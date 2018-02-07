@@ -11,14 +11,20 @@ extension MyController {
 
     @discardableResult @objc func mountCartridge() -> Bool {
     
-        // Get cartridge attached to this document (if any)
+        // Does this document have an attachment?
         let document = self.document as! MyDocument
-        guard let crt = document.attachedCartridge else {
+        guard let attachment = document.attachment else {
             return false;
         }
         
-        // Check for cartridge support
-        if !crt.isSupported() {
+        // Is the attachment a cartridge?
+        if attachment.type() != CRT_CONTAINER {
+            return false;
+        }
+        
+        // Is it a supported cartridge?
+        let crt = attachment as! CRTProxy
+         if !crt.isSupported() {
             showUnsupportedCartridgeAlert(crt)
             return false;
         }

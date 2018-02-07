@@ -631,46 +631,20 @@
         case MSG_READY_TO_RUN:
             
             // Close ROM dialog if open
+            // TODO: MAKE SURE THAT DIALOG IS ALREADY CLOSED
             if (romDialog) {
                 [romDialog orderOut:nil];
                 [[self window] endSheet:romDialog returnCode:NSModalResponseCancel];
                 romDialog = NULL;
             }
             
-            /*
-            // Check for attached snapshot
-            if ([[self document] attachedSnapshot]) {
-                NSLog(@"Found attached snapshot");
-                [c64 loadFromSnapshot:[[self document] attachedSnapshot]];
-            }
-            
-            // Check for attached cartridge
-            if ([[self document] attachedCartridge]) {
-                NSLog(@"Found attached cartridge");
-                [self mountCartridge];
-            }
-            */
-            
             // Start emulator
             [c64 run];
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
             
-            /*
-            // Check for attached tape
-            if ([[self document]  attachedTape]) {
-                NSLog(@"Found attached tape");
-                [self showTapeDialog];
-            }
-            */
-            
-            // Check for attached archive
-            if ([[self document] attachedArchive]) {
-                NSLog(@"Found attached archive");
-                [self showMountDialog];
-            }
-        
-            
+            // Show mount dialog if an attachment is present
+            [self showMountDialog];
             break;
             
         case MSG_RUN:
@@ -679,7 +653,7 @@
             [self refresh];
             [cheatboxPanel close];
             
-            // disable undo because the internal state changes permanently
+            // Disable undo because the internal state changes permanently
             [[self document] updateChangeCount:NSChangeDone];
             [[self undoManager] removeAllActions];
             break;

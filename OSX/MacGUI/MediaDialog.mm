@@ -95,8 +95,7 @@
 - (IBAction)cartridgeEjectAction:(id)sender
 {
     NSLog(@"cartridgeEjectAction");
-    
-    [[controller document] setAttachedCartridge:nil];
+    // [[controller document] setAttachedCartridge:nil];
     [c64 detachCartridgeAndReset];
     [self update];
 }

@@ -18,7 +18,7 @@ class MountController : NSWindowController {
         
         let document = controller.document as! MyDocument
         self.controller = controller
-        self.archive = document.attachedArchive
+        self.archive = document.attachment as!ArchiveProxy
         self.c64 = document.c64
         self.parentWindow = controller.window
     }

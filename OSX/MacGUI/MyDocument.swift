@@ -26,24 +26,15 @@ class MyDocument : NSDocument {
      */
     var c64: C64Proxy!
     
-    // TODO: Merge the following four variables into one:
-    // var Container attachment: ContainerProxy? = nil
-    
-    //! @brief   Reference to an attached snapshot image
-    /*! @details When the GUI launches, it checks for this object. If set, the attached
-     *           snapshot is loaded into the emulator.
+    //! @brief   Attachment
+    /*! @details When the GUI receives the READY_TO_RUN message from the emulator,
+     *           it checks his variable. If an attachment is found, e.g., a T64 file archive,
+     *           is displays a user dialog. The user can then choose to mount the archive
+     *           as a disk or to flash a single file into memory. If the attachment is a
+     *           snapshot, it is read into the emulator without asking the user.
      */
-    @objc var attachedSnapshot: SnapshotProxy? = nil
-    
-    //! Reference to an attachment of type T64, D64, PRG, P00, G64, or NIB
-    @objc var attachedArchive: ArchiveProxy? = nil
-    
-    //! Reference to an attached TAP container
-    @objc var attachedTape: TAPProxy? = nil
-    
-    //! Reference to an attached CRT container
-    @objc var attachedCartridge: CRTProxy? = nil
-    
+    @objc var attachment: ContainerProxy? = nil
+        
     override init() {
         
         NSLog("MyDocument::\(#function)")
@@ -87,19 +78,19 @@ class MyDocument : NSDocument {
             return
             
         case "T64":
-            attachedArchive = T64Proxy.make(withBuffer: ptr, length: size)
+            attachment = T64Proxy.make(withBuffer: ptr, length: size)
             break
         case "PRG":
-            attachedArchive = PRGProxy.make(withBuffer: ptr, length: size)
+            attachment = PRGProxy.make(withBuffer: ptr, length: size)
             break
         case "P00":
-            attachedArchive = P00Proxy.make(withBuffer: ptr, length: size)
+            attachment = P00Proxy.make(withBuffer: ptr, length: size)
             break
         case "G64":
-            attachedArchive = G64Proxy.make(withBuffer: ptr, length: size)
+            attachment = G64Proxy.make(withBuffer: ptr, length: size)
             break
         case "NIB":
-            attachedArchive = NIBProxy.make(withBuffer: ptr, length: size)
+            attachment = NIBProxy.make(withBuffer: ptr, length: size)
             break
 
         default:

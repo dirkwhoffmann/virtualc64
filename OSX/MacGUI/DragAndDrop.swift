@@ -126,8 +126,8 @@ public extension MetalView {
             }
             
             // Is it an archive?
-            document.attachedArchive = ArchiveProxy.make(withFile: path)
-            if document.attachedArchive != nil {
+            document.attachment = ArchiveProxy.make(withFile: path)
+            if document.attachment != nil {
                 
                 track("Successfully read archive.")
                 controller.showMountDialog()
@@ -135,16 +135,16 @@ public extension MetalView {
             }
         
             // Is it a magnetic tape?
-            document.attachedTape = TAPProxy.make(withFile: path)
-            if document.attachedTape != nil {
+            document.attachment = TAPProxy.make(withFile: path)
+            if document.attachment != nil {
                 track("Successfully read tape.")
                 // controller.showTapeDialog()
                 return true
             }
             
             // Is it a cartridge?
-            document.attachedCartridge = CRTProxy.make(withFile: path)
-            if document.attachedCartridge != nil {
+            document.attachment = CRTProxy.make(withFile: path)
+            if document.attachment != nil {
                 track("Successfully read cartridge.")
                 return true
             }

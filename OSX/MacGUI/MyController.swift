@@ -36,15 +36,15 @@ extension MyController {
         
         track()
 
-        // Check for attachment
+        // Does this document have an attachment?
         let document = self.document as! MyDocument
-        if (document.attachedArchive == nil) {
+        guard let attachment = document.attachment else {
             return
         }
         
         // Which mount dialog should we use?
         var controller: MountController!
-        switch document.attachedArchive!.type() {
+        switch attachment.type() {
         case T64_CONTAINER,
              PRG_CONTAINER,
              P00_CONTAINER,
@@ -69,15 +69,18 @@ extension MyController {
             break
             
         default:
-            assert(false)
+            // There is no mount dialog availabe for the attachments type
             return
         }
         
-        // Show dialog
+        // Show dialog as a sheet
         controller.setParentController(self)
         if let sheetWindow = controller.window {
             window!.beginSheet(sheetWindow, completionHandler: { responseCode in
-                controller.cleanup() // Makes sure, ARC doesn't delete controller too early
+                
+                // We need to do somethig with controller. Otherwise, ARC deletes it too early.
+                controller.cleanup()
+                
                 if responseCode == NSApplication.ModalResponse.OK {
                     self.rotateBack()
                 }
@@ -85,7 +88,6 @@ extension MyController {
         }
     }
 
-    
     // --------------------------------------------------------------------------------
     // Action methods (Drive)
     // --------------------------------------------------------------------------------
@@ -159,8 +161,8 @@ extension MyController {
     @IBAction func cartridgeEjectAction(_ sender: Any!) {
   
         NSLog("\(#function)")
-        let document = self.document as! MyDocument
-        document.attachedCartridge = nil
+        // let document = self.document as! MyDocument
+        // document.attachment = nil
         c64.detachCartridgeAndReset()
     }
     
