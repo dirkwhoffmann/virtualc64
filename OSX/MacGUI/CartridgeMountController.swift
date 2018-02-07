@@ -9,7 +9,7 @@ import Foundation
 
 class CartridgeMountController : MountController {
     
-    var cartridge: CRTContainerProxy!
+    var cartridge: CRTProxy!
     
     // Outlets
     @IBOutlet weak var header: NSTextField!

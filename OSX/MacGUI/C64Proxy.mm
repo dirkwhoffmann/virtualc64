@@ -34,6 +34,9 @@ struct Via6522Wrapper { VIA6522 *via; };
 struct Disk525Wrapper { Disk525 *disk; };
 struct Vc1541Wrapper { VC1541 *vc1541; };
 struct DatasetteWrapper { Datasette *datasette; };
+struct ContainerWrapper { Container *container; };
+
+// DEPRECATED
 struct SnapshotWrapper { Snapshot *snapshot; };
 struct ArchiveWrapper { Archive *archive; };
 struct TAPContainerWrapper { TAPContainer *tapcontainer; };
@@ -377,18 +380,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) toggleCtrlKey { wrapper->keyboard->toggleCtrlKey(); }
 - (void) toggleRunstopKey { wrapper->keyboard->toggleRunstopKey(); }
 
-
-/*
-- (void) pressHomeKey { wrapper->keyboard->pressHomeKey(); }
-- (void) releaseHomeKey { wrapper->keyboard->releaseHomeKey(); }
-- (void) pressClearKey { wrapper->keyboard->pressClearKey(); }
-- (void) releaseClearKey { wrapper->keyboard->releaseClearKey(); }
-- (void) pressDeleteKey { wrapper->keyboard->pressDeleteKey(); }
-- (void) releaseDeleteKey { wrapper->keyboard->releaseDeleteKey(); }
-- (void) pressInsertKey { wrapper->keyboard->pressInsertKey(); }
-- (void) releaseInsertKey { wrapper->keyboard->releaseInsertKey(); }
-*/
-
 @end
 
 
@@ -692,8 +683,15 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
+/*
 - (void) awakeFromNib
 {
+}
+*/
+
+- (struct C64Wrapper *)wrapper
+{
+    return wrapper;
 }
 
 - (void) kill
@@ -721,16 +719,20 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
 - (void) rampDown { wrapper->c64->sid.rampDown(); }
 
+/*
 - (SnapshotProxy *) takeSnapshot {
-    SnapshotProxy *snapshot = [[SnapshotProxy alloc] init];
-    wrapper->c64->saveToSnapshotSafe([snapshot wrapper]->snapshot);
-    return snapshot;
+    SnapshotProxy *snapshotProxy = [[SnapshotProxy alloc] init];
+    ContainerWrapper *snapshotWrapper = [snapshotProxy wrapper];
+    wrapper->c64->saveToSnapshotSafe((Snapshot *)(snapshotWrapper->container));
+    return snapshotProxy;
 }
+*/
 
 // DEPRECATED
-- (void) _loadFromSnapshotWrapper:(SnapshotWrapper *)w
+- (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper
 {
-    wrapper->c64->loadFromSnapshotSafe(w->snapshot);
+    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
+    wrapper->c64->loadFromSnapshotSafe(snapshot);
 }
 
 - (void) loadFromSnapshot:(SnapshotProxy *)snapshot
@@ -738,9 +740,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     [self _loadFromSnapshotWrapper:[snapshot wrapper]];
 }
 
-- (void) _saveToSnapshotWrapper:(SnapshotWrapper *)w
+- (void) _saveToSnapshotWrapper:(ContainerWrapper *)containerWrapper
 {
-    wrapper->c64->saveToSnapshotSafe(w->snapshot);
+    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
+    wrapper->c64->saveToSnapshotSafe(snapshot);
 }
 
 - (void) saveToSnapshot:(SnapshotProxy *)snapshot
@@ -792,8 +795,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) loadRom:(NSString *)filename {
     return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
-- (bool) attachCartridgeAndReset:(CRTContainerProxy *)c {
-    return wrapper->c64->attachCartridgeAndReset([c wrapper]->crtcontainer); }
+- (bool) attachCartridgeAndReset:(CRTProxy *)c {
+    return wrapper->c64->attachCartridgeAndReset((CRTContainer *)([c wrapper]->container)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 - (bool) insertDisk:(ArchiveProxy *)a {
@@ -857,80 +860,175 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @end
 
 // --------------------------------------------------------------------------
+//                                Container
+// --------------------------------------------------------------------------
+
+@implementation ContainerProxy
+
+/*
+- (instancetype) init
+{
+    if (self = [super init]) {
+        wrapper = new ContainerWrapper();
+        wrapper->container = nil;
+    }
+    return self;
+}
+*/
+
+- (instancetype) initWithContainer:(Container *)container
+{
+    NSLog(@"********** ContainerProxy::initWithContainer");
+
+    if (container == nil) {
+        return nil;
+    }
+    if (self = [super init]) {
+        wrapper = new ContainerWrapper();
+        wrapper->container = container;
+    }
+    return self;
+}
+
++ (ContainerProxy *) makeWithContainer:(Container *)container
+{
+    NSLog(@"********** ContainerProxy::makeWithContainer");
+    
+    if (container == nil) {
+        return nil;
+    }
+    return [[self alloc] initWithContainer:container];
+}
+
+- (ContainerWrapper *)wrapper
+{
+    return wrapper;
+}
+
+- (NSInteger) sizeOnDisk
+{
+    return wrapper->container->sizeOnDisk();
+}
+
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
+{
+    wrapper->container->readFromBuffer((const uint8_t *)buffer, length);
+}
+
+- (NSInteger) writeToBuffer:(void *)buffer
+{
+    return wrapper->container->writeToBuffer((uint8_t *)buffer);
+}
+
+- (void) dealloc
+{
+    NSLog(@"********** ContainerProxy::dealloc");
+    
+    if (wrapper) {
+        if (wrapper->container) delete wrapper->container;
+        delete wrapper;
+    }
+}
+@end
+
+// --------------------------------------------------------------------------
 //                                Snapshot
 // --------------------------------------------------------------------------
 
 @implementation SnapshotProxy
 
-- (instancetype) init
-{
-    if (self = [super init]) {
-        wrapper = new SnapshotWrapper();
-        wrapper->snapshot = new Snapshot;
-    }
-    return self;
-}
-
-- (instancetype) initWithSnapshot:(Snapshot *)snapshot
-{
-    if (snapshot == nil) return nil;
-    
-    if (self = [super init]) {
-        wrapper = new SnapshotWrapper();
-        wrapper->snapshot = snapshot;
-    }
-    return self;
-}
-
-- (void) dealloc
-{	
-	NSLog(@"V64Snapshot::dealloc");
-
-	if (wrapper->snapshot) delete wrapper->snapshot;
-    if (wrapper) delete wrapper;
-}
-
 + (BOOL) isSnapshotFile:(NSString *)path {
     return Snapshot::isSnapshotFile([path UTF8String]);
 }
+
 + (BOOL) isUsupportedSnapshotFile:(NSString *)path {
     return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
 }
 
-+ (instancetype) makeSnapshotWithSnapshot:(Snapshot *)snapshot
++ (instancetype) make:(Snapshot *)snapshot
 {
-    if (snapshot == NULL)
+    if (snapshot == NULL) {
         return nil;
-    
-    SnapshotProxy *newSnapshot = [[self alloc] initWithSnapshot:snapshot];
-    return newSnapshot;
+    }
+    return [[self alloc] initWithContainer:snapshot];
 }
 
-+ (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     Snapshot *snapshot = Snapshot::makeSnapshotWithBuffer((uint8_t *)buffer, length);
-    return [self makeSnapshotWithSnapshot:snapshot];
+    return [self make:snapshot];
 }
 
-+ (instancetype) makeSnapshotWithFile:(NSString *)path {
++ (instancetype) makeWithFile:(NSString *)path
+{
     Snapshot *snapshot = Snapshot::makeSnapshotWithFile([path UTF8String]);
-    return [self makeSnapshotWithSnapshot:snapshot];
+    return [self make:snapshot];
 }
 
++ (instancetype) makeWithC64:(C64Proxy *)c64proxy
+{
+    C64Wrapper *wrapper = [c64proxy wrapper];
+    C64 *c64 = wrapper->c64;
+    Snapshot *snapshot = c64->takeSnapshotSafe();
+    return [self make:snapshot];
+}
+@end
 
-- (SnapshotWrapper *)wrapper { return wrapper; }
-- (NSInteger) sizeOnDisk { return wrapper->snapshot->sizeOnDisk(); }
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length {
-    wrapper->snapshot->readFromBuffer((const uint8_t *)buffer, length); }
-- (NSInteger) writeToBuffer:(void *)buffer {
-    return wrapper->snapshot->writeToBuffer((uint8_t *)buffer); }
+// --------------------------------------------------------------------------
+//                                CRTContainer
+// --------------------------------------------------------------------------
+
+@implementation CRTProxy
+
 /*
-- (bool) readDataFromFile:(NSString *)path {
-    return wrapper->snapshot->readFromFile([path UTF8String]); }
-- (bool) writeDataToFile:(NSString *)path {
-    return wrapper->snapshot->writeToFile([path UTF8String]); }
+- (instancetype) initWithCRTContainer:(CRTContainer *)container
+{
+    if (self = [super init]) {
+        wrapper = new CRTContainerWrapper();
+        wrapper->crtcontainer = container;
+    }
+    return self;
+}
 */
 
++ (BOOL) isCRTFile:(NSString *)path
+{
+    return CRTContainer::isValidCRTFile([path UTF8String]);
+}
+
++ (instancetype) make:(CRTContainer *)container
+{
+    if (container == NULL) {
+        return nil;
+    }
+    return [[self alloc] initWithContainer:container];
+}
+
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    CRTContainer *container = CRTContainer::makeCRTContainerWithBuffer((const uint8_t *)buffer, length);
+    return [self make: container];
+}
+
++ (instancetype) makeWithFile:(NSString *)path
+{
+    CRTContainer *container = CRTContainer::makeCRTContainerWithFile([path UTF8String]);
+    return [self make: container];
+}
+
+- (CartridgeType)cartridgeType {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->getCartridgeType();
+}
+
+- (NSString *)cartridgeTypeName {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return [NSString stringWithUTF8String:c->getCartridgeTypeName()];
+}
+
+- (BOOL) isSupported {
+    return Cartridge::isSupportedType([self cartridgeType]);
+}
 @end
 
 
@@ -1036,7 +1134,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 
 @end
-
 
 @implementation T64ArchiveProxy
 
@@ -1279,57 +1376,4 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @end
 
-
-// --------------------------------------------------------------------------
-//                                 Cartridge
-// --------------------------------------------------------------------------
-
-@implementation CRTContainerProxy
-
-- (CRTContainerWrapper *)wrapper { return wrapper; }
-
-- (instancetype) initWithCRTContainer:(CRTContainer *)container
-{
-    if (self = [super init]) {
-        wrapper = new CRTContainerWrapper();
-        wrapper->crtcontainer = container;
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    NSLog(@"CRTContainerProxy::dealloc (deleted CRTContainer at %p)", wrapper->crtcontainer);
-    
-    if (wrapper) {
-        if (wrapper->crtcontainer)
-            delete wrapper->crtcontainer;
-        delete wrapper;
-    }
-}
-
-+ (BOOL) isCRTFile:(NSString *)path
-{
-    return CRTContainer::isValidCRTFile([path UTF8String]);
-}
-
-+ (instancetype) makeCRTContainerWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    CRTContainer *container = CRTContainer::makeCRTContainerWithBuffer(ptr, length);
-    return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
-}
-
-+ (instancetype) makeCRTContainerWithFile:(NSString *)path
-{
-    CRTContainer *container = CRTContainer::makeCRTContainerWithFile([path UTF8String]);
-    return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
-}
-
-- (CartridgeType)type { return wrapper->crtcontainer->getCartridgeType(); }
-- (NSString *)typeName { return [NSString stringWithUTF8String:wrapper->crtcontainer->getCartridgeTypeName()]; }
-- (BOOL) isSupportedType { return Cartridge::isSupportedType((CartridgeType)[self type]); }
-
-
-@end
 

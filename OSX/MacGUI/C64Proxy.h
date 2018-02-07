@@ -28,7 +28,7 @@
 @class D64ArchiveProxy; 
 @class ArchiveProxy;
 @class TAPContainerProxy;
-@class CRTContainerProxy;
+@class CRTProxy;
 
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++ here.
@@ -47,6 +47,9 @@ struct Via6522Wrapper;
 struct Disk525Wrapper;
 struct Vc1541Wrapper;
 struct DatasetteWrapper;
+struct ContainerWrapper;
+
+// DEPRECATED
 struct SnapshotWrapper;
 struct ArchiveWrapper;
 struct TAPContainerWrapper;
@@ -614,7 +617,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @property BOOL iecBusIsBusy;
 @property BOOL tapeBusIsBusy;
 
-// Initialization
+- (struct C64Wrapper *)wrapper;
 - (void) kill;
 
 // Hardware configuration
@@ -631,9 +634,9 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) rampDown;
 
 // Loadind and saving
-- (void)_loadFromSnapshotWrapper:(struct SnapshotWrapper *) snapshot;
+- (void)_loadFromSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
-- (void)_saveToSnapshotWrapper:(struct SnapshotWrapper *) snapshot;
+- (void)_saveToSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
 - (CIAProxy *) cia:(int)num;
@@ -670,7 +673,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 
-- (bool) attachCartridgeAndReset:(CRTContainerProxy *)c;
+- (bool) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;
 - (bool) isCartridgeAttached;
 
@@ -688,7 +691,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (long) cycles;
 - (long) frames;
 
-- (SnapshotProxy *) takeSnapshot;
+// - (SnapshotProxy *) takeSnapshot;
 
 // Cheatbox
 - (NSInteger) historicSnapshots;
@@ -712,30 +715,59 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 
 
 // --------------------------------------------------------------------------
+//                  C O N T A I N E R   C L A S S E S
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+//                                  Container
+// --------------------------------------------------------------------------
+
+@interface ContainerProxy : NSObject {
+    
+    struct ContainerWrapper *wrapper;
+}
+
+- (struct ContainerWrapper *)wrapper;
+
+- (NSInteger) sizeOnDisk;
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
+- (NSInteger) writeToBuffer:(void *)buffer;
+
+@end
+
+// --------------------------------------------------------------------------
 //                                  Snapshot
 // --------------------------------------------------------------------------
 
-@interface SnapshotProxy : NSObject {
-    
-	struct SnapshotWrapper *wrapper;
+@interface SnapshotProxy : ContainerProxy {
 }
-
-- (instancetype) init;
 
 + (BOOL) isSnapshotFile:(NSString *)path;
 + (BOOL) isUsupportedSnapshotFile:(NSString *)path;
-+ (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeSnapshotWithFile:(NSString *)path;
-
-- (struct SnapshotWrapper *)wrapper; // Where do we need this?
-
-- (NSInteger) sizeOnDisk;
-// - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
-- (NSInteger) writeToBuffer:(void *)buffer;
-// - (bool) readDataFromFile:(NSString *)path;
-// - (bool) writeDataToFile:(NSString *)path;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)path;
++ (instancetype) makeWithC64:(C64Proxy *)c64proxy;
 
 @end
+
+// --------------------------------------------------------------------------
+//                                  CRT Proxy
+// --------------------------------------------------------------------------
+
+@interface CRTProxy : ContainerProxy {
+}
+
++ (BOOL) isCRTFile:(NSString *)path;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)path;
+
+- (CartridgeType)cartridgeType;
+- (NSString *)cartridgeTypeName;
+- (BOOL) isSupported;
+
+@end
+
+
 
 
 // --------------------------------------------------------------------------
@@ -859,6 +891,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 //                             CRT Container
 // --------------------------------------------------------------------------
 
+/*
 @interface CRTContainerProxy : NSObject {
     
     struct CRTContainerWrapper *wrapper;
@@ -874,4 +907,4 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (BOOL) isSupportedType;
 
 @end
-
+*/

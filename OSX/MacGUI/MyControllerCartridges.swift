@@ -13,18 +13,18 @@ extension MyController {
     
         // Get cartridge attached to this document (if any)
         let document = self.document as! MyDocument
-        guard let crtContainer = document.attachedCartridge else {
+        guard let crt = document.attachedCartridge else {
             return false;
         }
         
         // Check for cartridge support
-        if !crtContainer.isSupportedType() {
-            showUnsupportedCartridgeAlert(crtContainer)
+        if !crt.isSupported() {
+            showUnsupportedCartridgeAlert(crt)
             return false;
         }
         
         // Attach cartride 
-        c64.attachCartridgeAndReset(crtContainer)
+        c64.attachCartridgeAndReset(crt)
         return true
     }
     

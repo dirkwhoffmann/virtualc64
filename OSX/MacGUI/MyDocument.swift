@@ -42,7 +42,7 @@ class MyDocument : NSDocument {
     @objc var attachedTape: TAPContainerProxy? = nil
     
     //! Reference to an attached CRT container
-    @objc var attachedCartridge: CRTContainerProxy? = nil
+    @objc var attachedCartridge: CRTProxy? = nil
     
     override init() {
         
@@ -82,7 +82,7 @@ class MyDocument : NSDocument {
         switch (typeName) {
         
         case "VC64":
-            let snapshot = SnapshotProxy.makeSnapshot(withBuffer: ptr, length: size)
+            let snapshot = SnapshotProxy.make(withBuffer: ptr, length: size)
             c64.load(fromSnapshot: snapshot)
             return
         
@@ -160,7 +160,7 @@ class MyDocument : NSDocument {
             NSLog("Type is VC64")
             
             // Take snapshot
-            if let snapshot = c64.takeSnapshot() {
+            if let snapshot = SnapshotProxy.make(withC64: c64) {
 
                 // Write to data buffer
                 if let data = NSMutableData.init(length: snapshot.sizeOnDisk()) {

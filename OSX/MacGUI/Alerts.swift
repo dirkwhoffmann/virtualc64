@@ -72,9 +72,9 @@ public extension MyController {
         alert.runModal()
     }
     
-    @objc func showUnsupportedCartridgeAlert(_ container: CRTContainerProxy) {
+    @objc func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
         
-        let name = container.typeName() as String
+        let name = container.cartridgeTypeName() as String
         
         let alert = NSAlert()
         alert.alertStyle = .warning

@@ -95,7 +95,7 @@ public extension MetalView {
             let length = fileData!.count
             let nsData = fileData! as NSData
             let rawPtr = nsData.bytes
-            let snapshot = SnapshotProxy.makeSnapshot(withBuffer: rawPtr, length: length)
+            let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length)
             
             controller.c64.load(fromSnapshot: snapshot)
             return true
@@ -119,7 +119,7 @@ public extension MetalView {
             }
             
             // Is it a snapshop with a matching version number?
-            if let snapshot = SnapshotProxy.makeSnapshot(withFile: path) {
+            if let snapshot = SnapshotProxy.make(withFile: path) {
                 controller.c64.load(fromSnapshot: snapshot)
                 document.fileURL = nil // Make document 'Untitled'
                 return true
@@ -143,7 +143,7 @@ public extension MetalView {
             }
             
             // Is it a cartridge?
-            document.attachedCartridge = CRTContainerProxy.makeCRTContainer(withFile: path)
+            document.attachedCartridge = CRTProxy.make(withFile: path)
             if document.attachedCartridge != nil {
                 track("Successfully read cartridge.")
                 return true
