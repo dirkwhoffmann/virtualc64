@@ -39,7 +39,7 @@ class MyDocument : NSDocument {
     @objc var attachedArchive: ArchiveProxy? = nil
     
     //! Reference to an attached TAP container
-    @objc var attachedTape: TAPContainerProxy? = nil
+    @objc var attachedTape: TAPProxy? = nil
     
     //! Reference to an attached CRT container
     @objc var attachedCartridge: CRTProxy? = nil

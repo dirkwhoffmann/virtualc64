@@ -27,7 +27,7 @@
 @class SnapshotProxy;
 @class D64ArchiveProxy; 
 @class ArchiveProxy;
-@class TAPContainerProxy;
+@class TAPProxy;
 @class CRTProxy;
 
 // Forward declarations of wrappers for C++ classes.
@@ -680,7 +680,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (bool) insertDisk:(ArchiveProxy *)a;
 - (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
-- (bool) insertTape:(TAPContainerProxy *)a;
+- (bool) insertTape:(TAPProxy *)a;
 
 - (bool) warp;
 - (void) setWarp:(bool)b;
@@ -715,11 +715,11 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 
 
 // --------------------------------------------------------------------------
-//                  C O N T A I N E R   C L A S S E S
+//               C O N T A I N E R   P R O X Y   C L A S S E S
 // --------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
-//                                  Container
+//                                  ContainerProxy
 // --------------------------------------------------------------------------
 
 @interface ContainerProxy : NSObject {
@@ -736,7 +736,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @end
 
 // --------------------------------------------------------------------------
-//                                  Snapshot
+//                                 SnapshotProxy
 // --------------------------------------------------------------------------
 
 @interface SnapshotProxy : ContainerProxy {
@@ -751,7 +751,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @end
 
 // --------------------------------------------------------------------------
-//                                  CRT Proxy
+//                                  CRTProxy
 // --------------------------------------------------------------------------
 
 @interface CRTProxy : ContainerProxy {
@@ -766,6 +766,22 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (BOOL) isSupported;
 
 @end
+
+// --------------------------------------------------------------------------
+//                                  TAPProxy
+// --------------------------------------------------------------------------
+
+@interface TAPProxy : ContainerProxy {
+}
+
++ (BOOL) isTAPFile:(NSString *)path;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)path;
+
+- (NSInteger)TAPversion;
+
+@end
+
 
 
 
@@ -869,6 +885,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 //                                TAP Container
 // --------------------------------------------------------------------------
 
+/*
 @interface TAPContainerProxy : NSObject
 {
     struct TAPContainerWrapper *wrapper;
@@ -886,6 +903,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (NSInteger)TAPversion;
 
 @end
+*/
 
 // --------------------------------------------------------------------------
 //                             CRT Container

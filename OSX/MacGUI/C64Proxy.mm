@@ -805,8 +805,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
     return wrapper->c64->flushArchive([a wrapper]->archive, (int)nr);
 }
-- (bool) insertTape:(TAPContainerProxy *)c {
-    return wrapper->c64->insertTape([c wrapper]->tapcontainer);
+- (bool) insertTape:(TAPProxy *)c {
+    TAPContainer *container = (TAPContainer *)([c wrapper]->container);
+    return wrapper->c64->insertTape(container);
 }
 - (bool) warp { return wrapper->c64->getWarp(); }
 - (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }
@@ -932,7 +933,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @end
 
 // --------------------------------------------------------------------------
-//                                Snapshot
+//                              SnapshotProxy
 // --------------------------------------------------------------------------
 
 @implementation SnapshotProxy
@@ -975,21 +976,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @end
 
 // --------------------------------------------------------------------------
-//                                CRTContainer
+//                                CRTProxy
 // --------------------------------------------------------------------------
 
 @implementation CRTProxy
-
-/*
-- (instancetype) initWithCRTContainer:(CRTContainer *)container
-{
-    if (self = [super init]) {
-        wrapper = new CRTContainerWrapper();
-        wrapper->crtcontainer = container;
-    }
-    return self;
-}
-*/
 
 + (BOOL) isCRTFile:(NSString *)path
 {
@@ -1030,6 +1020,46 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return Cartridge::isSupportedType([self cartridgeType]);
 }
 @end
+
+// --------------------------------------------------------------------------
+//                                  TAPProxy
+// --------------------------------------------------------------------------
+
+@implementation TAPProxy
+
++ (BOOL) isTAPFile:(NSString *)path
+{
+    return TAPContainer::isTAPFile([path UTF8String]);
+}
+
++ (instancetype) make:(TAPContainer *)container
+{
+    if (container == NULL) {
+        return nil;
+    }
+    return [[self alloc] initWithContainer:container];
+}
+
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    TAPContainer *container = TAPContainer::makeTAPContainerWithBuffer((const uint8_t *)buffer, length);
+    return [self make: container];
+}
+
++ (instancetype) makeWithFile:(NSString *)path
+{
+    TAPContainer *container = TAPContainer::makeTAPContainerWithFile([path UTF8String]);
+    return [self make: container];
+}
+
+- (NSInteger)TAPversion {
+    TAPContainer *container = (TAPContainer *)wrapper->container;
+    return (NSInteger)container->TAPversion();
+}
+
+@end
+
+
 
 
 // --------------------------------------------------------------------------
@@ -1323,6 +1353,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @end
 
 
+/*
 @implementation TAPContainerProxy
 
 - (instancetype) initWithTAPContainer:(TAPContainer *)container
@@ -1374,6 +1405,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger)getType { return (NSInteger)wrapper->tapcontainer->type(); }
 - (NSInteger)TAPversion { return (NSInteger)wrapper->tapcontainer->TAPversion(); }
 
+
 @end
 
-
+*/

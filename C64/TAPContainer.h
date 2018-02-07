@@ -81,7 +81,7 @@ public:
     // Accessing the container
     //
     
-    unsigned TAPversion() { return data[0x000C]; }
+    uint8_t TAPversion() { return data[0x000C]; }
     uint8_t *getData() { return &data[0x0014]; }
     size_t getSize() { return size - 0x14; }
 };

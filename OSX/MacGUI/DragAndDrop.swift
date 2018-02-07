@@ -135,7 +135,7 @@ public extension MetalView {
             }
         
             // Is it a magnetic tape?
-            document.attachedTape = TAPContainerProxy.makeTAPContainer(withFile: path)
+            document.attachedTape = TAPProxy.make(withFile: path)
             if document.attachedTape != nil {
                 track("Successfully read tape.")
                 // controller.showTapeDialog()

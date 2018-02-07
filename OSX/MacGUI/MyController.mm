@@ -1187,13 +1187,14 @@
 }
 #endif
 
+#if 0
 - (bool)showTapeDialog
 {
     // Only proceed if a a tape image is present
     if (![[self document] attachedTape])
         return NO;
     
-    [tapeDialog initialize:[[self document] attachedTape] c64proxy:c64];
+    // [tapeDialog initialize:[[self document] attachedTape] c64proxy:c64];
     [[self window] beginSheet:tapeDialog completionHandler:nil];
     
     return YES;
@@ -1235,6 +1236,7 @@
                        ^{ usleep(400000); [[c64 datasette] pressPlay]; });
     }
 }
+#endif
 
 - (BOOL)exportToD64:(NSString *)path
 {
