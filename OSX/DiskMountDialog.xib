@@ -10,7 +10,6 @@
             <connections>
                 <outlet property="contents" destination="3hQ-0q-ukR" id="Zso-90-dYX"/>
                 <outlet property="header" destination="l19-lb-oYh" id="bWO-sH-HKD"/>
-                <outlet property="icon" destination="AKJ-2U-d4K" id="uvC-Yy-fXg"/>
                 <outlet property="stepper" destination="Vhe-Oz-Tgl" id="w4C-G6-YWn"/>
                 <outlet property="subheader" destination="JMf-QF-9dD" id="1aY-GH-DL4"/>
                 <outlet property="subsubheader" destination="rl8-hE-Z6v" id="zmP-eY-4IV"/>
@@ -30,25 +29,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="462"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iAg-Xw-L2a">
-                        <rect key="frame" x="129" y="419" width="331" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    </box>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uNg-sD-f1D">
-                        <rect key="frame" x="386" y="-105" width="143" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="OqD-Vj-Sjc">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                    </button>
-                    <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKJ-2U-d4K" customClass="MountDragView">
-                        <rect key="frame" x="20" y="344" width="101" height="97"/>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yxi-Ar-LgQ" userLabel="Icon">
+                        <rect key="frame" x="23" y="342" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="IconD64" id="pHB-88-mcy"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="IconD64" id="bqS-ql-Ov6"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l19-lb-oYh">
                         <rect key="frame" x="127" y="423" width="267" height="19"/>
@@ -59,6 +43,10 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iAg-Xw-L2a">
+                        <rect key="frame" x="129" y="419" width="331" height="5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JMf-QF-9dD">
                         <rect key="frame" x="127" y="398" width="335" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>

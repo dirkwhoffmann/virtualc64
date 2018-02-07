@@ -1238,6 +1238,7 @@
 }
 #endif
 
+#if 0
 - (BOOL)exportToD64:(NSString *)path
 {
     NSLog(@"Writing drive contents to D64 archive in %@...",path);
@@ -1263,6 +1264,7 @@
     // Sorry, too many failures
     return NO;
 }
+#endif
 
 // --------------------------------------------------------------------------------
 //                                  Keyboard events 

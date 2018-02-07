@@ -719,7 +719,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 // --------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
-//                                  ContainerProxy
+//                              ContainerProxy
 // --------------------------------------------------------------------------
 
 @interface ContainerProxy : NSObject {
@@ -729,25 +729,24 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 
 - (struct ContainerWrapper *)wrapper;
 
-- (NSInteger) sizeOnDisk;
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
-- (NSInteger) writeToBuffer:(void *)buffer;
-
+- (ContainerType)type; 
+- (NSInteger)sizeOnDisk;
+- (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
+- (NSInteger)writeToBuffer:(void *)buffer;
 @end
 
 // --------------------------------------------------------------------------
-//                                 SnapshotProxy
+//                               SnapshotProxy
 // --------------------------------------------------------------------------
 
 @interface SnapshotProxy : ContainerProxy {
 }
 
-+ (BOOL) isSnapshotFile:(NSString *)path;
-+ (BOOL) isUsupportedSnapshotFile:(NSString *)path;
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeWithFile:(NSString *)path;
-+ (instancetype) makeWithC64:(C64Proxy *)c64proxy;
-
++ (BOOL)isSnapshotFile:(NSString *)path;
++ (BOOL)isUsupportedSnapshotFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path;
++ (instancetype)makeWithC64:(C64Proxy *)c64proxy;
 @end
 
 // --------------------------------------------------------------------------
@@ -757,14 +756,13 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @interface CRTProxy : ContainerProxy {
 }
 
-+ (BOOL) isCRTFile:(NSString *)path;
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeWithFile:(NSString *)path;
++ (BOOL)isCRTFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path;
 
 - (CartridgeType)cartridgeType;
 - (NSString *)cartridgeTypeName;
-- (BOOL) isSupported;
-
+- (BOOL)isSupported;
 @end
 
 // --------------------------------------------------------------------------
@@ -774,155 +772,90 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @interface TAPProxy : ContainerProxy {
 }
 
-+ (BOOL) isTAPFile:(NSString *)path;
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeWithFile:(NSString *)path;
++ (BOOL)isTAPFile:(NSString *)path;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)path;
 
 - (NSInteger)TAPversion;
-
 @end
-
-
-
-
 
 // --------------------------------------------------------------------------
-//                                Archive
+//                                ArchiveProxy
 // --------------------------------------------------------------------------
 
-@interface ArchiveProxy : NSObject {
-    
-    struct ArchiveWrapper *wrapper;
+@interface ArchiveProxy : ContainerProxy {
 }
 
-- (struct ArchiveWrapper *)wrapper;
++ (instancetype)makeWithFile:(NSString *)path;
 
-+ (instancetype) makeArchiveWithFile:(NSString *)filename;
-- (NSString *)getPath;
-- (NSString *)getName;
-- (ContainerType)getType;
-- (NSInteger)getNumberOfItems; 
-- (NSString *)getNameOfItem:(NSInteger)item;
-- (NSString *)getUnicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max;
-- (const char *)getNameOfItemUTF8:(NSInteger)item;
-- (NSInteger) getSizeOfItem:(NSInteger)item;
-- (NSInteger) getSizeOfItemInBlocks:(NSInteger)item;
-- (NSString *) getTypeOfItem:(NSInteger)item;
-- (NSInteger) sizeOnDisk;
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
-- (NSInteger) writeToBuffer:(const void *)buffer;
-- (NSString *) byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;
+- (NSInteger)numberOfItems;
+- (NSString *)nameOfItem:(NSInteger)item;
+- (NSString *)unicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max;
+- (NSInteger)sizeOfItem:(NSInteger)item;
+- (NSInteger)sizeOfItemInBlocks:(NSInteger)item;
+- (NSString *)typeOfItem:(NSInteger)item;
 
-
-// - (BOOL)writeToFile:(NSString *)filename;
+// Think about a better API for accessing tracks and sectors directly
+- (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;
 @end
 
-@interface T64ArchiveProxy : ArchiveProxy
+@interface T64Proxy : ArchiveProxy
 {
 }
-+ (BOOL) isT64File:(NSString *)filename;
-+ (instancetype) makeT64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeT64ArchiveWithFile:(NSString *)filename;
-+ (instancetype) makeT64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (BOOL)isT64File:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
 @end
 
-@interface D64ArchiveProxy : ArchiveProxy
+@interface PRGProxy : ArchiveProxy
 {
 }
-+ (BOOL) isD64File:(NSString *)filename;
-+ (instancetype) makeD64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeD64ArchiveWithFile:(NSString *)filename;
-+ (instancetype) makeD64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
-
-+ (instancetype) archiveFromVC1541:(VC1541Proxy *)vc1541;
++ (BOOL)isPRGFile:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
 @end
 
-@interface PRGArchiveProxy : ArchiveProxy
+@interface P00Proxy : ArchiveProxy
 {
 }
-+ (BOOL) isPRGFile:(NSString *)filename;
-+ (instancetype) makePRGArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makePRGArchiveWithFile:(NSString *)filename;
-+ (instancetype) makePRGArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
-
++ (BOOL)isP00File:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
 @end
 
-@interface P00ArchiveProxy : ArchiveProxy
+@interface D64Proxy : ArchiveProxy
 {
 }
-+ (BOOL) isP00File:(NSString *)filename;
-+ (instancetype) makeP00ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeP00ArchiveWithFile:(NSString *)filename;
-+ (instancetype) makeP00ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (BOOL)isD64File:(NSString *)filename;
++ (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype)makeWithFile:(NSString *)filename;
++ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (instancetype)makeWithVC1541:(VC1541Proxy *)vc1541;
 @end
 
-@interface G64ArchiveProxy : ArchiveProxy
+@interface G64Proxy : ArchiveProxy
 {
 }
-+ (BOOL) isG64File:(NSString *)filename;
-+ (instancetype) makeG64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeG64ArchiveWithFile:(NSString *)filename;
-
++ (BOOL)isG64File:(NSString *)filename;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)filename;
 @end
 
-@interface NIBArchiveProxy : ArchiveProxy
+@interface NIBProxy : ArchiveProxy
 {
 }
 + (BOOL) isNIBFile:(NSString *)filename;
-+ (instancetype) makeNIBArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeNIBArchiveWithFile:(NSString *)filename;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)filename;
 @end
 
-@interface FileArchiveProxy : ArchiveProxy
+@interface FileProxy : ArchiveProxy
 {
 }
-+ (instancetype) makeFileArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeFileArchiveWithFile:(NSString *)filename;
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeWithFile:(NSString *)filename;
 @end
 
-
-// --------------------------------------------------------------------------
-//                                TAP Container
-// --------------------------------------------------------------------------
-
-/*
-@interface TAPContainerProxy : NSObject
-{
-    struct TAPContainerWrapper *wrapper;
-}
-
-- (struct TAPContainerWrapper *)wrapper;
-
-+ (BOOL) isTAPFile:(NSString *)filename;
-+ (instancetype) makeTAPContainerWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeTAPContainerWithFile:(NSString *)filename;
-
-- (NSString *)getPath;
-- (NSString *)getName;
-- (NSInteger)getType;
-- (NSInteger)TAPversion;
-
-@end
-*/
-
-// --------------------------------------------------------------------------
-//                             CRT Container
-// --------------------------------------------------------------------------
-
-/*
-@interface CRTContainerProxy : NSObject {
-    
-    struct CRTContainerWrapper *wrapper;
-}
-
-- (struct CRTContainerWrapper *) wrapper;
-+ (BOOL) isCRTFile:(NSString *)filename;
-+ (instancetype) makeCRTContainerWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeCRTContainerWithFile:(NSString *)filename;
-
-- (CartridgeType)type;
-- (NSString *)typeName;
-- (BOOL) isSupportedType;
-
-@end
-*/

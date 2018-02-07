@@ -301,7 +301,7 @@ extension MyController {
     
         func numberOfItems(archive: ArchiveProxy, format: String) -> Int {
             
-            let items = archive.getNumberOfItems()
+            let items = archive.numberOfItems()
             
             if items == 0 { showDiskIsEmptyAlert(format: format) }
             if items > 1  { showDiskHasMultipleFilesAlert(format: format) }
@@ -312,7 +312,7 @@ extension MyController {
         var fileTypes: [String]?
     
         // Create D64 archive from drive
-        guard let d64archive = D64ArchiveProxy.archive(fromVC1541: c64.vc1541) else {
+        guard let d64archive = D64Proxy.make(withVC1541: c64.vc1541) else {
             NSLog("Failed to create D64 archive from disk in drive")
             return false
         }
@@ -324,19 +324,19 @@ extension MyController {
             fileTypes = ["D64"]
             archive = d64archive
             break
-    
+
         case T64_CONTAINER:
             fileTypes = ["T64"]
-            archive = T64ArchiveProxy.makeT64Archive(withAnyArchive: d64archive)
+            archive = T64Proxy.make(withAnyArchive: d64archive)
             break
-    
+
         case PRG_CONTAINER:
             // PRG files store exactly one file. Abort if disk is empty
             if numberOfItems(archive: d64archive, format: "PRG") == 0 {
                 return false
             }
             fileTypes = ["PRG"]
-            archive = PRGArchiveProxy.makePRGArchive(withAnyArchive: d64archive)
+            archive = PRGProxy.make(withAnyArchive: d64archive)
             break
     
         case P00_CONTAINER:
@@ -345,7 +345,7 @@ extension MyController {
                 return false
             }
             fileTypes = ["P00"]
-            archive = P00ArchiveProxy.makeP00Archive(withAnyArchive: d64archive)
+            archive = P00Proxy.make(withAnyArchive: d64archive)
             break
     
         default:

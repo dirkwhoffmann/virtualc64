@@ -44,7 +44,7 @@ extension MyController {
         
         // Which mount dialog should we use?
         var controller: MountController!
-        switch document.attachedArchive!.getType() {
+        switch document.attachedArchive!.type() {
         case T64_CONTAINER,
              PRG_CONTAINER,
              P00_CONTAINER,

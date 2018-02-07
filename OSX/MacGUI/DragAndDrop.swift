@@ -126,7 +126,7 @@ public extension MetalView {
             }
             
             // Is it an archive?
-            document.attachedArchive = ArchiveProxy.makeArchive(withFile: path)
+            document.attachedArchive = ArchiveProxy.make(withFile: path)
             if document.attachedArchive != nil {
                 
                 track("Successfully read archive.")

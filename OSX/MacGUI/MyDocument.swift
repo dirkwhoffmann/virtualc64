@@ -85,25 +85,21 @@ class MyDocument : NSDocument {
             let snapshot = SnapshotProxy.make(withBuffer: ptr, length: size)
             c64.load(fromSnapshot: snapshot)
             return
-        
+            
         case "T64":
-            attachedArchive = T64ArchiveProxy.makeT64Archive(withBuffer: ptr, length: size)
+            attachedArchive = T64Proxy.make(withBuffer: ptr, length: size)
             break
-   
         case "PRG":
-            attachedArchive = PRGArchiveProxy.makePRGArchive(withBuffer: ptr, length: size)
+            attachedArchive = PRGProxy.make(withBuffer: ptr, length: size)
             break
-            
         case "P00":
-            attachedArchive = P00ArchiveProxy.makeP00Archive(withBuffer: ptr, length: size)
+            attachedArchive = P00Proxy.make(withBuffer: ptr, length: size)
             break
-            
         case "G64":
-            attachedArchive = G64ArchiveProxy.makeG64Archive(withBuffer: ptr, length: size)
+            attachedArchive = G64Proxy.make(withBuffer: ptr, length: size)
             break
-
         case "NIB":
-            attachedArchive = NIBArchiveProxy.makeNIBArchive(withBuffer: ptr, length: size)
+            attachedArchive = NIBProxy.make(withBuffer: ptr, length: size)
             break
 
         default:

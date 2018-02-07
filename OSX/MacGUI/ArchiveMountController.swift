@@ -36,14 +36,14 @@ class ArchiveMountController : MountController {
         
         
         // Set icon and title
-        if (archive.getNumberOfItems() == 1) {
+        if (archive.numberOfItems() == 1) {
             subheader.stringValue = "This file contains the byte stream of a single C64 program."
         } else {
             subheader.stringValue = "This file contains the byte streams of multiple C64 programs."
         }
         subsubheader.stringValue = "Copying programs directly into memory is likely to work."
         
-        switch archive.getType() {
+        switch archive.type() {
 
         case T64_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
@@ -115,7 +115,7 @@ extension ArchiveMountController : NSTableViewDelegate {
         let c = cell as! NSTextFieldCell
         
         c.font = cbmfont
-        c.textColor = archive.getTypeOfItem(row) == "PRG" ? .black : .gray
+        c.textColor = archive.type(ofItem: row) == "PRG" ? .black : .gray
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
@@ -128,7 +128,7 @@ extension ArchiveMountController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
 
-        return archive.getNumberOfItems()
+        return archive.numberOfItems()
     }
 
     func tableView(_ tableView: NSTableView,
@@ -136,15 +136,15 @@ extension ArchiveMountController : NSTableViewDataSource {
    
         if (tableColumn?.identifier)!.rawValue == "filename" {
     
-            return archive.getUnicodeName(ofItem: row, maxChars: 16)
+            return archive.unicodeName(ofItem: row, maxChars: 16)
         }
         if (tableColumn?.identifier)!.rawValue == "filesize" {
             
-            return archive.getSizeOfItem(inBlocks: row)
+            return archive.sizeOfItem(inBlocks: row)
         }
         if (tableColumn?.identifier)!.rawValue == "filetype" {
 
-            return archive.getTypeOfItem(row)
+            return archive.type(ofItem: row)
         }
     return "???"
     }

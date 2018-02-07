@@ -10,7 +10,7 @@
             <connections>
                 <outlet property="contents" destination="LV6-8k-0lG" id="qFP-ds-BgN"/>
                 <outlet property="header" destination="uBS-zg-XUI" id="Xq6-dE-vs1"/>
-                <outlet property="icon" destination="jK5-9g-uS2" id="9AP-rA-AEt"/>
+                <outlet property="icon" destination="KFl-AN-CmK" id="r1u-dW-Otn"/>
                 <outlet property="subheader" destination="4dA-W3-WEJ" id="R07-N5-CIR"/>
                 <outlet property="subsubheader" destination="F5v-IL-MIl" id="4RN-b8-kVV"/>
                 <outlet property="window" destination="FSf-w1-keQ" id="dCe-mm-hva"/>
@@ -27,25 +27,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="376"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="tzV-vx-tsV">
-                        <rect key="frame" x="129" y="333" width="331" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    </box>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7v2-fa-2Yq">
-                        <rect key="frame" x="386" y="-105" width="143" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="jsb-K4-C8z">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                    </button>
-                    <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK5-9g-uS2" customClass="MountDragView">
-                        <rect key="frame" x="20" y="258" width="101" height="97"/>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KFl-AN-CmK" userLabel="Icon">
+                        <rect key="frame" x="21" y="256" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="IconT64" id="OW8-ku-4RV"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="IconT64" id="bVV-al-ksd"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBS-zg-XUI">
                         <rect key="frame" x="127" y="337" width="267" height="19"/>
@@ -56,6 +41,10 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="tzV-vx-tsV">
+                        <rect key="frame" x="129" y="333" width="331" height="5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4dA-W3-WEJ">
                         <rect key="frame" x="127" y="312" width="335" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

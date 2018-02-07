@@ -423,5 +423,5 @@ typedef unsigned long MacKeyFingerprint;
 // - (IBAction)endTapeDialog:(id)sender;
 
 // Exporting
-- (BOOL)exportToD64:(NSString *)path;
+// - (BOOL)exportToD64:(NSString *)path;
 @end

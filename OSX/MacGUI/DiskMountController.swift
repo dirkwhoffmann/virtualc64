@@ -26,7 +26,7 @@ class DiskMountController : MountController {
     
     override public func awakeFromNib() {
         
-        let numItems = archive.getNumberOfItems()
+        let numItems = archive.numberOfItems()
   
         stepper.minValue = 0
         stepper.maxValue = Double(numItems) - 1
@@ -36,7 +36,7 @@ class DiskMountController : MountController {
         // directory.intercellSpacing = NSSize(width: 0, height: 0)
         
         // Set icon and title
-        switch archive.getType() {
+        switch archive.type() {
             
         case G64_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
@@ -61,12 +61,12 @@ class DiskMountController : MountController {
         let halftrack = item + 1
         let track = (item / 2) + 1
         
-        if (archive.getType() == G64_CONTAINER) {
-            sizeInBytes = archive.getSizeOfItem(item)
+        if (archive.type() == G64_CONTAINER) {
+            sizeInBytes = archive.size(ofItem: item)
             sizeInBits = sizeInBytes * 8
             trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)
         } else {
-            sizeInBits = archive.getSizeOfItem(item)
+            sizeInBits = archive.size(ofItem: item)
             sizeInBytes = sizeInBits / 8
             trackSizeinfo.stringValue = String(format: "%d Bits", sizeInBits)
         }

@@ -154,7 +154,6 @@
                 <outlet property="mediaDialog" destination="NN4-6X-6x6" id="J9x-fU-EuG"/>
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="metalScreen" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
-                <outlet property="mountDialog" destination="1004" id="1021"/>
                 <outlet property="pc" destination="47" id="163"/>
                 <outlet property="progress" destination="2203" id="tHU-2P-FXF"/>
                 <outlet property="propertiesDialog" destination="2228" id="2324"/>
@@ -188,7 +187,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application">
+        <customObject id="-3" userLabel="Application" customClass="NSObject">
             <connections>
                 <outlet property="delegate" destination="2er-Ml-G01" id="X2h-ya-LWT"/>
             </connections>
@@ -793,7 +792,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
                                             <rect key="frame" x="1" y="0.0" width="266" height="459"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView">
                                                     <rect key="frame" x="0.0" y="0.0" width="266" height="442"/>
@@ -3023,201 +3022,6 @@
             </subviews>
             <point key="canvasLocation" x="539" y="408"/>
         </customView>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1004" userLabel="MountDialog" customClass="MountDialog">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="19" y="153" width="488" height="296"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
-            <value key="minSize" type="size" width="488" height="267"/>
-            <view key="contentView" id="1005">
-                <rect key="frame" x="0.0" y="0.0" width="488" height="296"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <box verticalHuggingPriority="750" boxType="separator" id="1027">
-                        <rect key="frame" x="20" y="262" width="448" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    </box>
-                    <textField verticalHuggingPriority="750" id="1031">
-                        <rect key="frame" x="18" y="272" width="452" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC1541 drive" id="1816">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <box autoresizesSubviews="NO" borderType="line" title="Archive name" id="3Y3-Wc-m3k">
-                        <rect key="frame" x="335" y="123" width="137" height="135"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="d3f-YD-bn4">
-                            <rect key="frame" x="1" y="1" width="135" height="119"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <imageView id="mSf-Ra-lAe" customClass="MountDragView">
-                                    <rect key="frame" x="17" y="13" width="101" height="97"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="xYz-Tm-iXo"/>
-                                    <connections>
-                                        <outlet property="controller" destination="-2" id="gWf-hg-DWW"/>
-                                    </connections>
-                                </imageView>
-                            </subviews>
-                        </view>
-                    </box>
-                    <scrollView horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" id="1016">
-                        <rect key="frame" x="19" y="73" width="311" height="185"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <clipView key="contentView" id="eoY-tS-MLP">
-                            <rect key="frame" x="1" y="0.0" width="309" height="184"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
-                                    <rect key="frame" x="0.0" y="0.0" width="309" height="167"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <size key="intercellSpacing" width="3" height="2"/>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                    <tableColumns>
-                                        <tableColumn identifier="filename" editable="NO" width="205.16015625" minWidth="40" maxWidth="1000" id="1018">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="File name">
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
-                                            </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" title="Text Cell" id="1833">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                        </tableColumn>
-                                        <tableColumn identifier="filetype" editable="NO" width="41" minWidth="32" maxWidth="1000" id="1019">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
-                                            </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" title="Text Cell" id="1834">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
-                                        </tableColumn>
-                                        <tableColumn identifier="filesize" editable="NO" width="54" minWidth="32" maxWidth="1000" id="1034">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                            </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="right" title="Text Cell" id="1835">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
-                                        </tableColumn>
-                                    </tableColumns>
-                                    <connections>
-                                        <outlet property="dataSource" destination="1004" id="1024"/>
-                                    </connections>
-                                </tableView>
-                            </subviews>
-                        </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="1843">
-                            <rect key="frame" x="1" y="168" width="309" height="16"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0092592592592592587" horizontal="NO" id="1842">
-                            <rect key="frame" x="294" y="17" width="16" height="167"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <tableHeaderView key="headerView" id="1844">
-                            <rect key="frame" x="0.0" y="0.0" width="309" height="17"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </tableHeaderView>
-                    </scrollView>
-                    <button verticalHuggingPriority="750" id="1011">
-                        <rect key="frame" x="332" y="13" width="143" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1813">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="endMountDialog:" target="-2" id="1Xc-m0-SBP"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="eY8-2X-Y2A">
-                        <rect key="frame" x="13" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="FLP-6t-zU7">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancelMountDialog:" target="-2" id="Xcd-jb-ZZS"/>
-                        </connections>
-                    </button>
-                    <popUpButton identifier="Load options" id="yIn-rf-6xJ" userLabel="Load options">
-                        <rect key="frame" x="104" y="50" width="226" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <popUpButtonCell key="cell" type="bevel" title="Flash binary into memory" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" identifier="Load options" tag="2" inset="2" preferredEdge="maxY" selectedItem="29N-xy-sHB" id="VNN-XE-VO5" userLabel="Load options">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="smallSystem"/>
-                            <menu key="menu" id="7H8-iy-Vua">
-                                <items>
-                                    <menuItem title="Load &quot;&quot;,8,1" id="XeE-db-dpd"/>
-                                    <menuItem title="Load &quot;&quot;,8" tag="1" id="eJB-H2-yne"/>
-                                    <menuItem title="Flash binary into memory" state="on" tag="2" id="29N-xy-sHB"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <connections>
-                            <action selector="loadOptionsAction:" target="1004" id="D7q-fq-xNA"/>
-                        </connections>
-                    </popUpButton>
-                    <textField verticalHuggingPriority="750" id="pv0-sz-BJr">
-                        <rect key="frame" x="18" y="49" width="91" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="On double click:" id="9Lv-MW-1E7">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="1025">
-                        <rect key="frame" x="341" y="72" width="124" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" id="1815">
-                            <font key="font" metaFont="smallSystem"/>
-                            <string key="title">WARNING: 
-Flashing ist fast, but less compatible</string>
-                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                </subviews>
-            </view>
-            <connections>
-                <outlet property="CancelButton" destination="eY8-2X-Y2A" id="OTb-tI-pNz"/>
-                <outlet property="OKButton" destination="1011" id="92g-nh-FSO"/>
-                <outlet property="directory" destination="1017" id="1030"/>
-                <outlet property="diskIcon" destination="mSf-Ra-lAe" id="6Vx-YJ-LxN"/>
-                <outlet property="diskIconFrame" destination="3Y3-Wc-m3k" id="ag6-0r-aZU"/>
-                <outlet property="doubleClickText" destination="pv0-sz-BJr" id="gtP-Gc-jfa"/>
-                <outlet property="headerText" destination="1031" id="Y67-2o-4SO"/>
-                <outlet property="loadOptions" destination="yIn-rf-6xJ" id="BSS-vr-fqc"/>
-                <outlet property="warningText" destination="1025" id="EaN-ow-O7c"/>
-            </connections>
-            <point key="canvasLocation" x="-374" y="-233"/>
-        </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Dhu-87-6sj" userLabel="TapeDialog" customClass="TapeDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -4579,24 +4383,6 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <box autoresizesSubviews="NO" borderType="line" titlePosition="noTitle" id="jXW-kS-Pl7">
-                        <rect key="frame" x="17" y="242" width="70" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="2Lh-Gm-0SX">
-                            <rect key="frame" x="1" y="1" width="68" height="68"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <imageView id="Uof-3e-kp0" customClass="MountDragView">
-                                    <rect key="frame" x="7" y="7" width="55" height="55"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="5FD-ZF-QGm"/>
-                                    <connections>
-                                        <outlet property="controller" destination="-2" id="099-mu-6hg"/>
-                                    </connections>
-                                </imageView>
-                            </subviews>
-                        </view>
-                    </box>
                     <button verticalHuggingPriority="750" id="tuD-cL-g6y">
                         <rect key="frame" x="381" y="85" width="28" height="29"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4629,24 +4415,6 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <box autoresizesSubviews="NO" borderType="line" titlePosition="noTitle" id="RVy-6m-Oia">
-                        <rect key="frame" x="17" y="142" width="70" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="Z56-jb-XtN">
-                            <rect key="frame" x="1" y="1" width="68" height="68"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <imageView id="JJu-5M-frX" customClass="MountDragView">
-                                    <rect key="frame" x="6" y="7" width="55" height="55"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="tape" id="hxJ-PG-m8I"/>
-                                    <connections>
-                                        <outlet property="controller" destination="-2" id="lZn-Ne-uNE"/>
-                                    </connections>
-                                </imageView>
-                            </subviews>
-                        </view>
-                    </box>
                     <textField verticalHuggingPriority="750" id="oqZ-jV-spj">
                         <rect key="frame" x="96" y="191" width="66" height="19"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4782,24 +4550,6 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <box autoresizesSubviews="NO" borderType="line" titlePosition="noTitle" id="q7T-UC-pVa">
-                        <rect key="frame" x="17" y="41" width="70" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="dN8-Qj-s5T">
-                            <rect key="frame" x="1" y="1" width="68" height="68"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <imageView id="58V-eJ-qvJ" customClass="MountDragView">
-                                    <rect key="frame" x="7" y="8" width="55" height="55"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="72S-RY-UkR"/>
-                                    <connections>
-                                        <outlet property="controller" destination="-2" id="jq5-4r-mFB"/>
-                                    </connections>
-                                </imageView>
-                            </subviews>
-                        </view>
-                    </box>
                     <button verticalHuggingPriority="750" id="LYL-VY-3ZX">
                         <rect key="frame" x="307" y="13" width="106" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -4822,23 +4572,35 @@ DQ
                             <action selector="tapeHeadAction:" target="NN4-6X-6x6" id="DiF-l0-ZgZ"/>
                         </connections>
                     </slider>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="9uI-HN-EhW">
+                        <rect key="frame" x="20" y="246" width="64" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="diskette" id="hQW-AD-hTE"/>
+                    </imageView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="TWO-Ht-4qL">
+                        <rect key="frame" x="20" y="46" width="64" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="rom" id="pSP-1a-DuI"/>
+                    </imageView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="RbN-ly-sFk">
+                        <rect key="frame" x="20" y="145" width="64" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tape" id="XA1-Io-CcN"/>
+                    </imageView>
                 </subviews>
             </view>
             <connections>
                 <outlet property="cartridgeEject" destination="tuD-cL-g6y" id="cF5-ny-h5y"/>
                 <outlet property="cartridgeEjectText" destination="RHJ-YM-saK" id="B1K-NG-gUc"/>
-                <outlet property="cartridgeIcon" destination="58V-eJ-qvJ" id="G7p-jm-GBr"/>
                 <outlet property="cartridgeText" destination="K23-mT-JQ6" id="DgT-MY-njk"/>
                 <outlet property="diskEject" destination="Ijo-FQ-k1l" id="EiY-MH-Dlr"/>
                 <outlet property="diskEjectText" destination="GVd-kn-bxr" id="hhA-7a-FUQ"/>
-                <outlet property="diskIcon" destination="Uof-3e-kp0" id="x5I-Kj-VGQ"/>
                 <outlet property="diskText" destination="Ple-3v-cFO" id="oYB-NG-Bcy"/>
                 <outlet property="diskWriteProtected" destination="FxP-og-vWY" id="wi1-Wg-dvj"/>
                 <outlet property="tapeEject" destination="mlt-iQ-jYT" id="QTd-23-WqR"/>
                 <outlet property="tapeEjectText" destination="4DG-rd-8Di" id="Exa-2V-wEB"/>
                 <outlet property="tapeEnd" destination="JbD-Rx-3iA" id="CGd-hF-vwu"/>
                 <outlet property="tapeHead" destination="sY2-Oz-H60" id="emz-T0-sxn"/>
-                <outlet property="tapeIcon" destination="JJu-5M-frX" id="b0V-Wz-hdx"/>
                 <outlet property="tapePlay" destination="pXD-eQ-Jui" id="ZeR-tF-BEk"/>
                 <outlet property="tapeRewind" destination="4I3-KB-jIw" id="63X-EO-Ud7"/>
                 <outlet property="tapeSlider" destination="Gxx-6n-1L6" id="RcP-rS-kbU"/>

@@ -719,15 +719,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
 - (void) rampDown { wrapper->c64->sid.rampDown(); }
 
-/*
-- (SnapshotProxy *) takeSnapshot {
-    SnapshotProxy *snapshotProxy = [[SnapshotProxy alloc] init];
-    ContainerWrapper *snapshotWrapper = [snapshotProxy wrapper];
-    wrapper->c64->saveToSnapshotSafe((Snapshot *)(snapshotWrapper->container));
-    return snapshotProxy;
-}
-*/
-
 // DEPRECATED
 - (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper
 {
@@ -800,10 +791,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 - (bool) insertDisk:(ArchiveProxy *)a {
-    return wrapper->c64->insertDisk([a wrapper]->archive);
+    Archive *archive = (Archive *)([a wrapper]->container);
+    return wrapper->c64->insertDisk(archive);
 }
 - (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
-    return wrapper->c64->flushArchive([a wrapper]->archive, (int)nr);
+    Archive *archive = (Archive *)([a wrapper]->container);
+    return wrapper->c64->flushArchive(archive, (int)nr);
 }
 - (bool) insertTape:(TAPProxy *)c {
     TAPContainer *container = (TAPContainer *)([c wrapper]->container);
@@ -866,17 +859,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation ContainerProxy
 
-/*
-- (instancetype) init
-{
-    if (self = [super init]) {
-        wrapper = new ContainerWrapper();
-        wrapper->container = nil;
-    }
-    return self;
-}
-*/
-
 - (instancetype) initWithContainer:(Container *)container
 {
     NSLog(@"********** ContainerProxy::initWithContainer");
@@ -901,15 +883,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return [[self alloc] initWithContainer:container];
 }
 
-- (ContainerWrapper *)wrapper
-{
-    return wrapper;
-}
-
-- (NSInteger) sizeOnDisk
-{
-    return wrapper->container->sizeOnDisk();
-}
+- (ContainerWrapper *)wrapper { return wrapper; }
+- (ContainerType)type { return wrapper->container->type(); }
+- (NSInteger) sizeOnDisk { return wrapper->container->sizeOnDisk(); }
 
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1056,11 +1032,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     TAPContainer *container = (TAPContainer *)wrapper->container;
     return (NSInteger)container->TAPversion();
 }
-
 @end
-
-
-
 
 // --------------------------------------------------------------------------
 //                                  Archive
@@ -1068,59 +1040,28 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation ArchiveProxy
 
-- (instancetype) init
++ (instancetype) make:(Archive *)archive
 {
-    NSLog(@"ArchiveProxy::init");
-    if (self = [super init]) {
-        Archive *archive = new Archive();
-        wrapper = new ArchiveWrapper();
-        wrapper->archive = archive;
-        NSLog(@"Success");
-    }
-    return self;
-}
-
-- (instancetype) initWithArchive:(Archive *)archive
-{
-    NSLog(@"ArchiveProxy::initWithArchive %p", archive);
-
     if (archive == NULL) return nil;
-    
-    if (self = [super init]) {
-        wrapper = new ArchiveWrapper();
-        wrapper->archive = archive;
-    }
-    return self;
+    return [[self alloc] initWithContainer:archive];
 }
-
-- (void)dealloc
-{
-    NSLog(@"ArchiveProxy %p deleted", wrapper->archive);
-    
-    if (wrapper->archive) delete wrapper->archive;
-    if (wrapper) delete wrapper;
-}
-
-+ (instancetype)makeArchiveWithFile:(NSString *)path
++ (instancetype) makeWithFile:(NSString *)path
 {
     Archive *archive = Archive::makeArchiveWithFile([path UTF8String]);
-    return archive ? [[ArchiveProxy alloc] initWithArchive:archive] : nil;
+    return [self make: archive];
 }
 
-- (ArchiveWrapper *)wrapper { return wrapper; }
-- (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->archive->getPath()]; }
-- (NSString *)getName { return [NSString stringWithUTF8String:wrapper->archive->getName()]; }
-- (ContainerType)getType { return wrapper->archive->type(); }
-
-- (NSInteger)getNumberOfItems {
-    return (NSInteger)wrapper->archive->getNumberOfItems();
+- (NSInteger)numberOfItems {
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return (NSInteger)archive->getNumberOfItems();
 }
-- (NSString *)getNameOfItem:(NSInteger)item {
-    return [NSString stringWithUTF8String:wrapper->archive->getNameOfItem((int)item)];
+- (NSString *)nameOfItem:(NSInteger)item {
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return [NSString stringWithUTF8String:archive->getNameOfItem((int)item)];
 }
-- (NSString *)getUnicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max {
-
-    const unsigned short *name = wrapper->archive->getUnicodeNameOfItem((int)item, max);
+- (NSString *)unicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max {
+    Archive *archive = (Archive *)([self wrapper]->container);
+    const unsigned short *name = archive->getUnicodeNameOfItem((int)item, max);
     
     if (name == NULL)
         return NULL;
@@ -1131,281 +1072,239 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return [NSString stringWithCharacters:name length:numChars];
 }
 
-- (const char *)getNameOfItemUTF8:(NSInteger)item {
-    return wrapper->archive->getNameOfItem((int)item);
-}
-
-// - (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item {
-//     return wrapper->archive->getNameOfItemAsPETString((int)item);
-// }
-
-- (NSInteger) getSizeOfItem:(NSInteger)item {
-    return wrapper->archive->getSizeOfItem((int)item);
-}
-- (NSInteger) getSizeOfItemInBlocks:(NSInteger)item {
-    return wrapper->archive->getSizeOfItemInBlocks((int)item);
-}
-- (NSString *) getTypeOfItem:(NSInteger)item {
-    return [NSString stringWithUTF8String:wrapper->archive->getTypeOfItem((int)item)];
-}
-
-- (NSInteger) sizeOnDisk { return wrapper->archive->sizeOnDisk(); }
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length {
-    wrapper->archive->readFromBuffer((const uint8_t *)buffer, length);
-}
-- (NSInteger) writeToBuffer:(const void *)buffer {
-    return wrapper->archive->writeToBuffer((uint8_t *)buffer);
-}
-
-- (NSString *) byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
+- (NSInteger)sizeOfItem:(NSInteger)item
 {
-    return [NSString stringWithUTF8String:wrapper->archive->byteStream((unsigned)n, offset, num)];
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return archive->getSizeOfItem((int)item);
 }
-
-
+- (NSInteger)sizeOfItemInBlocks:(NSInteger)item
+{
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return archive->getSizeOfItemInBlocks((int)item);
+}
+- (NSString *)typeOfItem:(NSInteger)item
+{
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return [NSString stringWithUTF8String:archive->getTypeOfItem((int)item)];
+}
+- (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
+{
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return [NSString stringWithUTF8String:archive->byteStream((unsigned)n, offset, num)];
+}
 @end
 
-@implementation T64ArchiveProxy
+// --------------------------------------------------------------------------
+//                                 T64Proxy
+// --------------------------------------------------------------------------
+
+@implementation T64Proxy
 
 + (BOOL)isT64File:(NSString *)filename
 {
     return T64Archive::isT64File([filename UTF8String]);
 }
-
-+ (instancetype)makeT64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) make:(T64Archive *)archive
 {
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    T64Archive *archive = T64Archive::makeT64ArchiveWithBuffer(ptr, length);
-    return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
 }
-
-+ (instancetype)makeT64ArchiveWithFile:(NSString *)filename
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    T64Archive *archive = T64Archive::makeT64ArchiveWithFile([filename UTF8String]);
-    return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
+    T64Archive *archive = T64Archive::makeT64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
 }
-
-+ (instancetype)makeT64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithFile:(NSString *)path
 {
-    Archive *other = [otherArchive wrapper]->archive;
+    T64Archive *archive = T64Archive::makeT64ArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
++ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
+{
+    Archive *other = (Archive *)([otherArchive wrapper]->container);
     T64Archive *archive = T64Archive::makeT64ArchiveWithAnyArchive(other);
-    return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
+    return [self make: archive];
 }
-
 @end
 
+// --------------------------------------------------------------------------
+//                                 PRGProxy
+// --------------------------------------------------------------------------
 
-@implementation D64ArchiveProxy
-
-+ (BOOL) isD64File:(NSString *)filename
-{
-   return D64Archive::isD64File([filename UTF8String]);
-}
-
-+ (instancetype) makeD64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    D64Archive *archive = D64Archive::makeD64ArchiveWithBuffer(ptr, length);
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
-}
-
-+ (instancetype) makeD64ArchiveWithFile:(NSString *)filename
-{
-    D64Archive *archive = D64Archive::makeD64ArchiveWithFile([filename UTF8String]);
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
-}
-
-+ (instancetype) makeD64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
-{
-    Archive *other = [otherArchive wrapper]->archive;
-    D64Archive *archive = D64Archive::makeD64ArchiveWithAnyArchive(other);
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
-}
-
-+ (instancetype) archiveFromVC1541:(VC1541Proxy *)vc1541
-{
-    D64Archive *archive = [vc1541 wrapper]->vc1541->convertToD64();
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
-}
-
-@end
-
-
-@implementation PRGArchiveProxy
+@implementation PRGProxy
 
 + (BOOL)isPRGFile:(NSString *)filename
 {
     return PRGArchive::isPRGFile([filename UTF8String]);
 }
-
-+ (instancetype) makePRGArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) make:(PRGArchive *)archive
 {
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    PRGArchive *archive = PRGArchive::makePRGArchiveWithBuffer(ptr, length);
-    return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
 }
-
-+ (instancetype) makePRGArchiveWithFile:(NSString *)filename
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    PRGArchive *archive = PRGArchive::makePRGArchiveWithFile([filename UTF8String]);
-    return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
+    PRGArchive *archive = PRGArchive::makePRGArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
 }
-
-+ (instancetype) makePRGArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithFile:(NSString *)path
 {
-    Archive *other = [otherArchive wrapper]->archive;
+    PRGArchive *archive = PRGArchive::makePRGArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
++ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
+{
+    Archive *other = (Archive *)([otherArchive wrapper]->container);
     PRGArchive *archive = PRGArchive::makePRGArchiveWithAnyArchive(other);
-    return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
+    return [self make: archive];
 }
-
 @end
 
+// --------------------------------------------------------------------------
+//                                 P00Proxy
+// --------------------------------------------------------------------------
 
-@implementation P00ArchiveProxy
+@implementation P00Proxy
 
 + (BOOL)isP00File:(NSString *)filename
 {
     return P00Archive::isP00File([filename UTF8String]);
 }
-
-+ (instancetype) makeP00ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) make:(P00Archive *)archive
 {
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    P00Archive *archive = P00Archive::makeP00ArchiveWithBuffer(ptr, length);
-    return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
 }
-
-+ (instancetype) makeP00ArchiveWithFile:(NSString *)filename
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    P00Archive *archive = P00Archive::makeP00ArchiveWithFile([filename UTF8String]);
-    return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
+    P00Archive *archive = P00Archive::makeP00ArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
 }
-
-+ (instancetype) makeP00ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithFile:(NSString *)path
 {
-    Archive *other = [otherArchive wrapper]->archive;
+    P00Archive *archive = P00Archive::makeP00ArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
++ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
+{
+    Archive *other = (Archive *)([otherArchive wrapper]->container);
     P00Archive *archive = P00Archive::makeP00ArchiveWithAnyArchive(other);
-    return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
+    return [self make: archive];
 }
 @end
 
+// --------------------------------------------------------------------------
+//                                 D64Proxy
+// --------------------------------------------------------------------------
 
-@implementation G64ArchiveProxy
+@implementation D64Proxy
 
-+ (BOOL) isG64File:(NSString *)filename
++ (BOOL)isD64File:(NSString *)filename
+{
+    return D64Archive::isD64File([filename UTF8String]);
+}
++ (instancetype) make:(D64Archive *)archive
+{
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
+}
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    D64Archive *archive = D64Archive::makeD64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
+}
++ (instancetype) makeWithFile:(NSString *)path
+{
+    D64Archive *archive = D64Archive::makeD64ArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
++ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
+{
+    Archive *other = (Archive *)([otherArchive wrapper]->container);
+    D64Archive *archive = D64Archive::makeD64ArchiveWithAnyArchive(other);
+    return [self make: archive];
+}
++ (instancetype) makeWithVC1541:(VC1541Proxy *)vc1541
+{
+    D64Archive *archive = [vc1541 wrapper]->vc1541->convertToD64();
+    return [self make: archive];
+}
+@end
+
+// --------------------------------------------------------------------------
+//                                 PG64Proxy
+// --------------------------------------------------------------------------
+
+@implementation G64Proxy
+
++ (BOOL)isG64File:(NSString *)filename
 {
     return G64Archive::isG64File([filename UTF8String]);
 }
-
-+ (instancetype) makeG64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) make:(G64Archive *)archive
 {
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    G64Archive *archive = G64Archive::makeG64ArchiveWithBuffer(ptr, length);
-    return archive ? [[G64ArchiveProxy alloc] initWithArchive:archive] : nil;
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
 }
-
-+ (instancetype) makeG64ArchiveWithFile:(NSString *)filename
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    G64Archive *archive = G64Archive::makeG64ArchiveWithFile([filename UTF8String]);
-    return archive ? [[G64ArchiveProxy alloc] initWithArchive:archive] : nil;
+    G64Archive *archive = G64Archive::makeG64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
 }
-
++ (instancetype) makeWithFile:(NSString *)path
+{
+    G64Archive *archive = G64Archive::makeG64ArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
 @end
 
+// --------------------------------------------------------------------------
+//                                 NIBProxy
+// --------------------------------------------------------------------------
 
-@implementation NIBArchiveProxy
+@implementation NIBProxy
 
-+ (BOOL) isNIBFile:(NSString *)filename
++ (BOOL)isNIBFile:(NSString *)filename
 {
     return NIBArchive::isNIBFile([filename UTF8String]);
 }
-+ (instancetype) makeNIBArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) make:(NIBArchive *)archive
 {
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    NIBArchive *archive = NIBArchive::makeNIBArchiveWithBuffer(ptr, length);
-    return archive ? [[NIBArchiveProxy alloc] initWithArchive:archive] : nil;
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
 }
-
-+ (instancetype) makeNIBArchiveWithFile:(NSString *)filename
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    NIBArchive *archive = NIBArchive::makeNIBArchiveWithFile([filename UTF8String]);
-    return archive ? [[NIBArchiveProxy alloc] initWithArchive:archive] : nil;
+    NIBArchive *archive = NIBArchive::makeNIBArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
 }
-
++ (instancetype) makeWithFile:(NSString *)path
+{
+    NIBArchive *archive = NIBArchive::makeNIBArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
 @end
 
+// --------------------------------------------------------------------------
+//                                 FileProxy
+// --------------------------------------------------------------------------
 
-@implementation FileArchiveProxy
+@implementation FileProxy
 
-+ (instancetype) makeFileArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
++ (instancetype) make:(FileArchive *)archive
 {
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    FileArchive *archive = FileArchive::makeFileArchiveWithBuffer(ptr, length);
-    return archive ? [[FileArchiveProxy alloc] initWithArchive:archive] : nil;
+    if (archive == NULL) return nil;
+    return [[self alloc] initWithContainer:archive];
 }
-
-+ (instancetype) makeFileArchiveWithFile:(NSString *)filename
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    FileArchive *archive = FileArchive::makeFileArchiveWithFile([filename UTF8String]);
-    return archive ? [[FileArchiveProxy alloc] initWithArchive:archive] : nil;
+    FileArchive *archive = FileArchive::makeFileArchiveWithBuffer((const uint8_t *)buffer, length);
+    return [self make: archive];
 }
-
++ (instancetype) makeWithFile:(NSString *)path
+{
+    FileArchive *archive = FileArchive::makeFileArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
 @end
 
-
-/*
-@implementation TAPContainerProxy
-
-- (instancetype) initWithTAPContainer:(TAPContainer *)container
-{
-    NSLog(@"TAPContainerProxy::initWithTAPContainer");
-    
-    if (container == NULL) return nil;
-    
-    if (self = [super init]) {
-        wrapper = new TAPContainerWrapper();
-        wrapper->tapcontainer = container;
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    NSLog(@"TAPContainerProxy::dealloc (deleted TAPContainer at %p)", wrapper->tapcontainer);
-    
-    if (wrapper) {
-        if (wrapper->tapcontainer)
-            delete wrapper->tapcontainer;
-        delete wrapper;
-    }
-}
-
-- (TAPContainerWrapper *)wrapper { return wrapper; }
-
-+ (BOOL) isTAPFile:(NSString *)filename
-{
-    return TAPContainer::isTAPFile([filename UTF8String]);
-}
-
-+ (instancetype) makeTAPContainerWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    const uint8_t *ptr = (const uint8_t *)buffer;
-    TAPContainer *container = TAPContainer::makeTAPContainerWithBuffer(ptr, length);
-    return container ? [[TAPContainerProxy alloc] initWithTAPContainer:container] : nil;
-}
-
-+ (instancetype) makeTAPContainerWithFile:(NSString *)filename
-{
-    TAPContainer *container = TAPContainer::makeTAPContainerWithFile([filename UTF8String]);
-    return container ? [[TAPContainerProxy alloc] initWithTAPContainer:container] : nil;
-}
-
-- (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->tapcontainer->getPath()]; }
-- (NSString *)getName { return [NSString stringWithUTF8String:wrapper->tapcontainer->getName()]; }
-- (NSInteger)getType { return (NSInteger)wrapper->tapcontainer->type(); }
-- (NSInteger)TAPversion { return (NSInteger)wrapper->tapcontainer->TAPversion(); }
-
-
-@end
-
-*/
