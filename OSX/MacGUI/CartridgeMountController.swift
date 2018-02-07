@@ -21,7 +21,7 @@ class CartridgeMountController : MountController {
         
         track()
         
-        // cartridge = archive as! CRTContainerProxy
+        cartridge = attachment as! CRTProxy
         
         // Configure directory window
         // contents.target = self

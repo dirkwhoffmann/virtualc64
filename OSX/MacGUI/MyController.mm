@@ -1101,65 +1101,7 @@
 	[NSApp terminate: nil]; // Exit
 }
 
-#if 0
-- (bool)showMountDialog
-{    
-    // Only proceed if a an archive is present
-	if (![[self document] attachedArchive])
-		return NO;
-	
-    [mountDialog initialize:[[self document] attachedArchive] c64proxy:c64];
-    [[self window] beginSheet:mountDialog completionHandler:nil];
-    
-	return YES;
-}
 
-- (IBAction)cancelMountDialog:(id)sender
-{
-    [mountDialog orderOut:sender]; // Hide sheet
-    [[self window] endSheet:mountDialog returnCode:NSModalResponseCancel];
-}
-
-- (IBAction)endMountDialog:(id)sender
-{
-    NSString *textToType =[mountDialog loadCommand];
-    bool doMount = [mountDialog doMount];
-    bool doType = [mountDialog doType];
-    bool doFlash = [mountDialog doFlash];
-
-    NSLog(@"Should mount: %ld", (long)doMount);
-    NSLog(@"Should flash: %ld", (long)doFlash);
-    NSLog(@"Should type:  %ld (%@)", (long)doType, textToType);
-    
-	// Rotate C64 screen
-    if (doMount || doFlash) {
-        [metalScreen rotate];
-    }
-    
-	// Hide sheet
-	[mountDialog orderOut:sender]; // Hide sheet
-    [[self window] endSheet:mountDialog returnCode:NSModalResponseCancel];
-	
-	// Mount image if requested
-    if (doMount) {
-        if (![c64 insertDisk:[[self document] attachedArchive]]) {
-            NSLog(@"FAILED TO MOUNT ARCHIVE");
-        }
-    }
-
-    // Flash data if requested
-    if (doFlash) {
-        [c64 flushArchive:[[self document] attachedArchive] item:[mountDialog selection]];
-    }
-    
-    // Type command if requested
-    if (doType) {
-        NSString *text = [NSString stringWithFormat:@"%@\n", textToType];
-        [self simulateUserTypingText:text withInitialDelay:500000];
-        // [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType] withDelay:500000];
-    }
-}
-#endif
 
 #if 0
 - (bool)showTapeDialog

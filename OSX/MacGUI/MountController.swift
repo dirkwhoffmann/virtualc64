@@ -9,16 +9,15 @@ import Foundation
 
 class MountController : NSWindowController {
     
+    var attachment: ContainerProxy!
     var controller: MyController!
-    var archive: ArchiveProxy!
     var c64: C64Proxy!
     var parentWindow: NSWindow!
     
     func setParentController(_ controller: MyController) {
         
         let document = controller.document as! MyDocument
-        self.controller = controller
-        self.archive = document.attachment as!ArchiveProxy
+        self.attachment = document.attachment
         self.c64 = document.c64
         self.parentWindow = controller.window
     }
@@ -26,7 +25,7 @@ class MountController : NSWindowController {
     func cleanup() {
         track()
         self.controller = nil
-        self.archive = nil
+        self.attachment = nil
         self.c64 = nil
         self.parentWindow = nil
     }

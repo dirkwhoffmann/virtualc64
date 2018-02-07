@@ -6,7 +6,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="CartridgeMountController" customModule="VirtualC64" customModuleProvider="target">
+            <connections>
+                <outlet property="data" destination="9ev-DI-Wbs" id="Fy8-RH-Swy"/>
+                <outlet property="header" destination="1y6-5O-gjP" id="CwG-fG-vJ8"/>
+                <outlet property="lines" destination="sY6-FN-171" id="gc4-ry-cP2"/>
+                <outlet property="name" destination="yfe-nd-OfH" id="mC4-gF-uaC"/>
+                <outlet property="window" destination="Az5-tX-ul1" id="Kpu-EP-UwQ"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Az5-tX-ul1">
@@ -64,6 +72,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="okAction:" target="-2" id="Joz-a2-BcE"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nFb-hG-cNL">
                         <rect key="frame" x="14" y="16" width="113" height="32"/>
@@ -75,6 +86,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancelAction:" target="-2" id="AcG-M5-4GK"/>
+                        </connections>
                     </button>
                     <scrollView fixedFrame="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktd-yc-hbA">
                         <rect key="frame" x="23" y="64" width="437" height="120"/>
@@ -131,6 +145,10 @@ Gw
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                     </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-2" id="Vcb-Ue-FnT"/>
+                                        <outlet property="delegate" destination="-2" id="KPT-Bd-OiN"/>
+                                    </connections>
                                 </tableView>
                             </subviews>
                         </clipView>

@@ -9,6 +9,8 @@ import Foundation
 
 class DiskMountController : MountController {
     
+    var archive: ArchiveProxy!
+    
     let bytesPerRow = 32
     var item = 0          // Selected archive item (track) to display
     var sizeInBytes = 0   // Number of bytes in selected item
@@ -26,6 +28,7 @@ class DiskMountController : MountController {
     
     override public func awakeFromNib() {
         
+        archive = attachment as! ArchiveProxy
         let numItems = archive.numberOfItems()
   
         stepper.minValue = 0

@@ -60,6 +60,7 @@ extension MyController {
             break
 
         case CRT_CONTAINER:
+            track()
             let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
             controller = CartridgeMountController.init(windowNibName: nibName)
             break

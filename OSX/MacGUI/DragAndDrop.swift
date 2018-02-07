@@ -146,6 +146,7 @@ public extension MetalView {
             document.attachment = CRTProxy.make(withFile: path)
             if document.attachment != nil {
                 track("Successfully read cartridge.")
+                controller.showMountDialog()
                 return true
             }
         

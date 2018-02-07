@@ -9,6 +9,8 @@ import Foundation
 
 class ArchiveMountController : MountController {
     
+    var archive: ArchiveProxy!
+    
     // Custom font
     let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
     let cbmfontsmall = NSFont.init(name: "C64ProMono", size: 8)
@@ -24,10 +26,12 @@ class ArchiveMountController : MountController {
         
         track()
         
+        archive = attachment as! ArchiveProxy
+        
         // Configure directory window
-        contents.target = self
-        contents.delegate = self
-        contents.dataSource = self
+        // contents.target = self
+        // contents.delegate = self
+        // contents.dataSource = self
         // contents.doubleAction = #selector(ArchiveMountController.performDoubleClick(_:))
         contents.deselectAll(self)
         contents.intercellSpacing = NSSize(width: 0, height: 0)
