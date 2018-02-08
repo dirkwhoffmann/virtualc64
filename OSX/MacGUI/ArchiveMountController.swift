@@ -21,7 +21,8 @@ class ArchiveMountController : MountController {
     @IBOutlet weak var subheader: NSTextField!
     @IBOutlet weak var subsubheader: NSTextField!
     @IBOutlet weak var contents: NSTableView!
-    
+    @IBOutlet weak var protect: NSButton!
+
     override public func awakeFromNib() {
         
         track()
@@ -45,7 +46,7 @@ class ArchiveMountController : MountController {
         } else {
             subheader.stringValue = "This file contains the byte streams of multiple C64 programs."
         }
-        subsubheader.stringValue = "Copying programs directly into memory is likely to work."
+        subsubheader.stringValue = "Flushing files directly into memory is likely to work."
         
         switch archive.type() {
 
@@ -65,7 +66,7 @@ class ArchiveMountController : MountController {
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "D64 File Archive"
             subheader.stringValue = "This file contains a byte-accurate image of a C64 diskette."
-            subsubheader.stringValue = "Copying files into memory is not recommended for this file type."
+            subsubheader.stringValue = "Flushing files into memory is not recommended for this file type."
             break
         default:
             assert(false)
@@ -83,6 +84,10 @@ class ArchiveMountController : MountController {
         
         // Insert archive as disk
         c64.insertDisk(archive)
+        
+        // Set write protection
+        let value = protect.integerValue
+        c64.vc1541.setWriteProtection(value != 0)
         
         window?.orderOut(self)
         parentWindow.endSheet(window!, returnCode: .OK)

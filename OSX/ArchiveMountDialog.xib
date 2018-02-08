@@ -11,6 +11,7 @@
                 <outlet property="contents" destination="LV6-8k-0lG" id="qFP-ds-BgN"/>
                 <outlet property="header" destination="uBS-zg-XUI" id="Xq6-dE-vs1"/>
                 <outlet property="icon" destination="KFl-AN-CmK" id="r1u-dW-Otn"/>
+                <outlet property="protect" destination="eSc-h6-6Tj" id="3cO-Sn-LK7"/>
                 <outlet property="subheader" destination="4dA-W3-WEJ" id="R07-N5-CIR"/>
                 <outlet property="subsubheader" destination="F5v-IL-MIl" id="4RN-b8-kVV"/>
                 <outlet property="window" destination="FSf-w1-keQ" id="dCe-mm-hva"/>
@@ -64,21 +65,21 @@
                         </textFieldCell>
                     </textField>
                     <scrollView fixedFrame="YES" horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6d-iI-arE">
-                        <rect key="frame" x="20" y="74" width="440" height="176"/>
+                        <rect key="frame" x="129" y="64" width="331" height="195"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" ambiguous="YES" id="Ea5-Xw-RXP">
-                            <rect key="frame" x="1" y="0.0" width="438" height="175"/>
+                            <rect key="frame" x="1" y="0.0" width="329" height="194"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="nI8-Xu-bNg" id="LV6-8k-0lG">
-                                    <rect key="frame" x="0.0" y="0.0" width="438" height="152"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="329" height="171"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="filename" editable="NO" width="325.16015625" minWidth="40" maxWidth="1000" id="g79-gS-MwP">
+                                        <tableColumn identifier="filename" editable="NO" width="216.16015625" minWidth="40" maxWidth="1000" id="g79-gS-MwP">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="File name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -127,15 +128,15 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="6JM-Rp-9l1">
-                            <rect key="frame" x="1" y="159" width="438" height="16"/>
+                            <rect key="frame" x="1" y="178" width="329" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0092592592592592587" horizontal="NO" id="aBP-0b-mA6">
-                            <rect key="frame" x="423" y="23" width="16" height="152"/>
+                            <rect key="frame" x="314" y="23" width="16" height="171"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="nI8-Xu-bNg">
-                            <rect key="frame" x="0.0" y="0.0" width="438" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="329" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
@@ -167,10 +168,18 @@ Gw
                             <action selector="cancelAction:" target="-2" id="pUd-4g-JQl"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-h6-6Tj">
+                        <rect key="frame" x="243" y="24" width="102" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="check" title="Write protect" bezelStyle="regularSquare" imagePosition="left" inset="2" id="o1q-EZ-MFa">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dSZ-Fi-yHu">
-                        <rect key="frame" x="189" y="54" width="272" height="14"/>
+                        <rect key="frame" x="23" y="141" width="95" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Double-click to copy file directly into memory" id="q9i-JQ-NCZ">
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Double-click to flush file directly into memory" id="q9i-JQ-NCZ">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
