@@ -85,42 +85,44 @@ public:
     
     //! Return logical cartridge name
     //! TODO: Override getName
-    char *getCartridgeName() { return (char *)&data[0x20]; }
+    char *cartridgeName() { return (char *)&data[0x20]; }
     
     //! @brief    Returns the version number of the cartridge
-    uint16_t getCartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
+    uint16_t cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
     
     //! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
     /*! @details  Don't confuse with ContainerType
      */
-    CartridgeType getCartridgeType() { return CartridgeType(LO_HI(data[0x17], data[0x16])); }
+    CartridgeType cartridgeType() { return CartridgeType(LO_HI(data[0x17], data[0x16])); }
     
     //! @brief    Returns the cartridge type in plain text
-    const char *getCartridgeTypeName();
+    const char *cartridgeTypeName();
     
     //! @brief    Returns the initial value of the Exrom line
-    bool getExromLine() { return data[0x18] != 0; }
+    bool exromLine() { return data[0x18] != 0; }
     
     //! @brief    Returns the initial value of the Game line
-    bool getGameLine() { return data[0x19] != 0; }
+    bool gameLine() { return data[0x19] != 0; }
     
     //! @brief    Returns how many chips are contained in this cartridge
-    uint8_t getNumberOfChips() { return numberOfChips; }
+    uint8_t chipCount() { return numberOfChips; }
     
     //! @brief    Returns where the data of a certain chip can be found
-    uint8_t *getChipData(unsigned nr) { return chips[nr]+0x10; }
+    uint8_t *chipData(unsigned nr) { return chips[nr]+0x10; }
     
     //! @brief    Returns the size of chip (8 KB or 16 KB)
-    uint16_t getChipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
+    uint16_t chipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
     
-    //! @brief    Returns the type of chip (what is this exactly?)
-    uint16_t getChipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
+    //! @brief    Returns the type of chip
+    /*! @details  0 = ROM, 1 = RAM, 2 = Flash ROM
+     */
+    uint16_t chipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
     
     //! @brief    Return bank information (what is this exactly?)
-    uint16_t getChipBank(unsigned nr) { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
+    uint16_t chipBank(unsigned nr) { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
     
     //! Returns start of chip rom in address space
-    uint16_t getChipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
+    uint16_t chipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
     
     
     //

@@ -99,15 +99,15 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
 {
     Cartridge *cart;
     
-    cart = makeCartridgeWithType(c64, container->getCartridgeType());
+    cart = makeCartridgeWithType(c64, container->cartridgeType());
     assert(cart != NULL);
     
     // Remember powerup values for game line and exrom line
-    cart->initialGameLine  = container->getGameLine();
-    cart->initialExromLine = container->getExromLine();
+    cart->initialGameLine  = container->gameLine();
+    cart->initialExromLine = container->exromLine();
     
     // Load chip packets
-    for (unsigned i = 0; i < container->getNumberOfChips(); i++) {
+    for (unsigned i = 0; i < container->chipCount(); i++) {
         cart->loadChip(i, container);
     }
     
@@ -294,9 +294,9 @@ Cartridge::loadChip(unsigned nr, CRTContainer *c)
     assert(nr < 64);
     assert(c != NULL);
     
-    uint16_t start = c->getChipAddr(nr);
-    uint16_t size  = c->getChipSize(nr);
-    uint8_t  *data = c->getChipData(nr);
+    uint16_t start = c->chipAddr(nr);
+    uint16_t size  = c->chipSize(nr);
+    uint8_t  *data = c->chipData(nr);
     
     if (start < 0x8000) {
         warn("Ignoring chip %d: Start address too low (%04X)", nr, start);

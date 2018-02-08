@@ -76,7 +76,10 @@ class MyDocument : NSDocument {
             let snapshot = SnapshotProxy.make(withBuffer: ptr, length: size)
             c64.load(fromSnapshot: snapshot)
             return
-            
+
+        case "CRT":
+            attachment = CRTProxy.make(withBuffer: ptr, length: size)
+            break
         case "T64":
             attachment = T64Proxy.make(withBuffer: ptr, length: size)
             break

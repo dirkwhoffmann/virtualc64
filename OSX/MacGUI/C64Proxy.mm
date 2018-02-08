@@ -982,18 +982,54 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return [self make: container];
 }
 
+- (NSString *)cartridgeName
+{
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return [NSString stringWithUTF8String:c->cartridgeName()];
+}
+
 - (CartridgeType)cartridgeType {
     CRTContainer *c = (CRTContainer *)wrapper->container;
-    return c->getCartridgeType();
+    return c->cartridgeType();
 }
 
 - (NSString *)cartridgeTypeName {
     CRTContainer *c = (CRTContainer *)wrapper->container;
-    return [NSString stringWithUTF8String:c->getCartridgeTypeName()];
+    return [NSString stringWithUTF8String:c->cartridgeTypeName()];
 }
 
 - (BOOL) isSupported {
     return Cartridge::isSupportedType([self cartridgeType]);
+}
+
+- (NSInteger)exromLine {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->exromLine();
+}
+
+- (NSInteger)gameLine {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->gameLine();
+}
+
+- (NSInteger)chipCount {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->chipCount();
+}
+
+- (NSInteger)typeOfChip:(NSInteger)nr; {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->chipType((unsigned)nr);
+}
+
+- (NSInteger)loadAddrOfChip:(NSInteger)nr; {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->chipAddr((unsigned)nr);
+}
+
+- (NSInteger)sizeOfChip:(NSInteger)nr; {
+    CRTContainer *c = (CRTContainer *)wrapper->container;
+    return c->chipSize((unsigned)nr);
 }
 @end
 

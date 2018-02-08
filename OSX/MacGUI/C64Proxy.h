@@ -753,9 +753,16 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 
+- (NSString *)cartridgeName;
 - (CartridgeType)cartridgeType;
 - (NSString *)cartridgeTypeName;
 - (BOOL)isSupported;
+- (NSInteger)exromLine;
+- (NSInteger)gameLine;
+- (NSInteger)chipCount;
+- (NSInteger)typeOfChip:(NSInteger)nr;
+- (NSInteger)loadAddrOfChip:(NSInteger)nr;
+- (NSInteger)sizeOfChip:(NSInteger)nr;
 @end
 
 // --------------------------------------------------------------------------

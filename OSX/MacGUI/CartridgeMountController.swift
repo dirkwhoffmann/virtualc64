@@ -14,34 +14,40 @@ class CartridgeMountController : MountController {
     // Outlets
     @IBOutlet weak var header: NSTextField!
     @IBOutlet weak var name: NSTextField!
-    @IBOutlet weak var lines: NSTextField!
+    @IBOutlet weak var type: NSTextField!
+    @IBOutlet weak var exrom: NSTextField!
+    @IBOutlet weak var game: NSTextField!
     @IBOutlet weak var data: NSTableView!
+    
+    override func setParentController(_ controller: MyController) {
+        
+        super.setParentController(controller)
+        cartridge = attachment as! CRTProxy
+    }
     
     override public func awakeFromNib() {
         
         track()
         
-        cartridge = attachment as! CRTProxy
-        
-        // Configure directory window
-        // contents.target = self
-        // contents.delegate = self
-        // contents.dataSource = self
-        // contents.deselectAll(self)
+        // Configure table view
         data.intercellSpacing = NSSize(width: 0, height: 0)
         data.reloadData()
         
-        // Set title
-        // let archive = self.archive as! CRTContainerProxy
+        // Set name and type
+        let cartName = cartridge.cartridgeName()!
+        let cartType = cartridge.cartridgeType().rawValue
+        let cartTypeName = cartridge.cartridgeTypeName()!
+    
+        print("\(cartType) \(cartTypeName)")
         
-        /*
-        if cartridge.cartridgeType() != CRT_NORMAL) {
-            let str = String(format: "CRT Format (Type %d: %s)",
-                             cartridge.getCartridgeType(),
-                             cartridge.getCartridgeTypeAsStr())
-            header.stringValue = str
-        }
-        */
+        name.stringValue = (cartName == "") ? "" : "Name: \(cartName)"
+        type.stringValue = "Type \(cartType): \(cartTypeName)"
+    
+        // Set exrom and game line
+        let exromLine = cartridge.exromLine()
+        let gameLine = cartridge.gameLine()
+        exrom.stringValue = "Exrom line: \(exromLine)"
+        game.stringValue = "Game line: \(gameLine)"
     }
     
     //
@@ -89,8 +95,7 @@ extension CartridgeMountController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        // return cartridge.getNumberOfChips()
-        return 1
+        return cartridge.chipCount()
     }
     
     func tableView(_ tableView: NSTableView,
@@ -100,20 +105,30 @@ extension CartridgeMountController : NSTableViewDataSource {
             
             return String(row)
         }
-        /*
+        
         if (tableColumn?.identifier)!.rawValue == "addr" {
             
             let str = String(format: "$%04X - %04X",
-                             cartridge.getLoadAddr(row),
-                             cartridge.getLoadAddr(row) + cartrifge.size(row))
+                             cartridge.loadAddr(ofChip: row),
+                             cartridge.loadAddr(ofChip: row) + cartridge.size(ofChip: row))
             return str
         }
         if (tableColumn?.identifier)!.rawValue == "size" {
             
-            let str = String(format: "%d KB", cartridge.size(row) / 1024)
+            let str = String(format: "%d KB", cartridge.size(ofChip: row) / 1024)
             return str
         }
-         */
+
+        if (tableColumn?.identifier)!.rawValue == "type" {
+            
+            switch cartridge.type(ofChip: row) {
+            case 0: return "ROM"
+            case 1: return "RAM"
+            case 2: return "Flash ROM"
+            default: return "Unknown"
+            }
+        }
+        
         return "???"
     }
 }

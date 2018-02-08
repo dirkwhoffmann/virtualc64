@@ -61,6 +61,14 @@ extension MyController {
 
         case CRT_CONTAINER:
             track()
+            
+            // Check if we support this cartridge
+            let crt = attachment as! CRTProxy
+            if !crt.isSupported() {
+                showUnsupportedCartridgeAlert(crt)
+                return
+            }
+            
             let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
             controller = CartridgeMountController.init(windowNibName: nibName)
             break

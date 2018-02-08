@@ -119,11 +119,11 @@ CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
     // Minimum header size is 0x40. Some cartridges show a value of 0x20 which is wrong.
     if (headerSize < 0x40) headerSize = 0x40;
     
-    msg("Cartridge: %s\n", getCartridgeName());
+    msg("Cartridge: %s\n", cartridgeName());
     msg("   Header: %08X bytes long (normally 0x40)\n", headerSize);
-    msg("   Type:   %d\n", getCartridgeType());
-    msg("   Game:   %d\n", getGameLine());
-    msg("   Exrom:  %d\n", getExromLine());
+    msg("   Type:   %d\n", cartridgeType());
+    msg("   Game:   %d\n", gameLine());
+    msg("   Exrom:  %d\n", exromLine());
     
     // Load chip packets
     uint8_t *ptr = &data[headerSize];
@@ -139,7 +139,7 @@ CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
         chips[numberOfChips] = ptr;
         
         ptr += 0x10;
-        ptr += getChipSize(numberOfChips);
+        ptr += chipSize(numberOfChips);
     }
     
     debug("CRT container imported successfully (%d chips)\n", numberOfChips);
@@ -147,9 +147,9 @@ CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 const char *
-CRTContainer::getCartridgeTypeName()
+CRTContainer::cartridgeTypeName()
 {
-    switch (getCartridgeType()) {
+    switch (cartridgeType()) {
             
         case CRT_NORMAL: return "Normal cartridge";
         case CRT_ACTION_REPLAY: return "Action Replay";

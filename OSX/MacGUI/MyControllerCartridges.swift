@@ -22,15 +22,8 @@ extension MyController {
             return false;
         }
         
-        // Is it a supported cartridge?
-        let crt = attachment as! CRTProxy
-         if !crt.isSupported() {
-            showUnsupportedCartridgeAlert(crt)
-            return false;
-        }
-        
         // Attach cartride 
-        c64.attachCartridgeAndReset(crt)
+        c64.attachCartridgeAndReset(attachment as! CRTProxy)
         return true
     }
     
