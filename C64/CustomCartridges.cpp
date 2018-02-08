@@ -58,13 +58,19 @@ FinalIII::reset()
 }
 
 uint8_t
-FinalIII::peekIO(uint16_t addr)
+FinalIII::peekIO1(uint16_t addr)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
-    // The I/O space mirrors $1E00 to $1EFF from the selected bank.
+    // The I/O 1 space mirrors $1E00 to $1EFF from the selected bank.
     uint16_t offset = addr - 0xDE00;
     return peek(0x8000 + 0x1E00 + offset);
+}
+
+uint8_t
+FinalIII::peekIO2(uint16_t addr)
+{    
+    // The I/O 2 space mirrors $1F00 to $1FFF from the selected bank.
+    uint16_t offset = addr - 0xDF00;
+    return peek(0x8000 + 0x1F00 + offset);
 }
 
 void
@@ -230,12 +236,6 @@ Funplay::poke(uint16_t addr, uint8_t value)
 //                                     Supergames
 // -----------------------------------------------------------------------------------------
 
-uint8_t
-Supergames::peekIO(uint16_t addr)
-{
-    return 0;
-}
-
 void
 Supergames::poke(uint16_t addr, uint8_t value)
 {
@@ -335,28 +335,17 @@ EpyxFastLoad::peek(uint16_t addr)
 }
 
 uint8_t
-EpyxFastLoad::peekIO(uint16_t addr)
+EpyxFastLoad::peekIO1(uint16_t addr)
 {
-    // I/O space 1
-    if (addr >= 0xDE00 && addr <= 0xDEFF) {
- 
-        // debug("EpyxFasLoader %04X: Peeking I/O 1 %04X\n", c64->cpu.getPC_at_cycle_0(), addr);
-
-        dischargeCapacitor();
-        return 0;
-    }
-    
-    // I/O space 2
-    if (addr >= 0xDF00 && addr <= 0xDFFF) {
-        
-        // debug("EpyxFasLoader %04X: Peeking I/O 2 %04X\n", c64->cpu.getPC(), addr);
-        
-        /* I/O 2 mirrors the last 256 ROM bytes */
-        return chip[0][0x1f00 + (addr & 0xff)];
-    }
-    
-    assert(0);
+    dischargeCapacitor();
     return 0;
+}
+    
+uint8_t
+EpyxFastLoad::peekIO2(uint16_t addr)
+{
+    // I/O 2 mirrors the last 256 ROM bytes
+    return chip[0][0x1f00 + (addr & 0xff)];
 }
 
 // -----------------------------------------------------------------------------------------
@@ -364,7 +353,7 @@ EpyxFastLoad::peekIO(uint16_t addr)
 // -----------------------------------------------------------------------------------------
 
 uint8_t
-Westermann::peekIO(uint16_t addr)
+Westermann::peekIO2(uint16_t addr)
 {
     // Any read access to I/O space 2 switches to 8KB configuration
     if (addr >= 0xDF00 && addr <= 0xDFFF) {
@@ -378,7 +367,7 @@ Westermann::peekIO(uint16_t addr)
 // -----------------------------------------------------------------------------------------
 
 uint8_t
-Rex::peekIO(uint16_t addr)
+Rex::peekIO2(uint16_t addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM
     if (addr >= 0xDF00 && addr <= 0xDFBF) {
@@ -396,3 +385,61 @@ Rex::peekIO(uint16_t addr)
     
     return 0;
 }
+
+// -----------------------------------------------------------------------------------------
+//                                     COMAL 80
+// -----------------------------------------------------------------------------------------
+
+void
+Comal80::reset()
+{
+    debug("Comal80::reset\n");
+    c64->expansionport.setExromLine(0);
+    c64->expansionport.setGameLine(0);
+    bankIn(0);
+}
+
+uint8_t
+Comal80::peekIO1(uint16_t addr)
+{
+    // debug("Comal80::peekIO1(%04X)", addr);
+    return regval;
+}
+
+uint8_t
+Comal80::peekIO2(uint16_t addr)
+{
+    // debug("Comal80::peekIO2(%04X)\n", addr);
+    return 0;
+}
+
+void
+Comal80::poke(uint16_t addr, uint8_t value)
+{
+    // debug("Comal80::pokeIO(%04X, %02X)\n", addr, value);
+    
+    if (addr >= 0xDE00 && addr <= 0xDEFF) {
+
+        regval = value & 0xC7;
+        bankIn(value & 0x03);
+        
+        switch (value & 0xE0) {
+                
+            case 0xe0: // Disables the cartridge
+                c64->expansionport.setExromLine(1);
+                c64->expansionport.setGameLine(1);
+                break;
+                
+            case 0x40: // 8 KB configuration
+                c64->expansionport.setExromLine(0);
+                c64->expansionport.setGameLine(1);
+                break;
+                
+            default:   // 16 KB configuration
+                c64->expansionport.setExromLine(0);
+                c64->expansionport.setGameLine(0);
+                break;
+        }
+    }
+}
+

@@ -47,14 +47,20 @@ Cartridge::isSupportedType(CartridgeType type)
     switch (type) {
         
         case CRT_NORMAL:
+            
         case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN:
+            
         case CRT_FUNPLAY:
         case CRT_SUPER_GAMES:
+            
         case CRT_EPYX_FASTLOAD:
         case CRT_WESTERMANN:
         case CRT_REX:
+            
+        case CRT_COMAL80:
+            
             return true;
             
         default:
@@ -87,6 +93,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new Westermann(c64);
         case CRT_REX:
             return new Rex(c64);
+        case CRT_COMAL80:
+            return new Comal80(c64);
             
         default:
             assert(false); // should not reach

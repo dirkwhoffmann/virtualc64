@@ -31,7 +31,8 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_FINAL_III; }
     void reset();
-    uint8_t peekIO(uint16_t addr);
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
     void pressFirstButton();
     void pressSecondButton();
@@ -76,7 +77,6 @@ class Supergames : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_SUPER_GAMES; }
-    uint8_t peekIO(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
 };
 
@@ -93,6 +93,7 @@ private:
      *            the capacitor is discharged and the ROM visible. To avoid the ROM to be
      *            disabled, the cartridge can either read from ROML or I/O space 1. Both
      *            operations discharge the capacitor and keep the ROM alive.
+     *            TODO: Write into snapshot buffer
      */
     uint64_t disable_at_cycle;
     
@@ -113,7 +114,8 @@ public:
     void reset();
     void execute();
     uint8_t peek(uint16_t addr);
-    uint8_t peekIO(uint16_t addr);
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
 };
 
 //! @brief    Type 11 cartridges
@@ -122,7 +124,7 @@ class Westermann : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
-    uint8_t peekIO(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
 };
 
 //! @brief    Type 12 cartridges
@@ -131,7 +133,22 @@ class Rex : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_REX; }
-    uint8_t peekIO(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
 };
+
+//! @brief    Type 21 cartridges
+class Comal80 : public Cartridge {
+    
+    uint8_t regval;
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_COMAL80; }
+    void reset();
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void poke(uint16_t addr, uint8_t value);
+};
+
 
 #endif
