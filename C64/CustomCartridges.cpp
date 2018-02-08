@@ -74,9 +74,7 @@ FinalIII::peekIO2(uint16_t addr)
 }
 
 void
-FinalIII::poke(uint16_t addr, uint8_t value) {
-    
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
+FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
     
     // 0xDFFF is Final Cartridge's internal control register
     if (addr == 0xDFFF) {
@@ -127,7 +125,7 @@ void
 FinalIII::pressFirstButton() {
     
     // The freezer is enabled by selecting bank 0 in unimax mode and triggering an NMI
-    poke(0xDFFF, 0x10);
+    pokeIO2(0xDFFF, 0x10);
 }
 
 void
@@ -164,10 +162,8 @@ SimonsBasic::peekIO1(uint16_t addr)
 }
 
 void
-SimonsBasic::poke(uint16_t addr, uint8_t value)
+SimonsBasic::pokeIO1(uint16_t addr, uint8_t value)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
     if (addr == 0xDE00) {
         // Switch to 16KB configuration
         c64->expansionport.setGameLine(0);
@@ -190,13 +186,10 @@ SimonsBasic::poke(uint16_t addr, uint8_t value)
  */
 
 void
-Ocean::poke(uint16_t addr, uint8_t value)
+Ocean::pokeIO1(uint16_t addr, uint8_t value)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
-    if (addr == 0xDE00) {
+    if (addr == 0xDE00)
         bankIn(value & 0x3F);
-    }
 }
 
 
@@ -205,10 +198,8 @@ Ocean::poke(uint16_t addr, uint8_t value)
 // -----------------------------------------------------------------------------------------
 
 void
-Funplay::poke(uint16_t addr, uint8_t value)
+Funplay::pokeIO1(uint16_t addr, uint8_t value)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
     /*
      * Bank switching is done by writing to $DE00.
      *
@@ -237,12 +228,9 @@ Funplay::poke(uint16_t addr, uint8_t value)
 // -----------------------------------------------------------------------------------------
 
 void
-Supergames::poke(uint16_t addr, uint8_t value)
+Supergames::pokeIO2(uint16_t addr, uint8_t value)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
-    /*
-     * Bits 0 and 1: Bank bits 0 and 1
+    /* Bits 0 and 1: Bank bits 0 and 1
      * Bits 2:       Exrom / Game control
      * Bits 3:       when 1, further writes to DE00 have no effect (not implemented)
      */
@@ -414,7 +402,7 @@ Comal80::peekIO2(uint16_t addr)
 }
 
 void
-Comal80::poke(uint16_t addr, uint8_t value)
+Comal80::pokeIO1(uint16_t addr, uint8_t value)
 {
     // debug("Comal80::pokeIO(%04X, %02X)\n", addr, value);
     

@@ -19,17 +19,10 @@
  */
 
 // TODO:
-// 1. Fix Ultimax mode (VIC needs a special peek function taking care of Ultimax)
-// 1a.Make Music Machine cartridge running
-// 2. Test with other Ultramax cartridges
-// 3. Check Freezer in Final Cartridge
-//    Hypothesis:
-//    Reset button issues a normal reset
-//    Freeze button switches to ultramax mode and issues a reset or an nmi
-// 4. Check why cartridge does not jump start
-// 5. Add MenuItem Cartridge->FinalCartridge->Reset,Freeze
-// 6. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
-// 7. Magic Desk, Domark, HES Australia, interesting test case
+// 1. Implement pokeIO1, pokeIO2 instead of poke
+// 2. Some archives do not write their internal state into snapshop buffer
+// 3. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
+// 4. Magic Desk, Domark, HES Australia, interesting test case
 
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
@@ -137,9 +130,12 @@ public:
     //! @brief    Peek fallthrough for I/O space 2
     virtual uint8_t peekIO2(uint16_t addr) { return 0; }
 
-    //! @brief    Poke fallthrough
-    virtual void poke(uint16_t addr, uint8_t value) { }
-    
+    //! @brief    Poke fallthrough for I/O space 1
+    virtual void pokeIO1(uint16_t addr, uint8_t value) { }
+
+    //! @brief    Poke fallthrough for I/O space 2
+    virtual void pokeIO2(uint16_t addr, uint8_t value) { }
+
     //! @brief    Returns the cartridge type
     virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
     

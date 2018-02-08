@@ -102,8 +102,11 @@ public:
     uint8_t peekIO2(uint16_t addr);
 
 
-    //! @brief    Poke fallthrough
-    void poke(uint16_t addr, uint8_t value);
+    //! @brief    Poke fallthrough for I/O space 1
+    void pokeIO1(uint16_t addr, uint8_t value);
+    
+    //! @brief    Poke fallthrough for I/O space 2
+    void pokeIO2(uint16_t addr, uint8_t value);
     
     //! @brief    Returns the cartridge type
     CartridgeType getCartridgeType();

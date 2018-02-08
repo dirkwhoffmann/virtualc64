@@ -158,12 +158,19 @@ ExpansionPort::peekIO2(uint16_t addr)
 }
 
 void
-ExpansionPort::poke(uint16_t addr, uint8_t value)
+ExpansionPort::pokeIO1(uint16_t addr, uint8_t value)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
+    assert(addr >= 0xDE00 && addr <= 0xDEFF);
     if (cartridge != NULL)
-        cartridge->poke(addr, value);
+        cartridge->pokeIO1(addr, value);
+}
+
+void
+ExpansionPort::pokeIO2(uint16_t addr, uint8_t value)
+{
+    assert(addr >= 0xDF00 && addr <= 0xDFFF);
+    if (cartridge != NULL)
+        cartridge->pokeIO2(addr, value);
 }
 
 void

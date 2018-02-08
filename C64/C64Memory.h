@@ -141,24 +141,24 @@ public:
 
     /*! @brief    Returns true, iff the provided address is in the Basic ROM address range.
      */
-    static inline bool isBasicRomAddr(uint16_t addr) { return (0xA000 <= addr && addr <= 0xBFFF); }
+    static bool isBasicRomAddr(uint16_t addr) { return (0xA000 <= addr && addr <= 0xBFFF); }
     
     /*! @brief    Returns true, iff the provided address is in the Character ROM address range.
      */
-    static inline bool isCharRomAddr(uint16_t addr) { return (0xD000 <= addr && addr <= 0xDFFF); }
+    static bool isCharRomAddr(uint16_t addr) { return (0xD000 <= addr && addr <= 0xDFFF); }
     
     /*! @brief    Returns true, iff the provided address is in the Kernel ROM address range.
      */
-    static inline bool isKernelRomAddr(uint16_t addr) { return (0xE000 <= addr); }
+    static bool isKernelRomAddr(uint16_t addr) { return (0xE000 <= addr); }
     
     /*! @brief    Returns true, iff the provided address is in the possible cartridge address ranges.
      */
-    static inline bool isCartridgeRomAddr(uint16_t addr)
+    static bool isCartridgeRomAddr(uint16_t addr)
     { return (0x8000 <= addr && addr <= 0x9FFF)||(0xA000 <= addr && addr <= 0xBFFF)||(0xE000 <= addr && addr <= 0xFFFE); }
     
     /*! @brief    Returns true, iff the provided address is in one of the three ROM address ranges.
      */
-    static inline bool isRomAddr(uint16_t addr)
+    static bool isRomAddr(uint16_t addr)
     { return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
 
     
@@ -238,10 +238,10 @@ public:
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
     //! @brief    Reads a byte from RAM.
-    inline uint8_t peekRam(uint16_t addr) { return ram[addr]; }
+    uint8_t peekRam(uint16_t addr) { return ram[addr]; }
 
     //! @brief    Reads a byte from ROM.
-    inline uint8_t peekRom(uint16_t addr) { return rom[addr]; }
+    uint8_t peekRom(uint16_t addr) { return rom[addr]; }
 
     //! @brief    Reads a byte from I/O space.
     uint8_t peekIO(uint16_t addr);

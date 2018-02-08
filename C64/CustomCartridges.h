@@ -33,7 +33,7 @@ public:
     void reset();
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
     void pressFirstButton();
     void pressSecondButton();
 };
@@ -47,7 +47,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
     void reset();
     uint8_t peekIO1(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
+    void pokeIO1(uint16_t addr, uint8_t value);
 };
 
 
@@ -57,7 +57,7 @@ class Ocean : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_OCEAN; }
-    void poke(uint16_t addr, uint8_t value);
+    void pokeIO1(uint16_t addr, uint8_t value);
 };
 
 
@@ -67,7 +67,7 @@ class Funplay : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_FUNPLAY; }
-    void poke(uint16_t addr, uint8_t value);
+    void pokeIO1(uint16_t addr, uint8_t value);
 };
 
 
@@ -77,7 +77,7 @@ class Supergames : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_SUPER_GAMES; }
-    void poke(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
 };
 
 
@@ -147,7 +147,7 @@ public:
     void reset();
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
+    void pokeIO1(uint16_t addr, uint8_t value);
 };
 
 

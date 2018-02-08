@@ -317,7 +317,6 @@ uint8_t C64Memory::peekIO(uint16_t addr)
         case 0xF: // I/O space 2
 
             return c64->expansionport.peekIO2(addr);
-
 	}
     
 	assert(false);
@@ -386,6 +385,67 @@ uint8_t C64Memory::peek(uint16_t addr)
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 {
+    assert(addr >= 0xD000 && addr <= 0xDFFF);
+    
+    switch ((addr >> 8) & 0xF) {
+            
+        case 0x0: // VIC
+        case 0x1: // VIC
+        case 0x2: // VIC
+        case 0x3: // VIC
+            
+            // Only the lower 6 bits are used for adressing the VIC I/O space.
+            // As a result, VIC's I/O memory repeats every 64 bytes.
+            c64->vic.poke(addr & 0x003F, value);
+            return;
+            
+        case 0x4: // SID
+        case 0x5: // SID
+        case 0x6: // SID
+        case 0x7: // SID
+            
+            // Only the lower 5 bits are used for adressing the SID I/O space.
+            // As a result, SID's I/O memory repeats every 32 bytes.
+            c64->sid.poke(addr & 0x001F, value);
+            return;
+            
+        case 0x8: // Color RAM
+        case 0x9: // Color RAM
+        case 0xA: // Color RAM
+        case 0xB: // Color RAM
+            
+            colorRam[addr - 0xD800] = (value & 0x0F) | (rand() & 0xF0);
+            return;
+            
+        case 0xC: // CIA 1
+            
+            // Only the lower 4 bits are used for adressing the CIA I/O space.
+            // As a result, CIA's I/O memory repeats every 16 bytes.
+            c64->cia1.poke(addr & 0x000F, value);
+            return;
+            
+        case 0xD: // CIA 2
+            
+            c64->cia2.poke(addr & 0x000F, value);
+            return;
+            
+        case 0xE: // I/O space 1
+            
+            c64->expansionport.pokeIO1(addr, value);
+            return;
+            
+        case 0xF: // I/O space 2
+            
+            c64->expansionport.pokeIO2(addr, value);
+            return;
+    }
+    
+    assert(false);
+}
+
+#if 0
+void C64Memory::pokeIO(uint16_t addr, uint8_t value)
+{
 	// 0xD000 - 0xD3FF (VIC)
 	if (addr < 0xD400) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
@@ -437,6 +497,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 
 	assert(false);
 }
+#endif
 
 void C64Memory::poke(uint16_t addr, uint8_t value)
 {	
