@@ -74,7 +74,8 @@ extension MyController {
             break
 
         case TAP_CONTAINER:
-            // TODO
+            let nibName = NSNib.Name(rawValue: "TapeMountDialog")
+            controller = TapeMountController.init(windowNibName: nibName)
             break
             
         default:

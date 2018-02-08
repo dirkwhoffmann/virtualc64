@@ -17,6 +17,7 @@ class MountController : NSWindowController {
     func setParentController(_ controller: MyController) {
         
         let document = controller.document as! MyDocument
+        self.controller = controller
         self.attachment = document.attachment
         self.c64 = document.c64
         self.parentWindow = controller.window

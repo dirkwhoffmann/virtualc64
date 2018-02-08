@@ -510,11 +510,15 @@
     [keyboardcontroller simulateUserPressingKeyWithRunstop:key];
 }
 - (void)simulateUserTypingText:(NSString *)text {
-    [keyboardcontroller simulateUserTypingText:text initialDelay:0];
+    [keyboardcontroller simulateUserTypingWithText:text initialDelay:0 pressPlay:NO];
 }
 - (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay {
-    [keyboardcontroller simulateUserTypingText:text initialDelay:delay];
+    [keyboardcontroller simulateUserTypingWithText:text initialDelay:delay pressPlay:NO];
 }
+- (void)simulateUserTypingText:(NSString *)text pressPlay:(BOOL)press {
+    [keyboardcontroller simulateUserTypingWithText:text initialDelay:0 pressPlay:press];
+}
+
 - (BOOL)getDisconnectEmulationKeys { return [keyboardcontroller getDisconnectEmulationKeys]; }
 - (void)setDisconnectEmulationKeys:(BOOL)b { [keyboardcontroller setDisconnectEmulationKeys:b]; }
 
@@ -1144,7 +1148,7 @@
     // Type command if requested
     if (doAutoType) {
         // [[c64 keyboard] typeText:textToType withDelay:500000];
-        
+
     }
     
     if (doAutoType && doPressPlay) {

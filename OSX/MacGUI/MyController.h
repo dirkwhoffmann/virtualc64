@@ -380,6 +380,7 @@ typedef unsigned long MacKeyFingerprint;
 - (void)simulateUserPressingKeyWithRunstop:(C64KeyFingerprint)key;
 - (void)simulateUserTypingText:(NSString *)text;
 - (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay;
+- (void)simulateUserTypingText:(NSString *)text pressPlay:(BOOL)press;
 - (BOOL)getDisconnectEmulationKeys;
 - (void)setDisconnectEmulationKeys:(BOOL)b;
 

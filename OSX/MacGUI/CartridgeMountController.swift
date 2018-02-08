@@ -38,8 +38,6 @@ class CartridgeMountController : MountController {
         let cartType = cartridge.cartridgeType().rawValue
         let cartTypeName = cartridge.cartridgeTypeName()!
     
-        print("\(cartType) \(cartTypeName)")
-        
         name.stringValue = (cartName == "") ? "" : "Name: \(cartName)"
         type.stringValue = "Type \(cartType): \(cartTypeName)"
     

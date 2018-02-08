@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="contents" destination="3hQ-0q-ukR" id="Zso-90-dYX"/>
                 <outlet property="header" destination="l19-lb-oYh" id="bWO-sH-HKD"/>
+                <outlet property="icon" destination="Yxi-Ar-LgQ" id="X37-7U-YmI"/>
                 <outlet property="stepper" destination="Vhe-Oz-Tgl" id="w4C-G6-YWn"/>
                 <outlet property="subheader" destination="JMf-QF-9dD" id="1aY-GH-DL4"/>
                 <outlet property="subsubheader" destination="rl8-hE-Z6v" id="zmP-eY-4IV"/>

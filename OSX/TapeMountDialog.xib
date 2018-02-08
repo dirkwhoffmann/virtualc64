@@ -6,25 +6,31 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="TapeMountController" customModule="VirtualC64" customModuleProvider="target">
+            <connections>
+                <outlet property="autoLoad" destination="bAE-Xn-vA8" id="GuD-2H-1TK"/>
+                <outlet property="autoPress" destination="Piq-xx-fII" id="Hvs-Dq-lgT"/>
+                <outlet property="window" destination="kdj-BQ-sXz" id="OV9-Eq-E8o"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="kdj-BQ-sXz">
-            <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="158" width="480" height="193"/>
+            <rect key="contentRect" x="131" y="158" width="480" height="181"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="0EV-qd-WRC">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="193"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="181"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXb-iy-86B" userLabel="Icon">
-                        <rect key="frame" x="20" y="73" width="100" height="100"/>
+                        <rect key="frame" x="20" y="61" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="IconT64" id="6x5-Rt-8vV"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GAk-c2-XOe" userLabel="Header">
-                        <rect key="frame" x="127" y="154" width="267" height="19"/>
+                        <rect key="frame" x="127" y="142" width="267" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TAP format" id="7Cz-RE-Zot">
                             <font key="font" metaFont="system"/>
@@ -33,11 +39,11 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="TAU-1b-6A9">
-                        <rect key="frame" x="129" y="150" width="331" height="5"/>
+                        <rect key="frame" x="129" y="138" width="331" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z68-8h-5M4" userLabel="Subheader">
-                        <rect key="frame" x="127" y="118" width="335" height="28"/>
+                        <rect key="frame" x="127" y="106" width="335" height="28"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This file contains a bit-accurate image of a C64 cassette tape." id="3ai-ap-En7">
                             <font key="font" metaFont="smallSystem"/>
@@ -45,41 +51,19 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VCs-9c-d8O">
-                        <rect key="frame" x="127" y="93" width="216" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Tape length: 4:30 min" id="Day-ob-FtR">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Piq-xx-fII">
-                        <rect key="frame" x="294" y="64" width="168" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="utT-s1-5p3">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bAE-Xn-vA8">
-                        <rect key="frame" x="294" y="92" width="104" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jC4-t3-CFT">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dnb-vv-aVv">
                         <rect key="frame" x="353" y="16" width="113" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Attach" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="IkK-QH-scm">
+                        <buttonCell key="cell" type="push" title="Insert tape" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="IkK-QH-scm">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="okAction:" target="-2" id="e3k-dW-hNb"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qcr-5N-dJH">
                         <rect key="frame" x="14" y="16" width="113" height="32"/>
@@ -91,10 +75,32 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancelAction:" target="-2" id="vJ5-Og-Tjw"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Piq-xx-fII">
+                        <rect key="frame" x="129" y="69" width="168" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="utT-s1-5p3">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bAE-Xn-vA8">
+                        <rect key="frame" x="129" y="93" width="104" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jC4-t3-CFT">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="autoLoadAction:" target="-2" id="MSt-Ye-0m6"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-353" y="587.5"/>
+            <point key="canvasLocation" x="-491" y="592.5"/>
         </window>
     </objects>
     <resources>

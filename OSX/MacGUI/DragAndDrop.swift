@@ -134,11 +134,11 @@ public extension MetalView {
                 return true
             }
         
-            // Is it a magnetic tape?
+            // Is it a band tape?
             document.attachment = TAPProxy.make(withFile: path)
             if document.attachment != nil {
                 track("Successfully read tape.")
-                // controller.showTapeDialog()
+                controller.showMountDialog()
                 return true
             }
             
