@@ -129,6 +129,8 @@
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
+		50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1644B202DD52500447D3E /* ExportDiskController.swift */; };
+		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */; };
@@ -413,6 +415,8 @@
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romMissing.png; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		50B1644B202DD52500447D3E /* ExportDiskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDiskController.swift; sourceTree = "<group>"; };
+		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualC64-Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMDropTargetView.h; sourceTree = "<group>"; };
@@ -761,7 +765,7 @@
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				50763278202989E000575110 /* MountControllers */,
+				50763278202989E000575110 /* DialogControllers */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -954,7 +958,7 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		50763278202989E000575110 /* MountControllers */ = {
+		50763278202989E000575110 /* DialogControllers */ = {
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* MountController.swift */,
@@ -962,8 +966,9 @@
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
 				50265F56202D00940041C315 /* TapeMountController.swift */,
+				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 			);
-			name = MountControllers;
+			name = DialogControllers;
 			sourceTree = "<group>";
 		};
 		5080F3511EE7469C001313D4 /* TouchBar Icons */ = {
@@ -1028,6 +1033,7 @@
 				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
 				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,
 				5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */,
+				50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1167,6 +1173,7 @@
 				5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */,
+				50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
@@ -1349,6 +1356,7 @@
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
+				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,

@@ -19,7 +19,7 @@
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for updates..." keyEquivalent="u" id="412">
+                            <menuItem title="Check for Updates..." keyEquivalent="u" id="412">
                                 <connections>
                                     <action selector="checkForUpdates:" target="411" id="413"/>
                                 </connections>
@@ -111,7 +111,7 @@
                                     <action selector="saveScreenshotDialog:" target="-1" id="wgq-rs-LCi"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Quick save screenshot" keyEquivalent="s" id="7oe-oV-MnG">
+                            <menuItem title="Quick Save Screenshot" keyEquivalent="s" id="7oe-oV-MnG">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="quicksaveScreenshot:" target="-1" id="3hD-6J-vdQ"/>
@@ -168,7 +168,7 @@
                             <menuItem title="Debug" id="414">
                                 <menu key="submenu" title="Debug" id="415">
                                     <items>
-                                        <menuItem title="Reset emulator" id="434">
+                                        <menuItem title="Reset Emulator" id="434">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -191,17 +191,17 @@ CA
                                                 <action selector="continueAction:" target="-1" id="484"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Step into" keyEquivalent="I" id="429">
+                                        <menuItem title="Step Into" keyEquivalent="I" id="429">
                                             <connections>
                                                 <action selector="stepIntoAction:" target="-1" id="488"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Step over" keyEquivalent="O" id="428">
+                                        <menuItem title="Step Over" keyEquivalent="O" id="428">
                                             <connections>
                                                 <action selector="stepOverAction:" target="-1" id="502"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Step out" keyEquivalent="T" id="431">
+                                        <menuItem title="Step Out" keyEquivalent="T" id="431">
                                             <connections>
                                                 <action selector="stepOutAction:" target="-1" id="494"/>
                                             </connections>
@@ -209,18 +209,18 @@ CA
                                         <menuItem isSeparatorItem="YES" id="427">
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </menuItem>
-                                        <menuItem title="Hide sprites" keyEquivalent="s" id="426">
+                                        <menuItem title="Hide Sprites" keyEquivalent="s" id="426">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="hideSpritesAction:" target="-1" id="491"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show IRQ rasterlines" keyEquivalent="R" id="425">
+                                        <menuItem title="Show IRQ Rasterlines" keyEquivalent="R" id="425">
                                             <connections>
                                                 <action selector="markIRQLinesAction:" target="-1" id="496"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show DMA rasterlines" keyEquivalent="D" id="424">
+                                        <menuItem title="Show DMA Rasterlines" keyEquivalent="D" id="424">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
                                                 <action selector="markDMALinesAction:" target="-1" id="509"/>
@@ -237,7 +237,7 @@ CA
                                                             <action selector="traceC64CpuAction:" target="-1" id="504"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Trace IEC bus" id="417">
+                                                    <menuItem title="Trace IEC Bus" id="417">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="traceIecAction:" target="-1" id="497"/>
@@ -261,9 +261,9 @@ CA
                                                 <action selector="traceAction:" target="-1" id="U0J-eK-vGr"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Dump state" id="421">
+                                        <menuItem title="Dump State" id="421">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Dump state" id="435">
+                                            <menu key="submenu" title="Dump State" id="435">
                                                 <items>
                                                     <menuItem title="C64" id="438">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -545,9 +545,9 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="349"/>
-                            <menuItem title="Hold down" id="eLl-99-KML">
+                            <menuItem title="Hold Down" id="eLl-99-KML">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Hold down" id="lUh-uP-rwo">
+                                <menu key="submenu" title="Hold Down" id="lUh-uP-rwo">
                                     <items>
                                         <menuItem title="SHIFT" id="dSY-dP-E8v">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -577,7 +577,7 @@ CA
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="YmU-rj-Jhy"/>
-                            <menuItem title="Load directory" keyEquivalent="d" id="328">
+                            <menuItem title="Load Directory" keyEquivalent="d" id="328">
                                 <connections>
                                     <action selector="loadDirectoryAction:" target="-1" id="JuA-2C-Ups"/>
                                 </connections>
@@ -588,7 +588,7 @@ CA
                                     <action selector="listAction:" target="-1" id="k64-op-GK2"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Load first file" keyEquivalent="l" id="511">
+                            <menuItem title="Load First File" keyEquivalent="l" id="511">
                                 <connections>
                                     <action selector="loadFirstFileAction:" target="-1" id="cMu-Ip-rBc"/>
                                 </connections>
@@ -599,7 +599,7 @@ CA
                                     <action selector="runProgramAction:" target="-1" id="Ds9-wO-9jQ"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Format disk" id="510">
+                            <menuItem title="Format Disk" id="510">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="formatDiskAction:" target="-1" id="IvR-x1-Puy"/>
@@ -618,48 +618,20 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Bft-tN-tO1"/>
-                            <menuItem title="Eject disk" id="mVY-LA-phJ">
+                            <menuItem title="Eject Disk" id="mVY-LA-phJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="driveEjectAction:" target="-1" id="jqu-Xs-erO"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Insert blank disk" id="e0B-5D-eZ0">
+                            <menuItem title="Insert Blank Disk" id="e0B-5D-eZ0">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="insertBlankDisk:" target="-1" id="ZLQ-l2-2QE"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export disk" id="inq-yB-iPf" userLabel="Export disk">
+                            <menuItem title="Export Disk ..." id="inq-yB-iPf" userLabel="Export disk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Export disk" id="e6l-tB-OY6">
-                                    <items>
-                                        <menuItem title="D64 ..." id="EOt-Xa-f3C">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskD64:" target="-1" id="1wJ-nA-NRi"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="T64 ..." id="taQ-HZ-taF">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskT64:" target="-1" id="2eX-Di-flw"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="PRG ..." id="J0u-P7-GSL">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskPRG:" target="-1" id="j43-2D-8ch"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="P00 ..." id="SGV-T9-ber">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskP00:" target="-1" id="DIX-0U-Kt2"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
                                 <connections>
                                     <action selector="exportDisk:" target="-1" id="avU-pb-XsW"/>
                                 </connections>
@@ -671,13 +643,13 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Datasette" id="fgB-qc-rPk">
                         <items>
-                            <menuItem title="Eject tape" id="3h6-Hc-BgC">
+                            <menuItem title="Eject Tape" id="3h6-Hc-BgC">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="ejectTapeAction:" target="-1" id="agh-Ez-H8n"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Press play" id="Yck-5G-ERH">
+                            <menuItem title="Press Play" id="Yck-5G-ERH">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="playOrStopAction:" target="-1" id="Nn6-SA-EdH"/>

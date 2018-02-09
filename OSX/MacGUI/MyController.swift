@@ -90,16 +90,8 @@ extension MyController {
     // Action methods (Drive)
     // --------------------------------------------------------------------------------
     
-    @IBAction func driveAction(_ sender: Any!) {
-        
-        NSLog("\(#function)")
-        if c64.iec.isDriveConnected() {
-            c64.iec.disconnectDrive()
-        } else {
-            c64.iec.connectDrive()
-        }
-    }
-    
+ 
+    /*
     @IBAction func driveEjectAction(_ sender: Any!) {
     
         NSLog("\(#function)")
@@ -115,43 +107,26 @@ extension MyController {
         // If disk is modified, ask the user how to proceed
         let alert = NSAlert()
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.addButton(withTitle: "Export...")
         alert.addButton(withTitle: "Eject")
         alert.addButton(withTitle: "Cancel")
         alert.messageText = "Do you want to export the inserted disk to a D64 archive?"
         alert.informativeText = "Otherwise, your changes will be lost."
         alert.alertStyle = .critical
         
-        while true {
-
-            let result = alert.runModal()
-
-            // Export... button
-            if result == .alertFirstButtonReturn {
-                if exportDiskDialogWorker(type: D64_CONTAINER) {
-                    NSLog("Disk saved. Ejecting...")
-                    drive.ejectDisk()
-                    break
-                } else {
-                    NSLog("Export dialog cancelled. Asking again...")
-                }
-            }
+        let result = alert.runModal()
+            
+        // Eject button
+        if result == .alertFirstButtonReturn {
+            NSLog("Ejecting disk...")
+            drive.ejectDisk()
+        }
     
-            // Eject button
-            if result == .alertSecondButtonReturn {
-                NSLog("Ejecting disk...")
-                drive.ejectDisk()
-                break
-            }
-    
-            // Cancel button
-            if result == .alertThirdButtonReturn {
-                NSLog("Canceling disk data loss warning dialog...")
-                break
-            }
+        // Cancel button
+        if result == .alertSecondButtonReturn {
+            NSLog("Canceling disk data loss warning dialog...")
         }
     }
-
+*/
     // --------------------------------------------------------------------------------
     // Action methods (Cartridge)
     // --------------------------------------------------------------------------------

@@ -848,7 +848,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (instancetype) initWithContainer:(Container *)container
 {
-    NSLog(@"********** ContainerProxy::initWithContainer");
+    // NSLog(@"ContainerProxy::initWithContainer");
 
     if (container == nil) {
         return nil;
@@ -862,7 +862,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 + (ContainerProxy *) makeWithContainer:(Container *)container
 {
-    NSLog(@"********** ContainerProxy::makeWithContainer");
+    // NSLog(@"ContainerProxy::makeWithContainer");
     
     if (container == nil) {
         return nil;
@@ -886,7 +886,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dealloc
 {
-    NSLog(@"********** ContainerProxy::dealloc");
+    // NSLog(@"ContainerProxy::dealloc");
     
     if (wrapper) {
         if (wrapper->container) delete wrapper->container;

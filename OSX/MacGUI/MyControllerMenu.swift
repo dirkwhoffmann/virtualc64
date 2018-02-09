@@ -126,7 +126,7 @@ extension MyController {
         savePanel.prompt = "Export"
         savePanel.title = "Export"
         savePanel.nameFieldLabel = "Export As:"
-        if sPanel.runModal() != .OK {
+        if savePanel.runModal() != .OK {
             return
         }
     
@@ -335,117 +335,48 @@ extension MyController {
     // Action methods (Disk menu)
     // -----------------------------------------------------------------
 
+    @IBAction func driveAction(_ sender: Any!) {
+        
+        track()
+        if c64.iec.isDriveConnected() {
+            c64.iec.disconnectDrive()
+        } else {
+            c64.iec.connectDrive()
+        }
+    }
+    
+    @IBAction func driveEjectAction(_ sender: Any!) {
+        
+        if !c64.vc1541.diskModified() ||
+            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
+            
+            c64.vc1541.ejectDisk()
+        }
+    }
+
     @IBAction func insertBlankDisk(_ sender: Any!) {
         
-        if !c64.vc1541.diskModified() || showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
-            
-            let archive = ArchiveProxy.make() // Returns an empty archive
-            c64.insertDisk(archive)
+        if !c64.vc1541.diskModified() ||
+            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
+
+            c64.insertDisk(ArchiveProxy.make())
         }
     }
     
     @IBAction func exportDisk(_ sender: Any!) {
-        // Dummy target to make menu item validatable
-    }
-    @IBAction func exportDiskD64(_ sender: Any!) {
-        exportDiskDialogWorker(type: D64_CONTAINER)
-    }
-    @IBAction func exportDiskT64(_ sender: Any!) {
-        exportDiskDialogWorker(type: T64_CONTAINER)
-    }
-    @IBAction func exportDiskPRG(_ sender: Any!) {
-        exportDiskDialogWorker(type: PRG_CONTAINER)
-    }
-    @IBAction func exportDiskP00(_ sender: Any!) {
-        exportDiskDialogWorker(type: P00_CONTAINER)
-    }
-    
-    /*! @brief   Main functionality of exportDiskDialog
-     *  @result  true if disk contents has been exportet, false if operation was canceled.
-     */
-    @discardableResult
-    func exportDiskDialogWorker(type: ContainerType) -> Bool {
-    
-        func numberOfItems(archive: ArchiveProxy, format: String) -> Int {
-            
-            let items = archive.numberOfItems()
-            
-            if items == 0 { showDiskIsEmptyAlert(format: format) }
-            if items > 1  { showDiskHasMultipleFilesAlert(format: format) }
-            return items
-        }
         
-        var archive: ArchiveProxy?
-        var fileTypes: [String]?
-    
-        // Create D64 archive from drive
+        track()
+        
+        // Convert disk to D64 archive
         guard let d64archive = D64Proxy.make(withVC1541: c64.vc1541) else {
             NSLog("Failed to create D64 archive from disk in drive")
-            return false
+            return
         }
         
-        // Convert D64 archive to target format
-        switch (type) {
-
-        case D64_CONTAINER:
-            fileTypes = ["D64"]
-            archive = d64archive
-            break
-
-        case T64_CONTAINER:
-            fileTypes = ["T64"]
-            archive = T64Proxy.make(withAnyArchive: d64archive)
-            break
-
-        case PRG_CONTAINER:
-            // PRG files store exactly one file. Abort if disk is empty
-            if numberOfItems(archive: d64archive, format: "PRG") == 0 {
-                return false
-            }
-            fileTypes = ["PRG"]
-            archive = PRGProxy.make(withAnyArchive: d64archive)
-            break
-    
-        case P00_CONTAINER:
-            // P00 files store exactly one file. Abort if disk is empty
-            if numberOfItems(archive: d64archive, format: "P00") == 0 {
-                return false
-            }
-            fileTypes = ["P00"]
-            archive = P00Proxy.make(withAnyArchive: d64archive)
-            break
-    
-        default:
-            assert(false)
-            return false
-        }
-    
-        if archive == nil {
-            NSLog("Unable to create archive from disk data")
-            return false
-        }
-        
-        // Open save panel
-        let sPanel = NSSavePanel()
-        sPanel.canSelectHiddenExtension = true
-        sPanel.allowedFileTypes = fileTypes
-        if sPanel.runModal() != .OK {
-            return false
-        }
-        
-        // Serialize archive
-        let data = NSMutableData.init(length: archive!.sizeOnDisk())
-        let ptr = data!.mutableBytes //  .assumingMemoryBound(to: UInt8.self)
-        archive!.write(toBuffer: ptr)
-        
-        // Save data
-        if let url = sPanel.url {
-            track("Exporting to file \(url)")
-            data?.write(to: url, atomically: true)
-            c64.vc1541.disk.setModified(false)
-        }
-        
-        return true
+        // Show export panel
+        let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
+        let exportPanel = ExportDiskController.init(windowNibName: nibName)
+        exportPanel.runPanel(d64archive, parent: self)
     }
     
     // -----------------------------------------------------------------

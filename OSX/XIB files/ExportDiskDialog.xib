@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ExportDiskController" customModule="VirtualC64" customModuleProvider="target">
+            <connections>
+                <outlet property="button" destination="zmV-Bu-1Tk" id="Dx8-Dh-nne"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="BbN-hK-AZN"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="cWH-uk-YnN"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hasShadow="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="61"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="61"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8JD-hx-8k0">
+                        <rect key="frame" x="154" y="23" width="52" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Format:" id="Lv5-Ip-EeM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zmV-Bu-1Tk">
+                        <rect key="frame" x="210" y="17" width="117" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="D64" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="K71-Kk-WTL" id="dgL-pE-5bm">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="P6j-96-X7Q">
+                                <items>
+                                    <menuItem title="D64" state="on" id="K71-Kk-WTL" userLabel="D64 Format">
+                                        <connections>
+                                            <action selector="selectD64:" target="-2" id="c3o-fh-eMx"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="T64" tag="1" id="Mxl-Oz-Nc0" userLabel="T64 Format">
+                                        <connections>
+                                            <action selector="selectT64:" target="-2" id="4pA-k3-TJ3"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="PRG" tag="2" id="iqX-ma-UIC" userLabel="PRG Format">
+                                        <connections>
+                                            <action selector="selectPRG:" target="-2" id="vG2-j9-JdD"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="P00" tag="3" id="Tt4-Qz-K62" userLabel="P00 Format">
+                                        <connections>
+                                            <action selector="selectP00:" target="-2" id="9B2-Hm-sId"/>
+                                        </connections>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="-2" y="65"/>
+        </window>
+    </objects>
+</document>
