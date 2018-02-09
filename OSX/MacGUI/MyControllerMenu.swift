@@ -121,53 +121,21 @@ extension MyController {
         let exportPanel = ExportScreenshotController.init(windowNibName: nibName)
         exportPanel.showSheet(withParent: self)
     }
+    
+    @IBAction func quicksaveScreenshot(_ sender: Any!) {
         
-    // NSArray *fileTypes = @[@"tif", @"jpg", @"gif", @"png", @"psd", @"tga"];
-    
-        // Create and show save panel
-        /*
-        let savePanel = NSSavePanel()
-        savePanel.canSelectHiddenExtension = true
-        savePanel.allowedFileTypes = ["tif", "jpg", "gif", "png", "psd", "tga"]
-        savePanel.prompt = "Export"
-        savePanel.title = "Export"
-        savePanel.nameFieldLabel = "Export As:"
-        if savePanel.runModal() != .OK {
-            return
-        }
-    
-        // Save image
-        if let url = savePanel.url {
-            track("Saving screenshot to file \(url)")
-            let image = screenshot()
+        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
+        let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
+        if let url = desktopUrl.appendingPathComponent("Untitled.tiff") {
+            let image = self.screenshot()
             let data = image?.tiffRepresentation
             do {
-                try data?.write(to: url)
-                track("Image saved successfully")
+                try data?.write(to: url, options: .atomic)
             } catch {
-                track("Cannot save image to file")
+                track("Cannot quicksave screenshot")
             }
         }
     }
-    */
-        
-    @IBAction func quicksaveScreenshot(_ sender: Any!) {
-        
- 
-    }
-        
-    /*
-    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
-    NSString *desktopPath = [paths objectAtIndex:0];
-    NSString *filePath = [desktopPath stringByAppendingPathComponent:@"Untitled.png"];
-    NSURL *url = [NSURL fileURLWithPath:filePath];
-    
-    NSLog(@"Quicksaving screenshot to file %@", url);
-    
-    NSImage *image = [self screenshot];
-    NSData *data = [image TIFFRepresentation];
-    [data writeToURL:url atomically:YES];
- */
     
     // -----------------------------------------------------------------
     // Action methods (View menu)

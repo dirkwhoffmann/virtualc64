@@ -17,7 +17,6 @@
 		5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */; };
 		5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */; };
 		5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */; };
-		5000474C12DCEE500098D890 /* MyControllerMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000474B12DCEE500098D890 /* MyControllerMenu.mm */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
@@ -265,8 +264,6 @@
 		5000472712DCE9AB0098D890 /* MyControllerMemoryPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerMemoryPanel.h; sourceTree = "<group>"; };
 		5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCiaPanel.h; sourceTree = "<group>"; };
 		5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCiaPanel.mm; sourceTree = "<group>"; };
-		5000474A12DCEE500098D890 /* MyControllerMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerMenu.h; sourceTree = "<group>"; };
-		5000474B12DCEE500098D890 /* MyControllerMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerMenu.mm; sourceTree = "<group>"; };
 		5000C80D0D13CE680011A2E9 /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		5000C80E0D13CE680011A2E9 /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
 		5000C8220D13CEE10011A2E9 /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
@@ -754,8 +751,6 @@
 				50E9B92C201F299500065A89 /* MyController.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
-				5000474A12DCEE500098D890 /* MyControllerMenu.h */,
-				5000474B12DCEE500098D890 /* MyControllerMenu.mm */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
 				5088A6D412E0676200378033 /* MyControllerDebugPanel.h */,
 				5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */,
@@ -1342,7 +1337,6 @@
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
-				5000474C12DCEE500098D890 /* MyControllerMenu.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
