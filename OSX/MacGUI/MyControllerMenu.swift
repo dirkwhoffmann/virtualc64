@@ -115,14 +115,51 @@ extension MyController {
     // Action methods (File menu)
     // -----------------------------------------------------------------
     
-    @IBAction func insertBlankDisk(_ sender: Any!) {
-        
-        if !c64.vc1541.diskModified() || showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
-        
-            let archive = ArchiveProxy.make() // Returns an empty archive
-            c64.insertDisk(archive)
+    @IBAction func saveScreenshotDialog(_ sender: Any!) {
+    
+    // NSArray *fileTypes = @[@"tif", @"jpg", @"gif", @"png", @"psd", @"tga"];
+    
+        // Create and show save panel
+        let savePanel = NSSavePanel()
+        savePanel.canSelectHiddenExtension = true
+        savePanel.allowedFileTypes = ["tif", "jpg", "gif", "png", "psd", "tga"]
+        savePanel.prompt = "Export"
+        savePanel.title = "Export"
+        savePanel.nameFieldLabel = "Export As:"
+        if sPanel.runModal() != .OK {
+            return
+        }
+    
+        // Save image
+        if let url = savePanel.url {
+            track("Saving screenshot to file \(url)")
+            let image = screenshot()
+            let data = image?.tiffRepresentation
+            do {
+                try data?.write(to: url)
+                track("Image saved successfully")
+            } catch {
+                track("Cannot save image to file")
+            }
         }
     }
+    
+    @IBAction func quicksaveScreenshot(_ sender: Any!) {
+        
+    /*
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *filePath = [desktopPath stringByAppendingPathComponent:@"Untitled.png"];
+    NSURL *url = [NSURL fileURLWithPath:filePath];
+    
+    NSLog(@"Quicksaving screenshot to file %@", url);
+    
+    NSImage *image = [self screenshot];
+    NSData *data = [image TIFFRepresentation];
+    [data writeToURL:url atomically:YES];
+ */
+    }
+    
     
     // -----------------------------------------------------------------
     // Action methods (View menu)
@@ -298,6 +335,15 @@ extension MyController {
     // Action methods (Disk menu)
     // -----------------------------------------------------------------
 
+    @IBAction func insertBlankDisk(_ sender: Any!) {
+        
+        if !c64.vc1541.diskModified() || showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
+            
+            let archive = ArchiveProxy.make() // Returns an empty archive
+            c64.insertDisk(archive)
+        }
+    }
+    
     @IBAction func exportDisk(_ sender: Any!) {
         // Dummy target to make menu item validatable
     }
@@ -398,15 +444,6 @@ extension MyController {
             data?.write(to: url, atomically: true)
             c64.vc1541.disk.setModified(false)
         }
-        
-        /*
-        let selectedURL = sPanel.url
-        let selectedFileURL = selectedURL?.absoluteString
-        guard let selectedFile = selectedFileURL?.replacingOccurrences(of: "file://", with: "") else {
-            NSLog("Unable to extract filename")
-            return false
-        }
-        */
         
         return true
     }

@@ -28,11 +28,11 @@
  *  @details This method is called when the current emulator image is saved
  *           to disk.
  */
-- (IBAction)saveScreenshotDialog:(id)sender;
+// - (IBAction)saveScreenshotDialog:(id)sender;
 
 /*! @brief   Action function for the quick save screenshot feature
  *  @details A screenshot is taken is saved to a file on the users desktop.
  */
-- (IBAction)quicksaveScreenshot:(id)sender;
+// - (IBAction)quicksaveScreenshot:(id)sender;
 
 @end

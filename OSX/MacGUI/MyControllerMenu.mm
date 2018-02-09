@@ -28,6 +28,7 @@
 
 #pragma mark file menu
 
+#if 0
 - (IBAction)saveScreenshotDialog:(id)sender
 {
     NSArray *fileTypes = @[@"tif", @"jpg", @"gif", @"png", @"psd", @"tga"];
@@ -64,36 +65,6 @@
     [data writeToURL:url atomically:YES];
 }
 
-
- 
-// --------------------------------------------------------------------------------
-//                                  Edit menu
-// --------------------------------------------------------------------------------
-
-#pragma mark edit menu
-
-
-#if 0
-- (IBAction)datasetteEjectAction:(id)sender
-{
-    NSLog(@"datasetteEjectAction");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 datasette] ejectTape];
-}
-
-- (IBAction)datasettePressPlayAction:(id)sender
-{
-    NSLog(@"datasettePressPlayAction");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 datasette] pressPlay];
-}
-
-- (IBAction)datasettePressStopAction:(id)sender
-{
-    NSLog(@"datasettePressStopAction");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 datasette] pressStop];
-}
 #endif
 
 @end
