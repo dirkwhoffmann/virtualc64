@@ -117,9 +117,15 @@ extension MyController {
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
     
+        let nibName = NSNib.Name(rawValue: "ExportScreenshotDialog")
+        let exportPanel = ExportScreenshotController.init(windowNibName: nibName)
+        exportPanel.showSheet(withParent: self)
+    }
+        
     // NSArray *fileTypes = @[@"tif", @"jpg", @"gif", @"png", @"psd", @"tga"];
     
         // Create and show save panel
+        /*
         let savePanel = NSSavePanel()
         savePanel.canSelectHiddenExtension = true
         savePanel.allowedFileTypes = ["tif", "jpg", "gif", "png", "psd", "tga"]
@@ -143,8 +149,12 @@ extension MyController {
             }
         }
     }
-    
+    */
+        
     @IBAction func quicksaveScreenshot(_ sender: Any!) {
+        
+ 
+    }
         
     /*
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
@@ -158,8 +168,6 @@ extension MyController {
     NSData *data = [image TIFFRepresentation];
     [data writeToURL:url atomically:YES];
  */
-    }
-    
     
     // -----------------------------------------------------------------
     // Action methods (View menu)
