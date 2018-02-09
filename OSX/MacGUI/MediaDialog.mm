@@ -48,33 +48,6 @@
 
 // VC 1530
 
-- (IBAction)tapeEjectAction:(id)sender
-{
-    NSLog(@"tapeEjectAction");
-    [[c64 datasette] ejectTape];
-
-}
-
-- (IBAction)tapePlayAction:(id)sender
-{
-    NSLog(@"tapePlayAction");
-    [[c64 datasette] pressPlay];
-}
-
-- (IBAction)tapeStopAction:(id)sender
-{
-    NSLog(@"tapeStopAction");
-    [[c64 datasette] pressStop];
-
-
-}
-
-- (IBAction)tapeRewindAction:(id)sender
-{
-    NSLog(@"tapeRewindAction");
-    [[c64 datasette] pressRewind];
-}
-
 - (IBAction)tapeHeadAction:(id)sender
 {
     NSLog(@"tapeHeadAction");
@@ -130,9 +103,6 @@
         [tapeIcon setHidden:NO];
         [tapeText setStringValue:[NSString stringWithFormat:@"Type %ld tape",
                                   (long)[datasette getType]]];
-        [tapePlay setEnabled:YES];
-        [tapeRewind setEnabled:YES];
-        [tapeStop setEnabled:YES];
         [tapeEject setEnabled:YES];
         [tapeEjectText setEnabled:YES];
         [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d",
@@ -148,9 +118,6 @@
     } else {
         [tapeIcon setHidden:YES];
         [tapeText setStringValue:@"No tape"];
-        [tapePlay setEnabled:NO];
-        [tapeRewind setEnabled:NO];
-        [tapeStop setEnabled:NO];
         [tapeEject setEnabled:NO];
         [tapeEjectText setEnabled:NO];
         [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];

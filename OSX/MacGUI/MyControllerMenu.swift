@@ -9,84 +9,105 @@ import Foundation
 
 extension MyController {
     
-    //
-    // Menu item validation (NSMenuValidation informal protocol)
-    //
-    
-    @objc override open func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        
+    @objc override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
+  
         // View menu
-        if menuItem.action == #selector(MyController.toggleStatusBarAction(_:)) {
-            menuItem.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
+        if item.action == #selector(MyController.toggleStatusBarAction(_:)) {
+            item.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
+            return true
         }
         
         // Keyboard menu
-        if menuItem.action == #selector(MyController.toggleShiftKey(_:)) {
-            menuItem.state = c64.keyboard.shiftKeyIsPressed() ? .on : .off
+        if item.action == #selector(MyController.toggleShiftKey(_:)) {
+            item.state = c64.keyboard.shiftKeyIsPressed() ? .on : .off
+            return true
         }
-        if menuItem.action == #selector(MyController.toggleCommodoreKey(_:)) {
-            menuItem.state = c64.keyboard.commodoreKeyIsPressed() ? .on : .off
+        if item.action == #selector(MyController.toggleCommodoreKey(_:)) {
+            item.state = c64.keyboard.commodoreKeyIsPressed() ? .on : .off
+            return true
         }
-        if menuItem.action == #selector(MyController.toggleCtrlKey(_:)) {
-            menuItem.state = c64.keyboard.ctrlKeyIsPressed() ? .on : .off
+        if item.action == #selector(MyController.toggleCtrlKey(_:)) {
+            item.state = c64.keyboard.ctrlKeyIsPressed() ? .on : .off
+            return true
         }
-        if menuItem.action == #selector(MyController.toggleRunstopKey(_:)) {
-            menuItem.state = c64.keyboard.runstopKeyIsPressed() ? .on : .off
+        if item.action == #selector(MyController.toggleRunstopKey(_:)) {
+            item.state = c64.keyboard.runstopKeyIsPressed() ? .on : .off
+            return true
         }
         
         // Disk menu
-        if menuItem.action == #selector(MyController.driveAction(_:)) {
-            menuItem.title = c64.iec.isDriveConnected() ? "Power off" : "Power on"
+        if item.action == #selector(MyController.driveAction(_:)) {
+            item.title = c64.iec.isDriveConnected() ? "Power off" : "Power on"
             return true
         }
-        if menuItem.action == #selector(MyController.insertBlankDisk(_:)) {
+        if item.action == #selector(MyController.insertBlankDisk(_:)) {
             return c64.iec.isDriveConnected()
         }
-        if menuItem.action == #selector(MyController.driveEjectAction(_:)) {
+        if item.action == #selector(MyController.driveEjectAction(_:)) {
             return c64.iec.isDriveConnected() && c64.vc1541.hasDisk()
         }
-        if menuItem.action == #selector(MyController.exportDisk(_:)) {
+        if item.action == #selector(MyController.exportDisk(_:)) {
             return c64.vc1541.hasDisk()
+        }
+
+        // Tape menu
+        if item.action == #selector(MyController.playOrStopAction(_:)) {
+            item.title = c64.datasette.playKey() ? "Press Stop" : "Press Play"
+            return c64.datasette.hasTape()
+        }
+        if item.action == #selector(MyController.rewindAction(_:)) {
+            return c64.datasette.hasTape()
+        }
+        if item.action == #selector(MyController.ejectTapeAction(_:)) {
+            return c64.datasette.hasTape()
         }
         
         // Cartridge menu
-        if menuItem.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
+        if item.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
             return c64.expansionport.cartridgeType() == CRT_FINAL_III
         }
         
         // Debug menu
-        if menuItem.action == #selector(MyController.pauseAction(_:)) {
+        if item.action == #selector(MyController.pauseAction(_:)) {
             return c64.isRunning();
         }
-        if menuItem.action == #selector(MyController.continueAction(_:)) ||
-            menuItem.action == #selector(MyController.stepIntoAction(_:)) ||
-            menuItem.action == #selector(MyController.stepOutAction(_:)) ||
-            menuItem.action == #selector(MyController.stepOverAction(_:)) ||
-            menuItem.action == #selector(MyController.stopAndGoAction(_:)) {
+        if item.action == #selector(MyController.continueAction(_:)) ||
+            item.action == #selector(MyController.stepIntoAction(_:)) ||
+            item.action == #selector(MyController.stepOutAction(_:)) ||
+            item.action == #selector(MyController.stepOverAction(_:)) ||
+            item.action == #selector(MyController.stopAndGoAction(_:)) {
             return c64.isHalted();
         }
-        if menuItem.action == #selector(MyController.markIRQLinesAction(_:)) {
-            menuItem.state = c64.vic.showIrqLines() ? .on : .off
+        if item.action == #selector(MyController.markIRQLinesAction(_:)) {
+            item.state = c64.vic.showIrqLines() ? .on : .off
         }
-        if menuItem.action == #selector(MyController.markDMALinesAction(_:)) {
-            menuItem.state = c64.vic.showDmaLines() ? .on : .off
+        if item.action == #selector(MyController.markDMALinesAction(_:)) {
+            item.state = c64.vic.showDmaLines() ? .on : .off
         }
-        if menuItem.action == #selector(MyController.hideSpritesAction(_:)) {
-            menuItem.state = c64.vic.hideSprites() ? .on : .off
+        if item.action == #selector(MyController.hideSpritesAction(_:)) {
+            item.state = c64.vic.hideSprites() ? .on : .off
         }
-        if menuItem.action == #selector(MyController.traceC64CpuAction(_:)) {
-            menuItem.state = c64.cpu.tracingEnabled() ? .on : .off
+
+        if item.action == #selector(MyController.traceAction(_:)) {
+            return c64.developmentMode();
         }
-        if menuItem.action == #selector(MyController.traceIecAction(_:)) {
-            menuItem.state = c64.iec.tracingEnabled() ? .on : .off
+        if item.action == #selector(MyController.traceC64CpuAction(_:)) {
+            item.state = c64.cpu.tracingEnabled() ? .on : .off
         }
-        if menuItem.action == #selector(MyController.traceVC1541CpuAction(_:)) {
-            menuItem.state = c64.vc1541.cpu.tracingEnabled() ? .on : .off
+        if item.action == #selector(MyController.traceIecAction(_:)) {
+            item.state = c64.iec.tracingEnabled() ? .on : .off
         }
-        if menuItem.action == #selector(MyController.traceViaAction(_:)) {
-            menuItem.state = c64.vc1541.via1.tracingEnabled() ? .on : .off
+        if item.action == #selector(MyController.traceVC1541CpuAction(_:)) {
+            item.state = c64.vc1541.cpu.tracingEnabled() ? .on : .off
+        }
+        if item.action == #selector(MyController.traceViaAction(_:)) {
+            item.state = c64.vc1541.via1.tracingEnabled() ? .on : .off
         }
         
+        if item.action == #selector(MyController.dumpStateAction(_:)) {
+            return c64.developmentMode();
+        }
+
         return true
     }
    
@@ -98,7 +119,7 @@ extension MyController {
         
         if !c64.vc1541.diskModified() || showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
         
-            let archive = ArchiveProxy() // Returns an empty archive
+            let archive = ArchiveProxy.make() // Returns an empty archive
             c64.insertDisk(archive)
         }
     }
@@ -391,6 +412,30 @@ extension MyController {
     }
     
     // -----------------------------------------------------------------
+    // Action methods (Datasette menu)
+    // -----------------------------------------------------------------
+    
+    @IBAction func playOrStopAction(_ sender: Any!) {
+        track()
+        if c64.datasette.playKey() {
+            c64.datasette.pressStop()
+        } else {
+            c64.datasette.pressPlay()
+        }
+    }
+    
+    @IBAction func rewindAction(_ sender: Any!) {
+        track()
+        c64.datasette.rewind()
+    }
+
+    @IBAction func ejectTapeAction(_ sender: Any!) {
+        track()
+        c64.datasette.ejectTape()
+    }
+
+    
+    // -----------------------------------------------------------------
     // Action methods (Cartridge menu)
     // -----------------------------------------------------------------
 
@@ -406,10 +451,10 @@ extension MyController {
         c64.expansionport.pressSecondButton()
     }
     
-    //
-    // Action methods (Debug)
-    //
-    
+    // -----------------------------------------------------------------
+    // Action methods (Debug menu)
+    // -----------------------------------------------------------------
+
     @IBAction func hideSpritesAction(_ sender: Any!) {
 
         let undo = undoManager()
@@ -440,6 +485,14 @@ extension MyController {
         c64.vic.setShowDmaLines(!c64.vic.showDmaLines())
     }
     
+    @IBAction func traceAction(_ sender: Any!) {
+        // Dummy target to make menu item validatable
+    }
+    
+    @IBAction func dumpStateAction(_ sender: Any!) {
+        // Dummy target to make menu item validatable
+    }
+
     @IBAction func traceC64CpuAction(_ sender: Any!) {
         
         let undo = undoManager()

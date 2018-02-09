@@ -324,27 +324,25 @@ class KeyboardController: NSObject {
     }
     
     @objc func simulateUserTyping(text: String,
-                                  initialDelay: Int = 0,
-                                  pressPlay: Bool = false) {
+                                  initialDelay: useconds_t = 0,
+                                  completion: (() -> Void)?) {
 
         let truncated = (text.count < 256) ? text : text.prefix(256) + "..."
 
         DispatchQueue.global().async {
         
-            // Perform text typing
-            usleep(useconds_t(initialDelay));
+            usleep(initialDelay);
             for c in truncated.lowercased().utf8 {
                 self.controller.c64.keyboard.pressKey(C64KeyFingerprint(c))
                 usleep(useconds_t(27500))
                 self.controller.c64.keyboard.releaseKey(C64KeyFingerprint(c))
                 usleep(useconds_t(27500))
             }
-            
-            // Perform action items
-            if pressPlay {
-                usleep(useconds_t(27500))
-                self.controller.c64.datasette.pressPlay()
-            }
+            completion?()
         }
+    }
+    
+    @objc func simulateUserTypingAndPressPlay(text: String) {
+        simulateUserTyping(text: text, completion: controller.c64.datasette.pressPlay)
     }
 }

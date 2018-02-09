@@ -58,7 +58,8 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+// Disable assert checking in relase versions
+// #define NDEBUG
 
 // Data types and constants
 #include "C64_defs.h"
@@ -359,6 +360,15 @@ public:
 	//! @brief    Prints debugging information
 	void dumpState();
 	
+    //! @brief    Returns true if the executable was compiled for development
+    /*! @details  In release mode, assertion checking should be switched off
+     */
+    bool developmentMode() {
+    #ifndef NDEBUG
+        return true;
+    #endif
+        return false;
+    }
 			
     //
     //! @functiongroup Configuring the emulator

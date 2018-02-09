@@ -347,40 +347,30 @@ VC1541::insertDisk(Archive *a)
     
     switch (a->type()) {
             
-        case T64_CONTAINER:
-        case PRG_CONTAINER:
-        case P00_CONTAINER:
-            
-            // Archives of this type are first converted to D64 format
-            if (!(converted = D64Archive::makeD64ArchiveWithAnyArchive(a)))
-                return false;
-            
-            ejectDisk();
-            disk.encodeArchive(converted);
-            break;
-    
         case D64_CONTAINER:
-            
             ejectDisk();
             disk.encodeArchive((D64Archive *)a);
             break;
             
         case G64_CONTAINER:
-            
             ejectDisk();
             disk.encodeArchive((G64Archive *)a);
             break;
-
-        case NIB_CONTAINER:
             
+        case NIB_CONTAINER:
             ejectDisk();
             disk.encodeArchive((NIBArchive *)a);
             break;
-
+            
         default:
             
-            warn("Only D64, T64, PRG, P00, G64 and NIB archives can be mounted as disk.");
-            return false;
+            // All other archives cannot be encoded directly. We convert them to D64 first.
+            if (!(converted = D64Archive::makeD64ArchiveWithAnyArchive(a)))
+                return false;
+
+            ejectDisk();
+            disk.encodeArchive(converted);
+            break;
     }
     
     diskInserted = true;

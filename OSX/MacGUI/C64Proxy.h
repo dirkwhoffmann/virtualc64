@@ -326,33 +326,11 @@ struct ContainerWrapper;
 - (void) toggleCtrlKey;
 - (void) toggleRunstopKey;
 
-/*
-- (void) pressHomeKey;
-- (void) releaseHomeKey;
-- (void) pressClearKey;
-- (void) releaseClearKey;
-- (void) pressDeleteKey;
-- (void) releaseDeleteKey;
-- (void) pressInsertKey;
-- (void) releaseInsertKey;
-*/
-
 @end 
 
 // --------------------------------------------------------------------------
 //                                 Joystick
 // -------------------------------------------------------------------------
-
-/*
-typedef NS_ENUM(NSInteger, JoystickDirection) {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    FIRE,
-    RELEASED
-};
-*/
 
 @interface JoystickProxy : NSObject {
     
@@ -362,6 +340,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) trigger:(JoystickEvent)event; 
 
 // DEPRECATED
+/*
 - (void) setButton:(NSInteger)pressed;
 - (void) pressButton;
 - (void) releaseButton;
@@ -374,30 +353,11 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) setYAxis:(NSInteger)value;
 - (void) releaseXAxis;
 - (void) releaseYAxis;
-
-
-- (void) dump;
-
-@end
-
-/*
-@interface GamePadProxy : NSObject {
-    
-    struct GamePadWrapper *wrapper;
-}
-
-- (void) setButton:(NSInteger)pressed;
-- (void) setXAxis:(NSInteger)value;
-- (void) setYAxis:(NSInteger)value;
-- (void) pullJoystick:(JoystickDirection)dir;
-- (void) releaseJoystick:(JoystickDirection)dir;
-- (void) releaseXAxis;
-- (void) releaseYAxis;
-
-- (void) dump;
-
-@end
 */
+
+- (void) dump;
+
+@end
 
 // --------------------------------------------------------------------------
 //                                    SID
@@ -544,7 +504,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (bool) hasTape;
 - (void) pressPlay;
 - (void) pressStop;
-- (void) pressRewind;
+- (void) rewind;
 - (void) ejectTape;
 - (NSInteger) getType; 
 - (long) durationInCycles;
@@ -635,6 +595,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (CIAProxy *) cia:(int)num;
 
 - (void) dump;
+- (BOOL) developmentMode;
 
 - (Message *)message;
 - (void) putMessage:(int)msg;
@@ -786,6 +747,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @interface ArchiveProxy : ContainerProxy {
 }
 
++ (instancetype)make;
 + (instancetype)makeWithFile:(NSString *)path;
 
 - (NSInteger)numberOfItems;

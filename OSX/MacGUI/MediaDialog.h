@@ -40,9 +40,6 @@
     IBOutlet NSSlider *tapeSlider;
     IBOutlet NSTextField *tapeHead;
     IBOutlet NSTextField *tapeEnd;
-    IBOutlet NSButton *tapePlay;
-    IBOutlet NSButton *tapeStop;
-    IBOutlet NSButton *tapeRewind;
 
     /* Expansion port */
     IBOutlet NSImageView *cartridgeIcon;
@@ -59,10 +56,6 @@
 - (IBAction)diskWriteProtectAction:(id)sender;
 
 // VC 1530
-- (IBAction)tapeEjectAction:(id)sender;
-- (IBAction)tapePlayAction:(id)sender;
-- (IBAction)tapeStopAction:(id)sender;
-- (IBAction)tapeRewindAction:(id)sender;
 - (IBAction)tapeHeadAction:(id)sender;
 
 // Expansion port

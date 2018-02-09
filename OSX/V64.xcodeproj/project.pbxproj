@@ -1022,8 +1022,8 @@
 		50C4F055202D8B37004C5F21 /* XIB files */ = {
 			isa = PBXGroup;
 			children = (
-				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
+				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
 				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
 				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,

@@ -510,13 +510,13 @@
     [keyboardcontroller simulateUserPressingKeyWithRunstop:key];
 }
 - (void)simulateUserTypingText:(NSString *)text {
-    [keyboardcontroller simulateUserTypingWithText:text initialDelay:0 pressPlay:NO];
+    [keyboardcontroller simulateUserTypingWithText:text initialDelay:0 completion:nil];
 }
-- (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay {
-    [keyboardcontroller simulateUserTypingWithText:text initialDelay:delay pressPlay:NO];
+- (void)simulateUserTypingText:(NSString *)text withInitialDelay:(useconds_t)delay {
+    [keyboardcontroller simulateUserTypingWithText:text initialDelay:delay completion:nil];
 }
-- (void)simulateUserTypingText:(NSString *)text pressPlay:(BOOL)press {
-    [keyboardcontroller simulateUserTypingWithText:text initialDelay:0 pressPlay:press];
+- (void)simulateUserTypingTextAndPressPlay:(NSString *)text {
+    [keyboardcontroller simulateUserTypingAndPressPlayWithText:text];
 }
 
 - (BOOL)getDisconnectEmulationKeys { return [keyboardcontroller getDisconnectEmulationKeys]; }

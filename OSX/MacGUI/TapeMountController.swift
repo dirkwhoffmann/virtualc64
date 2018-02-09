@@ -37,7 +37,11 @@ class TapeMountController : MountController {
         c64.insertTape(tape)
 
         if autoLoad.integerValue == 1 {
-            controller.simulateUserTypingText("LOAD\n", pressPlay:(autoPress.integerValue == 1))
+            if autoPress.integerValue == 1 {
+                controller.simulateUserTypingTextAndPressPlay("LOAD\n")
+            } else {
+                controller.simulateUserTypingText("LOAD\n")
+            }
         }
 
         window?.orderOut(self)

@@ -164,6 +164,232 @@
                                     <action selector="paste:" target="-1" id="275"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
+                            <menuItem title="Debug" id="414">
+                                <menu key="submenu" title="Debug" id="415">
+                                    <items>
+                                        <menuItem title="Reset emulator" id="434">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="resetAction:" target="-1" id="506"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="433">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="Pause" keyEquivalent="p" id="430">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="pauseAction:" target="-1" id="505"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Continue" keyEquivalent="&gt;" id="432">
+                                            <connections>
+                                                <action selector="continueAction:" target="-1" id="484"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Step into" keyEquivalent="I" id="429">
+                                            <connections>
+                                                <action selector="stepIntoAction:" target="-1" id="488"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Step over" keyEquivalent="O" id="428">
+                                            <connections>
+                                                <action selector="stepOverAction:" target="-1" id="502"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Step out" keyEquivalent="T" id="431">
+                                            <connections>
+                                                <action selector="stepOutAction:" target="-1" id="494"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="427">
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="Hide sprites" keyEquivalent="s" id="426">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="hideSpritesAction:" target="-1" id="491"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show IRQ rasterlines" keyEquivalent="R" id="425">
+                                            <connections>
+                                                <action selector="markIRQLinesAction:" target="-1" id="496"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show DMA rasterlines" keyEquivalent="D" id="424">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="markDMALinesAction:" target="-1" id="509"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="420"/>
+                                        <menuItem title="Trace" id="l45-bY-cgb">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Trace" id="F5S-uB-hpC">
+                                                <items>
+                                                    <menuItem title="Trace CPU" id="419">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceC64CpuAction:" target="-1" id="504"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Trace IEC bus" id="417">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceIecAction:" target="-1" id="497"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Trace VC1541 CPU" id="418">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceVC1541CpuAction:" target="-1" id="482"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Trace VC1541 VIA" id="416">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="traceViaAction:" target="-1" id="495"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                            <connections>
+                                                <action selector="traceAction:" target="-1" id="U0J-eK-vGr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Dump state" id="421">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Dump state" id="435">
+                                                <items>
+                                                    <menuItem title="C64" id="438">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <menu key="submenu" title="C64" id="440">
+                                                            <items>
+                                                                <menuItem title="C64" id="443">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64:" target="-1" id="489"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="CPU" id="447">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64CPU:" target="-1" id="486"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="VIC" id="446">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64VIC:" target="-1" id="500"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="CIA 1" id="445">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64CIA1:" target="-1" id="498"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="CIA 2" id="441">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64CIA2:" target="-1" id="503"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="SID" id="444">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64SID:" target="-1" id="490"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Expansion port" id="527">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64ExpansionPort:" target="-1" id="530"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Memory" id="442">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpC64Memory:" target="-1" id="501"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                            </items>
+                                                        </menu>
+                                                    </menuItem>
+                                                    <menuItem title="VC1541" id="437">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <menu key="submenu" title="VC1541" id="448">
+                                                            <items>
+                                                                <menuItem title="VC1541" id="451">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpVC1541:" target="-1" id="483"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="CPU" id="453">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpVC1541CPU:" target="-1" id="492"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="VIA 1" id="452">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpVC1541VIA1:" target="-1" id="493"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="VIA 2" id="449">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpVC1541VIA2:" target="-1" id="507"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Memory" id="450">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="dumpVC1541Memory:" target="-1" id="487"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                            </items>
+                                                        </menu>
+                                                    </menuItem>
+                                                    <menuItem title="Keyboard" id="436">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="dumpKeyboard:" target="-1" id="508"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Joystick port 1" id="531">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="dumpC64JoystickA:" target="-1" id="T6M-Xr-kHQ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Joystick port 2" id="537">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="dumpC64JoystickB:" target="-1" id="Wk0-ml-hsq"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="IEC bus" id="439">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="dumpIEC:" target="-1" id="499"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                            <connections>
+                                                <action selector="dumpStateAction:" target="-1" id="emE-rq-sxM"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -392,16 +618,16 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Bft-tN-tO1"/>
-                            <menuItem title="Insert blank disk" id="e0B-5D-eZ0">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="insertBlankDisk:" target="-1" id="ZLQ-l2-2QE"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Eject disk" id="mVY-LA-phJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="driveEjectAction:" target="-1" id="jqu-Xs-erO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Insert blank disk" id="e0B-5D-eZ0">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="insertBlankDisk:" target="-1" id="ZLQ-l2-2QE"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Export disk" id="inq-yB-iPf" userLabel="Export disk">
@@ -441,8 +667,33 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Expansion Port" id="6Nh-dL-Pbk" userLabel="Cartridge">
-                    <menu key="submenu" title="Expansion Port" id="ZzZ-hT-u7h">
+                <menuItem title="Datasette" id="qM3-ZW-mhJ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Datasette" id="fgB-qc-rPk">
+                        <items>
+                            <menuItem title="Eject tape" id="3h6-Hc-BgC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="ejectTapeAction:" target="-1" id="agh-Ez-H8n"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Press play" id="Yck-5G-ERH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="playOrStopAction:" target="-1" id="Nn6-SA-EdH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Rewind" id="4up-R5-h6f">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="rewindAction:" target="-1" id="5Ea-fA-j9g"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Expansion" id="6Nh-dL-Pbk" userLabel="Cartridge">
+                    <menu key="submenu" title="Expansion" id="ZzZ-hT-u7h">
                         <items>
                             <menuItem title="Final Cartridge III" id="ldk-GO-tsE" userLabel="Final Cartridge III">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -465,219 +716,6 @@
                                 <connections>
                                     <action selector="finalCartridgeIIIaction:" target="-1" id="G5E-EB-ROn"/>
                                 </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="Debug" id="414">
-                    <menu key="submenu" title="Debug" id="415">
-                        <items>
-                            <menuItem title="Reset emulator" id="434">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-CA
-</string>
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="resetAction:" target="-1" id="506"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="433">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Pause" keyEquivalent="p" id="430">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="pauseAction:" target="-1" id="505"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Continue" keyEquivalent="&gt;" id="432">
-                                <connections>
-                                    <action selector="continueAction:" target="-1" id="484"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Step into" keyEquivalent="I" id="429">
-                                <connections>
-                                    <action selector="stepIntoAction:" target="-1" id="488"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Step over" keyEquivalent="O" id="428">
-                                <connections>
-                                    <action selector="stepOverAction:" target="-1" id="502"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Step out" keyEquivalent="T" id="431">
-                                <connections>
-                                    <action selector="stepOutAction:" target="-1" id="494"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="427">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Hide sprites" keyEquivalent="s" id="426">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="hideSpritesAction:" target="-1" id="491"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Show IRQ rasterlines" keyEquivalent="R" id="425">
-                                <connections>
-                                    <action selector="markIRQLinesAction:" target="-1" id="496"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Show DMA rasterlines" keyEquivalent="D" id="424">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                <connections>
-                                    <action selector="markDMALinesAction:" target="-1" id="509"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="420"/>
-                            <menuItem title="Trace CPU" id="419">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="traceC64CpuAction:" target="-1" id="504"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Trace IEC bus" id="417">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="traceIecAction:" target="-1" id="497"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Trace VC1541 CPU" id="418">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="traceVC1541CpuAction:" target="-1" id="482"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Trace VC1541 VIA" id="416">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="traceViaAction:" target="-1" id="495"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="422"/>
-                            <menuItem title="Dump state to console" id="421">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Dump state to console" id="435">
-                                    <items>
-                                        <menuItem title="C64" id="438">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="C64" id="440">
-                                                <items>
-                                                    <menuItem title="C64" id="443">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64:" target="-1" id="489"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="CPU" id="447">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64CPU:" target="-1" id="486"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="VIC" id="446">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64VIC:" target="-1" id="500"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="CIA 1" id="445">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64CIA1:" target="-1" id="498"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="CIA 2" id="441">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64CIA2:" target="-1" id="503"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="SID" id="444">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64SID:" target="-1" id="490"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Expansion port" id="527">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64ExpansionPort:" target="-1" id="530"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Memory" id="442">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpC64Memory:" target="-1" id="501"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem title="VC1541" id="437">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="VC1541" id="448">
-                                                <items>
-                                                    <menuItem title="VC1541" id="451">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpVC1541:" target="-1" id="483"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="CPU" id="453">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpVC1541CPU:" target="-1" id="492"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="VIA 1" id="452">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpVC1541VIA1:" target="-1" id="493"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="VIA 2" id="449">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpVC1541VIA2:" target="-1" id="507"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Memory" id="450">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="dumpVC1541Memory:" target="-1" id="487"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem title="Keyboard" id="436">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="dumpKeyboard:" target="-1" id="508"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Joystick port 1" id="531">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="dumpC64JoystickA:" target="-1" id="T6M-Xr-kHQ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Joystick port 2" id="537">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="dumpC64JoystickB:" target="-1" id="Wk0-ml-hsq"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="IEC bus" id="439">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="dumpIEC:" target="-1" id="499"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
                             </menuItem>
                         </items>
                     </menu>

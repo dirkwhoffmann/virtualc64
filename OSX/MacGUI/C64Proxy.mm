@@ -399,20 +399,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) trigger:(JoystickEvent)event { wrapper->joystick->trigger(event); }
-
-- (void) setButton:(NSInteger)pressed { wrapper->joystick->setButton((bool)pressed); }
-- (void) pressButton { wrapper->joystick->pressButton(); }
-- (void) releaseButton { wrapper->joystick->releaseButton(); }
-- (void) pullUp { wrapper->joystick->pullUp(); }
-- (void) pullDown { wrapper->joystick->pullDown(); }
-- (void) pullLeft { wrapper->joystick->pullLeft(); }
-- (void) pullRight { wrapper->joystick->pullRight(); }
-- (void) releaseAxes { wrapper->joystick->releaseAxes(); }
-- (void) setXAxis:(NSInteger)value { wrapper->joystick->setXAxis((int)value); }
-- (void) setYAxis:(NSInteger)value { wrapper->joystick->setYAxis((int)value); }
-- (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
-- (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
-
 - (void) dump { wrapper->joystick->dumpState(); }
 
 @end
@@ -622,7 +608,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) hasTape { return wrapper->datasette->hasTape(); }
 - (void) pressPlay { wrapper->datasette->pressPlay(); }
 - (void) pressStop { wrapper->datasette->pressStop(); }
-- (void) pressRewind { wrapper->datasette->rewind(); }
+- (void) rewind { wrapper->datasette->rewind(); }
 - (void) ejectTape { wrapper->datasette->ejectTape(); }
 - (NSInteger) getType { return wrapper->datasette->getType(); }
 - (long) durationInCycles { return wrapper->datasette->getDurationInCycles(); }
@@ -745,6 +731,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
 
 - (void) dump { wrapper->c64->dumpState(); }
+- (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 - (Message *)message { return wrapper->c64->getMessage(); }
 - (void) putMessage:(int)msg { wrapper->c64->putMessage(msg); }
 
@@ -1081,6 +1068,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
 }
+
++ (instancetype) make
+{
+    Archive *archive = new Archive();
+    return [self make: archive];
+}
+
 + (instancetype) makeWithFile:(NSString *)path
 {
     Archive *archive = Archive::makeArchiveWithFile([path UTF8String]);
