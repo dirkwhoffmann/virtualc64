@@ -210,14 +210,6 @@
     NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
 }
 
-/*
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    NSLog(@"MyController::applicationDidFinishLaunching\n");
-    [[NSApplication sharedApplication] setAutomaticCustomizeTouchBarMenuItemEnabled:YES];
-}
-*/
-
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize
 {
     // Get some basic parameters
@@ -392,22 +384,6 @@
     } else {
         [c64 setPAL];
     }
-    
-    /*
-    NSLog(@"    VC64BasicRomFileKey: %@",
-          [defaults stringForKey:VC64BasicRomFileKey]);
-    NSLog(@"    VC64CharRomFileKey: %@",
-          [defaults stringForKey:VC64CharRomFileKey]);
-    NSLog(@"    VC64KernelRomFileKey: %@",
-          [defaults stringForKey:VC64KernelRomFileKey]);
-    NSLog(@"    VC64VC1541RomFileKey: %@",
-          [defaults stringForKey:VC64VC1541RomFileKey]);
-
-    [[self document] loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
-    [[self document] loadRom:[defaults stringForKey:VC64CharRomFileKey]];
-    [[self document] loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
-    [[self document] loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
-    */
     
     // Peripherals
     [c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
@@ -955,81 +931,6 @@
 		[stepOutButton setEnabled:false];		
 	}		
 }
-
-
-// --------------------------------------------------------------------------------
-// Action methods (main window area)
-// --------------------------------------------------------------------------------
-
-/*
-- (IBAction)driveAction:(id)sender
-{
-    NSLog(@"Drive action...");
-    if ([[c64 iec] isDriveConnected]) {
-        [[c64 iec] disconnectDrive];
-    } else {
-        [[c64 iec] connectDrive];
-    }
-}
-
-- (IBAction)driveEjectAction:(id)sender
-{
-    NSLog(@"driveEjectAction");
-
-    if (![[c64 vc1541] DiskModified]) {
-        [[c64 vc1541] ejectDisk];
-        return;
-    }
-        
-    NSAlert *alert = [[NSAlert alloc] init];
-    
-    [alert setIcon:[NSImage imageNamed:@"diskette"]];
-    [alert addButtonWithTitle:@"Export..."];
-    [alert addButtonWithTitle:@"Eject"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert setMessageText: @"Do you want to export the currently inserted disk to a D64 archive?"];
-    [alert setInformativeText: @"Your changes will be lost if you don’t save them."];
-    [alert setAlertStyle: NSCriticalAlertStyle];
-    
-    NSModalResponse result = [alert runModal];
-    
-    if (result == NSAlertFirstButtonReturn) {
-
-        if ([self exportDiskDialogWorker:3]) {
-            NSLog(@"Disk saved. Ejecting...");
-            [[c64 vc1541] ejectDisk];
-        } else {
-            NSLog(@"Export dialog cancelled. Ask again...");
-            [self driveEjectAction:sender];
-        }
-    }
-
-    if (result == NSAlertSecondButtonReturn) {
-        NSLog(@"Ejecting disk...");
-        [[c64 vc1541] ejectDisk];
-    }
-
-    if (result == NSAlertThirdButtonReturn) {
-        NSLog(@"Canceling disk data loss warning dialog...");
-    }
-}
-*/
-
-- (IBAction)tapeEjectAction:(id)sender
-{
-    NSLog(@"tapeEjectAction");
-    [[c64 datasette] ejectTape];
-    // [[self document] setTape:NULL];
-}
-
-/*
-- (IBAction)cartridgeEjectAction:(id)sender
-{
-	NSLog(@"cartridgeEjectAAction");
-    [[self document] setAttachedCartridge:nil];
-	[c64 detachCartridgeAndReset];
-}
-*/
 
 - (IBAction)alwaysWarpAction:(id)sender
 {

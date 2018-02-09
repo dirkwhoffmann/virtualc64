@@ -151,7 +151,6 @@ extension MyController {
         showStatusBar(!statusBar)
     }
     
-    
     @objc public func showStatusBar(_ value: Bool) {
         
         if !statusBar && value {

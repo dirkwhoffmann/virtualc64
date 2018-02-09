@@ -166,7 +166,6 @@
                 <outlet property="stepOutButton" destination="2094" id="2109"/>
                 <outlet property="stepOverButton" destination="2096" id="2108"/>
                 <outlet property="stopAndGoButton" destination="2100" id="2102"/>
-                <outlet property="tapeDialog" destination="Dhu-87-6sj" id="vwJ-0Y-oXf"/>
                 <outlet property="tapeEject" destination="QgG-3s-0CX" id="5OD-4O-7Jf"/>
                 <outlet property="tapeIcon" destination="NlM-JA-g9p" id="uQv-wG-QgZ"/>
                 <outlet property="tapeProgress" destination="H1X-Kk-fcE" id="x5B-ie-sqw"/>
@@ -243,7 +242,7 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
-                            <action selector="tapeEjectAction:" target="-2" id="2yg-D4-e5M"/>
+                            <action selector="ejectTapeAction:" target="-2" id="NcJ-Sf-xGr"/>
                         </connections>
                     </button>
                     <button hidden="YES" id="NlM-JA-g9p">
@@ -3022,118 +3021,6 @@
             </subviews>
             <point key="canvasLocation" x="539" y="408"/>
         </customView>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Dhu-87-6sj" userLabel="TapeDialog" customClass="TapeDialog">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="19" y="153" width="488" height="230"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
-            <value key="minSize" type="size" width="488" height="230"/>
-            <view key="contentView" id="JwP-07-2BF">
-                <rect key="frame" x="0.0" y="0.0" width="488" height="230"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <box verticalHuggingPriority="750" boxType="separator" id="rcJ-rc-0Cf">
-                        <rect key="frame" x="20" y="196" width="448" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    </box>
-                    <textField verticalHuggingPriority="750" id="rE0-0a-S2s">
-                        <rect key="frame" x="18" y="206" width="452" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Datasette" id="Cjz-gt-oy2">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <box autoresizesSubviews="NO" borderType="line" title="Archive name" id="5pX-FM-kh9">
-                        <rect key="frame" x="335" y="57" width="137" height="135"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="CMo-8Z-0eP">
-                            <rect key="frame" x="1" y="1" width="135" height="119"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <imageView id="seI-pA-tuL" customClass="MountDragView">
-                                    <rect key="frame" x="17" y="11" width="101" height="97"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="IconT64" id="GrI-Ub-F4Z"/>
-                                    <connections>
-                                        <outlet property="controller" destination="-2" id="Lb7-1T-I2e"/>
-                                    </connections>
-                                </imageView>
-                            </subviews>
-                        </view>
-                    </box>
-                    <button verticalHuggingPriority="750" id="REz-hd-Tcv">
-                        <rect key="frame" x="332" y="13" width="143" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Insert tape" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="pnB-qp-8qP">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="endTapeDialog:" target="-2" id="kQ2-Io-l2X"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="FWJ-Hr-eyS">
-                        <rect key="frame" x="14" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="iXD-Qq-AaX">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancelTapeDialog:" target="-2" id="WbN-aA-WtZ"/>
-                        </connections>
-                    </button>
-                    <button id="ttO-gK-9RO">
-                        <rect key="frame" x="107" y="64" width="168" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U84-BP-98B">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="pressPlayAction:" target="Dhu-87-6sj" id="kJr-yS-HFi"/>
-                        </connections>
-                    </button>
-                    <textField verticalHuggingPriority="750" id="czP-9Q-9k7">
-                        <rect key="frame" x="76" y="119" width="225" height="56"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="TAP archives contain a continous bit-stream with no preview available." id="81L-ww-kxd">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button id="G9s-bL-nHr">
-                        <rect key="frame" x="107" y="92" width="104" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="894-3k-9b3">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="autoTypeAction:" target="Dhu-87-6sj" id="V63-BL-eGt"/>
-                        </connections>
-                    </button>
-                </subviews>
-            </view>
-            <connections>
-                <outlet property="CancelButton" destination="FWJ-Hr-eyS" id="9DA-Zh-2B7"/>
-                <outlet property="OKButton" destination="REz-hd-Tcv" id="27Y-05-FCz"/>
-                <outlet property="diskIconFrame" destination="5pX-FM-kh9" id="6RL-O2-eD3"/>
-                <outlet property="headerText" destination="rE0-0a-S2s" id="DzT-J5-xgN"/>
-                <outlet property="pressPlayButton" destination="ttO-gK-9RO" id="btw-7l-CcN"/>
-                <outlet property="typeButton" destination="G9s-bL-nHr" id="6MB-5H-sJy"/>
-            </connections>
-            <point key="canvasLocation" x="-374" y="-599"/>
-        </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1872" userLabel="RomDialog" customClass="RomDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
@@ -4567,7 +4454,6 @@ DQ
     </objects>
     <resources>
         <image name="1541" width="384" height="384"/>
-        <image name="IconT64" width="512" height="512"/>
         <image name="LEDgray" width="128" height="128"/>
         <image name="LEDnewGreen" width="65" height="65"/>
         <image name="bottom" width="24" height="24"/>
