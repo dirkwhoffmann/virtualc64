@@ -43,7 +43,7 @@ extension MyController {
         }
         
         // Which mount dialog should we use?
-        var controller: MountController!
+        var controller: UserDialogController!
         switch attachment.type() {
         case T64_CONTAINER,
              PRG_CONTAINER,
@@ -83,7 +83,7 @@ extension MyController {
             return
         }
         
-        controller.showSheet(self)
+        controller.showSheet(withParent: self)
     }
 
     // --------------------------------------------------------------------------------

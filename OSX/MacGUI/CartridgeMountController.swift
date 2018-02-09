@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CartridgeMountController : MountController {
+class CartridgeMountController : UserDialogController {
     
     var cartridge: CRTProxy!
     
@@ -19,6 +19,7 @@ class CartridgeMountController : MountController {
     @IBOutlet weak var game: NSTextField!
     @IBOutlet weak var data: NSTableView!
     
+    /*
     override func showSheet(_ controller: MyController) {
         
         let document = controller.document as! MyDocument
@@ -26,10 +27,13 @@ class CartridgeMountController : MountController {
         
         super.showSheet(controller)
     }
+    */
     
     override public func awakeFromNib() {
         
         track()
+        
+        cartridge = mydocument.attachment as! CRTProxy
         
         // Configure table view
         data.intercellSpacing = NSSize(width: 0, height: 0)
@@ -60,15 +64,9 @@ class CartridgeMountController : MountController {
         
         // Attach cartridge
         c64.attachCartridgeAndReset(cartridge)
+        parent.rotateBack()
         
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .OK)
-    }
-    
-    @IBAction func cancelAction(_ sender: Any!) {
-        
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
+        hideSheet()
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TapeMountController : MountController {
+class TapeMountController : UserDialogController {
     
     var tape: TAPProxy!
     
@@ -15,11 +15,17 @@ class TapeMountController : MountController {
     @IBOutlet weak var autoLoad: NSButton!
     @IBOutlet weak var autoPress: NSButton!
     
+    /*
     override func showSheet(_ controller: MyController) {
         
         let document = controller.document as! MyDocument
         tape = document.attachment as! TAPProxy
         super.showSheet(controller)
+    }
+    */
+    
+    override func awakeFromNib() {
+        tape = mydocument.attachment as! TAPProxy
     }
     
     //
@@ -34,24 +40,20 @@ class TapeMountController : MountController {
     
     @IBAction func okAction(_ sender: Any!) {
         
+        // Insert tape
         c64.insertTape(tape)
-
+        parent.rotateBack()
+        
+        // Process options
         if autoLoad.integerValue == 1 {
             if autoPress.integerValue == 1 {
-                controller.simulateUserTypingTextAndPressPlay("LOAD\n")
+                parent.simulateUserTypingTextAndPressPlay("LOAD\n")
             } else {
-                controller.simulateUserTypingText("LOAD\n")
+                parent.simulateUserTypingText("LOAD\n")
             }
         }
-
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .OK)
-    }
-    
-    @IBAction func cancelAction(_ sender: Any!) {
         
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
+        hideSheet()
     }
 }
 

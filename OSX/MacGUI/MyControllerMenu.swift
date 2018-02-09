@@ -364,19 +364,10 @@ extension MyController {
     }
     
     @IBAction func exportDisk(_ sender: Any!) {
-        
-        track()
-        
-        // Convert disk to D64 archive
-        guard let d64archive = D64Proxy.make(withVC1541: c64.vc1541) else {
-            NSLog("Failed to create D64 archive from disk in drive")
-            return
-        }
-        
-        // Show export panel
+
         let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
-        exportPanel.runPanel(d64archive, parent: self)
+        exportPanel.showSheet(withParent: self)
     }
     
     // -----------------------------------------------------------------

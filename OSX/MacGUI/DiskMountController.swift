@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DiskMountController : MountController {
+class DiskMountController : UserDialogController {
     
     var archive: ArchiveProxy!
     
@@ -28,7 +28,7 @@ class DiskMountController : MountController {
     
     override public func awakeFromNib() {
         
-        archive = attachment as! ArchiveProxy
+        archive = document?.attachment as! ArchiveProxy
         let numItems = archive.numberOfItems()
   
         stepper.minValue = 0
@@ -100,15 +100,9 @@ class DiskMountController : MountController {
         
         // Insert archive as disk
         c64.insertDisk(archive)
+        parent.rotateBack()
         
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .OK)
-    }
-    
-    @IBAction func cancelAction(_ sender: Any!) {
-        
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
+        hideSheet()
     }
 }
 
@@ -125,13 +119,6 @@ extension DiskMountController : NSTableViewDelegate {
         // c.font = cbmfont
         // c.textColor = .red
     }
-    
-    /*
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        
-        return true
-    }
-    */
 }
 
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ArchiveMountController : MountController {
+class ArchiveMountController : UserDialogController {
     
     var archive: ArchiveProxy!
     
@@ -25,20 +25,13 @@ class ArchiveMountController : MountController {
 
     override public func awakeFromNib() {
         
-        track()
-        
-        archive = attachment as! ArchiveProxy
+        archive = mydocument.attachment as! ArchiveProxy
         
         // Configure directory window
-        // contents.target = self
-        // contents.delegate = self
-        // contents.dataSource = self
-        // contents.doubleAction = #selector(ArchiveMountController.performDoubleClick(_:))
         contents.deselectAll(self)
         contents.intercellSpacing = NSSize(width: 0, height: 0)
         contents.selectRowIndexes(IndexSet.init(integer: 0), byExtendingSelection: false)
         contents.reloadData()
-        
         
         // Set icon and title
         if (archive.numberOfItems() == 1) {
@@ -54,20 +47,24 @@ class ArchiveMountController : MountController {
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
             header.stringValue = "T64 File Archive"
             break
+            
         case PRG_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconPRG"))
             header.stringValue = "PRG File Container"
             break
+            
         case P00_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconP00"))
             header.stringValue = "P00 File Container"
             break
+            
         case D64_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "D64 File Archive"
             subheader.stringValue = "This file contains a byte-accurate image of a C64 diskette."
             subsubheader.stringValue = "Flushing files into memory is not recommended for this file type."
             break
+            
         default:
             assert(false)
             break
@@ -84,19 +81,13 @@ class ArchiveMountController : MountController {
         
         // Insert archive as disk
         c64.insertDisk(archive)
+        parent.rotateBack()
         
         // Set write protection
         let value = protect.integerValue
         c64.vc1541.setWriteProtection(value != 0)
         
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .OK)
-    }
-    
-    @IBAction func cancelAction(_ sender: Any!) {
-
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
+        hideSheet()
     }
     
     @IBAction func performDoubleClick(_ sender: Any!) {
@@ -105,10 +96,9 @@ class ArchiveMountController : MountController {
         c64.flushArchive(archive, item: contents.selectedRow)
         
         // Type "RUN"
-        controller.simulateUserTypingText("RUN\n")
+        parent.simulateUserTypingText("RUN\n")
         
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .OK)
+        hideSheet()
     }
 }
 

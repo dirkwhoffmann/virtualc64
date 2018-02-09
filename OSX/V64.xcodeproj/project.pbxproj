@@ -102,7 +102,7 @@
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
-		50763277202989D300575110 /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* MountController.swift */; };
+		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
@@ -379,7 +379,7 @@
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
-		50763276202989D300575110 /* MountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountController.swift; sourceTree = "<group>"; };
+		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
@@ -765,7 +765,7 @@
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				50763278202989E000575110 /* DialogControllers */,
+				50763278202989E000575110 /* UserDialogControllers */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -958,17 +958,17 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		50763278202989E000575110 /* DialogControllers */ = {
+		50763278202989E000575110 /* UserDialogControllers */ = {
 			isa = PBXGroup;
 			children = (
-				50763276202989D300575110 /* MountController.swift */,
+				50763276202989D300575110 /* UserDialogController.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
 				50265F56202D00940041C315 /* TapeMountController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 			);
-			name = DialogControllers;
+			name = UserDialogControllers;
 			sourceTree = "<group>";
 		};
 		5080F3511EE7469C001313D4 /* TouchBar Icons */ = {
@@ -1290,7 +1290,7 @@
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
-				50763277202989D300575110 /* MountController.swift in Sources */,
+				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,

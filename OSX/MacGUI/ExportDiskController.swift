@@ -7,13 +7,12 @@
 
 import Foundation
 
-class ExportDiskController : NSWindowController {
+class ExportDiskController : UserDialogController {
 
     @IBOutlet weak var button: NSPopUpButton!
     var type: ContainerType = D64_CONTAINER
     var savePanel: NSSavePanel!
     var d64archive: D64Proxy!
-    var parent: MyController!
     
     override func awakeFromNib() {
         
@@ -26,10 +25,16 @@ class ExportDiskController : NSWindowController {
             button.item(at: 3)?.isHidden = true // P00
         }
     }
-    func runPanel(_ d64archive: D64Proxy, parent: MyController) {
+    
+    override func showSheet(withParent: MyController, completionHandler:(() -> Void)? = nil) {
         
-        self.d64archive = d64archive
-        self.parent = parent
+        parent = withParent
+        mydocument = parent.document as! MyDocument
+        parentWindow = parent.window
+        c64 = mydocument.c64
+        
+        // Convert inserted disk to D64 archive
+        d64archive = D64Proxy.make(withVC1541: c64.vc1541)
         
         // Create save panel
         savePanel = NSSavePanel()
@@ -38,24 +43,22 @@ class ExportDiskController : NSWindowController {
         savePanel.prompt = "Export"
         savePanel.title = "Export"
         savePanel.nameFieldLabel = "Export As:"
-        
-        // Add file type selector
         savePanel.accessoryView = window?.contentView
         
         // Run panel as sheet
         savePanel.beginSheetModal(for: parent.window!, completionHandler: { result in
             if result == .OK {
                 self.export()
-                parent.c64.vc1541.setDiskModified(false)
+                self.c64.vc1541.setDiskModified(false)
             }
         })
     }
     
-    @discardableResult
-    func export() -> Bool {
+    @discardableResult func export() -> Bool {
         
-        // Create archive to write on disk
+        // Convert D64 archive to target format
         var archive: ArchiveProxy?
+        
         switch type {
         case D64_CONTAINER:
             track("Exporting to D64 format")
@@ -109,16 +112,19 @@ class ExportDiskController : NSWindowController {
         savePanel.allowedFileTypes = ["d64"]
         type = D64_CONTAINER
     }
+    
     @IBAction func selectT64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["t64"]
         type = T64_CONTAINER
     }
+    
     @IBAction func selectPRG(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["prg"]
         type = PRG_CONTAINER
     }
+    
     @IBAction func selectP00(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["P00"]
