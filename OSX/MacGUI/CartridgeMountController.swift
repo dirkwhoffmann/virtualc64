@@ -19,10 +19,12 @@ class CartridgeMountController : MountController {
     @IBOutlet weak var game: NSTextField!
     @IBOutlet weak var data: NSTableView!
     
-    override func setParentController(_ controller: MyController) {
+    override func showSheet(_ controller: MyController) {
         
-        super.setParentController(controller)
-        cartridge = attachment as! CRTProxy
+        let document = controller.document as! MyDocument
+        cartridge = document.attachment as! CRTProxy
+        
+        super.showSheet(controller)
     }
     
     override public func awakeFromNib() {

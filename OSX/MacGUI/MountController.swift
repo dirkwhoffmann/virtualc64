@@ -14,21 +14,21 @@ class MountController : NSWindowController {
     var c64: C64Proxy!
     var parentWindow: NSWindow!
     
-    func setParentController(_ controller: MyController) {
+    func showSheet(_ controller: MyController) {
+        
+        track()
         
         let document = controller.document as! MyDocument
         self.controller = controller
         self.attachment = document.attachment
         self.c64 = document.c64
         self.parentWindow = controller.window
-    }
-    
-    func cleanup() {
-        track()
-        self.controller = nil
-        self.attachment = nil
-        self.c64 = nil
-        self.parentWindow = nil
+        
+        parentWindow!.beginSheet(window!, completionHandler: { result in
+            if result == NSApplication.ModalResponse.OK {
+                controller.rotateBack()
+            }
+        })
     }
 }
 

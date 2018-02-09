@@ -15,11 +15,11 @@ class TapeMountController : MountController {
     @IBOutlet weak var autoLoad: NSButton!
     @IBOutlet weak var autoPress: NSButton!
     
-    override func setParentController(_ controller: MyController) {
+    override func showSheet(_ controller: MyController) {
         
-        track()
-        super.setParentController(controller)
-        tape = attachment as! TAPProxy
+        let document = controller.document as! MyDocument
+        tape = document.attachment as! TAPProxy
+        super.showSheet(controller)
     }
     
     //

@@ -83,19 +83,7 @@ extension MyController {
             return
         }
         
-        // Show dialog as a sheet
-        controller.setParentController(self)
-        if let sheetWindow = controller.window {
-            window!.beginSheet(sheetWindow, completionHandler: { responseCode in
-                
-                // We need to do somethig with controller. Otherwise, ARC deletes it too early.
-                controller.cleanup()
-                
-                if responseCode == NSApplication.ModalResponse.OK {
-                    self.rotateBack()
-                }
-            })
-        }
+        controller.showSheet(self)
     }
 
     // --------------------------------------------------------------------------------
