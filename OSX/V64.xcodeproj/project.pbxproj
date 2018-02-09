@@ -590,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				50C4F055202D8B37004C5F21 /* XIB files */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -620,12 +621,6 @@
 			children = (
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
-				50F55DA30F28EADC0040592B /* MyDocument.xib */,
-				50F55DCB0F28EC010040592B /* MainMenu.xib */,
-				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
-				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
-				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,
-				5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -1022,6 +1017,19 @@
 				50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */,
 			);
 			name = TouchBar;
+			sourceTree = "<group>";
+		};
+		50C4F055202D8B37004C5F21 /* XIB files */ = {
+			isa = PBXGroup;
+			children = (
+				50F55DA30F28EADC0040592B /* MyDocument.xib */,
+				50F55DCB0F28EC010040592B /* MainMenu.xib */,
+				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
+				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
+				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,
+				5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */,
+			);
+			path = "XIB files";
 			sourceTree = "<group>";
 		};
 		50C8924D1BEF35FB00231B96 /* MetalView */ = {
