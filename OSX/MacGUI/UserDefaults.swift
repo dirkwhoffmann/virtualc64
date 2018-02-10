@@ -26,9 +26,7 @@ struct VC64Keys {
     static let aspectRatio    = "VC64FullscreenKeepAspectRatioKey"
 
     static let joyKeyMap1     = "VC64JoyKeyMap1"
-    static let joyKeyCharMap1 = "VC64JoyKeyCharMap1"
     static let joyKeyMap2     = "VC64JoyKeyMap2"
-    static let joyKeyCharMap2 = "VC64JoyKeyCharMap2"
     static let disconnectKeys = "VC64DisconnectKeys"
     
     // Hardware preferences dialog
@@ -87,30 +85,6 @@ extension MyController {
             VC64Keys.videoFilter: 0,
             VC64Keys.aspectRatio: false,
         
-            VC64Keys.joyKeyMap1: ["123": String(JOYSTICK_LEFT.rawValue),
-                                  "124": String(JOYSTICK_RIGHT.rawValue),
-                                  "126": String(JOYSTICK_UP.rawValue),
-                                  "125": String(JOYSTICK_DOWN.rawValue),
-                                  "49": String(JOYSTICK_FIRE.rawValue)],
-            
-            VC64Keys.joyKeyCharMap1: [String(JOYSTICK_LEFT.rawValue): " ",
-                                      String(JOYSTICK_RIGHT.rawValue): " ",
-                                      String(JOYSTICK_UP.rawValue): " ",
-                                      String(JOYSTICK_DOWN.rawValue): " ",
-                                      String(JOYSTICK_FIRE.rawValue): " "],
-            
-            VC64Keys.joyKeyMap2: ["0": String(JOYSTICK_LEFT.rawValue),
-                                  "1": String(JOYSTICK_RIGHT.rawValue),
-                                  "13": String(JOYSTICK_UP.rawValue),
-                                  "6": String(JOYSTICK_DOWN.rawValue),
-                                  "7": String(JOYSTICK_FIRE.rawValue)],
-            
-            VC64Keys.joyKeyCharMap2: [String(JOYSTICK_LEFT.rawValue): "a",
-                                      String(JOYSTICK_RIGHT.rawValue): "s",
-                                      String(JOYSTICK_UP.rawValue): "w",
-                                      String(JOYSTICK_DOWN.rawValue): "y",
-                                      String(JOYSTICK_FIRE.rawValue): "x"],
-
             VC64Keys.disconnectKeys: true
         ]
         
@@ -164,17 +138,15 @@ extension MyController {
         setVideoUpscaler(defaults.integer(forKey: VC64Keys.videoUpscaler))
         setVideoFilter(defaults.integer(forKey: VC64Keys.videoFilter))
         setFullscreenKeepAspectRatio(defaults.bool(forKey: VC64Keys.aspectRatio))
-        if let dict = defaults.object(forKey: VC64Keys.joyKeyMap1) as? [String:String] {
-            gamePadManager.gamePads[0]?.keymap.mappingStrStr = dict
+        if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
+            if let keymap = try? JSONDecoder().decode(KeyMap.self, from: data) {
+               gamePadManager.gamePads[0]?.keymap = keymap
+            }
         }
-        if let dict = defaults.object(forKey: VC64Keys.joyKeyCharMap1) as? [String:String] {
-            gamePadManager.gamePads[0]?.keymap.characterStrStr = dict
-        }
-        if let dict = defaults.object(forKey: VC64Keys.joyKeyMap2) as? [String:String] {
-            gamePadManager.gamePads[1]?.keymap.mappingStrStr = dict
-        }
-        if let dict = defaults.object(forKey: VC64Keys.joyKeyCharMap2) as? [String:String] {
-            gamePadManager.gamePads[1]?.keymap.characterStrStr = dict
+        if let data = defaults.data(forKey: VC64Keys.joyKeyMap2) {
+            if let keymap = try? JSONDecoder().decode(KeyMap.self, from: data) {
+                gamePadManager.gamePads[1]?.keymap = keymap
+            }
         }
         keyboardcontroller.setDisconnectEmulationKeys(defaults.bool(forKey: VC64Keys.disconnectKeys))
     }
@@ -218,14 +190,12 @@ extension MyController {
         defaults.set(videoUpscaler(), forKey: VC64Keys.videoUpscaler)
         defaults.set(videoFilter(), forKey: VC64Keys.videoFilter)
         defaults.set(fullscreenKeepAspectRatio(), forKey: VC64Keys.aspectRatio)
-        defaults.set(gamePadManager.gamePads[0]?.keymap.mappingStrStr,
-                     forKey: VC64Keys.joyKeyMap1)
-        defaults.set(gamePadManager.gamePads[0]?.keymap.characterStrStr,
-                     forKey: VC64Keys.joyKeyCharMap1)
-        defaults.set(gamePadManager.gamePads[1]?.keymap.mappingStrStr,
-                     forKey: VC64Keys.joyKeyMap2)
-        defaults.set(gamePadManager.gamePads[1]?.keymap.characterStrStr,
-                     forKey: VC64Keys.joyKeyCharMap2)
+        if let keymap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keymap) {
+            defaults.set(keymap, forKey: VC64Keys.joyKeyMap1)
+        }
+        if let keymap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keymap) {
+            defaults.set(keymap, forKey: VC64Keys.joyKeyMap2)
+        }
         defaults.set(getDisconnectEmulationKeys(), forKey: VC64Keys.disconnectKeys)
     }
     
@@ -260,6 +230,8 @@ extension MyController {
     @objc func restoreEmulatorUserDefaults() {
         
         track()
+        gamePadManager.restoreFactorySettings()
+        
         // Remove keys
         let keys: [String] = [
             VC64Keys.eyeX,
@@ -270,9 +242,7 @@ extension MyController {
             VC64Keys.videoFilter,
             VC64Keys.aspectRatio,
             VC64Keys.joyKeyMap1,
-            VC64Keys.joyKeyCharMap1,
             VC64Keys.joyKeyMap2,
-            VC64Keys.joyKeyCharMap2,
             VC64Keys.disconnectKeys
         ]
         let defaults = UserDefaults.standard

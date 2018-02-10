@@ -23,57 +23,19 @@ import IOKit.hid
 /*! @details Each GamePad can be assigned a KeyMap which can be used
  *           to trigger events by using the keyboard.
  */
-public class KeyMap: NSObject {
+public class KeyMap: NSObject, Codable {
     
     /// Maping of fingerprints to joystick events
-    var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
+    var mapping : [UInt:UInt32] = [:]
 
-    /// [String:String] accessor for 'mapping' dictionary
-    var mappingStrStr: [String:String] {
-        get {
-            var result = [String: String]()
-            mapping.forEach {
-                result[String(describing: $0.0)] = String(($0.1).rawValue)
-            }
-            return result
-        }
-        set(strStr) {
-            strStr.forEach {
-                if let key = Int($0.0) {
-                    if let value = Int($0.1) {
-                        mapping[MacKeyFingerprint(key)] = JoystickDirection(UInt32(value))
-                    }
-                }
-            }
-        }
-    }
-    
     //! @brief Mapping of joystick events to readable representations of related fingerprints
-    var character : [Int:String] = [:]
-    
-    /// [String:String] accessor for 'character' dictionary
-    var characterStrStr: [String:String] {
-        get {
-            var result = [String: String]()
-            character.forEach {
-                result[String($0.0)] = $0.1
-            }
-            return result
-        }
-        set(strStr) {
-            strStr.forEach {
-                if let i = Int($0.0) {
-                    character[i] = $0.1
-                }
-            }
-        }
-    }
-    
+    var character : [UInt32:String] = [:]
+        
     @objc public
     func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
         
         for (fingerprint, direction) in mapping {
-            if direction == d {
+            if direction == d.rawValue {
                 return fingerprint;
             }
         }
@@ -85,23 +47,23 @@ public class KeyMap: NSObject {
         
         // Avoid double mappings
         for (fingerprint, direction) in mapping {
-            if direction == d {
+            if direction == d.rawValue {
                 mapping[fingerprint] = nil
             }
         }
-        mapping[f] = d
+        mapping[f] = d.rawValue
     }
     
     @objc public
     func getCharacter(for d: JoystickDirection) -> String {
         
-        return character[Int(d.rawValue)] ?? ""
+        return character[d.rawValue] ?? ""
     }
     
     @objc public
     func setCharacter(_ c: String?, for d: JoystickDirection) {
         
-        character[Int(d.rawValue)] = c
+        character[d.rawValue] = c
     }
 }
 
@@ -156,7 +118,7 @@ class GamePad
 
             var event: JoystickEvent
             
-            switch (direction) {
+            switch (JoystickDirection(direction)) {
             case JOYSTICK_UP:
                 event = PULL_UP
                 break
@@ -170,7 +132,7 @@ class GamePad
                 event = PULL_RIGHT
                 break
             default:
-                assert(direction == JOYSTICK_FIRE)
+                assert(JoystickDirection(direction) == JOYSTICK_FIRE)
                 event = PRESS_FIRE
             }
             
@@ -191,7 +153,7 @@ class GamePad
             
             var event: JoystickEvent
             
-            switch (direction) {
+            switch (JoystickDirection(direction)) {
             case JOYSTICK_UP, JOYSTICK_DOWN:
                 event = RELEASE_Y
                 break
@@ -199,7 +161,7 @@ class GamePad
                 event = RELEASE_X
                 break
             default:
-                assert(direction == JOYSTICK_FIRE)
+                assert(JoystickDirection(direction) == JOYSTICK_FIRE)
                 event = RELEASE_FIRE
             }
             

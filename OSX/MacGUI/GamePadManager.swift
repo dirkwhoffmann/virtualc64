@@ -41,13 +41,11 @@
 
     override init()
     {
-        hidManager = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone));
+        hidManager = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
         super.init()
     }
     
     @objc convenience init?(controller: MyController) {
-        
-        NSLog("\(#function)")
         
         self.init()
         self.controller = controller
@@ -55,7 +53,8 @@
         // Add  generic devices (two keyboard emulated joysticks)
         gamePads[0] = GamePad(manager: self)
         gamePads[1] = GamePad(manager: self)
-        
+        restoreFactorySettings()
+
         // Prepare for accepting HID devices
         let deviceCriteria = [
             [
@@ -93,7 +92,7 @@
     }
     
     deinit {
-        NSLog("\(#function)")
+        track()
         IOHIDManagerClose(hidManager, IOOptionBits(kIOHIDOptionsTypeNone));
     }
     
@@ -303,5 +302,37 @@
                 NSLog("  Location ID: %@", device.locationID ?? "UNKNOWN");
             }
         }
+    }
+    
+    @objc func restoreFactorySettings()
+    {
+        track()
+        
+        let keymap1 = gamePads[0]!.keymap
+        let keymap2 = gamePads[1]!.keymap
+        
+        keymap1.setFingerprint(123, for: JOYSTICK_LEFT)
+        keymap1.setFingerprint(124, for: JOYSTICK_RIGHT)
+        keymap1.setFingerprint(126, for: JOYSTICK_UP)
+        keymap1.setFingerprint(125, for: JOYSTICK_DOWN)
+        keymap1.setFingerprint(49,  for: JOYSTICK_FIRE)
+        
+        keymap1.setCharacter(" ", for: JOYSTICK_LEFT)
+        keymap1.setCharacter(" ", for: JOYSTICK_RIGHT)
+        keymap1.setCharacter(" ", for: JOYSTICK_UP)
+        keymap1.setCharacter(" ", for: JOYSTICK_DOWN)
+        keymap1.setCharacter(" ", for: JOYSTICK_FIRE)
+        
+        keymap2.setFingerprint(0,  for: JOYSTICK_LEFT)
+        keymap2.setFingerprint(1,  for: JOYSTICK_RIGHT)
+        keymap2.setFingerprint(13,  for: JOYSTICK_UP)
+        keymap2.setFingerprint(6, for: JOYSTICK_DOWN)
+        keymap2.setFingerprint(7,  for: JOYSTICK_FIRE)
+        
+        keymap2.setCharacter("a", for: JOYSTICK_LEFT)
+        keymap2.setCharacter("s", for: JOYSTICK_RIGHT)
+        keymap2.setCharacter("w", for: JOYSTICK_UP)
+        keymap2.setCharacter("y", for: JOYSTICK_DOWN)
+        keymap2.setCharacter("x", for: JOYSTICK_FIRE)
     }
 }
