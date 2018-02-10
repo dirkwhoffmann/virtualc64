@@ -3433,7 +3433,7 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" misplaced="YES" id="xGo-lF-CT2">
-                        <rect key="frame" x="439" y="123" width="18" height="14"/>
+                        <rect key="frame" x="439" y="130" width="18" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X" id="6mv-5V-7wN">
                             <font key="font" metaFont="smallSystem"/>
@@ -3542,7 +3542,7 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" misplaced="YES" id="cZp-Hp-FpX">
-                        <rect key="frame" x="439" y="98" width="18" height="14"/>
+                        <rect key="frame" x="439" y="105" width="18" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X" id="AET-Xn-92i">
                             <font key="font" metaFont="smallSystem"/>
@@ -3631,13 +3631,13 @@ DQ
                     <popUpButton verticalHuggingPriority="750" id="2236">
                         <rect key="frame" x="348" y="300" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="CCS64" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2301" id="2299">
+                        <popUpButtonCell key="cell" type="push" title="VICE" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2301" id="2299">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2300">
                                 <items>
-                                    <menuItem title="CCS64" state="on" id="2301"/>
-                                    <menuItem title="VICE" tag="1" id="2302"/>
+                                    <menuItem title="VICE" state="on" id="2301"/>
+                                    <menuItem title="CCS64" tag="1" id="2302"/>
                                     <menuItem title="FRODO" tag="2" id="2304"/>
                                     <menuItem title="PC64" tag="3" id="2303"/>
                                     <menuItem title="C64S" tag="4" id="2305"/>

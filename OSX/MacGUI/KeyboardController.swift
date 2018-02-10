@@ -33,6 +33,9 @@ extension CChar {
 }
 
 
+// TODO: Imlement as extension to MyController, not as a single class
+
+
 /*! @brief   Remembers currently pressed keys and there related C64KeyFingerprints
  *  @details Make this a simple variable once the whole class has been ported to Swift
  */

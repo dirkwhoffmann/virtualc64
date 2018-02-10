@@ -57,11 +57,10 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 - (IBAction)factorySettingsAction:(id)sender
 {
     NSLog(@"Restoring emulator factoring settings");
-    
-    // Joystick and keyboard
-    [controller restoreFactorySettingsKeyboard];
-    
+    [controller restoreEmulatorUserDefaults];
+
     // Video
+    /*
     [controller setEyeX:(float)0.0];
     [controller setEyeY:(float)0.0];
     [controller setEyeZ:(float)0.0];
@@ -73,6 +72,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     
     [self update];
     [self useAsDefaultAction:self];
+    */
 }
 
 - (IBAction)recordKeyAction:(id)sender

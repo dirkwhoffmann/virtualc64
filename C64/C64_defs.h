@@ -27,8 +27,8 @@ typedef struct {
  *  @details  Predefined RGB color values
  */
 typedef enum {
-    CCS64           = 0x00,
-    VICE            = 0x01,
+    VICE            = 0x00,
+    CCS64           = 0x01,
     FRODO           = 0x02,
     PC64            = 0x03,
     C64S            = 0x04,

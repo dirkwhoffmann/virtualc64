@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation HardwareDialog
 
@@ -44,13 +45,15 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 - (IBAction)useAsDefaultAction:(id)sender
 {
     NSLog(@"Saving emulator user defaults");
-    [controller saveVirtualMachineUserDefaults];
+    [controller saveHardwareUserDefaults];
 }
 
 - (IBAction)factorySettingsAction:(id)sender
 {
     NSLog(@"Restoring virtual machine factoring settings");
-    
+     
+    [controller restoreHardwareUserDefaults];
+    /*
     // System
     [self setPalAction:self];
     
@@ -67,13 +70,14 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 
     [self update];
     [self useAsDefaultAction:self];
+    */
 }
 
 - (IBAction)setPalAction:(id)sender
 {
     NSLog(@"setPalAction");
     
-    [c64 setPAL];
+    [c64 setNTSC:false];
     [self update];
 }
 
@@ -81,7 +85,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 {
     NSLog(@"setNtscAction");
     
-    [c64 setNTSC];
+    [c64 setNTSC:true];
     [self update];	
 }
 

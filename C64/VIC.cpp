@@ -34,7 +34,7 @@ VIC::VIC()
 	markDMALines = false;
     
     // Assign default color scheme
-    setColorScheme(CCS64);
+    setColorScheme(VICE);
     
     // Register sub components
     VirtualComponent *subcomponents[] = { &pixelEngine, NULL };

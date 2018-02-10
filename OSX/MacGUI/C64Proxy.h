@@ -614,6 +614,7 @@ struct ContainerWrapper;
 - (bool) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
+- (void) setNTSC:(BOOL)b;
 
 - (uint8_t) missingRoms;
 - (bool) isBasicRom:(NSString *)filename;

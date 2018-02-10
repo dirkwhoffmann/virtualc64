@@ -487,7 +487,6 @@ public:
      */
     void setColorScheme(ColorScheme scheme);
 
-    
     // @brief    Returns the number of frames per second.
     inline unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     

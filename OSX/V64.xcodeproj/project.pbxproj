@@ -42,6 +42,7 @@
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
+		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
@@ -306,6 +307,7 @@
 		50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportScreenshotController.swift; sourceTree = "<group>"; };
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
+		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
@@ -763,8 +765,9 @@
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				50763278202989E000575110 /* UserDialogControllers */,
+				50763278202989E000575110 /* UserDialogs */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -957,7 +960,7 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		50763278202989E000575110 /* UserDialogControllers */ = {
+		50763278202989E000575110 /* UserDialogs */ = {
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
@@ -968,7 +971,7 @@
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
 			);
-			name = UserDialogControllers;
+			name = UserDialogs;
 			sourceTree = "<group>";
 		};
 		5080F3511EE7469C001313D4 /* TouchBar Icons */ = {
@@ -1314,6 +1317,7 @@
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
+				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,

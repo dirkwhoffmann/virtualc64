@@ -15,12 +15,12 @@ public func track(_ message: String = "",
                   path: String = #file, function: String = #function, line: Int = #line ) {
     
     if let file = URL.init(string: path)?.deletingPathExtension().lastPathComponent {
-        print("\(file)::\(function).\(line): \(message)\n")
+        print("\(file)::\(function).\(line): \(message)")
     }
 }
 
 // -------------------------------------------------------------------
-//                          NSImage extensions
+//                         Image processing
 // -------------------------------------------------------------------
 
 extension NSImage {

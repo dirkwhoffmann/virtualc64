@@ -750,6 +750,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) isNTSC { return wrapper->c64->isNTSC(); }
 - (void) setPAL { wrapper->c64->setPAL(); }
 - (void) setNTSC { wrapper->c64->setNTSC(); }
+- (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
 
 - (uint8_t) missingRoms { return wrapper->c64->getMissingRoms(); }
 - (bool) isBasicRom:(NSString *)filename {

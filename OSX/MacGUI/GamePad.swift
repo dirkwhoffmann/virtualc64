@@ -25,11 +25,49 @@ import IOKit.hid
  */
 public class KeyMap: NSObject {
     
-    //! @brief Mapping of fingerprints to joystick events
+    /// Maping of fingerprints to joystick events
     var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
 
+    /// [String:String] accessor for 'mapping' dictionary
+    var mappingStrStr: [String:String] {
+        get {
+            var result = [String: String]()
+            mapping.forEach {
+                result[String(describing: $0.0)] = String(($0.1).rawValue)
+            }
+            return result
+        }
+        set(strStr) {
+            strStr.forEach {
+                if let key = Int($0.0) {
+                    if let value = Int($0.1) {
+                        mapping[MacKeyFingerprint(key)] = JoystickDirection(UInt32(value))
+                    }
+                }
+            }
+        }
+    }
+    
     //! @brief Mapping of joystick events to readable representations of related fingerprints
     var character : [Int:String] = [:]
+    
+    /// [String:String] accessor for 'character' dictionary
+    var characterStrStr: [String:String] {
+        get {
+            var result = [String: String]()
+            character.forEach {
+                result[String($0.0)] = $0.1
+            }
+            return result
+        }
+        set(strStr) {
+            strStr.forEach {
+                if let i = Int($0.0) {
+                    character[i] = $0.1
+                }
+            }
+        }
+    }
     
     @objc public
     func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {

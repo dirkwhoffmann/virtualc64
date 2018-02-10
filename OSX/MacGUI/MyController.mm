@@ -30,7 +30,7 @@
     /*! @brief   Keyboard controller
      *  @details Handles all keyboard related events
      */
-    KeyboardController *keyboardcontroller;
+    // KeyboardController *keyboardcontroller;
 
     IBOutlet MetalView *metalScreen;
 }
@@ -77,41 +77,11 @@
 @synthesize gamepadSlotA;
 @synthesize gamepadSlotB;
 
+@synthesize keyboardcontroller;
+
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
-
-+ (void)initialize {
-	
-	NSLog(@"MyController::initialize");
-
-    // Register standard defaults
-    [self registerStandardDefaults];
-    
-    // Change working directory to the main bundle ressource path.
-    /*
-    NSBundle* mainBundle = [NSBundle mainBundle];
-    NSString *path = [mainBundle resourcePath];
-    if (chdir([path UTF8String]) != 0)
-        NSLog(@"WARNING: Could not change working directory.");
-    else
-        NSLog(@"New base directory is %@", path);
-     */
-}
-
-/*
-- (instancetype)initWithWindowNibName:(NSNibName)windowNibName
-{
-    NSLog(@"MyController::initWithWindowNibName");
-    
-    return [super initWithWindowNibName:windowNibName];
-}
-*/
-
-- (void)dealloc
-{	
-	NSLog(@"MyController::dealloc");
-}
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
@@ -123,15 +93,7 @@
 	
 	// Stop metal view
     [metalScreen cleanup];
-    
-	// release C64
-    /*
-	[timerLock lock];
-	NSLog(@"Killing C64");
-	[c64 kill];
-	c64 = nil;
-	[timerLock unlock];
-     */
+
 }
 
 - (void)awakeFromNib
@@ -164,10 +126,6 @@
     [[[self window] windowController] setShouldCascadeWindows:NO];
     [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
     
-    // Load user defaults
-	[self loadUserDefaults];
-    [self loadVirtualMachineUserDefaults];
- 
     // Enable fullscreen mode
     [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
@@ -175,8 +133,8 @@
     [metalScreen setupMetal];
     NSLog(@"Metal is up and running");
     
-	// Start emulator
-	[c64 run];
+    // Load user defaults
+    [self loadUserDefaults];
 }
 
 - (void)configureWindow
@@ -298,156 +256,6 @@
 - (NSUndoManager *)undoManager
 {
     return [[self document] undoManager];
-}
-
-// --------------------------------------------------------------------------------
-//                                   User defaults
-// --------------------------------------------------------------------------------
-
-+ (void)registerStandardDefaults
-{
-	NSLog(@"MyController::registerStandardDefaults");
-	
-	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-	
-	// System 
-	[defaultValues setObject:@0 forKey:VC64PALorNTSCKey]; /*PAL*/
-	[defaultValues setObject:@"" forKey:VC64BasicRomFileKey];
-	[defaultValues setObject:@"" forKey:VC64CharRomFileKey];
-	[defaultValues setObject:@"" forKey:VC64KernelRomFileKey];
-	[defaultValues setObject:@"" forKey:VC64VC1541RomFileKey];
-	
-	// VC1541
-	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
-    [defaultValues setObject:@YES forKey:VC64DriveNoiseKey];
-    [defaultValues setObject:@YES forKey:VC64BitAccuracyKey];
-
-    // Joystick and keyboard
-    [GamePadManager registerStandardUserDefaults];
-    [defaultValues setObject:@YES forKey:VC64DisconnectEmulationKeys];
-
-	// Audio
-	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
-	[defaultValues setObject:@NO forKey:VC64SIDFilterKey];
-	[defaultValues setObject:@1 forKey:VC64SIDChipModelKey];
-	[defaultValues setObject:@0 forKey:VC64SIDSamplingMethodKey];
-	
-	// Video
-	[defaultValues setObject:@((float)0.0) forKey:VC64EyeX];
-	[defaultValues setObject:@((float)0.0) forKey:VC64EyeY];
-	[defaultValues setObject:@((float)0.0) forKey:VC64EyeZ];
-
-	[defaultValues setObject:@((int)CCS64) forKey:VC64ColorSchemeKey];
-    [defaultValues setObject:@0 forKey:VC64VideoUpscalerKey];
-	[defaultValues setObject:@0 forKey:VC64VideoFilterKey];
-    [defaultValues setObject:@NO forKey:VC64FullscreenKeepAspectRatioKey];
-		
-	// Register dictionary
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-}
-
-- (void)loadUserDefaults
-{
-	NSLog(@"MyController::loadUserDefaults");
-	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    // Joystick and Keyboard
-    [gamePadManager loadUserDefaults];
-    [keyboardcontroller setDisconnectEmulationKeys:[defaults boolForKey:VC64DisconnectEmulationKeys]];
-    
-	// Video
-    [metalScreen setEyeX:[defaults floatForKey:VC64EyeX]];
-    [metalScreen setEyeY:[defaults floatForKey:VC64EyeY]];
-    [metalScreen setEyeZ:[defaults floatForKey:VC64EyeZ]];
-
-    [[c64 vic] setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
-    [metalScreen setVideoUpscaler:[defaults integerForKey:VC64VideoUpscalerKey]];
-    [metalScreen setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
-    [metalScreen setFullscreenKeepAspectRatio:[defaults boolForKey:VC64FullscreenKeepAspectRatioKey]];
-}
-
-- (void)loadVirtualMachineUserDefaults
-{
-    NSLog(@"MyController::loadVirtualMachineUserDefaults");
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if (defaults == nil) {
-        NSLog(@"Cannot access NSUserDefaults.standard");
-        return;
-    }
-    
-    // System
-    if ([defaults integerForKey:VC64PALorNTSCKey]) {
-        [c64 setNTSC];
-    } else {
-        [c64 setPAL];
-    }
-    
-    // Peripherals
-    [c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
-    [[c64 vc1541] setSendSoundMessages:[defaults boolForKey:VC64DriveNoiseKey]];
-    [[c64 vc1541] setBitAccuracy:[defaults boolForKey:VC64BitAccuracyKey]];
-    
-    // Audio
-    [c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
-    [c64 setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
-    [c64 setChipModel:[defaults boolForKey:VC64SIDChipModelKey]];
-    [c64 setSamplingMethod:[defaults boolForKey:VC64SIDSamplingMethodKey]];
-}
-
-- (void)saveUserDefaults
-{
-	NSLog(@"MyController::saveUserDefaults");
-	
-	NSUserDefaults *defaults;
-	
-	// Set standard user defaults
-	defaults = [NSUserDefaults standardUserDefaults];
-
-    // Joystick and keyboard
-    [gamePadManager saveUserDefaults];
-    [defaults setBool:[keyboardcontroller getDisconnectEmulationKeys] forKey:VC64DisconnectEmulationKeys];
-    
-	// Video
-    [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
-    [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
-    [defaults setFloat:[metalScreen eyeZ] forKey:VC64EyeZ];
-    [defaults setInteger:[[c64 vic] colorScheme] forKey:VC64ColorSchemeKey];
-    [defaults setInteger:[metalScreen videoUpscaler] forKey:VC64VideoUpscalerKey];
-    [defaults setInteger:[metalScreen videoFilter] forKey:VC64VideoFilterKey];
-    [defaults setInteger:[metalScreen fullscreenKeepAspectRatio] forKey:VC64FullscreenKeepAspectRatioKey];
-}
-
-- (void)saveVirtualMachineUserDefaults
-{
-    NSLog(@"MyController::saveVirtualMachineUserDefaults");
-    
-    NSUserDefaults *defaults;
-    
-    // Set standard user defaults
-    defaults = [NSUserDefaults standardUserDefaults];
-    
-    // System
-    [defaults setInteger:[c64 isNTSC] forKey:VC64PALorNTSCKey];
-    
-    // VC1541
-    [defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
-    [defaults setBool:[[c64 vc1541] soundMessagesEnabled] forKey:VC64DriveNoiseKey];
-    [defaults setBool:[[c64 vc1541] bitAccuracy] forKey:VC64BitAccuracyKey];
-    
-    // Audio
-    [defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];
-    [defaults setBool:[c64 audioFilter] forKey:VC64SIDFilterKey];
-    [defaults setBool:[c64 chipModel] forKey:VC64SIDChipModelKey];
-    [defaults setBool:[c64 samplingMethod] forKey:VC64SIDSamplingMethodKey];
-}
-
-- (void)restoreFactorySettingsKeyboard
-{
-    [gamePadManager restoreFactorySettings];
-    [self setDisconnectEmulationKeys:YES];
 }
 
 // --------------------------------------------------------------------------------

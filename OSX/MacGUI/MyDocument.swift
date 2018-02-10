@@ -37,11 +37,16 @@ class MyDocument : NSDocument {
         
     override init() {
         
-        NSLog("MyDocument::\(#function)")
+        track()
         super.init()
         
-        // Create emulator instance and try to load ROMs
+        // Register standard user defaults
+        MyController.registerUserDefaults()
+        
+        // Create emulator instance
         c64 = C64Proxy()
+        
+        // Try to load ROMs
         let defaults = UserDefaults.standard
         loadRom(defaults.string(forKey: VC64BasicRomFileKey))
         loadRom(defaults.string(forKey: VC64CharRomFileKey))
@@ -51,7 +56,7 @@ class MyDocument : NSDocument {
  
     override open func makeWindowControllers() {
         
-        NSLog("\(#function)")
+        track()
         
         let nibName = NSNib.Name(rawValue: "MyDocument")
         let controller = MyController.init(windowNibName: nibName)

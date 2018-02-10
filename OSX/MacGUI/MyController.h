@@ -21,6 +21,7 @@
 // Forward declarations
 @class C64Proxy;
 @class GamePadManager;
+@class KeyboardController;
 @class PropertiesDialog;
 @class HardwareDialog;
 @class MediaDialog;
@@ -46,6 +47,9 @@ typedef unsigned long MacKeyFingerprint;
     
     // Game pad manager
     GamePadManager *gamePadManager;
+
+    // Keyboard controller
+    KeyboardController *keyboardcontroller;
     
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
@@ -298,6 +302,7 @@ typedef unsigned long MacKeyFingerprint;
 
 @property (strong) C64Proxy *c64;
 @property (readonly) GamePadManager *gamePadManager;
+@property (readonly) KeyboardController *keyboardcontroller;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
@@ -346,14 +351,6 @@ typedef unsigned long MacKeyFingerprint;
 
 // Undo manager
 - (NSUndoManager *)undoManager;
-
-// User defaults
-+ (void)registerStandardDefaults;
-- (void)loadUserDefaults;
-- (void)loadVirtualMachineUserDefaults;
-- (void)saveUserDefaults;
-- (void)saveVirtualMachineUserDefaults;
-- (void)restoreFactorySettingsKeyboard;
 
 // MetalView API
 - (BOOL)fullscreen;
