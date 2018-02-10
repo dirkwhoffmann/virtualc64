@@ -27,12 +27,7 @@
 
 @implementation MyController {
     
-    /*! @brief   Keyboard controller
-     *  @details Handles all keyboard related events
-     */
-    // KeyboardController *keyboardcontroller;
-
-    IBOutlet MetalView *metalScreen;
+    // IBOutlet MetalView *metalScreen;
 }
 
 @synthesize c64;
@@ -78,28 +73,14 @@
 @synthesize gamepadSlotB;
 
 @synthesize keyboardcontroller;
+@synthesize metalScreen;
+
+@synthesize timer;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
 
-- (void)windowWillClose:(NSNotification *)aNotification
-{
-	// NSLog(@"windowWillClose");
-	
-	// Stop timer
-	[timer invalidate];
-	timer = nil;
-	
-	// Stop metal view
-    [metalScreen cleanup];
-
-}
-
-- (void)awakeFromNib
-{	
-    NSLog(@"MyController::awakeFromNib");
-}
 
 - (void)windowDidLoad
 {
@@ -168,6 +149,7 @@
     NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
 }
 
+/*
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize
 {
     // Get some basic parameters
@@ -186,11 +168,13 @@
 
     return NSMakeSize(frameSize.width, frameSize.height + correction);
 }
+*/
 
 /*! @brief    Custom function to adjust window size programatically
  *  @details The size is adjusted to get the metal view's aspect ration right
  */
 
+/*
 - (void)adjustWindowSize
 {
     // Get frame of window
@@ -206,7 +190,7 @@
     
     [[self window] setFrame: frame display: YES animate: NO];    
 }
-
+*/
 
 // --------------------------------------------------------------------------------
 //                                   Full screen

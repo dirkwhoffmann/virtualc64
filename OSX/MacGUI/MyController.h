@@ -22,13 +22,14 @@
 @class C64Proxy;
 @class GamePadManager;
 @class KeyboardController;
+@class MetalView;
 @class PropertiesDialog;
 @class HardwareDialog;
 @class MediaDialog;
 @class MountDialog;
 @class TapeDialog;
 @class RomDialog;
-@class MyMetalView;
+@class MetalView;
 @class CpuTableView;
 @class MemTableView;
 @class Speedometer;
@@ -38,7 +39,7 @@
  */
 typedef unsigned long MacKeyFingerprint;
 
-@interface MyController : NSWindowController
+@interface MyController : NSWindowController 
 {
 	// Proxy object. Used get data from and sent data to the virtual C64
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
@@ -50,6 +51,8 @@ typedef unsigned long MacKeyFingerprint;
 
     // Keyboard controller
     KeyboardController *keyboardcontroller;
+    
+    IBOutlet MetalView *metalScreen;
     
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
@@ -303,6 +306,7 @@ typedef unsigned long MacKeyFingerprint;
 @property (strong) C64Proxy *c64;
 @property (readonly) GamePadManager *gamePadManager;
 @property (readonly) KeyboardController *keyboardcontroller;
+@property (readonly) MetalView *metalScreen;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
@@ -335,7 +339,6 @@ typedef unsigned long MacKeyFingerprint;
 @property NSLevelIndicator *clockSpeedBar;
 @property NSButton *warpIcon;
 
-
 @property CheatboxImageBrowserView *cheatboxImageBrowserView;
 @property NSMenuItem *menuItemFinalIII;
 @property NSEventModifierFlags modifierFlags;
@@ -343,11 +346,13 @@ typedef unsigned long MacKeyFingerprint;
 @property NSInteger gamepadSlotA;
 @property NSInteger gamepadSlotB;
 
+@property NSTimer *timer;
+
 // Initialization
 - (void)configureWindow;
 
 // Window handling
-- (void)adjustWindowSize;
+// - (void)adjustWindowSize;
 
 // Undo manager
 - (NSUndoManager *)undoManager;
@@ -394,7 +399,7 @@ typedef unsigned long MacKeyFingerprint;
 // Main window controls
 // - (IBAction)driveAction:(id)sender; PORTED TO SWIFT
 // - (IBAction)driveEjectAction:(id)sender; PORTED TO SWIFT
-- (IBAction)tapeEjectAction:(id)sender;
+// - (IBAction)tapeEjectAction:(id)sender;
 // - (IBAction)cartridgeEjectAction:(id)sender;
 - (IBAction)alwaysWarpAction:(id)sender;
 
@@ -412,14 +417,4 @@ typedef unsigned long MacKeyFingerprint;
 - (bool)showRomDialog:(Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;
 
-// - (bool)showMountDialog;
-// - (IBAction)cancelMountDialog:(id)sender;
-// - (IBAction)endMountDialog:(id)sender;
-
-// - (bool)showTapeDialog;
-// - (IBAction)cancelTapeDialog:(id)sender;
-// - (IBAction)endTapeDialog:(id)sender;
-
-// Exporting
-// - (BOOL)exportToD64:(NSString *)path;
 @end

@@ -7,11 +7,83 @@
 
 import Foundation
 
-extension MyController {
+// --------------------------------------------------------------------------------
+//                                NSWindowDelegate
+// --------------------------------------------------------------------------------
+
+extension MyController : NSWindowDelegate {
+ 
+    @objc public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+
+        // Get some basic parameters
+        let windowFrame = sender.frame
+        let deltaX = frameSize.width - windowFrame.size.width
+        let deltaY = frameSize.height - windowFrame.size.height
     
-    //! @brief  GamePadManager delegation method
-    /*! @returns true, iff a joystick event has been triggered on port A or port B
-     */
+        // How big would the metal view become?
+        let metalFrame = metalScreen.frame
+        let metalX = metalFrame.size.width + deltaX
+        let metalY = metalFrame.size.height + deltaY
+    
+        // We want to achieve an aspect ratio of 804:621
+        let newMetalY  = metalX * (621.0 / 804.0)
+        let correction = newMetalY - metalY
+    
+        return NSMakeSize(frameSize.width, frameSize.height + correction)
+    }
+    
+    /// Adjusts the window size programatically
+    /// The size is adjusted to get the metal view's aspect ration right
+    
+    @objc func adjustWindowSize() {
+        
+        track()
+        if var frame = window?.frame {
+    
+            // Compute size correction
+            let newsize = windowWillResize(window!, to: frame.size)
+            let correction = newsize.height - frame.size.height
+    
+            // Adjust frame
+            frame.origin.y -= correction;
+            frame.size = newsize;
+    
+            window!.setFrame(frame, display: true)
+        }
+    }
+
+    @objc public func windowWillClose(_ notification: Notification) {
+        
+        track()
+        
+        // Stop timer
+        timer.invalidate()
+        timer = nil
+        
+        // Stop metal view
+        metalScreen.cleanup()
+    }
+}
+
+extension MyController {
+
+    // --------------------------------------------------------------------------------
+    //                          Window life cycle methods
+    // --------------------------------------------------------------------------------
+    
+    
+    override open func awakeFromNib() {
+
+        track()
+    }
+    
+    // --------------------------------------------------------------------------------
+    //                               Game pad events
+    // --------------------------------------------------------------------------------
+
+    
+    /// GamePadManager delegation method
+    /// - Returns: true, iff a joystick event has been triggered on port A or port B
     @discardableResult
     func joystickEvent(slot: Int, event: JoystickEvent) -> Bool {
         
@@ -91,42 +163,6 @@ extension MyController {
     // --------------------------------------------------------------------------------
     
  
-    /*
-    @IBAction func driveEjectAction(_ sender: Any!) {
-    
-        NSLog("\(#function)")
-        
-        let drive = c64.vc1541!
-        
-        // Eject disk only if disk is not modified
-        if !drive.diskModified() {
-            drive.ejectDisk()
-            return
-        }
-        
-        // If disk is modified, ask the user how to proceed
-        let alert = NSAlert()
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.addButton(withTitle: "Eject")
-        alert.addButton(withTitle: "Cancel")
-        alert.messageText = "Do you want to export the inserted disk to a D64 archive?"
-        alert.informativeText = "Otherwise, your changes will be lost."
-        alert.alertStyle = .critical
-        
-        let result = alert.runModal()
-            
-        // Eject button
-        if result == .alertFirstButtonReturn {
-            NSLog("Ejecting disk...")
-            drive.ejectDisk()
-        }
-    
-        // Cancel button
-        if result == .alertSecondButtonReturn {
-            NSLog("Canceling disk data loss warning dialog...")
-        }
-    }
-*/
     // --------------------------------------------------------------------------------
     // Action methods (Cartridge)
     // --------------------------------------------------------------------------------
@@ -134,8 +170,6 @@ extension MyController {
     @IBAction func cartridgeEjectAction(_ sender: Any!) {
   
         NSLog("\(#function)")
-        // let document = self.document as! MyDocument
-        // document.attachment = nil
         c64.detachCartridgeAndReset()
     }
     

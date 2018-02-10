@@ -21,7 +21,7 @@ public extension MetalView {
   
     @objc public func setupMetal() {
 
-        NSLog("MyMetalView::setupMetal")
+        track()
         
         // TODO: Get rid of this reference. Don't communicate with model directly, use controller instead
         c64proxy = controller.c64
@@ -39,40 +39,38 @@ public extension MetalView {
     
     func buildMetal() {
     
-    NSLog("MyMetalView::buildMetal")
-    
-    
+        track()
             
-    // Metal device
-    device = MTLCreateSystemDefaultDevice()
-    precondition(device != nil, "Metal device must not be nil")
+        // Metal device
+        device = MTLCreateSystemDefaultDevice()
+        precondition(device != nil, "Metal device must not be nil")
     
-    // Metal layer
-    metalLayer = self.layer as! CAMetalLayer
-    precondition(metalLayer != nil, "Metal layer must not be nil")
+        // Metal layer
+        metalLayer = self.layer as! CAMetalLayer
+        precondition(metalLayer != nil, "Metal layer must not be nil")
         
-    metalLayer.device = device
-    metalLayer.pixelFormat = MTLPixelFormat.bgra8Unorm
-    metalLayer.framebufferOnly = true
-    metalLayer.frame = metalLayer.frame
-    layerWidth = metalLayer.drawableSize.width
-    layerHeight = metalLayer.drawableSize.height
+        metalLayer.device = device
+        metalLayer.pixelFormat = MTLPixelFormat.bgra8Unorm
+        metalLayer.framebufferOnly = true
+        metalLayer.frame = metalLayer.frame
+        layerWidth = metalLayer.drawableSize.width
+        layerHeight = metalLayer.drawableSize.height
     
-    // Command queue
-    queue = device?.makeCommandQueue()
-    precondition(queue != nil, "Metal command queue must not be nil")
+        // Command queue
+        queue = device?.makeCommandQueue()
+        precondition(queue != nil, "Metal command queue must not be nil")
     
-    // Shader library
-    library = device?.makeDefaultLibrary()
-    precondition(library != nil, "Metal library must not be nil")
+        // Shader library
+        library = device?.makeDefaultLibrary()
+        precondition(library != nil, "Metal library must not be nil")
     
-    // View parameters
-    self.sampleCount = 1
+        // View parameters
+        self.sampleCount = 1
     }
     
     func buildTextures() {
 
-        NSLog("MyMetalView::buildTextures")
+        track()
         precondition(device != nil)
 
         let readWriteUsage =
@@ -365,9 +363,8 @@ public extension MetalView {
     }
     
     func buildPipeline() {
-    
-        NSLog("MyMetalView::buildPipeline");
-    
+
+        track()
         precondition(device != nil)
         precondition(library != nil)
         

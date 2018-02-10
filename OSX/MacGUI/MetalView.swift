@@ -1,5 +1,5 @@
 //
-//  MyMetalView.swift
+//  MetalView.swift
 //  VirtualC64
 //
 //  Created by Dirk Hoffmann on 15.01.18.
@@ -169,7 +169,7 @@ public class MetalView: MTKView {
     
     override open func awakeFromNib() {
 
-        NSLog("MyMetalView::awakeFromNib")
+        track()
         
         // Create semaphore
         semaphore = DispatchSemaphore(value: 1);
@@ -199,8 +199,6 @@ public class MetalView: MTKView {
     @objc public func updateScreenGeometry() {
     
         var rect: CGRect
-        
-        // NSLog("MyMetalView::updateScreenGeometry")
         
         if c64proxy?.isPAL() == true {
     
@@ -476,7 +474,7 @@ public class MetalView: MTKView {
    
     @objc public func cleanup() {
     
-        NSLog("MyMetalView::cleanup")
+        track()
     }
     
 }

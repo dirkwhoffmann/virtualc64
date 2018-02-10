@@ -154,7 +154,7 @@ public extension NSImage {
 
 
 // --------------------------------------------------------------------------------
-//                            Extensions to MyMetalView
+//                            Extensions to MetalView
 // --------------------------------------------------------------------------------
 
 
@@ -168,7 +168,7 @@ public extension MetalView
     
     @objc func screenshot() -> NSImage?
     {
-        print("MyMetalViewHelper::screenshot")
+        track()
         
         return emulatorTexture.toNSImage(Float(textureRect.minX),
                                          Float(textureRect.minY),

@@ -552,7 +552,6 @@ struct ContainerWrapper;
     long colorScheme;
 }
 
-// @property (strong,readonly) MyMetalView *metalScreen;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VICProxy *vic;
