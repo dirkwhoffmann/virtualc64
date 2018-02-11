@@ -598,6 +598,8 @@ struct ContainerWrapper;
 
 - (Message *)message;
 - (void) putMessage:(int)msg;
+- (VC64Message) messageID:(Message *)message;
+- (NSInteger) messageValue:(Message *)message;
 
 - (void) powerUp;
 - (void) ping;

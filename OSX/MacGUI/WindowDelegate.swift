@@ -9,6 +9,18 @@ import Foundation
 
 extension MyController : NSWindowDelegate {
     
+    public func windowDidBecomeMain(_ notification: Notification) {
+        
+        track()
+        c64.enableAudio()
+    }
+    
+    public func windowDidResignMain(_ notification: Notification) {
+        
+        track()
+        c64.disableAudio()
+    }
+    
     public func windowWillClose(_ notification: Notification) {
         
         track()

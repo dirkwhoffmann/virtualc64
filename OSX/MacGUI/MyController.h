@@ -379,7 +379,7 @@ typedef unsigned long MacKeyFingerprint;
 
 // Timer and message processing
 // - (void)timerFunc;
-- (void)processMessage:(Message *)msg;
+// - (void)processMessage:(Message *)msg;
 
 // Refresh
 - (void)refresh;
@@ -404,7 +404,7 @@ typedef unsigned long MacKeyFingerprint;
 - (bool)showMediaDialog;
 - (IBAction)cancelMediaDialog:(id)sender;
 
-- (bool)showRomDialog:(Message *)msg;
+- (bool)showRomDialog:(NSInteger)i;
 - (IBAction)cancelRomDialog:(id)sender;
 
 @end

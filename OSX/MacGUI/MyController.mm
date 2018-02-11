@@ -150,90 +150,7 @@
      
 }
 
-
-// --------------------------------------------------------------------------------
-//                                Notifications
-// --------------------------------------------------------------------------------
-
-- (void) windowDidBecomeMain:(NSNotification *)notification
-{
-	// NSLog(@"windowDidBecomeMain");
-	[c64 enableAudio];	
-}
-
-- (void) windowDidResignMain:(NSNotification *)notification
-{
-	// NSLog(@"windowDidResignMain");
-	[c64 disableAudio];
-}
-
-// --------------------------------------------------------------------------------
-//                           Timer and message processing
-// --------------------------------------------------------------------------------
-
 /*
-- (void)timerFunc
-{
-    assert(timerLock != NULL);
-	[timerLock lock];
-	
-	
-	animationCounter++;
-	
-    // Do 24 times a second ...
-    {
-        // Process pending messages
-        Message *message;
-        while ((message = [c64 message]) != NULL) {
-            [self processMessage:message];
-        }
-    }
-    
-    // Do 12 times a second ...
-    if ((animationCounter % 2) == 0) {
-        
-        // Refresh debug panel if open
-        if ([c64 isRunning] && ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState)) {
-            [self refresh];
-        }
-    }
-    
-    // Do 6 times a second ...
-    if ((animationCounter % 4) == 0) {
-
-        // Update tape progress icon
-        // Note: The tape progress icon is not switched on or off by a "push" message, because
-        // some games continously switch on and off the datasette motor. This would quickly
-        // overflow the message queue.
-        if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
-            if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
-                [tapeProgress startAnimation:nil];
-                [c64 setTapeBusIsBusy:YES];
-            } else {
-                [tapeProgress stopAnimation:nil];
-                [c64 setTapeBusIsBusy:NO];
-            }
-        }
-    }
-    
-	// Do 3 times a second ...
-	if ((animationCounter % 8) == 0) {
-		[speedometer updateWithCycle:[c64 cycles] frame:[c64 frames]];
-        
-		// [clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %.0f fps", mhz, fps]];
-		// [clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
-	}
-    
-    // Let the cursor disappear in fullscreen mode
-    if ([metalScreen fullscreen] &&
-        CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventMouseMoved) > 1.0) {
-        [NSCursor setHiddenUntilMouseMoves:YES];
-    }
-
-    [timerLock unlock];
-}
-*/
-
 - (void)processMessage:(Message *)msg
 {
     // NSLog(@"Message %d",msg->id);
@@ -420,6 +337,7 @@
 			assert(0);
 	}
 }
+*/
 
 // --------------------------------------------------------------------------------
 //          Refresh methods: Force all GUI items to refresh their value
@@ -623,9 +541,9 @@
     [[self window] endSheet:mediaDialog returnCode:NSModalResponseCancel];
 }
 
-- (bool)showRomDialog:(Message *)msg
+- (bool)showRomDialog:(NSInteger)i
 {
-    [romDialog initialize:msg->i];
+    [romDialog initialize:(int)i];
     [[self window] beginSheet:romDialog completionHandler:nil];
 
     return YES;

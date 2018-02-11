@@ -105,7 +105,9 @@ extension MyController {
         
         // Process all pending messages
         while let message = c64.message() {
-            processMessage(message)
+            let id = c64.messageID(message)
+            let value = c64.messageValue(message)
+            processMessage(id: id, value: value)
         }
  
         // Do 12 times a second ...
@@ -127,21 +129,23 @@ extension MyController {
             // Note: The tape progress icon is not switched on or off by a "push" message,
             // because some games continously switch on and off the datasette motor.
             // This would quickly overflow the message queue.
-            if (c64.tapeBusIsBusy) {
+            if (c64.datasette.motor() && c64.datasette.playKey()) {
                 tapeProgress.startAnimation(self)
             } else {
                 tapeProgress.stopAnimation(self)
             }
-/*
+
+            /* Original code: Why so complicated???
             if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
-            if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
-            [tapeProgress startAnimation:nil];
-            [c64 setTapeBusIsBusy:YES];
-            } else {
-            [tapeProgress stopAnimation:nil];
-            [c64 setTapeBusIsBusy:NO];
-             }}
- */
+                if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
+                    [tapeProgress startAnimation:nil];
+                    [c64 setTapeBusIsBusy:YES];
+                } else {
+                    [tapeProgress stopAnimation:nil];
+                    [c64 setTapeBusIsBusy:NO];
+                }
+            }
+            */
         }
         
         // Do 3 times a second ...
@@ -163,6 +167,202 @@ extension MyController {
         timerLock.unlock()
     }
  
+    func processMessage(id: VC64Message, value: Int) {
+
+        // track("Message \(id.rawValue)")
+    
+        switch (id) {
+    
+        case MSG_READY_TO_RUN:
+    
+            // Close ROM dialog if open
+            // TODO: MAKE SURE THAT DIALOG IS ALREADY CLOSED
+            if (romDialog != nil) {
+                romDialog.orderOut(nil)
+                window?.endSheet(romDialog, returnCode: .cancel)
+                romDialog = nil
+            }
+    
+            // Start emulator
+            c64.run()
+            metalScreen.blendIn()
+            metalScreen.drawC64texture = true
+    
+            // Show mount dialog if an attachment is present
+            showMountDialog()
+            break;
+    
+        case MSG_RUN:
+            
+            info.stringValue = ""
+            enableUserEditing(false)
+            refresh()
+            cheatboxPanel.close()
+ 
+            // Disable undo because the internal state changes permanently
+            document?.updateChangeCount(.changeDone)
+            undoManager?.removeAllActions()
+            break
+    
+        case MSG_HALT:
+            
+            enableUserEditing(true)
+            refresh()
+            break
+    
+        case MSG_ROM_LOADED:
+            
+            // Update ROM dialog
+            if romDialog != nil {
+                romDialog.update(Int32(c64.missingRoms()))
+            }
+            break
+    
+        case MSG_ROM_MISSING:
+
+            precondition(value != 0)
+            enableUserEditing(true) // Why?
+            refresh()
+            showRomDialog(value)
+            break
+            
+        case MSG_SNAPSHOT:
+
+            // Update TouchBar with new snapshpot image
+            if #available(OSX 10.12.2, *) {
+                rebuildTouchBar()
+            }
+            break
+    
+        case MSG_CPU:
+            switch(ErrorState(UInt32(value))) {
+            case CPU_OK,
+                 SOFT_BREAKPOINT_REACHED:
+                info.stringValue = ""
+                break
+            case HARD_BREAKPOINT_REACHED,
+                 ILLEGAL_INSTRUCTION:
+                self.debugOpenAction(self)
+                break
+            default:
+                break
+            }
+            refresh()
+            break
+            
+        case MSG_WARP,
+             MSG_ALWAYS_WARP:
+
+            if c64.alwaysWarp() {
+                warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "pin_red"))
+            } else if (c64.warp()) {
+                warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "clock_red"))
+            } else {
+                warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "clock_green"))
+            }
+            break
+    
+        case MSG_PAL,
+             MSG_NTSC:
+
+            metalScreen.updateScreenGeometry()
+            break
+    
+        case MSG_VC1541_ATTACHED:
+            
+            let name = NSImage.Name(rawValue: (value != 0) ? "LEDgreen" : "LEDgray")
+            greenLED.image = NSImage.init(named: name)
+            break
+    
+        case MSG_VC1541_ATTACHED_SOUND:
+            
+            if value != 0 {
+                // Not sure about the copyright of the following sound:
+                // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
+                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+                c64.vc1541.playSound("drive_click", volume: 1.0)
+            } else {
+                // Not sure about the copyright of the following sound:
+                // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+                c64.vc1541.playSound("drive_click", volume: 1.0)
+            }
+            break
+    
+        case MSG_VC1541_DISK_SOUND:
+            
+            if value != 0 {
+                // [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
+                c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
+            } else {
+                // [[c64 vc1541] playSound:@"1541_door_open_1" volume:0.2];
+                c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
+            }
+            break
+            
+        case MSG_VC1541_HEAD_SOUND:
+            
+            if value != 0 {
+                // Not sure about the copyright of the following sound:
+                // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+                c64.vc1541.playSound("drive_click", volume: 1.0)
+
+            } else {
+                // Not sure about the copyright of the following sound:
+                // [[c64 vc1541] playSound:@"1541_track_change_2" volume:1.0];
+                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+                c64.vc1541.playSound("drive_click", volume: 1.0)
+            }
+            break;
+            
+        case MSG_VC1541_DISK:
+            
+            driveIcon.isHidden = (value == 0)
+            driveEject.isHidden = (value == 0)
+            break
+  
+        case MSG_VC1541_LED:
+            
+            let name = NSImage.Name(rawValue: (value != 0) ? "LEDred" : "LEDgray")
+            redLED.image = NSImage.init(named: name)
+            redLED.setNeedsDisplay()
+            break
+    
+        case MSG_VC1541_DATA:
+
+            c64.iecBusIsBusy = (value != 0)
+            break
+    
+        case MSG_VC1541_MOTOR,
+             MSG_VC1541_HEAD:
+            break
+    
+        case MSG_VC1530_TAPE:
+            
+            tapeIcon.isHidden = (value == 0)
+            tapeEject.isHidden = (value == 0)
+            break
+            
+        case MSG_VC1530_PLAY:
+            break
+    
+        case MSG_VC1530_PROGRESS:
+            
+            mediaDialog.update()
+            break
+    
+        case MSG_CARTRIDGE:
+            
+            cartridgeIcon.isHidden = (value == 0)
+            cartridgeEject.isHidden = (value == 0)
+            break
+    
+        default:
+            assert(false)
+            break
+        }
+    }
     
     // --------------------------------------------------------------------------------
     //                               Game pad events

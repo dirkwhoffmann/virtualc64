@@ -14,14 +14,6 @@
 #define V_MINOR 7
 #define V_SUBMINOR 0
 
-/*! @brief    Message layout
- *  @details  A message queue is used to communicate with the GUI. Each message consists of 
- *            a message id and an additional integer parameter.
- */
-typedef struct {
-    int id;
-    int i;
-} Message;
 
 /*! @brief    Color schemes
  *  @details  Predefined RGB color values
@@ -96,6 +88,15 @@ typedef enum {
     
     // MSG_LOG,
 } VC64Message;
+
+/*! @brief    Message layout
+ *  @details  A message queue is used to communicate with the GUI. Each message consists of
+ *            a message id and an additional integer parameter.
+ */
+typedef struct {
+    VC64Message id;
+    int i;
+} Message;
 
 //! @brief    Fingerprint that uniquely identifies a key combination on the virtual C64 keyboard
 typedef unsigned short C64KeyFingerprint;

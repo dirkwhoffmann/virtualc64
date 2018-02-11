@@ -49,7 +49,7 @@ MessageQueue::putMessage(int id, int i)
 	pthread_mutex_lock(&lock);
 		
 	// Write data
-	queue[w].id = id; 
+	queue[w].id = (VC64Message)id; 
 	queue[w].i = i; 
     
 	// Move write pointer to next location
