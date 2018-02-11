@@ -311,9 +311,10 @@ typedef unsigned long MacKeyFingerprint;
 @property MetalView *metalScreen;
 @property CpuTableView *cpuTableView;
 @property MemTableView *memTableView;
-@property Speedometer *speedometer;
+@property (strong) Speedometer *speedometer;
 @property double mhz;
 @property double fps;
+@property long animationCounter;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
@@ -390,7 +391,7 @@ typedef unsigned long MacKeyFingerprint;
 
 
 // Timer and message processing
-- (void)timerFunc;
+// - (void)timerFunc;
 - (void)processMessage:(Message *)msg;
 
 // Refresh

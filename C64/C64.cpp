@@ -662,8 +662,9 @@ C64::endOfRasterline()
         expansionport.execute();
         
         // Count some sheep (zzzzzz) ...
-        if (!getWarp())
+        if (!getWarp()) {
             synchronizeTiming();
+        } 
     }
 }
 

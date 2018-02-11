@@ -147,8 +147,78 @@ extension MyController {
         
         track("GUI timer is up and running")
     }
-
     
+// --------------------------------------------------------------------------------
+//                           Timer and message processing
+// --------------------------------------------------------------------------------
+
+    @objc func timerFunc() {
+
+        precondition(timerLock != nil)
+        timerLock.lock()
+ 
+        animationCounter += 1
+        
+        // Process all pending messages
+        while let message = c64.message() {
+            processMessage(message)
+        }
+ 
+        // Do 12 times a second ...
+        if (animationCounter % 2) == 0 {
+ 
+            // Refresh debug panel if open
+            if c64.isRunning() {
+                let state = debugPanel.state
+                if state == NSDrawerState.open || state == NSDrawerState.opening {
+                    refresh()
+                }
+            }
+        }
+        
+        // Do 6 times a second ...
+        if (animationCounter % 4) == 0 {
+ 
+            // Update tape progress icon
+            // Note: The tape progress icon is not switched on or off by a "push" message,
+            // because some games continously switch on and off the datasette motor.
+            // This would quickly overflow the message queue.
+            if (c64.tapeBusIsBusy) {
+                tapeProgress.startAnimation(self)
+            } else {
+                tapeProgress.stopAnimation(self)
+            }
+/*
+            if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
+            if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
+            [tapeProgress startAnimation:nil];
+            [c64 setTapeBusIsBusy:YES];
+            } else {
+            [tapeProgress stopAnimation:nil];
+            [c64 setTapeBusIsBusy:NO];
+             }}
+ */
+        }
+        
+        // Do 3 times a second ...
+        if (animationCounter % 8) == 0 {
+            speedometer.updateWith(cycle: c64.cycles(), frame: metalScreen.frames)
+            let mhz = speedometer.mhz(digits: 2)
+            let fps = speedometer.fps(digits: 0)
+            clockSpeed.stringValue = String(format:"%.2f MHz %.0f fps", mhz, fps)
+            clockSpeedBar.doubleValue = 10 * mhz
+        
+            // Let the cursor disappear in fullscreen mode
+            if metalScreen.fullscreen &&
+                CGEventSource.secondsSinceLastEventType(.combinedSessionState,
+                                                        eventType: .mouseMoved) > 1.0 {
+                NSCursor.setHiddenUntilMouseMoves(true)
+            }
+        }
+        
+        timerLock.unlock()
+    }
+ 
     
     // --------------------------------------------------------------------------------
     //                               Game pad events

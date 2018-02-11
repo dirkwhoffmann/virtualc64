@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if 0
 
 #import <Cocoa/Cocoa.h>
 
@@ -45,14 +46,15 @@
 
 @property (readonly) double mhz;
 @property (readonly) double fps;
-@property (readonly) unsigned jitter;
 
 /*! @brief    Updates speed, frame and jitter information.
  *  @details  This function needs to be invoked before reading mhz, fps or jitter.
  *  @param    cycles Current cycle count (processed cycles since emulator power up).
  *  @param    frame Current frame (processed frames since emulator power up).
- *  @param    expectedMhz Proposed emulator speed (50 Hz for PAL, 60 Hz for NTSC).
  */
-- (void)updateWithCurrentCycle:(long)cycles currentFrame:(long)frame expectedSpeed:(double)expectedMhz;
+- (void)updateWithCurrentCycle:(long)cycles currentFrame:(long)frame;
 
 @end
+
+#endif
+

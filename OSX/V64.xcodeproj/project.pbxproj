@@ -204,7 +204,7 @@
 		50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
-		50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.mm */; };
+		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
 		50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
 		50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F238F312DF576600B1F275 /* CheatboxItem.mm */; };
@@ -513,7 +513,7 @@
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
-		50ED5BF712DD99C000596417 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
+		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
 		50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserView.h; sourceTree = "<group>"; };
 		50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserView.mm; sourceTree = "<group>"; };
@@ -801,7 +801,7 @@
 				023023FE0DC902A700F8818A /* AudioDevice.h */,
 				023023FF0DC902A700F8818A /* AudioDevice.mm */,
 				50ED5BF612DD99C000596417 /* Speedometer.h */,
-				50ED5BF712DD99C000596417 /* Speedometer.mm */,
+				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1341,7 +1341,7 @@
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
-				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
+				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,

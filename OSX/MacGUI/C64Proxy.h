@@ -642,8 +642,8 @@ struct ContainerWrapper;
 - (void) setAlwaysWarp:(bool)b;
 - (bool) warpLoad;
 - (void) setWarpLoad:(bool)b;
-- (long) cycles;
-- (long) frames;
+- (UInt64) cycles;
+- (UInt64) frames;
 
 // - (SnapshotProxy *) takeSnapshot;
 

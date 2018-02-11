@@ -79,6 +79,7 @@
 @synthesize speedometer;
 @synthesize mhz;
 @synthesize fps;
+@synthesize animationCounter;
 
 @synthesize timer;
 @synthesize timerLock;
@@ -341,6 +342,7 @@
 //                           Timer and message processing
 // --------------------------------------------------------------------------------
 
+/*
 - (void)timerFunc
 {
     assert(timerLock != NULL);
@@ -387,11 +389,10 @@
     
 	// Do 3 times a second ...
 	if ((animationCounter % 8) == 0) {
-		[speedometer updateWithCurrentCycle:[c64 cycles] currentFrame:[c64 frames] expectedSpeed:0.0];
-        mhz = 0.6 * mhz + 0.4 * (round([speedometer mhz] * 100.0) / 100.0);
-        fps = 0.6 * fps + 0.4 * round([speedometer fps]);
-		[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %.0f fps", mhz, fps]];
-		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
+		[speedometer updateWithCycle:[c64 cycles] frame:[c64 frames]];
+        
+		// [clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %.0f fps", mhz, fps]];
+		// [clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
     
     // Let the cursor disappear in fullscreen mode
@@ -402,6 +403,7 @@
 
     [timerLock unlock];
 }
+*/
 
 - (void)processMessage:(Message *)msg
 {

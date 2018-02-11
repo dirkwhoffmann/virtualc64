@@ -797,8 +797,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) warpLoad { return wrapper->c64->getWarpLoad(); }
 - (void) setWarpLoad:(bool)b { wrapper->c64->setWarpLoad(b); }
 
-- (long) cycles { return (long)wrapper->c64->getCycles(); }
-- (long) frames { return (long)wrapper->c64->getFrame(); }
+- (UInt64) cycles { return wrapper->c64->getCycles(); }
+- (UInt64) frames { return wrapper->c64->getFrame(); }
 
 // Cheatbox
 - (NSInteger) historicSnapshots { return wrapper->c64->numHistoricSnapshots(); }

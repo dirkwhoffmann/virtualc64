@@ -40,8 +40,11 @@ struct C64Filter {
 public class MetalView: MTKView {
     
     @IBOutlet var controller: MyController!
-    // @IBOutlet var c64proxy: C64Proxy!
+    
     var c64proxy: C64Proxy!
+    
+    /// Number of drawn frames sind power up
+    var frames: UInt64 = 0
     
     // Synchronization semaphore
     var semaphore: DispatchSemaphore!
@@ -67,9 +70,7 @@ public class MetalView: MTKView {
     var uniformBuffer3D: MTLBuffer! = nil
     var uniformBufferBg: MTLBuffer! = nil
     
-    //
     // Textures
-    //
     
     //! Background image behind the cube
     var bgTexture: MTLTexture! = nil
@@ -132,30 +133,24 @@ public class MetalView: MTKView {
     
     // Texture cut-out (normalized)
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
-    /*
-    var textureXStart = Float(0.0)
-    var textureXEnd = Float(0.0)
-    var textureYStart = Float(0.0)
-    var textureYEnd = Float(0.0)
-    */
-    
+ 
     // Currently selected texture upscaler
-    @objc public var videoUpscaler = C64Upscaler.none
+    @objc var videoUpscaler = C64Upscaler.none
     
     // Currently selected texture filter
-    @objc public var videoFilter = C64Filter.smooth
+    @objc var videoFilter = C64Filter.smooth
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
-    @objc public var enableMetal = false
+    @objc var enableMetal = false
     
     //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
-    @objc public var fullscreen = false
+    @objc var fullscreen = false
     
     //! If true, the 3D renderer is also used in fullscreen mode
-    @objc public var fullscreenKeepAspectRatio = true
+    @objc var fullscreenKeepAspectRatio = true
     
     //! If false, the C64 screen is not drawn (background texture will be visible)
-    @objc public var drawC64texture = false
+    @objc var drawC64texture = false
     
     required public init(coder: NSCoder) {
     
@@ -401,6 +396,8 @@ public class MetalView: MTKView {
             commandBuffer.present(drawable)
             commandBuffer.commit()
         }
+        
+        frames += 1
     }
     
     override public func setFrameSize(_ newSize: NSSize) {

@@ -52,6 +52,9 @@ class MyDocument : NSDocument {
         loadRom(defaults.string(forKey: VC64CharRomFileKey))
         loadRom(defaults.string(forKey: VC64KernelRomFileKey))
         loadRom(defaults.string(forKey: VC64VC1541RomFileKey))
+        
+        // Try to run
+        c64.run()
     }
  
     override open func makeWindowControllers() {
