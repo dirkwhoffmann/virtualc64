@@ -8,7 +8,7 @@
 import Foundation
 
 // --------------------------------------------------------------------------------
-//                                NSWindowDelegate
+//                          Window life cycle methods
 // --------------------------------------------------------------------------------
 
 extension MyController : NSWindowDelegate {
@@ -67,15 +67,88 @@ extension MyController : NSWindowDelegate {
 
 extension MyController {
 
-    // --------------------------------------------------------------------------------
-    //                          Window life cycle methods
-    // --------------------------------------------------------------------------------
-    
-    
     override open func awakeFromNib() {
 
         track()
     }
+    
+    override open func windowDidLoad() {
+ 
+        track()
+
+        // Create keyboard controller
+        keyboardcontroller = KeyboardController(controller: self)
+        if (keyboardcontroller == nil) {
+            track("Failed to create keyboard controller")
+            return
+        }
+
+        // Create game pad manager
+        gamePadManager = GamePadManager(controller: self)
+        if (gamePadManager == nil) {
+            track("Failed to create game pad manager")
+            return
+        }
+        gamepadSlotA = -1 // No gampad assigned
+        gamepadSlotB = -1
+    
+        // Setup window properties
+        configureWindow()
+        
+    
+        // TODO: GET RID OF THIS: Move to it's own window controller
+        setHexadecimalAction(self)
+        cpuTableView.setController(self)
+        memTableView.setController(self)
+        cheatboxImageBrowserView.setController(self)
+        
+        // Get metal running
+        metalScreen.setupMetal()
+    
+        // Load user defaults
+        loadUserDefaults()
+        
+        // Create speed monitor and get the timer tunning
+        createTimer()
+    }
+    
+    func configureWindow() {
+    
+        // Add status bar
+        window?.autorecalculatesContentBorderThickness(for: .minY)
+        window?.setContentBorderThickness(32.0, for: .minY)
+        statusBar = true
+        
+        // Adjust size and enable auto-save for window coordinates
+        adjustWindowSize()
+        window?.windowController?.shouldCascadeWindows = false // true ?!
+        let name = NSWindow.FrameAutosaveName(rawValue: "dirkwhoffmann.de.virtualC64.window")
+        window?.setFrameAutosaveName(name)
+        
+        // Enable fullscreen mode
+        window?.collectionBehavior = .fullScreenPrimary
+    }
+    
+    func createTimer() {
+    
+        // Create speed monitor
+        // TODO: Implement as class extension in Swift
+        speedometer = Speedometer()
+        fps = PAL_REFRESH_RATE;
+        mhz = Double(CLOCK_FREQUENCY_PAL) / 100000.0;
+        
+        // Create timer and speedometer
+        timerLock = NSLock()
+        timer = Timer.scheduledTimer(timeInterval: 1.0/24.0, // 24 times a second
+                                     target: self,
+                                     selector: #selector(timerFunc),
+                                     userInfo: nil,
+                                     repeats: true)
+        
+        track("GUI timer is up and running")
+    }
+
+    
     
     // --------------------------------------------------------------------------------
     //                               Game pad events

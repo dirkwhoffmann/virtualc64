@@ -74,14 +74,20 @@
 
 @synthesize keyboardcontroller;
 @synthesize metalScreen;
+@synthesize cpuTableView;
+@synthesize memTableView;
+@synthesize speedometer;
+@synthesize mhz;
+@synthesize fps;
 
 @synthesize timer;
+@synthesize timerLock;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
 
-
+/*
 - (void)windowDidLoad
 {
     NSLog(@"MyController::windowDidLoad");
@@ -117,7 +123,9 @@
     // Load user defaults
     [self loadUserDefaults];
 }
+*/
 
+/*
 - (void)configureWindow
 {
     // Add status bar
@@ -126,7 +134,7 @@
     statusBar = YES;
     
     // Update some toolbar icons
-    [self setupToolbarIcons];
+    // [self setupToolbarIcons];
     
     // Create and bind number formatters
     [self setHexadecimalAction:self];
@@ -148,6 +156,7 @@
     
     NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
 }
+*/
 
 /*
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize

@@ -67,8 +67,6 @@ extension MyController {
         item2?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
         
         // Mark game pad connected to port
-        // let slot = gamePadManager.lookupGamePad(port: port)
-        // popup.selectItem(withTag: slot)
         popup.selectItem(withTag: selectedSlot)
     }
     
@@ -77,25 +75,7 @@ extension MyController {
         validateJoystickToolbarItem(joystickPortA, selectedSlot: gamepadSlotA, port: c64.joystickA)
         validateJoystickToolbarItem(joystickPortB, selectedSlot: gamepadSlotB, port: c64.joystickB)
     }
-    
-    @objc func setupToolbarIcons() {
-
-        // Joystick selectors
-        // joystickPortA.selectItem(at: 0)
-        // joystickPortB.selectItem(at: 0)
-        validateJoystickToolbarItems()
-    }
-    
-    
-    // deprecated
-    /*
-    func portAction(_ sender: NSPopUpButton, port: JoystickProxy) {
-
-        gamePadManager.attachGamePad(sender.selectedTag(), toPort: port)
-        validateJoystickToolbarItems()
-    }
-    */
-    
+        
     @IBAction func portAAction(_ sender: NSPopUpButton) {
         
         // Remember selection

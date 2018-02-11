@@ -281,9 +281,11 @@ typedef unsigned long MacKeyFingerprint;
 	Speedometer *speedometer;    
 
     //! Stores how fast the emulator is currently running
+    //! @deprecated MOVE TO SPEEDOMETER
     double mhz;
     
     //! Stores how many frames per second are currently drawn
+    //! @deprecated MOVE TO SPEEDOMETER
     double fps;
 
     /*! @brief   Current keyboard modifier flags
@@ -304,9 +306,14 @@ typedef unsigned long MacKeyFingerprint;
 }
 
 @property (strong) C64Proxy *c64;
-@property (readonly) GamePadManager *gamePadManager;
-@property (readonly) KeyboardController *keyboardcontroller;
-@property (readonly) MetalView *metalScreen;
+@property GamePadManager *gamePadManager;
+@property KeyboardController *keyboardcontroller;
+@property MetalView *metalScreen;
+@property CpuTableView *cpuTableView;
+@property MemTableView *memTableView;
+@property Speedometer *speedometer;
+@property double mhz;
+@property double fps;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
@@ -347,12 +354,7 @@ typedef unsigned long MacKeyFingerprint;
 @property NSInteger gamepadSlotB;
 
 @property NSTimer *timer;
-
-// Initialization
-- (void)configureWindow;
-
-// Window handling
-// - (void)adjustWindowSize;
+@property NSLock *timerLock;
 
 // Undo manager
 - (NSUndoManager *)undoManager;

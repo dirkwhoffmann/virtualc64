@@ -89,7 +89,7 @@ class KeyboardController: NSObject {
         // restoreFactorySettings()
     }
  
-    @objc convenience init(withController c: MyController)
+    @objc convenience init(controller c: MyController)
     {
         self.init()
         self.controller = c
