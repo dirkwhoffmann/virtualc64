@@ -280,14 +280,6 @@ typedef unsigned long MacKeyFingerprint;
 	// Speedometer to measure clock frequence and frames per second
 	Speedometer *speedometer;    
 
-    //! Stores how fast the emulator is currently running
-    //! @deprecated MOVE TO SPEEDOMETER
-    double mhz;
-    
-    //! Stores how many frames per second are currently drawn
-    //! @deprecated MOVE TO SPEEDOMETER
-    double fps;
-
     /*! @brief   Current keyboard modifier flags
      *  @details These flags tell us if one of the special keys
      *           are currently pressed. The flags are utilized, e.g., to
@@ -311,9 +303,7 @@ typedef unsigned long MacKeyFingerprint;
 @property MetalView *metalScreen;
 @property CpuTableView *cpuTableView;
 @property MemTableView *memTableView;
-@property (strong) Speedometer *speedometer;
-@property double mhz;
-@property double fps;
+@property Speedometer *speedometer;
 @property long animationCounter;
 
 @property PropertiesDialog *propertiesDialog;
@@ -356,9 +346,6 @@ typedef unsigned long MacKeyFingerprint;
 
 @property NSTimer *timer;
 @property NSLock *timerLock;
-
-// Undo manager
-- (NSUndoManager *)undoManager;
 
 // MetalView API
 - (BOOL)fullscreen;

@@ -7,65 +7,12 @@
 
 import Foundation
 
-// --------------------------------------------------------------------------------
-//                          Window life cycle methods
-// --------------------------------------------------------------------------------
-
-extension MyController : NSWindowDelegate {
- 
-    @objc public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-
-        // Get some basic parameters
-        let windowFrame = sender.frame
-        let deltaX = frameSize.width - windowFrame.size.width
-        let deltaY = frameSize.height - windowFrame.size.height
-    
-        // How big would the metal view become?
-        let metalFrame = metalScreen.frame
-        let metalX = metalFrame.size.width + deltaX
-        let metalY = metalFrame.size.height + deltaY
-    
-        // We want to achieve an aspect ratio of 804:621
-        let newMetalY  = metalX * (621.0 / 804.0)
-        let correction = newMetalY - metalY
-    
-        return NSMakeSize(frameSize.width, frameSize.height + correction)
-    }
-    
-    /// Adjusts the window size programatically
-    /// The size is adjusted to get the metal view's aspect ration right
-    
-    @objc func adjustWindowSize() {
-        
-        track()
-        if var frame = window?.frame {
-    
-            // Compute size correction
-            let newsize = windowWillResize(window!, to: frame.size)
-            let correction = newsize.height - frame.size.height
-    
-            // Adjust frame
-            frame.origin.y -= correction;
-            frame.size = newsize;
-    
-            window!.setFrame(frame, display: true)
-        }
-    }
-
-    @objc public func windowWillClose(_ notification: Notification) {
-        
-        track()
-        
-        // Stop timer
-        timer.invalidate()
-        timer = nil
-        
-        // Stop metal view
-        metalScreen.cleanup()
-    }
-}
 
 extension MyController {
+    
+    // --------------------------------------------------------------------------------
+    //                               Life cycle
+    // --------------------------------------------------------------------------------
 
     override open func awakeFromNib() {
 
@@ -95,7 +42,6 @@ extension MyController {
         // Setup window properties
         configureWindow()
         
-    
         // TODO: GET RID OF THIS: Move to it's own window controller
         setHexadecimalAction(self)
         cpuTableView.setController(self)
@@ -134,8 +80,6 @@ extension MyController {
         // Create speed monitor
         // TODO: Implement as class extension in Swift
         speedometer = Speedometer()
-        fps = PAL_REFRESH_RATE;
-        mhz = Double(CLOCK_FREQUENCY_PAL) / 100000.0;
         
         // Create timer and speedometer
         timerLock = NSLock()

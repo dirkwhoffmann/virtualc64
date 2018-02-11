@@ -143,8 +143,7 @@ extension MyController {
 
     @IBAction func toggleStatusBarAction(_ sender: Any!) {
         
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.toggleStatusBarAction(sender)
         }
         
@@ -391,8 +390,7 @@ extension MyController {
 
     @IBAction func hideSpritesAction(_ sender: Any!) {
 
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.hideSpritesAction(sender)
         }
         
@@ -401,8 +399,7 @@ extension MyController {
   
     @IBAction func markIRQLinesAction(_ sender: Any!) {
     
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.markIRQLinesAction(sender)
         }
         
@@ -411,8 +408,7 @@ extension MyController {
     
     @IBAction func markDMALinesAction(_ sender: Any!) {
     
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.markDMALinesAction(sender)
         }
         
@@ -429,8 +425,7 @@ extension MyController {
 
     @IBAction func traceC64CpuAction(_ sender: Any!) {
         
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.traceC64CpuAction(sender)
         }
         
@@ -439,8 +434,7 @@ extension MyController {
   
     @IBAction func traceIecAction(_ sender: Any!) {
         
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.traceIecAction(sender)
         }
         
@@ -449,8 +443,7 @@ extension MyController {
  
     @IBAction func traceVC1541CpuAction(_ sender: Any!) {
         
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.traceVC1541CpuAction(sender)
         }
         
@@ -459,8 +452,7 @@ extension MyController {
   
     @IBAction func traceViaAction(_ sender: Any!) {
         
-        let undo = undoManager()
-        undo?.registerUndo(withTarget: self) {
+        undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.traceViaAction(sender)
         }
         

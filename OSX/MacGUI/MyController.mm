@@ -63,7 +63,6 @@
 @synthesize clockSpeedBar;
 @synthesize warpIcon;
 
-
 @synthesize cheatboxImageBrowserView;
 @synthesize menuItemFinalIII;
 @synthesize gamePadManager;
@@ -77,180 +76,10 @@
 @synthesize cpuTableView;
 @synthesize memTableView;
 @synthesize speedometer;
-@synthesize mhz;
-@synthesize fps;
 @synthesize animationCounter;
 
 @synthesize timer;
 @synthesize timerLock;
-
-// --------------------------------------------------------------------------------
-//                          Construction and Destruction
-// --------------------------------------------------------------------------------
-
-/*
-- (void)windowDidLoad
-{
-    NSLog(@"MyController::windowDidLoad");
-    NSLog(@"    window   = %@", [self window]);
-    NSLog(@"    document = %@", [self document]);
-    
-    // Initialize keyboard controller
-    keyboardcontroller = [[KeyboardController alloc] initWithController:self];
-    
-    // Initialize GamePad manager
-    gamePadManager = [[GamePadManager alloc] initWithController:self];
-    if (!gamePadManager) {
-        NSLog(@"WARNING: Failed to initialize GamePadManager");
-    }
-    gamepadSlotA = -1; // No gampad assigned
-    gamepadSlotB = -1; 
-
-    // Setup window properties
-    [self configureWindow];
-    
-    // Adjust size and enable auto-save for window coordinates
-    [self adjustWindowSize];
-    [[[self window] windowController] setShouldCascadeWindows:NO];
-    [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
-    
-    // Enable fullscreen mode
-    [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
-    
-    // Get metal running
-    [metalScreen setupMetal];
-    NSLog(@"Metal is up and running");
-    
-    // Load user defaults
-    [self loadUserDefaults];
-}
-*/
-
-/*
-- (void)configureWindow
-{
-    // Add status bar
-    [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
-    [[self window] setContentBorderThickness:32.0 forEdge: NSMinYEdge];
-    statusBar = YES;
-    
-    // Update some toolbar icons
-    // [self setupToolbarIcons];
-    
-    // Create and bind number formatters
-    [self setHexadecimalAction:self];
-    
-    // Setup table views
-    [cpuTableView setController:self];
-    [memTableView setController:self];
-    [cheatboxImageBrowserView setController:self];
-    
-    // Create timer and speedometer
-    timerLock = [[NSLock alloc] init];
-    timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/24.0f)
-                                             target:self
-                                           selector:@selector(timerFunc)
-                                           userInfo:nil repeats:YES];
-    speedometer = [[Speedometer alloc] init];
-    fps = PAL_REFRESH_RATE;
-    mhz = CLOCK_FREQUENCY_PAL / 100000;
-    
-    NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
-}
-*/
-
-/*
-- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize
-{
-    // Get some basic parameters
-    NSRect windowFrame = [sender frame];
-    CGFloat deltaX     = frameSize.width - windowFrame.size.width;
-    CGFloat deltaY     = frameSize.height - windowFrame.size.height;
-    
-    // How big would the metal view become?
-    NSRect metalFrame  = [metalScreen frame];
-    CGFloat metalX     = metalFrame.size.width + deltaX;
-    CGFloat metalY     = metalFrame.size.height + deltaY;
-    
-    // We want to achieve an aspect ratio of 804:621
-    CGFloat newMetalY  = metalX * (621.0 / 804.0);
-    CGFloat correction = newMetalY - metalY;
-
-    return NSMakeSize(frameSize.width, frameSize.height + correction);
-}
-*/
-
-/*! @brief    Custom function to adjust window size programatically
- *  @details The size is adjusted to get the metal view's aspect ration right
- */
-
-/*
-- (void)adjustWindowSize
-{
-    // Get frame of window
-    NSRect frame = [[self window] frame];
-
-    // Compute size correction
-    NSSize newsize = [self windowWillResize:[self window] toSize:frame.size];
-    CGFloat correction = newsize.height - frame.size.height;
-    
-    // Adjust frame
-    frame.origin.y -= correction;
-    frame.size = newsize;
-    
-    [[self window] setFrame: frame display: YES animate: NO];    
-}
-*/
-
-// --------------------------------------------------------------------------------
-//                                   Full screen
-// --------------------------------------------------------------------------------
-
-- (void)windowWillEnterFullScreen:(NSNotification *)notification
-{
-    NSLog(@"windowWillEnterFullScreen");
-    [metalScreen setFullscreen:YES];
-    [self showStatusBar:false];
-}
-
-- (void)windowDidEnterFullScreen:(NSNotification *)notification
-{
-    NSLog(@"windowDidEnterFullScreen");
-}
-
-- (void)windowWillExitFullScreen:(NSNotification *)notification
-{
-    NSLog(@"windowWillExitFullScreen");
-    [metalScreen setFullscreen:NO];
-    [self showStatusBar:true];
-}
-
-- (void)windowDidExitFullScreen:(NSNotification *)notification
-{
-    NSLog(@"windowDidExitFullScreen");
-}
-
-- (NSApplicationPresentationOptions)window:(NSWindow *)window
-      willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions
-{
-    NSLog(@"window:willUseFullScreenPresentationOptions");
-    proposedOptions |= NSApplicationPresentationAutoHideToolbar;
-    return proposedOptions;
-}
-
-- (NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
-{
-    NSLog(@"Proposed full screen size: %f x %f", proposedSize.width, proposedSize.height);
-    
-    NSRect myRect = [metalScreen bounds];
-    myRect.size = proposedSize;
-    return proposedSize;
-}
-
-- (NSUndoManager *)undoManager
-{
-    return [[self document] undoManager];
-}
 
 // --------------------------------------------------------------------------------
 //       Metal screen API (will be removed when controller is Swift only)
@@ -259,7 +88,7 @@
 - (BOOL)fullscreen { return [metalScreen fullscreen]; }
 - (NSImage *)screenshot { return [metalScreen screenshot]; }
 - (void)rotateBack { [metalScreen rotateBack]; }
-- (void)shrink { [metalScreen shrink]; }
+ - (void)shrink { [metalScreen shrink]; }
 - (void)expand { [metalScreen expand]; }
 - (float)eyeX { return [metalScreen eyeX]; }
 - (void)setEyeX:(float)x { [metalScreen setEyeX:x]; }

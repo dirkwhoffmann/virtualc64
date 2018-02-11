@@ -138,6 +138,7 @@
 		50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */; };
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
+		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
 		50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C8924E1BEFB11700231B96 /* cntrlEject.png */; };
@@ -430,6 +431,7 @@
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
+		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		50C8924E1BEFB11700231B96 /* cntrlEject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlEject.png; sourceTree = "<group>"; };
@@ -512,7 +514,6 @@
 		50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PropertiesDialog.mm; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
 		50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserView.h; sourceTree = "<group>"; };
@@ -751,6 +752,7 @@
 				50B6894612DCA7B100CBB5B7 /* MyController.h */,
 				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
+				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
@@ -800,7 +802,6 @@
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
 				023023FE0DC902A700F8818A /* AudioDevice.h */,
 				023023FF0DC902A700F8818A /* AudioDevice.mm */,
-				50ED5BF612DD99C000596417 /* Speedometer.h */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 			);
 			name = Misc;
@@ -1281,6 +1282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,

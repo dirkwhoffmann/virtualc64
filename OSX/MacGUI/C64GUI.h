@@ -46,6 +46,5 @@
 #import "TapeDialog.h"
 #import "RomDialog.h"
 
-#import "Speedometer.h"
 
 
