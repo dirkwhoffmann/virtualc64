@@ -292,6 +292,16 @@ private:
     
     
     //
+    // Message queue
+    //
+    
+    /*! @brief    Message queue.
+     *  @details  Used to communicate with the graphical user interface.
+     */
+    MessageQueue queue;
+    
+    
+    //
     // Executed cycle, rasterline, and frame
     //
 
@@ -332,14 +342,7 @@ private:
     unsigned backInTimeWritePtr;
     
 
-    //
-    // Message queue
-    //
-    
-    /*! @brief    Message queue.
-     *  @details  Used to communicate with the graphical user interface.
-     */
-    MessageQueue queue;
+ 
     
     
 	// -----------------------------------------------------------------------------------------------
@@ -669,6 +672,9 @@ public:
     //
     //! @functiongroup Accessing the message queue
     //
+    
+    //! @brief    Registers a listener callback function
+    void setListener(void *sender, void(*func)(int) ) { queue.setListener(sender, func); }
     
     //! @brief    Gets a notification message from message queue
     VC64Message getMessage() { return queue.getMessage(); }

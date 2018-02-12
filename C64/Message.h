@@ -41,8 +41,18 @@ private:
 	int w;
 		
 	//! @brief    Mutex for streamlining parallel read and write accesses
-	pthread_mutex_t lock;  
-			
+	pthread_mutex_t lock;
+    
+    //! @brief    Callback function
+    /*! @details  If set, the function is called whenever a message is put into the queue
+     */
+    void(*callback)(int);
+
+    //! @brief    Registered listener
+    /*! @details  This value is passed back into the registered callback
+     */
+    void *listener;
+
 public:
 	//! @brief    Constructor
 	MessageQueue();
@@ -50,6 +60,9 @@ public:
 	//! @brief    Destructor
 	~MessageQueue();
 
+    //! @brief    Registers a listener callback function
+    void setListener( void *sender, void(*func)(int) );
+    
 	/*! @brief    Returns the next pending message
      *  @return   Returns NULL, if the queue is empty
      */

@@ -13,12 +13,25 @@ MessageQueue::MessageQueue()
 {
     setDescription("MessageQueue");
 	r = w = 0;
+    listener = NULL;
+    callback = NULL;
 	pthread_mutex_init(&lock, NULL);
 }
 
 MessageQueue::~MessageQueue()
 {
 	pthread_mutex_destroy(&lock);
+}
+
+void
+MessageQueue::setListener(void *sender, void(*func)(int)) {
+
+    pthread_mutex_lock(&lock);
+    
+    listener = sender;
+    callback = func;
+    
+    pthread_mutex_unlock(&lock);
 }
 
 VC64Message
@@ -55,7 +68,13 @@ MessageQueue::putMessage(VC64Message msg)
 	if (w == r) {
         // debug(2, "Queue overflow. Oldest message is lost.\n");
 		r = (r + 1) % queue_size;
-	} 
-	
+	}
+    
+    // Call listener function
+    if (callback) {
+        callback(msg);
+        // callback(listener, msg);
+    }
+    
 	pthread_mutex_unlock(&lock);
 }

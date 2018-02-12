@@ -734,7 +734,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 - (VC64Message)message { return wrapper->c64->getMessage(); }
 - (void) putMessage:(VC64Message)msg { wrapper->c64->putMessage(msg); }
-
+- (void) setListener:(void *)sender function:(void(*)(int))func {
+    wrapper->c64->setListener(sender, func);
+}
 
 - (void) powerUp { wrapper->c64->powerUp(); }
 // - (void) reset { wrapper->c64->reset(); }
