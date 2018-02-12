@@ -22,9 +22,9 @@ MessageQueue::~MessageQueue()
 {
 	pthread_mutex_destroy(&lock);
 }
-
+    
 void
-MessageQueue::setListener(void *sender, void(*func)(int)) {
+MessageQueue::setListener(const void *sender, void(*func)(const void *, int)) {
 
     pthread_mutex_lock(&lock);
     
@@ -32,6 +32,12 @@ MessageQueue::setListener(void *sender, void(*func)(int)) {
     callback = func;
     
     pthread_mutex_unlock(&lock);
+    
+    // Process all pending messages
+    VC64Message msg;
+    while ((msg = getMessage()) != MSG_NONE) {
+        callback(listener, msg);
+    }
 }
 
 VC64Message
@@ -72,8 +78,7 @@ MessageQueue::putMessage(VC64Message msg)
     
     // Call listener function
     if (callback) {
-        callback(msg);
-        // callback(listener, msg);
+        callback(listener, msg);
     }
     
 	pthread_mutex_unlock(&lock);

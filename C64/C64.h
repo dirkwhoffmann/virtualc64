@@ -661,7 +661,7 @@ public:
 
 	//! @brief    Attaches a cartridge to the expansion port.
 	bool attachCartridgeAndReset(CRTContainer *c);
-	
+
 	//! @brief    Detaches a cartridge from the expansion port.
 	void detachCartridgeAndReset();
 
@@ -674,8 +674,9 @@ public:
     //
     
     //! @brief    Registers a listener callback function
-    void setListener(void *sender, void(*func)(int) ) { queue.setListener(sender, func); }
-    
+    void setListener(const void *sender, void(*func)(const void *, int) ) {
+        queue.setListener(sender, func);
+    }
     //! @brief    Gets a notification message from message queue
     VC64Message getMessage() { return queue.getMessage(); }
     

@@ -598,7 +598,7 @@ struct ContainerWrapper;
 
 - (VC64Message)message;
 - (void) putMessage:(VC64Message)msg;
-- (void) setListener:(void *)sender function:(void(*)(int))func;
+- (void) setListener:(const void *)sender function:(void(*)(const void *, int))func;
 
 - (void) powerUp;
 - (void) ping;

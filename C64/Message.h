@@ -46,12 +46,12 @@ private:
     //! @brief    Callback function
     /*! @details  If set, the function is called whenever a message is put into the queue
      */
-    void(*callback)(int);
+    void(*callback)(const void *, int);
 
     //! @brief    Registered listener
     /*! @details  This value is passed back into the registered callback
      */
-    void *listener;
+    const void *listener;
 
 public:
 	//! @brief    Constructor
@@ -61,7 +61,7 @@ public:
 	~MessageQueue();
 
     //! @brief    Registers a listener callback function
-    void setListener( void *sender, void(*func)(int) );
+    void setListener(const void *sender, void(*func)(const void *, int));
     
 	/*! @brief    Returns the next pending message
      *  @return   Returns NULL, if the queue is empty

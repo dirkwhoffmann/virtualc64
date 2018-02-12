@@ -54,6 +54,9 @@ extension MyController {
         // Load user defaults
         loadUserDefaults()
         
+        // Enable message processing (register callback)
+        setListener()
+
         // Create speed monitor and get the timer tunning
         createTimer()
     }
@@ -75,6 +78,25 @@ extension MyController {
         window?.collectionBehavior = .fullScreenPrimary
     }
     
+    func setListener() {
+        
+        // Convert 'self' to a void pointer
+        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+        
+        c64.setListener(myself) { (ptr, msg) in
+            
+            // Convert void pointer back to 'self'
+            let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
+            
+            // Process message in the main thread
+            DispatchQueue.main.async {
+                myself.processMessage(VC64Message(UInt32(msg)))
+            }
+        }
+        
+        track("Listener is in place")
+    }
+    
     func createTimer() {
     
         // Create speed monitor
@@ -83,7 +105,7 @@ extension MyController {
         
         // Create timer and speedometer
         timerLock = NSLock()
-        timer = Timer.scheduledTimer(timeInterval: 1.0/24.0, // 24 times a second
+        timer = Timer.scheduledTimer(timeInterval: 1.0/12.0, // 12 times a second
                                      target: self,
                                      selector: #selector(timerFunc),
                                      userInfo: nil,
@@ -104,14 +126,16 @@ extension MyController {
         animationCounter += 1
         
         // Process all pending messages
+        /*
         var msg: VC64Message = c64.message()
         while msg != MSG_NONE {
             processMessage(msg)
             msg = c64.message()
         }
- 
+        */
+        
         // Do 12 times a second ...
-        if (animationCounter % 2) == 0 {
+        if (animationCounter % 1) == 0 {
  
             // Refresh debug panel if open
             if c64.isRunning() {
@@ -123,7 +147,7 @@ extension MyController {
         }
         
         // Do 6 times a second ...
-        if (animationCounter % 4) == 0 {
+        if (animationCounter % 2) == 0 {
  
             // Update tape progress icon
             // Note: The tape progress icon is not switched on or off by a "push" message,
@@ -149,7 +173,7 @@ extension MyController {
         }
         
         // Do 3 times a second ...
-        if (animationCounter % 8) == 0 {
+        if (animationCounter % 4) == 0 {
             speedometer.updateWith(cycle: c64.cycles(), frame: metalScreen.frames)
             let mhz = speedometer.mhz(digits: 2)
             let fps = speedometer.fps(digits: 0)
