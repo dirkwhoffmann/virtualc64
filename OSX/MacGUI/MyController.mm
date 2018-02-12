@@ -19,15 +19,7 @@
 #import "C64GUI.h"
 #import "VirtualC64-Swift.h"
 
-
-// TODO
-// Register user defaults is class method. Don't access keymap there
-// Initialize keymap (where? in which init?) We can also create it on the fly in loadUserDefaults
-// Replace Character by String in KeyMap class
-
 @implementation MyController {
-    
-    // IBOutlet MetalView *metalScreen;
 }
 
 @synthesize c64;
@@ -78,7 +70,7 @@
 @synthesize timerLock;
 
 // --------------------------------------------------------------------------------
-//       Metal screen API (will be removed when controller is Swift only)
+//       Metal screen API (remove when controller is Swift only!)
 // --------------------------------------------------------------------------------
 
 - (BOOL)fullscreen { return [metalScreen fullscreen]; }
@@ -100,7 +92,7 @@
 - (void)setFullscreenKeepAspectRatio:(BOOL)val { [metalScreen setFullscreenKeepAspectRatio:val]; }
 
 // --------------------------------------------------------------------------------
-//     KeyboardController API (will be removed when controller is Swift only)
+//     KeyboardController API (remove when controller is Swift only!)
 // --------------------------------------------------------------------------------
 
 - (void)simulateUserPressingKey:(C64KeyFingerprint)key {
