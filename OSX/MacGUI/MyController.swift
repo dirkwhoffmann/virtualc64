@@ -344,13 +344,11 @@ extension MyController {
         case MSG_VC1541_DISK:
             
             driveIcon.isHidden = false
-            driveEject.isHidden = false
             break
   
         case MSG_VC1541_NO_DISK:
             
             driveIcon.isHidden = true
-            driveEject.isHidden = true
             break
             
         case MSG_VC1541_RED_LED_ON:
@@ -384,13 +382,11 @@ extension MyController {
         case MSG_VC1530_TAPE:
             
             tapeIcon.isHidden = false
-            tapeEject.isHidden = false
             break
 
         case MSG_VC1530_NO_TAPE:
             
             tapeIcon.isHidden = true
-            tapeEject.isHidden = true
             break
 
         //case MSG_VC1530_PLAY:
@@ -404,13 +400,11 @@ extension MyController {
         case MSG_CARTRIDGE:
             
             cartridgeIcon.isHidden = false
-            cartridgeEject.isHidden = false
             break
     
         case MSG_NO_CARTRIDGE:
          
             cartridgeIcon.isHidden = true
-            cartridgeEject.isHidden = true
             break
             
         default:

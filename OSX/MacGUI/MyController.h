@@ -75,11 +75,8 @@ typedef unsigned long MacKeyFingerprint;
     IBOutlet NSButton *redLED;
     IBOutlet NSProgressIndicator *progress;
     IBOutlet NSButton *driveIcon;
-	IBOutlet NSButton *driveEject;
     IBOutlet NSButton *cartridgeIcon;
-    IBOutlet NSButton *cartridgeEject;
     IBOutlet NSButton *tapeIcon;
-    IBOutlet NSButton *tapeEject;
     IBOutlet NSProgressIndicator *tapeProgress;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
@@ -325,11 +322,8 @@ typedef unsigned long MacKeyFingerprint;
 @property NSButton *redLED;
 @property NSProgressIndicator *progress;
 @property NSButton *driveIcon;
-@property NSButton *driveEject;
 @property NSButton *cartridgeIcon;
-@property NSButton *cartridgeEject;
 @property NSButton *tapeIcon;
-@property NSButton *tapeEject;
 @property NSProgressIndicator *tapeProgress;
 @property NSTextField *clockSpeed;
 @property NSLevelIndicator *clockSpeedBar;
@@ -379,14 +373,6 @@ typedef unsigned long MacKeyFingerprint;
 - (void)refresh;
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;
 - (void)enableUserEditing:(BOOL)enabled;
-
-// Main window controls
-// - (IBAction)driveAction:(id)sender; PORTED TO SWIFT
-// - (IBAction)driveEjectAction:(id)sender; PORTED TO SWIFT
-// - (IBAction)tapeEjectAction:(id)sender;
-// - (IBAction)cartridgeEjectAction:(id)sender;
-// - (IBAction)alwaysWarpAction:(id)sender;
-
 
 // Dialogs
 - (bool)showPropertiesDialog;

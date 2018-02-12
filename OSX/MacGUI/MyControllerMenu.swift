@@ -36,6 +36,9 @@ extension MyController {
         }
         
         // Disk menu
+        if item.action == #selector(MyController.driveEjectAction(_:)) {
+            return c64.iec.isDriveConnected() && c64.vc1541.hasDisk()
+        }
         if item.action == #selector(MyController.driveAction(_:)) {
             item.title = c64.iec.isDriveConnected() ? "Power off" : "Power on"
             return true
@@ -43,14 +46,14 @@ extension MyController {
         if item.action == #selector(MyController.insertBlankDisk(_:)) {
             return c64.iec.isDriveConnected()
         }
-        if item.action == #selector(MyController.driveEjectAction(_:)) {
-            return c64.iec.isDriveConnected() && c64.vc1541.hasDisk()
-        }
         if item.action == #selector(MyController.exportDisk(_:)) {
             return c64.vc1541.hasDisk()
         }
 
         // Tape menu
+        if item.action == #selector(MyController.ejectTapeAction(_:)) {
+            return c64.datasette.hasTape()
+        }
         if item.action == #selector(MyController.playOrStopAction(_:)) {
             item.title = c64.datasette.playKey() ? "Press Stop" : "Press Play"
             return c64.datasette.hasTape()
@@ -58,11 +61,11 @@ extension MyController {
         if item.action == #selector(MyController.rewindAction(_:)) {
             return c64.datasette.hasTape()
         }
-        if item.action == #selector(MyController.ejectTapeAction(_:)) {
-            return c64.datasette.hasTape()
-        }
         
         // Cartridge menu
+        if item.action == #selector(MyController.detachCartridgeAction(_:)) {
+            return c64.expansionport.cartridgeAttached()
+        }
         if item.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
             return c64.expansionport.cartridgeType() == CRT_FINAL_III
         }
@@ -159,10 +162,8 @@ extension MyController {
             progress.isHidden = false
             tapeProgress.isHidden = false
             driveIcon.isHidden = !c64.vc1541.hasDisk()
-            driveEject.isHidden = !c64.vc1541.hasDisk()
             tapeIcon.isHidden = !c64.datasette.hasTape()
             cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
-            cartridgeEject.isHidden = !c64.expansionport.cartridgeAttached()
             clockSpeed.isHidden = false
             clockSpeedBar.isHidden = false
             warpIcon.isHidden = false
@@ -180,10 +181,8 @@ extension MyController {
             progress.isHidden = true
             tapeProgress.isHidden = true
             driveIcon.isHidden = true
-            driveEject.isHidden = true
             tapeIcon.isHidden = true
             cartridgeIcon.isHidden = true
-            cartridgeEject.isHidden = true
             clockSpeed.isHidden = true
             clockSpeedBar.isHidden = true
             warpIcon.isHidden = true

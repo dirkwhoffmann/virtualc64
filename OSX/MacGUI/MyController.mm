@@ -52,11 +52,8 @@
 @synthesize redLED;
 @synthesize progress;
 @synthesize driveIcon;
-@synthesize driveEject;
 @synthesize cartridgeIcon;
-@synthesize cartridgeEject;
 @synthesize tapeIcon;
-@synthesize tapeEject;
 @synthesize tapeProgress;
 @synthesize clockSpeed;
 @synthesize clockSpeedBar;

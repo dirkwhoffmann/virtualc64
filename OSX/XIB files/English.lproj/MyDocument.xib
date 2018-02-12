@@ -98,7 +98,6 @@
                 <outlet property="alarm2Seconds" destination="2539" id="2680"/>
                 <outlet property="alarm2Tenth" destination="2541" id="2681"/>
                 <outlet property="breakpoint" destination="512" id="632"/>
-                <outlet property="cartridgeEject" destination="2000" id="2011"/>
                 <outlet property="cartridgeIcon" destination="2003" id="2010"/>
                 <outlet property="cheatboxImageBrowserView" destination="2182" id="2184"/>
                 <outlet property="cheatboxPanel" destination="2025" id="2193"/>
@@ -143,7 +142,6 @@
                 <outlet property="cpuTableView" destination="767" id="945"/>
                 <outlet property="debugPanel" destination="35" id="2196"/>
                 <outlet property="dezHexSelector" destination="367" id="759"/>
-                <outlet property="driveEject" destination="1038" id="XgJ-JL-fdj"/>
                 <outlet property="driveIcon" destination="1045" id="Vlm-gT-AYk"/>
                 <outlet property="greenLED" destination="1208" id="1214"/>
                 <outlet property="hardwareDialog" destination="YW8-0Q-Xve" id="8zS-3M-G6U"/>
@@ -165,7 +163,6 @@
                 <outlet property="stepOutButton" destination="2094" id="2109"/>
                 <outlet property="stepOverButton" destination="2096" id="2108"/>
                 <outlet property="stopAndGoButton" destination="2100" id="2102"/>
-                <outlet property="tapeEject" destination="QgG-3s-0CX" id="5OD-4O-7Jf"/>
                 <outlet property="tapeIcon" destination="NlM-JA-g9p" id="uQv-wG-QgZ"/>
                 <outlet property="tapeProgress" destination="H1X-Kk-fcE" id="x5B-ie-sqw"/>
                 <outlet property="tod1Hours" destination="686" id="2647"/>
@@ -199,31 +196,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button hidden="YES" toolTip="Eject cartridge" id="2000">
-                        <rect key="frame" x="115" y="0.0" width="20" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="2001">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cartridgeEjectAction:" target="-2" id="N0v-Y0-aiX"/>
-                        </connections>
-                    </button>
-                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
-                        <rect key="frame" x="43" y="4" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </progressIndicator>
-                    <button toolTip="Drive LED" id="1210">
-                        <rect key="frame" x="22" y="4" width="17" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1710">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <button toolTip="Connect / Disconnect drive" id="1208">
-                        <rect key="frame" x="5" y="4" width="17" height="17"/>
+                    <button toolTip="Connect / Disconnect drive" misplaced="YES" id="1208">
+                        <rect key="frame" x="5" y="3" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1709">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -232,33 +206,6 @@
                         <connections>
                             <action selector="driveAction:" target="-2" id="1370"/>
                         </connections>
-                    </button>
-                    <button hidden="YES" toolTip="Eject cartridge" id="QgG-3s-0CX">
-                        <rect key="frame" x="155" y="0.0" width="20" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="4FB-cf-9Kf">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="ejectTapeAction:" target="-2" id="NcJ-Sf-xGr"/>
-                        </connections>
-                    </button>
-                    <button hidden="YES" id="NlM-JA-g9p">
-                        <rect key="frame" x="136" y="2" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="tape" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                    </button>
-                    <button hidden="YES" id="1045">
-                        <rect key="frame" x="63" y="2" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="diskette" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
                     </button>
                     <textField verticalHuggingPriority="750" id="214">
                         <rect key="frame" x="562" y="7" width="133" height="11"/>
@@ -276,17 +223,6 @@
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
-                    <button hidden="YES" toolTip="Eject disk" id="1038">
-                        <rect key="frame" x="81" y="0.0" width="20" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="1705">
-                            <behavior key="behavior" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="driveEjectAction:" target="-2" id="F7g-p0-xZi"/>
-                        </connections>
-                    </button>
                     <button toolTip="Warp mode" id="1052">
                         <rect key="frame" x="700" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -305,16 +241,44 @@
                             <outlet property="controller" destination="-2" id="DoA-Vt-vqv"/>
                         </connections>
                     </customView>
-                    <button hidden="YES" id="2003">
-                        <rect key="frame" x="98" y="2" width="20" height="20"/>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
+                        <rect key="frame" x="50" y="4" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </progressIndicator>
+                    <button toolTip="Drive LED" misplaced="YES" id="1210">
+                        <rect key="frame" x="25" y="3" width="17" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1710">
+                            <behavior key="behavior" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button hidden="YES" misplaced="YES" id="NlM-JA-g9p">
+                        <rect key="frame" x="130" y="2" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="tape" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
+                    <button hidden="YES" misplaced="YES" id="1045">
+                        <rect key="frame" x="74" y="2" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="diskette" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
+                    <button hidden="YES" misplaced="YES" id="2003">
+                        <rect key="frame" x="102" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
-                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H1X-Kk-fcE">
-                        <rect key="frame" x="175" y="4" width="16" height="16"/>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H1X-Kk-fcE">
+                        <rect key="frame" x="158" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
                 </subviews>
@@ -4446,7 +4410,6 @@ DQ
         <image name="1541" width="384" height="384"/>
         <image name="LEDgray" width="128" height="128"/>
         <image name="LEDnewGreen" width="65" height="65"/>
-        <image name="bottom" width="24" height="24"/>
         <image name="cartridge" width="18" height="18"/>
         <image name="cntrlEject" width="20.803611755371094" height="20.803611755371094"/>
         <image name="diskette" width="101" height="97"/>
