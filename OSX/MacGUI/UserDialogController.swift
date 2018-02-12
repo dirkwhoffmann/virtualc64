@@ -14,9 +14,10 @@ class UserDialogController : NSWindowController {
     var parentWindow: NSWindow!
     var c64: C64Proxy!
     
-    func showSheet(withParent: MyController, completionHandler:(() -> Void)? = nil) {
+    func showSheet(withParent controller: MyController, completionHandler:(() -> Void)? = nil) {
         
-        parent = withParent
+        track()
+        parent = controller
         mydocument = parent.document as! MyDocument
         parentWindow = parent.window
         c64 = mydocument.c64

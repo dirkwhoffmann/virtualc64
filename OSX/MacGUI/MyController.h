@@ -375,10 +375,6 @@ typedef unsigned long MacKeyFingerprint;
 - (void)setDisconnectEmulationKeys:(BOOL)b;
 
 
-// Timer and message processing
-// - (void)timerFunc;
-// - (void)processMessage:(Message *)msg;
-
 // Refresh
 - (void)refresh;
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;
@@ -389,7 +385,7 @@ typedef unsigned long MacKeyFingerprint;
 // - (IBAction)driveEjectAction:(id)sender; PORTED TO SWIFT
 // - (IBAction)tapeEjectAction:(id)sender;
 // - (IBAction)cartridgeEjectAction:(id)sender;
-- (IBAction)alwaysWarpAction:(id)sender;
+// - (IBAction)alwaysWarpAction:(id)sender;
 
 
 // Dialogs

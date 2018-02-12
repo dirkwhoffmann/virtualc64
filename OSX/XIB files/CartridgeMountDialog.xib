@@ -12,7 +12,6 @@
                 <outlet property="exrom" destination="sY6-FN-171" id="4ZC-RM-NUg"/>
                 <outlet property="game" destination="eT6-zc-xuo" id="Kef-Cc-g8G"/>
                 <outlet property="header" destination="1y6-5O-gjP" id="CwG-fG-vJ8"/>
-                <outlet property="lines" destination="sY6-FN-171" id="gc4-ry-cP2"/>
                 <outlet property="name" destination="yfe-nd-OfH" id="mC4-gF-uaC"/>
                 <outlet property="type" destination="igf-0I-qXg" id="BUK-wt-3l3"/>
                 <outlet property="window" destination="Az5-tX-ul1" id="Kpu-EP-UwQ"/>

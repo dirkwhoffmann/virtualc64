@@ -481,6 +481,7 @@
 	}		
 }
 
+/*
 - (IBAction)alwaysWarpAction:(id)sender
 {
     NSLog(@"alwaysWarpAction");
@@ -492,7 +493,7 @@
     [c64 setAlwaysWarp:![c64 alwaysWarp]];
     [self refresh];
 }
-
+*/
 
 // --------------------------------------------------------------------------------
 //                                     Dialogs

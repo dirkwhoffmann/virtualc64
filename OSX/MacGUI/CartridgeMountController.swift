@@ -19,21 +19,18 @@ class CartridgeMountController : UserDialogController {
     @IBOutlet weak var game: NSTextField!
     @IBOutlet weak var data: NSTableView!
     
-    /*
-    override func showSheet(_ controller: MyController) {
+    override func showSheet(withParent controller: MyController,
+                            completionHandler:(() -> Void)? = nil) {
         
+        track()
         let document = controller.document as! MyDocument
         cartridge = document.attachment as! CRTProxy
-        
-        super.showSheet(controller)
+        super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
-    */
-    
+        
     override public func awakeFromNib() {
         
         track()
-        
-        cartridge = mydocument.attachment as! CRTProxy
         
         // Configure table view
         data.intercellSpacing = NSSize(width: 0, height: 0)

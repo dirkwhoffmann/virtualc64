@@ -26,9 +26,17 @@ class DiskMountController : UserDialogController {
     @IBOutlet weak var trackSizeinfo: NSTextField!
     @IBOutlet weak var stepper: NSStepper!
     
-    override public func awakeFromNib() {
+    override func showSheet(withParent controller: MyController,
+                            completionHandler:(() -> Void)? = nil) {
         
-        archive = document?.attachment as! ArchiveProxy
+        track()
+        let document = controller.document as! MyDocument
+        archive = document.attachment as! ArchiveProxy
+        super.showSheet(withParent: controller, completionHandler: completionHandler)
+    }
+    
+    override public func awakeFromNib() {
+ 
         let numItems = archive.numberOfItems()
   
         stepper.minValue = 0

@@ -23,9 +23,16 @@ class ArchiveMountController : UserDialogController {
     @IBOutlet weak var contents: NSTableView!
     @IBOutlet weak var protect: NSButton!
 
-    override public func awakeFromNib() {
+    override func showSheet(withParent controller: MyController,
+                            completionHandler:(() -> Void)? = nil) {
         
-        archive = mydocument.attachment as! ArchiveProxy
+        track()
+        let document = controller.document as! MyDocument
+        archive = document.attachment as! ArchiveProxy
+        super.showSheet(withParent: controller, completionHandler: completionHandler)
+    }
+    
+    override public func awakeFromNib() {
         
         // Configure directory window
         contents.deselectAll(self)

@@ -307,6 +307,15 @@ extension MyController {
     // Action methods (Disk menu)
     // -----------------------------------------------------------------
 
+    @IBAction func driveEjectAction(_ sender: Any!) {
+        
+        if !c64.vc1541.diskModified() ||
+            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
+            
+            c64.vc1541.ejectDisk()
+        }
+    }
+    
     @IBAction func driveAction(_ sender: Any!) {
         
         track()
@@ -314,15 +323,6 @@ extension MyController {
             c64.iec.disconnectDrive()
         } else {
             c64.iec.connectDrive()
-        }
-    }
-    
-    @IBAction func driveEjectAction(_ sender: Any!) {
-        
-        if !c64.vc1541.diskModified() ||
-            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
-            
-            c64.vc1541.ejectDisk()
         }
     }
 
@@ -346,6 +346,11 @@ extension MyController {
     // Action methods (Datasette menu)
     // -----------------------------------------------------------------
     
+    @IBAction func ejectTapeAction(_ sender: Any!) {
+        track()
+        c64.datasette.ejectTape()
+    }
+    
     @IBAction func playOrStopAction(_ sender: Any!) {
         track()
         if c64.datasette.playKey() {
@@ -360,16 +365,18 @@ extension MyController {
         c64.datasette.rewind()
     }
 
-    @IBAction func ejectTapeAction(_ sender: Any!) {
-        track()
-        c64.datasette.ejectTape()
-    }
+
 
     
     // -----------------------------------------------------------------
     // Action methods (Cartridge menu)
     // -----------------------------------------------------------------
 
+    @IBAction func detachCartridgeAction(_ sender: Any!) {
+        track()
+        c64.detachCartridgeAndReset()
+    }
+    
     @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }

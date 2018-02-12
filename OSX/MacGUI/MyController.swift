@@ -502,17 +502,26 @@ extension MyController {
     }
 
     // --------------------------------------------------------------------------------
-    // Action methods (Drive)
+    //                         Action methods (main screen)
     // --------------------------------------------------------------------------------
     
- 
+    @IBAction func alwaysWarpAction(_ sender: Any!) {
+        
+        undoManager?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.alwaysWarpAction(sender)
+        }
+    
+        c64.setAlwaysWarp(!c64.alwaysWarp())
+        refresh()
+    }
+    
+    
     // --------------------------------------------------------------------------------
     // Action methods (Cartridge)
     // --------------------------------------------------------------------------------
 
     @IBAction func cartridgeEjectAction(_ sender: Any!) {
   
-        NSLog("\(#function)")
         c64.detachCartridgeAndReset()
     }
     

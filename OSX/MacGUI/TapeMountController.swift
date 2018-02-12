@@ -15,17 +15,13 @@ class TapeMountController : UserDialogController {
     @IBOutlet weak var autoLoad: NSButton!
     @IBOutlet weak var autoPress: NSButton!
     
-    /*
-    override func showSheet(_ controller: MyController) {
+    override func showSheet(withParent controller: MyController,
+                   completionHandler:(() -> Void)? = nil) {
         
+        track()
         let document = controller.document as! MyDocument
         tape = document.attachment as! TAPProxy
-        super.showSheet(controller)
-    }
-    */
-    
-    override func awakeFromNib() {
-        tape = mydocument.attachment as! TAPProxy
+        super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     
     //
