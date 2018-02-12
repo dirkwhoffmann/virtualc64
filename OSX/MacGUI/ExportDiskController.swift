@@ -29,9 +29,9 @@ class ExportDiskController : UserDialogController {
     override func showSheet(withParent: MyController, completionHandler:(() -> Void)? = nil) {
         
         parent = withParent
-        mydocument = parent.document as! MyDocument
+        // mydocument = parent.document as! MyDocument
         parentWindow = parent.window
-        c64 = mydocument.c64
+        c64 = (parent.document as! MyDocument).c64
         
         // Convert inserted disk to D64 archive
         d64archive = D64Proxy.make(withVC1541: c64.vc1541)

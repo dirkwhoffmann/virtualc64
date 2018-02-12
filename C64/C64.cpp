@@ -238,7 +238,7 @@ C64::run()
     if (isHalted()) {
         
         // Check for ROM images
-        if (!allRomsLoaded()) {
+        if (!isRunnable()) {
             putMessage(MSG_ROM_MISSING);
             return;
         }
@@ -765,16 +765,6 @@ C64::synchronizeTiming()
 //
 //! @functiongroup Loading ROM images
 //
-
-bool
-C64::allRomsLoaded() {
-
-    return
-    mem.basicRomIsLoaded() &&
-    mem.charRomIsLoaded() &&
-    mem.kernelRomIsLoaded() &&
-    floppy.mem.romIsLoaded();
-}
 
 uint8_t
 C64::getMissingRoms() {

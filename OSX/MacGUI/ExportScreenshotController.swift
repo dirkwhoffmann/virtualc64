@@ -41,9 +41,9 @@ class ExportScreenshotController : UserDialogController {
     override func showSheet(withParent: MyController, completionHandler:(() -> Void)? = nil) {
         
         parent = withParent
-        mydocument = parent.document as! MyDocument
+        // mydocument = parent.document as! MyDocument
         parentWindow = parent.window
-        c64 = mydocument.c64
+        c64 = (parent.document as! MyDocument).c64
         
         // Create save panel
         savePanel = NSSavePanel()

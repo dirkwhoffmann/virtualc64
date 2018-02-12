@@ -103,6 +103,9 @@
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
+		506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54C720321C830026D8B4 /* RomDialogController.swift */; };
+		506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506D54C920321EDF0026D8B4 /* RomDialog.xib */; };
+		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
@@ -380,6 +383,9 @@
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
+		506D54C720321C830026D8B4 /* RomDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDialogController.swift; sourceTree = "<group>"; };
+		506D54C920321EDF0026D8B4 /* RomDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RomDialog.xib; sourceTree = "<group>"; };
+		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
@@ -960,12 +966,14 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
+				506D54C720321C830026D8B4 /* RomDialogController.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
 				50265F56202D00940041C315 /* TapeMountController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
+				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 			);
 			name = UserDialogs;
 			sourceTree = "<group>";
@@ -1028,6 +1036,7 @@
 			children = (
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
+				506D54C920321EDF0026D8B4 /* RomDialog.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
 				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
 				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,
@@ -1234,6 +1243,7 @@
 				50C8925C1BEFB64500231B96 /* cntrlStop.png in Resources */,
 				50F8731F1EE7DB6900B30DBD /* home.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
+				506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 				502F57F41B93441A00D1077E /* LEDred.png in Resources */,
@@ -1332,6 +1342,7 @@
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
+				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
@@ -1350,6 +1361,7 @@
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
+				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
