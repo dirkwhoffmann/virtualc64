@@ -73,10 +73,10 @@ void
 Datasette::ping()
 {
     debug(3, "Pinging Datasette...\n");
-    c64->putMessage(MSG_VC1530_TAPE, hasTape() ? 1 : 0);
+    c64->putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
     // c64->putMessage(MSG_VC1530_MOTOR, motor ? 1 : 0);
     // c64->putMessage(MSG_VC1530_PLAY, playKey ? 1 : 0);
-    c64->putMessage(MSG_VC1530_PROGRESS, headInSeconds);
+    c64->putMessage(MSG_VC1530_PROGRESS);
 }
 
 size_t
@@ -155,7 +155,7 @@ Datasette::insertTape(TAPContainer *a)
     durationInCycles = headInCycles;
     rewind();
     
-    c64->putMessage(MSG_VC1530_TAPE, 1);
+    c64->putMessage(MSG_VC1530_TAPE);
 }
 
 void
@@ -176,7 +176,7 @@ Datasette::ejectTape()
     durationInCycles = 0;
     head = -1;
 
-    c64->putMessage(MSG_VC1530_TAPE, 0);
+    c64->putMessage(MSG_VC1530_NO_TAPE);
 }
 
 void
@@ -195,7 +195,7 @@ Datasette::advanceHead(bool silent)
     // Send message if the tapeCounter (in seconds) changes
     uint32_t newHeadInSeconds = (uint32_t)(headInCycles / PAL_CYCLES_PER_SECOND);
     if (newHeadInSeconds != headInSeconds && !silent)
-        c64->putMessage(MSG_VC1530_PROGRESS, newHeadInSeconds);
+        c64->putMessage(MSG_VC1530_PROGRESS);
 
     // Update headInSeconds
     headInSeconds = newHeadInSeconds;

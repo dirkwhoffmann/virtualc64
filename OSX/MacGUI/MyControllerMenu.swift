@@ -163,7 +163,6 @@ extension MyController {
             tapeIcon.isHidden = !c64.datasette.hasTape()
             cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
             cartridgeEject.isHidden = !c64.expansionport.cartridgeAttached()
-            info.isHidden = false
             clockSpeed.isHidden = false
             clockSpeedBar.isHidden = false
             warpIcon.isHidden = false
@@ -185,7 +184,6 @@ extension MyController {
             tapeIcon.isHidden = true
             cartridgeIcon.isHidden = true
             cartridgeEject.isHidden = true
-            info.isHidden = true
             clockSpeed.isHidden = true
             clockSpeedBar.isHidden = true
             warpIcon.isHidden = true

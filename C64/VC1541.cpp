@@ -94,9 +94,9 @@ void
 VC1541::ping()
 {
     debug(3, "Pinging VC1541...\n");
-    c64->putMessage(MSG_VC1541_LED, redLED ? 1 : 0);
-    c64->putMessage(MSG_VC1541_MOTOR, rotating ? 1 : 0);
-    c64->putMessage(MSG_VC1541_DISK, diskInserted ? 1 : 0);
+    c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF);
+    c64->putMessage(rotating ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
+    c64->putMessage(diskInserted ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
 
     // TODO: Replace manual pinging of sub components by a call to super::ping()
     cpu.ping();
@@ -259,10 +259,10 @@ VC1541::setRedLED(bool b)
 {
     if (!redLED && b) {
         redLED = true;
-        c64->putMessage(MSG_VC1541_LED, 1);
+        c64->putMessage(MSG_VC1541_RED_LED_ON);
     } else if (redLED && !b) {
         redLED = false;
-        c64->putMessage(MSG_VC1541_LED, 0);
+        c64->putMessage(MSG_VC1541_RED_LED_OFF);
     }
 }
 
@@ -271,10 +271,10 @@ VC1541::setRotating(bool b)
 {
     if (!rotating && b) {
         rotating = true;
-        c64->putMessage(MSG_VC1541_MOTOR, 1);
+        c64->putMessage(MSG_VC1541_MOTOR_ON);
     } else if (rotating && !b) {
         rotating = false;
-        c64->putMessage(MSG_VC1541_MOTOR, 0);
+        c64->putMessage(MSG_VC1541_MOTOR_OFF);
     }
 }
 
@@ -296,9 +296,9 @@ VC1541::moveHeadUp()
    
     assert(disk.isValidDiskPositon(halftrack, bitoffset));
     
-    c64->putMessage(MSG_VC1541_HEAD, 1);
+    c64->putMessage(MSG_VC1541_HEAD_UP);
     if (halftrack % 2 && sendSoundMessages)
-        c64->putMessage(MSG_VC1541_HEAD_SOUND, 1); // play sound for full tracks, only
+        c64->putMessage(MSG_VC1541_HEAD_UP_SOUND); // play sound for full tracks, only
 }
 
 void
@@ -318,9 +318,9 @@ VC1541::moveHeadDown()
     
     assert(disk.isValidDiskPositon(halftrack, bitoffset));
     
-    c64->putMessage(MSG_VC1541_HEAD, 0);
+    c64->putMessage(MSG_VC1541_HEAD_DOWN);
     if (halftrack % 2 && sendSoundMessages)
-        c64->putMessage(MSG_VC1541_HEAD_SOUND, 0); // play sound for full tracks, only
+        c64->putMessage(MSG_VC1541_HEAD_DOWN_SOUND); // play sound for full tracks, only
 }
 
 void
@@ -374,9 +374,9 @@ VC1541::insertDisk(Archive *a)
     }
     
     diskInserted = true;
-    c64->putMessage(MSG_VC1541_DISK, 1);
+    c64->putMessage(MSG_VC1541_DISK);
     if (sendSoundMessages)
-        c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
+        c64->putMessage(MSG_VC1541_DISK_SOUND);
 
     // If bit accuracy is disabled, we write-protect the disk
     disk.setWriteProtection(!bitAccuracy);
@@ -403,9 +403,9 @@ VC1541::ejectDisk()
 	setDiskPartiallyInserted(false);
 		
     // Notify listener
-	c64->putMessage(MSG_VC1541_DISK, 0);
+	c64->putMessage(MSG_VC1541_NO_DISK);
     if (sendSoundMessages)
-        c64->putMessage(MSG_VC1541_DISK_SOUND, 0);
+        c64->putMessage(MSG_VC1541_NO_DISK_SOUND);
 }
 
 D64Archive *

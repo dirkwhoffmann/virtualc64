@@ -54,7 +54,7 @@ ExpansionPort::reset()
 void
 ExpansionPort::ping()
 {
-    c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);
+    c64->putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
 }
 
 size_t
@@ -199,7 +199,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     // Reset cartridge to update exrom and game line on the expansion port
     cartridge->reset();
     
-    c64->putMessage(MSG_CARTRIDGE, 1);
+    c64->putMessage(MSG_CARTRIDGE);
     debug(1, "Cartridge attached to expansion port");
     cartridge->dumpState();
 
@@ -234,7 +234,7 @@ ExpansionPort::detachCartridge()
     setGameLine(1);
     setExromLine(1);
 
-    c64->putMessage(MSG_CARTRIDGE, 0);
+    c64->putMessage(MSG_NO_CARTRIDGE);
     
     debug(1, "Cartridge detached from expansion port");
 }

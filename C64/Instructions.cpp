@@ -63,9 +63,9 @@ CPU::fetch() {
 	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
 		if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
 			breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
-			setErrorState(SOFT_BREAKPOINT_REACHED);
+			setErrorState(CPU_SOFT_BREAKPOINT_REACHED);
 		} else {
-			setErrorState(HARD_BREAKPOINT_REACHED);
+			setErrorState(CPU_HARD_BREAKPOINT_REACHED);
 		}
 		debug(1, "Breakpoint reached\n");
 	}
@@ -405,7 +405,7 @@ void CPU::registerInstructions()
 
 void CPU::JAM()
 {
-	setErrorState(ILLEGAL_INSTRUCTION);
+	setErrorState(CPU_ILLEGAL_INSTRUCTION);
 	next = &CPU::JAM_2;
 }
 

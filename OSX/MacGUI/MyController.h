@@ -81,7 +81,6 @@ typedef unsigned long MacKeyFingerprint;
     IBOutlet NSButton *tapeIcon;
     IBOutlet NSButton *tapeEject;
     IBOutlet NSProgressIndicator *tapeProgress;
-	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
 	IBOutlet NSButton *warpIcon;
@@ -332,7 +331,6 @@ typedef unsigned long MacKeyFingerprint;
 @property NSButton *tapeIcon;
 @property NSButton *tapeEject;
 @property NSProgressIndicator *tapeProgress;
-@property NSTextField *info;
 @property NSTextField *clockSpeed;
 @property NSLevelIndicator *clockSpeedBar;
 @property NSButton *warpIcon;
@@ -404,7 +402,7 @@ typedef unsigned long MacKeyFingerprint;
 - (bool)showMediaDialog;
 - (IBAction)cancelMediaDialog:(id)sender;
 
-- (bool)showRomDialog:(NSInteger)i;
+- (bool)showRomDialog;
 - (IBAction)cancelRomDialog:(id)sender;
 
 @end

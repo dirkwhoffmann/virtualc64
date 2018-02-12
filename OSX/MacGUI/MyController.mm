@@ -58,7 +58,6 @@
 @synthesize tapeIcon;
 @synthesize tapeEject;
 @synthesize tapeProgress;
-@synthesize info;
 @synthesize clockSpeed;
 @synthesize clockSpeedBar;
 @synthesize warpIcon;
@@ -207,7 +206,7 @@
             [self showRomDialog:msg];
             break;
             
-        case MSG_SNAPSHOT:
+        case MSG_SNAPSHOT_TAKEN:
             // Update TouchBar with new snapshpot image
             [self rebuildTouchBar];
             break;
@@ -541,9 +540,10 @@
     [[self window] endSheet:mediaDialog returnCode:NSModalResponseCancel];
 }
 
-- (bool)showRomDialog:(NSInteger)i
+- (bool)showRomDialog
 {
-    [romDialog initialize:(int)i];
+    uint8_t missing = [c64 missingRoms];
+    [romDialog initialize:(int)missing];
     [[self window] beginSheet:romDialog completionHandler:nil];
 
     return YES;

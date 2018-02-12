@@ -147,7 +147,6 @@
                 <outlet property="driveIcon" destination="1045" id="Vlm-gT-AYk"/>
                 <outlet property="greenLED" destination="1208" id="1214"/>
                 <outlet property="hardwareDialog" destination="YW8-0Q-Xve" id="8zS-3M-G6U"/>
-                <outlet property="info" destination="24" id="209"/>
                 <outlet property="ioSource" destination="976" id="1689"/>
                 <outlet property="joystickPortA" destination="L2b-nG-yBo" id="EVC-v9-DPf"/>
                 <outlet property="joystickPortB" destination="4MP-rV-xX2" id="mps-Jv-PSQ"/>
@@ -277,15 +276,6 @@
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
-                    <textField verticalHuggingPriority="750" id="24">
-                        <rect key="frame" x="220" y="4" width="173" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" id="1701">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button hidden="YES" toolTip="Eject disk" id="1038">
                         <rect key="frame" x="81" y="0.0" width="20" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

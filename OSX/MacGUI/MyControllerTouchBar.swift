@@ -21,14 +21,14 @@ extension NSTouchBarItem.Identifier {
 
 public extension MyController
 {
-    @available(OSX 10.12.2, *)
     @objc func rebuildTouchBar() {
         
-        let popover = touchBar?.item(forIdentifier:.ttpopover) as? NSPopoverTouchBarItem
-        let bar = popover?.popoverTouchBar as? TimeTravelTouchBar
-        bar?.rebuild()
+        if #available(OSX 10.12.2, *) {
+            let popover = touchBar?.item(forIdentifier:.ttpopover) as? NSPopoverTouchBarItem
+            let bar = popover?.popoverTouchBar as? TimeTravelTouchBar
+            bar?.rebuild()
+        }
     }
-    
 }
 
 @available(OSX 10.12.2, *)

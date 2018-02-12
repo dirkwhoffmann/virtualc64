@@ -596,10 +596,8 @@ struct ContainerWrapper;
 - (void) dump;
 - (BOOL) developmentMode;
 
-- (Message *)message;
-- (void) putMessage:(int)msg;
-- (VC64Message) messageID:(Message *)message;
-- (NSInteger) messageValue:(Message *)message;
+- (VC64Message)message;
+- (void) putMessage:(VC64Message)msg;
 
 - (void) powerUp;
 - (void) ping;

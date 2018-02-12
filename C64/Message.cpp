@@ -21,22 +21,20 @@ MessageQueue::~MessageQueue()
 	pthread_mutex_destroy(&lock);
 }
 
-Message *
+VC64Message
 MessageQueue::getMessage()
 { 
-	Message *result;
+	VC64Message result;
 
 	pthread_mutex_lock(&lock);	
 
-	// Get data
+	// Read message
 	if (r == w) {
-		result = NULL; // Queue is empty!
+		result = MSG_NONE; // Queue is empty
 	} else {
-		result = (r == w) ? NULL : &queue[r];
+        result = queue[r];
+        r = (r + 1) % queue_size;
 	}
-	
-	// Move read pointer to next location
-	if (result) r = (r + 1) % queue_size;
 		
 	pthread_mutex_unlock(&lock);
 	
@@ -44,19 +42,18 @@ MessageQueue::getMessage()
 }
 
 void
-MessageQueue::putMessage(int id, int i)
+MessageQueue::putMessage(VC64Message msg)
 {
 	pthread_mutex_lock(&lock);
 		
 	// Write data
-	queue[w].id = (VC64Message)id; 
-	queue[w].i = i; 
+    queue[w] = msg;
     
 	// Move write pointer to next location
 	w = (w + 1) % queue_size;
 
 	if (w == r) {
-        // debug(2, "Queue overflow\n");
+        // debug(2, "Queue overflow. Oldest message is lost.\n");
 		r = (r + 1) % queue_size;
 	} 
 	

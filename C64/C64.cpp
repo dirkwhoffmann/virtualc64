@@ -171,8 +171,8 @@ void C64::ping()
     debug (1, "Pinging virtual C64[%p]\n", this);
 
     VirtualComponent::ping();
-    putMessage(MSG_WARP, warp);
-    putMessage(MSG_ALWAYS_WARP, alwaysWarp);
+    putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
+    putMessage(alwaysWarp ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
 }
 	
 void 
@@ -239,7 +239,7 @@ C64::run()
         
         // Check for ROM images
         if (getMissingRoms()) {
-            putMessage(MSG_ROM_MISSING, getMissingRoms());
+            putMessage(MSG_ROM_MISSING);
             return;
         }
         
@@ -681,8 +681,9 @@ C64::setWarp(bool b)
     
     warp = b;
 
-    // Warping has the unavoidable drawback that audio playback gets out of sync. To cope with this issue,
-    // we silence SID during warp mode and smoothly bring back sound when warping ends.
+    // Warping has the unavoidable drawback that audio playback gets out of sync.
+    // To cope with this issue, we silence SID during warp mode and fade in smoothly
+    // after warping has ended.
     
     if (warp) {
         // Quickly fade out SID
@@ -694,7 +695,7 @@ C64::setWarp(bool b)
         restartTimer();
     }
     
-    putMessage(MSG_WARP, b);
+    putMessage(b ? MSG_WARP_ON : MSG_WARP_OFF);
 }
 
 void
@@ -706,7 +707,7 @@ C64::setAlwaysWarp(bool b)
     if (alwaysWarp != b) {
         alwaysWarp = b;
         setWarp(b);
-        putMessage(MSG_ALWAYS_WARP, b);
+        putMessage(b ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
     }
 }
 
@@ -789,22 +790,22 @@ C64::loadRom(const char *filename)
     
     if (C64Memory::isBasicRom(filename)) {
         result = mem.loadBasicRom(filename);
-        if (result) putMessage(MSG_ROM_LOADED, BASIC_ROM);
+        if (result) putMessage(MSG_BASIC_ROM_LOADED);
     }
     
     if (C64Memory::isCharRom(filename)) {
         result = mem.loadCharRom(filename);
-        if (result) putMessage(MSG_ROM_LOADED, CHAR_ROM);
+        if (result) putMessage(MSG_CHAR_ROM_LOADED);
     }
     
     if (C64Memory::isKernelRom(filename)) {
         result = mem.loadKernelRom(filename);
-        if (result) putMessage(MSG_ROM_LOADED, KERNEL_ROM);
+        if (result) putMessage(MSG_KERNEL_ROM_LOADED);
     }
     
     if (VC1541Memory::is1541Rom(filename)) {
         result = floppy.mem.loadRom(filename);
-        if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
+        if (result) putMessage(MSG_VC1541_ROM_LOADED);
     }
     
     if (result) {
@@ -927,7 +928,7 @@ C64::takeTimeTravelSnapshot()
     debug(3, "Taking time-travel snapshop %d\n", backInTimeWritePtr);
     
     saveToSnapshotUnsafe(backInTimeHistory[backInTimeWritePtr]);
-    putMessage(MSG_SNAPSHOT, backInTimeWritePtr);
+    putMessage(MSG_SNAPSHOT_TAKEN);
 
     backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
 }

@@ -48,20 +48,30 @@ typedef enum {
  */
 typedef enum {
     
+    MSG_NONE = 0,
+    
     // Running the emulator
-    MSG_READY_TO_RUN = 1,
+    MSG_READY_TO_RUN,
     MSG_RUN,
     MSG_HALT,
 
     // ROM and snapshot handling
-    MSG_ROM_LOADED,
+    MSG_BASIC_ROM_LOADED,
+    MSG_CHAR_ROM_LOADED,
+    MSG_KERNEL_ROM_LOADED,
+    MSG_VC1541_ROM_LOADED,
     MSG_ROM_MISSING,
-    MSG_SNAPSHOT,
+    MSG_SNAPSHOT_TAKEN,
 
     // CPU related messages
-    MSG_CPU,
-    MSG_WARP,
-    MSG_ALWAYS_WARP,
+    MSG_CPU_OK,
+    MSG_CPU_SOFT_BREAKPOINT_REACHED,
+    MSG_CPU_HARD_BREAKPOINT_REACHED,
+    MSG_CPU_ILLEGAL_INSTRUCTION,
+    MSG_WARP_ON,
+    MSG_WARP_OFF,
+    MSG_ALWAYS_WARP_ON,
+    MSG_ALWAYS_WARP_OFF,
 
     // VIC related messages
     MSG_PAL,
@@ -70,33 +80,34 @@ typedef enum {
     // Peripherals (Disk drive)
     MSG_VC1541_ATTACHED,
     MSG_VC1541_ATTACHED_SOUND,
+    MSG_VC1541_DETACHED,
+    MSG_VC1541_DETACHED_SOUND,
     MSG_VC1541_DISK,
     MSG_VC1541_DISK_SOUND,
-    MSG_VC1541_LED,
-    MSG_VC1541_DATA,
-    MSG_VC1541_MOTOR,
-    MSG_VC1541_HEAD,
-    MSG_VC1541_HEAD_SOUND,
-    
+    MSG_VC1541_NO_DISK,
+    MSG_VC1541_NO_DISK_SOUND,
+    MSG_VC1541_RED_LED_ON,
+    MSG_VC1541_RED_LED_OFF,
+    MSG_VC1541_DATA_ON,
+    MSG_VC1541_DATA_OFF,
+    MSG_VC1541_MOTOR_ON,
+    MSG_VC1541_MOTOR_OFF,
+    MSG_VC1541_HEAD_UP,
+    MSG_VC1541_HEAD_UP_SOUND,
+    MSG_VC1541_HEAD_DOWN,
+    MSG_VC1541_HEAD_DOWN_SOUND,
+
     // Peripherals (Datasette)
     MSG_VC1530_TAPE,
-    MSG_VC1530_PLAY,
+    MSG_VC1530_NO_TAPE,
+    // MSG_VC1530_PLAY,
     MSG_VC1530_PROGRESS,
 
     // Peripherals (Expansion port)
     MSG_CARTRIDGE,
-    
-    // MSG_LOG,
-} VC64Message;
+    MSG_NO_CARTRIDGE
 
-/*! @brief    Message layout
- *  @details  A message queue is used to communicate with the GUI. Each message consists of
- *            a message id and an additional integer parameter.
- */
-typedef struct {
-    VC64Message id;
-    int i;
-} Message;
+} VC64Message;
 
 //! @brief    Fingerprint that uniquely identifies a key combination on the virtual C64 keyboard
 typedef unsigned short C64KeyFingerprint;
@@ -164,9 +175,9 @@ typedef enum {
  */
 typedef enum {
     CPU_OK = 0,
-    SOFT_BREAKPOINT_REACHED,
-    HARD_BREAKPOINT_REACHED,
-    ILLEGAL_INSTRUCTION
+    CPU_SOFT_BREAKPOINT_REACHED,
+    CPU_HARD_BREAKPOINT_REACHED,
+    CPU_ILLEGAL_INSTRUCTION
 } ErrorState;
 
 /*! @brief    Breakpoint type

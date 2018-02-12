@@ -32,7 +32,7 @@ private:
     const static unsigned queue_size = 64;
     
     //! @brief    Message queue ring buffer
-	Message queue[queue_size];
+	VC64Message queue[queue_size];
 	
 	//! @brief    The ring buffers read pointer
 	int r; 
@@ -53,10 +53,13 @@ public:
 	/*! @brief    Returns the next pending message
      *  @return   Returns NULL, if the queue is empty
      */
-	Message *getMessage();
+	VC64Message getMessage();
 
-	//! @brief   Adds new message to queue
-	void putMessage(int id, int i = 0);
+	//! @brief    Writes new message into the message queue
+    /*! @detals   If a callback function is set, the functions is invoked.
+     */
+	// void putMessage(int id, int i = 0);
+    void putMessage(VC64Message id);
 };
 
 #endif

@@ -402,7 +402,23 @@ CPU::setErrorState(ErrorState state)
         return;
 
     errorState = state;
-    c64->putMessage(MSG_CPU, state);
+    
+    switch (errorState) {
+        case CPU_OK:
+            c64->putMessage(MSG_CPU_OK);
+            return;
+        case CPU_SOFT_BREAKPOINT_REACHED:
+            c64->putMessage(MSG_CPU_SOFT_BREAKPOINT_REACHED);
+            return; 
+        case CPU_HARD_BREAKPOINT_REACHED:
+            c64->putMessage(MSG_CPU_HARD_BREAKPOINT_REACHED);
+            return;
+        case CPU_ILLEGAL_INSTRUCTION:
+            c64->putMessage(MSG_CPU_ILLEGAL_INSTRUCTION);
+            return;
+        default:
+            assert(false);
+    }
 }
 
 

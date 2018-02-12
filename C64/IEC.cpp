@@ -87,8 +87,8 @@ IEC::reset()
 void
 IEC::ping()
 {
- 	drive->c64->putMessage(MSG_VC1541_ATTACHED, driveConnected);
-    drive->c64->putMessage(MSG_VC1541_DATA, busActivity > 0);
+    drive->c64->putMessage(driveConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
+    drive->c64->putMessage(busActivity > 0 ? MSG_VC1541_DATA_ON : MSG_VC1541_DATA_OFF );
     
 }
 
@@ -132,9 +132,9 @@ void
 IEC::connectDrive() 
 { 
 	driveConnected = true; 
-	drive->c64->putMessage(MSG_VC1541_ATTACHED, 1);
+	drive->c64->putMessage(MSG_VC1541_ATTACHED);
     if (drive->soundMessagesEnabled())
-        drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND, 1);
+        drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND);
 }
 	
 void 
@@ -142,9 +142,9 @@ IEC::disconnectDrive()
 {
     // Disconnect drive from bus
 	driveConnected = false; 
-	drive->c64->putMessage(MSG_VC1541_ATTACHED, 0);
+	drive->c64->putMessage(MSG_VC1541_DETACHED);
     if (drive->soundMessagesEnabled())
-        drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND, 0);
+        drive->c64->putMessage(MSG_VC1541_DETACHED_SOUND);
 
     // Switch drive off and on
     drive->powerUp();
@@ -200,7 +200,7 @@ void IEC::updateIecLines()
 	if (signals_changed) {
 		if (busActivity == 0) {
 			// Bus activity detected
-			drive->c64->putMessage(MSG_VC1541_DATA, 1);
+			drive->c64->putMessage(MSG_VC1541_DATA_ON);
 			drive->c64->setWarp(drive->c64->getAlwaysWarp() || drive->c64->getWarpLoad());
 		}
 		busActivity = 30;
@@ -248,7 +248,7 @@ void IEC::execute()
 		busActivity--;
 		if (busActivity == 0) {
 			// Bus is idle 
-			drive->c64->putMessage(MSG_VC1541_DATA, 0);
+			drive->c64->putMessage(MSG_VC1541_DATA_OFF);
 			drive->c64->setWarp(drive->c64->getAlwaysWarp());
 		}
 	}

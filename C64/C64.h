@@ -34,6 +34,10 @@
 // 8. Fixed a bug that sometimes crashed the emulator when grabbing the background texture in 1.6.
 //
 // TODO:
+// Get rid of parameter i in Message
+// Use VC64Message type instead of Message struct everywhere
+// Remove info text field in main window
+//
 // Cartridge handler. Store everything in snapshot files
 // TODO:
 // - Make Snaphshot store everything in one chunk of memory
@@ -53,7 +57,6 @@
 //    Better: Run asychronously. BTW, try to speed-optimize Disk->D64.
 //
 //
-
 
 #ifndef _C64_INC
 #define _C64_INC
@@ -668,10 +671,13 @@ public:
     //
     
     //! @brief    Gets a notification message from message queue
-    Message *getMessage() { return queue.getMessage(); }
+    VC64Message getMessage() { return queue.getMessage(); }
     
     //! @brief    Feeds a notification message into message queue
-    void putMessage(int id, int i = 0) { queue.putMessage(id, i); }
+    void putMessage(VC64Message msg) {
+        
+       queue.putMessage(msg);
+    }
 };
 
 #endif

@@ -104,10 +104,10 @@ extension MyController {
         animationCounter += 1
         
         // Process all pending messages
-        while let message = c64.message() {
-            let id = c64.messageID(message)
-            let value = c64.messageValue(message)
-            processMessage(id: id, value: value)
+        var msg: VC64Message = c64.message()
+        while msg != MSG_NONE {
+            processMessage(msg)
+            msg = c64.message()
         }
  
         // Do 12 times a second ...
@@ -167,11 +167,11 @@ extension MyController {
         timerLock.unlock()
     }
  
-    func processMessage(id: VC64Message, value: Int) {
+    func processMessage(_ msg: VC64Message) {
 
-        // track("Message \(id.rawValue)")
+        // track("Message \(msg)")
     
-        switch (id) {
+        switch (msg) {
     
         case MSG_READY_TO_RUN:
     
@@ -194,7 +194,6 @@ extension MyController {
     
         case MSG_RUN:
             
-            info.stringValue = ""
             enableUserEditing(false)
             refresh()
             cheatboxPanel.close()
@@ -210,7 +209,10 @@ extension MyController {
             refresh()
             break
     
-        case MSG_ROM_LOADED:
+        case MSG_BASIC_ROM_LOADED,
+             MSG_CHAR_ROM_LOADED,
+             MSG_KERNEL_ROM_LOADED,
+             MSG_VC1541_ROM_LOADED:
             
             // Update ROM dialog
             if romDialog != nil {
@@ -220,38 +222,31 @@ extension MyController {
     
         case MSG_ROM_MISSING:
 
-            precondition(value != 0)
             enableUserEditing(true) // Why?
             refresh()
-            showRomDialog(value)
+            showRomDialog()
             break
             
-        case MSG_SNAPSHOT:
+        case MSG_SNAPSHOT_TAKEN:
 
             // Update TouchBar with new snapshpot image
-            if #available(OSX 10.12.2, *) {
-                rebuildTouchBar()
-            }
+            rebuildTouchBar()
             break
     
-        case MSG_CPU:
-            switch(ErrorState(UInt32(value))) {
-            case CPU_OK,
-                 SOFT_BREAKPOINT_REACHED:
-                info.stringValue = ""
-                break
-            case HARD_BREAKPOINT_REACHED,
-                 ILLEGAL_INSTRUCTION:
-                self.debugOpenAction(self)
-                break
-            default:
-                break
-            }
+        case MSG_CPU_OK,
+             MSG_CPU_SOFT_BREAKPOINT_REACHED:
+            break
+            
+        case MSG_CPU_HARD_BREAKPOINT_REACHED,
+             MSG_CPU_ILLEGAL_INSTRUCTION:
+            self.debugOpenAction(self)
             refresh()
             break
             
-        case MSG_WARP,
-             MSG_ALWAYS_WARP:
+        case MSG_WARP_ON,
+             MSG_WARP_OFF,
+             MSG_ALWAYS_WARP_ON,
+             MSG_ALWAYS_WARP_OFF:
 
             if c64.alwaysWarp() {
                 warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "pin_red"))
@@ -270,82 +265,112 @@ extension MyController {
     
         case MSG_VC1541_ATTACHED:
             
-            let name = NSImage.Name(rawValue: (value != 0) ? "LEDgreen" : "LEDgray")
-            greenLED.image = NSImage.init(named: name)
+            greenLED.image = NSImage.init(named: NSImage.Name(rawValue:"LEDgreen"))
             break
-    
+
+        case MSG_VC1541_DETACHED:
+            
+            greenLED.image = NSImage.init(named: NSImage.Name(rawValue:"LEDgray"))
+            break
+
         case MSG_VC1541_ATTACHED_SOUND:
             
-            if value != 0 {
-                // Not sure about the copyright of the following sound:
-                // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
-                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-                c64.vc1541.playSound("drive_click", volume: 1.0)
-            } else {
-                // Not sure about the copyright of the following sound:
-                // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
-                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-                c64.vc1541.playSound("drive_click", volume: 1.0)
-            }
+            // Not sure about the copyright of the following sound:
+            // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
+            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+            c64.vc1541.playSound("drive_click", volume: 1.0)
+            break
+        
+        case MSG_VC1541_DETACHED_SOUND:
+            
+            // Not sure about the copyright of the following sound:
+            // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+            c64.vc1541.playSound("drive_click", volume: 1.0)
             break
     
         case MSG_VC1541_DISK_SOUND:
             
-            if value != 0 {
-                // [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
-                c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
-            } else {
-                // [[c64 vc1541] playSound:@"1541_door_open_1" volume:0.2];
-                c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
-            }
+            // [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
+            c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
             break
             
-        case MSG_VC1541_HEAD_SOUND:
+        case MSG_VC1541_NO_DISK_SOUND:
             
-            if value != 0 {
-                // Not sure about the copyright of the following sound:
-                // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
-                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-                c64.vc1541.playSound("drive_click", volume: 1.0)
-
-            } else {
-                // Not sure about the copyright of the following sound:
-                // [[c64 vc1541] playSound:@"1541_track_change_2" volume:1.0];
-                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-                c64.vc1541.playSound("drive_click", volume: 1.0)
-            }
-            break;
+            // [[c64 vc1541] playSound:@"1541_door_open_1" volume:0.2];
+            c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
+            break
+            
+        case MSG_VC1541_HEAD_UP_SOUND:
+            
+            // Not sure about the copyright of the following sound:
+            // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+            c64.vc1541.playSound("drive_click", volume: 1.0)
+            break
+            
+        case MSG_VC1541_HEAD_DOWN_SOUND:
+            
+            // Not sure about the copyright of the following sound:
+            // [[c64 vc1541] playSound:@"1541_track_change_2" volume:1.0];
+            // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+            c64.vc1541.playSound("drive_click", volume: 1.0)
+            break
             
         case MSG_VC1541_DISK:
             
-            driveIcon.isHidden = (value == 0)
-            driveEject.isHidden = (value == 0)
+            driveIcon.isHidden = false
+            driveEject.isHidden = false
             break
   
-        case MSG_VC1541_LED:
+        case MSG_VC1541_NO_DISK:
             
-            let name = NSImage.Name(rawValue: (value != 0) ? "LEDred" : "LEDgray")
-            redLED.image = NSImage.init(named: name)
+            driveIcon.isHidden = true
+            driveEject.isHidden = true
+            break
+            
+        case MSG_VC1541_RED_LED_ON:
+            
+            redLED.image = NSImage.init(named: NSImage.Name(rawValue: "LEDred"))
+            redLED.setNeedsDisplay()
+            break
+            
+        case MSG_VC1541_RED_LED_OFF:
+            
+            redLED.image = NSImage.init(named: NSImage.Name(rawValue: "LEDgray"))
             redLED.setNeedsDisplay()
             break
     
-        case MSG_VC1541_DATA:
+        case MSG_VC1541_DATA_ON:
 
-            c64.iecBusIsBusy = (value != 0)
+            c64.iecBusIsBusy = true
             break
     
-        case MSG_VC1541_MOTOR,
-             MSG_VC1541_HEAD:
+        case MSG_VC1541_DATA_OFF:
+            
+            c64.iecBusIsBusy = false
+            break
+            
+        case MSG_VC1541_MOTOR_ON,
+             MSG_VC1541_MOTOR_OFF,
+             MSG_VC1541_HEAD_UP,
+             MSG_VC1541_HEAD_DOWN:
             break
     
         case MSG_VC1530_TAPE:
             
-            tapeIcon.isHidden = (value == 0)
-            tapeEject.isHidden = (value == 0)
+            tapeIcon.isHidden = false
+            tapeEject.isHidden = false
             break
+
+        case MSG_VC1530_NO_TAPE:
             
-        case MSG_VC1530_PLAY:
+            tapeIcon.isHidden = true
+            tapeEject.isHidden = true
             break
+
+        //case MSG_VC1530_PLAY:
+        //    break
     
         case MSG_VC1530_PROGRESS:
             
@@ -354,11 +379,18 @@ extension MyController {
     
         case MSG_CARTRIDGE:
             
-            cartridgeIcon.isHidden = (value == 0)
-            cartridgeEject.isHidden = (value == 0)
+            cartridgeIcon.isHidden = false
+            cartridgeEject.isHidden = false
             break
     
+        case MSG_NO_CARTRIDGE:
+         
+            cartridgeIcon.isHidden = true
+            cartridgeEject.isHidden = true
+            break
+            
         default:
+            track("Unknown message: \(msg)")
             assert(false)
             break
         }

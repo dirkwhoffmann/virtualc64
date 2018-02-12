@@ -732,10 +732,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
-- (Message *)message { return wrapper->c64->getMessage(); }
-- (void) putMessage:(int)msg { wrapper->c64->putMessage(msg); }
-- (VC64Message) messageID:(Message *)message { return message->id; }
-- (NSInteger) messageValue:(Message *)message { return message->i; }
+- (VC64Message)message { return wrapper->c64->getMessage(); }
+- (void) putMessage:(VC64Message)msg { wrapper->c64->putMessage(msg); }
 
 
 - (void) powerUp { wrapper->c64->powerUp(); }

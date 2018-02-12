@@ -117,7 +117,7 @@ public extension MetalView {
         // Build filters
         bypassFilter = BypassFilter.init(device: device!, library: library)
         smoothFilter = SaturationFilter.init(device: device!, library: library, factor: 1.0)
-        blurFilter = BlurFilter.init(device: device!, library: library, radius: 2.0)
+        blurFilter = BlurFilter.init(device: device!, library: library, radius: 3.0)
         saturationFilter = SaturationFilter.init(device: device!, library: library, factor: 0.5)
         sepiaFilter = SepiaFilter.init(device: device!, library: library)
         grayscaleFilter = SaturationFilter.init(device: device!, library: library, factor: 0.0)
