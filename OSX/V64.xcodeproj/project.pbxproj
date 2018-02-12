@@ -46,7 +46,6 @@
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
-		5020C3121C4BA3A700DAE8E5 /* MyWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
 		50265F57202D00940041C315 /* TapeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50265F56202D00940041C315 /* TapeMountController.swift */; };
@@ -313,8 +312,6 @@
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
-		5020C3101C4BA3A700DAE8E5 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
-		5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyWindow.mm; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
@@ -739,8 +736,6 @@
 				50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */,
 				50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */,
 				50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */,
-				5020C3101C4BA3A700DAE8E5 /* MyWindow.h */,
-				5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1324,7 +1319,6 @@
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
-				5020C3121C4BA3A700DAE8E5 /* MyWindow.mm in Sources */,
 				50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
