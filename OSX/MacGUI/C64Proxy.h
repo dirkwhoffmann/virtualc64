@@ -616,15 +616,21 @@ struct ContainerWrapper;
 - (void) setNTSC;
 - (void) setNTSC:(BOOL)b;
 
-- (uint8_t) missingRoms;
+- (uint8_t) missingRoms; // DEPRECATED
+
+
 - (bool) isBasicRom:(NSString *)filename;
 - (bool) loadBasicRom:(NSString *)filename;
+- (bool) isBasicRomLoaded;
 - (bool) isCharRom:(NSString *)filename;
 - (bool) loadCharRom:(NSString *)filename;
+- (bool) isCharRomLoaded;
 - (bool) isKernelRom:(NSString *)filename;
 - (bool) loadKernelRom:(NSString *)filename;
+- (bool) isKernelRomLoaded;
 - (bool) isVC1541Rom:(NSString *)filename;
 - (bool) loadVC1541Rom:(NSString *)filename;
+- (bool) isVC1541RomLoaded;
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 

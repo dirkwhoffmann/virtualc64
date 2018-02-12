@@ -542,7 +542,11 @@ public:
     //
     //! @functiongroup Loading ROM images
     //
-    
+
+    /*! @brief    Returns true iff all ROMs are loaded
+     */
+    bool allRomsLoaded();
+
     /*! @brief    Provides information about missing ROM images.
      *  @details  Each missing ROM is indicated by a 1 in the returned bitmap.
      */
@@ -550,7 +554,7 @@ public:
     
     //! @brief    Loads ROM image into memory
     bool loadRom(const char *filename);
-    
+
     
     //
     //! @functiongroup Loading and saving snapshots
