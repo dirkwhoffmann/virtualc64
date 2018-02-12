@@ -140,6 +140,24 @@ extension MyController {
         }
     }
     
+    
+    // -----------------------------------------------------------------
+    // Action methods (Edit menu)
+    // -----------------------------------------------------------------
+    
+    @IBAction func paste(_ sender: Any!) {
+        
+        track()
+        
+        let pasteBoard = NSPasteboard.general
+        guard let text = pasteBoard.string(forType: .string) else {
+            track("Cannot paste. No text in pasteboard")
+            return
+        }
+        
+        simulateUserTypingText(text)
+    }
+
     // -----------------------------------------------------------------
     // Action methods (View menu)
     // -----------------------------------------------------------------

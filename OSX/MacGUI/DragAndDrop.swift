@@ -80,7 +80,7 @@ public extension MetalView {
         case DragType.string:
             
             // Type text on virtual keyboard
-            guard let text = pasteBoard.string(forType:DragType.string) else {
+            guard let text = pasteBoard.string(forType: .string) else {
                 return false
             }
             // document.c64.keyboard.typeText(text)

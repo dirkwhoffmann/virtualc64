@@ -34,9 +34,7 @@
 // 8. Fixed a bug that sometimes crashed the emulator when grabbing the background texture in 1.6.
 //
 // TODO:
-// Get rid of parameter i in Message
-// Use VC64Message type instead of Message struct everywhere
-// Remove info text field in main window
+// Move ROM dialog to swift
 //
 // Cartridge handler. Store everything in snapshot files
 // TODO:
@@ -45,10 +43,6 @@
 //
 //
 //
-
-// TODO:
-// Use better text descriptions in Mount dialog for G64 and NIB files
-// Cartridge dialog
 // 
 // SPEEDUP:
 //
