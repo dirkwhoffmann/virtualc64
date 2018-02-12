@@ -28,15 +28,11 @@
     unsigned noOfFiles;
     IBOutlet NSImageView *diskIcon;
     IBOutlet NSTextField *diskText;
-    IBOutlet NSButton *diskEject;
-    IBOutlet NSTextField *diskEjectText;
     IBOutlet NSButton *diskWriteProtected;
     
     /* VC 1530 */
     IBOutlet NSImageView *tapeIcon;
     IBOutlet NSTextField *tapeText;
-    IBOutlet NSButton *tapeEject;
-    IBOutlet NSTextField *tapeEjectText;
     IBOutlet NSSlider *tapeSlider;
     IBOutlet NSTextField *tapeHead;
     IBOutlet NSTextField *tapeEnd;
@@ -44,8 +40,6 @@
     /* Expansion port */
     IBOutlet NSImageView *cartridgeIcon;
     IBOutlet NSTextField *cartridgeText;
-    IBOutlet NSButton *cartridgeEject;
-    IBOutlet NSTextField *cartridgeEjectText;
 }
 
 - (void) initialize:(MyController *)mycontroller;

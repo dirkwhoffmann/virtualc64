@@ -84,15 +84,11 @@
         [diskIcon setHidden:NO];
         [diskText setStringValue:[NSString stringWithFormat:@"%ld track disk",
                                   (long)[[[c64 vc1541] disk] numTracks]]];
-        [diskEject setEnabled:YES];
-        [diskEjectText setEnabled:YES];
         [diskWriteProtected setEnabled:[[c64 vc1541] bitAccuracy]];
         [diskWriteProtected setState:[[c64 vc1541] writeProtection]];
     } else {
         [diskIcon setHidden:YES];
         [diskText setStringValue:@"No disk"];
-        [diskEject setEnabled:NO];
-        [diskEjectText setEnabled:NO];
         [diskWriteProtected setEnabled:NO];
     }
 
@@ -103,8 +99,6 @@
         [tapeIcon setHidden:NO];
         [tapeText setStringValue:[NSString stringWithFormat:@"Type %ld tape",
                                   (long)[datasette getType]]];
-        [tapeEject setEnabled:YES];
-        [tapeEjectText setEnabled:YES];
         [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d",
                                   [datasette headInSeconds] / 60,
                                   [datasette headInSeconds] % 60]];
@@ -118,8 +112,6 @@
     } else {
         [tapeIcon setHidden:YES];
         [tapeText setStringValue:@"No tape"];
-        [tapeEject setEnabled:NO];
-        [tapeEjectText setEnabled:NO];
         [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
         [tapeEnd  setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
         [tapeSlider setIntValue:0];
@@ -132,14 +124,9 @@
         [cartridgeIcon setHidden:NO];
         [cartridgeText setStringValue:[NSString stringWithFormat:@"Type %d cartridge",
                                        [[c64 expansionport] cartridgeType]]];
-        [cartridgeEject setEnabled:YES];
-        [cartridgeEject setHidden:NO];
-        [cartridgeEjectText setEnabled:YES];
     } else {
         [cartridgeIcon setHidden:YES];
         [cartridgeText setStringValue:@"No cartridge"];
-        [cartridgeEject setEnabled:NO];
-        [cartridgeEjectText setEnabled:NO];
     }
 }
 
