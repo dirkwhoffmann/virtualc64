@@ -12,6 +12,9 @@ class DiskInspectorController : UserDialogController
     let diskImage = NSImage.init(named: NSImage.Name.init(rawValue: "diskette"))
     let noDiskImage = NSImage.init(named: NSImage.Name.init(rawValue: "diskette_light"))
     
+    // Remembers the currently displayed track.
+    var currentTrack = 0
+    
     // Outlets
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var halftrack: NSTextField!
@@ -36,6 +39,7 @@ class DiskInspectorController : UserDialogController
         refresh()
     }
     
+    /// Updates all GUI elements
     func refresh() {
         
         track()
@@ -63,15 +67,31 @@ class DiskInspectorController : UserDialogController
             let info = String(format: "GCR data of halftrack %d (track %d):", ht, t)
             gcrHeader.stringValue = String(info)
         }
+        protect.integerValue = drive.writeProtection() ? 1 : 0
         
-        let gcr = String(cString: drive.trackAsString())
-        let documentView = gcrData.documentView as? NSTextView
-        let textStorage = NSTextStorage.init(string: gcr)
-        documentView?.layoutManager?.replaceTextStorage(textStorage)
+        if currentTrack != t {
+            refreshGcr()
+            currentTrack = t
+        }
+    }
     
+    /// Updates the GCR data field only
+    func refreshGcr() {
+  
+        let drive = c64.vc1541!
+        let offset = drive.bitOffset()
         
-        // gcrData. stringValue = gcr
-        // protect.integerValue = drive.writeProtection() ? 1 : 0
+        // Update displayed bits
+        let gcr = String(cString: drive.trackAsString())
+        let textStorage = NSTextStorage.init(string: gcr)
+        textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .medium)
+        let documentView = gcrData.documentView as? NSTextView
+        documentView?.layoutManager?.replaceTextStorage(textStorage)
+        
+        // Scroll to head position and highlight bit
+        let range = NSRange.init(location: offset, length: 1)
+        documentView?.scrollRangeToVisible(range)
+        documentView?.setTextColor(.red, range: range)
     }
     
     //
@@ -144,6 +164,20 @@ class DiskInspectorController : UserDialogController
         
         c64.vc1541.writeBit(toHead: value)
         refresh()
+    }
+    
+    @IBAction func scrollToHead(_ sender: Any!)
+    {
+        track()
+        
+        let offset = drive.bitOffset()
+        let range = NSRange.init(location: offset, length: 1)
+        let documentView = gcrData.documentView as? NSTextView
+        
+        documentView?.scrollRangeToVisible(range)
+        documentView?.setTextColor(.red, range: range)
+
+        refreshGcr()
     }
     
     @IBAction func writeProtectAction(_ sender: Any!)
