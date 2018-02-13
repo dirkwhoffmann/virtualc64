@@ -28,7 +28,6 @@
 @class MediaDialog;
 @class MountDialog;
 @class TapeDialog;
-@class RomDialog;
 @class MetalView;
 @class CpuTableView;
 @class MemTableView;
@@ -60,7 +59,6 @@ typedef unsigned long MacKeyFingerprint;
     IBOutlet MediaDialog *mediaDialog;
 	IBOutlet MountDialog *mountDialog;
     IBOutlet TapeDialog *tapeDialog;
-	IBOutlet RomDialog *romDialog;
 	    
     // Toolbar
     IBOutlet NSPopUpButton *joystickPortA;
@@ -307,7 +305,6 @@ typedef unsigned long MacKeyFingerprint;
 @property MediaDialog *mediaDialog;
 @property MountDialog *mountDialog;
 @property TapeDialog *tapeDialog;
-@property RomDialog *romDialog;
 
 // Toolbar
 @property NSPopUpButton *joystickPortA;
@@ -383,8 +380,5 @@ typedef unsigned long MacKeyFingerprint;
 
 - (bool)showMediaDialog;
 - (IBAction)cancelMediaDialog:(id)sender;
-
-- (bool)showRomDialog;
-- (IBAction)cancelRomDialog:(id)sender;
 
 @end

@@ -213,12 +213,14 @@ extension MyController {
     
             // Close ROM dialog if open
             // TODO: MAKE SURE THAT DIALOG IS ALREADY CLOSED
+            /*
             if (romDialog != nil) {
                 romDialog.orderOut(nil)
                 window?.endSheet(romDialog, returnCode: .cancel)
                 romDialog = nil
             }
-    
+            */
+            
             // Start emulator
             c64.run()
             metalScreen.blendIn()
@@ -250,17 +252,21 @@ extension MyController {
              MSG_KERNEL_ROM_LOADED,
              MSG_VC1541_ROM_LOADED:
             
+            break
             // Update ROM dialog
+            /*
             if romDialog != nil {
                 romDialog.update(Int32(c64.missingRoms()))
             }
             break
-    
+            */
+            
         case MSG_ROM_MISSING:
 
-            enableUserEditing(true) // Why?
-            refresh()
-            showRomDialog()
+            track("MSG_ROM_MISSING")
+            let nibName = NSNib.Name(rawValue: "RomDialog")
+            let dialogController = RomDialogController.init(windowNibName: nibName)
+            dialogController.showSheet(withParent: self)
             break
             
         case MSG_SNAPSHOT_TAKEN:

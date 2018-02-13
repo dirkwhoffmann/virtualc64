@@ -29,7 +29,6 @@
 @synthesize mediaDialog;
 @synthesize mountDialog;
 @synthesize tapeDialog;
-@synthesize romDialog;
 
 // Toolbar
 @synthesize joystickPortA;
@@ -306,22 +305,6 @@
 {
     [mediaDialog orderOut:sender]; // Hide sheet
     [[self window] endSheet:mediaDialog returnCode:NSModalResponseCancel];
-}
-
-- (bool)showRomDialog
-{
-    uint8_t missing = [c64 missingRoms];
-    [romDialog initialize:(int)missing];
-    [[self window] beginSheet:romDialog completionHandler:nil];
-
-    return YES;
-}
-
-- (IBAction)cancelRomDialog:(id)sender
-{
-    [romDialog orderOut:sender]; // Hide sheet
-    [[self window] endSheet:romDialog returnCode:NSModalResponseCancel];
-	[NSApp terminate: nil]; // Exit
 }
 
 @end

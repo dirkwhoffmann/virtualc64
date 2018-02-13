@@ -78,7 +78,7 @@ public extension MyController {
         
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "rom.png"))
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "cartridge.png"))
         alert.messageText = "Unsupported cartridge type: \(name)"
         alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
         alert.addButton(withTitle: "OK")

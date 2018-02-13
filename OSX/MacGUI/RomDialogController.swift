@@ -9,14 +9,19 @@ import Foundation
 
 class RomDialogController : UserDialogController {
     
-    let romImage = NSImage.init(named: NSImage.Name.init(rawValue: "romchip"))
-    let noRomImage = NSImage.init(named: NSImage.Name.init(rawValue: "romchipMissing"))
-    
+    let romImage = NSImage.init(named: NSImage.Name.init(rawValue: "rom"))
+    let romImageLight = NSImage.init(named: NSImage.Name.init(rawValue: "rom_light"))
+    let romImageMedium = NSImage.init(named: NSImage.Name.init(rawValue: "rom_medium"))
+
     // @IBOutlet weak var learnMore: NSTextField!
     @IBOutlet weak var kernelRom: NSImageView!
+    @IBOutlet weak var kernelRomText: NSTextField!
     @IBOutlet weak var basicRom: NSImageView!
+    @IBOutlet weak var basicRomText: NSTextField!
     @IBOutlet weak var characterRom: NSImageView!
+    @IBOutlet weak var characterRomText: NSTextField!
     @IBOutlet weak var vc1541Rom: NSImageView!
+    @IBOutlet weak var vc1541RomText: NSTextField!
     // @IBOutlet weak var dragBox: NSBox!
     // @IBOutlet weak var quitButton: NSButton!
 
@@ -27,10 +32,14 @@ class RomDialogController : UserDialogController {
 
     func refresh()
     {
-        kernelRom.image = c64.isKernelRomLoaded() ? romImage : noRomImage
-        basicRom.image = c64.isBasicRomLoaded() ? romImage : noRomImage
-        characterRom.image = c64.isCharRomLoaded() ? romImage : noRomImage
-        vc1541Rom.image = c64.isVC1541RomLoaded() ? romImage : noRomImage
+        kernelRom.image = c64.isKernelRomLoaded() ? romImage : romImageLight
+        kernelRomText.isHidden = c64.isKernelRomLoaded()
+        basicRom.image = c64.isBasicRomLoaded() ? romImage : romImageLight
+        basicRomText.isHidden = c64.isBasicRomLoaded()
+        characterRom.image = c64.isCharRomLoaded() ? romImage : romImageLight
+        characterRomText.isHidden = c64.isCharRomLoaded()
+        vc1541Rom.image = c64.isVC1541RomLoaded() ? romImage : romImageLight
+        vc1541RomText.isHidden = c64.isVC1541RomLoaded()
     }
 
     //
@@ -46,6 +55,7 @@ class RomDialogController : UserDialogController {
     
     @IBAction func quitAction(_ sender: Any!)
     {
+        track()
         hideSheet()
         NSApp.terminate(self)
     }

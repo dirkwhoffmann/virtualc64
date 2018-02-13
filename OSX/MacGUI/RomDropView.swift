@@ -22,8 +22,7 @@ extension NSDraggingInfo
 
 class RomDropView : NSImageView
 {
-    @IBOutlet weak var controller: RomDialogController!
-    // var oldImage: NSImage? = nil
+    @IBOutlet var dialogController: RomDialogController!
     
     override func awakeFromNib()
     {
@@ -34,9 +33,8 @@ class RomDropView : NSImageView
     {
         track()
         if let url = sender.url {
-            if controller.c64.isRom(url) {
-                // oldImage = image
-                image = controller.romImage
+            if dialogController.c64.isRom(url) {
+                image = dialogController.romImageMedium
                 return .copy
             }
         }
@@ -46,7 +44,7 @@ class RomDropView : NSImageView
     override func draggingExited(_ sender: NSDraggingInfo?)
     {
         track()
-        controller.refresh()
+        dialogController.refresh()
     }
     
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool
@@ -58,16 +56,25 @@ class RomDropView : NSImageView
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool
     {
         track()
-        if let url = sender.url {
-            return controller.c64.loadRom(url)
+        
+        guard let url = sender.url else {
+            return false
         }
-        return false
+        if !dialogController.c64.loadRom(url) {
+            return false
+        }
+        
+        // Check if all ROMs are loaded
+        if dialogController.c64.isRunnable() {
+            dialogController.hideSheet()
+        }
+        return true
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?)
     {
         track()
-        controller.refresh()
+        dialogController.refresh()
     }
 }
 
