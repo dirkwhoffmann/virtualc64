@@ -108,7 +108,7 @@ public extension MetalView {
             track("Processing dragged in file \(path)")
             
             // Is it a ROM file?
-            if document.loadRom(path) {
+            if document.loadRom(URL.init(string: path)) {
                 return true
             }
             

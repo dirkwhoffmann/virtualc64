@@ -270,7 +270,7 @@ VIC::setColorScheme(ColorScheme scheme)
     };
     
     unsigned numSchemes = sizeof(rgb) / (16*3);
-    debug(1, "Using color scheme %ld from %ld available schemes\n", scheme, numSchemes);
+    debug(2, "Using color scheme %ld from %ld available schemes\n", scheme, numSchemes);
 
     pixelEngine.colorScheme = (scheme < numSchemes) ? scheme : CCS64;
     for (unsigned i = 0; i < 16; i++) {

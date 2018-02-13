@@ -43,16 +43,26 @@ extension MyController {
         configureWindow()
         
         // TODO: GET RID OF THIS: Move to it's own window controller
+        track()
         setHexadecimalAction(self)
+        track()
         cpuTableView.setController(self)
+        track()
         memTableView.setController(self)
+        track()
         cheatboxImageBrowserView.setController(self)
+        
+        track()
         
         // Get metal running
         metalScreen.setupMetal()
     
+        track()
+        
         // Load user defaults
         loadUserDefaults()
+        
+        track()
         
         // Enable message processing (register callback)
         setListener()
@@ -79,6 +89,8 @@ extension MyController {
     }
     
     func setListener() {
+        
+        track()
         
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())

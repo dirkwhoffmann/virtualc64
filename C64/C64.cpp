@@ -77,7 +77,7 @@ void
 C64::C64()
 {
 	setDescription("C64");
-	debug(1, "Creating virtual C64[%p]\n", this);
+	debug("Creating virtual C64[%p]\n", this);
 
 	p = NULL;    
     warp = false;
@@ -119,10 +119,21 @@ C64::C64()
     
     registerSnapshotItems(items, sizeof(items));
 
+    // Setup references
+    cpu.mem = &mem;
+    mem.cpu = &cpu;
+    floppy.cpu.mem = &c64->floppy.mem;
+    floppy.mem.cpu = &c64->floppy.cpu;
+    
+    floppy.mem.iec = &c64->iec;
+    floppy.mem.floppy = &c64->floppy;
+
+    floppy.iec = &c64->iec;
+    
     // Configure VIC
     setPAL();
 			
-    // Initialie mach timer info
+    // Initialize mach timer info
     mach_timebase_info(&timebase);
 
 	// Initialize snapshot ringbuffer (BackInTime feature)
@@ -130,7 +141,7 @@ C64::C64()
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
     
-    // reset();
+    reset();
 }
 
 C64::~C64()
@@ -150,7 +161,6 @@ C64::reset()
     VirtualComponent::reset();
     
     // Make CPU ready to go
-    cpu.mem = &mem;
     cpu.initPC();
     
     // Initialize processor port data direction register and processor port

@@ -7,7 +7,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="RomDialogController" customModule="VirtualC64" customModuleProvider="target"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="RomDialogController" customModule="VirtualC64" customModuleProvider="target">
+            <connections>
+                <outlet property="basicRom" destination="ZMB-nm-OyY" id="hC5-tP-c3v"/>
+                <outlet property="characterRom" destination="W7l-RJ-fsC" id="M0D-g9-zYx"/>
+                <outlet property="kernelRom" destination="TBA-Lc-PJo" id="S22-1a-Vi7"/>
+                <outlet property="quitButton" destination="lg0-Ga-AyE" id="OaP-HR-o5f"/>
+                <outlet property="vc1541Rom" destination="Ghl-N9-pkS" id="sSQ-50-2wb"/>
+                <outlet property="window" destination="FMc-nL-WNC" id="Y9d-C5-7fO"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="FMc-nL-WNC" userLabel="RomDialog" customClass="RomDialog">
@@ -37,22 +46,22 @@
                             <rect key="frame" x="1" y="1" width="444" height="154"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBA-Lc-PJo" customClass="ROMDropTargetView">
+                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBA-Lc-PJo" customClass="ROMDropView">
                                     <rect key="frame" x="5" y="25" width="118" height="118"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="lcJ-mc-D6S"/>
                                 </imageView>
-                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZMB-nm-OyY" customClass="ROMDropTargetView">
+                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZMB-nm-OyY" customClass="ROMDropView">
                                     <rect key="frame" x="111" y="25" width="118" height="118"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="zCX-qP-bCb"/>
                                 </imageView>
-                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7l-RJ-fsC" customClass="ROMDropTargetView">
+                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7l-RJ-fsC" customClass="ROMDropView">
                                     <rect key="frame" x="215" y="25" width="118" height="118"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="mg1-3G-x4a"/>
                                 </imageView>
-                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ghl-N9-pkS" customClass="ROMDropTargetView">
+                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ghl-N9-pkS" customClass="ROMDropView">
                                     <rect key="frame" x="321" y="25" width="118" height="118"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="Kfi-H0-MSA"/>
@@ -106,7 +115,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sMG-1V-ztt">
-                        <rect key="frame" x="17" y="20" width="434" height="18"/>
+                        <rect key="frame" x="17" y="20" width="335" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click help button to learn more about compatible ROMs." id="0Cl-vs-f4d">
                             <font key="font" metaFont="cellTitle"/>
@@ -124,6 +133,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="quitAction:" target="-2" id="j8c-9F-Mwl"/>
+                        </connections>
                     </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyn-98-bfj">
                         <rect key="frame" x="356" y="18" width="25" height="25"/>
@@ -133,20 +145,11 @@ DQ
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="helpAction:" target="FMc-nL-WNC" id="dxb-Jm-qFE"/>
+                            <action selector="helpAction:" target="-2" id="Nur-2m-M9c"/>
                         </connections>
                     </button>
                 </subviews>
             </view>
-            <connections>
-                <outlet property="VC1541Rom" destination="Ghl-N9-pkS" id="XLH-KN-Acw"/>
-                <outlet property="basicRom" destination="ZMB-nm-OyY" id="WMw-hC-oI1"/>
-                <outlet property="cancelButton" destination="lg0-Ga-AyE" id="xwz-X6-9hf"/>
-                <outlet property="characterRom" destination="W7l-RJ-fsC" id="fG5-4m-pTx"/>
-                <outlet property="dragBox" destination="K9r-2n-lSs" id="4N8-cV-dPR"/>
-                <outlet property="kernelRom" destination="TBA-Lc-PJo" id="KPw-eR-aQ6"/>
-                <outlet property="learnMore" destination="sMG-1V-ztt" id="4Hq-BR-Bcr"/>
-            </connections>
             <point key="canvasLocation" x="953" y="298"/>
         </window>
     </objects>

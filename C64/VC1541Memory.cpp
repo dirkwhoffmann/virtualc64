@@ -46,9 +46,9 @@ VC1541Memory::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    cpu = &c64->cpu;
-    iec = &c64->iec;
-    floppy = &c64->floppy;
+    // cpu = &c64->cpu;
+    // iec = &c64->iec;
+    // floppy = &c64->floppy;
 }
 
 bool 
@@ -86,12 +86,6 @@ VC1541Memory::dumpState()
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");
 	msg("VC1541 ROM :%s loaded\n", romIsLoaded() ? "" : " not");
-	for (uint16_t i = 0; i < 0xFFFF; i++) {
-		uint8_t tag = cpu->getBreakpointTag(i);
-		if (tag != NO_BREAKPOINT) {
-			msg("Breakpoint at %0x4X %s\n", i, tag == SOFT_BREAKPOINT ? "(soft)" : "");
-		}
-	}
 	msg("\n");
 }
 

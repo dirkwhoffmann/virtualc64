@@ -619,20 +619,20 @@ struct ContainerWrapper;
 - (uint8_t) missingRoms; // DEPRECATED
 
 
-- (bool) isBasicRom:(NSString *)filename;
-- (bool) loadBasicRom:(NSString *)filename;
+- (bool) isBasicRom:(NSURL *)url;
+- (bool) loadBasicRom:(NSURL *)url;
 - (bool) isBasicRomLoaded;
-- (bool) isCharRom:(NSString *)filename;
-- (bool) loadCharRom:(NSString *)filename;
+- (bool) isCharRom:(NSURL *)url;
+- (bool) loadCharRom:(NSURL *)url;
 - (bool) isCharRomLoaded;
-- (bool) isKernelRom:(NSString *)filename;
-- (bool) loadKernelRom:(NSString *)filename;
+- (bool) isKernelRom:(NSURL *)url;
+- (bool) loadKernelRom:(NSURL *)url;
 - (bool) isKernelRomLoaded;
-- (bool) isVC1541Rom:(NSString *)filename;
-- (bool) loadVC1541Rom:(NSString *)filename;
+- (bool) isVC1541Rom:(NSURL *)url;
+- (bool) loadVC1541Rom:(NSURL *)url;
 - (bool) isVC1541RomLoaded;
-- (bool) isRom:(NSString *)filename;
-- (bool) loadRom:(NSString *)filename;
+- (bool) isRom:(NSURL *)url;
+- (bool) loadRom:(NSURL *)url;
 
 - (bool) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;

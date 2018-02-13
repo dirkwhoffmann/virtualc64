@@ -9,11 +9,11 @@ import Foundation
 
 extension NSDraggingInfo
 {
-    var path: String? {
+    var url: URL? {
         let pasteBoard = draggingPasteboard()
         if let _ = pasteBoard.availableType(from: [DragType.filenames]) {
             if let paths = pasteBoard.propertyList(forType: DragType.filenames) as? [String] {
-                return paths[0]
+                return URL.init(string: paths[0])
             }
         }
         return nil
@@ -33,8 +33,8 @@ class RomDropView : NSImageView
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation
     {
         track()
-        if let path = sender.path {
-            if controller.c64.isRom(path) {
+        if let url = sender.url {
+            if controller.c64.isRom(url) {
                 // oldImage = image
                 image = controller.romImage
                 return .copy
@@ -58,8 +58,8 @@ class RomDropView : NSImageView
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool
     {
         track()
-        if let path = sender.path {
-            return controller.c64.loadRom(path)
+        if let url = sender.url {
+            return controller.c64.loadRom(url)
         }
         return false
     }

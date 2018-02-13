@@ -29,15 +29,14 @@ class VC1541;
  */
 class VC1541Memory : public Memory {
 
-private:
+public:
     
 	//! @brief    Reference to the connected IEC bus
 	IEC *iec;
 
 	//! @brief    Reference to the connected disk drive
 	VC1541 *floppy;
-	
-public:		
+		
 	//! @brief    The VC1541s memory space
 	uint8_t mem[65536];
 	

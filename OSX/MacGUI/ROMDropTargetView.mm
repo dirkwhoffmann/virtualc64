@@ -48,8 +48,9 @@
     if (besttype == NSFilenamesPboardType) {
 
         NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];
-
-        if ([[controller c64] isRom:path]) {
+        NSURL *url = [NSURL URLWithString:path];
+      
+        if ([[controller c64] isRom:url]) {
             [self setImage:[NSImage imageNamed:@"romchip"]];
             [self setNeedsDisplay];
             return NSDragOperationCopy;
@@ -79,7 +80,8 @@
     
     // Load ROM
     NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];
-    return [[controller document] loadRom:path];
+    NSURL *url = [NSURL URLWithString:path];
+    return [[controller document] loadRom:url];
 }
 
 

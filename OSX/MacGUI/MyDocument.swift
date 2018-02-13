@@ -48,10 +48,10 @@ class MyDocument : NSDocument {
         
         // Try to load ROMs
         let defaults = UserDefaults.standard
-        loadRom(defaults.string(forKey: VC64BasicRomFileKey))
-        loadRom(defaults.string(forKey: VC64CharRomFileKey))
-        loadRom(defaults.string(forKey: VC64KernelRomFileKey))
-        loadRom(defaults.string(forKey: VC64VC1541RomFileKey))
+        loadRom(defaults.url(forKey: VC64BasicRomFileKey))
+        loadRom(defaults.url(forKey: VC64CharRomFileKey))
+        loadRom(defaults.url(forKey: VC64KernelRomFileKey))
+        loadRom(defaults.url(forKey: VC64VC1541RomFileKey))
         
         // Try to run
         c64.run()
@@ -116,35 +116,36 @@ class MyDocument : NSDocument {
     }
     
     @discardableResult
-    @objc func loadRom(_ filename: String?) -> Bool {
+    @objc func loadRom(_ url: URL?) -> Bool {
         
-        if (filename == nil) {
+        if (url == nil) {
             return false
         }
         
         let defaults = UserDefaults.standard
         
-        if c64.loadBasicRom(filename!) {
-            NSLog("Basic ROM:  \(filename!)")
-            defaults.set(filename, forKey: VC64BasicRomFileKey)
+        if c64.loadBasicRom(url!) {
+            track("Basic ROM:  \(url!)")
+            defaults.set(url, forKey: VC64BasicRomFileKey)
             return true
         }
-        if c64.loadCharRom(filename!) {
-            NSLog("Char ROM:   \(filename!)")
-            defaults.set(filename, forKey: VC64CharRomFileKey)
+        if c64.loadCharRom(url!) {
+            track("Char ROM:   \(url!)")
+            defaults.set(url, forKey: VC64CharRomFileKey)
             return true
         }
-        if c64.loadKernelRom(filename!) {
-            NSLog("Kernel ROM: \(filename!)")
-            defaults.set(filename, forKey: VC64KernelRomFileKey)
+        if c64.loadKernelRom(url!) {
+            track("Kernel ROM: \(url!)")
+            defaults.set(url, forKey: VC64KernelRomFileKey)
             return true
         }
-        if c64.loadVC1541Rom(filename!) {
-            NSLog("VC1541 ROM: \(filename!)")
-            defaults.set(filename, forKey: VC64VC1541RomFileKey)
+        if c64.loadVC1541Rom(url!) {
+            track("VC1541 ROM: \(url!)")
+            defaults.set(url, forKey: VC64VC1541RomFileKey)
             return true
         }
         
+        track("ROM file \(url!) not found")
         return false
     }
 

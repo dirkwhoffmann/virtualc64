@@ -17,8 +17,8 @@ class RomDialogController : UserDialogController {
     @IBOutlet weak var basicRom: NSImageView!
     @IBOutlet weak var characterRom: NSImageView!
     @IBOutlet weak var vc1541Rom: NSImageView!
-    @IBOutlet weak var dragBox: NSBox!
-    @IBOutlet weak var cancelButton: NSButton!
+    // @IBOutlet weak var dragBox: NSBox!
+    // @IBOutlet weak var quitButton: NSButton!
 
     override func awakeFromNib()
     {

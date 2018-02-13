@@ -261,16 +261,16 @@ public:
     //
 
 	//! @brief    Returns the value of processor port.
-	inline uint8_t getPort() { return port; }
+    uint8_t getPort() { return port; }
     
 	//! @brief    Sets the value of the processor port register.
 	void setPort(uint8_t value);
     
 	//! @brief    Returns the value of processor port register.
-	inline uint8_t getPortDirection() { return port_direction; }
+    uint8_t getPortDirection() { return port_direction; }
     
 	//! @brief    Experimental.
-	inline uint8_t getExternalPortBits() { return external_port_bits; }
+    uint8_t getExternalPortBits() { return external_port_bits; }
     
 	//! @brief    Sets the value of the processor port data direction register.
 	void setPortDirection(uint8_t value);
@@ -284,142 +284,142 @@ public:
     //
 
 	//! @brief    Returns the contents of the accumulator.
-	inline uint8_t getA() { return A; }
+    uint8_t getA() { return A; }
     
 	//! @brief    Returns current value of the X register.
-	inline uint8_t getX() { return X; }
+    uint8_t getX() { return X; }
     
 	//! @brief    Returns current value of the Y register.
-	inline uint8_t getY() { return Y; }
+    uint8_t getY() { return Y; }
 
     //! @brief    Initialize PC with its start up valie
-    inline void initPC() { PC = LO_HI(mem->peek(0xFFFC), mem->peek(0xFFFD)); }
+    void initPC() { PC = LO_HI(mem->peek(0xFFFC), mem->peek(0xFFFD)); }
 
 	//! @brief    Returns current value of the program counter.
-	inline uint16_t getPC() { return PC; }
+    uint16_t getPC() { return PC; }
     
 	//! @brief    Returns "freezed" program counter.
-	inline uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; }
+    uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; }
     
 	//! @brief    Returns current value of the program counter.
-	inline uint8_t getSP() { return SP; }
+    uint8_t getSP() { return SP; }
 	
 	//! @brief    Returns current value of the memory cell addressed by the program counter.
-	inline uint8_t peekPC() { return mem->peek(PC); }
+    uint8_t peekPC() { return mem->peek(PC); }
 
 	//! @brief    Returns 1, if Negative flag is set, 0 otherwise.
-	inline uint8_t getN() { return (N ? N_FLAG : 0); }
+    uint8_t getN() { return (N ? N_FLAG : 0); }
     
 	//! @brief    Returns 1, if Overflow flag is set, 0 otherwise.
-	inline uint8_t getV() { return (V ? V_FLAG : 0); }
+    uint8_t getV() { return (V ? V_FLAG : 0); }
     
 	//! @brief    Returns 1, if Break flag is set, 0 otherwise.
-	inline uint8_t getB() { return (B ? B_FLAG : 0); }
+    uint8_t getB() { return (B ? B_FLAG : 0); }
     
 	//! @brief    Returns 1, if Decimal flag is set, 0 otherwise.
-	inline uint8_t getD() { return (D ? D_FLAG : 0); }
+    uint8_t getD() { return (D ? D_FLAG : 0); }
     
 	//! @brief    Returns 1, if Interrupt flag is set, 0 otherwise.
-	inline uint8_t getI() { return (I ? I_FLAG : 0); }
+    uint8_t getI() { return (I ? I_FLAG : 0); }
     
 	//! @brief    Returns 1, if Zero flag is set, 0 otherwise.
-	inline uint8_t getZ() { return (Z ? Z_FLAG : 0); }
+    uint8_t getZ() { return (Z ? Z_FLAG : 0); }
     
 	//! @brief    Returns 1, if Carry flag is set, 0 otherwise.
-	inline uint8_t getC() { return (C ? C_FLAG : 0); }
+    uint8_t getC() { return (C ? C_FLAG : 0); }
     
 	/*! @brief    Returns the contents of the status register
 	 *  @details  Each bit in the status register corresponds to the value of a single flag, 
      *            except bit 5 which is always set. 
      */
-	inline uint8_t getP() { return getN() | getV() | 32 | getB() | getD() | getI() | getZ() | getC(); }
+    uint8_t getP() { return getN() | getV() | 32 | getB() | getD() | getI() | getZ() | getC(); }
     
 	/*! @brief    Returns the status register without the B flag
 	 *  @details  The bit position of the B flag is always 0. This function is needed for proper 
      *            interrupt handling. When an IRQ or NMI is triggered internally, the status 
      *            register is pushed on the stack with the B-flag cleared. 
      */
-	inline uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
+    uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
 	
     //! @brief    Returns current opcode.
-    inline uint8_t getOpcode() { return opcode; }
+    uint8_t getOpcode() { return opcode; }
     
 	//! @brief    Writes value to the accumulator register. Flags remain untouched.
-	inline void setA(uint8_t a) { A = a; }
+    void setA(uint8_t a) { A = a; }
     
 	//! @brief    Writes value to the the X register. Flags remain untouched.
-	inline void setX(uint8_t x) { X = x; }
+    void setX(uint8_t x) { X = x; }
     
 	//! @brief    Writes value to the the Y register. Flags remain untouched.
-	inline void setY(uint8_t y) { Y = y; }
+    void setY(uint8_t y) { Y = y; }
     
 	//! @brief    Writes value to the the program counter.
-	inline void setPC(uint16_t pc) { PC = pc; }
+    void setPC(uint16_t pc) { PC = pc; }
     
 	//! @brief    Writes value to the freezend program counter.
-	inline void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = &CPU::fetch;}
+    void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = &CPU::fetch;}
     
 	//! @brief    Changes low byte of the program counter only.
-	inline void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
+    void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
     
 	//! @brief    Changes high byte of the program counter only.
-	inline void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
+    void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
     
 	/*! @brief    Increments the program counter by the specified amount.
 	 *  @details  If no argument is provided, the program counter is incremented by one. 
      */
-	inline void incPC(uint8_t offset = 1) { PC += offset; }
+    void incPC(uint8_t offset = 1) { PC += offset; }
     
 	//! @brief    Increments low byte of program counter (hi byte remains unchanged).
-	inline void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(PC) + offset); }
+    void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(PC) + offset); }
     
 	//! @brief    Increments high byte of program counter (lo byte remains unchanged).
-	inline void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
+    void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
 	
 	//! @brief    Writes value to the stack pointer.
-	inline void setSP(uint8_t sp) { SP = sp; }
+    void setSP(uint8_t sp) { SP = sp; }
 	
 	//! @brief    0: Negative-flag is cleared, any other value: flag is set.
-	inline void setN(uint8_t n) { N = n; }
+    void setN(uint8_t n) { N = n; }
     
 	//! @brief    0: Overflow-flag is cleared, any other value: flag is set.
-	inline void setV(uint8_t v) { V = v; }
+    void setV(uint8_t v) { V = v; }
     
 	//! @brief    0: Break-flag is cleared, any other value: flag is set.
-	inline void setB(uint8_t b) { B = b; }
+    void setB(uint8_t b) { B = b; }
     
 	//! @brief    0: Decimal-flag is cleared, any other value: flag is set.
-	inline void setD(uint8_t d) { D = d; }
+    void setD(uint8_t d) { D = d; }
     
 	//! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
-	inline void setI(uint8_t i) { I = i; }
+    void setI(uint8_t i) { I = i; }
     
 	//! @brief    0: Zero-flag is cleared, any other value: flag is set.
-	inline void setZ(uint8_t z) { Z = z; }
+    void setZ(uint8_t z) { Z = z; }
     
 	//! @brief    0: Carry-flag is cleared, any other value: flag is set.
-	inline void setC(uint8_t c) { C = c; }
+    void setC(uint8_t c) { C = c; }
     
 	//! @brief    Write value to the status register. The value of bit 5 is ignored.
-	inline void setP(uint8_t p) 
+    void setP(uint8_t p)
 		{ setN(p & N_FLAG); setV(p & V_FLAG); setB(p & B_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
-	inline void setPWithoutB(uint8_t p) 
+    void setPWithoutB(uint8_t p)
 		{ setN(p & N_FLAG); setV(p & V_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
 			
 	//! @brief    Loads the accumulator. The Z- and N-flag may change.
-	inline void loadA(uint8_t a) { A = a; N = a & 128; Z = (a == 0); }
+    void loadA(uint8_t a) { A = a; N = a & 128; Z = (a == 0); }
     
 	//! @brief    Loads the X register. The Z- and N-flag may change.
-	inline void loadX(uint8_t x) { X = x; N = x & 128; Z = (x == 0); }
+    void loadX(uint8_t x) { X = x; N = x & 128; Z = (x == 0); }
     
 	//! @brief    Loads the Y register. The Z- and N-flag may change.
-	inline void loadY(uint8_t y) { Y = y; N = y & 128; Z = (y == 0); }
+    void loadY(uint8_t y) { Y = y; N = y & 128; Z = (y == 0); }
     
 	//! @brief    Loads the stack register. The Z- and N-flag may change.
-	inline void loadSP(uint8_t s) { SP = s; N = s & 128; Z = (s == 0); }
+    void loadSP(uint8_t s) { SP = s; N = s & 128; Z = (s == 0); }
     
 	//! @brief    Loads a value into memory. The Z- and N-flag may change.
-	inline void loadM(uint16_t addr, uint8_t s) { mem->poke(addr, s); N = s & 128; Z = (s == 0); }
+    void loadM(uint16_t addr, uint8_t s) { mem->poke(addr, s); N = s & 128; Z = (s == 0); }
 
     
     //
@@ -439,10 +439,10 @@ public:
 	void setIRQLine(uint8_t bit);
 	
 	//! @brief    Clears a bit of the IRQ line.
-    inline void clearIRQLine(uint8_t bit) { irqLine &= ~bit; interruptsPending = irqLine || nmiEdge; }
+    void clearIRQLine(uint8_t bit) { irqLine &= ~bit; interruptsPending = irqLine || nmiEdge; }
 		
 	//! @brief    Returns bit of IRQ line.
-	inline uint8_t getIRQLine(uint8_t bit) { return irqLine & bit; }
+    uint8_t getIRQLine(uint8_t bit) { return irqLine & bit; }
 	
 	//! @brief    Checks if IRQ line has been activated for at least 2 cycles.
 	bool IRQLineRaisedLongEnough();
@@ -457,55 +457,55 @@ public:
     void clearNMIEdge();
 
 	//! @brief    Clears bit of NMI line.
-	inline void clearNMILine(uint8_t bit) { nmiLine &= ~bit; }
+    void clearNMILine(uint8_t bit) { nmiLine &= ~bit; }
 	
 	//! @brief    Checks if NMI line has been activated for at least 2 cycles.
 	bool NMILineRaisedLongEnough();
 	
 	//! @brief    Sets CIA bit of IRQ line.
-	inline void setIRQLineCIA() { setIRQLine(0x01); }
+    void setIRQLineCIA() { setIRQLine(0x01); }
     
 	//! @brief    Sets VIC bit of IRQ line.
-	inline void setIRQLineVIC() { setIRQLine(0x02); }
+    void setIRQLineVIC() { setIRQLine(0x02); }
     
     //! @brief    Sets VIA bit of IRQ line (1541 drive).
-    inline void setIRQLineVIA() { setIRQLine(0x10); }
+    void setIRQLineVIA() { setIRQLine(0x10); }
     
 	//! @brief    Sets ATN bit of IRQ line (1541 drive).
-	inline void setIRQLineATN() { setIRQLine(0x40); }
+    void setIRQLineATN() { setIRQLine(0x40); }
     
 	//! @brief    Clears CIA bit of IRQ line.
-	inline void clearIRQLineCIA() { clearIRQLine(0x01); }
+    void clearIRQLineCIA() { clearIRQLine(0x01); }
     
 	//! @brief    Clears VIC bit of IRQ line.
-	inline void clearIRQLineVIC() { clearIRQLine(0x02); }
+    void clearIRQLineVIC() { clearIRQLine(0x02); }
     
     //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
-    inline void clearIRQLineVIA() { clearIRQLine(0x10); }
+    void clearIRQLineVIA() { clearIRQLine(0x10); }
     
 	//! @brief    Clears ATN bit of IRQ line (1541 drive).
-	inline void clearIRQLineATN() { clearIRQLine(0x40); }
+    void clearIRQLineATN() { clearIRQLine(0x40); }
     
 	//! @brief    Sets CIA bit of NMI line.
-	inline void setNMILineCIA() { setNMILine(0x01); }
+    void setNMILineCIA() { setNMILine(0x01); }
     
 	//! @brief    Clears CIA bit of NMI line.
-	inline void clearNMILineCIA() { clearNMILine(0x01); }
+    void clearNMILineCIA() { clearNMILine(0x01); }
 
     //! @brief    Sets ExpansionPort bit of NMI line.
-    inline void setNMILineExpansionPort() { setNMILine(0x02); }
+    void setNMILineExpansionPort() { setNMILine(0x02); }
     
     //! @brief    Clears ExpansionPort bit of NMI line.
-    inline void clearNMILineExpansionPort() { clearNMILine(0x02); }
+    void clearNMILineExpansionPort() { clearNMILine(0x02); }
     
 	//! @brief    Sets reset bit of NMI line.
-	inline void setNMILineReset() { setNMILine(0x08); }
+    void setNMILineReset() { setNMILine(0x08); }
     
 	//! @brief    Clears reset bit of NMI line.
-	inline void clearNMILineReset() { clearNMILine(0x08); }
+    void clearNMILineReset() { clearNMILine(0x08); }
     
 	//! @brief    Sets the RDY line.
-	inline void setRDY(bool value) { rdyLine = value; }
+    void setRDY(bool value) { rdyLine = value; }
 		
     
     //
@@ -532,23 +532,23 @@ public:
 	/*! @brief    Returns the length in bytes of the instruction with the specified address.
      *  @result   Integer value between 1 and 3.
      */
-	inline int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->peek(addr)); }
+    int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->peek(addr)); }
     
 	/*! @brief    Returns the length in bytes of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
-	inline int getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
+    int getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
     
 	/*! @brief    Returns the address of the instruction following the current instruction.
      *  @result   Integer value between 1 and 3.
      */
-    inline uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
+    uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
     
 	//! @brief    Disassembles the current instruction.
 	char *disassemble();
 				
 	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
-	inline bool atBeginningOfNewCommand() { return next == &CPU::fetch; }
+    bool atBeginningOfNewCommand() { return next == &CPU::fetch; }
 	
     
     //
@@ -558,10 +558,10 @@ public:
 	/*! @brief    Executes the device for one cycle.
 	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
      */
-	inline bool executeOneCycle() { (*this.*next)(); return errorState == CPU_OK; }
+    bool executeOneCycle() { (*this.*next)(); return errorState == CPU_OK; }
 
 	//! @brief    Returns the current error state.
-    inline ErrorState getErrorState() { return errorState; }
+    ErrorState getErrorState() { return errorState; }
     
 	//! @brief    Sets the error state.
     void setErrorState(ErrorState state);
@@ -575,7 +575,7 @@ public:
     //
     
 	//! @brief    Returns breakpoint tag for the specified address.
-	inline uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
+    uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
 	
 	//! @brief    Returns the breakpoint tag for the specified address.
 	uint8_t getBreakpoint(uint16_t addr) { return breakpoint[addr]; }

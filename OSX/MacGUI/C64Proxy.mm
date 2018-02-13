@@ -758,47 +758,47 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (uint8_t) missingRoms {
     return wrapper->c64->getMissingRoms();
 }
-- (bool) isBasicRom:(NSString *)filename {
-    return wrapper->c64->mem.isBasicRom([filename UTF8String]);
+- (bool) isBasicRom:(NSURL *)url {
+    return wrapper->c64->mem.isBasicRom([[url absoluteString] UTF8String]);
 }
-- (bool) loadBasicRom:(NSString *)filename {
-    return [self isBasicRom:filename] && wrapper->c64->loadRom([filename UTF8String]);
+- (bool) loadBasicRom:(NSURL *)url {
+    return [self isBasicRom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
 }
 - (bool) isBasicRomLoaded {
     return wrapper->c64->mem.basicRomIsLoaded();
 }
-- (bool) isCharRom:(NSString *)filename {
-    return wrapper->c64->mem.isCharRom([filename UTF8String]);
+- (bool) isCharRom:(NSURL *)url {
+    return wrapper->c64->mem.isCharRom([[url absoluteString] UTF8String]);
 }
 - (bool) isCharRomLoaded {
     return wrapper->c64->mem.charRomIsLoaded();
 }
-- (bool) loadCharRom:(NSString *)filename {
-    return [self isCharRom:filename] && wrapper->c64->loadRom([filename UTF8String]);
+- (bool) loadCharRom:(NSURL *)url {
+    return [self isCharRom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
 }
-- (bool) isKernelRom:(NSString *)filename {
-    return wrapper->c64->mem.isKernelRom([filename UTF8String]);
+- (bool) isKernelRom:(NSURL *)url {
+    return wrapper->c64->mem.isKernelRom([[url absoluteString] UTF8String]);
 }
-- (bool) loadKernelRom:(NSString *)filename {
-    return [self isKernelRom:filename] && wrapper->c64->loadRom([filename UTF8String]);
+- (bool) loadKernelRom:(NSURL *)url {
+    return [self isKernelRom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
 }
 - (bool) isKernelRomLoaded {
     return wrapper->c64->mem.kernelRomIsLoaded();
 }
-- (bool) isVC1541Rom:(NSString *)filename {
-    return wrapper->c64->floppy.mem.is1541Rom([filename UTF8String]);
+- (bool) isVC1541Rom:(NSURL *)url {
+    return wrapper->c64->floppy.mem.is1541Rom([[url absoluteString] UTF8String]);
 }
-- (bool) loadVC1541Rom:(NSString *)filename {
-    return [self isVC1541Rom:filename] && wrapper->c64->loadRom([filename UTF8String]);
+- (bool) loadVC1541Rom:(NSURL *)url {
+    return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
 }
 - (bool) isVC1541RomLoaded {
     return wrapper->c64->floppy.mem.romIsLoaded();
 }
-- (bool) isRom:(NSString *)filename {
-    return [self isBasicRom:filename] || [self isCharRom:filename] || [self isKernelRom:filename] || [self isVC1541Rom:filename];
+- (bool) isRom:(NSURL *)url {
+    return [self isBasicRom:url] || [self isCharRom:url] || [self isKernelRom:url] || [self isVC1541Rom:url];
 }
-- (bool) loadRom:(NSString *)filename {
-    return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename];
+- (bool) loadRom:(NSURL *)url {
+    return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernelRom:url] || [self loadVC1541Rom:url];
 }
 
 - (bool) attachCartridgeAndReset:(CRTProxy *)c {
