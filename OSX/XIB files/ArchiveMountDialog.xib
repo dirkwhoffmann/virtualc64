@@ -169,9 +169,9 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-h6-6Tj">
-                        <rect key="frame" x="243" y="24" width="102" height="18"/>
+                        <rect key="frame" x="220" y="24" width="130" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="check" title="Write protect" bezelStyle="regularSquare" imagePosition="left" inset="2" id="o1q-EZ-MFa">
+                        <buttonCell key="cell" type="check" title="Write protect disk" bezelStyle="regularSquare" imagePosition="left" inset="2" id="o1q-EZ-MFa">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>

@@ -223,6 +223,10 @@
 		50F8731F1EE7DB6900B30DBD /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F8731E1EE7DB6900B30DBD /* home.png */; };
 		50F873211EE7E42500B30DBD /* restore.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F873201EE7E42500B30DBD /* restore.png */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
+		50FB749C203306A700E05051 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749B203306A700E05051 /* DiskInspector.xib */; };
+		50FB74A02033193300E05051 /* serial.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749F2033193300E05051 /* serial.png */; };
+		50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB74A1203322C900E05051 /* DiskInspectorController.swift */; };
+		50FB74A4203323E700E05051 /* diskette_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB74A3203323E700E05051 /* diskette_light.png */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
 		50FF818F1F88D9100004548A /* GamePad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF818E1F88D9100004548A /* GamePad.swift */; };
@@ -541,6 +545,10 @@
 		50F873201EE7E42500B30DBD /* restore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restore.png; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
+		50FB749B203306A700E05051 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
+		50FB749F2033193300E05051 /* serial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serial.png; sourceTree = "<group>"; };
+		50FB74A1203322C900E05051 /* DiskInspectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspectorController.swift; sourceTree = "<group>"; };
+		50FB74A3203323E700E05051 /* diskette_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette_light.png; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
 		50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerVicPanel.mm; sourceTree = "<group>"; };
 		50FD96A41BF65861009134A4 /* 1541.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1541.png; sourceTree = "<group>"; };
@@ -601,7 +609,6 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				50C4F055202D8B37004C5F21 /* XIB files */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -614,6 +621,7 @@
 			isa = PBXGroup;
 			children = (
 				50176C6D0A6F7357009E80BD /* MacGUI */,
+				50C4F055202D8B37004C5F21 /* XIB files */,
 				50176C4E0A6F72F3009E80BD /* C64 */,
 			);
 			name = Classes;
@@ -901,6 +909,7 @@
 				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
 				50D6955012E375A800D9C738 /* Icons */,
 				50FD96A41BF65861009134A4 /* 1541.png */,
+				50FB749F2033193300E05051 /* serial.png */,
 				504A22A61BF71FD500B29BEB /* clock_green.png */,
 				504A22A71BF71FD500B29BEB /* clock_yellow.png */,
 				504A22A81BF71FD500B29BEB /* clock_red.png */,
@@ -923,6 +932,7 @@
 				50F23D0712DF932800B1F275 /* glossy.png */,
 				5039A31315BE89940038ACBC /* drive48.png */,
 				5039A31F15BE97500038ACBC /* diskette.png */,
+				50FB74A3203323E700E05051 /* diskette_light.png */,
 				50C892501BEFB31200231B96 /* tape.png */,
 				502F57F11B93441400D1077E /* LEDgreen.png */,
 				502F57F31B93441A00D1077E /* LEDred.png */,
@@ -971,6 +981,7 @@
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
 				50265F56202D00940041C315 /* TapeMountController.swift */,
+				50FB74A1203322C900E05051 /* DiskInspectorController.swift */,
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
@@ -1043,6 +1054,7 @@
 				5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */,
 				50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */,
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
+				50FB749B203306A700E05051 /* DiskInspector.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1231,9 +1243,11 @@
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,
 				50CCB1C61B84A185008D8C30 /* tb_inspect2.png in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
+				50FB74A4203323E700E05051 /* diskette_light.png in Resources */,
 				38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */,
 				38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */,
 				504A22AD1BF71FD500B29BEB /* clock_yellow.png in Resources */,
+				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
 				504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */,
 				50CCB1D41B84ACA8008D8C30 /* keyboard.png in Resources */,
 				38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */,
@@ -1273,6 +1287,7 @@
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				50C9CB241B826CD50054EE86 /* expansion.png in Resources */,
+				50FB74A02033193300E05051 /* serial.png in Resources */,
 				5039A31415BE89940038ACBC /* drive48.png in Resources */,
 				50F8731D1EE7DB6000B30DBD /* del.png in Resources */,
 				5039A32015BE97500038ACBC /* diskette.png in Resources */,
@@ -1291,6 +1306,7 @@
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
+				50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
 				50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */,
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,

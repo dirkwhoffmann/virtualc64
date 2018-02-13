@@ -459,6 +459,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) connectDrive { wrapper->iec->connectDrive(); }
 - (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
 - (bool) isDriveConnected { return wrapper->iec->driveIsConnected(); }
+- (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
+- (BOOL) clockLine { return wrapper->iec->getClockLine(); }
+- (BOOL) dataLine { return wrapper->iec->getDataLine(); }
 
 @end
 
@@ -578,8 +581,22 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setBitAccuracy:(bool)b { wrapper->vc1541->setBitAccuracy(b); }
 - (bool) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
-- (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
+- (NSInteger) halftrack { return wrapper->vc1541->getHalftrack(); }
+- (void) setHalftrack:(NSInteger) value { wrapper->vc1541->setHalftrack((Halftrack)value); }
+- (NSInteger) numberOfBits { return wrapper->vc1541->numberOfBits(); }
+- (NSInteger) bitOffset { return wrapper->vc1541->getBitOffset(); }
+- (void) setBitOffset:(NSInteger)value { wrapper->vc1541->setBitOffset((uint16_t)value); }
+- (NSInteger) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
+- (void) writeBitToHead:(NSInteger)value { wrapper->vc1541->writeBitToHead(value); }
 
+- (void) moveHeadUp { wrapper->vc1541->moveHeadUp(); }
+- (void) moveHeadDown { wrapper->vc1541->moveHeadDown(); }
+- (void) rotateDisk { wrapper->vc1541->rotateDisk(); }
+- (void) rotateBack { wrapper->vc1541->rotateBack(); }
+
+- (const char *)trackAsString { return wrapper->vc1541->trackAsString(); }
+
+- (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 - (void) playSound:(NSString *)name volume:(float)v
 {
     NSSound *s = [NSSound soundNamed:name];

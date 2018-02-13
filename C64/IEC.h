@@ -162,11 +162,8 @@ public:
 	void setDeviceDataPin(bool value) { deviceDataPin = value; _updateIecLines(); }
 			
 	bool getAtnLine() { return atnLine; }
-	//bool getOldAtnLine() { return oldAtnLine; }
 	bool getClockLine() { return clockLine; }
-	//bool getOldClockLine() { return oldClockLine; }
 	bool getDataLine() { return dataLine; }
-	//bool getOldDataLine() { return oldDataLine; }
 
 	bool atnPositiveEdge() { return oldAtnLine == 0 && atnLine == 1; }
 	bool atnNegativeEdge() { return oldAtnLine == 1 && atnLine == 0; }

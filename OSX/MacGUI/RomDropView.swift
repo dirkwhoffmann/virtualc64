@@ -60,7 +60,7 @@ class RomDropView : NSImageView
         guard let url = sender.url else {
             return false
         }
-        if !dialogController.c64.loadRom(url) {
+        if !(dialogController.parent.document as! MyDocument).loadRom(url) {
             return false
         }
         

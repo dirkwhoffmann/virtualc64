@@ -501,7 +501,7 @@ extension MyController {
     @objc func showMountDialog() {
         
         track()
-
+        
         // Does this document have an attachment?
         let document = self.document as! MyDocument
         guard let attachment = document.attachment else {

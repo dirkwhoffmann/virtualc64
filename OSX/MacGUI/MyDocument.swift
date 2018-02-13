@@ -116,7 +116,7 @@ class MyDocument : NSDocument {
     }
     
     @discardableResult
-    @objc func loadRom(_ url: URL?) -> Bool {
+    func loadRom(_ url: URL?) -> Bool {
         
         if (url == nil) {
             return false

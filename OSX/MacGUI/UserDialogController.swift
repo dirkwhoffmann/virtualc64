@@ -24,9 +24,16 @@ class UserDialogController : NSWindowController
 
         parentWindow.beginSheet(window!, completionHandler: { result in
             if result == NSApplication.ModalResponse.OK {
+                
+                self.cleanup()
                 completionHandler?()
             }
         })
+    }
+    
+    func cleanup() {
+        // Don't delete this function. Calling cleanup in the sheet's completion handler
+        // makes sure that ARC doesn't delete the reference too early.
     }
     
     func hideSheet() {
@@ -38,6 +45,7 @@ class UserDialogController : NSWindowController
     // Default action method for Cancel
     @IBAction func cancelAction(_ sender: Any!) {
         
+        track()
         hideSheet()
     }
     

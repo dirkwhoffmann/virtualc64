@@ -169,6 +169,10 @@ public:
      */
     void ejectDisk();
 
+    /*! @brief Returns a textual represention of the current halftrack
+     */
+    const char *trackAsString() { return disk.trackAsString(halftrack); }
+    
     /*! @brief    Converts the currently inserted disk into a D64 archive.
      *  @result   A D64 archive containing the same files as the currently inserted disk;
      *            NULL if no disk is inserted.
@@ -301,7 +305,26 @@ public:
 
     //! @brief    Returns true iff drive is currently in write mode
     bool writeMode() { return !(via2.io[0x0C] & 0x20); }
-   
+
+    //! @brief    Returns the current halftrack position of the drive head
+    Halftrack getHalftrack() { return halftrack; }
+
+    //! @brief    Sets the current halftrack position of the drive head
+    void setHalftrack(Halftrack ht) {
+        if (isHalftrackNumber(ht)) halftrack = ht;
+    }
+
+    //! @brief    Returns the number of bits in the current halftrack
+    unsigned numberOfBits() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
+
+    //! @brief    Bit position of the read/write head inside the current track
+    uint16_t getBitOffset() { return bitoffset; }
+
+    //! @brief    Sets bit position of the read/write head inside the current track
+    void setBitOffset(uint16_t offset) {
+        if (hasDisk() && disk.isValidDiskPositon(halftrack, offset)) bitoffset = offset;
+    }
+
     //! @brief    Moves head one halftrack up
     void moveHeadUp();
     
@@ -324,8 +347,6 @@ public:
      */
     void simulateAtnInterrupt();
 
-private:
-
     /*! @brief    Reads a single bit from the disk head
      *  @result   0 or 1
      */
@@ -335,19 +356,21 @@ private:
      *  @result   0 ... 255
      */
     inline uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
-
+    
     //! @brief Writes a single bit to the disk head
     inline void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
     
     //! @brief Writes a single byte to the disk head
     inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
-    
+
     //! @brief  Advances drive head position by one bit
     inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
 
     //! @brief  Moves drive head position back by one bit
     inline void rotateBack() { bitoffset = (bitoffset > 0) ? (bitoffset - 1) : (disk.length.halftrack[halftrack] - 1); }
 
+private:
+    
     //! @brief  Advances drive head position by eight bits
     inline void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
 

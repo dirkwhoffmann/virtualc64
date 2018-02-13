@@ -108,9 +108,9 @@ private:
     uint8_t invgcr[32];
 
     
-    // -----------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------
     //                                      Disk data
-    // -----------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------
 
 public:
     
@@ -142,6 +142,11 @@ public:
         uint16_t track[43][2];
     } length;
 
+    /*! @brief    Textual representation of track data
+     *! @details  Used for pretty printing, only
+     */
+    char text[(7928 * 8) + 1];
+        
     /*! @brief       Total number of tracks on this disk
      *  @deprecated  Add method bool emptyTrack(Track nr) as a replacement
      */
@@ -300,6 +305,10 @@ public:
     //
     //! @functiongroup Debugging disk data
     //
+    
+    /*! @brief Returns a textual represention of a halftrack
+     */
+    const char *trackAsString(Halftrack ht);
     
     /*! @brief Prints some track data 
      */

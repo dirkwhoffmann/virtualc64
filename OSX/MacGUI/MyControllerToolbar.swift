@@ -110,7 +110,9 @@ extension MyController {
     
     @IBAction func mediaAction(_ sender: Any!) {
     
-        showMediaDialog()
+        let nibName = NSNib.Name(rawValue: "DiskInspector")
+        let dialogController = DiskInspectorController.init(windowNibName: nibName)
+        dialogController.showSheet(withParent: self)
     }
     
     @objc public func debugOpenAction(_ sender: Any!) {

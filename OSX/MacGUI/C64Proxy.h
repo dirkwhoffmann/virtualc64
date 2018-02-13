@@ -393,6 +393,9 @@ struct ContainerWrapper;
 - (bool) isDriveConnected;
 - (void) connectDrive;
 - (void) disconnectDrive;
+- (BOOL) atnLine;
+- (BOOL) clockLine;
+- (BOOL) dataLine;
 
 @end
 
@@ -484,8 +487,22 @@ struct ContainerWrapper;
 - (void) setBitAccuracy:(bool)b;
 - (bool) soundMessagesEnabled;
 - (void) setSendSoundMessages:(bool)b;
-- (bool) exportToD64:(NSString *)path;
 
+- (NSInteger) halftrack;
+- (void) setHalftrack:(NSInteger)value;
+- (NSInteger) numberOfBits;
+- (NSInteger) bitOffset;
+- (void) setBitOffset:(NSInteger)value;
+- (NSInteger) readBitFromHead;
+- (void) writeBitToHead:(NSInteger)value;
+
+- (void) moveHeadUp;
+- (void) moveHeadDown;
+- (void) rotateDisk;
+- (void) rotateBack;
+
+- (const char *)trackAsString; 
+- (bool) exportToD64:(NSString *)path;
 - (void) playSound:(NSString *)name volume:(float)v;
 
 @end

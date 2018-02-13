@@ -144,6 +144,16 @@ Disk525::clearHalftrack(Halftrack ht)
     memset(data.halftrack[ht], 0x55, sizeof(data.halftrack[ht]));
 }
 
+const char *
+Disk525::trackAsString(Halftrack ht)
+{
+    unsigned i;
+    for (i = 0; i < length.halftrack[ht]; i++) {
+        text[i] = readBitFromHalftrack(ht, i) ? '1' : '0';
+    }
+    text[i] = 0;
+    return text;
+}
 
 // ---------------------------------------------------------------------------------------------
 //                               Data encoding and decoding
