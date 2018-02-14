@@ -121,12 +121,14 @@ class DiskInspectorController : UserDialogController
     {
         let drive = c64.vc1541!
         let offset = drive.bitOffset()
+        let length = c64.vc1541.numberOfBits()
+
         headOffset.integerValue = offset
-        headWheel.integerValue = (1000 * offset) / c64.vc1541.numberOfBits()
+        headWheel.integerValue = (length == 0) ? 0 : (1000 * offset / length)
         
         if drive.hasDisk() {
             headValue.integerValue = drive.readBitFromHead()
-            headLeft.stringValue = String(cString: drive.dataRel(-11, length: 10))
+            headLeft.stringValue = String(cString: drive.dataRel(-10, length: 10))
             headRight.stringValue = String(cString: drive.dataRel(1, length: 10))
         } else {
             headValue.stringValue = ""
@@ -137,19 +139,23 @@ class DiskInspectorController : UserDialogController
     
     func removeHeadMarker()
     {
-        let storage = (gcrData.documentView as! NSTextView).textStorage
-        storage?.removeAttribute(.foregroundColor, range: headPosition)
-        storage?.removeAttribute(.backgroundColor, range: headPosition)
-        headPosition = NSRange.init(location: 0, length: 0)
+        if c64.vc1541.numberOfBits() > 0 {
+            let storage = (gcrData.documentView as! NSTextView).textStorage
+            storage?.removeAttribute(.foregroundColor, range: headPosition)
+            storage?.removeAttribute(.backgroundColor, range: headPosition)
+            headPosition = NSRange.init(location: 0, length: 0)
+        }
     }
     
     func setHeadMarker()
     {
-        removeHeadMarker()
-        let storage = (gcrData.documentView as! NSTextView).textStorage
-        headPosition = NSRange.init(location: c64.vc1541.bitOffset(), length: 1)
-        storage?.addAttribute(.foregroundColor, value: NSColor.white, range: headPosition)
-        storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
+        if c64.vc1541.numberOfBits() > 0 {
+            removeHeadMarker()
+            let storage = (gcrData.documentView as! NSTextView).textStorage
+            headPosition = NSRange.init(location: c64.vc1541.bitOffset(), length: 1)
+            storage?.addAttribute(.foregroundColor, value: NSColor.white, range: headPosition)
+            storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
+        }
     }
     
     //
@@ -161,7 +167,6 @@ class DiskInspectorController : UserDialogController
         let value = (sender as! NSTextField).integerValue
         c64.vc1541.setHalftrack(value)
         refresh()
-        markHeadAction(self)
     }
 
     @IBAction func halftrackStepperAction(_ sender: Any!)
@@ -173,7 +178,6 @@ class DiskInspectorController : UserDialogController
             c64.vc1541.moveHeadDown()
         }
         refresh()
-        markHeadAction(self)
     }
     
     @IBAction func headAction(_ sender: Any!)
@@ -181,7 +185,6 @@ class DiskInspectorController : UserDialogController
         let value = (sender as! NSTextField).integerValue
         c64.vc1541.setBitOffset(value)
         refresh()
-        markHeadAction(self)
     }
 
     @IBAction func headStepperAction(_ sender: Any!)
@@ -193,7 +196,6 @@ class DiskInspectorController : UserDialogController
             c64.vc1541.rotateBack()
         }
         refresh()
-        markHeadAction(self)
     }
 
     @IBAction func headWheelAction(_ sender: Any!)
@@ -203,7 +205,7 @@ class DiskInspectorController : UserDialogController
         let newPosition = (trackSize * value) / 1000
         c64.vc1541.setBitOffset(newPosition)
         refresh()
-        scrollToHead(self) // markHead action is too slow
+        scrollToHead()
     }
 
     @IBAction func headValueAction(_ sender: Any!)
@@ -212,10 +214,9 @@ class DiskInspectorController : UserDialogController
         c64.vc1541.writeBit(toHead: value)
         refreshTrack() // Because data on track might have changed
         refresh()
-        markHeadAction(self)
     }
     
-    @IBAction func scrollToHead(_ sender: Any!)
+    func scrollToHead()
     {
         let range = NSRange.init(location: c64.vc1541.bitOffset(), length: 1)
         let view = gcrData.documentView as! NSTextView
@@ -224,8 +225,14 @@ class DiskInspectorController : UserDialogController
 
     @IBAction func markHeadAction(_ sender: Any!)
     {
-        setHeadMarker()
-        scrollToHead(self)
+        track()
+        
+        if (sender as! NSButton).integerValue == 1 {
+            setHeadMarker()
+            scrollToHead()
+        } else {
+            removeHeadMarker()
+        }
     }
     
     @IBAction func writeProtectAction(_ sender: Any!)
