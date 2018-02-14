@@ -317,8 +317,8 @@ Keyboard::keyIsPressed(uint8_t row, uint8_t col)
 {
     // We can either check the row or column matrix
     bool result1 = (kbMatrixRow[row] & (1 << col)) == 0;
-    bool result2 = (kbMatrixCol[col] & (1 << row)) == 0;
-    assert(result1 == result2);
+    // bool result2 = (kbMatrixCol[col] & (1 << row)) == 0;
+    // assert(result1 == result2);
 
     return result1;
 }
