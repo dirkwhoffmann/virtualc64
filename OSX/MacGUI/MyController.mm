@@ -293,18 +293,4 @@
     [[self window] endSheet:hardwareDialog returnCode:NSModalResponseCancel];
 }
 
-- (bool)showMediaDialog
-{
-    [mediaDialog initialize:self];
-    [[self window] beginSheet:mediaDialog completionHandler:nil];
-    
-    return YES;
-}
-
-- (IBAction)cancelMediaDialog:(id)sender
-{
-    [mediaDialog orderOut:sender]; // Hide sheet
-    [[self window] endSheet:mediaDialog returnCode:NSModalResponseCancel];
-}
-
 @end

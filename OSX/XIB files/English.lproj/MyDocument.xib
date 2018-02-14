@@ -148,7 +148,6 @@
                 <outlet property="ioSource" destination="976" id="1689"/>
                 <outlet property="joystickPortA" destination="L2b-nG-yBo" id="EVC-v9-DPf"/>
                 <outlet property="joystickPortB" destination="4MP-rV-xX2" id="mps-Jv-PSQ"/>
-                <outlet property="mediaDialog" destination="NN4-6X-6x6" id="J9x-fU-EuG"/>
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="metalScreen" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
                 <outlet property="pc" destination="47" id="163"/>
@@ -307,7 +306,7 @@
                             <action selector="propertiesAction:" target="-2" id="4xt-Za-auc"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="44750A76-96CA-4180-AA7E-CFBA12DE3318" label="Inspect" paletteLabel="Inspect" tag="-1" image="diskette" id="f2e-mw-dVA" userLabel="Media">
+                    <toolbarItem implicitItemIdentifier="44750A76-96CA-4180-AA7E-CFBA12DE3318" label="Inspect" paletteLabel="Inspect" tag="-1" image="diskette" id="f2e-mw-dVA">
                         <connections>
                             <action selector="mediaAction:" target="-2" id="cHt-Hg-iuV"/>
                         </connections>
@@ -3960,7 +3959,7 @@ DQ
                     <button id="Mq7-sK-uET">
                         <rect key="frame" x="86" y="79" width="134" height="25"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Drive sound" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sPW-ij-jf1">
+                        <buttonCell key="cell" type="check" title="Play drive sounds" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sPW-ij-jf1">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -4025,157 +4024,6 @@ DQ
             </connections>
             <point key="canvasLocation" x="851.5" y="-297.5"/>
         </window>
-        <window title="Media" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="NN4-6X-6x6" userLabel="Media" customClass="MediaDialog">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="271" y="425" width="427" height="330"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
-            <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" id="RTK-wa-joS">
-                <rect key="frame" x="0.0" y="0.0" width="427" height="330"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <box verticalHuggingPriority="750" boxType="separator" id="U2y-4o-FC7">
-                        <rect key="frame" x="20" y="125" width="387" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <box verticalHuggingPriority="750" boxType="separator" id="mYI-aP-e9p">
-                        <rect key="frame" x="20" y="225" width="387" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <textField verticalHuggingPriority="750" id="iJd-i0-rp1">
-                        <rect key="frame" x="94" y="92" width="114" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Expansion port" id="bkK-ta-eKm">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="CmB-BB-Zr8">
-                        <rect key="frame" x="94" y="291" width="88" height="19"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC-1541" id="dc4-vV-l0N">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="oqZ-jV-spj">
-                        <rect key="frame" x="96" y="191" width="66" height="19"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC-1530" id="7Nx-vq-pZE">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="v51-Lw-wBN">
-                        <rect key="frame" x="96" y="177" width="197" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Datasette" id="iNF-lz-Kp3">
-                            <font key="font" metaFont="cellTitle"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="JbD-Rx-3iA">
-                        <rect key="frame" x="373" y="152" width="43" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00:00" id="wfp-MI-zXg">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="sY2-Oz-H60">
-                        <rect key="frame" x="192" y="152" width="43" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="00:00" id="qCV-Kx-bWx">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="K23-mT-JQ6">
-                        <rect key="frame" x="94" y="75" width="199" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cartridge slot" id="PZs-Mt-XEB">
-                            <font key="font" metaFont="cellTitle"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button id="FxP-og-vWY">
-                        <rect key="frame" x="291" y="249" width="118" height="28"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Write protected" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Owi-gT-vak">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="diskWriteProtectAction:" target="NN4-6X-6x6" id="mWb-vb-Z9L"/>
-                        </connections>
-                    </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ple-3v-cFO">
-                        <rect key="frame" x="94" y="276" width="199" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Floppy drive" id="VLj-0Q-awN">
-                            <font key="font" metaFont="cellTitle"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" id="LYL-VY-3ZX">
-                        <rect key="frame" x="307" y="13" width="106" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="A1e-En-5s3">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancelMediaDialog:" target="-2" id="obY-CI-t5y"/>
-                        </connections>
-                    </button>
-                    <slider verticalHuggingPriority="750" id="Gxx-6n-1L6">
-                        <rect key="frame" x="238" y="151" width="132" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="Dk0-Tg-olp"/>
-                        <connections>
-                            <action selector="tapeHeadAction:" target="NN4-6X-6x6" id="DiF-l0-ZgZ"/>
-                        </connections>
-                    </slider>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="9uI-HN-EhW">
-                        <rect key="frame" x="20" y="246" width="64" height="64"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="diskette" id="hQW-AD-hTE"/>
-                    </imageView>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="TWO-Ht-4qL">
-                        <rect key="frame" x="20" y="46" width="64" height="64"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="rom" id="pSP-1a-DuI"/>
-                    </imageView>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="RbN-ly-sFk">
-                        <rect key="frame" x="20" y="145" width="64" height="64"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="tape" id="XA1-Io-CcN"/>
-                    </imageView>
-                </subviews>
-            </view>
-            <connections>
-                <outlet property="cartridgeText" destination="K23-mT-JQ6" id="DgT-MY-njk"/>
-                <outlet property="diskText" destination="Ple-3v-cFO" id="oYB-NG-Bcy"/>
-                <outlet property="diskWriteProtected" destination="FxP-og-vWY" id="wi1-Wg-dvj"/>
-                <outlet property="tapeEnd" destination="JbD-Rx-3iA" id="CGd-hF-vwu"/>
-                <outlet property="tapeHead" destination="sY2-Oz-H60" id="emz-T0-sxn"/>
-                <outlet property="tapeSlider" destination="Gxx-6n-1L6" id="RcP-rS-kbU"/>
-                <outlet property="tapeText" destination="v51-Lw-wBN" id="Nie-eK-S6s"/>
-            </connections>
-            <point key="canvasLocation" x="1422.5" y="-310"/>
-        </window>
     </objects>
     <resources>
         <image name="1541" width="384" height="384"/>
@@ -4195,7 +4043,6 @@ DQ
         <image name="pref_sid" width="129" height="129"/>
         <image name="pref_vic" width="145" height="134"/>
         <image name="restart32" width="128" height="128"/>
-        <image name="rom" width="129" height="157"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOut32" width="32" height="32"/>
         <image name="stepOver32" width="32" height="32"/>

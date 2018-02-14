@@ -411,8 +411,6 @@ extension MyController {
         //    break
     
         case MSG_VC1530_PROGRESS:
-            
-            mediaDialog.update()
             break
     
         case MSG_CARTRIDGE:

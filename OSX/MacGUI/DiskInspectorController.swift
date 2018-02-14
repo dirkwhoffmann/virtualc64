@@ -18,7 +18,12 @@ class DiskInspectorController : UserDialogController
     // These values are used to determine the items that need to be refreshed
     var currentHalftrack = Int.max
     var currentOffset = Int.max
+    
+    // Currently highlighted bit in gcr view
     var headPosition = NSRange.init(location: 0, length: 0)
+    
+    // Timer for automatically refreshing the gcr view
+    var timer: Timer!
     
     // Outlets
     @IBOutlet weak var icon: NSImageView!
@@ -28,7 +33,8 @@ class DiskInspectorController : UserDialogController
     @IBOutlet weak var headValue: NSTextField!
     @IBOutlet weak var headLeft: NSTextField!
     @IBOutlet weak var headRight: NSTextField!
-    
+    @IBOutlet weak var headWheel: NSSlider!
+
     @IBOutlet weak var serialData: NSTextField!
     @IBOutlet weak var serialClock: NSTextField!
     @IBOutlet weak var serialAtn: NSTextField!
@@ -47,13 +53,19 @@ class DiskInspectorController : UserDialogController
         headRight.font = monoLarge
         headValue.font = monoLarge
         
+        // Start refresh timer
+        if #available(OSX 10.12, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.06, repeats: true, block: { (t) in
+                self.refresh()
+            })
+        }
+        
         refresh()
     }
     
     /// Updates all GUI elements
     func refresh() {
         
-        track()
         let drive = c64.vc1541!
         let halftrack = drive.halftrack()
         let offset = drive.bitOffset()
@@ -67,13 +79,11 @@ class DiskInspectorController : UserDialogController
     
         // Update track info if necessary
         if (halftrack != currentHalftrack) {
-            track("Track has changed")
             refreshTrack()
         }
         
         // Update head info if necessary
         if (halftrack != currentHalftrack || offset != currentOffset) {
-            track("Track or Offset has changed")
             refreshHead()
         }
         
@@ -112,6 +122,7 @@ class DiskInspectorController : UserDialogController
         let drive = c64.vc1541!
         let offset = drive.bitOffset()
         headOffset.integerValue = offset
+        headWheel.integerValue = (1000 * offset) / c64.vc1541.numberOfBits()
         
         if drive.hasDisk() {
             headValue.integerValue = drive.readBitFromHead()
@@ -223,5 +234,12 @@ class DiskInspectorController : UserDialogController
         let value = (sender as! NSButton).integerValue
         c64.vc1541.setWriteProtection(value != 0)
         refresh()
+    }
+    
+    override func cancelAction(_ sender: Any!) {
+        
+        track("Canceling timer")
+        timer.invalidate()
+        super.cancelAction(self)
     }
 }

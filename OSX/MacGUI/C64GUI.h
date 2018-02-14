@@ -42,7 +42,6 @@
 
 #import "PropertiesDialog.h"
 #import "HardwareDialog.h"
-#import "MediaDialog.h"
 #import "TapeDialog.h"
 #import "RomDialog.h"
 

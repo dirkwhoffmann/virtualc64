@@ -95,7 +95,6 @@
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
-		506158731BF0A8A10031FD2F /* MediaDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506158721BF0A8A10031FD2F /* MediaDialog.mm */; };
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
@@ -377,8 +376,6 @@
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506004641B78E9C500EBDD93 /* PixelEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelEngine.cpp; sourceTree = "<group>"; };
 		506004651B78E9C500EBDD93 /* PixelEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelEngine.h; sourceTree = "<group>"; };
-		506158721BF0A8A10031FD2F /* MediaDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MediaDialog.mm; sourceTree = "<group>"; };
-		506158741BF0A8AE0031FD2F /* MediaDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaDialog.h; sourceTree = "<group>"; };
 		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDWrapper.cpp; sourceTree = "<group>"; };
@@ -791,8 +788,6 @@
 				50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */,
 				50C9CB331B8272F40054EE86 /* HardwareDialog.h */,
 				50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */,
-				506158741BF0A8AE0031FD2F /* MediaDialog.h */,
-				506158721BF0A8A10031FD2F /* MediaDialog.mm */,
 				50F681E21BEA2015008568E3 /* TapeDialog.h */,
 				50F681E31BEA203F008568E3 /* TapeDialog.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
@@ -1406,7 +1401,6 @@
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
-				506158731BF0A8A10031FD2F /* MediaDialog.mm in Sources */,
 				50D141891417A34B0024FC74 /* wave6581_PST.cc in Sources */,
 				50D1418A1417A34B0024FC74 /* wave8580__ST.cc in Sources */,
 				50D1418B1417A34B0024FC74 /* wave8580_P_T.cc in Sources */,

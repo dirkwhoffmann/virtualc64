@@ -25,6 +25,9 @@ extension MyController : NSWindowDelegate {
         
         track()
         
+        // Deconnect emulator
+        c64.setListener(nil, function: nil)
+        
         // Stop timer
         timer.invalidate()
         timer = nil

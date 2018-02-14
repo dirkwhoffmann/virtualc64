@@ -35,7 +35,7 @@ MessageQueue::setListener(const void *sender, void(*func)(const void *, int)) {
     
     // Process all pending messages
     VC64Message msg;
-    while ((msg = getMessage()) != MSG_NONE) {
+    while (callback && (msg = getMessage()) != MSG_NONE) {
         callback(listener, msg);
     }
 }

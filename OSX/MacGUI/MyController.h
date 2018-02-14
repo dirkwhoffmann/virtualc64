@@ -378,7 +378,4 @@ typedef unsigned long MacKeyFingerprint;
 - (bool)showHardwareDialog;
 - (IBAction)cancelHardwareDialog:(id)sender;
 
-- (bool)showMediaDialog;
-- (IBAction)cancelMediaDialog:(id)sender;
-
 @end
