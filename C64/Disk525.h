@@ -289,7 +289,6 @@ public:
             writeBitToHalftrack(ht, offset + i, byte & mask);
     }
 
-    
     //
     //! @functiongroup Erasing disk data
     //
@@ -306,10 +305,19 @@ public:
     //! @functiongroup Debugging disk data
     //
     
-    /*! @brief Returns a textual represention of a halftrack
+    /*! @brief   Returns a textual represention of halftrack data
+     *  @details The starting position of the first bit is specified as an absolute position.
      */
-    const char *trackAsString(Halftrack ht);
-    
+    const char *dataAbs(Halftrack ht, int start, unsigned n);
+
+    /*! @brief   Returns a textual represention of halftrack data
+     *  @details The starting position of the first bit is specified as an absolute position.
+     */
+    const char *dataAbs(Halftrack ht, int start) {
+        assert(isHalftrackNumber(ht));
+        return dataAbs(ht, start, length.halftrack[ht]);
+    }
+
     /*! @brief Prints some track data 
      */
     void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);

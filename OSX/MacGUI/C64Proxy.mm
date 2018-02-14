@@ -594,7 +594,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) rotateDisk { wrapper->vc1541->rotateDisk(); }
 - (void) rotateBack { wrapper->vc1541->rotateBack(); }
 
-- (const char *)trackAsString { return wrapper->vc1541->trackAsString(); }
+- (const char *)dataAbs:(NSInteger)start {
+    return wrapper->vc1541->dataAbs((int)start); }
+- (const char *)dataAbs:(NSInteger)start length:(NSInteger)n {
+    return wrapper->vc1541->dataAbs((int)start, (unsigned)n); }
+- (const char *)dataRel:(NSInteger)start {
+    return wrapper->vc1541->dataRel((int)start); }
+- (const char *)dataRel:(NSInteger)start length:(NSInteger)n {
+    return wrapper->vc1541->dataRel((int)start, (unsigned)n); }
 
 - (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 - (void) playSound:(NSString *)name volume:(float)v

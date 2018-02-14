@@ -145,11 +145,17 @@ Disk525::clearHalftrack(Halftrack ht)
 }
 
 const char *
-Disk525::trackAsString(Halftrack ht)
+Disk525::dataAbs(Halftrack ht, int start, unsigned n)
 {
+    assert(isHalftrackNumber(ht));
+    assert(n < sizeof(text));
+    
+    // We also accept negative values for 'start'
+    start = (start + length.halftrack[ht]) % length.halftrack[ht];
+    
     unsigned i;
-    for (i = 0; i < length.halftrack[ht]; i++) {
-        text[i] = readBitFromHalftrack(ht, i) ? '1' : '0';
+    for (i = 0; i < n; i++) {
+        text[i] = readBitFromHalftrack(ht, start + i) ? '1' : '0';
     }
     text[i] = 0;
     return text;

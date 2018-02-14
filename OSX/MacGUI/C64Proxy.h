@@ -501,7 +501,11 @@ struct ContainerWrapper;
 - (void) rotateDisk;
 - (void) rotateBack;
 
-- (const char *)trackAsString; 
+- (const char *)dataAbs:(NSInteger)start;
+- (const char *)dataAbs:(NSInteger)start length:(NSInteger)n;
+- (const char *)dataRel:(NSInteger)start;
+- (const char *)dataRel:(NSInteger)start length:(NSInteger)n;
+
 - (bool) exportToD64:(NSString *)path;
 - (void) playSound:(NSString *)name volume:(float)v;
 

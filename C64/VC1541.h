@@ -1,7 +1,7 @@
 /*! 
  * @header      VC1541.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2008 - 2016 Dirk W. Hoffmann
+ * @copyright   2008 - 2018 Dirk W. Hoffmann
  * @brief       Declares VC1541 class
  */
 /* This program is free software; you can redistribute it and/or modify
@@ -79,15 +79,17 @@ public:
     
 private:
     
-    /*! @brief    The stored numbers indicate how many clock cycles are needed for reading or writing a single bit
-     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is divided by N where N ranges
-     *            from 13 (zone 0) to 16 (zone 4). On the logic board, this is done with a 4-bit counter of type 74SL193
-     *            whose reset value bits are connected to the two "zone" bits (PB5 and PB6) coming from via 2.
-     *            A second 74SL193 divides the signal by 4. The result serves as the clock signal for all units operating
-     *            on bit level (i.e., the two shift registers that transfer bits from and to the head).
-     *            It follows that a single bit is ready after 3,25 CPU cycles in zone 0 and 4 CPU cycles in zone 4.
-     *            The resulting signal is fed into a third counter (of type 74LS191). It divides the signal by 8 and its
-     *            output is fed into a three input NAND-gate computing the important BYTE-READY signal. 
+    /*! @brief    Indicates how many clock cycles are needed for reading or writing a single bit
+     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is divided by N where
+     *            N ranges from 13 (zone 0) to 16 (zone 4). On the logic board, this is done with
+     *            a 4-bit counter of type 74SL193 whose reset value bits are connected to the two
+     *            "zone" bits (PB5 and PB6) coming from via 2. A second 74SL193 divides the signal
+     *            by 4. The result serves as the clock signal for all units operating on bit level
+     *            (i.e., the two shift registers that transfer bits from and to the head). It
+     *            follows that a single bit is ready after 3,25 CPU cycles in zone 0 and 4 CPU
+     *            cycles in zone 4. The resulting signal is fed into a third counter (of type
+     *            74LS191). It divides the signal by 8 and its output is fed into a three input
+     *            NAND-gate computing the important BYTE-READY signal.
      */
     const uint16_t cyclesPerBit[4] = {
         13 * 4, // Zone 0: One bit each (16 * 3.25) base clock cycles (= 3.25 CPU cycles)
@@ -97,9 +99,9 @@ private:
     };
 
     
-    // ---------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------
     //                                    Main entry points
-    // ---------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------
     
 public:
     
@@ -168,11 +170,7 @@ public:
      *            VC1541 DOS would not recognize the ejection.
      */
     void ejectDisk();
-
-    /*! @brief Returns a textual represention of the current halftrack
-     */
-    const char *trackAsString() { return disk.trackAsString(halftrack); }
-    
+   
     /*! @brief    Converts the currently inserted disk into a D64 archive.
      *  @result   A D64 archive containing the same files as the currently inserted disk;
      *            NULL if no disk is inserted.
@@ -181,7 +179,6 @@ public:
 
     //! @brief    Exports the currently inserted disk to D64 file.
     bool exportToD64(const char *filename);
-
     
     //
     //! @functiongroup Running the device
@@ -209,7 +206,45 @@ private:
      *  @details  Method is executed whenever a single byte is ready
      */
     void executeByteReady();
-        
+    
+    //
+    //! @functiongroup Accessing disk data
+    //
+
+public:
+    
+    /*! @brief   Returns a textual represention of a part of the current halftrack
+     *  @details The starting position of the first bit is specified as an absolute position.
+     */
+    const char *dataAbs(int start, unsigned n) {
+        if (!hasDisk()) return "";
+        return disk.dataAbs(halftrack, start, n);
+    }
+    
+    /*! @brief   Returns a textual represention of the current halftrack
+     *  @details The starting position of the first bit is specified as an absolute position.
+     */
+    const char *dataAbs(int start) {
+        if (!hasDisk()) return "";
+        return disk.dataAbs(halftrack, start);
+    }
+    
+    /*! @brief   Returns a textual represention of a part of the current halftrack
+     *  @details The starting position of the first bit is specified relative to the drive head.
+     */
+    const char *dataRel(int start, unsigned n) {
+        if (!hasDisk()) return "";
+        return disk.dataAbs(halftrack, bitoffset + start, n);
+    }
+    
+    /*! @brief   Returns a textual represention of the current halftrack
+     *  @details The starting position of the first bit is specified relative to the drive head.
+     */
+    const char *dataRel(int start) {
+        if (!hasDisk()) return "";
+        return disk.dataAbs(halftrack, bitoffset + start);
+    }
+
     
     // ---------------------------------------------------------------------------------------------
     //                                   Drive properties
