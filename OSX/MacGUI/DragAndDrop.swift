@@ -108,7 +108,7 @@ public extension MetalView {
             track("Processing dragged in file \(path)")
             
             // Is it a snapshot from a different version?
-            if SnapshotProxy.isUsupportedSnapshotFile(path) {
+            if !SnapshotProxy.isSupportedSnapshotFile(path) {
                 document.showSnapshotVersionAlert()
                 return false
             }

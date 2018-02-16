@@ -725,7 +725,8 @@ struct ContainerWrapper;
 }
 
 + (BOOL)isSnapshotFile:(NSString *)path;
-+ (BOOL)isUsupportedSnapshotFile:(NSString *)path;
++ (BOOL)isSupportedSnapshotFile:(NSString *)path;
++ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;

@@ -957,8 +957,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return Snapshot::isSnapshotFile([path UTF8String]);
 }
 
-+ (BOOL) isUsupportedSnapshotFile:(NSString *)path {
-    return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
++ (BOOL) isSupportedSnapshotFile:(NSString *)path {
+    return Snapshot::isSupportedSnapshotFile([path UTF8String]);
+}
+
++ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length {
+    return Snapshot::isSupportedSnapshot((uint8_t *)buffer, length);
 }
 
 + (instancetype) make:(Snapshot *)snapshot

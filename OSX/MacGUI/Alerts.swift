@@ -25,16 +25,20 @@ extension MyDocument {
     
     func showSnapshotVersionAlert() {
         
+        // TODO:
+        // The same dialog is shown in the application delegate.
+        // Is it possible to call a method on the application instance with an
+        // appropriate NSError object?
+        
         let alert = NSAlert()
-        alert.alertStyle = .warning
-        // alert.icon = NSImage.init(named: NSImage.Name(rawValue: ""))
+        alert.alertStyle = .critical
         alert.messageText = "Snapshot from other VirtualC64 release"
         alert.informativeText = "The snapshot was created with a different version of VirtualC64 and cannot be opened."
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
 }
-    
+
 public extension MyController {
     
     @discardableResult

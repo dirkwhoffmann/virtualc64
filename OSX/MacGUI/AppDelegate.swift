@@ -12,7 +12,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        print("\(#function)")
+        track()
         
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
@@ -21,7 +21,24 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     
     public func applicationWillTerminate(_ aNotification: Notification) {
 
-        print("\(#function)")
+        track()
+    }
+    
+    public func application(_ application: NSApplication, willPresentError error: Error) -> Error {
+
+        track()
+        
+        let nserror = error as NSError
+        
+        if (nserror.domain == "VirtualC64") {
+            if (nserror.code == 1) {
+                return NSError(domain: "", code: 0, userInfo:
+                    [NSLocalizedDescriptionKey: "Snapshot from other VirtualC64 release",
+                     NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64 and cannot be opened."])
+            }
+        }
+        
+        return error
     }
     
     /*

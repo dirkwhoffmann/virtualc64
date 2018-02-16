@@ -81,9 +81,16 @@ class MyDocument : NSDocument {
         switch (typeName) {
         
         case "VC64":
+            
+            // Check version number in snapshot data
+            if !SnapshotProxy.isSupportedSnapshot(ptr, length: size) {
+                throw NSError(domain: "VirtualC64", code: 1, userInfo: nil)
+            }
+            
+            // Update emulator with snapshot data
             let snapshot = SnapshotProxy.make(withBuffer: ptr, length: size)
             c64.load(fromSnapshot: snapshot)
-            return
+            break
             
         case "CRT":
             attachment = CRTProxy.make(withBuffer: ptr, length: size)
