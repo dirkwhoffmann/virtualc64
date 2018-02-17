@@ -104,6 +104,9 @@ class MyDocument : NSDocument {
         case "PRG":
             attachment = PRGProxy.make(withBuffer: ptr, length: size)
             break
+        case "D64":
+            attachment = D64Proxy.make(withBuffer: ptr, length: size)
+            break
         case "P00":
             attachment = P00Proxy.make(withBuffer: ptr, length: size)
             break
