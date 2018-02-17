@@ -380,7 +380,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -3004,12 +3004,12 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView horizontalLineScroll="174" horizontalPageScroll="10" verticalLineScroll="174" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="2189">
+                <scrollView horizontalLineScroll="189" horizontalPageScroll="10" verticalLineScroll="189" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="2189">
                     <rect key="frame" x="9" y="20" width="191" height="306"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <clipView key="contentView" copiesOnScroll="NO" id="qbt-6L-5ue">
                         <rect key="frame" x="1" y="1" width="189" height="304"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <ikImageBrowserView autoresizesSubviews="NO" zoomValue="1" allowsMultipleSelection="NO" id="2182" customClass="CheatboxImageBrowserView">
                                 <rect key="frame" x="0.0" y="0.0" width="189" height="304"/>
@@ -3025,7 +3025,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="2190">
-                        <rect key="frame" x="175" y="1" width="15" height="304"/>
+                        <rect key="frame" x="174" y="1" width="16" height="304"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
@@ -3057,9 +3057,6 @@
                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2367">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
                         </buttonCell>
                         <connections>
                             <action selector="cancelPropertiesDialog:" target="-2" id="2396"/>
@@ -3068,7 +3065,7 @@ DQ
                     <button verticalHuggingPriority="750" id="2329">
                         <rect key="frame" x="197" y="13" width="192" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <buttonCell key="cell" type="push" title="Restore Factory settings" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2330">
+                        <buttonCell key="cell" type="push" title="Restore Factory settings" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2330">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -3079,7 +3076,7 @@ DQ
                     <button verticalHuggingPriority="750" id="2327">
                         <rect key="frame" x="5" y="13" width="192" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Use as default" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2328">
+                        <buttonCell key="cell" type="push" title="Use as default" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2328">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -3098,7 +3095,7 @@ DQ
                     <textField verticalHuggingPriority="750" id="2269">
                         <rect key="frame" x="71" y="196" width="143" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Joystick emulation" id="2278">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Joystick emulation" id="2278">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3107,7 +3104,7 @@ DQ
                     <textField verticalHuggingPriority="750" misplaced="YES" id="2272">
                         <rect key="frame" x="69" y="365" width="114" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Graphics" id="2275">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Graphics" id="2275">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3152,7 +3149,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" id="q2T-0G-wkf">
                         <rect key="frame" x="167" y="127" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YbU-xc-RvQ">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YbU-xc-RvQ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3163,7 +3160,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="1" id="Oe8-LV-af6">
                         <rect key="frame" x="239" y="127" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="T8k-4u-uwC">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="T8k-4u-uwC">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3183,7 +3180,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="2" id="hwb-d6-fKL">
                         <rect key="frame" x="311" y="127" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dYr-5d-2CB">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dYr-5d-2CB">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3203,7 +3200,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="3" id="kW7-uq-bAY">
                         <rect key="frame" x="383" y="127" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rIq-T3-FXC">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rIq-T3-FXC">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3223,7 +3220,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="4" id="gFt-Q9-EfZ">
                         <rect key="frame" x="455" y="127" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GXW-69-j13">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GXW-69-j13">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3252,7 +3249,7 @@ DQ
                     <textField verticalHuggingPriority="750" misplaced="YES" id="mlc-em-EZy">
                         <rect key="frame" x="254" y="182" width="275" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VirtualC64 supports the following USB devices:" id="jbo-Bp-nam">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="VirtualC64 supports the following USB devices:" id="jbo-Bp-nam">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3261,7 +3258,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="10" id="2ek-Tr-UYe">
                         <rect key="frame" x="167" y="102" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qee-1C-obW">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qee-1C-obW">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3272,7 +3269,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="11" id="mpf-05-sLp">
                         <rect key="frame" x="239" y="102" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CN1-bl-Gpa">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CN1-bl-Gpa">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3292,7 +3289,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="12" id="5rx-Xq-lZ3">
                         <rect key="frame" x="311" y="102" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3L-MP-IFq">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3L-MP-IFq">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3312,7 +3309,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="13" id="BHq-1h-OhI">
                         <rect key="frame" x="383" y="102" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zJN-zB-CXF">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zJN-zB-CXF">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3332,7 +3329,7 @@ DQ
                     <button verticalHuggingPriority="750" misplaced="YES" tag="14" id="G90-Ih-iYU">
                         <rect key="frame" x="455" y="102" width="54" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ePO-RW-WkI">
+                        <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="LEDnewGreen" imagePosition="overlaps" alignment="center" controlSize="small" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ePO-RW-WkI">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -3406,7 +3403,7 @@ DQ
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2234">
                         <rect key="frame" x="253" y="319" width="32" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2316"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2316"/>
                         <connections>
                             <action selector="setEyeZAction:" target="2228" id="2377"/>
                         </connections>
@@ -3414,7 +3411,7 @@ DQ
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2232">
                         <rect key="frame" x="182" y="319" width="32" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2318"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2318"/>
                         <connections>
                             <action selector="setEyeYAction:" target="2228" id="2376"/>
                         </connections>
@@ -3422,7 +3419,7 @@ DQ
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2233">
                         <rect key="frame" x="112" y="319" width="32" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2317"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2317"/>
                         <connections>
                             <action selector="setEyeXAction:" target="2228" id="2375"/>
                         </connections>
@@ -3430,7 +3427,7 @@ DQ
                     <popUpButton verticalHuggingPriority="750" id="2236">
                         <rect key="frame" x="348" y="300" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="VICE" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2301" id="2299">
+                        <popUpButtonCell key="cell" type="push" title="VICE" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2301" id="2299">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2300">
@@ -3531,7 +3528,7 @@ DQ
                     <textField verticalHuggingPriority="750" misplaced="YES" id="2237">
                         <rect key="frame" x="300" y="306" width="50" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Colors:" id="2298">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Colors:" id="2298">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3540,7 +3537,7 @@ DQ
                     <textField verticalHuggingPriority="750" misplaced="YES" id="2238">
                         <rect key="frame" x="307" y="334" width="43" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Filter:" id="2297">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Filter:" id="2297">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3549,7 +3546,7 @@ DQ
                     <textField verticalHuggingPriority="750" misplaced="YES" id="BwJ-O9-VNu">
                         <rect key="frame" x="287" y="365" width="63" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Upscaler:" id="eFj-8T-qqT">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Upscaler:" id="eFj-8T-qqT">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3558,7 +3555,7 @@ DQ
                     <popUpButton verticalHuggingPriority="750" misplaced="YES" id="2239">
                         <rect key="frame" x="348" y="329" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="2294">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="2294">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2295">
@@ -3594,7 +3591,7 @@ DQ
                     <popUpButton verticalHuggingPriority="750" misplaced="YES" id="dgF-Sb-ZZG">
                         <rect key="frame" x="348" y="358" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="f8q-Ue-Ip7" id="SHX-Lb-5Lh">
+                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="f8q-Ue-Ip7" id="SHX-Lb-5Lh">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="jSI-ts-hUG">
@@ -3637,7 +3634,7 @@ DQ
                     <button id="zjr-Hb-uLk">
                         <rect key="frame" x="96" y="238" width="243" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Keep aspect ratio in fullscreen mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NIM-ed-3D9">
+                        <buttonCell key="cell" type="check" title="Keep aspect ratio in fullscreen mode" bezelStyle="regularSquare" imagePosition="left" refusesFirstResponder="YES" state="on" inset="2" id="NIM-ed-3D9">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -3648,7 +3645,7 @@ DQ
                     <button misplaced="YES" id="Gj8-sK-2i5">
                         <rect key="frame" x="94" y="73" width="305" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Disconnect emulation keys from C64 keyboard" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RG8-TC-ozP">
+                        <buttonCell key="cell" type="check" title="Disconnect emulation keys from C64 keyboard" bezelStyle="regularSquare" imagePosition="left" refusesFirstResponder="YES" state="on" inset="2" id="RG8-TC-ozP">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -3664,7 +3661,7 @@ DQ
                     <textField verticalHuggingPriority="750" misplaced="YES" id="BeI-Wf-cy0">
                         <rect key="frame" x="298" y="178" width="231" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" title="Speedlink Competition Pro SL-6602 (USB) " id="b9A-mc-kVN">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="justified" title="Speedlink Competition Pro SL-6602 (USB) " id="b9A-mc-kVN">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
