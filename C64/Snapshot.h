@@ -100,14 +100,10 @@ public:
                            uint8_t major, uint8_t minor, uint8_t subminor);
  
     //! @brief    Returns true iff buffer contains a snapshot with a supported version number
-    static bool isSupportedSnapshot(const uint8_t *buffer, size_t length) {
-        return isSnapshot(buffer, length, V_MAJOR, V_MINOR, V_SUBMINOR);
-    }
+    static bool isSupportedSnapshot(const uint8_t *buffer, size_t length);
 
     //! @brief    Returns true iff buffer contains a snapshot with an outdated version number
-    static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length) {
-        return !isSupportedSnapshot(buffer, length);
-    }
+    static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length);
 
     //! @brief    Returns true if path points to a snapshot file
     static bool isSnapshotFile(const char *path);
@@ -116,14 +112,10 @@ public:
     static bool isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor);
 
     //! @brief    Returns true if file is a snapshot with a supported version number
-    static bool isSupportedSnapshotFile(const char *path) {
-        return isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
-    }
+    static bool isSupportedSnapshotFile(const char *path);
 
     //! @brief    Returns true if file is a snapshot with an outdated version number
-    static bool isUnsupportedSnapshotFile(const char *path) {
-        return !isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
-    }
+    static bool isUnsupportedSnapshotFile(const char *path);
 
     //
 	// Virtual functions from Container class

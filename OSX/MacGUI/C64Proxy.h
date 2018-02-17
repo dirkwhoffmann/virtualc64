@@ -724,9 +724,10 @@ struct ContainerWrapper;
 @interface SnapshotProxy : ContainerProxy {
 }
 
-+ (BOOL)isSnapshotFile:(NSString *)path;
-+ (BOOL)isSupportedSnapshotFile:(NSString *)path;
 + (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isSupportedSnapshotFile:(NSString *)path;
++ (BOOL)isUnsupportedSnapshotFile:(NSString *)path;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;

@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 // -------------------------------------------------------------------
 //                          Logging / Debugging
 // -------------------------------------------------------------------
@@ -22,6 +23,18 @@ public func track(_ message: String = "",
         }
     }
 }
+
+// -------------------------------------------------------------------
+//                         Drag and Drop
+// -------------------------------------------------------------------
+
+/*
+struct DragType {
+    static let string = NSPasteboard.PasteboardType.string
+    static let contents = NSPasteboard.PasteboardType.fileContents
+    static let file = NSPasteboard.PasteboardType.fileURL
+}
+*/
 
 // -------------------------------------------------------------------
 //                         Image processing

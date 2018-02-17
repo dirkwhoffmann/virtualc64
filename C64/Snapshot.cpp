@@ -114,6 +114,18 @@ Snapshot::isSnapshot(const uint8_t *buffer, size_t length,
 }
 
 bool
+Snapshot::isSupportedSnapshot(const uint8_t *buffer, size_t length)
+{
+    return isSnapshot(buffer, length, V_MAJOR, V_MINOR, V_SUBMINOR);
+}
+
+bool
+Snapshot::isUnsupportedSnapshot(const uint8_t *buffer, size_t length)
+{
+    return isSnapshot(buffer, length) && !isSupportedSnapshot(buffer, length);
+}
+
+bool
 Snapshot::isSnapshotFile(const char *path)
 {
     assert(path != NULL);
@@ -135,6 +147,18 @@ Snapshot::isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t
         return false;
     
     return true;
+}
+
+bool
+Snapshot::isSupportedSnapshotFile(const char *path)
+{
+    return isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
+}
+
+bool
+Snapshot::isUnsupportedSnapshotFile(const char *path)
+{
+    return isSnapshotFile(path) && !isSupportedSnapshotFile(path);
 }
 
 ContainerType

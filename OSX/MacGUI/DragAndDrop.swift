@@ -7,18 +7,14 @@
 
 import Foundation
 
-struct DragType {
-    static let string = NSPasteboard.PasteboardType.string
-    static let contents = NSPasteboard.PasteboardType.fileContents
-    static let filenames = NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")
-}
+
 
 public extension MetalView {
     
     //! Returns a list of supported drag and drop types
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
     
-        return [DragType.filenames, DragType.string, DragType.contents]
+        return [.fileURL, .string, .fileContents]
     }
     
     //! Register supported drag and drop types
@@ -36,17 +32,17 @@ public extension MetalView {
         
         switch (type) {
             
-        case DragType.string:
+        case .string:
             
             print ("Dragged in string")
             return NSDragOperation.copy
         
-        case DragType.contents:
+        case .fileContents:
             
             print ("Dragged in file contents")
             return NSDragOperation.copy
             
-        case DragType.filenames:
+        case .fileURL:
             
             print ("Dragged in filename")
             return NSDragOperation.copy
@@ -77,7 +73,7 @@ public extension MetalView {
         
         switch (type) {
             
-        case DragType.string:
+        case .string:
             
             // Type text on virtual keyboard
             guard let text = pasteBoard.string(forType: .string) else {
@@ -87,7 +83,7 @@ public extension MetalView {
             controller.simulateUserTypingText(text, withInitialDelay: 0) 
             return true
             
-        case DragType.contents:
+        case .fileContents:
             
             // Check if we got another virtual machine dragged in
             let fileWrapper = pasteBoard.readFileWrapper()
@@ -100,15 +96,16 @@ public extension MetalView {
             controller.c64.load(fromSnapshot: snapshot)
             return true
             
-        case DragType.filenames:
+        case .fileURL:
             
-            let paths = pasteBoard.propertyList(forType: DragType.filenames) as! [String]
-            let path = paths[0]
-            
+            guard let url = NSURL.init(from: pasteBoard) as URL? else {
+               return false
+            }
+            let  path = url.path
             track("Processing dragged in file \(path)")
             
             // Is it a snapshot from a different version?
-            if !SnapshotProxy.isSupportedSnapshotFile(path) {
+            if SnapshotProxy.isUnsupportedSnapshotFile(path) {
                 document.showSnapshotVersionAlert()
                 return false
             }

@@ -783,37 +783,37 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->c64->getMissingRoms();
 }
 - (bool) isBasicRom:(NSURL *)url {
-    return wrapper->c64->mem.isBasicRom([[url absoluteString] UTF8String]);
+    return wrapper->c64->mem.isBasicRom([[url path] UTF8String]);
 }
 - (bool) loadBasicRom:(NSURL *)url {
-    return [self isBasicRom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
+    return [self isBasicRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
 - (bool) isBasicRomLoaded {
     return wrapper->c64->mem.basicRomIsLoaded();
 }
 - (bool) isCharRom:(NSURL *)url {
-    return wrapper->c64->mem.isCharRom([[url absoluteString] UTF8String]);
+    return wrapper->c64->mem.isCharRom([[url path] UTF8String]);
 }
 - (bool) isCharRomLoaded {
     return wrapper->c64->mem.charRomIsLoaded();
 }
 - (bool) loadCharRom:(NSURL *)url {
-    return [self isCharRom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
+    return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
 - (bool) isKernelRom:(NSURL *)url {
-    return wrapper->c64->mem.isKernelRom([[url absoluteString] UTF8String]);
+    return wrapper->c64->mem.isKernelRom([[url path] UTF8String]);
 }
 - (bool) loadKernelRom:(NSURL *)url {
-    return [self isKernelRom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
+    return [self isKernelRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
 - (bool) isKernelRomLoaded {
     return wrapper->c64->mem.kernelRomIsLoaded();
 }
 - (bool) isVC1541Rom:(NSURL *)url {
-    return wrapper->c64->floppy.mem.is1541Rom([[url absoluteString] UTF8String]);
+    return wrapper->c64->floppy.mem.is1541Rom([[url path] UTF8String]);
 }
 - (bool) loadVC1541Rom:(NSURL *)url {
-    return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url absoluteString] UTF8String]);
+    return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
 - (bool) isVC1541RomLoaded {
     return wrapper->c64->floppy.mem.romIsLoaded();
@@ -953,16 +953,22 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation SnapshotProxy
 
+/*
 + (BOOL) isSnapshotFile:(NSString *)path {
     return Snapshot::isSnapshotFile([path UTF8String]);
 }
-
+ */ 
++ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length {
+    return Snapshot::isSupportedSnapshot((uint8_t *)buffer, length);
+}
++ (BOOL)isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length {
+    return Snapshot::isUnsupportedSnapshot((uint8_t *)buffer, length);
+}
 + (BOOL) isSupportedSnapshotFile:(NSString *)path {
     return Snapshot::isSupportedSnapshotFile([path UTF8String]);
 }
-
-+ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length {
-    return Snapshot::isSupportedSnapshot((uint8_t *)buffer, length);
++ (BOOL) isUnsupportedSnapshotFile:(NSString *)path {
+    return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
 }
 
 + (instancetype) make:(Snapshot *)snapshot

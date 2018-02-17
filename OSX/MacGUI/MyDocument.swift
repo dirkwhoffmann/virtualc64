@@ -83,7 +83,7 @@ class MyDocument : NSDocument {
         case "VC64":
             
             // Check version number in snapshot data
-            if !SnapshotProxy.isSupportedSnapshot(ptr, length: size) {
+            if SnapshotProxy.isUnsupportedSnapshot(ptr, length: size) {
                 throw NSError(domain: "VirtualC64", code: 1, userInfo: nil)
             }
             

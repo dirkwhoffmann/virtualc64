@@ -17,6 +17,8 @@
  */
 
 // Forward declaration
+
+#if 0
 @class MyController;
 
 @protocol DragDropImageViewDelegate;
@@ -32,5 +34,7 @@
 - (id)initWithCoder:(NSCoder *)coder;
 
 @end
+
+#endif
 
 
