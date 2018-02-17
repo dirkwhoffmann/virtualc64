@@ -38,31 +38,22 @@ extension MyController {
         }
         gamepadSlotA = -1 // No gampad assigned
         gamepadSlotB = -1
-    
+        validateJoystickToolbarItems()
+        
         // Setup window properties
         configureWindow()
         
         // TODO: GET RID OF THIS: Move to it's own window controller
-        track()
         setHexadecimalAction(self)
-        track()
         cpuTableView.setController(self)
-        track()
         memTableView.setController(self)
-        track()
         cheatboxImageBrowserView.setController(self)
-        
-        track()
         
         // Get metal running
         metalScreen.setupMetal()
     
-        track()
-        
         // Load user defaults
         loadUserDefaults()
-        
-        track()
         
         // Enable message processing (register callback)
         setListener()

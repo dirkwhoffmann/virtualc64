@@ -7,14 +7,15 @@
 
 import Foundation
 
-
+extension NSPasteboard.PasteboardType {
+    static let compatibleFileURL = NSPasteboard.PasteboardType(kUTTypeFileURL as String)
+}
 
 public extension MetalView {
     
     //! Returns a list of supported drag and drop types
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
-    
-        return [.fileURL, .string, .fileContents]
+        return [.compatibleFileURL, .string, .fileContents]
     }
     
     //! Register supported drag and drop types
@@ -42,7 +43,7 @@ public extension MetalView {
             print ("Dragged in file contents")
             return NSDragOperation.copy
             
-        case .fileURL:
+        case .compatibleFileURL:
             
             print ("Dragged in filename")
             return NSDragOperation.copy
@@ -96,7 +97,7 @@ public extension MetalView {
             controller.c64.load(fromSnapshot: snapshot)
             return true
             
-        case .fileURL:
+        case .compatibleFileURL:
             
             guard let url = NSURL.init(from: pasteBoard) as URL? else {
                return false

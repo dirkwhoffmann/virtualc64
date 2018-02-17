@@ -11,7 +11,8 @@ extension NSDraggingInfo
 {
     var url: URL? {
         let pasteBoard = draggingPasteboard()
-        if let _ = pasteBoard.availableType(from: [NSPasteboard.PasteboardType.fileURL]) {
+        let types = [NSPasteboard.PasteboardType.compatibleFileURL]
+        if let _ = pasteBoard.availableType(from: types) {
             track()
             return NSURL.init(from: pasteBoard) as URL?
         }
@@ -27,7 +28,7 @@ class RomDropView : NSImageView
     {
         track()
         // registerForDraggedTypes([DragType.experimental])
-        registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
+        registerForDraggedTypes([NSPasteboard.PasteboardType.compatibleFileURL])
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation

@@ -794,11 +794,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) isCharRom:(NSURL *)url {
     return wrapper->c64->mem.isCharRom([[url path] UTF8String]);
 }
-- (bool) isCharRomLoaded {
-    return wrapper->c64->mem.charRomIsLoaded();
-}
 - (bool) loadCharRom:(NSURL *)url {
     return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
+}
+- (bool) isCharRomLoaded {
+    return wrapper->c64->mem.charRomIsLoaded();
 }
 - (bool) isKernelRom:(NSURL *)url {
     return wrapper->c64->mem.isKernelRom([[url path] UTF8String]);

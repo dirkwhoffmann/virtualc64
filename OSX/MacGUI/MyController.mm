@@ -123,7 +123,8 @@
 // --------------------------------------------------------------------------------
 
 - (void)refresh
-{		
+{
+    // NSLog(@"Refresh");
 	[self refreshCPU];
 	[self refreshMemory];
 	[self refreshCIA];
