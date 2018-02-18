@@ -359,6 +359,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (BOOL) ctrlKeyIsPressed { return wrapper->keyboard->ctrlKeyIsPressed(); }
 - (BOOL) runstopKeyIsPressed { return wrapper->keyboard->runstopKeyIsPressed(); }
 
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col { wrapper->keyboard->pressKey(row, col); }
 - (void) pressKey:(C64KeyFingerprint)c { wrapper->keyboard->pressKey(c); }
 - (void) pressShiftKey { wrapper->keyboard->pressShiftKey(); }
 - (void) pressCommodoreKey { wrapper->keyboard->pressCommodoreKey(); }
@@ -367,6 +368,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }
 - (void) pressRestoreKey { wrapper->keyboard->pressRestoreKey(); }
 
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col { wrapper->keyboard->releaseKey(row, col); }
 - (void) releaseKey:(C64KeyFingerprint)c { wrapper->keyboard->releaseKey(c); }
 - (void) releaseShiftKey { wrapper->keyboard->releaseShiftKey(); }
 - (void) releaseCommodoreKey { wrapper->keyboard->releaseCommodoreKey(); }

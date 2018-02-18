@@ -11,13 +11,13 @@ extension MyController : NSWindowDelegate {
     
     public func windowDidBecomeMain(_ notification: Notification) {
         
-        track()
+        // track()
         c64.enableAudio()
     }
     
     public func windowDidResignMain(_ notification: Notification) {
         
-        track()
+        // track()
         c64.disableAudio()
     }
     

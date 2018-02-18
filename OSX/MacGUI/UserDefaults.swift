@@ -68,7 +68,7 @@ extension MyController {
             VC64Keys.kernelRom: "",
             VC64Keys.vc1541Rom: "",
             
-            VC64Keys.mapKeysByPosition: true
+            VC64Keys.mapKeysByPosition: false
         ]
         
         let defaults = UserDefaults.standard

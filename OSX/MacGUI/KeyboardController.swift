@@ -19,19 +19,6 @@
 import Foundation
 import Carbon.HIToolbox
 
-// Some convenience stuff
-extension UInt8 {
-    var char: Character {
-        return Character(UnicodeScalar(self))
-    }
-}
-
-extension CChar {
-    var uint8: UInt8 {
-        return UInt8(bitPattern: Int8(self))
-    }
-}
-
 /*! @brief   Remembers currently pressed keys and there related C64KeyFingerprints
  *  @details Make this a simple variable once the whole class has been ported to Swift
  *  @deprecated
@@ -49,37 +36,408 @@ class KeyboardController: NSObject {
     /// Determines whether the joystick emulation keys should be uncoupled from the keyboard.
     var disconnectEmulationKeys: Bool = true
     
-    /* Key mapping mode
-       The user can choose between a symbolic and a positional assignment of the keys. The
-       symbolic assignment tries to assign the keys according to their meaning while the
-       positional assignment establishes a one-to-one mapping between Mac keys and C64 keys.
+    /**
+     Key mapping mode
+     The user can choose between a symbolic and a positional assignment of the keys. The
+     symbolic assignment tries to assign the keys according to their meaning while the
+     positional assignment establishes a one-to-one mapping between Mac keys and C64 keys.
     */
-    var mapKeysByPosition: Bool = true
+    var mapKeysByPosition: Bool = false
     
+    /// Used key map if keys are mapped by position
+    var keyMap: [MacKey:C64Key] = [:]
     
-    
-    
-    
-    override init()
-    {
-        disconnectEmulationKeys = true
-        super.init()
-        // restoreFactorySettings()
-    }
-
-    @objc convenience init(controller c: MyController)
-    {
-        self.init()
-        self.controller = c
-    }
-
     // Delete when Objective-C code is gone
     @objc func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
     @objc func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
     @objc func getMapKeysByPosition() -> Bool { return mapKeysByPosition }
     @objc func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
 
+    /// Remembers the currently pressed key modifiers
+    var shift: Bool = false
+    var control: Bool = false
+    var option: Bool = false
+    
+    // Remembers the currently pressed keys and their assigned C64 key lists
+    var pressedKeys: [MacKey:[C64Key]] = [:]
+    
+    /**
+     Checks if the internal values are consistent with the provides modifier flags.
+     
+     There should never be an insonsistency. But if there is, we release the suspicous key.
+     Otherwise, we risk to block the C64's keyboard matrix forever.
+     */
+    func checkConsistency(withFlags flags: NSEvent.ModifierFlags) {
+        
+        if (shift != flags.contains(NSEvent.ModifierFlags.shift)) {
+            Swift.print("*** SHIFT inconsistency detected *** \(shift)")
+        }
+        if (control != flags.contains(NSEvent.ModifierFlags.control)) {
+            Swift.print("*** SHIFT inconsistency *** \(control)")
+        }
+        if (option != flags.contains(NSEvent.ModifierFlags.option)) {
+            Swift.print("*** SHIFT inconsistency *** \(option)")
+        }
+    }
+    
+    @objc init(controller c: MyController) {
+        
+        super.init()
+        self.controller = c
+    }
 
+ 
+    func keyDown(with event: NSEvent) {
+        
+        // Ignore repeating keys
+        if (event.isARepeat) {
+            return
+        }
+        
+        // Ignore keys that are pressed in combination with the command key
+        if (event.modifierFlags.contains(NSEvent.ModifierFlags.command)) {
+            track("Ignoring the command key")
+            return
+        }
+        
+        // Create and press MacKey
+        let keyCode = event.keyCode
+        let modifierFlags = event.modifierFlags
+        let characters = event.charactersIgnoringModifiers
+        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
+        
+        checkConsistency(withFlags: modifierFlags)
+        keyDown(with: macKey)
+    }
+    
+    func keyUp(with event: NSEvent)
+    {
+        // Create and release macKey
+        let keyCode = event.keyCode
+        let modifierFlags = event.modifierFlags
+        let characters = event.charactersIgnoringModifiers
+        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
+        
+        checkConsistency(withFlags: modifierFlags)
+        keyUp(with: macKey)
+    }
+    
+    func flagsChanged(with event: NSEvent) {
+        
+        let mod = event.modifierFlags
+        
+        if mod.contains(.shift) && !shift {
+            shift = true
+            keyDown(with: MacKey.shift)
+        }
+        if !mod.contains(.shift) && shift {
+            shift = false
+            keyUp(with: MacKey.shift)
+        }
+        
+        if mod.contains(.control) && !control {
+            control = true
+            keyDown(with: MacKey.control)
+        }
+        if !mod.contains(.control) && control {
+            control = false
+            keyUp(with: MacKey.control)
+        }
+        
+        if mod.contains(.option) && !option {
+            option = true
+            keyDown(with: MacKey.option)
+        }
+        if !mod.contains(.option) && option {
+            option = false
+            keyUp(with: MacKey.option)
+        }
+    }
+    
+    func keyDown(with macKey: MacKey) {
+        
+        track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
+        
+        if mapKeysByPosition {
+            keyDown(with: macKey, keyMap: [:])
+            return
+        }
+
+        // Translate MacKey to a list of C64Keys
+        let c64Keys = translate(macKey: macKey)
+        track("Mac key translated symbolically to C64 key list \(c64Keys)")
+        
+        if c64Keys == [] {
+            track("Ignoring key")
+            return
+        }
+
+        // Store key combination for later use in keyUp
+        pressedKeys[macKey] = c64Keys
+        
+        // Press all required keys
+        for key in c64Keys {
+            let row = key.row
+            let col = key.col
+            track("Pressing row: \(row) col: \(col)\n")
+            controller.c64.keyboard.pressKey(atRow: row, col: col)
+            controller.c64.keyboard.dump()
+        }
+    }
+    
+    func keyDown(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
+        track("To be implemented")
+    }
+        
+    func keyUp(with macKey: MacKey) {
+        
+        track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
+        
+        if mapKeysByPosition {
+            keyUp(with: macKey, keyMap: [:])
+            return
+        }
+        
+        // Lookup keys to be released
+        if let c64Keys = pressedKeys[macKey] {
+            track("Will release \(c64Keys)")
+            for key in c64Keys {
+                let row = key.row
+                let col = key.col
+                track("Releasing row: \(row) col: \(col)\n")
+                controller.c64.keyboard.releaseKey(atRow: row, col: col)
+                controller.c64.keyboard.dump()
+            }
+        }
+    }
+    
+    func keyUp(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
+        track("To be implemented")
+    }
+
+    
+    /// Standard physical key mapping
+    /// Keys are matched based on their position on the keyboard
+    static let standardKeyMap: [MacKey:C64Key] = [
+        
+        // First row of C64 keyboard
+        MacKey.ansi.grave: C64Key.leftArrow,
+        MacKey.iso.hat: C64Key.leftArrow,
+        MacKey.ansi.digit0: C64Key.digit0,
+        MacKey.ansi.digit1: C64Key.digit1,
+        MacKey.ansi.digit2: C64Key.digit2,
+        MacKey.ansi.digit3: C64Key.digit3,
+        MacKey.ansi.digit4: C64Key.digit4,
+        MacKey.ansi.digit5: C64Key.digit5,
+        MacKey.ansi.digit6: C64Key.digit6,
+        MacKey.ansi.digit7: C64Key.digit7,
+        MacKey.ansi.digit8: C64Key.digit8,
+        MacKey.ansi.digit9: C64Key.digit9,
+        MacKey.ansi.minus: C64Key.minus,
+        MacKey.ansi.equal: C64Key.plus,
+        MacKey.delete: C64Key.delete,
+        
+        // Second row of C64 keyboard
+        MacKey.tab: C64Key.control,
+        MacKey.ansi.Q: C64Key.Q,
+        MacKey.ansi.W: C64Key.W,
+        MacKey.ansi.E: C64Key.E,
+        MacKey.ansi.R: C64Key.R,
+        MacKey.ansi.T: C64Key.T,
+        MacKey.ansi.Y: C64Key.Y,
+        MacKey.ansi.U: C64Key.U,
+        MacKey.ansi.I: C64Key.I,
+        MacKey.ansi.O: C64Key.O,
+        MacKey.ansi.P: C64Key.P,
+        MacKey.ansi.leftBracket: C64Key.at,
+        MacKey.ansi.rightBracket: C64Key.asterisk,
+        
+        // Third row of C64 keyboard
+        MacKey.control: C64Key.runStop,
+        MacKey.ansi.A: C64Key.A,
+        MacKey.ansi.S: C64Key.S,
+        MacKey.ansi.D: C64Key.D,
+        MacKey.ansi.F: C64Key.F,
+        MacKey.ansi.G: C64Key.G,
+        MacKey.ansi.H: C64Key.H,
+        MacKey.ansi.J: C64Key.J,
+        MacKey.ansi.K: C64Key.K,
+        MacKey.ansi.L: C64Key.L,
+        MacKey.ansi.semicolon: C64Key.semicolon,
+        MacKey.ansi.quote: C64Key.colon,
+        MacKey.ansi.backSlash: C64Key.equal,
+        
+        // Fourth row of C64 keyboard
+        MacKey.option: C64Key.commodore,
+        MacKey.shift: C64Key.shift,
+        MacKey.ansi.Z: C64Key.Z,
+        MacKey.ansi.X: C64Key.X,
+        MacKey.ansi.C: C64Key.C,
+        MacKey.ansi.V: C64Key.V,
+        MacKey.ansi.B: C64Key.B,
+        MacKey.ansi.N: C64Key.N,
+        MacKey.ansi.M: C64Key.M,
+        MacKey.ansi.comma: C64Key.comma,
+        MacKey.ansi.period: C64Key.period,
+        MacKey.ansi.slash: C64Key.slash,
+        MacKey.curRight : C64Key.curLeftRight,
+        MacKey.curDown : C64Key.curUpDown,
+        
+        // Fifth row of C64 keyboard
+        MacKey.space : C64Key.space
+    ]
+    
+    /// Logical key mapping
+    /// Keys are mapped based on their meaning or the characters they represent
+    func translate(macKey: MacKey) -> [C64Key] {
+        
+        // Translate key that do not have a printable representation
+        switch (macKey) {
+        
+        // First row of C64 keyboard
+        case MacKey.delete: return [C64Key.delete]
+
+        // Second row of C64 keyboard
+        case MacKey.tab: return [C64Key.control]
+
+        // Third row of C64 keyboard
+        case MacKey.control: return [C64Key.runStop]
+        case MacKey.ret: return [C64Key.ret]
+
+        // Fourth row of C64 keyboard
+        case MacKey.option: return [C64Key.commodore]
+        case MacKey.curLeft: return [C64Key.curLeftRight, C64Key.shift]
+        case MacKey.curRight: return [C64Key.curLeftRight]
+        case MacKey.curUp: return [C64Key.curUpDown, C64Key.shift]
+        case MacKey.curDown: return [C64Key.curUpDown]
+           
+        // Fifth row of C64 keyboard
+        case MacKey.space: return [C64Key.space]
+            
+        // Function keys
+        case MacKey.F1: return [C64Key.F1F2]
+        case MacKey.F2: return [C64Key.F1F2, C64Key.shift]
+        case MacKey.F3: return [C64Key.F3F4]
+        case MacKey.F4: return [C64Key.F3F4, C64Key.shift]
+        case MacKey.F5: return [C64Key.F5F6]
+        case MacKey.F6: return [C64Key.F5F6, C64Key.shift]
+        case MacKey.F7: return [C64Key.F7F8]
+        case MacKey.F8: return [C64Key.F7F8, C64Key.shift]
+            
+        default: if macKey.description == nil { return [] }
+        }
+        
+        // Translate keys having a printable representation
+        
+        switch (macKey.description!) {
+        
+        // First row of C64 keyboard
+        case "ü": return [C64Key.leftArrow]
+        case "1": return [C64Key.digit1]
+        case "!": return [C64Key.digit1, C64Key.shift]
+        case "2": return [C64Key.digit2]
+        case "\"": return [C64Key.digit2, C64Key.shift]
+        case "3": return [C64Key.digit3]
+        case "#": return [C64Key.digit3, C64Key.shift]
+        case "4": return [C64Key.digit4]
+        case "$": return [C64Key.digit4, C64Key.shift]
+        case "5": return [C64Key.digit5]
+        case "%": return [C64Key.digit5, C64Key.shift]
+        case "6": return [C64Key.digit6]
+        case "&": return [C64Key.digit6, C64Key.shift]
+        case "7": return [C64Key.digit7]
+        case "'": return [C64Key.digit7, C64Key.shift]
+        case "8": return [C64Key.digit8]
+        case "(": return [C64Key.digit8, C64Key.shift]
+        case "9": return [C64Key.digit9]
+        case ")": return [C64Key.digit9, C64Key.shift]
+        case "0": return [C64Key.digit0]
+        case "+": return [C64Key.plus]
+        case "-": return [C64Key.minus]
+        case "ü": return [C64Key.pound]
+        case "§": return [C64Key.pound]
+            
+        // Second row of C64 keyboard
+        case "q": return [C64Key.Q]
+        case "Q": return [C64Key.Q, C64Key.shift]
+        case "w": return [C64Key.W]
+        case "W": return [C64Key.W, C64Key.shift]
+        case "e": return [C64Key.E]
+        case "E": return [C64Key.E, C64Key.shift]
+        case "r": return [C64Key.R]
+        case "R": return [C64Key.R, C64Key.shift]
+        case "t": return [C64Key.T]
+        case "T": return [C64Key.T, C64Key.shift]
+        case "y": return [C64Key.Y]
+        case "Y": return [C64Key.Y, C64Key.shift]
+        case "u": return [C64Key.U]
+        case "U": return [C64Key.U, C64Key.shift]
+        case "i": return [C64Key.I]
+        case "I": return [C64Key.I, C64Key.shift]
+        case "o": return [C64Key.O]
+        case "O": return [C64Key.O, C64Key.shift]
+        case "p": return [C64Key.P]
+        case "P": return [C64Key.P, C64Key.shift]
+        case "@": return [C64Key.at]
+        case "ö": return [C64Key.at]
+        case "*": return [C64Key.asterisk]
+        case "ä": return [C64Key.upArrow]
+            
+        // Third row of C64 keyboard
+        case "a": return [C64Key.A]
+        case "A": return [C64Key.A, C64Key.shift]
+        case "s": return [C64Key.S]
+        case "S": return [C64Key.S, C64Key.shift]
+        case "d": return [C64Key.D]
+        case "D": return [C64Key.D, C64Key.shift]
+        case "f": return [C64Key.F]
+        case "F": return [C64Key.F, C64Key.shift]
+        case "g": return [C64Key.G]
+        case "G": return [C64Key.G, C64Key.shift]
+        case "h": return [C64Key.H]
+        case "H": return [C64Key.H, C64Key.shift]
+        case "j": return [C64Key.J]
+        case "J": return [C64Key.J, C64Key.shift]
+        case "k": return [C64Key.K]
+        case "K": return [C64Key.K, C64Key.shift]
+        case "l": return [C64Key.L]
+        case "L": return [C64Key.L, C64Key.shift]
+        case ":": return [C64Key.colon]
+        case "[": return [C64Key.colon, C64Key.shift]
+        case ";": return [C64Key.semicolon]
+        case "]": return [C64Key.semicolon, C64Key.shift]
+        case "=": return [C64Key.equal]
+            
+        // Fourth row of C64 keyboard
+        case "z": return [C64Key.Z]
+        case "Z": return [C64Key.Z, C64Key.shift]
+        case "x": return [C64Key.X]
+        case "X": return [C64Key.X, C64Key.shift]
+        case "c": return [C64Key.C]
+        case "C": return [C64Key.C, C64Key.shift]
+        case "v": return [C64Key.V]
+        case "V": return [C64Key.V, C64Key.shift]
+        case "b": return [C64Key.B]
+        case "B": return [C64Key.B, C64Key.shift]
+        case "n": return [C64Key.N]
+        case "N": return [C64Key.N, C64Key.shift]
+        case "m": return [C64Key.M]
+        case "M": return [C64Key.M, C64Key.shift]
+        case ",": return [C64Key.comma]
+        case "<": return [C64Key.comma, C64Key.shift]
+        case ".": return [C64Key.period]
+        case ">": return [C64Key.period, C64Key.shift]
+        case "/": return [C64Key.slash]
+        case "?": return [C64Key.slash, C64Key.shift]
+            
+        default: return []
+        }
+}
+    
+    
+    
+
+    
 
 
 
@@ -87,15 +445,7 @@ class KeyboardController: NSObject {
 // OLD CONTROLLER (TO BE REMOVED)
 //
 
-
-
-
-// TODO: Imlement as extension to MyController, not as a single class
-
-
-
-    
-    var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
+    // var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
     
     struct MacKeys {
         static let F1 = UInt16(122)
@@ -120,107 +470,6 @@ class KeyboardController: NSObject {
         static let TILDE_US = UInt16(50)
     }
 
-    //
-    // Initialization
-    //
-
-    
-    //
-    // Keyboard events
-    //
-    
-    @objc public func keyDown(with event: NSEvent)
-    {
-        // Exit fullscreen mode if ESC is pressed
-        if (event.keyCode == MacKeys.ESC && controller.fullscreen()) {
-            controller.window!.toggleFullScreen(nil)
-        }
-        
-        var c       = event.characters!.utf8CString[0].uint8
-        let c_unmod = event.charactersIgnoringModifiers!.utf8CString[0].uint8
-        let keycode = event.keyCode
-        let flags   = event.modifierFlags
-        
-        // print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
-            
-        // Ignore keys that are already pressed
-        if (pressedKeys[keycode] != nil) {
-            return
-        }
-        
-        // Ignore command key
-        if (flags.contains(NSEvent.ModifierFlags.command)) {
-            return
-        }
-        
-        // Inform GamePadManager about pressed key
-        let f = KeyboardController.fingerprint(forKey:keycode, withModifierFlags:flags)
-        if controller.gamePadManager.keyDown(f) && disconnectEmulationKeys {
-            return
-        }
-        
-        // Remove alternate key modifier if present
-        if (flags.contains(NSEvent.ModifierFlags.option)) {
-            c = c_unmod
-        }
-        
-        // Translate key
-        let c64key = KeyboardController.translateKey(c, plainkey: c_unmod, keycode: keycode, flags: flags)
-        if (c64key == 0) {
-            return
-        }
-        
-        // Press key
-        pressedKeys[keycode] = c64key
-        controller.c64.keyboard.pressKey(c64key)
-    }
-    
-    @objc public func keyUp(with event: NSEvent)
-    {
-        let keycode = event.keyCode       // UInt16
-        let flags   = event.modifierFlags // NSEventModifierFlags
-        
-        // print("keyUp: keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
-
-        // Inform GamePadManager about released key
-        let f = KeyboardController.fingerprint(forKey:keycode, withModifierFlags:flags)
-        if controller.gamePadManager.keyUp(f) && disconnectEmulationKeys {
-            return
-        }
-        
-        // Release key
-        if let key = pressedKeys[keycode] {
-            controller.c64.keyboard.releaseKey(key)
-            pressedKeys[keycode] = nil
-        }
-    }
-
-    @objc public func flagsChanged(with event: NSEvent) {
-        
-        let flags = event.modifierFlags
-        var key: MacKeyFingerprint
-        
-        // Check if special keys are used for joystick emulation
-        if (flags.contains(NSEvent.ModifierFlags.option)) {
-            key = NSEvent.ModifierFlags.option.rawValue;
-        } else if (flags.contains(NSEvent.ModifierFlags.shift)) {
-            key = NSEvent.ModifierFlags.shift.rawValue;
-        } else if (flags.contains(NSEvent.ModifierFlags.command)) {
-            key = NSEvent.ModifierFlags.command.rawValue;
-        } else if (flags.contains(NSEvent.ModifierFlags.control)) {
-            key = NSEvent.ModifierFlags.control.rawValue;
-        } else {
-            // Release joystick
-            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.option.rawValue)
-            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.shift.rawValue)
-            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.command.rawValue)
-            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.control.rawValue)
-            
-            return;
-        }
-        
-        controller.gamePadManager.keyDown(key)
-    }
     
     /*! @brief  Computes unique fingerprint for a certain key combination pressed
      *          on the pyhsical Mac keyboard

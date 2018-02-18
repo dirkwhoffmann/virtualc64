@@ -305,6 +305,7 @@ struct ContainerWrapper;
 - (BOOL) ctrlKeyIsPressed;
 - (BOOL) runstopKeyIsPressed;
 
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) pressKey:(C64KeyFingerprint)c;
 - (void) pressShiftKey;
 - (void) pressCommodoreKey;
@@ -313,6 +314,7 @@ struct ContainerWrapper;
 - (void) pressShiftRunstopKey;
 - (void) pressRestoreKey;
 
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) releaseKey:(C64KeyFingerprint)c;
 - (void) releaseShiftKey;
 - (void) releaseCommodoreKey;

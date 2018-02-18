@@ -114,14 +114,14 @@ extension C64Key {
     
     
     // Eights row
-    static let digit1       = C64Key.init(row: 6, col: 0, characters: "1")
-    static let leftArrow    = C64Key.init(row: 6, col: 1, characters: "\u{2190}")
-    static let control      = C64Key.init(row: 6, col: 2, characters: "CONTROL")
-    static let digit2       = C64Key.init(row: 6, col: 3, characters: "2")
-    static let space        = C64Key.init(row: 6, col: 4, characters: "\u{23b5}") // \u{2423}
-    static let commodore    = C64Key.init(row: 6, col: 5, characters: "C=")
-    static let Q            = C64Key.init(row: 6, col: 6, characters: "Q")
-    static let runStop      = C64Key.init(row: 6, col: 7, characters: "RUNSTOP")
+    static let digit1       = C64Key.init(row: 7, col: 0, characters: "1")
+    static let leftArrow    = C64Key.init(row: 7, col: 1, characters: "\u{2190}")
+    static let control      = C64Key.init(row: 7, col: 2, characters: "CONTROL")
+    static let digit2       = C64Key.init(row: 7, col: 3, characters: "2")
+    static let space        = C64Key.init(row: 7, col: 4, characters: "\u{23b5}") // \u{2423}
+    static let commodore    = C64Key.init(row: 7, col: 5, characters: "C=")
+    static let Q            = C64Key.init(row: 7, col: 6, characters: "Q")
+    static let runStop      = C64Key.init(row: 7, col: 7, characters: "RUNSTOP")
     
     // Restore key
     static let restore      = C64Key.init(row: 9, col: 9, characters: "RESTORE" )
