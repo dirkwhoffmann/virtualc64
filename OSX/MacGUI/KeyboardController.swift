@@ -32,12 +32,9 @@ extension CChar {
     }
 }
 
-
-// TODO: Imlement as extension to MyController, not as a single class
-
-
 /*! @brief   Remembers currently pressed keys and there related C64KeyFingerprints
  *  @details Make this a simple variable once the whole class has been ported to Swift
+ *  @deprecated
  */
 public class PressedKeys: NSObject {
     
@@ -49,9 +46,54 @@ class KeyboardController: NSObject {
     
     var controller : MyController!
     
-    // If set to true, a key that is used for joystick emulation will not
-    // be passed to the keyboard.
+    /// Determines whether the joystick emulation keys should be uncoupled from the keyboard.
     var disconnectEmulationKeys: Bool = true
+    
+    /* Key mapping mode
+       The user can choose between a symbolic and a positional assignment of the keys. The
+       symbolic assignment tries to assign the keys according to their meaning while the
+       positional assignment establishes a one-to-one mapping between Mac keys and C64 keys.
+    */
+    var mapKeysByPosition: Bool = true
+    
+    
+    
+    
+    
+    override init()
+    {
+        disconnectEmulationKeys = true
+        super.init()
+        // restoreFactorySettings()
+    }
+
+    @objc convenience init(controller c: MyController)
+    {
+        self.init()
+        self.controller = c
+    }
+
+    // Delete when Objective-C code is gone
+    @objc func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
+    @objc func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
+    @objc func getMapKeysByPosition() -> Bool { return mapKeysByPosition }
+    @objc func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
+
+
+
+
+
+//
+// OLD CONTROLLER (TO BE REMOVED)
+//
+
+
+
+
+// TODO: Imlement as extension to MyController, not as a single class
+
+
+
     
     var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
     
@@ -82,21 +124,6 @@ class KeyboardController: NSObject {
     // Initialization
     //
 
-    override init()
-    {
-        disconnectEmulationKeys = true
-        super.init()
-        // restoreFactorySettings()
-    }
- 
-    @objc convenience init(controller c: MyController)
-    {
-        self.init()
-        self.controller = c
-    }
-
-    @objc func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
-    @objc func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
     
     //
     // Keyboard events

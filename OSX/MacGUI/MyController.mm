@@ -112,10 +112,8 @@
 - (void)simulateUserTypingTextAndPressPlay:(NSString *)text {
     [keyboardcontroller simulateUserTypingAndPressPlayWithText:text];
 }
-
 - (BOOL)getDisconnectEmulationKeys { return [keyboardcontroller getDisconnectEmulationKeys]; }
 - (void)setDisconnectEmulationKeys:(BOOL)b { [keyboardcontroller setDisconnectEmulationKeys:b]; }
-
 
 
 // --------------------------------------------------------------------------------

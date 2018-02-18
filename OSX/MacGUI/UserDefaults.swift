@@ -15,6 +15,9 @@ struct VC64Keys {
     static let kernelRom = "VC64KernelRomFileKey"
     static let vc1541Rom = "VC64VC1541RomFileKey"
 
+    // Keyboard
+    static let mapKeysByPosition = "VC64MapKeysByPosition"
+    
     // Emulator preferences dialog
     static let eyeX = "VC64EyeX"
     static let eyeY = "VC64EyeY"
@@ -63,7 +66,9 @@ extension MyController {
             VC64Keys.basicRom: "",
             VC64Keys.charRom: "",
             VC64Keys.kernelRom: "",
-            VC64Keys.vc1541Rom: ""
+            VC64Keys.vc1541Rom: "",
+            
+            VC64Keys.mapKeysByPosition: true
         ]
         
         let defaults = UserDefaults.standard
@@ -122,6 +127,9 @@ extension MyController {
     @objc func loadUserDefaults() {
         
         track()
+        let defaults = UserDefaults.standard
+        keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
+        
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
     }
@@ -148,7 +156,7 @@ extension MyController {
                 gamePadManager.gamePads[1]?.keymap = keymap
             }
         }
-        keyboardcontroller.setDisconnectEmulationKeys(defaults.bool(forKey: VC64Keys.disconnectKeys))
+        keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -174,6 +182,9 @@ extension MyController {
     @objc func saveUserDefaults() {
         
         track()
+        let defaults = UserDefaults.standard
+        defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
+        
         saveEmulatorUserDefaults()
         saveHardwareUserDefaults()
     }
@@ -196,7 +207,7 @@ extension MyController {
         if let keymap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keymap) {
             defaults.set(keymap, forKey: VC64Keys.joyKeyMap2)
         }
-        defaults.set(getDisconnectEmulationKeys(), forKey: VC64Keys.disconnectKeys)
+        defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
     }
     
     /// Saves the user defaults for all properties that are set in the hardware dialog
@@ -243,7 +254,8 @@ extension MyController {
             VC64Keys.aspectRatio,
             VC64Keys.joyKeyMap1,
             VC64Keys.joyKeyMap2,
-            VC64Keys.disconnectKeys
+            VC64Keys.disconnectKeys,
+            VC64Keys.mapKeysByPosition
         ]
         let defaults = UserDefaults.standard
         for key in keys {

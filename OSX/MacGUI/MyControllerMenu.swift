@@ -18,6 +18,13 @@ extension MyController {
         }
         
         // Keyboard menu
+        if item.action == #selector(MyController.mapKeysByPositionAction(_:)) {
+            item.state = keyboardcontroller.mapKeysByPosition ? .on : .off
+            return true
+        }
+        if item.action == #selector(MyController.customizeKeyMap(_:)) {
+            return keyboardcontroller.mapKeysByPosition
+        }
         if item.action == #selector(MyController.toggleShiftKey(_:)) {
             item.state = c64.keyboard.shiftKeyIsPressed() ? .on : .off
             return true
@@ -217,11 +224,23 @@ extension MyController {
     // -----------------------------------------------------------------
 
 
-    @IBAction func shiftAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_SHIFT))
+    @IBAction func mapKeysByPositionAction(_ sender: Any!) {
+        
+        track()
+        undoManager?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.mapKeysByPositionAction(sender)
+        }
+        
+        keyboardcontroller.mapKeysByPosition = !keyboardcontroller.mapKeysByPosition
     }
     
-    // >>>>
+    @IBAction func customizeKeyMap(_ sender: Any!) {
+        
+        track()
+        // TODO
+    }
+    
+    // -----------------------------------------------------------------
     @IBAction func shiftCommodoreKeyAction(_ sender: Any!) {
         simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_COMMODORE))
     }
@@ -243,8 +262,8 @@ extension MyController {
     @IBAction func shiftPowndAction(_ sender: Any!) {
         simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_POUND))
     }
-    // <<<<
     
+    // -----------------------------------------------------------------
     @IBAction func commodoreKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_COMMODORE))
     }
@@ -282,8 +301,7 @@ extension MyController {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_DEL))
     }
     
-    // -----
-    
+    // -----------------------------------------------------------------
     @IBAction func toggleShiftKey(_ sender: Any!) {
         c64.keyboard.toggleShiftKey()
         c64.keyboard.dump()
@@ -301,8 +319,7 @@ extension MyController {
         c64.keyboard.dump()
     }
     
-    // ----
-    
+    // -----------------------------------------------------------------
     @IBAction func loadDirectoryAction(_ sender: Any!) {
         simulateUserTypingText("LOAD \"$\",8")
     }

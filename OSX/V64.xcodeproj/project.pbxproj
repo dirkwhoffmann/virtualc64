@@ -228,6 +228,8 @@
 		50FB74A4203323E700E05051 /* diskette_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB74A3203323E700E05051 /* diskette_light.png */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
+		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
+		50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B372039B3C5006CE7C7 /* C64Key.swift */; };
 		50FF818F1F88D9100004548A /* GamePad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF818E1F88D9100004548A /* GamePad.swift */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -549,6 +551,8 @@
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
 		50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerVicPanel.mm; sourceTree = "<group>"; };
 		50FD96A41BF65861009134A4 /* 1541.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1541.png; sourceTree = "<group>"; };
+		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
+		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
 		50FF818E1F88D9100004548A /* GamePad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePad.swift; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* VirtualC64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualC64.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -772,9 +776,9 @@
 				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
-				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
+				50FE5B342039B392006CE7C7 /* Keyboard */,
 				50763278202989E000575110 /* UserDialogs */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
@@ -1129,6 +1133,16 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		50FE5B342039B392006CE7C7 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
+				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
+				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+			);
+			name = Keyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1321,6 +1335,7 @@
 				020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
+				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
@@ -1345,6 +1360,7 @@
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
+				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
