@@ -109,31 +109,51 @@ class KeyboardController: NSObject {
             return
         }
         
+        // Exit fullscreen mode if escape key is pressed
+        if (event.keyCode == MacKeys.ESC && controller.fullscreen()) {
+            controller.window!.toggleFullScreen(nil)
+        }
+        
+        let keyCode = event.keyCode
+        let flags = event.modifierFlags
+        let characters = event.charactersIgnoringModifiers
+        
         // Ignore keys that are pressed in combination with the command key
-        if (event.modifierFlags.contains(NSEvent.ModifierFlags.command)) {
+        if (flags.contains(NSEvent.ModifierFlags.command)) {
             track("Ignoring the command key")
             return
         }
         
-        // Create and press MacKey
-        let keyCode = event.keyCode
-        let modifierFlags = event.modifierFlags
-        let characters = event.charactersIgnoringModifiers
-        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
+        // Ask GamePadManager if this key is used for joystick emulation
+        // TODO: MOVE THIS CODE ONE LEVEL DOWN, TO keyDown(with macKey: MacKey)
+        let f = KeyboardController.fingerprint(forKey:keyCode, withModifierFlags:flags)
+        if controller.gamePadManager.keyDown(f) && disconnectEmulationKeys {
+            return
+        }
         
-        checkConsistency(withFlags: modifierFlags)
+        // Create and press MacKey
+        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
+        checkConsistency(withFlags: flags)
         keyDown(with: macKey)
     }
     
     func keyUp(with event: NSEvent)
     {
-        // Create and release macKey
         let keyCode = event.keyCode
-        let modifierFlags = event.modifierFlags
+        let flags = event.modifierFlags
         let characters = event.charactersIgnoringModifiers
-        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
         
-        checkConsistency(withFlags: modifierFlags)
+        // Inform GamePadManager about released key
+        // TODO: MOVE THIS CODE ONE LEVEL DOWN, TO keyDown(with macKey: MacKey)
+        let f = KeyboardController.fingerprint(forKey:keyCode, withModifierFlags:flags)
+        if controller.gamePadManager.keyUp(f) && disconnectEmulationKeys {
+            return
+        }
+        
+        // Create and release macKey
+        
+        let macKey = MacKey.init(keyCode: keyCode, characters: characters)
+        checkConsistency(withFlags: flags)
         keyUp(with: macKey)
     }
     
