@@ -1,7 +1,7 @@
 /*!
  * @header      Keyboard.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
+ * @copyright   2006 - 2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@ class Keyboard : public VirtualComponent {
     //! @brief    The C64 keyboard matrix indexed by column
     uint8_t kbMatrixCol[8];
 
+    //! @brief    True iff shift lock is pressed
+    bool shiftLock;
 			
 public:
     
@@ -80,6 +82,14 @@ public:
      *  @details  The key is identified by its native row and column index.
      */
 	void pressKey(uint8_t row, uint8_t col);
+    
+    /*! @brief    Presses the shift lock key
+     *  @details  The shift lock key permanently holds down the right shift key
+     */
+    void pressShiftLockKey() { shiftLock = true; pressKey(6,4); }
+    
+    //! @brief    Releases the shift lock key
+    void releaseShiftLockKey() { shiftLock = false; releaseKey(6,4); }
     
 	//! @brief    Presses a key.
 	void pressKey(C64KeyFingerprint key);

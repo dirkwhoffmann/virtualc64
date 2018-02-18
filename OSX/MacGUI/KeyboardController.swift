@@ -23,7 +23,7 @@ import Carbon.HIToolbox
  *  @details Make this a simple variable once the whole class has been ported to Swift
  *  @deprecated
  */
-public class PressedKeys: NSObject {
+class PressedKeys: NSObject {
     
     var keycodes : [UInt16:C64KeyFingerprint] = [:]
 }
@@ -38,14 +38,14 @@ class KeyboardController: NSObject {
     
     /**
      Key mapping mode
-     The user can choose between a symbolic and a positional assignment of the keys. The
-     symbolic assignment tries to assign the keys according to their meaning while the
-     positional assignment establishes a one-to-one mapping between Mac keys and C64 keys.
+     
+     The user can choose between a symbolic and a positional assignment of the keys. The symbolic assignment tries to assign the keys according to their meaning while the positional assignment establishes a one-to-one mapping between Mac keys and C64 keys.
     */
     var mapKeysByPosition: Bool = false
     
     /// Used key map if keys are mapped by position
-    var keyMap: [MacKey:C64Key] = [:]
+ 
+    var keyMap: [MacKey:C64Key] = KeyboardController.standardKeyMap
     
     // Delete when Objective-C code is gone
     @objc func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
@@ -58,14 +58,17 @@ class KeyboardController: NSObject {
     var control: Bool = false
     var option: Bool = false
     
-    // Remembers the currently pressed keys and their assigned C64 key lists
+    /**
+     Remembers the currently pressed keys and their assigned C64 key list
+
+     This variable is only used when keys are mapped symbolically. It's written in keyDown and picked up in keyUp.
+     */
     var pressedKeys: [MacKey:[C64Key]] = [:]
     
     /**
      Checks if the internal values are consistent with the provides modifier flags.
      
-     There should never be an insonsistency. But if there is, we release the suspicous key.
-     Otherwise, we risk to block the C64's keyboard matrix forever.
+     There should never be an insonsistency. But if there is, we release the suspicous key. Otherwise, we risk to block the C64's keyboard matrix forever.
      */
     func checkConsistency(withFlags flags: NSEvent.ModifierFlags) {
         
@@ -80,13 +83,25 @@ class KeyboardController: NSObject {
         }
     }
     
-    @objc init(controller c: MyController) {
+    /*
+    override init() {
+        self.keyMap = KeyboardController.standardKeyMap
+        super.init()
+    }
+    
+    @objc convenience init(controller c: MyController) {
+
+        self.init()
+        self.controller = c
+    }
+ */
+    
+    init(controller c: MyController) {
         
         super.init()
         self.controller = c
     }
-
- 
+    
     func keyDown(with event: NSEvent) {
         
         // Ignore repeating keys
@@ -159,7 +174,7 @@ class KeyboardController: NSObject {
         track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
         
         if mapKeysByPosition {
-            keyDown(with: macKey, keyMap: [:])
+            keyDown(with: macKey, keyMap: keyMap)
             return
         }
 
@@ -177,16 +192,19 @@ class KeyboardController: NSObject {
         
         // Press all required keys
         for key in c64Keys {
-            let row = key.row
-            let col = key.col
-            track("Pressing row: \(row) col: \(col)\n")
-            controller.c64.keyboard.pressKey(atRow: row, col: col)
+            track("Pressing row: \(key.row) col: \(key.col)\n")
+            controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
             controller.c64.keyboard.dump()
         }
     }
     
     func keyDown(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
-        track("To be implemented")
+        
+        if let key = keyMap[macKey] {
+            track("Pressing row: \(key.row) col: \(key.col)\n")
+            controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            controller.c64.keyboard.dump()
+        }
     }
         
     func keyUp(with macKey: MacKey) {
@@ -194,7 +212,7 @@ class KeyboardController: NSObject {
         track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
         
         if mapKeysByPosition {
-            keyUp(with: macKey, keyMap: [:])
+            keyUp(with: macKey, keyMap: keyMap)
             return
         }
         
@@ -202,17 +220,20 @@ class KeyboardController: NSObject {
         if let c64Keys = pressedKeys[macKey] {
             track("Will release \(c64Keys)")
             for key in c64Keys {
-                let row = key.row
-                let col = key.col
-                track("Releasing row: \(row) col: \(col)\n")
-                controller.c64.keyboard.releaseKey(atRow: row, col: col)
+                track("Releasing row: \(key.row) col: \(key.col)\n")
+                controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
                 controller.c64.keyboard.dump()
             }
         }
     }
     
     func keyUp(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
-        track("To be implemented")
+        
+        if let key = keyMap[macKey] {
+            track("Releasing row: \(key.row) col: \(key.col)\n")
+            controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+            controller.c64.keyboard.dump()
+        }
     }
 
     
@@ -266,6 +287,7 @@ class KeyboardController: NSObject {
         MacKey.ansi.semicolon: C64Key.semicolon,
         MacKey.ansi.quote: C64Key.colon,
         MacKey.ansi.backSlash: C64Key.equal,
+        MacKey.ret: C64Key.ret,
         
         // Fourth row of C64 keyboard
         MacKey.option: C64Key.commodore,
@@ -281,8 +303,10 @@ class KeyboardController: NSObject {
         MacKey.ansi.period: C64Key.period,
         MacKey.ansi.slash: C64Key.slash,
         MacKey.curRight : C64Key.curLeftRight,
+        MacKey.curLeft : C64Key.curLeftRight,
         MacKey.curDown : C64Key.curUpDown,
-        
+        MacKey.curUp : C64Key.curUpDown,
+
         // Fifth row of C64 keyboard
         MacKey.space : C64Key.space
     ]

@@ -106,6 +106,7 @@ Keyboard::Keyboard()
 
         { &kbMatrixRow, sizeof(kbMatrixRow), CLEAR_ON_RESET | BYTE_FORMAT },
         { &kbMatrixCol, sizeof(kbMatrixCol), CLEAR_ON_RESET | BYTE_FORMAT },
+        { &shiftLock,   sizeof(shiftLock),   CLEAR_ON_RESET },
         { NULL,         0,                   0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -152,6 +153,7 @@ Keyboard::dumpState()
             (kbMatrixCol[i] & 0x80) != 0);
 	}
 	msg("\n");
+    msg("Shift lock: %s pressed\n", shiftLock ? "" : "not");
 }
 
 uint8_t
@@ -253,6 +255,10 @@ Keyboard::releaseKey(uint8_t row, uint8_t col)
 {
     assert(row < 8);
     assert(col < 8);
+    
+    // Only release right shift key if shift lock is not pressed
+    if (row == 6 && col == 4 && shiftLock)
+        return;
     
     kbMatrixRow[row] |= (1 << col);
     kbMatrixCol[col] |= (1 << row);
