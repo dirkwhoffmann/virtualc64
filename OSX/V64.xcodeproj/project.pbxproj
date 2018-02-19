@@ -128,6 +128,8 @@
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
+		50A7494F203B52C100EDFDA2 /* keyboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A7494E203B52C100EDFDA2 /* keyboard2.png */; };
+		50A74951203B52D600EDFDA2 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A74950203B52D600EDFDA2 /* keyboard.png */; };
 		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
@@ -213,6 +215,7 @@
 		50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */; };
 		50F23D0812DF932800B1F275 /* glossy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F23D0712DF932800B1F275 /* glossy.png */; };
 		50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */; };
+		50F483AB203B1A0B008F74FD /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F483AA203B1A0B008F74FD /* c64.png */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E31BEA203F008568E3 /* TapeDialog.mm */; };
@@ -425,6 +428,8 @@
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50A52A170C2FD43700A1377F /* D64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64Archive.h; sourceTree = "<group>"; };
 		50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64Archive.cpp; sourceTree = "<group>"; };
+		50A7494E203B52C100EDFDA2 /* keyboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard2.png; sourceTree = "<group>"; };
+		50A74950203B52D600EDFDA2 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
 		50A8F8F10E47171300ACE17D /* RomDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomDialog.h; sourceTree = "<group>"; };
 		50A8F8F20E47171300ACE17D /* RomDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RomDialog.mm; sourceTree = "<group>"; };
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romMissing.png; sourceTree = "<group>"; };
@@ -536,6 +541,7 @@
 		50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserCell.mm; sourceTree = "<group>"; };
 		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy.png; sourceTree = "<group>"; };
 		50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
+		50F483AA203B1A0B008F74FD /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c64.png; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50F681E21BEA2015008568E3 /* TapeDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapeDialog.h; sourceTree = "<group>"; };
@@ -918,6 +924,10 @@
 				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
 				50D6955012E375A800D9C738 /* Icons */,
 				50FD96A41BF65861009134A4 /* 1541.png */,
+				50F483AA203B1A0B008F74FD /* c64.png */,
+				50A74950203B52D600EDFDA2 /* keyboard.png */,
+				50F9955A203AC13D004C4856 /* key.png */,
+				50A7494E203B52C100EDFDA2 /* keyboard2.png */,
 				50FB749F2033193300E05051 /* serial.png */,
 				504A22A61BF71FD500B29BEB /* clock_green.png */,
 				504A22A71BF71FD500B29BEB /* clock_yellow.png */,
@@ -1132,7 +1142,6 @@
 		50D6955012E375A800D9C738 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				50F9955A203AC13D004C4856 /* key.png */,
 				50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */,
 				50D6954312E3759500D9C738 /* IconCRT.icns */,
 				50D6954412E3759500D9C738 /* IconD64.icns */,
@@ -1247,6 +1256,8 @@
 				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
 				500FF3911BD7F4DF0038245B /* rom.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
+				50F483AB203B1A0B008F74FD /* c64.png in Resources */,
+				50A7494F203B52C100EDFDA2 /* keyboard2.png in Resources */,
 				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
 				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
@@ -1284,6 +1295,7 @@
 				50F8731F1EE7DB6900B30DBD /* home.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
 				506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */,
+				50A74951203B52D600EDFDA2 /* keyboard.png in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 				502F57F41B93441A00D1077E /* LEDred.png in Resources */,

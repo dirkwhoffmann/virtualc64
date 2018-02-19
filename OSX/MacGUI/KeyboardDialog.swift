@@ -7,102 +7,73 @@
 
 import Foundation
 
-func textToImage(text: NSString, inImage: NSImage) -> NSImage {
-    
-    let width = 48.0
-    let height = 48.0
-    let font = NSFont.boldSystemFont(ofSize: 12)
-    let imageRect = CGRect(x: 0, y: 0, width: width, height: height)
-    let textRect = CGRect(x: 5, y: 5, width: width - 5, height: height - 5)
-    let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-    let textFontAttributes = [
-        NSAttributedStringKey.font: font,
-        NSAttributedStringKey.foregroundColor: NSColor.gray,
-        NSAttributedStringKey.paragraphStyle: textStyle
-    ]
-    
-    let outImage = NSImage(size: NSSize.init(width: width, height: height))
-    let rep:NSBitmapImageRep = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                                pixelsWide: Int(width),
-                                                pixelsHigh: Int(height),
-                                                bitsPerSample: 8,
-                                                samplesPerPixel: 4,
-                                                hasAlpha: true,
-                                                isPlanar: false,
-                                                colorSpaceName: NSColorSpaceName.calibratedRGB,
-                                                bytesPerRow: 0,
-                                                bitsPerPixel: 0)!
-    outImage.addRepresentation(rep)
-    outImage.lockFocus()
-    inImage.draw(in: imageRect)
-    text.draw(in: textRect, withAttributes: textFontAttributes)
-    outImage.unlockFocus()
-    
-    track()
-    return outImage
-}
-
 class KeyboardDialog : UserDialogController {
 
-    // Double array of key images, indexed by their row and column number
-    // var keyImage: [[NSImage]] = []
-    var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
-    
-    // Custom font
-    let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
-    let cbmfontsmall = NSFont.init(name: "C64ProMono", size: 8)
-    
     // Outlets
     @IBOutlet weak var keyCode: NSTextField!
     @IBOutlet weak var keyChar: NSTextField!
     @IBOutlet weak var keyMatrix: NSCollectionView!
+
+    // Double array of key images, indexed by their row and column number
+    var keyImage = Array(repeating: Array(repeating: nil as NSImage?, count: 8), count: 8)
     
-    /*
-    override func showSheet(withParent controller: MyController,
-                            completionHandler:(() -> Void)? = nil) {
-        
-        track()
-        let document = controller.document as! MyDocument
-        archive = document.attachment as! ArchiveProxy
-        super.showSheet(withParent: controller, completionHandler: completionHandler)
-    }
-    */
+    // Keymap that is going to be customized
+    var keyMap: [MacKey:C64Key] = [:]
     
     override public func awakeFromNib() {
         
         track()
         
-        // Create all images
-        let background = NSImage(named: NSImage.Name(rawValue: "key.png"))!
+        // Get current KeyMap from KeyboardController
+        keyMap = parent.keyboardcontroller.keyMap
+        updateImages()
+    }
+    
+    func updateImages() {
         
+        // Clear old images
         for row in 0...7 {
             for col in 0...7 {
-                keyImage[row][col] = textToImage(text: "\(row),\(col)" as NSString,
-                                                 inImage: background)
+                keyImage[row][col] = nil
             }
         }
         
-        if (keyImage[0][0] == keyImage[0][1]) {
-            track("WE HAVE A PROBLEM")
+        // Create images for all mapped keys
+        for (macKey,c64Key) in keyMap {
+            let keyCodeString = String.init(format: "%02X", macKey.keyCode) as NSString
+            keyImage[c64Key.row][c64Key.col] = c64Key.image(auxiliaryText: keyCodeString)
+        }
+        
+        // Create images for unmapped keys
+        for row in 0...7 {
+            for col in 0...7 {
+                if keyImage[row][col] == nil {
+                    keyImage[row][col] = C64Key.init(row: row, col: col).image()
+                }
+            }
         }
     }
+
+    //
+    // Keyboard events
+    //
+
     
-    func updateImages(with keymap: [MacKey:C64Key]) {
-        
-    }
     //
     // Action methods
     //
+
+    @IBAction func factorySettingskAction(_ sender: Any!) {
+        
+        // Revert to standard map from KeyboardController
+        keyMap = KeyboardController.standardKeyMap
+        updateImages()
+    }
     
     @IBAction func okAction(_ sender: Any!) {
         
-        track()
-        hideSheet()
-    }
-    
-    @IBAction func performDoubleClick(_ sender: Any!) {
-        
-        track()
+        // Write customized KeyMap back to KeyboardController
+        parent.keyboardcontroller.keyMap = keyMap
         hideSheet()
     }
 }
@@ -128,7 +99,6 @@ extension KeyboardDialog : NSCollectionViewDataSource {
         let id = NSUserInterfaceItemIdentifier(rawValue: "KeyViewItem")
         let item = keyMatrix.makeItem(withIdentifier: id, for: indexPath)
         guard let keyViewItem = item as? KeyViewItem else {
-            track("ERROR")
             return item
         }
         
@@ -139,7 +109,8 @@ extension KeyboardDialog : NSCollectionViewDataSource {
         keyViewItem.imageView?.image = keyImage[row][col]
         return keyViewItem
     }
-
 }
+
+
 
 

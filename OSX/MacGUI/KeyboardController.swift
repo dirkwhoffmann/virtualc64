@@ -17,6 +17,9 @@
  */
 
 // TODO:
+// Auto-synthesize Unicode symbol in constructor for C64 keys
+// Implement updateKeys
+// Do autolayout stuff
 // Port Properties Dialog to Swift as it used Fingerprints stuff heavily
 // Remove temporary keyboard API in MyController
 // Update Joystick emulation key code. Make Shift etc. keys to work again
