@@ -16,6 +16,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// TODO:
+// Port Properties Dialog to Swift as it used Fingerprints stuff heavily
+// Remove temporary keyboard API in MyController
+// Update Joystick emulation key code. Make Shift etc. keys to work again
+// Get rid of Macfingerprint, C64Fingerprint
+// Use Unicode symbols for keys (a lot of keys have "" assigned right now)
+// Think about layout of KeyboardDialog
+
 import Foundation
 import Carbon.HIToolbox
 

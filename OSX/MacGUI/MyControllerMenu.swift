@@ -237,7 +237,10 @@ extension MyController {
     @IBAction func customizeKeyMap(_ sender: Any!) {
         
         track()
-        // TODO
+        let nibName = NSNib.Name(rawValue: "KeyboardDialog")
+        let controller = KeyboardDialog.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+        
     }
     
     // -----------------------------------------------------------------

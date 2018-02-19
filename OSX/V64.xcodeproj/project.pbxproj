@@ -222,6 +222,11 @@
 		50F8731F1EE7DB6900B30DBD /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F8731E1EE7DB6900B30DBD /* home.png */; };
 		50F873211EE7E42500B30DBD /* restore.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F873201EE7E42500B30DBD /* restore.png */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
+		50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99556203AB2A9004C4856 /* KeyboardDialog.xib */; };
+		50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F99558203AB3B9004C4856 /* KeyboardDialog.swift */; };
+		50F9955B203AC13D004C4856 /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9955A203AC13D004C4856 /* key.png */; };
+		50F99564203AEC80004C4856 /* KeyViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F99562203AEC80004C4856 /* KeyViewItem.swift */; };
+		50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99563203AEC80004C4856 /* KeyViewItem.xib */; };
 		50FB749C203306A700E05051 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749B203306A700E05051 /* DiskInspector.xib */; };
 		50FB74A02033193300E05051 /* serial.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749F2033193300E05051 /* serial.png */; };
 		50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB74A1203322C900E05051 /* DiskInspectorController.swift */; };
@@ -544,6 +549,11 @@
 		50F873201EE7E42500B30DBD /* restore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restore.png; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
+		50F99556203AB2A9004C4856 /* KeyboardDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardDialog.xib; sourceTree = "<group>"; };
+		50F99558203AB3B9004C4856 /* KeyboardDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDialog.swift; sourceTree = "<group>"; };
+		50F9955A203AC13D004C4856 /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
+		50F99562203AEC80004C4856 /* KeyViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyViewItem.swift; sourceTree = "<group>"; };
+		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FB749B203306A700E05051 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		50FB749F2033193300E05051 /* serial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serial.png; sourceTree = "<group>"; };
 		50FB74A1203322C900E05051 /* DiskInspectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspectorController.swift; sourceTree = "<group>"; };
@@ -1122,6 +1132,7 @@
 		50D6955012E375A800D9C738 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				50F9955A203AC13D004C4856 /* key.png */,
 				50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */,
 				50D6954312E3759500D9C738 /* IconCRT.icns */,
 				50D6954412E3759500D9C738 /* IconD64.icns */,
@@ -1139,6 +1150,10 @@
 				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
 				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
+				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
+				50F99562203AEC80004C4856 /* KeyViewItem.swift */,
+				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 			);
 			name = Keyboard;
 			sourceTree = "<group>";
@@ -1208,6 +1223,7 @@
 				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				50C9CB201B826C960054EE86 /* joystick.png in Resources */,
+				50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				5080F3591EE74784001313D4 /* commodore.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
@@ -1215,6 +1231,7 @@
 				50DB328B1B948489000FB839 /* kext.png in Resources */,
 				502F57F61B93442100D1077E /* LEDgray.png in Resources */,
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
+				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */,
 				50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
@@ -1289,6 +1306,7 @@
 				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
+				50F9955B203AC13D004C4856 /* key.png in Resources */,
 				50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */,
 				5087FD591BDA16C400570F0D /* metal.png in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
@@ -1368,6 +1386,7 @@
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
+				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
@@ -1397,6 +1416,7 @@
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
+				50F99564203AEC80004C4856 /* KeyViewItem.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,

@@ -84,7 +84,7 @@ class ArchiveMountController : UserDialogController {
 
     @IBAction func okAction(_ sender: Any!) {
         
-        NSLog("OK Action")
+        track()
         
         // Insert archive as disk
         c64.insertDisk(archive)
