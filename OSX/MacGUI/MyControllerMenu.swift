@@ -307,19 +307,15 @@ extension MyController {
     // -----------------------------------------------------------------
     @IBAction func toggleShiftKey(_ sender: Any!) {
         c64.keyboard.toggleShiftKey()
-        c64.keyboard.dump()
     }
     @IBAction func toggleCommodoreKey(_ sender: Any!) {
         c64.keyboard.toggleCommodoreKey()
-        c64.keyboard.dump()
     }
     @IBAction func toggleCtrlKey(_ sender: Any!) {
         c64.keyboard.toggleCtrlKey()
-        c64.keyboard.dump()
     }
     @IBAction func toggleRunstopKey(_ sender: Any!) {
         c64.keyboard.toggleRunstopKey()
-        c64.keyboard.dump()
     }
     
     // -----------------------------------------------------------------

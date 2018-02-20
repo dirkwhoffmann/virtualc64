@@ -18,17 +18,9 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.7
-// 1. VIC timing is now very close to VICE (Thanks Fabio)
-// 2. Cartridge handler has been rewritten.
-// 3. Several non standard cartridges are now supported such as Simons Basic, Final Cartridge III and Comal 80. The Epxy Fast Loader is also working, but does not deliver the expected speed increase. This is probably due to the current VC1541 emulation which needs to be improved.
-// 4. Peeking CIA1 register $DC00 sometimes returned a wrong value in case of keyboard events. This prevented some games (Pitfall II) to detect pressed keys. As a side effect, the $DC00 fix causes a lot of interference when joystick emulation keys trigger a joystick and a keyboard event on the same time. Therefore, joystick emulation keys are disconnected from thekeyboard by default. This behavior can be changed in the emulator setup window.
-// 5. Some user interface elements have been changed
-// - New menus have been added for accessing drive, datasette and expansion port.
-// - Existing mount dialogs have been redesigned and simplified.
-// - A new mount dialog for cartridges has been implemented.
-// - The media dialog has been removed. It is replaced by a new disk inspector that lets you observe
-//   the GCR encoded data of each track.
+// RELEASE NOTES FOR NEXT RELEASE: 1.8
+// 1. Keyboard manager has been overhauled. The keyboard menu let's you choose between symbolic and positional key mapping. Symbolic mapping means that the emulator tries to map the pressed key based on their ASCII representation. Older versions solely used this kind of mapping. If you choose positional mapping, a Mac will be wired directly to a key on the C64 keyboard. To support the large variety of international keyboards, the key map can be customized individually.
+// 2. TODO: Added an option to skip the mount dialog if a D64, T64, PRG, P00, G64, or NIB file is loaded. The file will automatically be converted to a disk and inserted in the floppy drive.
 
 //
 // TODO:

@@ -129,7 +129,6 @@
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
 		50A7494F203B52C100EDFDA2 /* keyboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A7494E203B52C100EDFDA2 /* keyboard2.png */; };
-		50A74951203B52D600EDFDA2 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A74950203B52D600EDFDA2 /* keyboard.png */; };
 		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
@@ -1195,7 +1194,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0920;
 				TargetAttributes = {
 					8D15AC270486D014006FF6A4 = {
 						LastSwiftMigration = 0900;
@@ -1295,7 +1294,6 @@
 				50F8731F1EE7DB6900B30DBD /* home.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
 				506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */,
-				50A74951203B52D600EDFDA2 /* keyboard.png in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 				502F57F41B93441A00D1077E /* LEDred.png in Resources */,

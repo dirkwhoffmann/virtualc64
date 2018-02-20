@@ -17,9 +17,6 @@
  */
 
 // TODO:
-// Auto-synthesize Unicode symbol in constructor for C64 keys
-// Implement updateKeys
-// Do autolayout stuff
 // Port Properties Dialog to Swift as it used Fingerprints stuff heavily
 // Remove temporary keyboard API in MyController
 // Update Joystick emulation key code. Make Shift etc. keys to work again
@@ -227,7 +224,6 @@ class KeyboardController: NSObject {
         for key in c64Keys {
             track("Pressing row: \(key.row) col: \(key.col)\n")
             controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
-            controller.c64.keyboard.dump()
         }
     }
     
@@ -236,13 +232,12 @@ class KeyboardController: NSObject {
         if let key = keyMap[macKey] {
             track("Pressing row: \(key.row) col: \(key.col)\n")
             controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
-            controller.c64.keyboard.dump()
         }
     }
         
     func keyUp(with macKey: MacKey) {
         
-        track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
+        // track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
         
         if mapKeysByPosition {
             keyUp(with: macKey, keyMap: keyMap)
@@ -255,7 +250,6 @@ class KeyboardController: NSObject {
             for key in c64Keys {
                 track("Releasing row: \(key.row) col: \(key.col)\n")
                 controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
-                controller.c64.keyboard.dump()
             }
         }
     }
@@ -263,9 +257,8 @@ class KeyboardController: NSObject {
     func keyUp(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
         
         if let key = keyMap[macKey] {
-            track("Releasing row: \(key.row) col: \(key.col)\n")
+            // track("Releasing row: \(key.row) col: \(key.col)\n")
             controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
-            controller.c64.keyboard.dump()
         }
     }
 

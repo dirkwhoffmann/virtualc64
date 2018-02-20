@@ -47,7 +47,8 @@ class KeyboardDialogWindow : NSWindow {
 class KeyboardDialog : UserDialogController {
 
     // Outlets
-    @IBOutlet weak var info: NSTextField!
+    @IBOutlet weak var info1: NSTextField!
+    @IBOutlet weak var info2: NSTextField!
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var keyMatrix: NSCollectionView!
 
@@ -64,21 +65,20 @@ class KeyboardDialog : UserDialogController {
     
     override public func awakeFromNib() {
         
-        track()
         keyMap = parent.keyboardcontroller.keyMap
-        icon.isHidden = true
-        
-        updateImages()
+        update()
     }
     
     func update() {
         
         if recordedKey == nil {
             icon.isHidden = true
-            info.stringValue = "Step 1: Press key on the Mac keyboard"
+            info1.isHidden = true
+            info2.isHidden = true
         } else {
             icon.isHidden = false
-            info.stringValue = "Step 2: Select key from the C64's keyboard matrix below"
+            info1.isHidden = false
+            info2.isHidden = false
         }
         
         updateImages()
@@ -118,7 +118,9 @@ class KeyboardDialog : UserDialogController {
         
         track()
         recordedKey = macKey
-        icon.image = C64Key(row: 0, col: 0).image(auxiliaryText: macKey.keyCodeStr as NSString)
+        let plainKey = C64Key(row: 0, col: 0, characters: "")
+        icon.image = plainKey.image(auxiliaryText: macKey.keyCodeStr as NSString)
+        update()
     }
         
     //
