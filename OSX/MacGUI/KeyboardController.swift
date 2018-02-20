@@ -115,6 +115,8 @@ class KeyboardController: NSObject {
     
     func keyDown(with event: NSEvent) {
         
+        track()
+        
         // Ignore repeating keys
         if (event.isARepeat) {
             return

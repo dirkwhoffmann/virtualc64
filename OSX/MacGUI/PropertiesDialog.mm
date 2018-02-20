@@ -250,6 +250,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)keyDown:(NSEvent *)event
 {
+    NSLog(@"keyDown");
     unsigned short keycode = [event keyCode];
     // unsigned char  c = [[event characters] UTF8String][0];
     NSEventModifierFlags flags = [event modifierFlags];

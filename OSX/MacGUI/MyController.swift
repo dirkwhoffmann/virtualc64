@@ -442,11 +442,13 @@ extension MyController {
     
     override open func keyDown(with event: NSEvent) {
 
+        track()
         keyboardcontroller.keyDown(with: event)
     }
     
     override open func keyUp(with event: NSEvent) {
         
+        track()
         keyboardcontroller.keyUp(with: event)
     }
     

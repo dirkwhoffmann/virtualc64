@@ -12,19 +12,22 @@ import Carbon.HIToolbox
 /// The key is specified by its row and coloumn position in the C64 keyboard matrix.
 struct MacKey : Codable {
     
-    // Unique identifier for a key on the Mac keyboard
+    /// Unique identifier for a key on the Mac keyboard
     var keyCode: UInt16 = 0
+    
+    /// Keycode in hex format as a string
+    var keyCodeStr: String { return String.init(format: "%02X", keyCode) }
     
     // Textual description of this key
     var description: String?
     
-    init(keyCode: UInt16, characters: String?) {
+    init(keyCode: UInt16, characters: String? = nil) {
         
         self.keyCode = keyCode
         self.description = characters
     }
     
-    init(keyCode: Int, characters: String?) {
+    init(keyCode: Int, characters: String? = nil) {
         
         self.init(keyCode: UInt16(keyCode), characters: characters)
     }

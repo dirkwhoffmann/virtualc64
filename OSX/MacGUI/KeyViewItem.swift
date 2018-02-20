@@ -11,13 +11,10 @@ class KeyViewItem: NSCollectionViewItem {
 
     override func viewDidLoad() {
         
-        track()
-        
         super.viewDidLoad()
-        
         view.wantsLayer = true
-        let img = NSImage(named: NSImage.Name(rawValue: "key.png"))
-        imageView?.image = img
+        // let img = NSImage(named: NSImage.Name(rawValue: "key.png"))
+        // imageView?.image = img
     }
     
 }
