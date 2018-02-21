@@ -372,8 +372,8 @@ typedef unsigned long MacKeyFingerprint;
 - (void)enableUserEditing:(BOOL)enabled;
 
 // Dialogs
-- (bool)showPropertiesDialog;
-- (IBAction)cancelPropertiesDialog:(id)sender;
+// - (bool)showPropertiesDialog;
+// - (IBAction)cancelPropertiesDialog:(id)sender;
 
 - (bool)showHardwareDialog;
 - (IBAction)cancelHardwareDialog:(id)sender;

@@ -7,6 +7,17 @@
 
 import Foundation
 
+class KeyViewItem: NSCollectionViewItem {
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        view.wantsLayer = true
+        // let img = NSImage(named: NSImage.Name(rawValue: "key.png"))
+        // imageView?.image = img
+    }
+}
+
 class KeyboardDialogWindow : NSWindow {
     
     @IBOutlet weak var controller: KeyboardDialog!

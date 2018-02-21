@@ -100,7 +100,9 @@ extension MyController {
     
     @IBAction func propertiesAction(_ sender: Any!) {
     
-        showPropertiesDialog()
+        let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
+        let controller = EmulatorPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
     }
     
     @IBAction func hardwareAction(_ sender: Any!) {

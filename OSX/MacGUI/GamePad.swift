@@ -19,6 +19,8 @@
 import Foundation
 import IOKit.hid
 
+#if false
+    
 //! @brief   Mapping from keycodes to joystick movements
 /*! @details Each GamePad can be assigned a KeyMap which can be used
  *           to trigger events by using the keyboard.
@@ -66,13 +68,14 @@ public class KeyMap: NSObject, Codable {
         character[d.rawValue] = c
     }
 }
+#endif
 
 class GamePad
 {
     //! @brief    Keymap of the managed device
     /*! @details  Only used for keyboard emulated devices
      */
-    var keymap: KeyMap = KeyMap()
+    var keyMap: [MacKey:UInt32]?
     
     //! @brief    Vendor ID of the managed device
     /*! @details  Value is only used for HID devices
@@ -89,10 +92,9 @@ class GamePad
      */
     var locationID: String?
 
-    //! @brief    Reference to the GamePadManager
+    /// Reference to the GamePadManager
     var manager: GamePadManager
     
-    //! @brief    Constructor
     init(manager: GamePadManager,
          vendorID: String?, productID: String?, locationID: String?) {
         
@@ -102,9 +104,22 @@ class GamePad
         self.locationID = locationID
     }
     
-    //! @brief    Convenience constructor
     convenience init(manager: GamePadManager) {
         self.init(manager: manager, vendorID: nil, productID: nil, locationID: nil)
+    }
+    
+    /// Assigns a keyboard emulation key
+    func assign(key: MacKey, direction: JoystickDirection) {
+        
+        precondition(keyMap != nil)
+        
+        // Avoid double mappings
+        for (k, dir) in keyMap! {
+            if dir == direction.rawValue {
+                keyMap![k] = nil
+            }
+        }
+        keyMap![key] = direction.rawValue
     }
     
     //! @brief   Handles a keyboard down event
@@ -112,9 +127,9 @@ class GamePad
      *           and triggeres an event if a match has been found.
      *  @result  Returns true if a joystick event has been triggered.
      */
-    func keyDown(_ key: MacKeyFingerprint) -> Bool {
+    func keyDown(_ macKey: MacKey) -> Bool {
         
-        if let direction = keymap.mapping[key] {
+        if let direction = keyMap?[macKey] {
 
             var event: JoystickEvent
             
@@ -147,9 +162,9 @@ class GamePad
      *           and triggeres an event if a match has been found.
      *  @result  Returns true if a joystick event has been triggered.
      */
-    func keyUp(_ key: MacKeyFingerprint) -> Bool
+    func keyUp(_ macKey: MacKey) -> Bool
     {
-        if let direction = keymap.mapping[key] {
+        if let direction = keyMap?[macKey] {
             
             var event: JoystickEvent
             

@@ -264,6 +264,7 @@
 //                                     Dialogs
 // --------------------------------------------------------------------------------
 
+/*
 - (bool)showPropertiesDialog
 {
     [propertiesDialog initialize:self];
@@ -277,6 +278,7 @@
 	[propertiesDialog orderOut:sender]; // Hide sheet
     [[self window] endSheet:propertiesDialog returnCode:NSModalResponseCancel];
 }
+*/
 
 - (bool)showHardwareDialog
 {

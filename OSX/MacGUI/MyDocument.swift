@@ -48,10 +48,10 @@ class MyDocument : NSDocument {
         
         // Try to load ROMs
         let defaults = UserDefaults.standard
-        loadRom(defaults.url(forKey: VC64BasicRomFileKey))
-        loadRom(defaults.url(forKey: VC64CharRomFileKey))
-        loadRom(defaults.url(forKey: VC64KernelRomFileKey))
-        loadRom(defaults.url(forKey: VC64VC1541RomFileKey))
+        loadRom(defaults.url(forKey: VC64Keys.basicRom))
+        loadRom(defaults.url(forKey: VC64Keys.charRom))
+        loadRom(defaults.url(forKey: VC64Keys.kernelRom))
+        loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
         
         // Try to run
         c64.run()
@@ -136,22 +136,22 @@ class MyDocument : NSDocument {
         
         if c64.loadBasicRom(url!) {
             track("Basic ROM:  \(url!)")
-            defaults.set(url, forKey: VC64BasicRomFileKey)
+            defaults.set(url, forKey: VC64Keys.basicRom)
             return true
         }
         if c64.loadCharRom(url!) {
             track("Char ROM:   \(url!)")
-            defaults.set(url, forKey: VC64CharRomFileKey)
+            defaults.set(url, forKey: VC64Keys.charRom)
             return true
         }
         if c64.loadKernelRom(url!) {
             track("Kernel ROM: \(url!)")
-            defaults.set(url, forKey: VC64KernelRomFileKey)
+            defaults.set(url, forKey: VC64Keys.kernelRom)
             return true
         }
         if c64.loadVC1541Rom(url!) {
             track("VC1541 ROM: \(url!)")
-            defaults.set(url, forKey: VC64VC1541RomFileKey)
+            defaults.set(url, forKey: VC64Keys.vc1541Rom)
             return true
         }
         

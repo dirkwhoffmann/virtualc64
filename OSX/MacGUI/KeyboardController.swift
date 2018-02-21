@@ -124,13 +124,6 @@ class KeyboardController: NSObject {
             return
         }
         
-        // Ask GamePadManager if this key is used for joystick emulation
-        // TODO: MOVE THIS CODE ONE LEVEL DOWN, TO keyDown(with macKey: MacKey)
-        let f = KeyboardController.fingerprint(forKey:keyCode, withModifierFlags:flags)
-        if controller.gamePadManager.keyDown(f) && disconnectEmulationKeys {
-            return
-        }
-        
         // Create and press MacKey
         let macKey = MacKey.init(keyCode: keyCode, characters: characters)
         checkConsistency(withFlags: flags)
@@ -142,16 +135,8 @@ class KeyboardController: NSObject {
         let keyCode = event.keyCode
         let flags = event.modifierFlags
         let characters = event.charactersIgnoringModifiers
-        
-        // Inform GamePadManager about released key
-        // TODO: MOVE THIS CODE ONE LEVEL DOWN, TO keyDown(with macKey: MacKey)
-        let f = KeyboardController.fingerprint(forKey:keyCode, withModifierFlags:flags)
-        if controller.gamePadManager.keyUp(f) && disconnectEmulationKeys {
-            return
-        }
-        
+
         // Create and release macKey
-        
         let macKey = MacKey.init(keyCode: keyCode, characters: characters)
         checkConsistency(withFlags: flags)
         keyUp(with: macKey)
@@ -191,7 +176,10 @@ class KeyboardController: NSObject {
     
     func keyDown(with macKey: MacKey) {
         
-        // track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
+        // Check if this key is used for joystick emulation
+        if controller.gamePadManager.keyDown(with: macKey) && disconnectEmulationKeys {
+            return
+        }
         
         if mapKeysByPosition {
             keyDown(with: macKey, keyMap: keyMap)
@@ -222,7 +210,10 @@ class KeyboardController: NSObject {
         
     func keyUp(with macKey: MacKey) {
         
-        // track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
+        // Check if this key is used for joystick emulation
+        if controller.gamePadManager.keyUp(with: macKey) && disconnectEmulationKeys {
+            return
+        }
         
         if mapKeysByPosition {
             keyUp(with: macKey, keyMap: keyMap)

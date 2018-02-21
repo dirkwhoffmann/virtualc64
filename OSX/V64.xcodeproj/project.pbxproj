@@ -153,7 +153,6 @@
 		50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892581BEFB64500231B96 /* ctrlEnd.png */; };
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
-		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
 		50C9CB241B826CD50054EE86 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB231B826CD50054EE86 /* expansion.png */; };
 		50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB2B1B826FF20054EE86 /* graphics.png */; };
 		50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */; };
@@ -224,10 +223,12 @@
 		50F8731F1EE7DB6900B30DBD /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F8731E1EE7DB6900B30DBD /* home.png */; };
 		50F873211EE7E42500B30DBD /* restore.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F873201EE7E42500B30DBD /* restore.png */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
+		50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */; };
+		50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F97E02203D8D570005E19C /* EmulatorPrefs.xib */; };
+		50F97E05203D90070005E19C /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F97E04203D90070005E19C /* joystick.png */; };
 		50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99556203AB2A9004C4856 /* KeyboardDialog.xib */; };
 		50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F99558203AB3B9004C4856 /* KeyboardDialog.swift */; };
 		50F9955B203AC13D004C4856 /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9955A203AC13D004C4856 /* key.png */; };
-		50F99564203AEC80004C4856 /* KeyViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F99562203AEC80004C4856 /* KeyViewItem.swift */; };
 		50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99563203AEC80004C4856 /* KeyViewItem.xib */; };
 		50FB749C203306A700E05051 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749B203306A700E05051 /* DiskInspector.xib */; };
 		50FB74A02033193300E05051 /* serial.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749F2033193300E05051 /* serial.png */; };
@@ -459,7 +460,6 @@
 		50C892581BEFB64500231B96 /* ctrlEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctrlEnd.png; sourceTree = "<group>"; };
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
-		50C9CB1F1B826C960054EE86 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expansion.png; sourceTree = "<group>"; };
 		50C9CB2B1B826FF20054EE86 /* graphics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphics.png; sourceTree = "<group>"; };
 		50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HardwareDialog.mm; sourceTree = "<group>"; };
@@ -554,10 +554,12 @@
 		50F873201EE7E42500B30DBD /* restore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restore.png; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
+		50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorPrefsController.swift; sourceTree = "<group>"; };
+		50F97E02203D8D570005E19C /* EmulatorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmulatorPrefs.xib; sourceTree = "<group>"; };
+		50F97E04203D90070005E19C /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		50F99556203AB2A9004C4856 /* KeyboardDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardDialog.xib; sourceTree = "<group>"; };
 		50F99558203AB3B9004C4856 /* KeyboardDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDialog.swift; sourceTree = "<group>"; };
 		50F9955A203AC13D004C4856 /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
-		50F99562203AEC80004C4856 /* KeyViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyViewItem.swift; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FB749B203306A700E05051 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		50FB749F2033193300E05051 /* serial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serial.png; sourceTree = "<group>"; };
@@ -944,7 +946,6 @@
 				50C9CB361B83561E0054EE86 /* pref_vic.png */,
 				50C9CB381B8356280054EE86 /* pref_sid.png */,
 				50C9CB2B1B826FF20054EE86 /* graphics.png */,
-				50C9CB1F1B826C960054EE86 /* joystick.png */,
 				50C9CB231B826CD50054EE86 /* expansion.png */,
 				50DB328A1B948489000FB839 /* kext.png */,
 				50F23D0712DF932800B1F275 /* glossy.png */,
@@ -964,6 +965,7 @@
 				50E555FE0C42699300AFB05F /* flag_eu.png */,
 				50E555FC0C42698E00AFB05F /* flag_usa.png */,
 				50E4BFA60C3CE95400CB6B43 /* floppy.png */,
+				50F97E04203D90070005E19C /* joystick.png */,
 				38AF83890C7BA24A00F6DBCE /* joystick1_32.png */,
 				38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */,
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
@@ -995,6 +997,8 @@
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
 				506D54C720321C830026D8B4 /* RomDialogController.swift */,
+				50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */,
+				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
@@ -1066,6 +1070,9 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				506D54C920321EDF0026D8B4 /* RomDialog.xib */,
+				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
+				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
+				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
 				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
 				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,
@@ -1158,10 +1165,6 @@
 				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
 				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
-				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
-				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
-				50F99562203AEC80004C4856 /* KeyViewItem.swift */,
-				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 			);
 			name = Keyboard;
 			sourceTree = "<group>";
@@ -1230,7 +1233,6 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
-				50C9CB201B826C960054EE86 /* joystick.png in Resources */,
 				50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				5080F3591EE74784001313D4 /* commodore.png in Resources */,
@@ -1244,6 +1246,7 @@
 				50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
 				50287EEB0A7CA86900292533 /* stepOut32.png in Resources */,
+				50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */,
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
@@ -1273,6 +1276,7 @@
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
 				50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */,
 				50C892511BEFB31200231B96 /* tape.png in Resources */,
+				50F97E05203D90070005E19C /* joystick.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50CCB1D21B84AC10008D8C30 /* none.png in Resources */,
@@ -1406,6 +1410,7 @@
 				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
+				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
 				50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */,
@@ -1426,7 +1431,6 @@
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
-				50F99564203AEC80004C4856 /* KeyViewItem.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,

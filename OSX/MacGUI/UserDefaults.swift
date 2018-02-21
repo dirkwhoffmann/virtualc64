@@ -146,14 +146,15 @@ extension MyController {
         setVideoUpscaler(defaults.integer(forKey: VC64Keys.videoUpscaler))
         setVideoFilter(defaults.integer(forKey: VC64Keys.videoFilter))
         setFullscreenKeepAspectRatio(defaults.bool(forKey: VC64Keys.aspectRatio))
+        
         if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
-            if let keymap = try? JSONDecoder().decode(KeyMap.self, from: data) {
-               gamePadManager.gamePads[0]?.keymap = keymap
+            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
+               gamePadManager.gamePads[0]?.keyMap = keyMap
             }
         }
         if let data = defaults.data(forKey: VC64Keys.joyKeyMap2) {
-            if let keymap = try? JSONDecoder().decode(KeyMap.self, from: data) {
-                gamePadManager.gamePads[1]?.keymap = keymap
+            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
+                gamePadManager.gamePads[1]?.keyMap = keyMap
             }
         }
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
@@ -201,11 +202,12 @@ extension MyController {
         defaults.set(videoUpscaler(), forKey: VC64Keys.videoUpscaler)
         defaults.set(videoFilter(), forKey: VC64Keys.videoFilter)
         defaults.set(fullscreenKeepAspectRatio(), forKey: VC64Keys.aspectRatio)
-        if let keymap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keymap) {
-            defaults.set(keymap, forKey: VC64Keys.joyKeyMap1)
+        
+        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
+            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)
         }
-        if let keymap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keymap) {
-            defaults.set(keymap, forKey: VC64Keys.joyKeyMap2)
+        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keyMap) {
+            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap2)
         }
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
     }

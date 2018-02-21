@@ -161,12 +161,12 @@
     /*! @result  Returns true if a joystick event has been triggered.
      */
     @discardableResult
-    func keyDown(_ key: MacKeyFingerprint) -> Bool {
+    func keyDown(with macKey: MacKey) -> Bool {
         
         var result = false
         
         for (_, device) in gamePads {
-            result = result || device.keyDown(key)
+            result = result || device.keyDown(macKey)
         }
         
         return result
@@ -176,20 +176,22 @@
     /*! @result  Returns true if a joystick event has been triggered.
      */
     @discardableResult
-    func keyUp(_ key: MacKeyFingerprint) -> Bool {
+    func keyUp(with macKey: MacKey) -> Bool {
         
         var result = false
         
         for (_, device) in gamePads {
-            result = result || device.keyUp(key)
+            result = result || device.keyUp(macKey)
         }
         
         return result
     }
     
+    /*
     @objc public func keysetOfDevice(_ slotNr: Int) -> KeyMap? {
         return gamePads[slotNr]?.keymap
     }
+    */
     
     //
     // HID stuff
@@ -307,32 +309,21 @@
     @objc func restoreFactorySettings()
     {
         track()
+    
+        gamePads[0]!.keyMap = [
+            MacKey.curLeft: JOYSTICK_LEFT.rawValue,
+            MacKey.curRight: JOYSTICK_RIGHT.rawValue,
+            MacKey.curUp: JOYSTICK_UP.rawValue,
+            MacKey.curDown: JOYSTICK_DOWN.rawValue,
+            MacKey.space: JOYSTICK_FIRE.rawValue
+        ]
         
-        let keymap1 = gamePads[0]!.keymap
-        let keymap2 = gamePads[1]!.keymap
-        
-        keymap1.setFingerprint(123, for: JOYSTICK_LEFT)
-        keymap1.setFingerprint(124, for: JOYSTICK_RIGHT)
-        keymap1.setFingerprint(126, for: JOYSTICK_UP)
-        keymap1.setFingerprint(125, for: JOYSTICK_DOWN)
-        keymap1.setFingerprint(49,  for: JOYSTICK_FIRE)
-        
-        keymap1.setCharacter(" ", for: JOYSTICK_LEFT)
-        keymap1.setCharacter(" ", for: JOYSTICK_RIGHT)
-        keymap1.setCharacter(" ", for: JOYSTICK_UP)
-        keymap1.setCharacter(" ", for: JOYSTICK_DOWN)
-        keymap1.setCharacter(" ", for: JOYSTICK_FIRE)
-        
-        keymap2.setFingerprint(0,  for: JOYSTICK_LEFT)
-        keymap2.setFingerprint(1,  for: JOYSTICK_RIGHT)
-        keymap2.setFingerprint(13,  for: JOYSTICK_UP)
-        keymap2.setFingerprint(6, for: JOYSTICK_DOWN)
-        keymap2.setFingerprint(7,  for: JOYSTICK_FIRE)
-        
-        keymap2.setCharacter("a", for: JOYSTICK_LEFT)
-        keymap2.setCharacter("s", for: JOYSTICK_RIGHT)
-        keymap2.setCharacter("w", for: JOYSTICK_UP)
-        keymap2.setCharacter("y", for: JOYSTICK_DOWN)
-        keymap2.setCharacter("x", for: JOYSTICK_FIRE)
+        gamePads[1]!.keyMap = [
+            MacKey.ansi.a: JOYSTICK_LEFT.rawValue,
+            MacKey.ansi.s: JOYSTICK_RIGHT.rawValue,
+            MacKey.ansi.w: JOYSTICK_UP.rawValue,
+            MacKey.ansi.y: JOYSTICK_DOWN.rawValue,
+            MacKey.ansi.x: JOYSTICK_FIRE.rawValue
+        ]
     }
 }
