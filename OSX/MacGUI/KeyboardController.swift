@@ -81,28 +81,18 @@ class KeyboardController: NSObject {
     func checkConsistency(withFlags flags: NSEvent.ModifierFlags) {
         
         if (shift != flags.contains(NSEvent.ModifierFlags.shift)) {
+            keyUp(with: MacKey.shift)
             Swift.print("*** SHIFT inconsistency detected *** \(shift)")
         }
         if (control != flags.contains(NSEvent.ModifierFlags.control)) {
+            keyUp(with: MacKey.control)
             Swift.print("*** SHIFT inconsistency *** \(control)")
         }
         if (option != flags.contains(NSEvent.ModifierFlags.option)) {
+            keyUp(with: MacKey.option)
             Swift.print("*** SHIFT inconsistency *** \(option)")
         }
     }
-    
-    /*
-    override init() {
-        self.keyMap = KeyboardController.standardKeyMap
-        super.init()
-    }
-    
-    @objc convenience init(controller c: MyController) {
-
-        self.init()
-        self.controller = c
-    }
- */
     
     init(controller c: MyController) {
         
@@ -112,7 +102,7 @@ class KeyboardController: NSObject {
     
     func keyDown(with event: NSEvent) {
         
-        track()
+        // track()
         
         // Ignore repeating keys
         if (event.isARepeat) {
@@ -201,7 +191,7 @@ class KeyboardController: NSObject {
     
     func keyDown(with macKey: MacKey) {
         
-        track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
+        // track("keycode = \(macKey.keyCode) (\(macKey.description ?? ""))")
         
         if mapKeysByPosition {
             keyDown(with: macKey, keyMap: keyMap)
@@ -210,27 +200,22 @@ class KeyboardController: NSObject {
 
         // Translate MacKey to a list of C64Keys
         let c64Keys = translate(macKey: macKey)
-        track("Mac key translated symbolically to C64 key list \(c64Keys)")
         
-        if c64Keys == [] {
-            track("Ignoring key")
-            return
-        }
+        if c64Keys != [] {
 
-        // Store key combination for later use in keyUp
-        pressedKeys[macKey] = c64Keys
+            // Store key combination for later use in keyUp
+            pressedKeys[macKey] = c64Keys
         
-        // Press all required keys
-        for key in c64Keys {
-            track("Pressing row: \(key.row) col: \(key.col)\n")
-            controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            // Press all required keys
+            for key in c64Keys {
+                controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            }
         }
     }
     
     func keyDown(with macKey: MacKey, keyMap: [MacKey:C64Key]) {
         
         if let key = keyMap[macKey] {
-            track("Pressing row: \(key.row) col: \(key.col)\n")
             controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
         }
     }
@@ -246,9 +231,7 @@ class KeyboardController: NSObject {
         
         // Lookup keys to be released
         if let c64Keys = pressedKeys[macKey] {
-            track("Will release \(c64Keys)")
             for key in c64Keys {
-                track("Releasing row: \(key.row) col: \(key.col)\n")
                 controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
             }
         }
@@ -283,6 +266,7 @@ class KeyboardController: NSObject {
         MacKey.ansi.minus: C64Key.minus,
         MacKey.ansi.equal: C64Key.plus,
         MacKey.delete: C64Key.delete,
+        MacKey.F1 : C64Key.F1F2,
         
         // Second row of C64 keyboard
         MacKey.tab: C64Key.control,
@@ -298,6 +282,7 @@ class KeyboardController: NSObject {
         MacKey.ansi.P: C64Key.P,
         MacKey.ansi.leftBracket: C64Key.at,
         MacKey.ansi.rightBracket: C64Key.asterisk,
+        MacKey.F3 : C64Key.F3F4,
         
         // Third row of C64 keyboard
         MacKey.control: C64Key.runStop,
@@ -314,6 +299,7 @@ class KeyboardController: NSObject {
         MacKey.ansi.quote: C64Key.colon,
         MacKey.ansi.backSlash: C64Key.equal,
         MacKey.ret: C64Key.ret,
+        MacKey.F5 : C64Key.F5F6,
         
         // Fourth row of C64 keyboard
         MacKey.option: C64Key.commodore,
@@ -332,6 +318,7 @@ class KeyboardController: NSObject {
         MacKey.curLeft : C64Key.curLeftRight,
         MacKey.curDown : C64Key.curUpDown,
         MacKey.curUp : C64Key.curUpDown,
+        MacKey.F7 : C64Key.F7F8,
 
         // Fifth row of C64 keyboard
         MacKey.space : C64Key.space

@@ -58,10 +58,13 @@ class KeyboardDialog : UserDialogController {
     // Keymap that is going to be customized
     var keyMap: [MacKey:C64Key] = [:]
     
-    // Recorded key
-    var recordedKey: MacKey? = nil
+    // Selected C64 key
+    var selectedKey: C64Key? = nil
     
-    override var acceptsFirstResponder: Bool { return true }
+    // Recorded key
+    // var recordedKey: MacKey? = nil
+    
+    // override var acceptsFirstResponder: Bool { return true }
     
     override public func awakeFromNib() {
         
@@ -71,12 +74,12 @@ class KeyboardDialog : UserDialogController {
     
     func update() {
         
-        if recordedKey == nil {
-            icon.isHidden = true
+        if selectedKey == nil {
+            // icon.isHidden = true
             info1.isHidden = true
             info2.isHidden = true
         } else {
-            icon.isHidden = false
+            // icon.isHidden = false
             info1.isHidden = false
             info2.isHidden = false
         }
@@ -98,7 +101,7 @@ class KeyboardDialog : UserDialogController {
             keyImage[c64Key.row][c64Key.col] = c64Key.image(auxiliaryText: keyCodeString)
         }
         
-        // Create images for unmapped keys
+        // Create images for all unmapped keys
         for row in 0...7 {
             for col in 0...7 {
                 if keyImage[row][col] == nil {
@@ -117,9 +120,25 @@ class KeyboardDialog : UserDialogController {
     func keyDown(with macKey: MacKey) {
         
         track()
-        recordedKey = macKey
-        let plainKey = C64Key(row: 0, col: 0, characters: "")
-        icon.image = plainKey.image(auxiliaryText: macKey.keyCodeStr as NSString)
+        
+        // Check for ESC key
+        if macKey == MacKey.escape {
+            perform(#selector(cancelAction(_:)))
+            return
+        }
+        
+        // Remove old key assignment (if any)
+        for (macKey, key) in keyMap {
+            if key == selectedKey {
+                keyMap[macKey] = nil
+            }
+        }
+        
+        // Assign new key
+        keyMap[macKey] = selectedKey
+        
+        // Update  view
+        icon.image = selectedKey?.image(auxiliaryText: macKey.keyCodeStr as NSString)
         update()
     }
         
@@ -179,29 +198,14 @@ extension KeyboardDialog : NSCollectionViewDelegate {
         
         guard let indexPath = indexPaths.first else { return }
         
-        if recordedKey != nil {
-            
-            let row = indexPath.section
-            let col = indexPath.item
-            let c64Key = C64Key(row: row, col: col)
-            
-            // Remove old key assignment (if any)
-            for (macKey, key) in keyMap {
-                if key == c64Key {
-                    keyMap[macKey] = nil
-                }
-            }
-            
-            // Assign new key
-            keyMap[recordedKey!] = C64Key(row: row, col: col)
-            
-            // Update view
-            recordedKey = nil
-            update()
-
-            // Hey, CollectionView, why do you steal the first responder status. Give it back!
-            (window as! KeyboardDialogWindow).respondToEvents()
-        }
+        let row = indexPath.section
+        let col = indexPath.item
+        selectedKey = C64Key(row: row, col: col)
+        icon.image = selectedKey?.image()
+        update()
+        
+        // Hey, CollectionView, why do you steal first responder status? Give it back!
+        (window as! KeyboardDialogWindow).respondToEvents()
     }
 }
 

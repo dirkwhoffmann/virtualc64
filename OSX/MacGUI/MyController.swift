@@ -425,39 +425,20 @@ extension MyController {
     //                              Keyboard events
     // --------------------------------------------------------------------------------
 
-    /*
-    override open func resignFirstResponder() -> Bool
-    {
-        track()
-        return true
-    }
-    */
-    
-    /*
-    override func becomeFirstResonder()
-    {
-        track()
-    }
-    */
-    
     override open func keyDown(with event: NSEvent) {
 
-        track()
         keyboardcontroller.keyDown(with: event)
     }
     
     override open func keyUp(with event: NSEvent) {
         
-        track()
         keyboardcontroller.keyUp(with: event)
     }
     
     override open func flagsChanged(with event: NSEvent) {
         
-        let flags = event.modifierFlags
-        
         // Save modifier flags. They are needed in TouchBar code
-        modifierFlags = flags
+        modifierFlags = event.modifierFlags
         
         keyboardcontroller.flagsChanged(with: event)
     }
