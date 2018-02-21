@@ -166,8 +166,9 @@ class KeyboardDialog : UserDialogController {
     
     @IBAction func okAction(_ sender: Any!) {
         
-        // Write customized KeyMap back to KeyboardController
+        // Write customized KeyMap back to KeyboardController and save to user defaults
         parent.keyboardcontroller.keyMap = keyMap
+        parent.saveKeyMapUserDefaults()
         hideSheet()
     }
 }

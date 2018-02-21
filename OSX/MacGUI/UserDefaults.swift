@@ -17,6 +17,7 @@ struct VC64Keys {
 
     // Keyboard
     static let mapKeysByPosition = "VC64MapKeysByPosition"
+    static let keyMap = "VC64KeyMap"
     
     // Emulator preferences dialog
     static let eyeX = "VC64EyeX"
@@ -132,6 +133,7 @@ extension MyController {
         
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
+        loadKeyMapUserDefaults()
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -175,6 +177,16 @@ extension MyController {
         c64.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
     }
     
+    func loadKeyMapUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: VC64Keys.keyMap) {
+            if let keyMap = try? JSONDecoder().decode([MacKey:C64Key].self, from: data) {
+                keyboardcontroller.keyMap = keyMap
+            }
+        }
+    }
+    
     // --------------------------------------------------------------------------------
     //                                  Saving
     // --------------------------------------------------------------------------------
@@ -188,6 +200,7 @@ extension MyController {
         
         saveEmulatorUserDefaults()
         saveHardwareUserDefaults()
+        saveKeyMapUserDefaults()
     }
     
     /// Saves the user defaults for all properties that are set in the hardware dialog
@@ -225,6 +238,14 @@ extension MyController {
         defaults.set(c64.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.samplingMethod(), forKey: VC64Keys.samplingMethod)
+    }
+    
+    func saveKeyMapUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        if let keyMap = try? JSONEncoder().encode(keyboardcontroller.keyMap) {
+            defaults.set(keyMap, forKey: VC64Keys.keyMap)
+        }
     }
     
     // --------------------------------------------------------------------------------
