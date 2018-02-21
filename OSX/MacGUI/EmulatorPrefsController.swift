@@ -162,9 +162,15 @@ class EmulatorPrefsController : UserDialogController {
     
         // Update text and button image
         let recordKey = (nr == 0) ? recordKey1 : recordKey2
-        let recordImg = NSImage(named: NSImage.Name(rawValue: "LEDnewRed.png"))
-        button.title = (recordKey == direction) ? "" : macKeyCode
-        button.image = (recordKey == direction) ? recordImg : nil
+        if (recordKey == direction) {
+            button.title = ""
+            button.image = NSImage(named: NSImage.Name(rawValue: "keyRed.png"))
+            button.imageScaling = .scaleAxesIndependently
+        } else {
+            button.image = NSImage(named: NSImage.Name(rawValue: "key.png"))
+            button.imageScaling = .scaleAxesIndependently
+        }
+        button.title = macKeyCode
         txt.stringValue = macKeyDesc
      }
     
