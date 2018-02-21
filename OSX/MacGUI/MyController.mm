@@ -91,32 +91,6 @@
 - (void)setFullscreenKeepAspectRatio:(BOOL)val { [metalScreen setFullscreenKeepAspectRatio:val]; }
 
 // --------------------------------------------------------------------------------
-//     KeyboardController API (remove when controller is Swift only!)
-// --------------------------------------------------------------------------------
-
-- (void)simulateUserPressingKey:(C64KeyFingerprint)key {
-    [keyboardcontroller simulateUserPressingKey:key];
-}
-- (void)simulateUserPressingKeyWithShift:(C64KeyFingerprint)key {
-    [keyboardcontroller simulateUserPressingKeyWithShift:key];
-}
-- (void)simulateUserPressingKeyWithRunstop:(C64KeyFingerprint)key {
-    [keyboardcontroller simulateUserPressingKeyWithRunstop:key];
-}
-- (void)simulateUserTypingText:(NSString *)text {
-    [keyboardcontroller simulateUserTypingWithText:text initialDelay:0 completion:nil];
-}
-- (void)simulateUserTypingText:(NSString *)text withInitialDelay:(useconds_t)delay {
-    [keyboardcontroller simulateUserTypingWithText:text initialDelay:delay completion:nil];
-}
-- (void)simulateUserTypingTextAndPressPlay:(NSString *)text {
-    [keyboardcontroller simulateUserTypingAndPressPlayWithText:text];
-}
-- (BOOL)getDisconnectEmulationKeys { return [keyboardcontroller getDisconnectEmulationKeys]; }
-- (void)setDisconnectEmulationKeys:(BOOL)b { [keyboardcontroller setDisconnectEmulationKeys:b]; }
-
-
-// --------------------------------------------------------------------------------
 //          Refresh methods: Force all GUI items to refresh their value
 // --------------------------------------------------------------------------------
 

@@ -355,17 +355,6 @@ typedef unsigned long MacKeyFingerprint;
 - (BOOL)fullscreenKeepAspectRatio;
 - (void)setFullscreenKeepAspectRatio:(BOOL)val;
 
-// KeyboardController API
-- (void)simulateUserPressingKey:(C64KeyFingerprint)key;
-- (void)simulateUserPressingKeyWithShift:(C64KeyFingerprint)key;
-- (void)simulateUserPressingKeyWithRunstop:(C64KeyFingerprint)key;
-- (void)simulateUserTypingText:(NSString *)text;
-- (void)simulateUserTypingText:(NSString *)text withInitialDelay:(useconds_t)delay;
-- (void)simulateUserTypingTextAndPressPlay:(NSString *)text;
-- (BOOL)getDisconnectEmulationKeys;
-- (void)setDisconnectEmulationKeys:(BOOL)b;
-
-
 // Refresh
 - (void)refresh;
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;

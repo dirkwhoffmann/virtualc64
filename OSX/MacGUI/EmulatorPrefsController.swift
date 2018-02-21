@@ -138,7 +138,7 @@ class EmulatorPrefsController : UserDialogController {
         updateKeyMap(1, direction: JOYSTICK_LEFT, button: left2button, txt: left2)
         updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
         updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
-        disconnectKeys.state = parent.getDisconnectEmulationKeys() ? .on : .off
+        disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
@@ -275,7 +275,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func disconnectKeysAction(_ sender: Any!) {
     
         let sender = sender as! NSButton
-        parent.setDisconnectEmulationKeys(sender.state.rawValue != 0);
+        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state.rawValue != 0)
         update()
     }
     

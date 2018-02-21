@@ -319,7 +319,6 @@ class KeyboardController: NSObject {
     /// Keys are mapped based on their meaning or the characters they represent
     func translate(macKey: MacKey) -> [C64Key] {
         
-        // Translate key that do not have a printable representation
         switch (macKey) {
         
         // First row of C64 keyboard
@@ -352,115 +351,12 @@ class KeyboardController: NSObject {
         case MacKey.F7: return [C64Key.F7F8]
         case MacKey.F8: return [C64Key.F7F8, C64Key.shift]
             
-        default: if macKey.description == nil { return [] }
+        default:
+            
+            // Translate symbolically
+            return C64Key.translate(char: macKey.description)
         }
-        
-        // Translate keys having a printable representation
-        
-        switch (macKey.description!) {
-        
-        // First row of C64 keyboard
-        case "ü": return [C64Key.leftArrow]
-        case "1": return [C64Key.digit1]
-        case "!": return [C64Key.digit1, C64Key.shift]
-        case "2": return [C64Key.digit2]
-        case "\"": return [C64Key.digit2, C64Key.shift]
-        case "3": return [C64Key.digit3]
-        case "#": return [C64Key.digit3, C64Key.shift]
-        case "4": return [C64Key.digit4]
-        case "$": return [C64Key.digit4, C64Key.shift]
-        case "5": return [C64Key.digit5]
-        case "%": return [C64Key.digit5, C64Key.shift]
-        case "6": return [C64Key.digit6]
-        case "&": return [C64Key.digit6, C64Key.shift]
-        case "7": return [C64Key.digit7]
-        case "'": return [C64Key.digit7, C64Key.shift]
-        case "8": return [C64Key.digit8]
-        case "(": return [C64Key.digit8, C64Key.shift]
-        case "9": return [C64Key.digit9]
-        case ")": return [C64Key.digit9, C64Key.shift]
-        case "0": return [C64Key.digit0]
-        case "+": return [C64Key.plus]
-        case "-": return [C64Key.minus]
-        case "ü": return [C64Key.pound]
-        case "§": return [C64Key.pound]
-            
-        // Second row of C64 keyboard
-        case "q": return [C64Key.Q]
-        case "Q": return [C64Key.Q, C64Key.shift]
-        case "w": return [C64Key.W]
-        case "W": return [C64Key.W, C64Key.shift]
-        case "e": return [C64Key.E]
-        case "E": return [C64Key.E, C64Key.shift]
-        case "r": return [C64Key.R]
-        case "R": return [C64Key.R, C64Key.shift]
-        case "t": return [C64Key.T]
-        case "T": return [C64Key.T, C64Key.shift]
-        case "y": return [C64Key.Y]
-        case "Y": return [C64Key.Y, C64Key.shift]
-        case "u": return [C64Key.U]
-        case "U": return [C64Key.U, C64Key.shift]
-        case "i": return [C64Key.I]
-        case "I": return [C64Key.I, C64Key.shift]
-        case "o": return [C64Key.O]
-        case "O": return [C64Key.O, C64Key.shift]
-        case "p": return [C64Key.P]
-        case "P": return [C64Key.P, C64Key.shift]
-        case "@": return [C64Key.at]
-        case "ö": return [C64Key.at]
-        case "*": return [C64Key.asterisk]
-        case "ä": return [C64Key.upArrow]
-            
-        // Third row of C64 keyboard
-        case "a": return [C64Key.A]
-        case "A": return [C64Key.A, C64Key.shift]
-        case "s": return [C64Key.S]
-        case "S": return [C64Key.S, C64Key.shift]
-        case "d": return [C64Key.D]
-        case "D": return [C64Key.D, C64Key.shift]
-        case "f": return [C64Key.F]
-        case "F": return [C64Key.F, C64Key.shift]
-        case "g": return [C64Key.G]
-        case "G": return [C64Key.G, C64Key.shift]
-        case "h": return [C64Key.H]
-        case "H": return [C64Key.H, C64Key.shift]
-        case "j": return [C64Key.J]
-        case "J": return [C64Key.J, C64Key.shift]
-        case "k": return [C64Key.K]
-        case "K": return [C64Key.K, C64Key.shift]
-        case "l": return [C64Key.L]
-        case "L": return [C64Key.L, C64Key.shift]
-        case ":": return [C64Key.colon]
-        case "[": return [C64Key.colon, C64Key.shift]
-        case ";": return [C64Key.semicolon]
-        case "]": return [C64Key.semicolon, C64Key.shift]
-        case "=": return [C64Key.equal]
-            
-        // Fourth row of C64 keyboard
-        case "z": return [C64Key.Z]
-        case "Z": return [C64Key.Z, C64Key.shift]
-        case "x": return [C64Key.X]
-        case "X": return [C64Key.X, C64Key.shift]
-        case "c": return [C64Key.C]
-        case "C": return [C64Key.C, C64Key.shift]
-        case "v": return [C64Key.V]
-        case "V": return [C64Key.V, C64Key.shift]
-        case "b": return [C64Key.B]
-        case "B": return [C64Key.B, C64Key.shift]
-        case "n": return [C64Key.N]
-        case "N": return [C64Key.N, C64Key.shift]
-        case "m": return [C64Key.M]
-        case "M": return [C64Key.M, C64Key.shift]
-        case ",": return [C64Key.comma]
-        case "<": return [C64Key.comma, C64Key.shift]
-        case ".": return [C64Key.period]
-        case ">": return [C64Key.period, C64Key.shift]
-        case "/": return [C64Key.slash]
-        case "?": return [C64Key.slash, C64Key.shift]
-            
-        default: return []
-        }
-}
+    }
     
     
     
@@ -598,58 +494,63 @@ class KeyboardController: NSObject {
         return C64KeyFingerprint(UInt8(key));
     }
     
-    func simulatePress(_ key: C64KeyFingerprint) {
+    func _typeOnKeyboard(keyList: [C64Key]) {
         
-        self.controller.c64.keyboard.pressKey(key)
+        for key in keyList {
+            if (key == .restore) {
+                controller.c64.keyboard.pressRestoreKey()
+            } else {
+                controller.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            }
+        }
         usleep(useconds_t(50000))
-        self.controller.c64.keyboard.releaseKey(key)
+        
+        for key in keyList {
+            if (key == .restore) {
+                controller.c64.keyboard.releaseRestoreKey()
+            } else {
+            controller.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+            }
+        }
     }
     
-    @objc func simulateUserPressingKey(_ key: C64KeyFingerprint) {
+    func _typeOnKeyboard(key: C64Key) {
+        typeOnKeyboard(keyList: [key])
+    }
+
+    func typeOnKeyboard(keyList: [C64Key]) {
         
         DispatchQueue.global().async {
-            self.simulatePress(key)
+            self._typeOnKeyboard(keyList: keyList)
         }
     }
  
-    @objc func simulateUserPressingKeyWithShift(_ key: C64KeyFingerprint) {
+    func typeOnKeyboard(key: C64Key) {
         
         DispatchQueue.global().async {
-            self.controller.c64.keyboard.pressShiftKey()
-            self.simulatePress(key)
-            self.controller.c64.keyboard.releaseShiftKey()
+            self._typeOnKeyboard(key: key)
         }
     }
     
-    @objc func simulateUserPressingKeyWithRunstop(_ key: C64KeyFingerprint) {
-            
-        DispatchQueue.global().async {
-            self.controller.c64.keyboard.pressRunstopKey()
-            self.simulatePress(key)
-            self.controller.c64.keyboard.releaseRunstopKey()
-        }
-    }
-    
-    @objc func simulateUserTyping(text: String,
-                                  initialDelay: useconds_t = 0,
-                                  completion: (() -> Void)?) {
+    @objc func typeOnKeyboard(string: String,
+                              initialDelay: useconds_t = 0,
+                              completion: (() -> Void)?) {
 
-        let truncated = (text.count < 256) ? text : text.prefix(256) + "..."
+        let truncated = (string.count < 256) ? string : string.prefix(256) + "..."
 
         DispatchQueue.global().async {
         
             usleep(initialDelay);
-            for c in truncated.lowercased().utf8 {
-                self.controller.c64.keyboard.pressKey(C64KeyFingerprint(c))
-                usleep(useconds_t(27500))
-                self.controller.c64.keyboard.releaseKey(C64KeyFingerprint(c))
-                usleep(useconds_t(27500))
+            for c in truncated.lowercased() {
+                let c64Keys = C64Key.translate(char: String(c))
+                self._typeOnKeyboard(keyList: c64Keys)
+                usleep(useconds_t(20000))
             }
             completion?()
         }
     }
     
-    @objc func simulateUserTypingAndPressPlay(text: String) {
-        simulateUserTyping(text: text, completion: controller.c64.datasette.pressPlay)
+    @objc func typeOnKeyboardAndPressPlay(string: String) {
+        typeOnKeyboard(string: string, completion: controller.c64.datasette.pressPlay)
     }
 }

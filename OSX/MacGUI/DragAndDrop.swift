@@ -80,8 +80,7 @@ public extension MetalView {
             guard let text = pasteBoard.string(forType: .string) else {
                 return false
             }
-            // document.c64.keyboard.typeText(text)
-            controller.simulateUserTypingText(text, withInitialDelay: 0) 
+            controller.keyboardcontroller.typeOnKeyboard(string: text, completion: nil)
             return true
             
         case .fileContents:

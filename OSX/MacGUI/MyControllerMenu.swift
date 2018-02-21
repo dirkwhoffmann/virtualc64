@@ -162,7 +162,7 @@ extension MyController {
             return
         }
         
-        simulateUserTypingText(text)
+        keyboardcontroller.typeOnKeyboard(string: text, completion: nil)
     }
 
     // -----------------------------------------------------------------
@@ -245,63 +245,63 @@ extension MyController {
     
     // -----------------------------------------------------------------
     @IBAction func shiftCommodoreKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_COMMODORE))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.commodore, C64Key.shift])
     }
     @IBAction func shiftCtrlKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_CTRL))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.control, C64Key.shift])
     }
     @IBAction func shiftRunstopKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_RUNSTOP))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.runStop, C64Key.shift])
     }
     @IBAction func shiftRestoreAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_RESTORE))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.restore, C64Key.shift])
     }
     @IBAction func shiftLeftarrowAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_LEFTARROW))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.leftArrow, C64Key.shift])
     }
     @IBAction func shiftUparrowAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_UPARROW))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.upArrow, C64Key.shift])
     }
     @IBAction func shiftPowndAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_POUND))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.pound, C64Key.shift])
     }
     
     // -----------------------------------------------------------------
     @IBAction func commodoreKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_COMMODORE))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.commodore)
     }
     @IBAction func ctrlKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_CTRL))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.control)
     }
     @IBAction func runstopAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RUNSTOP))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.runStop)
     }
     @IBAction func restoreAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RESTORE))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.restore)
     }
     @IBAction func runstopRestoreAction(_ sender: Any!) {
-        simulateUserPressingKey(withRunstop: C64KeyFingerprint(C64KEY_RESTORE))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.runStop, C64Key.restore])
     }
     @IBAction func leftarrowAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_LEFTARROW))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.leftArrow)
     }
     @IBAction func uparrowAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_UPARROW))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.upArrow)
     }
     @IBAction func powndAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_POUND))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.pound)
     }
     @IBAction func clearKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_CLR))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.home, C64Key.shift])
     }
     @IBAction func homeKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_HOME))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.home)
     }
     @IBAction func insertKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_INST))
+        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.delete, C64Key.shift])
     }
     @IBAction func deleteKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_DEL))
+        keyboardcontroller.typeOnKeyboard(key: C64Key.delete)
     }
     
     // -----------------------------------------------------------------
@@ -320,19 +320,19 @@ extension MyController {
     
     // -----------------------------------------------------------------
     @IBAction func loadDirectoryAction(_ sender: Any!) {
-        simulateUserTypingText("LOAD \"$\",8")
+        keyboardcontroller.typeOnKeyboard(string: "LOAD \"$\",8", completion: nil)
     }
     @IBAction func listAction(_ sender: Any!) {
-        simulateUserTypingText("LIST")
+        keyboardcontroller.typeOnKeyboard(string: "LIST", completion: nil)
     }
     @IBAction func loadFirstFileAction(_ sender: Any!) {
-        simulateUserTypingText("LOAD \"*\",8,1")
+        keyboardcontroller.typeOnKeyboard(string: "LOAD \"*\",8,1", completion: nil)
     }
     @IBAction func runProgramAction(_ sender: Any!) {
-        simulateUserTypingText("RUN")
+        keyboardcontroller.typeOnKeyboard(string: "RUN", completion: nil)
     }
     @IBAction func formatDiskAction(_ sender: Any!) {
-        simulateUserTypingText("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
+        keyboardcontroller.typeOnKeyboard(string: "OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1", completion: nil)
     }
 
  
