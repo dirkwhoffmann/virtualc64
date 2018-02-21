@@ -354,28 +354,20 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->keyboard->dumpState(); }
 
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col {
+    wrapper->keyboard->pressKey(row, col); }
+- (void) pressRestoreKey {
+    wrapper->keyboard->pressRestoreKey(); }
+
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col {
+    wrapper->keyboard->releaseKey(row, col); }
+- (void) releaseRestoreKey {
+    wrapper->keyboard->releaseRestoreKey(); }
+
 - (BOOL) shiftKeyIsPressed { return wrapper->keyboard->shiftKeyIsPressed(); }
 - (BOOL) commodoreKeyIsPressed { return wrapper->keyboard->commodoreKeyIsPressed(); }
 - (BOOL) ctrlKeyIsPressed { return wrapper->keyboard->ctrlKeyIsPressed(); }
 - (BOOL) runstopKeyIsPressed { return wrapper->keyboard->runstopKeyIsPressed(); }
-
-- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col { wrapper->keyboard->pressKey(row, col); }
-- (void) pressKey:(C64KeyFingerprint)c { wrapper->keyboard->pressKey(c); }
-- (void) pressShiftKey { wrapper->keyboard->pressShiftKey(); }
-- (void) pressCommodoreKey { wrapper->keyboard->pressCommodoreKey(); }
-- (void) pressCtrlKey { wrapper->keyboard->pressCtrlKey(); }
-- (void) pressRunstopKey { wrapper->keyboard->pressRunstopKey(); }
-- (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }
-- (void) pressRestoreKey { wrapper->keyboard->pressRestoreKey(); }
-
-- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col { wrapper->keyboard->releaseKey(row, col); }
-- (void) releaseKey:(C64KeyFingerprint)c { wrapper->keyboard->releaseKey(c); }
-- (void) releaseShiftKey { wrapper->keyboard->releaseShiftKey(); }
-- (void) releaseCommodoreKey { wrapper->keyboard->releaseCommodoreKey(); }
-- (void) releaseCtrlKey { wrapper->keyboard->releaseCtrlKey(); }
-- (void) releaseRunstopKey { wrapper->keyboard->releaseRunstopKey(); }
-- (void) releaseShiftRunstopKey { wrapper->keyboard->releaseShiftRunstopKey(); }
-- (void) releaseRestoreKey { wrapper->keyboard->releaseRestoreKey(); }
 
 - (void) toggleShiftKey { wrapper->keyboard->toggleShiftKey(); }
 - (void) toggleCommodoreKey { wrapper->keyboard->toggleCommodoreKey(); }

@@ -129,14 +129,12 @@
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
 		50A7494F203B52C100EDFDA2 /* keyboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A7494E203B52C100EDFDA2 /* keyboard2.png */; };
-		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
 		50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1644B202DD52500447D3E /* ExportDiskController.swift */; };
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
-		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */; };
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
@@ -203,7 +201,6 @@
 		50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */; };
 		50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FC0C42698E00AFB05F /* flag_usa.png */; };
 		50E555FF0C42699300AFB05F /* flag_eu.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FE0C42699300AFB05F /* flag_eu.png */; };
-		50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
@@ -216,7 +213,6 @@
 		50F483AB203B1A0B008F74FD /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F483AA203B1A0B008F74FD /* c64.png */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
-		50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E31BEA203F008568E3 /* TapeDialog.mm */; };
 		50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPContainer.cpp */; };
 		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
 		50F8731D1EE7DB6000B30DBD /* del.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F8731C1EE7DB6000B30DBD /* del.png */; };
@@ -430,8 +426,6 @@
 		50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64Archive.cpp; sourceTree = "<group>"; };
 		50A7494E203B52C100EDFDA2 /* keyboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard2.png; sourceTree = "<group>"; };
 		50A74950203B52D600EDFDA2 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
-		50A8F8F10E47171300ACE17D /* RomDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomDialog.h; sourceTree = "<group>"; };
-		50A8F8F20E47171300ACE17D /* RomDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RomDialog.mm; sourceTree = "<group>"; };
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romMissing.png; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
@@ -439,8 +433,6 @@
 		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualC64-Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
-		50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMDropTargetView.h; sourceTree = "<group>"; };
-		50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ROMDropTargetView.mm; sourceTree = "<group>"; };
 		50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelScrubber.swift; sourceTree = "<group>"; };
 		50B5861B201C673900742DB3 /* CustomCartridges.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCartridges.cpp; sourceTree = "<group>"; };
 		50B5861C201C673900742DB3 /* CustomCartridges.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCartridges.h; sourceTree = "<group>"; };
@@ -525,8 +517,6 @@
 		50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOn.png; sourceTree = "<group>"; };
 		50E555FC0C42698E00AFB05F /* flag_usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag_usa.png; sourceTree = "<group>"; };
 		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag_eu.png; sourceTree = "<group>"; };
-		50E6014613A3653900EDBEA9 /* PropertiesDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesDialog.h; sourceTree = "<group>"; };
-		50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PropertiesDialog.mm; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
@@ -543,8 +533,6 @@
 		50F483AA203B1A0B008F74FD /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c64.png; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		50F681E21BEA2015008568E3 /* TapeDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapeDialog.h; sourceTree = "<group>"; };
-		50F681E31BEA203F008568E3 /* TapeDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDialog.mm; sourceTree = "<group>"; };
 		50F681E51BEA2917008568E3 /* TAPContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPContainer.h; sourceTree = "<group>"; };
 		50F681E61BEA2927008568E3 /* TAPContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPContainer.cpp; sourceTree = "<group>"; };
 		50F681E81BEA3BE4008568E3 /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
@@ -805,16 +793,8 @@
 		5000474212DCECDB0098D890 /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
-				50E6014613A3653900EDBEA9 /* PropertiesDialog.h */,
-				50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */,
 				50C9CB331B8272F40054EE86 /* HardwareDialog.h */,
 				50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */,
-				50F681E21BEA2015008568E3 /* TapeDialog.h */,
-				50F681E31BEA203F008568E3 /* TapeDialog.mm */,
-				50A8F8F10E47171300ACE17D /* RomDialog.h */,
-				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
-				50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */,
-				50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -1386,8 +1366,6 @@
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
-				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
-				50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
@@ -1417,13 +1395,11 @@
 				50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */,
 				50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
-				50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
-				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,

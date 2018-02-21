@@ -26,7 +26,6 @@
 
 #import "Disassembler.h"
 #import "Formatter.h"
-#import "ROMDropTargetView.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"
 #import "CheatboxItem.h"
@@ -40,10 +39,8 @@
 #import "MyControllerCiaPanel.h"
 #import "MyControllerVicPanel.h"
 
-#import "PropertiesDialog.h"
 #import "HardwareDialog.h"
-#import "TapeDialog.h"
-#import "RomDialog.h"
+
 
 
 

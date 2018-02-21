@@ -300,28 +300,16 @@ struct ContainerWrapper;
 
 - (void) dump;
 
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
+- (void) pressRestoreKey;
+
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
+- (void) releaseRestoreKey;
+
 - (BOOL) shiftKeyIsPressed;
 - (BOOL) commodoreKeyIsPressed;
 - (BOOL) ctrlKeyIsPressed;
 - (BOOL) runstopKeyIsPressed;
-
-- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void) pressKey:(C64KeyFingerprint)c;
-- (void) pressShiftKey;
-- (void) pressCommodoreKey;
-- (void) pressCtrlKey;
-- (void) pressRunstopKey;
-- (void) pressShiftRunstopKey;
-- (void) pressRestoreKey;
-
-- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void) releaseKey:(C64KeyFingerprint)c;
-- (void) releaseShiftKey;
-- (void) releaseCommodoreKey;
-- (void) releaseCtrlKey;
-- (void) releaseRunstopKey;
-- (void) releaseShiftRunstopKey;
-- (void) releaseRestoreKey;
 
 - (void) toggleShiftKey;
 - (void) toggleCommodoreKey;
