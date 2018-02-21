@@ -19,57 +19,6 @@
 import Foundation
 import IOKit.hid
 
-#if false
-    
-//! @brief   Mapping from keycodes to joystick movements
-/*! @details Each GamePad can be assigned a KeyMap which can be used
- *           to trigger events by using the keyboard.
- */
-public class KeyMap: NSObject, Codable {
-    
-    /// Maping of fingerprints to joystick events
-    var mapping : [UInt:UInt32] = [:]
-
-    //! @brief Mapping of joystick events to readable representations of related fingerprints
-    var character : [UInt32:String] = [:]
-        
-    @objc public
-    func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
-        
-        for (fingerprint, direction) in mapping {
-            if direction == d.rawValue {
-                return fingerprint;
-            }
-        }
-        return 0;
-    }
-    
-    @objc public
-    func setFingerprint(_ f: MacKeyFingerprint, for d: JoystickDirection) {
-        
-        // Avoid double mappings
-        for (fingerprint, direction) in mapping {
-            if direction == d.rawValue {
-                mapping[fingerprint] = nil
-            }
-        }
-        mapping[f] = d.rawValue
-    }
-    
-    @objc public
-    func getCharacter(for d: JoystickDirection) -> String {
-        
-        return character[d.rawValue] ?? ""
-    }
-    
-    @objc public
-    func setCharacter(_ c: String?, for d: JoystickDirection) {
-        
-        character[d.rawValue] = c
-    }
-}
-#endif
-
 class GamePad
 {
     //! @brief    Keymap of the managed device
