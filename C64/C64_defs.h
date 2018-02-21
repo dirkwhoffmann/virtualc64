@@ -109,40 +109,6 @@ typedef enum {
 
 } VC64Message;
 
-//! @brief    Fingerprint that uniquely identifies a key combination on the virtual C64 keyboard
-typedef unsigned short C64KeyFingerprint;
-
-//! @brief    Fingerprints of special keys on the C64 keyboard
-enum {
-    C64KEY_F1 = 0x80,
-    C64KEY_F2,
-    C64KEY_F3,
-    C64KEY_F4,
-    C64KEY_F5,
-    C64KEY_F6,
-    C64KEY_F7,
-    C64KEY_F8,
-    C64KEY_POUND,
-    C64KEY_HOME,
-    C64KEY_CLR,
-    C64KEY_DEL,
-    C64KEY_INST,
-    C64KEY_RET,
-    C64KEY_CL,
-    C64KEY_CR,
-    C64KEY_CU,
-    C64KEY_CD,
-    C64KEY_LEFTARROW,
-    C64KEY_UPARROW,
-    C64KEY_RUNSTOP,
-    C64KEY_RESTORE,
-    
-    // Flags (combinable with all other keys)
-    C64KEY_SHIFT = 0x1000,
-    C64KEY_COMMODORE = 0x2000,
-    C64KEY_CTRL = 0x4000
-};
-
 //! @brief    Processor models
 typedef enum {
     MOS_6510 = 0,

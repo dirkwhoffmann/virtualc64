@@ -90,9 +90,6 @@ public:
     
     //! @brief    Releases the shift lock key
     void releaseShiftLockKey() { shiftLock = false; releaseKey(6,4); }
-    
-	//! @brief    Presses a key.
-	void pressKey(C64KeyFingerprint key);
 
 	//! @brief    Presses the shift hey.
 	void pressShiftKey() { pressKey(1,7); }
@@ -107,7 +104,7 @@ public:
 	void pressRunstopKey() { pressKey(7,7); }
 
     //! @brief    Presses shift and runstop simultaniously.
-    void pressShiftRunstopKey() { pressShiftKey(); pressKey(7,7); }
+    // void pressShiftRunstopKey() { pressShiftKey(); pressKey(7,7); }
 
     //! @brief    Presses the restore key.
     void pressRestoreKey();
@@ -117,9 +114,6 @@ public:
      *  @details  The key is identified by its native row and column index.
      */
 	void releaseKey(uint8_t row, uint8_t col);
-    
-	//! @brief    Releases a pressed key.
-	void releaseKey(C64KeyFingerprint key);
     
     //! @brief    Releases the shift key.
 	void releaseShiftKey() { releaseKey(1,7); }
@@ -134,7 +128,7 @@ public:
 	void releaseRunstopKey() { releaseKey(7,7); }
 
     //! @brief    Releases shift and runstop simultaniously.
-    void releaseShiftRunstopKey() { releaseKey(7,7); releaseShiftKey(); }
+    // void releaseShiftRunstopKey() { releaseKey(7,7); releaseShiftKey(); }
 
     //! @brief    Releases the restore key.
     void releaseRestoreKey();
@@ -170,11 +164,6 @@ public:
      *  @param    rowMask  Indicates the rows to read
      */
     uint8_t getColumnValues(uint8_t rowMask);
-
-private:
-	
-	//! @brief    Mapping from ASCII characters to the C64 row/column format
-	uint16_t rowcolmap[256];
 };
 	
 #endif

@@ -33,11 +33,6 @@
 @class MemTableView;
 @class Speedometer;
 
-/*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
- *  @seealso  C64KeyFingerprint
- */
-typedef unsigned long MacKeyFingerprint;
-
 @interface MyController : NSWindowController 
 {
 	// Proxy object. Used get data from and sent data to the virtual C64
