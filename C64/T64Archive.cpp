@@ -16,12 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "TAPContainer.h"
 #include "T64Archive.h"
 
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
- *  Substrings"C64" und "tape" suchen. Vorsicht: TAP Images verwenden den String: C64-TAPE-RAW
- *  der ebenfalls die Substrings "C64" und "TAPE" enthält." [Power64 doc]
- *  TODO: Make sure that the archive is not a TAP file.
+ *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
  */
 const uint8_t T64Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
 
@@ -186,9 +185,14 @@ T64Archive::~T64Archive()
 }
 
 bool
-T64Archive::isT64Buffer(const uint8_t *buffer, size_t length)
+T64Archive::isT64(const uint8_t *buffer, size_t length)
 {
-    if (length < 0x40) return false;
+    if (length < 0x40)
+        return false;
+    
+    if (TAPContainer::isTAP(buffer, length)) // Note: TAP files have a very similar header
+        return false;
+        
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
@@ -200,6 +204,9 @@ T64Archive::isT64File(const char *path)
 	if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
 		return false;
 	
+    if (TAPContainer::isTAPFile(path)) // Note: TAP files have a very similar header
+        return false;
+    
 	if (!checkFileSize(path, 0x40, -1))
 		return false;
 	

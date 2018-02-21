@@ -71,9 +71,10 @@ TAPContainer::isTAPFile(const char *filename)
 {
     assert (filename != NULL);
     
-    if (!checkFileSuffix(filename, ".TAP") && !checkFileSuffix(filename, ".tap"))
+    if (!checkFileSuffix(filename, ".TAP") && !checkFileSuffix(filename, ".tap") &&
+        !checkFileSuffix(filename, ".T64") && !checkFileSuffix(filename, ".t64"))
         return false;
-
+    
     if (!checkFileSize(filename, 0x15, -1))
         return false;
     
