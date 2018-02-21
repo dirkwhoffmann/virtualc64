@@ -103,7 +103,7 @@ Gw
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aWB-Pb-eLW">
                         <rect key="frame" x="87" y="395" width="114" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Graphics" id="s6b-6n-y1r">
+                        <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Monitor" id="s6b-6n-y1r">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -365,9 +365,9 @@ Gw
                         </connections>
                     </button>
                     <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UsB-qb-69g">
-                        <rect key="frame" x="11" y="364" width="48" height="48"/>
+                        <rect key="frame" x="14" y="350" width="62" height="62"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="graphics" id="fbD-3C-Nv7"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="monitor" id="fbD-3C-Nv7"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tm2-bC-UuM">
                         <rect key="frame" x="87" y="221" width="143" height="17"/>
@@ -652,9 +652,9 @@ DQ
                         </textFieldCell>
                     </textField>
                     <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rsr-Yj-2mJ">
-                        <rect key="frame" x="14" y="180" width="62" height="62"/>
+                        <rect key="frame" x="15" y="183" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="keys2" id="Gnh-u7-Cx3"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="keys" id="Gnh-u7-Cx3"/>
                     </imageView>
                 </subviews>
             </view>
@@ -665,9 +665,9 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="graphics" width="128" height="128"/>
         <image name="joystick2" width="569.45452880859375" height="654.54547119140625"/>
         <image name="key" width="198" height="187"/>
-        <image name="keys2" width="195.906982421875" height="160.74418640136719"/>
+        <image name="keys" width="128" height="128"/>
+        <image name="monitor" width="38.365898132324219" height="38.365898132324219"/>
     </resources>
 </document>

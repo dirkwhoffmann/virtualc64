@@ -65,6 +65,7 @@
 		50355F37203E21F600163F80 /* joystick2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F36203E21F600163F80 /* joystick2.png */; };
 		50355F39203E242A00163F80 /* keys.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F38203E242A00163F80 /* keys.png */; };
 		50355F3B203E254700163F80 /* keys2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F3A203E254700163F80 /* keys2.png */; };
+		50355F3D203E277000163F80 /* monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F3C203E276F00163F80 /* monitor.png */; };
 		5039A31415BE89940038ACBC /* drive48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31315BE89940038ACBC /* drive48.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
@@ -348,6 +349,7 @@
 		50355F36203E21F600163F80 /* joystick2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick2.png; sourceTree = "<group>"; };
 		50355F38203E242A00163F80 /* keys.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keys.png; sourceTree = "<group>"; };
 		50355F3A203E254700163F80 /* keys2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keys2.png; sourceTree = "<group>"; };
+		50355F3C203E276F00163F80 /* monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monitor.png; sourceTree = "<group>"; };
 		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
@@ -935,6 +937,7 @@
 				50C9CB361B83561E0054EE86 /* pref_vic.png */,
 				50C9CB381B8356280054EE86 /* pref_sid.png */,
 				50C9CB2B1B826FF20054EE86 /* graphics.png */,
+				50355F3C203E276F00163F80 /* monitor.png */,
 				50C9CB231B826CD50054EE86 /* expansion.png */,
 				50DB328A1B948489000FB839 /* kext.png */,
 				50F23D0712DF932800B1F275 /* glossy.png */,
@@ -1254,6 +1257,7 @@
 				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				500FF3921BD7F4DF0038245B /* rom_light.png in Resources */,
+				50355F3D203E277000163F80 /* monitor.png in Resources */,
 				50F873211EE7E42500B30DBD /* restore.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
