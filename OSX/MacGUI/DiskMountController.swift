@@ -108,7 +108,7 @@ class DiskMountController : UserDialogController {
         
         // Insert archive as disk
         c64.insertDisk(archive)
-        parent.rotateBack()
+        parent.metalScreen.rotateBack()
         
         hideSheet()
     }

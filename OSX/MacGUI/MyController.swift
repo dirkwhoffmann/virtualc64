@@ -7,11 +7,10 @@
 
 import Foundation
 
-
 extension MyController {
     
     // --------------------------------------------------------------------------------
-    //                               Life cycle
+    // Initialization
     // --------------------------------------------------------------------------------
 
     override open func awakeFromNib() {
@@ -103,7 +102,6 @@ extension MyController {
     func createTimer() {
     
         // Create speed monitor
-        // TODO: Implement as class extension in Swift
         speedometer = Speedometer()
         
         // Create timer and speedometer
@@ -412,7 +410,7 @@ extension MyController {
     }
 
     // --------------------------------------------------------------------------------
-    //                              Keyboard events
+    //  Keyboard events
     // --------------------------------------------------------------------------------
 
     override open func keyDown(with event: NSEvent) {
@@ -435,7 +433,7 @@ extension MyController {
     
  
     // --------------------------------------------------------------------------------
-    //                               Game pad events
+    //  Game pad events
     // --------------------------------------------------------------------------------
 
     /// GamePadManager delegation method
@@ -520,7 +518,7 @@ extension MyController {
             fatalError()
         }
     }
-        
+    
     // --------------------------------------------------------------------------------
     // Action methods (main screen)
     // --------------------------------------------------------------------------------

@@ -137,7 +137,7 @@ extension MyController {
         let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
         let desktopUrl = NSURL.init(fileURLWithPath: paths[0])
         if let url = desktopUrl.appendingPathComponent("Untitled.tiff") {
-            let image = self.screenshot()
+            let image = metalScreen.screenshot()
             let data = image?.tiffRepresentation
             do {
                 try data?.write(to: url, options: .atomic)
@@ -193,7 +193,7 @@ extension MyController {
             clockSpeedBar.isHidden = false
             warpIcon.isHidden = false
             
-            shrink()
+            metalScreen.shrink()
             window?.setContentBorderThickness(24, for: .minY)
             adjustWindowSize()
             statusBar = true
@@ -212,7 +212,7 @@ extension MyController {
             clockSpeedBar.isHidden = true
             warpIcon.isHidden = true
             
-            expand()
+            metalScreen.expand()
             window?.setContentBorderThickness(0, for: .minY)
             adjustWindowSize()
             statusBar = false
@@ -525,7 +525,7 @@ extension MyController {
         let document = self.document as! MyDocument
         document.updateChangeCount(.changeDone)
         
-        rotateBack()
+        metalScreen.rotateBack()
         c64.powerUp()
         refresh()
     }

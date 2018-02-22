@@ -144,13 +144,13 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
-        setEyeX(defaults.float(forKey: VC64Keys.eyeX))
-        setEyeY(defaults.float(forKey: VC64Keys.eyeY))
-        setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
+        metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
+        metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
+        metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
         c64.vic.setColorScheme(defaults.integer(forKey: VC64Keys.colorScheme))
-        setVideoUpscaler(defaults.integer(forKey: VC64Keys.videoUpscaler))
-        setVideoFilter(defaults.integer(forKey: VC64Keys.videoFilter))
-        setFullscreenKeepAspectRatio(defaults.bool(forKey: VC64Keys.aspectRatio))
+        metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
+        metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
+        metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
         
         if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
             if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
@@ -212,13 +212,13 @@ extension MyController {
      
         track()
         let defaults = UserDefaults.standard
-        defaults.set(eyeX(), forKey: VC64Keys.eyeX)
-        defaults.set(eyeY(), forKey: VC64Keys.eyeY)
-        defaults.set(eyeZ(), forKey: VC64Keys.eyeZ)
+        defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
+        defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
+        defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
         defaults.set(c64.vic.colorScheme(), forKey: VC64Keys.colorScheme)
-        defaults.set(videoUpscaler(), forKey: VC64Keys.videoUpscaler)
-        defaults.set(videoFilter(), forKey: VC64Keys.videoFilter)
-        defaults.set(fullscreenKeepAspectRatio(), forKey: VC64Keys.aspectRatio)
+        defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
+        defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
+        defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)
         
         if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
             defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)

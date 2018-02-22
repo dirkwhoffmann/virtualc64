@@ -61,7 +61,7 @@ class CartridgeMountController : UserDialogController {
         
         // Attach cartridge
         c64.attachCartridgeAndReset(cartridge)
-        parent.rotateBack()
+        parent.metalScreen.rotateBack()
         
         hideSheet()
     }

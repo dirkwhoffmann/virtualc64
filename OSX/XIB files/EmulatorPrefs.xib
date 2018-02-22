@@ -9,7 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="EmulatorPrefsController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
                 <outlet property="aspectRatioButton" destination="b83-5Y-HZf" id="JTq-ge-uBk"/>
-                <outlet property="autoMount" destination="PUa-Ci-VYH" id="bhz-fj-Np6"/>
                 <outlet property="colorScheme" destination="9WR-aO-C3q" id="ACt-9p-3S5"/>
                 <outlet property="colorWell0" destination="AjL-Lu-fgD" id="MO7-GF-eDS"/>
                 <outlet property="colorWell1" destination="gkI-gO-ghe" id="Hsd-MT-ZEn"/>
@@ -601,7 +600,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDF-0g-r5M">
-                        <rect key="frame" x="91" y="162" width="305" height="18"/>
+                        <rect key="frame" x="87" y="161" width="305" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Disconnect emulation keys from C64 keyboard" bezelStyle="regularSquare" imagePosition="left" refusesFirstResponder="YES" state="on" inset="2" id="197-R1-5Ct">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -676,9 +675,9 @@ DQ
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="IconD64" id="vMg-BN-Kqs"/>
                     </imageView>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-Ci-VYH">
-                        <rect key="frame" x="87" y="91" width="163" height="25"/>
+                        <rect key="frame" x="87" y="91" width="146" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Skip user dialogs" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5AH-dJ-c4k">
+                        <buttonCell key="cell" type="check" title="Skip mount dialogs" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5AH-dJ-c4k">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -687,9 +686,9 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlK-gj-RRF">
-                        <rect key="frame" x="105" y="72" width="422" height="19"/>
+                        <rect key="frame" x="238" y="89" width="275" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If enabled, files are converted automatically to virtual disks" id="v9g-Er-yMf">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="If possible, files are automatically converted to virtual diskettes and inserted into the floppy drive." id="v9g-Er-yMf">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

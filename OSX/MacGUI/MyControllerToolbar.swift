@@ -202,7 +202,7 @@ extension MyController {
 
         // Image view
         let paperSize = printInfo.paperSize
-        let image = screenshot()
+        let image = metalScreen.screenshot()
         let printRect = NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height)
         let imageView = NSImageView.init(frame: printRect)
         imageView.image = image

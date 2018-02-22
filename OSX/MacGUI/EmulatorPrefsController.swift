@@ -106,13 +106,13 @@ class EmulatorPrefsController : UserDialogController {
     func update() {
        
         // Video
-        upscaler.selectItem(withTag: parent.videoUpscaler())
-        filter.selectItem(withTag: parent.videoFilter())
+        upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
+        filter.selectItem(withTag: parent.metalScreen.videoFilter)
         colorScheme.selectItem(withTag: c64.vic.colorScheme())
-        eyeXSlider.floatValue = parent.eyeX()
-        eyeYSlider.floatValue = parent.eyeY()
-        eyeZSlider.floatValue = parent.eyeZ()
-        aspectRatioButton.state = parent.fullscreenKeepAspectRatio() ? .on : .off
+        eyeXSlider.floatValue = parent.metalScreen.eyeX()
+        eyeYSlider.floatValue = parent.metalScreen.eyeY()
+        eyeZSlider.floatValue = parent.metalScreen.eyeZ()
+        aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
         colorWell0.color = c64.vic.color(0)
         colorWell1.color = c64.vic.color(1)
         colorWell2.color = c64.vic.color(2)
@@ -215,7 +215,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func setUpscalerAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
-        parent.setVideoUpscaler(sender.selectedTag())
+        parent.metalScreen.videoUpscaler = sender.selectedTag()
         update()
     }
     
@@ -223,7 +223,7 @@ class EmulatorPrefsController : UserDialogController {
     
         track()
         let sender = sender as! NSPopUpButton
-        parent.setVideoFilter(sender.selectedTag())
+        parent.metalScreen.videoFilter = sender.selectedTag()
         update()
     }
     
@@ -238,28 +238,28 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func setEyeXAction(_ sender: Any!) {
     
         let sender = sender as! NSSlider
-        parent.setEyeX(sender.floatValue)
+        parent.metalScreen.setEyeX(sender.floatValue)
         update()
     }
     
     @IBAction func setEyeYAction(_ sender: Any!) {
     
         let sender = sender as! NSSlider
-        parent.setEyeY(sender.floatValue)
+        parent.metalScreen.setEyeY(sender.floatValue)
         update()
     }
     
     @IBAction func setEyeZAction(_ sender: Any!) {
     
         let sender = sender as! NSSlider
-        parent.setEyeZ(sender.floatValue)
+        parent.metalScreen.setEyeZ(sender.floatValue)
         update()
     }
     
     @IBAction func setFullscreenAspectRatio(_ sender: Any!) {
     
         let sender = sender as! NSButton
-        parent.setFullscreenKeepAspectRatio(sender.state == .on)
+        parent.metalScreen.fullscreenKeepAspectRatio = (sender.state == .on)
         update()
     }
     

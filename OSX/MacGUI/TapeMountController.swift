@@ -38,7 +38,7 @@ class TapeMountController : UserDialogController {
         
         // Insert tape
         c64.insertTape(tape)
-        parent.rotateBack()
+        parent.metalScreen.rotateBack()
         
         // Process options
         if autoLoad.integerValue == 1 {

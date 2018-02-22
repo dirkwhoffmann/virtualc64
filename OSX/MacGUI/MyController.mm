@@ -73,6 +73,7 @@
 //       Metal screen API (remove when controller is Swift only!)
 // --------------------------------------------------------------------------------
 
+/*
 - (BOOL)fullscreen { return [metalScreen fullscreen]; }
 - (NSImage *)screenshot { return [metalScreen screenshot]; }
 - (void)rotateBack { [metalScreen rotateBack]; }
@@ -90,6 +91,7 @@
 - (void)setVideoFilter:(long)val { [metalScreen setVideoFilter:val]; }
 - (BOOL)fullscreenKeepAspectRatio { return [metalScreen fullscreenKeepAspectRatio]; }
 - (void)setFullscreenKeepAspectRatio:(BOOL)val { [metalScreen setFullscreenKeepAspectRatio:val]; }
+*/
 
 // --------------------------------------------------------------------------------
 //          Refresh methods: Force all GUI items to refresh their value

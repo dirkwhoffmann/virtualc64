@@ -64,7 +64,7 @@ class ExportScreenshotController : UserDialogController {
     
     @discardableResult func export() -> Bool {
         
-        let image = parent.screenshot()
+        let image = parent.metalScreen.screenshot()
         var data: Data?
         
         print("targetFormat = \(type)")

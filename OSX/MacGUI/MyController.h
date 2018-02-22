@@ -336,6 +336,7 @@
 @property NSLock *timerLock;
 
 // MetalView API
+/*
 - (BOOL)fullscreen;
 - (NSImage *)screenshot;
 - (void)rotateBack;
@@ -353,6 +354,7 @@
 - (void)setVideoFilter:(long)val;
 - (BOOL)fullscreenKeepAspectRatio;
 - (void)setFullscreenKeepAspectRatio:(BOOL)val;
+*/
 
 // Refresh
 - (void)refresh;
