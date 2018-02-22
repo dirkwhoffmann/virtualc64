@@ -265,7 +265,6 @@ EpyxFastLoad::reset()
     // Make the ROM show up
     initialGameLine = 1;
     initialExromLine = 0;
-    // disable_at_cycle = UINT64_MAX;
     Cartridge::reset();
     
     dischargeCapacitor();
@@ -282,7 +281,11 @@ void
 EpyxFastLoad::dischargeCapacitor()
 {
     // debug("Discharging capacitor\n");
-    disable_at_cycle = c64->getCycles() + 512 /* VICE value */;
+    
+    /* The capacitor will be charged in about 512 cycles (value taken from VICE).
+     * We store this value variable 'cycle', so it can be picked up in execute().
+     */
+    cycle = c64->getCycles() + 512;
     
     if (c64->expansionport.getGameLine() == 1 && c64->expansionport.getExromLine() == 1) {
     }
@@ -297,7 +300,7 @@ EpyxFastLoad::checkCapacitor()
     
     // debug("Capacitor check: Cartridge continues to live for %ld cycles\n", disable_at_cycle - c64->getCycles());
     
-    if (c64->getCycles() > disable_at_cycle) {
+    if (c64->getCycles() > cycle) {
         
         if (c64->expansionport.getGameLine() != 1 || c64->expansionport.getExromLine() != 1) {
         }
@@ -375,7 +378,33 @@ Rex::peekIO2(uint16_t addr)
 }
 
 // -----------------------------------------------------------------------------------------
-//                                     COMAL 80
+// Zaxxon
+// -----------------------------------------------------------------------------------------
+
+uint8_t
+Zaxxon::peek(uint16_t addr)
+{
+    /* "The (Super) Zaxxon carts use a 4Kb ($1000) ROM at $8000-$8FFF (mirrored
+     * in $9000-$9FFF) along with two 8Kb ($2000) cartridge banks  located  at
+     * $A000-$BFFF. One of the two banks is selected by doing a read access to
+     * either the $8000-$8FFF area (bank 0 is selected) or to $9000-$9FFF area
+     * (bank 1 is selected)."
+     */
+    
+    if (addr >= 0x8000 && addr <= 0x8FFF) {
+        bankIn(1);
+        return Cartridge::peek(addr);
+    }
+    if (addr >= 0x9000 && addr <= 0x9FFF) {
+        bankIn(2);
+        return Cartridge::peek(addr - 0x1000);
+    }
+    
+    return Cartridge::peek(addr);
+}
+
+// -----------------------------------------------------------------------------------------
+// COMAL 80
 // -----------------------------------------------------------------------------------------
 
 void
@@ -391,7 +420,7 @@ uint8_t
 Comal80::peekIO1(uint16_t addr)
 {
     // debug("Comal80::peekIO1(%04X)", addr);
-    return regval;
+    return regValue; // 'value' contains the latest value passed to pokeIO1()
 }
 
 uint8_t
@@ -408,7 +437,7 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
     
     if (addr >= 0xDE00 && addr <= 0xDEFF) {
 
-        regval = value & 0xC7;
+        regValue = value & 0xC7;
         bankIn(value & 0x03);
         
         switch (value & 0xE0) {

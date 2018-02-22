@@ -23,6 +23,8 @@ Cartridge::Cartridge(C64 *c64)
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
     }
+    cycle = 0;
+    regValue = 0;
 }
 
 Cartridge::~Cartridge()
@@ -39,6 +41,8 @@ Cartridge::reset()
 {
     // Bank in chip 0 on startup
     bankIn(0);
+    cycle = 0;
+    regValue = 0;
 }
 
 bool
@@ -58,6 +62,8 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_EPYX_FASTLOAD:
         case CRT_WESTERMANN:
         case CRT_REX:
+        
+        case CRT_ZAXXON:
             
         case CRT_COMAL80:
             
@@ -93,6 +99,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new Westermann(c64);
         case CRT_REX:
             return new Rex(c64);
+        case CRT_ZAXXON:
+            return new Zaxxon(c64);
         case CRT_COMAL80:
             return new Comal80(c64);
             
@@ -132,7 +140,9 @@ Cartridge::stateSize()
     }
 
     size += sizeof(blendedIn);
-    
+    size += sizeof(cycle);
+    size += sizeof(regValue);
+
     return size;
 }
 
@@ -157,6 +167,8 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     }
     
     readBlock(buffer, blendedIn, sizeof(blendedIn));
+    cycle = read64(buffer);
+    regValue = read8(buffer);
     
     debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -180,6 +192,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     }
     
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
+    write64(buffer, cycle);
+    write8(buffer, regValue);
     
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());

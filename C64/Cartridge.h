@@ -64,6 +64,19 @@ public:
      */
     uint8_t blendedIn[16];
     
+    /*! @brief    Temporary storage for cycle information
+     *  @details  Some custom cartridges need to remember when certain event took place.
+     *            When such an event happens, they preserve the cycle in this variable.
+     *            Most cartridges do not use this variable.
+     */
+    uint64_t cycle;
+    
+    /*! @brief    Temporary storage for peeked or poked values
+     *  @details  Some custom cartridges need to remember the last value that has been
+     *            peeked or poked. They preserve this value in this variable.
+     */
+    uint8_t regValue;
+    
 public:
     
     //! @brief    Convenience constructor
