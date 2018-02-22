@@ -202,23 +202,13 @@ extension MyController {
     
         case MSG_READY_TO_RUN:
     
-            // Close ROM dialog if open
-            // TODO: MAKE SURE THAT DIALOG IS ALREADY CLOSED
-            /*
-            if (romDialog != nil) {
-                romDialog.orderOut(nil)
-                window?.endSheet(romDialog, returnCode: .cancel)
-                romDialog = nil
-            }
-            */
-            
             // Start emulator
             c64.run()
             metalScreen.blendIn()
             metalScreen.drawC64texture = true
     
             // Show mount dialog if an attachment is present
-            showMountDialog()
+            processAttachment()
             break;
     
         case MSG_RUN:
@@ -470,60 +460,67 @@ extension MyController {
     // Attachment processing
     // --------------------------------------------------------------------------------
 
-    @objc func showMountDialog() {
-        
-        track()
-        
-        // Does this document have an attachment?
+    /// System-level entry point for processing attachment
+    /// According to the attachment type and the user preferences, a user dialog is
+    /// presented before loading the attachment into the emulator.
+    func processAttachment() {
+       
+        // Get attachment from document
         let document = self.document as! MyDocument
         guard let attachment = document.attachment else {
             return
         }
         
-        // Which mount dialog should we use?
-        var controller: UserDialogController!
+        // Process according to attachment type
         switch attachment.type() {
-        case T64_CONTAINER,
-             PRG_CONTAINER,
-             P00_CONTAINER,
-             D64_CONTAINER:
-            let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
-            controller = ArchiveMountController.init(windowNibName: nibName)
-            break
             
-        case G64_CONTAINER,
-             NIB_CONTAINER:
-            let nibName = NSNib.Name(rawValue: "DiskMountDialog")
-            controller = DiskMountController.init(windowNibName: nibName)
-            break
-
+        case V64_CONTAINER:
+            c64.load(fromSnapshot: attachment as! SnapshotProxy)
+            return
+            
         case CRT_CONTAINER:
-            track()
-            
-            // Check if we support this cartridge
-            let crt = attachment as! CRTProxy
-            if !crt.isSupported() {
-                showUnsupportedCartridgeAlert(crt)
+            let cartridge = attachment as! CRTProxy
+            if !cartridge.isSupported() {
+                showUnsupportedCartridgeAlert(cartridge)
                 return
             }
-            
             let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
-            controller = CartridgeMountController.init(windowNibName: nibName)
-            break
-
+            let controller = CartridgeMountController.init(windowNibName: nibName)
+            controller.showSheet(withParent: self)
+            return
+            
         case TAP_CONTAINER:
             let nibName = NSNib.Name(rawValue: "TapeMountDialog")
-            controller = TapeMountController.init(windowNibName: nibName)
-            break
+            let controller = TapeMountController.init(windowNibName: nibName)
+            controller.showSheet(withParent: self)
+            return
+            
+        case T64_CONTAINER, PRG_CONTAINER, P00_CONTAINER, D64_CONTAINER:
+            if autoMount {
+                c64.insertDisk(attachment as! ArchiveProxy)
+            } else {
+                let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+                let controller = ArchiveMountController.init(windowNibName: nibName)
+                controller.showSheet(withParent: self)
+            }
+            return
+            
+        case G64_CONTAINER, NIB_CONTAINER:
+            if autoMount {
+                c64.insertDisk(attachment as! ArchiveProxy)
+            } else {
+                let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+                let controller = DiskMountController.init(windowNibName: nibName)
+                controller.showSheet(withParent: self)
+            }
+            return
             
         default:
-            // There is no mount dialog availabe for the attachments type
-            return
+            track("Unknown attachment type")
+            fatalError()
         }
-        
-        controller.showSheet(withParent: self)
     }
-
+        
     // --------------------------------------------------------------------------------
     // Action methods (main screen)
     // --------------------------------------------------------------------------------

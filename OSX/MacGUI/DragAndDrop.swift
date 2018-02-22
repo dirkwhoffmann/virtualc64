@@ -111,8 +111,9 @@ public extension MetalView {
             }
             
             // Is it a snapshop with a matching version number?
-            if let snapshot = SnapshotProxy.make(withFile: path) {
-                controller.c64.load(fromSnapshot: snapshot)
+            document.attachment = SnapshotProxy.make(withFile: path)
+            if document.attachment != nil {
+                controller.processAttachment()
                 document.fileURL = nil // Make document 'Untitled'
                 return true
             }
@@ -120,25 +121,21 @@ public extension MetalView {
             // Is it an archive?
             document.attachment = ArchiveProxy.make(withFile: path)
             if document.attachment != nil {
-                
-                track("Successfully read archive.")
-                controller.showMountDialog()
+                controller.processAttachment()
                 return true
             }
         
             // Is it a band tape?
             document.attachment = TAPProxy.make(withFile: path)
             if document.attachment != nil {
-                track("Successfully read tape.")
-                controller.showMountDialog()
+                controller.processAttachment()
                 return true
             }
             
             // Is it a cartridge?
             document.attachment = CRTProxy.make(withFile: path)
             if document.attachment != nil {
-                track("Successfully read cartridge.")
-                controller.showMountDialog()
+                controller.processAttachment()
                 return true
             }
         
@@ -149,7 +146,7 @@ public extension MetalView {
             document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
             if document.attachedArchive != nil {
                 track("Successfully read archive.")
-                controller.showMountDialog()
+                controller.processAttachment()
                 return true
             }
             */
