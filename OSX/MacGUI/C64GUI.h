@@ -39,7 +39,6 @@
 #import "MyControllerCiaPanel.h"
 #import "MyControllerVicPanel.h"
 
-#import "HardwareDialog.h"
 
 
 

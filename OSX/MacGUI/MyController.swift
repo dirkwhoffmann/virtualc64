@@ -467,7 +467,7 @@ extension MyController {
     }    
 
     // --------------------------------------------------------------------------------
-    //                                 Modal dialogs
+    // Attachment processing
     // --------------------------------------------------------------------------------
 
     @objc func showMountDialog() {
@@ -525,7 +525,7 @@ extension MyController {
     }
 
     // --------------------------------------------------------------------------------
-    //                         Action methods (main screen)
+    // Action methods (main screen)
     // --------------------------------------------------------------------------------
     
     @IBAction func alwaysWarpAction(_ sender: Any!) {

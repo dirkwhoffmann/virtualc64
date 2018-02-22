@@ -33,12 +33,14 @@ struct VC64Keys {
     static let joyKeyMap2     = "VC64JoyKeyMap2"
     static let disconnectKeys = "VC64DisconnectKeys"
     
+    static let autoMount      = "VC64AutoMount"
+    
     // Hardware preferences dialog
     static let ntsc = "VC64PALorNTSCKey"
     
     static let warpLoad    = "VC64WarpLoadKey"
     static let driveNoise  = "VC64DriveNoiseKey"
-    static let bitAccuracy = "VC64BitAccuracyKey"
+    // static let bitAccuracy = "VC64BitAccuracyKey"
 
     static let reSID          = "VC64SIDReSIDKey"
     static let audioChip      = "VC64SIDChipModelKey"
@@ -91,8 +93,9 @@ extension MyController {
             VC64Keys.videoFilter: 2,
             VC64Keys.aspectRatio: false,
         
-            VC64Keys.disconnectKeys: true
-        ]
+            VC64Keys.disconnectKeys: true,
+            VC64Keys.autoMount: false
+]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
@@ -108,7 +111,7 @@ extension MyController {
         
             VC64Keys.warpLoad: true,
             VC64Keys.driveNoise: true,
-            VC64Keys.bitAccuracy: true,
+            // VC64Keys.bitAccuracy: true,
         
             VC64Keys.reSID: true,
             VC64Keys.audioChip: 1,
@@ -160,6 +163,7 @@ extension MyController {
             }
         }
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
+        autoMount = defaults.bool(forKey: VC64Keys.autoMount)
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -170,7 +174,7 @@ extension MyController {
         c64.setNTSC(defaults.bool(forKey: VC64Keys.ntsc))
         c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
         c64.vc1541.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
-        c64.vc1541.setBitAccuracy(defaults.bool(forKey: VC64Keys.bitAccuracy))
+        // c64.vc1541.setBitAccuracy(defaults.bool(forKey: VC64Keys.bitAccuracy))
         c64.setReSID(defaults.bool(forKey: VC64Keys.reSID))
         c64.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
@@ -223,6 +227,7 @@ extension MyController {
             defaults.set(keyMap, forKey: VC64Keys.joyKeyMap2)
         }
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
+        defaults.set(autoMount, forKey: VC64Keys.autoMount)
     }
     
     /// Saves the user defaults for all properties that are set in the hardware dialog
@@ -233,7 +238,7 @@ extension MyController {
         defaults.set(c64.isNTSC(), forKey: VC64Keys.ntsc)
         defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
         defaults.set(c64.vc1541.soundMessagesEnabled(), forKey: VC64Keys.driveNoise)
-        defaults.set(c64.vc1541.bitAccuracy(), forKey: VC64Keys.bitAccuracy)
+        // defaults.set(c64.vc1541.bitAccuracy(), forKey: VC64Keys.bitAccuracy)
         defaults.set(c64.reSID(), forKey: VC64Keys.reSID)
         defaults.set(c64.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.audioFilter(), forKey: VC64Keys.audioFilter)
@@ -278,6 +283,7 @@ extension MyController {
             VC64Keys.joyKeyMap1,
             VC64Keys.joyKeyMap2,
             VC64Keys.disconnectKeys,
+            VC64Keys.autoMount,
             VC64Keys.mapKeysByPosition
         ]
         let defaults = UserDefaults.standard
@@ -298,7 +304,7 @@ extension MyController {
             VC64Keys.ntsc,
             VC64Keys.warpLoad,
             VC64Keys.driveNoise,
-            VC64Keys.bitAccuracy,
+            // VC64Keys.bitAccuracy,
             VC64Keys.reSID,
             VC64Keys.audioChip,
             VC64Keys.audioFilter,

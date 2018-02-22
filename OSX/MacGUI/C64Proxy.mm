@@ -571,8 +571,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setWriteProtection:(bool)b { wrapper->vc1541->disk.setWriteProtection(b); }
 - (bool) DiskModified { return wrapper->vc1541->disk.isModified(); }
 - (void) setDiskModified:(bool)b { wrapper->vc1541->disk.setModified(b); }
-- (bool) bitAccuracy { return wrapper->vc1541->getBitAccuracy(); }
-- (void) setBitAccuracy:(bool)b { wrapper->vc1541->setBitAccuracy(b); }
+// - (bool) bitAccuracy { return wrapper->vc1541->getBitAccuracy(); }
+// - (void) setBitAccuracy:(bool)b { wrapper->vc1541->setBitAccuracy(b); }
 - (bool) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (NSInteger) halftrack { return wrapper->vc1541->getHalftrack(); }

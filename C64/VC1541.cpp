@@ -57,6 +57,7 @@ VC1541::VC1541()
     
     registerSnapshotItems(items, sizeof(items));
     
+    bitAccuracy = true;
     sendSoundMessages = true;
     resetDisk();
 }

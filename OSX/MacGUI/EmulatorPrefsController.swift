@@ -96,6 +96,9 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var fire2button: NSButton!
     @IBOutlet weak var disconnectKeys: NSButton!
     
+    // Documents
+    @IBOutlet weak var autoMount: NSButton!
+
     override func awakeFromNib() {
         update()
     }
@@ -139,6 +142,9 @@ class EmulatorPrefsController : UserDialogController {
         updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
         updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
         disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
+        
+        // Documents
+        autoMount.state = parent.autoMount ? .on : .off
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
@@ -253,7 +259,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func setFullscreenAspectRatio(_ sender: Any!) {
     
         let sender = sender as! NSButton
-        parent.setFullscreenKeepAspectRatio(sender.state.rawValue != 0)
+        parent.setFullscreenKeepAspectRatio(sender.state == .on)
         update()
     }
     
@@ -281,7 +287,14 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func disconnectKeysAction(_ sender: Any!) {
     
         let sender = sender as! NSButton
-        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state.rawValue != 0)
+        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
+        update()
+    }
+    
+    @IBAction func autoMountAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        parent.autoMount =  (sender.state == .on)
         update()
     }
     

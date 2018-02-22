@@ -22,6 +22,8 @@
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
+		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
+		500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
 		500FF3911BD7F4DF0038245B /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF38F1BD7F4DF0038245B /* rom.png */; };
 		500FF3921BD7F4DF0038245B /* rom_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF3901BD7F4DF0038245B /* rom_light.png */; };
@@ -158,7 +160,6 @@
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB241B826CD50054EE86 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB231B826CD50054EE86 /* expansion.png */; };
 		50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB2B1B826FF20054EE86 /* graphics.png */; };
-		50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */; };
 		50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB361B83561E0054EE86 /* pref_vic.png */; };
 		50C9CB391B8356280054EE86 /* pref_sid.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB381B8356280054EE86 /* pref_sid.png */; };
 		50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* OldSID.cpp */; };
@@ -292,6 +293,8 @@
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		500EC05010E4DCC4005A19A3 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
+		500EF688203EB0210043F4FC /* HardwarePrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HardwarePrefs.xib; sourceTree = "<group>"; };
+		500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePrefsController.swift; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
 		500FF38F1BD7F4DF0038245B /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
@@ -463,8 +466,6 @@
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
 		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expansion.png; sourceTree = "<group>"; };
 		50C9CB2B1B826FF20054EE86 /* graphics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphics.png; sourceTree = "<group>"; };
-		50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HardwareDialog.mm; sourceTree = "<group>"; };
-		50C9CB331B8272F40054EE86 /* HardwareDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareDialog.h; sourceTree = "<group>"; };
 		50C9CB361B83561E0054EE86 /* pref_vic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref_vic.png; sourceTree = "<group>"; };
 		50C9CB381B8356280054EE86 /* pref_sid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref_sid.png; sourceTree = "<group>"; };
 		50CA0D500A9076FD00A5A08D /* OldSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldSID.h; sourceTree = "<group>"; };
@@ -799,15 +800,6 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		5000474212DCECDB0098D890 /* Dialogs */ = {
-			isa = PBXGroup;
-			children = (
-				50C9CB331B8272F40054EE86 /* HardwareDialog.h */,
-				50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */,
-			);
-			name = Dialogs;
-			sourceTree = "<group>";
-		};
 		5000474312DCED190098D890 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
@@ -856,7 +848,6 @@
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
-				5000474212DCECDB0098D890 /* Dialogs */,
 				5000474312DCED190098D890 /* Misc */,
 			);
 			path = MacGUI;
@@ -991,6 +982,7 @@
 				50763276202989D300575110 /* UserDialogController.swift */,
 				506D54C720321C830026D8B4 /* RomDialogController.swift */,
 				50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */,
+				500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */,
 				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
@@ -1064,6 +1056,7 @@
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				506D54C920321EDF0026D8B4 /* RomDialog.xib */,
 				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
+				500EF688203EB0210043F4FC /* HardwarePrefs.xib */,
 				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
@@ -1310,6 +1303,7 @@
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
 				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
 				50355F3B203E254700163F80 /* keys2.png in Resources */,
+				500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */,
 				50F23D0812DF932800B1F275 /* glossy.png in Resources */,
 				50D6954812E3759500D9C738 /* IconCRT.icns in Resources */,
 				505529BC2033014B006004B3 /* rom_medium.png in Resources */,
@@ -1444,6 +1438,7 @@
 				50D141881417A34B0024FC74 /* wave6581_PS_.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
+				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50D141891417A34B0024FC74 /* wave6581_PST.cc in Sources */,
 				50D1418A1417A34B0024FC74 /* wave8580__ST.cc in Sources */,
@@ -1452,7 +1447,6 @@
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 				50D1418D1417A34B0024FC74 /* wave8580_PST.cc in Sources */,
-				50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

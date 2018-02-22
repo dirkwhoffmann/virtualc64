@@ -107,7 +107,9 @@ extension MyController {
     
     @IBAction func hardwareAction(_ sender: Any!) {
     
-        showHardwareDialog()
+        let nibName = NSNib.Name(rawValue: "HardwarePrefs")
+        let controller = HardwarePrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
     }
     
     @IBAction func mediaAction(_ sender: Any!) {

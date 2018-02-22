@@ -49,11 +49,11 @@
     IBOutlet MetalView *metalScreen;
     
 	// Dialogs
-    IBOutlet PropertiesDialog *propertiesDialog;
-    IBOutlet HardwareDialog *hardwareDialog;
-    IBOutlet MediaDialog *mediaDialog;
-	IBOutlet MountDialog *mountDialog;
-    IBOutlet TapeDialog *tapeDialog;
+    // IBOutlet PropertiesDialog *propertiesDialog;
+    // IBOutlet HardwareDialog *hardwareDialog;
+    // IBOutlet MediaDialog *mediaDialog;
+	// IBOutlet MountDialog *mountDialog;
+    // IBOutlet TapeDialog *tapeDialog;
 	    
     // Toolbar
     IBOutlet NSPopUpButton *joystickPortA;
@@ -284,6 +284,9 @@
 
     //! @brief   Selected game pad slot for joystick in port B
     NSInteger gamepadSlotB;
+    
+    //! @brief   Indicates if user dialog should be skipped when opening archives
+    bool autoMount;
 }
 
 @property (strong) C64Proxy *c64;
@@ -327,6 +330,7 @@
 @property bool statusBar;
 @property NSInteger gamepadSlotA;
 @property NSInteger gamepadSlotB;
+@property bool autoMount;
 
 @property NSTimer *timer;
 @property NSLock *timerLock;
@@ -354,12 +358,5 @@
 - (void)refresh;
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;
 - (void)enableUserEditing:(BOOL)enabled;
-
-// Dialogs
-// - (bool)showPropertiesDialog;
-// - (IBAction)cancelPropertiesDialog:(id)sender;
-
-- (bool)showHardwareDialog;
-- (IBAction)cancelHardwareDialog:(id)sender;
 
 @end

@@ -57,6 +57,7 @@
 @synthesize statusBar;
 @synthesize gamepadSlotA;
 @synthesize gamepadSlotB;
+@synthesize autoMount;
 
 @synthesize keyboardcontroller;
 @synthesize metalScreen;
@@ -232,40 +233,6 @@
 		[stepOverButton setEnabled:false];
 		[stepOutButton setEnabled:false];		
 	}		
-}
-
-// --------------------------------------------------------------------------------
-//                                     Dialogs
-// --------------------------------------------------------------------------------
-
-/*
-- (bool)showPropertiesDialog
-{
-    [propertiesDialog initialize:self];
-    [[self window] beginSheet:propertiesDialog completionHandler:nil];
-    
-    return YES;
-}
-
-- (IBAction)cancelPropertiesDialog:(id)sender
-{
-	[propertiesDialog orderOut:sender]; // Hide sheet
-    [[self window] endSheet:propertiesDialog returnCode:NSModalResponseCancel];
-}
-*/
-
-- (bool)showHardwareDialog
-{
-    [hardwareDialog initialize:self];
-    [[self window] beginSheet:hardwareDialog completionHandler:nil];
-
-    return YES;
-}
-
-- (IBAction)cancelHardwareDialog:(id)sender
-{
-    [hardwareDialog orderOut:sender];
-    [[self window] endSheet:hardwareDialog returnCode:NSModalResponseCancel];
 }
 
 @end
