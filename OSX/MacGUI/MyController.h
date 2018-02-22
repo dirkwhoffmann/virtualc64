@@ -335,27 +335,6 @@
 @property NSTimer *timer;
 @property NSLock *timerLock;
 
-// MetalView API
-/*
-- (BOOL)fullscreen;
-- (NSImage *)screenshot;
-- (void)rotateBack;
-- (void)shrink;
-- (void)expand;
-- (float)eyeX;
-- (void)setEyeX:(float)x;
-- (float)eyeY;
-- (void)setEyeY:(float)y;
-- (float)eyeZ;
-- (void)setEyeZ:(float)z;
-- (long)videoUpscaler;
-- (void)setVideoUpscaler:(long)val;
-- (long)videoFilter;
-- (void)setVideoFilter:(long)val;
-- (BOOL)fullscreenKeepAspectRatio;
-- (void)setFullscreenKeepAspectRatio:(BOOL)val;
-*/
-
 // Refresh
 - (void)refresh;
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;

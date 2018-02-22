@@ -11,7 +11,7 @@
 
 //! @brief Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 7
+#define V_MINOR 8
 #define V_SUBMINOR 0
 
 
@@ -36,12 +36,14 @@ typedef enum {
 /*! @brief    Rom types
  *  @details  VirtualC64 needs all four ROMs to run
  */
+/*
 typedef enum {
     BASIC_ROM  = 1,
     CHAR_ROM   = 2,
     KERNEL_ROM = 4,
     VC1541_ROM = 8
 } RomType;
+*/
 
 /*! @brief    Message types
  *  @details  List of all possible message id's

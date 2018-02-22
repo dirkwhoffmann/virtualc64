@@ -305,7 +305,13 @@ struct ContainerWrapper;
 
 - (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void) releaseRestoreKey;
+- (void) releaseAll;
 
+- (BOOL) shiftLockIsPressed;
+- (void) lockShift;
+- (void) unlockShift;
+
+/*
 - (BOOL) shiftKeyIsPressed;
 - (BOOL) commodoreKeyIsPressed;
 - (BOOL) ctrlKeyIsPressed;
@@ -315,6 +321,7 @@ struct ContainerWrapper;
 - (void) toggleCommodoreKey;
 - (void) toggleCtrlKey;
 - (void) toggleRunstopKey;
+*/
 
 @end 
 
@@ -626,9 +633,6 @@ struct ContainerWrapper;
 - (void) setPAL;
 - (void) setNTSC;
 - (void) setNTSC:(BOOL)b;
-
-- (uint8_t) missingRoms; // DEPRECATED
-
 
 - (bool) isBasicRom:(NSURL *)url;
 - (bool) loadBasicRom:(NSURL *)url;

@@ -44,6 +44,7 @@ Keyboard::reset()
     VirtualComponent::reset();
 
 	// Release all keys (resets the keyboard matrix)
+    debug("Releasing keyboard matrix");
     releaseAll();
 }
 

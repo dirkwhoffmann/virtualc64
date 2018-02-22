@@ -776,18 +776,6 @@ C64::synchronizeTiming()
 //! @functiongroup Loading ROM images
 //
 
-uint8_t
-C64::getMissingRoms() {
-    
-    uint8_t missingRoms = 0;
-    
-    if (!mem.basicRomIsLoaded()) missingRoms |= BASIC_ROM;
-    if (!mem.charRomIsLoaded()) missingRoms |= CHAR_ROM;
-    if (!mem.kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
-    if (!floppy.mem.romIsLoaded()) missingRoms |= VC1541_ROM;
-    return missingRoms;
-}
-
 bool
 C64::loadRom(const char *filename)
 {

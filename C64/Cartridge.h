@@ -19,7 +19,6 @@
  */
 
 // TODO:
-// 1. Implement pokeIO1, pokeIO2 instead of poke
 // 2. Some archives do not write their internal state into snapshop buffer
 // 3. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
 // 4. Magic Desk, Domark, HES Australia, interesting test case

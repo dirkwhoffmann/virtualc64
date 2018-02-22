@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="EmulatorPrefsController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
                 <outlet property="aspectRatioButton" destination="b83-5Y-HZf" id="JTq-ge-uBk"/>
+                <outlet property="autoMount" destination="PUa-Ci-VYH" id="ftj-sZ-YSR"/>
                 <outlet property="colorScheme" destination="9WR-aO-C3q" id="ACt-9p-3S5"/>
                 <outlet property="colorWell0" destination="AjL-Lu-fgD" id="MO7-GF-eDS"/>
                 <outlet property="colorWell1" destination="gkI-gO-ghe" id="Hsd-MT-ZEn"/>

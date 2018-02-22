@@ -25,6 +25,7 @@ extension MyController {
         if item.action == #selector(MyController.customizeKeyMap(_:)) {
             return keyboardcontroller.mapKeysByPosition
         }
+        /*
         if item.action == #selector(MyController.toggleShiftKey(_:)) {
             item.state = c64.keyboard.shiftKeyIsPressed() ? .on : .off
             return true
@@ -41,6 +42,7 @@ extension MyController {
             item.state = c64.keyboard.runstopKeyIsPressed() ? .on : .off
             return true
         }
+        */
         
         // Disk menu
         if item.action == #selector(MyController.driveEjectAction(_:)) {
@@ -244,35 +246,6 @@ extension MyController {
     }
     
     // -----------------------------------------------------------------
-    @IBAction func shiftCommodoreKeyAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.commodore, C64Key.shift])
-    }
-    @IBAction func shiftCtrlKeyAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.control, C64Key.shift])
-    }
-    @IBAction func shiftRunstopKeyAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.runStop, C64Key.shift])
-    }
-    @IBAction func shiftRestoreAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.restore, C64Key.shift])
-    }
-    @IBAction func shiftLeftarrowAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.leftArrow, C64Key.shift])
-    }
-    @IBAction func shiftUparrowAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.upArrow, C64Key.shift])
-    }
-    @IBAction func shiftPowndAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(keyList: [C64Key.pound, C64Key.shift])
-    }
-    
-    // -----------------------------------------------------------------
-    @IBAction func commodoreKeyAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(key: C64Key.commodore)
-    }
-    @IBAction func ctrlKeyAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(key: C64Key.control)
-    }
     @IBAction func runstopAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(key: C64Key.runStop)
     }
@@ -282,14 +255,8 @@ extension MyController {
     @IBAction func runstopRestoreAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(keyList: [C64Key.runStop, C64Key.restore])
     }
-    @IBAction func leftarrowAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(key: C64Key.leftArrow)
-    }
-    @IBAction func uparrowAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(key: C64Key.upArrow)
-    }
-    @IBAction func powndAction(_ sender: Any!) {
-        keyboardcontroller.typeOnKeyboard(key: C64Key.pound)
+    @IBAction func commodoreKeyAction(_ sender: Any!) {
+        keyboardcontroller.typeOnKeyboard(key: C64Key.commodore)
     }
     @IBAction func clearKeyAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(keyList: [C64Key.home, C64Key.shift])
@@ -303,21 +270,21 @@ extension MyController {
     @IBAction func deleteKeyAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(key: C64Key.delete)
     }
-    
-    // -----------------------------------------------------------------
-    @IBAction func toggleShiftKey(_ sender: Any!) {
-        c64.keyboard.toggleShiftKey()
+    @IBAction func shiftLockAction(_ sender: Any!) {
+        
+        undoManager?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.shiftLockAction(sender)
+        }
+        if c64.keyboard.shiftLockIsPressed() {
+            c64.keyboard.unlockShift()
+        } else {
+            c64.keyboard.lockShift()
+        }
     }
-    @IBAction func toggleCommodoreKey(_ sender: Any!) {
-        c64.keyboard.toggleCommodoreKey()
+    @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
+        c64.keyboard.releaseAll()
     }
-    @IBAction func toggleCtrlKey(_ sender: Any!) {
-        c64.keyboard.toggleCtrlKey()
-    }
-    @IBAction func toggleRunstopKey(_ sender: Any!) {
-        c64.keyboard.toggleRunstopKey()
-    }
-    
+
     // -----------------------------------------------------------------
     @IBAction func loadDirectoryAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(string: "LOAD \"$\",8", completion: nil)

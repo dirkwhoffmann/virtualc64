@@ -64,7 +64,10 @@ public:
      *  @details  The key is identified by its native row and column index.
      */
     bool keyIsPressed(uint8_t row, uint8_t col);
-    
+
+    //! @brief    Checks if the shift lock key is held down.
+    bool shiftLockIsPressed() { return shiftLock; }
+
     //! @brief    Checks if the shift key is currently pressed.
     bool shiftKeyIsPressed() { return keyIsPressed(1,7); }
     
@@ -135,7 +138,6 @@ public:
     
     //! @brief    Clears the keyboard matrix.
     void releaseAll() { for (unsigned i = 0; i < 8; i++) kbMatrixRow[i] = kbMatrixCol[i] = 0xFF; }
-
     
     /*! @brief    Toggles a certain key.
      *  @details  The key is identified by its native row and column index.

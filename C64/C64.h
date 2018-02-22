@@ -20,9 +20,10 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.8
 // 1. Keyboard manager has been overhauled. The keyboard menu let's you choose between symbolic and positional key mapping. Symbolic mapping means that the emulator tries to map the pressed key based on their ASCII representation. Older versions solely used this kind of mapping. If you choose positional mapping, a Mac will be wired directly to a key on the C64 keyboard. In positional mapping mode, the key map can be customized individually.
-// 2. TODO: Added an option to skip the mount dialog if a D64, T64, PRG, P00, G64, or NIB file is loaded. The file will automatically be converted to a disk and inserted in the floppy drive.
-// 3. Fixed a bug that caused the emulator to crash when a TAP file with a .T64 file suffix was loaded
-// 4.
+// 2. Added an option to skip the mount dialog if a D64, T64, PRG, P00, G64, or NIB file is loaded. The file will automatically be converted to a disk and inserted in the floppy drive.
+// 3. In order to simplifiy the VC1541 emulation code, the option to put the drive in an accellerated read-only mode has been removed.
+// 4. Fixed a bug that caused the emulator to crash when a TAP file with a .T64 file suffix was loaded
+// 5.
 //
 // TODO:
 //
@@ -528,16 +529,11 @@ public:
     //
     //! @functiongroup Loading ROM images
     //
-
-    /*! @brief    Provides information about missing ROM images.
-     *  @details  Each missing ROM is indicated by a 1 in the returned bitmap.
-     */
-    uint8_t getMissingRoms();
     
     //! @brief    Loads ROM image into memory
     bool loadRom(const char *filename);
 
-    
+
     //
     //! @functiongroup Loading and saving snapshots
     //

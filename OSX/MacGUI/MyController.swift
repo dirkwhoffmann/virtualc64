@@ -230,15 +230,7 @@ extension MyController {
              MSG_CHAR_ROM_LOADED,
              MSG_KERNEL_ROM_LOADED,
              MSG_VC1541_ROM_LOADED:
-            
             break
-            // Update ROM dialog
-            /*
-            if romDialog != nil {
-                romDialog.update(Int32(c64.missingRoms()))
-            }
-            break
-            */
             
         case MSG_ROM_MISSING:
 

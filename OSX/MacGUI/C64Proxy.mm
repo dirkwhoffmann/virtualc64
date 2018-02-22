@@ -363,7 +363,15 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->keyboard->releaseKey(row, col); }
 - (void) releaseRestoreKey {
     wrapper->keyboard->releaseRestoreKey(); }
+- (void) releaseAll { wrapper->keyboard->releaseAll(); }
 
+- (BOOL) shiftLockIsPressed { return wrapper->keyboard->shiftLockIsPressed(); }
+- (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
+- (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
+
+
+
+/*
 - (BOOL) shiftKeyIsPressed { return wrapper->keyboard->shiftKeyIsPressed(); }
 - (BOOL) commodoreKeyIsPressed { return wrapper->keyboard->commodoreKeyIsPressed(); }
 - (BOOL) ctrlKeyIsPressed { return wrapper->keyboard->ctrlKeyIsPressed(); }
@@ -373,7 +381,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) toggleCommodoreKey { wrapper->keyboard->toggleCommodoreKey(); }
 - (void) toggleCtrlKey { wrapper->keyboard->toggleCtrlKey(); }
 - (void) toggleRunstopKey { wrapper->keyboard->toggleRunstopKey(); }
-
+*/
 @end
 
 
@@ -773,9 +781,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setNTSC { wrapper->c64->setNTSC(); }
 - (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
 
-- (uint8_t) missingRoms {
-    return wrapper->c64->getMissingRoms();
-}
 - (bool) isBasicRom:(NSURL *)url {
     return wrapper->c64->mem.isBasicRom([[url path] UTF8String]);
 }
