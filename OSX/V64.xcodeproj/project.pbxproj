@@ -793,8 +793,8 @@
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				50FE5B342039B392006CE7C7 /* Keyboard */,
-				50763278202989E000575110 /* UserDialogs */,
+				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
+				50763278202989E000575110 /* User Dialog Controllers */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -976,7 +976,7 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		50763278202989E000575110 /* UserDialogs */ = {
+		50763278202989E000575110 /* User Dialog Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
@@ -993,7 +993,7 @@
 				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 			);
-			name = UserDialogs;
+			name = "User Dialog Controllers";
 			sourceTree = "<group>";
 		};
 		5080F3511EE7469C001313D4 /* TouchBar Icons */ = {
@@ -1145,14 +1145,14 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
-		50FE5B342039B392006CE7C7 /* Keyboard */ = {
+		50FE5B342039B392006CE7C7 /* Keyboard Controller */ = {
 			isa = PBXGroup;
 			children = (
 				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
 				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 			);
-			name = Keyboard;
+			name = "Keyboard Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

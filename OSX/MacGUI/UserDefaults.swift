@@ -258,14 +258,17 @@ extension MyController {
     // --------------------------------------------------------------------------------
 
     /// Restores the factory settings for all user defaults except the ROM settings
+    /*
     func restoreUserDefaults() {
         
         track()
         restoreEmulatorUserDefaults()
         restoreHardwareUserDefaults()
     }
+    */
     
     /// Restores the factory settings for all properties that are set in the hardware dialog
+    /*
     @objc func restoreEmulatorUserDefaults() {
         
         track()
@@ -294,8 +297,10 @@ extension MyController {
         // Reload to restore the registered default values
         loadEmulatorUserDefaults()
     }
+    */
     
     /// Restores the factory settings for all properties that are set in the hardware dialog
+    /*
     @objc func restoreHardwareUserDefaults() {
         
         track()
@@ -318,4 +323,5 @@ extension MyController {
         // Reload to restore the registered default values
         loadHardwareUserDefaults()
     }
+    */
 }

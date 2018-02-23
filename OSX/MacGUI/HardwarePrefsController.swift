@@ -117,13 +117,27 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction override func cancelAction(_ sender: Any!) {
         
+        track()
         parent.loadHardwareUserDefaults()
         hideSheet()
     }
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
-        parent.restoreHardwareUserDefaults()
+        // VIC
+        c64.setNTSC(false)
+        
+        // SID
+        c64.setReSID(true)
+        c64.setChipModel(1)
+        c64.setAudioFilter(false)
+        c64.setSamplingMethod(0)
+
+        // VC1541
+        c64.setWarpLoad(true)
+        c64.vc1541.setSendSoundMessages(true)
+        // c64.vc1541.setBitAccuracy(defaults.bool(forKey: VC64Keys.bitAccuracy))
+
         update()
     }
     

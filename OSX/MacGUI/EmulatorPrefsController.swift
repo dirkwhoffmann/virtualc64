@@ -317,7 +317,22 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
-        parent.restoreEmulatorUserDefaults()
+        // Display
+        parent.metalScreen.setEyeX(0.0)
+        parent.metalScreen.setEyeY(0.0)
+        parent.metalScreen.setEyeZ(0.0)
+        parent.metalScreen.videoUpscaler = 1
+        parent.metalScreen.videoFilter = 2
+        c64.vic.setColorScheme(Int(VICE.rawValue))
+        parent.metalScreen.fullscreenKeepAspectRatio = false
+        
+        // Joystick emulation
+        parent.gamePadManager.restoreFactorySettings()
+        parent.keyboardcontroller.disconnectEmulationKeys = true
+        
+        // File handling
+        parent.autoMount = false
+    
         update()
     }
     

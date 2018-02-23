@@ -144,7 +144,6 @@
                 <outlet property="dezHexSelector" destination="367" id="759"/>
                 <outlet property="driveIcon" destination="1045" id="Vlm-gT-AYk"/>
                 <outlet property="greenLED" destination="1208" id="1214"/>
-                <outlet property="hardwareDialog" destination="YW8-0Q-Xve" id="8zS-3M-G6U"/>
                 <outlet property="ioSource" destination="976" id="1689"/>
                 <outlet property="joystickPortA" destination="L2b-nG-yBo" id="EVC-v9-DPf"/>
                 <outlet property="joystickPortB" destination="4MP-rV-xX2" id="mps-Jv-PSQ"/>
@@ -742,7 +741,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
                                             <rect key="frame" x="1" y="0.0" width="266" height="459"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView">
                                                     <rect key="frame" x="0.0" y="0.0" width="266" height="442"/>
@@ -3008,7 +3007,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <clipView key="contentView" copiesOnScroll="NO" id="qbt-6L-5ue">
                         <rect key="frame" x="1" y="1" width="189" height="304"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <ikImageBrowserView autoresizesSubviews="NO" zoomValue="1" allowsMultipleSelection="NO" id="2182" customClass="CheatboxImageBrowserView">
                                 <rect key="frame" x="0.0" y="0.0" width="189" height="304"/>
@@ -3029,7 +3028,7 @@
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="-649" y="255.5"/>
+            <point key="canvasLocation" x="-750" y="271"/>
         </customView>
         <drawer leadingOffset="15" trailingOffset="15" id="2025" userLabel="Cheatbox Drawer">
             <size key="contentSize" width="210" height="473"/>
@@ -3040,325 +3039,17 @@
                 <outlet property="parentWindow" destination="5" id="2029"/>
             </connections>
         </drawer>
-        <window title="Hardware" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="YW8-0Q-Xve" userLabel="Virtual Hardware" customClass="HardwareDialog">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="271" y="425" width="537" height="355"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
-            <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" id="EC1-a2-dTe">
-                <rect key="frame" x="0.0" y="0.0" width="537" height="355"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <textField verticalHuggingPriority="750" id="uvS-PK-9dO">
-                        <rect key="frame" x="352" y="272" width="147" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Lorem ipsum" id="bUp-1z-sEv">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="C9p-lk-FFA">
-                        <rect key="frame" x="280" y="70" width="247" height="36"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Disable to put drive in a faster, but less compatible read-only mode." id="X93-qZ-lCt">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="rTD-N9-Nqe">
-                        <rect key="frame" x="352" y="289" width="162" height="20"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" placeholderString="" id="MmW-1E-F35">
-                            <font key="font" metaFont="system"/>
-                            <string key="title"> Lorem ipsum
-</string>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <box verticalHuggingPriority="750" boxType="separator" id="Opp-NL-XCM">
-                        <rect key="frame" x="9" y="161" width="516" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <box verticalHuggingPriority="750" boxType="separator" id="IAG-eW-1sJ">
-                        <rect key="frame" x="9" y="261" width="516" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <textField verticalHuggingPriority="750" id="cXi-g8-BAE">
-                        <rect key="frame" x="81" y="137" width="114" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC1541" id="zkn-7J-HM8">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="Yrn-Vm-ekZ">
-                        <rect key="frame" x="262" y="315" width="83" height="20"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Chip model:" id="7LW-t1-aer">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView id="plR-6Q-bAw">
-                        <rect key="frame" x="262" y="265" width="73" height="52"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="flag_eu" id="Wmy-sK-kfi"/>
-                    </imageView>
-                    <popUpButton id="39A-36-mMb" userLabel="System">
-                        <rect key="frame" x="345" y="312" width="182" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="MOS6569" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="Fd2-x2-gQ8" id="YkE-pA-BXc" userLabel="System">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="yUi-Fn-EEd">
-                                <items>
-                                    <menuItem title="MOS6569" state="on" id="Fd2-x2-gQ8">
-                                        <attributedString key="attributedTitle"/>
-                                        <connections>
-                                            <action selector="setPalAction:" target="YW8-0Q-Xve" id="uL0-IB-QjJ"/>
-                                        </connections>
-                                    </menuItem>
-                                    <menuItem title="MOS6567" tag="1" id="Arj-SR-LZL">
-                                        <connections>
-                                            <action selector="setNtscAction:" target="YW8-0Q-Xve" id="X8K-9D-rZn"/>
-                                        </connections>
-                                    </menuItem>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
-                    <textField verticalHuggingPriority="750" id="5bw-jZ-T8F">
-                        <rect key="frame" x="276" y="201" width="69" height="24"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sampling:" id="Lvf-mY-jiU">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="7fN-G5-wkh">
-                        <rect key="frame" x="263" y="234" width="83" height="19"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Chip model:" id="te3-bX-o9A">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton verticalHuggingPriority="750" id="aTL-8a-SsD">
-                        <rect key="frame" x="345" y="201" width="182" height="26"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="DQt-ri-dpe">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="A3v-ZW-FJg">
-                                <items>
-                                    <menuItem title="Fast" id="HHU-nK-7jN">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem title="Interpolate" tag="1" id="PBk-eX-ga9">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem title="Resample fast" tag="2" hidden="YES" enabled="NO" id="ASe-BR-MKo">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem title="Resample interpolate" tag="3" hidden="YES" enabled="NO" id="2vF-XN-wwg">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <connections>
-                            <action selector="SIDSamplingMethodAction:" target="YW8-0Q-Xve" id="daC-A0-6Qb"/>
-                        </connections>
-                    </popUpButton>
-                    <popUpButton verticalHuggingPriority="750" id="k3R-Dp-cxR">
-                        <rect key="frame" x="345" y="230" width="182" height="26"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <popUpButtonCell key="cell" type="push" title="MOS8580" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="U4A-AF-nD2" id="JVz-tU-IaD">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="Ocd-pB-cLP">
-                                <items>
-                                    <menuItem title="MOS8580" state="on" tag="1" id="U4A-AF-nD2">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem title="MOS6581" id="ymf-jX-QZH">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <connections>
-                            <action selector="SIDChipModelAction:" target="YW8-0Q-Xve" id="COr-I4-bEr"/>
-                        </connections>
-                    </popUpButton>
-                    <imageView id="YS1-Bn-FmA">
-                        <rect key="frame" x="20" y="199" width="55" height="55"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_sid" id="cMs-XS-gzF"/>
-                    </imageView>
-                    <imageView id="ZyG-hz-3zZ">
-                        <rect key="frame" x="23" y="103" width="48" height="48"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="1541" id="Vmo-VZ-GfC"/>
-                    </imageView>
-                    <textField verticalHuggingPriority="750" id="8le-fC-BRa">
-                        <rect key="frame" x="86" y="236" width="114" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="SID" id="fFB-uW-03r">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button id="jIG-y6-2eD">
-                        <rect key="frame" x="86" y="208" width="168" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Use ReSID library" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="E73-Vb-hLv">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="SIDReSIDAction:" target="YW8-0Q-Xve" id="fm8-qW-ZxK"/>
-                        </connections>
-                    </button>
-                    <button id="NZ6-Ne-KK1">
-                        <rect key="frame" x="346" y="175" width="168" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Enable audio filters" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Web-8g-jQU">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="SIDFilterAction:" target="YW8-0Q-Xve" id="Rpr-tH-pd8"/>
-                        </connections>
-                    </button>
-                    <button id="fEC-s4-hUO">
-                        <rect key="frame" x="86" y="106" width="149" height="25"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Load with full speed" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="DsJ-xk-J16">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="warpLoadAction:" target="YW8-0Q-Xve" id="8gL-lu-19K"/>
-                        </connections>
-                    </button>
-                    <textField verticalHuggingPriority="750" id="EBJ-Jt-UKM">
-                        <rect key="frame" x="86" y="319" width="70" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="VICII" id="Dyx-BU-L38">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView id="q6X-rk-8sV">
-                        <rect key="frame" x="17" y="285" width="57" height="57"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_vic" id="TJi-qn-CZ6"/>
-                    </imageView>
-                    <button id="tlU-KH-6Fv">
-                        <rect key="frame" x="262" y="106" width="163" height="25"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Bit accurate emulation" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aQs-st-SUx">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="bitAccurateAction:" target="YW8-0Q-Xve" id="xDX-Wh-4AZ"/>
-                        </connections>
-                    </button>
-                    <button id="Mq7-sK-uET">
-                        <rect key="frame" x="86" y="79" width="134" height="25"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="check" title="Play drive sounds" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sPW-ij-jf1">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="driveNoiseAction:" target="YW8-0Q-Xve" id="yIO-xP-pbW"/>
-                        </connections>
-                    </button>
-                    <box verticalHuggingPriority="750" boxType="separator" id="oMF-IN-GUZ">
-                        <rect key="frame" x="10" y="59" width="516" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </box>
-                    <button verticalHuggingPriority="750" id="h43-h1-GVM">
-                        <rect key="frame" x="426" y="13" width="106" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Yuq-HQ-GcN">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancelHardwareDialog:" target="-2" id="ba1-KO-25A"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="klq-h9-e1e">
-                        <rect key="frame" x="196" y="13" width="192" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Restore Factory settings" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aM7-yc-Bf0">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="factorySettingsAction:" target="YW8-0Q-Xve" id="9hv-b9-yhR"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="Afy-kx-ry9">
-                        <rect key="frame" x="4" y="13" width="192" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Use as default" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lhD-ZP-of5">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="useAsDefaultAction:" target="YW8-0Q-Xve" id="Xyn-Gd-t2F"/>
-                        </connections>
-                    </button>
-                </subviews>
-            </view>
-            <connections>
-                <outlet property="SIDChipModel" destination="k3R-Dp-cxR" id="dSz-Az-Orc"/>
-                <outlet property="SIDFilter" destination="NZ6-Ne-KK1" id="AFl-hV-Zvy"/>
-                <outlet property="SIDSamplingMethod" destination="aTL-8a-SsD" id="M5v-55-DaB"/>
-                <outlet property="SIDUseReSID" destination="jIG-y6-2eD" id="Lax-6Z-43v"/>
-                <outlet property="bitAccurate" destination="tlU-KH-6Fv" id="F7b-fj-Hh4"/>
-                <outlet property="driveNoise" destination="Mq7-sK-uET" id="1Zf-sO-4ut"/>
-                <outlet property="flag" destination="plR-6Q-bAw" id="pmd-5u-F5L"/>
-                <outlet property="machineType" destination="39A-36-mMb" id="nHb-JB-4JX"/>
-                <outlet property="systemText" destination="rTD-N9-Nqe" id="TQX-5S-gn8"/>
-                <outlet property="systemText2" destination="uvS-PK-9dO" id="KSj-ws-I0c"/>
-                <outlet property="warpLoad" destination="fEC-s4-hUO" id="zVl-PA-GWa"/>
-            </connections>
-            <point key="canvasLocation" x="851.5" y="-297.5"/>
-        </window>
     </objects>
     <resources>
-        <image name="1541" width="384" height="384"/>
         <image name="LEDgray" width="128" height="128"/>
         <image name="cartridge" width="128" height="128"/>
         <image name="diskette" width="101" height="97"/>
         <image name="fast" width="128" height="128"/>
-        <image name="flag_eu" width="67" height="42"/>
         <image name="joystick1_32" width="35" height="35"/>
         <image name="joystick2_32" width="35" height="35"/>
         <image name="keyboard32" width="34" height="35"/>
         <image name="none32" width="39" height="39"/>
         <image name="pause32" width="32" height="32"/>
-        <image name="pref_sid" width="129" height="129"/>
-        <image name="pref_vic" width="145" height="134"/>
         <image name="restart32" width="128" height="128"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOut32" width="32" height="32"/>

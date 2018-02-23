@@ -75,7 +75,7 @@ extension MyController : NSWindowDelegate {
     
     @objc public func window(_ window: NSWindow, willUseFullScreenContentSize proposedSize: NSSize) -> NSSize {
 
-        track("Proposed size: \(proposedSize.width) x \(proposedSize.height)")
+        // track("Proposed size: \(proposedSize.width) x \(proposedSize.height)")
         var myRect = metalScreen.bounds
         myRect.size = proposedSize
         return proposedSize

@@ -159,6 +159,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
         chipSize[i] = read16(buffer);
         
         if (chipSize[i] > 0) {
+            if (chip[i] != NULL) free(chip[i]);
             chip[i] = (uint8_t *)malloc(chipSize[i]);
             readBlock(buffer, chip[i], chipSize[i]);
         } else {
