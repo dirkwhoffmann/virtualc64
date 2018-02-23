@@ -18,12 +18,7 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.8
-// 1. The Keyboard Manager has been reworked. In the keyboard menu, you can now choose between symbolic and position-based assignment. In the symbolic key assignment, the emulator tries to map the pressed key using its ASCII representation. Up to now, the emulator has only used this type of assignment. In position-based mapping, a Mac key is directly connected to a key on the C64 keyboard. The selected assignment can be adjusted individually to fit your needs.
-// 2. Added an option to skip the mount dialog if a D64, T64, PRG, P00, G64, or NIB file is loaded. When selecting this option, files of these types will be converted to a disk and inserted automatically in the floppy drive.
-// 3. In VC1541 emulation code needs to be improved. In order to simplifiy the current code, the option to put the drive in an accellerated, but less compatible read-only mode has been removed.
-// 4. Added support for type 18 cartridges (Zaxxon, Super Zaxxon)
-// 5. Fixed a bug that caused the emulator to crash when a TAP file had a .T64 suffix.
+// RELEASE NOTES FOR NEXT RELEASE: 1.9
 //
 //
 // TODO:
