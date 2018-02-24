@@ -117,7 +117,7 @@ class MyDocument : NSDocument {
             throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }
         
-        fileURL = nil // Create an 'Untitled' document
+        // fileURL = nil // Create an 'Untitled' document
     }
     
     @discardableResult
