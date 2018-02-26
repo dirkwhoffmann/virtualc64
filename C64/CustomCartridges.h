@@ -141,6 +141,16 @@ public:
     uint8_t peek(uint16_t addr);
 };
 
+//! @brief    Type 19 cartridges
+class MagicDesk : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_MAGIC_DESK; }
+    uint8_t peekIO1(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+};
+
 //! @brief    Type 21 cartridges
 class Comal80 : public Cartridge {
     

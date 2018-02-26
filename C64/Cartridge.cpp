@@ -64,7 +64,8 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_REX:
         
         case CRT_ZAXXON:
-            
+        case CRT_MAGIC_DESK:
+
         case CRT_COMAL80:
             
             return true;
@@ -101,6 +102,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new Rex(c64);
         case CRT_ZAXXON:
             return new Zaxxon(c64);
+        case CRT_MAGIC_DESK:
+            return new MagicDesk(c64);
         case CRT_COMAL80:
             return new Comal80(c64);
             
