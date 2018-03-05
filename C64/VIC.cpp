@@ -343,7 +343,7 @@ inline void VIC::gAccess()
         //  Adressleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
         //  (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.]
         
-        if (ECMbitInPreviousCycle())
+        if (ECMbit())
             addr &= 0xF9FF;
 
         // Prepare graphic sequencer
@@ -360,7 +360,7 @@ inline void VIC::gAccess()
     } else {
     
         // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
-        addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
+        addr = ECMbit() ? 0x39FF : 0x3FFF;
         
         // Prepare graphic sequencer
         p.g_data = memAccess(addr);
