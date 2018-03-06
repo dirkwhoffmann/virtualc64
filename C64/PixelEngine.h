@@ -228,6 +228,7 @@ public:
 
     //! @brief    Register pipe
     PixelEnginePipe pipe;
+    PixelEnginePipe previousPipe;
 
     //! @brief    Border color pipe
     BorderColorPipe bpipe;
