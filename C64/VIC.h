@@ -571,13 +571,13 @@ public:
     inline bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
 
     //! @brief    Returns the value of the BMM bit in the previous cycle.
-    inline bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 5); }
+    inline bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.previousPipe.registerCTRL1, 5); }
     
     //! @brief    Returns the current value of the ECM bit (Extended Character Mode).
     inline bool ECMbit() { return GET_BIT(p.registerCTRL1, 6); }
 
     //! @brief    Returns the value of the ECM bit in the previous cycle.
-    inline bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 6); }
+    inline bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.previousPipe.registerCTRL1, 6); }
 
     //! @brief    Returns the masked CB13 bit (controls memory access).
     inline uint8_t CB13() { return iomem[0x18] & 0x08; }
@@ -884,7 +884,7 @@ public:
 	void endFrame();
 	
     //! @brief    Pushes portions of the VIC state into the pixel engine.
-    inline void preparePixelEngine() { pixelEngine.pipe = p; };
+    inline void preparePixelEngine() { pixelEngine.previousPipe = pixelEngine.pipe; pixelEngine.pipe = p; };
     
 	//! @brief    Executes a specific rasterline cycle
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();
