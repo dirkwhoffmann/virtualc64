@@ -18,10 +18,6 @@
 
 #include "C64.h"
 
-// DIRK DEBUG, REMOVE ASAP
-extern unsigned dirktrace;
-extern unsigned dirkcnt;
-
 // Cycle 0
 void 
 CPU::fetch() {

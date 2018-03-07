@@ -2156,21 +2156,5 @@ VIC::cycle65() 	// NTSC only
 void
 VIC::debug_cycle(unsigned c)
 {
-/*
-    static cycle = 0;
-    cycle = (c == 19) ? (cycle+1) : c;
-*/
-
-/*
-     if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-     printf("(%i,%i) (dx,yd):(%d,%d) D020:%d D021:%d BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
-     yCounter, c64->rasterCycle,
-     getHorizontalRasterScroll(), getVerticalRasterScroll(),
-     iomem[0x20], iomem[0x21],
-     BAlow, cpu->getRDY(),
-     registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
-     dirkcnt++;
-     }
-*/
 }
 

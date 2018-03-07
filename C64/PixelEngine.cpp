@@ -20,12 +20,7 @@
 
 #include "C64.h"
 
-// DIRK DEBUG, REMOVE ASAP
-extern unsigned dirktrace;
-extern unsigned dirkcnt;
-
-
-PixelEngine::PixelEngine() // C64 *c64)
+PixelEngine::PixelEngine()
 {
     setDescription("PixelEngine");
     
