@@ -255,6 +255,9 @@ typedef struct {
     //! @brief    Color value grabbed in gAccess()
     uint8_t g_color;
     
+    //! @brief    Color for drawing border pixels
+    uint8_t borderColor;
+    
     //! @brief    Main frame flipflop
     uint8_t mainFrameFF;
 
@@ -262,15 +265,6 @@ typedef struct {
     uint8_t verticalFrameFF;
     
 } PixelEnginePipe;
-
-
-//! @brief    Color for drawing border pixels
-typedef struct {
-    
-    uint8_t borderColor;
-    
-} BorderColorPipe;
-
 
 //! @brief    Colors for drawing canvas pixels
 typedef struct {

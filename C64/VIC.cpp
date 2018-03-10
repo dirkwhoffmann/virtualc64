@@ -56,7 +56,7 @@ VIC::VIC()
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
         { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
         { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
-        { &bp.borderColor,              sizeof(bp.borderColor),                 CLEAR_ON_RESET },
+        { &p.borderColor,               sizeof(p.borderColor),                  CLEAR_ON_RESET },
         { cp.backgroundColor,           sizeof(cp.backgroundColor),             CLEAR_ON_RESET | BYTE_FORMAT},
         { sp.spriteColor,               sizeof(sp.spriteColor),                 CLEAR_ON_RESET | BYTE_FORMAT},
         { &sp.spriteExtraColor1,        sizeof(sp.spriteExtraColor1),           CLEAR_ON_RESET },
@@ -109,7 +109,7 @@ VIC::reset()
     
     // Internal state
     yCounter = PAL_HEIGHT;
-    bp.borderColor = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
+    p.borderColor = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
     cp.backgroundColor[0] = PixelEngine::BLUE; // Let the background color look correct right from the beginning
     setScreenMemoryAddr(0x400);                // Remove startup graphics glitches by setting the initial value early
 	p.registerCTRL1 = 0x10;                    // Make screen visible from the beginning
@@ -553,7 +553,7 @@ VIC::peek(uint16_t addr)
 			return result;
 
         case 0x20:
-            return bp.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            return p.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
             
         case 0x21: // Backgrund color
         case 0x22: // Extended background color 1
@@ -697,7 +697,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			return;
 
         case 0x20: // Border color
-            bp.borderColor = value & 0x0F;
+            p.borderColor = value & 0x0F;
             return;
 
         case 0x21: // Backgrund color
@@ -1524,7 +1524,6 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     preparePixelEngine(); // Prepare for next cycle (first border column)
     // Update color registers in pixel engine to get the first pixel right
     pixelEngine.cpipe = cp;
-    pixelEngine.bpipe = bp;
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();

@@ -44,7 +44,8 @@ PixelEngine::PixelEngine()
         { &pipe.mainFrameFF,         sizeof(pipe.mainFrameFF),        CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,     sizeof(pipe.verticalFrameFF),    CLEAR_ON_RESET },
         
-        { &bpipe.borderColor,        sizeof(bpipe.borderColor),       CLEAR_ON_RESET },
+        { &pipe.borderColor,         sizeof(pipe.borderColor),        CLEAR_ON_RESET },
+        // { &bpipe.borderColor,        sizeof(bpipe.borderColor),       CLEAR_ON_RESET },
         { cpipe.backgroundColor,     sizeof(cpipe.backgroundColor),   CLEAR_ON_RESET | BYTE_FORMAT },
         { spipe.spriteColor,         sizeof(spipe.spriteColor),       CLEAR_ON_RESET | BYTE_FORMAT },
         { &spipe.spriteExtraColor1,  sizeof(spipe.spriteExtraColor1), CLEAR_ON_RESET },
@@ -220,12 +221,12 @@ PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
-        setFramePixel(0, colors[bpipe.borderColor]);
+        setFramePixel(0, colors[pipe.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
-        bpipe = vic->bp;
+        int rgba = colors[vic->p.borderColor];
+        // bpipe = vic->bp;
         
-        int rgba = colors[bpipe.borderColor];
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);
         setFramePixel(3, rgba);
@@ -242,12 +243,12 @@ PixelEngine::drawBorder17()
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(0, colors[bpipe.borderColor]);
+        setFramePixel(0, colors[pipe.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
-        bpipe = vic->bp;
+        int rgba = colors[vic->p.borderColor];
+        // bpipe = vic->bp;
         
-        int rgba = colors[bpipe.borderColor];
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);
         setFramePixel(3, rgba);
@@ -269,7 +270,7 @@ PixelEngine::drawBorder55()
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(7, colors[bpipe.borderColor]);
+        setFramePixel(7, colors[pipe.borderColor]);
         
     } else {
         

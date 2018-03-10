@@ -58,7 +58,6 @@ public:
     PixelEnginePipe p;
 
     //! @brief    Color pipes
-    BorderColorPipe bp;
     CanvasColorPipe cp;
     SpriteColorPipe sp; 
     
@@ -641,10 +640,7 @@ public:
 	
 	//! @brief    Sets the horizontan raster scroll offset (0 to 7).
 	inline void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
-			
-	//! @brief    Returns the border color.
-    inline uint8_t getBorderColor() { return bp.borderColor; }
-	
+    
 	//! @brief    Returns the background color.
     inline uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
 	
