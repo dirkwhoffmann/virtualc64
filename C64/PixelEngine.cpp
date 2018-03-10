@@ -47,10 +47,6 @@ PixelEngine::PixelEngine()
         { &pipe.borderColor,         sizeof(pipe.borderColor),        CLEAR_ON_RESET },
         // { &bpipe.borderColor,        sizeof(bpipe.borderColor),       CLEAR_ON_RESET },
         { cpipe.backgroundColor,     sizeof(cpipe.backgroundColor),   CLEAR_ON_RESET | BYTE_FORMAT },
-        { spipe.spriteColor,         sizeof(spipe.spriteColor),       CLEAR_ON_RESET | BYTE_FORMAT },
-        { &spipe.spriteExtraColor1,  sizeof(spipe.spriteExtraColor1), CLEAR_ON_RESET },
-        { &spipe.spriteExtraColor2,  sizeof(spipe.spriteExtraColor2), CLEAR_ON_RESET },
-
         { &displayMode,              sizeof(displayMode),             CLEAR_ON_RESET },
         { NULL,                      0,                               0 }};
     
@@ -405,9 +401,6 @@ PixelEngine::drawSprites()
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
     
-    // Update sprite color registers
-    spipe = vic->sp;
-    
     // Draw first four pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
@@ -600,7 +593,7 @@ inline void
 PixelEngine::setSingleColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t bit)
 {
     if (bit) {
-        int rgba = colors[spipe.spriteColor[spritenr]];
+        int rgba = colors[vic->sp.spriteColor[spritenr]];
         setSpritePixel(pixelnr, rgba, spritenr);
     }
 }
@@ -612,22 +605,21 @@ PixelEngine::setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8
     
     switch (two_bits) {
         case 0x01:
-            rgba = colors[spipe.spriteExtraColor1];
+            rgba = colors[vic->sp.spriteExtraColor1];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x02:
-            rgba = colors[spipe.spriteColor[spritenr]];
+            rgba = colors[vic->sp.spriteColor[spritenr]];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x03:
-            rgba = colors[spipe.spriteExtraColor2];
+            rgba = colors[vic->sp.spriteExtraColor2];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
     }
 }
-
 
 inline void
 PixelEngine::setSpritePixel(unsigned pixelnr, int color, int nr)

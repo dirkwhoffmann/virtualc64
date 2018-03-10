@@ -233,9 +233,6 @@ public:
     //! @brief    Canvas color pipe
     CanvasColorPipe cpipe;
 
-    //! @brief    Sprite color pipe
-    SpriteColorPipe spipe;
-
     /*! @brief    Latched VIC state
      *  @details  To draw pixels right, it is important to gather the necessary information at the right time.
      *            Some VIC and memory registers need to be looked up one cycle before drawing, others need
