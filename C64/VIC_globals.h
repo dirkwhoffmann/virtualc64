@@ -229,14 +229,11 @@ static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
  */
 typedef struct {
     
-    //! @brief    Internal x counter of the sequencer (sprite coordinate system)
-    uint16_t xCounter;
-    
     /*! @brief    Sprite X coordinates
-     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a
-     *            seperate IO register, while the uppermost bits are packed in a single register (0xD010).
-     *            The sprites X coordinate is updated whenever one the corresponding IO register changes
-     *            its value. 
+     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored
+     *            in a seperate IO register, while the uppermost bits are packed in a single
+     *            register (0xD010). The sprites X coordinate is updated whenever one the
+     *            corresponding IO register changes its value.
      */
     uint16_t spriteX[8];
 

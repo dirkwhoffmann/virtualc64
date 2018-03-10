@@ -47,7 +47,6 @@ VIC::VIC()
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
         
         // Internal state
-        { &p.xCounter,                  sizeof(p.xCounter),                     CLEAR_ON_RESET },
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
         { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
         { &p.registerCTRL1,             sizeof(p.registerCTRL1),                CLEAR_ON_RESET },
@@ -64,6 +63,7 @@ VIC::VIC()
         { &sp.spriteExtraColor2,        sizeof(sp.spriteExtraColor2),           CLEAR_ON_RESET },
         
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
+        { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
         { &registerVC,                  sizeof(registerVC),                     CLEAR_ON_RESET },
@@ -157,7 +157,7 @@ VIC::dumpState()
 		default:
 			msg("Invalid\n");
 	}
-	msg("            (X,Y) : (%d,%d) %s %s\n", p.xCounter, yCounter,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
+	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
 	msg("               VC : %02X\n", registerVC);
 	msg("           VCBASE : %02X\n", registerVCBASE);
 	msg("               RC : %02X\n", registerRC);
@@ -823,7 +823,7 @@ VIC::triggerLightPenInterrupt()
 		lightpenIRQhasOccured = true;
 
 		// determine current coordinates
-        int x = p.xCounter - 4; // Is this correct?
+        int x = xCounter - 4; // Is this correct?
         int y = yCounter;
 				
 		// latch coordinates 
@@ -1538,7 +1538,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    p.xCounter = 0;
+    countX();
 }
 
 void
@@ -1576,7 +1576,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    countX();
+    xCounter = 0;
 }
 
 void

@@ -346,9 +346,9 @@ public:
         uint8_t chunk1, chunk2, chunk3;
         
         /*! @brief    Remaining bits to be pumped out
-         *  @details  At the beginning of each rasterline, this value is initialized with -1 and set to
-         *            26 when the horizontal trigger condition is met (sprite X trigger coord reaches xCounter).
-         *            When all bits are drawn, this value reaches 0. 
+         *  @details  At the beginning of each rasterline, this value is initialized with -1
+         *            and set to 26 when the horizontal trigger condition is met (sprite X trigger
+         *             coord reaches xCounter). When all bits are drawn, this value reaches 0.
          */
         int remaining_bits;
 

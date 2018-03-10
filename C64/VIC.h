@@ -1,7 +1,6 @@
 /*!
  * @header      VIC.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -81,9 +80,12 @@ public:
 	//! @brief    Internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
 
+    //! @brief    Internal x counter of the sequencer (sprite coordinate system)
+    uint16_t xCounter;
+    
     /*! @brief    Rasterline counter
-     *  @details  The rasterline counter is is usually incremented in cycle 1. The only exception is the
-     *            overflow condition which is handled in cycle 2 
+     *  @details  The rasterline counter is usually incremented in cycle 1.
+     *            The only exception is the overflow condition which is handled in cycle 2.
      */
     uint32_t yCounter;
     
@@ -151,7 +153,7 @@ public:
     uint64_t BAwentLowAtCycle;
     
     //! @brief    Increases the X counter by 8
-    inline void countX() { p.xCounter += 8; }
+    inline void countX() { xCounter += 8; }
     
     //! @brief    Returns true if yCounter needs to be reset to 0 in this rasterline
     bool yCounterOverflow();

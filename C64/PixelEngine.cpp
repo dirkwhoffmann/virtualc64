@@ -34,7 +34,6 @@ PixelEngine::PixelEngine()
     SnapshotItem items[] = {
         
         // VIC state latching
-        { &pipe.xCounter,            sizeof(pipe.xCounter),           CLEAR_ON_RESET },
         { pipe.spriteX,              sizeof(pipe.spriteX),            CLEAR_ON_RESET | WORD_FORMAT },
         { &pipe.spriteXexpand,       sizeof(pipe.spriteXexpand),      CLEAR_ON_RESET },
         { &pipe.registerCTRL1,       sizeof(pipe.registerCTRL1),      CLEAR_ON_RESET },
@@ -401,7 +400,7 @@ PixelEngine::drawSprites()
 {
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
-
+    
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
     
@@ -467,7 +466,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (pipe.xCounter + pixelnr == pipe.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
+        if (vic->xCounter + pixelnr == pipe.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
             sprite_sr[spritenr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[spritenr].exp_flop = true;
             sprite_sr[spritenr].mc_flop = true;
