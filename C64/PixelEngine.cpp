@@ -217,11 +217,11 @@ PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
-        setFramePixel(0, colors[pipe.borderColor]);
+        int rgba = colors[pipe.borderColor];
+        setFramePixel(0, rgba);
         
         // After the first pixel has been drawn, color register changes show up
-        int rgba = colors[vic->p.borderColor];
-        // bpipe = vic->bp;
+        rgba = colors[vic->p.borderColor];
         
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);
@@ -239,11 +239,11 @@ PixelEngine::drawBorder17()
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(0, colors[pipe.borderColor]);
+        int rgba = colors[pipe.borderColor];
+        setFramePixel(0, rgba);
         
         // After the first pixel has been drawn, color register changes show up
-        int rgba = colors[vic->p.borderColor];
-        // bpipe = vic->bp;
+        rgba = colors[vic->p.borderColor];
         
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);

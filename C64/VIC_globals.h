@@ -274,6 +274,7 @@ typedef struct {
 } CanvasColorPipe;
 
 //! @brief    Colors for drawing sprites
+//! @todo     Don't implement as pipe as the pixel engine does not need piped values
 typedef struct {
     
     uint8_t spriteColor[8];
