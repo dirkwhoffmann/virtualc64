@@ -209,7 +209,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (int) spriteY:(NSInteger)nr { return wrapper->vic->getSpriteY(nr); }
 - (void) setSpriteY:(NSInteger)nr value:(int)y { wrapper->vic->setSpriteY(nr, y); }
 
-- (int) spriteColor:(NSInteger)nr { return wrapper->vic->spriteColor(nr); }
+- (int) spriteColor:(NSInteger)nr { return wrapper->vic->getSpriteColor(nr); }
 - (void) setSpriteColor:(NSInteger)nr value:(int)c { wrapper->vic->setSpriteColor(nr, c); }
 - (bool) spriteMulticolorFlag:(NSInteger)nr { return wrapper->vic->spriteIsMulticolor((unsigned)nr); }
 - (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }

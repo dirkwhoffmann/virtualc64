@@ -41,8 +41,6 @@ public class MetalView: MTKView {
     
     @IBOutlet var controller: MyController!
     
-    var c64proxy: C64Proxy!
-    
     /// Number of drawn frames sind power up
     var frames: UInt64 = 0
     
@@ -195,7 +193,7 @@ public class MetalView: MTKView {
     
         var rect: CGRect
         
-        if c64proxy?.isPAL() == true {
+        if controller.c64.isPAL() {
     
             // PAL border will be 36 pixels wide and 34 pixels heigh
             rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
@@ -237,11 +235,13 @@ public class MetalView: MTKView {
     
     func updateTexture() {
     
+        /*
         if c64proxy == nil {
             return
         }
-    
-        let buf = c64proxy.vic.screenBuffer()
+        */
+        
+        let buf = controller.c64.vic.screenBuffer()
         precondition(buf != nil)
         
         let pixelSize = 4
@@ -358,7 +358,7 @@ public class MetalView: MTKView {
         startFrame()
     
         // Make texture transparent if emulator is halted
-        let alpha = c64proxy.isHalted() ? 0.5 : currentAlpha
+        let alpha = controller.c64.isHalted() ? 0.5 : currentAlpha
         fillAlpha(uniformBuffer3D, alpha)
         
         // Render background
@@ -443,7 +443,7 @@ public class MetalView: MTKView {
     
     override public func draw(_ rect: NSRect) {
         
-        if c64proxy == nil || !enableMetal {
+        if !enableMetal {
             return
         }
 

@@ -23,10 +23,6 @@ public extension MetalView {
 
         track()
         
-        // TODO: Get rid of this reference. Don't communicate with model directly, use controller instead
-        c64proxy = controller.c64
-        assert(c64proxy != nil)
-        
         buildMetal()
         buildTextures()
         buildKernels()

@@ -153,7 +153,7 @@ PixelEngine::endFrame()
 //                                   VIC state latching
 // -----------------------------------------------------------------------------------------------
 
-inline void
+void
 PixelEngine::updateSpriteOnOff()
 {
     dc.spriteOnOff = dc.spriteOnOffPipe;
@@ -212,7 +212,7 @@ PixelEngine::drawOutsideBorder()
     drawSprites();
 }
 
-inline void
+void
 PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
@@ -233,7 +233,7 @@ PixelEngine::drawBorder()
     }
 }
 
-inline void
+void
 PixelEngine::drawBorder17()
 {
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
@@ -260,7 +260,7 @@ PixelEngine::drawBorder17()
     }
 }
 
-inline void
+void
 PixelEngine::drawBorder55()
 {
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
@@ -275,7 +275,7 @@ PixelEngine::drawBorder55()
     }
 }
 
-inline void
+void
 PixelEngine::drawCanvas()
 {
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
@@ -332,7 +332,7 @@ PixelEngine::drawCanvas()
     }
 }
 
-inline void
+void
 PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 {
     assert(pixelnr < 8);
@@ -392,7 +392,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 }
 
 
-inline void
+void
 PixelEngine::drawSprites()
 {
     uint8_t firstDMA = vic->isFirstDMAcycle;
@@ -502,7 +502,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
 //                         Mid level drawing (semantic pixel rendering)
 // -----------------------------------------------------------------------------------------------
 
-inline void
+void
 PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
     switch (mode) {
@@ -567,7 +567,7 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
     }
 }
 
-inline void
+void
 PixelEngine::setSingleColorPixel(unsigned pixelnr, uint8_t bit /* valid: 0, 1 */)
 {
     int rgba = col_rgba[bit];
@@ -578,7 +578,7 @@ PixelEngine::setSingleColorPixel(unsigned pixelnr, uint8_t bit /* valid: 0, 1 */
         setBackgroundPixel(pixelnr, rgba);
 }
 
-inline void
+void
 PixelEngine::setMultiColorPixel(unsigned pixelnr, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
 {
     int rgba = col_rgba[two_bits];
@@ -589,39 +589,39 @@ PixelEngine::setMultiColorPixel(unsigned pixelnr, uint8_t two_bits /* valid: 00,
         setBackgroundPixel(pixelnr, rgba);
 }
 
-inline void
+void
 PixelEngine::setSingleColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t bit)
 {
     if (bit) {
-        int rgba = colors[vic->sp.spriteColor[spritenr]];
+        int rgba = colors[vic->spriteColor[spritenr]];
         setSpritePixel(pixelnr, rgba, spritenr);
     }
 }
 
-inline void
+void
 PixelEngine::setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t two_bits)
 {
     int rgba;
     
     switch (two_bits) {
         case 0x01:
-            rgba = colors[vic->sp.spriteExtraColor1];
+            rgba = colors[vic->spriteExtraColor1];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x02:
-            rgba = colors[vic->sp.spriteColor[spritenr]];
+            rgba = colors[vic->spriteColor[spritenr]];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x03:
-            rgba = colors[vic->sp.spriteExtraColor2];
+            rgba = colors[vic->spriteExtraColor2];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
     }
 }
 
-inline void
+void
 PixelEngine::setSpritePixel(unsigned pixelnr, int color, int nr)
 {
     uint8_t mask = (1 << nr);
@@ -649,7 +649,7 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int color, int nr)
 //                        Low level drawing (pixel buffer access)
 // -----------------------------------------------------------------------------------------------
 
-inline void
+void
 PixelEngine::setFramePixel(unsigned pixelnr, int rgba)
 {
     unsigned offset = bufferoffset + pixelnr;
@@ -660,7 +660,7 @@ PixelEngine::setFramePixel(unsigned pixelnr, int rgba)
     pixelSource[pixelnr] &= (~0x80); // disable sprite/foreground collision detection in border
 }
 
-inline void
+void
 PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
 {
     unsigned offset = bufferoffset + pixelnr;
@@ -675,7 +675,7 @@ PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
     }
 }
 
-inline void
+void
 PixelEngine::setBackgroundPixel(unsigned pixelnr, int rgba)
 {
     unsigned offset = bufferoffset + pixelnr;

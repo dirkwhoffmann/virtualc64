@@ -57,9 +57,8 @@ public:
     //! @brief    Main pixel engine pipe
     PixelEnginePipe p;
 
-    //! @brief    Color pipes
+    //! @brief    Canvas color pipe
     CanvasColorPipe cp;
-    SpriteColorPipe sp; 
     
     //! @brief    Selected chip model (determines whether video mode is PAL or NTSC)
     VICChipModel chipModel;
@@ -335,9 +334,9 @@ private:
     inline void rIdleAccess() { (void)memIdleAccess(); }
     
 
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                         Sprites
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 
 	/*! @brief    MOB data counter.
 	 *  @details  A 6 bit counter, one for each sprite.
@@ -375,11 +374,20 @@ private:
      *  @details  This value is set in pokeIO and cycle 15 and read in cycle 16 
      */
     uint8_t cleared_bits_in_d017;
-	
-				
-	// -----------------------------------------------------------------------------------------------
+    
+    //! Sprite colors (same for all sprites)
+    uint8_t spriteColor[8];
+
+    //! Sprite extra color 1 (same for all sprites)
+    uint8_t spriteExtraColor1;
+
+    //! Sprite extra color 2 (same for all sprites)
+    uint8_t spriteExtraColor2;
+    
+    
+	// ------------------------------------------------------------------------------------------
 	//                                             Lightpen
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	
 	/*! @brief    Indicates whether the lightpen has triggered
 	 *  @details  This variable ndicates whether a lightpen interrupt has occurred within the current 
@@ -389,9 +397,9 @@ private:
 	bool lightpenIRQhasOccured;
 	
 	
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                             Debugging
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	
 	/*! @brief    Determines whether sprites are drawn or not
 	 *  @details  During normal emulation, the value is always true. For debugging purposes, the value 
@@ -429,9 +437,9 @@ private:
 	bool markDMALines;
 
 	
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                             Methods
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 
 public:
 	
@@ -451,9 +459,9 @@ public:
 	void dumpState();	
 	
     
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                         Configuring
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	
 public:
 	
@@ -505,9 +513,9 @@ public:
     inline uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
 
     
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                       Getter and setter
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 
 public:
 	
@@ -556,9 +564,9 @@ public:
     inline uint8_t getDataBus() { return dataBus; }
     
     
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                         Properties
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	
 public:
 		
@@ -648,9 +656,9 @@ public:
     inline uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
 	
 	
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                DMA lines, BA signal and IRQs
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 
 private:
     
@@ -714,9 +722,9 @@ public:
 	void triggerLightPenInterrupt();
 
 	
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 	//                                              Sprites
-	// -----------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------
 
 private:
 
@@ -753,16 +761,16 @@ private:
 public: 
 	
 	//! @brief    Returns color code of multicolor sprites (extra color 1).
-    inline uint8_t spriteExtraColor1() { return sp.spriteExtraColor1; }
+    inline uint8_t getSpriteExtraColor1() { return spriteExtraColor1; }
 	
 	//! @brief    Returns color code of multicolor sprites (extra color 2).
-	inline uint8_t spriteExtraColor2() { return sp.spriteExtraColor2; }
+	inline uint8_t getSpriteExtraColor2() { return spriteExtraColor2; }
 	
 	//! @brief    Returns the color of a sprite.
-	inline uint8_t spriteColor(uint8_t nr) { assert(nr < 8); return sp.spriteColor[nr]; }
+    inline uint8_t getSpriteColor(uint8_t nr) { return spriteColor[nr]; }
 
 	//! @brief    Sets the color of a sprite.
-	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); sp.spriteColor[nr] = color; }
+	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); spriteColor[nr] = color; }
 		
 	//! @brief    Returns the X coordinate of a sprite.
     inline uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }

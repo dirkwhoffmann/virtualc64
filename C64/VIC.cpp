@@ -58,10 +58,10 @@ VIC::VIC()
         { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
         { &p.borderColor,               sizeof(p.borderColor),                  CLEAR_ON_RESET },
         { cp.backgroundColor,           sizeof(cp.backgroundColor),             CLEAR_ON_RESET | BYTE_FORMAT},
-        { sp.spriteColor,               sizeof(sp.spriteColor),                 CLEAR_ON_RESET | BYTE_FORMAT},
-        { &sp.spriteExtraColor1,        sizeof(sp.spriteExtraColor1),           CLEAR_ON_RESET },
-        { &sp.spriteExtraColor2,        sizeof(sp.spriteExtraColor2),           CLEAR_ON_RESET },
-        
+        { spriteColor,                  sizeof(spriteColor),                    CLEAR_ON_RESET | BYTE_FORMAT},
+        { &spriteExtraColor1,           sizeof(spriteExtraColor1),              CLEAR_ON_RESET },
+        { &spriteExtraColor2,           sizeof(spriteExtraColor2),              CLEAR_ON_RESET },
+
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
         { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
@@ -562,10 +562,10 @@ VIC::peek(uint16_t addr)
             return cp.backgroundColor[addr - 0x21] | 0xF0; // Bits 4 to 7 are unsed (always 1)
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            return sp.spriteExtraColor1 | 0xF0;
+            return spriteExtraColor1 | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            return sp.spriteExtraColor2 | 0xF0;
+            return spriteExtraColor2 | 0xF0;
             
         case 0x27: // Sprite color 1
         case 0x28: // Sprite color 2
@@ -575,7 +575,7 @@ VIC::peek(uint16_t addr)
         case 0x2C: // Sprite color 6
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
-            return sp.spriteColor[addr - 0x27] | 0xF0;
+            return spriteColor[addr - 0x27] | 0xF0;
 
     }
 		
@@ -708,11 +708,11 @@ VIC::poke(uint16_t addr, uint8_t value)
             return;
 
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            sp.spriteExtraColor1 = value & 0x0F;
+            spriteExtraColor1 = value & 0x0F;
             return;
 
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            sp.spriteExtraColor2 = value & 0x0F;
+            spriteExtraColor2 = value & 0x0F;
             return;
 
         case 0x27: // Sprite color 1
@@ -723,7 +723,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2C: // Sprite color 6
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
-            sp.spriteColor[addr - 0x27] = value & 0x0F;
+            spriteColor[addr - 0x27] = value & 0x0F;
             return;
             
 		case 0x1a: // IRQ mask

@@ -1,7 +1,6 @@
 /*!
  * @header      PixelEngine.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2015 - 2016 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -49,7 +48,7 @@ enum DisplayMode {
 };
 
 //! @class   PixelEngine
-/*! @details This component is part of the virtual VICII chip and encapulates all functionality 
+/*! @details This component is part of the virtual VICII chip and encapulates all the functionality
  *           that is related to the synthesis of pixels. Its main entry point are prepareForCycle() 
  *           and draw() which are called in every VIC cycle inside the viewable range.
  */
@@ -78,9 +77,9 @@ public:
     void resetScreenBuffers();
 
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                                     Constant definitions
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     
     //! @brief    VIC colors
     enum Color {
@@ -102,10 +101,9 @@ public:
         GREY3   = 0x0F
     };
     
-    
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                                    Pixel buffers and colors
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     
 private:
 
@@ -135,7 +133,7 @@ private:
     };
     
     /*! @brief    First screen buffer
-     *  @details  The VIC chip writes it output into this buffer. The contents of the array is 
+     *  @details  The VIC chip writes its output into this buffer. The contents of the array is
      *            later copied into to texture RAM of your graphic card by the drawRect method 
      *            in the GPU related code. 
      */
@@ -170,7 +168,7 @@ private:
     
     /*! @brief    Indicates the source of a drawn pixel
      *  @details  Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the 
-     *            pixelSource array is set. The information is utilized to detect sprite-sprite 
+     *            pixelSource array is set. The information is needed to detect sprite-sprite
      *            and sprite-background collisions. 
      */
     int pixelSource[8];
@@ -185,27 +183,28 @@ public:
     /*! @brief    Get screen buffer that is currently stable
      *  @details  This method is called by the GPU code at the beginning of each frame. 
      */
-    inline void *screenBuffer() {
-        return (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0]; }
+    void *screenBuffer() {
+        return (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0];
+    }
 
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                                  Rastercycle information
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
 
 private:
     
     /*! @brief    Indicates wether we are in a visible display column or not
-     *  @details  The visible columns comprise canvas columns and border columns. The first visible 
-     *            column is drawn in cycle 14 (first left border column) and the last in cycle ?? 
-     *            (fourth right border column).
+     *  @details  The visible columns comprise canvas columns and border columns. The first
+     *            visible column is drawn in cycle 14 (first left border column) and the last
+     *            in cycle ?? (fourth right border column).
      */
     bool visibleColumn;
     
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                                    Execution functions
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
 
 public:
     
@@ -222,22 +221,25 @@ public:
     void endFrame();
 
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                                   VIC state latching
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
 
-    //! @brief    Register pipe
+    //! @brief    VIC register pipe (first stage)
     PixelEnginePipe pipe;
+
+    //! @brief    VIC register pipe (second stage)
     PixelEnginePipe previousPipe;
     
     //! @brief    Canvas color pipe
     CanvasColorPipe cpipe;
 
     /*! @brief    Latched VIC state
-     *  @details  To draw pixels right, it is important to gather the necessary information at the right time.
-     *            Some VIC and memory registers need to be looked up one cycle before drawing, others need
-     *            to be looked up at the same cycle or even in the middle of drawing an 8 pixel chunk. To make
-     *            this process transparent, all gatheres information is stored in this structure. 
+     *  @details  To draw pixels right, it is important to gather the necessary information at
+     *            the right time. Some VIC and memory registers need to be looked up one cycle
+     *            before drawing, others need to be looked up at the same cycle or even in the
+     *            middle of drawing an 8 pixel chunk. To make this process transparent, all
+     *            gatheres information is stored in this structure.
      */
 
     // TODO:
@@ -263,9 +265,9 @@ public:
     void updateSpriteOnOff();
     
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //               Shift register logic for canvas pixels (handled in drawCanvasPixel)
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     
     //! @brief    Main shift register
     /*! @details  An eight bit shift register used to synthesize the canvas pixels.
@@ -316,20 +318,21 @@ public:
     } sr;
     
     
-    // -----------------------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------------------
     //              Shift register logic for sprite pixels (handled in drawSpritePixel)
-    // -----------------------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------------------
     
     /*! @brief    Sprite shift registers
-     *  @details  The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores the sprite
-     *            for one rasterline. If a sprite is a display candidate in the current rasterline, its
-     *            shift register is activated when the raster X coordinate matches the sprites X coordinate.
-     *            The comparison is done in method drawSprite().
-     *            Once a shift register is activated, it remains activated until the beginning of the next
-     *            rasterline. However, after an activated shift register has dumped out its 24 pixels, it
-     *            can't draw anything else than transparent pixels (which is the same as not to draw anything).
-     *            An exception is during DMA cycles. When a shift register is activated during such a cycle,
-     *            it freezes a short period of time in which it repeats the previous drawn pixel.
+     *  @details  The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores
+     *            the sprite for one rasterline. If a sprite is a display candidate in the current
+     *            rasterline, its shift register is activated when the raster X coordinate matches
+     *            the sprites X coordinate. The comparison is done in method drawSprite().
+     *            Once a shift register is activated, it remains activated until the beginning of
+     *            the next rasterline. However, after an activated shift register has dumped out
+     *            its 24 pixels, it can't draw anything else than transparent pixels (which is
+     *            the same as not to draw anything). An exception is during DMA cycles. When a
+     *            shift register is activated during such a cycle, it freezes a short period of
+     *            time in which it repeats the previous drawn pixel.
      */
     struct {
         
@@ -356,23 +359,33 @@ public:
         bool exp_flop;
 
         /*! @brief    Color bits of the currently processed pixel
-         *  @details  In single-color mode, these bits are updats every cycle
-         *            In multi-color mode, these bits are updats every second cycle (synchronized with mc_flop) 
+         *  @details  In single-color mode, these bits are updated every cycle
+         *            In multi-color mode, these bits are updated every second cycle
+         *            (synchronized with mc_flop)
          */
         uint8_t col_bits;
 
+        //! @brief    Sprite color
+        uint8_t spriteColor;
+        
     } sprite_sr[8];
+
+    //! Sprite extra color 1 (same for all sprites)
+    uint8_t spriteExtraColor1;
+    
+    //! Sprite extra color 2 (same for all sprites)
+    uint8_t spriteExtraColor2;
 
     /*! @brief    Loads the sprite shift register.
      *  @details  The shift register is loaded with the three data bytes fetched in the previous sAccesses.
      */
-    inline void loadShiftRegister(unsigned nr) {
+    void loadShiftRegister(unsigned nr) {
         sprite_sr[nr].data = (sprite_sr[nr].chunk1 << 16) | (sprite_sr[nr].chunk2 << 8) | sprite_sr[nr].chunk3;
     }
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                          High level drawing (canvas, sprites, border)
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
 
 public:
   
@@ -455,9 +468,9 @@ private:
     void drawSprite(uint8_t nr);
     
     
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
     //                         Mid level drawing (semantic pixel rendering)
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
 
 private:
     
@@ -519,7 +532,7 @@ public:
     void setBackgroundPixel(unsigned pixelnr, int rgba);
 
     //! @brief    Draw eight background pixels in a row
-    inline void setEightBackgroundPixels(int rgba) {
+    void setEightBackgroundPixels(int rgba) {
         for (unsigned i = 0; i < 8; i++) setBackgroundPixel(i, rgba); }
 
     //! @brief    Draw a single sprite pixel
