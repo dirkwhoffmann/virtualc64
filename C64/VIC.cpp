@@ -334,7 +334,7 @@ inline void VIC::gAccess()
         //  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
         //  BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
         
-        if (BMMbitInPreviousCycle()) {
+        if (BMMbitInPreviousCycle() | BMMbit()) {
             addr = (CB13() << 10) | (registerVC << 3) | registerRC;
         } else {
             addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
