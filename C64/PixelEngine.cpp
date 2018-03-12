@@ -34,21 +34,21 @@ PixelEngine::PixelEngine()
     SnapshotItem items[] = {
         
         // VIC state latching
-        { pipe.spriteX,              sizeof(pipe.spriteX),            CLEAR_ON_RESET | WORD_FORMAT },
-        { &pipe.spriteXexpand,       sizeof(pipe.spriteXexpand),      CLEAR_ON_RESET },
-        { &pipe.registerCTRL1,       sizeof(pipe.registerCTRL1),      CLEAR_ON_RESET },
-        { &pipe.registerCTRL2,       sizeof(pipe.registerCTRL2),      CLEAR_ON_RESET },
-        { &pipe.g_data,              sizeof(pipe.g_data),             CLEAR_ON_RESET },
-        { &pipe.g_character,         sizeof(pipe.g_character),        CLEAR_ON_RESET },
-        { &pipe.g_color,             sizeof(pipe.g_color),            CLEAR_ON_RESET },
-        { &pipe.mainFrameFF,         sizeof(pipe.mainFrameFF),        CLEAR_ON_RESET },
-        { &pipe.verticalFrameFF,     sizeof(pipe.verticalFrameFF),    CLEAR_ON_RESET },
+        { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
+        { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
+        { &pipe.registerCTRL1,      sizeof(pipe.registerCTRL1),     CLEAR_ON_RESET },
+        { &pipe.previousCTRL1,      sizeof(pipe.previousCTRL1),     CLEAR_ON_RESET },
+        { &pipe.registerCTRL2,      sizeof(pipe.registerCTRL2),     CLEAR_ON_RESET },
+        { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
+        { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
+        { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
+        { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
+        { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
         
-        { &pipe.borderColor,         sizeof(pipe.borderColor),        CLEAR_ON_RESET },
-        // { &bpipe.borderColor,        sizeof(bpipe.borderColor),       CLEAR_ON_RESET },
-        { cpipe.backgroundColor,     sizeof(cpipe.backgroundColor),   CLEAR_ON_RESET | BYTE_FORMAT },
-        { &displayMode,              sizeof(displayMode),             CLEAR_ON_RESET },
-        { NULL,                      0,                               0 }};
+        { &pipe.borderColor,        sizeof(pipe.borderColor),       CLEAR_ON_RESET },
+        { cpipe.backgroundColor,    sizeof(cpipe.backgroundColor),  CLEAR_ON_RESET | BYTE_FORMAT },
+        { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
+        { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
 }

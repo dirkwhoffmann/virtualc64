@@ -244,6 +244,9 @@ typedef struct {
     //! @brief    Internal VIC-II register D011, control register 1
     uint8_t registerCTRL1;
 
+    //! @brief    Value of registerCTRL1 one cycle earlier
+    uint8_t previousCTRL1;
+
     //! @brief    Internal VIC-II register D016, control register 2
     uint8_t registerCTRL2;
 

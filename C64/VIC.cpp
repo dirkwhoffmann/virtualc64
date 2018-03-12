@@ -50,6 +50,7 @@ VIC::VIC()
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
         { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
         { &p.registerCTRL1,             sizeof(p.registerCTRL1),                CLEAR_ON_RESET },
+        { &p.previousCTRL1,             sizeof(p.previousCTRL1),                CLEAR_ON_RESET },
         { &p.registerCTRL2,             sizeof(p.registerCTRL2),                CLEAR_ON_RESET },
         { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },

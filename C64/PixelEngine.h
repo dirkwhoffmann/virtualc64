@@ -225,11 +225,8 @@ public:
     //                                   VIC state latching
     // ------------------------------------------------------------------------------------------
 
-    //! @brief    VIC register pipe (first stage)
+    //! @brief    VIC register pipe
     PixelEnginePipe pipe;
-
-    //! @brief    VIC register pipe (second stage)
-    PixelEnginePipe previousPipe;
     
     //! @brief    Canvas color pipe
     CanvasColorPipe cpipe;
