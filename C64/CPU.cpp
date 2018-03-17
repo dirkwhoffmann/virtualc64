@@ -62,11 +62,9 @@ CPU::CPU()
         { &pc_hi,                   sizeof(pc_hi),                  CLEAR_ON_RESET },
         { &overflow,                sizeof(overflow),               CLEAR_ON_RESET },
         { &data,                    sizeof(data),                   CLEAR_ON_RESET },
-        { &port,                    sizeof(port),                   CLEAR_ON_RESET },
-        { &port_direction,          sizeof(port_direction),         CLEAR_ON_RESET },
-//        { &port,                    sizeof(port),                   KEEP_ON_RESET },  // Reset in C64Memory::reset
-//        { &port_direction,          sizeof(port_direction),         KEEP_ON_RESET },  // Reset in C64Memory::reset
-        { &external_port_bits,      sizeof(external_port_bits),     CLEAR_ON_RESET },
+        // { &port,                    sizeof(port),                   CLEAR_ON_RESET },
+        // { &port_direction,          sizeof(port_direction),         CLEAR_ON_RESET },
+        // { &external_port_bits,      sizeof(external_port_bits),     CLEAR_ON_RESET },
         { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
@@ -93,8 +91,7 @@ CPU::reset()
 {
     VirtualComponent::reset();
     
-    B = 1; 
-	external_port_bits = 0x1F;
+    B = 1;
 	rdyLine = true;
 	next = &CPU::fetch;
 }
@@ -133,8 +130,6 @@ CPU::dumpState()
 	msg("CPU:\n");
 	msg("----\n\n");
     msg("%s\n", disassemble());
-	msg("Processor port : %02X\n", port);
-	msg("Port direction : %02X\n", port_direction);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
 	msg("      Irq line : %02X\n", irqLine);
 	msg("      Nmi line : %02X %s\n", nmiLine, nmiEdge ? "(negative edge)" : "");
@@ -143,40 +138,6 @@ CPU::dumpState()
 	msg("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
 	msg("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
 	msg("\n");
-}
-
-void 
-CPU::setPortDirection(uint8_t value)
-{
-	
-	port_direction = value;
-	
-	// TODO: A VIC byte will show up in ram[0x0000];
-	// "ram[0] = TheVIC->LastVICByte;" [Frodo]
-
-	// Store value of Bit 7, Bit 6 and Bit 3 if the corresponding bit lines are configured as outputs
-	uint8_t mask = 0xC8 & port_direction;	
-	external_port_bits &= ~mask;
-	external_port_bits |= mask & port;	
-}
-
-void 
-CPU::setPort(uint8_t value)
-{
-	port = value;
-	
-	// TODO: A VIC byte will show up in ram[0x0001];
-	// "ram[1] = TheVIC->LastVICByte;" [Frodo]
-
-	// Store value of Bit 7, Bit 6 and Bit 3 if the corresponding bit lines are configured as outputs
-	uint8_t mask = 0xC8 & port_direction;	
-	external_port_bits &= ~mask;
-	external_port_bits |= mask & port;
-    
-    // Datasette
-    if (port_direction & 0x20) {
-        c64->datasette.setMotor((value & 0x20) == 0);
-    }
 }
 
 void

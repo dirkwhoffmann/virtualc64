@@ -143,13 +143,13 @@ private:
 	uint8_t data;
 			
 	//! @brief    Processor port register
-	uint8_t port;
+	// uint8_t port;
     
 	//! @brief    Processor port data direction register
-	uint8_t port_direction;
+	// uint8_t port_direction;
 
     //! @brief    Experimental
-	uint8_t external_port_bits;
+	// uint8_t external_port_bits;
 	
 	/*! @brief    RDY line (ready line)
 	 *  @details  If this line is LOW, the CPU freezes on the next read access.
@@ -260,6 +260,7 @@ public:
     //! @functiongroup Managing the processor port
     //
 
+    /*
 	//! @brief    Returns the value of processor port.
     uint8_t getPort() { return port; }
     
@@ -277,7 +278,7 @@ public:
     
 	//! @brief    Returns the physical value of the port lines.
 	uint8_t getPortLines() { return (port | ~port_direction); }
-	
+	*/
     
     //
     //! @functiongroup Handling registers and flags

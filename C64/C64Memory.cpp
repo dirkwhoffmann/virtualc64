@@ -354,31 +354,12 @@ uint8_t C64Memory::peek(uint16_t addr)
             return c64->expansionport.peek(addr);
             
         case M_PP:
-            
-            uint8_t dir, ext, result;
-            
-            if (addr > 0x0001)
-                return ram[addr];
-
+    
             if (addr == 0x0000)
                 return c64->processorPort.readProcessorPortDirection();
-            
             if (addr == 0x0001)
                 return c64->processorPort.readProcessorPort();
-            
-            /*
-            // Processor port
-            dir = cpu->getPortDirection();
-            ext = cpu->getExternalPortBits();
-            
-            // Datasette (move to getExternalPortBits(?) after cleanup)
-            if (c64->datasette.getPlayKey()) ext &= 0xEF; else ext |= 0x10;
-            
-            result = (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
-            return result;
-             */
-            assert(0);
-            break;
+            return ram[addr];
 
         case M_NONE:
             // what happens if RAM is unmapped?
@@ -528,28 +509,17 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 			
 		case M_PP:
 			
-			if (addr > 0x0001) {
-				ram[addr] = value;
-				return;
-			}
-			
-            if (addr == 0x0000)
+            if (addr == 0x0000) {
                 c64->processorPort.writeProcessorPortDirection(value);
-            
-            if (addr == 0x0001)
+                return;
+            }
+            if (addr == 0x0001) {
                 c64->processorPort.writeProcessorPort(value);
-
-            /*
-			// Processor port
-			if (addr == 0x0000) {
-				cpu->setPortDirection(value);
-                updatePeekPokeLookupTables();
-			} else {
-				cpu->setPort(value);
-                updatePeekPokeLookupTables();
-			}
-            */
-			return;
+                return;
+            }
+    
+            ram[addr] = value;
+            return;
 
 		default:
 			assert(0);

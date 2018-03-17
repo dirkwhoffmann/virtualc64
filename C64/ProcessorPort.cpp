@@ -78,10 +78,10 @@ ProcessorPort::readProcessorPort()
     }
     */
     
-    uint8_t result = (port & direction) | (external & ~direction);
-    
     // Update datasette bit
-    if (c64->datasette.getPlayKey()) result &= 0xEF; else result |= 0x10;
+    if (c64->datasette.getPlayKey()) external &= 0xEF; else external |= 0x10;
+    
+    uint8_t result = (port & direction) | (external & ~direction);
     
     return result;
 }
