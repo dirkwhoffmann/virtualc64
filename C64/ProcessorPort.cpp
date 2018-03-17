@@ -8,14 +8,17 @@
 #include "C64.h"
 
 // From CPU6510C64.cpp (part of the Emulator Developers Kit):
-// The CPU port of the C64 behaves strange in input mode:
-// 00010111 (17) pull-up resistors, drawn high
-// 00100000 (20) pull-down transistor, drawn low
-// 11000000 (C0) keeps last high for 65ms, then drawn low
-// 00001000 (08) no datasette: keeps last high for 1s, then drawn low
-//               datasette connected: high and low randomly (mains?)
-// In reality, times depend on both CPU temperature and how long the output was
-// high (measure bit 3 with CPUPORT3.ASM on the C64).
+//
+//     The CPU port of the C64 behaves strange in input mode:
+//
+//     00010111 (17) pull-up resistors, drawn high
+//     00100000 (20) pull-down transistor, drawn low
+//     11000000 (C0) keeps last high for 65ms, then drawn low
+//     00001000 (08) no datasette: keeps last high for 1s, then drawn low
+//                   datasette connected: high and low randomly (mains?)
+//
+//     In reality, times depend on both CPU temperature and how long the output was
+//     high (measure bit 3 with CPUPORT3.ASM on the C64).
 
 ProcessorPort::ProcessorPort()
 {
@@ -27,8 +30,9 @@ ProcessorPort::ProcessorPort()
         
         { &port,               sizeof(port),               0 },
         { &direction,          sizeof(direction),          0 },
-        { &external,           sizeof(external),           CLEAR_ON_RESET },
-        { &dischargeCycleBit6, sizeof(dischargeCycleBit6), CLEAR_ON_RESET },
+        { &external,           sizeof(external),           0 },
+        { &dischargeCycleBit3, sizeof(dischargeCycleBit3), 0 },
+        { &dischargeCycleBit6, sizeof(dischargeCycleBit6), 0 },
         { &dischargeCycleBit7, sizeof(dischargeCycleBit7), 0 },
         { NULL,                0,                          0 }};
     
@@ -47,6 +51,7 @@ ProcessorPort::reset()
     port =  0x37;
     external = 0x1F;
     direction = 0x2F;
+    dischargeCycleBit3 = UINT64_MAX;
     dischargeCycleBit6 = UINT64_MAX;
     dischargeCycleBit7 = UINT64_MAX;
 }
@@ -59,6 +64,7 @@ ProcessorPort::dumpState()
     msg("port:           %02X\n", port);
     msg("direction:      %02X\n", direction);
     msg("external:       %02X\n", external);
+    msg("Bit 3 floating: %s\n", c64->getCycles() < dischargeCycleBit3 ? "yes" : "no");
     msg("Bit 6 floating: %s\n", c64->getCycles() < dischargeCycleBit6 ? "yes" : "no");
     msg("Bit 7 floating: %s\n", c64->getCycles() < dischargeCycleBit7 ? "yes" : "no");
 }
@@ -66,12 +72,16 @@ ProcessorPort::dumpState()
 uint8_t
 ProcessorPort::readProcessorPort()
 {
-    // Check if floating bits reached zero
-    if (c64->getCycles() > dischargeCycleBit6) {
+    // Clear discharged floating bits if they are still configured as inputs
+    if (!(direction & 0x08) && c64->getCycles() > dischargeCycleBit3) {
+        CLR_BIT(external, 3);
+        dischargeCycleBit6 = UINT64_MAX;
+    }
+    if (!(direction & 0x40) && c64->getCycles() > dischargeCycleBit6) {
         CLR_BIT(external, 6);
         dischargeCycleBit6 = UINT64_MAX;
     }
-    if (c64->getCycles() > dischargeCycleBit7) {
+    if (!(direction & 0x80) && c64->getCycles() > dischargeCycleBit7) {
         CLR_BIT(external, 7);
         dischargeCycleBit7 = UINT64_MAX;
     }
@@ -93,24 +103,13 @@ ProcessorPort::readProcessorPortDirection()
 void
 ProcessorPort::writeProcessorPort(uint8_t value)
 {
-    // Bit 6 and 7 are not connected and the external port bits act like an capacitor
-    /*
-    if (direction & 0x80) {
-        external = (external & 0x7F) | (value & 0x80);
-    }
-    if (direction & 0x40) {
-        external = (external & 0xBF) | (value & 0x40);
-    }
-    */
-    
     port = value;
     
-    // Bits 3, 6 and 7 act like capacitors in input mode
+    // Update bits 3, 6 and 7 if they are configured as outputs
     uint8_t mask = 0xC8 & direction;
-    external &= ~mask;
-    external |= mask & port;
+    external = (external & ~mask) | (port & mask);
     
-    // Datasette
+    // Check for datasette motor bit
     if (direction & 0x20) {
         c64->datasette.setMotor((value & 0x20) == 0);
     }
@@ -122,31 +121,23 @@ ProcessorPort::writeProcessorPort(uint8_t value)
 void
 ProcessorPort::writeProcessorPortDirection(uint8_t value)
 {
-    // Check if bit 6 or bit 7 is now an output
-    if (value & 0x40) {
-        dischargeCycleBit6 = UINT64_MAX;
-    }
-    if (value & 0x80) {
-        dischargeCycleBit7 = UINT64_MAX;
-    }
-
-    // Check if bits 6 and 7 are changed from output to inputs. In that case, they
+    // Check if bits 3, 6, or 7 change from output to input. In that case, they
     // will change to a floating state and discharge over time.
-    // TODO: Change to if (FALLING_EDGE(direction, value, 6)) {
-    if ((direction & 0x40) && !(value & 0x40)) {
+    if (FALLING_EDGE(direction, value, 3)) {
+        dischargeCycleBit3 = c64->getCycles() + PAL_CYCLES_PER_SECOND;
+    }
+    if (FALLING_EDGE(direction, value, 6)) {
         dischargeCycleBit6 = c64->getCycles() + 360000;
     }
-    // TODO: Change to if (FALLING_EDGE(direction, value, 7)) {
-    if ((direction & 0x80) && !(value & 0x80)) {
+    if (FALLING_EDGE(direction, value, 7)) {
         dischargeCycleBit7 = c64->getCycles() + 360000;
     }
     
     direction = value;
     
-    // Bits 3, 6 and 7 act like capacitors in input mode
+    // Update bits 3, 6 and 7 if they are configured as outputs
     uint8_t mask = 0xC8 & direction;
-    external &= ~mask;
-    external |= mask & port;
+    external = (external & ~mask) | (port & mask);
     
     // Switch memory banks
     c64->mem.updatePeekPokeLookupTables();

@@ -138,6 +138,8 @@ CPU::dumpState()
 	msg("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
 	msg("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
 	msg("\n");
+    
+    c64->processorPort.dumpState();
 }
 
 void

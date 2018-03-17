@@ -18,28 +18,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.9
+// RELEASE NOTES FOR NEXT RELEASE: 1.8.1
 //
 // Milestone reached: VirtualC64 passes VICE test vicii_reg_timing
 // Added support for cartridges of type 19 (Magic Desk)
-// TODO:
+// Processor port handling has been changed. Now passing tests bitfade (VICE), delaytime (VICE) and CPUPORT3 (PC64WIN)
 //
-// Save KeyMap to UserDefaults
-// Use bigger icons for Joystick emulation keys in pref dialog
-// 
-// Cartridge handler. Store everything in snapshot files
 // TODO:
-// - Make Snaphshot store everything in one chunk of memory
-//   This would simplify the creation of a NSData object when saving.
-//
-// SPEEDUP:
-// Improve pipelining in VIC implementation
-// 1. Merge all pipes into 1 (should be possible now because we have two pipes now)
-//    Step 1: Add new variables to main pipe
-//    Step 2: Run side by side for testing
-//    Step 3: Remove old pipes
-// 2. Introduce pipeIsDirty variable
-// 3. Shift pipes only when pipeIsDirty
 
 #ifndef _C64_INC
 #define _C64_INC

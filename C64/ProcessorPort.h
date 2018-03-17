@@ -49,7 +49,9 @@ class ProcessorPort : public VirtualComponent {
      *            external signal driving them. They get into a floating state and act as an
      *            capacitor. As a result, they will discharge slowly and eventually reach zero.
      *            These variables are used to indicate when the zero level is reached.
+     *            Bit 3 shows a similar behaviour when no datasette is attached
      */
+    uint64_t dischargeCycleBit3;
     uint64_t dischargeCycleBit6;
     uint64_t dischargeCycleBit7;
 
