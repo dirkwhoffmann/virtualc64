@@ -66,17 +66,15 @@ ProcessorPort::dumpState()
 uint8_t
 ProcessorPort::readProcessorPort()
 {
-    /*
     // Check if floating bits reached zero
     if (c64->getCycles() > dischargeCycleBit6) {
-        port &= 0xBF; // clear bit 6
+        CLR_BIT(external, 6);
         dischargeCycleBit6 = UINT64_MAX;
     }
     if (c64->getCycles() > dischargeCycleBit7) {
-        port &= 0x7F; // clear bit 7
+        CLR_BIT(external, 7);
         dischargeCycleBit7 = UINT64_MAX;
     }
-    */
     
     // Update datasette bit
     if (c64->datasette.getPlayKey()) external &= 0xEF; else external |= 0x10;
@@ -124,8 +122,6 @@ ProcessorPort::writeProcessorPort(uint8_t value)
 void
 ProcessorPort::writeProcessorPortDirection(uint8_t value)
 {
-    
-    /*
     // Check if bit 6 or bit 7 is now an output
     if (value & 0x40) {
         dischargeCycleBit6 = UINT64_MAX;
@@ -138,15 +134,12 @@ ProcessorPort::writeProcessorPortDirection(uint8_t value)
     // will change to a floating state and discharge over time.
     // TODO: Change to if (FALLING_EDGE(direction, value, 6)) {
     if ((direction & 0x40) && !(value & 0x40)) {
-        debug("Bit 6 becomes floating\n");
         dischargeCycleBit6 = c64->getCycles() + 360000;
     }
     // TODO: Change to if (FALLING_EDGE(direction, value, 7)) {
     if ((direction & 0x80) && !(value & 0x80)) {
-        debug("Bit 7 becomes floating\n");
         dischargeCycleBit7 = c64->getCycles() + 360000;
     }
-    */
     
     direction = value;
     
