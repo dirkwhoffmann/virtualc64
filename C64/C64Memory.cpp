@@ -223,7 +223,9 @@ C64Memory::updatePeekPokeLookupTables()
 {
     uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
     uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
-    uint8_t index = (cpu->getPortLines() & 0x07) | exrom | game;
+    // uint8_t index = (cpu->getPortLines() & 0x07) | exrom | game;
+    uint8_t index = (c64->processorPort.readProcessorPort() & 0x07) | exrom | game;
+
     
     // Set ultimax flag
     c64->setUltimax(exrom && !game);
@@ -357,7 +359,14 @@ uint8_t C64Memory::peek(uint16_t addr)
             
             if (addr > 0x0001)
                 return ram[addr];
+
+            if (addr == 0x0000)
+                return c64->processorPort.readProcessorPortDirection();
             
+            if (addr == 0x0001)
+                return c64->processorPort.readProcessorPort();
+            
+            /*
             // Processor port
             dir = cpu->getPortDirection();
             ext = cpu->getExternalPortBits();
@@ -367,6 +376,9 @@ uint8_t C64Memory::peek(uint16_t addr)
             
             result = (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
             return result;
+             */
+            assert(0);
+            break;
 
         case M_NONE:
             // what happens if RAM is unmapped?
@@ -521,6 +533,13 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 				return;
 			}
 			
+            if (addr == 0x0000)
+                c64->processorPort.writeProcessorPortDirection(value);
+            
+            if (addr == 0x0001)
+                c64->processorPort.writeProcessorPort(value);
+
+            /*
 			// Processor port
 			if (addr == 0x0000) {
 				cpu->setPortDirection(value);
@@ -529,6 +548,7 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 				cpu->setPort(value);
                 updatePeekPokeLookupTables();
 			}
+            */
 			return;
 
 		default:

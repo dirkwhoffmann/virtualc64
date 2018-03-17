@@ -88,6 +88,7 @@ C64::C64()
     VirtualComponent *subcomponents[] = {
         
         &cpu,
+        &processorPort,
         &mem,
         &vic,
         &sid,

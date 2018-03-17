@@ -240,6 +240,7 @@
 		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
 		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
 		50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B372039B3C5006CE7C7 /* C64Key.swift */; };
+		50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FF16FB205D17F5000A729A /* ProcessorPort.cpp */; };
 		50FF818F1F88D9100004548A /* GamePad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF818E1F88D9100004548A /* GamePad.swift */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -568,6 +569,8 @@
 		50FD96A41BF65861009134A4 /* 1541.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1541.png; sourceTree = "<group>"; };
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
+		50FF16FB205D17F5000A729A /* ProcessorPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorPort.cpp; sourceTree = "<group>"; };
+		50FF16FC205D17F5000A729A /* ProcessorPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorPort.h; sourceTree = "<group>"; };
 		50FF818E1F88D9100004548A /* GamePad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePad.swift; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* VirtualC64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualC64.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -713,6 +716,8 @@
 				50176C550A6F72F3009E80BD /* CPU.cpp */,
 				50176C580A6F72F3009E80BD /* Instructions.h */,
 				50176C570A6F72F3009E80BD /* Instructions.cpp */,
+				50FF16FC205D17F5000A729A /* ProcessorPort.h */,
+				50FF16FB205D17F5000A729A /* ProcessorPort.cpp */,
 				50176C5A0A6F72F3009E80BD /* Keyboard.h */,
 				50176C590A6F72F3009E80BD /* Keyboard.cpp */,
 				389E777F0C7A3B6F00BEAFA6 /* Joystick.h */,
@@ -1399,6 +1404,7 @@
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
+				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,

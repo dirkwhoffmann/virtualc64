@@ -66,6 +66,7 @@
 #include "CRTContainer.h"
 
 // Sub components
+#include "ProcessorPort.h"
 #include "ExpansionPort.h"
 #include "IEC.h"
 #include "Keyboard.h"
@@ -211,6 +212,9 @@ public:
 	//! @brief    The C64s virtual CPU
     CPU cpu;
 	
+    //! @brief    The C64s processor port
+    ProcessorPort processorPort;
+
 	//! @brief    The C64s video controller chip
 	VIC vic;
 	
