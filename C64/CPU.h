@@ -457,26 +457,33 @@ public:
 	//! @brief    Sets CIA bit of IRQ line.
     void setIRQLineCIA() { setIRQLine(0x01); }
     
+    //! @brief    Clears CIA bit of IRQ line.
+    void clearIRQLineCIA() { clearIRQLine(0x01); }
+
 	//! @brief    Sets VIC bit of IRQ line.
     void setIRQLineVIC() { setIRQLine(0x02); }
     
-    //! @brief    Sets VIA bit of IRQ line (1541 drive).
-    void setIRQLineVIA() { setIRQLine(0x10); }
+    //! @brief    Clears VIC bit of IRQ line.
+    void clearIRQLineVIC() { clearIRQLine(0x02); }
     
 	//! @brief    Sets ATN bit of IRQ line (1541 drive).
     void setIRQLineATN() { setIRQLine(0x40); }
     
-	//! @brief    Clears CIA bit of IRQ line.
-    void clearIRQLineCIA() { clearIRQLine(0x01); }
+    //! @brief    Clears ATN bit of IRQ line (1541 drive).
+    void clearIRQLineATN() { clearIRQLine(0x40); }
     
-	//! @brief    Clears VIC bit of IRQ line.
-    void clearIRQLineVIC() { clearIRQLine(0x02); }
+    //! @brief    Sets VIA bit of IRQ line (1541 drive).
+    void setIRQLineVIA() { setIRQLine(0x10); }
     
     //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
     void clearIRQLineVIA() { clearIRQLine(0x10); }
     
-	//! @brief    Clears ATN bit of IRQ line (1541 drive).
-    void clearIRQLineATN() { clearIRQLine(0x40); }
+    //! @brief    Sets TOD bit of NMI line.
+    void setIRQLineTOD() { setIRQLine(0x20); }
+    
+    //! @brief    Clears TOD bit of NMI line.
+    void clearIRQLineTOD() { clearIRQLine(0x20); }
+
     
 	//! @brief    Sets CIA bit of NMI line.
     void setNMILineCIA() { setNMILine(0x01); }
@@ -484,6 +491,12 @@ public:
 	//! @brief    Clears CIA bit of NMI line.
     void clearNMILineCIA() { clearNMILine(0x01); }
 
+    //! @brief    Sets TOD bit of NMI line.
+    void setNMILineTOD() { setNMILine(0x20); }
+    
+    //! @brief    Clears TOD bit of NMI line.
+    void clearNMILineTOD() { clearNMILine(0x20); }
+    
     //! @brief    Sets ExpansionPort bit of NMI line.
     void setNMILineExpansionPort() { setNMILine(0x02); }
     

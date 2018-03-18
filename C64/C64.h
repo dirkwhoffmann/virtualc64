@@ -22,7 +22,8 @@
 //
 // Milestone reached: VirtualC64 passes VICE test vicii_reg_timing
 // Added support for cartridges of type 19 (Magic Desk)
-// Processor port handling has been changed. Now passing tests bitfade (VICE), delaytime (VICE) and CPUPORT3 (PC64WIN)
+// Processor port code has been refactored
+// Passing processor port tests bitfade (VICE), delaytime (VICE), ram0001 (VICE), and CPUPORT3 (PC64WIN)
 //
 // TODO:
 

@@ -159,21 +159,33 @@ public:
 	bool readICR;
 
 	/*! @brief    Activates the interrupt line
-	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
-     *            Whereas the CIA 1 activates the IRQ line, the CIA 2 activates clears the NMI line.
+	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
+     *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
      */
 	virtual void raiseInterruptLine() = 0;	
-	
-	/*! @brief    Clears the interrupt line
-	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
-     *            Whereas the CIA 1 clears the IRQ line, the CIA 2 chip clears the NMI line.
+
+    /*! @brief    Activates the interrupt line with TOD as source
+     *  @details  The function is abstract and implemented differently by CIA1 and CIA2.
+     *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
      */
-	virtual void clearInterruptLine() = 0;	
-	
+    virtual void raiseInterruptLineTOD() = 0;
+
+	/*! @brief    Clears the interrupt line
+	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
+     *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
+     */
+	virtual void clearInterruptLine() = 0;
+
+    /*! @brief    Clears the interrupt line with TOD as source
+     *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
+     *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
+     */
+    virtual void clearInterruptLineTOD() = 0;
     
-    // -----------------------------------------------------------------------------------------------
+    
+    // ------------------------------------------------------------------------------------------
     //                                             Methods
-    // -----------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
 
 public:	
 	
@@ -483,6 +495,9 @@ public:
 
 	//! Increments the TOD clock by one tenth of a second
 	void incrementTOD();
+
+    //! Triggers a TOD interrupt if current time matches alarm time
+    void checkForTODInterrupt();
 };
 
 
@@ -509,15 +524,18 @@ private:
     //! @brief    Polls current state of a single joystick
     void pollJoystick(Joystick *joy, int joyDevNo);
 
-    /*! @brief    Raises the interrupt line
-     *  @details  Note that CIA 1 is connected to the IRQ line
-     */    void raiseInterruptLine();
+    //! @brief    Raises the IRQ line
+    void raiseInterruptLine();
 
-    /*! @brief    Clears the interrupt line
-     *  @details  Note that CIA 1 is connected to the IRQ line
-     */    void clearInterruptLine();
+    //! @brief    Raises the IRQ line with TOD as source
+    void raiseInterruptLineTOD();
 
-	
+    //! @brief    Clears the IRQ line
+    void clearInterruptLine();
+
+    //! @brief    Clears the IRQ line with TOD as source
+    void clearInterruptLineTOD();
+
 public:
 
 	//! @brief    Constructor
@@ -570,15 +588,17 @@ public:
 
 private:
 
-    /*! @brief    Raises the interrupt line
-     *  @details  Note that CIA 2 is connected to the NMI line 
-     */
+    //! @brief    Raises the NMI line
     void raiseInterruptLine();
-
-    /*! @brief    Clears the interrupt line
-     *  @details  Note that CIA 2 is connected to the NMI line
-     */
+    
+    //! @brief    Raises the NMI line with TOD as source
+    void raiseInterruptLineTOD();
+    
+    //! @brief    Clears the NMI line
     void clearInterruptLine();
+    
+    //! @brief    Clears the NMI line with TOD as source
+    void clearInterruptLineTOD();
 
 		
 public:

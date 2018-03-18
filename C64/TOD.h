@@ -46,17 +46,17 @@ private:
 	TimeOfDay latch;
 	
 	/*! @brief    If set to true, the TOD registers are frozen
-	 *  @details  The CIA chip freezes the registers when the hours-part is read and reactivates them,
-     *            when the 1/10th part is read. Although the values stay constant, the internal clock 
-     *            continues to run. Purpose: If you start reading with the hours-part, the clock won't 
-     *            change until you have read the whole time.
+	 *  @details  The CIA chip freezes the registers when the hours-part is read and reactivates
+     *            them, when the 1/10th part is read. Although the values stay constant, the
+     *            internal clock continues to run. Purpose: If you start reading with the
+     *            hours-part, the clock won't change until you have read the whole time.
      */
 	bool frozen;
 	
 	/*! @brief    If set to true, the TOD clock is stopped
-	 *  @details  The CIA chip stops the TOD clock, when the hours-part is written and restarts it, 
-     *            when the 1/10th part is written. Purpose: The clock will only start running when the 
-     *            time is completely set.
+	 *  @details  The CIA chip stops the TOD clock when the hours-part is written and restarts
+     *            it, when the 1/10th part is written. Purpose: The clock will only start running
+     *            when the time is completely set.
      */
 	bool stopped;
 	
@@ -75,16 +75,16 @@ public:
 	void dumpState();	
 	
     //! @brief    Freezes the time of day clock.
-	inline void freeze() { latch.value = tod.value; frozen = true; }
+    void freeze() { latch.value = tod.value; frozen = true; }
 
     //! @brief    Defreezes the time of day clock.
-    inline void defreeze() { frozen = false; }
+    void defreeze() { frozen = false; }
 
     //! @brief    Stops the time of day clock.
-    inline void stop() { stopped = true; }
+    void stop() { stopped = true; }
 
     //! @brief    Starts the time of day clock.
-    inline void cont() { stopped = false; }
+    void cont() { stopped = false; }
 		
 	/*! @brief    Returns the hours digits of the time of day clock.
 	 *  @note     The TOD clock freezes when a read or write access occurrs.
@@ -97,16 +97,16 @@ public:
 	void setTodHours(uint8_t value) { tod.time.hours = value & 0x9F; }
 	
 	//! @brief    Returns the minutes digits of the time of day clock.
-	inline uint8_t getTodMinutes() { return frozen ? latch.time.minutes & 0x7F : tod.time.minutes & 0x7F; }
+    uint8_t getTodMinutes() { return frozen ? latch.time.minutes & 0x7F : tod.time.minutes & 0x7F; }
 	
 	//! @brief    Sets the minutes digits of the time of day clock.
-	inline void setTodMinutes(uint8_t value) { tod.time.minutes = value & 0x7F; }
+    void setTodMinutes(uint8_t value) { tod.time.minutes = value & 0x7F; }
 	
 	//! @brief    Returns the seconds digits of the time of day clock.
-	inline uint8_t getTodSeconds() { return frozen ? latch.time.seconds & 0x7F : tod.time.seconds & 0x7F; }
+    uint8_t getTodSeconds() { return frozen ? latch.time.seconds & 0x7F : tod.time.seconds & 0x7F; }
 	
 	//! @brief    Sets the seconds digits of the time of day clock.
-	inline void setTodSeconds(uint8_t value) { tod.time.seconds = value & 0x7F; }
+    void setTodSeconds(uint8_t value) { tod.time.seconds = value & 0x7F; }
 	
 	/*! @brief    Returns the tenth-of-a-second digits of the time of day clock.
 	 *  @note     The TOD clock unfreezes on a read or write access.
@@ -119,31 +119,31 @@ public:
 	void setTodTenth(uint8_t value) { tod.time.tenth = value & 0x0F; }
 	
 	//! @brief    Returns the hours digits of the alarm time.
-	inline uint8_t getAlarmHours() { return alarm.time.hours & 0x9F; }
+    uint8_t getAlarmHours() { return alarm.time.hours & 0x9F; }
 	
 	//! @brief    Sets the hours digits of the alarm time.
-	inline void setAlarmHours(uint8_t value) { alarm.time.hours = value & 0x9F; }
+    void setAlarmHours(uint8_t value) { alarm.time.hours = value & 0x9F; }
 	
 	//! @brief    Returns the minutes digits of the alarm time.
-	inline uint8_t getAlarmMinutes() { return alarm.time.minutes & 0x7F; }
+    uint8_t getAlarmMinutes() { return alarm.time.minutes & 0x7F; }
 	
 	//! @brief    Sets the minutes digits of the alarm time.
-	inline void setAlarmMinutes(uint8_t value) { alarm.time.minutes = value & 0x7F; }
+    void setAlarmMinutes(uint8_t value) { alarm.time.minutes = value & 0x7F; }
 	
 	//! @brief    Returns the seconds digits of the alarm time.
-	inline uint8_t getAlarmSeconds() { return alarm.time.seconds & 0x7F; }
+    uint8_t getAlarmSeconds() { return alarm.time.seconds & 0x7F; }
 	
 	//! @brief    Sets the seconds digits of the alarm time.
-	inline void setAlarmSeconds(uint8_t value) { alarm.time.seconds = value & 0x7F; }
+    void setAlarmSeconds(uint8_t value) { alarm.time.seconds = value & 0x7F; }
 	
 	//! @brief    Returns the tenth-of-a-second digits of the alarm time.
-	inline uint8_t getAlarmTenth() { return alarm.time.tenth & 0x0F; }
+    uint8_t getAlarmTenth() { return alarm.time.tenth & 0x0F; }
 	
 	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
-	inline void setAlarmTenth(uint8_t value) { alarm.time.tenth = value & 0x0F; }
+    void setAlarmTenth(uint8_t value) { alarm.time.tenth = value & 0x0F; }
 	
 	//! @brief    Returns true, iff the TOD clock is currently frozen.
-	inline bool isFrozen() { return frozen; }
+    bool isFrozen() { return frozen; }
 	
 	/*! @brief    Increments the TOD clock by one tenth of a second.
 	 *  @details  The function increments the TOD clock. It returns true iff the currently set
@@ -152,6 +152,8 @@ public:
      */
 	bool increment();
 	
+    //! @brief    Returns true if current time matches alarm time
+    bool alarming();
 };
 
 #endif

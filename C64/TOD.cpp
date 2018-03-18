@@ -108,3 +108,10 @@ TOD::increment()
 	
 	return (tod.value == alarm.value);
 }
+
+bool
+TOD::alarming()
+{
+    return tod.value == alarm.value;
+}
+

@@ -263,6 +263,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
 			if (CRB & 0x80) {
 				tod.setAlarmTenth(value);
+                checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
 				tod.cont();
@@ -271,24 +272,29 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
         case 0x09: // CIA_TIME_OF_DAY_SECONDS
             
-			if (CRB & 0x80)
+            if (CRB & 0x80) {
 				tod.setAlarmSeconds(value);
-			else 
+                checkForTODInterrupt();
+            } else {
 				tod.setTodSeconds(value);
+            }
 			return;
 			
         case 0x0A: // CIA_TIME_OF_DAY_MINUTES
             
-			if (CRB & 0x80)
+            if (CRB & 0x80) {
 				tod.setAlarmMinutes(value);
-			else 
+                checkForTODInterrupt();
+            } else {
 				tod.setTodMinutes(value);
+            }
 			return;
 			
         case 0x0B: // CIA_TIME_OF_DAY_HOURS
 			
 			if (CRB & 0x80) {
 				tod.setAlarmHours(value);
+                checkForTODInterrupt();
 			} else {
 				// Note: A real C64 shows strange behaviour when writing 0x12 or 0x92 
 				// into this register. In this case, the AM/PM flag is inverted
@@ -317,7 +323,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			} else {
 				IMR &= ~(value & 0x1F);
 			}
-			
+            debug("Setting IMR to %02X\n", IMR);
 			// raise an interrupt in the next cycle if condition matches
 			if ((IMR & ICR) != 0) {
 				if (INT) {
@@ -448,17 +454,28 @@ void CIA::poke(uint16_t addr, uint8_t value)
 void 
 CIA::incrementTOD()
 {
-	if (tod.increment()) {
-		// Set interrupt source
-		ICR |= 0x04; 
-		
-		// Trigger interrupt, if enabled
-		if (IMR & 0x04) {
-			// The uppermost bit indicates that an interrupt occured
-			ICR |= 0x80;
-			raiseInterruptLine();
-		}
-	}
+    tod.increment();
+    checkForTODInterrupt();
+}
+
+void
+CIA::checkForTODInterrupt()
+{
+    if (tod.alarming()) {
+        
+        // Set interrupt source
+        ICR |= 0x04;
+        
+        // Trigger interrupt, if enabled
+        if (IMR & 0x04) {
+            // The uppermost bit indicates that an interrupt occured
+            ICR |= 0x80;
+            raiseInterruptLineTOD();
+        }
+    }  else {
+        ICR &= 0xFB;
+        clearInterruptLineTOD();
+    }
 }
 
 void CIA::dumpTrace()
@@ -792,10 +809,22 @@ CIA1::raiseInterruptLine()
 	c64->cpu.setIRQLineCIA();
 }
 
+void
+CIA1::raiseInterruptLineTOD()
+{
+    c64->cpu.setIRQLineTOD();
+}
+
 void 
 CIA1::clearInterruptLine()
 {
 	c64->cpu.clearIRQLineCIA();
+}
+
+void
+CIA1::clearInterruptLineTOD()
+{
+    c64->cpu.clearIRQLineTOD();
 }
 
 void 
@@ -1004,10 +1033,22 @@ CIA2::raiseInterruptLine()
 	c64->cpu.setNMILineCIA();
 }
 
+void
+CIA2::raiseInterruptLineTOD()
+{
+    c64->cpu.setNMILineTOD();
+}
+
 void 
 CIA2::clearInterruptLine()
 {
 	c64->cpu.clearNMILineCIA();
+}
+
+void
+CIA2::clearInterruptLineTOD()
+{
+    c64->cpu.clearNMILineTOD();
 }
 
 uint8_t 
