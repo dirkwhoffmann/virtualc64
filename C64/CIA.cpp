@@ -141,7 +141,6 @@ CIA::peek(uint16_t addr)
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
 			
 			result = tod.getTodTenth();
-			tod.defreeze();
 			break;
 		
         case 0x09: // CIA_TIME_OF_DAY_SECONDS
@@ -156,7 +155,6 @@ CIA::peek(uint16_t addr)
 			
         case 0x0B: // CIA_TIME_OF_DAY_HOURS
 
-			tod.freeze();
 			result = tod.getTodHours();
 			break;
 			
@@ -266,7 +264,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
                 checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
-				tod.cont();
+                // if (tod.tod.oldValue != tod.tod.value)
+                    checkForTODInterrupt();
 			}
 			return;
 			
@@ -277,6 +276,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
                 checkForTODInterrupt();
             } else {
 				tod.setTodSeconds(value);
+                // if (tod.tod.oldValue != tod.tod.value)
+                    checkForTODInterrupt();
             }
 			return;
 			
@@ -287,6 +288,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
                 checkForTODInterrupt();
             } else {
 				tod.setTodMinutes(value);
+                // if (tod.tod.oldValue != tod.tod.value)
+                    checkForTODInterrupt();
             }
 			return;
 			
@@ -301,7 +304,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);
-				tod.stop();
+                // if (tod.tod.oldValue != tod.tod.value)
+                    checkForTODInterrupt();
 			}
 			return;
 			
@@ -323,7 +327,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			} else {
 				IMR &= ~(value & 0x1F);
 			}
-            debug("Setting IMR to %02X\n", IMR);
+            
 			// raise an interrupt in the next cycle if condition matches
 			if ((IMR & ICR) != 0) {
 				if (INT) {
@@ -473,7 +477,6 @@ CIA::checkForTODInterrupt()
             raiseInterruptLineTOD();
         }
     }  else {
-        ICR &= 0xFB;
         clearInterruptLineTOD();
     }
 }

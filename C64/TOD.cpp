@@ -43,17 +43,9 @@ TOD::~TOD()
 void
 TOD::reset() 
 {
-    time_t rawtime;
-    struct tm *timeinfo;
-    
     VirtualComponent::reset();
-
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-
-    tod.time.seconds = BinaryToBCD((uint8_t)timeinfo->tm_sec);
-    tod.time.minutes = BinaryToBCD((uint8_t)timeinfo->tm_min);
-    tod.time.hours = BinaryToBCD((uint8_t)timeinfo->tm_hour);
+    tod.time.hours = BinaryToBCD(1);
+    stopped = true;
 }
 
 void 
@@ -67,46 +59,52 @@ TOD::dumpState()
 	msg("\n");
 }
 
-bool 
+void
 TOD::increment()
 {
-	if (stopped)
-		return false;
+    if (stopped) {
+		return;
+    }
+    
+    // 1/10 seconds
+	if (tod.time.tenth != 0x09) {
+        tod.time.tenth = incBCD(tod.time.tenth);
+        return;
+    }
+    tod.time.tenth = 0;
+    
+    // Seconds
+    if (tod.time.seconds != 0x59) {
+        tod.time.seconds = incBCD(tod.time.seconds) & 0x7F;
+        return;
+    }
+    tod.time.seconds = 0;
+    
+    // Minutes
+    if (tod.time.minutes != 0x59) {
+        tod.time.minutes = incBCD(tod.time.minutes) & 0x7F;
+        return;
+    }
+    tod.time.minutes = 0;
 	
-	if (tod.time.tenth == 0x09) {
-		tod.time.tenth = 0;
-		if (tod.time.seconds == 0x59) {
-			tod.time.seconds = 0;
-			if (tod.time.minutes == 0x59) {
-				tod.time.minutes = 0;
+    // Hours
+    uint8_t pm = tod.time.hours & 0x80;
+    uint8_t hr = tod.time.hours & 0x1F;
 				
-				// Adopted from VICE
-				uint8_t pm = tod.time.hours & 0x80;
-				uint8_t hr = tod.time.hours & 0x1F;
-				
-				if (hr == 0x11)
-					pm ^= 0x80;					
-				if (hr == 0x12)
-					hr = 0x00;
-
-				hr++;
-
-				if (hr == 0x0A)
-					hr = 0x10;
-
-				tod.time.hours = pm | (hr & 0x1F);
-
-			} else {
-				tod.time.minutes = incBCD(tod.time.minutes);
-			}
-		} else {
-			tod.time.seconds = incBCD(tod.time.seconds);
-		}
-	} else {
-		tod.time.tenth = incBCD(tod.time.tenth);
-	}
-	
-	return (tod.value == alarm.value);
+    if (hr == 0x11) {
+        pm ^= 0x80;
+    }
+    if (hr == 0x12) {
+        hr = 0x01;
+    } else if (hr == 0x09) {
+        hr = 0x10;
+    } else {
+        uint8_t hr_lo = hr & 0x0F;
+        uint8_t hr_hi = hr & 0x10;
+        hr = hr_hi | ((hr_lo + 1) & 0x0F);
+    }
+                
+    tod.time.hours = pm | hr;
 }
 
 bool
