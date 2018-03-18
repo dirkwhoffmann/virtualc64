@@ -70,11 +70,7 @@ public:
 	
 	//! @brief    Restores the initial state.
 	void reset();
-	
-    //! @brief    Returns the size of the internal state.
-    // TODO: Get rid of this. Should be calculated automatically
-    size_t stateSize();
-    
+	    
 	//! @brief    Prints debug information.
 	void dumpState();	
 	

@@ -74,6 +74,7 @@ VIC::VIC()
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
+        { &prevDataBus,                 sizeof(prevDataBus),                    CLEAR_ON_RESET },
         { &gAccessDisplayMode,          sizeof(gAccessDisplayMode),             CLEAR_ON_RESET },
         { &gAccessfgColor,              sizeof(gAccessfgColor),                 CLEAR_ON_RESET },
         { &gAccessbgColor,              sizeof(gAccessbgColor),                 CLEAR_ON_RESET },
@@ -110,13 +111,16 @@ VIC::reset()
     
     // Internal state
     yCounter = PAL_HEIGHT;
-    p.borderColor = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
-    cp.backgroundColor[0] = PixelEngine::BLUE; // Let the background color look correct right from the beginning
-    setScreenMemoryAddr(0x400);                // Remove startup graphics glitches by setting the initial value early
-	p.registerCTRL1 = 0x10;                    // Make screen visible from the beginning
+    
+    // Preset some video parameters to show a blank blue sreen on power up
+    p.borderColor = PixelEngine::LTBLUE;
+    cp.backgroundColor[0] = PixelEngine::BLUE;
+    setScreenMemoryAddr(0x400);
+    memset(&c64->mem.ram[0x400], 32, 40*25);
+	p.registerCTRL1 = 0x10;
 	expansionFF = 0xFF;
     
-	// Debugging	
+	// Disable cheating by default
 	drawSprites = true;
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
@@ -212,6 +216,7 @@ uint8_t VIC::memAccess(uint16_t addr)
     assert((addr & 0xC000) == 0); /* 14 bit address */
     assert((bankAddr & 0x3FFF) == 0); /* multiple of 16 KB */
     
+    prevDataBus = dataBus;
     addrBus = bankAddr | addr;
    
     // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)

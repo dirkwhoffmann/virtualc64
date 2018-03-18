@@ -114,6 +114,9 @@ public:
      */
     uint8_t dataBus;
     
+    //! @brief    Value of data bus one access earlier
+    uint8_t prevDataBus;
+    
     //! @brief    Display mode in latest gAccess
     uint8_t gAccessDisplayMode;
     
@@ -559,9 +562,6 @@ public:
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
-	
-    //! @brief    Returns the last value on VIC data bus
-    inline uint8_t getDataBus() { return dataBus; }
     
     
 	// ------------------------------------------------------------------------------------------

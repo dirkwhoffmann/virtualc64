@@ -149,13 +149,13 @@ ExpansionPort::peekIO1(uint16_t addr)
      *  Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
      *  VIC gelesene Byte zurück!)" [C.B.]
      */
-   return cartridge ? cartridge->peekIO1(addr) : c64->vic.getDataBus();
+    return cartridge ? cartridge->peekIO1(addr) : c64->vic.prevDataBus;
 }
 
 uint8_t
 ExpansionPort::peekIO2(uint16_t addr)
 {
-    return cartridge ? cartridge->peekIO2(addr) : c64->vic.getDataBus();
+    return cartridge ? cartridge->peekIO2(addr) : c64->vic.prevDataBus;
 }
 
 void

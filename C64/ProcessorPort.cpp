@@ -29,16 +29,13 @@ ProcessorPort::~ProcessorPort()
 {
 }
 
+/*
 void
 ProcessorPort::reset()
 {
     VirtualComponent::reset();
-    
-    /*
-    port =  0x37;
-    direction = 0x2F;
-    */
 }
+*/
 
 void
 ProcessorPort::dumpState()
@@ -95,6 +92,9 @@ ProcessorPort::write(uint8_t value)
         c64->datasette.setMotor((value & 0x20) == 0);
     }
     
+    // When writing to the port register, the last VIC byte appears in 0x0001
+    c64->mem.ram[0x0001] = c64->vic.prevDataBus;
+    
     // Switch memory banks
     c64->mem.updatePeekPokeLookupTables();
 }
@@ -119,7 +119,10 @@ ProcessorPort::writeDirection(uint8_t value)
     
     direction = value;
     
-     // Switch memory banks
+    // When writing to the direction register, the last VIC byte appears in 0x0000
+    c64->mem.ram[0x0000] = c64->vic.prevDataBus;
+    
+    // Switch memory banks
     c64->mem.updatePeekPokeLookupTables();
 }
 

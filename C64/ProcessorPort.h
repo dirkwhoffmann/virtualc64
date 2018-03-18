@@ -60,7 +60,7 @@ public:
     ~ProcessorPort();
     
     //! @brief    Restores the initial state.
-    void reset();
+    // void reset();
     
     //! @brief    Prints debug information.
     void dumpState();

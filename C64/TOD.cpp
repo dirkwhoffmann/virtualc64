@@ -56,12 +56,6 @@ TOD::reset()
     tod.time.hours = BinaryToBCD((uint8_t)timeinfo->tm_hour);
 }
 
-size_t
-TOD::stateSize()
-{
-    return 14;
-}
-
 void 
 TOD::dumpState()
 {
