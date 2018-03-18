@@ -178,7 +178,7 @@ public:
 public:	
 	
 	//! @brief    Returns true if addr is located in the I/O range of one of the two CIA chips
-	static inline bool isCiaAddr(uint16_t addr) { return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
+	static bool isCiaAddr(uint16_t addr) { return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
 	
 	//! @brief    Constructor
 	CIA();
@@ -201,28 +201,28 @@ public:
     //
     
 	//! @brief    Returns the value of data port A
-	inline uint8_t getDataPortA() { return peek(0x00); }
+    uint8_t getDataPortA() { return peek(0x00); }
 
 	//! @brief    Sets the current value of data port A
-	inline void setDataPortA(uint8_t value) { poke(0x00, value); }
+    void setDataPortA(uint8_t value) { poke(0x00, value); }
 
 	//! @brief    Returns the value of the data port A direction register
-	inline uint8_t getDataPortDirectionA() { return DDRA; }
+    uint8_t getDataPortDirectionA() { return DDRA; }
 	
 	//! @brief    Sets the current value of the data port A direction register
-	inline void setDataPortDirectionA(uint8_t value) { DDRA = value; }
+    void setDataPortDirectionA(uint8_t value) { DDRA = value; }
 	
 	//! @brief    Returns the value of data port B
-	inline uint8_t getDataPortB() { return PB; }
+    uint8_t getDataPortB() { return PB; }
 	
 	//! @brief    Sets the current value of data port B
-	inline void setDataPortB(uint8_t value) { poke(0x01, value); }
+    void setDataPortB(uint8_t value) { poke(0x01, value); }
 	
 	//! @brief    Returns the value of the data port B direction register
-	inline uint8_t getDataPortDirectionB() { return DDRB; }
+    uint8_t getDataPortDirectionB() { return DDRB; }
 	
 	//! @brief    Sets the current value of the data port B direction register
-	inline void setDataPortDirectionB(uint8_t value) { DDRB = value; }
+    void setDataPortDirectionB(uint8_t value) { DDRB = value; }
 
     //! @brief    Simulates a rising edge on the flag pin
     void triggerRisingEdgeOnFlagPin();
@@ -235,228 +235,228 @@ public:
 	//
     
 	//! @brief    Returns true, if timer can trigger interrupts
-	inline bool isInterruptEnabledA() { return IMR & 0x01; }
+    bool isInterruptEnabledA() { return IMR & 0x01; }
 
 	//! @brief    Sets or deletes interrupt enable flag
-	inline void setInterruptEnabledA(bool b) { if (b) IMR |= 0x01; else IMR &= (0xff-0x01); }
+    void setInterruptEnabledA(bool b) { if (b) IMR |= 0x01; else IMR &= (0xff-0x01); }
 
 	//! @brief    Toggles interrupt enable flag of timer A
-	inline void toggleInterruptEnableFlagA() { setInterruptEnabledA(!isInterruptEnabledA()); }
+    void toggleInterruptEnableFlagA() { setInterruptEnabledA(!isInterruptEnabledA()); }
 
 	//! @brief    Returns true, if timer A has reached zero
-	inline bool isSignalPendingA() { return ICR & 0x01; }
+    bool isSignalPendingA() { return ICR & 0x01; }
 
 	//! @brief    Sets or delete signal pending flag
-	inline void setSignalPendingA(bool b) { if (b) ICR |= 0x01; else ICR &= (0xff-0x01); }
+    void setSignalPendingA(bool b) { if (b) ICR |= 0x01; else ICR &= (0xff-0x01); }
 
 	//! @brief    Toggles signal pending flag of timer A
-	inline void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
+    void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
 		
 	//! @brief    Returns true, if timer B can trigger interrupts
-	inline bool isInterruptEnabledB() { return IMR & 0x02; }
+    bool isInterruptEnabledB() { return IMR & 0x02; }
 
 	//! @brief    Sets or deletes interrupt enable flag
-	inline void setInterruptEnabledB(bool b) { if (b) IMR |= 0x02; else IMR &= (0xff-0x02); }
+    void setInterruptEnabledB(bool b) { if (b) IMR |= 0x02; else IMR &= (0xff-0x02); }
 
 	//! @brief    Toggles interrupt enable flag of timer B
-	inline void toggleInterruptEnableFlagB() { setInterruptEnabledB(!isInterruptEnabledB()); }
+    void toggleInterruptEnableFlagB() { setInterruptEnabledB(!isInterruptEnabledB()); }
 
 	//! @brief    Returns true, if timer B has reached zero
-	inline bool isSignalPendingB() { return ICR & 0x02; }
+    bool isSignalPendingB() { return ICR & 0x02; }
 
 	//! @brief    Sets or delete signal pending flag
-	inline void setSignalPendingB(bool b) { if (b) ICR |= 0x02; else ICR &= (0xff-0x02); }
+    void setSignalPendingB(bool b) { if (b) ICR |= 0x02; else ICR &= (0xff-0x02); }
 	
 	//! @brief    Toggles signal pending flag of timer B
-	inline void togglePendingSignalFlagB() { setSignalPendingB(!isSignalPendingB()); }
+    void togglePendingSignalFlagB() { setSignalPendingB(!isSignalPendingB()); }
 
 	//! @brief    Returns true, if the "time of day" interrupt alarm is enabled
-	inline bool isInterruptEnabledTOD() { return ICR & 0x04; }
+    bool isInterruptEnabledTOD() { return ICR & 0x04; }
 
 	//! @brief    Enables or disable "time of day" interrupts
-	inline void setInterruptEnabledTOD(bool b) { if (b) ICR |= 0x04; else ICR &= (0xff-0x04); }
+    void setInterruptEnabledTOD(bool b) { if (b) ICR |= 0x04; else ICR &= (0xff-0x04); }
 
     //! @brief    Returns true, if a negative edge on the FLAG pin triggers an interrupt
-    inline bool isInterruptEnabledFlg() { return ICR & 0x10; }
+    bool isInterruptEnabledFlg() { return ICR & 0x10; }
     
     //! @brief    Enables or disable interrupts on negative edges of the FLAG pin
-    inline void setInterruptEnabledFlg(bool b) { if (b) ICR |= 0x10; else ICR &= (0xff-0x10); }
+    void setInterruptEnabledFlg(bool b) { if (b) ICR |= 0x10; else ICR &= (0xff-0x10); }
     
 	//
 	// Timer A
 	// 
 	
 	//! @brief    Returns latch value.
-	inline uint16_t getLatchA() { return latchA; }
+    uint16_t getLatchA() { return latchA; }
 	
 	//! @brief    Sets latch value.
-	inline void setLatchA(uint16_t value) { latchA = value; }
+    void setLatchA(uint16_t value) { latchA = value; }
 	
 	//! @brief    Returns low byte of latch.
-	inline uint8_t getLatchALo() { return (uint8_t)(latchA & 0xFF); }
+    uint8_t getLatchALo() { return (uint8_t)(latchA & 0xFF); }
 	
 	//! @brief    Sets low byte of latch.
-	inline void setLatchALo(uint8_t value) { latchA = (latchA & 0xFF00) | value; }
+    void setLatchALo(uint8_t value) { latchA = (latchA & 0xFF00) | value; }
 	
 	//! @brief    Returns high byte of latch.
-	inline uint8_t getLatchAHi() { return (uint8_t)(latchA >> 8); }
+    uint8_t getLatchAHi() { return (uint8_t)(latchA >> 8); }
 	
 	//! @brief    Sets high byte of latch.
-	inline void setLatchAHi(uint8_t value) { latchA = (value << 8) | (latchA & 0xFF); }
+    void setLatchAHi(uint8_t value) { latchA = (value << 8) | (latchA & 0xFF); }
 	
 	//! @brief    Returns current timer value.
-	inline uint16_t getCounterA() { return counterA; }
+    uint16_t getCounterA() { return counterA; }
 	
 	//! @brief    Sets current timer value.
-	inline void setCounterA(uint16_t value) { counterA = value; }
+    void setCounterA(uint16_t value) { counterA = value; }
 	
 	//! @brief    Returns low byte of current timer value.
-	inline uint8_t getCounterALo() { return (uint8_t)(counterA & 0xFF); }
+    uint8_t getCounterALo() { return (uint8_t)(counterA & 0xFF); }
 	
 	//! @brief    Sets low byte of current timer value.
-	inline void setCounterALo(uint8_t value) { counterA = (counterA & 0xFF00) | value; }
+    void setCounterALo(uint8_t value) { counterA = (counterA & 0xFF00) | value; }
 	
 	//! @brief    Returns high byte of current timer value.
-	inline uint8_t getCounterAHi() { return (uint8_t)(counterA >> 8); }
+    uint8_t getCounterAHi() { return (uint8_t)(counterA >> 8); }
 	
 	//! @brief    Sets high byte of current timer value.
-	inline void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
+    void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
 	
 	/*! @brief    Load latched value into timer.
 	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait for one cycle before 
      *            it continous to count.
      */
-	inline void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
+    void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
 	
 	//! @brief    Returns true, if timer is running, 0 if stopped.
-	inline bool isStartedA() { return CRA & 0x01; }
+    bool isStartedA() { return CRA & 0x01; }
 	
 	//! @brief    Starts or stops timer.
-	inline void setStartedA(bool b) { if (b) CRA |= 0x01; else CRA &= 0xFE; }
+    void setStartedA(bool b) { if (b) CRA |= 0x01; else CRA &= 0xFE; }
 	
 	//! @brief    Toggles start flag.
-	inline void toggleStartFlagA() { setStartedA(!isStartedA()); }
+    void toggleStartFlagA() { setStartedA(!isStartedA()); }
 	
 	//! @brief    Returns true, if the force load strobe is 1.
-	inline bool forceLoadStrobeA() { return CRA & 0x10; }
+    bool forceLoadStrobeA() { return CRA & 0x10; }
 	
 	//! @brief    Returns true, if an underflow will be indicated in bit #6 in Port B register.
-	inline bool willIndicateUnderflowA() { return CRA & 0x02; }
+    bool willIndicateUnderflowA() { return CRA & 0x02; }
 	
 	//! @brief    Returns true, if an underflow will be indicated as a single pulse.
-	inline bool willIndicateUnderflowAsPulseA() { return !(CRA & 0x04); }
+    bool willIndicateUnderflowAsPulseA() { return !(CRA & 0x04); }
 	
 	//! @brief    Enables or disables underflow indication.
-	inline void setIndicateUnderflowA(bool b) { if (b) CRA |= 0x02; else CRA &= (0xFF-0x02); }
+    void setIndicateUnderflowA(bool b) { if (b) CRA |= 0x02; else CRA &= (0xFF-0x02); }
 	
 	//! @brief    Toggles underflow indication flag.
-	inline void toggleUnderflowFlagA() { setIndicateUnderflowA(!willIndicateUnderflowA()); }
+    void toggleUnderflowFlagA() { setIndicateUnderflowA(!willIndicateUnderflowA()); }
 	
 	//! @brief    Returns true, if timer is in one shot mode.
-	inline bool isOneShotA() { return CRA & 0x08; }
+    bool isOneShotA() { return CRA & 0x08; }
 	
 	//! @brief    Enables or disables one-shot-mode.
-	inline void setOneShotA(bool b) { if (b) CRA |= 0x08; else CRA &= (0xff-0x08); }
+    void setOneShotA(bool b) { if (b) CRA |= 0x08; else CRA &= (0xff-0x08); }
 	
 	//! @brief    Toggle one shot flag.
-	inline void toggleOneShotFlagA() { setOneShotA(!isOneShotA()); }
+    void toggleOneShotFlagA() { setOneShotA(!isOneShotA()); }
 	
 	//! @brief    Returns true, if timer counts clock ticks.
-	inline bool isCountingClockTicksA() { return (CRA & 0x20) == 0x00; }
+    bool isCountingClockTicksA() { return (CRA & 0x20) == 0x00; }
 	
 	//! @brief    Returns value of timer control register.
-	inline bool getControlRegA() { return CRA; }
+    bool getControlRegA() { return CRA; }
 
 	//! @brief    Sets value of timer control register.
-	inline void setControlRegA(uint8_t value) { CRA = value; }
+    void setControlRegA(uint8_t value) { CRA = value; }
 	
 	//
 	// Timer B
 	// 
 	
 	//! @brief    Returns latch value.
-	inline uint16_t getLatchB() { return latchB; }
+    uint16_t getLatchB() { return latchB; }
 	
 	//! @brief    Sets latch value.
-	inline void setLatchB(uint16_t value) { latchB = value; }
+    void setLatchB(uint16_t value) { latchB = value; }
 	
 	//! @brief    Returns low byte of latch.
-	inline uint8_t getLatchBLo() { return (uint8_t)(latchB & 0xFF); }
+    uint8_t getLatchBLo() { return (uint8_t)(latchB & 0xFF); }
 	
 	//! @brief    Set low byte of latch.
-	inline void setLatchBLo(uint8_t value) { latchB = (latchB & 0xFF00) | value; }
+    void setLatchBLo(uint8_t value) { latchB = (latchB & 0xFF00) | value; }
 	
 	//! @brief    Returns high byte of latch.
-	inline uint8_t getLatchBHi() { return (uint8_t)(latchB >> 8); }
+    uint8_t getLatchBHi() { return (uint8_t)(latchB >> 8); }
 	
 	//! @brief    Set high byte of latch.
-	inline void setLatchBHi(uint8_t value) { latchB = (value << 8) | (latchB & 0xFF); }
+    void setLatchBHi(uint8_t value) { latchB = (value << 8) | (latchB & 0xFF); }
 	
 	//! @brief    Returns current timer value.
-	inline uint16_t getCounterB() { return counterB; }
+    uint16_t getCounterB() { return counterB; }
 	
 	//! @brief    Set current timer value.
-	inline void setCounterB(uint16_t value) { counterB = value; }
+    void setCounterB(uint16_t value) { counterB = value; }
 	
 	//! @brief    Returns low byte of current timer value.
-	inline uint8_t getCounterBLo() { return (uint8_t)(counterB & 0xFF); }
+    uint8_t getCounterBLo() { return (uint8_t)(counterB & 0xFF); }
 	
 	//! @brief    Set low byte of current timer value.
-	inline void setCounterBLo(uint8_t value) { counterB = (counterB & 0xFF00) | value; }
+    void setCounterBLo(uint8_t value) { counterB = (counterB & 0xFF00) | value; }
 	
 	//! @brief    Returns high byte of current timer value.
-	inline uint8_t getCounterBHi() { return (uint8_t)(counterB >> 8); }
+    uint8_t getCounterBHi() { return (uint8_t)(counterB >> 8); }
 	
 	//! @brief    Set high byte of current timer value.
-	inline void setCounterBHi(uint8_t value) { counterB = (value << 8) | (counterB & 0xFF); }
+    void setCounterBHi(uint8_t value) { counterB = (value << 8) | (counterB & 0xFF); }
 	
 	/*! @brief    Loads latched value into timer.
-	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for one cycle before 
-     *            it continous to count.
+	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for
+     *            one cycle before it continous to count.
      */
-	inline void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
+    void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
 	
 	//! @brief    Returns true, if timer is running, 0 if stopped.
-	inline bool isStartedB() { return CRB & 0x01; }
+    bool isStartedB() { return CRB & 0x01; }
 	
 	//! @brief    Starts or stop timer.
-	inline void setStartedB(bool b) { if (b) CRB |= 0x01; else CRB &= 0xFE; }
+    void setStartedB(bool b) { if (b) CRB |= 0x01; else CRB &= 0xFE; }
 	
 	//! @brief    Toggles start flag.
-	inline void toggleStartFlagB() { setStartedB(!isStartedB()); }
+    void toggleStartFlagB() { setStartedB(!isStartedB()); }
 	
 	//! @brief    Returns true, if the force load strobe is 1.
-	inline bool forceLoadStrobeB() { return CRB & 0x10; }
+    bool forceLoadStrobeB() { return CRB & 0x10; }
 	
 	//! @brief    Returns true, if an underflow will be indicated in bit #7 in Port B register.
-	inline bool willIndicateUnderflowB() { return CRB & 0x02; }
+    bool willIndicateUnderflowB() { return CRB & 0x02; }
 	
 	//! @brief    Returns true, if an underflow will be indicated as a single pulse.
-	inline bool willIndicateUnderflowAsPulseB() { return !(CRB & 0x04); }
+    bool willIndicateUnderflowAsPulseB() { return !(CRB & 0x04); }
 	
 	//! @brief    Enables or disables underflow indication.
-	inline void setIndicateUnderflowB(bool b) { if (b) CRB |= 0x02; else CRB &= (0xFF-0x02); }
+    void setIndicateUnderflowB(bool b) { if (b) CRB |= 0x02; else CRB &= (0xFF-0x02); }
 	
 	//! @brief    Toggles underflow indication flag.
-	inline void toggleUnderflowFlagB() { setIndicateUnderflowB(!willIndicateUnderflowB()); }
+    void toggleUnderflowFlagB() { setIndicateUnderflowB(!willIndicateUnderflowB()); }
 	
 	//! @brief    Returns true, if timer is in one shot mode.
-	inline bool isOneShotB() { return CRB & 0x08; }
+    bool isOneShotB() { return CRB & 0x08; }
 	
 	//! @brief    Enables or disable one-shot-mode.
-	inline void setOneShotB(bool b) { if (b) CRB |= 0x08; else CRB &= (0xff-0x08); }
+    void setOneShotB(bool b) { if (b) CRB |= 0x08; else CRB &= (0xff-0x08); }
 	
 	//! @brief    Toggles one shot flag.
-	inline void toggleOneShotFlagB() { setOneShotB(!isOneShotB()); }
+    void toggleOneShotFlagB() { setOneShotB(!isOneShotB()); }
 	
 	//! @brief    Returns true, if timer counts clock ticks.
-	inline bool isCountingClockTicksB() { return (CRB & 0x20) == 0x00; }
+    bool isCountingClockTicksB() { return (CRB & 0x20) == 0x00; }
 	
 	//! @brief    Returns value of timer control register.
-	inline bool getControlRegB() { return CRB; }
+    bool getControlRegB() { return CRB; }
 	
 	//! @brief    Sets value of timer control register.
-	inline void setControlRegB(uint8_t value) { CRB = value; }
+    void setControlRegB(uint8_t value) { CRB = value; }
 	
 	
     //
@@ -530,7 +530,7 @@ public:
 	void reset();
 		
 	//! @brief    Returns true if addr is located in the I/O range of the CIA 1 chip
-	static inline bool isCia1Addr(uint16_t addr) 
+	static bool isCia1Addr(uint16_t addr)
 		{ return (CIA1_START_ADDR <= addr && addr <= CIA1_END_ADDR); }
 	
     //! @brief    Custom implementation of peek
@@ -593,7 +593,7 @@ public:
 	void reset();
 	
 	//! Returns true if the \a addr is located in the I/O range of the CIA 2 chip
-	static inline bool isCia2Addr(uint16_t addr) 
+	static bool isCia2Addr(uint16_t addr) 
 		{ return (CIA2_START_ADDR <= addr && addr <= CIA2_END_ADDR); }
 
 	uint8_t peek(uint16_t addr);

@@ -103,7 +103,7 @@ class ArchiveMountController : UserDialogController {
         c64.flushArchive(archive, item: contents.selectedRow)
         
         // Type "RUN"
-        parent.keyboardcontroller.typeOnKeyboard(string: "RUN", completion: nil)
+        parent.keyboardcontroller.typeOnKeyboard(string: "RUN\n", completion: nil)
         
         hideSheet()
     }

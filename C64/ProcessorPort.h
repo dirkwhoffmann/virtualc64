@@ -28,7 +28,7 @@
  *            indicates if a processor bit is configured as input or output. The register
  *            serves multiple pursposes. Firstly, it is used for bank switching, i.e. it
  *            decided for certain memory regions if ROM or RAM is avaible. Secondly, it
- *            it used to communicate with certain peripherals such as the datasette.
+ *            it used to communicate with the datasette.
  */
 class ProcessorPort : public VirtualComponent {
    
@@ -37,19 +37,16 @@ class ProcessorPort : public VirtualComponent {
     
     //! @brief    Processor port direction bits
     uint8_t direction;
-    
-    //! @brief    External port bits (driven by connected devices)
-    uint8_t external;
 
-    //! @brief    Clock cycle when floating bit valus reach zero
-    /*! @details  Bits 6 and 7 of the processor port are not connected to an outer pin.
-     *            This means that these bit can only be used from inside the computer and not
-     *            be driven by any connected peripheral. This has the following implication:
+    //! @brief    Clock cycle when floating bit values reach zero
+    /*! @details  Bit 3, 6, and 7 of the processor need our special attention.
      *            When these bits are changed from being outputs to being inputs, there is no
      *            external signal driving them. They get into a floating state and act as an
      *            capacitor. As a result, they will discharge slowly and eventually reach zero.
      *            These variables are used to indicate when the zero level is reached.
-     *            Bit 3 shows a similar behaviour when no datasette is attached
+     *            All three variables are queried in readPort() and have the following semantics:
+     *            dischargeCycleBit3 > current cycle => bit reads as 1 (if configured as input)
+     *            otherwise                          => bit reads as 0 (if configured as input)
      */
     uint64_t dischargeCycleBit3;
     uint64_t dischargeCycleBit6;
@@ -69,23 +66,16 @@ public:
     void dumpState();
 
     //! @brief    Reads from the processor port register
-    uint8_t readProcessorPort();
+    uint8_t read();
 
     //! @brief    Reads from the processor port direction register
-    uint8_t readProcessorPortDirection();
+    uint8_t readDirection();
 
     //! @brief    Writes to the processor port register
-    void writeProcessorPort(uint8_t value);
+    void write(uint8_t value);
     
     //! @brief    Writes to the processor port direction register
-    void writeProcessorPortDirection(uint8_t value);
-
-    //! @brief    Set external bits
-    /*! @brief    This method is used by periphals such as the datasette to
-     *            change a bit of the processor port.
-     */
-    void setExternalBits(uint8_t value);
-
+    void writeDirection(uint8_t value);
 };
 
 #endif 

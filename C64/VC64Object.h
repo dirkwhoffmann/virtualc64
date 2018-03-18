@@ -75,23 +75,23 @@ public:
     
     /*! @brief    Sets the logfile.
      */
-    inline static void setLogfile(FILE *file) { logfile = file; }
+    static void setLogfile(FILE *file) { logfile = file; }
 
     /*! @brief    Sets the default debug level.
      */
-    inline static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }
+    static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }
 
     /*! @brief    Changes the debug level for a specific object.
      */
-    inline void setDebugLevel(unsigned level) { debugLevel = level; }
+    void setDebugLevel(unsigned level) { debugLevel = level; }
 
     /*! @brief    Returns the textual description.
      */
-    inline const char *getDescription() { return description ? description : ""; }
+    const char *getDescription() { return description ? description : ""; }
 
     /*! @brief    Assigns a textual description.
      */
-    inline void setDescription(const char *desc) { description = desc; }
+    void setDescription(const char *desc) { description = desc; }
 
     
     //
@@ -100,11 +100,11 @@ public:
     
     /*! @brief    Returns true iff trace mode is enabled.
      */
-    inline bool tracingEnabled() { return traceMode; }
+    bool tracingEnabled() { return traceMode; }
     
     /*! @brief    Enables or disables trace mode.
      */
-    inline void setTraceMode(bool b) { traceMode = b; }
+    void setTraceMode(bool b) { traceMode = b; }
 
     //
     //! @functiongroup Printing messages to console

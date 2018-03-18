@@ -7,19 +7,6 @@
 
 #include "C64.h"
 
-// From CPU6510C64.cpp (part of the Emulator Developers Kit):
-//
-//     The CPU port of the C64 behaves strange in input mode:
-//
-//     00010111 (17) pull-up resistors, drawn high
-//     00100000 (20) pull-down transistor, drawn low
-//     11000000 (C0) keeps last high for 65ms, then drawn low
-//     00001000 (08) no datasette: keeps last high for 1s, then drawn low
-//                   datasette connected: high and low randomly (mains?)
-//
-//     In reality, times depend on both CPU temperature and how long the output was
-//     high (measure bit 3 with CPUPORT3.ASM on the C64).
-
 ProcessorPort::ProcessorPort()
 {
     setDescription("ProcessorPort");
@@ -28,12 +15,11 @@ ProcessorPort::ProcessorPort()
     // Register snapshot items
     SnapshotItem items[] = {
         
-        { &port,               sizeof(port),               0 },
-        { &direction,          sizeof(direction),          0 },
-        { &external,           sizeof(external),           0 },
-        { &dischargeCycleBit3, sizeof(dischargeCycleBit3), 0 },
-        { &dischargeCycleBit6, sizeof(dischargeCycleBit6), 0 },
-        { &dischargeCycleBit7, sizeof(dischargeCycleBit7), 0 },
+        { &port,               sizeof(port),               CLEAR_ON_RESET },
+        { &direction,          sizeof(direction),          CLEAR_ON_RESET },
+        { &dischargeCycleBit3, sizeof(dischargeCycleBit3), CLEAR_ON_RESET },
+        { &dischargeCycleBit6, sizeof(dischargeCycleBit6), CLEAR_ON_RESET },
+        { &dischargeCycleBit7, sizeof(dischargeCycleBit7), CLEAR_ON_RESET },
         { NULL,                0,                          0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -48,12 +34,10 @@ ProcessorPort::reset()
 {
     VirtualComponent::reset();
     
+    /*
     port =  0x37;
-    external = 0x1F;
     direction = 0x2F;
-    dischargeCycleBit3 = UINT64_MAX;
-    dischargeCycleBit6 = UINT64_MAX;
-    dischargeCycleBit7 = UINT64_MAX;
+    */
 }
 
 void
@@ -63,51 +47,48 @@ ProcessorPort::dumpState()
     msg("---------------\n\n");
     msg("port:           %02X\n", port);
     msg("direction:      %02X\n", direction);
-    msg("external:       %02X\n", external);
-    msg("Bit 3 floating: %s\n", c64->getCycles() < dischargeCycleBit3 ? "yes" : "no");
-    msg("Bit 6 floating: %s\n", c64->getCycles() < dischargeCycleBit6 ? "yes" : "no");
-    msg("Bit 7 floating: %s\n", c64->getCycles() < dischargeCycleBit7 ? "yes" : "no");
+    msg("Bit 3 discharge cycle: %ld\n", dischargeCycleBit3);
+    msg("Bit 6 discharge cycle: %ld\n", dischargeCycleBit6);
+    msg("Bit 7 discharge cycle: %ld\n", dischargeCycleBit7);
 }
             
 uint8_t
-ProcessorPort::readProcessorPort()
+ProcessorPort::read()
 {
-    // Clear discharged floating bits if they are still configured as inputs
-    if (!(direction & 0x08) && c64->getCycles() > dischargeCycleBit3) {
-        CLR_BIT(external, 3);
-        dischargeCycleBit6 = UINT64_MAX;
-    }
-    if (!(direction & 0x40) && c64->getCycles() > dischargeCycleBit6) {
-        CLR_BIT(external, 6);
-        dischargeCycleBit6 = UINT64_MAX;
-    }
-    if (!(direction & 0x80) && c64->getCycles() > dischargeCycleBit7) {
-        CLR_BIT(external, 7);
-        dischargeCycleBit7 = UINT64_MAX;
-    }
+    // If the port bits are configured as inputs and no datasette is attached, the
+    // following values are returned:
+    //
+    //     Bit 0:  1 (bit is driven by a pull-up resistor)
+    //     Bit 1:  1 (bit is driven by a pull-up resistor)
+    //     Bit 2:  1 (bit is driven by a pull-up resistor)
+    //     Bit 3:  Eventually 0 (acts a a capacitor)
+    //     Bit 4:  1 (bit is driven by a pull-up resistor)
+    //     Bit 5:  0 (bit is driven by a pull-down resistor)
+    //     Bit 6:  Eventually 0 (acts a a capacitor)
+    //     Bit 7:  Eventually 0 (acts a a capacitor)
+    //
+    //     In reality, discharging times for bits 3, 6, and 7 depend on both CPU temperature
+    //     and how long the output was 1 befor the bit became an input.
     
-    // Update datasette bit
-    if (c64->datasette.getPlayKey()) external &= 0xEF; else external |= 0x10;
+    uint8_t bit3 = (dischargeCycleBit3 > c64->getCycles()) ? 0x08 : 0x00;
+    uint8_t bit6 = (dischargeCycleBit6 > c64->getCycles()) ? 0x40 : 0x00;
+    uint8_t bit7 = (dischargeCycleBit7 > c64->getCycles()) ? 0x80 : 0x00;
+    uint8_t bit4 = c64->datasette.getPlayKey() ? 0x00 : 0x10;
+    uint8_t bits = bit7 | bit6 | bit4 | bit3 | 0x07;
     
-    uint8_t result = (port & direction) | (external & ~direction);
-    
-    return result;
+    return (port & direction) | (bits & ~direction);
 }
 
 uint8_t
-ProcessorPort::readProcessorPortDirection()
+ProcessorPort::readDirection()
 {
     return direction;
 }
 
 void
-ProcessorPort::writeProcessorPort(uint8_t value)
+ProcessorPort::write(uint8_t value)
 {
     port = value;
-    
-    // Update bits 3, 6 and 7 if they are configured as outputs
-    uint8_t mask = 0xC8 & direction;
-    external = (external & ~mask) | (port & mask);
     
     // Check for datasette motor bit
     if (direction & 0x20) {
@@ -119,35 +100,27 @@ ProcessorPort::writeProcessorPort(uint8_t value)
 }
 
 void
-ProcessorPort::writeProcessorPortDirection(uint8_t value)
+ProcessorPort::writeDirection(uint8_t value)
 {
-    // Check if bits 3, 6, or 7 change from output to input. In that case, they
-    // will change to a floating state and discharge over time.
-    if (FALLING_EDGE(direction, value, 3)) {
+    // Check floating status of bits 3, 6, and 7.
+    
+    // 1) If bits 3, 6, and 7 are configured as outputs, they are not floating
+    if (GET_BIT(value, 3)) dischargeCycleBit3 = 0;
+    if (GET_BIT(value, 6)) dischargeCycleBit6 = 0;
+    if (GET_BIT(value, 7)) dischargeCycleBit7 = 0;
+
+    // 2) If bits 3, 6, and 7 change from output to input, they become floating
+    if (FALLING_EDGE(direction, value, 3) && GET_BIT(port, 3) != 0)
         dischargeCycleBit3 = c64->getCycles() + PAL_CYCLES_PER_SECOND;
-    }
-    if (FALLING_EDGE(direction, value, 6)) {
+    if (FALLING_EDGE(direction, value, 6) && GET_BIT(port, 6) != 0)
         dischargeCycleBit6 = c64->getCycles() + 360000;
-    }
-    if (FALLING_EDGE(direction, value, 7)) {
+    if (FALLING_EDGE(direction, value, 7) && GET_BIT(port, 7) != 0)
         dischargeCycleBit7 = c64->getCycles() + 360000;
-    }
     
     direction = value;
     
-    // Update bits 3, 6 and 7 if they are configured as outputs
-    uint8_t mask = 0xC8 & direction;
-    external = (external & ~mask) | (port & mask);
-    
-    // Switch memory banks
+     // Switch memory banks
     c64->mem.updatePeekPokeLookupTables();
 }
-
-void
-ProcessorPort::setExternalBits(uint8_t value)
-{
-    external = value;
-}
-
 
 

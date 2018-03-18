@@ -142,15 +142,6 @@ private:
 	//! @brief    Internal data register
 	uint8_t data;
 			
-	//! @brief    Processor port register
-	// uint8_t port;
-    
-	//! @brief    Processor port data direction register
-	// uint8_t port_direction;
-
-    //! @brief    Experimental
-	// uint8_t external_port_bits;
-	
 	/*! @brief    RDY line (ready line)
 	 *  @details  If this line is LOW, the CPU freezes on the next read access.
      *            RDY is pulled down by VIC to perform longer lasting read operations.
