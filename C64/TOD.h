@@ -62,7 +62,19 @@ public:
      */
 	bool stopped;
 	
-
+    //! @brief    Indicates if TOD is driven by a 50 Hz or 60 Hz signal
+    /*! @details  Valid values are 5 (50 Hz mode) and 6 (60 Hz mode)
+     */
+    uint8_t hz;
+    
+    //! @brief    Frequency counter
+    /*! @details  This counter is driven by the A/C power frequency and determines when the
+     *            the TOD should increment. This variable is incremented in function 'increment'
+     *            which is called after each frame. As a result, frequencyCounter is a 50 Hz
+     *            signal in PAL mode and a 60 Hz signal in NTSC mode.
+     */
+    uint64_t frequencyCounter;
+    
 public:
 	//! @brief    Constructor
 	TOD();
@@ -83,7 +95,7 @@ public:
     void defreeze() { frozen = false; }
 
     //! @brief    Stops the time of day clock.
-    void stop() { stopped = true; }
+    void stop() { frequencyCounter = 0; stopped = true; }
 
     //! @brief    Starts the time of day clock.
     void cont() { stopped = false; }

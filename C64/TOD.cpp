@@ -26,12 +26,14 @@ TOD::TOD()
     // Register snapshot items
     SnapshotItem items[] = {
                 
-        { &tod.value,   sizeof(tod.value),      CLEAR_ON_RESET },
-        { &alarm.value, sizeof(alarm.value),    CLEAR_ON_RESET },
-        { &latch.value, sizeof(latch.value),    CLEAR_ON_RESET },
-        { &frozen,      sizeof(frozen),         CLEAR_ON_RESET },
-        { &stopped,     sizeof(stopped),        CLEAR_ON_RESET },
-        { NULL,         0,                      0 }};
+        { &tod.value,        sizeof(tod.value),        CLEAR_ON_RESET },
+        { &alarm.value,      sizeof(alarm.value),      CLEAR_ON_RESET },
+        { &latch.value,      sizeof(latch.value),      CLEAR_ON_RESET },
+        { &frozen,           sizeof(frozen),           CLEAR_ON_RESET },
+        { &stopped,          sizeof(stopped),          CLEAR_ON_RESET },
+        { &hz,               sizeof(hz),               CLEAR_ON_RESET },
+        { &frequencyCounter, sizeof(frequencyCounter), CLEAR_ON_RESET },
+        { NULL,              0,                        0 }};
     
     registerSnapshotItems(items, sizeof(items));
 }
@@ -44,8 +46,9 @@ void
 TOD::reset() 
 {
     VirtualComponent::reset();
-    tod.time.hours = BinaryToBCD(1);
+    tod.time.hours = 1;
     stopped = true;
+    hz = 60;
 }
 
 void 
@@ -62,10 +65,12 @@ TOD::dumpState()
 void
 TOD::increment()
 {
-    if (stopped) {
+    if (stopped)
 		return;
-    }
     
+    if (++frequencyCounter % hz != 0)
+        return;
+
     // 1/10 seconds
 	if (tod.time.tenth != 0x09) {
         tod.time.tenth = incBCD(tod.time.tenth);

@@ -655,7 +655,8 @@ C64::endOfRasterline()
         frame++;
         
         // Increment time of day clocks every tenth of a second
-        if (frame % (vic.getFramesPerSecond() / 10) == 0) {
+        // if (frame % (vic.getFramesPerSecond() / 10) == 0)
+        {
             cia1.incrementTOD();
             cia2.incrementTOD();
         }

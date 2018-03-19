@@ -387,6 +387,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// write PB67 
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			
+            // Set real time clock frequency in Hz
+            tod.hz = (value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */;
+            
 			// set the register
 			CRA = value;
 			
