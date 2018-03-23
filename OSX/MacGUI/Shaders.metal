@@ -62,10 +62,7 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
                            texture2d<half, access::write> outTexture  [[ texture(1) ]],
                            uint2                          gid         [[ thread_position_in_grid ]])
 {
-    float rx = outTexture.get_width() / inTexture.get_width();
-    float ry = outTexture.get_height() / inTexture.get_height();
-
-    half4 result = inTexture.read(uint2(gid.x / rx, gid.y / ry));
+    half4 result = inTexture.read(uint2(gid.x / SCALE_FACTOR, gid.y / SCALE_FACTOR));
     outTexture.write(result, gid);
 }
 

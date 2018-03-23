@@ -33,18 +33,6 @@ typedef enum {
     GRAYSCALE       = 0x0B
 } ColorScheme;
 
-/*! @brief    Rom types
- *  @details  VirtualC64 needs all four ROMs to run
- */
-/*
-typedef enum {
-    BASIC_ROM  = 1,
-    CHAR_ROM   = 2,
-    KERNEL_ROM = 4,
-    VC1541_ROM = 8
-} RomType;
-*/
-
 /*! @brief    Message types
  *  @details  List of all possible message id's
  */
@@ -102,7 +90,6 @@ typedef enum {
     // Peripherals (Datasette)
     MSG_VC1530_TAPE,
     MSG_VC1530_NO_TAPE,
-    // MSG_VC1530_PLAY,
     MSG_VC1530_PROGRESS,
 
     // Peripherals (Expansion port)

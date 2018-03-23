@@ -20,10 +20,10 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.8.1
 //
+// Fixed a bug that prevented texture upscaling to work on some machines
 // Milestone reached: VirtualC64 passes VICE test vicii_reg_timing
-// Added support for cartridges of type 19 (Magic Desk)
-// Processor port code has been refactored
-// Passing processor port tests bitfade (VICE), delaytime (VICE), ram0001 (VICE), and CPUPORT3 (PC64WIN)
+// Added support for type 19 cartridges (Magic Desk)
+// Processor port and time of day clock emulation have been improved
 //
 // TODO:
 
@@ -31,7 +31,7 @@
 #define _C64_INC
 
 // Disable assert checking in relase versions
-// #define NDEBUG
+#define NDEBUG
 
 // Data types and constants
 #include "C64_defs.h"
