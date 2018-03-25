@@ -1394,7 +1394,7 @@ void CPU::BRK_3()
 	//  vector ($FFFE). However, if an NMI interrupt occurs while executing a BRK instruction, the processor will
 	//  jump to the NMI vector ($FFFA), and the P register will be pushed on the stack with the B flag set."
 	if (nmiEdge) {
-        clearNMIEdge();
+        nmiEdge = false;
 		next = &CPU::BRK_nmi_4;
 	} else {
 		next = &CPU::BRK_4;

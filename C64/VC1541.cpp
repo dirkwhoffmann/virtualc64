@@ -237,7 +237,7 @@ VC1541::simulateAtnInterrupt()
 {
 	if (via1.atnInterruptsEnabled()) {
 		via1.indicateAtnInterrupt();
-		cpu.setIRQLineATN();
+		cpu.pullDownIrqLineATN();
 		// debug("CPU is interrupted by ATN line.\n");
 	} else {
 		// debug("Sorry, want to interrupt, but CPU does not accept ATN line interrupts\n");

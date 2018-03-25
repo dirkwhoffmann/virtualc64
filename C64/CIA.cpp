@@ -812,25 +812,25 @@ CIA1::dumpState()
 void 
 CIA1::raiseInterruptLine()
 {
-	c64->cpu.setIRQLineCIA();
+	c64->cpu.pullDownIrqLineCIA();
 }
 
 void
 CIA1::raiseInterruptLineTOD()
 {
-    c64->cpu.setIRQLineTOD();
+    c64->cpu.pullDownIrqLineTOD();
 }
 
 void 
 CIA1::clearInterruptLine()
 {
-	c64->cpu.clearIRQLineCIA();
+	c64->cpu.pullUpIrqLineCIA();
 }
 
 void
 CIA1::clearInterruptLineTOD()
 {
-    c64->cpu.clearIRQLineTOD();
+    c64->cpu.pullUpIrqLineTOD();
 }
 
 void 

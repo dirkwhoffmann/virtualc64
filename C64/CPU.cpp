@@ -66,7 +66,6 @@ CPU::CPU()
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
         { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
-        { &interruptsPending,       sizeof(interruptsPending),      CLEAR_ON_RESET },
         { &nextPossibleIrqCycle,    sizeof(nextPossibleIrqCycle),   CLEAR_ON_RESET },
         { &nextPossibleNmiCycle,    sizeof(nextPossibleNmiCycle),   CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
@@ -140,15 +139,14 @@ CPU::dumpState()
 }
 
 void
-CPU::setIRQLine(uint8_t bit)
+CPU::pullDownIrqLine(uint8_t source)
 {
-	assert(bit != 0);
+	assert(source != 0);
     
 	if (irqLine == 0) {
 		nextPossibleIrqCycle = c64->getCycles() + 2;
 	}
-	irqLine |= bit; 
-    interruptsPending = true;
+	irqLine |= source;
 }
 
 bool 
@@ -170,27 +168,16 @@ CPU::IRQsAreBlocked() {
 }
 
 void 
-CPU::setNMILine(uint8_t bit) // TODO: RENAME TO RAISE NMIline
+CPU::setNMILine(uint8_t bit) // TODO: RENAME TO pullDownNmiLine
 { 
 	assert(bit != 0);
 
-    if (!nmiLine) setNMIEdge();
+    if (!nmiLine) {
+        nmiEdge = true;
+        nextPossibleNmiCycle = c64->getCycles() + 2;
+    }
+    
 	nmiLine |= bit; 
-}
-
-void
-CPU::setNMIEdge()
-{
-    nmiEdge = true;
-    interruptsPending = true;
-    nextPossibleNmiCycle = c64->getCycles() + 2;
-}
-
-void
-CPU::clearNMIEdge()
-{
-    nmiEdge = false;
-    interruptsPending = irqLine;
 }
 
 bool

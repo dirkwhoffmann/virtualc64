@@ -165,18 +165,17 @@ private:
      */
 	uint8_t nmiLine; 
 	
-	/*! @brief    Indicates the occurance of an interrupt triggering edge on the NMI line
-	 *  @details  The variable is set to 1, when the value of variable nmiLine is changed from 0 to 
-     *            another value. The variable is used to determine when an NMI interrupt needs 
-     *            to be triggered. 
+	/*! @brief    Edge detector of NMI line
+     *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     *            "The NMI input is connected to an edge detector. This edge detector polls
+     *             the status of the NMI line during φ2 of each CPU cycle (i.e., during the
+     *             second half of each cycle) and raises an internal signal if the input goes
+     *             from being high during one cycle to being low during the next. The internal
+     *             signal goes high during φ1 of the cycle that follows the one where the edge
+     *             is detected, and stays high until the NMI has been handled."
      */
 	bool nmiEdge;
 	
-    /*! @brief    Indicates if the CPU has to check for pending interrupts in its fetch phase
-     *  @details  This variable has beed introduced for speedup. At all times, it is equivalent
-     *            to "(irqLine || nmiEdge)".
-     */
-    bool interruptsPending;
     
 	/*! @brief    Indicates when the next IRQ can occurr. 
      *  @details  This variable is set when a negative edge occurs on the irq line and stores the
@@ -427,26 +426,20 @@ public:
      */
     bool IRQsAreBlocked();
 
-	//! @brief    Sets a bit of the IRQ line.
-	void setIRQLine(uint8_t bit);
+	//! @brief    Pulls down the IRQ line
+	void pullDownIrqLine(uint8_t source);
 	
-	//! @brief    Clears a bit of the IRQ line.
-    void clearIRQLine(uint8_t bit) { irqLine &= ~bit; interruptsPending = irqLine || nmiEdge; }
+	//! @brief    Pulls up the IRQ line
+    void pullUpIrqLine(uint8_t source) { irqLine &= ~source; }
 		
 	//! @brief    Returns bit of IRQ line.
-    uint8_t getIRQLine(uint8_t bit) { return irqLine & bit; }
+    uint8_t getIRQLine(uint8_t source) { return irqLine & source; }
 	
 	//! @brief    Checks if IRQ line has been activated for at least 2 cycles.
 	bool IRQLineRaisedLongEnough();
 	
 	//! @brief    Sets bit of NMI line.
 	void setNMILine(uint8_t bit);
-
-    //! @brief    Indicates a negative edge on the NMI line.
-    void setNMIEdge();
-
-    //! @brief    Removes negative edge indicator for the NMI line.
-    void clearNMIEdge();
 
 	//! @brief    Clears bit of NMI line.
     void clearNMILine(uint8_t bit) { nmiLine &= ~bit; }
@@ -455,34 +448,34 @@ public:
 	bool NMILineRaisedLongEnough();
 	
 	//! @brief    Sets CIA bit of IRQ line.
-    void setIRQLineCIA() { setIRQLine(0x01); }
+    void pullDownIrqLineCIA() { pullDownIrqLine(0x01); }
     
     //! @brief    Clears CIA bit of IRQ line.
-    void clearIRQLineCIA() { clearIRQLine(0x01); }
+    void pullUpIrqLineCIA() { pullUpIrqLine(0x01); }
 
 	//! @brief    Sets VIC bit of IRQ line.
-    void setIRQLineVIC() { setIRQLine(0x02); }
+    void pullDownIrqLineVIC() { pullDownIrqLine(0x02); }
     
     //! @brief    Clears VIC bit of IRQ line.
-    void clearIRQLineVIC() { clearIRQLine(0x02); }
+    void pullUpIrqLineVIC() { pullUpIrqLine(0x02); }
     
 	//! @brief    Sets ATN bit of IRQ line (1541 drive).
-    void setIRQLineATN() { setIRQLine(0x40); }
+    void pullDownIrqLineATN() { pullDownIrqLine(0x40); }
     
     //! @brief    Clears ATN bit of IRQ line (1541 drive).
-    void clearIRQLineATN() { clearIRQLine(0x40); }
+    void pullUpIrqLineATN() { pullUpIrqLine(0x40); }
     
     //! @brief    Sets VIA bit of IRQ line (1541 drive).
-    void setIRQLineVIA() { setIRQLine(0x10); }
+    void pullDownIrqLineVIA() { pullDownIrqLine(0x10); }
     
     //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
-    void clearIRQLineVIA() { clearIRQLine(0x10); }
+    void pullUpIrqLineVIA() { pullUpIrqLine(0x10); }
     
     //! @brief    Sets TOD bit of NMI line.
-    void setIRQLineTOD() { setIRQLine(0x20); }
+    void pullDownIrqLineTOD() { pullDownIrqLine(0x20); }
     
     //! @brief    Clears TOD bit of NMI line.
-    void clearIRQLineTOD() { clearIRQLine(0x20); }
+    void pullUpIrqLineTOD() { pullUpIrqLine(0x20); }
 
     
 	//! @brief    Sets CIA bit of NMI line.
