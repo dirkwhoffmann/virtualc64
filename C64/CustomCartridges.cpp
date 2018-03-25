@@ -108,8 +108,8 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
         }
         
         // Bit 6
-        nmi ? c64->cpu.clearNMILineExpansionPort()
-        : c64->cpu.setNMILineExpansionPort();
+        nmi ? c64->cpu.pullUpNmiLineExpansionPort()
+        : c64->cpu.pullDownNmiLineExpansionPort();
         
         // Bit 5 and 4
         c64->expansionport.setGameLine(game);

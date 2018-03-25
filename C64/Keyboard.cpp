@@ -123,7 +123,7 @@ Keyboard::pressKey(uint8_t row, uint8_t col)
 void
 Keyboard::pressRestoreKey()
 {
-    c64->cpu.setNMILineReset();
+    c64->cpu.pullDownNmiLineReset();
 }
 
 void
@@ -146,7 +146,7 @@ Keyboard::releaseKey(uint8_t row, uint8_t col)
 void
 Keyboard::releaseRestoreKey()
 {
-    c64->cpu.clearNMILineReset();
+    c64->cpu.pullUpNmiLineReset();
 }
 
 bool

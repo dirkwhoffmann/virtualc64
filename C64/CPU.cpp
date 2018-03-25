@@ -168,7 +168,7 @@ CPU::IRQsAreBlocked() {
 }
 
 void 
-CPU::setNMILine(uint8_t bit) // TODO: RENAME TO pullDownNmiLine
+CPU::pullDownNmiLine(uint8_t bit) // TODO: RENAME TO pullDownNmiLine
 { 
 	assert(bit != 0);
 

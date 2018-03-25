@@ -439,10 +439,10 @@ public:
 	bool IRQLineRaisedLongEnough();
 	
 	//! @brief    Sets bit of NMI line.
-	void setNMILine(uint8_t bit);
+	void pullDownNmiLine(uint8_t source);
 
 	//! @brief    Clears bit of NMI line.
-    void clearNMILine(uint8_t bit) { nmiLine &= ~bit; }
+    void pullUpNmiLine(uint8_t source) { nmiLine &= ~source; }
 	
 	//! @brief    Checks if NMI line has been activated for at least 2 cycles.
 	bool NMILineRaisedLongEnough();
@@ -479,28 +479,28 @@ public:
 
     
 	//! @brief    Sets CIA bit of NMI line.
-    void setNMILineCIA() { setNMILine(0x01); }
+    void pullDownNmiLineCIA() { pullDownNmiLine(0x01); }
     
 	//! @brief    Clears CIA bit of NMI line.
-    void clearNMILineCIA() { clearNMILine(0x01); }
+    void pullUpNmiLineCIA() { pullUpNmiLine(0x01); }
 
     //! @brief    Sets TOD bit of NMI line.
-    void setNMILineTOD() { setNMILine(0x20); }
+    void pullDownNmiLineTOD() { pullDownNmiLine(0x20); }
     
     //! @brief    Clears TOD bit of NMI line.
-    void clearNMILineTOD() { clearNMILine(0x20); }
+    void pullUpNmiLineTOD() { pullUpNmiLine(0x20); }
     
     //! @brief    Sets ExpansionPort bit of NMI line.
-    void setNMILineExpansionPort() { setNMILine(0x02); }
+    void pullDownNmiLineExpansionPort() { pullDownNmiLine(0x02); }
     
     //! @brief    Clears ExpansionPort bit of NMI line.
-    void clearNMILineExpansionPort() { clearNMILine(0x02); }
+    void pullUpNmiLineExpansionPort() { pullUpNmiLine(0x02); }
     
 	//! @brief    Sets reset bit of NMI line.
-    void setNMILineReset() { setNMILine(0x08); }
+    void pullDownNmiLineReset() { pullDownNmiLine(0x08); }
     
 	//! @brief    Clears reset bit of NMI line.
-    void clearNMILineReset() { clearNMILine(0x08); }
+    void pullUpNmiLineReset() { pullUpNmiLine(0x08); }
     
 	//! @brief    Sets the RDY line.
     void setRDY(bool value) { rdyLine = value; }

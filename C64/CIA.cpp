@@ -1036,25 +1036,25 @@ CIA2::dumpState()
 void 
 CIA2::raiseInterruptLine()
 {
-	c64->cpu.setNMILineCIA();
+	c64->cpu.pullDownNmiLineCIA();
 }
 
 void
 CIA2::raiseInterruptLineTOD()
 {
-    c64->cpu.setNMILineTOD();
+    c64->cpu.pullDownNmiLineTOD();
 }
 
 void 
 CIA2::clearInterruptLine()
 {
-	c64->cpu.clearNMILineCIA();
+	c64->cpu.pullUpNmiLineCIA();
 }
 
 void
 CIA2::clearInterruptLineTOD()
 {
-    c64->cpu.clearNMILineTOD();
+    c64->cpu.pullUpNmiLineTOD();
 }
 
 uint8_t 
