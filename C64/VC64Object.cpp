@@ -21,7 +21,8 @@
 VC64Object::VC64Object()
 {
     debugLevel = defaultDebugLevel; 
-    traceMode = false;
+    traceCounter = 0;
+    silentTracing = false; 
     description = NULL;
 }
 
@@ -33,6 +34,41 @@ VC64Object::~VC64Object()
 
 unsigned VC64Object::defaultDebugLevel = 1;
 FILE *VC64Object::logfile = NULL;
+char VC64Object::traceBuffer[512][256];
+unsigned VC64Object::tracePtr = 0;
+
+// ---------------------------------------------------------------------------------------------
+//                                       Tracing
+// ---------------------------------------------------------------------------------------------
+
+void
+VC64Object::startTracing(int count) {
+    silentTracing = false;
+    traceCounter = count;
+}
+
+void
+VC64Object::startSilentTracing(int count) {
+    silentTracing = true;
+    traceCounter = count;
+}
+
+void
+VC64Object::stopTracing() {
+    traceCounter = 0;
+}
+
+void
+VC64Object::backtrace(int count) {
+    
+    assert(count < 256);
+    
+    for (unsigned i = 0; i < count; i++) {
+        unsigned base = 256 + tracePtr - 1;
+        fprintf(stderr, "%s", traceBuffer[(base - i) % 256]);
+    }
+}
+
 
 // ---------------------------------------------------------------------------------------------
 //                                      Printing messages
@@ -105,4 +141,27 @@ VC64Object::panic(const char *fmt, ...)
         fprintf(logfile ? logfile : stderr, "PANIC: %s", buf);
 
     assert(0);
+}
+
+void
+VC64Object::trace(const char *fmt, ...)
+{
+    if (traceCounter == 0)
+        return;
+
+    if (traceCounter > 0)
+        traceCounter--;
+    
+    VC64OBJ_PARSE;
+    if (description)
+        sprintf(traceBuffer[tracePtr], "%s: %s", description, buf);
+    else
+        sprintf(traceBuffer[tracePtr], "%s", buf);
+
+    if (!silentTracing) {
+        fprintf(stderr, "%s", traceBuffer[tracePtr]);
+    }
+
+    tracePtr = (tracePtr < 255) ? tracePtr++ : 0;
+    
 }

@@ -62,7 +62,7 @@ VirtualComponent::reset()
             if (snapshotItems[i].flags & CLEAR_ON_RESET)
                 memset(snapshotItems[i].data, 0, snapshotItems[i].size);
     
-    setTraceMode(false); 
+    stopTracing();
     
     debug(3, "Resetting...\n");
     

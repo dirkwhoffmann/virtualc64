@@ -32,16 +32,15 @@ CPU::fetch() {
 	
 	// Check interrupt lines
     if (nmiEdge && NMILineRaisedLongEnough()) {
-            
-        if (tracingEnabled())
-            debug(1, "NMI (source = %02X)\n", nmiLine);
+        
+        trace("NMI (source = %02X)\n", nmiLine);
         nmiEdge = false;
         next = &CPU::nmi_2;
         return;
 
     } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
-        if (tracingEnabled())
-            debug(1, "IRQ (source = %02X)\n", irqLine);
+
+        trace("IRQ (source = %02X)\n", irqLine);
         next = &CPU::irq_2;
         return;
     }
@@ -51,9 +50,7 @@ CPU::fetch() {
     next = actionFunc[opcode];
 
     // Disassemble command if requested
-    if (tracingEnabled()) {
-        debug(1, "%s\n", disassemble());
-    }
+    trace("%s\n", disassemble());
     
 	// Check breakpoint tag
 	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {

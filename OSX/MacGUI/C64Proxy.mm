@@ -60,7 +60,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->cpu->dumpState(); }
 - (bool) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { wrapper->cpu->setTraceMode(b); }
+- (void) setTraceMode:(bool)b {
+    if (b) wrapper->cpu->startTracing(100); else wrapper->cpu->stopTracing(); }
 
 - (uint16_t) PC { return wrapper->cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
@@ -265,8 +266,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->cia->dumpState(); }
 - (bool) tracingEnabled { return wrapper->cia->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { wrapper->cia->setTraceMode(b); }
-
+- (void) setTraceMode:(bool)b {
+    if (b) wrapper->cia->startTracing(b); else wrapper->cia->stopTracing(); }
 - (uint8_t) dataPortA { return wrapper->cia->getDataPortA(); }
 - (void) setDataPortA:(uint8_t)v { wrapper->cia->setDataPortA(v); }
 - (uint8_t) dataPortDirectionA { return wrapper->cia->getDataPortDirectionA(); }
@@ -457,7 +458,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->iec->dumpState(); }
 - (bool) tracingEnabled { return wrapper->iec->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { wrapper->iec->setTraceMode(b); }
+- (void) setTraceMode:(bool)b {
+    if (b) wrapper->iec->startTracing(); else wrapper->iec->stopTracing(); }
 - (void) connectDrive { wrapper->iec->connectDrive(); }
 - (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
 - (bool) isDriveConnected { return wrapper->iec->driveIsConnected(); }
@@ -507,7 +509,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->via->dumpState(); }
 - (bool) tracingEnabled { return wrapper->via->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { wrapper->via->setTraceMode(b); }
+- (void) setTraceMode:(bool)b {
+    if (b) wrapper->via->startTracing(); else wrapper->via->stopTracing(); }
 
 @end
 
@@ -571,7 +574,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->vc1541->dumpState(); }
 - (bool) tracingEnabled { return wrapper->vc1541->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { wrapper->vc1541->setTraceMode(b); }
+- (void) setTraceMode:(bool)b {
+    if (b) wrapper->vc1541->startTracing(); else wrapper->vc1541->stopTracing(); }
 - (bool) hasRedLED { return wrapper->vc1541->getRedLED(); }
 - (bool) hasDisk { return wrapper->vc1541->hasDisk(); }
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }

@@ -38,6 +38,14 @@ private:
      */
     static FILE *logfile;
 
+    /*! @brief    Tracing ringbuffer
+     *  @details  All trace messages are written to a ringbuffer.
+     *  @seealso  backtrace()
+     *  @note     traceBuffer is a class member, i.e., it is shared among all objects
+     */
+    static char traceBuffer[512][256];
+    static unsigned tracePtr;
+    
     /*! @brief    Default debug level
      *  @details  On object creation, this value is used as debug level.
      */
@@ -49,11 +57,15 @@ private:
     unsigned debugLevel;
 
     /*! @brief    Indicates whether the component should print trace messages.
-     *  @details  In trace mode, all components are requested to dump debug information perodically.
-     *            Only a few components will react to this flag.
+     *  @details  If set to 0, no trace messages are printed when calling trace().
+     *            Otherwise, trace() prints a message into the ringbuffer and to stderr
+     *            Set to a negative value to trace forever.
      */
-    bool traceMode;
-    
+     int traceCounter;
+
+    //! @brief    If set, printing trace messages to stderr is omitted.
+    bool silentTracing;
+
     /*! @brief    Textual description of this object
      *  @details  Most debug output methods preceed their output with this string.
      *  @note     The default value is NULL. In that case, no prefix is printed.
@@ -100,12 +112,16 @@ public:
     
     /*! @brief    Returns true iff trace mode is enabled.
      */
-    bool tracingEnabled() { return traceMode; }
+    bool tracingEnabled() { return traceCounter != 0; }
     
     /*! @brief    Enables or disables trace mode.
      */
-    void setTraceMode(bool b) { traceMode = b; }
-
+    void startTracing(int count = -1);
+    void stopTracing();
+    void startSilentTracing(int count = -1);
+    void stopSilentTracing();
+    void backtrace(int count);
+    
     //
     //! @functiongroup Printing messages to console
     //
@@ -139,6 +155,10 @@ public:
      *            Panic messages indicate that a code bug is encountered.
      */
     void panic(const char *fmt, ...);
+    
+    /*! @brief    Prints a trace message
+     */
+    void trace(const char *fmt, ...);
 };
 
 #endif
