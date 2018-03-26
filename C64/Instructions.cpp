@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,35 +23,38 @@ void
 CPU::fetch() {
     
     /*
-    if (PC == 0x8030) {
-        setTraceMode(true);
+    if (PC == 2073) {
+        startSilentTracing();
     }
     */
     
 	PC_at_cycle_0 = PC;
 	
 	// Check interrupt lines
-    if (nmiEdge && NMILineRaisedLongEnough()) {
-        
-        trace("NMI (source = %02X)\n", nmiLine);
+    if (doNmi) {
         nmiEdge = false;
         next = &CPU::nmi_2;
+        doNmi = false; 
+        doIrq = false; // NMI wins
         return;
 
-    } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
-
-        trace("IRQ (source = %02X)\n", irqLine);
+    } else if (doIrq) {
+    
+        if (tracingEnabled()) trace("IRQ (source = %02X)\n", irqLine);
         next = &CPU::irq_2;
+        doIrq = false;
         return;
     }
-
+    
     // Execute fetch phase
     FETCH_OPCODE
     next = actionFunc[opcode];
 
     // Disassemble command if requested
-    trace("%s\n", disassemble());
-    
+    if (tracingEnabled()) {
+        // debug("TR\n");
+        trace("%s\n", disassemble());
+    }
 	// Check breakpoint tag
 	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
 		if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
@@ -446,7 +449,7 @@ void CPU::irq_7()
 {
 	setPCL(data);
 	setPCH(mem->peek(0xFFFF));
-	DONE;
+	DONE_NO_POLL;
 }
 
 
@@ -488,8 +491,7 @@ void CPU::nmi_7()
 {
 	setPCL(data);
 	setPCH(mem->peek(0xFFFB));
-    // printf("\n\nNMI: Jumping to %04X\n\n", PC);
-	DONE;
+	DONE_NO_POLL;
 }
 
 
@@ -1115,22 +1117,26 @@ inline void CPU::branch(int8_t offset)
 void CPU::branch_3_underflow()
 {
 	IDLE_READ_FROM(PC + 0x100); 
-	DONE;
+    POLL_IRQ_AND_NMI_AGAIN
+    DONE_NO_POLL;
 }
 void CPU::branch_3_overflow()
 {
 	IDLE_READ_FROM(PC - 0x100); 
-	DONE;
+    POLL_IRQ_AND_NMI_AGAIN
+	DONE_NO_POLL;
 }
 	
 // ------------------------------------------------------------------------------
 void CPU::BCC_relative()
 {
-	READ_IMMEDIATE;
+    READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
+
 	if (!getC()) { 
 		next = &CPU::BCC_relative_2;
 	} else {
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 void CPU::BCC_relative_2()
@@ -1144,7 +1150,7 @@ void CPU::BCC_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++;
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 
@@ -1161,10 +1167,12 @@ void CPU::BCC_relative_2()
 void CPU::BCS_relative()
 {	
 	READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
+
 	if (getC()) { 
 		next = &CPU::BCS_relative_2;
 	} else {
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 void CPU::BCS_relative_2()
@@ -1178,7 +1186,7 @@ void CPU::BCS_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++;
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 
@@ -1195,10 +1203,12 @@ void CPU::BCS_relative_2()
 void CPU::BEQ_relative()
 {	
 	READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
+    
 	if (getZ()) { 
 		next = &CPU::BEQ_relative_2;
 	} else {
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 void CPU::BEQ_relative_2()
@@ -1212,7 +1222,7 @@ void CPU::BEQ_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++;
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 
@@ -1273,10 +1283,12 @@ void CPU::BIT_absolute_3()
 void CPU::BMI_relative()
 {	
 	READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
+    
 	if (getN()) { 
 		next = &CPU::BMI_relative_2;
 	} else {
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 void CPU::BMI_relative_2()
@@ -1290,7 +1302,7 @@ void CPU::BMI_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++;
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 
@@ -1307,10 +1319,12 @@ void CPU::BMI_relative_2()
 void CPU::BNE_relative()
 {	
 	READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
+
 	if (!getZ()) { 
 		next = &CPU::BNE_relative_2;
 	} else {
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 void CPU::BNE_relative_2()
@@ -1324,7 +1338,7 @@ void CPU::BNE_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++;
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 
@@ -1340,11 +1354,13 @@ void CPU::BNE_relative_2()
 
 void CPU::BPL_relative()
 {	
-	READ_IMMEDIATE;
+    READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
+
 	if (!getN()) { 
 		next = &CPU::BPL_relative_2;
 	} else {
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 void CPU::BPL_relative_2()
@@ -1358,7 +1374,7 @@ void CPU::BPL_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
         nextPossibleNmiCycle++;
-        DONE;
+        DONE_NO_POLL;
 	}
 }
 
@@ -1417,7 +1433,11 @@ void CPU::BRK_6()
 	// [http://www.c64-wiki.de/index.php/Micro64]
 	if (nextPossibleNmiCycle < c64->getCycles() + 2)
 		nextPossibleNmiCycle = c64->getCycles() + 2;
-	DONE;
+    
+    // HOW DO WE HANDLE THIS???
+    POLL_IRQ;
+    doNmi = false;
+    DONE_NO_POLL;
 }
 
 void CPU::BRK_nmi_4()
@@ -1450,7 +1470,8 @@ void CPU::BRK_nmi_6()
 
 void CPU::BVC_relative()
 {	
-	READ_IMMEDIATE;
+    READ_IMMEDIATE;
+    POLL_IRQ_AND_NMI;
 
     if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
         
@@ -1458,7 +1479,7 @@ void CPU::BVC_relative()
         if (!((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV())) {
             next = &CPU::BVC_relative_2;
         } else {
-            DONE;
+            DONE_NO_POLL;
         }
         
     } else {
@@ -1467,7 +1488,7 @@ void CPU::BVC_relative()
         if (!getV()) {
             next = &CPU::BVC_relative_2;
         } else {
-            DONE;
+            DONE_NO_POLL;
         }
     }
 }
@@ -1483,7 +1504,7 @@ void CPU::BVC_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++;
-        DONE;
+        DONE_NO_POLL;
 	}
 }
 
@@ -1500,14 +1521,15 @@ void CPU::BVC_relative_2()
 void CPU::BVS_relative()
 {	
 	READ_IMMEDIATE;
-    
+    POLL_IRQ_AND_NMI;
+
     if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
         
         // Special handling for the VC1541 CPU. Taken from Frodo
         if ((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV()) {
             next = &CPU::BVS_relative_2;
         } else {
-            DONE;
+            DONE_NO_POLL;
         }
         
     } else {
@@ -1516,7 +1538,7 @@ void CPU::BVS_relative()
         if (getV()) {
             next = &CPU::BVS_relative_2;
         } else {
-            DONE;
+            DONE_NO_POLL;
         }
     }
 }
@@ -1532,7 +1554,7 @@ void CPU::BVS_relative_2()
 	} else {
 		nextPossibleIrqCycle++; // Delay IRQs by one cycle
 		nextPossibleNmiCycle++; 
-		DONE;
+		DONE_NO_POLL;
 	}
 }
 
@@ -1583,10 +1605,12 @@ void CPU::CLD()
 void CPU::CLI()
 {
 	IDLE_READ_IMPLIED;
+    POLL_IRQ_AND_NMI;
+    
 	oldI = I;
 	setI(0);
-	
-	DONE;
+    
+    DONE_NO_POLL;
 }
 
 
@@ -3727,8 +3751,10 @@ void CPU::PLP_2()
 }
 void CPU::PLP_3()
 {
+    // POLL_IRQ_AND_NMI;
 	PULL_P;
-	DONE;
+    // DONE_NO_POLL;
+    DONE;
 }
 
 
@@ -4462,7 +4488,7 @@ void CPU::SED()
 // -------------------------------------------------------------------------------
 // Instruction: SEI
 //
-// Operation:   D := 1
+// Operation:   I := 1
 //
 // Flags:       N Z C I D V
 //              - - - 1 - -
@@ -4471,10 +4497,12 @@ void CPU::SED()
 void CPU::SEI()
 {		
 	IDLE_READ_IMPLIED;
+    POLL_IRQ_AND_NMI;
+    
 	oldI = I;
 	setI(1);
-	
-	DONE;
+    
+    DONE_NO_POLL;
 }
 
 

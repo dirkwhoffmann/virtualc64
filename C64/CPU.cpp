@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,8 +64,12 @@ CPU::CPU()
         { &data,                    sizeof(data),                   CLEAR_ON_RESET },
         { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
+        { &oldIrqLine,              sizeof(oldIrqLine),             CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
         { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
+        { &oldNmiEdge,              sizeof(oldNmiEdge),             CLEAR_ON_RESET },
+        { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
+        { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
         { &nextPossibleIrqCycle,    sizeof(nextPossibleIrqCycle),   CLEAR_ON_RESET },
         { &nextPossibleNmiCycle,    sizeof(nextPossibleNmiCycle),   CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
@@ -137,6 +141,17 @@ CPU::dumpState()
     
     c64->processorPort.dumpState();
 }
+
+bool
+CPU::executeOneCycle() {
+    trace("%d PC: %04X irqL: %02X old: %02X nmiL: %02X edge: %d old: %02X irqLE: %d nmiLE: %d doIRQ: %d doNMI: %d\n",
+          c64->getCycles(), PC, irqLine, oldIrqLine, nmiLine, nmiEdge, oldNmiEdge, IRQLineRaisedLongEnough(), NMILineRaisedLongEnough(), doIrq, doNmi);
+    (*this.*next)();
+    oldIrqLine = irqLine;
+    oldNmiEdge = nmiEdge;
+    return errorState == CPU_OK;
+}
+
 
 void
 CPU::pullDownIrqLine(uint8_t source)

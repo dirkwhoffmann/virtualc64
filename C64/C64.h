@@ -18,14 +18,22 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.8.1
+// RELEASE NOTES FOR NEXT RELEASE: 1.8.2
 //
-// Fixed a bug that prevented texture upscaling to work on some machines
-// Milestone reached: VirtualC64 passes VICE test vicii_reg_timing
-// Added support for type 19 cartridges (Magic Desk)
-// Processor port and time of day clock emulation have been improved
+// Fixed a bug that caused the emulator to crash on some Macbooks with TouchBars
+// CPU interrupt handler is more accurate now
 //
 // TODO:
+// Fix NSScrubber bug
+// Remove nextPossibleXXXcycle, oldI
+// Change nmiEdge from bool to nmiDown of type uint64_t
+//    nmiDown == UINT64_MAX if no edge since last NMI
+// Add uint64_t irqUpOrDown
+// Replace oldIrq and oldNmi by level_detector(), edge_detector()
+// edgeDetector() nmiEdge >(=?) nmiCleared && nmiEdge < currentCycle (-1 ?)
+// levelDetector() irqLine == 0 && irqUpOrDown < current-1 || irqLine == 1 && irqChanged == current
+// cleanup macros in Instructions.h
+
 
 #ifndef _C64_INC
 #define _C64_INC

@@ -61,7 +61,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->cpu->dumpState(); }
 - (bool) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
 - (void) setTraceMode:(bool)b {
-    if (b) wrapper->cpu->startTracing(100); else wrapper->cpu->stopTracing(); }
+    if (b) wrapper->cpu->startSilentTracing(); else wrapper->cpu->stopTracing(); }
 
 - (uint16_t) PC { return wrapper->cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }

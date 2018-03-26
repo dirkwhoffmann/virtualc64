@@ -60,7 +60,13 @@
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
 
-#define DONE next = &CPU::fetch;
+#define POLL_IRQ doIrq = ((oldIrqLine != 0) && (I == 0));
+#define POLL_NMI doNmi = oldNmiEdge;
+#define POLL_IRQ_AND_NMI doIrq = ((oldIrqLine != 0) && (I == 0)); doNmi = oldNmiEdge;
+#define POLL_IRQ_AND_NMI_AGAIN doIrq |= (oldIrqLine != 0) && (I == 0); doNmi |= oldNmiEdge;
+
+#define DONE next = &CPU::fetch; doIrq = ((oldIrqLine != 0) && (I == 0)); doNmi = oldNmiEdge;
+#define DONE_NO_POLL next = &CPU::fetch;
 
 //! Mnemonic strings (used by the source level debugger only)
 const char *mnemonic[256];

@@ -1,7 +1,7 @@
 /*!
  * @header      CPU.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -156,7 +156,8 @@ private:
      * @see       CPU::I CPU::I_FLAG
      */
 	uint8_t irqLine;
-	
+    uint8_t oldIrqLine;
+
 	/*! @brief    NMI line (non maskable interrupts)
      *  @details  The CPU checks the IRQ line before the next instruction is executed.
      *            If at least one bit is set, the CPU performs an interrupt, regardless of the 
@@ -164,7 +165,7 @@ private:
      *            (CIA, VIC). Each source is represented by a separate bit.
      */
 	uint8_t nmiLine; 
-	
+
 	/*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
      *            "The NMI input is connected to an edge detector. This edge detector polls
@@ -175,7 +176,10 @@ private:
      *             is detected, and stays high until the NMI has been handled."
      */
 	bool nmiEdge;
-	
+    bool oldNmiEdge;
+    
+    bool doIrq;
+    bool doNmi;
     
 	/*! @brief    Indicates when the next IRQ can occurr. 
      *  @details  This variable is set when a negative edge occurs on the irq line and stores the
@@ -556,7 +560,7 @@ public:
 	/*! @brief    Executes the device for one cycle.
 	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
      */
-    bool executeOneCycle() { (*this.*next)(); return errorState == CPU_OK; }
+    bool executeOneCycle();
 
 	//! @brief    Returns the current error state.
     ErrorState getErrorState() { return errorState; }

@@ -45,12 +45,16 @@ void
 VC64Object::startTracing(int count) {
     silentTracing = false;
     traceCounter = count;
+    for (int i = 0; i < 256; i++)
+        strcpy(traceBuffer[i], "--\n");
 }
 
 void
 VC64Object::startSilentTracing(int count) {
     silentTracing = true;
     traceCounter = count;
+    for (int i = 0; i < 256; i++)
+        strcpy(traceBuffer[i], "--\n");
 }
 
 void
@@ -63,9 +67,10 @@ VC64Object::backtrace(int count) {
     
     assert(count < 256);
     
+    debug("Backtrace:\n");
+    unsigned base = 256 + tracePtr - count;
     for (unsigned i = 0; i < count; i++) {
-        unsigned base = 256 + tracePtr - 1;
-        fprintf(stderr, "%s", traceBuffer[(base - i) % 256]);
+        fprintf(stderr, "%d: %s", (base + i) % 256, traceBuffer[(base + i) % 256]);
     }
 }
 
@@ -162,6 +167,5 @@ VC64Object::trace(const char *fmt, ...)
         fprintf(stderr, "%s", traceBuffer[tracePtr]);
     }
 
-    tracePtr = (tracePtr < 255) ? tracePtr++ : 0;
-    
+    tracePtr = (tracePtr < 255) ? tracePtr + 1 : 0;
 }
