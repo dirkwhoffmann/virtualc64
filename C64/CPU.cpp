@@ -55,6 +55,7 @@ CPU::CPU()
         { &Z,                       sizeof(Z),                      CLEAR_ON_RESET },
         { &C,                       sizeof(C),                      CLEAR_ON_RESET },
         { &opcode,                  sizeof(opcode),                 CLEAR_ON_RESET },
+        { &next,                    sizeof(next),                   CLEAR_ON_RESET },
         { &addr_lo,                 sizeof(addr_lo),                CLEAR_ON_RESET },
         { &addr_hi,                 sizeof(addr_hi),                CLEAR_ON_RESET },
         { &ptr,                     sizeof(ptr),                    CLEAR_ON_RESET },
@@ -93,35 +94,7 @@ CPU::reset()
     
     B = 1;
 	rdyLine = true;
-	next = &CPU::fetch;
-}
-
-size_t
-CPU::stateSize()
-{
-    return VirtualComponent::stateSize() + 2;
-}
-
-void 
-CPU::loadFromBuffer(uint8_t **buffer) 
-{
-    VirtualComponent::loadFromBuffer(buffer);
-	next = CPU::callbacks[read16(buffer)];
-}
-
-void
-CPU::saveToBuffer(uint8_t **buffer) 
-{
-    VirtualComponent::saveToBuffer(buffer);
-	for (uint16_t i = 0;; i++) {
-		if (callbacks[i] == NULL) {
-			panic("ERROR while saving state: Callback pointer not found!\n");
-		}
-		if (callbacks[i] == next) {
-			write16(buffer, i);
-			break;
-		}
-	}
+	next = fetch;
 }
 
 void 
@@ -144,9 +117,7 @@ CPU::dumpState()
 
 bool
 CPU::executeOneCycle() {
-    trace("%d PC: %04X irqL: %02X old: %02X nmiL: %02X edge: %d old: %02X irqLE: %d nmiLE: %d doIRQ: %d doNMI: %d\n",
-          c64->getCycles(), PC, irqLine, oldIrqLine, nmiLine, nmiEdge, oldNmiEdge, IRQLineRaisedLongEnough(), NMILineRaisedLongEnough(), doIrq, doNmi);
-    (*this.*next)();
+    executeMicroInstruction();
     oldIrqLine = irqLine;
     oldNmiEdge = nmiEdge;
     return errorState == CPU_OK;

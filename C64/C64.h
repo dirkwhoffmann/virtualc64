@@ -20,12 +20,17 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.8.2
 //
-// Fixed a bug that caused the emulator to crash on some Macbooks with TouchBars
+// (Hopefully) fixed a bug that caused the emulator to crash on some Macbooks Pros with TouchBar support
 // CPU interrupt handler is more accurate now
 //
 // TODO:
 // Fix NSScrubber bug
+//
+// Add highjacking to IRQs as well (only implemented in BRK so far (?!) )
+// !! Move highjacking test to BRK_4 and use oldNmiEdge for testing (nmiEdge will go away)
+// 
 // Remove nextPossibleXXXcycle, oldI
+//
 // Change nmiEdge from bool to nmiDown of type uint64_t
 //    nmiDown == UINT64_MAX if no edge since last NMI
 // Add uint64_t irqUpOrDown
@@ -33,6 +38,8 @@
 // edgeDetector() nmiEdge >(=?) nmiCleared && nmiEdge < currentCycle (-1 ?)
 // levelDetector() irqLine == 0 && irqUpOrDown < current-1 || irqLine == 1 && irqChanged == current
 // cleanup macros in Instructions.h
+// Use Web page INT description in comments
+
 
 
 #ifndef _C64_INC

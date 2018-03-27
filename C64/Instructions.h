@@ -16,6 +16,302 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// Microinstructions
+typedef enum {
+    
+    fetch,
+    
+    JAM, JAM_2,
+    
+    irq, irq_2, irq_3, irq_4, irq_5, irq_6, irq_7,
+    nmi, nmi_2, nmi_3, nmi_4, nmi_5, nmi_6, nmi_7,
+    
+    ADC_immediate,
+    ADC_zero_page, ADC_zero_page_2,
+    ADC_zero_page_x, ADC_zero_page_x_2, ADC_zero_page_x_3,
+    ADC_absolute, ADC_absolute_2, ADC_absolute_3,
+    ADC_absolute_x, ADC_absolute_x_2, ADC_absolute_x_3, ADC_absolute_x_4,
+    ADC_absolute_y, ADC_absolute_y_2, ADC_absolute_y_3, ADC_absolute_y_4,
+    ADC_indirect_x, ADC_indirect_x_2, ADC_indirect_x_3, ADC_indirect_x_4, ADC_indirect_x_5,
+    ADC_indirect_y, ADC_indirect_y_2, ADC_indirect_y_3, ADC_indirect_y_4, ADC_indirect_y_5,
+    
+    AND_immediate,
+    AND_zero_page, AND_zero_page_2,
+    AND_zero_page_x, AND_zero_page_x_2, AND_zero_page_x_3,
+    AND_absolute, AND_absolute_2, AND_absolute_3,
+    AND_absolute_x, AND_absolute_x_2, AND_absolute_x_3, AND_absolute_x_4,
+    AND_absolute_y, AND_absolute_y_2, AND_absolute_y_3, AND_absolute_y_4,
+    AND_indirect_x, AND_indirect_x_2, AND_indirect_x_3, AND_indirect_x_4, AND_indirect_x_5,
+    AND_indirect_y, AND_indirect_y_2, AND_indirect_y_3, AND_indirect_y_4, AND_indirect_y_5,
+    
+    ASL_accumulator,
+    ASL_zero_page, ASL_zero_page_2, ASL_zero_page_3, ASL_zero_page_4,
+    ASL_zero_page_x, ASL_zero_page_x_2, ASL_zero_page_x_3, ASL_zero_page_x_4, ASL_zero_page_x_5,
+    ASL_absolute, ASL_absolute_2, ASL_absolute_3, ASL_absolute_4, ASL_absolute_5,
+    ASL_absolute_x, ASL_absolute_x_2, ASL_absolute_x_3, ASL_absolute_x_4, ASL_absolute_x_5, ASL_absolute_x_6,
+    ASL_indirect_x, ASL_indirect_x_2, ASL_indirect_x_3, ASL_indirect_x_4, ASL_indirect_x_5, ASL_indirect_x_6, ASL_indirect_x_7,
+    
+    branch_3_underflow, branch_3_overflow,
+    BCC_relative, BCC_relative_2,
+    BCS_relative, BCS_relative_2,
+    BEQ_relative, BEQ_relative_2,
+    
+    BIT_zero_page, BIT_zero_page_2,
+    BIT_absolute, BIT_absolute_2, BIT_absolute_3,
+    
+    BMI_relative, BMI_relative_2,
+    BNE_relative, BNE_relative_2,
+    BPL_relative, BPL_relative_2,
+    
+    BRK, BRK_2, BRK_3, BRK_4, BRK_5, BRK_6,
+    BRK_nmi_4, BRK_nmi_5, BRK_nmi_6,
+    
+    BVC_relative, BVC_relative_2,
+    BVS_relative, BVS_relative_2,
+    CLC,
+    CLD,
+    CLI,
+    CLV,
+    
+    CMP_immediate,
+    CMP_zero_page, CMP_zero_page_2,
+    CMP_zero_page_x, CMP_zero_page_x_2, CMP_zero_page_x_3,
+    CMP_absolute, CMP_absolute_2, CMP_absolute_3,
+    CMP_absolute_x, CMP_absolute_x_2, CMP_absolute_x_3, CMP_absolute_x_4,
+    CMP_absolute_y, CMP_absolute_y_2, CMP_absolute_y_3, CMP_absolute_y_4,
+    CMP_indirect_x, CMP_indirect_x_2, CMP_indirect_x_3, CMP_indirect_x_4, CMP_indirect_x_5,
+    CMP_indirect_y, CMP_indirect_y_2, CMP_indirect_y_3, CMP_indirect_y_4, CMP_indirect_y_5,
+    
+    CPX_immediate,
+    CPX_zero_page, CPX_zero_page_2,
+    CPX_absolute, CPX_absolute_2, CPX_absolute_3,
+    
+    CPY_immediate,
+    CPY_zero_page, CPY_zero_page_2,
+    CPY_absolute, CPY_absolute_2, CPY_absolute_3,
+    
+    DEC_zero_page, DEC_zero_page_2, DEC_zero_page_3, DEC_zero_page_4,
+    DEC_zero_page_x, DEC_zero_page_x_2, DEC_zero_page_x_3, DEC_zero_page_x_4, DEC_zero_page_x_5,
+    DEC_absolute, DEC_absolute_2, DEC_absolute_3, DEC_absolute_4, DEC_absolute_5,
+    DEC_absolute_x, DEC_absolute_x_2, DEC_absolute_x_3, DEC_absolute_x_4, DEC_absolute_x_5, DEC_absolute_x_6,
+    DEC_indirect_x, DEC_indirect_x_2, DEC_indirect_x_3, DEC_indirect_x_4, DEC_indirect_x_5, DEC_indirect_x_6, DEC_indirect_x_7,
+    
+    DEX,
+    DEY,
+    
+    EOR_immediate,
+    EOR_zero_page, EOR_zero_page_2,
+    EOR_zero_page_x, EOR_zero_page_x_2, EOR_zero_page_x_3,
+    EOR_absolute, EOR_absolute_2, EOR_absolute_3,
+    EOR_absolute_x, EOR_absolute_x_2, EOR_absolute_x_3, EOR_absolute_x_4,
+    EOR_absolute_y, EOR_absolute_y_2, EOR_absolute_y_3, EOR_absolute_y_4,
+    EOR_indirect_x, EOR_indirect_x_2, EOR_indirect_x_3, EOR_indirect_x_4, EOR_indirect_x_5,
+    EOR_indirect_y, EOR_indirect_y_2, EOR_indirect_y_3, EOR_indirect_y_4, EOR_indirect_y_5,
+    
+    INC_zero_page, INC_zero_page_2, INC_zero_page_3, INC_zero_page_4,
+    INC_zero_page_x, INC_zero_page_x_2, INC_zero_page_x_3, INC_zero_page_x_4, INC_zero_page_x_5,
+    INC_absolute, INC_absolute_2, INC_absolute_3, INC_absolute_4, INC_absolute_5,
+    INC_absolute_x, INC_absolute_x_2, INC_absolute_x_3, INC_absolute_x_4, INC_absolute_x_5, INC_absolute_x_6,
+    INC_indirect_x, INC_indirect_x_2, INC_indirect_x_3, INC_indirect_x_4, INC_indirect_x_5, INC_indirect_x_6, INC_indirect_x_7,
+    
+    INX,
+    INY,
+    
+    JMP_absolute, JMP_absolute_2,
+    JMP_absolute_indirect, JMP_absolute_indirect_2, JMP_absolute_indirect_3, JMP_absolute_indirect_4,
+    
+    JSR, JSR_2, JSR_3, JSR_4, JSR_5,
+    
+    LDA_immediate,
+    LDA_zero_page, LDA_zero_page_2,
+    LDA_zero_page_x, LDA_zero_page_x_2, LDA_zero_page_x_3,
+    LDA_absolute, LDA_absolute_2, LDA_absolute_3,
+    LDA_absolute_x, LDA_absolute_x_2, LDA_absolute_x_3, LDA_absolute_x_4,
+    LDA_absolute_y, LDA_absolute_y_2, LDA_absolute_y_3, LDA_absolute_y_4,
+    LDA_indirect_x, LDA_indirect_x_2, LDA_indirect_x_3, LDA_indirect_x_4, LDA_indirect_x_5,
+    LDA_indirect_y, LDA_indirect_y_2, LDA_indirect_y_3, LDA_indirect_y_4, LDA_indirect_y_5,
+    
+    LDX_immediate,
+    LDX_zero_page, LDX_zero_page_2,
+    LDX_zero_page_y, LDX_zero_page_y_2, LDX_zero_page_y_3,
+    LDX_absolute, LDX_absolute_2, LDX_absolute_3,
+    LDX_absolute_y, LDX_absolute_y_2, LDX_absolute_y_3, LDX_absolute_y_4,
+    LDX_indirect_x, LDX_indirect_x_2, LDX_indirect_x_3, LDX_indirect_x_4, LDX_indirect_x_5,
+    LDX_indirect_y, LDX_indirect_y_2, LDX_indirect_y_3, LDX_indirect_y_4, LDX_indirect_y_5,
+    
+    LDY_immediate,
+    LDY_zero_page, LDY_zero_page_2,
+    LDY_zero_page_x, LDY_zero_page_x_2, LDY_zero_page_x_3,
+    LDY_absolute, LDY_absolute_2, LDY_absolute_3,
+    LDY_absolute_x, LDY_absolute_x_2, LDY_absolute_x_3, LDY_absolute_x_4,
+    LDY_indirect_x, LDY_indirect_x_2, LDY_indirect_x_3, LDY_indirect_x_4, LDY_indirect_x_5,
+    LDY_indirect_y, LDY_indirect_y_2, LDY_indirect_y_3, LDY_indirect_y_4, LDY_indirect_y_5,
+    
+    LSR_accumulator,
+    LSR_zero_page, LSR_zero_page_2, LSR_zero_page_3, LSR_zero_page_4,
+    LSR_zero_page_x, LSR_zero_page_x_2, LSR_zero_page_x_3, LSR_zero_page_x_4, LSR_zero_page_x_5,
+    LSR_absolute, LSR_absolute_2, LSR_absolute_3, LSR_absolute_4, LSR_absolute_5,
+    LSR_absolute_x, LSR_absolute_x_2, LSR_absolute_x_3, LSR_absolute_x_4, LSR_absolute_x_5, LSR_absolute_x_6,
+    LSR_absolute_y, LSR_absolute_y_2, LSR_absolute_y_3, LSR_absolute_y_4, LSR_absolute_y_5, LSR_absolute_y_6,
+    LSR_indirect_x, LSR_indirect_x_2, LSR_indirect_x_3, LSR_indirect_x_4, LSR_indirect_x_5, LSR_indirect_x_6, LSR_indirect_x_7,
+    LSR_indirect_y, LSR_indirect_y_2, LSR_indirect_y_3, LSR_indirect_y_4, LSR_indirect_y_5, LSR_indirect_y_6, LSR_indirect_y_7,
+    
+    NOP,
+    NOP_immediate,
+    NOP_zero_page, NOP_zero_page_2,
+    NOP_zero_page_x, NOP_zero_page_x_2, NOP_zero_page_x_3,
+    NOP_absolute, NOP_absolute_2, NOP_absolute_3,
+    NOP_absolute_x, NOP_absolute_x_2, NOP_absolute_x_3, NOP_absolute_x_4,
+    
+    ORA_immediate,
+    ORA_zero_page, ORA_zero_page_2,
+    ORA_zero_page_x, ORA_zero_page_x_2, ORA_zero_page_x_3,
+    ORA_absolute, ORA_absolute_2, ORA_absolute_3,
+    ORA_absolute_x, ORA_absolute_x_2, ORA_absolute_x_3, ORA_absolute_x_4,
+    ORA_absolute_y, ORA_absolute_y_2, ORA_absolute_y_3, ORA_absolute_y_4,
+    ORA_indirect_x, ORA_indirect_x_2, ORA_indirect_x_3, ORA_indirect_x_4, ORA_indirect_x_5,
+    ORA_indirect_y, ORA_indirect_y_2, ORA_indirect_y_3, ORA_indirect_y_4, ORA_indirect_y_5,
+    
+    PHA, PHA_2,
+    PHP, PHP_2,
+    PLA, PLA_2, PLA_3,
+    PLP, PLP_2, PLP_3,
+    
+    ROL_accumulator,
+    ROL_zero_page, ROL_zero_page_2, ROL_zero_page_3, ROL_zero_page_4,
+    ROL_zero_page_x, ROL_zero_page_x_2, ROL_zero_page_x_3, ROL_zero_page_x_4, ROL_zero_page_x_5,
+    ROL_absolute, ROL_absolute_2, ROL_absolute_3, ROL_absolute_4, ROL_absolute_5,
+    ROL_absolute_x, ROL_absolute_x_2, ROL_absolute_x_3, ROL_absolute_x_4, ROL_absolute_x_5, ROL_absolute_x_6,
+    ROL_indirect_x, ROL_indirect_x_2, ROL_indirect_x_3, ROL_indirect_x_4, ROL_indirect_x_5, ROL_indirect_x_6, ROL_indirect_x_7,
+    
+    ROR_accumulator,
+    ROR_zero_page, ROR_zero_page_2, ROR_zero_page_3, ROR_zero_page_4,
+    ROR_zero_page_x, ROR_zero_page_x_2, ROR_zero_page_x_3, ROR_zero_page_x_4, ROR_zero_page_x_5,
+    ROR_absolute, ROR_absolute_2, ROR_absolute_3, ROR_absolute_4, ROR_absolute_5,
+    ROR_absolute_x, ROR_absolute_x_2, ROR_absolute_x_3, ROR_absolute_x_4, ROR_absolute_x_5, ROR_absolute_x_6,
+    ROR_indirect_x, ROR_indirect_x_2, ROR_indirect_x_3, ROR_indirect_x_4, ROR_indirect_x_5, ROR_indirect_x_6, ROR_indirect_x_7,
+    
+    RTI, RTI_2, RTI_3, RTI_4, RTI_5,
+    RTS, RTS_2, RTS_3, RTS_4, RTS_5,
+    
+    SBC_immediate,
+    SBC_zero_page, SBC_zero_page_2,
+    SBC_zero_page_x, SBC_zero_page_x_2, SBC_zero_page_x_3,
+    SBC_absolute, SBC_absolute_2, SBC_absolute_3,
+    SBC_absolute_x, SBC_absolute_x_2, SBC_absolute_x_3, SBC_absolute_x_4,
+    SBC_absolute_y, SBC_absolute_y_2, SBC_absolute_y_3, SBC_absolute_y_4,
+    SBC_indirect_x, SBC_indirect_x_2, SBC_indirect_x_3, SBC_indirect_x_4, SBC_indirect_x_5,
+    SBC_indirect_y, SBC_indirect_y_2, SBC_indirect_y_3, SBC_indirect_y_4, SBC_indirect_y_5,
+    
+    SEC,
+    SED,
+    SEI,
+    
+    STA_zero_page, STA_zero_page_2,
+    STA_zero_page_x, STA_zero_page_x_2, STA_zero_page_x_3,
+    STA_absolute, STA_absolute_2, STA_absolute_3,
+    STA_absolute_x, STA_absolute_x_2, STA_absolute_x_3, STA_absolute_x_4,
+    STA_absolute_y, STA_absolute_y_2, STA_absolute_y_3, STA_absolute_y_4,
+    STA_indirect_x, STA_indirect_x_2, STA_indirect_x_3, STA_indirect_x_4, STA_indirect_x_5,
+    STA_indirect_y, STA_indirect_y_2, STA_indirect_y_3, STA_indirect_y_4, STA_indirect_y_5,
+    
+    STX_zero_page, STX_zero_page_2,
+    STX_zero_page_y, STX_zero_page_y_2, STX_zero_page_y_3,
+    STX_absolute, STX_absolute_2, STX_absolute_3,
+    
+    STY_zero_page, STY_zero_page_2,
+    STY_zero_page_x, STY_zero_page_x_2, STY_zero_page_x_3,
+    STY_absolute, STY_absolute_2, STY_absolute_3,
+    
+    TAX,
+    TAY,
+    TSX,
+    TXA,
+    TXS,
+    TYA,
+    
+    // Illegal instructions
+    
+    ALR_immediate,
+    ANC_immediate,
+    ANE_immediate,
+    ARR_immediate,
+    AXS_immediate,
+    
+    DCP_zero_page, DCP_zero_page_2, DCP_zero_page_3, DCP_zero_page_4,
+    DCP_zero_page_x, DCP_zero_page_x_2, DCP_zero_page_x_3, DCP_zero_page_x_4, DCP_zero_page_x_5,
+    DCP_absolute, DCP_absolute_2, DCP_absolute_3, DCP_absolute_4, DCP_absolute_5,
+    DCP_absolute_x, DCP_absolute_x_2, DCP_absolute_x_3, DCP_absolute_x_4, DCP_absolute_x_5, DCP_absolute_x_6,
+    DCP_absolute_y, DCP_absolute_y_2, DCP_absolute_y_3, DCP_absolute_y_4, DCP_absolute_y_5, DCP_absolute_y_6,
+    DCP_indirect_x, DCP_indirect_x_2, DCP_indirect_x_3, DCP_indirect_x_4, DCP_indirect_x_5, DCP_indirect_x_6, DCP_indirect_x_7,
+    DCP_indirect_y, DCP_indirect_y_2, DCP_indirect_y_3, DCP_indirect_y_4, DCP_indirect_y_5, DCP_indirect_y_6, DCP_indirect_y_7,
+    
+    ISC_zero_page, ISC_zero_page_2, ISC_zero_page_3, ISC_zero_page_4,
+    ISC_zero_page_x, ISC_zero_page_x_2, ISC_zero_page_x_3, ISC_zero_page_x_4, ISC_zero_page_x_5,
+    ISC_absolute, ISC_absolute_2, ISC_absolute_3, ISC_absolute_4, ISC_absolute_5,
+    ISC_absolute_x, ISC_absolute_x_2, ISC_absolute_x_3, ISC_absolute_x_4, ISC_absolute_x_5, ISC_absolute_x_6,
+    ISC_absolute_y, ISC_absolute_y_2, ISC_absolute_y_3, ISC_absolute_y_4, ISC_absolute_y_5, ISC_absolute_y_6,
+    ISC_indirect_x, ISC_indirect_x_2, ISC_indirect_x_3, ISC_indirect_x_4, ISC_indirect_x_5, ISC_indirect_x_6, ISC_indirect_x_7,
+    ISC_indirect_y, ISC_indirect_y_2, ISC_indirect_y_3, ISC_indirect_y_4, ISC_indirect_y_5, ISC_indirect_y_6, ISC_indirect_y_7,
+    
+    LAS_absolute_y, LAS_absolute_y_2, LAS_absolute_y_3, LAS_absolute_y_4,
+    
+    LAX_zero_page, LAX_zero_page_2,
+    LAX_zero_page_y, LAX_zero_page_y_2, LAX_zero_page_y_3,
+    LAX_absolute, LAX_absolute_2, LAX_absolute_3,
+    LAX_absolute_y, LAX_absolute_y_2, LAX_absolute_y_3, LAX_absolute_y_4,
+    LAX_indirect_x, LAX_indirect_x_2, LAX_indirect_x_3, LAX_indirect_x_4, LAX_indirect_x_5,
+    LAX_indirect_y, LAX_indirect_y_2, LAX_indirect_y_3, LAX_indirect_y_4, LAX_indirect_y_5,
+    
+    LXA_immediate,
+    
+    RLA_zero_page, RLA_zero_page_2, RLA_zero_page_3, RLA_zero_page_4,
+    RLA_zero_page_x, RLA_zero_page_x_2, RLA_zero_page_x_3, RLA_zero_page_x_4, RLA_zero_page_x_5,
+    RLA_absolute, RLA_absolute_2, RLA_absolute_3, RLA_absolute_4, RLA_absolute_5,
+    RLA_absolute_x, RLA_absolute_x_2, RLA_absolute_x_3, RLA_absolute_x_4, RLA_absolute_x_5, RLA_absolute_x_6,
+    RLA_absolute_y, RLA_absolute_y_2, RLA_absolute_y_3, RLA_absolute_y_4, RLA_absolute_y_5, RLA_absolute_y_6,
+    RLA_indirect_x, RLA_indirect_x_2, RLA_indirect_x_3, RLA_indirect_x_4, RLA_indirect_x_5, RLA_indirect_x_6, RLA_indirect_x_7,
+    RLA_indirect_y, RLA_indirect_y_2, RLA_indirect_y_3, RLA_indirect_y_4, RLA_indirect_y_5, RLA_indirect_y_6, RLA_indirect_y_7,
+    
+    RRA_zero_page, RRA_zero_page_2, RRA_zero_page_3, RRA_zero_page_4,
+    RRA_zero_page_x, RRA_zero_page_x_2, RRA_zero_page_x_3, RRA_zero_page_x_4, RRA_zero_page_x_5,
+    RRA_absolute, RRA_absolute_2, RRA_absolute_3, RRA_absolute_4, RRA_absolute_5,
+    RRA_absolute_x, RRA_absolute_x_2, RRA_absolute_x_3, RRA_absolute_x_4, RRA_absolute_x_5, RRA_absolute_x_6,
+    RRA_absolute_y, RRA_absolute_y_2, RRA_absolute_y_3, RRA_absolute_y_4, RRA_absolute_y_5, RRA_absolute_y_6,
+    RRA_indirect_x, RRA_indirect_x_2, RRA_indirect_x_3, RRA_indirect_x_4, RRA_indirect_x_5, RRA_indirect_x_6, RRA_indirect_x_7,
+    RRA_indirect_y, RRA_indirect_y_2, RRA_indirect_y_3, RRA_indirect_y_4, RRA_indirect_y_5, RRA_indirect_y_6, RRA_indirect_y_7,
+    
+    SAX_zero_page, SAX_zero_page_2,
+    SAX_zero_page_y, SAX_zero_page_y_2, SAX_zero_page_y_3,
+    SAX_absolute, SAX_absolute_2, SAX_absolute_3,
+    SAX_indirect_x, SAX_indirect_x_2, SAX_indirect_x_3, SAX_indirect_x_4, SAX_indirect_x_5,
+    
+    SHA_indirect_y, SHA_indirect_y_2, SHA_indirect_y_3, SHA_indirect_y_4, SHA_indirect_y_5,
+    SHA_absolute_y, SHA_absolute_y_2, SHA_absolute_y_3, SHA_absolute_y_4,
+    
+    SHX_absolute_y, SHX_absolute_y_2, SHX_absolute_y_3, SHX_absolute_y_4,
+    SHY_absolute_x, SHY_absolute_x_2, SHY_absolute_x_3, SHY_absolute_x_4,
+    
+    SLO_zero_page, SLO_zero_page_2, SLO_zero_page_3, SLO_zero_page_4,
+    SLO_zero_page_x, SLO_zero_page_x_2, SLO_zero_page_x_3, SLO_zero_page_x_4, SLO_zero_page_x_5,
+    SLO_absolute, SLO_absolute_2, SLO_absolute_3, SLO_absolute_4, SLO_absolute_5,
+    SLO_absolute_x, SLO_absolute_x_2, SLO_absolute_x_3, SLO_absolute_x_4, SLO_absolute_x_5, SLO_absolute_x_6,
+    SLO_absolute_y, SLO_absolute_y_2, SLO_absolute_y_3, SLO_absolute_y_4, SLO_absolute_y_5, SLO_absolute_y_6,
+    SLO_indirect_x, SLO_indirect_x_2, SLO_indirect_x_3, SLO_indirect_x_4, SLO_indirect_x_5, SLO_indirect_x_6, SLO_indirect_x_7,
+    SLO_indirect_y, SLO_indirect_y_2, SLO_indirect_y_3, SLO_indirect_y_4, SLO_indirect_y_5, SLO_indirect_y_6, SLO_indirect_y_7,
+    
+    SRE_zero_page, SRE_zero_page_2, SRE_zero_page_3, SRE_zero_page_4,
+    SRE_zero_page_x, SRE_zero_page_x_2, SRE_zero_page_x_3, SRE_zero_page_x_4, SRE_zero_page_x_5,
+    SRE_absolute, SRE_absolute_2, SRE_absolute_3, SRE_absolute_4, SRE_absolute_5,
+    SRE_absolute_x, SRE_absolute_x_2, SRE_absolute_x_3, SRE_absolute_x_4, SRE_absolute_x_5, SRE_absolute_x_6,
+    SRE_absolute_y, SRE_absolute_y_2, SRE_absolute_y_3, SRE_absolute_y_4, SRE_absolute_y_5, SRE_absolute_y_6,
+    SRE_indirect_x, SRE_indirect_x_2, SRE_indirect_x_3, SRE_indirect_x_4, SRE_indirect_x_5, SRE_indirect_x_6, SRE_indirect_x_7,
+    SRE_indirect_y, SRE_indirect_y_2, SRE_indirect_y_3, SRE_indirect_y_4, SRE_indirect_y_5, SRE_indirect_y_6, SRE_indirect_y_7,
+    
+    TAS_absolute_y, TAS_absolute_y_2, TAS_absolute_y_3, TAS_absolute_y_4
+    
+} MicroInstruction;
+
 // Atomic CPU tasks
 #define FETCH_OPCODE if (rdyLine) opcode = mem->peek(PC++); else return;
 #define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return;
@@ -65,8 +361,16 @@
 #define POLL_IRQ_AND_NMI doIrq = ((oldIrqLine != 0) && (I == 0)); doNmi = oldNmiEdge;
 #define POLL_IRQ_AND_NMI_AGAIN doIrq |= (oldIrqLine != 0) && (I == 0); doNmi |= oldNmiEdge;
 
-#define DONE next = &CPU::fetch; doIrq = ((oldIrqLine != 0) && (I == 0)); doNmi = oldNmiEdge;
-#define DONE_NO_POLL next = &CPU::fetch;
+#define CONTINUE next = (MicroInstruction)((int)next+1); return;
+#define DONE next = fetch; doIrq = ((oldIrqLine != 0) && (I == 0)); doNmi = oldNmiEdge; return;
+#define DONE_NO_POLL next = fetch; return;
+
+
+//! Next microinstruction to be executed
+MicroInstruction next;
+
+//! Callback function array pointing to the execution function of each instruction
+MicroInstruction actionFunc[256];
 
 //! Mnemonic strings (used by the source level debugger only)
 const char *mnemonic[256];
@@ -78,10 +382,11 @@ AddressingMode addressingMode[256];
 static void (CPU::*callbacks[])(void);
 
 //! Register callback function for a single opcode
-void registerCallback(uint8_t opcode, void (CPU::*func)(void));
+void registerCallback(uint8_t opcode, MicroInstruction mInstr);
 
 //! Register callback function for a single opcode
-void registerCallback(uint8_t opcode, const char *mnemonic, AddressingMode mode, void (CPU::*func)(void));
+void registerCallback(uint8_t opcode, const char *mnemonic,
+                      AddressingMode mode, MicroInstruction mInstr);
 
 //! Register illegal instructions
 void registerIllegalInstructions();
@@ -100,300 +405,4 @@ void branch(int8_t offset); // returns number of penalty cycles
 void cmp(uint8_t op1, uint8_t op2);
 uint8_t ror(uint8_t op);
 uint8_t rol(uint8_t op);
-
-// Execution functions
-public: 
-
-void fetch();
-
-void JAM(); void JAM_2(); // Default action for illegal instructions
-
-void irq(); void irq_2(); void irq_3(); void irq_4(); void irq_5(); void irq_6(); void irq_7();
-void nmi(); void nmi_2(); void nmi_3(); void nmi_4(); void nmi_5(); void nmi_6(); void nmi_7();
-
-void ADC_immediate();
-void ADC_zero_page(); void ADC_zero_page_2();
-void ADC_zero_page_x(); void ADC_zero_page_x_2(); void ADC_zero_page_x_3();
-void ADC_absolute(); void ADC_absolute_2(); void ADC_absolute_3();
-void ADC_absolute_x(); void ADC_absolute_x_2(); void ADC_absolute_x_3(); void ADC_absolute_x_4();
-void ADC_absolute_y(); void ADC_absolute_y_2(); void ADC_absolute_y_3(); void ADC_absolute_y_4();
-void ADC_indirect_x(); void ADC_indirect_x_2(); void ADC_indirect_x_3(); void ADC_indirect_x_4(); void ADC_indirect_x_5();
-void ADC_indirect_y(); void ADC_indirect_y_2(); void ADC_indirect_y_3(); void ADC_indirect_y_4(); void ADC_indirect_y_5();
-
-void AND_immediate();
-void AND_zero_page(); void AND_zero_page_2();
-void AND_zero_page_x(); void AND_zero_page_x_2(); void AND_zero_page_x_3();
-void AND_absolute(); void AND_absolute_2(); void AND_absolute_3();
-void AND_absolute_x(); void AND_absolute_x_2(); void AND_absolute_x_3(); void AND_absolute_x_4();
-void AND_absolute_y(); void AND_absolute_y_2(); void AND_absolute_y_3(); void AND_absolute_y_4();
-void AND_indirect_x(); void AND_indirect_x_2(); void AND_indirect_x_3(); void AND_indirect_x_4(); void AND_indirect_x_5();
-void AND_indirect_y(); void AND_indirect_y_2(); void AND_indirect_y_3(); void AND_indirect_y_4(); void AND_indirect_y_5();
-
-void ASL_accumulator();
-void ASL_zero_page(); void ASL_zero_page_2(); void ASL_zero_page_3(); void ASL_zero_page_4(); 
-void ASL_zero_page_x(); void ASL_zero_page_x_2(); void ASL_zero_page_x_3(); void ASL_zero_page_x_4(); void ASL_zero_page_x_5();
-void ASL_absolute(); void ASL_absolute_2(); void ASL_absolute_3(); void ASL_absolute_4(); void ASL_absolute_5();
-void ASL_absolute_x(); void ASL_absolute_x_2(); void ASL_absolute_x_3(); void ASL_absolute_x_4(); void ASL_absolute_x_5(); void ASL_absolute_x_6();
-void ASL_indirect_x(); void ASL_indirect_x_2(); void ASL_indirect_x_3(); void ASL_indirect_x_4(); void ASL_indirect_x_5(); void ASL_indirect_x_6(); void ASL_indirect_x_7();     
-
-void branch_3_underflow(); void branch_3_overflow();
-void BCC_relative(); void BCC_relative_2(); 
-void BCS_relative(); void BCS_relative_2(); 
-void BEQ_relative(); void BEQ_relative_2(); 
-
-void BIT_zero_page(); void BIT_zero_page_2();
-void BIT_absolute(); void BIT_absolute_2(); void BIT_absolute_3();
-
-void BMI_relative(); void BMI_relative_2(); 
-void BNE_relative(); void BNE_relative_2(); 
-void BPL_relative(); void BPL_relative_2(); 
-
-void BRK(); void BRK_2(); void BRK_3(); void BRK_4(); void BRK_5(); void BRK_6();
-void BRK_nmi_4(); void BRK_nmi_5(); void BRK_nmi_6(); 
-
-void BVC_relative(); void BVC_relative_2(); 
-void BVS_relative(); void BVS_relative_2(); 
-void CLC();
-void CLD();
-void CLI();
-void CLV();
-
-void CMP_immediate();
-void CMP_zero_page(); void CMP_zero_page_2();
-void CMP_zero_page_x(); void CMP_zero_page_x_2(); void CMP_zero_page_x_3();
-void CMP_absolute(); void CMP_absolute_2(); void CMP_absolute_3();
-void CMP_absolute_x(); void CMP_absolute_x_2(); void CMP_absolute_x_3(); void CMP_absolute_x_4();
-void CMP_absolute_y(); void CMP_absolute_y_2(); void CMP_absolute_y_3(); void CMP_absolute_y_4();
-void CMP_indirect_x(); void CMP_indirect_x_2(); void CMP_indirect_x_3(); void CMP_indirect_x_4(); void CMP_indirect_x_5();
-void CMP_indirect_y(); void CMP_indirect_y_2(); void CMP_indirect_y_3(); void CMP_indirect_y_4(); void CMP_indirect_y_5();
-
-void CPX_immediate();
-void CPX_zero_page(); void CPX_zero_page_2(); 
-void CPX_absolute(); void CPX_absolute_2(); void CPX_absolute_3();
-
-void CPY_immediate();
-void CPY_zero_page(); void CPY_zero_page_2();
-void CPY_absolute(); void CPY_absolute_2(); void CPY_absolute_3();
-
-void DEC_zero_page(); void DEC_zero_page_2(); void DEC_zero_page_3(); void DEC_zero_page_4();
-void DEC_zero_page_x(); void DEC_zero_page_x_2(); void DEC_zero_page_x_3(); void DEC_zero_page_x_4(); void DEC_zero_page_x_5();
-void DEC_absolute(); void DEC_absolute_2(); void DEC_absolute_3(); void DEC_absolute_4(); void DEC_absolute_5();
-void DEC_absolute_x(); void DEC_absolute_x_2(); void DEC_absolute_x_3(); void DEC_absolute_x_4(); void DEC_absolute_x_5(); void DEC_absolute_x_6();
-void DEC_indirect_x(); void DEC_indirect_x_2(); void DEC_indirect_x_3(); void DEC_indirect_x_4(); void DEC_indirect_x_5(); void DEC_indirect_x_6(); void DEC_indirect_x_7();     
-
-void DEX();
-void DEY();
-
-void EOR_immediate();
-void EOR_zero_page(); void EOR_zero_page_2();
-void EOR_zero_page_x(); void EOR_zero_page_x_2(); void EOR_zero_page_x_3();
-void EOR_absolute(); void EOR_absolute_2(); void EOR_absolute_3();
-void EOR_absolute_x(); void EOR_absolute_x_2(); void EOR_absolute_x_3(); void EOR_absolute_x_4();
-void EOR_absolute_y(); void EOR_absolute_y_2(); void EOR_absolute_y_3(); void EOR_absolute_y_4();
-void EOR_indirect_x(); void EOR_indirect_x_2(); void EOR_indirect_x_3(); void EOR_indirect_x_4(); void EOR_indirect_x_5();
-void EOR_indirect_y(); void EOR_indirect_y_2(); void EOR_indirect_y_3(); void EOR_indirect_y_4(); void EOR_indirect_y_5();
-
-void INC_zero_page(); void INC_zero_page_2(); void INC_zero_page_3(); void INC_zero_page_4();
-void INC_zero_page_x(); void INC_zero_page_x_2(); void INC_zero_page_x_3(); void INC_zero_page_x_4(); void INC_zero_page_x_5();
-void INC_absolute(); void INC_absolute_2(); void INC_absolute_3(); void INC_absolute_4(); void INC_absolute_5();
-void INC_absolute_x(); void INC_absolute_x_2(); void INC_absolute_x_3(); void INC_absolute_x_4(); void INC_absolute_x_5(); void INC_absolute_x_6();
-void INC_indirect_x(); void INC_indirect_x_2(); void INC_indirect_x_3(); void INC_indirect_x_4(); void INC_indirect_x_5(); void INC_indirect_x_6(); void INC_indirect_x_7();     
-
-void INX();
-void INY();
-
-void JMP_absolute(); void JMP_absolute_2();
-void JMP_absolute_indirect(); void JMP_absolute_indirect_2(); void JMP_absolute_indirect_3(); void JMP_absolute_indirect_4();
-
-void JSR(); void JSR_2(); void JSR_3(); void JSR_4(); void JSR_5();
-
-void LDA_immediate();
-void LDA_zero_page(); void LDA_zero_page_2();
-void LDA_zero_page_x(); void LDA_zero_page_x_2(); void LDA_zero_page_x_3();
-void LDA_absolute(); void LDA_absolute_2(); void LDA_absolute_3();
-void LDA_absolute_x(); void LDA_absolute_x_2(); void LDA_absolute_x_3(); void LDA_absolute_x_4();
-void LDA_absolute_y(); void LDA_absolute_y_2(); void LDA_absolute_y_3(); void LDA_absolute_y_4();
-void LDA_indirect_x(); void LDA_indirect_x_2(); void LDA_indirect_x_3(); void LDA_indirect_x_4(); void LDA_indirect_x_5();
-void LDA_indirect_y(); void LDA_indirect_y_2(); void LDA_indirect_y_3(); void LDA_indirect_y_4(); void LDA_indirect_y_5();
-
-void LDX_immediate();
-void LDX_zero_page(); void LDX_zero_page_2();
-void LDX_zero_page_y(); void LDX_zero_page_y_2(); void LDX_zero_page_y_3();
-void LDX_absolute(); void LDX_absolute_2(); void LDX_absolute_3();
-void LDX_absolute_y(); void LDX_absolute_y_2(); void LDX_absolute_y_3(); void LDX_absolute_y_4();
-void LDX_indirect_x(); void LDX_indirect_x_2(); void LDX_indirect_x_3(); void LDX_indirect_x_4(); void LDX_indirect_x_5();
-void LDX_indirect_y(); void LDX_indirect_y_2(); void LDX_indirect_y_3(); void LDX_indirect_y_4(); void LDX_indirect_y_5();
-
-void LDY_immediate();
-void LDY_zero_page(); void LDY_zero_page_2();
-void LDY_zero_page_x(); void LDY_zero_page_x_2(); void LDY_zero_page_x_3();
-void LDY_absolute(); void LDY_absolute_2(); void LDY_absolute_3();
-void LDY_absolute_x(); void LDY_absolute_x_2(); void LDY_absolute_x_3(); void LDY_absolute_x_4();
-void LDY_indirect_x(); void LDY_indirect_x_2(); void LDY_indirect_x_3(); void LDY_indirect_x_4(); void LDY_indirect_x_5();
-void LDY_indirect_y(); void LDY_indirect_y_2(); void LDY_indirect_y_3(); void LDY_indirect_y_4(); void LDY_indirect_y_5();
-
-void LSR_accumulator();
-void LSR_zero_page(); void LSR_zero_page_2(); void LSR_zero_page_3(); void LSR_zero_page_4();
-void LSR_zero_page_x(); void LSR_zero_page_x_2(); void LSR_zero_page_x_3(); void LSR_zero_page_x_4(); void LSR_zero_page_x_5();
-void LSR_absolute(); void LSR_absolute_2(); void LSR_absolute_3(); void LSR_absolute_4(); void LSR_absolute_5();
-void LSR_absolute_x(); void LSR_absolute_x_2(); void LSR_absolute_x_3(); void LSR_absolute_x_4(); void LSR_absolute_x_5(); void LSR_absolute_x_6();
-void LSR_absolute_y(); void LSR_absolute_y_2(); void LSR_absolute_y_3(); void LSR_absolute_y_4(); void LSR_absolute_y_5(); void LSR_absolute_y_6(); 
-void LSR_indirect_x(); void LSR_indirect_x_2(); void LSR_indirect_x_3(); void LSR_indirect_x_4(); void LSR_indirect_x_5(); void LSR_indirect_x_6(); void LSR_indirect_x_7();     
-void LSR_indirect_y(); void LSR_indirect_y_2(); void LSR_indirect_y_3(); void LSR_indirect_y_4(); void LSR_indirect_y_5(); void LSR_indirect_y_6(); void LSR_indirect_y_7();
-
-void NOP();
-void NOP_immediate();
-void NOP_zero_page(); void NOP_zero_page_2();
-void NOP_zero_page_x(); void NOP_zero_page_x_2(); void NOP_zero_page_x_3();
-void NOP_absolute(); void NOP_absolute_2(); void NOP_absolute_3();
-void NOP_absolute_x(); void NOP_absolute_x_2(); void NOP_absolute_x_3(); void NOP_absolute_x_4();
-
-void ORA_immediate();
-void ORA_zero_page(); void ORA_zero_page_2();
-void ORA_zero_page_x(); void ORA_zero_page_x_2(); void ORA_zero_page_x_3();
-void ORA_absolute(); void ORA_absolute_2(); void ORA_absolute_3();
-void ORA_absolute_x(); void ORA_absolute_x_2(); void ORA_absolute_x_3(); void ORA_absolute_x_4();
-void ORA_absolute_y(); void ORA_absolute_y_2(); void ORA_absolute_y_3(); void ORA_absolute_y_4();
-void ORA_indirect_x(); void ORA_indirect_x_2(); void ORA_indirect_x_3(); void ORA_indirect_x_4(); void ORA_indirect_x_5();
-void ORA_indirect_y(); void ORA_indirect_y_2(); void ORA_indirect_y_3(); void ORA_indirect_y_4(); void ORA_indirect_y_5();
-
-void PHA(); void PHA_2();
-void PHP(); void PHP_2();
-void PLA(); void PLA_2(); void PLA_3();
-void PLP(); void PLP_2(); void PLP_3();
-
-void ROL_accumulator();
-void ROL_zero_page(); void ROL_zero_page_2(); void ROL_zero_page_3(); void ROL_zero_page_4();
-void ROL_zero_page_x(); void ROL_zero_page_x_2(); void ROL_zero_page_x_3(); void ROL_zero_page_x_4(); void ROL_zero_page_x_5();
-void ROL_absolute(); void ROL_absolute_2(); void ROL_absolute_3(); void ROL_absolute_4(); void ROL_absolute_5();
-void ROL_absolute_x(); void ROL_absolute_x_2(); void ROL_absolute_x_3(); void ROL_absolute_x_4(); void ROL_absolute_x_5(); void ROL_absolute_x_6();
-void ROL_indirect_x(); void ROL_indirect_x_2(); void ROL_indirect_x_3(); void ROL_indirect_x_4(); void ROL_indirect_x_5(); void ROL_indirect_x_6(); void ROL_indirect_x_7();     
-
-void ROR_accumulator();
-void ROR_zero_page(); void ROR_zero_page_2(); void ROR_zero_page_3(); void ROR_zero_page_4();
-void ROR_zero_page_x(); void ROR_zero_page_x_2(); void ROR_zero_page_x_3(); void ROR_zero_page_x_4(); void ROR_zero_page_x_5();
-void ROR_absolute(); void ROR_absolute_2(); void ROR_absolute_3(); void ROR_absolute_4(); void ROR_absolute_5();
-void ROR_absolute_x(); void ROR_absolute_x_2(); void ROR_absolute_x_3(); void ROR_absolute_x_4(); void ROR_absolute_x_5(); void ROR_absolute_x_6();
-void ROR_indirect_x(); void ROR_indirect_x_2(); void ROR_indirect_x_3(); void ROR_indirect_x_4(); void ROR_indirect_x_5(); void ROR_indirect_x_6(); void ROR_indirect_x_7();     
-
-void RTI(); void RTI_2(); void RTI_3(); void RTI_4(); void RTI_5();
-void RTS(); void RTS_2(); void RTS_3(); void RTS_4(); void RTS_5();
-
-void SBC_immediate();
-void SBC_zero_page(); void SBC_zero_page_2();
-void SBC_zero_page_x(); void SBC_zero_page_x_2(); void SBC_zero_page_x_3();
-void SBC_absolute(); void SBC_absolute_2(); void SBC_absolute_3();
-void SBC_absolute_x(); void SBC_absolute_x_2(); void SBC_absolute_x_3(); void SBC_absolute_x_4();
-void SBC_absolute_y(); void SBC_absolute_y_2(); void SBC_absolute_y_3(); void SBC_absolute_y_4();
-void SBC_indirect_x(); void SBC_indirect_x_2(); void SBC_indirect_x_3(); void SBC_indirect_x_4(); void SBC_indirect_x_5();
-void SBC_indirect_y(); void SBC_indirect_y_2(); void SBC_indirect_y_3(); void SBC_indirect_y_4(); void SBC_indirect_y_5();
-
-void SEC();
-void SED();
-void SEI();
-
-void STA_zero_page(); void STA_zero_page_2();
-void STA_zero_page_x(); void STA_zero_page_x_2(); void STA_zero_page_x_3();
-void STA_absolute(); void STA_absolute_2(); void STA_absolute_3();
-void STA_absolute_x(); void STA_absolute_x_2(); void STA_absolute_x_3(); void STA_absolute_x_4();
-void STA_absolute_y(); void STA_absolute_y_2(); void STA_absolute_y_3(); void STA_absolute_y_4();
-void STA_indirect_x(); void STA_indirect_x_2(); void STA_indirect_x_3(); void STA_indirect_x_4(); void STA_indirect_x_5();
-void STA_indirect_y(); void STA_indirect_y_2(); void STA_indirect_y_3(); void STA_indirect_y_4(); void STA_indirect_y_5();
-
-void STX_zero_page(); void STX_zero_page_2();
-void STX_zero_page_y(); void STX_zero_page_y_2(); void STX_zero_page_y_3();
-void STX_absolute(); void STX_absolute_2(); void STX_absolute_3();
-
-void STY_zero_page(); void STY_zero_page_2();
-void STY_zero_page_x(); void STY_zero_page_x_2(); void STY_zero_page_x_3();
-void STY_absolute(); void STY_absolute_2(); void STY_absolute_3();
-
-void TAX();
-void TAY();
-void TSX();
-void TXA();
-void TXS();
-void TYA();
-
-// Illegal instructions
-
-void ALR_immediate();   
-void ANC_immediate();   
-void ANE_immediate();
-void ARR_immediate();   
-void AXS_immediate();   
-
-void DCP_zero_page(); void DCP_zero_page_2(); void DCP_zero_page_3(); void DCP_zero_page_4();
-void DCP_zero_page_x(); void DCP_zero_page_x_2(); void DCP_zero_page_x_3(); void DCP_zero_page_x_4(); void DCP_zero_page_x_5();
-void DCP_absolute(); void DCP_absolute_2(); void DCP_absolute_3(); void DCP_absolute_4(); void DCP_absolute_5();
-void DCP_absolute_x(); void DCP_absolute_x_2(); void DCP_absolute_x_3(); void DCP_absolute_x_4(); void DCP_absolute_x_5(); void DCP_absolute_x_6();
-void DCP_absolute_y(); void DCP_absolute_y_2(); void DCP_absolute_y_3(); void DCP_absolute_y_4(); void DCP_absolute_y_5(); void DCP_absolute_y_6(); 
-void DCP_indirect_x(); void DCP_indirect_x_2(); void DCP_indirect_x_3(); void DCP_indirect_x_4(); void DCP_indirect_x_5(); void DCP_indirect_x_6(); void DCP_indirect_x_7();     
-void DCP_indirect_y(); void DCP_indirect_y_2(); void DCP_indirect_y_3(); void DCP_indirect_y_4(); void DCP_indirect_y_5(); void DCP_indirect_y_6(); void DCP_indirect_y_7();
-
-void ISC_zero_page(); void ISC_zero_page_2(); void ISC_zero_page_3(); void ISC_zero_page_4();
-void ISC_zero_page_x(); void ISC_zero_page_x_2(); void ISC_zero_page_x_3(); void ISC_zero_page_x_4(); void ISC_zero_page_x_5();
-void ISC_absolute(); void ISC_absolute_2(); void ISC_absolute_3(); void ISC_absolute_4(); void ISC_absolute_5();
-void ISC_absolute_x(); void ISC_absolute_x_2(); void ISC_absolute_x_3(); void ISC_absolute_x_4(); void ISC_absolute_x_5(); void ISC_absolute_x_6();
-void ISC_absolute_y(); void ISC_absolute_y_2(); void ISC_absolute_y_3(); void ISC_absolute_y_4(); void ISC_absolute_y_5(); void ISC_absolute_y_6(); 
-void ISC_indirect_x(); void ISC_indirect_x_2(); void ISC_indirect_x_3(); void ISC_indirect_x_4(); void ISC_indirect_x_5(); void ISC_indirect_x_6(); void ISC_indirect_x_7();     
-void ISC_indirect_y(); void ISC_indirect_y_2(); void ISC_indirect_y_3(); void ISC_indirect_y_4(); void ISC_indirect_y_5(); void ISC_indirect_y_6(); void ISC_indirect_y_7();
-
-void LAS_absolute_y(); void LAS_absolute_y_2(); void LAS_absolute_y_3(); void LAS_absolute_y_4();
-
-void LAX_zero_page(); void LAX_zero_page_2();
-void LAX_zero_page_y(); void LAX_zero_page_y_2(); void LAX_zero_page_y_3();
-void LAX_absolute(); void LAX_absolute_2(); void LAX_absolute_3();
-void LAX_absolute_y(); void LAX_absolute_y_2(); void LAX_absolute_y_3(); void LAX_absolute_y_4();
-void LAX_indirect_x(); void LAX_indirect_x_2(); void LAX_indirect_x_3(); void LAX_indirect_x_4(); void LAX_indirect_x_5();
-void LAX_indirect_y(); void LAX_indirect_y_2(); void LAX_indirect_y_3(); void LAX_indirect_y_4(); void LAX_indirect_y_5();
-
-void LXA_immediate();
-
-void RLA_zero_page(); void RLA_zero_page_2(); void RLA_zero_page_3(); void RLA_zero_page_4();
-void RLA_zero_page_x(); void RLA_zero_page_x_2(); void RLA_zero_page_x_3(); void RLA_zero_page_x_4(); void RLA_zero_page_x_5();
-void RLA_absolute(); void RLA_absolute_2(); void RLA_absolute_3(); void RLA_absolute_4(); void RLA_absolute_5();
-void RLA_absolute_x(); void RLA_absolute_x_2(); void RLA_absolute_x_3(); void RLA_absolute_x_4(); void RLA_absolute_x_5(); void RLA_absolute_x_6();
-void RLA_absolute_y(); void RLA_absolute_y_2(); void RLA_absolute_y_3(); void RLA_absolute_y_4(); void RLA_absolute_y_5(); void RLA_absolute_y_6();
-void RLA_indirect_x(); void RLA_indirect_x_2(); void RLA_indirect_x_3(); void RLA_indirect_x_4(); void RLA_indirect_x_5(); void RLA_indirect_x_6(); void RLA_indirect_x_7();
-void RLA_indirect_y(); void RLA_indirect_y_2(); void RLA_indirect_y_3(); void RLA_indirect_y_4(); void RLA_indirect_y_5(); void RLA_indirect_y_6(); void RLA_indirect_y_7();
-
-void RRA_zero_page(); void RRA_zero_page_2(); void RRA_zero_page_3(); void RRA_zero_page_4();
-void RRA_zero_page_x(); void RRA_zero_page_x_2(); void RRA_zero_page_x_3(); void RRA_zero_page_x_4(); void RRA_zero_page_x_5();
-void RRA_absolute(); void RRA_absolute_2(); void RRA_absolute_3(); void RRA_absolute_4(); void RRA_absolute_5();
-void RRA_absolute_x(); void RRA_absolute_x_2(); void RRA_absolute_x_3(); void RRA_absolute_x_4(); void RRA_absolute_x_5(); void RRA_absolute_x_6();
-void RRA_absolute_y(); void RRA_absolute_y_2(); void RRA_absolute_y_3(); void RRA_absolute_y_4(); void RRA_absolute_y_5(); void RRA_absolute_y_6();
-void RRA_indirect_x(); void RRA_indirect_x_2(); void RRA_indirect_x_3(); void RRA_indirect_x_4(); void RRA_indirect_x_5(); void RRA_indirect_x_6(); void RRA_indirect_x_7();
-void RRA_indirect_y(); void RRA_indirect_y_2(); void RRA_indirect_y_3(); void RRA_indirect_y_4(); void RRA_indirect_y_5(); void RRA_indirect_y_6(); void RRA_indirect_y_7();
-
-void SAX_zero_page(); void SAX_zero_page_2();
-void SAX_zero_page_y(); void SAX_zero_page_y_2(); void SAX_zero_page_y_3();
-void SAX_absolute(); void SAX_absolute_2(); void SAX_absolute_3();
-void SAX_indirect_x(); void SAX_indirect_x_2(); void SAX_indirect_x_3(); void SAX_indirect_x_4(); void SAX_indirect_x_5();
-
-void SHA_indirect_y(); void SHA_indirect_y_2(); void SHA_indirect_y_3(); void SHA_indirect_y_4(); void SHA_indirect_y_5();
-void SHA_absolute_y(); void SHA_absolute_y_2(); void SHA_absolute_y_3(); void SHA_absolute_y_4();
-
-void SHX_absolute_y(); void SHX_absolute_y_2(); void SHX_absolute_y_3(); void SHX_absolute_y_4();
-void SHY_absolute_x(); void SHY_absolute_x_2(); void SHY_absolute_x_3(); void SHY_absolute_x_4();
-
-void SLO_zero_page(); void SLO_zero_page_2(); void SLO_zero_page_3(); void SLO_zero_page_4();
-void SLO_zero_page_x(); void SLO_zero_page_x_2(); void SLO_zero_page_x_3(); void SLO_zero_page_x_4(); void SLO_zero_page_x_5();
-void SLO_absolute(); void SLO_absolute_2(); void SLO_absolute_3(); void SLO_absolute_4(); void SLO_absolute_5();
-void SLO_absolute_x(); void SLO_absolute_x_2(); void SLO_absolute_x_3(); void SLO_absolute_x_4(); void SLO_absolute_x_5(); void SLO_absolute_x_6();
-void SLO_absolute_y(); void SLO_absolute_y_2(); void SLO_absolute_y_3(); void SLO_absolute_y_4(); void SLO_absolute_y_5(); void SLO_absolute_y_6();
-void SLO_indirect_x(); void SLO_indirect_x_2(); void SLO_indirect_x_3(); void SLO_indirect_x_4(); void SLO_indirect_x_5(); void SLO_indirect_x_6(); void SLO_indirect_x_7();
-void SLO_indirect_y(); void SLO_indirect_y_2(); void SLO_indirect_y_3(); void SLO_indirect_y_4(); void SLO_indirect_y_5(); void SLO_indirect_y_6(); void SLO_indirect_y_7();
-
-void SRE_zero_page(); void SRE_zero_page_2(); void SRE_zero_page_3(); void SRE_zero_page_4();
-void SRE_zero_page_x(); void SRE_zero_page_x_2(); void SRE_zero_page_x_3(); void SRE_zero_page_x_4(); void SRE_zero_page_x_5();
-void SRE_absolute(); void SRE_absolute_2(); void SRE_absolute_3(); void SRE_absolute_4(); void SRE_absolute_5();
-void SRE_absolute_x(); void SRE_absolute_x_2(); void SRE_absolute_x_3(); void SRE_absolute_x_4(); void SRE_absolute_x_5(); void SRE_absolute_x_6();
-void SRE_absolute_y(); void SRE_absolute_y_2(); void SRE_absolute_y_3(); void SRE_absolute_y_4(); void SRE_absolute_y_5(); void SRE_absolute_y_6();
-void SRE_indirect_x(); void SRE_indirect_x_2(); void SRE_indirect_x_3(); void SRE_indirect_x_4(); void SRE_indirect_x_5(); void SRE_indirect_x_6(); void SRE_indirect_x_7();
-void SRE_indirect_y(); void SRE_indirect_y_2(); void SRE_indirect_y_3(); void SRE_indirect_y_4(); void SRE_indirect_y_5(); void SRE_indirect_y_6(); void SRE_indirect_y_7();
-
-void TAS_absolute_y(); void TAS_absolute_y_2(); void TAS_absolute_y_3(); void TAS_absolute_y_4(); 
-
-
 

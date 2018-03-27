@@ -198,14 +198,6 @@ private:
 	//! @brief    Current error state
 	ErrorState errorState;
     
-	/*! @brief    Next function to be executed
-	 *  @details  Each function performs the actions of a single cycle 
-     */
-	void (CPU::*next)(void);
-	 
-	//! @brief    Callback function array pointing to the execution function of each instruction
-	void (CPU::*actionFunc[256])(void);
-	
 	//! @brief    Breakpoint tag for each memory cell
 	uint8_t breakpoint[65536];
 	
@@ -233,15 +225,6 @@ public:
 
 	//! @brief    Restores the initial state.
 	void reset();
-
-    //! @brief    Returns the size of the internal state.
-    size_t stateSize();
-
-	//! @brief    Reads the internal state from a buffer.
-	void loadFromBuffer(uint8_t **buffer);
-	
-	//! @brief    Writes the internal state into a buffer.
-	void saveToBuffer(uint8_t **buffer);	
 	
 	//! @brief    Prints debugging information.
 	void dumpState();	
@@ -352,7 +335,7 @@ public:
     void setPC(uint16_t pc) { PC = pc; }
     
 	//! @brief    Writes value to the freezend program counter.
-    void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = &CPU::fetch;}
+    void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = fetch;}
     
 	//! @brief    Changes low byte of the program counter only.
     void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
@@ -550,7 +533,7 @@ public:
 	char *disassemble();
 				
 	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
-    bool atBeginningOfNewCommand() { return next == &CPU::fetch; }
+    bool atBeginningOfNewCommand() { return next == fetch; }
 	
     
     //
@@ -561,7 +544,8 @@ public:
 	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
      */
     bool executeOneCycle();
-
+    void executeMicroInstruction();
+    
 	//! @brief    Returns the current error state.
     ErrorState getErrorState() { return errorState; }
     
