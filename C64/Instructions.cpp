@@ -146,8 +146,8 @@ CPU::registerCallback(uint8_t opcode, const char *mnc,
 void 
 CPU::registerIllegalInstructions()
 {
-	registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_indirect_y);
-	registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_absolute_y);
+	registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
+	registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);
 
 	registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, ALR_immediate);
 
@@ -159,30 +159,30 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, ARR_immediate);
 	registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, AXS_immediate);
 
-	registerCallback(0xC7, "DCP*", ADDR_ZERO_PAGE, DCP_zero_page);
-	registerCallback(0xD7, "DCP*", ADDR_ZERO_PAGE_X, DCP_zero_page_x);
-	registerCallback(0xC3, "DCP*", ADDR_INDIRECT_X, DCP_indirect_x);
-	registerCallback(0xD3, "DCP*", ADDR_INDIRECT_Y, DCP_indirect_y);
-	registerCallback(0xCF, "DCP*", ADDR_ABSOLUTE, DCP_absolute);
-	registerCallback(0xDF, "DCP*", ADDR_ABSOLUTE_X, DCP_absolute_x);
-	registerCallback(0xDB, "DCP*", ADDR_ABSOLUTE_Y, DCP_absolute_y);
+	registerCallback(0xC7, "DCP*", ADDR_ZERO_PAGE, DCP_zpg);
+	registerCallback(0xD7, "DCP*", ADDR_ZERO_PAGE_X, DCP_zpg_x);
+	registerCallback(0xC3, "DCP*", ADDR_INDIRECT_X, DCP_ind_x);
+	registerCallback(0xD3, "DCP*", ADDR_INDIRECT_Y, DCP_ind_y);
+	registerCallback(0xCF, "DCP*", ADDR_ABSOLUTE, DCP_abs);
+	registerCallback(0xDF, "DCP*", ADDR_ABSOLUTE_X, DCP_abs_x);
+	registerCallback(0xDB, "DCP*", ADDR_ABSOLUTE_Y, DCP_abs_y);
 
-	registerCallback(0xE7, "ISC*", ADDR_ZERO_PAGE, ISC_zero_page);
-	registerCallback(0xF7, "ISC*", ADDR_ZERO_PAGE_X, ISC_zero_page_x);
-	registerCallback(0xE3, "ISC*", ADDR_INDIRECT_X, ISC_indirect_x);
-	registerCallback(0xF3, "ISC*", ADDR_INDIRECT_Y, ISC_indirect_y);
-	registerCallback(0xEF, "ISC*", ADDR_ABSOLUTE, ISC_absolute);
-	registerCallback(0xFF, "ISC*", ADDR_ABSOLUTE_X, ISC_absolute_x);
-	registerCallback(0xFB, "ISC*", ADDR_ABSOLUTE_Y, ISC_absolute_y);
+	registerCallback(0xE7, "ISC*", ADDR_ZERO_PAGE, ISC_zpg);
+	registerCallback(0xF7, "ISC*", ADDR_ZERO_PAGE_X, ISC_zpg_x);
+	registerCallback(0xE3, "ISC*", ADDR_INDIRECT_X, ISC_ind_x);
+	registerCallback(0xF3, "ISC*", ADDR_INDIRECT_Y, ISC_ind_y);
+	registerCallback(0xEF, "ISC*", ADDR_ABSOLUTE, ISC_abs);
+	registerCallback(0xFF, "ISC*", ADDR_ABSOLUTE_X, ISC_abs_x);
+	registerCallback(0xFB, "ISC*", ADDR_ABSOLUTE_Y, ISC_abs_y);
 
-	registerCallback(0xBB, "LAS*", ADDR_ABSOLUTE_Y, LAS_absolute_y);
+	registerCallback(0xBB, "LAS*", ADDR_ABSOLUTE_Y, LAS_abs_y);
 
-	registerCallback(0xA7, "LAX*", ADDR_ZERO_PAGE, LAX_zero_page);
-	registerCallback(0xB7, "LAX*", ADDR_ZERO_PAGE_Y, LAX_zero_page_y);
-	registerCallback(0xA3, "LAX*", ADDR_INDIRECT_X, LAX_indirect_x);
-	registerCallback(0xB3, "LAX*", ADDR_INDIRECT_Y, LAX_indirect_y);
-	registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, LAX_absolute);
-	registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, LAX_absolute_y);
+	registerCallback(0xA7, "LAX*", ADDR_ZERO_PAGE, LAX_zpg);
+	registerCallback(0xB7, "LAX*", ADDR_ZERO_PAGE_Y, LAX_zpg_y);
+	registerCallback(0xA3, "LAX*", ADDR_INDIRECT_X, LAX_ind_x);
+	registerCallback(0xB3, "LAX*", ADDR_INDIRECT_Y, LAX_ind_y);
+	registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, LAX_abs);
+	registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, LAX_abs_y);
 
 	registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, LXA_immediate);
 
@@ -197,66 +197,66 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x7A, "NOP*", ADDR_IMPLIED, NOP);
 	registerCallback(0xDA, "NOP*", ADDR_IMPLIED, NOP);
 	registerCallback(0xFA, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0x04, "NOP*", ADDR_ZERO_PAGE, NOP_zero_page);
-	registerCallback(0x44, "NOP*", ADDR_ZERO_PAGE, NOP_zero_page);
-	registerCallback(0x64, "NOP*", ADDR_ZERO_PAGE, NOP_zero_page);
-	registerCallback(0x0C, "NOP*", ADDR_ABSOLUTE, NOP_absolute);
-	registerCallback(0x14, "NOP*", ADDR_ZERO_PAGE_X, NOP_zero_page_x);
-	registerCallback(0x34, "NOP*", ADDR_ZERO_PAGE_X, NOP_zero_page_x);
-	registerCallback(0x54, "NOP*", ADDR_ZERO_PAGE_X, NOP_zero_page_x);
-	registerCallback(0x74, "NOP*", ADDR_ZERO_PAGE_X, NOP_zero_page_x);
-	registerCallback(0xD4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zero_page_x);
-	registerCallback(0xF4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zero_page_x);
-	registerCallback(0x1C, "NOP*", ADDR_ABSOLUTE_X, NOP_absolute_x);
-	registerCallback(0x3C, "NOP*", ADDR_ABSOLUTE_X, NOP_absolute_x);
-	registerCallback(0x5C, "NOP*", ADDR_ABSOLUTE_X, NOP_absolute_x);
-	registerCallback(0x7C, "NOP*", ADDR_ABSOLUTE_X, NOP_absolute_x);
-	registerCallback(0xDC, "NOP*", ADDR_ABSOLUTE_X, NOP_absolute_x);
-	registerCallback(0xFC, "NOP*", ADDR_ABSOLUTE_X, NOP_absolute_x);
+	registerCallback(0x04, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
+	registerCallback(0x44, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
+	registerCallback(0x64, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
+	registerCallback(0x0C, "NOP*", ADDR_ABSOLUTE, NOP_abs);
+	registerCallback(0x14, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+	registerCallback(0x34, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+	registerCallback(0x54, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+	registerCallback(0x74, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+	registerCallback(0xD4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+	registerCallback(0xF4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+	registerCallback(0x1C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+	registerCallback(0x3C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+	registerCallback(0x5C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+	registerCallback(0x7C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+	registerCallback(0xDC, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+	registerCallback(0xFC, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
 
-	registerCallback(0x27, "RLA*", ADDR_ZERO_PAGE, RLA_zero_page);
-	registerCallback(0x37, "RLA*", ADDR_ZERO_PAGE_X, RLA_zero_page_x);
-	registerCallback(0x23, "RLA*", ADDR_INDIRECT_X, RLA_indirect_x);
-	registerCallback(0x33, "RLA*", ADDR_INDIRECT_Y, RLA_indirect_y);
-	registerCallback(0x2F, "RLA*", ADDR_ABSOLUTE, RLA_absolute);
-	registerCallback(0x3F, "RLA*", ADDR_ABSOLUTE_X, RLA_absolute_x);
-	registerCallback(0x3B, "RLA*", ADDR_ABSOLUTE_Y, RLA_absolute_y);
+	registerCallback(0x27, "RLA*", ADDR_ZERO_PAGE, RLA_zpg);
+	registerCallback(0x37, "RLA*", ADDR_ZERO_PAGE_X, RLA_zpg_x);
+	registerCallback(0x23, "RLA*", ADDR_INDIRECT_X, RLA_ind_x);
+	registerCallback(0x33, "RLA*", ADDR_INDIRECT_Y, RLA_ind_y);
+	registerCallback(0x2F, "RLA*", ADDR_ABSOLUTE, RLA_abs);
+	registerCallback(0x3F, "RLA*", ADDR_ABSOLUTE_X, RLA_abs_x);
+	registerCallback(0x3B, "RLA*", ADDR_ABSOLUTE_Y, RLA_abs_y);
 
-	registerCallback(0x67, "RRA*", ADDR_ZERO_PAGE, RRA_zero_page);
-	registerCallback(0x77, "RRA*", ADDR_ZERO_PAGE_X, RRA_zero_page_x);
-	registerCallback(0x63, "RRA*", ADDR_INDIRECT_X, RRA_indirect_x);
-	registerCallback(0x73, "RRA*", ADDR_INDIRECT_Y, RRA_indirect_y);
-	registerCallback(0x6F, "RRA*", ADDR_ABSOLUTE, RRA_absolute);
-	registerCallback(0x7F, "RRA*", ADDR_ABSOLUTE_X, RRA_absolute_x);
-	registerCallback(0x7B, "RRA*", ADDR_ABSOLUTE_Y, RRA_absolute_y);
+	registerCallback(0x67, "RRA*", ADDR_ZERO_PAGE, RRA_zpg);
+	registerCallback(0x77, "RRA*", ADDR_ZERO_PAGE_X, RRA_zpg_x);
+	registerCallback(0x63, "RRA*", ADDR_INDIRECT_X, RRA_ind_x);
+	registerCallback(0x73, "RRA*", ADDR_INDIRECT_Y, RRA_ind_y);
+	registerCallback(0x6F, "RRA*", ADDR_ABSOLUTE, RRA_abs);
+	registerCallback(0x7F, "RRA*", ADDR_ABSOLUTE_X, RRA_abs_x);
+	registerCallback(0x7B, "RRA*", ADDR_ABSOLUTE_Y, RRA_abs_y);
 
-	registerCallback(0x87, "SAX*", ADDR_ZERO_PAGE, SAX_zero_page);
-	registerCallback(0x97, "SAX*", ADDR_ZERO_PAGE_Y, SAX_zero_page_y);
-	registerCallback(0x83, "SAX*", ADDR_INDIRECT_X, SAX_indirect_x);
-	registerCallback(0x8F, "SAX*", ADDR_ABSOLUTE, SAX_absolute);
+	registerCallback(0x87, "SAX*", ADDR_ZERO_PAGE, SAX_zpg);
+	registerCallback(0x97, "SAX*", ADDR_ZERO_PAGE_Y, SAX_zpg_y);
+	registerCallback(0x83, "SAX*", ADDR_INDIRECT_X, SAX_ind_x);
+	registerCallback(0x8F, "SAX*", ADDR_ABSOLUTE, SAX_abs);
 
 	registerCallback(0xEB, "SBC*", ADDR_IMMEDIATE, SBC_immediate);
 
-	registerCallback(0x9E, "SHX*", ADDR_ABSOLUTE_Y, SHX_absolute_y);
-	registerCallback(0x9C, "SHY*", ADDR_ABSOLUTE_X, SHY_absolute_x);
+	registerCallback(0x9E, "SHX*", ADDR_ABSOLUTE_Y, SHX_abs_y);
+	registerCallback(0x9C, "SHY*", ADDR_ABSOLUTE_X, SHY_abs_x);
 
-	registerCallback(0x07, "SLO*", ADDR_ZERO_PAGE, SLO_zero_page);
-	registerCallback(0x17, "SLO*", ADDR_ZERO_PAGE_X, SLO_zero_page_x);
-	registerCallback(0x03, "SLO*", ADDR_INDIRECT_X, SLO_indirect_x);
-	registerCallback(0x13, "SLO*", ADDR_INDIRECT_Y, SLO_indirect_y);
-	registerCallback(0x0F, "SLO*", ADDR_ABSOLUTE, SLO_absolute);
-	registerCallback(0x1F, "SLO*", ADDR_ABSOLUTE_X, SLO_absolute_x);
-	registerCallback(0x1B, "SLO*", ADDR_ABSOLUTE_Y, SLO_absolute_y);
+	registerCallback(0x07, "SLO*", ADDR_ZERO_PAGE, SLO_zpg);
+	registerCallback(0x17, "SLO*", ADDR_ZERO_PAGE_X, SLO_zpg_x);
+	registerCallback(0x03, "SLO*", ADDR_INDIRECT_X, SLO_ind_x);
+	registerCallback(0x13, "SLO*", ADDR_INDIRECT_Y, SLO_ind_y);
+	registerCallback(0x0F, "SLO*", ADDR_ABSOLUTE, SLO_abs);
+	registerCallback(0x1F, "SLO*", ADDR_ABSOLUTE_X, SLO_abs_x);
+	registerCallback(0x1B, "SLO*", ADDR_ABSOLUTE_Y, SLO_abs_y);
 
-	registerCallback(0x47, "SRE*", ADDR_ZERO_PAGE, SRE_zero_page);
-	registerCallback(0x57, "SRE*", ADDR_ZERO_PAGE_X, SRE_zero_page_x);
-	registerCallback(0x43, "SRE*", ADDR_INDIRECT_X, SRE_indirect_x);
-	registerCallback(0x53, "SRE*", ADDR_INDIRECT_Y, SRE_indirect_y);
-	registerCallback(0x4F, "SRE*", ADDR_ABSOLUTE, SRE_absolute);
-	registerCallback(0x5F, "SRE*", ADDR_ABSOLUTE_X, SRE_absolute_x);
-	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, SRE_absolute_y);
+	registerCallback(0x47, "SRE*", ADDR_ZERO_PAGE, SRE_zpg);
+	registerCallback(0x57, "SRE*", ADDR_ZERO_PAGE_X, SRE_zpg_x);
+	registerCallback(0x43, "SRE*", ADDR_INDIRECT_X, SRE_ind_x);
+	registerCallback(0x53, "SRE*", ADDR_INDIRECT_Y, SRE_ind_y);
+	registerCallback(0x4F, "SRE*", ADDR_ABSOLUTE, SRE_abs);
+	registerCallback(0x5F, "SRE*", ADDR_ABSOLUTE_X, SRE_abs_x);
+	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, SRE_abs_y);
 	
-	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_absolute_y);
+	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
 	
@@ -266,35 +266,35 @@ void CPU::registerInstructions()
 		registerCallback(i, JAM);
 
 	registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_immediate);
-	registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zero_page);
-	registerCallback(0x75, "ADC", ADDR_ZERO_PAGE_X, ADC_zero_page_x);
-	registerCallback(0x6D, "ADC", ADDR_ABSOLUTE, ADC_absolute);
-	registerCallback(0x7D, "ADC", ADDR_ABSOLUTE_X, ADC_absolute_x);
-	registerCallback(0x79, "ADC", ADDR_ABSOLUTE_Y, ADC_absolute_y);
-	registerCallback(0x61, "ADC", ADDR_INDIRECT_X, ADC_indirect_x);
-	registerCallback(0x71, "ADC", ADDR_INDIRECT_Y, ADC_indirect_y);
+	registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zpg);
+	registerCallback(0x75, "ADC", ADDR_ZERO_PAGE_X, ADC_zpg_x);
+	registerCallback(0x6D, "ADC", ADDR_ABSOLUTE, ADC_abs);
+	registerCallback(0x7D, "ADC", ADDR_ABSOLUTE_X, ADC_abs_x);
+	registerCallback(0x79, "ADC", ADDR_ABSOLUTE_Y, ADC_abs_y);
+	registerCallback(0x61, "ADC", ADDR_INDIRECT_X, ADC_ind_x);
+	registerCallback(0x71, "ADC", ADDR_INDIRECT_Y, ADC_ind_y);
 
 	registerCallback(0x29, "AND", ADDR_IMMEDIATE, AND_immediate);
-	registerCallback(0x25, "AND", ADDR_ZERO_PAGE, AND_zero_page);
-	registerCallback(0x35, "AND", ADDR_ZERO_PAGE_X, AND_zero_page_x);
-	registerCallback(0x2D, "AND", ADDR_ABSOLUTE, AND_absolute);
-	registerCallback(0x3D, "AND", ADDR_ABSOLUTE_X, AND_absolute_x);
-	registerCallback(0x39, "AND", ADDR_ABSOLUTE_Y, AND_absolute_y);
-	registerCallback(0x21, "AND", ADDR_INDIRECT_X, AND_indirect_x);
-	registerCallback(0x31, "AND", ADDR_INDIRECT_Y, AND_indirect_y);
+	registerCallback(0x25, "AND", ADDR_ZERO_PAGE, AND_zpg);
+	registerCallback(0x35, "AND", ADDR_ZERO_PAGE_X, AND_zpg_x);
+	registerCallback(0x2D, "AND", ADDR_ABSOLUTE, AND_abs);
+	registerCallback(0x3D, "AND", ADDR_ABSOLUTE_X, AND_abs_x);
+	registerCallback(0x39, "AND", ADDR_ABSOLUTE_Y, AND_abs_y);
+	registerCallback(0x21, "AND", ADDR_INDIRECT_X, AND_ind_x);
+	registerCallback(0x31, "AND", ADDR_INDIRECT_Y, AND_ind_y);
 	
 	registerCallback(0x0A, "ASL", ADDR_ACCUMULATOR, ASL_accumulator);
-	registerCallback(0x06, "ASL", ADDR_ZERO_PAGE, ASL_zero_page);
-	registerCallback(0x16, "ASL", ADDR_ZERO_PAGE_X, ASL_zero_page_x);
-	registerCallback(0x0E, "ASL", ADDR_ABSOLUTE, ASL_absolute);
-	registerCallback(0x1E, "ASL", ADDR_ABSOLUTE_X, ASL_absolute_x);
+	registerCallback(0x06, "ASL", ADDR_ZERO_PAGE, ASL_zpg);
+	registerCallback(0x16, "ASL", ADDR_ZERO_PAGE_X, ASL_zpg_x);
+	registerCallback(0x0E, "ASL", ADDR_ABSOLUTE, ASL_abs);
+	registerCallback(0x1E, "ASL", ADDR_ABSOLUTE_X, ASL_abs_x);
 	
 	registerCallback(0x90, "BCC", ADDR_RELATIVE, BCC_relative);
 	registerCallback(0xB0, "BCS", ADDR_RELATIVE, BCS_relative);
 	registerCallback(0xF0, "BEQ", ADDR_RELATIVE, BEQ_relative);
 
-	registerCallback(0x24, "BIT", ADDR_ZERO_PAGE, BIT_zero_page);
-	registerCallback(0x2C, "BIT", ADDR_ABSOLUTE, BIT_absolute);
+	registerCallback(0x24, "BIT", ADDR_ZERO_PAGE, BIT_zpg);
+	registerCallback(0x2C, "BIT", ADDR_ABSOLUTE, BIT_abs);
 	
 	registerCallback(0x30, "BMI", ADDR_RELATIVE, BMI_relative);
 	registerCallback(0xD0, "BNE", ADDR_RELATIVE, BNE_relative);
@@ -309,89 +309,89 @@ void CPU::registerInstructions()
 	registerCallback(0xB8, "CLV", ADDR_IMPLIED, CLV);
 
 	registerCallback(0xC9, "CMP", ADDR_IMMEDIATE, CMP_immediate);
-	registerCallback(0xC5, "CMP", ADDR_ZERO_PAGE, CMP_zero_page);
-	registerCallback(0xD5, "CMP", ADDR_ZERO_PAGE_X, CMP_zero_page_x);
-	registerCallback(0xCD, "CMP", ADDR_ABSOLUTE, CMP_absolute);
-	registerCallback(0xDD, "CMP", ADDR_ABSOLUTE_X, CMP_absolute_x);
-	registerCallback(0xD9, "CMP", ADDR_ABSOLUTE_Y, CMP_absolute_y);
-	registerCallback(0xC1, "CMP", ADDR_INDIRECT_X, CMP_indirect_x);
-	registerCallback(0xD1, "CMP", ADDR_INDIRECT_Y, CMP_indirect_y);
+	registerCallback(0xC5, "CMP", ADDR_ZERO_PAGE, CMP_zpg);
+	registerCallback(0xD5, "CMP", ADDR_ZERO_PAGE_X, CMP_zpg_x);
+	registerCallback(0xCD, "CMP", ADDR_ABSOLUTE, CMP_abs);
+	registerCallback(0xDD, "CMP", ADDR_ABSOLUTE_X, CMP_abs_x);
+	registerCallback(0xD9, "CMP", ADDR_ABSOLUTE_Y, CMP_abs_y);
+	registerCallback(0xC1, "CMP", ADDR_INDIRECT_X, CMP_ind_x);
+	registerCallback(0xD1, "CMP", ADDR_INDIRECT_Y, CMP_ind_y);
 
 	registerCallback(0xE0, "CPX", ADDR_IMMEDIATE, CPX_immediate);
-	registerCallback(0xE4, "CPX", ADDR_ZERO_PAGE, CPX_zero_page);
-	registerCallback(0xEC, "CPX", ADDR_ABSOLUTE, CPX_absolute);
+	registerCallback(0xE4, "CPX", ADDR_ZERO_PAGE, CPX_zpg);
+	registerCallback(0xEC, "CPX", ADDR_ABSOLUTE, CPX_abs);
 
 	registerCallback(0xC0, "CPY", ADDR_IMMEDIATE, CPY_immediate);
-	registerCallback(0xC4, "CPY", ADDR_ZERO_PAGE, CPY_zero_page);
-	registerCallback(0xCC, "CPY", ADDR_ABSOLUTE, CPY_absolute);
+	registerCallback(0xC4, "CPY", ADDR_ZERO_PAGE, CPY_zpg);
+	registerCallback(0xCC, "CPY", ADDR_ABSOLUTE, CPY_abs);
 
-	registerCallback(0xC6, "DEC", ADDR_ZERO_PAGE, DEC_zero_page);
-	registerCallback(0xD6, "DEC", ADDR_ZERO_PAGE_X, DEC_zero_page_x);
-	registerCallback(0xCE, "DEC", ADDR_ABSOLUTE, DEC_absolute);
-	registerCallback(0xDE, "DEC", ADDR_ABSOLUTE_X, DEC_absolute_x);
+	registerCallback(0xC6, "DEC", ADDR_ZERO_PAGE, DEC_zpg);
+	registerCallback(0xD6, "DEC", ADDR_ZERO_PAGE_X, DEC_zpg_x);
+	registerCallback(0xCE, "DEC", ADDR_ABSOLUTE, DEC_abs);
+	registerCallback(0xDE, "DEC", ADDR_ABSOLUTE_X, DEC_abs_x);
 
 	registerCallback(0xCA, "DEX", ADDR_IMPLIED, DEX);
 	registerCallback(0x88, "DEY", ADDR_IMPLIED, DEY);
 	
 	registerCallback(0x49, "EOR", ADDR_IMMEDIATE, EOR_immediate);
-	registerCallback(0x45, "EOR", ADDR_ZERO_PAGE, EOR_zero_page);
-	registerCallback(0x55, "EOR", ADDR_ZERO_PAGE_X, EOR_zero_page_x);
-	registerCallback(0x4D, "EOR", ADDR_ABSOLUTE, EOR_absolute);
-	registerCallback(0x5D, "EOR", ADDR_ABSOLUTE_X, EOR_absolute_x);
-	registerCallback(0x59, "EOR", ADDR_ABSOLUTE_Y, EOR_absolute_y);
-	registerCallback(0x41, "EOR", ADDR_INDIRECT_X, EOR_indirect_x);
-	registerCallback(0x51, "EOR", ADDR_INDIRECT_Y, EOR_indirect_y);
+	registerCallback(0x45, "EOR", ADDR_ZERO_PAGE, EOR_zpg);
+	registerCallback(0x55, "EOR", ADDR_ZERO_PAGE_X, EOR_zpg_x);
+	registerCallback(0x4D, "EOR", ADDR_ABSOLUTE, EOR_abs);
+	registerCallback(0x5D, "EOR", ADDR_ABSOLUTE_X, EOR_abs_x);
+	registerCallback(0x59, "EOR", ADDR_ABSOLUTE_Y, EOR_abs_y);
+	registerCallback(0x41, "EOR", ADDR_INDIRECT_X, EOR_ind_x);
+	registerCallback(0x51, "EOR", ADDR_INDIRECT_Y, EOR_ind_y);
 
-	registerCallback(0xE6, "INC", ADDR_ZERO_PAGE, INC_zero_page);
-	registerCallback(0xF6, "INC", ADDR_ZERO_PAGE_X, INC_zero_page_x);
-	registerCallback(0xEE, "INC", ADDR_ABSOLUTE, INC_absolute);
-	registerCallback(0xFE, "INC", ADDR_ABSOLUTE_X, INC_absolute_x);
+	registerCallback(0xE6, "INC", ADDR_ZERO_PAGE, INC_zpg);
+	registerCallback(0xF6, "INC", ADDR_ZERO_PAGE_X, INC_zpg_x);
+	registerCallback(0xEE, "INC", ADDR_ABSOLUTE, INC_abs);
+	registerCallback(0xFE, "INC", ADDR_ABSOLUTE_X, INC_abs_x);
 	
 	registerCallback(0xE8, "INX", ADDR_IMPLIED, INX);
 	registerCallback(0xC8, "INY", ADDR_IMPLIED, INY);
 
-	registerCallback(0x4C, "JMP", ADDR_DIRECT, JMP_absolute);
-	registerCallback(0x6C, "JMP", ADDR_INDIRECT, JMP_absolute_indirect);
+	registerCallback(0x4C, "JMP", ADDR_DIRECT, JMP_abs);
+	registerCallback(0x6C, "JMP", ADDR_INDIRECT, JMP_abs_indirect);
 
 	registerCallback(0x20, "JSR", ADDR_DIRECT, JSR);
 
 	registerCallback(0xA9, "LDA", ADDR_IMMEDIATE, LDA_immediate);
-	registerCallback(0xA5, "LDA", ADDR_ZERO_PAGE, LDA_zero_page);
-	registerCallback(0xB5, "LDA", ADDR_ZERO_PAGE_X, LDA_zero_page_x);
-	registerCallback(0xAD, "LDA", ADDR_ABSOLUTE, LDA_absolute);
-	registerCallback(0xBD, "LDA", ADDR_ABSOLUTE_X, LDA_absolute_x);
-	registerCallback(0xB9, "LDA", ADDR_ABSOLUTE_Y, LDA_absolute_y);
-	registerCallback(0xA1, "LDA", ADDR_INDIRECT_X, LDA_indirect_x);
-	registerCallback(0xB1, "LDA", ADDR_INDIRECT_Y, LDA_indirect_y);
+	registerCallback(0xA5, "LDA", ADDR_ZERO_PAGE, LDA_zpg);
+	registerCallback(0xB5, "LDA", ADDR_ZERO_PAGE_X, LDA_zpg_x);
+	registerCallback(0xAD, "LDA", ADDR_ABSOLUTE, LDA_abs);
+	registerCallback(0xBD, "LDA", ADDR_ABSOLUTE_X, LDA_abs_x);
+	registerCallback(0xB9, "LDA", ADDR_ABSOLUTE_Y, LDA_abs_y);
+	registerCallback(0xA1, "LDA", ADDR_INDIRECT_X, LDA_ind_x);
+	registerCallback(0xB1, "LDA", ADDR_INDIRECT_Y, LDA_ind_y);
 
 	registerCallback(0xA2, "LDX", ADDR_IMMEDIATE, LDX_immediate);
-	registerCallback(0xA6, "LDX", ADDR_ZERO_PAGE, LDX_zero_page);
-	registerCallback(0xB6, "LDX", ADDR_ZERO_PAGE_Y,LDX_zero_page_y);
-	registerCallback(0xAE, "LDX", ADDR_ABSOLUTE, LDX_absolute);
-	registerCallback(0xBE, "LDX", ADDR_ABSOLUTE_Y, LDX_absolute_y);
+	registerCallback(0xA6, "LDX", ADDR_ZERO_PAGE, LDX_zpg);
+	registerCallback(0xB6, "LDX", ADDR_ZERO_PAGE_Y,LDX_zpg_y);
+	registerCallback(0xAE, "LDX", ADDR_ABSOLUTE, LDX_abs);
+	registerCallback(0xBE, "LDX", ADDR_ABSOLUTE_Y, LDX_abs_y);
 
 	registerCallback(0xA0, "LDY", ADDR_IMMEDIATE, LDY_immediate);
-	registerCallback(0xA4, "LDY", ADDR_ZERO_PAGE, LDY_zero_page);
-	registerCallback(0xB4, "LDY", ADDR_ZERO_PAGE_X, LDY_zero_page_x);
-	registerCallback(0xAC, "LDY", ADDR_ABSOLUTE, LDY_absolute);
-	registerCallback(0xBC, "LDY", ADDR_ABSOLUTE_X, LDY_absolute_x);
+	registerCallback(0xA4, "LDY", ADDR_ZERO_PAGE, LDY_zpg);
+	registerCallback(0xB4, "LDY", ADDR_ZERO_PAGE_X, LDY_zpg_x);
+	registerCallback(0xAC, "LDY", ADDR_ABSOLUTE, LDY_abs);
+	registerCallback(0xBC, "LDY", ADDR_ABSOLUTE_X, LDY_abs_x);
 	
 	registerCallback(0x4A, "LSR", ADDR_ACCUMULATOR, LSR_accumulator);
-	registerCallback(0x46, "LSR", ADDR_ZERO_PAGE, LSR_zero_page);
-	registerCallback(0x56, "LSR", ADDR_ZERO_PAGE_X, LSR_zero_page_x);
-	registerCallback(0x4E, "LSR", ADDR_ABSOLUTE, LSR_absolute);
-	registerCallback(0x5E, "LSR", ADDR_ABSOLUTE_X, LSR_absolute_x);
+	registerCallback(0x46, "LSR", ADDR_ZERO_PAGE, LSR_zpg);
+	registerCallback(0x56, "LSR", ADDR_ZERO_PAGE_X, LSR_zpg_x);
+	registerCallback(0x4E, "LSR", ADDR_ABSOLUTE, LSR_abs);
+	registerCallback(0x5E, "LSR", ADDR_ABSOLUTE_X, LSR_abs_x);
 
 	registerCallback(0xEA, "NOP", ADDR_IMPLIED, NOP);
 	
 	registerCallback(0x09, "ORA", ADDR_IMMEDIATE, ORA_immediate);
-	registerCallback(0x05, "ORA", ADDR_ZERO_PAGE, ORA_zero_page);
-	registerCallback(0x15, "ORA", ADDR_ZERO_PAGE_X, ORA_zero_page_x);
-	registerCallback(0x0D, "ORA", ADDR_ABSOLUTE, ORA_absolute);
-	registerCallback(0x1D, "ORA", ADDR_ABSOLUTE_X, ORA_absolute_x);
-	registerCallback(0x19, "ORA", ADDR_ABSOLUTE_Y, ORA_absolute_y);
-	registerCallback(0x01, "ORA", ADDR_INDIRECT_X, ORA_indirect_x);
-	registerCallback(0x11, "ORA", ADDR_INDIRECT_Y, ORA_indirect_y);
+	registerCallback(0x05, "ORA", ADDR_ZERO_PAGE, ORA_zpg);
+	registerCallback(0x15, "ORA", ADDR_ZERO_PAGE_X, ORA_zpg_x);
+	registerCallback(0x0D, "ORA", ADDR_ABSOLUTE, ORA_abs);
+	registerCallback(0x1D, "ORA", ADDR_ABSOLUTE_X, ORA_abs_x);
+	registerCallback(0x19, "ORA", ADDR_ABSOLUTE_Y, ORA_abs_y);
+	registerCallback(0x01, "ORA", ADDR_INDIRECT_X, ORA_ind_x);
+	registerCallback(0x11, "ORA", ADDR_INDIRECT_Y, ORA_ind_y);
 
 	registerCallback(0x48, "PHA", ADDR_IMPLIED, PHA);
 	registerCallback(0x08, "PHP", ADDR_IMPLIED, PHP);
@@ -399,48 +399,48 @@ void CPU::registerInstructions()
 	registerCallback(0x28, "PLP", ADDR_IMPLIED, PLP);
 
 	registerCallback(0x2A, "ROL", ADDR_ACCUMULATOR, ROL_accumulator);
-	registerCallback(0x26, "ROL", ADDR_ZERO_PAGE, ROL_zero_page);
-	registerCallback(0x36, "ROL", ADDR_ZERO_PAGE_X, ROL_zero_page_x);
-	registerCallback(0x2E, "ROL", ADDR_ABSOLUTE, ROL_absolute);
-	registerCallback(0x3E, "ROL", ADDR_ABSOLUTE_X, ROL_absolute_x);
+	registerCallback(0x26, "ROL", ADDR_ZERO_PAGE, ROL_zpg);
+	registerCallback(0x36, "ROL", ADDR_ZERO_PAGE_X, ROL_zpg_x);
+	registerCallback(0x2E, "ROL", ADDR_ABSOLUTE, ROL_abs);
+	registerCallback(0x3E, "ROL", ADDR_ABSOLUTE_X, ROL_abs_x);
 
 	registerCallback(0x6A, "ROR", ADDR_ACCUMULATOR, ROR_accumulator);
-	registerCallback(0x66, "ROR", ADDR_ZERO_PAGE, ROR_zero_page);
-	registerCallback(0x76, "ROR", ADDR_ZERO_PAGE_X, ROR_zero_page_x);
-	registerCallback(0x6E, "ROR", ADDR_ABSOLUTE, ROR_absolute);
-	registerCallback(0x7E, "ROR", ADDR_ABSOLUTE_X, ROR_absolute_x);
+	registerCallback(0x66, "ROR", ADDR_ZERO_PAGE, ROR_zpg);
+	registerCallback(0x76, "ROR", ADDR_ZERO_PAGE_X, ROR_zpg_x);
+	registerCallback(0x6E, "ROR", ADDR_ABSOLUTE, ROR_abs);
+	registerCallback(0x7E, "ROR", ADDR_ABSOLUTE_X, ROR_abs_x);
 	
 	registerCallback(0x40, "RTI", ADDR_IMPLIED, RTI);
 	registerCallback(0x60, "RTS", ADDR_IMPLIED, RTS);
 
 	registerCallback(0xE9, "SBC", ADDR_IMMEDIATE, SBC_immediate);
-	registerCallback(0xE5, "SBC", ADDR_ZERO_PAGE, SBC_zero_page);
-	registerCallback(0xF5, "SBC", ADDR_ZERO_PAGE_X, SBC_zero_page_x);
-	registerCallback(0xED, "SBC", ADDR_ABSOLUTE, SBC_absolute);
-	registerCallback(0xFD, "SBC", ADDR_ABSOLUTE_X, SBC_absolute_x);
-	registerCallback(0xF9, "SBC", ADDR_ABSOLUTE_Y, SBC_absolute_y);
-	registerCallback(0xE1, "SBC", ADDR_INDIRECT_X, SBC_indirect_x);
-	registerCallback(0xF1, "SBC", ADDR_INDIRECT_Y, SBC_indirect_y);
+	registerCallback(0xE5, "SBC", ADDR_ZERO_PAGE, SBC_zpg);
+	registerCallback(0xF5, "SBC", ADDR_ZERO_PAGE_X, SBC_zpg_x);
+	registerCallback(0xED, "SBC", ADDR_ABSOLUTE, SBC_abs);
+	registerCallback(0xFD, "SBC", ADDR_ABSOLUTE_X, SBC_abs_x);
+	registerCallback(0xF9, "SBC", ADDR_ABSOLUTE_Y, SBC_abs_y);
+	registerCallback(0xE1, "SBC", ADDR_INDIRECT_X, SBC_ind_x);
+	registerCallback(0xF1, "SBC", ADDR_INDIRECT_Y, SBC_ind_y);
 
 	registerCallback(0x38, "SEC", ADDR_IMPLIED, SEC);
 	registerCallback(0xF8, "SED", ADDR_IMPLIED, SED);
 	registerCallback(0x78, "SEI", ADDR_IMPLIED, SEI);
 
-	registerCallback(0x85, "STA", ADDR_ZERO_PAGE, STA_zero_page);
-	registerCallback(0x95, "STA", ADDR_ZERO_PAGE_X, STA_zero_page_x);
-	registerCallback(0x8D, "STA", ADDR_ABSOLUTE, STA_absolute);
-	registerCallback(0x9D, "STA", ADDR_ABSOLUTE_X, STA_absolute_x);
-	registerCallback(0x99, "STA", ADDR_ABSOLUTE_Y, STA_absolute_y);
-	registerCallback(0x81, "STA", ADDR_INDIRECT_X, STA_indirect_x);
-	registerCallback(0x91, "STA", ADDR_INDIRECT_Y, STA_indirect_y);
+	registerCallback(0x85, "STA", ADDR_ZERO_PAGE, STA_zpg);
+	registerCallback(0x95, "STA", ADDR_ZERO_PAGE_X, STA_zpg_x);
+	registerCallback(0x8D, "STA", ADDR_ABSOLUTE, STA_abs);
+	registerCallback(0x9D, "STA", ADDR_ABSOLUTE_X, STA_abs_x);
+	registerCallback(0x99, "STA", ADDR_ABSOLUTE_Y, STA_abs_y);
+	registerCallback(0x81, "STA", ADDR_INDIRECT_X, STA_ind_x);
+	registerCallback(0x91, "STA", ADDR_INDIRECT_Y, STA_ind_y);
 
-	registerCallback(0x86, "STX", ADDR_ZERO_PAGE, STX_zero_page);
-	registerCallback(0x96, "STX", ADDR_ZERO_PAGE_Y, STX_zero_page_y);
-	registerCallback(0x8E, "STX", ADDR_ABSOLUTE, STX_absolute);
+	registerCallback(0x86, "STX", ADDR_ZERO_PAGE, STX_zpg);
+	registerCallback(0x96, "STX", ADDR_ZERO_PAGE_Y, STX_zpg_y);
+	registerCallback(0x8E, "STX", ADDR_ABSOLUTE, STX_abs);
 
-	registerCallback(0x84, "STY", ADDR_ZERO_PAGE, STY_zero_page);
-	registerCallback(0x94, "STY", ADDR_ZERO_PAGE_X, STY_zero_page_x);
-	registerCallback(0x8C, "STY", ADDR_ABSOLUTE, STY_absolute);
+	registerCallback(0x84, "STY", ADDR_ZERO_PAGE, STY_zpg);
+	registerCallback(0x94, "STY", ADDR_ZERO_PAGE_X, STY_zpg_x);
+	registerCallback(0x8C, "STY", ADDR_ABSOLUTE, STY_abs);
 
 	registerCallback(0xAA, "TAX", ADDR_IMPLIED, TAX);
 	registerCallback(0xA8, "TAY", ADDR_IMPLIED, TAY);
@@ -618,65 +618,65 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_zero_page:
+        case ADC_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ADC_zero_page_2:
+        case ADC_zpg_2:
             
             READ_FROM_ZERO_PAGE
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_zero_page_x:
+        case ADC_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ADC_zero_page_x_2:
+        case ADC_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case ADC_zero_page_x_3:
+        case ADC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             adc(data);
             DONE
 
             // -------------------------------------------------------------------------------
-        case ADC_absolute:
+        case ADC_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ADC_absolute_2:
+        case ADC_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case ADC_absolute_3:
+        case ADC_abs_3:
             
             READ_FROM_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_absolute_x:
+        case ADC_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ADC_absolute_x_2:
+        case ADC_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case ADC_absolute_x_3:
+        case ADC_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -687,25 +687,25 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case ADC_absolute_x_4:
+        case ADC_abs_x_4:
             
             READ_FROM_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_absolute_y:
+        case ADC_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ADC_absolute_y_2:
+        case ADC_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case ADC_absolute_y_3:
+        case ADC_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -716,58 +716,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case ADC_absolute_y_4:
+        case ADC_abs_y_4:
             
             READ_FROM_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_indirect_x:
+        case ADC_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ADC_indirect_x_2:
+        case ADC_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case ADC_indirect_x_3:
+        case ADC_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ADC_indirect_x_4:
+        case ADC_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case ADC_indirect_x_5:
+        case ADC_ind_x_5:
             
             READ_FROM_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_indirect_y:
+        case ADC_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ADC_indirect_y_2:
+        case ADC_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ADC_indirect_y_3:
+        case ADC_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y;
             CONTINUE
             
-        case ADC_indirect_y_4:
+        case ADC_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -778,7 +778,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case ADC_indirect_y_5:
+        case ADC_ind_y_5:
             
             READ_FROM_ADDRESS
             adc(data);
@@ -800,64 +800,64 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_absolute:
+        case AND_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case AND_absolute_2:
+        case AND_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case AND_absolute_3:
+        case AND_abs_3:
             READ_FROM_ADDRESS
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_zero_page:
+        case AND_zpg:
 
             FETCH_ADDR_LO
             CONTINUE
 
-        case AND_zero_page_2:
+        case AND_zpg_2:
 
             READ_FROM_ZERO_PAGE
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_zero_page_x:
+        case AND_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case AND_zero_page_x_2:
+        case AND_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case AND_zero_page_x_3:
+        case AND_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_absolute_x:
+        case AND_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case AND_absolute_x_2:
+        case AND_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case AND_absolute_x_3:
+        case AND_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -868,25 +868,25 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case AND_absolute_x_4:
+        case AND_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_absolute_y:
+        case AND_abs_y:
             
             FETCH_ADDR_LO;
             CONTINUE
             
-        case AND_absolute_y_2:
+        case AND_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case AND_absolute_y_3:
+        case AND_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -897,58 +897,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case AND_absolute_y_4:
+        case AND_abs_y_4:
         
             READ_FROM_ADDRESS
             loadA(A & data);
             DONE
         
         // -------------------------------------------------------------------------------
-        case AND_indirect_x:
+        case AND_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case AND_indirect_x_2:
+        case AND_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case AND_indirect_x_3:
+        case AND_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case AND_indirect_x_4:
+        case AND_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case AND_indirect_x_5:
+        case AND_ind_x_5:
             
             READ_FROM_ADDRESS
             loadA(A & data);
             DONE
             
         // -------------------------------------------------------------------------------
-        case AND_indirect_y:
+        case AND_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case AND_indirect_y_2:
+        case AND_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case AND_indirect_y_3:
+        case AND_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case AND_indirect_y_4:
+        case AND_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -959,7 +959,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case AND_indirect_y_5:
+        case AND_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A & data);
@@ -984,150 +984,150 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_zero_page:
+        case ASL_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ASL_zero_page_2:
+        case ASL_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ASL_zero_page_3:
+        case ASL_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_ASL
             CONTINUE
             
-        case ASL_zero_page_4:
+        case ASL_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_zero_page_x:
+        case ASL_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ASL_zero_page_x_2:
+        case ASL_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case ASL_zero_page_x_3:
+        case ASL_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ASL_zero_page_x_4:
+        case ASL_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ASL
             CONTINUE
             
-        case ASL_zero_page_x_5:
+        case ASL_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
             
         // -------------------------------------------------------------------------------
-        case ASL_absolute:
+        case ASL_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ASL_absolute_2:
+        case ASL_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case ASL_absolute_3:
+        case ASL_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ASL_absolute_4:
+        case ASL_abs_4:
             
             WRITE_TO_ADDRESS
             DO_ASL
             CONTINUE
             
-        case ASL_absolute_5:
+        case ASL_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_absolute_x:
+        case ASL_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ASL_absolute_x_2:
+        case ASL_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case ASL_absolute_x_3:
+        case ASL_abs_x_3:
             
             READ_FROM_ADDRESS;
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case ASL_absolute_x_4:
+        case ASL_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ASL_absolute_x_5:
+        case ASL_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_ASL
             CONTINUE
             
-        case ASL_absolute_x_6:
+        case ASL_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_indirect_x:
+        case ASL_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ASL_indirect_x_2:
+        case ASL_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case ASL_indirect_x_3:
+        case ASL_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ASL_indirect_x_4:
+        case ASL_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case ASL_indirect_x_5:
+        case ASL_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ASL_indirect_x_6:
+        case ASL_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ASL
             CONTINUE
             
-        case ASL_indirect_x_7:
+        case ASL_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
@@ -1255,12 +1255,12 @@ CPU::executeMicroInstruction()
         //              / / - - - /
         // -------------------------------------------------------------------------------
 
-        case BIT_zero_page:
+        case BIT_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case BIT_zero_page_2:
+        case BIT_zpg_2:
             
             READ_FROM_ZERO_PAGE
             setN(data & 128);
@@ -1269,17 +1269,17 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case BIT_absolute:
+        case BIT_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case BIT_absolute_2:
+        case BIT_abs_2:
             
             FETCH_ADDR_HI;
             CONTINUE
             
-        case BIT_absolute_3:
+        case BIT_abs_3:
             
             READ_FROM_ADDRESS
             setN(data & 128);
@@ -1634,65 +1634,65 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_absolute:
+        case CMP_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CMP_absolute_2:
+        case CMP_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case CMP_absolute_3:
+        case CMP_abs_3:
             
             READ_FROM_ADDRESS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_zero_page:
+        case CMP_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CMP_zero_page_2:
+        case CMP_zpg_2:
             
             READ_FROM_ZERO_PAGE
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_zero_page_x:
+        case CMP_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CMP_zero_page_x_2:
+        case CMP_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case CMP_zero_page_x_3:
+        case CMP_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_absolute_x:
+        case CMP_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CMP_absolute_x_2:
+        case CMP_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case CMP_absolute_x_3:
+        case CMP_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -1703,25 +1703,25 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case CMP_absolute_x_4:
+        case CMP_abs_x_4:
             
             READ_FROM_ADDRESS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_absolute_y:
+        case CMP_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CMP_absolute_y_2:
+        case CMP_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case CMP_absolute_y_3:
+        case CMP_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -1732,58 +1732,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case CMP_absolute_y_4:
+        case CMP_abs_y_4:
             
             READ_FROM_ADDRESS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_indirect_x:
+        case CMP_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case CMP_indirect_x_2:
+        case CMP_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case CMP_indirect_x_3:
+        case CMP_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case CMP_indirect_x_4:
+        case CMP_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case CMP_indirect_x_5:
+        case CMP_ind_x_5:
             
             READ_FROM_ADDRESS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_indirect_y:
+        case CMP_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case CMP_indirect_y_2:
+        case CMP_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case CMP_indirect_y_3:
+        case CMP_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case CMP_indirect_y_4:
+        case CMP_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -1794,7 +1794,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case CMP_indirect_y_5:
+        case CMP_ind_y_5:
             
             READ_FROM_ADDRESS
             cmp(A, data);
@@ -1816,27 +1816,27 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPX_zero_page:
+        case CPX_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CPX_zero_page_2:
+        case CPX_zpg_2:
             
             READ_FROM_ZERO_PAGE
             cmp(X, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPX_absolute:
+        case CPX_abs:
             FETCH_ADDR_LO
             CONTINUE
             
-        case CPX_absolute_2:
+        case CPX_abs_2:
             FETCH_ADDR_HI
             CONTINUE
             
-        case CPX_absolute_3:
+        case CPX_abs_3:
             READ_FROM_ADDRESS
             cmp(X, data);
             DONE
@@ -1857,29 +1857,29 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPY_zero_page:
+        case CPY_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CPY_zero_page_2:
+        case CPY_zpg_2:
             
             READ_FROM_ZERO_PAGE
             cmp(Y, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPY_absolute:
+        case CPY_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case CPY_absolute_2:
+        case CPY_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case CPY_absolute_3:
+        case CPY_abs_3:
             
             READ_FROM_ADDRESS
             cmp(Y, data);
@@ -1897,150 +1897,150 @@ CPU::executeMicroInstruction()
         #define DO_DEC data--;
 
         // -------------------------------------------------------------------------------
-        case DEC_zero_page:
+        case DEC_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DEC_zero_page_2:
+        case DEC_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case DEC_zero_page_3:
+        case DEC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_DEC
             CONTINUE
             
-        case DEC_zero_page_4:
+        case DEC_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_zero_page_x:
+        case DEC_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DEC_zero_page_x_2:
+        case DEC_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case DEC_zero_page_x_3:
+        case DEC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case DEC_zero_page_x_4:
+        case DEC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_DEC
             CONTINUE
             
-        case DEC_zero_page_x_5:
+        case DEC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_absolute:
+        case DEC_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DEC_absolute_2:
+        case DEC_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case DEC_absolute_3:
+        case DEC_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DEC_absolute_4:
+        case DEC_abs_4:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DEC_absolute_5:
+        case DEC_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_absolute_x:
+        case DEC_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DEC_absolute_x_2:
+        case DEC_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case DEC_absolute_x_3:
+        case DEC_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case DEC_absolute_x_4:
+        case DEC_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DEC_absolute_x_5:
+        case DEC_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DEC_absolute_x_6:
+        case DEC_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_indirect_x:
+        case DEC_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case DEC_indirect_x_2:
+        case DEC_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case DEC_indirect_x_3:
+        case DEC_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case DEC_indirect_x_4:
+        case DEC_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case DEC_indirect_x_5:
+        case DEC_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DEC_indirect_x_6:
+        case DEC_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DEC_indirect_x_7:
+        case DEC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
@@ -2091,65 +2091,65 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_absolute:
+        case EOR_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case EOR_absolute_2:
+        case EOR_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case EOR_absolute_3:
+        case EOR_abs_3:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_zero_page:
+        case EOR_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case EOR_zero_page_2:
+        case EOR_zpg_2:
             
             READ_FROM_ZERO_PAGE
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_zero_page_x:
+        case EOR_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case EOR_zero_page_x_2:
+        case EOR_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case EOR_zero_page_x_3:
+        case EOR_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_absolute_x:
+        case EOR_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case EOR_absolute_x_2:
+        case EOR_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case EOR_absolute_x_3:
+        case EOR_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2160,25 +2160,25 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case EOR_absolute_x_4:
+        case EOR_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_absolute_y:
+        case EOR_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case EOR_absolute_y_2:
+        case EOR_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case EOR_absolute_y_3:
+        case EOR_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2189,58 +2189,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case EOR_absolute_y_4:
+        case EOR_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_indirect_x:
+        case EOR_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case EOR_indirect_x_2:
+        case EOR_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case EOR_indirect_x_3:
+        case EOR_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case EOR_indirect_x_4:
+        case EOR_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case EOR_indirect_x_5:
+        case EOR_ind_x_5:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_indirect_y:
+        case EOR_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case EOR_indirect_y_2:
+        case EOR_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case EOR_indirect_y_3:
+        case EOR_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case EOR_indirect_y_4:
+        case EOR_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2251,7 +2251,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case EOR_indirect_y_5:
+        case EOR_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
@@ -2269,150 +2269,150 @@ CPU::executeMicroInstruction()
         #define DO_INC data++;
 
         // -------------------------------------------------------------------------------
-        case INC_zero_page:
+        case INC_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case INC_zero_page_2:
+        case INC_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case INC_zero_page_3:
+        case INC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_INC
             CONTINUE
             
-        case INC_zero_page_4:
+        case INC_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_zero_page_x:
+        case INC_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case INC_zero_page_x_2:
+        case INC_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case INC_zero_page_x_3:
+        case INC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case INC_zero_page_x_4:
+        case INC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_INC
             CONTINUE
             
-        case INC_zero_page_x_5:
+        case INC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_absolute:
+        case INC_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case INC_absolute_2:
+        case INC_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case INC_absolute_3:
+        case INC_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case INC_absolute_4:
+        case INC_abs_4:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case INC_absolute_5:
+        case INC_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_absolute_x:
+        case INC_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case INC_absolute_x_2:
+        case INC_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case INC_absolute_x_3:
+        case INC_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case INC_absolute_x_4:
+        case INC_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case INC_absolute_x_5:
+        case INC_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case INC_absolute_x_6:
+        case INC_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_indirect_x:
+        case INC_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case INC_indirect_x_2:
+        case INC_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case INC_indirect_x_3:
+        case INC_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case INC_indirect_x_4:
+        case INC_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case INC_indirect_x_5:
+        case INC_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case INC_indirect_x_6:
+        case INC_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case INC_indirect_x_7:
+        case INC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
@@ -2456,34 +2456,34 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case JMP_absolute:
+        case JMP_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case JMP_absolute_2:
+        case JMP_abs_2:
             
             FETCH_ADDR_HI
             setPC(LO_HI(addr_lo, addr_hi));
             DONE
 
         // -------------------------------------------------------------------------------
-        case JMP_absolute_indirect:
+        case JMP_abs_indirect:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case JMP_absolute_indirect_2:
+        case JMP_abs_ind_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case JMP_absolute_indirect_3:
+        case JMP_abs_ind_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case JMP_absolute_indirect_4:
+        case JMP_abs_ind_4:
             
             setPCL(data);
             setPCH(mem->peek(addr_lo+1, addr_hi));
@@ -2541,65 +2541,65 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_zero_page:
+        case LDA_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDA_zero_page_2:
+        case LDA_zpg_2:
             
             READ_FROM_ZERO_PAGE
             loadA(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_zero_page_x:
+        case LDA_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDA_zero_page_x_2:
+        case LDA_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case LDA_zero_page_x_3:
+        case LDA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_absolute:
+        case LDA_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDA_absolute_2:
+        case LDA_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case LDA_absolute_3:
+        case LDA_abs_3:
             
             READ_FROM_ADDRESS
             loadA(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_absolute_x:
+        case LDA_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDA_absolute_x_2:
+        case LDA_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case LDA_absolute_x_3:
+        case LDA_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2610,25 +2610,25 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDA_absolute_x_4:
+        case LDA_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(data);
             DONE
             
         // -------------------------------------------------------------------------------
-        case LDA_absolute_y:
+        case LDA_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDA_absolute_y_2:
+        case LDA_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case LDA_absolute_y_3:
+        case LDA_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2639,58 +2639,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDA_absolute_y_4:
+        case LDA_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_indirect_x:
+        case LDA_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LDA_indirect_x_2:
+        case LDA_ind_x_2:
 
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case LDA_indirect_x_3:
+        case LDA_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LDA_indirect_x_4:
+        case LDA_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case LDA_indirect_x_5:
+        case LDA_ind_x_5:
             
             READ_FROM_ADDRESS
             loadA(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_indirect_y:
+        case LDA_ind_y:
 
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LDA_indirect_y_2:
+        case LDA_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LDA_indirect_y_3:
+        case LDA_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case LDA_indirect_y_4:
+        case LDA_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2701,7 +2701,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDA_indirect_y_5:
+        case LDA_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(data);
@@ -2724,65 +2724,65 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_zero_page:
+        case LDX_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDX_zero_page_2:
+        case LDX_zpg_2:
             
             READ_FROM_ZERO_PAGE
             loadX(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_zero_page_y:
+        case LDX_zpg_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDX_zero_page_y_2:
+        case LDX_zpg_y_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_Y
             CONTINUE
             
-        case LDX_zero_page_y_3:
+        case LDX_zpg_y_3:
             
             READ_FROM_ZERO_PAGE
             loadX(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_absolute:
+        case LDX_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDX_absolute_2:
+        case LDX_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case LDX_absolute_3:
+        case LDX_abs_3:
             
             READ_FROM_ADDRESS
             loadX(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_absolute_y:
+        case LDX_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDX_absolute_y_2:
+        case LDX_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case LDX_absolute_y_3:
+        case LDX_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2793,58 +2793,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDX_absolute_y_4:
+        case LDX_abs_y_4:
             
             READ_FROM_ADDRESS
             loadX(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_indirect_x:
+        case LDX_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LDX_indirect_x_2:
+        case LDX_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case LDX_indirect_x_3:
+        case LDX_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LDX_indirect_x_4:
+        case LDX_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case LDX_indirect_x_5:
+        case LDX_ind_x_5:
             
             READ_FROM_ADDRESS
             loadX(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_indirect_y:
+        case LDX_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LDX_indirect_y_2:
+        case LDX_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LDX_indirect_y_3:
+        case LDX_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case LDX_indirect_y_4:
+        case LDX_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2855,7 +2855,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDX_indirect_y_5:
+        case LDX_ind_y_5:
             
             READ_FROM_ADDRESS
             loadX(data);
@@ -2878,65 +2878,65 @@ CPU::executeMicroInstruction()
 	DONE
 
 // -------------------------------------------------------------------------------
-        case LDY_zero_page:
+        case LDY_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDY_zero_page_2:
+        case LDY_zpg_2:
             
             READ_FROM_ZERO_PAGE
             loadY(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_zero_page_x:
+        case LDY_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDY_zero_page_x_2:
+        case LDY_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case LDY_zero_page_x_3:
+        case LDY_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadY(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_absolute:
+        case LDY_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LDY_absolute_2:
+        case LDY_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case LDY_absolute_3:
+        case LDY_abs_3:
             
             READ_FROM_ADDRESS;
             loadY(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_absolute_x:
+        case LDY_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
 
-        case LDY_absolute_x_2:
+        case LDY_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case LDY_absolute_x_3:
+        case LDY_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -2947,58 +2947,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDY_absolute_x_4:
+        case LDY_abs_x_4:
             
             READ_FROM_ADDRESS
             loadY(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_indirect_x:
+        case LDY_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LDY_indirect_x_2:
+        case LDY_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case LDY_indirect_x_3:
+        case LDY_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LDY_indirect_x_4:
+        case LDY_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case LDY_indirect_x_5:
+        case LDY_ind_x_5:
             
             READ_FROM_ADDRESS
             loadY(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_indirect_y:
+        case LDY_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LDY_indirect_y_2:
+        case LDY_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LDY_indirect_y_3:
+        case LDY_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case LDY_indirect_y_4:
+        case LDY_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3009,7 +3009,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case LDY_indirect_y_5:
+        case LDY_ind_y_5:
             
             READ_FROM_ADDRESS
             loadY(data);
@@ -3034,95 +3034,95 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LSR_zero_page:
+        case LSR_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LSR_zero_page_2:
+        case LSR_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case LSR_zero_page_3:
+        case LSR_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_LSR
             CONTINUE
             
-        case LSR_zero_page_4:
+        case LSR_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
             
         // -------------------------------------------------------------------------------
-        case LSR_zero_page_x:
+        case LSR_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LSR_zero_page_x_2:
+        case LSR_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case LSR_zero_page_x_3:
+        case LSR_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case LSR_zero_page_x_4:
+        case LSR_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_LSR
             CONTINUE
             
-        case LSR_zero_page_x_5:
+        case LSR_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
             
         // -------------------------------------------------------------------------------
-        case LSR_absolute:
+        case LSR_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LSR_absolute_2:
+        case LSR_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case LSR_absolute_3:
+        case LSR_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case LSR_absolute_4:
+        case LSR_abs_4:
             
             WRITE_TO_ADDRESS
             DO_LSR
             CONTINUE
             
-        case LSR_absolute_5:
+        case LSR_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
             
         // -------------------------------------------------------------------------------
-        case LSR_absolute_x:
+        case LSR_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LSR_absolute_x_2:
+        case LSR_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case LSR_absolute_x_3:
+        case LSR_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3130,35 +3130,35 @@ CPU::executeMicroInstruction()
             }
             CONTINUE
             
-        case LSR_absolute_x_4:
+        case LSR_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case LSR_absolute_x_5:
+        case LSR_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_LSR
             CONTINUE
             
-        case LSR_absolute_x_6:
+        case LSR_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case LSR_absolute_y:
+        case LSR_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LSR_absolute_y_2:
+        case LSR_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case LSR_absolute_y_3:
+        case LSR_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3166,78 +3166,78 @@ CPU::executeMicroInstruction()
             }
             CONTINUE
             
-        case LSR_absolute_y_4:
+        case LSR_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case LSR_absolute_y_5:
+        case LSR_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_LSR
             CONTINUE
             
-        case LSR_absolute_y_6:
+        case LSR_abs_y_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
             // -------------------------------------------------------------------------------
-        case LSR_indirect_x:
+        case LSR_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LSR_indirect_x_2:
+        case LSR_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case LSR_indirect_x_3:
+        case LSR_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LSR_indirect_x_4:
+        case LSR_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case LSR_indirect_x_5:
+        case LSR_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case LSR_indirect_x_6:
+        case LSR_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_LSR
             CONTINUE
             
-        case LSR_indirect_x_7:
+        case LSR_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case LSR_indirect_y:
+        case LSR_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LSR_indirect_y_2:
+        case LSR_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LSR_indirect_y_3:
+        case LSR_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case LSR_indirect_y_4:
+        case LSR_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3245,18 +3245,18 @@ CPU::executeMicroInstruction()
             }
             CONTINUE
             
-        case LSR_indirect_y_5:
+        case LSR_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case LSR_indirect_y_6:
+        case LSR_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_LSR
             CONTINUE
             
-        case LSR_indirect_y_7:
+        case LSR_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
@@ -3282,62 +3282,62 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_zero_page:
+        case NOP_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case NOP_zero_page_2:
+        case NOP_zpg_2:
             
             READ_FROM_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_zero_page_x:
+        case NOP_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case NOP_zero_page_x_2:
+        case NOP_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case NOP_zero_page_x_3:
+        case NOP_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_absolute:
+        case NOP_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case NOP_absolute_2:
+        case NOP_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case NOP_absolute_3:
+        case NOP_abs_3:
             
             READ_FROM_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_absolute_x:
+        case NOP_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case NOP_absolute_x_2:
+        case NOP_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case NOP_absolute_x_3:
+        case NOP_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3347,7 +3347,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case NOP_absolute_x_4:
+        case NOP_abs_x_4:
             
             READ_FROM_ADDRESS
             DONE
@@ -3368,63 +3368,63 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_absolute:
+        case ORA_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ORA_absolute_2:
+        case ORA_abs_2:
             FETCH_ADDR_HI
             CONTINUE
             
-        case ORA_absolute_3:
+        case ORA_abs_3:
             READ_FROM_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_zero_page:
+        case ORA_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ORA_zero_page_2:
+        case ORA_zpg_2:
             
             READ_FROM_ZERO_PAGE
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_zero_page_x:
+        case ORA_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ORA_zero_page_x_2:
+        case ORA_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case ORA_zero_page_x_3:
+        case ORA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_absolute_x:
+        case ORA_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ORA_absolute_x_2:
+        case ORA_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case ORA_absolute_x_3:
+        case ORA_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3435,25 +3435,25 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case ORA_absolute_x_4:
+        case ORA_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_absolute_y:
+        case ORA_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ORA_absolute_y_2:
+        case ORA_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case ORA_absolute_y_3:
+        case ORA_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3464,58 +3464,58 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case ORA_absolute_y_4:
+        case ORA_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_indirect_x:
+        case ORA_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ORA_indirect_x_2:
+        case ORA_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case ORA_indirect_x_3:
+        case ORA_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE;
             
-        case ORA_indirect_x_4:
+        case ORA_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case ORA_indirect_x_5:
+        case ORA_ind_x_5:
             
             READ_FROM_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_indirect_y:
+        case ORA_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ORA_indirect_y_2:
+        case ORA_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ORA_indirect_y_3:
+        case ORA_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case ORA_indirect_y_4:
+        case ORA_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3526,7 +3526,7 @@ CPU::executeMicroInstruction()
                 DONE
             }
             
-        case ORA_indirect_y_5:
+        case ORA_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A | data);
@@ -3659,150 +3659,150 @@ inline uint8_t CPU::rol(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_zero_page:
+        case ROL_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROL_zero_page_2:
+        case ROL_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ROL_zero_page_3:
+        case ROL_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_ROL
             CONTINUE
             
-        case ROL_zero_page_4:
+        case ROL_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_zero_page_x:
+        case ROL_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROL_zero_page_x_2:
+        case ROL_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case ROL_zero_page_x_3:
+        case ROL_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ROL_zero_page_x_4:
+        case ROL_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ROL
             CONTINUE
             
-        case ROL_zero_page_x_5:
+        case ROL_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_absolute:
+        case ROL_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROL_absolute_2:
+        case ROL_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case ROL_absolute_3:
+        case ROL_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ROL_absolute_4:
+        case ROL_abs_4:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case ROL_absolute_5:
+        case ROL_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_absolute_x:
+        case ROL_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROL_absolute_x_2:
+        case ROL_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case ROL_absolute_x_3:
+        case ROL_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case ROL_absolute_x_4:
+        case ROL_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ROL_absolute_x_5:
+        case ROL_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case ROL_absolute_x_6:
+        case ROL_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_indirect_x:
+        case ROL_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ROL_indirect_x_2:
+        case ROL_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case ROL_indirect_x_3:
+        case ROL_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ROL_indirect_x_4:
+        case ROL_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case ROL_indirect_x_5:
+        case ROL_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ROL_indirect_x_6:
+        case ROL_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case ROL_indirect_x_7:
+        case ROL_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
@@ -3844,95 +3844,95 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_zero_page:
+        case ROR_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROR_zero_page_2:
+        case ROR_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ROR_zero_page_3:
+        case ROR_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_ROR
             CONTINUE
             
-        case ROR_zero_page_4:
+        case ROR_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_zero_page_x:
+        case ROR_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROR_zero_page_x_2:
+        case ROR_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case ROR_zero_page_x_3:
+        case ROR_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ROR_zero_page_x_4:
+        case ROR_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ROR
             CONTINUE
             
-        case ROR_zero_page_x_5:
+        case ROR_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_absolute:
+        case ROR_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROR_absolute_2:
+        case ROR_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case ROR_absolute_3:
+        case ROR_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ROR_absolute_4:
+        case ROR_abs_4:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case ROR_absolute_5:
+        case ROR_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_absolute_x:
+        case ROR_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ROR_absolute_x_2:
+        case ROR_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case ROR_absolute_x_3:
+        case ROR_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3940,56 +3940,56 @@ inline uint8_t CPU::ror(uint8_t op)
             }
             CONTINUE
             
-        case ROR_absolute_x_4:
+        case ROR_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ROR_absolute_x_5:
+        case ROR_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case ROR_absolute_x_6:
+        case ROR_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_indirect_x:
+        case ROR_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ROR_indirect_x_2:
+        case ROR_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case ROR_indirect_x_3:
+        case ROR_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ROR_indirect_x_4:
+        case ROR_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case ROR_indirect_x_5:
+        case ROR_ind_x_5:
             
             READ_FROM_ADDRESS;
             CONTINUE
             
-        case ROR_indirect_x_6:
+        case ROR_ind_x_6:
             
             WRITE_TO_ADDRESS;
             DO_ROR;
             CONTINUE
             
-        case ROR_indirect_x_7:
+        case ROR_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             DONE
@@ -4082,65 +4082,65 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_zero_page:
+        case SBC_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SBC_zero_page_2:
+        case SBC_zpg_2:
             
             READ_FROM_ZERO_PAGE
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_zero_page_x:
+        case SBC_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SBC_zero_page_x_2:
+        case SBC_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case SBC_zero_page_x_3:
+        case SBC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_absolute:
+        case SBC_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SBC_absolute_2:
+        case SBC_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case SBC_absolute_3:
+        case SBC_abs_3:
             
             READ_FROM_ADDRESS;
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_absolute_x:
+        case SBC_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SBC_absolute_x_2:
+        case SBC_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case SBC_absolute_x_3:
+        case SBC_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -4151,25 +4151,25 @@ inline uint8_t CPU::ror(uint8_t op)
                 DONE
             }
             
-        case SBC_absolute_x_4:
+        case SBC_abs_x_4:
             
             READ_FROM_ADDRESS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_absolute_y:
+        case SBC_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SBC_absolute_y_2:
+        case SBC_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case SBC_absolute_y_3:
+        case SBC_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -4180,58 +4180,58 @@ inline uint8_t CPU::ror(uint8_t op)
                 DONE
             }
             
-        case SBC_absolute_y_4:
+        case SBC_abs_y_4:
             
             READ_FROM_ADDRESS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_indirect_x:
+        case SBC_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SBC_indirect_x_2:
+        case SBC_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case SBC_indirect_x_3:
+        case SBC_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SBC_indirect_x_4:
+        case SBC_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case SBC_indirect_x_5:
+        case SBC_ind_x_5:
             
             READ_FROM_ADDRESS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_indirect_y:
+        case SBC_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SBC_indirect_y_2:
+        case SBC_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SBC_indirect_y_3:
+        case SBC_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case SBC_indirect_y_4:
+        case SBC_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -4242,7 +4242,7 @@ inline uint8_t CPU::ror(uint8_t op)
                 DONE
             }
             
-        case SBC_indirect_y_5:
+        case SBC_ind_y_5:
             
             READ_FROM_ADDRESS
             sbc(data);
@@ -4303,153 +4303,153 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case STA_zero_page:
+        case STA_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STA_zero_page_2:
+        case STA_zpg_2:
             
             data = A;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_zero_page_x:
+        case STA_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STA_zero_page_x_2:
+        case STA_zpg_x_2:
             
             IDLE_READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case STA_zero_page_x_3:
+        case STA_zpg_x_3:
             
             data = A;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_absolute:
+        case STA_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STA_absolute_2:
+        case STA_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case STA_absolute_3:
+        case STA_abs_3:
             
             data = A;
             WRITE_TO_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_absolute_x:
+        case STA_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STA_absolute_x_2:
+        case STA_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case STA_absolute_x_3:
+        case STA_abs_x_3:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case STA_absolute_x_4:
+        case STA_abs_x_4:
             
             data = A;
             WRITE_TO_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_absolute_y:
+        case STA_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STA_absolute_y_2:
+        case STA_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case STA_absolute_y_3:
+        case STA_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED)
                 FIX_ADDR_HI
                 CONTINUE
                 
-                case STA_absolute_y_4:
+                case STA_abs_y_4:
                 
                 data = A;
             WRITE_TO_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_indirect_x:
+        case STA_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case STA_indirect_x_2:
+        case STA_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case STA_indirect_x_3:
+        case STA_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case STA_indirect_x_4:
+        case STA_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case STA_indirect_x_5:
+        case STA_ind_x_5:
             
             data = A;
             WRITE_TO_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_indirect_y:
+        case STA_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case STA_indirect_y_2:
+        case STA_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case STA_indirect_y_3:
+        case STA_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case STA_indirect_y_4:
+        case STA_ind_y_4:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case STA_indirect_y_5:
+        case STA_ind_y_5:
             
             data = A;
             WRITE_TO_ADDRESS
@@ -4464,47 +4464,47 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case STX_zero_page:
+        case STX_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STX_zero_page_2:
+        case STX_zpg_2:
             
             data = X;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case STX_zero_page_y:
+        case STX_zpg_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STX_zero_page_y_2:
+        case STX_zpg_y_2:
             
             IDLE_READ_FROM_ZERO_PAGE
             ADD_INDEX_Y
             CONTINUE
             
-        case STX_zero_page_y_3:
+        case STX_zpg_y_3:
             
             data = X;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case STX_absolute:
+        case STX_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STX_absolute_2:
+        case STX_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case STX_absolute_3:
+        case STX_abs_3:
             
             data = X;
             WRITE_TO_ADDRESS
@@ -4519,47 +4519,47 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case STY_zero_page:
+        case STY_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STY_zero_page_2:
+        case STY_zpg_2:
             
             data = Y;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case STY_zero_page_x:
+        case STY_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STY_zero_page_x_2:
+        case STY_zpg_x_2:
             
             IDLE_READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case STY_zero_page_x_3:
+        case STY_zpg_x_3:
             
             data = Y;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case STY_absolute:
+        case STY_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case STY_absolute_2:
+        case STY_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case STY_absolute_3:
+        case STY_abs_3:
             
             data = Y;
             WRITE_TO_ADDRESS
@@ -4764,229 +4764,229 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / / - - -
         // -------------------------------------------------------------------------------
             
-        case DCP_zero_page:
+        case DCP_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DCP_zero_page_2:
+        case DCP_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case DCP_zero_page_3:
+        case DCP_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_DEC
             CONTINUE
             
-        case DCP_zero_page_4:
+        case DCP_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_zero_page_x:
+        case DCP_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DCP_zero_page_x_2:
+        case DCP_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case DCP_zero_page_x_3:
+        case DCP_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case DCP_zero_page_x_4:
+        case DCP_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_DEC
             CONTINUE
             
-        case DCP_zero_page_x_5:
+        case DCP_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_absolute:
+        case DCP_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DCP_absolute_2:
+        case DCP_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case DCP_absolute_3:
+        case DCP_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DCP_absolute_4:
+        case DCP_abs_4:
             
             WRITE_TO_ADDRESS
             DO_DEC;
             CONTINUE
             
-        case DCP_absolute_5:
+        case DCP_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_absolute_x:
+        case DCP_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DCP_absolute_x_2:
+        case DCP_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case DCP_absolute_x_3:
+        case DCP_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case DCP_absolute_x_4:
+        case DCP_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DCP_absolute_x_5:
+        case DCP_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DCP_absolute_x_6:
+        case DCP_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_absolute_y:
+        case DCP_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case DCP_absolute_y_2:
+        case DCP_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case DCP_absolute_y_3:
+        case DCP_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case DCP_absolute_y_4:
+        case DCP_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DCP_absolute_y_5:
+        case DCP_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DCP_absolute_y_6:
+        case DCP_abs_y_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_indirect_x:
+        case DCP_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case DCP_indirect_x_2:
+        case DCP_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case DCP_indirect_x_3:
+        case DCP_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case DCP_indirect_x_4:
+        case DCP_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case DCP_indirect_x_5:
+        case DCP_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DCP_indirect_x_6:
+        case DCP_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DCP_indirect_x_7:
+        case DCP_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
             DONE;
 
         // -------------------------------------------------------------------------------
-        case DCP_indirect_y:
+        case DCP_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case DCP_indirect_y_2:
+        case DCP_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case DCP_indirect_y_3:
+        case DCP_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case DCP_indirect_y_4:
+        case DCP_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case DCP_indirect_y_5:
+        case DCP_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case DCP_indirect_y_6:
+        case DCP_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_DEC
             CONTINUE
             
-        case DCP_indirect_y_7:
+        case DCP_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
@@ -5001,229 +5001,229 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / / - - /
         // -------------------------------------------------------------------------------
 
-        case ISC_zero_page:
+        case ISC_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ISC_zero_page_2:
+        case ISC_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ISC_zero_page_3:
+        case ISC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_INC
             CONTINUE
             
-        case ISC_zero_page_4:
+        case ISC_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_zero_page_x:
+        case ISC_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ISC_zero_page_x_2:
+        case ISC_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case ISC_zero_page_x_3:
+        case ISC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case ISC_zero_page_x_4:
+        case ISC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_INC
             CONTINUE
             
-        case ISC_zero_page_x_5:
+        case ISC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_absolute:
+        case ISC_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ISC_absolute_2:
+        case ISC_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case ISC_absolute_3:
+        case ISC_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ISC_absolute_4:
+        case ISC_abs_4:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case ISC_absolute_5:
+        case ISC_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_absolute_x:
+        case ISC_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ISC_absolute_x_2:
+        case ISC_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case ISC_absolute_x_3:
+        case ISC_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case ISC_absolute_x_4:
+        case ISC_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ISC_absolute_x_5:
+        case ISC_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case ISC_absolute_x_6:
+        case ISC_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_absolute_y:
+        case ISC_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case ISC_absolute_y_2:
+        case ISC_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case ISC_absolute_y_3:
+        case ISC_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case ISC_absolute_y_4:
+        case ISC_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ISC_absolute_y_5:
+        case ISC_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case ISC_absolute_y_6:
+        case ISC_abs_y_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_indirect_x:
+        case ISC_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ISC_indirect_x_2:
+        case ISC_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case ISC_indirect_x_3:
+        case ISC_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ISC_indirect_x_4:
+        case ISC_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case ISC_indirect_x_5:
+        case ISC_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ISC_indirect_x_6:
+        case ISC_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case ISC_indirect_x_7:
+        case ISC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_indirect_y:
+        case ISC_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case ISC_indirect_y_2:
+        case ISC_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case ISC_indirect_y_3:
+        case ISC_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case ISC_indirect_y_4:
+        case ISC_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case ISC_indirect_y_5:
+        case ISC_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case ISC_indirect_y_6:
+        case ISC_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_INC
             CONTINUE
             
-        case ISC_indirect_y_7:
+        case ISC_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
@@ -5238,18 +5238,18 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case LAS_absolute_y:
+        case LAS_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LAS_absolute_y_2:
+        case LAS_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case LAS_absolute_y_3:
+        case LAS_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -5263,7 +5263,7 @@ inline uint8_t CPU::ror(uint8_t op)
                 DONE
             }
             
-        case LAS_absolute_y_4:
+        case LAS_abs_y_4:
             
             READ_FROM_ADDRESS
             data &= SP;
@@ -5281,12 +5281,12 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case LAX_zero_page:
+        case LAX_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LAX_zero_page_2:
+        case LAX_zpg_2:
             
             READ_FROM_ZERO_PAGE
             loadA(data);
@@ -5294,18 +5294,18 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_zero_page_y:
+        case LAX_zpg_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LAX_zero_page_y_2:
+        case LAX_zpg_y_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_Y
             CONTINUE
             
-        case LAX_zero_page_y_3:
+        case LAX_zpg_y_3:
             
             READ_FROM_ZERO_PAGE
             loadA(data);
@@ -5313,17 +5313,17 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_absolute:
+        case LAX_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LAX_absolute_2:
+        case LAX_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case LAX_absolute_3:
+        case LAX_abs_3:
             
             READ_FROM_ADDRESS;
             loadA(data);
@@ -5331,18 +5331,18 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_absolute_y:
+        case LAX_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case LAX_absolute_y_2:
+        case LAX_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case LAX_absolute_y_3:
+        case LAX_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -5354,7 +5354,7 @@ inline uint8_t CPU::ror(uint8_t op)
                 DONE
             }
             
-        case LAX_absolute_y_4:
+        case LAX_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(data);
@@ -5362,28 +5362,28 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_indirect_x:
+        case LAX_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LAX_indirect_x_2:
+        case LAX_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case LAX_indirect_x_3:
+        case LAX_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LAX_indirect_x_4:
+        case LAX_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case LAX_indirect_x_5:
+        case LAX_ind_x_5:
             
             READ_FROM_ADDRESS
             loadA(data);
@@ -5391,23 +5391,23 @@ inline uint8_t CPU::ror(uint8_t op)
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_indirect_y:
+        case LAX_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case LAX_indirect_y_2:
+        case LAX_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case LAX_indirect_y_3:
+        case LAX_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case LAX_indirect_y_4:
+        case LAX_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -5419,7 +5419,7 @@ inline uint8_t CPU::ror(uint8_t op)
                 DONE
             }
             
-        case LAX_indirect_y_5:
+        case LAX_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(data);
@@ -5436,229 +5436,229 @@ inline uint8_t CPU::ror(uint8_t op)
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case RLA_zero_page:
+        case RLA_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RLA_zero_page_2:
+        case RLA_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case RLA_zero_page_3:
+        case RLA_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_ROL
             CONTINUE
             
-        case RLA_zero_page_4:
+        case RLA_zpg_4:
             
             WRITE_TO_ZERO_PAGE
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_zero_page_x:
+        case RLA_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RLA_zero_page_x_2:
+        case RLA_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case RLA_zero_page_x_3:
+        case RLA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case RLA_zero_page_x_4:
+        case RLA_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ROL
             CONTINUE
             
-        case RLA_zero_page_x_5:
+        case RLA_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_absolute:
+        case RLA_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RLA_absolute_2:
+        case RLA_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case RLA_absolute_3:
+        case RLA_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RLA_absolute_4:
+        case RLA_abs_4:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case RLA_absolute_5:
+        case RLA_abs_5:
             
             WRITE_TO_ADDRESS
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_absolute_x:
+        case RLA_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RLA_absolute_x_2:
+        case RLA_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case RLA_absolute_x_3:
+        case RLA_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case RLA_absolute_x_4:
+        case RLA_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RLA_absolute_x_5:
+        case RLA_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case RLA_absolute_x_6:
+        case RLA_abs_x_6:
             
             WRITE_TO_ADDRESS
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_absolute_y:
+        case RLA_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RLA_absolute_y_2:
+        case RLA_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case RLA_absolute_y_3:
+        case RLA_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case RLA_absolute_y_4:
+        case RLA_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RLA_absolute_y_5:
+        case RLA_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case RLA_absolute_y_6:
+        case RLA_abs_y_6:
             
             WRITE_TO_ADDRESS
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_indirect_x:
+        case RLA_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case RLA_indirect_x_2:
+        case RLA_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case RLA_indirect_x_3:
+        case RLA_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case RLA_indirect_x_4:
+        case RLA_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case RLA_indirect_x_5:
+        case RLA_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RLA_indirect_x_6:
+        case RLA_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case RLA_indirect_x_7:
+        case RLA_ind_x_7:
             
             WRITE_TO_ADDRESS
             loadA(A & data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_indirect_y:
+        case RLA_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case RLA_indirect_y_2:
+        case RLA_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case RLA_indirect_y_3:
+        case RLA_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case RLA_indirect_y_4:
+        case RLA_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case RLA_indirect_y_5:
+        case RLA_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RLA_indirect_y_6:
+        case RLA_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
-        case RLA_indirect_y_7:
+        case RLA_ind_y_7:
             
             WRITE_TO_ADDRESS
             loadA(A & data);
@@ -5674,229 +5674,229 @@ inline uint8_t CPU::ror(uint8_t op)
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case RRA_zero_page:
+        case RRA_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RRA_zero_page_2:
+        case RRA_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case RRA_zero_page_3:
+        case RRA_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_ROR
             CONTINUE
             
-        case RRA_zero_page_4:
+        case RRA_zpg_4:
             
             WRITE_TO_ZERO_PAGE
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_zero_page_x:
+        case RRA_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RRA_zero_page_x_2:
+        case RRA_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case RRA_zero_page_x_3:
+        case RRA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case RRA_zero_page_x_4:
+        case RRA_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ROR
             CONTINUE
             
-        case RRA_zero_page_x_5:
+        case RRA_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_absolute:
+        case RRA_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RRA_absolute_2:
+        case RRA_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case RRA_absolute_3:
+        case RRA_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RRA_absolute_4:
+        case RRA_abs_4:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case RRA_absolute_5:
+        case RRA_abs_5:
             
             WRITE_TO_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_absolute_x:
+        case RRA_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RRA_absolute_x_2:
+        case RRA_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case RRA_absolute_x_3:
+        case RRA_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case RRA_absolute_x_4:
+        case RRA_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RRA_absolute_x_5:
+        case RRA_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case RRA_absolute_x_6:
+        case RRA_abs_x_6:
             
             WRITE_TO_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_absolute_y:
+        case RRA_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case RRA_absolute_y_2:
+        case RRA_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case RRA_absolute_y_3:
+        case RRA_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case RRA_absolute_y_4:
+        case RRA_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RRA_absolute_y_5:
+        case RRA_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case RRA_absolute_y_6:
+        case RRA_abs_y_6:
             
             WRITE_TO_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_indirect_x:
+        case RRA_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case RRA_indirect_x_2:
+        case RRA_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case RRA_indirect_x_3:
+        case RRA_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case RRA_indirect_x_4:
+        case RRA_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case RRA_indirect_x_5:
+        case RRA_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RRA_indirect_x_6:
+        case RRA_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case RRA_indirect_x_7:
+        case RRA_ind_x_7:
             
             WRITE_TO_ADDRESS
             adc(data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_indirect_y:
+        case RRA_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case RRA_indirect_y_2:
+        case RRA_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case RRA_indirect_y_3:
+        case RRA_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case RRA_indirect_y_4:
+        case RRA_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case RRA_indirect_y_5:
+        case RRA_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case RRA_indirect_y_6:
+        case RRA_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
-        case RRA_indirect_y_7:
+        case RRA_ind_y_7:
             
             WRITE_TO_ADDRESS
             adc(data);
@@ -5911,75 +5911,75 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case SAX_zero_page:
+        case SAX_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SAX_zero_page_2:
+        case SAX_zpg_2:
             
             data = A & X;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case SAX_zero_page_y:
+        case SAX_zpg_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SAX_zero_page_y_2:
+        case SAX_zpg_y_2:
             
             IDLE_READ_FROM_ZERO_PAGE
             ADD_INDEX_Y
             CONTINUE
             
-        case SAX_zero_page_y_3:
+        case SAX_zpg_y_3:
             
             data = A & X;
             WRITE_TO_ZERO_PAGE
             DONE
 
         // -------------------------------------------------------------------------------
-        case SAX_absolute:
+        case SAX_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SAX_absolute_2:
+        case SAX_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case SAX_absolute_3:
+        case SAX_abs_3:
             
             data = A & X;
             WRITE_TO_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case SAX_indirect_x:
+        case SAX_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SAX_indirect_x_2:
+        case SAX_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case SAX_indirect_x_3:
+        case SAX_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SAX_indirect_x_4:
+        case SAX_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case SAX_indirect_x_5:
+        case SAX_ind_x_5:
             
             data = A & X;
             WRITE_TO_ADDRESS
@@ -5994,53 +5994,53 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case SHA_absolute_y:
+        case SHA_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SHA_absolute_y_2:
+        case SHA_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case SHA_absolute_y_3:
+        case SHA_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SHA_absolute_y_4:
+        case SHA_abs_y_4:
             
             data = A & X & (addr_hi + 1);
             WRITE_TO_ADDRESS
             DONE
 
         // -------------------------------------------------------------------------------
-        case SHA_indirect_y:
+        case SHA_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SHA_indirect_y_2:
+        case SHA_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SHA_indirect_y_3:
+        case SHA_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case SHA_indirect_y_4:
+        case SHA_ind_y_4:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SHA_indirect_y_5:
+        case SHA_ind_y_5:
             
             data = A & X & (addr_hi + 1);
             WRITE_TO_ADDRESS
@@ -6055,24 +6055,24 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case SHX_absolute_y:
+        case SHX_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SHX_absolute_y_2:
+        case SHX_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case SHX_absolute_y_3:
+        case SHX_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SHX_absolute_y_4:
+        case SHX_abs_y_4:
             
             data = X & (addr_hi + 1);
             WRITE_TO_ADDRESS
@@ -6087,24 +6087,24 @@ inline uint8_t CPU::ror(uint8_t op)
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case SHY_absolute_x:
+        case SHY_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SHY_absolute_x_2:
+        case SHY_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case SHY_absolute_x_3:
+        case SHY_abs_x_3:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SHY_absolute_x_4:
+        case SHY_abs_x_4:
             
             data = 	data = Y & (addr_hi + 1);
             WRITE_TO_ADDRESS
@@ -6122,228 +6122,228 @@ inline uint8_t CPU::ror(uint8_t op)
         #define DO_SLO setC(data & 128); data <<= 1;
 
         // -------------------------------------------------------------------------------
-        case SLO_zero_page:
+        case SLO_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SLO_zero_page_2:
+        case SLO_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case SLO_zero_page_3:
+        case SLO_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_SLO
             CONTINUE
             
-        case SLO_zero_page_4:
+        case SLO_zpg_4:
             
             WRITE_TO_ZERO_PAGE
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_zero_page_x:
+        case SLO_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SLO_zero_page_x_2:
+        case SLO_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case SLO_zero_page_x_3:
+        case SLO_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case SLO_zero_page_x_4:
+        case SLO_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_SLO
             CONTINUE
             
-        case SLO_zero_page_x_5:
+        case SLO_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_absolute:
+        case SLO_abs:
             FETCH_ADDR_LO
             CONTINUE
             
-        case SLO_absolute_2:
+        case SLO_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case SLO_absolute_3:
+        case SLO_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SLO_absolute_4:
+        case SLO_abs_4:
             
             WRITE_TO_ADDRESS
             DO_SLO
             CONTINUE
             
-        case SLO_absolute_5:
+        case SLO_abs_5:
             
             WRITE_TO_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_absolute_x:
+        case SLO_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SLO_absolute_x_2:
+        case SLO_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case SLO_absolute_x_3:
+        case SLO_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SLO_absolute_x_4:
+        case SLO_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SLO_absolute_x_5:
+        case SLO_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_SLO
             CONTINUE
             
-        case SLO_absolute_x_6:
+        case SLO_abs_x_6:
             
             WRITE_TO_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_absolute_y:
+        case SLO_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SLO_absolute_y_2:
+        case SLO_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case SLO_absolute_y_3:
+        case SLO_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SLO_absolute_y_4:
+        case SLO_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SLO_absolute_y_5:
+        case SLO_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_SLO
             CONTINUE
             
-        case SLO_absolute_y_6:
+        case SLO_abs_y_6:
             
             WRITE_TO_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_indirect_x:
+        case SLO_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SLO_indirect_x_2:
+        case SLO_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case SLO_indirect_x_3:
+        case SLO_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SLO_indirect_x_4:
+        case SLO_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case SLO_indirect_x_5:
+        case SLO_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SLO_indirect_x_6:
+        case SLO_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_SLO
             CONTINUE
             
-        case SLO_indirect_x_7:
+        case SLO_ind_x_7:
             
             WRITE_TO_ADDRESS
             loadA(A | data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_indirect_y:
+        case SLO_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SLO_indirect_y_2:
+        case SLO_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SLO_indirect_y_3:
+        case SLO_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case SLO_indirect_y_4:
+        case SLO_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SLO_indirect_y_5:
+        case SLO_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SLO_indirect_y_6:
+        case SLO_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_SLO
             CONTINUE
             
-        case SLO_indirect_y_7:
+        case SLO_ind_y_7:
             WRITE_TO_ADDRESS
             loadA(A | data);
             DONE
@@ -6360,229 +6360,229 @@ inline uint8_t CPU::ror(uint8_t op)
         #define DO_SRE setC(data & 1); data >>= 1;
 
         // -------------------------------------------------------------------------------
-        case SRE_zero_page:
+        case SRE_zpg:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SRE_zero_page_2:
+        case SRE_zpg_2:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case SRE_zero_page_3:
+        case SRE_zpg_3:
             
             WRITE_TO_ZERO_PAGE
             DO_SRE
             CONTINUE
             
-        case SRE_zero_page_4:
+        case SRE_zpg_4:
             
             WRITE_TO_ZERO_PAGE
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_zero_page_x:
+        case SRE_zpg_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SRE_zero_page_x_2:
+        case SRE_zpg_x_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
             
-        case SRE_zero_page_x_3:
+        case SRE_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        case SRE_zero_page_x_4:
+        case SRE_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_SRE
             CONTINUE
             
-        case SRE_zero_page_x_5:
+        case SRE_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_absolute:
+        case SRE_abs:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SRE_absolute_2:
+        case SRE_abs_2:
             
             FETCH_ADDR_HI
             CONTINUE
             
-        case SRE_absolute_3:
+        case SRE_abs_3:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SRE_absolute_4:
+        case SRE_abs_4:
             
             WRITE_TO_ADDRESS
             DO_SRE
             CONTINUE
             
-        case SRE_absolute_5:
+        case SRE_abs_5:
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_absolute_x:
+        case SRE_abs_x:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SRE_absolute_x_2:
+        case SRE_abs_x_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_X
             CONTINUE
             
-        case SRE_absolute_x_3:
+        case SRE_abs_x_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SRE_absolute_x_4:
+        case SRE_abs_x_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SRE_absolute_x_5:
+        case SRE_abs_x_5:
             
             WRITE_TO_ADDRESS
             DO_SRE
             CONTINUE
             
-        case SRE_absolute_x_6:
+        case SRE_abs_x_6:
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_absolute_y:
+        case SRE_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
             
-        case SRE_absolute_y_2:
+        case SRE_abs_y_2:
             
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
             
-        case SRE_absolute_y_3:
+        case SRE_abs_y_3:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SRE_absolute_y_4:
+        case SRE_abs_y_4:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SRE_absolute_y_5:
+        case SRE_abs_y_5:
             
             WRITE_TO_ADDRESS
             DO_SRE
             CONTINUE
             
-        case SRE_absolute_y_6:
+        case SRE_abs_y_6:
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_indirect_x:
+        case SRE_ind_x:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SRE_indirect_x_2:
+        case SRE_ind_x_2:
             
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
             
-        case SRE_indirect_x_3:
+        case SRE_ind_x_3:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SRE_indirect_x_4:
+        case SRE_ind_x_4:
             
             FETCH_ADDR_HI_INDIRECT
             CONTINUE
             
-        case SRE_indirect_x_5:
+        case SRE_ind_x_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SRE_indirect_x_6:
+        case SRE_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_SRE
             CONTINUE
             
-        case SRE_indirect_x_7:
+        case SRE_ind_x_7:
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_indirect_y:
+        case SRE_ind_y:
             
             FETCH_POINTER_ADDR
             CONTINUE
             
-        case SRE_indirect_y_2:
+        case SRE_ind_y_2:
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
-        case SRE_indirect_y_3:
+        case SRE_ind_y_3:
             
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
             
-        case SRE_indirect_y_4:
+        case SRE_ind_y_4:
             
             READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
             CONTINUE
             
-        case SRE_indirect_y_5:
+        case SRE_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
-        case SRE_indirect_y_6:
+        case SRE_ind_y_6:
             
             WRITE_TO_ADDRESS
             DO_SRE
             CONTINUE
             
-        case SRE_indirect_y_7:
+        case SRE_ind_y_7:
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
@@ -6599,19 +6599,19 @@ inline uint8_t CPU::ror(uint8_t op)
         // TODO: THIS IS MOST LIKELY IMPLEMENTED WRONG
         // -------------------------------------------------------------------------------
 
-        case TAS_absolute_y:
+        case TAS_abs_y:
             
             data = mem->peek(PC + 1) + 1;
             FETCH_ADDR_LO
             CONTINUE
             
-        case TAS_absolute_y_2:
+        case TAS_abs_y_2:
             
             FETCH_ADDR_HI;
             ADD_INDEX_Y;
             CONTINUE
             
-        case TAS_absolute_y_3:
+        case TAS_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
@@ -6621,7 +6621,7 @@ inline uint8_t CPU::ror(uint8_t op)
             // Otherwise, the CPUTIMING test fails.
             CONTINUE
             
-        case TAS_absolute_y_4:
+        case TAS_abs_y_4:
             
             IDLE_READ_FROM_ADDRESS;
             SP = A & X;
