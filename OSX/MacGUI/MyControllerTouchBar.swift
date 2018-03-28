@@ -70,8 +70,11 @@ extension MyController : NSTouchBarDelegate
             .home,
             .del,
             .restore,
-            .ttscrubber,
-            .ttpopover
+            // We disable the time travel touchbar feature for now as it causes
+            // a race condition in the emulator. We resurrect the feature when
+            // the time travel functionality has been reworked. 
+            // .ttscrubber,
+            // .ttpopover
         ]
         
         // Make touchbar customizable
