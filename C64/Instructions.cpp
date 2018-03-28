@@ -517,7 +517,8 @@ CPU::executeMicroInstruction()
             CONTINUE
 
         case JAM_2:
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // IRQ handling
@@ -615,7 +616,8 @@ CPU::executeMicroInstruction()
 
             READ_IMMEDIATE
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ADC_zpg:
@@ -627,7 +629,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ADC_zpg_x:
@@ -645,9 +648,10 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
-            // -------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------
         case ADC_abs:
             
             FETCH_ADDR_LO
@@ -662,7 +666,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ADC_abs_x:
@@ -684,14 +689,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 adc(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case ADC_abs_x_4:
             
             READ_FROM_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ADC_abs_y:
@@ -713,14 +720,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 adc(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case ADC_abs_y_4:
             
             READ_FROM_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ADC_ind_x:
@@ -748,7 +757,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ADC_ind_y:
@@ -775,14 +785,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 adc(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case ADC_ind_y_5:
             
             READ_FROM_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: AND
@@ -797,7 +809,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case AND_abs:
@@ -813,7 +826,8 @@ CPU::executeMicroInstruction()
         case AND_abs_3:
             READ_FROM_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case AND_zpg:
@@ -825,7 +839,8 @@ CPU::executeMicroInstruction()
 
             READ_FROM_ZERO_PAGE
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case AND_zpg_x:
@@ -843,7 +858,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case AND_abs_x:
@@ -865,14 +881,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A & data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case AND_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case AND_abs_y:
@@ -894,14 +912,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A & data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case AND_abs_y_4:
         
             READ_FROM_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
         
         // -------------------------------------------------------------------------------
         case AND_ind_x:
@@ -929,7 +949,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         case AND_ind_y:
@@ -956,14 +977,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A & data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case AND_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         // Instruction: ASL
@@ -981,7 +1004,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             setC(A & 128); loadA(A << 1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ASL_zpg:
@@ -1003,7 +1027,8 @@ CPU::executeMicroInstruction()
         case ASL_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ASL_zpg_x:
@@ -1031,7 +1056,8 @@ CPU::executeMicroInstruction()
         case ASL_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         case ASL_abs:
@@ -1058,7 +1084,8 @@ CPU::executeMicroInstruction()
         case ASL_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ASL_abs_x:
@@ -1092,7 +1119,8 @@ CPU::executeMicroInstruction()
         case ASL_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ASL_ind_x:
@@ -1130,7 +1158,8 @@ CPU::executeMicroInstruction()
         case ASL_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         // Instruction: BCC
@@ -1146,20 +1175,20 @@ CPU::executeMicroInstruction()
         case branch_3_underflow:
             
             IDLE_READ_FROM(PC + 0x100)
-            POLL_IRQ_AND_NMI_AGAIN
-            DONE_NO_POLL;
+            POLL_INT_AGAIN
+            DONE_NO_POLL
             
         case branch_3_overflow:
             
             IDLE_READ_FROM(PC - 0x100)
-            POLL_IRQ_AND_NMI_AGAIN
+            POLL_INT_AGAIN
             DONE_NO_POLL
 
         // ------------------------------------------------------------------------------
         case BCC_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (!getC()) {
                 CONTINUE
@@ -1192,7 +1221,7 @@ CPU::executeMicroInstruction()
         case BCS_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (getC()) {
                 CONTINUE
@@ -1225,7 +1254,7 @@ CPU::executeMicroInstruction()
         case BEQ_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (getZ()) {
                 CONTINUE
@@ -1266,7 +1295,8 @@ CPU::executeMicroInstruction()
             setN(data & 128);
             setV(data & 64);
             setZ((data & A) == 0);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case BIT_abs:
@@ -1285,7 +1315,8 @@ CPU::executeMicroInstruction()
             setN(data & 128);
             setV(data & 64);
             setZ((data & A) == 0);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: BMI
@@ -1299,7 +1330,7 @@ CPU::executeMicroInstruction()
         case BMI_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (getN()) {
                 CONTINUE
@@ -1332,7 +1363,7 @@ CPU::executeMicroInstruction()
         case BNE_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (!getZ()) {
                 CONTINUE
@@ -1365,7 +1396,7 @@ CPU::executeMicroInstruction()
         case BPL_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (!getN()) {
                 CONTINUE
@@ -1462,7 +1493,8 @@ CPU::executeMicroInstruction()
             setPCL(data);
             setPCH(mem->peek(0xFFFB));
             setI(1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: BVC
@@ -1476,7 +1508,7 @@ CPU::executeMicroInstruction()
         case BVC_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
                 
@@ -1522,7 +1554,7 @@ CPU::executeMicroInstruction()
         case BVS_rel:
             
             READ_IMMEDIATE
-            POLL_IRQ_AND_NMI
+            POLL_INT
             
             if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
                 
@@ -1569,7 +1601,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             setC(0);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: CLD
@@ -1584,7 +1617,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             setD(0);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: CLI
@@ -1598,7 +1632,7 @@ CPU::executeMicroInstruction()
         case CLI:
             
             IDLE_READ_IMPLIED
-            POLL_IRQ_AND_NMI
+            POLL_INT
             setI(0);
             DONE_NO_POLL
 
@@ -1615,7 +1649,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             setV(0);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: CMP
@@ -1631,7 +1666,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_abs:
@@ -1648,7 +1684,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_zpg:
@@ -1660,7 +1697,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_zpg_x:
@@ -1678,7 +1716,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_abs_x:
@@ -1700,14 +1739,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 cmp(A, data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case CMP_abs_x_4:
             
             READ_FROM_ADDRESS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_abs_y:
@@ -1729,14 +1770,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 cmp(A, data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case CMP_abs_y_4:
             
             READ_FROM_ADDRESS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_ind_x:
@@ -1764,7 +1807,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CMP_ind_y:
@@ -1791,14 +1835,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 cmp(A, data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case CMP_ind_y_5:
             
             READ_FROM_ADDRESS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: CPX
@@ -1813,7 +1859,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             cmp(X, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CPX_zpg:
@@ -1825,7 +1872,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             cmp(X, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CPX_abs:
@@ -1839,7 +1887,8 @@ CPU::executeMicroInstruction()
         case CPX_abs_3:
             READ_FROM_ADDRESS
             cmp(X, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: CPY
@@ -1854,7 +1903,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             cmp(Y, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CPY_zpg:
@@ -1866,7 +1916,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             cmp(Y, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case CPY_abs:
@@ -1883,7 +1934,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             cmp(Y, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: DEC
@@ -1916,7 +1968,8 @@ CPU::executeMicroInstruction()
         case DEC_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DEC_zpg_x:
@@ -1944,7 +1997,8 @@ CPU::executeMicroInstruction()
         case DEC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DEC_abs:
@@ -1971,7 +2025,8 @@ CPU::executeMicroInstruction()
         case DEC_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DEC_abs_x:
@@ -2005,7 +2060,8 @@ CPU::executeMicroInstruction()
         case DEC_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DEC_ind_x:
@@ -2043,7 +2099,8 @@ CPU::executeMicroInstruction()
         case DEC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: DEX
@@ -2058,7 +2115,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             loadX(getX()-1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         // Instruction: DEY
@@ -2073,7 +2131,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             loadY(getY()-1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: EOR
@@ -2088,7 +2147,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_abs:
@@ -2105,7 +2165,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_zpg:
@@ -2117,7 +2178,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_zpg_x:
@@ -2135,7 +2197,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_abs_x:
@@ -2157,14 +2220,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A ^ data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case EOR_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_abs_y:
@@ -2186,14 +2251,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A ^ data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case EOR_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_ind_x:
@@ -2221,7 +2288,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case EOR_ind_y:
@@ -2248,14 +2316,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A ^ data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case EOR_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: INC
@@ -2288,7 +2358,8 @@ CPU::executeMicroInstruction()
         case INC_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case INC_zpg_x:
@@ -2316,7 +2387,8 @@ CPU::executeMicroInstruction()
         case INC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case INC_abs:
@@ -2343,7 +2415,8 @@ CPU::executeMicroInstruction()
         case INC_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case INC_abs_x:
@@ -2377,7 +2450,8 @@ CPU::executeMicroInstruction()
         case INC_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case INC_ind_x:
@@ -2415,7 +2489,8 @@ CPU::executeMicroInstruction()
         case INC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: INX
@@ -2430,7 +2505,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             loadX(getX()+1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: INY
@@ -2445,7 +2521,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             loadY(getY()+1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: JMP
@@ -2465,7 +2542,8 @@ CPU::executeMicroInstruction()
             
             FETCH_ADDR_HI
             setPC(LO_HI(addr_lo, addr_hi));
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case JMP_abs_indirect:
@@ -2487,7 +2565,8 @@ CPU::executeMicroInstruction()
             
             setPCL(data);
             setPCH(mem->peek(addr_lo+1, addr_hi));
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: JSR
@@ -2522,7 +2601,8 @@ CPU::executeMicroInstruction()
             
             FETCH_ADDR_HI
             setPC(LO_HI(addr_lo, addr_hi));
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LDA
@@ -2538,7 +2618,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDA_zpg:
@@ -2550,7 +2631,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDA_zpg_x:
@@ -2568,7 +2650,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDA_abs:
@@ -2585,7 +2668,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDA_abs_x:
@@ -2607,14 +2691,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDA_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         case LDA_abs_y:
@@ -2636,14 +2722,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDA_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDA_ind_x:
@@ -2671,7 +2759,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDA_ind_y:
@@ -2698,14 +2787,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDA_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LDX
@@ -2721,7 +2812,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDX_zpg:
@@ -2733,7 +2825,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDX_zpg_y:
@@ -2751,7 +2844,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDX_abs:
@@ -2768,7 +2862,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDX_abs_y:
@@ -2790,14 +2885,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadX(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDX_abs_y_4:
             
             READ_FROM_ADDRESS
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDX_ind_x:
@@ -2825,7 +2922,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDX_ind_y:
@@ -2852,14 +2950,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadX(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDX_ind_y_5:
             
             READ_FROM_ADDRESS
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LDY
@@ -2872,12 +2972,13 @@ CPU::executeMicroInstruction()
 
         // -------------------------------------------------------------------------------
         case LDY_imm:
+            
+            READ_IMMEDIATE
+            loadY(data);
+            POLL_INT
+            DONE_NO_POLL
 
-	READ_IMMEDIATE
-	loadY(data);
-	DONE
-
-// -------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------
         case LDY_zpg:
             
             FETCH_ADDR_LO
@@ -2887,7 +2988,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadY(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDY_zpg_x:
@@ -2905,7 +3007,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadY(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDY_abs:
@@ -2922,7 +3025,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS;
             loadY(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDY_abs_x:
@@ -2944,14 +3048,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadY(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDY_abs_x_4:
             
             READ_FROM_ADDRESS
             loadY(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDY_ind_x:
@@ -2979,7 +3085,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadY(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LDY_ind_y:
@@ -3006,14 +3113,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadY(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LDY_ind_y_5:
             
             READ_FROM_ADDRESS
             loadY(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LSR
@@ -3031,7 +3140,8 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             setC(A & 1); loadA(A >> 1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LSR_zpg:
@@ -3053,7 +3163,8 @@ CPU::executeMicroInstruction()
         case LSR_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         case LSR_zpg_x:
@@ -3081,7 +3192,8 @@ CPU::executeMicroInstruction()
         case LSR_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         case LSR_abs:
@@ -3108,7 +3220,8 @@ CPU::executeMicroInstruction()
         case LSR_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
             
         // -------------------------------------------------------------------------------
         case LSR_abs_x:
@@ -3144,7 +3257,8 @@ CPU::executeMicroInstruction()
         case LSR_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LSR_abs_y:
@@ -3180,7 +3294,8 @@ CPU::executeMicroInstruction()
         case LSR_abs_y_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
             // -------------------------------------------------------------------------------
         case LSR_ind_x:
@@ -3218,7 +3333,8 @@ CPU::executeMicroInstruction()
         case LSR_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LSR_ind_y:
@@ -3259,7 +3375,8 @@ CPU::executeMicroInstruction()
         case LSR_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: NOP
@@ -3273,13 +3390,15 @@ CPU::executeMicroInstruction()
         case NOP:
             
             IDLE_READ_IMPLIED
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case NOP_imm:
             
             IDLE_READ_IMMEDIATE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case NOP_zpg:
@@ -3290,7 +3409,8 @@ CPU::executeMicroInstruction()
         case NOP_zpg_2:
             
             READ_FROM_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case NOP_zpg_x:
@@ -3307,7 +3427,8 @@ CPU::executeMicroInstruction()
         case NOP_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case NOP_abs:
@@ -3323,7 +3444,8 @@ CPU::executeMicroInstruction()
         case NOP_abs_3:
             
             READ_FROM_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case NOP_abs_x:
@@ -3344,13 +3466,15 @@ CPU::executeMicroInstruction()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case NOP_abs_x_4:
             
             READ_FROM_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: ORA
@@ -3365,7 +3489,8 @@ CPU::executeMicroInstruction()
             
             READ_IMMEDIATE
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_abs:
@@ -3380,7 +3505,8 @@ CPU::executeMicroInstruction()
         case ORA_abs_3:
             READ_FROM_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_zpg:
@@ -3392,7 +3518,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_zpg_x:
@@ -3410,7 +3537,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ZERO_PAGE
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_abs_x:
@@ -3432,14 +3560,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A | data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case ORA_abs_x_4:
             
             READ_FROM_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_abs_y:
@@ -3461,14 +3591,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A | data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case ORA_abs_y_4:
             
             READ_FROM_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_ind_x:
@@ -3496,7 +3628,8 @@ CPU::executeMicroInstruction()
             
             READ_FROM_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ORA_ind_y:
@@ -3523,14 +3656,16 @@ CPU::executeMicroInstruction()
                 CONTINUE
             } else {
                 loadA(A | data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case ORA_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: PHA
@@ -3549,7 +3684,8 @@ CPU::executeMicroInstruction()
         case PHA_2:
             
             PUSH_A
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: PHA
@@ -3568,7 +3704,8 @@ CPU::executeMicroInstruction()
         case PHP_2:
             
             PUSH_P
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: PLA
@@ -3592,7 +3729,8 @@ CPU::executeMicroInstruction()
         case PLA_3:
             
             PULL_A
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: PLP
@@ -3616,11 +3754,12 @@ CPU::executeMicroInstruction()
         case PLP_3:
             
             // TODO: According to the doc, interrupts are polled first
-            POLL_IRQ_AND_NMI
+            POLL_INT
             PULL_P
             DONE_NO_POLL
             // PULL_P
-            // DONE
+            // POLL_INT
+            // DONE_NO_POLL_INT
 
         // -------------------------------------------------------------------------------
         // Instruction: ROL
@@ -3656,7 +3795,8 @@ inline uint8_t CPU::rol(uint8_t op)
                 setC(A & 128);
                 loadA(A << 1);
             }
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROL_zpg:
@@ -3678,7 +3818,8 @@ inline uint8_t CPU::rol(uint8_t op)
         case ROL_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROL_zpg_x:
@@ -3706,7 +3847,8 @@ inline uint8_t CPU::rol(uint8_t op)
         case ROL_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROL_abs:
@@ -3733,7 +3875,8 @@ inline uint8_t CPU::rol(uint8_t op)
         case ROL_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROL_abs_x:
@@ -3767,7 +3910,8 @@ inline uint8_t CPU::rol(uint8_t op)
         case ROL_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROL_ind_x:
@@ -3805,7 +3949,8 @@ inline uint8_t CPU::rol(uint8_t op)
         case ROL_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: ROR
@@ -3841,7 +3986,8 @@ inline uint8_t CPU::ror(uint8_t op)
                 setC(A & 1);
                 loadA(A >> 1);
             }
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROR_zpg:
@@ -3863,7 +4009,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case ROR_zpg_4:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROR_zpg_x:
@@ -3891,7 +4038,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case ROR_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROR_abs:
@@ -3918,7 +4066,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case ROR_abs_5:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROR_abs_x:
@@ -3954,7 +4103,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case ROR_abs_x_6:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ROR_ind_x:
@@ -3992,7 +4142,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case ROR_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: RTI
@@ -4028,7 +4179,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case RTI_5:
             
             PULL_PCH
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: RTS
@@ -4063,7 +4215,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case RTS_5:
             
             IDLE_READ_IMMEDIATE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SBC
@@ -4079,7 +4232,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             READ_IMMEDIATE
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_zpg:
@@ -4091,7 +4245,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             READ_FROM_ZERO_PAGE
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_zpg_x:
@@ -4109,7 +4264,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             READ_FROM_ZERO_PAGE
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_abs:
@@ -4126,7 +4282,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             READ_FROM_ADDRESS;
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_abs_x:
@@ -4148,14 +4305,16 @@ inline uint8_t CPU::ror(uint8_t op)
                 CONTINUE
             } else {
                 sbc(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case SBC_abs_x_4:
             
             READ_FROM_ADDRESS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_abs_y:
@@ -4177,14 +4336,16 @@ inline uint8_t CPU::ror(uint8_t op)
                 CONTINUE
             } else {
                 sbc(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case SBC_abs_y_4:
             
             READ_FROM_ADDRESS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_ind_x:
@@ -4212,7 +4373,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             READ_FROM_ADDRESS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SBC_ind_y:
@@ -4239,14 +4401,16 @@ inline uint8_t CPU::ror(uint8_t op)
                 CONTINUE
             } else {
                 sbc(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case SBC_ind_y_5:
             
             READ_FROM_ADDRESS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SEC
@@ -4261,7 +4425,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             setC(1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SED
@@ -4276,7 +4441,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             setD(1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SEI
@@ -4290,7 +4456,7 @@ inline uint8_t CPU::ror(uint8_t op)
         case SEI:
             
             IDLE_READ_IMPLIED
-            POLL_IRQ_AND_NMI
+            POLL_INT
             setI(1);
             DONE_NO_POLL
 
@@ -4312,7 +4478,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STA_zpg_x:
@@ -4330,7 +4497,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STA_abs:
@@ -4347,7 +4515,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STA_abs_x:
@@ -4371,7 +4540,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STA_abs_y:
@@ -4396,7 +4566,8 @@ inline uint8_t CPU::ror(uint8_t op)
                 
                 data = A;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STA_ind_x:
@@ -4424,7 +4595,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STA_ind_y:
@@ -4453,7 +4625,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: STX
@@ -4473,7 +4646,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = X;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STX_zpg_y:
@@ -4491,7 +4665,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = X;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STX_abs:
@@ -4508,7 +4683,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = X;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: STY
@@ -4528,7 +4704,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = Y;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STY_zpg_x:
@@ -4546,7 +4723,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = Y;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case STY_abs:
@@ -4563,7 +4741,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = Y;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TAX
@@ -4578,7 +4757,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             loadX(A);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TAY
@@ -4593,7 +4773,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             loadY(A);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TSX
@@ -4608,7 +4789,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             loadX(SP);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TXA
@@ -4623,7 +4805,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             loadA(X);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TXS
@@ -4638,7 +4821,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             SP = X;
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TYA
@@ -4653,7 +4837,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             loadA(Y);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Illegal instructions
@@ -4675,7 +4860,8 @@ inline uint8_t CPU::ror(uint8_t op)
             A = A & data;
             setC(A & 1);
             loadA(A >> 1);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: ANC
@@ -4691,7 +4877,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_IMMEDIATE
             loadA(A & data);
             setC(getN());
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: ARR
@@ -4731,7 +4918,8 @@ inline uint8_t CPU::ror(uint8_t op)
                     setC(0);
                 }
             }
-            DONE
+            POLL_INT
+            DONE_NO_POLL
         }
 
         // -------------------------------------------------------------------------------
@@ -4752,7 +4940,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             setC(op2 >= data);
             loadX(tmp);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
         }
 
         // -------------------------------------------------------------------------------
@@ -4784,7 +4973,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DCP_zpg_x:
@@ -4813,7 +5003,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DCP_abs:
@@ -4841,7 +5032,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DCP_abs_x:
@@ -4876,7 +5068,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DCP_abs_y:
@@ -4911,7 +5104,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DCP_ind_x:
@@ -4950,7 +5144,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
-            DONE;
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case DCP_ind_y:
@@ -4990,7 +5185,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             cmp(A, data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: ISC
@@ -5021,7 +5217,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ISC_zpg_x:
@@ -5050,7 +5247,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ISC_abs:
@@ -5078,7 +5276,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ISC_abs_x:
@@ -5113,7 +5312,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ISC_abs_y:
@@ -5148,7 +5348,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ISC_ind_x:
@@ -5187,7 +5388,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case ISC_ind_y:
@@ -5227,7 +5429,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             sbc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LAS
@@ -5260,7 +5463,8 @@ inline uint8_t CPU::ror(uint8_t op)
                 SP = data;
                 X = data;
                 loadA(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LAS_abs_y_4:
@@ -5270,7 +5474,8 @@ inline uint8_t CPU::ror(uint8_t op)
             SP = data;
             X = data;
             loadA(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LAX
@@ -5291,7 +5496,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_FROM_ZERO_PAGE
             loadA(data);
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LAX_zpg_y:
@@ -5310,7 +5516,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_FROM_ZERO_PAGE
             loadA(data);
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LAX_abs:
@@ -5328,7 +5535,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_FROM_ADDRESS;
             loadA(data);
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LAX_abs_y:
@@ -5351,7 +5559,8 @@ inline uint8_t CPU::ror(uint8_t op)
             } else {
                 loadA(data);
                 loadX(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LAX_abs_y_4:
@@ -5359,7 +5568,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_FROM_ADDRESS
             loadA(data);
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LAX_ind_x:
@@ -5388,7 +5598,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_FROM_ADDRESS
             loadA(data);
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case LAX_ind_y:
@@ -5416,7 +5627,8 @@ inline uint8_t CPU::ror(uint8_t op)
             } else {
                 loadA(data);
                 loadX(data);
-                DONE
+                POLL_INT
+                DONE_NO_POLL
             }
             
         case LAX_ind_y_5:
@@ -5424,7 +5636,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_FROM_ADDRESS
             loadA(data);
             loadX(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: RLA
@@ -5456,7 +5669,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RLA_zpg_x:
@@ -5485,7 +5699,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RLA_abs:
@@ -5513,7 +5728,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RLA_abs_x:
@@ -5548,7 +5764,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RLA_abs_y:
@@ -5583,7 +5800,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RLA_ind_x:
@@ -5622,7 +5840,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RLA_ind_y:
@@ -5662,7 +5881,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A & data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: RRA
@@ -5694,7 +5914,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RRA_zpg_x:
@@ -5723,7 +5944,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RRA_abs:
@@ -5751,7 +5973,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RRA_abs_x:
@@ -5786,7 +6009,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RRA_abs_y:
@@ -5821,7 +6045,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RRA_ind_x:
@@ -5860,7 +6085,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case RRA_ind_y:
@@ -5900,7 +6126,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             adc(data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SAX
@@ -5920,7 +6147,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A & X;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SAX_zpg_y:
@@ -5938,7 +6166,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A & X;
             WRITE_TO_ZERO_PAGE
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SAX_abs:
@@ -5955,7 +6184,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A & X;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SAX_ind_x:
@@ -5983,7 +6213,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A & X;
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SHA
@@ -6015,7 +6246,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A & X & (addr_hi + 1);
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SHA_ind_y:
@@ -6044,7 +6276,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = A & X & (addr_hi + 1);
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SHX
@@ -6076,7 +6309,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = X & (addr_hi + 1);
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SHY
@@ -6108,7 +6342,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             data = 	data = Y & (addr_hi + 1);
             WRITE_TO_ADDRESS
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SLO (ASO)
@@ -6142,7 +6377,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SLO_zpg_x:
@@ -6171,7 +6407,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SLO_abs:
@@ -6198,7 +6435,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SLO_abs_x:
@@ -6233,7 +6471,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SLO_abs_y:
@@ -6268,7 +6507,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SLO_ind_x:
@@ -6307,7 +6547,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SLO_ind_y:
@@ -6346,7 +6587,8 @@ inline uint8_t CPU::ror(uint8_t op)
         case SLO_ind_y_7:
             WRITE_TO_ADDRESS
             loadA(A | data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: SRE (LSE)
@@ -6380,7 +6622,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SRE_zpg_x:
@@ -6409,7 +6652,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ZERO_PAGE
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SRE_abs:
@@ -6437,7 +6681,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SRE_abs_x:
@@ -6472,7 +6717,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SRE_abs_y:
@@ -6507,7 +6753,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SRE_ind_x:
@@ -6546,7 +6793,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         case SRE_ind_y:
@@ -6586,7 +6834,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             WRITE_TO_ADDRESS
             loadA(A ^ data);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: TAS (SHS)
@@ -6623,11 +6872,12 @@ inline uint8_t CPU::ror(uint8_t op)
             
         case TAS_abs_y_4:
             
-            IDLE_READ_FROM_ADDRESS;
+            IDLE_READ_FROM_ADDRESS
             SP = A & X;
             data &= SP;
-            WRITE_TO_ADDRESS;
-            DONE;
+            WRITE_TO_ADDRESS
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: ANE
@@ -6642,7 +6892,8 @@ inline uint8_t CPU::ror(uint8_t op)
             
             READ_IMMEDIATE
             loadA(X & data & (A | 0xEE));
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
         // Instruction: LXA
@@ -6658,7 +6909,8 @@ inline uint8_t CPU::ror(uint8_t op)
             READ_IMMEDIATE
             X = data & (A | 0xEE);
             loadA(X);
-            DONE
+            POLL_INT
+            DONE_NO_POLL
 
         default:
             debug("ERROR: UNIMPLEMENTED OPCODE: %d (%02X)\n", next, next);
