@@ -73,7 +73,6 @@ CPU::CPU()
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
         { &callStack,               sizeof(callStack),              CLEAR_ON_RESET | WORD_FORMAT },
         { &callStackPointer,        sizeof(callStackPointer),       CLEAR_ON_RESET },
-        { &oldI,                    sizeof(oldI),                   CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -152,18 +151,6 @@ CPU::releaseIrqLine(uint8_t source)
 {
     irqLine &= ~source;
     write8_delayed(levelDetector, irqLine);
-}
-
-bool
-CPU::IRQsAreBlocked() { 
-	bool result;
-	if (opcode == 0x78 /* SEI */ || opcode == 0x58 /* CLI */)
-		result = oldI;
-	else
-		result = I;
-
-	oldI = I;
-	return result;
 }
 
 // Instruction set

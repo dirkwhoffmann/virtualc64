@@ -1599,10 +1599,7 @@ CPU::executeMicroInstruction()
             
             IDLE_READ_IMPLIED
             POLL_IRQ_AND_NMI
-            
-            oldI = I;
             setI(0);
-            
             DONE_NO_POLL
 
         // -------------------------------------------------------------------------------
@@ -4294,10 +4291,7 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_IMPLIED
             POLL_IRQ_AND_NMI
-            
-            oldI = I;
             setI(1);
-            
             DONE_NO_POLL
 
         // -------------------------------------------------------------------------------

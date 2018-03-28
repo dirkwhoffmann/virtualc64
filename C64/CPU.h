@@ -224,9 +224,6 @@ private:
 	//! @brief    Location of the next free cell of the callstack.
 	uint8_t callStackPointer;
 
-	//! @brief    Value of the I flag before it got changed with the SEI command.
-	uint8_t oldI;
-			
 #include "Instructions.h"
 		
 public:
@@ -414,16 +411,6 @@ public:
      */
     void releaseIrqLine(uint8_t source);
     
-    
-    /*! @brief    Returns true iff IRQs are blocked
-     *  @details  IRQs are blocked by setting the I flag to 1. The I flag is set with the SEI command
-     *            and cleared with the CLI command. Note that the timing is important here! When an
-     *            interrupt occures while SEI or CLI is executed, the previous value of I determines
-     *            whether an interrupt is triggered or not. To handle timing correctly, the previous
-     *            value of I is stored in variable oldI whenever SEI or CLI is executed.
-     */
-    bool IRQsAreBlocked(); // REMOVE
-
 	//! @brief    Returns bit of IRQ line.
     uint8_t getIRQLine(uint8_t source) { return irqLine & source; }
 	
