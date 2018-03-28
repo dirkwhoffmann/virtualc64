@@ -356,15 +356,13 @@ typedef enum {
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
 
+// #define POLL_IRQ doIrq = (read8_delayed(levelDetector) && I == 0);
 #define POLL_INT doIrq = (read8_delayed(levelDetector) && I == 0); \
                  doNmi = read8_delayed(edgeDetector);
 #define POLL_INT_AGAIN doIrq |= (read8_delayed(levelDetector) && I == 0); \
                        doNmi |= read8_delayed(edgeDetector);
-
-#define POLL_IRQ doIrq = (read8_delayed(levelDetector) && I == 0);
 #define CONTINUE next = (MicroInstruction)((int)next+1); return;
-// #define DONE next = fetch; doIrq = (read8_delayed(levelDetector) && I == 0); doNmi = read8_delayed(edgeDetector); return;
-#define DONE_NO_POLL next = fetch; return;
+#define DONE     next = fetch; return;
 
 
 //! Next microinstruction to be executed
