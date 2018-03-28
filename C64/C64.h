@@ -20,17 +20,14 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.8.2
 //
-// The CPU implementation has been revised. In particular, the accuracy of interrupt handling has been improved.
+// Accuracy of interrupt handling has been improved.
+// As a result, VirtualC64 passes VICE test cia-timer-oldcias.
 //
 // TODO:
-// Fix NSScrubber bug
 //
 // Add highjacking to IRQs as well (only implemented in BRK so far (?!) )
 // What about the PLP command?
 //
-//
-// cleanup macros in Instructions.h
-// Use Web page INT description in comments
 
 
 
@@ -38,7 +35,7 @@
 #define _C64_INC
 
 // Disable assert checking in relase versions
-// #define NDEBUG
+#define NDEBUG
 
 // Data types and constants
 #include "C64_defs.h"

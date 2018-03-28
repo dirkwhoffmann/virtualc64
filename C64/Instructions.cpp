@@ -542,6 +542,17 @@ CPU::executeMicroInstruction()
         case irq_4:
             
             mem->poke(0x100+(SP--), LO_BYTE(PC));
+            
+            // Check for interrupt hijacking
+            
+            // If there is a positive edge on the NMI line ...
+            if (edgeDetector.value) {
+                
+                // ... the processor will jump to the NMI vector instead of the IRQ vector
+                clear8_delayed(edgeDetector);
+                next = nmi_5;
+                return;
+            }
             CONTINUE
             
         case irq_5:
@@ -1446,8 +1457,7 @@ CPU::executeMicroInstruction()
             // If there is a positive edge on the NMI line ...
             if (edgeDetector.value) {
             
-                // ... the processor will jump to the NMI vector ($FFFA),
-                // and the P register will be pushed on the stack with the B flag set.
+                // ... the processor will jump to the NMI vector instead of the IRQ vector
                 clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
                 return;
@@ -3752,13 +3762,9 @@ CPU::executeMicroInstruction()
             
         case PLP_3:
             
-            // TODO: According to the doc, interrupts are polled first
-            POLL_INT
+            POLL_INT // Interrupts are polled before P is pulled
             PULL_P
             DONE
-            // PULL_P
-            // POLL_INT
-            // DONE_INT
 
         // -------------------------------------------------------------------------------
         // Instruction: ROL
