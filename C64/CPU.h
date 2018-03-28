@@ -164,7 +164,6 @@ private:
      *            bits indicate the interrupt source.
      */
 	uint8_t irqLine;
-    uint8_t oldIrqLine; // REMOVE
 
 	/*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -176,7 +175,7 @@ private:
      *             is detected, and stays high until the NMI has been handled."
      */
 	bool nmiEdge; // REMOVE
-    bool oldNmiEdge; // REMOVE
+
     uint8_delayed edgeDetector;
     
     /*! @brief    Level detector of IRQ line

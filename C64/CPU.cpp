@@ -71,9 +71,7 @@ CPU::CPU()
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
         { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
 
-        { &oldIrqLine,              sizeof(oldIrqLine),             CLEAR_ON_RESET },
         { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
-        { &oldNmiEdge,              sizeof(oldNmiEdge),             CLEAR_ON_RESET },
         { &nextPossibleIrqCycle,    sizeof(nextPossibleIrqCycle),   CLEAR_ON_RESET },
         { &nextPossibleNmiCycle,    sizeof(nextPossibleNmiCycle),   CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
@@ -120,14 +118,7 @@ CPU::dumpState()
 bool
 CPU::executeOneCycle() {
     
-    assert (oldNmiEdge == read8_delayed(edgeDetector));
-    if (oldIrqLine != read8_delayed(levelDetector)) {
-        debug("MISMATCH ON IRQ LINE: %lld %lld %d %d %d %d\n",
-              c64->cycle, levelDetector.timeStamp, levelDetector.value, levelDetector.prevValue, irqLine, oldIrqLine);
-    }
     executeMicroInstruction();
-    oldIrqLine = irqLine;
-    oldNmiEdge = nmiEdge;
     return errorState == CPU_OK;
 }
 

@@ -1436,7 +1436,7 @@ CPU::executeMicroInstruction()
             
                 // ... the processor will jump to the NMI vector ($FFFA),
                 // and the P register will be pushed on the stack with the B flag set.
-                nmiEdge = oldNmiEdge = false;
+                nmiEdge = false;
                 clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
                 return;
