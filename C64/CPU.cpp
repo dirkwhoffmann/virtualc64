@@ -70,10 +70,6 @@ CPU::CPU()
         { &levelDetector,           sizeof(levelDetector),          CLEAR_ON_RESET },
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
         { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
-
-        { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
-        { &nextPossibleIrqCycle,    sizeof(nextPossibleIrqCycle),   CLEAR_ON_RESET },
-        { &nextPossibleNmiCycle,    sizeof(nextPossibleNmiCycle),   CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
         { &callStack,               sizeof(callStack),              CLEAR_ON_RESET | WORD_FORMAT },
         { &callStackPointer,        sizeof(callStackPointer),       CLEAR_ON_RESET },
@@ -104,10 +100,12 @@ CPU::dumpState()
 	msg("----\n\n");
     msg("%s\n", disassemble());
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
-	msg("      Irq line : %02X\n", irqLine);
-	msg("      Nmi line : %02X %s\n", nmiLine, nmiEdge ? "(negative edge)" : "");
-	msg(" no IRQ before : %ull\n", nextPossibleIrqCycle);
-	msg(" no NMI before : %ull\n", nextPossibleNmiCycle);
+    msg("      Nmi line : %02X\n", nmiLine);
+    msg(" Edge detector : %02X\n", read8_delayed(edgeDetector));
+    msg("         doNmi : %s\n", doNmi ? "yes" : "no");
+    msg("      Irq line : %02X\n", irqLine);
+    msg("Level detector : %02X\n", read8_delayed(levelDetector));
+    msg("         doIrq : %s\n", doIrq ? "yes" : "no");
 	msg("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
 	msg("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
 	msg("\n");
@@ -127,11 +125,9 @@ CPU::pullDownNmiLine(uint8_t bit)
 {
     assert(bit != 0);
     
-    if (!nmiLine) {
-        nmiEdge = true;
+    // Check for falling edge on physical line
+    if (!nmiLine)
         write8_delayed(edgeDetector, 1);
-        nextPossibleNmiCycle = c64->getCycles() + 2;
-    }
     
     nmiLine |= bit;
 }
@@ -147,9 +143,6 @@ CPU::pullDownIrqLine(uint8_t source)
 {
 	assert(source != 0);
     
-	if (irqLine == 0) {
-		nextPossibleIrqCycle = c64->getCycles() + 2;
-	}
 	irqLine |= source;
     write8_delayed(levelDetector, irqLine);
 }
@@ -159,12 +152,6 @@ CPU::releaseIrqLine(uint8_t source)
 {
     irqLine &= ~source;
     write8_delayed(levelDetector, irqLine);
-}
-
-bool 
-CPU::IRQLineRaisedLongEnough() 
-{ 
-	return c64->getCycles() >= nextPossibleIrqCycle;
 }
 
 bool
@@ -178,15 +165,6 @@ CPU::IRQsAreBlocked() {
 	oldI = I;
 	return result;
 }
-
-
-
-bool
-CPU::NMILineRaisedLongEnough()
-{ 
-	return c64->getCycles() >= nextPossibleNmiCycle;
-}
-
 
 // Instruction set
 const char 

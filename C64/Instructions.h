@@ -357,7 +357,6 @@ typedef enum {
 #define FIX_ADDR_HI addr_hi++;
 
 #define POLL_IRQ doIrq = (read8_delayed(levelDetector) && I == 0);
-#define POLL_NMI doNmi = oldNmiEdge;
 #define POLL_IRQ_AND_NMI doIrq = (read8_delayed(levelDetector) && I == 0); doNmi = read8_delayed(edgeDetector);
 #define POLL_IRQ_AND_NMI_AGAIN doIrq |= read8_delayed(levelDetector) && I == 0; doNmi |= read8_delayed(edgeDetector);
 

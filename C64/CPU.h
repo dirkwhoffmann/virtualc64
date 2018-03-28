@@ -174,8 +174,6 @@ private:
      *             signal goes high during φ1 of the cycle that follows the one where the edge
      *             is detected, and stays high until the NMI has been handled."
      */
-	bool nmiEdge; // REMOVE
-
     uint8_delayed edgeDetector;
     
     /*! @brief    Level detector of IRQ line
@@ -198,7 +196,7 @@ private:
      *             Many references will claim that interrupts are polled during the last cycle
      *             of an instruction, but this is true only when talking about the output from
      *             the edge and level detectors."
-     * @seealso   Makro POLL_INTS
+     *            Variable is set in macro POLL_INTS (Instructions.h)
      */
     bool doNmi;
     
@@ -207,23 +205,10 @@ private:
      *  @note     "If both an NMI and an IRQ are pending at the end of an instruction, the
      *             NMI will be handled and the pending status of the IRQ forgotten (though it's
      *             likely to be detected again during later polling)."
+     *            Variable is set in macro POLL_INTS (Instructions.h)
      */
     bool doIrq;
     
-	/*! @brief    Indicates when the next IRQ can occurr. 
-     *  @details  This variable is set when a negative edge occurs on the irq line and stores the
-     *            next cycle in which an IRQ can occur. The value is needed to determine the exact 
-     *            time to trigger the interrupt.
-     */
-	uint64_t nextPossibleIrqCycle; // REMOVE
-	
-    /*! @brief    Indicates when the next NMI can occurr.
-     *  @details  This variable is set when a negative edge occurs on the nmi line and stores the
-     *            next cycle in which an NMI can occur. The value is needed to determine the exact 
-     *            time to trigger the interrupt.
-     */
-	uint64_t nextPossibleNmiCycle; // REMOVE
-		
 	//! @brief    Current error state
 	ErrorState errorState;
     
@@ -441,12 +426,6 @@ public:
 
 	//! @brief    Returns bit of IRQ line.
     uint8_t getIRQLine(uint8_t source) { return irqLine & source; }
-	
-	//! @brief    Checks if IRQ line has been activated for at least 2 cycles.
-	bool IRQLineRaisedLongEnough(); // REMOVE
-	
-	//! @brief    Checks if NMI line has been activated for at least 2 cycles.
-	bool NMILineRaisedLongEnough(); // REMOVE
 	
 	//! @brief    Sets CIA bit of IRQ line.
     void pullDownIrqLineCIA() { pullDownIrqLine(0x01); }

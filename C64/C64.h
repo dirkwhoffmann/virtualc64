@@ -28,7 +28,7 @@
 // Add highjacking to IRQs as well (only implemented in BRK so far (?!) )
 // What about the PLP command?
 //
-// Remove nextPossibleXXXcycle, oldI
+// Remove oldI
 //
 // cleanup macros in Instructions.h
 // Use Web page INT description in comments

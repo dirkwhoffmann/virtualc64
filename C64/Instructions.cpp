@@ -472,7 +472,6 @@ CPU::executeMicroInstruction()
             if (doNmi) {
                 
                 if (tracingEnabled()) trace("NMI (source = %02X)\n", nmiLine);
-                nmiEdge = false;
                 clear8_delayed(edgeDetector);
                 next = nmi_2;
                 doNmi = false;
@@ -1177,11 +1176,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
             
         // -------------------------------------------------------------------------------
@@ -1213,11 +1209,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
             
         // -------------------------------------------------------------------------------
@@ -1249,11 +1242,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
             
         // -------------------------------------------------------------------------------
@@ -1326,11 +1316,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
             
         // -------------------------------------------------------------------------------
@@ -1362,11 +1349,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
 
         // -------------------------------------------------------------------------------
@@ -1398,11 +1382,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
 
         // -------------------------------------------------------------------------------
@@ -1436,7 +1417,6 @@ CPU::executeMicroInstruction()
             
                 // ... the processor will jump to the NMI vector ($FFFA),
                 // and the P register will be pushed on the stack with the B flag set.
-                nmiEdge = false;
                 clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
                 return;
@@ -1461,12 +1441,8 @@ CPU::executeMicroInstruction()
             setPCH(mem->peek(0xFFFF));
             setI(1);
             
-            // "Ein NMI darf nicht sofort nach einem BRK oder IRQ ausgeführt werden, sondern erst mit 1 Cycle Delay."
-            // [http://www.c64-wiki.de/index.php/Micro64]
-            if (nextPossibleNmiCycle < c64->getCycles() + 2)
-                nextPossibleNmiCycle = c64->getCycles() + 2;
-            
-            // HOW DO WE HANDLE THIS???
+            // Only the level detector is polled here. This is the reason why only IRQs can
+            // be triggered right after a BRK command, but not NMIs.
             POLL_IRQ
             doNmi = false;
             DONE_NO_POLL
@@ -1530,11 +1506,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
 
         // -------------------------------------------------------------------------------
@@ -1579,11 +1552,8 @@ CPU::executeMicroInstruction()
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return;
-            } else {
-                nextPossibleIrqCycle++; // Delay IRQs by one cycle
-                nextPossibleNmiCycle++;
-                DONE_NO_POLL
             }
+            DONE_NO_POLL
         }
 
         // -------------------------------------------------------------------------------
