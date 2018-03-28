@@ -26,7 +26,7 @@ typedef enum {
     irq, irq_2, irq_3, irq_4, irq_5, irq_6, irq_7,
     nmi, nmi_2, nmi_3, nmi_4, nmi_5, nmi_6, nmi_7,
     
-    ADC_immediate,
+    ADC_imm,
     ADC_zpg,   ADC_zpg_2,
     ADC_zpg_x, ADC_zpg_x_2, ADC_zpg_x_3,
     ADC_abs,   ADC_abs_2,   ADC_abs_3,
@@ -35,7 +35,7 @@ typedef enum {
     ADC_ind_x, ADC_ind_x_2, ADC_ind_x_3, ADC_ind_x_4, ADC_ind_x_5,
     ADC_ind_y, ADC_ind_y_2, ADC_ind_y_3, ADC_ind_y_4, ADC_ind_y_5,
     
-    AND_immediate,
+    AND_imm,
     AND_zpg,   AND_zpg_2,
     AND_zpg_x, AND_zpg_x_2, AND_zpg_x_3,
     AND_abs,   AND_abs_2,   AND_abs_3,
@@ -44,7 +44,7 @@ typedef enum {
     AND_ind_x, AND_ind_x_2, AND_ind_x_3, AND_ind_x_4, AND_ind_x_5,
     AND_ind_y, AND_ind_y_2, AND_ind_y_3, AND_ind_y_4, AND_ind_y_5,
     
-    ASL_accumulator,
+    ASL_acc,
     ASL_zpg,   ASL_zpg_2,   ASL_zpg_3,   ASL_zpg_4,
     ASL_zpg_x, ASL_zpg_x_2, ASL_zpg_x_3, ASL_zpg_x_4, ASL_zpg_x_5,
     ASL_abs,   ASL_abs_2,   ASL_abs_3,   ASL_abs_4,   ASL_abs_5,
@@ -52,28 +52,28 @@ typedef enum {
     ASL_ind_x, ASL_ind_x_2, ASL_ind_x_3, ASL_ind_x_4, ASL_ind_x_5, ASL_ind_x_6, ASL_ind_x_7,
     
     branch_3_underflow, branch_3_overflow,
-    BCC_relative, BCC_relative_2,
-    BCS_relative, BCS_relative_2,
-    BEQ_relative, BEQ_relative_2,
+    BCC_rel, BCC_rel_2,
+    BCS_rel, BCS_rel_2,
+    BEQ_rel, BEQ_rel_2,
     
     BIT_zpg, BIT_zpg_2,
     BIT_abs, BIT_abs_2, BIT_abs_3,
     
-    BMI_relative, BMI_relative_2,
-    BNE_relative, BNE_relative_2,
-    BPL_relative, BPL_relative_2,
+    BMI_rel, BMI_rel_2,
+    BNE_rel, BNE_rel_2,
+    BPL_rel, BPL_rel_2,
     
     BRK, BRK_2, BRK_3, BRK_4, BRK_5, BRK_6,
     BRK_nmi_4, BRK_nmi_5, BRK_nmi_6,
     
-    BVC_relative, BVC_relative_2,
-    BVS_relative, BVS_relative_2,
+    BVC_rel, BVC_rel_2,
+    BVS_rel, BVS_rel_2,
     CLC,
     CLD,
     CLI,
     CLV,
     
-    CMP_immediate,
+    CMP_imm,
     CMP_zpg,   CMP_zpg_2,
     CMP_zpg_x, CMP_zpg_x_2, CMP_zpg_x_3,
     CMP_abs,   CMP_abs_2,   CMP_abs_3,
@@ -82,11 +82,11 @@ typedef enum {
     CMP_ind_x, CMP_ind_x_2, CMP_ind_x_3, CMP_ind_x_4, CMP_ind_x_5,
     CMP_ind_y, CMP_ind_y_2, CMP_ind_y_3, CMP_ind_y_4, CMP_ind_y_5,
     
-    CPX_immediate,
+    CPX_imm,
     CPX_zpg, CPX_zpg_2,
     CPX_abs, CPX_abs_2, CPX_abs_3,
     
-    CPY_immediate,
+    CPY_imm,
     CPY_zpg, CPY_zpg_2,
     CPY_abs, CPY_abs_2, CPY_abs_3,
     
@@ -99,7 +99,7 @@ typedef enum {
     DEX,
     DEY,
     
-    EOR_immediate,
+    EOR_imm,
     EOR_zpg,   EOR_zpg_2,
     EOR_zpg_x, EOR_zpg_x_2, EOR_zpg_x_3,
     EOR_abs,   EOR_abs_2,   EOR_abs_3,
@@ -122,7 +122,7 @@ typedef enum {
     
     JSR, JSR_2, JSR_3, JSR_4, JSR_5,
     
-    LDA_immediate,
+    LDA_imm,
     LDA_zpg,   LDA_zpg_2,
     LDA_zpg_x, LDA_zpg_x_2, LDA_zpg_x_3,
     LDA_abs,   LDA_abs_2,   LDA_abs_3,
@@ -131,7 +131,7 @@ typedef enum {
     LDA_ind_x, LDA_ind_x_2, LDA_ind_x_3, LDA_ind_x_4, LDA_ind_x_5,
     LDA_ind_y, LDA_ind_y_2, LDA_ind_y_3, LDA_ind_y_4, LDA_ind_y_5,
     
-    LDX_immediate,
+    LDX_imm,
     LDX_zpg,   LDX_zpg_2,
     LDX_zpg_y, LDX_zpg_y_2, LDX_zpg_y_3,
     LDX_abs,   LDX_abs_2,   LDX_abs_3,
@@ -139,7 +139,7 @@ typedef enum {
     LDX_ind_x, LDX_ind_x_2, LDX_ind_x_3, LDX_ind_x_4, LDX_ind_x_5,
     LDX_ind_y, LDX_ind_y_2, LDX_ind_y_3, LDX_ind_y_4, LDX_ind_y_5,
     
-    LDY_immediate,
+    LDY_imm,
     LDY_zpg,   LDY_zpg_2,
     LDY_zpg_x, LDY_zpg_x_2, LDY_zpg_x_3,
     LDY_abs,   LDY_abs_2,   LDY_abs_3,
@@ -147,7 +147,7 @@ typedef enum {
     LDY_ind_x, LDY_ind_x_2, LDY_ind_x_3, LDY_ind_x_4, LDY_ind_x_5,
     LDY_ind_y, LDY_ind_y_2, LDY_ind_y_3, LDY_ind_y_4, LDY_ind_y_5,
     
-    LSR_accumulator,
+    LSR_acc,
     LSR_zpg,   LSR_zpg_2,   LSR_zpg_3,   LSR_zpg_4,
     LSR_zpg_x, LSR_zpg_x_2, LSR_zpg_x_3, LSR_zpg_x_4, LSR_zpg_x_5,
     LSR_abs,   LSR_abs_2,   LSR_abs_3,   LSR_abs_4,   LSR_abs_5,
@@ -157,13 +157,13 @@ typedef enum {
     LSR_ind_y, LSR_ind_y_2, LSR_ind_y_3, LSR_ind_y_4, LSR_ind_y_5, LSR_ind_y_6, LSR_ind_y_7,
     
     NOP,
-    NOP_immediate,
+    NOP_imm,
     NOP_zpg,   NOP_zpg_2,
     NOP_zpg_x, NOP_zpg_x_2, NOP_zpg_x_3,
     NOP_abs,   NOP_abs_2,   NOP_abs_3,
     NOP_abs_x, NOP_abs_x_2, NOP_abs_x_3, NOP_abs_x_4,
     
-    ORA_immediate,
+    ORA_imm,
     ORA_zpg,   ORA_zpg_2,
     ORA_zpg_x, ORA_zpg_x_2, ORA_zpg_x_3,
     ORA_abs,   ORA_abs_2,   ORA_abs_3,
@@ -177,14 +177,14 @@ typedef enum {
     PLA, PLA_2, PLA_3,
     PLP, PLP_2, PLP_3,
     
-    ROL_accumulator,
+    ROL_acc,
     ROL_zpg,   ROL_zpg_2,   ROL_zpg_3,   ROL_zpg_4,
     ROL_zpg_x, ROL_zpg_x_2, ROL_zpg_x_3, ROL_zpg_x_4, ROL_zpg_x_5,
     ROL_abs,   ROL_abs_2,   ROL_abs_3,   ROL_abs_4,   ROL_abs_5,
     ROL_abs_x, ROL_abs_x_2, ROL_abs_x_3, ROL_abs_x_4, ROL_abs_x_5, ROL_abs_x_6,
     ROL_ind_x, ROL_ind_x_2, ROL_ind_x_3, ROL_ind_x_4, ROL_ind_x_5, ROL_ind_x_6, ROL_ind_x_7,
     
-    ROR_accumulator,
+    ROR_acc,
     ROR_zpg,   ROR_zpg_2,   ROR_zpg_3,   ROR_zpg_4,
     ROR_zpg_x, ROR_zpg_x_2, ROR_zpg_x_3, ROR_zpg_x_4, ROR_zpg_x_5,
     ROR_abs,   ROR_abs_2,   ROR_abs_3,   ROR_abs_4,   ROR_abs_5,
@@ -194,7 +194,7 @@ typedef enum {
     RTI, RTI_2, RTI_3, RTI_4, RTI_5,
     RTS, RTS_2, RTS_3, RTS_4, RTS_5,
     
-    SBC_immediate,
+    SBC_imm,
     SBC_zpg,   SBC_zpg_2,
     SBC_zpg_x, SBC_zpg_x_2, SBC_zpg_x_3,
     SBC_abs,   SBC_abs_2,   SBC_abs_3,
@@ -232,11 +232,11 @@ typedef enum {
     
     // Illegal instructions
     
-    ALR_immediate,
-    ANC_immediate,
-    ANE_immediate,
-    ARR_immediate,
-    AXS_immediate,
+    ALR_imm,
+    ANC_imm,
+    ANE_imm,
+    ARR_imm,
+    AXS_imm,
     
     DCP_zpg,   DCP_zpg_2,   DCP_zpg_3,   DCP_zpg_4,
     DCP_zpg_x, DCP_zpg_x_2, DCP_zpg_x_3, DCP_zpg_x_4, DCP_zpg_x_5,
@@ -263,7 +263,7 @@ typedef enum {
     LAX_ind_x, LAX_ind_x_2, LAX_ind_x_3, LAX_ind_x_4, LAX_ind_x_5,
     LAX_ind_y, LAX_ind_y_2, LAX_ind_y_3, LAX_ind_y_4, LAX_ind_y_5,
     
-    LXA_immediate,
+    LXA_imm,
     
     RLA_zpg,   RLA_zpg_2,   RLA_zpg_3,   RLA_zpg_4,
     RLA_zpg_x, RLA_zpg_x_2, RLA_zpg_x_3, RLA_zpg_x_4, RLA_zpg_x_5,

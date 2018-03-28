@@ -149,15 +149,15 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
 	registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);
 
-	registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, ALR_immediate);
+	registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, ALR_imm);
 
-	registerCallback(0x0B, "ANC*", ADDR_IMMEDIATE, ANC_immediate);
-	registerCallback(0x2B, "ANC*", ADDR_IMMEDIATE, ANC_immediate);
+	registerCallback(0x0B, "ANC*", ADDR_IMMEDIATE, ANC_imm);
+	registerCallback(0x2B, "ANC*", ADDR_IMMEDIATE, ANC_imm);
 	
-	registerCallback(0x8B, "ANE*", ADDR_IMMEDIATE, ANE_immediate);
+	registerCallback(0x8B, "ANE*", ADDR_IMMEDIATE, ANE_imm);
 
-	registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, ARR_immediate);
-	registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, AXS_immediate);
+	registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, ARR_imm);
+	registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, AXS_imm);
 
 	registerCallback(0xC7, "DCP*", ADDR_ZERO_PAGE, DCP_zpg);
 	registerCallback(0xD7, "DCP*", ADDR_ZERO_PAGE_X, DCP_zpg_x);
@@ -184,13 +184,13 @@ CPU::registerIllegalInstructions()
 	registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, LAX_abs);
 	registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, LAX_abs_y);
 
-	registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, LXA_immediate);
+	registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, LXA_imm);
 
-	registerCallback(0x80, "NOP*", ADDR_IMMEDIATE, NOP_immediate);
-	registerCallback(0x82, "NOP*", ADDR_IMMEDIATE, NOP_immediate);
-	registerCallback(0x89, "NOP*", ADDR_IMMEDIATE, NOP_immediate);
-	registerCallback(0xC2, "NOP*", ADDR_IMMEDIATE, NOP_immediate);
-	registerCallback(0xE2, "NOP*", ADDR_IMMEDIATE, NOP_immediate);
+	registerCallback(0x80, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+	registerCallback(0x82, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+	registerCallback(0x89, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+	registerCallback(0xC2, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+	registerCallback(0xE2, "NOP*", ADDR_IMMEDIATE, NOP_imm);
 	registerCallback(0x1A, "NOP*", ADDR_IMPLIED, NOP);
 	registerCallback(0x3A, "NOP*", ADDR_IMPLIED, NOP);
 	registerCallback(0x5A, "NOP*", ADDR_IMPLIED, NOP);
@@ -235,7 +235,7 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x83, "SAX*", ADDR_INDIRECT_X, SAX_ind_x);
 	registerCallback(0x8F, "SAX*", ADDR_ABSOLUTE, SAX_abs);
 
-	registerCallback(0xEB, "SBC*", ADDR_IMMEDIATE, SBC_immediate);
+	registerCallback(0xEB, "SBC*", ADDR_IMMEDIATE, SBC_imm);
 
 	registerCallback(0x9E, "SHX*", ADDR_ABSOLUTE_Y, SHX_abs_y);
 	registerCallback(0x9C, "SHY*", ADDR_ABSOLUTE_X, SHY_abs_x);
@@ -265,7 +265,7 @@ void CPU::registerInstructions()
 	for (int i=0; i<256; i++)
 		registerCallback(i, JAM);
 
-	registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_immediate);
+	registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_imm);
 	registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zpg);
 	registerCallback(0x75, "ADC", ADDR_ZERO_PAGE_X, ADC_zpg_x);
 	registerCallback(0x6D, "ADC", ADDR_ABSOLUTE, ADC_abs);
@@ -274,7 +274,7 @@ void CPU::registerInstructions()
 	registerCallback(0x61, "ADC", ADDR_INDIRECT_X, ADC_ind_x);
 	registerCallback(0x71, "ADC", ADDR_INDIRECT_Y, ADC_ind_y);
 
-	registerCallback(0x29, "AND", ADDR_IMMEDIATE, AND_immediate);
+	registerCallback(0x29, "AND", ADDR_IMMEDIATE, AND_imm);
 	registerCallback(0x25, "AND", ADDR_ZERO_PAGE, AND_zpg);
 	registerCallback(0x35, "AND", ADDR_ZERO_PAGE_X, AND_zpg_x);
 	registerCallback(0x2D, "AND", ADDR_ABSOLUTE, AND_abs);
@@ -283,32 +283,32 @@ void CPU::registerInstructions()
 	registerCallback(0x21, "AND", ADDR_INDIRECT_X, AND_ind_x);
 	registerCallback(0x31, "AND", ADDR_INDIRECT_Y, AND_ind_y);
 	
-	registerCallback(0x0A, "ASL", ADDR_ACCUMULATOR, ASL_accumulator);
+	registerCallback(0x0A, "ASL", ADDR_ACCUMULATOR, ASL_acc);
 	registerCallback(0x06, "ASL", ADDR_ZERO_PAGE, ASL_zpg);
 	registerCallback(0x16, "ASL", ADDR_ZERO_PAGE_X, ASL_zpg_x);
 	registerCallback(0x0E, "ASL", ADDR_ABSOLUTE, ASL_abs);
 	registerCallback(0x1E, "ASL", ADDR_ABSOLUTE_X, ASL_abs_x);
 	
-	registerCallback(0x90, "BCC", ADDR_RELATIVE, BCC_relative);
-	registerCallback(0xB0, "BCS", ADDR_RELATIVE, BCS_relative);
-	registerCallback(0xF0, "BEQ", ADDR_RELATIVE, BEQ_relative);
+	registerCallback(0x90, "BCC", ADDR_RELATIVE, BCC_rel);
+	registerCallback(0xB0, "BCS", ADDR_RELATIVE, BCS_rel);
+	registerCallback(0xF0, "BEQ", ADDR_RELATIVE, BEQ_rel);
 
 	registerCallback(0x24, "BIT", ADDR_ZERO_PAGE, BIT_zpg);
 	registerCallback(0x2C, "BIT", ADDR_ABSOLUTE, BIT_abs);
 	
-	registerCallback(0x30, "BMI", ADDR_RELATIVE, BMI_relative);
-	registerCallback(0xD0, "BNE", ADDR_RELATIVE, BNE_relative);
-	registerCallback(0x10, "BPL", ADDR_RELATIVE, BPL_relative);
+	registerCallback(0x30, "BMI", ADDR_RELATIVE, BMI_rel);
+	registerCallback(0xD0, "BNE", ADDR_RELATIVE, BNE_rel);
+	registerCallback(0x10, "BPL", ADDR_RELATIVE, BPL_rel);
 	registerCallback(0x00, "BRK", ADDR_IMPLIED, BRK);
-	registerCallback(0x50, "BVC", ADDR_RELATIVE, BVC_relative);
-	registerCallback(0x70, "BVS", ADDR_RELATIVE, BVS_relative);
+	registerCallback(0x50, "BVC", ADDR_RELATIVE, BVC_rel);
+	registerCallback(0x70, "BVS", ADDR_RELATIVE, BVS_rel);
 
 	registerCallback(0x18, "CLC", ADDR_IMPLIED, CLC);
 	registerCallback(0xD8, "CLD", ADDR_IMPLIED, CLD);
 	registerCallback(0x58, "CLI", ADDR_IMPLIED, CLI);
 	registerCallback(0xB8, "CLV", ADDR_IMPLIED, CLV);
 
-	registerCallback(0xC9, "CMP", ADDR_IMMEDIATE, CMP_immediate);
+	registerCallback(0xC9, "CMP", ADDR_IMMEDIATE, CMP_imm);
 	registerCallback(0xC5, "CMP", ADDR_ZERO_PAGE, CMP_zpg);
 	registerCallback(0xD5, "CMP", ADDR_ZERO_PAGE_X, CMP_zpg_x);
 	registerCallback(0xCD, "CMP", ADDR_ABSOLUTE, CMP_abs);
@@ -317,11 +317,11 @@ void CPU::registerInstructions()
 	registerCallback(0xC1, "CMP", ADDR_INDIRECT_X, CMP_ind_x);
 	registerCallback(0xD1, "CMP", ADDR_INDIRECT_Y, CMP_ind_y);
 
-	registerCallback(0xE0, "CPX", ADDR_IMMEDIATE, CPX_immediate);
+	registerCallback(0xE0, "CPX", ADDR_IMMEDIATE, CPX_imm);
 	registerCallback(0xE4, "CPX", ADDR_ZERO_PAGE, CPX_zpg);
 	registerCallback(0xEC, "CPX", ADDR_ABSOLUTE, CPX_abs);
 
-	registerCallback(0xC0, "CPY", ADDR_IMMEDIATE, CPY_immediate);
+	registerCallback(0xC0, "CPY", ADDR_IMMEDIATE, CPY_imm);
 	registerCallback(0xC4, "CPY", ADDR_ZERO_PAGE, CPY_zpg);
 	registerCallback(0xCC, "CPY", ADDR_ABSOLUTE, CPY_abs);
 
@@ -333,7 +333,7 @@ void CPU::registerInstructions()
 	registerCallback(0xCA, "DEX", ADDR_IMPLIED, DEX);
 	registerCallback(0x88, "DEY", ADDR_IMPLIED, DEY);
 	
-	registerCallback(0x49, "EOR", ADDR_IMMEDIATE, EOR_immediate);
+	registerCallback(0x49, "EOR", ADDR_IMMEDIATE, EOR_imm);
 	registerCallback(0x45, "EOR", ADDR_ZERO_PAGE, EOR_zpg);
 	registerCallback(0x55, "EOR", ADDR_ZERO_PAGE_X, EOR_zpg_x);
 	registerCallback(0x4D, "EOR", ADDR_ABSOLUTE, EOR_abs);
@@ -355,7 +355,7 @@ void CPU::registerInstructions()
 
 	registerCallback(0x20, "JSR", ADDR_DIRECT, JSR);
 
-	registerCallback(0xA9, "LDA", ADDR_IMMEDIATE, LDA_immediate);
+	registerCallback(0xA9, "LDA", ADDR_IMMEDIATE, LDA_imm);
 	registerCallback(0xA5, "LDA", ADDR_ZERO_PAGE, LDA_zpg);
 	registerCallback(0xB5, "LDA", ADDR_ZERO_PAGE_X, LDA_zpg_x);
 	registerCallback(0xAD, "LDA", ADDR_ABSOLUTE, LDA_abs);
@@ -364,19 +364,19 @@ void CPU::registerInstructions()
 	registerCallback(0xA1, "LDA", ADDR_INDIRECT_X, LDA_ind_x);
 	registerCallback(0xB1, "LDA", ADDR_INDIRECT_Y, LDA_ind_y);
 
-	registerCallback(0xA2, "LDX", ADDR_IMMEDIATE, LDX_immediate);
+	registerCallback(0xA2, "LDX", ADDR_IMMEDIATE, LDX_imm);
 	registerCallback(0xA6, "LDX", ADDR_ZERO_PAGE, LDX_zpg);
 	registerCallback(0xB6, "LDX", ADDR_ZERO_PAGE_Y,LDX_zpg_y);
 	registerCallback(0xAE, "LDX", ADDR_ABSOLUTE, LDX_abs);
 	registerCallback(0xBE, "LDX", ADDR_ABSOLUTE_Y, LDX_abs_y);
 
-	registerCallback(0xA0, "LDY", ADDR_IMMEDIATE, LDY_immediate);
+	registerCallback(0xA0, "LDY", ADDR_IMMEDIATE, LDY_imm);
 	registerCallback(0xA4, "LDY", ADDR_ZERO_PAGE, LDY_zpg);
 	registerCallback(0xB4, "LDY", ADDR_ZERO_PAGE_X, LDY_zpg_x);
 	registerCallback(0xAC, "LDY", ADDR_ABSOLUTE, LDY_abs);
 	registerCallback(0xBC, "LDY", ADDR_ABSOLUTE_X, LDY_abs_x);
 	
-	registerCallback(0x4A, "LSR", ADDR_ACCUMULATOR, LSR_accumulator);
+	registerCallback(0x4A, "LSR", ADDR_ACCUMULATOR, LSR_acc);
 	registerCallback(0x46, "LSR", ADDR_ZERO_PAGE, LSR_zpg);
 	registerCallback(0x56, "LSR", ADDR_ZERO_PAGE_X, LSR_zpg_x);
 	registerCallback(0x4E, "LSR", ADDR_ABSOLUTE, LSR_abs);
@@ -384,7 +384,7 @@ void CPU::registerInstructions()
 
 	registerCallback(0xEA, "NOP", ADDR_IMPLIED, NOP);
 	
-	registerCallback(0x09, "ORA", ADDR_IMMEDIATE, ORA_immediate);
+	registerCallback(0x09, "ORA", ADDR_IMMEDIATE, ORA_imm);
 	registerCallback(0x05, "ORA", ADDR_ZERO_PAGE, ORA_zpg);
 	registerCallback(0x15, "ORA", ADDR_ZERO_PAGE_X, ORA_zpg_x);
 	registerCallback(0x0D, "ORA", ADDR_ABSOLUTE, ORA_abs);
@@ -398,13 +398,13 @@ void CPU::registerInstructions()
 	registerCallback(0x68, "PLA", ADDR_IMPLIED, PLA);
 	registerCallback(0x28, "PLP", ADDR_IMPLIED, PLP);
 
-	registerCallback(0x2A, "ROL", ADDR_ACCUMULATOR, ROL_accumulator);
+	registerCallback(0x2A, "ROL", ADDR_ACCUMULATOR, ROL_acc);
 	registerCallback(0x26, "ROL", ADDR_ZERO_PAGE, ROL_zpg);
 	registerCallback(0x36, "ROL", ADDR_ZERO_PAGE_X, ROL_zpg_x);
 	registerCallback(0x2E, "ROL", ADDR_ABSOLUTE, ROL_abs);
 	registerCallback(0x3E, "ROL", ADDR_ABSOLUTE_X, ROL_abs_x);
 
-	registerCallback(0x6A, "ROR", ADDR_ACCUMULATOR, ROR_accumulator);
+	registerCallback(0x6A, "ROR", ADDR_ACCUMULATOR, ROR_acc);
 	registerCallback(0x66, "ROR", ADDR_ZERO_PAGE, ROR_zpg);
 	registerCallback(0x76, "ROR", ADDR_ZERO_PAGE_X, ROR_zpg_x);
 	registerCallback(0x6E, "ROR", ADDR_ABSOLUTE, ROR_abs);
@@ -413,7 +413,7 @@ void CPU::registerInstructions()
 	registerCallback(0x40, "RTI", ADDR_IMPLIED, RTI);
 	registerCallback(0x60, "RTS", ADDR_IMPLIED, RTS);
 
-	registerCallback(0xE9, "SBC", ADDR_IMMEDIATE, SBC_immediate);
+	registerCallback(0xE9, "SBC", ADDR_IMMEDIATE, SBC_imm);
 	registerCallback(0xE5, "SBC", ADDR_ZERO_PAGE, SBC_zpg);
 	registerCallback(0xF5, "SBC", ADDR_ZERO_PAGE_X, SBC_zpg_x);
 	registerCallback(0xED, "SBC", ADDR_ABSOLUTE, SBC_abs);
@@ -611,7 +611,7 @@ CPU::executeMicroInstruction()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case ADC_immediate:
+        case ADC_imm:
 
             READ_IMMEDIATE
             adc(data);
@@ -793,7 +793,7 @@ CPU::executeMicroInstruction()
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case AND_immediate:
+        case AND_imm:
             
             READ_IMMEDIATE
             loadA(A & data);
@@ -977,7 +977,7 @@ CPU::executeMicroInstruction()
         #define DO_ASL setC(data & 128); data = data << 1;
 
         // -------------------------------------------------------------------------------
-        case ASL_accumulator:
+        case ASL_acc:
             
             IDLE_READ_IMPLIED
             setC(A & 128); loadA(A << 1);
@@ -1156,7 +1156,7 @@ CPU::executeMicroInstruction()
             DONE_NO_POLL
 
         // ------------------------------------------------------------------------------
-        case BCC_relative:
+        case BCC_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1167,7 +1167,7 @@ CPU::executeMicroInstruction()
                 DONE_NO_POLL
             }
             
-        case BCC_relative_2:
+        case BCC_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1189,7 +1189,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case BCS_relative:
+        case BCS_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1200,7 +1200,7 @@ CPU::executeMicroInstruction()
                 DONE_NO_POLL
             }
             
-        case BCS_relative_2:
+        case BCS_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1222,7 +1222,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
             
-        case BEQ_relative:
+        case BEQ_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1233,7 +1233,7 @@ CPU::executeMicroInstruction()
                 DONE_NO_POLL
             }
             
-        case BEQ_relative_2:
+        case BEQ_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1296,7 +1296,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case BMI_relative:
+        case BMI_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1307,7 +1307,7 @@ CPU::executeMicroInstruction()
                 DONE_NO_POLL
             }
             
-        case BMI_relative_2:
+        case BMI_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1329,7 +1329,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
             
-        case BNE_relative:
+        case BNE_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1340,7 +1340,7 @@ CPU::executeMicroInstruction()
                 DONE_NO_POLL
             }
             
-        case BNE_relative_2:
+        case BNE_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1362,7 +1362,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case BPL_relative:
+        case BPL_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1373,7 +1373,7 @@ CPU::executeMicroInstruction()
                 DONE_NO_POLL
             }
             
-        case BPL_relative_2:
+        case BPL_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1473,7 +1473,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case BVC_relative:
+        case BVC_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1497,7 +1497,7 @@ CPU::executeMicroInstruction()
                 }
             }
             
-        case BVC_relative_2:
+        case BVC_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1519,7 +1519,7 @@ CPU::executeMicroInstruction()
         //              - - - - - -
         // -------------------------------------------------------------------------------
 
-        case BVS_relative:
+        case BVS_rel:
             
             READ_IMMEDIATE
             POLL_IRQ_AND_NMI
@@ -1543,7 +1543,7 @@ CPU::executeMicroInstruction()
                 }
             }
             
-        case BVS_relative_2:
+        case BVS_rel_2:
         {
             IDLE_READ_IMPLIED
             uint8_t pc_hi = HI_BYTE(PC);
@@ -1627,7 +1627,7 @@ CPU::executeMicroInstruction()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case CMP_immediate:
+        case CMP_imm:
             
             READ_IMMEDIATE
             cmp(A, data);
@@ -1809,7 +1809,7 @@ CPU::executeMicroInstruction()
         //              / / / - - -
         // -------------------------------------------------------------------------------
 
-        case CPX_immediate:
+        case CPX_imm:
             
             READ_IMMEDIATE
             cmp(X, data);
@@ -1850,7 +1850,7 @@ CPU::executeMicroInstruction()
         //              / / / - - -
         // -------------------------------------------------------------------------------
 
-        case CPY_immediate:
+        case CPY_imm:
             
             READ_IMMEDIATE
             cmp(Y, data);
@@ -2084,7 +2084,7 @@ CPU::executeMicroInstruction()
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case EOR_immediate:
+        case EOR_imm:
             
             READ_IMMEDIATE
             loadA(A ^ data);
@@ -2534,7 +2534,7 @@ CPU::executeMicroInstruction()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case LDA_immediate:
+        case LDA_imm:
             
             READ_IMMEDIATE
             loadA(data);
@@ -2717,7 +2717,7 @@ CPU::executeMicroInstruction()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case LDX_immediate:
+        case LDX_imm:
             
             READ_IMMEDIATE
             loadX(data);
@@ -2871,7 +2871,7 @@ CPU::executeMicroInstruction()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case LDY_immediate:
+        case LDY_imm:
 
 	READ_IMMEDIATE
 	loadY(data);
@@ -3027,7 +3027,7 @@ CPU::executeMicroInstruction()
         #define DO_LSR setC(data & 1); data = data >> 1;
 
         // -------------------------------------------------------------------------------
-        case LSR_accumulator:
+        case LSR_acc:
             
             IDLE_READ_IMPLIED
             setC(A & 1); loadA(A >> 1);
@@ -3276,7 +3276,7 @@ CPU::executeMicroInstruction()
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_immediate:
+        case NOP_imm:
             
             IDLE_READ_IMMEDIATE
             DONE
@@ -3361,7 +3361,7 @@ CPU::executeMicroInstruction()
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case ORA_immediate:
+        case ORA_imm:
             
             READ_IMMEDIATE
             loadA(A | data);
@@ -3646,7 +3646,7 @@ inline uint8_t CPU::rol(uint8_t op)
         #define DO_ROL if (getC()) { setC(data & 128); data = (data << 1) + 1; } else { setC(data & 128); data = (data << 1); }
 
         // -------------------------------------------------------------------------------
-        case ROL_accumulator:
+        case ROL_acc:
             
             IDLE_READ_IMPLIED
             if (getC()) {
@@ -3831,7 +3831,7 @@ inline uint8_t CPU::ror(uint8_t op)
         #define DO_ROR if (getC()) { setC(data & 1); data = (data >> 1) + 128; } else { setC(data & 1); data = (data >> 1); }
 
         // -------------------------------------------------------------------------------
-        case ROR_accumulator:
+        case ROR_acc:
             
             IDLE_READ_IMPLIED
             if (getC()) {
@@ -4075,7 +4075,7 @@ inline uint8_t CPU::ror(uint8_t op)
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case SBC_immediate:
+        case SBC_imm:
             
             READ_IMMEDIATE
             sbc(data);
@@ -4669,7 +4669,7 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / / - - -
         // -------------------------------------------------------------------------------
 
-        case ALR_immediate:
+        case ALR_imm:
             
             READ_IMMEDIATE
             A = A & data;
@@ -4686,7 +4686,7 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / / - - -
         // -------------------------------------------------------------------------------
 
-        case ANC_immediate:
+        case ANC_imm:
             
             READ_IMMEDIATE
             loadA(A & data);
@@ -4702,7 +4702,7 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / / - - /
         // -------------------------------------------------------------------------------
 
-        case ARR_immediate:
+        case ARR_imm:
         {
             READ_IMMEDIATE
             
@@ -4743,7 +4743,7 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / / - - -
         // -------------------------------------------------------------------------------
 
-        case AXS_immediate:
+        case AXS_imm:
         {
             READ_IMMEDIATE
             
@@ -6638,7 +6638,7 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case ANE_immediate:
+        case ANE_imm:
             
             READ_IMMEDIATE
             loadA(X & data & (A | 0xEE));
@@ -6653,7 +6653,7 @@ inline uint8_t CPU::ror(uint8_t op)
         //              / / - - - -
         // -------------------------------------------------------------------------------
 
-        case LXA_immediate:
+        case LXA_imm:
             
             READ_IMMEDIATE
             X = data & (A | 0xEE);
