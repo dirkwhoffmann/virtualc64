@@ -149,23 +149,22 @@ private:
      */
 	bool rdyLine;
 	
-	/*! @brief    IRQ line (maskable interrupts)
-	 *  @details  The CPU checks the IRQ line before the next instruction is executed.
-     *            If the Interrupt flag is cleared and at least one bit is set, the CPU performs 
-     *            an interrupt. The IRQ line of the real CPU is driven by multiple sources 
-     *            (CIA, VIC). Each source is represented by a separate bit.
-     * @see       CPU::I CPU::I_FLAG
+    /*! @brief    NMI line (non maskable interrupts)
+     *  @details  This variable is usually set to 0 which means that the NMI line is in
+     *            high state. When an external component requests an NMI nterrupt, this line
+     *            is pulled low. In that case, this variable has a positive value and the set
+     *            bits indicate the interrupt source.
+     */
+    uint8_t nmiLine;
+    
+    /*! @brief    IRQ line (maskable interrupts)
+     *  @details  This variable is usually set to 0 which means that the IRQ line is in
+     *            high state. When an external component requests an IRQ nterrupt, this line
+     *            is pulled low. In that case, this variable has a positive value and the set
+     *            bits indicate the interrupt source.
      */
 	uint8_t irqLine;
-    uint8_t oldIrqLine;
-
-	/*! @brief    NMI line (non maskable interrupts)
-     *  @details  The CPU checks the IRQ line before the next instruction is executed.
-     *            If at least one bit is set, the CPU performs an interrupt, regardless of the 
-     *            value of the I flag. The IRQ line of the real CPU is driven by multiple sources 
-     *            (CIA, VIC). Each source is represented by a separate bit.
-     */
-	uint8_t nmiLine; 
+    uint8_t oldIrqLine; // REMOVE
 
 	/*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -176,26 +175,55 @@ private:
      *             signal goes high during φ1 of the cycle that follows the one where the edge
      *             is detected, and stays high until the NMI has been handled."
      */
-	bool nmiEdge;
-    bool oldNmiEdge;
+	bool nmiEdge; // REMOVE
+    bool oldNmiEdge; // REMOVE
     uint8_delayed edgeDetector;
     
-    bool doIrq;
+    /*! @brief    Level detector of IRQ line
+     *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     *            "The IRQ input is connected to a level detector. If a low level is detected
+     *             on the IRQ input during φ2 of a cycle, an internal signal is raised during
+     *             φ1 the following cycle, remaining high for that cycle only (or put another
+     *             way, remaining high as long as the IRQ input is low during the preceding
+     *             cycle's φ2).
+     */
+    uint8_delayed levelDetector;
+    
+    //! @brief    Result of the edge detector polling operation
+    /*! @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     *            "The output from the edge detector and level detector are polled at certain
+     *             points to detect pending interrupts. For most instructions, this polling
+     *             happens during the final cycle of the instruction, before the opcode fetch
+     *             for the next instruction. If the polling operation detects that an interrupt
+     *             has been asserted, the next "instruction" executed is the interrupt sequence.
+     *             Many references will claim that interrupts are polled during the last cycle
+     *             of an instruction, but this is true only when talking about the output from
+     *             the edge and level detectors."
+     * @seealso   Makro POLL_INTS
+     */
     bool doNmi;
+    
+    //! @brief    Result of the level detector polling operation
+    /*! details   https://wiki.nesdev.com/w/index.php/CPU_interrupts
+     *  @note     "If both an NMI and an IRQ are pending at the end of an instruction, the
+     *             NMI will be handled and the pending status of the IRQ forgotten (though it's
+     *             likely to be detected again during later polling)."
+     */
+    bool doIrq;
     
 	/*! @brief    Indicates when the next IRQ can occurr. 
      *  @details  This variable is set when a negative edge occurs on the irq line and stores the
      *            next cycle in which an IRQ can occur. The value is needed to determine the exact 
      *            time to trigger the interrupt.
      */
-	uint64_t nextPossibleIrqCycle;
+	uint64_t nextPossibleIrqCycle; // REMOVE
 	
     /*! @brief    Indicates when the next NMI can occurr.
      *  @details  This variable is set when a negative edge occurs on the nmi line and stores the
      *            next cycle in which an NMI can occur. The value is needed to determine the exact 
      *            time to trigger the interrupt.
      */
-	uint64_t nextPossibleNmiCycle;
+	uint64_t nextPossibleNmiCycle; // REMOVE
 		
 	//! @brief    Current error state
 	ErrorState errorState;
@@ -382,6 +410,27 @@ public:
     //! @functiongroup Handling interrupts
     //
     
+    /*! @brief    Pulls down the NMI line
+     *  @details  Pulling down the NMI line requests the CPU to interrupt.
+     */
+    void pullDownNmiLine(uint8_t source);
+    
+    /*! @brief    Releases the NMI line
+     *  @note     Other sources might still hold the line down.
+     */
+    void releaseNmiLine(uint8_t source);
+    
+    /*! @brief    Pulls down the IRQ line
+     *  @details  Pulling down the IRQ line requests the CPU to interrupt.
+     */
+    void pullDownIrqLine(uint8_t source);
+    
+    /*! @brief    Releases the IRQ line
+     *  @note     Other sources might still hold the line down.
+     */
+    void releaseIrqLine(uint8_t source);
+    
+    
     /*! @brief    Returns true iff IRQs are blocked
      *  @details  IRQs are blocked by setting the I flag to 1. The I flag is set with the SEI command
      *            and cleared with the CLI command. Note that the timing is important here! When an
@@ -389,83 +438,71 @@ public:
      *            whether an interrupt is triggered or not. To handle timing correctly, the previous
      *            value of I is stored in variable oldI whenever SEI or CLI is executed.
      */
-    bool IRQsAreBlocked();
+    bool IRQsAreBlocked(); // REMOVE
 
-	//! @brief    Pulls down the IRQ line
-	void pullDownIrqLine(uint8_t source);
-	
-	//! @brief    Pulls up the IRQ line
-    void pullUpIrqLine(uint8_t source) { irqLine &= ~source; }
-		
 	//! @brief    Returns bit of IRQ line.
     uint8_t getIRQLine(uint8_t source) { return irqLine & source; }
 	
 	//! @brief    Checks if IRQ line has been activated for at least 2 cycles.
-	bool IRQLineRaisedLongEnough();
-	
-	//! @brief    Sets bit of NMI line.
-	void pullDownNmiLine(uint8_t source);
-
-	//! @brief    Clears bit of NMI line.
-    void pullUpNmiLine(uint8_t source); 
+	bool IRQLineRaisedLongEnough(); // REMOVE
 	
 	//! @brief    Checks if NMI line has been activated for at least 2 cycles.
-	bool NMILineRaisedLongEnough();
+	bool NMILineRaisedLongEnough(); // REMOVE
 	
 	//! @brief    Sets CIA bit of IRQ line.
     void pullDownIrqLineCIA() { pullDownIrqLine(0x01); }
     
     //! @brief    Clears CIA bit of IRQ line.
-    void pullUpIrqLineCIA() { pullUpIrqLine(0x01); }
+    void releaseIrqLineCIA() { releaseIrqLine(0x01); }
 
 	//! @brief    Sets VIC bit of IRQ line.
     void pullDownIrqLineVIC() { pullDownIrqLine(0x02); }
     
     //! @brief    Clears VIC bit of IRQ line.
-    void pullUpIrqLineVIC() { pullUpIrqLine(0x02); }
+    void releaseIrqLineVIC() { releaseIrqLine(0x02); }
     
 	//! @brief    Sets ATN bit of IRQ line (1541 drive).
     void pullDownIrqLineATN() { pullDownIrqLine(0x40); }
     
     //! @brief    Clears ATN bit of IRQ line (1541 drive).
-    void pullUpIrqLineATN() { pullUpIrqLine(0x40); }
+    void releaseIrqLineATN() { releaseIrqLine(0x40); }
     
     //! @brief    Sets VIA bit of IRQ line (1541 drive).
     void pullDownIrqLineVIA() { pullDownIrqLine(0x10); }
     
     //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
-    void pullUpIrqLineVIA() { pullUpIrqLine(0x10); }
+    void releaseIrqLineVIA() { releaseIrqLine(0x10); }
     
     //! @brief    Sets TOD bit of NMI line.
     void pullDownIrqLineTOD() { pullDownIrqLine(0x20); }
     
     //! @brief    Clears TOD bit of NMI line.
-    void pullUpIrqLineTOD() { pullUpIrqLine(0x20); }
+    void releaseIrqLineTOD() { releaseIrqLine(0x20); }
 
     
 	//! @brief    Sets CIA bit of NMI line.
     void pullDownNmiLineCIA() { pullDownNmiLine(0x01); }
     
 	//! @brief    Clears CIA bit of NMI line.
-    void pullUpNmiLineCIA() { pullUpNmiLine(0x01); }
+    void releaseNmiLineCIA() { releaseNmiLine(0x01); }
 
     //! @brief    Sets TOD bit of NMI line.
     void pullDownNmiLineTOD() { pullDownNmiLine(0x20); }
     
     //! @brief    Clears TOD bit of NMI line.
-    void pullUpNmiLineTOD() { pullUpNmiLine(0x20); }
+    void releaseNmiLineTOD() { releaseNmiLine(0x20); }
     
     //! @brief    Sets ExpansionPort bit of NMI line.
     void pullDownNmiLineExpansionPort() { pullDownNmiLine(0x02); }
     
     //! @brief    Clears ExpansionPort bit of NMI line.
-    void pullUpNmiLineExpansionPort() { pullUpNmiLine(0x02); }
+    void releaseNmiLineExpansionPort() { releaseNmiLine(0x02); }
     
 	//! @brief    Sets reset bit of NMI line.
     void pullDownNmiLineReset() { pullDownNmiLine(0x08); }
     
 	//! @brief    Clears reset bit of NMI line.
-    void pullUpNmiLineReset() { pullUpNmiLine(0x08); }
+    void releaseNmiLineReset() { releaseNmiLine(0x08); }
     
 	//! @brief    Sets the RDY line.
     void setRDY(bool value) { rdyLine = value; }

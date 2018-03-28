@@ -1426,20 +1426,24 @@ CPU::executeMicroInstruction()
             CONTINUE
             
         case BRK_3:
-            
+        
             PUSH_PCL
             
-            // "The official NMOS 65xx documentation claims that the BRK instruction could only cause a jump to the IRQ
-            //  vector ($FFFE). However, if an NMI interrupt occurs while executing a BRK instruction, the processor will
-            //  jump to the NMI vector ($FFFA), and the P register will be pushed on the stack with the B flag set."
-            if (nmiEdge) {
-                nmiEdge = false;
+            // Check for interrupt hijacking
+            
+            // If there is a positive edge on the NMI line ...
+            if (edgeDetector.value) {
+            
+                // ... the processor will jump to the NMI vector ($FFFA),
+                // and the P register will be pushed on the stack with the B flag set.
+                nmiEdge = oldNmiEdge = false;
                 clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
+                return;
+                
             } else {
-                next = BRK_4;
+                CONTINUE
             }
-            return;
             
         case BRK_4:
             
@@ -3645,11 +3649,11 @@ CPU::executeMicroInstruction()
         case PLP_3:
             
             // TODO: According to the doc, interrupts are polled first
-            // POLL_IRQ_AND_NMI
-            // PULL_P
-            // DONE_NO_POLL
+            POLL_IRQ_AND_NMI
             PULL_P
-            DONE
+            DONE_NO_POLL
+            // PULL_P
+            // DONE
 
         // -------------------------------------------------------------------------------
         // Instruction: ROL

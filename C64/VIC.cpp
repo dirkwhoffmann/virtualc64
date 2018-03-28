@@ -697,7 +697,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x19: // IRQ flags
 			// A bit is cleared when a "1" is written
 			iomem[addr] &= (~value & 0x0f);
-			c64->cpu.pullUpIrqLineVIC();
+			c64->cpu.releaseIrqLineVIC();
 			if (iomem[addr] & iomem[0x1a])
 				iomem[addr] |= 0x80;
 			return;
@@ -739,7 +739,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 				c64->cpu.pullDownIrqLineVIC();
 			} else {
 				iomem[0x19] &= 0x7f; // clear uppermost bit
-				c64->cpu.pullUpIrqLineVIC();
+				c64->cpu.releaseIrqLineVIC();
 			}
 			return;		
 			

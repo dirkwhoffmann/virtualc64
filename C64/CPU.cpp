@@ -64,14 +64,16 @@ CPU::CPU()
         { &overflow,                sizeof(overflow),               CLEAR_ON_RESET },
         { &data,                    sizeof(data),                   CLEAR_ON_RESET },
         { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
-        { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
-        { &oldIrqLine,              sizeof(oldIrqLine),             CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
-        { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
+        { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
         { &edgeDetector,            sizeof(edgeDetector),           CLEAR_ON_RESET },
-        { &oldNmiEdge,              sizeof(oldNmiEdge),             CLEAR_ON_RESET },
-        { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
+        { &levelDetector,           sizeof(levelDetector),          CLEAR_ON_RESET },
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
+        { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
+
+        { &oldIrqLine,              sizeof(oldIrqLine),             CLEAR_ON_RESET },
+        { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
+        { &oldNmiEdge,              sizeof(oldNmiEdge),             CLEAR_ON_RESET },
         { &nextPossibleIrqCycle,    sizeof(nextPossibleIrqCycle),   CLEAR_ON_RESET },
         { &nextPossibleNmiCycle,    sizeof(nextPossibleNmiCycle),   CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
@@ -92,7 +94,6 @@ void
 CPU::reset()
 {
     VirtualComponent::reset();
-    
     B = 1;
 	rdyLine = true;
 	next = fetch;
@@ -120,12 +121,35 @@ bool
 CPU::executeOneCycle() {
     
     assert (oldNmiEdge == read8_delayed(edgeDetector));
+    if (oldIrqLine != read8_delayed(levelDetector)) {
+        debug("MISMATCH ON IRQ LINE: %lld %lld %d %d %d %d\n",
+              c64->cycle, levelDetector.timeStamp, levelDetector.value, levelDetector.prevValue, irqLine, oldIrqLine);
+    }
     executeMicroInstruction();
     oldIrqLine = irqLine;
     oldNmiEdge = nmiEdge;
     return errorState == CPU_OK;
 }
 
+void
+CPU::pullDownNmiLine(uint8_t bit)
+{
+    assert(bit != 0);
+    
+    if (!nmiLine) {
+        nmiEdge = true;
+        write8_delayed(edgeDetector, 1);
+        nextPossibleNmiCycle = c64->getCycles() + 2;
+    }
+    
+    nmiLine |= bit;
+}
+
+void
+CPU::releaseNmiLine(uint8_t source)
+{
+    nmiLine &= ~source;
+}
 
 void
 CPU::pullDownIrqLine(uint8_t source)
@@ -136,6 +160,14 @@ CPU::pullDownIrqLine(uint8_t source)
 		nextPossibleIrqCycle = c64->getCycles() + 2;
 	}
 	irqLine |= source;
+    write8_delayed(levelDetector, irqLine);
+}
+
+void
+CPU::releaseIrqLine(uint8_t source)
+{
+    irqLine &= ~source;
+    write8_delayed(levelDetector, irqLine);
 }
 
 bool 
@@ -156,25 +188,7 @@ CPU::IRQsAreBlocked() {
 	return result;
 }
 
-void 
-CPU::pullDownNmiLine(uint8_t bit)
-{ 
-	assert(bit != 0);
 
-    if (!nmiLine) {
-        nmiEdge = true;
-        write8_delayed(edgeDetector, 1);
-        nextPossibleNmiCycle = c64->getCycles() + 2;
-    }
-    
-	nmiLine |= bit; 
-}
-
-void
-CPU::pullUpNmiLine(uint8_t source)
-{
-    nmiLine &= ~source;
-}
 
 bool
 CPU::NMILineRaisedLongEnough()

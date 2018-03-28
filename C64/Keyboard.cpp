@@ -44,7 +44,6 @@ Keyboard::reset()
     VirtualComponent::reset();
 
 	// Release all keys (resets the keyboard matrix)
-    debug("Releasing keyboard matrix");
     releaseAll();
 }
 
@@ -146,7 +145,7 @@ Keyboard::releaseKey(uint8_t row, uint8_t col)
 void
 Keyboard::releaseRestoreKey()
 {
-    c64->cpu.pullUpNmiLineReset();
+    c64->cpu.releaseNmiLineReset();
 }
 
 bool

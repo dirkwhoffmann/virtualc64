@@ -65,9 +65,6 @@ CIA::reset()
 {
     VirtualComponent::reset();
     
-    clearInterruptLine();
-
-    
     // PB67TimerMode = 0x80;
     /*
     PA = PALatch | ~DDRA;
@@ -824,13 +821,13 @@ CIA1::raiseInterruptLineTOD()
 void 
 CIA1::clearInterruptLine()
 {
-	c64->cpu.pullUpIrqLineCIA();
+	c64->cpu.releaseIrqLineCIA();
 }
 
 void
 CIA1::clearInterruptLineTOD()
 {
-    c64->cpu.pullUpIrqLineTOD();
+    c64->cpu.releaseIrqLineTOD();
 }
 
 void 
@@ -1048,13 +1045,13 @@ CIA2::raiseInterruptLineTOD()
 void 
 CIA2::clearInterruptLine()
 {
-	c64->cpu.pullUpNmiLineCIA();
+	c64->cpu.releaseNmiLineCIA();
 }
 
 void
 CIA2::clearInterruptLineTOD()
 {
-    c64->cpu.pullUpNmiLineTOD();
+    c64->cpu.releaseNmiLineTOD();
 }
 
 uint8_t 

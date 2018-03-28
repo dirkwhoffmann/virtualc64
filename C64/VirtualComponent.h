@@ -351,9 +351,14 @@ public:
     void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
         for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
 
+    
+    //
+    //! @functiongroup  Time delayed variables
+    //
+    
     //! @brief    Reads a time delayed variable
     #define read8_delayed(var) ((c64->cycle >= var.timeStamp) ? var.value : var.prevValue)
-    
+
     //! @brief    Writes to a time delayed variable
     void write8_delayed(uint8_delayed &var, uint8_t value);
 
