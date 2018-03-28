@@ -249,7 +249,24 @@ public:
     //! @brief    A virtual datasette
     Datasette datasette;
 
+    //
+    // Executed cycle, rasterline, and frame
+    //
     
+    //! @brief    Elapsed C64 clock cycles since power up
+    uint64_t cycle;
+    
+    //! @brief    Total number of frames drawn since power up
+    uint64_t frame;
+    
+    //! @brief    Currently drawn rasterline
+    uint16_t rasterline;
+    
+    /*! @brief    Currently executed clock cycle relative to the current rasterline
+     *  @details  Range: 1 ... 63 on PAL machines, 1 ... 65 on NTSC machines
+     */
+    uint8_t rasterlineCycle;
+
 private:
 
     //
@@ -288,24 +305,6 @@ private:
      */
     MessageQueue queue;
     
-    
-    //
-    // Executed cycle, rasterline, and frame
-    //
-
-	//! @brief    Elapsed C64 clock cycles since power up
-	uint64_t cycle;
-    
-	//! @brief    Total number of frames drawn since power up
-	uint64_t frame;
-	
-	//! @brief    Currently drawn rasterline
-	uint16_t rasterline;
-	
-    /*! @brief    Currently executed clock cycle relative to the current rasterline
-     *  @details  Range: 1 ... 63 on PAL machines, 1 ... 65 on NTSC machines
-     */
-    uint8_t rasterlineCycle;
 
     //
     // Operation modes

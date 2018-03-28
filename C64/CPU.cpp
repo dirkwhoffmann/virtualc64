@@ -68,6 +68,7 @@ CPU::CPU()
         { &oldIrqLine,              sizeof(oldIrqLine),             CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
         { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
+        { &edgeDetector,            sizeof(edgeDetector),           CLEAR_ON_RESET },
         { &oldNmiEdge,              sizeof(oldNmiEdge),             CLEAR_ON_RESET },
         { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
@@ -117,6 +118,8 @@ CPU::dumpState()
 
 bool
 CPU::executeOneCycle() {
+    
+    assert (oldNmiEdge == read8_delayed(edgeDetector));
     executeMicroInstruction();
     oldIrqLine = irqLine;
     oldNmiEdge = nmiEdge;
@@ -154,16 +157,23 @@ CPU::IRQsAreBlocked() {
 }
 
 void 
-CPU::pullDownNmiLine(uint8_t bit) // TODO: RENAME TO pullDownNmiLine
+CPU::pullDownNmiLine(uint8_t bit)
 { 
 	assert(bit != 0);
 
     if (!nmiLine) {
         nmiEdge = true;
+        write8_delayed(edgeDetector, 1);
         nextPossibleNmiCycle = c64->getCycles() + 2;
     }
     
 	nmiLine |= bit; 
+}
+
+void
+CPU::pullUpNmiLine(uint8_t source)
+{
+    nmiLine &= ~source;
 }
 
 bool

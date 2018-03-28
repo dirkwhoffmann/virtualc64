@@ -301,3 +301,27 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
         assert(false);
     }
 }
+
+void
+VirtualComponent::write8_delayed(uint8_delayed &var, uint8_t value)
+{
+    if (var.timeStamp > c64->cycle) {
+        // Multiple writes in the same cycle. We descard the previous value
+        var.value = value;
+    } else {
+        // Shift values and store new time stamp
+        var.prevValue = var.value;
+        var.value = value;
+        var.timeStamp = c64->cycle + 1;
+    }
+}
+
+void
+VirtualComponent::init8_delayed(uint8_delayed &var, uint8_t value)
+{
+    var.timeStamp = 0;
+    var.value = value;
+    var.prevValue = value;
+}
+
+    

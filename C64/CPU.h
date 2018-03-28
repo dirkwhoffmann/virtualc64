@@ -23,7 +23,7 @@
 
 #include "Memory.h"
 
-/*! @class  The virtual 6510 processor
+/*! @class  The virtual 6502 / 6510 processor
  */
 class CPU : public VirtualComponent {
 
@@ -56,8 +56,9 @@ public:
 	Memory *mem;
 
     /*! @brief    Selected chip model
-     *  @abstract Right now, this atrribute is only used to distinguish the C64 CPU (MOS6510) from the
-     *            VC1541 CPU (MOS6502). Hardware differences between the two processors are not emulated.
+     *  @details  Right now, this atrribute is only used to distinguish the C64 CPU (MOS6510)
+     *            from the VC1541 CPU (MOS6502). Hardware differences between both models
+     *            are not emulated.
      */
     CPUChipModel chipModel;
 
@@ -177,6 +178,7 @@ private:
      */
 	bool nmiEdge;
     bool oldNmiEdge;
+    uint8_delayed edgeDetector;
     
     bool doIrq;
     bool doNmi;
@@ -232,30 +234,6 @@ public:
     //! @brief    Returns true iff this object is the C64 CPU (for debugging, only).
     bool isC64CPU() { return strcmp(getDescription(), "CPU") == 0; /* VC1541 CPU is calles "1541CPU" */ }
 
-    
-    //
-    //! @functiongroup Managing the processor port
-    //
-
-    /*
-	//! @brief    Returns the value of processor port.
-    uint8_t getPort() { return port; }
-    
-	//! @brief    Sets the value of the processor port register.
-	void setPort(uint8_t value);
-    
-	//! @brief    Returns the value of processor port register.
-    uint8_t getPortDirection() { return port_direction; }
-    
-	//! @brief    Experimental.
-    uint8_t getExternalPortBits() { return external_port_bits; }
-    
-	//! @brief    Sets the value of the processor port data direction register.
-	void setPortDirection(uint8_t value);
-    
-	//! @brief    Returns the physical value of the port lines.
-	uint8_t getPortLines() { return (port | ~port_direction); }
-	*/
     
     //
     //! @functiongroup Handling registers and flags
@@ -429,7 +407,7 @@ public:
 	void pullDownNmiLine(uint8_t source);
 
 	//! @brief    Clears bit of NMI line.
-    void pullUpNmiLine(uint8_t source) { nmiLine &= ~source; }
+    void pullUpNmiLine(uint8_t source); 
 	
 	//! @brief    Checks if NMI line has been activated for at least 2 cycles.
 	bool NMILineRaisedLongEnough();

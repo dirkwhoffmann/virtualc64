@@ -72,7 +72,7 @@ extension MyController : NSTouchBarDelegate
             .restore,
             // We disable the time travel touchbar feature for now as it causes
             // a race condition in the emulator. We resurrect the feature when
-            // the time travel functionality has been reworked. 
+            // the time travel functionality has been reworked.
             // .ttscrubber,
             // .ttpopover
         ]

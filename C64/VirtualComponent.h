@@ -26,6 +26,16 @@
 // Forward declarations
 class C64;
 
+//! @brief    Time delayed uint8_t value
+/*! @details  Use READ8_DELAYED and WRITE8_DELAYED to read and write a value.
+ *            All written values show up one cycle after they were written.
+ *  @note     Time delayed variables are speed optimized for read accesses.
+ */
+typedef struct {
+    uint64_t timeStamp; // Cycle when the new value shows up
+    uint8_t value;
+    uint8_t prevValue;
+} uint8_delayed;
 
 /*! @brief    Common functionality of all virtual computer components.
  *  @details  This class defines the base functionality of all virtual components.
@@ -340,6 +350,19 @@ public:
      */
     void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
         for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
+
+    //! @brief    Reads a time delayed variable
+    #define read8_delayed(var) ((c64->cycle >= var.timeStamp) ? var.value : var.prevValue)
+    
+    //! @brief    Writes to a time delayed variable
+    void write8_delayed(uint8_delayed &var, uint8_t value);
+
+    //! @brief    Initializes a time delayed variable
+    void init8_delayed(uint8_delayed &var, uint8_t value);
+
+    //! @brief    Initializes a time delayed variable
+    void clear8_delayed(uint8_delayed &var) { init8_delayed(var, 0); }
+
 };
 
 #endif

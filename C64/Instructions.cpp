@@ -473,6 +473,7 @@ CPU::executeMicroInstruction()
                 
                 if (tracingEnabled()) trace("NMI (source = %02X)\n", nmiLine);
                 nmiEdge = false;
+                clear8_delayed(edgeDetector);
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
@@ -1433,6 +1434,7 @@ CPU::executeMicroInstruction()
             //  jump to the NMI vector ($FFFA), and the P register will be pushed on the stack with the B flag set."
             if (nmiEdge) {
                 nmiEdge = false;
+                clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
             } else {
                 next = BRK_4;
