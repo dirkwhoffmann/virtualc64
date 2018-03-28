@@ -64,13 +64,13 @@ public:
 
 private:
     
-	// @brief    Accumulator
+	//! @brief    Accumulator
 	uint8_t A;
     
-	// @brief    X register
+	//! @brief    X register
 	uint8_t X;
     
-	// @brief    Y register
+	//! @brief    Y register
 	uint8_t Y;
     
 	//! @brief    Program counter
@@ -79,42 +79,28 @@ private:
 	//! @brief    Memory location of the currently executed command
 	uint16_t PC_at_cycle_0;
     
-	// @brief    Stack pointer
+	//! @brief    Stack pointer
 	uint8_t SP;
     
-	/*! @brief    Negative flag
-	 *  @details  The negative flag is set when the most significant bit (sign bit) equals 1. 
-     */
+	//! @brief    Negative flag
 	uint8_t  N;
     
-	/*! @brief    Overflow flag
-	 *  @details  The overflow flag is set iff an arithmetic operation causes a \a signed overflow. 
-     */
+	//! @brief    Overflow flag
 	uint8_t  V;
     
-	/*! @brief    Break flag
-	 *  @details  Is set to signal external interrupt. 
-     */
+	//! @brief    Break flag
 	uint8_t  B;
     
-	/*! @brief    Decimal flag
-	 *  @details  If set, the CPU operates in BCD mode. (BCD mode is not supported yet). 
-     */
+	//! @brief    Decimal flag
 	uint8_t  D;
     
-	/*! @brief    Interrupt flag
-	 *  @details  If set, all interrupts are blocked. (No interrupt request will be answered). 
-     */
+	//! @brief    Interrupt flag
 	uint8_t  I;
     
-	/*! @brief    Zero flag
-	 *  @details  The zero flag is set iff the result of an arithmetic operation is zero. 
-     */
+	//! @brief    Zero flag
 	uint8_t  Z;
     
-	/*! @brief    Carry flag
-	 *  @details  The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. 
-     */
+	//! @brief    Carry flag
 	uint8_t  C;
 	
 	//! @brief    Opcode of the currently executed command
@@ -520,10 +506,12 @@ public:
     //! @functiongroup Executing the device
     //
     
-	/*! @brief    Executes the device for one cycle.
+	/*! @brief    Runs the CPU for one cycle.
 	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
      */
-    bool executeOneCycle();
+    bool executeOneCycle() { executeMicroInstruction(); return errorState == CPU_OK; }
+    
+    //! @brief    Executes the next micro instruction.
     void executeMicroInstruction();
     
 	//! @brief    Returns the current error state.

@@ -112,13 +112,6 @@ CPU::dumpState()
     c64->processorPort.dumpState();
 }
 
-bool
-CPU::executeOneCycle() {
-    
-    executeMicroInstruction();
-    return errorState == CPU_OK;
-}
-
 void
 CPU::pullDownNmiLine(uint8_t bit)
 {
