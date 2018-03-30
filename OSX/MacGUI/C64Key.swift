@@ -221,7 +221,6 @@ extension C64Key {
         case "0": return [C64Key.digit0]
         case "+": return [C64Key.plus]
         case "-": return [C64Key.minus]
-        case "ü": return [C64Key.pound]
         case "§": return [C64Key.pound]
             
         // Second row of C64 keyboard

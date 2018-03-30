@@ -220,7 +220,7 @@ struct UPSCALED_TEXTURE {
         let region = MTLRegionMake2D(0, 0, size, size)
         blurWeightTexture.replace(region: region, mipmapLevel: 0, withBytes: weights, bytesPerRow: size * 4 /* size of float */)
     
-        weights.deallocate(capacity: size * size)
+        weights.deallocate()
     }
     
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder)
