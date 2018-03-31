@@ -20,6 +20,9 @@
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
+		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
+		50031B38206FB0E200A1969B /* SnapshotViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B37206FB0E200A1969B /* SnapshotViewItem.xib */; };
+		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
@@ -289,6 +292,9 @@
 		5000C8230D13CEE10011A2E9 /* VC1541.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541.cpp; sourceTree = "<group>"; };
 		5000C9610D13DED40011A2E9 /* VC1541Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541Memory.h; sourceTree = "<group>"; };
 		5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541Memory.cpp; sourceTree = "<group>"; };
+		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
+		50031B37206FB0E200A1969B /* SnapshotViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotViewItem.xib; sourceTree = "<group>"; };
+		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -996,6 +1002,7 @@
 				50B1644B202DD52500447D3E /* ExportDiskController.swift */,
 				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
+				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 			);
 			name = "User Dialog Controllers";
 			sourceTree = "<group>";
@@ -1070,6 +1077,8 @@
 				50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */,
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
 				50FB749B203306A700E05051 /* DiskInspector.xib */,
+				50031B33206FABA400A1969B /* SnapshotDialog.xib */,
+				50031B37206FB0E200A1969B /* SnapshotViewItem.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1241,6 +1250,7 @@
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
 				50C8925A1BEFB64500231B96 /* cntrlRewind.png in Resources */,
+				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
 				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
 				504A22B01BF71FD500B29BEB /* pin_black.png in Resources */,
@@ -1269,6 +1279,7 @@
 				50C892511BEFB31200231B96 /* tape.png in Resources */,
 				50F97E05203D90070005E19C /* joystick.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
+				50031B38206FB0E200A1969B /* SnapshotViewItem.xib in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50CCB1D21B84AC10008D8C30 /* none.png in Resources */,
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,
@@ -1414,6 +1425,7 @@
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
+				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,

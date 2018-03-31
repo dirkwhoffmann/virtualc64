@@ -460,11 +460,11 @@ CPU::executeMicroInstruction()
             
         case fetch:
             
-            /*
-             if (PC == 2073) {
-             startSilentTracing();
+            
+             if (PC == 0x981) {
+             startTracing();
              }
-             */
+            
             
             PC_at_cycle_0 = PC;
             

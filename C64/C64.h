@@ -18,15 +18,16 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.8.2
+// RELEASE NOTES FOR NEXT RELEASE: 1.9
 //
 // Accuracy of interrupt handling has been improved.
 // As a result, VirtualC64 passes VICE test cia-timer-oldcias.
 //
 // TODO:
 //
-// Add highjacking to IRQs as well (only implemented in BRK so far (?!) )
-// What about the PLP command?
+// CLEANUP:
+// Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
+//                simplify code. 
 //
 
 

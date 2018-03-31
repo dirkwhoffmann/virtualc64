@@ -172,13 +172,19 @@ extension MyController {
     
     @IBAction func cheatboxAction(_ sender: Any!) {
         
+        track()
+        let nibName = NSNib.Name(rawValue: "SnapshotDialog")
+        let controller = SnapshotDialog.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+        
+        /*
         let state = cheatboxPanel.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
             cheatboxOpenAction(self)
         } else {
             cheatboxCloseAction(self)
         }
-        
+        */
     }
 
     @IBAction func printDocument(_ sender: Any!) {
