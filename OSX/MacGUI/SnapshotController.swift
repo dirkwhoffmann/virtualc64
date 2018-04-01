@@ -60,7 +60,6 @@ class SnapshotDialog : UserDialogController  {
             autoTimeStamp[n] = "\(timeStamp)"
 
             var diff = Int(round(now.timeIntervalSince1970 - Double(takenAt)))
-            diff += 140
             let min = diff / 60;
             let hrs = diff / 3600;
             if (diff) < 60 {

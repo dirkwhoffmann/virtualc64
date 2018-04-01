@@ -861,7 +861,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeaderSize() : 0; }
 
 - (uint8_t *) historicSnapshotHeader:(NSInteger)nr
-    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeader() : NULL; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? (uint8_t *)s->getHeader() : NULL; }
 
 
 - (NSInteger) historicSnapshotDataSize:(NSInteger)nr

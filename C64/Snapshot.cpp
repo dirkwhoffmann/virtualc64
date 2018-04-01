@@ -22,17 +22,6 @@ const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
 Snapshot::Snapshot()
 {
-    /*
-    header.magic[0] = magicBytes[0];
-    header.magic[1] = magicBytes[1];
-    header.magic[2] = magicBytes[2];
-    header.magic[3] = magicBytes[3];
-    header.major = V_MAJOR;
-    header.minor = V_MINOR;
-    header.subminor = V_SUBMINOR;
-    header.size = 0;
-    timestamp = (time_t)0;
-    */
     header = NULL;
     state = NULL;
 }
@@ -99,7 +88,16 @@ Snapshot::alloc(size_t size)
     if ((header = (SnapshotHeader *)malloc(sizeof(SnapshotHeader))) == NULL)
         return false;
         
+    header->magic[0] = magicBytes[0];
+    header->magic[1] = magicBytes[1];
+    header->magic[2] = magicBytes[2];
+    header->magic[3] = magicBytes[3];
+    header->major = V_MAJOR;
+    header->minor = V_MINOR;
+    header->subminor = V_SUBMINOR;
     header->size = (uint32_t)size;
+    header->timestamp = (time_t)0;
+    
     return true;
 }
 
@@ -190,17 +188,17 @@ bool
 Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     assert(buffer != NULL);
-    assert(length > sizeof(header));
+    assert(length > sizeof(SnapshotHeader));
 
     // Allocate memory
-    alloc(length - sizeof(header));
+    alloc(length - sizeof(SnapshotHeader));
     
     // Copy header
-    memcpy((uint8_t *)&header, buffer, sizeof(header));
-    assert(header.size == length - sizeof(header));
+    memcpy((void *)header, buffer, sizeof(SnapshotHeader));
+    assert(header.size == length - sizeof(SnapshotHeader));
     
     // Copy state data
-    memcpy(state, buffer + sizeof(header), length - sizeof(header));
+    memcpy(state, buffer + sizeof(SnapshotHeader), length - sizeof(SnapshotHeader));
     
 	return true;
 }
@@ -212,13 +210,13 @@ Snapshot::writeToBuffer(uint8_t *buffer)
     
     // Copy header
     if (buffer)
-        memcpy(buffer,(const void *)&header, sizeof(header));
+        memcpy(buffer,(const void *)header, sizeof(SnapshotHeader));
 
     // Copy state data
     if (buffer)
-        memcpy(buffer + sizeof(header), state, header->size);
+        memcpy(buffer + sizeof(SnapshotHeader), state, header->size);
 
-    return sizeof(header) + header->size;
+    return sizeof(SnapshotHeader) + header->size;
 }
 
 void
