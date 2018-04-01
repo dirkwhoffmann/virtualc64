@@ -568,12 +568,14 @@ public:
     /*! @brief    Saves the current state into an existing snapshot.
      *  @note     Use this function inside the execution thread.
      *  @seealso  saveToSnapshotSafe
+     *  @deprecated
      */
     void saveToSnapshotUnsafe(Snapshot *snapshot);
     
     /*! @brief    Saves the current state into an existing snapshot.
      *  @note     Use this function outside the execution thread.
      *  @seealso  saveToSnapshotUnsafe
+     *  @deprecated 
      */
     void saveToSnapshotSafe(Snapshot *snapshot);
 

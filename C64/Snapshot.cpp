@@ -22,6 +22,7 @@ const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
 Snapshot::Snapshot()
 {
+    /*
     header.magic[0] = magicBytes[0];
     header.magic[1] = magicBytes[1];
     header.magic[2] = magicBytes[2];
@@ -31,6 +32,8 @@ Snapshot::Snapshot()
     header.subminor = V_SUBMINOR;
     header.size = 0;
     timestamp = (time_t)0;
+    */
+    header = NULL;
     state = NULL;
 }
 
@@ -80,7 +83,9 @@ Snapshot::dealloc()
 {
     if (state != NULL) {
         free(state);
-        header.size = 0;
+    }
+    if (header != NULL) {
+        free(header);
     }
 }
 
@@ -91,8 +96,10 @@ Snapshot::alloc(size_t size)
     
     if ((state = (uint8_t *)malloc(size)) == NULL)
         return false;
-    
-    header.size = (uint32_t)size;
+    if ((header = (SnapshotHeader *)malloc(sizeof(SnapshotHeader))) == NULL)
+        return false;
+        
+    header->size = (uint32_t)size;
     return true;
 }
 
@@ -209,9 +216,9 @@ Snapshot::writeToBuffer(uint8_t *buffer)
 
     // Copy state data
     if (buffer)
-        memcpy(buffer + sizeof(header), state, header.size);
+        memcpy(buffer + sizeof(header), state, header->size);
 
-    return sizeof(header) + header.size;
+    return sizeof(header) + header->size;
 }
 
 void
@@ -222,20 +229,20 @@ Snapshot::takeScreenshot(uint32_t *buf, bool pal)
     if (pal) {
         x_start = PAL_LEFT_BORDER_WIDTH - 36;
         y_start = PAL_UPPER_BORDER_HEIGHT - 34;
-        header.screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
-        header.screenshot.height = 34 + PAL_CANVAS_HEIGHT + 34;
+        header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
+        header->screenshot.height = 34 + PAL_CANVAS_HEIGHT + 34;
     } else {
         x_start = NTSC_LEFT_BORDER_WIDTH - 42;
         y_start = NTSC_UPPER_BORDER_HEIGHT - 9;
-        header.screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
-        header.screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
+        header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
+        header->screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
     }
     
-    uint32_t *target = header.screenshot.screen;
+    uint32_t *target = header->screenshot.screen;
     buf += x_start + y_start * NTSC_PIXELS;
-    for (unsigned i = 0; i < header.screenshot.height; i++) {
-        memcpy(target, buf, header.screenshot.width * 4);
-        target += header.screenshot.width;
+    for (unsigned i = 0; i < header->screenshot.height; i++) {
+        memcpy(target, buf, header->screenshot.width * 4);
+        target += header->screenshot.width;
         buf += NTSC_PIXELS;
     }
 }

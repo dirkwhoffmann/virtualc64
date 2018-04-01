@@ -888,12 +888,12 @@ C64::saveToSnapshotUnsafe(Snapshot *snapshot)
     if (snapshot == NULL)
         return;
     
-    snapshot->setTimestamp(time(NULL));
-    snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), isPAL());
-    
     snapshot->alloc(stateSize());
     uint8_t *ptr = snapshot->getData();
     saveToBuffer(&ptr);
+
+    snapshot->setTimestamp(time(NULL));
+    snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), isPAL());
 }
 
 void

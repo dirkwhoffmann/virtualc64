@@ -26,6 +26,36 @@
 // Forward declarations
 class C64;
 
+// Snapshot header
+typedef struct {
+    
+    //! @brief    Magic bytes ('V','C','6','4')
+    char magic[4];
+    
+    //! @brief    Version number (V major.minor.subminor)
+    uint8_t major;
+    uint8_t minor;
+    uint8_t subminor;
+    
+    //! @brief    Screenshot
+    struct {
+        
+        //! @brief    Image width and height
+        uint16_t width, height;
+        
+        //! @brief    Screen buffer data
+        uint32_t screen[PAL_RASTERLINES * NTSC_PIXELS];
+        
+    } screenshot;
+    
+    //! @brief    Date and time of snapshot creation
+    time_t timestamp;
+    
+    //! @brief    Size of internal state
+    uint32_t size;
+    
+} SnapshotHeader;
+
 /*! @class    Snapshot
  *  @brief    The Snapshot class declares the programmatic interface for a file that contains an emulator snapshot 
  *            (a frozen internal state).
@@ -37,37 +67,9 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-	struct {
-		
-		//! @brief    Magic bytes ('V','C','6','4')
-		char magic[4];
-		
-		//! @brief    Version number (V major.minor.subminor)
-		uint8_t major;
-		uint8_t minor;
-        uint8_t subminor;
-		
-		//! @brief    Screenshot
-		struct { 	
-			
-			//! @brief    Image width and height
-			uint16_t width, height;
-		
-			//! @brief    Screen buffer data
-			uint32_t screen[PAL_RASTERLINES * NTSC_PIXELS];
-		
-		} screenshot;
-        
-        //! @brief    Size of internal state
-        uint32_t size;
-
-    } header;
-	
     //! @brief    Internal state data
+    SnapshotHeader *header;
     uint8_t *state;
-
-	//! @brief    Date and time of snapshot creation
-	time_t timestamp;
 	
 public:
 
@@ -134,28 +136,28 @@ public:
     uint8_t *getHeader() { return (uint8_t *)&header; }
 
     //! @brief    Returns size of core data
-    uint32_t getDataSize() { return header.size; }
+    uint32_t getDataSize() { return header->size; }
 
     //! @brief    Returns pointer to core data
 	uint8_t *getData() { return state; }
 
 	//! @brief    Returns the timestamp
-	time_t getTimestamp() { return timestamp; }
+	time_t getTimestamp() { return header->timestamp; }
 
 	//! @brief    Sets the timestamp
-	void setTimestamp(time_t value) { timestamp = value; }
+	void setTimestamp(time_t value) { header->timestamp = value; }
 	
 	//! Returns true, if snapshot does not contain data yet
-	bool isEmpty() { return timestamp == 0; }
+	bool isEmpty() { return state == NULL; }
 	
 	//! Return screen buffer
-	unsigned char *getImageData() { return (unsigned char *)header.screenshot.screen; }
+	unsigned char *getImageData() { return (unsigned char *)header->screenshot.screen; }
 
     //! Return image width
-    unsigned getImageWidth() { return header.screenshot.width; }
+    unsigned getImageWidth() { return header->screenshot.width; }
 
     //! Return image height
-    unsigned getImageHeight() { return header.screenshot.height; }
+    unsigned getImageHeight() { return header->screenshot.height; }
 
     //! Take screenshot
     void takeScreenshot(uint32_t *buf, bool pal);
