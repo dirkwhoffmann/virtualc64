@@ -202,15 +202,12 @@ Snapshot::writeToBuffer(uint8_t *buffer)
 {
     assert(state != NULL);
     
-    // Copy header
+    // Copy data
+    size_t length = header()->size + sizeof(SnapshotHeader);
     if (buffer)
-        memcpy(buffer,(const void *)header(), sizeof(SnapshotHeader));
-
-    // Copy state data
-    if (buffer)
-        memcpy(buffer + sizeof(SnapshotHeader), getData(), header()->size);
-
-    return sizeof(SnapshotHeader) + header()->size;
+        memcpy(buffer, state, length);
+    
+    return length;
 }
 
 void
