@@ -181,15 +181,12 @@ It has the same effect as switching a real C64 off and on again. Note that a
  */
 
 
-
-#define BACK_IN_TIME_BUFFER_SIZE 16
-
 //! @class    A complete virtual C64
 class C64 : public VirtualComponent {
 
-    // -----------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
     //                                          Properties
-    // -----------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
 
 public:
     
@@ -309,22 +306,31 @@ private:
     bool ultimax;
     
     //
-    // Time travel ring buffer
+    // Snapshot storage
     //
     
-    //! @brief    Ring buffer for storing the time travel snapshot images
-    Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE];
+    //! @brief    Time in seconds between two auto-saved snapshots
+    unsigned autoSaveInterval;
     
-    //! @brief    Write pointer of the time travel ring buffer
-    unsigned backInTimeWritePtr;
+    //! @brief    Ring buffer storage for automatically saved snapshots
+    #define MAX_AUTO_SAVED_SNAPSHOTS 16
+    Snapshot *autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS];
     
-
+    //! @brief    Ring buffer write pointer
+    unsigned autoSavedSnapshotsPtr;
+    
+    //! @brief    Ring buffer storage for manually saved snapshots
+    #define MAX_USER_SAVED_SNAPSHOTS 32
+    Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
+    
+    //! @brief    Ring buffer write pointer
+    unsigned userSavedSnapshotsPtr;
  
     
     
-	// -----------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	//                                             Methods
-	// -----------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	
 public:
 	

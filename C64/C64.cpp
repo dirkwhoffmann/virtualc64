@@ -137,10 +137,13 @@ C64::C64()
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
-	// Initialize snapshot ringbuffer (BackInTime feature)
-	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
-		backInTimeHistory[i] = new Snapshot();	
-	backInTimeWritePtr = 0;
+	// Initialize snapshot ringbuffers
+    for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
+		autoSavedSnapshots[i] = new Snapshot();
+        userSavedSnapshots[i] = new Snapshot();
+    }
+    autoSavedSnapshotsPtr = 0;
+    userSavedSnapshotsPtr = 0;
     
     reset();
 }
@@ -926,19 +929,19 @@ C64::takeSnapshotSafe()
 void
 C64::takeTimeTravelSnapshot()
 {
-    debug(3, "Taking time-travel snapshop %d\n", backInTimeWritePtr);
+    debug(3, "Taking time-travel snapshop %d\n", autoSavedSnapshotsPtr );
     
-    saveToSnapshotUnsafe(backInTimeHistory[backInTimeWritePtr]);
+    saveToSnapshotUnsafe(autoSavedSnapshots[autoSavedSnapshotsPtr]);
     putMessage(MSG_SNAPSHOT_TAKEN);
 
-    backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
+    autoSavedSnapshotsPtr = (autoSavedSnapshotsPtr + 1) % MAX_AUTO_SAVED_SNAPSHOTS;
 }
 
 unsigned
 C64::numHistoricSnapshots()
 {
-    for (int i = BACK_IN_TIME_BUFFER_SIZE - 1; i >= 0; i--) {
-        if (!backInTimeHistory[i]->isEmpty())
+    for (int i = MAX_AUTO_SAVED_SNAPSHOTS - 1; i >= 0; i--) {
+        if (!autoSavedSnapshots[i]->isEmpty())
             return i + 1;
     }
     return 0;
@@ -947,11 +950,11 @@ C64::numHistoricSnapshots()
 Snapshot *
 C64::getHistoricSnapshot(int nr)
 {
-    if (nr >= BACK_IN_TIME_BUFFER_SIZE)
+    if (nr >= MAX_AUTO_SAVED_SNAPSHOTS)
         return NULL;
     
-    int pos = (BACK_IN_TIME_BUFFER_SIZE + backInTimeWritePtr - 1 - nr) % BACK_IN_TIME_BUFFER_SIZE;
-    Snapshot *snapshot = backInTimeHistory[pos];
+    int pos = (MAX_AUTO_SAVED_SNAPSHOTS + autoSavedSnapshotsPtr - 1 - nr) % MAX_AUTO_SAVED_SNAPSHOTS;
+    Snapshot *snapshot = autoSavedSnapshots[pos];
     assert(snapshot != NULL);
     
     if (snapshot->isEmpty())

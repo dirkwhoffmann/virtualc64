@@ -229,14 +229,16 @@ public:
     virtual size_t stateSize();
     
     /*! @brief    Load internal state from memory buffer
-     *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to big endian format.
+     *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to
+     *            big endian format.
      *            Take this into account when loading byte arrays of these sizes.
      *  @param    buffer Pointer to next byte to read
      */
     virtual void loadFromBuffer(uint8_t **buffer);
     
     /*! @brief    Save internal state to memory buffer
-     *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to big endian format.
+     *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to
+     *            big endian format.
      *            Take this into account when saving byte arrays of these sizes.
      *  @param    buffer Pointer to next byte to read
      */
