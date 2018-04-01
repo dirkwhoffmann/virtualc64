@@ -7,29 +7,73 @@
 
 import Foundation
 
-class SnapshotViewItem: NSCollectionViewItem {
+class SnapshotTableCellView: NSTableCellView {
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        view.wantsLayer = true
-    }
+    @IBOutlet weak var preview: NSImageView!
+    @IBOutlet weak var text: NSTextField!
+    @IBOutlet weak var subText: NSTextField!
+    @IBOutlet weak var delete: NSButton!
 }
 
-class SnapshotDialog : UserDialogController {
+class SnapshotDialog : UserDialogController  {
     
     // Outlets
-    @IBOutlet weak var autoSnapshots: NSCollectionView!
-    @IBOutlet weak var userSnapshots: NSCollectionView!
+    
+    @IBOutlet weak var autoTableView: NSTableView!
+    @IBOutlet weak var userTableView: NSTableView!
+
+    // Number of snapshots and image caches
+    var numAutoSnapshots = -1
+    var numUserSnapshots = -1
+    var autoSnapshotImage : [Int:NSImage] = [:]
+    var autoTimeStamp : [Int:String] = [:]
+    var autoTimeDiff : [Int:String] = [:]
+    var userSnapshotImage : [Int:NSImage] = [:]
+    var userTimeStamp : [Int:String] = [:]
+    var userTimeDiff : [Int:String] = [:]
 
     override public func awakeFromNib() {
         
-        update()
+        if numAutoSnapshots == -1 {
+            setup()
+        }
     }
     
-    func update() {
-        autoSnapshots.reloadData()
-        userSnapshots.reloadData()
+    func setup() {
+        
+        numAutoSnapshots = c64.historicSnapshots()
+        
+        // Cache snapshot images
+        for n in 0..<numAutoSnapshots {
+            autoSnapshotImage[n] = c64.timetravelSnapshotImage(n)
+        }
+        
+        // Compute time stamps
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "HH:mm:ss" // "yyyy-MM-dd HH:mm"
+        
+        for n in 0..<numAutoSnapshots {
+            let takenAt = TimeInterval(c64.historicSnapshotTimestamp(n))
+            let timeStamp = formatter.string(from: Date(timeIntervalSince1970: takenAt))
+            autoTimeStamp[n] = "\(timeStamp)"
+
+            var diff = Int(round(now.timeIntervalSince1970 - Double(takenAt)))
+            diff += 140
+            let min = diff / 60;
+            let hrs = diff / 3600;
+            if (diff) < 60 {
+                let s = (diff == 1) ? "" : "s"
+                autoTimeDiff[n] = "\(diff) second\(s) ago"
+            } else if (diff) < 3600 {
+                diff = diff % 60
+                autoTimeDiff[n] = "\(min):\(diff) minutes ago"
+            } else {
+                diff = diff % 60
+                autoTimeDiff[n] = "\(hrs):\(min) hours ago"
+            }
+        }
     }
     
     @IBAction func okAction(_ sender: Any!) {
@@ -43,46 +87,24 @@ class SnapshotDialog : UserDialogController {
 }
 
 //
-// NSCollectionView data source and delegate
+// NSTableViewDataSource, NSTableViewDelegate
 //
 
-extension SnapshotDialog : NSCollectionViewDataSource {
+extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
     
-    func numberOfSections(in collectionView: NSCollectionView) -> Int {
-        
-        return 1
-    }
-    
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 8 // TODO get info from Emulator
-    }
-    
-    func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-    
-        let id = NSUserInterfaceItemIdentifier(rawValue: "SnapshotViewItem")
-        let item = autoSnapshots.makeItem(withIdentifier: id, for: indexPath)
-    
-        guard let snapshotViewItem = item as? SnapshotViewItem else {
-            return item
-        }
-        
-        snapshotViewItem.imageView?.image = NSImage.init(named: NSImage.Name(rawValue: "metal.png"))
-        snapshotViewItem.textField?.stringValue = "23 seconds ago"
-        return snapshotViewItem
-    }
-}
+    func numberOfRows(in tableView: NSTableView) -> Int {
 
-extension SnapshotDialog : NSCollectionViewDelegate {
+        return numAutoSnapshots
+    }
     
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?{
         
-        guard let indexPath = indexPaths.first else { return }
-        
-        let row = indexPath.section
-        let col = indexPath.item
-        
-        track("selected: row = \(row) col = \(col)")
+        let id = NSUserInterfaceItemIdentifier(rawValue: "defaultRow")
+        let result: SnapshotTableCellView = tableView.makeView(withIdentifier: id, owner: self) as! SnapshotTableCellView
+        result.preview.image = autoSnapshotImage[row]
+        result.text.stringValue = autoTimeStamp[row]!
+        result.subText.stringValue = autoTimeDiff[row]!
+        return result;
     }
 }
 

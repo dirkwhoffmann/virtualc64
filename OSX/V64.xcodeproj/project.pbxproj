@@ -21,7 +21,6 @@
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
-		50031B38206FB0E200A1969B /* SnapshotViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B37206FB0E200A1969B /* SnapshotViewItem.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
@@ -293,7 +292,6 @@
 		5000C9610D13DED40011A2E9 /* VC1541Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541Memory.h; sourceTree = "<group>"; };
 		5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541Memory.cpp; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
-		50031B37206FB0E200A1969B /* SnapshotViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotViewItem.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
@@ -1078,7 +1076,6 @@
 				50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */,
 				50FB749B203306A700E05051 /* DiskInspector.xib */,
 				50031B33206FABA400A1969B /* SnapshotDialog.xib */,
-				50031B37206FB0E200A1969B /* SnapshotViewItem.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1279,7 +1276,6 @@
 				50C892511BEFB31200231B96 /* tape.png in Resources */,
 				50F97E05203D90070005E19C /* joystick.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
-				50031B38206FB0E200A1969B /* SnapshotViewItem.xib in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50CCB1D21B84AC10008D8C30 /* none.png in Resources */,
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,

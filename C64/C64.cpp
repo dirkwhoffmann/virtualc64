@@ -662,7 +662,8 @@ C64::endOfRasterline()
         }
         
         // Take a snapshot once in a while
-        if (frame % (vic.getFramesPerSecond() * 4) == 0) {
+        // TODO: Move to endOfFrame, add variable (in sec) for taking snapshots
+        if (frame % (vic.getFramesPerSecond() * 1) == 0) {
             takeTimeTravelSnapshot();
         }
         
