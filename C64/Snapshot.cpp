@@ -22,7 +22,6 @@ const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
 Snapshot::Snapshot()
 {
-    header = NULL;
     state = NULL;
 }
 
@@ -73,9 +72,6 @@ Snapshot::dealloc()
     if (state != NULL) {
         free(state);
     }
-    if (header != NULL) {
-        free(header);
-    }
 }
 
 bool
@@ -83,20 +79,18 @@ Snapshot::alloc(size_t size)
 {
     dealloc();
     
-    if ((state = (uint8_t *)malloc(size)) == NULL)
+    if ((state = (uint8_t *)malloc(size + sizeof(SnapshotHeader))) == NULL)
         return false;
-    if ((header = (SnapshotHeader *)malloc(sizeof(SnapshotHeader))) == NULL)
-        return false;
-        
-    header->magic[0] = magicBytes[0];
-    header->magic[1] = magicBytes[1];
-    header->magic[2] = magicBytes[2];
-    header->magic[3] = magicBytes[3];
-    header->major = V_MAJOR;
-    header->minor = V_MINOR;
-    header->subminor = V_SUBMINOR;
-    header->size = (uint32_t)size;
-    header->timestamp = (time_t)0;
+    
+    header()->magic[0] = magicBytes[0];
+    header()->magic[1] = magicBytes[1];
+    header()->magic[2] = magicBytes[2];
+    header()->magic[3] = magicBytes[3];
+    header()->major = V_MAJOR;
+    header()->minor = V_MINOR;
+    header()->subminor = V_SUBMINOR;
+    header()->size = (uint32_t)size;
+    header()->timestamp = (time_t)0;
     
     return true;
 }
@@ -194,11 +188,11 @@ Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
     alloc(length - sizeof(SnapshotHeader));
     
     // Copy header
-    memcpy((void *)header, buffer, sizeof(SnapshotHeader));
+    memcpy((void *)header(), buffer, sizeof(SnapshotHeader));
     assert(header.size == length - sizeof(SnapshotHeader));
     
     // Copy state data
-    memcpy(state, buffer + sizeof(SnapshotHeader), length - sizeof(SnapshotHeader));
+    memcpy(getData(), buffer + sizeof(SnapshotHeader), length - sizeof(SnapshotHeader));
     
 	return true;
 }
@@ -210,13 +204,13 @@ Snapshot::writeToBuffer(uint8_t *buffer)
     
     // Copy header
     if (buffer)
-        memcpy(buffer,(const void *)header, sizeof(SnapshotHeader));
+        memcpy(buffer,(const void *)header(), sizeof(SnapshotHeader));
 
     // Copy state data
     if (buffer)
-        memcpy(buffer + sizeof(SnapshotHeader), state, header->size);
+        memcpy(buffer + sizeof(SnapshotHeader), getData(), header()->size);
 
-    return sizeof(SnapshotHeader) + header->size;
+    return sizeof(SnapshotHeader) + header()->size;
 }
 
 void
@@ -227,20 +221,20 @@ Snapshot::takeScreenshot(uint32_t *buf, bool pal)
     if (pal) {
         x_start = PAL_LEFT_BORDER_WIDTH - 36;
         y_start = PAL_UPPER_BORDER_HEIGHT - 34;
-        header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
-        header->screenshot.height = 34 + PAL_CANVAS_HEIGHT + 34;
+        header()->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
+        header()->screenshot.height = 34 + PAL_CANVAS_HEIGHT + 34;
     } else {
         x_start = NTSC_LEFT_BORDER_WIDTH - 42;
         y_start = NTSC_UPPER_BORDER_HEIGHT - 9;
-        header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
-        header->screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
+        header()->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
+        header()->screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
     }
     
-    uint32_t *target = header->screenshot.screen;
+    uint32_t *target = header()->screenshot.screen;
     buf += x_start + y_start * NTSC_PIXELS;
-    for (unsigned i = 0; i < header->screenshot.height; i++) {
-        memcpy(target, buf, header->screenshot.width * 4);
-        target += header->screenshot.width;
+    for (unsigned i = 0; i < header()->screenshot.height; i++) {
+        memcpy(target, buf, header()->screenshot.width * 4);
+        target += header()->screenshot.width;
         buf += NTSC_PIXELS;
     }
 }

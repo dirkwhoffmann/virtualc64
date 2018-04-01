@@ -68,7 +68,6 @@ private:
     static const uint8_t magicBytes[];
     
     //! @brief    Internal state data
-    SnapshotHeader *header;
     uint8_t *state;
 	
 public:
@@ -130,34 +129,34 @@ public:
 	const char *typeAsString();
 
     //! @brief    Returns size of header
-    size_t getHeaderSize() { return sizeof(SnapshotHeader); }
+    size_t headerSize() { return sizeof(SnapshotHeader); }
 
     //! @brief    Returns pointer to header data
-    SnapshotHeader *getHeader() { return header; }
+    SnapshotHeader *header() { return (SnapshotHeader *)state; }
 
     //! @brief    Returns size of core data
-    uint32_t getDataSize() { return getHeader()->size; }
+    uint32_t getDataSize() { return header()->size; }
 
     //! @brief    Returns pointer to core data
-	uint8_t *getData() { return state; }
+	uint8_t *getData() { return state + sizeof(SnapshotHeader); }
 
 	//! @brief    Returns the timestamp
-	time_t getTimestamp() { return getHeader()->timestamp; }
+	time_t getTimestamp() { return header()->timestamp; }
 
 	//! @brief    Sets the timestamp
-	void setTimestamp(time_t value) { getHeader()->timestamp = value; }
+	void setTimestamp(time_t value) { header()->timestamp = value; }
 	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return state == NULL; }
 	
 	//! Return screen buffer
-	unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
+	unsigned char *getImageData() { return (unsigned char *)(header()->screenshot.screen); }
 
     //! Return image width
-    unsigned getImageWidth() { return getHeader()->screenshot.width; }
+    unsigned getImageWidth() { return header()->screenshot.width; }
 
     //! Return image height
-    unsigned getImageHeight() { return getHeader()->screenshot.height; }
+    unsigned getImageHeight() { return header()->screenshot.height; }
 
     //! Take screenshot
     void takeScreenshot(uint32_t *buf, bool pal);
