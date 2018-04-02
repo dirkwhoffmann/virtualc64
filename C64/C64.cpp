@@ -882,35 +882,11 @@ C64::restoreHistoricSnapshotSafe(unsigned nr)
     return result;
 }
 
-void
-C64::saveToSnapshotUnsafe(Snapshot *snapshot)
-{
-    if (snapshot == NULL)
-        return;
-    
-    snapshot->alloc(stateSize());
-    uint8_t *ptr = snapshot->getData();
-    saveToBuffer(&ptr);
-
-    snapshot->setTimestamp(time(NULL));
-    snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), isPAL());
-}
-
-void
-C64::saveToSnapshotSafe(Snapshot *snapshot)
-{
-    debug(1, "C64::saveToSnapshotSafe\n");
-
-    suspend();
-    saveToSnapshotUnsafe(snapshot);
-    resume();
-}
-
 Snapshot *
 C64::takeSnapshotUnsafe()
 {
     Snapshot *snapshot = new Snapshot;
-    saveToSnapshotUnsafe(snapshot);
+    snapshot->readFromC64(this);
     return snapshot;
 }
 
@@ -931,10 +907,9 @@ C64::takeTimeTravelSnapshot()
 {
     debug(3, "Taking time-travel snapshop %d\n", autoSavedSnapshotsPtr );
     
-    saveToSnapshotUnsafe(autoSavedSnapshots[autoSavedSnapshotsPtr]);
-    putMessage(MSG_SNAPSHOT_TAKEN);
-
+    autoSavedSnapshots[autoSavedSnapshotsPtr]->readFromC64(this);
     autoSavedSnapshotsPtr = (autoSavedSnapshotsPtr + 1) % MAX_AUTO_SAVED_SNAPSHOTS;
+    putMessage(MSG_SNAPSHOT_TAKEN);
 }
 
 unsigned

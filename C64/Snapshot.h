@@ -87,12 +87,16 @@ public:
 	//! @brief    Destructor
 	~Snapshot();
 	
+private:
+    
     //! @brief    Frees the allocated memory
     void dealloc();
-
+    
     //! @brief    Allocates memory for storing internal state
     bool alloc(size_t size);
-
+    
+public:
+    
     //! @brief    Returns true iff buffer contains a snapshot
     static bool isSnapshot(const uint8_t *buffer, size_t length);
 
@@ -124,9 +128,14 @@ public:
     
 	bool hasSameType(const char *filename);
 	bool readFromBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Read contents from C64
+    bool readFromC64(C64 *c64);
+    
 	size_t writeToBuffer(uint8_t *buffer);
     ContainerType type();
 	const char *typeAsString();
+
 
     //! @brief    Returns size of header
     size_t headerSize() { return sizeof(SnapshotHeader); }
@@ -144,7 +153,7 @@ public:
 	time_t getTimestamp() { return header()->timestamp; }
 
 	//! @brief    Sets the timestamp
-	void setTimestamp(time_t value) { header()->timestamp = value; }
+	// void setTimestamp(time_t value) { header()->timestamp = value; }
 	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return state == NULL; }

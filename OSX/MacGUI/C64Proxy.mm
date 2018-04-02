@@ -750,7 +750,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) _saveToSnapshotWrapper:(ContainerWrapper *)containerWrapper
 {
     Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
-    wrapper->c64->saveToSnapshotSafe(snapshot);
+    snapshot->readFromC64(wrapper->c64);
 }
 
 - (void) saveToSnapshot:(SnapshotProxy *)snapshot
