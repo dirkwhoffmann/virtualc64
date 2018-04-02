@@ -103,7 +103,7 @@ class KeyboardController: NSObject {
         
         // Ignore keys that are pressed in combination with the command key
         if (flags.contains(NSEvent.ModifierFlags.command)) {
-            track("Ignoring the command key")
+            // track("Ignoring the command key")
             return
         }
         

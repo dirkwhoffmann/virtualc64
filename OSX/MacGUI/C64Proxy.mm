@@ -877,8 +877,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 - (time_t)userSnapshotTimestamp:(NSInteger)nr {
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (void)takeUserSnapshot {
-    wrapper->c64->takeUserSnapshot(); }
+- (bool)takeUserSnapshot {
+    return wrapper->c64->takeUserSnapshot(); }
 - (void)restoreUserSnapshot:(NSInteger)nr {
     wrapper->c64->restoreUserSnapshot((unsigned)nr); }
 - (void)deleteUserSnapshot:(NSInteger)nr {

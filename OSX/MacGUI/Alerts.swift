@@ -88,5 +88,16 @@ public extension MyController {
         alert.addButton(withTitle: "OK")
         alert.beginSheetModal(for: window!, completionHandler: nil)
     }
+    
+    func userSnapshotStorageFull() {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        // alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.messageText = "Cannot save snapshot"
+        alert.informativeText = "All slots are filled. Delete some snapshots manually."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
 
 }

@@ -682,7 +682,7 @@ struct ContainerWrapper;
 - (NSInteger)userSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger)userSnapshotImageHeight:(NSInteger)nr;
 - (time_t)userSnapshotTimestamp:(NSInteger)nr;
-- (void)takeUserSnapshot;
+- (bool)takeUserSnapshot;
 - (void)restoreUserSnapshot:(NSInteger)nr;
 - (void)deleteUserSnapshot:(NSInteger)nr;
 
