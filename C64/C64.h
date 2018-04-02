@@ -565,6 +565,18 @@ public:
      */
     bool restoreHistoricSnapshotSafe(unsigned nr);
 
+    /*! @brief    Saves the current state into an existing snapshot.
+     *  @note     Use this function inside the execution thread.
+     *  @seealso  saveToSnapshotSafe
+     */
+    void saveToSnapshotUnsafe(Snapshot *snapshot);
+    
+    /*! @brief    Saves the current state into an existing snapshot.
+     *  @note     Use this function outside the execution thread.
+     *  @seealso  saveToSnapshotUnsafe
+     */
+    void saveToSnapshotSafe(Snapshot *snapshot);
+    
     /*! @brief    Creates a new snapshot object storing the current state.
      *  @note     Use this function inside the execution thread.
      *  @seealso  takeSnapshotSafe

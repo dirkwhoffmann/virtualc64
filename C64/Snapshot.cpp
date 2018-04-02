@@ -22,6 +22,7 @@ const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
 Snapshot::Snapshot()
 {
+    capacity = 0;
     state = NULL;
 }
 
@@ -51,6 +52,7 @@ Snapshot::makeSnapshotWithFile(const char *filename)
     return snapshot;
 }
 
+/*
 Snapshot *
 Snapshot::makeSnapshotWithC64(C64 *c64)
 {
@@ -60,6 +62,7 @@ Snapshot::makeSnapshotWithC64(C64 *c64)
     snapshot->readFromC64(c64);
     return snapshot;
 }
+*/
 
 Snapshot::~Snapshot()
 {
@@ -75,13 +78,16 @@ Snapshot::dealloc()
 }
 
 bool
-Snapshot::alloc(size_t capacity)
+Snapshot::setCapacity(size_t size)
 {
-    if (state == NULL) {
-        if ((state = (uint8_t *)malloc(capacity + sizeof(SnapshotHeader))) == NULL)
-            return false;
-    }
+    if (state != NULL && capacity == size)
+        return true;
     
+    dealloc();
+    if ((state = (uint8_t *)malloc(size + sizeof(SnapshotHeader))) == NULL)
+        return false;
+    
+    capacity = size;
     header()->magic[0] = magicBytes[0];
     header()->magic[1] = magicBytes[1];
     header()->magic[2] = magicBytes[2];
@@ -184,8 +190,10 @@ Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
     assert(buffer != NULL);
     assert(length > sizeof(SnapshotHeader));
 
+    size_t stateSize = length - sizeof(SnapshotHeader);
+    
     // Allocate memory
-    if (!alloc(length))
+    if (!setCapacity(stateSize))
         return false; 
     
     // Copy header
@@ -196,21 +204,6 @@ Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
     memcpy(getData(), buffer + sizeof(SnapshotHeader), length - sizeof(SnapshotHeader));
     
 	return true;
-}
-
-bool
-Snapshot::readFromC64(C64 *c64)
-{
-    // Allocate memory
-    if (!alloc(c64->stateSize()))
-        return false;
-    
-    uint8_t *ptr = getData();
-    c64->saveToBuffer(&ptr);
-    header()->timestamp = time(NULL);
-    takeScreenshot((uint32_t *)c64->vic.screenBuffer(), c64->isPAL());
-
-    return true;
 }
 
 size_t

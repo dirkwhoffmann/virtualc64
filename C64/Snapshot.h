@@ -52,13 +52,14 @@ typedef struct {
     time_t timestamp;
     
     //! @brief    Size of internal state
+    //! @deprecated
     uint32_t size;
     
 } SnapshotHeader;
 
 /*! @class    Snapshot
- *  @brief    The Snapshot class declares the programmatic interface for a file that contains an emulator snapshot 
- *            (a frozen internal state).
+ *  @brief    The Snapshot class declares the programmatic interface for a file that contains
+ *            an emulator snapshot (frozen internal state).
  */
 class Snapshot : public Container {
 	
@@ -67,6 +68,12 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
+    //! @brief    Capacity
+    /*! @details  State size in bytes exluding header information
+     *  @note     Number of allocated bytes is capacity + sizeof(SnapshotHeader)
+     */
+    size_t capacity;
+    
     //! @brief    Internal state data
     uint8_t *state;
 	
@@ -74,28 +81,21 @@ public:
 
 	//! @brief    Constructor
 	Snapshot();
-	
+
     //! @brief    Factory method
     static Snapshot *makeSnapshotWithFile(const char *filename);
     
     //! @brief    Factory method
     static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
 
-    //! @brief    Factory method
-    static Snapshot *makeSnapshotWithC64(C64 *c64);
-
 	//! @brief    Destructor
 	~Snapshot();
 	
-private:
-    
     //! @brief    Frees the allocated memory
     void dealloc();
     
     //! @brief    Allocates memory for storing internal state
-    bool alloc(size_t size);
-    
-public:
+    bool setCapacity(size_t size);
     
     //! @brief    Returns true iff buffer contains a snapshot
     static bool isSnapshot(const uint8_t *buffer, size_t length);
@@ -128,10 +128,6 @@ public:
     
 	bool hasSameType(const char *filename);
 	bool readFromBuffer(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Read contents from C64
-    bool readFromC64(C64 *c64);
-    
 	size_t writeToBuffer(uint8_t *buffer);
     ContainerType type();
 	const char *typeAsString();
@@ -153,7 +149,7 @@ public:
 	time_t getTimestamp() { return header()->timestamp; }
 
 	//! @brief    Sets the timestamp
-	// void setTimestamp(time_t value) { header()->timestamp = value; }
+	void setTimestamp(time_t value) { header()->timestamp = value; }
 	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return state == NULL; }
