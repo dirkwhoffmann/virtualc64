@@ -147,6 +147,7 @@ C64::C64()
     }
     autoSavedSnapshotsPtr = 0;
     userSavedSnapshotsPtr = 0;
+    autoSaveSnapshots = true;
     autoSaveInterval = 1;
 
     reset();
@@ -678,7 +679,7 @@ C64::endOfFrame()
     expansionport.execute();
     
     // Take a snapshot once in a while
-    if (frame % (vic.getFramesPerSecond() * autoSaveInterval) == 0) {
+    if (autoSaveSnapshots && frame % (vic.getFramesPerSecond() * autoSaveInterval) == 0) {
         takeAutoSnapshot();
     }
     

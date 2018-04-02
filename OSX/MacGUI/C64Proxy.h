@@ -668,6 +668,8 @@ struct ContainerWrapper;
 - (UInt64) frames;
 
 // Snapshot storage
+- (void) setAutoSaveSnapshots:(bool)b;
+
 - (NSInteger) numAutoSnapshots;
 - (NSData *) autoSnapshotData:(NSInteger)nr;
 - (unsigned char *) autoSnapshotImageData:(NSInteger)nr;

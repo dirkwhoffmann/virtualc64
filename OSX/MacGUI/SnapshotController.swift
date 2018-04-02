@@ -13,6 +13,7 @@ class SnapshotTableCellView: NSTableCellView {
     @IBOutlet weak var text: NSTextField!
     @IBOutlet weak var subText: NSTextField!
     @IBOutlet weak var delete: NSButton!
+    // var slot = 0
 }
 
 class SnapshotDialog : UserDialogController  {
@@ -39,6 +40,11 @@ class SnapshotDialog : UserDialogController  {
     override public func awakeFromNib() {
         
         if numAutoSnapshots == -1 {
+            
+            // Disable auto snapshot saving while dialog is open
+            c64.setAutoSaveSnapshots(false)
+            
+            // Setup snapshot caches
             reloadAutoSnapshotCache()
             reloadUserSnapshotCache()
         }
@@ -107,12 +113,12 @@ class SnapshotDialog : UserDialogController  {
         reloadUserSnapshotCache()
     }
     
-    /*
     @IBAction override func cancelAction(_ sender: Any!) {
         
+        track()
+        c64.setAutoSaveSnapshots(true)
         hideSheet()
     }
-    */
     
     /*
     @IBAction func okAction(_ sender: Any!) {

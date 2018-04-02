@@ -309,8 +309,15 @@ private:
     // Snapshot storage
     //
     
+public:
+    
+    //! @brief    Indicates if snapshots should be recorded automatically
+    bool autoSaveSnapshots;
+    
     //! @brief    Time in seconds between two auto-saved snapshots
     unsigned autoSaveInterval;
+    
+private:
     
     //! @brief    Ring buffer storage for automatically saved snapshots
     #define MAX_AUTO_SAVED_SNAPSHOTS 16
@@ -320,7 +327,7 @@ private:
     unsigned autoSavedSnapshotsPtr;
     
     //! @brief    Ring buffer storage for manually saved snapshots
-    #define MAX_USER_SAVED_SNAPSHOTS 4 // 32
+    #define MAX_USER_SAVED_SNAPSHOTS 4
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
     //! @brief    Ring buffer write pointer
@@ -559,12 +566,6 @@ public:
 
     //! @brief    Restores a snapshot from the user storage
     void restoreUserSnapshot(unsigned nr);
-
-    
-    /*! @brief    Thread-safe version of restoreHistoricSnapshot
-     *  @details  A running emulator is paused before performing the operation
-     */
-    // bool restoreHistoricSnapshotSafe(unsigned nr);
 
     /*! @brief    Saves the current state into an existing snapshot.
      *  @note     Use this function inside the execution thread.

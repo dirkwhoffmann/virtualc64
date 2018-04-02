@@ -855,6 +855,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (UInt64) frames { return wrapper->c64->getFrame(); }
 
 // Snapshot storage
+- (void) setAutoSaveSnapshots:(bool)b { wrapper->c64->autoSaveSnapshots = b; }
 - (NSInteger) numAutoSnapshots {
     return wrapper->c64->numAutoSnapshots(); }
 - (NSData *)autoSnapshotData:(NSInteger)nr {
