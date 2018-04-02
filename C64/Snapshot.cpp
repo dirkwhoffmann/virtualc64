@@ -96,7 +96,6 @@ Snapshot::setCapacity(size_t size)
     header()->major = V_MAJOR;
     header()->minor = V_MINOR;
     header()->subminor = V_SUBMINOR;
-    header()->size = (uint32_t)capacity;
     header()->timestamp = (time_t)0;
     
     return true;
@@ -213,7 +212,7 @@ Snapshot::writeToBuffer(uint8_t *buffer)
     assert(state != NULL);
     
     // Copy data
-    size_t length = header()->size + sizeof(SnapshotHeader);
+    size_t length = capacity + sizeof(SnapshotHeader);
     if (buffer)
         memcpy(buffer, state, length);
     

@@ -667,24 +667,24 @@ struct ContainerWrapper;
 - (UInt64) cycles;
 - (UInt64) frames;
 
-// - (SnapshotProxy *) takeSnapshot;
-
 // Snapshot storage
 - (NSInteger) numAutoSnapshots;
-- (unsigned char *)autoSnapshotImageData:(NSInteger)nr;
-- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr;
-- (time_t)autoSnapshotTimestamp:(NSInteger)nr;
-- (void)restoreAutoSnapshot:(NSInteger)nr;
+- (NSData *) autoSnapshotData:(NSInteger)nr;
+- (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
+- (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
+- (time_t) autoSnapshotTimestamp:(NSInteger)nr;
+- (void) restoreAutoSnapshot:(NSInteger)nr;
 
 - (NSInteger) numUserSnapshots;
-- (unsigned char *)userSnapshotImageData:(NSInteger)nr;
-- (NSInteger)userSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger)userSnapshotImageHeight:(NSInteger)nr;
-- (time_t)userSnapshotTimestamp:(NSInteger)nr;
-- (bool)takeUserSnapshot;
-- (void)restoreUserSnapshot:(NSInteger)nr;
-- (void)deleteUserSnapshot:(NSInteger)nr;
+- (NSData *) userSnapshotData:(NSInteger)nr;
+- (unsigned char *) userSnapshotImageData:(NSInteger)nr;
+- (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
+- (time_t) userSnapshotTimestamp:(NSInteger)nr;
+- (bool) takeUserSnapshot;
+- (void) restoreUserSnapshot:(NSInteger)nr;
+- (void) deleteUserSnapshot:(NSInteger)nr;
 
 // DEPRECATED
 - (NSInteger) historicSnapshotHeaderSize:(NSInteger)nr;

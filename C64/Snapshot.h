@@ -51,10 +51,6 @@ typedef struct {
     //! @brief    Date and time of snapshot creation
     time_t timestamp;
     
-    //! @brief    Size of internal state
-    //! @deprecated
-    uint32_t size;
-    
 } SnapshotHeader;
 
 /*! @class    Snapshot
@@ -139,8 +135,9 @@ public:
     //! @brief    Returns pointer to header data
     SnapshotHeader *header() { return (SnapshotHeader *)state; }
 
-    //! @brief    Returns size of core data
-    uint32_t getDataSize() { return header()->size; }
+    //! @brief    Returns size of core data (without header)
+    //! @deprecated
+    size_t getDataSize() { return capacity; }
 
     //! @brief    Returns pointer to core data
 	uint8_t *getData() { return state + sizeof(SnapshotHeader); }

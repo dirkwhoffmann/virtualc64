@@ -24,12 +24,14 @@ class SnapshotDialog : UserDialogController  {
 
     var now: Date = Date()
     
-    // Number of snapshots and image caches
+    // Auto-saved snapshot cache
     var numAutoSnapshots = -1
-    var numUserSnapshots = -1
     var autoSnapshotImage: [Int:NSImage] = [:]
     var autoTimeStamp: [Int:String] = [:]
     var autoTimeDiff: [Int:String] = [:]
+    
+    // User-saved snapshot cache
+    var numUserSnapshots = -1
     var userSnapshotImage: [Int:NSImage] = [:]
     var userTimeStamp: [Int:String] = [:]
     var userTimeDiff: [Int:String] = [:]
@@ -37,10 +39,8 @@ class SnapshotDialog : UserDialogController  {
     override public func awakeFromNib() {
         
         if numAutoSnapshots == -1 {
-            
-            // now = Date()
-            c64.suspend() // Stop emulation while dialog is open
-            reloadCachedData()
+            reloadAutoSnapshotCache()
+            reloadUserSnapshotCache()
         }
     }
     
@@ -70,50 +70,58 @@ class SnapshotDialog : UserDialogController  {
         }
     }
     
-    func reloadCachedData() {
+    func reloadAutoSnapshotCache() {
         
+        c64.suspend()
         numAutoSnapshots = c64.numAutoSnapshots()
-        numUserSnapshots = c64.numUserSnapshots()
-        
-        // Cache snapshot images and time stamps
         for n in 0..<numAutoSnapshots {
             let takenAt = TimeInterval(c64.autoSnapshotTimestamp(n))
             autoSnapshotImage[n] = c64.autoSnapshotImage(n)
             autoTimeStamp[n] = timeInfo(timeStamp: takenAt)
             autoTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
+        c64.resume()
+        autoTableView.reloadData()
+    }
+    
+    func reloadUserSnapshotCache() {
+        
+        c64.suspend()
+        numUserSnapshots = c64.numUserSnapshots()
         for n in 0..<numUserSnapshots {
             let takenAt = TimeInterval(c64.userSnapshotTimestamp(n))
             userSnapshotImage[n] = c64.userSnapshotImage(n)
             userTimeStamp[n] = timeInfo(timeStamp: takenAt)
             userTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
-        
-        autoTableView.reloadData()
+        c64.resume()
         userTableView.reloadData()
     }
     
     @IBAction func deleteAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
+        let index = numUserSnapshots - sender.tag - 1
+        track("Deleting item \(index) tag \(sender.tag)")
         c64.deleteUserSnapshot(numUserSnapshots - sender.tag - 1)
-        reloadCachedData()
+        reloadUserSnapshotCache()
     }
     
+    /*
     @IBAction override func cancelAction(_ sender: Any!) {
         
-        c64.resume()
         hideSheet()
     }
+    */
     
+    /*
     @IBAction func okAction(_ sender: Any!) {
         
         // Restore selected snapshot
         track("TODO: Restore selected snapshot")
-        
-        c64.resume()
         hideSheet()
     }
+    */
     
     @IBAction func autoDoubleClick(_ sender: Any!) {
         
@@ -163,7 +171,7 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
             result.text.stringValue = autoTimeStamp[index]!
             result.subText.stringValue = autoTimeDiff[index]!
             result.delete.isHidden = true
-            result.delete.tag = index
+            result.delete.tag = row
             return result;
         }
         
@@ -174,11 +182,47 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
             result.text.stringValue = userTimeStamp[index]!
             result.subText.stringValue = userTimeDiff[index]!
             result.delete.isHidden = false
-            result.delete.tag = index
+            result.delete.tag = row
             return result;
         }
     
         fatalError();
+    }
+}
+
+//
+// Drag and drop
+//
+
+extension SnapshotDialog {
+    
+    func tableView(_ tableView: NSTableView,
+                   writeRowsWith rowIndexes: IndexSet,
+                   to pboard: NSPasteboard) -> Bool {
+        
+        // Get index of dragged item
+        guard let index = rowIndexes.first else {
+            track("Cannot get table index for drag and drop")
+            return false
+        }
+        
+        // Get snapshot data
+        var data : Data
+        if (tableView == autoTableView) {
+            data = c64.autoSnapshotData(numAutoSnapshots - index - 1)
+        }
+        else {
+            precondition(tableView == userTableView)
+            data = c64.userSnapshotData(numUserSnapshots - index - 1)
+        }
+        
+        let pboardType = NSPasteboard.PasteboardType.fileContents
+        pboard.declareTypes([pboardType], owner: self)
+        let fileWrapper = FileWrapper.init(regularFileWithContents: data)
+        fileWrapper.preferredFilename = "Snapshot.VC64"
+        pboard.write(fileWrapper)
+        
+        return true;
     }
 }
 

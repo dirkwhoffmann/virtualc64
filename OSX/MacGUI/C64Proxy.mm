@@ -857,6 +857,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 // Snapshot storage
 - (NSInteger) numAutoSnapshots {
     return wrapper->c64->numAutoSnapshots(); }
+- (NSData *)autoSnapshotData:(NSInteger)nr {
+    Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
+    return [NSData dataWithBytes: (void *)snapshot->header()
+                          length: snapshot->sizeOnDisk()];
+}
 - (unsigned char *)autoSnapshotImageData:(NSInteger)nr {
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageData() : NULL; }
 - (NSInteger)autoSnapshotImageWidth:(NSInteger)nr {
@@ -869,6 +874,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
 
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
+- (NSData *)userSnapshotData:(NSInteger)nr {
+    Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
+    return [NSData dataWithBytes: (void *)snapshot->header()
+                          length: snapshot->sizeOnDisk()];
+}
 - (unsigned char *)userSnapshotImageData:(NSInteger)nr {
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageData() : NULL; }
 - (NSInteger)userSnapshotImageWidth:(NSInteger)nr {
