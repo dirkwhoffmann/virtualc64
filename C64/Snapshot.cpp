@@ -74,6 +74,7 @@ Snapshot::dealloc()
 {
     if (state != NULL) {
         free(state);
+        state = NULL; 
     }
 }
 

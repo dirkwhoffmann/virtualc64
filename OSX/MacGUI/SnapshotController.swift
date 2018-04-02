@@ -22,21 +22,25 @@ class SnapshotDialog : UserDialogController  {
     @IBOutlet weak var autoTableView: NSTableView!
     @IBOutlet weak var userTableView: NSTableView!
 
+    var now: Date = Date()
+    
     // Number of snapshots and image caches
     var numAutoSnapshots = -1
     var numUserSnapshots = -1
-    var autoSnapshotImage : [Int:NSImage] = [:]
-    var autoTimeStamp : [Int:String] = [:]
-    var autoTimeDiff : [Int:String] = [:]
-    var userSnapshotImage : [Int:NSImage] = [:]
-    var userTimeStamp : [Int:String] = [:]
-    var userTimeDiff : [Int:String] = [:]
+    var autoSnapshotImage: [Int:NSImage] = [:]
+    var autoTimeStamp: [Int:String] = [:]
+    var autoTimeDiff: [Int:String] = [:]
+    var userSnapshotImage: [Int:NSImage] = [:]
+    var userTimeStamp: [Int:String] = [:]
+    var userTimeDiff: [Int:String] = [:]
 
     override public func awakeFromNib() {
         
         if numAutoSnapshots == -1 {
+            
+            // now = Date()
             c64.suspend() // Stop emulation while dialog is open
-            setup()
+            reloadCachedData()
         }
     }
     
@@ -51,7 +55,6 @@ class SnapshotDialog : UserDialogController  {
     
     func timeDiffInfo(timeStamp: TimeInterval) -> String {
         
-        let now = Date()
         var diff = Int(round(now.timeIntervalSince1970 - Double(timeStamp)))
         let min = diff / 60;
         let hrs = diff / 3600;
@@ -67,7 +70,7 @@ class SnapshotDialog : UserDialogController  {
         }
     }
     
-    func setup() {
+    func reloadCachedData() {
         
         numAutoSnapshots = c64.numAutoSnapshots()
         numUserSnapshots = c64.numUserSnapshots()
@@ -85,6 +88,16 @@ class SnapshotDialog : UserDialogController  {
             userTimeStamp[n] = timeInfo(timeStamp: takenAt)
             userTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
+        
+        autoTableView.reloadData()
+        userTableView.reloadData()
+    }
+    
+    @IBAction func deleteAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        c64.deleteUserSnapshot(numUserSnapshots - sender.tag - 1)
+        reloadCachedData()
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {
@@ -105,14 +118,16 @@ class SnapshotDialog : UserDialogController  {
     @IBAction func autoDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        c64.restoreAutoSnapshot(sender.selectedRow)
+        let index = numAutoSnapshots - sender.selectedRow - 1
+        c64.restoreAutoSnapshot(index)
         hideSheet()
     }
     
     @IBAction func userDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        c64.restoreUserSnapshot(sender.selectedRow)
+        let index = numUserSnapshots - sender.selectedRow - 1
+        c64.restoreUserSnapshot(index)
         hideSheet()
     }
 }
@@ -143,22 +158,26 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
         
         if (tableView == autoTableView) {
             
-            result.preview.image = autoSnapshotImage[row]
-            result.text.stringValue = autoTimeStamp[row]!
-            result.subText.stringValue = autoTimeDiff[row]!
+            let index = numAutoSnapshots - row - 1 // reverse display order
+            result.preview.image = autoSnapshotImage[index]
+            result.text.stringValue = autoTimeStamp[index]!
+            result.subText.stringValue = autoTimeDiff[index]!
             result.delete.isHidden = true
+            result.delete.tag = index
             return result;
         }
         
         else if (tableView == userTableView) {
             
-            result.preview.image = userSnapshotImage[row]
-            result.text.stringValue = userTimeStamp[row]!
-            result.subText.stringValue = userTimeDiff[row]!
+            let index = numUserSnapshots - row - 1 // reverse display order
+            result.preview.image = userSnapshotImage[index]
+            result.text.stringValue = userTimeStamp[index]!
+            result.subText.stringValue = userTimeDiff[index]!
             result.delete.isHidden = false
+            result.delete.tag = index
             return result;
         }
-        
+    
         fatalError();
     }
 }

@@ -89,9 +89,6 @@
         NSInteger height = [[controller c64] autoSnapshotImageHeight:i];
         NSImage *image = [c64 autoSnapshotImage:i];
         
-	    // Enhance image
-        // NSImage *image = [c64 makeGlossyWithImage:plainimage];
-        
 		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+70)];
 		[final lockFocus];
 		[image drawInRect:NSMakeRect(0, 0, width, height) 

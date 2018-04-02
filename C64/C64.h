@@ -320,7 +320,7 @@ private:
     unsigned autoSavedSnapshotsPtr;
     
     //! @brief    Ring buffer storage for manually saved snapshots
-    #define MAX_USER_SAVED_SNAPSHOTS 32
+    #define MAX_USER_SAVED_SNAPSHOTS 4 // 32
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
     //! @brief    Ring buffer write pointer
@@ -557,7 +557,7 @@ public:
     //! @brief    Restores a snapshot from the auto-save ringbuffer
     void restoreAutoSnapshot(unsigned nr);
 
-    //! @brief    Restores a snapshot from the user-save ringbuffer
+    //! @brief    Restores a snapshot from the user storage
     void restoreUserSnapshot(unsigned nr);
 
     
@@ -597,30 +597,30 @@ public:
      */
     void takeAutoSnapshot();
 
-    /*! @brief    Takes a snapshot and stores it in the user snapshot ringbuffer
+    /*! @brief    Takes a snapshot and stores it in the user storage
      *  @note     In contrast to takeAutoSnapshot(), this function is thread-safe an
      *            can be called any time.
+     *  @returns  false if user storage is full
      */
-    void takeUserSnapshot();
+    bool takeUserSnapshot();
 
     /*! @brief    Returns the number of items in the auto-save ringbuffer
      */
     unsigned numAutoSnapshots();
     
-    /*! @brief    Returns the number of items in the user-save ringbuffer
+    /*! @brief    Returns the number of items in the user storage
      */
     unsigned numUserSnapshots();
     
-    /*! @brief    Returns a snapshopt from the auto-save ringbuffer
-     *  @note     The latest snapshot is indexed 0.
-     */
-    Snapshot *autoSnapshot(int nr);
+    //! @brief    Returns a snapshopt from the auto-save ringbuffer
+    Snapshot *autoSnapshot(unsigned nr);
     
-    /*! @brief    Returns a snapshopt from the user-save ringbuffer
-     *  @note     The latest snapshot is indexed 0.
-     */
-    Snapshot *userSnapshot(int nr);
+    //! @brief    Returns a snapshopt from the user storage
+    Snapshot *userSnapshot(unsigned nr);
 
+    //! @brief    Deletes a snapshot from the user storage
+    void deleteUserSnapshot(unsigned nr);
+    
     //
     //! @functiongroup Handling disks, tapes, and cartridges
     //

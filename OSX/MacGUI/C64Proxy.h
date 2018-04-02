@@ -684,6 +684,7 @@ struct ContainerWrapper;
 - (time_t)userSnapshotTimestamp:(NSInteger)nr;
 - (void)takeUserSnapshot;
 - (void)restoreUserSnapshot:(NSInteger)nr;
+- (void)deleteUserSnapshot:(NSInteger)nr;
 
 // DEPRECATED
 - (NSInteger) historicSnapshotHeaderSize:(NSInteger)nr;

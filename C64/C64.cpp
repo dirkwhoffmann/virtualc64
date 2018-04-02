@@ -870,22 +870,6 @@ C64::restoreUserSnapshot(unsigned nr)
     loadFromSnapshotSafe(userSnapshot(nr));
 }
 
-/*
-bool
-C64::restoreHistoricSnapshotSafe(unsigned nr)
-{
-    debug(1, "C64::restoreHistoricSnapshotSafe (%d)\n", nr);
-
-    bool result;
-    
-    suspend();
-    result = restoreHistoricSnapshotUnsafe(nr);
-    resume();
-    
-    return result;
-}
-*/
-
 void
 C64::saveToSnapshotUnsafe(Snapshot *snapshot)
 {
@@ -940,16 +924,22 @@ C64::takeAutoSnapshot()
     putMessage(MSG_SNAPSHOT_TAKEN);
 }
 
-void
+bool
 C64::takeUserSnapshot()
 {
     debug(3, "Taking user snapshop %d\n", userSavedSnapshotsPtr);
     
+    // Check for free space
+    if (userSavedSnapshotsPtr == MAX_USER_SAVED_SNAPSHOTS)
+        return false;
+    
     suspend();
     saveToSnapshotUnsafe(userSavedSnapshots[userSavedSnapshotsPtr]);
-    userSavedSnapshotsPtr = (userSavedSnapshotsPtr + 1) % MAX_USER_SAVED_SNAPSHOTS;
+    userSavedSnapshotsPtr++;
     resume();
+    
     putMessage(MSG_SNAPSHOT_TAKEN);
+    return true;
 }
 
 unsigned
@@ -977,31 +967,40 @@ C64::numUserSnapshots()
 }
 
 Snapshot *
-C64::autoSnapshot(int nr)
+C64::autoSnapshot(unsigned nr)
 {
     assert(nr < MAX_AUTO_SAVED_SNAPSHOTS);
+    assert(autoSavedSnapshots[nr] != NULL);
+    assert(!autoSavedSnapshots[nr]->isEmpty());
     
-    int pos = autoSavedSnapshotsPtr - 1 - nr; // reverse order
-    pos = (pos + MAX_AUTO_SAVED_SNAPSHOTS) % MAX_AUTO_SAVED_SNAPSHOTS; // wrap around
-    
-    assert(autoSavedSnapshots[pos] != NULL);
-    assert(!autoSavedSnapshots[pos]->isEmpty());
-    
-    return autoSavedSnapshots[pos];
+    return autoSavedSnapshots[nr];
 }
 
 Snapshot *
-C64::userSnapshot(int nr)
+C64::userSnapshot(unsigned nr)
 {
     assert(nr < MAX_USER_SAVED_SNAPSHOTS);
+    assert(userSavedSnapshots[nr] != NULL);
+    assert(!userSavedSnapshots[nr]->isEmpty());
     
-    int pos = userSavedSnapshotsPtr - 1 - nr; // reverse order
-    pos = (pos + MAX_USER_SAVED_SNAPSHOTS) % MAX_USER_SAVED_SNAPSHOTS; // wrap around
+    return userSavedSnapshots[nr];
+}
+
+void
+C64::deleteUserSnapshot(unsigned nr)
+{
+    assert(nr < userSavedSnapshotsPtr);
+    unsigned i = nr;
     
-    assert(userSavedSnapshots[pos] != NULL);
-    assert(!userSavedSnapshots[pos]->isEmpty());
+    // Move snapshot 'nr' to the end of the list
+    Snapshot *toDelete = userSavedSnapshots[i];
+    for (; i < userSavedSnapshotsPtr - 1; i++)
+        userSavedSnapshots[i] = userSavedSnapshots[i + 1];
+    userSavedSnapshots[i] = toDelete;
     
-    return userSavedSnapshots[pos];
+    // Free last slot
+    userSavedSnapshots[i]->dealloc();
+    userSavedSnapshotsPtr--;
 }
 
 //
