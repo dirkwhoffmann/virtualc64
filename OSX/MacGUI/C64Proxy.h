@@ -671,6 +671,7 @@ struct ContainerWrapper;
 - (void) setAutoSaveSnapshots:(bool)b;
 
 - (NSInteger) numAutoSnapshots;
+- (NSInteger) autoMostRecent:(NSInteger)nr;
 - (NSData *) autoSnapshotData:(NSInteger)nr;
 - (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
 - (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
@@ -679,6 +680,7 @@ struct ContainerWrapper;
 - (void) restoreAutoSnapshot:(NSInteger)nr;
 
 - (NSInteger) numUserSnapshots;
+- (NSInteger) userMostRecent:(NSInteger)nr;
 - (NSData *) userSnapshotData:(NSInteger)nr;
 - (unsigned char *) userSnapshotImageData:(NSInteger)nr;
 - (NSInteger) userSnapshotImageWidth:(NSInteger)nr;

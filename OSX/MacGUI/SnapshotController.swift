@@ -13,7 +13,6 @@ class SnapshotTableCellView: NSTableCellView {
     @IBOutlet weak var text: NSTextField!
     @IBOutlet weak var subText: NSTextField!
     @IBOutlet weak var delete: NSButton!
-    // var slot = 0
 }
 
 class SnapshotDialog : UserDialogController  {
@@ -30,13 +29,15 @@ class SnapshotDialog : UserDialogController  {
     var autoSnapshotImage: [Int:NSImage] = [:]
     var autoTimeStamp: [Int:String] = [:]
     var autoTimeDiff: [Int:String] = [:]
+    var autoSlotForRow: [Int:Int] = [:]
     
     // User-saved snapshot cache
     var numUserSnapshots = -1
     var userSnapshotImage: [Int:NSImage] = [:]
     var userTimeStamp: [Int:String] = [:]
     var userTimeDiff: [Int:String] = [:]
-
+    var userSlotForRow: [Int:Int] = [:]
+    
     override public func awakeFromNib() {
         
         if numAutoSnapshots == -1 {
@@ -81,8 +82,9 @@ class SnapshotDialog : UserDialogController  {
         c64.suspend()
         numAutoSnapshots = c64.numAutoSnapshots()
         for n in 0..<numAutoSnapshots {
-            let takenAt = TimeInterval(c64.autoSnapshotTimestamp(n))
-            autoSnapshotImage[n] = c64.autoSnapshotImage(n)
+            let slot = c64.autoMostRecent(n)
+            let takenAt = TimeInterval(c64.autoSnapshotTimestamp(slot))
+            autoSnapshotImage[n] = c64.autoSnapshotImage(slot)
             autoTimeStamp[n] = timeInfo(timeStamp: takenAt)
             autoTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
@@ -95,8 +97,9 @@ class SnapshotDialog : UserDialogController  {
         c64.suspend()
         numUserSnapshots = c64.numUserSnapshots()
         for n in 0..<numUserSnapshots {
-            let takenAt = TimeInterval(c64.userSnapshotTimestamp(n))
-            userSnapshotImage[n] = c64.userSnapshotImage(n)
+            let slot = c64.userMostRecent(n)
+            let takenAt = TimeInterval(c64.userSnapshotTimestamp(slot))
+            userSnapshotImage[n] = c64.userSnapshotImage(slot)
             userTimeStamp[n] = timeInfo(timeStamp: takenAt)
             userTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
@@ -107,9 +110,8 @@ class SnapshotDialog : UserDialogController  {
     @IBAction func deleteAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        let index = numUserSnapshots - sender.tag - 1
-        track("Deleting item \(index) tag \(sender.tag)")
-        c64.deleteUserSnapshot(numUserSnapshots - sender.tag - 1)
+        let slot = c64.userMostRecent(sender.tag)
+        c64.deleteUserSnapshot(slot)
         reloadUserSnapshotCache()
     }
     
@@ -132,15 +134,15 @@ class SnapshotDialog : UserDialogController  {
     @IBAction func autoDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        let index = numAutoSnapshots - sender.selectedRow - 1
-        c64.restoreAutoSnapshot(index)
+        let slot = c64.autoMostRecent(sender.selectedRow)
+        c64.restoreAutoSnapshot(slot)
         hideSheet()
     }
     
     @IBAction func userDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        let index = numUserSnapshots - sender.selectedRow - 1
+        let index = c64.userMostRecent(sender.selectedRow)
         c64.restoreUserSnapshot(index)
         hideSheet()
     }
@@ -172,10 +174,9 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
         
         if (tableView == autoTableView) {
             
-            let index = numAutoSnapshots - row - 1 // reverse display order
-            result.preview.image = autoSnapshotImage[index]
-            result.text.stringValue = autoTimeStamp[index]!
-            result.subText.stringValue = autoTimeDiff[index]!
+            result.preview.image = autoSnapshotImage[row]
+            result.text.stringValue = autoTimeStamp[row]!
+            result.subText.stringValue = autoTimeDiff[row]!
             result.delete.isHidden = true
             result.delete.tag = row
             return result;
@@ -183,10 +184,9 @@ extension SnapshotDialog : NSTableViewDataSource, NSTableViewDelegate {
         
         else if (tableView == userTableView) {
             
-            let index = numUserSnapshots - row - 1 // reverse display order
-            result.preview.image = userSnapshotImage[index]
-            result.text.stringValue = userTimeStamp[index]!
-            result.subText.stringValue = userTimeDiff[index]!
+            result.preview.image = userSnapshotImage[row]
+            result.text.stringValue = userTimeStamp[row]!
+            result.subText.stringValue = userTimeDiff[row]!
             result.delete.isHidden = false
             result.delete.tag = row
             return result;
@@ -215,11 +215,13 @@ extension SnapshotDialog {
         // Get snapshot data
         var data : Data
         if (tableView == autoTableView) {
-            data = c64.autoSnapshotData(numAutoSnapshots - index - 1)
+            let slot = c64.autoMostRecent(index)
+            data = c64.autoSnapshotData(slot)
         }
         else {
             precondition(tableView == userTableView)
-            data = c64.userSnapshotData(numUserSnapshots - index - 1)
+            let slot = c64.userMostRecent(index)
+            data = c64.userSnapshotData(slot)
         }
         
         let pboardType = NSPasteboard.PasteboardType.fileContents

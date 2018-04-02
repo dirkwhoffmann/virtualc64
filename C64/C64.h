@@ -605,14 +605,20 @@ public:
      */
     bool takeUserSnapshot();
 
-    /*! @brief    Returns the number of items in the auto-save ringbuffer
-     */
+    //! @brief    Returns the number of items in the auto-save ringbuffer
     unsigned numAutoSnapshots();
     
-    /*! @brief    Returns the number of items in the user storage
-     */
-    unsigned numUserSnapshots();
+    //! @brief    Returns the index of the n-th most recent entry
+    unsigned autoMostRecent(unsigned nr) {
+        return (autoSavedSnapshotsPtr + MAX_AUTO_SAVED_SNAPSHOTS - 1 - nr) % MAX_AUTO_SAVED_SNAPSHOTS; }
     
+    //! @brief    Returns the number of items in the user storage
+    unsigned numUserSnapshots();
+
+    //! @brief    Returns the index of the n-th most recent entry
+    unsigned userMostRecent(unsigned nr) {
+        assert(userSavedSnapshotsPtr > nr); return userSavedSnapshotsPtr - 1 - nr; }
+
     //! @brief    Returns a snapshopt from the auto-save ringbuffer
     Snapshot *autoSnapshot(unsigned nr);
     

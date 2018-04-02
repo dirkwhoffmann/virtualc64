@@ -856,8 +856,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 // Snapshot storage
 - (void) setAutoSaveSnapshots:(bool)b { wrapper->c64->autoSaveSnapshots = b; }
-- (NSInteger) numAutoSnapshots {
-    return wrapper->c64->numAutoSnapshots(); }
+- (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
+- (NSInteger) autoMostRecent:(NSInteger)nr { return wrapper->c64->autoMostRecent(nr); }
 - (NSData *)autoSnapshotData:(NSInteger)nr {
     Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
     return [NSData dataWithBytes: (void *)snapshot->header()
@@ -875,6 +875,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
 
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
+- (NSInteger) userMostRecent:(NSInteger)nr { return wrapper->c64->userMostRecent(nr); }
 - (NSData *)userSnapshotData:(NSInteger)nr {
     Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
     return [NSData dataWithBytes: (void *)snapshot->header()
