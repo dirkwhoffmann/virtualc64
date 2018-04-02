@@ -46,7 +46,6 @@ extension MyController {
         setHexadecimalAction(self)
         cpuTableView.setController(self)
         memTableView.setController(self)
-        cheatboxImageBrowserView.setController(self)
         
         // Get metal running
         metalScreen.setupMetal()
@@ -213,7 +212,6 @@ extension MyController {
             
             enableUserEditing(false)
             refresh()
-            cheatboxPanel.close()
  
             // Disable undo because the internal state changes permanently
             document?.updateChangeCount(.changeDone)

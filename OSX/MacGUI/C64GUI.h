@@ -28,9 +28,6 @@
 #import "Formatter.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"
-#import "CheatboxItem.h"
-#import "CheatboxImageBrowserCell.h"
-#import "CheatboxImageBrowserView.h"
 
 #import "MyController.h"
 #import "MyControllerDebugPanel.h"

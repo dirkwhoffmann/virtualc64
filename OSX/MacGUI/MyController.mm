@@ -36,7 +36,6 @@
 
 // Main screen
 @synthesize debugPanel;
-@synthesize cheatboxPanel;
 
 // Bottom bar
 @synthesize greenLED;
@@ -50,7 +49,6 @@
 @synthesize clockSpeedBar;
 @synthesize warpIcon;
 
-@synthesize cheatboxImageBrowserView;
 @synthesize menuItemFinalIII;
 @synthesize gamePadManager;
 @synthesize modifierFlags;

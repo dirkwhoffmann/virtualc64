@@ -212,10 +212,7 @@
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
-		50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
-		50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F238F312DF576600B1F275 /* CheatboxItem.mm */; };
-		50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */; };
 		50F23D0812DF932800B1F275 /* glossy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F23D0712DF932800B1F275 /* glossy.png */; };
 		50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */; };
 		50F483AB203B1A0B008F74FD /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F483AA203B1A0B008F74FD /* c64.png */; };
@@ -537,13 +534,7 @@
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
-		50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserView.h; sourceTree = "<group>"; };
-		50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserView.mm; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
-		50F238F212DF576600B1F275 /* CheatboxItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxItem.h; sourceTree = "<group>"; };
-		50F238F312DF576600B1F275 /* CheatboxItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxItem.mm; sourceTree = "<group>"; };
-		50F239B912DF66CB00B1F275 /* CheatboxImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserCell.h; sourceTree = "<group>"; };
-		50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserCell.mm; sourceTree = "<group>"; };
 		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy.png; sourceTree = "<group>"; };
 		50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		50F483AA203B1A0B008F74FD /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c64.png; sourceTree = "<group>"; };
@@ -770,12 +761,6 @@
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
 				5077742F12DE490300D72088 /* MemTableView.mm */,
-				50F238F212DF576600B1F275 /* CheatboxItem.h */,
-				50F238F312DF576600B1F275 /* CheatboxItem.mm */,
-				50F239B912DF66CB00B1F275 /* CheatboxImageBrowserCell.h */,
-				50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */,
-				50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */,
-				50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1418,9 +1403,6 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
-				50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */,
-				50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */,
-				50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,

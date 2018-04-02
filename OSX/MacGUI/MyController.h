@@ -75,9 +75,6 @@
 	IBOutlet NSLevelIndicator *clockSpeedBar;
 	IBOutlet NSButton *warpIcon;
 	
-	// Cheatbox panel
-	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
-	
 	// Debug panel (common)
 	IBOutlet NSMatrix *dezHexSelector;
 	IBOutlet NSButton *stopAndGoButton;
@@ -310,7 +307,6 @@
 
 // Main screen
 @property NSDrawer *debugPanel;
-@property NSDrawer *cheatboxPanel;
 
 // Bottom bar
 @property NSButton *greenLED;
@@ -324,7 +320,6 @@
 @property NSLevelIndicator *clockSpeedBar;
 @property NSButton *warpIcon;
 
-@property CheatboxImageBrowserView *cheatboxImageBrowserView;
 @property NSMenuItem *menuItemFinalIII;
 @property NSEventModifierFlags modifierFlags;
 @property bool statusBar;

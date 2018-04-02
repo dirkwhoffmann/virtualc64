@@ -121,7 +121,6 @@ extension MyController {
     
     @objc public func debugOpenAction(_ sender: Any!) {
     
-        cheatboxCloseAction(self)
         let state = debugPanel.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
             debugPanel.open()
@@ -148,43 +147,12 @@ extension MyController {
         refresh()
     }
     
-    @objc public func cheatboxOpenAction(_ sender: Any!) {
-    
-        debugCloseAction(self)
-        let state = cheatboxPanel.state
-        if state == NSDrawerState.closed || state == NSDrawerState.closing {
-         
-            c64.suspend()
-            cheatboxImageBrowserView.refresh()
-            cheatboxPanel.open()
-        }
-    }
-    
-    @objc public func cheatboxCloseAction(_ sender: Any!) {
-        
-        let state = cheatboxPanel.state
-        if state == NSDrawerState.open || state == NSDrawerState.opening {
-            
-            c64.resume()
-            cheatboxPanel.close()
-        }
-    }
-    
     @IBAction func cheatboxAction(_ sender: Any!) {
         
         track()
         let nibName = NSNib.Name(rawValue: "SnapshotDialog")
         let controller = SnapshotDialog.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
-        
-        /*
-        let state = cheatboxPanel.state
-        if state == NSDrawerState.closed || state == NSDrawerState.closing {
-            cheatboxOpenAction(self)
-        } else {
-            cheatboxCloseAction(self)
-        }
-        */
     }
 
     @IBAction func printDocument(_ sender: Any!) {
