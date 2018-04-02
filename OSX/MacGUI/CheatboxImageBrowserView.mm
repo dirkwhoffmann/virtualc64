@@ -58,7 +58,7 @@
 {
 	// NSLog(@"doubleClickAction (item %lu)", (unsigned long)index);
 	
-	[c64 restoreHistoricSnapshot:index];
+	[c64 restoreAutoSnapshot:index];
 	[controller cheatboxCloseAction:self];
 }
 
@@ -71,11 +71,11 @@
 	
 	NSImage *camera = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Image Capture.app"];
 
-    for (unsigned i = 0; i < [[controller c64] historicSnapshots]; i++) {
+    for (unsigned i = 0; i < [[controller c64] numAutoSnapshots]; i++) {
 				
 		// Setup time information
 		char buf[64];
-		time_t stamp = [c64 historicSnapshotTimestamp:i];
+		time_t stamp = [c64 autoSnapshotTimestamp:i];
 		int diff = (int)difftime(setupTime, stamp);
 
 		sprintf(buf, "%d %s ago", diff, diff == 1 ? "second" : "seconds");
@@ -85,9 +85,9 @@
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
 							
 		// Get snapshot image
-        NSInteger width = [[controller c64] historicSnapshotImageWidth:i];
-        NSInteger height = [[controller c64] historicSnapshotImageHeight:i];
-        NSImage *image = [c64 timetravelSnapshotImage:i];
+        NSInteger width = [[controller c64] autoSnapshotImageWidth:i];
+        NSInteger height = [[controller c64] autoSnapshotImageHeight:i];
+        NSImage *image = [c64 autoSnapshotImage:i];
         
 	    // Enhance image
         // NSImage *image = [c64 makeGlossyWithImage:plainimage];

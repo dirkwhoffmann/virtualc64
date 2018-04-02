@@ -149,6 +149,11 @@ extension MyController {
         }
     }
     
+    @IBAction func takeSnapshot(_ sender: Any!) {
+        
+        metalScreen.snapToFront()
+        c64.takeUserSnapshot()
+    }
     
     // -----------------------------------------------------------------
     // Action methods (Edit menu)

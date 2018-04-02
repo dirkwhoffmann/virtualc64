@@ -76,11 +76,51 @@ extension NSImage {
 
 public extension C64Proxy {
     
-    @objc func timetravelSnapshotImage(_ item: Int) -> NSImage {
+    func image(data: UnsafeMutablePointer<UInt8>?, width: Int, height: Int) -> NSImage {
         
-        var data = historicSnapshotImageData(item)
-        let width = historicSnapshotImageWidth(item)
-        let height = historicSnapshotImageHeight(item)
+        var bitmap = data
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: &bitmap,
+                                        pixelsWide: width,
+                                        pixelsHigh: height,
+                                        bitsPerSample: 8,
+                                        samplesPerPixel: 4,
+                                        hasAlpha: true,
+                                        isPlanar: false,
+                                        colorSpaceName: NSColorSpaceName.calibratedRGB,
+                                        bytesPerRow: 4*width,
+                                        bitsPerPixel: 32)
+        let image = NSImage(size: (imageRep?.size)!)
+        image.addRepresentation(imageRep!)
+        image.makeGlossy()
+        
+        return image
+    }
+    @objc func autoSnapshotImage(_ item: Int) -> NSImage {
+        
+        let data = autoSnapshotImageData(item)
+        let width = autoSnapshotImageWidth(item)
+        let height = autoSnapshotImageHeight(item)
+        return image(data: data, width: width, height: height)
+    }
+
+    @objc func userSnapshotImage(_ item: Int) -> NSImage {
+        
+        let data = userSnapshotImageData(item)
+        let width = userSnapshotImageWidth(item)
+        let height = userSnapshotImageHeight(item)
+        return image(data: data, width: width, height: height)
+    }
+
+}
+
+/*
+public extension SnapshotProxy {
+    
+    @objc func image() -> NSImage {
+        
+        var data = imageData()
+        let width = imageWidth()
+        let height = imageHeight()
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: &data,
                                         pixelsWide: width,
                                         pixelsHigh: height,
@@ -98,4 +138,4 @@ public extension C64Proxy {
         return image
     }
 }
-
+*/

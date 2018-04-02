@@ -669,19 +669,27 @@ struct ContainerWrapper;
 
 // - (SnapshotProxy *) takeSnapshot;
 
-// Cheatbox
-- (NSInteger) historicSnapshots;
+// Snapshot storage
+- (NSInteger) numAutoSnapshots;
+- (unsigned char *)autoSnapshotImageData:(NSInteger)nr;
+- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr;
+- (time_t)autoSnapshotTimestamp:(NSInteger)nr;
+- (void)restoreAutoSnapshot:(NSInteger)nr;
+
+- (NSInteger) numUserSnapshots;
+- (unsigned char *)userSnapshotImageData:(NSInteger)nr;
+- (NSInteger)userSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger)userSnapshotImageHeight:(NSInteger)nr;
+- (time_t)userSnapshotTimestamp:(NSInteger)nr;
+- (void)takeUserSnapshot;
+- (void)restoreUserSnapshot:(NSInteger)nr;
+
+// DEPRECATED
 - (NSInteger) historicSnapshotHeaderSize:(NSInteger)nr;
 - (uint8_t *) historicSnapshotHeader:(NSInteger)nr;
 - (NSInteger) historicSnapshotDataSize:(NSInteger)nr;
 - (uint8_t *) historicSnapshotData:(NSInteger)nr;
-
-- (time_t)historicSnapshotTimestamp:(NSInteger)nr;
-- (unsigned char *)historicSnapshotImageData:(NSInteger)nr;
-- (NSInteger)historicSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger)historicSnapshotImageHeight:(NSInteger)nr;
-
-- (bool)restoreHistoricSnapshot:(NSInteger)nr;
 
 // Audio hardware
 - (BOOL) enableAudio;
@@ -725,6 +733,10 @@ struct ContainerWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;
+
+- (NSInteger)imageWidth;
+- (NSInteger)imageHeight;
+- (unsigned char *)imageData;
 @end
 
 // --------------------------------------------------------------------------

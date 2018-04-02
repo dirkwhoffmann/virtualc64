@@ -327,7 +327,6 @@ private:
     unsigned userSavedSnapshotsPtr;
  
     
-    
 	// ---------------------------------------------------------------------------------------
 	//                                             Methods
 	// ---------------------------------------------------------------------------------------
@@ -458,7 +457,10 @@ private:
 	
     //! @brief    Invoked after executing the last cycle of rasterline
 	void endOfRasterline();
-		
+
+    //! @brief    Invoked after executing the last rasterline of a frame
+    void endOfFrame();
+
     
     //
     //! @functiongroup Managing the execution thread
@@ -552,18 +554,17 @@ public:
      */
     void loadFromSnapshotSafe(Snapshot *snapshot);
 
-    /*! @brief    Overwrites current state with a snapshot stored in the time travel ringbuffer
-     *  @details  Returns true iff the snapshot was found and restored successfully 
-     *  @note     THIS FUNCTION IS NOT THREAD SAFE.
-     *            Only use on halted emulators or within the emulation thread
-     *  @seealso  restoreHistoricSnapshotSafe
-     */
-    bool restoreHistoricSnapshotUnsafe(unsigned nr);
+    //! @brief    Restores a snapshot from the auto-save ringbuffer
+    void restoreAutoSnapshot(unsigned nr);
 
+    //! @brief    Restores a snapshot from the user-save ringbuffer
+    void restoreUserSnapshot(unsigned nr);
+
+    
     /*! @brief    Thread-safe version of restoreHistoricSnapshot
      *  @details  A running emulator is paused before performing the operation
      */
-    bool restoreHistoricSnapshotSafe(unsigned nr);
+    // bool restoreHistoricSnapshotSafe(unsigned nr);
 
     /*! @brief    Saves the current state into an existing snapshot.
      *  @note     Use this function inside the execution thread.
@@ -590,28 +591,35 @@ public:
     Snapshot *takeSnapshotSafe();
 
     
-    /*! @brief    Takes a snapshot and stores it into the time travel ringbuffer
+    /*! @brief    Takes a snapshot and stores it in the auto snapshot ringbuffer
      *  @note     This function does not halt the emulator and must therefore be
      *            called inside the execution thread, only.
      */
-    void takeTimeTravelSnapshot();
+    void takeAutoSnapshot();
 
-    /*! @brief    Thread-safe version of takeSnapshoptUnsafe
-     *  @details  A running emulator is paused before performing the operation
+    /*! @brief    Takes a snapshot and stores it in the user snapshot ringbuffer
+     *  @note     In contrast to takeAutoSnapshot(), this function is thread-safe an
+     *            can be called any time.
      */
-    // void takeSnapshotSafe();
+    void takeUserSnapshot();
 
-    /*! @brief    Returns the number of previously taken snapshots
-     *  @result   Value between 0 and BACK_IN_TIME_BUFFER_SIZE
+    /*! @brief    Returns the number of items in the auto-save ringbuffer
      */
-    unsigned numHistoricSnapshots();
+    unsigned numAutoSnapshots();
     
-    /*! @brief    Reads a snapshopt from the time travel ringbuffer
-     *  @details  The latest snapshot is indexed 0.
-     *  @result   A reference to a snapshot, if present. NULL, otherwise.
+    /*! @brief    Returns the number of items in the user-save ringbuffer
      */
-    Snapshot *getHistoricSnapshot(int nr);
+    unsigned numUserSnapshots();
     
+    /*! @brief    Returns a snapshopt from the auto-save ringbuffer
+     *  @note     The latest snapshot is indexed 0.
+     */
+    Snapshot *autoSnapshot(int nr);
+    
+    /*! @brief    Returns a snapshopt from the user-save ringbuffer
+     *  @note     The latest snapshot is indexed 0.
+     */
+    Snapshot *userSnapshot(int nr);
 
     //
     //! @functiongroup Handling disks, tapes, and cartridges

@@ -140,11 +140,15 @@ C64::C64()
 	// Initialize snapshot ringbuffers
     for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
 		autoSavedSnapshots[i] = new Snapshot();
+    }
+    for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
+
         userSavedSnapshots[i] = new Snapshot();
     }
     autoSavedSnapshotsPtr = 0;
     userSavedSnapshotsPtr = 0;
-    
+    autoSaveInterval = 1;
+
     reset();
 }
 
@@ -651,39 +655,38 @@ C64::endOfRasterline()
     rasterline++;
     
     if (rasterline >= vic.getRasterlinesPerFrame()) {
-        
-        // Last rasterline of frame
         rasterline = 0;
-        vic.endFrame();
-        frame++;
-        
-        // Increment time of day clocks every tenth of a second
-        // if (frame % (vic.getFramesPerSecond() / 10) == 0)
-        {
-            cia1.incrementTOD();
-            cia2.incrementTOD();
-        }
-        
-        // Take a snapshot once in a while
-        // TODO: Move to endOfFrame, add variable (in sec) for taking snapshots
-        if (frame % (vic.getFramesPerSecond() * 1) == 0) {
-            takeTimeTravelSnapshot();
-        }
-        
-        // Execute remaining SID cycles
-        sid.executeUntil(cycle);
-        
-        // Execute other components
-        iec.execute();
-        expansionport.execute();
-        
-        // Count some sheep (zzzzzz) ...
-        if (!getWarp()) {
-            synchronizeTiming();
-        } 
+        endOfFrame();
     }
 }
 
+void
+C64::endOfFrame()
+{
+    frame++;
+    vic.endFrame();
+    
+    // Increment time of day clocks every tenth of a second
+    cia1.incrementTOD();
+    cia2.incrementTOD();
+    
+    // Execute remaining SID cycles
+    sid.executeUntil(cycle);
+        
+    // Execute other components
+    iec.execute();
+    expansionport.execute();
+    
+    // Take a snapshot once in a while
+    if (frame % (vic.getFramesPerSecond() * autoSaveInterval) == 0) {
+        takeAutoSnapshot();
+    }
+    
+    // Count some sheep (zzzzzz) ...
+    if (!getWarp()) {
+            synchronizeTiming();
+    }
+}
 
 //
 //! @functiongroup Managing the execution thread
@@ -855,19 +858,19 @@ C64::loadFromSnapshotSafe(Snapshot *snapshot)
     resume();
 }
 
-bool
-C64::restoreHistoricSnapshotUnsafe(unsigned nr)
+void
+C64::restoreAutoSnapshot(unsigned nr)
 {
-    Snapshot *s = getHistoricSnapshot(nr);
-    
-    if (s == NULL)
-        return false;
-    
-    loadFromSnapshotUnsafe(s);
-    
-    return true;
+    loadFromSnapshotSafe(autoSnapshot(nr));
 }
 
+void
+C64::restoreUserSnapshot(unsigned nr)
+{
+    loadFromSnapshotSafe(userSnapshot(nr));
+}
+
+/*
 bool
 C64::restoreHistoricSnapshotSafe(unsigned nr)
 {
@@ -881,6 +884,7 @@ C64::restoreHistoricSnapshotSafe(unsigned nr)
     
     return result;
 }
+*/
 
 void
 C64::saveToSnapshotUnsafe(Snapshot *snapshot)
@@ -927,41 +931,78 @@ C64::takeSnapshotSafe()
 }
 
 void
-C64::takeTimeTravelSnapshot()
+C64::takeAutoSnapshot()
 {
-    debug(3, "Taking time-travel snapshop %d\n", autoSavedSnapshotsPtr );
+    debug(3, "Taking auto snapshop %d\n", autoSavedSnapshotsPtr);
     
     saveToSnapshotUnsafe(autoSavedSnapshots[autoSavedSnapshotsPtr]);
     autoSavedSnapshotsPtr = (autoSavedSnapshotsPtr + 1) % MAX_AUTO_SAVED_SNAPSHOTS;
     putMessage(MSG_SNAPSHOT_TAKEN);
 }
 
-unsigned
-C64::numHistoricSnapshots()
+void
+C64::takeUserSnapshot()
 {
-    for (int i = MAX_AUTO_SAVED_SNAPSHOTS - 1; i >= 0; i--) {
+    debug(3, "Taking user snapshop %d\n", userSavedSnapshotsPtr);
+    
+    suspend();
+    saveToSnapshotUnsafe(userSavedSnapshots[userSavedSnapshotsPtr]);
+    userSavedSnapshotsPtr = (userSavedSnapshotsPtr + 1) % MAX_USER_SAVED_SNAPSHOTS;
+    resume();
+    putMessage(MSG_SNAPSHOT_TAKEN);
+}
+
+unsigned
+C64::numAutoSnapshots()
+{
+    unsigned result = 0;
+    for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
         if (!autoSavedSnapshots[i]->isEmpty())
-            return i + 1;
+            result++;
     }
-    return 0;
+    
+    return result;
+}
+
+unsigned
+C64::numUserSnapshots()
+{
+    unsigned result = 0;
+    for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
+        if (!userSavedSnapshots[i]->isEmpty())
+            result++;
+    }
+    
+    return result;
 }
 
 Snapshot *
-C64::getHistoricSnapshot(int nr)
+C64::autoSnapshot(int nr)
 {
-    if (nr >= MAX_AUTO_SAVED_SNAPSHOTS)
-        return NULL;
+    assert(nr < MAX_AUTO_SAVED_SNAPSHOTS);
     
-    int pos = (MAX_AUTO_SAVED_SNAPSHOTS + autoSavedSnapshotsPtr - 1 - nr) % MAX_AUTO_SAVED_SNAPSHOTS;
-    Snapshot *snapshot = autoSavedSnapshots[pos];
-    assert(snapshot != NULL);
+    int pos = autoSavedSnapshotsPtr - 1 - nr; // reverse order
+    pos = (pos + MAX_AUTO_SAVED_SNAPSHOTS) % MAX_AUTO_SAVED_SNAPSHOTS; // wrap around
     
-    if (snapshot->isEmpty())
-        return NULL;
+    assert(autoSavedSnapshots[pos] != NULL);
+    assert(!autoSavedSnapshots[pos]->isEmpty());
     
-    return snapshot;
+    return autoSavedSnapshots[pos];
 }
 
+Snapshot *
+C64::userSnapshot(int nr)
+{
+    assert(nr < MAX_USER_SAVED_SNAPSHOTS);
+    
+    int pos = userSavedSnapshotsPtr - 1 - nr; // reverse order
+    pos = (pos + MAX_USER_SAVED_SNAPSHOTS) % MAX_USER_SAVED_SNAPSHOTS; // wrap around
+    
+    assert(userSavedSnapshots[pos] != NULL);
+    assert(!userSavedSnapshots[pos]->isEmpty());
+    
+    return userSavedSnapshots[pos];
+}
 
 //
 //! @functiongroup Handling archives, tapes, and cartridges

@@ -122,9 +122,9 @@ Gw
                                                             </textFieldCell>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CgP-O1-nlh">
-                                                            <rect key="frame" x="233" y="3" width="24" height="24"/>
+                                                            <rect key="frame" x="233" y="10" width="20" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarDeleteTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="GZJ-1R-ak9">
+                                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trash" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="GZJ-1R-ak9">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -141,6 +141,7 @@ Gw
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <action trigger="doubleAction" selector="userDoubleClick:" target="-2" id="zhC-69-KjV"/>
                                         <outlet property="dataSource" destination="-2" id="Obk-0I-bDd"/>
                                         <outlet property="delegate" destination="-2" id="PuY-Qp-3It"/>
                                     </connections>
@@ -148,7 +149,7 @@ Gw
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="S88-Mq-3Ns">
-                            <rect key="frame" x="1" y="237" width="265" height="16"/>
+                            <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="BUc-Dc-cZr">
@@ -211,9 +212,9 @@ Gw
                                                             </textFieldCell>
                                                         </textField>
                                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oHe-zX-MKc">
-                                                            <rect key="frame" x="233" y="3" width="24" height="24"/>
+                                                            <rect key="frame" x="233" y="10" width="20" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSTouchBarDeleteTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="8Ly-dE-q4l">
+                                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trash" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="8Ly-dE-q4l">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -230,6 +231,7 @@ Gw
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <action trigger="doubleAction" selector="autoDoubleClick:" target="-2" id="BpI-Lv-Wl2"/>
                                         <outlet property="dataSource" destination="-2" id="pYG-14-dHK"/>
                                         <outlet property="delegate" destination="-2" id="fRl-Vj-fpd"/>
                                     </connections>
@@ -237,7 +239,7 @@ Gw
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="nDk-ng-CnM">
-                            <rect key="frame" x="1" y="237" width="265" height="16"/>
+                            <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="RGp-Ad-5Kc">
@@ -264,6 +266,6 @@ Gw
     </objects>
     <resources>
         <image name="NSAdvanced" width="32" height="32"/>
-        <image name="NSTouchBarDeleteTemplate" width="15" height="30"/>
+        <image name="trash" width="512" height="512"/>
     </resources>
 </document>
