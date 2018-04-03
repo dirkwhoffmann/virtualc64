@@ -24,9 +24,7 @@
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		5007A1692073A2A100E2D231 /* tb_snapshots2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5007A1662073A2A000E2D231 /* tb_snapshots2.png */; };
 		5007A16B2073A2A100E2D231 /* tb_snapshots3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5007A1682073A2A100E2D231 /* tb_snapshots3.png */; };
-		5007A16F2073A36100E2D231 /* tb_snapshots2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5007A16C2073A36100E2D231 /* tb_snapshots2.png */; };
 		5007A1702073A36100E2D231 /* tb_snapshots1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5007A16D2073A36100E2D231 /* tb_snapshots1.png */; };
-		5007A1712073A36100E2D231 /* tb_snapshots3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5007A16E2073A36100E2D231 /* tb_snapshots3.png */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
@@ -296,9 +294,7 @@
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		5007A1662073A2A000E2D231 /* tb_snapshots2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_snapshots2.png; sourceTree = "<group>"; };
 		5007A1682073A2A100E2D231 /* tb_snapshots3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_snapshots3.png; sourceTree = "<group>"; };
-		5007A16C2073A36100E2D231 /* tb_snapshots2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_snapshots2.png; path = ../../../Desktop/tb_snapshots2.png; sourceTree = "<group>"; };
 		5007A16D2073A36100E2D231 /* tb_snapshots1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_snapshots1.png; sourceTree = "<group>"; };
-		5007A16E2073A36100E2D231 /* tb_snapshots3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_snapshots3.png; path = ../../../Desktop/tb_snapshots3.png; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -1093,8 +1089,6 @@
 				5007A16D2073A36100E2D231 /* tb_snapshots1.png */,
 				5007A1662073A2A000E2D231 /* tb_snapshots2.png */,
 				5007A1682073A2A100E2D231 /* tb_snapshots3.png */,
-				5007A16C2073A36100E2D231 /* tb_snapshots2.png */,
-				5007A16E2073A36100E2D231 /* tb_snapshots3.png */,
 				50CCB1C31B84A185008D8C30 /* tb_inspect.png */,
 				50CCB1C41B84A185008D8C30 /* tb_inspect2.png */,
 				50CCB1CF1B84A5DD008D8C30 /* tb_virtualmachine.png */,
@@ -1257,7 +1251,6 @@
 				50A7494F203B52C100EDFDA2 /* keyboard.png in Resources */,
 				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
 				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
-				5007A1712073A36100E2D231 /* tb_snapshots3.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				500FF3921BD7F4DF0038245B /* rom_light.png in Resources */,
 				50355F3D203E277000163F80 /* monitor.png in Resources */,
@@ -1273,7 +1266,6 @@
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
 				50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */,
 				50C892511BEFB31200231B96 /* tape.png in Resources */,
-				5007A16F2073A36100E2D231 /* tb_snapshots2.png in Resources */,
 				50F97E05203D90070005E19C /* joystick.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
