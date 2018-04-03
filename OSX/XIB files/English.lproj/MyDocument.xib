@@ -285,18 +285,17 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
-                    <toolbarItem implicitItemIdentifier="944C7CF2-507D-458E-A37A-DA6E3FC68049" label="Power" paletteLabel="Power" tag="30" image="restart32" id="1853">
-                        <nil key="toolTip"/>
+                    <toolbarItem implicitItemIdentifier="944C7CF2-507D-458E-A37A-DA6E3FC68049" label="Power" paletteLabel="Power" toolTip="Perform a hard reset" tag="30" image="restart32" id="1853">
                         <connections>
                             <action selector="resetAction:" target="-2" id="1869"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware setup" paletteLabel="Hardware setup" tag="20" image="tb_virtualmachine" id="2033" userLabel="Hardware Setup">
+                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware setup" paletteLabel="Hardware setup" toolTip="Show the hardware preference window" tag="20" image="tb_virtualmachine" id="2033" userLabel="Hardware Setup">
                         <connections>
                             <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator setup" paletteLabel="Emulator setup" tag="-1" image="tb_setup" id="2226" userLabel="Emulator Setup">
+                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator setup" paletteLabel="Emulator setup" toolTip="Show the emulator preference window" tag="-1" image="tb_setup" id="2226" userLabel="Emulator Setup">
                         <connections>
                             <action selector="propertiesAction:" target="-2" id="4xt-Za-auc"/>
                         </connections>
@@ -306,24 +305,27 @@
                             <action selector="mediaAction:" target="-2" id="cHt-Hg-iuV"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Snapshots" paletteLabel="Snapshots" tag="21" image="tb_snapshots1" id="4tn-YG-78O">
+                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Snapshots" paletteLabel="Snapshots" toolTip="Open the snapshot library" tag="21" image="tb_snapshots1" id="4tn-YG-78O">
                         <connections>
                             <action selector="snapshotsAction:" target="-2" id="mTl-rl-ysT"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="E5BB1981-0D10-402E-94DE-A2E5DFDD5691" label="Rewind" paletteLabel="Rewind" tag="21" image="tb_snapshots2" id="pm3-ae-4ou">
+                    <toolbarItem implicitItemIdentifier="E5BB1981-0D10-402E-94DE-A2E5DFDD5691" label="Rewind" paletteLabel="Rewind" toolTip="Revert to the latest auto-saved snapshot" tag="5" image="tb_snapshots2" id="pm3-ae-4ou">
                         <connections>
-                            <action selector="backInTimeAction:" target="-2" id="w1P-ZO-D8l"/>
+                            <action selector="restoreLatestAutoSnapshotAction:" target="-2" id="OZ0-hO-b08"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Monitor" paletteLabel="Monitor" tag="31" image="tb_inspect" id="1855">
-                        <nil key="toolTip"/>
+                    <toolbarItem implicitItemIdentifier="58950F6F-5DE7-4266-8A24-7C3F4B754E89" label="Undo" paletteLabel="Undo" toolTip="Revert to the latest user-saved snapshot" tag="6" image="tb_snapshots3" id="dJi-AI-nsT">
+                        <connections>
+                            <action selector="restoreLatestUserSnapshotAction:" target="-2" id="lhM-tV-FEY"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Monitor" paletteLabel="Monitor" toolTip="Open the debugger" tag="31" image="tb_inspect" id="1855">
                         <connections>
                             <action selector="debugAction:" target="-2" id="h8p-Nc-0xz"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="D88C46BA-2484-4508-88A3-BD022DF84B51" label="Pause" paletteLabel="Pause" tag="1" image="pause32" id="1856">
-                        <nil key="toolTip"/>
                         <connections>
                             <action selector="stopAndGoAction:" target="-2" id="1870"/>
                         </connections>
@@ -401,13 +403,13 @@
                         </popUpButton>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="1848"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="1852"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="1855"/>
                     <toolbarItem reference="1851"/>
-                    <toolbarItem reference="pm3-ae-4ou"/>
                     <toolbarItem reference="4tn-YG-78O"/>
+                    <toolbarItem reference="pm3-ae-4ou"/>
+                    <toolbarItem reference="dJi-AI-nsT"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="kR6-IR-lNs"/>
                     <toolbarItem reference="Klt-YL-0mv"/>
@@ -2993,8 +2995,9 @@
         <image name="tape" width="256" height="256"/>
         <image name="tb_inspect" width="256" height="256"/>
         <image name="tb_setup" width="129" height="129"/>
-        <image name="tb_snapshots1" width="128" height="128"/>
-        <image name="tb_snapshots2" width="128" height="128"/>
+        <image name="tb_snapshots1" width="129" height="129"/>
+        <image name="tb_snapshots2" width="128" height="129"/>
+        <image name="tb_snapshots3" width="128" height="129"/>
         <image name="tb_virtualmachine" width="128" height="129"/>
     </resources>
 </document>

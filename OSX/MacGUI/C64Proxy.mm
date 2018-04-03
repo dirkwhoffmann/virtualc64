@@ -870,8 +870,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 - (time_t)autoSnapshotTimestamp:(NSInteger)nr {
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (void)restoreAutoSnapshot:(NSInteger)nr { wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
-- (void)backInTime { wrapper->c64->backInTime(); }
+- (bool)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
+- (bool)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
 
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
 - (NSData *)userSnapshotData:(NSInteger)nr {
@@ -888,7 +888,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (time_t)userSnapshotTimestamp:(NSInteger)nr {
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
 - (bool)takeUserSnapshot { return wrapper->c64->takeUserSnapshot(); }
-- (void)restoreUserSnapshot:(NSInteger)nr { wrapper->c64->restoreUserSnapshot((unsigned)nr); }
+- (bool)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
+- (bool)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
 - (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
 
 // Audio hardware

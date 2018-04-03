@@ -856,16 +856,40 @@ C64::loadFromSnapshotSafe(Snapshot *snapshot)
     resume();
 }
 
-void
+bool
 C64::restoreAutoSnapshot(unsigned nr)
 {
+    if (autoSnapshot(nr)->isEmpty())
+        return false;
+    
     loadFromSnapshotSafe(autoSnapshot(nr));
+    return true;
 }
 
-void
+bool
+C64::restoreLatestAutoSnapshot()
+{
+    if (!restoreAutoSnapshot(0))
+        return false;
+    
+    deleteAutoSnapshot(0);
+    return true;
+}
+
+bool
 C64::restoreUserSnapshot(unsigned nr)
 {
+    if (userSnapshot(nr)->isEmpty())
+        return false;
+    
     loadFromSnapshotSafe(userSnapshot(nr));
+    return true;
+}
+
+bool
+C64::restoreLatestUserSnapshot()
+{
+    return restoreUserSnapshot(0);
 }
 
 void
@@ -950,13 +974,6 @@ C64::deleteAutoSnapshot(unsigned index)
     for (unsigned i = index; i < MAX_AUTO_SAVED_SNAPSHOTS - 1; i++)
         autoSavedSnapshots[i] = autoSavedSnapshots[i + 1];
     autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS - 1] = first;
-}
-
-void
-C64::backInTime()
-{
-    restoreAutoSnapshot(0);
-    deleteAutoSnapshot(0);
 }
 
 unsigned

@@ -37,6 +37,15 @@ extension MyController {
             document?.updateChangeCount(.changeDone)
         }
     
+        // Snapshot handling
+        if tag == 5 {
+            // return c64.numAutoSnapshots() != 0
+            return true
+        }
+        if tag == 6 {
+            return c64.numUserSnapshots() != 0
+        }
+
         // Pause/Continue
         if tag == 1 {
             if c64.isRunning() {
@@ -154,10 +163,18 @@ extension MyController {
         controller.showSheet(withParent: self)
     }
 
-    @IBAction func backInTimeAction(_ sender: Any!) {
+    @IBAction func restoreLatestAutoSnapshotAction(_ sender: Any!) {
         
-        metalScreen.snapToFront()
-        c64.backInTime()
+        if (c64.restoreLatestAutoSnapshot()) {
+            metalScreen.snapToFront()
+        }
+    }
+
+    @IBAction func restoreLatestUserSnapshotAction(_ sender: Any!) {
+        
+        if (c64.restoreLatestUserSnapshot()) {
+            metalScreen.snapToFront()
+        }
     }
     
     @IBAction func printDocument(_ sender: Any!) {

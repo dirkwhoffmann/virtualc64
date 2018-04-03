@@ -560,11 +560,19 @@ public:
     void loadFromSnapshotSafe(Snapshot *snapshot);
 
     //! @brief    Restores a snapshot from the auto-save ringbuffer
-    void restoreAutoSnapshot(unsigned nr);
+    bool restoreAutoSnapshot(unsigned nr);
+
+    //! @brief    Restored the latest auto-saved snapshot.
+    /*! @note     The reverted snapshot is deleted from the snapshot buffer.
+     */
+    bool restoreLatestAutoSnapshot();
 
     //! @brief    Restores a snapshot from the user storage
-    void restoreUserSnapshot(unsigned nr);
+    bool restoreUserSnapshot(unsigned nr);
 
+    //! @brief    Restores the latest user-saved snapshot.
+    bool restoreLatestUserSnapshot();
+    
     /*! @brief    Saves the current state into an existing snapshot.
      *  @note     Use this function inside the execution thread.
      *  @seealso  saveToSnapshotSafe
@@ -602,17 +610,12 @@ public:
      *            called inside the execution thread, only.
      */
     void takeAutoSnapshot();
-
+    
     /*! @brief    Deletes a snapshot from the auto-save storage
      *  @details  All snapshots that follow are moved one position down.
      */
     void deleteAutoSnapshot(unsigned nr);
     
-    //! @brief    Reverts to the latest auto-saved snapshot.
-    /*! @note     The reverted snapshot is deleted from the snapshot buffer.
-     */
-    void backInTime();
-
     //! @brief    Returns the number of user-saved snapshots.
     unsigned numUserSnapshots();
     
@@ -627,7 +630,7 @@ public:
      *            can be called any time.
      */
     bool takeUserSnapshot();
-
+    
     /*! @brief    Deletes a snapshot from the user-save storage.
      *  @details  All snapshots that follow are moved one position down.
      */

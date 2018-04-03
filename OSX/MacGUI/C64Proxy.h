@@ -676,8 +676,8 @@ struct ContainerWrapper;
 - (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
 - (time_t) autoSnapshotTimestamp:(NSInteger)nr;
-- (void) restoreAutoSnapshot:(NSInteger)nr;
-- (void) backInTime;
+- (bool) restoreAutoSnapshot:(NSInteger)nr;
+- (bool) restoreLatestAutoSnapshot;
 
 - (NSInteger) numUserSnapshots;
 - (NSData *) userSnapshotData:(NSInteger)nr;
@@ -686,7 +686,8 @@ struct ContainerWrapper;
 - (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
 - (time_t) userSnapshotTimestamp:(NSInteger)nr;
 - (bool) takeUserSnapshot;
-- (void) restoreUserSnapshot:(NSInteger)nr;
+- (bool) restoreUserSnapshot:(NSInteger)nr;
+- (bool) restoreLatestUserSnapshot;
 - (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Audio hardware
