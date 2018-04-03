@@ -319,20 +319,18 @@ public:
     
 private:
     
-    //! @brief    Ring buffer storage for automatically saved snapshots
+    //! @brief    Maximum number of auto-taken snapshots
     #define MAX_AUTO_SAVED_SNAPSHOTS 16
+
+    //! @brief    Storage for auto-taken snapshots
     Snapshot *autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS];
     
-    //! @brief    Ring buffer write pointer
-    unsigned autoSavedSnapshotsPtr;
-    
-    //! @brief    Ring buffer storage for manually saved snapshots
+    //! @brief    Maximum number of user-taken snapshots
     #define MAX_USER_SAVED_SNAPSHOTS 32
+    
+    //! @brief    Storage for user-taken snapshots
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
-    //! @brief    Ring buffer write pointer
-    unsigned userSavedSnapshotsPtr;
- 
     
 	// ---------------------------------------------------------------------------------------
 	//                                             Methods
@@ -591,46 +589,48 @@ public:
      */
     Snapshot *takeSnapshotSafe();
 
+    //! @brief    Returns the number of auto-saved snapshots
+    unsigned numAutoSnapshots();
     
-    /*! @brief    Takes a snapshot and stores it in the auto snapshot ringbuffer
+    //! @brief    Returns an auto-saved snapshot
+    Snapshot *autoSnapshot(unsigned nr) { return autoSavedSnapshots[nr]; }
+    
+    /*! @brief    Takes a snapshot and inserts it into the auto-save storage
+     *  @details  The new snapshot is inserted at position 0 and all others are moved
+     *            one position up. If the buffer is full, the oldest snapshot is deleted.
      *  @note     This function does not halt the emulator and must therefore be
      *            called inside the execution thread, only.
      */
     void takeAutoSnapshot();
 
-    //! @brief    Reverts to the previous auto snapshot
-    /*! @note     The reverted snapshot is deleted from the snapshot buffer
+    /*! @brief    Deletes a snapshot from the auto-save storage
+     *  @details  All snapshots that follow are moved one position down.
+     */
+    void deleteAutoSnapshot(unsigned nr);
+    
+    //! @brief    Reverts to the latest auto-saved snapshot.
+    /*! @note     The reverted snapshot is deleted from the snapshot buffer.
      */
     void backInTime();
 
-    /*! @brief    Takes a snapshot and stores it in the user storage
+    //! @brief    Returns the number of user-saved snapshots.
+    unsigned numUserSnapshots();
+    
+    //! @brief    Returns a user-saved snapshot
+    Snapshot *userSnapshot(unsigned nr) { return userSavedSnapshots[nr]; }
+    
+    /*! @brief    Takes a snapshot and inserts it into the user-save storage
+     *  @details  If there is free space, the new snapshot is inserted at position 0
+     *            and all others are moved one position up.
+     *  @return   false, if all slots are occupied
      *  @note     In contrast to takeAutoSnapshot(), this function is thread-safe an
      *            can be called any time.
-     *  @returns  false if user storage is full
      */
     bool takeUserSnapshot();
 
-    //! @brief    Returns the number of items in the auto-save ringbuffer
-    unsigned numAutoSnapshots();
-    
-    //! @brief    Returns the index of the n-th most recent entry
-    unsigned autoMostRecent(unsigned nr) {
-        return (autoSavedSnapshotsPtr + MAX_AUTO_SAVED_SNAPSHOTS - 1 - nr) % MAX_AUTO_SAVED_SNAPSHOTS; }
-    
-    //! @brief    Returns the number of items in the user storage
-    unsigned numUserSnapshots();
-
-    //! @brief    Returns the index of the n-th most recent entry
-    unsigned userMostRecent(unsigned nr) {
-        assert(userSavedSnapshotsPtr > nr); return userSavedSnapshotsPtr - 1 - nr; }
-
-    //! @brief    Returns a snapshopt from the auto-save ringbuffer
-    Snapshot *autoSnapshot(unsigned nr);
-    
-    //! @brief    Returns a snapshopt from the user storage
-    Snapshot *userSnapshot(unsigned nr);
-
-    //! @brief    Deletes a snapshot from the user storage
+    /*! @brief    Deletes a snapshot from the user-save storage.
+     *  @details  All snapshots that follow are moved one position down.
+     */
     void deleteUserSnapshot(unsigned nr);
 
     

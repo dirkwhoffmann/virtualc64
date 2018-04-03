@@ -149,7 +149,6 @@ extension MyController {
     
     @IBAction func snapshotsAction(_ sender: Any!) {
         
-        track()
         let nibName = NSNib.Name(rawValue: "SnapshotDialog")
         let controller = SnapshotDialog.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
@@ -157,13 +156,11 @@ extension MyController {
 
     @IBAction func backInTimeAction(_ sender: Any!) {
         
-        track()
+        metalScreen.snapToFront()
         c64.backInTime()
     }
     
     @IBAction func printDocument(_ sender: Any!) {
-    
-        NSLog("\(#function)")
     
         let document = self.document as! MyDocument
         let window = document.windowForSheet!

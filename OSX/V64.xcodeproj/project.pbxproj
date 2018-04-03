@@ -147,7 +147,6 @@
 		50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1644B202DD52500447D3E /* ExportDiskController.swift */; };
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
-		50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */; };
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
@@ -451,7 +450,6 @@
 		50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDiskDialog.xib; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualC64-Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
-		50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelScrubber.swift; sourceTree = "<group>"; };
 		50B5861B201C673900742DB3 /* CustomCartridges.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCartridges.cpp; sourceTree = "<group>"; };
 		50B5861C201C673900742DB3 /* CustomCartridges.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCartridges.h; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -1043,7 +1041,6 @@
 			children = (
 				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
 				5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */,
-				50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */,
 			);
 			name = TouchBar;
 			sourceTree = "<group>";
@@ -1400,7 +1397,6 @@
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
-				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,

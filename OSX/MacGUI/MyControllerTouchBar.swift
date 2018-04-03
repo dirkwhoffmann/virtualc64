@@ -19,18 +19,6 @@ extension NSTouchBarItem.Identifier {
     static let ttpopover  = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.ttpopover")
 }
 
-public extension MyController
-{
-    @objc func rebuildTouchBar() {
-        
-        if #available(OSX 10.12.2, *) {
-            let popover = touchBar?.item(forIdentifier:.ttpopover) as? NSPopoverTouchBarItem
-            let bar = popover?.popoverTouchBar as? TimeTravelTouchBar
-            bar?.rebuild()
-        }
-    }
-}
-
 @available(OSX 10.12.2, *)
 extension MyController : NSTouchBarDelegate
  {

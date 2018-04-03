@@ -142,11 +142,8 @@ C64::C64()
 		autoSavedSnapshots[i] = new Snapshot();
     }
     for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
-
         userSavedSnapshots[i] = new Snapshot();
     }
-    autoSavedSnapshotsPtr = 0;
-    userSavedSnapshotsPtr = 0;
     autoSaveSnapshots = true;
     autoSaveInterval = 3;
 
@@ -915,104 +912,101 @@ C64::takeSnapshotSafe()
     return snapshot;
 }
 
+unsigned
+C64::numAutoSnapshots()
+{
+    unsigned result;
+    
+    for (result = 0; result < MAX_AUTO_SAVED_SNAPSHOTS; result++) {
+        if (autoSavedSnapshots[result]->isEmpty())
+            break;
+    }
+    
+    return result;
+}
+
 void
 C64::takeAutoSnapshot()
 {
-    debug(3, "Taking auto snapshop %d\n", autoSavedSnapshotsPtr);
+    Snapshot *last = autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS - 1];
     
-    saveToSnapshotUnsafe(autoSavedSnapshots[autoSavedSnapshotsPtr]);
-    autoSavedSnapshotsPtr = (autoSavedSnapshotsPtr + 1) % MAX_AUTO_SAVED_SNAPSHOTS;
+    // Shuffle slots
+    for (unsigned i = MAX_AUTO_SAVED_SNAPSHOTS - 1; i > 0; i--)
+        autoSavedSnapshots[i] = autoSavedSnapshots[i - 1];
+    autoSavedSnapshots[0] = last;
+    
+    // Save state
+    saveToSnapshotUnsafe(autoSavedSnapshots[0]);
     putMessage(MSG_SNAPSHOT_TAKEN);
+}
+
+void
+C64::deleteAutoSnapshot(unsigned index)
+{
+    Snapshot *first = autoSavedSnapshots[index];
+    first->dealloc();
+    
+    // Shuffle slots
+    for (unsigned i = index; i < MAX_AUTO_SAVED_SNAPSHOTS - 1; i++)
+        autoSavedSnapshots[i] = autoSavedSnapshots[i + 1];
+    autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS - 1] = first;
 }
 
 void
 C64::backInTime()
 {
-    unsigned previous = (autoSavedSnapshotsPtr + MAX_AUTO_SAVED_SNAPSHOTS - 1) % MAX_AUTO_SAVED_SNAPSHOTS;
-    loadFromSnapshotSafe(autoSnapshot(previous));
-    autoSavedSnapshotsPtr = previous;
-    
-    debug("Reverted to snapshot %d\n", previous);
-}
-
-bool
-C64::takeUserSnapshot()
-{
-    debug(3, "Taking user snapshop %d\n", userSavedSnapshotsPtr);
-    
-    // Check for free space
-    if (userSavedSnapshotsPtr == MAX_USER_SAVED_SNAPSHOTS)
-        return false;
-    
-    suspend();
-    saveToSnapshotUnsafe(userSavedSnapshots[userSavedSnapshotsPtr]);
-    userSavedSnapshotsPtr++;
-    resume();
-    
-    putMessage(MSG_SNAPSHOT_TAKEN);
-    return true;
-}
-
-unsigned
-C64::numAutoSnapshots()
-{
-    unsigned result = 0;
-    for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
-        if (!autoSavedSnapshots[i]->isEmpty())
-            result++;
-    }
-    
-    return result;
+    restoreAutoSnapshot(0);
+    deleteAutoSnapshot(0);
 }
 
 unsigned
 C64::numUserSnapshots()
 {
-    unsigned result = 0;
-    for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
-        if (!userSavedSnapshots[i]->isEmpty())
-            result++;
+    unsigned result;
+    
+    for (result = 0; result < MAX_USER_SAVED_SNAPSHOTS; result++) {
+        if (userSavedSnapshots[result]->isEmpty())
+            break;
     }
     
     return result;
 }
 
-Snapshot *
-C64::autoSnapshot(unsigned nr)
+bool
+C64::takeUserSnapshot()
 {
-    assert(nr < MAX_AUTO_SAVED_SNAPSHOTS);
-    assert(autoSavedSnapshots[nr] != NULL);
-    assert(!autoSavedSnapshots[nr]->isEmpty());
+    debug("Taking user snapshop\n");
     
-    return autoSavedSnapshots[nr];
-}
-
-Snapshot *
-C64::userSnapshot(unsigned nr)
-{
-    assert(nr < MAX_USER_SAVED_SNAPSHOTS);
-    assert(userSavedSnapshots[nr] != NULL);
-    assert(!userSavedSnapshots[nr]->isEmpty());
+    Snapshot *last = userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS - 1];
     
-    return userSavedSnapshots[nr];
+    // Check for free space
+    if (!last->isEmpty())
+        return false;
+    
+    // Shuffle slots
+    for (unsigned i = MAX_USER_SAVED_SNAPSHOTS - 1; i > 0; i--)
+        userSavedSnapshots[i] = userSavedSnapshots[i - 1];
+    userSavedSnapshots[0] = last;
+    
+    // Save state
+    saveToSnapshotSafe(userSavedSnapshots[0]);
+    putMessage(MSG_SNAPSHOT_TAKEN);
+    
+    return true;
 }
 
 void
-C64::deleteUserSnapshot(unsigned nr)
+C64::deleteUserSnapshot(unsigned index)
 {
-    assert(nr < userSavedSnapshotsPtr);
-    unsigned i = nr;
+    Snapshot *first = userSavedSnapshots[index];
+    first->dealloc();
     
-    // Move snapshot 'nr' to the end of the list
-    Snapshot *toDelete = userSavedSnapshots[i];
-    for (; i < userSavedSnapshotsPtr - 1; i++)
+    // Shuffle slots
+    for (unsigned i = index; i < MAX_USER_SAVED_SNAPSHOTS - 1; i++)
         userSavedSnapshots[i] = userSavedSnapshots[i + 1];
-    userSavedSnapshots[i] = toDelete;
-    
-    // Free last slot
-    userSavedSnapshots[i]->dealloc();
-    userSavedSnapshotsPtr--;
+    userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS - 1] = first;
 }
+
 
 //
 //! @functiongroup Handling archives, tapes, and cartridges

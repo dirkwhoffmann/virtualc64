@@ -23,12 +23,12 @@ class TimeTravelTouchBar: NSTouchBar {
     var parentItem: NSPopoverTouchBarItem?
     var c : MyController?
     
+    /*
     func rebuild()
     {
-        let scrubberItem = item(forIdentifier: .ttscrubber) as? TimeTravelScrubber
-        scrubberItem?.rebuild()
     }
-
+    */
+    
     func dismiss(_ sender: Any?)
     {
         guard let popover = parentItem else { return }
@@ -63,17 +63,9 @@ extension TimeTravelTouchBar: NSTouchBarDelegate {
         NSLog("\(#function)")
         
         switch identifier {
-            
-        case NSTouchBarItem.Identifier.ttscrubber:
-            
-            let item = TimeTravelScrubber(identifier: identifier, controller: c!)
-            return item
-
         default:
-            
             return nil
         }
     }
 }
-
 

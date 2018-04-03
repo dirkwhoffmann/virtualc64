@@ -239,9 +239,6 @@ extension MyController {
             break
             
         case MSG_SNAPSHOT_TAKEN:
-
-            // Update TouchBar with new snapshpot image
-            rebuildTouchBar()
             break
     
         case MSG_CPU_OK,

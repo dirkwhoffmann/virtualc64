@@ -22,8 +22,8 @@ const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
 Snapshot::Snapshot()
 {
-    capacity = 0;
     state = NULL;
+    capacity = 0;
 }
 
 Snapshot *
@@ -52,18 +52,6 @@ Snapshot::makeSnapshotWithFile(const char *filename)
     return snapshot;
 }
 
-/*
-Snapshot *
-Snapshot::makeSnapshotWithC64(C64 *c64)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot();
-    snapshot->readFromC64(c64);
-    return snapshot;
-}
-*/
-
 Snapshot::~Snapshot()
 {
     dealloc();
@@ -74,7 +62,8 @@ Snapshot::dealloc()
 {
     if (state != NULL) {
         free(state);
-        state = NULL; 
+        state = NULL;
+        capacity = 0;
     }
 }
 

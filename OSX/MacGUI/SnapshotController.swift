@@ -82,9 +82,8 @@ class SnapshotDialog : UserDialogController  {
         c64.suspend()
         numAutoSnapshots = c64.numAutoSnapshots()
         for n in 0..<numAutoSnapshots {
-            let slot = c64.autoMostRecent(n)
-            let takenAt = TimeInterval(c64.autoSnapshotTimestamp(slot))
-            autoSnapshotImage[n] = c64.autoSnapshotImage(slot)
+            let takenAt = TimeInterval(c64.autoSnapshotTimestamp(n))
+            autoSnapshotImage[n] = c64.autoSnapshotImage(n)
             autoTimeStamp[n] = timeInfo(timeStamp: takenAt)
             autoTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
@@ -96,10 +95,10 @@ class SnapshotDialog : UserDialogController  {
         
         c64.suspend()
         numUserSnapshots = c64.numUserSnapshots()
+        track("numUserSnaps = \(numUserSnapshots)")
         for n in 0..<numUserSnapshots {
-            let slot = c64.userMostRecent(n)
-            let takenAt = TimeInterval(c64.userSnapshotTimestamp(slot))
-            userSnapshotImage[n] = c64.userSnapshotImage(slot)
+            let takenAt = TimeInterval(c64.userSnapshotTimestamp(n))
+            userSnapshotImage[n] = c64.userSnapshotImage(n)
             userTimeStamp[n] = timeInfo(timeStamp: takenAt)
             userTimeDiff[n] = timeDiffInfo(timeStamp: takenAt)
         }
@@ -110,8 +109,7 @@ class SnapshotDialog : UserDialogController  {
     @IBAction func deleteAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        let slot = c64.userMostRecent(sender.tag)
-        c64.deleteUserSnapshot(slot)
+        c64.deleteUserSnapshot(sender.tag)
         reloadUserSnapshotCache()
     }
     
@@ -122,29 +120,18 @@ class SnapshotDialog : UserDialogController  {
         hideSheet()
     }
     
-    /*
-    @IBAction func okAction(_ sender: Any!) {
-        
-        // Restore selected snapshot
-        track("TODO: Restore selected snapshot")
-        hideSheet()
-    }
-    */
-    
     @IBAction func autoDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        let slot = c64.autoMostRecent(sender.selectedRow)
-        c64.restoreAutoSnapshot(slot)
-        hideSheet()
+        c64.restoreAutoSnapshot(sender.selectedRow)
+        cancelAction(self)
     }
     
     @IBAction func userDoubleClick(_ sender: Any!) {
         
         let sender = sender as! NSTableView
-        let index = c64.userMostRecent(sender.selectedRow)
-        c64.restoreUserSnapshot(index)
-        hideSheet()
+        c64.restoreUserSnapshot(sender.selectedRow)
+        cancelAction(self)
     }
 }
 
@@ -215,13 +202,11 @@ extension SnapshotDialog {
         // Get snapshot data
         var data : Data
         if (tableView == autoTableView) {
-            let slot = c64.autoMostRecent(index)
-            data = c64.autoSnapshotData(slot)
+            data = c64.autoSnapshotData(index)
         }
         else {
             precondition(tableView == userTableView)
-            let slot = c64.userMostRecent(index)
-            data = c64.userSnapshotData(slot)
+            data = c64.userSnapshotData(index)
         }
         
         let pboardType = NSPasteboard.PasteboardType.fileContents
