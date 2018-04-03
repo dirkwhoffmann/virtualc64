@@ -147,7 +147,7 @@ extension MyController {
         refresh()
     }
     
-    @IBAction func cheatboxAction(_ sender: Any!) {
+    @IBAction func snapshotsAction(_ sender: Any!) {
         
         track()
         let nibName = NSNib.Name(rawValue: "SnapshotDialog")
@@ -155,6 +155,13 @@ extension MyController {
         controller.showSheet(withParent: self)
     }
 
+    @IBAction func backInTimeAction(_ sender: Any!) {
+        
+        track()
+        
+        
+    }
+    
     @IBAction func printDocument(_ sender: Any!) {
     
         NSLog("\(#function)")

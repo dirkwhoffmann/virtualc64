@@ -306,9 +306,14 @@
                             <action selector="mediaAction:" target="-2" id="cHt-Hg-iuV"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Time travel" paletteLabel="Time travel" tag="21" image="tb_timetravel2" id="4tn-YG-78O">
+                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Snapshots" paletteLabel="Snapshots" tag="21" image="tb_snapshots1" id="4tn-YG-78O">
                         <connections>
-                            <action selector="cheatboxAction:" target="-2" id="wAq-lN-oJl"/>
+                            <action selector="snapshotsAction:" target="-2" id="mTl-rl-ysT"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E5BB1981-0D10-402E-94DE-A2E5DFDD5691" label="Rewind" paletteLabel="Rewind" tag="21" image="tb_snapshots2" id="pm3-ae-4ou">
+                        <connections>
+                            <action selector="backInTimeAction:" target="-2" id="w1P-ZO-D8l"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Monitor" paletteLabel="Monitor" tag="31" image="tb_inspect" id="1855">
@@ -375,7 +380,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -400,7 +405,9 @@
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="1855"/>
+                    <toolbarItem reference="1851"/>
                     <toolbarItem reference="4tn-YG-78O"/>
+                    <toolbarItem reference="pm3-ae-4ou"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="kR6-IR-lNs"/>
                     <toolbarItem reference="Klt-YL-0mv"/>
@@ -2986,7 +2993,8 @@
         <image name="tape" width="256" height="256"/>
         <image name="tb_inspect" width="256" height="256"/>
         <image name="tb_setup" width="129" height="129"/>
-        <image name="tb_timetravel2" width="128" height="128"/>
+        <image name="tb_snapshots1" width="128" height="128"/>
+        <image name="tb_snapshots2" width="128" height="128"/>
         <image name="tb_virtualmachine" width="128" height="129"/>
     </resources>
 </document>
