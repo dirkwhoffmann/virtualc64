@@ -27,6 +27,7 @@ Joystick::Joystick(int p) {
     debug(3, "    Creating game port %c at address %p...\n", p, this);
     
     // Register snapshot items
+    /*
     SnapshotItem items[] = {
         
         { &button,  sizeof(button), 0 },
@@ -35,6 +36,7 @@ Joystick::Joystick(int p) {
         { NULL,     0,              0 }};
     
     registerSnapshotItems(items, sizeof(items));
+     */
 }
 
 Joystick::~Joystick()
@@ -46,6 +48,15 @@ Joystick::reset()
 {
     VirtualComponent::reset();
 
+    button = false;
+    axisX = 0;
+    axisY = 0;
+}
+
+void
+Joystick::loadFromBuffer(uint8_t **buffer)
+{
+    // Discard any active joystick movements
     button = false;
     axisX = 0;
     axisY = 0;

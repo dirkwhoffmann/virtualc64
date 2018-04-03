@@ -874,6 +874,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
 - (void)restoreAutoSnapshot:(NSInteger)nr {
     wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
+- (void)backInTime { wrapper->c64->backInTime(); }
 
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
 - (NSInteger) userMostRecent:(NSInteger)nr {

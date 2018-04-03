@@ -327,7 +327,7 @@ private:
     unsigned autoSavedSnapshotsPtr;
     
     //! @brief    Ring buffer storage for manually saved snapshots
-    #define MAX_USER_SAVED_SNAPSHOTS 4
+    #define MAX_USER_SAVED_SNAPSHOTS 32
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
     //! @brief    Ring buffer write pointer
@@ -598,6 +598,11 @@ public:
      */
     void takeAutoSnapshot();
 
+    //! @brief    Reverts to the previous auto snapshot
+    /*! @note     The reverted snapshot is deleted from the snapshot buffer
+     */
+    void backInTime();
+
     /*! @brief    Takes a snapshot and stores it in the user storage
      *  @note     In contrast to takeAutoSnapshot(), this function is thread-safe an
      *            can be called any time.
@@ -627,6 +632,7 @@ public:
 
     //! @brief    Deletes a snapshot from the user storage
     void deleteUserSnapshot(unsigned nr);
+
     
     //
     //! @functiongroup Handling disks, tapes, and cartridges

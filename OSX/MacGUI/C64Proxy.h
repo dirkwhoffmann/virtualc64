@@ -678,6 +678,7 @@ struct ContainerWrapper;
 - (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
 - (time_t) autoSnapshotTimestamp:(NSInteger)nr;
 - (void) restoreAutoSnapshot:(NSInteger)nr;
+- (void) backInTime;
 
 - (NSInteger) numUserSnapshots;
 - (NSInteger) userMostRecent:(NSInteger)nr;

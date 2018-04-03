@@ -158,8 +158,7 @@ extension MyController {
     @IBAction func backInTimeAction(_ sender: Any!) {
         
         track()
-        
-        
+        c64.backInTime()
     }
     
     @IBAction func printDocument(_ sender: Any!) {

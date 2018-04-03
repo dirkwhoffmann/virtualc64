@@ -148,7 +148,7 @@ C64::C64()
     autoSavedSnapshotsPtr = 0;
     userSavedSnapshotsPtr = 0;
     autoSaveSnapshots = true;
-    autoSaveInterval = 1;
+    autoSaveInterval = 3;
 
     reset();
 }
@@ -923,6 +923,16 @@ C64::takeAutoSnapshot()
     saveToSnapshotUnsafe(autoSavedSnapshots[autoSavedSnapshotsPtr]);
     autoSavedSnapshotsPtr = (autoSavedSnapshotsPtr + 1) % MAX_AUTO_SAVED_SNAPSHOTS;
     putMessage(MSG_SNAPSHOT_TAKEN);
+}
+
+void
+C64::backInTime()
+{
+    unsigned previous = (autoSavedSnapshotsPtr + MAX_AUTO_SAVED_SNAPSHOTS - 1) % MAX_AUTO_SAVED_SNAPSHOTS;
+    loadFromSnapshotSafe(autoSnapshot(previous));
+    autoSavedSnapshotsPtr = previous;
+    
+    debug("Reverted to snapshot %d\n", previous);
 }
 
 bool

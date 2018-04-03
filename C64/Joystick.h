@@ -56,6 +56,9 @@ public:
     //! @brief    Restores the initial state
     void reset();
 
+    //! @brief    Inherited from VirtualComponent
+    void loadFromBuffer(uint8_t **buffer);
+    
     //! @brief    Prints debugging information
     void dumpState();
 
