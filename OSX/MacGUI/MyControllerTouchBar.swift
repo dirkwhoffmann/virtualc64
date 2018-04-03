@@ -58,11 +58,7 @@ extension MyController : NSTouchBarDelegate
             .home,
             .del,
             .restore,
-            // We disable the time travel touchbar feature for now as it causes
-            // a race condition in the emulator. We resurrect the feature when
-            // the time travel functionality has been reworked.
-            // .ttscrubber,
-            // .ttpopover
+            .ttpopover
         ]
         
         // Make touchbar customizable
@@ -142,12 +138,13 @@ extension MyController : NSTouchBarDelegate
 */
             
         case NSTouchBarItem.Identifier.ttpopover:
-            let item = NSPopoverTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name(rawValue: "tb_timetravel2.png"))
-            let resizedIcon = icon?.resizeImage(width: 24, height: 24)
-            item.customizationLabel = "Time travel"
-            item.collapsedRepresentationImage = resizedIcon
-            item.popoverTouchBar = TimeTravelTouchBar (parent: item, controller:self)
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name(rawValue: "tb_snapshots2.png"))!
+            let resizedIcon = icon.resizeImage(width: 24, height: 24)
+            item.customizationLabel = "Rewind"
+            item.view = NSButton(image: resizedIcon,
+                                 target: self,
+                                 action: #selector(backInTimeAction))
             return item
             
         default: return nil
