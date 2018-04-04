@@ -65,16 +65,10 @@ CIA::reset()
 {
     VirtualComponent::reset();
     
-    // PB67TimerMode = 0x80;
-    /*
-    PA = PALatch | ~DDRA;
-    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-    */
-    
     PA = 0xFF;
     PB = 0xFF;
 
-	CNT = true; // CNT line is high by default
+	CNT = true;
 	INT = 1;
 	
 	latchA = 0xFFFF;
@@ -168,7 +162,7 @@ CIA::peek(uint16_t addr)
 			if (INT == 0) {
 				result |= 0x80;
 				INT = 1;
-				clearInterruptLine(); // really?
+				clearInterruptLine();
 			}
 			
 			// discard pending interrupts

@@ -305,7 +305,7 @@
                             <action selector="mediaAction:" target="-2" id="cHt-Hg-iuV"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Snapshots" paletteLabel="Snapshots" toolTip="Open the snapshot library" tag="21" image="tb_snapshots1" id="4tn-YG-78O">
+                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Library" paletteLabel="Library" toolTip="Open the snapshot library" tag="21" image="tb_snapshots1" id="4tn-YG-78O">
                         <connections>
                             <action selector="snapshotsAction:" target="-2" id="mTl-rl-ysT"/>
                         </connections>
@@ -315,7 +315,7 @@
                             <action selector="restoreLatestAutoSnapshotAction:" target="-2" id="OZ0-hO-b08"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="58950F6F-5DE7-4266-8A24-7C3F4B754E89" label="Undo" paletteLabel="Undo" toolTip="Revert to the latest user-saved snapshot" tag="6" image="tb_snapshots3" id="dJi-AI-nsT">
+                    <toolbarItem implicitItemIdentifier="58950F6F-5DE7-4266-8A24-7C3F4B754E89" label="Revert" paletteLabel="Revert" toolTip="Revert to the latest user-saved snapshot" tag="6" image="tb_snapshots3" id="dJi-AI-nsT">
                         <connections>
                             <action selector="restoreLatestUserSnapshotAction:" target="-2" id="lhM-tV-FEY"/>
                         </connections>
