@@ -187,7 +187,6 @@ Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
     
     // Copy header
     memcpy((void *)header(), buffer, sizeof(SnapshotHeader));
-    assert(header.size == length - sizeof(SnapshotHeader));
     
     // Copy state data
     memcpy(getData(), buffer + sizeof(SnapshotHeader), length - sizeof(SnapshotHeader));

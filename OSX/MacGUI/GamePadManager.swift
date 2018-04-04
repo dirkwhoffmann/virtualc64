@@ -319,11 +319,11 @@
         ]
         
         gamePads[1]!.keyMap = [
-            MacKey.ansi.a: JOYSTICK_LEFT.rawValue,
-            MacKey.ansi.s: JOYSTICK_RIGHT.rawValue,
-            MacKey.ansi.w: JOYSTICK_UP.rawValue,
-            MacKey.ansi.y: JOYSTICK_DOWN.rawValue,
-            MacKey.ansi.x: JOYSTICK_FIRE.rawValue
+            MacKey.ansi.s: JOYSTICK_LEFT.rawValue,
+            MacKey.ansi.d: JOYSTICK_RIGHT.rawValue,
+            MacKey.ansi.e: JOYSTICK_UP.rawValue,
+            MacKey.ansi.x: JOYSTICK_DOWN.rawValue,
+            MacKey.ansi.c: JOYSTICK_FIRE.rawValue
         ]
     }
 }

@@ -36,7 +36,7 @@
 #define _C64_INC
 
 // Disable assert checking in relase versions
-#define NDEBUG
+// #define NDEBUG
 
 // Data types and constants
 #include "C64_defs.h"
