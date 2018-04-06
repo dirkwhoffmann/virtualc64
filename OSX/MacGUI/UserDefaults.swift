@@ -12,7 +12,7 @@ struct VC64Keys {
     // General
     static let basicRom  = "VC64BasicRomFileKey"
     static let charRom   = "VC64CharRomFileKey"
-    static let kernelRom = "VC64KernelRomFileKey"
+    static let kernalRom = "VC64KernelRomFileKey"
     static let vc1541Rom = "VC64VC1541RomFileKey"
 
     // Keyboard
@@ -68,7 +68,7 @@ extension MyController {
         
             VC64Keys.basicRom: "",
             VC64Keys.charRom: "",
-            VC64Keys.kernelRom: "",
+            VC64Keys.kernalRom: "",
             VC64Keys.vc1541Rom: "",
             
             VC64Keys.mapKeysByPosition: false

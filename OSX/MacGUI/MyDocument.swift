@@ -50,7 +50,7 @@ class MyDocument : NSDocument {
         let defaults = UserDefaults.standard
         loadRom(defaults.url(forKey: VC64Keys.basicRom))
         loadRom(defaults.url(forKey: VC64Keys.charRom))
-        loadRom(defaults.url(forKey: VC64Keys.kernelRom))
+        loadRom(defaults.url(forKey: VC64Keys.kernalRom))
         loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
         
         // Try to run
@@ -139,9 +139,9 @@ class MyDocument : NSDocument {
             defaults.set(url, forKey: VC64Keys.charRom)
             return true
         }
-        if c64.loadKernelRom(url!) {
-            track("Kernel ROM: \(url!)")
-            defaults.set(url, forKey: VC64Keys.kernelRom)
+        if c64.loadKernalRom(url!) {
+            track("Kernal ROM: \(url!)")
+            defaults.set(url, forKey: VC64Keys.kernalRom)
             return true
         }
         if c64.loadVC1541Rom(url!) {

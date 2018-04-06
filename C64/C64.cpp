@@ -277,7 +277,7 @@ C64::threadCleanup()
 bool
 C64::isRunnable()
 {
-    return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy.mem.romIsLoaded();
+    return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernalRomIsLoaded() && floppy.mem.romIsLoaded();
 }
 
 bool
@@ -803,9 +803,9 @@ C64::loadRom(const char *filename)
         if (result) putMessage(MSG_CHAR_ROM_LOADED);
     }
     
-    if (C64Memory::isKernelRom(filename)) {
-        result = mem.loadKernelRom(filename);
-        if (result) putMessage(MSG_KERNEL_ROM_LOADED);
+    if (C64Memory::isKernalRom(filename)) {
+        result = mem.loadKernalRom(filename);
+        if (result) putMessage(MSG_KERNAL_ROM_LOADED);
     }
     
     if (VC1541Memory::is1541Rom(filename)) {

@@ -37,7 +37,7 @@ FinalIII::reset()
      *
      * Final cartrige III switches frequently betwenn different exrom/game line
      * configurations. I.e., it uses ultimax mode to override the NMI vectors
-     * stored in Kernel ROM. Switching between configurations causes ROMH sometimes
+     * stored in Kernal ROM. Switching between configurations causes ROMH sometimes
      * to be visible at $A000 and sometimes at $E000. As we do not want to copy memory
      * back and forth, we simply add four new chips at location $E000 which
      * reflect the upper half of the original four cartridge chips.

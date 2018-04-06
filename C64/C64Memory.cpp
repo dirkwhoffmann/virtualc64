@@ -29,7 +29,7 @@ C64Memory::C64Memory()
 	debug (3, "  Creating main memory at address %p...\n", this);
 		
 	charRomFile = NULL;
-	kernelRomFile = NULL;
+	kernalRomFile = NULL;
 	basicRomFile = NULL;
     
     // Register snapshot items
@@ -39,7 +39,7 @@ C64Memory::C64Memory()
         { colorRam,     sizeof(colorRam),   KEEP_ON_RESET },
         { &rom[0xA000], 0x2000,             KEEP_ON_RESET  }, /* Basic ROM */
         { &rom[0xD000], 0x1000,             KEEP_ON_RESET  }, /* Character ROM */
-        { &rom[0xE000], 0x2000,             KEEP_ON_RESET  }, /* Kernel ROM */
+        { &rom[0xE000], 0x2000,             KEEP_ON_RESET  }, /* Kernal ROM */
         { &peekSrc,     sizeof(peekSrc),    KEEP_ON_RESET },
         { &pokeTarget,  sizeof(pokeTarget), KEEP_ON_RESET },
         { NULL,         0,                  0 }};
@@ -96,7 +96,7 @@ C64Memory::dumpState()
 	msg("-----------\n");
 	msg("    Basic ROM :%s loaded\n", basicRomIsLoaded() ? "" : " not");
 	msg("Character ROM :%s loaded\n", charRomIsLoaded() ? "" : " not");
-	msg("   Kernel ROM :%s loaded\n", kernelRomIsLoaded() ? "" : " not");
+	msg("   Kernal ROM :%s loaded\n", kernalRomIsLoaded() ? "" : " not");
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
 		if (tag != NO_BREAKPOINT) {
@@ -143,7 +143,7 @@ bool C64Memory::isCharRom(const char *filename)
 	return true;
 }
 
-bool C64Memory::isKernelRom(const char *filename) 
+bool C64Memory::isKernalRom(const char *filename)
 {
 	uint8_t magicBytes[] = { 0x85, 0x56, 0x20, 0x00 };
 
@@ -161,7 +161,7 @@ bool C64Memory::isKernelRom(const char *filename)
 
 bool C64Memory::isRom(const char *filename) 
 {
-	return isBasicRom(filename) || isCharRom(filename) || isKernelRom(filename);
+	return isBasicRom(filename) || isCharRom(filename) || isKernalRom(filename);
 }
 
 bool 
@@ -187,10 +187,10 @@ C64Memory::loadCharRom(const char *filename)
 }
 
 bool 
-C64Memory::loadKernelRom(const char *filename)
+C64Memory::loadKernalRom(const char *filename)
 {
-	if (isKernelRom(filename)) {
-		kernelRomFile = strdup(filename);
+	if (isKernalRom(filename)) {
+		kernalRomFile = strdup(filename);
 		flashRom(filename, 0xE000);
 		return true;
 	}
@@ -260,7 +260,7 @@ C64Memory::updatePeekPokeLookupTables()
     source = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O, Character ROM, or RAM)
     peekSrc[0xD] = source;
 
-    source = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, Kernel ROM, or RAM)
+    source = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, Kernal ROM, or RAM)
     peekSrc[0xE] = source;
     peekSrc[0xF] = source;
 

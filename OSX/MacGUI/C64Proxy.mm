@@ -803,14 +803,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) isCharRomLoaded {
     return wrapper->c64->mem.charRomIsLoaded();
 }
-- (bool) isKernelRom:(NSURL *)url {
-    return wrapper->c64->mem.isKernelRom([[url path] UTF8String]);
+- (bool) isKernalRom:(NSURL *)url {
+    return wrapper->c64->mem.isKernalRom([[url path] UTF8String]);
 }
-- (bool) loadKernelRom:(NSURL *)url {
-    return [self isKernelRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
+- (bool) loadKernalRom:(NSURL *)url {
+    return [self isKernalRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
-- (bool) isKernelRomLoaded {
-    return wrapper->c64->mem.kernelRomIsLoaded();
+- (bool) isKernalRomLoaded {
+    return wrapper->c64->mem.kernalRomIsLoaded();
 }
 - (bool) isVC1541Rom:(NSURL *)url {
     return wrapper->c64->floppy.mem.is1541Rom([[url path] UTF8String]);
@@ -822,10 +822,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->c64->floppy.mem.romIsLoaded();
 }
 - (bool) isRom:(NSURL *)url {
-    return [self isBasicRom:url] || [self isCharRom:url] || [self isKernelRom:url] || [self isVC1541Rom:url];
+    return [self isBasicRom:url] || [self isCharRom:url] || [self isKernalRom:url] || [self isVC1541Rom:url];
 }
 - (bool) loadRom:(NSURL *)url {
-    return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernelRom:url] || [self loadVC1541Rom:url];
+    return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url];
 }
 
 - (bool) attachCartridgeAndReset:(CRTProxy *)c {

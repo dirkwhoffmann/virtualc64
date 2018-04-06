@@ -39,7 +39,7 @@ class C64Memory : public Memory {
         M_RAM = 1,
         M_ROM,
         M_CHAR = M_ROM,
-        M_KERNEL = M_ROM,
+        M_KERNAL = M_ROM,
         M_BASIC = M_ROM,
         M_IO,
         M_CRTLO,
@@ -61,21 +61,21 @@ class C64Memory : public Memory {
     const MemorySource BankMap[32][6] = {
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
-        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNEL},
-        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNEL},
+        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
-        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNEL},
-        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNEL},
+        {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNAL},
+        {M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNAL},
         
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL},
-        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNEL},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNAL},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL},
-        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNEL},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
+        {M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNAL},
         
         {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
         {M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI},
@@ -88,12 +88,12 @@ class C64Memory : public Memory {
         
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL},
-        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNEL},
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL},
+        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNAL},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM},
-        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL},
-        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNEL}
+        {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
+        {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL}
     };
 
 public:		
@@ -123,10 +123,10 @@ public:
     static bool isBasicRom(const char *filename);
     
     /*! @brief    Checks the integrity of a Kernal ROM image file.
-     *  @details  Returns true, iff the specified file contains a valid Kernel ROM image.
+     *  @details  Returns true, iff the specified file contains a valid Kernal ROM image.
      *            File integrity is checked via the checkFileHeader function.
      */
-    static bool isKernelRom(const char *filename);
+    static bool isKernalRom(const char *filename);
     
     /*! @brief    Checks the integrity of a Character ROM image file.
      *  @details  Returns true, iff the specified file contains a valid Character ROM image.
@@ -147,9 +147,9 @@ public:
      */
     static bool isCharRomAddr(uint16_t addr) { return (0xD000 <= addr && addr <= 0xDFFF); }
     
-    /*! @brief    Returns true, iff the provided address is in the Kernel ROM address range.
+    /*! @brief    Returns true, iff the provided address is in the Kernal ROM address range.
      */
-    static bool isKernelRomAddr(uint16_t addr) { return (0xE000 <= addr); }
+    static bool isKernalRomAddr(uint16_t addr) { return (0xE000 <= addr); }
     
     /*! @brief    Returns true, iff the provided address is in the possible cartridge address ranges.
      */
@@ -159,7 +159,7 @@ public:
     /*! @brief    Returns true, iff the provided address is in one of the three ROM address ranges.
      */
     static bool isRomAddr(uint16_t addr)
-    { return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
+    { return isCharRomAddr(addr) || isKernalRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
 
     
 private:
@@ -174,7 +174,7 @@ private:
      *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
      *            any time.
      */
-	char *kernelRomFile;
+	char *kernalRomFile;
 
     /*! @brief    File name of the Basic ROM image.
      *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
@@ -206,14 +206,14 @@ public:
 	//! @brief    Loads a character ROM image into memory
 	bool loadCharRom(const char *filename);
     
-	//! @brief    Loads a kernel ROM image into memory
-	bool loadKernelRom(const char *filename);
+	//! @brief    Loads a kernal ROM image into memory
+	bool loadKernalRom(const char *filename);
 
 	//! @brief    Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return basicRomFile != NULL; }
     
-	//! @brief    Returns true, iff the Kernel ROM is alrady loaded
-	bool kernelRomIsLoaded() { return kernelRomFile != NULL; }
+	//! @brief    Returns true, iff the Kernal ROM is alrady loaded
+	bool kernalRomIsLoaded() { return kernalRomFile != NULL; }
     
 	//! @brief    Returns true, iff the Character ROM is alrady loaded
 	bool charRomIsLoaded() { return charRomFile != NULL; }

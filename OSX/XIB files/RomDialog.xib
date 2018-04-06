@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
@@ -14,8 +14,8 @@
                 <outlet property="basicRomText" destination="aqJ-lH-UEj" id="bE0-gc-JXH"/>
                 <outlet property="characterRom" destination="W7l-RJ-fsC" id="M0D-g9-zYx"/>
                 <outlet property="characterRomText" destination="vX9-XL-JTQ" id="242-Kh-OWC"/>
-                <outlet property="kernelRom" destination="TBA-Lc-PJo" id="S22-1a-Vi7"/>
-                <outlet property="kernelRomText" destination="J3c-Rt-LWZ" id="WgK-Cl-VcA"/>
+                <outlet property="kernalRom" destination="TBA-Lc-PJo" id="AjW-ce-C5F"/>
+                <outlet property="kernalRomText" destination="J3c-Rt-LWZ" id="rL9-HS-Iog"/>
                 <outlet property="vc1541Rom" destination="Ghl-N9-pkS" id="sSQ-50-2wb"/>
                 <outlet property="vc1541RomText" destination="gLe-GJ-CYr" id="q7L-e4-q0n"/>
                 <outlet property="window" destination="FMc-nL-WNC" id="Y9d-C5-7fO"/>
@@ -85,7 +85,7 @@
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IE7-QH-7Ml">
                                     <rect key="frame" x="31" y="11" width="67" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Kernel ROM" id="ET3-yx-phZ">
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Kernal ROM" id="ET3-yx-phZ">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

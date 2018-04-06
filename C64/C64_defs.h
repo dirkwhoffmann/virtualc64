@@ -48,7 +48,7 @@ typedef enum {
     // ROM and snapshot handling
     MSG_BASIC_ROM_LOADED,
     MSG_CHAR_ROM_LOADED,
-    MSG_KERNEL_ROM_LOADED,
+    MSG_KERNAL_ROM_LOADED,
     MSG_VC1541_ROM_LOADED,
     MSG_ROM_MISSING,
     MSG_SNAPSHOT_TAKEN,

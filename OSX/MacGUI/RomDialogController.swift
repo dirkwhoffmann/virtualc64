@@ -14,8 +14,8 @@ class RomDialogController : UserDialogController {
     let romImageMedium = NSImage.init(named: NSImage.Name.init(rawValue: "rom_medium"))
 
     // @IBOutlet weak var learnMore: NSTextField!
-    @IBOutlet weak var kernelRom: NSImageView!
-    @IBOutlet weak var kernelRomText: NSTextField!
+    @IBOutlet weak var kernalRom: NSImageView!
+    @IBOutlet weak var kernalRomText: NSTextField!
     @IBOutlet weak var basicRom: NSImageView!
     @IBOutlet weak var basicRomText: NSTextField!
     @IBOutlet weak var characterRom: NSImageView!
@@ -32,8 +32,8 @@ class RomDialogController : UserDialogController {
 
     func refresh()
     {
-        kernelRom.image = c64.isKernelRomLoaded() ? romImage : romImageLight
-        kernelRomText.isHidden = c64.isKernelRomLoaded()
+        kernalRom.image = c64.isKernalRomLoaded() ? romImage : romImageLight
+        kernalRomText.isHidden = c64.isKernalRomLoaded()
         basicRom.image = c64.isBasicRomLoaded() ? romImage : romImageLight
         basicRomText.isHidden = c64.isBasicRomLoaded()
         characterRom.image = c64.isCharRomLoaded() ? romImage : romImageLight
