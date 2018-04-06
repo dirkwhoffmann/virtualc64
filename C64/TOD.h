@@ -1,7 +1,7 @@
 /*!
  * @header      TOD.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2007 - 2016 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
  */
 class TOD : public VirtualComponent {
 
-public:
+private:
     
 	typedef	union {
 		struct { 
@@ -87,7 +87,10 @@ public:
 	    
 	//! @brief    Prints debug information.
 	void dumpState();	
-	
+
+    //! @brief    Setter
+    void setHz(uint8_t value) { assert(value == 5 || value == 6); hz = value; }
+
     //! @brief    Freezes the time of day clock.
     void freeze() { if (!frozen) { latch.value = tod.value; frozen = true; } }
 

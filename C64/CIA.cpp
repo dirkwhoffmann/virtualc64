@@ -245,12 +245,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
 			if (CRB & 0x80) {
 				tod.setAlarmTenth(value);
-                if (tod.alarm.value != tod.alarm.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
-                if (tod.tod.value != tod.tod.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
 			}
 			return;
 			
@@ -258,12 +256,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmSeconds(value);
-                if (tod.alarm.value != tod.alarm.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
             } else {
 				tod.setTodSeconds(value);
-                if (tod.tod.value != tod.tod.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
             }
 			return;
 			
@@ -271,12 +267,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmMinutes(value);
-                if (tod.alarm.value != tod.alarm.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
             } else {
 				tod.setTodMinutes(value);
-                if (tod.tod.value != tod.tod.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
             }
 			return;
 			
@@ -284,16 +278,14 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			if (CRB & 0x80) {
 				tod.setAlarmHours(value);
-                if (tod.alarm.value != tod.alarm.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
 			} else {
 				// Note: A real C64 shows strange behaviour when writing 0x12 or 0x92 
 				// into this register. In this case, the AM/PM flag is inverted
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);
-                if (tod.tod.value != tod.tod.oldValue)
-                    checkForTODInterrupt();
+                checkForTODInterrupt();
 			}
 			return;
 			
@@ -389,7 +381,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // 0------- : TOD speed = 60 Hz
             // 1------- : TOD speed = 50 Hz
             // TODO: We need to react on a change of this bit
-            tod.hz = (value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */;
+            tod.setHz((value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */);
             
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			CRA = value;
@@ -474,36 +466,15 @@ void
 CIA::incrementTOD()
 {
     tod.increment();
-    if (tod.tod.value != tod.tod.oldValue)
-        checkForTODInterrupt();
+    checkForTODInterrupt();
 }
 
 void
 CIA::checkForTODInterrupt()
 {
-    
     if (tod.alarming()) {
         delay |= TODInt0;
-        debug("Triggering TOD int\n");
-    } else {
-        // delay &= ~TODInt0;
     }
-    
-    /*
-    if (tod.alarming()) {
-        // Set interrupt source
-        ICR |= 0x04;
-        
-        // Trigger interrupt, if enabled
-        if (IMR & 0x04) {
-            // The uppermost bit indicates that an interrupt occured
-            ICR |= 0x80;
-            raiseInterruptLineTOD();
-        }
-    }  else {
-        clearInterruptLineTOD();
-    }
-     */
 }
 
 void CIA::dumpTrace()

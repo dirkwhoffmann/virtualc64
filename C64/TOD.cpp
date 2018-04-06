@@ -121,6 +121,10 @@ TOD::increment()
 bool
 TOD::alarming()
 {
+    // Skip test if value did not change since the last write or increment operation
+    if (tod.value == tod.oldValue && alarm.value == alarm.oldValue)
+        return false;
+    
     return tod.value == alarm.value;
 }
 
