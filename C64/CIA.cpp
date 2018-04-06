@@ -794,12 +794,14 @@ void CIA::executeOneCycle()
     }
 
     // Check for TOD interrupt
-    if ((delay & TODInt0) && (IMR & 0x04)) {
+    if (delay & TODInt0) {
         ICR |= 0x04;
-        delay |= Interrupt0;
-        delay |= SetIcr0;
+        if (IMR & 0x04) {
+            delay |= Interrupt0;
+            delay |= SetIcr0;
+        }
     }
-
+    
     if (delay & (ClearIcr1 | SetIcr1 | Interrupt1)) {
         
         if (delay & ClearIcr1) { // (12)
