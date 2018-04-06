@@ -543,38 +543,38 @@ void CIA::executeOneCycle()
 
     // Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
-    //                              Phi2            Phi2                  Phi2
-	//                               |               |                     |
-	// timerA      -----       ------v------   ------v------     ----------v-----------
-	// input  ---->| & |------>| dwDelay & |-X-| dwDelay & |---->| decrement counter  |
-	//         --->|   |       |  CountA2  | | |  CountA3  |     |        (1)         |
-	//         |   -----       ------------- | -------------     |                    |
-	// -----------------             ^ Clr   |                   |                    |
-	// | bCRA & 0x01   |             |       | ------------------| new counter ==  0? |
-	// | timer A start |<----        |       | |                 |                    |
-	// -----------------    |        |       v v                 |                    |
- 	//                    -----      |      -----                |      timer A       |
-	//                    | & |      |      | & |                |   16 bit counter   |
-	//                    |   |      |      |   |                |     and latch      |
-	//                    -----      |      -----                |                    |
-    //                     ^ ^       |        |(2)               |                    |
-    //                     | |       ---------|-------------     |                    |
-    //                     | |                |            |     |                    |    
-	// timer A             | |                |    -----   |     |                    |
-	// output  <-----------|-X----------------X--->|>=1|---X---->| load from latch    | 
-	//                     |                   --->|   |         |        (4)         |
-	//                    -----                |   -----         ----------------------
-	//                    |>=1|                |
-	//                    |   |                |       Phi2
-	//                    -----                |        |
-	//                     ^ ^                 |  ------v------      ----------------
-	//                     | | (3)             ---| dwDelay & |<-----| bcRA & 0x10  |
-	//                     | -----------------    |  LoadA1   |      | force load   |
-	//                     |       Phi2      |    -------------      ----------------
-    //                     |        |        |                              ^ Clr
-	// -----------------   |  ------v------  |                              |
-	// | bCRA & 0x08   |   |  | dwDelay & |  |                             Phi2
-	// | one shot      |---X->| oneShotA0 |---
+    //                           Phi2            Phi2                  Phi2
+	//                            |               |                     |
+	// timerA      -----    ------v------   ------v------     ----------v---------
+	// input  ---->| & |--->| dwDelay & |-X-| dwDelay & |---->| decrement counter|
+	//         --->|   |    |  CountA2  | | |  CountA3  |     |        (1)       |
+	//         |   -----    ------------- | -------------     |                  |
+	// -----------------          ^ Clr   |                   |                  |
+	// | bCRA & 0x01   | Clr (3)  |       | ------------------| new counter = 0? |
+	// | timer A start |<----     |       | |                 |                  |
+	// -----------------    |     |       v v                 |                  |
+ 	//                    -----   |      -----                |      timer A     |
+	//                    | & |   |      | & |                |  16 bit counter  |
+	//                    |   |   |      |   |                |     and latch    |
+	//                    -----   |      -----                |                  |
+    //                     ^ ^    |        |(2)               |                  |
+    //                     | |    ---------|-------------     |                  |
+    //                     | |             |            |     |                  |
+	// timer A             | |             |    -----   |     |                  |
+	// output  <-----------|-X-------------X--->|>=1|---X---->| load from latch  |
+	//                     |                --->|   |         |        (4)       |
+	//                    -----             |   -----         --------------------
+	//                    |>=1|             |
+	//                    |   |             |       Phi2
+	//                    -----             |        |
+	//                     ^ ^              |  ------v------    ----------------
+	//                     | |              ---| dwDelay & |<---| bcRA & 0x10  |
+	//                     | ----------------  |  LoadA1   |    | force load   |
+	//                     |       Phi2     |  -------------    ----------------
+    //                     |        |       |                            ^ Clr
+	// -----------------   |  ------v------ |                            |
+	// | bCRA & 0x08   |   |  | dwDelay & | |                           Phi2
+	// | one shot      |---X->| oneShotA0 |--
 	// -----------------      -------------
 
 				
@@ -601,6 +601,8 @@ void CIA::executeOneCycle()
 		if ((CRB & 0x61) == 0x41 || ((CRB & 0x61) == 0x61 && CNT)) {
 			delay |= CountB1;
 		}
+        
+        // Reload counter immediately
 		delay |= LoadA1;
 	}
 	
@@ -641,20 +643,20 @@ void CIA::executeOneCycle()
 	
 	// Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
-	//                       (7)            -----------------
-	//          --------------------------->| 0x00 (pulse)  |
-	//          |                           |               |       ----------------
-	//          |                           | bCRA & 0x04   |------>| 0x02 (timer) |
-	// timerA   |  Flip --------------- (8) | timer mode    |       |              |
-	// output  -X------>| bPB67Toggle |---->| 0x04 (toggle) |       | bCRA & 0x02  | 
-	//              (5) |  ^ 0x04     |     |     (6)       |       | output mode  |----> PB6 output
-	//                  ---------------     -----------------       |              |
-	//                        ^ Set                                 | 0x00 (port)  |
-	//                        |                                ---->|              |
-	// ----------------- 0->1 |             -----------------  |    ----------------
-	// | bCRA & 0x01   |-------             | port B bit 6  |---  
-	// | timer A start |                    |    output     |
-	// -----------------                    -----------------
+	//                     (7)            -----------------
+	//         -------------------------->| 0x00 (pulse)  |
+	//         |                          |               |  ----------------
+	//         |                          | bCRA & 0x04   |->| 0x02 (timer) |
+	// timerA  | Flip --------------- (8) | timer mode    |  |              |
+	// output -X----->| bPB67Toggle |---->| 0x04 (toggle) |  | bCRA & 0x02  |
+	//            (5) |  ^ 0x04     |     |     (6)       |  | output mode  |-> PB6 out
+	//                ---------------     -----------------  |              |
+	//                       ^ Set        -----------------  | 0x00 (port)  |
+	//                       |            | port B bit 6  |->|              |
+	// ----------------- 0->1|            |    output     |  ----------------
+	// | bCRA & 0x01   |------            -----------------
+	// | timer A start |
+	// -----------------
 
 	// Timer A output to PB6
 	
@@ -671,7 +673,8 @@ void CIA::executeOneCycle()
 				delay &= ~PB6Low1;
 			} else { 
 				// (8) toggle PB6 (copy bit 6 from PB67Toggle)
-				PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
+				// PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
+                PB67TimerOut ^= 0x40;
 			}
 		}
 	}
@@ -691,7 +694,8 @@ void CIA::executeOneCycle()
 				delay &= ~PB7Low1;				
 			} else {
 				// (8) toggle PB7 (copy bit 7 from PB67Toggle)
-				PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
+				// PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
+                PB67TimerOut ^= 0x80;
 			}
 		}
 	}

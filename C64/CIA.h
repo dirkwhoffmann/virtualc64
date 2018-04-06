@@ -335,8 +335,8 @@ public:
     void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
 	
 	/*! @brief    Load latched value into timer.
-	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait for one cycle before 
-     *            it continous to count.
+	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait
+     *            for one cycle before it continues to count.
      */
     void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
 	
@@ -424,7 +424,7 @@ public:
 	
 	/*! @brief    Loads latched value into timer.
 	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for
-     *            one cycle before it continous to count.
+     *            one cycle before it continues to count.
      */
     void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
 	
