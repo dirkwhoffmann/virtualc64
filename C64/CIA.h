@@ -57,10 +57,11 @@ class Joystick;
 #define ReadIcr1    0x00800000
 #define ClearIcr0   0x01000000
 #define ClearIcr1   0x02000000
-#define SetIcr0     0x04000000
-#define SetIcr1     0x08000000
+#define ClearIcr2   0x04000000
+#define SetIcr0     0x08000000
+#define SetIcr1     0x10000000
 
-#define DelayMask ~(0x10000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0)
+#define DelayMask ~(0x20000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
@@ -117,7 +118,7 @@ public:
     //! @brief    Control register A
 	uint8_t CRA;
 
-    //! @brief    Control register V
+    //! @brief    Control register B
     uint8_t CRB;
     
     //! @brief    Interrupt control register

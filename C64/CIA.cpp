@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -307,84 +307,98 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
 			
-			//if ((value & 0x84) == 0x84)
-			//	debug("SETTING TIME OF DAY ALARM (%02X)\n", value);
-			
-			// bit 7 means set (1) or clear (0) the other bits
+			// Bit 7 means set (1) or clear (0) the other bits
 			if ((value & 0x80) != 0) {
 				IMR |= (value & 0x1F);
 			} else {
 				IMR &= ~(value & 0x1F);
 			}
             
-			// raise an interrupt in the next cycle if condition matches
-			if ((IMR & ICR) != 0) {
-				if (INT) {
-					delay |= Interrupt0;
-                    delay |= SetIcr0;
-				}
+			// Raise an interrupt in the next cycle if conditions match
+			if ((IMR & ICR & 0x1F) && INT) {
+                delay |= (Interrupt0 | SetIcr0);
 			}
+            
+            // Clear pending interrupt if a write has occurred in the previous cycle
+            // Solution is taken from Hoxs64. It fixes dd0dtest (11)
+            else if (delay & ClearIcr2) {
+                delay &= ~(Interrupt1 | SetIcr1);
+            }
+            
 			return;
 			
         case 0x0E: // CIA_CONTROL_REG_A
-		{
-			// 
-			// Adapted from PC64Win by Wolfgang Lorenz
-			//
-						
-			// set clock in o2 mode // todo cnt
-			if ((value & 0x21) == 0x01) {
-				delay |= CountA1 | CountA0;
-				feed |= CountA0;
-			} else {
-				delay &= ~(CountA1 | CountA0);
-				feed &= ~CountA0;
-			}
-			
-			// set one shot mode
-			if ((value & 0x08) != 0) {
-				feed |= OneShotA0;
-			} else {
-				feed &= ~OneShotA0;
-			}
-			
-			// set force load
-			if ((value & 0x10) != 0) {
-				delay |= LoadA0;
-			}
-			
-			// set toggle high on rising edge of Start
-			if ((value & 0x01) != 0 && (CRA & 0x01) == 0) {
-				PB67Toggle |= 0x40;
-			}
-			
-			// timer A output to PB6
-			if ((value & 0x02) == 0) {
-				PB67TimerMode &= ~0x40;
-			} else {
-				PB67TimerMode |= 0x40;
-				if ((value & 0x04) == 0) {
-					if ((delay & PB7Low1) == 0) {
-						PB67TimerOut &= ~0x40;
-					} else {
-						PB67TimerOut |= 0x40;
-					}
-				} else {
-					PB67TimerOut = (PB67TimerOut & ~0x40) | (PB67Toggle & 0x40);
-				}
-			}
-			
-			// write PB67 
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			
-            // Set real time clock frequency in Hz
+		
+            // -------0 : Stop timer
+            // -------1 : Start timer
+            if (value & 0x01) {
+                delay |= CountA1 | CountA0;
+                feed |= CountA0;
+                if (!(CRA & 0x01))
+                    PB67Toggle |= 0x40; // Toggle is high on start
+            } else {
+                delay &= ~(CountA1 | CountA0);
+                feed &= ~CountA0;
+            }
+            
+            // ------0- : Don't indicate timer underflow on port B
+            // ------1- : Indicate timer underflow on port B bit 6
+            if (value & 0x02) {
+                PB67TimerMode |= 0x40;
+                if (!(value & 0x04)) {
+                    if ((delay & PB7Low1) == 0) {
+                        PB67TimerOut &= ~0x40;
+                    } else {
+                        PB67TimerOut |= 0x40;
+                    }
+                } else {
+                    PB67TimerOut = (PB67TimerOut & ~0x40) | (PB67Toggle & 0x40);
+                }
+            } else {
+                PB67TimerMode &= ~0x40;
+            }
+            
+            // -----0-- : Upon timer underflow, invert port B bit 6
+            // -----1-- : Upon timer underflow, generate a positive edge
+            //            on port B bit 6 for one cycle
+
+            // ----0--- : Timer restarts upon underflow
+            // ----1--- : Timer stops upon underflow (One shot mode)
+            if (value & 0x08) {
+                feed |= OneShotA0;
+            } else {
+                feed &= ~OneShotA0;
+            }
+            
+            // ---0---- : Nothing to do
+            // ---1---- : Load start value into timer
+            if (value & 0x10) {
+                delay |= LoadA0;
+            }
+
+            // --0----- : Timer counts system cycles
+            // --1----- : Timer counts positive edges on CNT pin
+            if (value & 0x20) {
+                delay &= ~(CountA1 | CountA0);
+                feed &= ~CountA0;
+            }
+    
+            // -0------ : Serial shift register in input mode (read)
+            // -1------ : Serial shift register in output mode (write)
+            // TODO
+            
+            // 0------- : TOD speed = 60 Hz
+            // 1------- : TOD speed = 50 Hz
+            // TODO: We need to react on a change of this bit
             tod.hz = (value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */;
             
+			// Set PB
+			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+			
 			// set the register
 			CRA = value;
 			
 			return;
-		}
 			
         case 0x0F: // CIA_CONTROL_REG_B
 		{
