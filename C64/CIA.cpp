@@ -825,13 +825,13 @@ CIA1::dumpState()
 void 
 CIA1::pullDownInterruptLine()
 {
-	c64->cpu.pullDownIrqLineCIA();
+    c64->cpu.pullDownIrqLine(CPU::CIA);
 }
 
 void 
 CIA1::releaseInterruptLine()
 {
-	c64->cpu.releaseIrqLineCIA();
+    c64->cpu.releaseIrqLine(CPU::CIA);
 }
 
 void 
@@ -1037,13 +1037,13 @@ CIA2::dumpState()
 void 
 CIA2::pullDownInterruptLine()
 {
-	c64->cpu.pullDownNmiLineCIA();
+    c64->cpu.pullDownNmiLine(CPU::CIA);
 }
 
 void 
 CIA2::releaseInterruptLine()
 {
-	c64->cpu.releaseNmiLineCIA();
+    c64->cpu.releaseNmiLine(CPU::CIA);
 }
 
 uint8_t 

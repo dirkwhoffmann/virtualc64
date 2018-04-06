@@ -697,7 +697,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x19: // IRQ flags
 			// A bit is cleared when a "1" is written
 			iomem[addr] &= (~value & 0x0f);
-			c64->cpu.releaseIrqLineVIC();
+            c64->cpu.releaseIrqLine(CPU::VIC);
 			if (iomem[addr] & iomem[0x1a])
 				iomem[addr] |= 0x80;
 			return;
@@ -736,10 +736,10 @@ VIC::poke(uint16_t addr, uint8_t value)
 			iomem[addr] = value & 0x0f;
 			if (iomem[addr] & iomem[0x19]) {
 				iomem[0x19] |= 0x80; // set uppermost bit (is directly connected to the IRQ line)
-				c64->cpu.pullDownIrqLineVIC();
+                c64->cpu.pullDownIrqLine(CPU::VIC);
 			} else {
 				iomem[0x19] &= 0x7f; // clear uppermost bit
-				c64->cpu.releaseIrqLineVIC();
+                c64->cpu.releaseIrqLine(CPU::VIC);
 			}
 			return;		
 			
@@ -813,7 +813,7 @@ VIC::triggerIRQ(uint8_t source)
 	if (iomem[0x1A] & source) {
 		// Interrupt is enabled
 		iomem[0x19] |= 128;
-		c64->cpu.pullDownIrqLineVIC();
+        c64->cpu.pullDownIrqLine(CPU::VIC);
 		// debug("Interrupting at rasterline %x %d\n", yCounter, yCounter);
 	}
 }

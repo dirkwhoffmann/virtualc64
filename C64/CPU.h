@@ -405,48 +405,6 @@ public:
      */
     void releaseIrqLine(InterruptSource source);
     
-	//! @brief    Sets CIA bit of IRQ line.
-    void pullDownIrqLineCIA() { pullDownIrqLine(CIA); }
-    
-    //! @brief    Clears CIA bit of IRQ line.
-    void releaseIrqLineCIA() { releaseIrqLine(CIA); }
-
-	//! @brief    Sets VIC bit of IRQ line.
-    void pullDownIrqLineVIC() { pullDownIrqLine(VIC); }
-    
-    //! @brief    Clears VIC bit of IRQ line.
-    void releaseIrqLineVIC() { releaseIrqLine(VIC); }
-    
-	//! @brief    Sets ATN bit of IRQ line (1541 drive).
-    void pullDownIrqLineATN() { pullDownIrqLine(ATN); }
-    
-    //! @brief    Clears ATN bit of IRQ line (1541 drive).
-    void releaseIrqLineATN() { releaseIrqLine(ATN); }
-    
-    //! @brief    Sets VIA bit of IRQ line (1541 drive).
-    void pullDownIrqLineVIA() { pullDownIrqLine(VIA); }
-    
-    //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
-    void releaseIrqLineVIA() { releaseIrqLine(VIA); }
-    
-	//! @brief    Sets CIA bit of NMI line.
-    void pullDownNmiLineCIA() { pullDownNmiLine(CIA); }
-    
-	//! @brief    Clears CIA bit of NMI line.
-    void releaseNmiLineCIA() { releaseNmiLine(CIA); }
-    
-    //! @brief    Sets ExpansionPort bit of NMI line.
-    void pullDownNmiLineExpansionPort() { pullDownNmiLine(EXPANSION); }
-    
-    //! @brief    Clears ExpansionPort bit of NMI line.
-    void releaseNmiLineExpansionPort() { releaseNmiLine(EXPANSION); }
-    
-	//! @brief    Sets reset bit of NMI line.
-    void pullDownNmiLineReset() { pullDownNmiLine(KEYBOARD); }
-    
-	//! @brief    Clears reset bit of NMI line.
-    void releaseNmiLineReset() { releaseNmiLine(KEYBOARD); }
-    
 	//! @brief    Sets the RDY line.
     void setRDY(bool value) { rdyLine = value; }
 		
