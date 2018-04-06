@@ -11,8 +11,8 @@
 
 //! @brief Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 8
-#define V_SUBMINOR 1
+#define V_MINOR 9
+#define V_SUBMINOR 0
 
 
 /*! @brief    Color schemes

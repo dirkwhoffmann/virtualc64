@@ -46,7 +46,6 @@ CIA::CIA()
         { &PB,              sizeof(PB),             CLEAR_ON_RESET },
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
         { &INT,             sizeof(INT),            CLEAR_ON_RESET },
-        { &readICR,         sizeof(readICR),        CLEAR_ON_RESET },
         { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
         { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
         { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
@@ -168,9 +167,6 @@ CIA::peek(uint16_t addr)
 			
 			// discard pending interrupts
 			delay &= ~(Interrupt0 | Interrupt1);
-
-			// Remember read access
-			readICR = true;
 
 			// Clear all bits except bit 7
 			ICR &= 0x80;
@@ -769,7 +765,7 @@ void CIA::executeOneCycle()
 		ICR |= 0x01;
 	}
 	
-	if (timerBOutput && !readICR) { // (10)
+	if (timerBOutput && !(delay & ReadIcr0)) { // (10)
 		// On a real C64, there is a race condition here. If ICR is currently read, 
 		// the read access occurs *after* timer B sets bit 2. Hence, bit 2 won't show up.
 		ICR |= 0x02;
@@ -779,8 +775,6 @@ void CIA::executeOneCycle()
 		delay |= Interrupt0;
         delay |= SetIcr0;
     }
-    
-	readICR = false;
 
 	// move delay flags left and feed in new bits
 	delay = ((delay << 1) & DelayMask) | feed;

@@ -162,10 +162,6 @@ public:
 	bool CNT;
 	bool INT;
 
-    //! @brief    Indicates if ICR register is currently read
-    //! @deprecated Use ReadIcr0/1 instead
-	bool readICR;
-
 	/*! @brief    Activates the interrupt line
 	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
      *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
