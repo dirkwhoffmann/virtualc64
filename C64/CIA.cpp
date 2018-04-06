@@ -280,8 +280,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				tod.setAlarmHours(value);
                 checkForTODInterrupt();
 			} else {
-				// Note: A real C64 shows strange behaviour when writing 0x12 or 0x92 
-				// into this register. In this case, the AM/PM flag is inverted
+                // Writing 12 pm into hour register turns to 12 am and vice versa.
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);

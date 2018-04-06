@@ -25,6 +25,10 @@
 //
 // TODO:
 //
+// CIA:
+// Remove 'virtual' from CIA::peek, CIA::poke
+// Instead, add virtual functions PeekPortA, PokePortA
+//
 // CLEANUP:
 // Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
 //                simplify code. 
