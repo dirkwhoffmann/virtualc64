@@ -156,23 +156,21 @@ CIA::peek(uint16_t addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
 			result = ICR;
-            delay |= ReadIcr0;
             
 			// Release interrupt request
 			if (INT == 0) {
-				// result |= 0x80;
 				INT = 1;
 				clearInterruptLine();
 			}
 			
-			// discard pending interrupts
+			// Discard pending interrupts
 			delay &= ~(Interrupt0 | Interrupt1);
 
 			// Clear all bits except bit 7
 			ICR &= 0x80;
             
-            // Schedule bit 7 to be cleared in next cycle
-            delay |= ClearIcr0;
+            // Schedule bit 7 to be cleared in the next cycle and remember the read access
+            delay |= (ClearIcr0 | ReadIcr0);
             
 			break;
 
@@ -736,29 +734,16 @@ void CIA::executeOneCycle()
 	//           X--------->|  0x01  |----                      |
 	//           |      Clr ----------       	                |
 	// read      |                                              |
-	// ICR ------X-------------X----------------                |
-	//                         |               |                |
-	//                         v Clr           v Clr            |
-	//           ------    ----------    ----------------       | (11)
-	// Int    <--| -1 |<---| bICR & |<---|   dwDelay &  |<-------
-	// ouptput   |    |    |  0x80  |Set |  Interrupt1  |     
-	//           ------    ----------    -------^--------   	
-	//                                          |
-	//                                         Phi2
-	
-	// Set interrupt register and interrupt line
-	if (delay & Interrupt1) {
-		INT = 0;
-		raiseInterruptLine();
-	}
-    if (delay & ClearIcr1) {
-        ICR &= 0x7F;
-    }
-    if (delay & SetIcr1) {
-        ICR |= 0x80;
-    }
-
-	
+	// ICR ------X---------------X-------------------           |
+	//                           | (12)             |           |
+	//                           v Clr              v Clr       |
+	//           ------      ----------      ----------------   | (11)
+	// Int    <--| -1 |<-----| bICR & |<-----|   dwDelay &  |<---
+	// ouptput   |    |      |  0x80  | Set  |  Interrupt1  |
+	// (14)      ------      ---------- (13) -------^--------
+	//                                              |
+	//                                             Phi2
+		
 	if (timerAOutput) { // (9)
 		// On a real C64, there is a race condition here. If ICR is currently read, 
 		// the read access occurs *before* timer A sets bit 1. Hence, bit 1 always shows up.
@@ -776,7 +761,21 @@ void CIA::executeOneCycle()
         delay |= SetIcr0;
     }
 
-	// move delay flags left and feed in new bits
+    if (delay & (ClearIcr1 | SetIcr1 | Interrupt1)) {
+        
+        if (delay & ClearIcr1) { // (12)
+            ICR &= 0x7F;
+        }
+        if (delay & SetIcr1) { // (13)
+            ICR |= 0x80;
+        }
+        if (delay & Interrupt1) { // (14)
+            INT = 0;
+            raiseInterruptLine();
+        }
+    }
+    
+	// Move delay flags left and feed in new bits
 	delay = ((delay << 1) & DelayMask) | feed;
 }
 
