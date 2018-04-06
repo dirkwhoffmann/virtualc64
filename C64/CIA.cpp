@@ -72,6 +72,8 @@ CIA::reset()
 	
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
+    
+    todAlarm = false; 
 }
 
 void
@@ -200,8 +202,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
         case 0x04: // CIA_TIMER_A_LOW
 			
 			setLatchALo(value);
-			
-			// If timer A is currently in LOAD state, this value goes directly into the counter
 			if (delay & LoadA2) {
 				setCounterALo(value);
 			}
@@ -210,23 +210,19 @@ void CIA::poke(uint16_t addr, uint8_t value)
         case 0x05: // CIA_TIMER_A_HIGH
 						
 			setLatchAHi(value);		
-			
-			// load counter if timer is stopped
-			if ((CRA & 0x01) == 0) {
+            if (delay & LoadA2) {
+                setCounterAHi(value);
+            }
+            
+			// Load counter if timer is stopped
+			if (!(CRA & 0x01)) {
 				delay |= LoadA0;
-			}
-			
-			// If timer A is currently in LOAD state, this value goes directly into the counter
-			if (delay & LoadA2) {
-				setCounterAHi(value);
 			}
 			return;
 			
         case 0x06: // CIA_TIMER_B_LOW
 
 			setLatchBLo(value);
-
-			// If timer B is currently in LOAD state, this value goes directly into the counter
 			if (delay & LoadB2) {
 				setCounterBLo(value);
 			}			
@@ -235,25 +231,25 @@ void CIA::poke(uint16_t addr, uint8_t value)
         case 0x07: // CIA_TIMER_B_HIGH
 			
 			setLatchBHi(value);
-			// load counter if timer is stopped
+            if (delay & LoadB2) {
+                setCounterBHi(value);
+            }
+            
+			// Load counter if timer is stopped
 			if ((CRB & 0x01) == 0) {
 				delay |= LoadB0;
 			}
-			
-			// If timer B is currently in LOAD state, this value goes directly into the counter
-			if (delay & LoadB2) {
-				setCounterBHi(value);
-			}						
 			return;
 			
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
             
 			if (CRB & 0x80) {
 				tod.setAlarmTenth(value);
-                checkForTODInterrupt();
+                if (tod.alarm.value != tod.alarm.time.oldValue)
+                    checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
-                // if (tod.tod.oldValue != tod.tod.value)
+                if (tod.tod.value != tod.tod.time.oldValue)
                     checkForTODInterrupt();
 			}
 			return;
@@ -262,10 +258,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmSeconds(value);
-                checkForTODInterrupt();
+                if (tod.alarm.value != tod.alarm.time.oldValue)
+                    checkForTODInterrupt();
             } else {
 				tod.setTodSeconds(value);
-                // if (tod.tod.oldValue != tod.tod.value)
+                if (tod.tod.value != tod.tod.time.oldValue)
                     checkForTODInterrupt();
             }
 			return;
@@ -274,10 +271,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmMinutes(value);
-                checkForTODInterrupt();
+                if (tod.alarm.value != tod.alarm.time.oldValue)
+                    checkForTODInterrupt();
             } else {
 				tod.setTodMinutes(value);
-                // if (tod.tod.oldValue != tod.tod.value)
+                if (tod.tod.value != tod.tod.time.oldValue)
                     checkForTODInterrupt();
             }
 			return;
@@ -286,14 +284,15 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			if (CRB & 0x80) {
 				tod.setAlarmHours(value);
-                checkForTODInterrupt();
+                if (tod.alarm.value != tod.alarm.time.oldValue)
+                    checkForTODInterrupt();
 			} else {
 				// Note: A real C64 shows strange behaviour when writing 0x12 or 0x92 
 				// into this register. In this case, the AM/PM flag is inverted
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);
-                // if (tod.tod.oldValue != tod.tod.value)
+                if (tod.tod.value != tod.tod.time.oldValue)
                     checkForTODInterrupt();
 			}
 			return;
@@ -471,18 +470,27 @@ void CIA::poke(uint16_t addr, uint8_t value)
 	}	
 }
 
-void 
+void
 CIA::incrementTOD()
 {
     tod.increment();
-    checkForTODInterrupt();
+    if (tod.tod.value != tod.tod.time.oldValue)
+        checkForTODInterrupt();
 }
 
 void
 CIA::checkForTODInterrupt()
 {
+    
     if (tod.alarming()) {
-        
+        delay |= TODInt0;
+        debug("Triggering TOD int\n");
+    } else {
+        // delay &= ~TODInt0;
+    }
+    
+    /*
+    if (tod.alarming()) {
         // Set interrupt source
         ICR |= 0x04;
         
@@ -495,6 +503,7 @@ CIA::checkForTODInterrupt()
     }  else {
         clearInterruptLineTOD();
     }
+     */
 }
 
 void CIA::dumpTrace()
@@ -766,7 +775,7 @@ void CIA::executeOneCycle()
 	// (14)      ------      ---------- (13) -------^--------
 	//                                              |
 	//                                             Phi2
-		
+    
 	if (timerAOutput) { // (9)
 		// On a real C64, there is a race condition here. If ICR is currently read, 
 		// the read access occurs *before* timer A sets bit 1. Hence, bit 1 always shows up.
@@ -778,9 +787,16 @@ void CIA::executeOneCycle()
 		// the read access occurs *after* timer B sets bit 2. Hence, bit 2 won't show up.
 		ICR |= 0x02;
 	}
-	
+    
     if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) { // (11)
 		delay |= Interrupt0;
+        delay |= SetIcr0;
+    }
+
+    // Check for TOD interrupt
+    if ((delay & TODInt0) && (IMR & 0x04)) {
+        ICR |= 0x04;
+        delay |= Interrupt0;
         delay |= SetIcr0;
     }
 

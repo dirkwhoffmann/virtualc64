@@ -38,6 +38,7 @@ public:
 			uint8_t seconds;
 			uint8_t minutes;
 			uint8_t hours;
+            uint32_t oldValue;
 		} time;
 		uint32_t value;
 	} TimeOfDay;
@@ -109,21 +110,21 @@ public:
      *  @note     The TOD clock freezes when a read or write access occurrs.
      */
     void setTodHours(uint8_t value) {
-        tod.time.hours = value & 0x9F; stop(); }
+        tod.time.oldValue = tod.value; tod.time.hours = value & 0x9F; stop(); }
 	
 	//! @brief    Returns the minutes digits of the time of day clock.
     uint8_t getTodMinutes() { return frozen ? latch.time.minutes & 0x7F : tod.time.minutes & 0x7F; }
 	
 	//! @brief    Sets the minutes digits of the time of day clock.
     void setTodMinutes(uint8_t value) {
-        tod.time.minutes = value & 0x7F; }
+        tod.time.oldValue = tod.value; tod.time.minutes = value & 0x7F; }
 	
 	//! @brief    Returns the seconds digits of the time of day clock.
     uint8_t getTodSeconds() { return frozen ? latch.time.seconds & 0x7F : tod.time.seconds & 0x7F; }
 	
 	//! @brief    Sets the seconds digits of the time of day clock.
     void setTodSeconds(uint8_t value) {
-        tod.time.seconds = value & 0x7F; }
+        tod.time.oldValue = tod.value; tod.time.seconds = value & 0x7F; }
 	
 	/*! @brief    Returns the tenth-of-a-second digits of the time of day clock.
 	 *  @note     The TOD clock unfreezes on a read or write access.
@@ -138,43 +139,44 @@ public:
 	 *  @note     The TOD clock unfreezes on a read or write access.
      */
 	void setTodTenth(uint8_t value) {
-        tod.time.tenth = value & 0x0F; cont(); }
+        tod.time.oldValue = tod.value; tod.time.tenth = value & 0x0F; cont(); }
 	
 	//! @brief    Returns the hours digits of the alarm time.
     uint8_t getAlarmHours() { return alarm.time.hours & 0x9F; }
 	
 	//! @brief    Sets the hours digits of the alarm time.
     void setAlarmHours(uint8_t value) {
-        alarm.time.hours = value & 0x9F; }
+        alarm.time.oldValue = alarm.value; alarm.time.hours = value & 0x9F; }
 	
 	//! @brief    Returns the minutes digits of the alarm time.
     uint8_t getAlarmMinutes() { return alarm.time.minutes & 0x7F; }
 	
 	//! @brief    Sets the minutes digits of the alarm time.
     void setAlarmMinutes(uint8_t value) {
-        alarm.time.minutes = value & 0x7F; }
+        alarm.time.oldValue = alarm.value; alarm.time.minutes = value & 0x7F; }
 	
 	//! @brief    Returns the seconds digits of the alarm time.
     uint8_t getAlarmSeconds() { return alarm.time.seconds & 0x7F; }
 	
 	//! @brief    Sets the seconds digits of the alarm time.
     void setAlarmSeconds(uint8_t value) {
-        alarm.time.seconds = value & 0x7F; }
+        alarm.time.oldValue = alarm.value; alarm.time.seconds = value & 0x7F; }
 	
 	//! @brief    Returns the tenth-of-a-second digits of the alarm time.
     uint8_t getAlarmTenth() { return alarm.time.tenth & 0x0F; }
 	
 	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
     void setAlarmTenth(uint8_t value) {
-        alarm.time.tenth = value & 0x0F; }
+        alarm.time.oldValue = alarm.value; alarm.time.tenth = value & 0x0F; }
 	
 	//! @brief    Returns true, iff the TOD clock is currently frozen.
     bool isFrozen() { return frozen; }
 	
 	/*! @brief    Increments the TOD clock by one tenth of a second.
 	 *  @details  The function increments the TOD clock and is called after each frame.
+     *  @return   true if TOD value changed
      */
-	void increment();
+	bool increment();
 	
     //! @brief    Returns true if current time matches alarm time
     bool alarming();

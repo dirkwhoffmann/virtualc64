@@ -60,8 +60,10 @@ class Joystick;
 #define ClearIcr2   0x04000000
 #define SetIcr0     0x08000000
 #define SetIcr1     0x10000000
+#define TODInt0     0x20000000
+#define TODInt1     0x40000000
 
-#define DelayMask ~(0x20000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0)
+#define DelayMask ~(0x80000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
@@ -80,9 +82,11 @@ public:
     
 	//! @brief    Start address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_START_ADDR = 0xDC00;
-	//! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
-    
+
+    //! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_END_ADDR = 0xDDFF;
+    
+    bool todAlarm;
     
 	//! @brief    Timer A counter
 	uint16_t counterA;
@@ -498,7 +502,7 @@ public:
 	//! @brief    Executes the CIA for one cycle
 	void executeOneCycle();
 
-	//! Increments the TOD clock by one tenth of a second
+	//! @brief    Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
     //! Triggers a TOD interrupt if current time matches alarm time

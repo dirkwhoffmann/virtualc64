@@ -27,6 +27,7 @@ TOD::TOD()
     SnapshotItem items[] = {
                 
         { &tod.value,        sizeof(tod.value),        CLEAR_ON_RESET },
+        { &tod.time.oldValue, sizeof(tod.time.oldValue),     CLEAR_ON_RESET },
         { &alarm.value,      sizeof(alarm.value),      CLEAR_ON_RESET },
         { &latch.value,      sizeof(latch.value),      CLEAR_ON_RESET },
         { &frozen,           sizeof(frozen),           CLEAR_ON_RESET },
@@ -62,33 +63,35 @@ TOD::dumpState()
 	msg("\n");
 }
 
-void
+bool
 TOD::increment()
 {
+    tod.time.oldValue = tod.value;
+    
     if (stopped)
-		return;
+		return false;
     
     if (++frequencyCounter % hz != 0)
-        return;
+        return false;
 
     // 1/10 seconds
 	if (tod.time.tenth != 0x09) {
         tod.time.tenth = incBCD(tod.time.tenth);
-        return;
+        return true;
     }
     tod.time.tenth = 0;
     
     // Seconds
     if (tod.time.seconds != 0x59) {
         tod.time.seconds = incBCD(tod.time.seconds) & 0x7F;
-        return;
+        return true;
     }
     tod.time.seconds = 0;
     
     // Minutes
     if (tod.time.minutes != 0x59) {
         tod.time.minutes = incBCD(tod.time.minutes) & 0x7F;
-        return;
+        return true;
     }
     tod.time.minutes = 0;
 	
@@ -110,6 +113,7 @@ TOD::increment()
     }
                 
     tod.time.hours = pm | hr;
+    return true;
 }
 
 bool
