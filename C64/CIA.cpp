@@ -245,11 +245,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
 			if (CRB & 0x80) {
 				tod.setAlarmTenth(value);
-                if (tod.alarm.value != tod.alarm.time.oldValue)
+                if (tod.alarm.value != tod.alarm.oldValue)
                     checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
-                if (tod.tod.value != tod.tod.time.oldValue)
+                if (tod.tod.value != tod.tod.oldValue)
                     checkForTODInterrupt();
 			}
 			return;
@@ -258,11 +258,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmSeconds(value);
-                if (tod.alarm.value != tod.alarm.time.oldValue)
+                if (tod.alarm.value != tod.alarm.oldValue)
                     checkForTODInterrupt();
             } else {
 				tod.setTodSeconds(value);
-                if (tod.tod.value != tod.tod.time.oldValue)
+                if (tod.tod.value != tod.tod.oldValue)
                     checkForTODInterrupt();
             }
 			return;
@@ -271,11 +271,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmMinutes(value);
-                if (tod.alarm.value != tod.alarm.time.oldValue)
+                if (tod.alarm.value != tod.alarm.oldValue)
                     checkForTODInterrupt();
             } else {
 				tod.setTodMinutes(value);
-                if (tod.tod.value != tod.tod.time.oldValue)
+                if (tod.tod.value != tod.tod.oldValue)
                     checkForTODInterrupt();
             }
 			return;
@@ -284,7 +284,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			if (CRB & 0x80) {
 				tod.setAlarmHours(value);
-                if (tod.alarm.value != tod.alarm.time.oldValue)
+                if (tod.alarm.value != tod.alarm.oldValue)
                     checkForTODInterrupt();
 			} else {
 				// Note: A real C64 shows strange behaviour when writing 0x12 or 0x92 
@@ -292,7 +292,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);
-                if (tod.tod.value != tod.tod.time.oldValue)
+                if (tod.tod.value != tod.tod.oldValue)
                     checkForTODInterrupt();
 			}
 			return;
@@ -474,7 +474,7 @@ void
 CIA::incrementTOD()
 {
     tod.increment();
-    if (tod.tod.value != tod.tod.time.oldValue)
+    if (tod.tod.value != tod.tod.oldValue)
         checkForTODInterrupt();
 }
 
