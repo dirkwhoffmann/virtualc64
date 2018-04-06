@@ -113,7 +113,7 @@ CPU::dumpState()
 }
 
 void
-CPU::pullDownNmiLine(uint8_t bit)
+CPU::pullDownNmiLine(InterruptSource bit)
 {
     assert(bit != 0);
     
@@ -125,13 +125,13 @@ CPU::pullDownNmiLine(uint8_t bit)
 }
 
 void
-CPU::releaseNmiLine(uint8_t source)
+CPU::releaseNmiLine(InterruptSource source)
 {
     nmiLine &= ~source;
 }
 
 void
-CPU::pullDownIrqLine(uint8_t source)
+CPU::pullDownIrqLine(InterruptSource source)
 {
 	assert(source != 0);
     
@@ -140,7 +140,7 @@ CPU::pullDownIrqLine(uint8_t source)
 }
 
 void
-CPU::releaseIrqLine(uint8_t source)
+CPU::releaseIrqLine(InterruptSource source)
 {
     irqLine &= ~source;
     write8_delayed(levelDetector, irqLine);

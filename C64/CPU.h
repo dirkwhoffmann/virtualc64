@@ -50,7 +50,15 @@ public:
 	//! @brief    Bit position of the Carry flag
 	static const uint8_t C_FLAG = 0x01;
 	
-public:
+    //! @brief    Possible interrupt sources
+    typedef enum : uint8_t {
+        CIA = 0x01,
+        VIC = 0x02,
+        ATN = 0x04,
+        VIA = 0x08,
+        EXPANSION = 0x10,
+        KEYBOARD = 0x20
+    } InterruptSource;
 
 	//! @brief    Reference to the connected virtual memory
 	Memory *mem;
@@ -380,78 +388,64 @@ public:
     /*! @brief    Pulls down the NMI line
      *  @details  Pulling down the NMI line requests the CPU to interrupt.
      */
-    void pullDownNmiLine(uint8_t source);
+    void pullDownNmiLine(InterruptSource source);
     
     /*! @brief    Releases the NMI line
      *  @note     Other sources might still hold the line down.
      */
-    void releaseNmiLine(uint8_t source);
+    void releaseNmiLine(InterruptSource source);
     
     /*! @brief    Pulls down the IRQ line
      *  @details  Pulling down the IRQ line requests the CPU to interrupt.
      */
-    void pullDownIrqLine(uint8_t source);
+    void pullDownIrqLine(InterruptSource source);
     
     /*! @brief    Releases the IRQ line
      *  @note     Other sources might still hold the line down.
      */
-    void releaseIrqLine(uint8_t source);
+    void releaseIrqLine(InterruptSource source);
     
-    /*! @brief    Joystick events
-     */
-    typedef enum {
-        CIA = 0x01,
-        VIC = 0x02,
-        ATN = 0x04,
-        VIA = 0x08,
-        EXPANSION = 0x10,
-        KEYBOARD = 0x20
-    } InterruptSource;
-    
-	//! @brief    Returns bit of IRQ line.
-    uint8_t getIRQLine(uint8_t source) { return irqLine & source; }
-	
 	//! @brief    Sets CIA bit of IRQ line.
-    void pullDownIrqLineCIA() { pullDownIrqLine(0x01); }
+    void pullDownIrqLineCIA() { pullDownIrqLine(CIA); }
     
     //! @brief    Clears CIA bit of IRQ line.
-    void releaseIrqLineCIA() { releaseIrqLine(0x01); }
+    void releaseIrqLineCIA() { releaseIrqLine(CIA); }
 
 	//! @brief    Sets VIC bit of IRQ line.
-    void pullDownIrqLineVIC() { pullDownIrqLine(0x02); }
+    void pullDownIrqLineVIC() { pullDownIrqLine(VIC); }
     
     //! @brief    Clears VIC bit of IRQ line.
-    void releaseIrqLineVIC() { releaseIrqLine(0x02); }
+    void releaseIrqLineVIC() { releaseIrqLine(VIC); }
     
 	//! @brief    Sets ATN bit of IRQ line (1541 drive).
-    void pullDownIrqLineATN() { pullDownIrqLine(0x40); }
+    void pullDownIrqLineATN() { pullDownIrqLine(ATN); }
     
     //! @brief    Clears ATN bit of IRQ line (1541 drive).
-    void releaseIrqLineATN() { releaseIrqLine(0x40); }
+    void releaseIrqLineATN() { releaseIrqLine(ATN); }
     
     //! @brief    Sets VIA bit of IRQ line (1541 drive).
-    void pullDownIrqLineVIA() { pullDownIrqLine(0x10); }
+    void pullDownIrqLineVIA() { pullDownIrqLine(VIA); }
     
     //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
-    void releaseIrqLineVIA() { releaseIrqLine(0x10); }
+    void releaseIrqLineVIA() { releaseIrqLine(VIA); }
     
 	//! @brief    Sets CIA bit of NMI line.
-    void pullDownNmiLineCIA() { pullDownNmiLine(0x01); }
+    void pullDownNmiLineCIA() { pullDownNmiLine(CIA); }
     
 	//! @brief    Clears CIA bit of NMI line.
-    void releaseNmiLineCIA() { releaseNmiLine(0x01); }
+    void releaseNmiLineCIA() { releaseNmiLine(CIA); }
     
     //! @brief    Sets ExpansionPort bit of NMI line.
-    void pullDownNmiLineExpansionPort() { pullDownNmiLine(0x02); }
+    void pullDownNmiLineExpansionPort() { pullDownNmiLine(EXPANSION); }
     
     //! @brief    Clears ExpansionPort bit of NMI line.
-    void releaseNmiLineExpansionPort() { releaseNmiLine(0x02); }
+    void releaseNmiLineExpansionPort() { releaseNmiLine(EXPANSION); }
     
 	//! @brief    Sets reset bit of NMI line.
-    void pullDownNmiLineReset() { pullDownNmiLine(0x08); }
+    void pullDownNmiLineReset() { pullDownNmiLine(KEYBOARD); }
     
 	//! @brief    Clears reset bit of NMI line.
-    void releaseNmiLineReset() { releaseNmiLine(0x08); }
+    void releaseNmiLineReset() { releaseNmiLine(KEYBOARD); }
     
 	//! @brief    Sets the RDY line.
     void setRDY(bool value) { rdyLine = value; }
