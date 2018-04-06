@@ -157,10 +157,11 @@ CIA::peek(uint16_t addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
 			result = ICR;
-
-			// get status of the Int line into bit 7 and draw Int high
+            delay |= ReadIcr0;
+            
+			// Release interrupt request
 			if (INT == 0) {
-				result |= 0x80;
+				// result |= 0x80;
 				INT = 1;
 				clearInterruptLine();
 			}
@@ -171,9 +172,12 @@ CIA::peek(uint16_t addr)
 			// Remember read access
 			readICR = true;
 
-			// set all events to 0
-			ICR = 0;
-						
+			// Clear all bits except bit 7
+			ICR &= 0x80;
+            
+            // Schedule bit 7 to be cleared in next cycle
+            delay |= ClearIcr0;
+            
 			break;
 
         case 0x0E: // CIA_CONTROL_REG_A
@@ -323,6 +327,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			if ((IMR & ICR) != 0) {
 				if (INT) {
 					delay |= Interrupt0;
+                    delay |= SetIcr0;
 				}
 			}
 			return;
@@ -750,6 +755,13 @@ void CIA::executeOneCycle()
 		INT = 0;
 		raiseInterruptLine();
 	}
+    if (delay & ClearIcr1) {
+        ICR &= 0x7F;
+    }
+    if (delay & SetIcr1) {
+        ICR |= 0x80;
+    }
+
 	
 	if (timerAOutput) { // (9)
 		// On a real C64, there is a race condition here. If ICR is currently read, 
@@ -763,9 +775,11 @@ void CIA::executeOneCycle()
 		ICR |= 0x02;
 	}
 	
-	if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) // (11)
+    if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) { // (11)
 		delay |= Interrupt0;
-	
+        delay |= SetIcr0;
+    }
+    
 	readICR = false;
 
 	// move delay flags left and feed in new bits

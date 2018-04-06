@@ -53,7 +53,14 @@ class Joystick;
 #define Interrupt1  0x00080000
 #define OneShotA0   0x00100000
 #define OneShotB0   0x00200000
-#define DelayMask ~(0x00400000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0)
+#define ReadIcr0    0x00400000
+#define ReadIcr1    0x00800000
+#define ClearIcr0   0x01000000
+#define ClearIcr1   0x02000000
+#define SetIcr0     0x04000000
+#define SetIcr1     0x08000000
+
+#define DelayMask ~(0x10000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
@@ -64,9 +71,9 @@ class Joystick;
  */
 class CIA : public VirtualComponent {
 
-    // -----------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
     //                                          Properties
-    // -----------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
 
 public:
     
@@ -156,6 +163,7 @@ public:
 	bool INT;
 
     //! @brief    Indicates if ICR register is currently read
+    //! @deprecated Use ReadIcr0/1 instead
 	bool readICR;
 
 	/*! @brief    Activates the interrupt line
