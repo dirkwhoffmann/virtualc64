@@ -172,23 +172,11 @@ public:
      */
 	virtual void raiseInterruptLine() = 0;	
 
-    /*! @brief    Activates the interrupt line with TOD as source
-     *  @details  The function is abstract and implemented differently by CIA1 and CIA2.
-     *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
-     */
-    virtual void raiseInterruptLineTOD() = 0;
-
 	/*! @brief    Clears the interrupt line
 	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
      *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
      */
 	virtual void clearInterruptLine() = 0;
-
-    /*! @brief    Clears the interrupt line with TOD as source
-     *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
-     *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
-     */
-    virtual void clearInterruptLineTOD() = 0;
     
     
     // ------------------------------------------------------------------------------------------
@@ -535,14 +523,8 @@ private:
     //! @brief    Raises the IRQ line
     void raiseInterruptLine();
 
-    //! @brief    Raises the IRQ line with TOD as source
-    void raiseInterruptLineTOD();
-
     //! @brief    Clears the IRQ line
     void clearInterruptLine();
-
-    //! @brief    Clears the IRQ line with TOD as source
-    void clearInterruptLineTOD();
 
 public:
 
@@ -599,16 +581,9 @@ private:
     //! @brief    Raises the NMI line
     void raiseInterruptLine();
     
-    //! @brief    Raises the NMI line with TOD as source
-    void raiseInterruptLineTOD();
-    
     //! @brief    Clears the NMI line
     void clearInterruptLine();
     
-    //! @brief    Clears the NMI line with TOD as source
-    void clearInterruptLineTOD();
-
-		
 public:
 
 	//! Constructor

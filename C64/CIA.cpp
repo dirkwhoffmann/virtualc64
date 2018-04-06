@@ -828,22 +828,10 @@ CIA1::raiseInterruptLine()
 	c64->cpu.pullDownIrqLineCIA();
 }
 
-void
-CIA1::raiseInterruptLineTOD()
-{
-    c64->cpu.pullDownIrqLineTOD();
-}
-
 void 
 CIA1::clearInterruptLine()
 {
 	c64->cpu.releaseIrqLineCIA();
-}
-
-void
-CIA1::clearInterruptLineTOD()
-{
-    c64->cpu.releaseIrqLineTOD();
 }
 
 void 
@@ -1052,22 +1040,10 @@ CIA2::raiseInterruptLine()
 	c64->cpu.pullDownNmiLineCIA();
 }
 
-void
-CIA2::raiseInterruptLineTOD()
-{
-    c64->cpu.pullDownNmiLineTOD();
-}
-
 void 
 CIA2::clearInterruptLine()
 {
 	c64->cpu.releaseNmiLineCIA();
-}
-
-void
-CIA2::clearInterruptLineTOD()
-{
-    c64->cpu.releaseNmiLineTOD();
 }
 
 uint8_t 

@@ -424,24 +424,11 @@ public:
     //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
     void releaseIrqLineVIA() { releaseIrqLine(0x10); }
     
-    //! @brief    Sets TOD bit of NMI line.
-    void pullDownIrqLineTOD() { pullDownIrqLine(0x20); }
-    
-    //! @brief    Clears TOD bit of NMI line.
-    void releaseIrqLineTOD() { releaseIrqLine(0x20); }
-
-    
 	//! @brief    Sets CIA bit of NMI line.
     void pullDownNmiLineCIA() { pullDownNmiLine(0x01); }
     
 	//! @brief    Clears CIA bit of NMI line.
     void releaseNmiLineCIA() { releaseNmiLine(0x01); }
-
-    //! @brief    Sets TOD bit of NMI line.
-    void pullDownNmiLineTOD() { pullDownNmiLine(0x20); }
-    
-    //! @brief    Clears TOD bit of NMI line.
-    void releaseNmiLineTOD() { releaseNmiLine(0x20); }
     
     //! @brief    Sets ExpansionPort bit of NMI line.
     void pullDownNmiLineExpansionPort() { pullDownNmiLine(0x02); }
