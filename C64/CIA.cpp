@@ -392,66 +392,75 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // TODO: We need to react on a change of this bit
             tod.hz = (value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */;
             
-			// Set PB
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			
-			// set the register
 			CRA = value;
 			
 			return;
 			
         case 0x0F: // CIA_CONTROL_REG_B
 		{
-			// 
-			// Adapted from PC64Win by Wolfgang Lorenz
-			//
-						
-			// set clock in o2 mode // todo cnt
-			if ((value & 0x61) == 0x01) {
-				delay |= CountB1 | CountB0;
-				feed |= CountB0;
-			} else {
-				delay &= ~(CountB1 | CountB0);
-				feed &= ~CountB0;
-			}
-			
-			// set one shot mode
-			if ((value & 0x08) != 0) {
-				feed |= OneShotB0;
-			} else {
-				feed &= ~OneShotB0;
-			}
-			
-			// set force load
-			if ((value & 0x10) != 0) {
-				delay |= LoadB0;
-			}
-			
-			// set toggle high on rising edge of Start
-			if ((value & 0x01) != 0 && (CRB & 0x01) == 0) {
-				PB67Toggle |= 0x80;
-			}
-			
-			// timer B output to PB7
-			if ((value & 0x02) == 0) {
-				PB67TimerMode &= ~0x80;
-			} else {
-				PB67TimerMode |= 0x80;
-				if ((value & 0x04) == 0) {
-					if ((delay & PB7Low1) == 0) {
-						PB67TimerOut &= ~0x80;
-					} else {
-						PB67TimerOut |= 0x80;
-					}
-				} else {
-					PB67TimerOut = (PB67TimerOut & ~0x80) | (PB67Toggle & 0x80);
-				}
-			}
-			
-			// write PB67
+            // -------0 : Stop timer
+            // -------1 : Start timer
+            if (value & 0x01) {
+                delay |= CountB1 | CountB0;
+                feed |= CountB0;
+                if (!(CRB & 0x01))
+                    PB67Toggle |= 0x80; // Toggle is high on start
+            } else {
+                delay &= ~(CountB1 | CountB0);
+                feed &= ~CountB0;
+            }
+            
+            // ------0- : Don't indicate timer underflow on port B
+            // ------1- : Indicate timer underflow on port B bit 7
+            if (value & 0x02) {
+                PB67TimerMode |= 0x80;
+                if ((value & 0x04) == 0) {
+                    if ((delay & PB7Low1) == 0) {
+                        PB67TimerOut &= ~0x80;
+                    } else {
+                        PB67TimerOut |= 0x80;
+                    }
+                } else {
+                    PB67TimerOut = (PB67TimerOut & ~0x80) | (PB67Toggle & 0x80);
+                }
+            } else {
+                PB67TimerMode &= ~0x80;
+            }
+            
+            // -----0-- : Upon timer underflow, invert port B bit 7
+            // -----1-- : Upon timer underflow, generate a positive edge
+            //            on port B bit 7 for one cycle
+            
+            // ----0--- : Timer restarts upon underflow
+            // ----1--- : Timer stops upon underflow (One shot mode)
+            if (value & 0x08) {
+                feed |= OneShotB0;
+            } else {
+                feed &= ~OneShotB0;
+            }
+            
+            // ---0---- : Nothing to do
+            // ---1---- : Load start value into timer
+            if (value & 0x10) {
+                delay |= LoadB0;
+            }
+            
+            // -00----- : Timer counts system cycles
+            // -01----- : Timer counts positive edges on CNT pin
+            // -10----- : Timer counts underflows of timer A
+            // -11----- : Timer counts underflows of timer A occurring along with a
+            //            positive edge on CNT pin
+            if (value & 0x60) {
+                delay &= ~(CountB1 | CountB0);
+                feed &= ~CountB0;
+            }
+            
+            // 0------- : Writing into TOD registers sets TOD
+            // 1------- : Writing into TOD registers sets alarm time
+            
+            
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			
-			// set the register
 			CRB = value;
 			
 			return;			
