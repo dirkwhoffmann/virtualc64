@@ -166,17 +166,17 @@ public:
 	bool CNT;
 	bool INT;
 
-	/*! @brief    Activates the interrupt line
+	/*! @brief    Requests the CPU to interrupt
 	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
      *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
      */
-	virtual void raiseInterruptLine() = 0;	
+	virtual void pullDownInterruptLine() = 0;
 
-	/*! @brief    Clears the interrupt line
+	/*! @brief    Removes the interrupt requests
 	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
      *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
      */
-	virtual void clearInterruptLine() = 0;
+	virtual void releaseInterruptLine() = 0;
     
     
     // ------------------------------------------------------------------------------------------
@@ -520,11 +520,11 @@ private:
     //! @brief    Polls current state of a single joystick
     void pollJoystick(Joystick *joy, int joyDevNo);
 
-    //! @brief    Raises the IRQ line
-    void raiseInterruptLine();
-
-    //! @brief    Clears the IRQ line
-    void clearInterruptLine();
+    //! @brief    Requests an IRQ
+    void pullDownInterruptLine();
+    
+    //! @brief    Releases the IRQ request
+    void releaseInterruptLine();
 
 public:
 
@@ -578,11 +578,11 @@ public:
 
 private:
 
-    //! @brief    Raises the NMI line
-    void raiseInterruptLine();
+    //! @brief    Requests an NMI
+    void pullDownInterruptLine();
     
-    //! @brief    Clears the NMI line
-    void clearInterruptLine();
+    //! @brief    Releases the NMI request
+    void releaseInterruptLine();
     
 public:
 

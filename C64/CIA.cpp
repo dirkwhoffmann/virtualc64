@@ -91,7 +91,7 @@ CIA::triggerFallingEdgeOnFlagPin()
     if (IMR & 0x10) {
         INT = 0;
         ICR |= 0x80;
-        raiseInterruptLine();
+        pullDownInterruptLine();
     }
 }
 
@@ -162,7 +162,7 @@ CIA::peek(uint16_t addr)
 			// Release interrupt request
 			if (INT == 0) {
 				INT = 1;
-				clearInterruptLine();
+                releaseInterruptLine();
 			}
 			
 			// Discard pending interrupts
@@ -782,7 +782,7 @@ void CIA::executeOneCycle()
         }
         if (delay & Interrupt1) { // (14)
             INT = 0;
-            raiseInterruptLine();
+            pullDownInterruptLine();
         }
     }
     
@@ -823,13 +823,13 @@ CIA1::dumpState()
 }
 
 void 
-CIA1::raiseInterruptLine()
+CIA1::pullDownInterruptLine()
 {
 	c64->cpu.pullDownIrqLineCIA();
 }
 
 void 
-CIA1::clearInterruptLine()
+CIA1::releaseInterruptLine()
 {
 	c64->cpu.releaseIrqLineCIA();
 }
@@ -1035,13 +1035,13 @@ CIA2::dumpState()
 }
 
 void 
-CIA2::raiseInterruptLine()
+CIA2::pullDownInterruptLine()
 {
 	c64->cpu.pullDownNmiLineCIA();
 }
 
 void 
-CIA2::clearInterruptLine()
+CIA2::releaseInterruptLine()
 {
 	c64->cpu.releaseNmiLineCIA();
 }

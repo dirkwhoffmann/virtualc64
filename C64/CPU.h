@@ -397,6 +397,17 @@ public:
      */
     void releaseIrqLine(uint8_t source);
     
+    /*! @brief    Joystick events
+     */
+    typedef enum {
+        CIA = 0x01,
+        VIC = 0x02,
+        ATN = 0x04,
+        VIA = 0x08,
+        EXPANSION = 0x10,
+        KEYBOARD = 0x20
+    } InterruptSource;
+    
 	//! @brief    Returns bit of IRQ line.
     uint8_t getIRQLine(uint8_t source) { return irqLine & source; }
 	
