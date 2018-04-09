@@ -50,6 +50,9 @@ CIA::CIA()
         { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
         { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
         { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
+        { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
+        { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
+        { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
@@ -73,7 +76,13 @@ CIA::reset()
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
     
-    todAlarm = false; 
+    todAlarm = false;
+    
+    SDR = 0;
+    
+    // Hoxs
+    serial_int_count=0;
+    f_cnt_out=true; //CNT high by default
 }
 
 void
@@ -150,9 +159,9 @@ CIA::peek(uint16_t addr)
 			result = tod.getTodHours();
 			break;
 			
-        case 0x0C: // CIA_SERIAL_IO_BUFFER
+        case 0x0C: // CIA_SERIAL_DATA_REGISTER
 			
-			result = 0x00;
+			result = SDR;
 			break;
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
@@ -288,11 +297,12 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			}
 			return;
 			
-        case 0x0C: // CIA_SERIAL_IO_BUFFER
+        case 0x0C: // CIA_DATA_REGISTER
             
-			// Serial I/O communication is not (yet) implemented
-			//triggerInterrupt(0x08);
-			// debug("poke CIA_SERIAL_IO_BUFFER: %0x2X\n", value);
+            SDR = value;
+            delay |= SerLoad0;
+            feed |= SerLoad0;
+            // delay &= ~SerLoad1;
 			return;
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
@@ -375,7 +385,16 @@ void CIA::poke(uint16_t addr, uint8_t value)
     
             // -0------ : Serial shift register in input mode (read)
             // -1------ : Serial shift register in output mode (write)
-            // TODO
+            if ((value ^ CRA) & 0x40)
+            {
+                //serial direction changing
+                delay &= ~(SerLoad0 | SerLoad1);
+                feed &= ~SerLoad0;
+                this->serial_int_count = 0;
+            
+                
+                this->delay &= ~(SetCntFlip0 | SetCntFlip1 | SetCntFlip2 | SetCntFlip3);
+            }
             
             // 0------- : TOD speed = 60 Hz
             // 1------- : TOD speed = 50 Hz
@@ -606,7 +625,54 @@ void CIA::executeOneCycle()
         // Reload counter immediately
 		delay |= LoadA1;
 	}
-	
+    
+    // From Hoxs
+    if (timerAOutput) {
+        
+        if (CRA & 0x40) {
+            serClk = !serClk;
+            feed ^= SerClk0;
+            assert(((feed & SerClk0) == 0) == (serClk == 0));
+        }
+    }
+    
+    if (timerAOutput) {
+        // Serial register
+        if (CRA & 0x40) //Generate serial interrupt after 16 timer a underflows.
+        {
+            if ((delay & SerLoad1) && serial_int_count == 0)
+            {
+                delay &= ~(SerLoad1 | SerLoad0);
+                feed &= ~SerLoad0;
+                serial_int_count = 16;
+            }
+            if (serial_int_count)
+            {
+                delay |= SetCntFlip0;
+            }
+        }
+    }
+
+    if (serial_int_count != 0 && (delay & SetCntFlip2) != 0 && (delay & SetCntFlip3) == 0)
+    {
+        f_cnt_out = !this->f_cnt_out;
+        {
+            serial_int_count--;
+            if (serial_int_count == 1)
+            {
+                delay |= SerInt0;
+            }
+        }
+        if (this->f_cnt_out)
+        {
+            feed |= SetCnt0;
+        }
+        else
+        {
+            feed &= ~SetCnt0;
+        }
+    }
+    
 	// Load counter
 	if (delay & LoadA1) // (4)
 		reloadTimerA(); 
@@ -645,12 +711,12 @@ void CIA::executeOneCycle()
 	// Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
 	//                     (7)            -----------------
-	//         -------------------------->| 0x00 (pulse)  |
-	//         |                          |               |  ----------------
-	//         |                          | bCRA & 0x04   |->| 0x02 (timer) |
-	// timerA  | Flip --------------- (8) | timer mode    |  |              |
-	// output -X----->| bPB67Toggle |---->| 0x04 (toggle) |  | bCRA & 0x02  |
-	//            (5) |  ^ 0x04     |     |     (6)       |  | output mode  |-> PB6 out
+    //         -------------------------->| bCRA & 0x04   |
+    //         |                          | timer mode    |  ----------------
+	//         |                          | 0x00: pulse   |->| 0x02 (timer) |
+	// timerA  | Flip ---------------     |       (7)     |  |              |
+    // output -X----->| bPB67Toggle |---->| 0x04: toggle  |  | bCRA & 0x02  |
+	//            (5) |  ^ 0x40     |     |       (8)     |  | output mode  |-> PB6 out
 	//                ---------------     -----------------  |              |
 	//                       ^ Set        -----------------  | 0x00 (port)  |
 	//                       |            | port B bit 6  |->|              |
@@ -758,6 +824,7 @@ void CIA::executeOneCycle()
 		ICR |= 0x02;
 	}
     
+    // Check for timer interrupt
     if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) { // (11)
 		delay |= Interrupt0;
         delay |= SetIcr0;
@@ -767,6 +834,15 @@ void CIA::executeOneCycle()
     if (delay & TODInt0) {
         ICR |= 0x04;
         if (IMR & 0x04) {
+            delay |= Interrupt0;
+            delay |= SetIcr0;
+        }
+    }
+    
+    // Check for Serial interrupt
+    if (delay & SerInt2) {
+        ICR |= 0x08;
+        if (IMR & 0x08) {
             delay |= Interrupt0;
             delay |= SetIcr0;
         }

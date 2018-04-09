@@ -62,7 +62,32 @@ class Joystick;
 #define SetIcr1     0x10000000
 #define TODInt0     0x20000000
 
-#define DelayMask ~(0x40000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0)
+#define Cnt0        0x0000100000000000
+#define Cnt1        0x0000200000000000
+#define Cnt2        0x0000400000000000
+#define SerInt0     0x0000800000000000
+#define SerInt1     0x0001000000000000
+#define SerInt2     0x0002000000000000
+#define SerLoad0    0x0004000000000000
+#define SerLoad1    0x0008000000000000
+#define SerClk0     0x0010000000000000
+#define SerClk1     0x0020000000000000
+#define SerClk2     0x0040000000000000
+#define SerClk3     0x0080000000000000
+
+// Hoxs
+#define SetCntFlip0   0x0000000400000000ULL
+#define SetCntFlip1   0x0000000800000000ULL
+#define SetCntFlip2   0x0000001000000000ULL
+#define SetCntFlip3   0x0000002000000000ULL
+#define SetCnt0       0x0000004000000000ULL
+#define SetCnt1       0x0000008000000000ULL
+#define SetCnt2       0x0000010000000000ULL
+#define SetCnt3       0x0000020000000000ULL
+
+
+
+#define DelayMask ~(CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | Cnt0 | SerInt0 | SerLoad0 | SerClk0 | /* Hoxs */ SetCntFlip0 | SetCnt0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
@@ -73,6 +98,22 @@ class Joystick;
  */
 class CIA : public VirtualComponent {
 
+
+    uint8_t SDR;
+    bool serClk;
+    uint8_t serCounter; 
+
+    // From Hoxs
+    
+    // Replace by serClock
+    uint8_t serial_int_count;
+    
+    // Replace by SerInt0 SerInt1 SerInt2
+    // uint32_t serial_interrupt_delay;
+    
+    // Replace by Cnt0, Cnt1???
+    bool f_cnt_out;
+    
     // ---------------------------------------------------------------------------------------
     //                                          Properties
     // ---------------------------------------------------------------------------------------
@@ -113,10 +154,10 @@ public:
     //
     
     //! @brief    Performs delay by shifting left at each clock
-	uint32_t delay;
+	uint64_t delay;
     
     //! @brief    New bits to feed into dwDelay
-	uint32_t feed;
+	uint64_t feed;
     
     //! @brief    Control register A
 	uint8_t CRA;
