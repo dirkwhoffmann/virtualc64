@@ -31,82 +31,56 @@ class Keyboard;
 class Joystick;
 
 // Adapted from PC64WIN
-#define CountA0     0x00000001
-#define CountA1     0x00000002
-#define CountA2     0x00000004
-#define CountA3     0x00000008
-#define CountB0     0x00000010
-#define CountB1     0x00000020
-#define CountB2     0x00000040
-#define CountB3     0x00000080
-#define LoadA0      0x00000100
-#define LoadA1      0x00000200
-#define LoadA2      0x00000400
-#define LoadB0      0x00000800
-#define LoadB1      0x00001000
-#define LoadB2      0x00002000
-#define PB6Low0     0x00004000
-#define PB6Low1     0x00008000
-#define PB7Low0     0x00010000
-#define PB7Low1     0x00020000
-#define Interrupt0  0x00040000
-#define Interrupt1  0x00080000
-#define OneShotA0   0x00100000
-#define OneShotB0   0x00200000
-#define ReadIcr0    0x00400000
-#define ReadIcr1    0x00800000
-#define ClearIcr0   0x01000000
-#define ClearIcr1   0x02000000
-#define ClearIcr2   0x04000000
-#define SetIcr0     0x08000000
-#define SetIcr1     0x10000000
-#define TODInt0     0x20000000
+#define CountA0     0x0000000000000001
+#define CountA1     0x0000000000000002
+#define CountA2     0x0000000000000004
+#define CountA3     0x0000000000000008 // Decrements timer A
+#define CountB0     0x0000000000000010
+#define CountB1     0x0000000000000020
+#define CountB2     0x0000000000000040
+#define CountB3     0x0000000000000080 // Decrements timer B
+#define LoadA0      0x0000000000000100
+#define LoadA1      0x0000000000000200
+#define LoadA2      0x0000000000000400 // Loads timer A
+#define LoadB0      0x0000000000000800
+#define LoadB1      0x0000000000001000
+#define LoadB2      0x0000000000002000 // Loads timer B
+#define PB6Low0     0x0000000000004000
+#define PB6Low1     0x0000000000008000
+#define PB7Low0     0x0000000000010000
+#define PB7Low1     0x0000000000020000
+#define Interrupt0  0x0000000000040000
+#define Interrupt1  0x0000000000080000 // Triggers an interrupt
+#define OneShotA0   0x0000000000100000
+#define OneShotB0   0x0000000000200000
+#define ReadIcr0    0x0000000000400000 // ICR register was read
+#define ReadIcr1    0x0000000000800000
+#define ClearIcr0   0x0000000001000000
+#define ClearIcr1   0x0000000002000000
+#define ClearIcr2   0x0000000004000000 // Clears bit 8 in ICR register
+#define SetIcr0     0x0000000008000000
+#define SetIcr1     0x0000000010000000 // Sets bit 8 in ICR register
+#define TODInt0     0x0000000020000000 // Triggers an interrupt with TOD as source
+#define SerInt0     0x0000000040000000
+#define SerInt1     0x0000000080000000
+#define SerInt2     0x0000000100000000 // Triggers an interrupt with serial register as source
+#define SerLoad0    0x0000000200000000
+#define SerLoad1    0x0000000400000000 // Loads the serial shift register
+#define SerClk0     0x0000000800000000 // Clock signal driving the serial register
+#define SerClk1     0x0000001000000000
+#define SerClk2     0x0000002000000000
+#define SerClk3     0x0000004000000000
 
-#define Cnt0        0x0000100000000000
-#define Cnt1        0x0000200000000000
-#define Cnt2        0x0000400000000000
-#define SerInt0     0x0000800000000000
-#define SerInt1     0x0001000000000000
-#define SerInt2     0x0002000000000000
-#define SerLoad0    0x0004000000000000
-#define SerLoad1    0x0008000000000000
-#define SerClk0     0x0010000000000000
-#define SerClk1     0x0020000000000000
-#define SerClk2     0x0040000000000000
-#define SerClk3     0x0080000000000000
-
-// Hoxs
-#define SetCntFlip0   0x0000000400000000ULL
-#define SetCntFlip1   0x0000000800000000ULL
-#define SetCntFlip2   0x0000001000000000ULL
-#define SetCntFlip3   0x0000002000000000ULL
-#define SetCnt0       0x0000004000000000ULL
-#define SetCnt1       0x0000008000000000ULL
-#define SetCnt2       0x0000010000000000ULL
-#define SetCnt3       0x0000020000000000ULL
-
-
-
-#define DelayMask ~(CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | Cnt0 | SerInt0 | SerLoad0 | SerClk0 | /* Hoxs */ SetCntFlip0 | SetCnt0)
+#define DelayMask ~(CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | SerInt0 | SerLoad0 | SerClk0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
- *  @details  The original C64 consists of two CIA chips (CIA 1 and CIA 2). Each CIA chip features two programmable
- *            hardware timers and a real-time clock. Furthermore, the CIA chips manage the communication with connected
- *            peripheral devices such as joysticks, printer or the keyboard. The CIA class implements the common
- *            functionality of both CIA chips.
+ *  @details  The original C64 contains two CIA chips (CIA 1 and CIA 2). Each chip features
+ *            two programmable timers and a real-time clock. Furthermore, the CIA chips manage
+ *            the communication with connected peripheral devices such as joysticks, printers
+ *            or the keyboard. The CIA class implements the common functionality of both CIAs.
  */
 class CIA : public VirtualComponent {
-
-
-    uint8_t SDR;
-    bool serClk;
-    uint8_t serCounter; 
-
-    // From Hoxs
-        
-    // Replace by Cnt0, Cnt1???
-    bool f_cnt_out;
     
     // ---------------------------------------------------------------------------------------
     //                                          Properties
@@ -190,6 +164,45 @@ public:
     //! @brief    Data directon register for port B (0 = input, 1 = output)
     uint8_t DDRB;
 	
+    //
+    // Shift register logic
+    //
+    
+    //! @brief    Serial data register
+    /*! @details  http://unusedino.de/ec64/technical/misc/cia6526/serial.html
+     *            "The serial port is a buffered, 8-bit synchronous shift register system.
+     *             A control bit selects input or output mode. In input mode, data on the SP pin
+     *             is shifted into the shift register on the rising edge of the signal applied
+     *             to the CNT pin. After 8 CNT pulses, the data in the shift register is dumped
+     *             into the Serial Data Register and an interrupt is generated. In the output
+     *             mode, TIMER A is used for the baud rate generator. Data is shifted out on the
+     *             SP pin at 1/2 the underflow rate of TIMER A. [...] Transmission will start
+     *             following a write to the Serial Data Register (provided TIMER A is running
+     *             and in continuous mode). The clock signal derived from TIMER A appears as an
+     *             output on the CNT pin. The data in the Serial Data Register will be loaded
+     *             into the shift register then shift out to the SP pin when a CNT pulse occurs.
+     *             Data shifted out becomes valid on the falling edge of CNT and remains valid
+     *             until the next falling edge. After 8 CNT pulses, an interrupt is generated to
+     *             indicate more data can be sent. If the Serial Data Register was loaded with
+     *             new information prior to this interrupt, the new data will automatically be
+     *             loaded into the shift register and transmission will continue. If the
+     *             microprocessor stays one byte ahead of the shift register, transmission will
+     *             be continuous. If no further data is to be transmitted, after the 8th CNT
+     *             pulse, CNT will return high and SP will remain at the level of the last data
+     *             bit transmitted. SDR data is shifted out MSB first and serial input data
+     *             should also appear in this format.
+     */
+    uint8_t SDR;
+    
+    //! @brief   Clock signal for driving the serial register
+    bool serClk;
+    
+    //! @brief   Shift register counter
+    /*! @details The counter is set to 8 when the shift register is loaded and decremented
+     *           when a bit is shifted out.
+     */
+    uint8_t serCounter;
+    
     //
 	// Interfaces
     //

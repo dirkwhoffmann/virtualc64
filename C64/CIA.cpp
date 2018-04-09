@@ -42,6 +42,9 @@ CIA::CIA()
         { &PBLatch,         sizeof(PBLatch),        CLEAR_ON_RESET },
         { &DDRA,            sizeof(DDRA),           CLEAR_ON_RESET },
         { &DDRB,            sizeof(DDRB),           CLEAR_ON_RESET },
+        { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
+        { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
+        { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
         { &PA,              sizeof(PA),             CLEAR_ON_RESET },
         { &PB,              sizeof(PB),             CLEAR_ON_RESET },
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
@@ -50,9 +53,6 @@ CIA::CIA()
         { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
         { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
         { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
-        { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
-        { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
-        { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
@@ -77,11 +77,6 @@ CIA::reset()
 	latchB = 0xFFFF;
     
     todAlarm = false;
-    
-    SDR = 0;
-    
-    // Hoxs
-    f_cnt_out=true; //CNT high by default
 }
 
 void
@@ -391,8 +386,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
                 feed &= ~SerLoad0;
                 serCounter = 0;
             
-                
-                this->delay &= ~(SetCntFlip0 | SetCntFlip1 | SetCntFlip2 | SetCntFlip3);
+                delay &= ~(SerClk0 | SerClk1 | SerClk2);
+                feed &= ~SerClk0;
             }
             
             // 0------- : TOD speed = 60 Hz
@@ -625,54 +620,6 @@ void CIA::executeOneCycle()
 		delay |= LoadA1;
 	}
     
-    // Serial register
-    /*
-    if (timerAOutput) {
-        
-        if (CRA & 0x40) {
-            serClk = !serClk;
-            feed ^= SerClk0;
-            assert(((feed & SerClk0) == 0) == (serClk == 0));
-        }
-    }
-    */
-    
-    // From Hoxs
-    if (timerAOutput) {
-        // Serial register
-        if (CRA & 0x40) //Generate serial interrupt after 16 timer a underflows.
-        {
-            if ((delay & SerLoad1) && serCounter == 0)
-            {
-                delay &= ~(SerLoad1 | SerLoad0);
-                feed &= ~SerLoad0;
-                serCounter = 8;
-            }
-            if (serCounter)
-            {
-                delay |= SetCntFlip0;
-            }
-        }
-    }
-
-    if (serCounter && (delay & SetCntFlip2) != 0 && (delay & SetCntFlip3) == 0)
-    {
-        serClk = !serClk;
-        if (!serClk) {
-            serCounter--;
-        }
-        
-        f_cnt_out = !this->f_cnt_out;
-    
-        if (serCounter == 1 && serClk) {
-            delay |= SerInt0;
-        }
-        if (this->f_cnt_out)
-            feed |= SetCnt0;
-        else
-            feed &= ~SetCnt0;
-    }
-    
 	// Load counter
 	if (delay & LoadA1) // (4)
 		reloadTimerA(); 
@@ -703,6 +650,39 @@ void CIA::executeOneCycle()
 	if (delay & LoadB1) // (4)
 		reloadTimerB();
 		
+    //
+    // Serial register
+    //
+    
+    // Generate clock signal
+    if (timerAOutput && (CRA & 0x40) /* output mode */ ) {
+        
+        if (serCounter) {
+            
+            // Toggle serial clock signal
+            feed ^= SerClk0;
+            
+        } else if (delay & SerLoad1) {
+            
+            // Load shift register
+            delay &= ~(SerLoad1 | SerLoad0);
+            feed &= ~SerLoad0;
+            serCounter = 8;
+            feed ^= SerClk0;
+        }
+    }
+    
+    // Run shift register with generated clock signal
+    if (serCounter) {
+        if ((delay & (SerClk2 | SerClk1)) == SerClk1) {      // Positive edge
+            if (serCounter == 1) {
+                delay |= SerInt0; // Trigger interrupt
+            }
+        }
+        else if ((delay & (SerClk2 | SerClk1)) == SerClk2) { // Negative edge
+            serCounter--;
+        }
+    }
 	
 	//
 	// Timer output to PB6 (timer A) and PB7 (timer B)

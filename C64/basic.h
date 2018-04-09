@@ -83,10 +83,10 @@
 #define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
 //! @brief Returns true if bit n is rising when switching from x to y
-#define RISING_EDGE(x,y,n) (!((x) & (1 << (n))) && ((y) & (1 << (n))))
+#define RISING_EDGE_BIT(x,y,n) (!((x) & (1 << (n))) && ((y) & (1 << (n))))
 
 //! @brief Returns true if bit n is rising when switching from x to y
-#define FALLING_EDGE(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
+#define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
 //
 //! @functiongroup Pretty printing

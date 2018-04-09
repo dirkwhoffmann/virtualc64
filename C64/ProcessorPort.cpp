@@ -110,11 +110,11 @@ ProcessorPort::writeDirection(uint8_t value)
     if (GET_BIT(value, 7)) dischargeCycleBit7 = 0;
 
     // 2) If bits 3, 6, and 7 change from output to input, they become floating
-    if (FALLING_EDGE(direction, value, 3) && GET_BIT(port, 3) != 0)
+    if (FALLING_EDGE_BIT(direction, value, 3) && GET_BIT(port, 3) != 0)
         dischargeCycleBit3 = c64->getCycles() + PAL_CYCLES_PER_SECOND;
-    if (FALLING_EDGE(direction, value, 6) && GET_BIT(port, 6) != 0)
+    if (FALLING_EDGE_BIT(direction, value, 6) && GET_BIT(port, 6) != 0)
         dischargeCycleBit6 = c64->getCycles() + 360000;
-    if (FALLING_EDGE(direction, value, 7) && GET_BIT(port, 7) != 0)
+    if (FALLING_EDGE_BIT(direction, value, 7) && GET_BIT(port, 7) != 0)
         dischargeCycleBit7 = c64->getCycles() + 360000;
     
     direction = value;
