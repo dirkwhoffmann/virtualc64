@@ -104,13 +104,7 @@ class CIA : public VirtualComponent {
     uint8_t serCounter; 
 
     // From Hoxs
-    
-    // Replace by serClock
-    uint8_t serial_int_count;
-    
-    // Replace by SerInt0 SerInt1 SerInt2
-    // uint32_t serial_interrupt_delay;
-    
+        
     // Replace by Cnt0, Cnt1???
     bool f_cnt_out;
     

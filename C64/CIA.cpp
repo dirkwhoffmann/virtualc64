@@ -81,7 +81,6 @@ CIA::reset()
     SDR = 0;
     
     // Hoxs
-    serial_int_count=0;
     f_cnt_out=true; //CNT high by default
 }
 
@@ -390,7 +389,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
                 //serial direction changing
                 delay &= ~(SerLoad0 | SerLoad1);
                 feed &= ~SerLoad0;
-                this->serial_int_count = 0;
+                serCounter = 0;
             
                 
                 this->delay &= ~(SetCntFlip0 | SetCntFlip1 | SetCntFlip2 | SetCntFlip3);
@@ -626,7 +625,8 @@ void CIA::executeOneCycle()
 		delay |= LoadA1;
 	}
     
-    // From Hoxs
+    // Serial register
+    /*
     if (timerAOutput) {
         
         if (CRA & 0x40) {
@@ -635,42 +635,42 @@ void CIA::executeOneCycle()
             assert(((feed & SerClk0) == 0) == (serClk == 0));
         }
     }
+    */
     
+    // From Hoxs
     if (timerAOutput) {
         // Serial register
         if (CRA & 0x40) //Generate serial interrupt after 16 timer a underflows.
         {
-            if ((delay & SerLoad1) && serial_int_count == 0)
+            if ((delay & SerLoad1) && serCounter == 0)
             {
                 delay &= ~(SerLoad1 | SerLoad0);
                 feed &= ~SerLoad0;
-                serial_int_count = 16;
+                serCounter = 8;
             }
-            if (serial_int_count)
+            if (serCounter)
             {
                 delay |= SetCntFlip0;
             }
         }
     }
 
-    if (serial_int_count != 0 && (delay & SetCntFlip2) != 0 && (delay & SetCntFlip3) == 0)
+    if (serCounter && (delay & SetCntFlip2) != 0 && (delay & SetCntFlip3) == 0)
     {
+        serClk = !serClk;
+        if (!serClk) {
+            serCounter--;
+        }
+        
         f_cnt_out = !this->f_cnt_out;
-        {
-            serial_int_count--;
-            if (serial_int_count == 1)
-            {
-                delay |= SerInt0;
-            }
+    
+        if (serCounter == 1 && serClk) {
+            delay |= SerInt0;
         }
         if (this->f_cnt_out)
-        {
             feed |= SetCnt0;
-        }
         else
-        {
             feed &= ~SetCnt0;
-        }
     }
     
 	// Load counter
