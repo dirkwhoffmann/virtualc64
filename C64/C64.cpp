@@ -108,6 +108,10 @@ C64::C64()
     // Register snapshot items
     SnapshotItem items[] = {
  
+        { &wakeUpCycleCIA1, sizeof(wakeUpCycleCIA1),    CLEAR_ON_RESET },
+        { &idleCounterCIA1, sizeof(idleCounterCIA1),    CLEAR_ON_RESET },
+        { &wakeUpCycleCIA2, sizeof(wakeUpCycleCIA2),    CLEAR_ON_RESET },
+        { &idleCounterCIA2, sizeof(idleCounterCIA2),    CLEAR_ON_RESET },
         { &warp,            sizeof(warp),               CLEAR_ON_RESET },
         { &alwaysWarp,      sizeof(alwaysWarp),         CLEAR_ON_RESET },
         { &warpLoad,        sizeof(warpLoad),           KEEP_ON_RESET },
@@ -334,8 +338,8 @@ C64::step()
 // '---------------------------------------------------------------'
 
 #define EXECUTE(x) \
-cia1.executeOneCycle(); \
-cia2.executeOneCycle(); \
+if (cycle >= wakeUpCycleCIA1) { cia1.executeOneCycle(); } else { idleCounterCIA1++; } \
+if (cycle >= wakeUpCycleCIA2) { cia2.executeOneCycle(); } else { idleCounterCIA2++; } \
 if (!cpu.executeOneCycle()) result = false; \
 if (!floppy.executeOneCycle()) result = false; \
 datasette.execute(); \

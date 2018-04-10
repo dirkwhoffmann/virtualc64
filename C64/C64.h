@@ -213,9 +213,21 @@ public:
 	//! @brief    The C64s first versatile interface adapter
 	CIA1 cia1;
 	
+    //! @brief    Wakeup cycle for CIA1
+    uint64_t wakeUpCycleCIA1;
+    
+    //! @brief    Number of skipped executions of CIA1
+    uint64_t idleCounterCIA1;
+    
     //! @brief    The C64s second versatile interface adapter
 	CIA2 cia2;
-	
+
+    //! @brief    Wakeup cycle for CIA2
+    uint64_t wakeUpCycleCIA2;
+
+    //! @brief    Number of skipped executions of CIA2
+    uint64_t idleCounterCIA2;
+
     //! @brief    The C64s sound chip
 	SIDWrapper sid;
 	

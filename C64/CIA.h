@@ -71,7 +71,7 @@ class Joystick;
 #define SerClk2     0x0000002000000000
 #define SerClk3     0x0000004000000000
 
-#define DelayMask ~(CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | SerInt0 | SerLoad0 | SerClk0)
+#define DelayMask ~(0x0000008000000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | SerInt0 | SerLoad0 | SerClk0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
@@ -226,6 +226,17 @@ public:
      */
 	virtual void releaseInterruptLine() = 0;
     
+    //
+    // Sleep logic (speedup)
+    //
+    
+    //! @brief    Idle counter
+    /*! @details  When the CIA state does not change during execution, this variable is
+     *            increased by one. If it exceeds a certain threshhold value, the chip
+     *            is put into idle state via sleep()
+     */
+    uint8_t tiredness;
+
     
     // ------------------------------------------------------------------------------------------
     //                                             Methods
@@ -540,8 +551,19 @@ public:
 	//! @brief    Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
-    //! Triggers a TOD interrupt if current time matches alarm time
+    //! @brief    Triggers a TOD interrupt if current time matches alarm time
     void checkForTODInterrupt();
+    
+    
+    //
+    //! @functiongroup Speeding up the emulation
+    //
+    
+    //! @brief    Puts the CIA chip into idle state
+    virtual void sleep() = 0;
+    
+    //! @brief    Emulate all previously skipped cycles
+    virtual void wakeUp() = 0;
 };
 
 
@@ -573,6 +595,9 @@ private:
     
     //! @brief    Releases the IRQ request
     void releaseInterruptLine();
+    
+    void sleep();
+    void wakeUp();
 
 public:
 
@@ -632,6 +657,9 @@ private:
     //! @brief    Releases the NMI request
     void releaseInterruptLine();
     
+    void sleep();
+    void wakeUp();
+
 public:
 
 	//! Constructor

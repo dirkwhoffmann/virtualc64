@@ -205,11 +205,11 @@
                         sender: Optional<UnsafeMutableRawPointer>,
                         device: IOHIDDevice) {
     
-        NSLog("\(#function)")
+        track()
         
         // Find a free slot for the new device
         guard let slotNr = findFreeSlot() else {
-            NSLog("Maximum number of devices reached. Ignoring device")
+            track("Maximum number of devices reached. Ignoring device")
             return
         }
         
@@ -231,7 +231,7 @@
         let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
         let status = IOHIDDeviceOpen(device, IOOptionBits(optionBits))
         if (status != kIOReturnSuccess) {
-            NSLog("WARNING: Cannot open HID device")
+            track("WARNING: Cannot open HID device")
             return
         }
     
@@ -250,7 +250,7 @@
                           sender: Optional<UnsafeMutableRawPointer>,
                           device: IOHIDDevice) {
         
-        NSLog("\(#function)")
+        track()
         
         let locationIDKey = kIOHIDLocationIDKey as CFString
         let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
@@ -259,7 +259,7 @@
         for (slotNr, device) in gamePads {
             if (device.locationID == locationID) {
                 gamePads[slotNr] = nil
-                NSLog("Clearing slot %d", slotNr)
+                track("Clearing slot \(slotNr)")
             }
         }
         
@@ -269,7 +269,7 @@
         let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
         let status = IOHIDDeviceClose(device, IOOptionBits(optionBits))
         if (status != kIOReturnSuccess) {
-            NSLog("WARNING: Cannot close HID device")
+            track("WARNING: Cannot close HID device")
         }
         */
         

@@ -166,6 +166,7 @@ class GamePad
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
+        // let analog    = Float(IOHIDValueGetScaledValue(value, IOHIDValueScaleType(kIOHIDValueScaleTypeCalibrated)))
         
         // Check button
         if usagePage == kHIDPage_Button {
@@ -179,6 +180,23 @@ class GamePad
             
             // var event: JoystickEvent
             let v = mapAnalogAxis(value: value, element: element)
+            
+            /*
+            track("Usage = \(usage) analog = \(analog)")
+            switch(usage) {
+            case kHIDUsage_GD_X:
+                track("kHIDUsage_GD_X")
+                break
+            case kHIDUsage_GD_Y:
+                track("kHIDUsage_GD_Y")
+                break
+            case kHIDUsage_GD_Z:
+                track("kHIDUsage_GD_Z")
+                break
+            default:
+                break
+            }
+            */
             
             switch(usage) {
                 

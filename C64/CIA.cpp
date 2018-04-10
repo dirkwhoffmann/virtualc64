@@ -550,8 +550,13 @@ void CIA::dumpState()
 }
 
 void CIA::executeOneCycle()
-{	
-	//
+{
+    wakeUp();
+    
+    uint64_t oldDelay = delay;
+    uint64_t oldFeed  = feed;
+
+    //
 	// Layout of timer (A and B)
 	//
 
@@ -844,8 +849,17 @@ void CIA::executeOneCycle()
     
 	// Move delay flags left and feed in new bits
 	delay = ((delay << 1) & DelayMask) | feed;
+    
+    // Go into idle state if possible
+    if (oldDelay == delay && oldFeed == feed) {
+        if (++tiredness > 8) {
+            sleep();
+            tiredness = 0;
+        }
+    } else {
+        tiredness = 0;
+    }
 }
-
 
 // -----------------------------------------------------------------------------------------
 // Complex Interface Adapter 1
@@ -888,6 +902,47 @@ void
 CIA1::releaseInterruptLine()
 {
     c64->cpu.releaseIrqLine(CPU::CIA);
+}
+
+void
+CIA1::sleep()
+{
+    // debug("CIA1::sleep at cycle %llu\n", c64->cycle);
+    assert(c64->idleCounterCIA1 == 0);
+    
+    // Determine maximum possible sleep cycles based on timer counts
+    uint64_t sleepA = (counterA > 4) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 4) ? (c64->cycle + counterB - 1) : 0;
+    
+    // CIAs with stopped timers can sleep forever
+    if (!(feed & CountA0)) sleepA = UINT64_MAX;
+    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    
+    // debug("CIA1 going idle for %llu cycles %llx\n", MIN(sleepA, sleepB) - c64->cycle, feed);
+    c64->wakeUpCycleCIA1 = MIN(sleepA, sleepB);
+}
+
+void
+CIA1::wakeUp()
+{
+    uint64_t idleCycles = c64->idleCounterCIA1;
+    // debug("CIA1::wakeUp at cycle %llu\n", c64->cycle);
+
+    // Make up for missed cycles
+    if (idleCycles) {
+        
+        // debug("Making up %llu CIA1 cycles\n", idleCycles);
+        if (feed & CountA0) {
+            assert(counterA >= idleCycles);
+            counterA -= idleCycles;
+        }
+        if (feed & CountB0) {
+            assert(counterB >= idleCycles);
+            counterB -= idleCycles;
+        }
+        c64->idleCounterCIA1 = 0;
+    }
+    c64->wakeUpCycleCIA1 = 0;
 }
 
 void 
@@ -939,6 +994,8 @@ CIA1::peek(uint16_t addr)
     
 	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
 	
+    wakeUp();
+    
 	switch(addr) {		
         case 0x00: // CIA_DATA_PORT_A
 				
@@ -994,7 +1051,8 @@ CIA1::poke(uint16_t addr, uint8_t value)
     
 	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
 	
-	// The following registers need special handling	
+    wakeUp();
+    
 	switch(addr) {
 			
         case 0x00: // CIA_DATA_PORT_A
@@ -1040,8 +1098,6 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			CIA::poke(addr, value);
 	}
 }
-
-
 
 void 
 CIA1::setJoystickBits(int nr, uint8_t mask)
@@ -1102,6 +1158,47 @@ CIA2::releaseInterruptLine()
     c64->cpu.releaseNmiLine(CPU::CIA);
 }
 
+void
+CIA2::sleep()
+{
+    // debug("CIA2::sleep at cycle %llu\n", c64->cycle);
+    assert(c64->idleCounterCIA2 == 0);
+    
+    // Determine maximum possible sleep cycles based on timer counts
+    uint64_t sleepA = (counterA > 4) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 4) ? (c64->cycle + counterB - 1) : 0;
+    
+    // CIAs with stopped timers can sleep forever
+    if (!(feed & CountA0)) sleepA = UINT64_MAX;
+    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    
+    // debug("CIA2 going idle for %llu cycles\n", MIN(sleepA, sleepB) - c64->cycle);
+    c64->wakeUpCycleCIA2 = MIN(sleepA, sleepB);
+}
+
+void
+CIA2::wakeUp()
+{
+    uint64_t idleCycles = c64->idleCounterCIA2;
+    // debug("CIA2::wakeUp at cycle %llu\n", c64->cycle);
+    
+    // Make up for missed cycles
+    if (idleCycles) {
+        
+        // debug("Making up %llu CIA2 cycles\n", idleCycles);
+        if (feed & CountA0) {
+            assert(counterA >= idleCycles);
+            counterA -= idleCycles;
+        }
+        if (feed & CountB0) {
+            assert(counterB >= idleCycles);
+            counterB -= idleCycles;
+        }
+        c64->idleCounterCIA2 = 0;
+    }
+    c64->wakeUpCycleCIA2 = 0;
+}
+
 uint8_t 
 CIA2::peek(uint16_t addr)
 {
@@ -1109,6 +1206,8 @@ CIA2::peek(uint16_t addr)
 	
 	assert(addr <= CIA_END_ADDR - CIA_START_ADDR);
 	
+    wakeUp();
+    
 	switch(addr) {
         case 0x00: // CIA_DATA_PORT_A
 			
@@ -1140,6 +1239,8 @@ CIA2::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr <= CIA2_END_ADDR - CIA2_START_ADDR);
 	
+    wakeUp();
+    
 	switch(addr) {
         case 0x00: // CIA_DATA_PORT_A
 			
