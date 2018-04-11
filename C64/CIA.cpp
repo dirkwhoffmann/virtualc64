@@ -911,8 +911,8 @@ CIA1::sleep()
     assert(c64->idleCounterCIA1 == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (counterA > 4) ? (c64->cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 4) ? (c64->cycle + counterB - 1) : 0;
+    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
     
     // CIAs with stopped timers can sleep forever
     if (!(feed & CountA0)) sleepA = UINT64_MAX;
@@ -1165,8 +1165,8 @@ CIA2::sleep()
     assert(c64->idleCounterCIA2 == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (counterA > 4) ? (c64->cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 4) ? (c64->cycle + counterB - 1) : 0;
+    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
     
     // CIAs with stopped timers can sleep forever
     if (!(feed & CountA0)) sleepA = UINT64_MAX;
