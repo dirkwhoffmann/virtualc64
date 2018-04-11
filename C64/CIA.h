@@ -236,7 +236,6 @@ public:
      *            is put into idle state via sleep()
      */
     uint8_t tiredness;
-
     
     // ------------------------------------------------------------------------------------------
     //                                             Methods

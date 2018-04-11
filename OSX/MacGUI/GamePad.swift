@@ -41,6 +41,11 @@ class GamePad
      */
     var locationID: String?
 
+    //! @brief    Rescued information from the last invocation of the action function
+    /*! @details  Used to determine if a joystick event needs to be triggered.
+     */
+    var oldUsage: [Int : Int] = [:]
+    
     /// Reference to the GamePadManager
     var manager: GamePadManager
     
@@ -150,10 +155,11 @@ class GamePad
         var v = (Double) (val - min) / (Double) (max - min);
         v = v * 2.0 - 1.0;
         
-        // Considering [ -0.1 ; 0.1 ] as "released state"
+        if v < -0.6 { return -2 };
         if v < -0.1 { return -1 };
-        if v > 0.1 { return 1 };
-        return 0;
+        if v <= 0.1 { return 0 };
+        if v <= 0.6 { return 1 };
+        return 2;
     }
     
     
@@ -181,32 +187,53 @@ class GamePad
             // var event: JoystickEvent
             let v = mapAnalogAxis(value: value, element: element)
             
-            /*
-            track("Usage = \(usage) analog = \(analog)")
+            
+            if (v == -1 || v == 1) {
+                return;
+            }
+            
+            if oldUsage[usage] == v {
+                return;
+            } else {
+                oldUsage[usage] = v
+            }
+            
+            
             switch(usage) {
             case kHIDUsage_GD_X:
-                track("kHIDUsage_GD_X")
+                track("kHIDUsage_GD_X \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Y:
-                track("kHIDUsage_GD_Y")
+                track("kHIDUsage_GD_Y \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Z:
-                track("kHIDUsage_GD_Z")
+                // track("kHIDUsage_GD_Z \(intValue) \(v)")
+                break
+            case kHIDUsage_GD_Rx:
+                // track("kHIDUsage_GD_Rx \(intValue) \(v)")
+                break
+            case kHIDUsage_GD_Ry:
+                // track("kHIDUsage_GD_Ry \(intValue) \(v)")
+                break
+            case kHIDUsage_GD_Rz:
+                // track("kHIDUsage_GD_Rz \(intValue) \(v)")
+                break
+            case kHIDUsage_GD_Hatswitch:
+                // track("kHIDUsage_GD_Hatswitch \(intValue) \(v)")
                 break
             default:
                 break
             }
-            */
             
             switch(usage) {
                 
             case kHIDUsage_GD_X, kHIDUsage_GD_Rz:
-                let event = (v == 1 ? PULL_RIGHT : (v == -1 ? PULL_LEFT : RELEASE_X))
+                let event = (v == 2 ? PULL_RIGHT : v == -2 ? PULL_LEFT : RELEASE_X)
                 manager.joystickEvent(self, event: event)
                 return
                 
             case kHIDUsage_GD_Y, kHIDUsage_GD_Z:
-                let event = (v == 1 ? PULL_DOWN : (v == -1 ? PULL_UP : RELEASE_Y))
+                let event = (v == 2 ? PULL_DOWN : v == -2 ? PULL_UP : RELEASE_Y)
                 manager.joystickEvent(self, event: event)
                 return
                 

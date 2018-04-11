@@ -53,6 +53,7 @@ CIA::CIA()
         { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
         { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
         { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
+        { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
