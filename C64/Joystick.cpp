@@ -25,18 +25,6 @@ Joystick::Joystick(int p) {
     
     setDescription("Joystick");
     debug(3, "    Creating game port %c at address %p...\n", p, this);
-    
-    // Register snapshot items
-    /*
-    SnapshotItem items[] = {
-        
-        { &button,  sizeof(button), 0 },
-        { &axisX,   sizeof(axisX),  0 },
-        { &axisY,   sizeof(axisY),  0 },
-        { NULL,     0,              0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-     */
 }
 
 Joystick::~Joystick()
@@ -67,7 +55,8 @@ Joystick::dumpState()
 {
     msg("Joystick port\n");
     msg("-------------\n");
-    msg("Button: %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
+    msg("Button:  %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
+    msg("Bitmask: %02X\n", bitmask());
 }
 
 void
@@ -106,5 +95,19 @@ Joystick::trigger(JoystickEvent event)
         default:
             assert(0);
     }
+}
+
+uint8_t
+Joystick::bitmask() {
+    
+    uint8_t result = 0xFF;
+    
+    if (axisY == -1) CLR_BIT(result, 0);
+    if (axisY ==  1) CLR_BIT(result, 1);
+    if (axisX == -1) CLR_BIT(result, 2);
+    if (axisX ==  1) CLR_BIT(result, 3);
+    if (button)      CLR_BIT(result, 4);
+    
+    return result;
 }
 

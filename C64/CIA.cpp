@@ -912,14 +912,6 @@ CIA1::~CIA1()
 }
 
 void 
-CIA1::reset()
-{
-    joystick[0] = 0xff;
-    joystick[1] = 0xff;
-	CIA::reset();
-}
-
-void 
 CIA1::dumpState()
 {
 	msg("CIA 1:\n");
@@ -939,103 +931,15 @@ CIA1::releaseInterruptLine()
     c64->cpu.releaseIrqLine(CPU::CIA);
 }
 
-void
-CIA1::sleep()
-{
-    // debug("CIA1::sleep at cycle %llu\n", c64->cycle);
-    assert(c64->idleCounterCIA1 == 0);
-    
-    // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
-    
-    // CIAs with stopped timers can sleep forever
-    if (!(feed & CountA0)) sleepA = UINT64_MAX;
-    if (!(feed & CountB0)) sleepB = UINT64_MAX;
-    
-    // debug("CIA1 going idle for %llu cycles %llx\n", MIN(sleepA, sleepB) - c64->cycle, feed);
-    c64->wakeUpCycleCIA1 = MIN(sleepA, sleepB);
-}
-
-void
-CIA1::wakeUp()
-{
-    uint64_t idleCycles = c64->idleCounterCIA1;
-    // debug("CIA1::wakeUp at cycle %llu\n", c64->cycle);
-
-    // Make up for missed cycles
-    if (idleCycles) {
-        
-        // debug("Making up %llu CIA1 cycles\n", idleCycles);
-        if (feed & CountA0) {
-            assert(counterA >= idleCycles);
-            counterA -= idleCycles;
-        }
-        if (feed & CountB0) {
-            assert(counterB >= idleCycles);
-            counterB -= idleCycles;
-        }
-        c64->idleCounterCIA1 = 0;
-    }
-    c64->wakeUpCycleCIA1 = 0;
-}
-
-void 
-CIA1::pollJoystick(Joystick *joy, int joyDevNo)
-{
-    assert (joy != NULL);
-    
-	// up/down
-	// set the down bit: 2, 2 and clear up bit: 2, 1		
-	// Remember: clearJoystickBits(x, y) means pressed
-    //           setJoystickBits( x, y ) means released
-    
-	if(joy->isPulledUp()) {
-		clearJoystickBits(joyDevNo, 1);
-		setJoystickBits(joyDevNo, 2);
-	} else if(joy->isPulledDown()) {
-		clearJoystickBits(joyDevNo, 2);
-		setJoystickBits(joyDevNo, 1);
-	} else {
-		setJoystickBits(joyDevNo, 1);			
-		setJoystickBits(joyDevNo, 2);
-	}
-	
-	// left/right
-	if(joy->isPulledLeft()) {
-		clearJoystickBits(joyDevNo, 4);
-		setJoystickBits(joyDevNo, 8);
-    } else if(joy->isPulledRight()) {
-		clearJoystickBits(joyDevNo, 8);			
-		setJoystickBits(joyDevNo, 4);
-	} else {
-		setJoystickBits(joyDevNo, 4);			
-		setJoystickBits(joyDevNo, 8);
-	}
-	
-	// fire
-	if(joy->getButton()) {
-		clearJoystickBits(joyDevNo, 16);
-	} else {
-		setJoystickBits(joyDevNo, 16);
-	}
-}
-
 uint8_t 
 CIA1::peekDataPortA()
 {
     uint8_t result = PA;
-    
-    pollJoystick(&c64->joystickA, 1);
-    pollJoystick(&c64->joystickB, 2);
-    
-    uint8_t rows = PB & joystick[0];
+    uint8_t rows = PB & c64->joystickA.bitmask();
     uint8_t columnBits = c64->keyboard.getColumnValues(rows);
     
-    // Check joystick movement
-    result &= joystick[1];
-    
-    // Check for pressed keys
+    // Clear joystick and keyboard bits
+    result &= c64->joystickB.bitmask();
     result &= columnBits;
     
     return result;
@@ -1045,16 +949,11 @@ uint8_t
 CIA1::peekDataPortB()
 {
     uint8_t result = PB;
-    uint8_t columns = PA & joystick[1];
+    uint8_t columns = PA & c64->joystickB.bitmask();
     uint8_t rowBits = c64->keyboard.getRowValues(columns);
     
-    pollJoystick(&c64->joystickA, 1);
-    pollJoystick(&c64->joystickB, 2);
-    
-    // Check joystick movement
-    result &= joystick[0];
-    
-    // Check for pressed keys
+    // Clear joystick and keyboard bits
+    result &= c64->joystickA.bitmask();
     result &= rowBits;
     
     return result;
@@ -1100,22 +999,45 @@ CIA1::pokeDataPortDirectionB(uint8_t value)
     }
 }
 
-void 
-CIA1::setJoystickBits(int nr, uint8_t mask)
+void
+CIA1::sleep()
 {
-	assert(nr == 1 || nr == 2);
-	
-	if (nr == 1) joystick[0] |= mask;
-	else if (nr == 2) joystick[1] |= mask;
+    // debug("CIA1::sleep at cycle %llu\n", c64->cycle);
+    assert(c64->idleCounterCIA1 == 0);
+    
+    // Determine maximum possible sleep cycles based on timer counts
+    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
+    
+    // CIAs with stopped timers can sleep forever
+    if (!(feed & CountA0)) sleepA = UINT64_MAX;
+    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    
+    // debug("CIA1 going idle for %llu cycles %llx\n", MIN(sleepA, sleepB) - c64->cycle, feed);
+    c64->wakeUpCycleCIA1 = MIN(sleepA, sleepB);
 }
 
-void 
-CIA1::clearJoystickBits(int nr, uint8_t mask)
+void
+CIA1::wakeUp()
 {
-	assert(nr == 1 || nr == 2);
-	
-	if (nr == 1) joystick[0] &= (0xff-mask);
-	else if (nr == 2) joystick[1] &= (0xff-mask);
+    uint64_t idleCycles = c64->idleCounterCIA1;
+    // debug("CIA1::wakeUp at cycle %llu\n", c64->cycle);
+    
+    // Make up for missed cycles
+    if (idleCycles) {
+        
+        // debug("Making up %llu CIA1 cycles\n", idleCycles);
+        if (feed & CountA0) {
+            assert(counterA >= idleCycles);
+            counterA -= idleCycles;
+        }
+        if (feed & CountB0) {
+            assert(counterB >= idleCycles);
+            counterB -= idleCycles;
+        }
+        c64->idleCounterCIA1 = 0;
+    }
+    c64->wakeUpCycleCIA1 = 0;
 }
 
 
@@ -1132,11 +1054,6 @@ CIA2::CIA2()
 CIA2::~CIA2()
 {
 	debug(3, "  Releasing CIA2...\n");
-}
-
-void CIA2::reset()
-{
-	CIA::reset();
 }
 
 void 
@@ -1157,46 +1074,6 @@ void
 CIA2::releaseInterruptLine()
 {
     c64->cpu.releaseNmiLine(CPU::CIA);
-}
-
-void
-CIA2::sleep()
-{
-    // debug("CIA2::sleep at cycle %llu\n", c64->cycle);
-    assert(c64->idleCounterCIA2 == 0);
-    
-    // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
-    
-    // CIAs with stopped timers can sleep forever
-    if (!(feed & CountA0)) sleepA = UINT64_MAX;
-    if (!(feed & CountB0)) sleepB = UINT64_MAX;
-    
-    // debug("CIA2 going idle for %llu cycles\n", MIN(sleepA, sleepB) - c64->cycle);
-    c64->wakeUpCycleCIA2 = MIN(sleepA, sleepB);
-}
-
-void
-CIA2::wakeUp()
-{
-    uint64_t idleCycles = c64->idleCounterCIA2;
-    // debug("CIA2::wakeUp at cycle %llu\n", c64->cycle);
-    
-    // Make up for missed cycles
-    if (idleCycles) {
-        // debug("Making up %llu CIA2 cycles\n", idleCycles);
-        if (feed & CountA0) {
-            assert(counterA >= idleCycles);
-            counterA -= idleCycles;
-        }
-        if (feed & CountB0) {
-            assert(counterB >= idleCycles);
-            counterB -= idleCycles;
-        }
-        c64->idleCounterCIA2 = 0;
-    }
-    c64->wakeUpCycleCIA2 = 0;
 }
 
 uint8_t 
@@ -1264,4 +1141,44 @@ CIA2::pokeDataPortDirectionB(uint8_t value)
     PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
     // oldPB = PB;
 }
-			
+
+void
+CIA2::sleep()
+{
+    // debug("CIA2::sleep at cycle %llu\n", c64->cycle);
+    assert(c64->idleCounterCIA2 == 0);
+    
+    // Determine maximum possible sleep cycles based on timer counts
+    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
+    
+    // CIAs with stopped timers can sleep forever
+    if (!(feed & CountA0)) sleepA = UINT64_MAX;
+    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    
+    // debug("CIA2 going idle for %llu cycles\n", MIN(sleepA, sleepB) - c64->cycle);
+    c64->wakeUpCycleCIA2 = MIN(sleepA, sleepB);
+}
+
+void
+CIA2::wakeUp()
+{
+    uint64_t idleCycles = c64->idleCounterCIA2;
+    // debug("CIA2::wakeUp at cycle %llu\n", c64->cycle);
+    
+    // Make up for missed cycles
+    if (idleCycles) {
+        // debug("Making up %llu CIA2 cycles\n", idleCycles);
+        if (feed & CountA0) {
+            assert(counterA >= idleCycles);
+            counterA -= idleCycles;
+        }
+        if (feed & CountB0) {
+            assert(counterB >= idleCycles);
+            counterB -= idleCycles;
+        }
+        c64->idleCounterCIA2 = 0;
+    }
+    c64->wakeUpCycleCIA2 = 0;
+}
+

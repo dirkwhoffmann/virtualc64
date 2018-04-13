@@ -68,6 +68,10 @@ public:
     //! @brief   Trigger a joystick event
     void trigger(JoystickEvent event);
     
+    /*! @brief   Returns the current joystick movement in form a bit mask
+     *  @details The bits are in the same order as they show up in the CIA's data port registers
+     */
+    uint8_t bitmask();
     
     // DEPRECATED
     inline bool getButton() { return button; }

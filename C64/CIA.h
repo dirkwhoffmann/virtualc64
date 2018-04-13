@@ -202,7 +202,7 @@ public:
     uint8_t serCounter;
     
     //
-	// Interfaces
+	// Chip interface (port pins)
     //
     
 	uint8_t PA;
@@ -212,17 +212,6 @@ public:
 	bool CNT;
 	bool INT;
 
-	/*! @brief    Requests the CPU to interrupt
-	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
-     *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
-     */
-	virtual void pullDownInterruptLine() = 0;
-
-	/*! @brief    Removes the interrupt requests
-	 *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
-     *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
-     */
-	virtual void releaseInterruptLine() = 0;
     
     //
     // Sleep logic (speedup)
@@ -240,9 +229,6 @@ public:
     // ------------------------------------------------------------------------------------------
 
 public:	
-	
-	//! @brief    Returns true if addr is located in the I/O range of one of the two CIA chips
-	static bool isCiaAddr(uint16_t addr) { return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
 	
 	//! @brief    Constructor
 	CIA();
@@ -297,6 +283,18 @@ public:
     //
 	// Interrupt control
 	//
+    
+    /*! @brief    Requests the CPU to interrupt
+     *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
+     *            CIA 1 activates the IRQ line and CIA 2 the NMI line.
+     */
+    virtual void pullDownInterruptLine() = 0;
+    
+    /*! @brief    Removes the interrupt requests
+     *  @details  This function is abstract and implemented differently by CIA1 and CIA2.
+     *            CIA 1 clears the IRQ line and CIA 2 the NMI line.
+     */
+    virtual void releaseInterruptLine() = 0;
     
 	//! @brief    Returns true, if timer can trigger interrupts
     bool isInterruptEnabledA() { return IMR & 0x01; }
@@ -586,63 +584,23 @@ public:
 class CIA1 : public CIA {
 	
 public:
-	
-	//! @brief    Start address of the CIA 1 I/O space
-	static const uint16_t CIA1_START_ADDR = 0xDC00;
-    
-	//! @brief    End address of the CIA 1 I/O space
-	static const uint16_t CIA1_END_ADDR = 0xDCFF;
 
-	//! @brief    Joystick bits
-	uint8_t joystick[2];
-	
+    CIA1();
+    ~CIA1();
+    void dumpState();
+    
 private:
-
-    //! @brief    Polls current state of a single joystick
-    void pollJoystick(Joystick *joy, int joyDevNo);
-
-    //! @brief    Requests an IRQ
+    
     void pullDownInterruptLine();
-    
-    //! @brief    Releases the IRQ request
     void releaseInterruptLine();
-    
-    void sleep();
-    void wakeUp();
-
-public:
-
-	//! @brief    Constructor
-	CIA1();
-
-	//! @brief    Destructor
-	~CIA1();
-	
-	//! @brief    Restores the initial state
-	void reset();
-		
-	//! @brief    Returns true if addr is located in the I/O range of the CIA 1 chip
-	static bool isCia1Addr(uint16_t addr)
-		{ return (CIA1_START_ADDR <= addr && addr <= CIA1_END_ADDR); }
-	
     uint8_t peekDataPortA();
     uint8_t peekDataPortB();
     void pokeDataPortA(uint8_t value);
     void pokeDataPortB(uint8_t value);
     void pokeDataPortDirectionA(uint8_t value);
     void pokeDataPortDirectionB(uint8_t value);
-	
-	/*! @brief    Simulates a joystick movement
-	 *  @param    nr    joystick number (1 or 2)
-     *  @param    value bit pattern of joystick movement
-     */
-	void setJoystickBits(int nr, uint8_t mask);
-
-    //! @brief    Clears all joystick bits
-    void clearJoystickBits(int nr, uint8_t mask);
-
-    //! @brief    Prints debug information
-	void dumpState();
+    void sleep();
+    void wakeUp();
 };
 	
 /*! @brief    The second virtual complex interface adapter (CIA 2)
@@ -654,47 +612,23 @@ public:
 class CIA2 : public CIA {
 
 public:
-	
-	//! @brief    Start address of the CIA 2 I/O space
-	static const uint16_t CIA2_START_ADDR = 0xDD00;
-    
-	//! @brief    End address of the CIA 1 2/O space
-	static const uint16_t CIA2_END_ADDR = 0xDDFF;
 
+    CIA2();
+    ~CIA2();
+    void dumpState();
+    
 private:
 
-    //! @brief    Requests an NMI
     void pullDownInterruptLine();
-    
-    //! @brief    Releases the NMI request
     void releaseInterruptLine();
-    
-    void sleep();
-    void wakeUp();
-
-public:
-
-	//! Constructor
-	CIA2();
-	
-	//! Destructor
-	~CIA2();
-	
-	//! Bring the CIA back to its initial state
-	void reset();
-	
-	//! Returns true if the \a addr is located in the I/O range of the CIA 2 chip
-	static bool isCia2Addr(uint16_t addr) 
-		{ return (CIA2_START_ADDR <= addr && addr <= CIA2_END_ADDR); }
-
     uint8_t peekDataPortA();
     uint8_t peekDataPortB();
     void pokeDataPortA(uint8_t value);
     void pokeDataPortB(uint8_t value);
     void pokeDataPortDirectionA(uint8_t value);
     void pokeDataPortDirectionB(uint8_t value);
-	
-	void dumpState();
+    void sleep();
+    void wakeUp();
 };
 
 #endif
