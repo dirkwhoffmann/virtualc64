@@ -896,6 +896,43 @@ void CIA::executeOneCycle()
     }
 }
 
+void
+CIA::sleep()
+{
+    assert(idleCounter() == 0);
+    
+    // Determine maximum possible sleep cycles based on timer counts
+    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
+    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
+    
+    // CIAs with stopped timers can sleep forever
+    if (!(feed & CountA0)) sleepA = UINT64_MAX;
+    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    
+    setWakeUpCycle(MIN(sleepA, sleepB));
+}
+
+void
+CIA::wakeUp()
+{
+    uint64_t idleCycles = idleCounter();
+    
+    // Make up for missed cycles
+    if (idleCycles) {
+        if (feed & CountA0) {
+            assert(counterA >= idleCycles);
+            counterA -= idleCycles;
+        }
+        if (feed & CountB0) {
+            assert(counterB >= idleCycles);
+            counterB -= idleCycles;
+        }
+        resetIdleCounter();
+    }
+    setWakeUpCycle(0);
+}
+
+
 // -----------------------------------------------------------------------------------------
 // Complex Interface Adapter 1
 // -----------------------------------------------------------------------------------------
@@ -999,46 +1036,10 @@ CIA1::pokeDataPortDirectionB(uint8_t value)
     }
 }
 
-void
-CIA1::sleep()
-{
-    // debug("CIA1::sleep at cycle %llu\n", c64->cycle);
-    assert(c64->idleCounterCIA1 == 0);
-    
-    // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
-    
-    // CIAs with stopped timers can sleep forever
-    if (!(feed & CountA0)) sleepA = UINT64_MAX;
-    if (!(feed & CountB0)) sleepB = UINT64_MAX;
-    
-    // debug("CIA1 going idle for %llu cycles %llx\n", MIN(sleepA, sleepB) - c64->cycle, feed);
-    c64->wakeUpCycleCIA1 = MIN(sleepA, sleepB);
-}
-
-void
-CIA1::wakeUp()
-{
-    uint64_t idleCycles = c64->idleCounterCIA1;
-    // debug("CIA1::wakeUp at cycle %llu\n", c64->cycle);
-    
-    // Make up for missed cycles
-    if (idleCycles) {
-        
-        // debug("Making up %llu CIA1 cycles\n", idleCycles);
-        if (feed & CountA0) {
-            assert(counterA >= idleCycles);
-            counterA -= idleCycles;
-        }
-        if (feed & CountB0) {
-            assert(counterB >= idleCycles);
-            counterB -= idleCycles;
-        }
-        c64->idleCounterCIA1 = 0;
-    }
-    c64->wakeUpCycleCIA1 = 0;
-}
+uint64_t CIA1::wakeUpCycle() { return c64->wakeUpCycleCIA1; }
+void CIA1::setWakeUpCycle(uint64_t cycle) { c64->wakeUpCycleCIA1 = cycle; }
+uint64_t CIA1::idleCounter() { return c64->idleCounterCIA1; }
+void CIA1::resetIdleCounter() { c64->idleCounterCIA1 = 0; }
 
 
 // -----------------------------------------------------------------------------------------
@@ -1142,43 +1143,7 @@ CIA2::pokeDataPortDirectionB(uint8_t value)
     // oldPB = PB;
 }
 
-void
-CIA2::sleep()
-{
-    // debug("CIA2::sleep at cycle %llu\n", c64->cycle);
-    assert(c64->idleCounterCIA2 == 0);
-    
-    // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (counterA > 2) ? (c64->cycle + counterA - 1) : 0;
-    uint64_t sleepB = (counterB > 2) ? (c64->cycle + counterB - 1) : 0;
-    
-    // CIAs with stopped timers can sleep forever
-    if (!(feed & CountA0)) sleepA = UINT64_MAX;
-    if (!(feed & CountB0)) sleepB = UINT64_MAX;
-    
-    // debug("CIA2 going idle for %llu cycles\n", MIN(sleepA, sleepB) - c64->cycle);
-    c64->wakeUpCycleCIA2 = MIN(sleepA, sleepB);
-}
-
-void
-CIA2::wakeUp()
-{
-    uint64_t idleCycles = c64->idleCounterCIA2;
-    // debug("CIA2::wakeUp at cycle %llu\n", c64->cycle);
-    
-    // Make up for missed cycles
-    if (idleCycles) {
-        // debug("Making up %llu CIA2 cycles\n", idleCycles);
-        if (feed & CountA0) {
-            assert(counterA >= idleCycles);
-            counterA -= idleCycles;
-        }
-        if (feed & CountB0) {
-            assert(counterB >= idleCycles);
-            counterB -= idleCycles;
-        }
-        c64->idleCounterCIA2 = 0;
-    }
-    c64->wakeUpCycleCIA2 = 0;
-}
-
+uint64_t CIA2::wakeUpCycle() { return c64->wakeUpCycleCIA2; }
+void CIA2::setWakeUpCycle(uint64_t cycle) { c64->wakeUpCycleCIA2 = cycle; }
+uint64_t CIA2::idleCounter() { return c64->idleCounterCIA2; }
+void CIA2::resetIdleCounter() { c64->idleCounterCIA2 = 0; }

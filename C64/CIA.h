@@ -568,11 +568,25 @@ public:
     //! @functiongroup Speeding up the emulation
     //
     
+private:
+    
     //! @brief    Puts the CIA chip into idle state
-    virtual void sleep() = 0;
+    virtual void sleep();
     
     //! @brief    Emulate all previously skipped cycles
-    virtual void wakeUp() = 0;
+    virtual void wakeUp();
+    
+    //! @brief    Returns the wake up cycle for this CIA chip
+    virtual uint64_t wakeUpCycle() = 0;
+
+    //! @brief    Sets the wake up cycle for this CIA chip
+    virtual void setWakeUpCycle(uint64_t cycle) = 0;
+    
+    //! @brief    Returns the number of skipped executions for this CIA chip
+    virtual uint64_t idleCounter() = 0;
+    
+    //! @brief    Resets the skipped execution cycle counter to zero
+    virtual void resetIdleCounter() = 0;
 };
 
 
@@ -599,8 +613,12 @@ private:
     void pokeDataPortB(uint8_t value);
     void pokeDataPortDirectionA(uint8_t value);
     void pokeDataPortDirectionB(uint8_t value);
-    void sleep();
-    void wakeUp();
+    uint64_t wakeUpCycle();
+    void setWakeUpCycle(uint64_t cycle);
+    uint64_t idleCounter();
+    void resetIdleCounter();
+    
+    
 };
 	
 /*! @brief    The second virtual complex interface adapter (CIA 2)
@@ -627,8 +645,10 @@ private:
     void pokeDataPortB(uint8_t value);
     void pokeDataPortDirectionA(uint8_t value);
     void pokeDataPortDirectionB(uint8_t value);
-    void sleep();
-    void wakeUp();
+    uint64_t wakeUpCycle();
+    void setWakeUpCycle(uint64_t cycle);
+    uint64_t idleCounter();
+    void resetIdleCounter();
 };
 
 #endif
