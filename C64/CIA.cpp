@@ -29,6 +29,10 @@ CIA::CIA()
     // Register snapshot items
     SnapshotItem items[] = {
         
+        { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
+        { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
+        { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
+        { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
         { &delay,           sizeof(delay),          CLEAR_ON_RESET },
         { &feed,            sizeof(feed),           CLEAR_ON_RESET },
         { &CRA,             sizeof(CRA),            CLEAR_ON_RESET },
@@ -49,10 +53,6 @@ CIA::CIA()
         { &PB,              sizeof(PB),             CLEAR_ON_RESET },
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
         { &INT,             sizeof(INT),            CLEAR_ON_RESET },
-        { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
-        { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
-        { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
-        { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
         { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
 
@@ -76,8 +76,6 @@ CIA::reset()
 	
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
-    
-    todAlarm = false;
 }
 
 void
@@ -478,6 +476,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 void
 CIA::incrementTOD()
 {
+    wakeUp();
     tod.increment();
     checkForTODInterrupt();
 }
@@ -1185,7 +1184,6 @@ CIA2::wakeUp()
     
     // Make up for missed cycles
     if (idleCycles) {
-        
         // debug("Making up %llu CIA2 cycles\n", idleCycles);
         if (feed & CountA0) {
             assert(counterA >= idleCycles);

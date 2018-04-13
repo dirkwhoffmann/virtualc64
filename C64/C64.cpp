@@ -335,9 +335,9 @@ C64::step()
 // |   '-----'   |   '----------------'     '------'     '------'  |
 // '---------------------------------------------------------------'
 
-#define EXECUTE(x) \
-if (cycle >= wakeUpCycleCIA1) { cia1.executeOneCycle(); } else { idleCounterCIA1++; } \
-if (cycle >= wakeUpCycleCIA2) { cia2.executeOneCycle(); } else { idleCounterCIA2++; } \
+#define EXECUTE \
+if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++; \
+if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++; \
 if (!cpu.executeOneCycle()) result = false; \
 if (!floppy.executeOneCycle()) result = false; \
 datasette.execute(); \
@@ -353,267 +353,132 @@ C64::executeOneCycle()
         case 1:
             beginOfRasterline();
             vic.cycle1();
-            EXECUTE(1);
+            EXECUTE
             break;
         case 2:
             vic.cycle2();
-            EXECUTE(2);
+            EXECUTE
             break;
         case 3:
             vic.cycle3();
-            EXECUTE(3);
+            EXECUTE
             break;
         case 4:
             vic.cycle4();
-            EXECUTE(4);
+            EXECUTE
             break;
         case 5:
             vic.cycle5();
-            EXECUTE(5);
+            EXECUTE
             break;
         case 6:
             vic.cycle6();
-            EXECUTE(6);
+            EXECUTE
             break;
         case 7:
             vic.cycle7();
-            EXECUTE(7);
+            EXECUTE
             break;
         case 8:
             vic.cycle8();
-            EXECUTE(8);
+            EXECUTE
             break;
         case 9:
             vic.cycle9();
-            EXECUTE(9);
+            EXECUTE
             break;
         case 10:
             vic.cycle10();
-            EXECUTE(10);
+            EXECUTE
             break;
         case 11:
             vic.cycle11();
-            EXECUTE(11);
+            EXECUTE
             break;
         case 12:
             vic.cycle12();
-            EXECUTE(12);
+            EXECUTE
             break;
         case 13:
             vic.cycle13();
-            EXECUTE(13);
+            EXECUTE
             break;
         case 14:
             vic.cycle14();
-            EXECUTE(14);
+            EXECUTE
             break;
         case 15:
             vic.cycle15();
-            EXECUTE(15);
+            EXECUTE
             break;
         case 16:
             vic.cycle16();
-            EXECUTE(16);
+            EXECUTE
             break;
         case 17:
             vic.cycle17();
-            EXECUTE(17);
+            EXECUTE
             break;
         case 18:
             vic.cycle18();
-            EXECUTE(18);
+            EXECUTE
             break;
-        case 19:
+        case 19: case 20: case 21: case 22: case 23: case 24: case 25: case 26:
+        case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34:
+        case 35: case 36: case 37: case 38: case 39: case 40: case 41: case 42:
+        case 43: case 44: case 45: case 46: case 47: case 48: case 49: case 50:
+        case 51: case 52: case 53: case 54:
             vic.cycle19to54();
-            EXECUTE(19);
-            break;
-        case 20:
-            vic.cycle19to54();
-            EXECUTE(20);
-            break;
-        case 21:
-            vic.cycle19to54();
-            EXECUTE(21);
-            break;
-        case 22:
-            vic.cycle19to54();
-            EXECUTE(22);
-            break;
-        case 23:
-            vic.cycle19to54();
-            EXECUTE(23);
-            break;
-        case 24:
-            vic.cycle19to54();
-            EXECUTE(24);
-            break;
-        case 25:
-            vic.cycle19to54();
-            EXECUTE(25);
-            break;
-        case 26:
-            vic.cycle19to54();
-            EXECUTE(26);
-            break;
-        case 27:
-            vic.cycle19to54();
-            EXECUTE(27);
-            break;
-        case 28:
-            vic.cycle19to54();
-            EXECUTE(28);
-            break;
-        case 29:
-            vic.cycle19to54();
-            EXECUTE(29);
-            break;
-        case 30:
-            vic.cycle19to54();
-            EXECUTE(30);
-            break;
-        case 31:
-            vic.cycle19to54();
-            EXECUTE(31);
-            break;
-        case 32:
-            vic.cycle19to54();
-            EXECUTE(32);
-            break;
-        case 33:
-            vic.cycle19to54();
-            EXECUTE(33);
-            break;
-        case 34:
-            vic.cycle19to54();
-            EXECUTE(34);
-            break;
-        case 35:
-            vic.cycle19to54();
-            EXECUTE(35);
-            break;
-        case 36:
-            vic.cycle19to54();
-            EXECUTE(36);
-            break;
-        case 37:
-            vic.cycle19to54();
-            EXECUTE(37);
-            break;
-        case 38:
-            vic.cycle19to54();
-            EXECUTE(38);
-            break;
-        case 39:
-            vic.cycle19to54();
-            EXECUTE(39);
-            break;
-        case 40:
-            vic.cycle19to54();
-            EXECUTE(40);
-            break;
-        case 41:
-            vic.cycle19to54();
-            EXECUTE(41);
-            break;
-        case 42:
-            vic.cycle19to54();
-            EXECUTE(42);
-            break;
-        case 43:
-            vic.cycle19to54();
-            EXECUTE(43);
-            break;
-        case 44:
-            vic.cycle19to54();
-            EXECUTE(44);
-            break;
-        case 45:
-            vic.cycle19to54();
-            EXECUTE(45);
-            break;
-        case 46:
-            vic.cycle19to54();
-            EXECUTE(46);
-            break;
-        case 47:
-            vic.cycle19to54();
-            EXECUTE(47);
-            break;
-        case 48:
-            vic.cycle19to54();
-            EXECUTE(48);
-            break;
-        case 49:
-            vic.cycle19to54();
-            EXECUTE(49);
-            break;
-        case 50:
-            vic.cycle19to54();
-            EXECUTE(50);
-            break;
-        case 51:
-            vic.cycle19to54();
-            EXECUTE(51);
-            break;
-        case 52:
-            vic.cycle19to54();
-            EXECUTE(52);
-            break;
-        case 53:
-            vic.cycle19to54();
-            EXECUTE(53);
-            break;
-        case 54:
-            vic.cycle19to54();
-            EXECUTE(54);
+            EXECUTE
             break;
         case 55:
             vic.cycle55();
-            EXECUTE(55);
+            EXECUTE
             break;
         case 56:
             vic.cycle56();
-            EXECUTE(56);
+            EXECUTE
             break;
         case 57: 
             vic.cycle57();
-            EXECUTE(57);
+            EXECUTE
             break;
         case 58: 
             vic.cycle58();
-            EXECUTE(58);
+            EXECUTE
             break;
         case 59: 
             vic.cycle59();
-            EXECUTE(59);
+            EXECUTE
             break;
         case 60: 
             vic.cycle60();
-            EXECUTE(60);
+            EXECUTE
             break;
         case 61: 
             vic.cycle61();
-            EXECUTE(61);
+            EXECUTE
             break;
         case 62: 
             vic.cycle62();
-            EXECUTE(62);
+            EXECUTE
             break;
         case 63: 
             vic.cycle63();
-            EXECUTE(63);
+            EXECUTE
+            
+            // This is the last cycle on PAL machines
             if (vic.getCyclesPerRasterline() == 63) {
-                // last cycle for PAL machines
                 endOfRasterline();
             }			
             break;
         case 64: 
             vic.cycle64();
-            EXECUTE(64);			
+            EXECUTE
             break;
         case 65: 
             vic.cycle65();
-            EXECUTE(65);
+            EXECUTE
             endOfRasterline();
             break;
             

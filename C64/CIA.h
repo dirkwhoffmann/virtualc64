@@ -93,9 +93,7 @@ public:
 
     //! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_END_ADDR = 0xDDFF;
-    
-    bool todAlarm;
-    
+        
 	//! @brief    Timer A counter
 	uint16_t counterA;
 	
