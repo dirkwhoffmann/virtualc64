@@ -102,7 +102,20 @@ CIA::peek(uint16_t addr)
 {
 	uint8_t result;
 	
-	switch(addr) {		
+    wakeUp();
+    
+	switch(addr) {
+            
+        case 0x00: // CIA_DATA_PORT_A
+            
+            result = peekDataPortA();
+            break;
+            
+        case 0x01: // CIA_DATA_PORT_B
+            
+            result = peekDataPortB();
+            break;
+            
         case 0x02: // CIA_DATA_DIRECTION_A
 
 			result = DDRA;
@@ -199,8 +212,30 @@ CIA::peek(uint16_t addr)
 
 void CIA::poke(uint16_t addr, uint8_t value)
 {
+    wakeUp();
+    
 	switch(addr) {
-			
+		
+        case 0x00: // CIA_DATA_PORT_A
+            
+            pokeDataPortA(value);
+            return;
+            
+        case 0x01: // CIA_DATA_PORT_B
+            
+            pokeDataPortB(value);
+            return;
+            
+        case 0x02: // CIA_DATA_DIRECTION_A
+            
+            pokeDataPortDirectionA(value);
+            return;
+            
+        case 0x03: // CIA_DATA_DIRECTION_B
+            
+            pokeDataPortDirectionB(value);
+            return;
+            
         case 0x04: // CIA_TIMER_A_LOW
 			
 			setLatchALo(value);
@@ -987,116 +1022,82 @@ CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 }
 
 uint8_t 
-CIA1::peek(uint16_t addr)
+CIA1::peekDataPortA()
 {
-	uint8_t result;
-    uint8_t rows, columnBits, columns, rowBits;
+    uint8_t result = PA;
     
-	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
-	
-    wakeUp();
+    pollJoystick(&c64->joystickA, 1);
+    pollJoystick(&c64->joystickB, 2);
     
-	switch(addr) {		
-        case 0x00: // CIA_DATA_PORT_A
-				
-            result = PA;
-            
-            pollJoystick(&c64->joystickA, 1);
-            pollJoystick(&c64->joystickB, 2);
+    uint8_t rows = PB & joystick[0];
+    uint8_t columnBits = c64->keyboard.getColumnValues(rows);
+    
+    // Check joystick movement
+    result &= joystick[1];
+    
+    // Check for pressed keys
+    result &= columnBits;
+    
+    return result;
+}
 
-            rows = PB & joystick[0];
-            columnBits = c64->keyboard.getColumnValues(rows);
-            
-			// Check joystick movement
-			result &= joystick[1];
-            
-            // Check for pressed keys
-            result &= columnBits;
-            
-			break;
-			
-        case 0x01: // CIA_DATA_PORT_B
-		{
-            result = PB;
-            
-            columns = PA & joystick[1];
-			rowBits = c64->keyboard.getRowValues(columns);
-			
-            pollJoystick(&c64->joystickA, 1);
-			pollJoystick(&c64->joystickB, 2);
-            
-            // Check joystick movement
-            result &= joystick[0];
-			
-			// Check for pressed keys
-			result &= rowBits;
-
-            // printf("PC: %04X bitmask = %02X keyboardBits = %02X PALatch = %04X PBLatch = %04X DDRA = %02X DDRB = %02X PB67TimerMode = %02X PB67TimerOut = %02X PA = %02X PB = %02X result: %02X\n", c64->cpu.getPC_at_cycle_0(), bitmask, keyboardBits, PALatch, PBLatch, DDRA, DDRB, PB67TimerMode, PB67TimerOut, PA, PB, result);
-
-            break;
-		}
-			
-		default:
-			result = CIA::peek(addr);	
-			break;
-	}
-	
-	return result;
+uint8_t
+CIA1::peekDataPortB()
+{
+    uint8_t result = PB;
+    uint8_t columns = PA & joystick[1];
+    uint8_t rowBits = c64->keyboard.getRowValues(columns);
+    
+    pollJoystick(&c64->joystickA, 1);
+    pollJoystick(&c64->joystickB, 2);
+    
+    // Check joystick movement
+    result &= joystick[0];
+    
+    // Check for pressed keys
+    result &= rowBits;
+    
+    return result;
 }
 
 void 
-CIA1::poke(uint16_t addr, uint8_t value)
+CIA1::pokeDataPortA(uint8_t value)
 {
-    uint8_t PBold;
+    PALatch = value;
+    PA = PALatch | ~DDRA;
+}
+
+void
+CIA1::pokeDataPortB(uint8_t value)
+{
+    uint8_t PBold = PB;
     
-	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
-	
-    wakeUp();
+    PBLatch = value;
+    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
     
-	switch(addr) {
-			
-        case 0x00: // CIA_DATA_PORT_A
-			
-			PALatch = value;
-			PA = PALatch | ~DDRA;
-			return;
-			
-        case 0x01: // CIA_DATA_PORT_B
-			
-            PBold = PB;
-            
-			PBLatch = value;
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-            
-            if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
-                c64->vic.triggerLightPenInterrupt();
-            }
-			return;
-			
-        case 0x02: // CIA_DATA_DIRECTION_A
-            
-            DDRA = value;
-            PA = PALatch | ~DDRA;
-            return;
-            
-        case 0x03: // CIA_DATA_DIRECTION_B
+    if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
+        c64->vic.triggerLightPenInterrupt();
+    }
+}
 
-            PBold = PB;
+void
+CIA1::pokeDataPortDirectionA(uint8_t value)
+{
+    DDRA = value;
+    PA = PALatch | ~DDRA;
+}
 
-            // printf("CIA1::poke Setting DDRB = %02X\n", value);
-            
-			DDRB = value;
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-
-            if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
-                c64->vic.triggerLightPenInterrupt();
-            }
-            
-            return;
-		
-		default:
-			CIA::poke(addr, value);
-	}
+void
+CIA1::pokeDataPortDirectionB(uint8_t value)
+{
+    uint8_t PBold = PB;
+    
+    DDRB = value;
+    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    
+    if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
+        c64->vic.triggerLightPenInterrupt();
+    }
 }
 
 void 
@@ -1199,88 +1200,68 @@ CIA2::wakeUp()
 }
 
 uint8_t 
-CIA2::peek(uint16_t addr)
+CIA2::peekDataPortA()
 {
-	uint8_t result;
-	
-	assert(addr <= CIA_END_ADDR - CIA_START_ADDR);
-	
-    wakeUp();
+    uint8_t result = PA;
     
-	switch(addr) {
-        case 0x00: // CIA_DATA_PORT_A
-			
-			result = PA;
-			
-			// The two upper bits are connected to the clock line and the data line
-			result &= 0x3F;
-			result |= (c64->iec.getClockLine() ? 0x40 : 0x00);
-			result |= (c64->iec.getDataLine() ? 0x80 : 0x00);
+    // The two upper bits are connected to the clock line and the data line
+    result &= 0x3F;
+    result |= (c64->iec.getClockLine() ? 0x40 : 0x00);
+    result |= (c64->iec.getDataLine() ? 0x80 : 0x00);
+    
+    // The external port lines can pull down any bit, even if it configured as output.
+    // Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
+    // result &= (portLinesB | 0x03);
+    
+    return result;
+}
 
-			// The external port lines can pull down any bit, even if it configured as output.
-			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
-			// result &= (portLinesB | 0x03);
-			
-			return result;
-						
-        case 0x01: // CIA_DATA_PORT_B
-			
-			result = PB;		
-			return result;
-			
-		default:
-			return CIA::peek(addr);
-	}
+uint8_t
+CIA2::peekDataPortB()
+{
+    uint8_t result = PB;
+    return result;
 }
 
 void 
-CIA2::poke(uint16_t addr, uint8_t value)
+CIA2::pokeDataPortA(uint8_t value)
 {
-	assert(addr <= CIA2_END_ADDR - CIA2_START_ADDR);
-	
-    wakeUp();
+    PALatch = value;
+    PA = PALatch | ~DDRA;
     
-	switch(addr) {
-        case 0x00: // CIA_DATA_PORT_A
-			
-			PALatch = value;
-			PA = PALatch | ~DDRA;
+    // Bits 0 and 1 determine the memory bank seen the VIC
+    c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+    
+    // Bits 3 to 5 of PA are connected to the IEC bus
+    c64->iec.updateCiaPins(PALatch, DDRA);
+}
 
-			// Bits 0 and 1 determine the memory bank seen the VIC
-			c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+void
+CIA2::pokeDataPortB(uint8_t value)
+{
+    PBLatch = value;
+    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    // oldPB = PB;
+}
 
-			// Bits 3 to 5 of PA are connected to the IEC bus
-			c64->iec.updateCiaPins(PALatch, DDRA);
-			return;
-			
-        case 0x01: // CIA_DATA_PORT_B
-			
-			PBLatch = value;
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			// oldPB = PB;
-			return;
+void
+CIA2::pokeDataPortDirectionA(uint8_t value)
+{
+    DDRA = value;
+    PA = PALatch | ~DDRA;
+    
+    // Bits 0 and 1 determine the memory bank seen the VIC
+    c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+    
+    // Bits 3 to 5 of PA are connected to the IEC bus
+    c64->iec.updateCiaPins(PALatch, DDRA);
+}
 
-        case 0x02: // CIA_DATA_DIRECTION_A
-            
-            DDRA = value;
-            PA = PALatch | ~DDRA;
-            
-            // Bits 0 and 1 determine the memory bank seen the VIC
-            c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
-            
-            // Bits 3 to 5 of PA are connected to the IEC bus
-            c64->iec.updateCiaPins(PALatch, DDRA);
-            return;
-            
-        case 0x03: // CIA_DATA_DIRECTION_B
-			
-			DDRB = value;
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			// oldPB = PB;
-			return;
-			
-		default:
-			CIA::poke(addr, value);
-	}
+void
+CIA2::pokeDataPortDirectionB(uint8_t value)
+{
+    DDRB = value;
+    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    // oldPB = PB;
 }
 			

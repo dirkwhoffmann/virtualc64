@@ -527,16 +527,30 @@ public:
     //! @functiongroup Communicating via the I/O address space
     //
     
-    /*! @brief    Special peek function for the I/O memory range
-     *  @details  The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip
-     */
-    virtual uint8_t peek(uint16_t addr);
+    //! @brief    Peek function for the CIA's I/O memory
+    uint8_t peek(uint16_t addr);
+
+    //! @brief    Peek function for the CIA's data port A register
+    virtual uint8_t peekDataPortA() = 0;
+
+    //! @brief    Peek function for the CIA's data port B register
+    virtual uint8_t peekDataPortB() = 0;
+
+    //! @brief    Poke function for the CIA's I/O memory
+    void poke(uint16_t addr, uint8_t value);
     
-    /*! @brief    Special poke function for the I/O memory range
-     *  @details  The poke function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip
-     */
-    virtual void poke(uint16_t addr, uint8_t value);
-    
+    //! @brief    Poke function for the CIA's data port A register
+    virtual void pokeDataPortA(uint8_t value) = 0;
+
+    //! @brief    Poke function for the CIA's data port B register
+    virtual void pokeDataPortB(uint8_t value) = 0;
+
+    //! @brief    Poke function for the CIA's data port A direction register
+    virtual void pokeDataPortDirectionA(uint8_t value) = 0;
+
+    //! @brief    Poke function for the CIA's data port B direction register
+    virtual void pokeDataPortDirectionB(uint8_t value) = 0;
+
     
     //
     //! @functiongroup Running the device
@@ -611,11 +625,12 @@ public:
 	static bool isCia1Addr(uint16_t addr)
 		{ return (CIA1_START_ADDR <= addr && addr <= CIA1_END_ADDR); }
 	
-    //! @brief    Custom implementation of peek
-	uint8_t peek(uint16_t addr);
-
-    //! @brief    Custom implementation of poke
-    void poke(uint16_t addr, uint8_t value);
+    uint8_t peekDataPortA();
+    uint8_t peekDataPortB();
+    void pokeDataPortA(uint8_t value);
+    void pokeDataPortB(uint8_t value);
+    void pokeDataPortDirectionA(uint8_t value);
+    void pokeDataPortDirectionB(uint8_t value);
 	
 	/*! @brief    Simulates a joystick movement
 	 *  @param    nr    joystick number (1 or 2)
@@ -672,8 +687,12 @@ public:
 	static bool isCia2Addr(uint16_t addr) 
 		{ return (CIA2_START_ADDR <= addr && addr <= CIA2_END_ADDR); }
 
-	uint8_t peek(uint16_t addr);
-	void poke(uint16_t addr, uint8_t value);
+    uint8_t peekDataPortA();
+    uint8_t peekDataPortB();
+    void pokeDataPortA(uint8_t value);
+    void pokeDataPortB(uint8_t value);
+    void pokeDataPortDirectionA(uint8_t value);
+    void pokeDataPortDirectionB(uint8_t value);
 	
 	void dumpState();
 };
