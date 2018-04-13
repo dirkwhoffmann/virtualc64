@@ -128,21 +128,21 @@ CIA::peek(uint16_t addr)
 			
         case 0x04: // CIA_TIMER_A_LOW
 			
-			result = getCounterALo();
+            result = LO_BYTE(counterA);
 			break;
 			
         case 0x05: // CIA_TIMER_A_HIGH
-			result = getCounterAHi();
+            result = HI_BYTE(counterA);
 			break;
 			
         case 0x06: // CIA_TIMER_B_LOW
 
-			result = getCounterBLo();
+            result = LO_BYTE(counterB);
 			break;
 			
         case 0x07: // CIA_TIMER_B_HIGH
 			
-			result = getCounterBHi();
+            result = HI_BYTE(counterB);
 			break;
 			
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
@@ -238,17 +238,17 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
         case 0x04: // CIA_TIMER_A_LOW
 			
-			setLatchALo(value);
+			latchA = value;
 			if (delay & LoadA2) {
-				setCounterALo(value);
+                counterA = (counterA & 0xFF00) | value;
 			}
 			return;
 			
         case 0x05: // CIA_TIMER_A_HIGH
-						
-			setLatchAHi(value);		
+			
+            latchA = (latchA & 0x00FF) | (value << 8);
             if (delay & LoadA2) {
-                setCounterAHi(value);
+                counterA = (counterA & 0x00FF) | (value << 8);
             }
             
 			// Load counter if timer is stopped
@@ -259,17 +259,17 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
         case 0x06: // CIA_TIMER_B_LOW
 
-			setLatchBLo(value);
+            latchB = (latchB & 0xFF00) | value;
 			if (delay & LoadB2) {
-				setCounterBLo(value);
+                counterB = (counterB & 0xFF00) | value;
 			}			
 			return;
 			
         case 0x07: // CIA_TIMER_B_HIGH
 			
-			setLatchBHi(value);
+            latchB = (latchB & 0x00FF) | (value << 8);
             if (delay & LoadB2) {
-                setCounterBHi(value);
+                counterB = (counterB & 0x00FF) | (value << 8);
             }
             
 			// Load counter if timer is stopped
@@ -566,19 +566,21 @@ CIA::dumpTrace()
 void
 CIA::dumpState()
 {
-	msg("              Counter A : %02X\n", getCounterA());
-	msg("                Latch A : %02X\n", getLatchA());
-	msg("            Data port A : %02X\n", getDataPortA());
-	msg("  Data port direction A : %02X\n", getDataPortDirectionA());
-	msg("     Control register A : %02X\n", getControlRegA());
-	msg("     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
+    CIAInfo info = getInfo();
+    
+	msg("              Counter A : %04X\n", info.timerA.count);
+    msg("                Latch A : %04X\n", info.timerA.latch);
+    msg("            Data port A : %02X\n", info.portA.reg);
+    msg("  Data port direction A : %02X\n", info.portA.dir);
+	msg("     Control register A : %02X\n", CRA);
+	msg("     Timer A interrupts : %s\n",   info.timerA.interruptMask ? "enabled" : "disabled");
 	msg("\n");
-	msg("              Counter B : %02X\n", getCounterB());
-	msg("                Latch B : %02X\n", getLatchB());
-	msg("            Data port B : %02X\n", getDataPortB());
-	msg("  Data port direction B : %02X\n", getDataPortDirectionB());
-	msg("     Control register B : %02X\n", getControlRegB());
-	msg("     Timer B interrupts : %s\n", isInterruptEnabledB() ? "enabled" : "disabled");	
+	msg("              Counter B : %04X\n", info.timerB.count);
+	msg("                Latch B : %04X\n", info.timerB.latch);
+	msg("            Data port B : %02X\n", info.portB.reg);
+	msg("  Data port direction B : %02X\n", info.portB.dir);
+	msg("     Control register B : %02X\n", CRB);
+	msg("     Timer B interrupts : %s\n",   info.timerB.interruptMask ? "enabled" : "disabled");
 	msg("\n");
 	msg("  Interrupt control reg : %02X\n", ICR);
 	msg("     Interrupt mask reg : %02X\n", IMR);

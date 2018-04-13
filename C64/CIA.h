@@ -257,6 +257,7 @@ public:
     
     // DEPRECATED:
     
+    /*
 	//! @brief    Returns the value of data port A
     uint8_t getDataPortA() { return peek(0x00); }
 
@@ -281,11 +282,14 @@ public:
 	//! @brief    Sets the current value of the data port B direction register
     void setDataPortDirectionB(uint8_t value) { DDRB = value; }
 
+     */
+    
     //! @brief    Simulates a rising edge on the flag pin
     void triggerRisingEdgeOnFlagPin();
 
     //! @brief    Simulates a falling edge on the flag pin
     void triggerFallingEdgeOnFlagPin();
+    
     
     //
 	// Interrupt control
@@ -303,6 +307,7 @@ public:
      */
     virtual void releaseInterruptLine() = 0;
     
+    /*
 	//! @brief    Returns true, if timer can trigger interrupts
     bool isInterruptEnabledA() { return IMR & 0x01; }
 
@@ -351,6 +356,7 @@ public:
     //! @brief    Enables or disable interrupts on negative edges of the FLAG pin
     void setInterruptEnabledFlg(bool b) { if (b) ICR |= 0x10; else ICR &= (0xff-0x10); }
     
+    
 	//
 	// Timer A
 	// 
@@ -391,12 +397,15 @@ public:
 	//! @brief    Sets high byte of current timer value.
     void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
 	
+     */
+    
 	/*! @brief    Load latched value into timer.
 	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait
      *            for one cycle before it continues to count.
      */
     void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
 	
+    /*
 	//! @brief    Returns true, if timer is running, 0 if stopped.
     bool isStartedA() { return CRA & 0x01; }
 	
@@ -478,13 +487,16 @@ public:
 	
 	//! @brief    Set high byte of current timer value.
     void setCounterBHi(uint8_t value) { counterB = (value << 8) | (counterB & 0xFF); }
-	
+	*/
+     
 	/*! @brief    Loads latched value into timer.
 	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for
      *            one cycle before it continues to count.
      */
     void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
 	
+    /*
+     
 	//! @brief    Returns true, if timer is running, 0 if stopped.
     bool isStartedB() { return CRB & 0x01; }
 	
@@ -526,7 +538,7 @@ public:
 	
 	//! @brief    Sets value of timer control register.
     void setControlRegB(uint8_t value) { CRB = value; }
-	
+	*/
 	
     //
     //! @functiongroup Communicating via the I/O address space
