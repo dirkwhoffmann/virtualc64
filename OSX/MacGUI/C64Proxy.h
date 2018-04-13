@@ -216,76 +216,9 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) tracingEnabled;
+// - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
-
-- (uint8_t) dataPortA;
-- (void) setDataPortA:(uint8_t)v;
-- (uint8_t) dataPortDirectionA;
-- (void) setDataPortDirectionA:(uint8_t)v;
-- (uint16_t) timerA;
-- (void) setTimerA:(uint16_t)v;
-- (uint16_t) timerLatchA;
-- (void) setTimerLatchA:(uint16_t)v;
-- (bool) startFlagA;
-- (void) setStartFlagA:(bool)b;
-- (void) toggleStartFlagA;
-- (bool) oneShotFlagA;
-- (void) setOneShotFlagA:(bool)b;
-- (void) toggleOneShotFlagA;
-- (bool) underflowFlagA;
-- (void) setUnderflowFlagA:(bool)b;
-- (void) toggleUnderflowFlagA;
-- (bool) pendingSignalFlagA;
-- (void) setPendingSignalFlagA:(bool)b;
-- (void) togglePendingSignalFlagA;
-- (bool) interruptEnableFlagA;
-- (void) setInterruptEnableFlagA:(bool)b;
-- (void) toggleInterruptEnableFlagA;
-
-- (uint8_t) dataPortB;
-- (void) setDataPortB:(uint8_t)v;
-- (uint8_t) dataPortDirectionB;
-- (void) setDataPortDirectionB:(uint8_t)v;
-- (uint16_t) timerB;
-- (void) setTimerB:(uint16_t)v;
-- (uint16_t) timerLatchB;
-- (void) setTimerLatchB:(uint16_t)v;
-- (bool) startFlagB;
-- (void) setStartFlagB:(bool)b;
-- (void) toggleStartFlagB;
-- (bool) oneShotFlagB;
-- (void) setOneShotFlagB:(bool)b;
-- (void) toggleOneShotFlagB;
-- (bool) underflowFlagB;
-- (void) setUnderflowFlagB:(bool)b;
-- (void) toggleUnderflowFlagB;
-- (bool) pendingSignalFlagB;
-- (void) setPendingSignalFlagB:(bool)b;
-- (void) togglePendingSignalFlagB;
-- (bool) interruptEnableFlagB;
-- (void) setInterruptEnableFlagB:(bool)b;
-- (void) toggleInterruptEnableFlagB;
-
-- (uint8_t) todHours;
-- (void) setTodHours:(uint8_t)value;
-- (uint8_t) todMinutes;
-- (void) setTodMinutes:(uint8_t)value;
-- (uint8_t) todSeconds;
-- (void) setTodSeconds:(uint8_t)value;
-- (uint8_t) todTenth;
-- (void) setTodTenth:(uint8_t)value;
-
-- (uint8_t) alarmHours;
-- (void) setAlarmHours:(uint8_t)value;
-- (uint8_t) alarmMinutes;
-- (void) setAlarmMinutes:(uint8_t)value;
-- (uint8_t) alarmSeconds;
-- (void) setAlarmSeconds:(uint8_t)value;
-- (uint8_t) alarmTenth;
-- (void) setAlarmTenth:(uint8_t)value;
-- (bool) isTodInterruptEnabled;
-- (void) setTodInterruptEnabled:(bool)b;
+- (CIAInfo) getInfo;
 
 @end 
 

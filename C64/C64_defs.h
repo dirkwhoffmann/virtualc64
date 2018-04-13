@@ -9,6 +9,8 @@
 #ifndef C64_DEFS_H
 #define C64_DEFS_H
 
+#include <stdint.h>
+
 //! @brief Snapshot version number of this release
 #define V_MAJOR 1
 #define V_MINOR 9
@@ -157,6 +159,67 @@ typedef enum {
     MEM_ROM,
     MEM_IO
 } MemoryType;
+
+/*! @brief    CIA chip model
+ *  @details  Currently, only the old model is supported.
+ */
+typedef enum {
+    MOS_6526_OLD,
+    MOS_6526_NEW
+} CIAChipModel;
+
+
+//! @brief    Time of day information (TOD)
+typedef union {
+    struct {
+        uint8_t tenth;
+        uint8_t seconds;
+        uint8_t minutes;
+        uint8_t hours;
+        uint32_t oldValue;
+    };
+    uint32_t value;
+} TimeOfDay;
+
+/*! @brief    CIA info
+ *  @details  This structure is returned by CIA::getInfo() which is used by the GUI to
+ *            update its debug panel contents.
+ */
+
+typedef struct {
+    TimeOfDay time;
+    TimeOfDay latch;
+    TimeOfDay alarm;
+} TODInfo;
+
+typedef struct {
+    struct {
+        uint8_t reg;
+        uint8_t dir;
+    } portA;
+    struct {
+        uint8_t reg;
+        uint8_t dir;
+    } portB;
+    struct {
+        uint32_t count;
+        uint32_t latch;
+        bool running;
+        bool oneShot;
+        bool interruptMask;
+        bool interruptData;
+    } timerA;
+    struct {
+        uint32_t count;
+        uint32_t latch;
+        bool running;
+        bool oneShot;
+        bool interruptMask;
+        bool interruptData;
+    } timerB;
+    TODInfo tod;
+    bool todInterruptMask; 
+} CIAInfo;
 
 /*! @brief    Sound chip models
  *  @details  This enum reflects enum "chip_model" used by reSID.

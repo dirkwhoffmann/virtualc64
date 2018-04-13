@@ -150,25 +150,12 @@
 
 - (void)enableUserEditing:(BOOL)enabled
 {
-	NSControl *controls[] = { 
+	NSControl *controls[] = {
+        
 		// CPU panel
 		pc, sp, a, x, y, 
 		Nflag, Zflag, Cflag, Iflag, Bflag, Dflag, Vflag,
-		// CIA panel
-		cia1DataPortA, cia1DataPortDirectionA, cia1TimerA, cia1LatchedTimerA, 
-		//cia1RunningA, cia1OneShotA, cia1CountUnderflowsA, cia1SignalPendingA, cia1InterruptEnableA,
-		cia1DataPortB, cia1DataPortDirectionB, cia1TimerB, cia1LatchedTimerB, 
-		//cia1RunningB, cia1OneShotB, cia1CountUnderflowsB, cia1SignalPendingB, cia1InterruptEnableB,
-		tod1Hours, tod1Minutes, tod1Seconds, tod1Tenth,
-		alarm1Hours, alarm1Minutes, alarm1Seconds, alarm1Tenth,
-        // tod1InterruptEnabled,
-		cia2DataPortA, cia2DataPortDirectionA, cia2TimerA, cia2LatchedTimerA, 
-		// cia2RunningA, cia2OneShotA, cia2CountUnderflowsA, cia2SignalPendingA, cia2InterruptEnableA,
-		cia2DataPortB, cia2DataPortDirectionB, cia2TimerB, cia2LatchedTimerB, 
-		//cia2RunningB, cia2OneShotB, cia2CountUnderflowsB, cia2SignalPendingB, cia2InterruptEnableB,
-		tod2Hours, tod2Minutes, tod2Seconds, tod2Tenth,
-		alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth,
-        // tod2InterruptEnabled,
+		
 		// VIC panel
 		VicSpriteX1, VicSpriteX2, VicSpriteX3, VicSpriteX4, VicSpriteX5, VicSpriteX6, VicSpriteX7, VicSpriteX8,
         VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,

@@ -524,7 +524,8 @@ CIA::checkForTODInterrupt()
     }
 }
 
-void CIA::dumpTrace()
+void
+CIA::dumpTrace()
 {
 	const char *indent = "                                                                      ";
 
@@ -562,7 +563,8 @@ void CIA::dumpTrace()
 		  indent, counterB, latchB, PB, PBLatch, DDRB, CRB);
 }
 
-void CIA::dumpState()
+void
+CIA::dumpState()
 {
 	msg("              Counter A : %02X\n", getCounterA());
 	msg("                Latch A : %02X\n", getLatchA());
@@ -584,7 +586,41 @@ void CIA::dumpState()
 	tod.dumpState();
 }
 
-void CIA::executeOneCycle()
+CIAInfo
+CIA::getInfo()
+{
+    bool runningA = delay & CountA3;
+    bool runningB = delay & CountB3;
+
+    CIAInfo info;
+    
+    info.portA.reg = peekDataPortA();
+    info.portA.dir = DDRA;
+
+    info.portB.reg = peekDataPortB();
+    info.portB.dir = DDRB;
+
+    info.timerA.running = runningA;
+    info.timerA.oneShot = CRA & 0x08;
+    info.timerA.interruptMask = IMR & 0x01;
+    info.timerA.interruptData = ICR & 0x01;
+    info.timerA.count = counterA - (runningA ? (uint16_t)idleCounter() : 0);
+    info.timerA.latch = latchA;
+    
+    info.timerB.running = runningB;
+    info.timerB.oneShot = CRB & 0x08;
+    info.timerB.interruptMask = IMR & 0x02;
+    info.timerB.interruptData = ICR & 0x02;
+    info.timerB.latch = latchB;
+    info.timerB.count = counterB - (runningB ? (uint16_t)idleCounter() : 0);
+
+    info.tod = tod.getInfo();
+    info.todInterruptMask = ICR & 0x04;
+    return info;
+}
+
+void
+CIA::executeOneCycle()
 {
     wakeUp();
     

@@ -82,6 +82,8 @@ class Joystick;
  */
 class CIA : public VirtualComponent {
     
+    friend C64;
+    
     // ---------------------------------------------------------------------------------------
     //                                          Properties
     // ---------------------------------------------------------------------------------------
@@ -249,6 +251,11 @@ public:
     //
     //! @functiongroup Accessing device properties
     //
+    
+    CIAInfo getInfo();
+    
+    
+    // DEPRECATED:
     
 	//! @brief    Returns the value of data port A
     uint8_t getDataPortA() { return peek(0x00); }
@@ -549,6 +556,7 @@ public:
     //! @brief    Poke function for the CIA's data port B direction register
     virtual void pokeDataPortDirectionB(uint8_t value) = 0;
 
+private:
     
     //
     //! @functiongroup Running the device
@@ -556,7 +564,7 @@ public:
     
 	//! @brief    Executes the CIA for one cycle
 	void executeOneCycle();
-
+    
 	//! @brief    Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
@@ -567,8 +575,6 @@ public:
     //
     //! @functiongroup Speeding up the emulation
     //
-    
-private:
     
     //! @brief    Puts the CIA chip into idle state
     virtual void sleep();

@@ -265,76 +265,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->cia->dumpState(); }
-- (bool) tracingEnabled { return wrapper->cia->tracingEnabled(); }
+// - (bool) tracingEnabled { return wrapper->cia->tracingEnabled(); }
 - (void) setTraceMode:(bool)b {
     if (b) wrapper->cia->startTracing(b); else wrapper->cia->stopTracing(); }
-- (uint8_t) dataPortA { return wrapper->cia->getDataPortA(); }
-- (void) setDataPortA:(uint8_t)v { wrapper->cia->setDataPortA(v); }
-- (uint8_t) dataPortDirectionA { return wrapper->cia->getDataPortDirectionA(); }
-- (void) setDataPortDirectionA:(uint8_t)v { wrapper->cia->setDataPortDirectionA(v); }
-- (uint16_t) timerA { return wrapper->cia->getCounterA(); }
-- (void) setTimerA:(uint16_t)v { wrapper->cia->setCounterA(v); }
-- (uint16_t) timerLatchA { return wrapper->cia->getLatchA(); }
-- (void) setTimerLatchA:(uint16_t)v { wrapper->cia->setLatchA(v); }
-- (bool) startFlagA { return wrapper->cia->isStartedA(); }
-- (void) setStartFlagA:(bool)b { wrapper->cia->setStartedA(b); }
-- (void) toggleStartFlagA { wrapper->cia->toggleStartFlagA(); }
-- (bool) oneShotFlagA { return wrapper->cia->isOneShotA(); }
-- (void) setOneShotFlagA:(bool)b { wrapper->cia->setOneShotA(b); }
-- (void) toggleOneShotFlagA { wrapper->cia->toggleOneShotFlagA(); }
-- (bool) underflowFlagA { return wrapper->cia->willIndicateUnderflowA(); }
-- (void) setUnderflowFlagA:(bool)b { return wrapper->cia->setIndicateUnderflowA(b); }
-- (void) toggleUnderflowFlagA { wrapper->cia->toggleUnderflowFlagA(); }
-- (bool) pendingSignalFlagA {return wrapper->cia->isSignalPendingA(); }
-- (void) setPendingSignalFlagA:(bool)b { wrapper->cia->setSignalPendingA(b); }
-- (void) togglePendingSignalFlagA { wrapper->cia->togglePendingSignalFlagA(); }
-- (bool) interruptEnableFlagA { return wrapper->cia->isInterruptEnabledA(); }
-- (void) setInterruptEnableFlagA:(bool)b { wrapper->cia->setInterruptEnabledA(b); }
-- (void) toggleInterruptEnableFlagA { wrapper->cia->toggleInterruptEnableFlagA(); }
-
-- (uint8_t) dataPortB { return wrapper->cia->getDataPortB(); }
-- (void) setDataPortB:(uint8_t)v { wrapper->cia->setDataPortB(v); }
-- (uint8_t) dataPortDirectionB { return wrapper->cia->getDataPortDirectionB(); }
-- (void) setDataPortDirectionB:(uint8_t)v { wrapper->cia->setDataPortDirectionB(v); }
-- (uint16_t) timerB { return wrapper->cia->getCounterB(); }
-- (void) setTimerB:(uint16_t)v { wrapper->cia->setCounterB(v); }
-- (uint16_t) timerLatchB { return wrapper->cia->getLatchB(); }
-- (void) setTimerLatchB:(uint16_t)v { wrapper->cia->setLatchB(v); }
-- (bool) startFlagB { return wrapper->cia->isStartedB(); }
-- (void) setStartFlagB:(bool)b { wrapper->cia->setStartedB(b); }
-- (void) toggleStartFlagB { wrapper->cia->toggleStartFlagB(); }
-- (bool) oneShotFlagB { return wrapper->cia->isOneShotB(); }
-- (void) setOneShotFlagB:(bool)b { wrapper->cia->setOneShotB(b); }
-- (void) toggleOneShotFlagB { wrapper->cia->toggleOneShotFlagB(); }
-- (bool) underflowFlagB { return wrapper->cia->willIndicateUnderflowB(); }
-- (void) setUnderflowFlagB:(bool)b { return wrapper->cia->setIndicateUnderflowB(b); }
-- (void) toggleUnderflowFlagB { wrapper->cia->toggleUnderflowFlagB(); }
-- (bool) pendingSignalFlagB {return wrapper->cia->isSignalPendingB(); }
-- (void) setPendingSignalFlagB:(bool)b { wrapper->cia->setSignalPendingB(b); }
-- (void) togglePendingSignalFlagB { wrapper->cia->togglePendingSignalFlagB(); }
-- (bool) interruptEnableFlagB { return wrapper->cia->isInterruptEnabledB(); }
-- (void) setInterruptEnableFlagB:(bool)b { wrapper->cia->setInterruptEnabledB(b); }
-- (void) toggleInterruptEnableFlagB { wrapper->cia->toggleInterruptEnableFlagB(); }
-
-- (uint8_t) todHours { return wrapper->cia->tod.getTodHours(); }
-- (void) setTodHours:(uint8_t)value { wrapper->cia->tod.setTodHours(value); }
-- (uint8_t) todMinutes { return wrapper->cia->tod.getTodMinutes(); }
-- (void) setTodMinutes:(uint8_t)value { wrapper->cia->tod.setTodMinutes(value); }
-- (uint8_t) todSeconds { return wrapper->cia->tod.getTodSeconds(); }
-- (void) setTodSeconds:(uint8_t)value { wrapper->cia->tod.setTodSeconds(value); }
-- (uint8_t) todTenth { return wrapper->cia->tod.getTodTenth(); }
-- (void) setTodTenth:(uint8_t)value { wrapper->cia->tod.setTodTenth(value); }
-
-- (uint8_t) alarmHours { return wrapper->cia->tod.getAlarmHours(); }
-- (void) setAlarmHours:(uint8_t)value { wrapper->cia->tod.setAlarmHours(value); }
-- (uint8_t) alarmMinutes { return wrapper->cia->tod.getAlarmMinutes(); }
-- (void) setAlarmMinutes:(uint8_t)value { wrapper->cia->tod.setAlarmMinutes(value); }
-- (uint8_t) alarmSeconds { return wrapper->cia->tod.getAlarmSeconds(); }
-- (void) setAlarmSeconds:(uint8_t)value { wrapper->cia->tod.setAlarmSeconds(value); }
-- (uint8_t) alarmTenth { return wrapper->cia->tod.getAlarmTenth(); }
-- (void) setAlarmTenth:(uint8_t)value { wrapper->cia->tod.setAlarmTenth(value); }
-- (bool) isTodInterruptEnabled { return wrapper->cia->isInterruptEnabledTOD(); }
-- (void) setTodInterruptEnabled:(bool)b { wrapper->cia->setInterruptEnabledTOD(b); }
+- (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
 
 @end 
 

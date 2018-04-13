@@ -32,17 +32,6 @@ class TOD : public VirtualComponent {
 
 private:
     
-	typedef	union {
-		struct { 
-			uint8_t tenth;
-			uint8_t seconds;
-			uint8_t minutes;
-			uint8_t hours;
-            uint32_t oldValue;
-		};
-		uint32_t value;
-	} TimeOfDay;
-	
 	TimeOfDay tod;
 	TimeOfDay alarm;
 	TimeOfDay latch;
@@ -88,6 +77,9 @@ public:
 	//! @brief    Prints debug information.
 	void dumpState();	
 
+    //! @brief    Get debug info
+    TODInfo getInfo();
+    
     //! @brief    Setter
     void setHz(uint8_t value) { assert(value == 5 || value == 6); hz = value; }
 

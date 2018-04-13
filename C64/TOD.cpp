@@ -65,6 +65,19 @@ TOD::dumpState()
 	msg("\n");
 }
 
+TODInfo
+TOD::getInfo()
+{
+    TODInfo info;
+    
+    info.time = tod;
+    info.latch = latch;
+    info.alarm = alarm;
+    
+    return info;
+}
+
+
 void
 TOD::increment()
 {
