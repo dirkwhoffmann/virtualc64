@@ -356,7 +356,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port A">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="joystick32_generic" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -364,8 +364,8 @@
                                         <menuItem title="None" image="none32" tag="-1" id="VD3-Wr-Ufe"/>
                                         <menuItem title="Keyset 1" image="keyboard32" id="L2h-xt-iO6"/>
                                         <menuItem title="Keyset 2" image="keyboard32" tag="1" id="Ohe-Pi-c1S"/>
-                                        <menuItem title="USB Joystick 1" image="joystick1_32" tag="2" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="3" id="1PP-xx-NoT">
+                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="2" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="3" id="1PP-xx-NoT">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -376,7 +376,7 @@
                             </connections>
                         </popUpButton>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port B" paletteLabel="Port B" tag="11" image="joystick1_32" id="Klt-YL-0mv" userLabel="Port B">
+                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port B" paletteLabel="Port B" tag="11" image="joystick32_generic" id="Klt-YL-0mv" userLabel="Port B">
                         <nil key="toolTip"/>
                         <size key="minSize" width="10" height="20"/>
                         <size key="maxSize" width="56" height="80"/>
@@ -391,8 +391,8 @@
                                         <menuItem title="None" image="none32" tag="-1" id="xyt-eC-0im"/>
                                         <menuItem title="Keyset 1" image="keyboard32" id="PAa-za-K8O"/>
                                         <menuItem title="Keyset 2" image="keyboard32" tag="1" id="1M8-Dz-dop"/>
-                                        <menuItem title="USB Joystick 1" state="on" image="joystick1_32" tag="2" id="JM3-8Y-xZU"/>
-                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="3" id="Ahc-WA-2jp">
+                                        <menuItem title="USB Joystick 1" state="on" image="joystick32_generic" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -749,7 +749,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
                                             <rect key="frame" x="1" y="0.0" width="266" height="459"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView">
                                                     <rect key="frame" x="0.0" y="0.0" width="266" height="442"/>
@@ -2791,8 +2791,7 @@
         <image name="cartridge" width="128" height="128"/>
         <image name="diskette" width="101" height="97"/>
         <image name="fast" width="128" height="128"/>
-        <image name="joystick1_32" width="35" height="35"/>
-        <image name="joystick2_32" width="35" height="35"/>
+        <image name="joystick32_generic" width="32" height="32"/>
         <image name="keyboard32" width="34" height="35"/>
         <image name="none32" width="39" height="39"/>
         <image name="pause32" width="32" height="32"/>

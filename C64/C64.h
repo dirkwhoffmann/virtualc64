@@ -20,15 +20,26 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.9
 //
-// Accuracy of interrupt handling has been improved.
-// As a result, VirtualC64 passes VICE test cia-timer-oldcias.
+// The time-travel feature has been reworked. In addition to the old auto-saving feature, the emulator now supports user-saved snapshots. Four new toolbar icons have been added:
+// Rewind : Reloads the latest auto-saved snapshot
+// Revert : Reloads the latest user-saved snapshot
+// Snap : Takes a snapshot
+// Browse : Opens a window showing all snapshots taken
+// Sony's Dualshock 4 (2nd Gen) is now a supported controller.
+// Emulation accuracy of the CPU and the two CIA chips has been improved. The emulator now passes most CIA tests from the VICE test suite.
+// Due to speed optimizations in the CIA implementation, the emulator runs about 10% - 15% faster than the previous release.
 //
 // TODO:
 //
-// CIA:
-// Remove 'virtual' from CIA::peek, CIA::poke
-// Instead, add virtual functions PeekPortA, PokePortA
+// ASAP: Add a read() function to all components that have a peek() function.
+// read() is the same peek(), but without side effects.
+// Afterwards, remove peek from Proxy. peek and poke must never be called outside the execution thread
 //
+// Make all peek and poke methods private and add friend classes
+// This will guarantee that the GUI can never access these two methods
+// Introduce VIC::getInfo
+// Introduce CPU::getInfo
+
 // CLEANUP:
 // Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
 //                simplify code. 
@@ -40,7 +51,7 @@
 #define _C64_INC
 
 // Disable assert checking in relase versions
-// #define NDEBUG
+#define NDEBUG
 
 // Data types and constants
 #include "C64_defs.h"

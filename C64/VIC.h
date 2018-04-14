@@ -35,8 +35,9 @@ class PixelEngine;
  */
 class VIC : public VirtualComponent {
 
-    friend class PixelEngine;
-   
+    friend PixelEngine;
+    friend C64Memory;
+    
 private:
     
     /*! @brief    Reference to the attached pixel engine (PE). 
@@ -50,9 +51,9 @@ public:
     void ping();
 
 
-	// -----------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------
 	//                                     Internal state
-	// -----------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------
 
     //! @brief    Main pixel engine pipe
     PixelEnginePipe p;
@@ -215,16 +216,16 @@ public:
     inline void clearMainFrameFF() { if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false; }
      
     
-	// -----------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------
 	//                              I/O memory handling and RAM access
-	// -----------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------
 
 public:
 	
 	/*! @brief    I/O Memory
-	 *  @details  This array is used to store most of the register values that are poked into the
-     *            VIC address space. Note that this does not hold for all register values. Some of them
-     *            are directly stored inside the state pipe for speedup purposes.
+	 *  @details  This array is used to store most of the register values that are poked into
+     *            the VIC address space. Note that this does not hold for all register values.
+     *            Some of them are directly stored inside the state pipe for speedup purposes.
      */
 	uint8_t iomem[64]; 
 
@@ -258,9 +259,9 @@ private:
     uint8_t memIdleAccess();
 
     
-// -----------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 //                                  Character access (cAccess)
-// -----------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
     
     /*! @brief    Performs a character access (cAccess)
      *  @details  During a cAccess, VIC accesses the video matrix
@@ -268,21 +269,21 @@ private:
     void cAccess();
     
     /*! @brief    cAcess character storage
-     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills this array with
-     *            character information 
+     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills this
+     *            array with character information.
      */
     uint8_t characterSpace[40];
     
     /*! @brief    cAcess color storage
-     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills the array with
-     *            color information 
+     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills
+     *            the array with color information.
      */
     uint8_t colorSpace[40];
     
     
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     //                                  Graphics access (gAccess)
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
 
     /*! @brief    Performs a graphics access (gAccess)
      *  @details  During a gAccess, VIC reads graphics data (character or bitmap patterns)
@@ -292,9 +293,9 @@ private:
     void gAccess();
     
 
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     //                             Sprite accesses (pAccess and sAccess)
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     
     //! @brief    Performs a sprite pointer access (sAccess)
     void pAccess(unsigned sprite);
@@ -326,9 +327,9 @@ private:
     uint8_t isSecondDMAcycle;
 
     
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     //                           Memory refresh accesses (rAccess)
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     
     //! @brief    Performs a DRAM refresh
     inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
@@ -388,9 +389,9 @@ private:
     uint8_t spriteExtraColor2;
     
     
-	// ------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------
 	//                                             Lightpen
-	// ------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------
 	
 	/*! @brief    Indicates whether the lightpen has triggered
 	 *  @details  This variable ndicates whether a lightpen interrupt has occurred within the current 
@@ -516,14 +517,14 @@ public:
     inline uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
 
     
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	//                                       Getter and setter
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 
 public:
 	
 	//! @brief    Returns true if the specified address lies in the VIC I/O range
-	static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
+	// static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
 		
 	//! @brief    Returns the current scanline
 	inline uint16_t getScanline() { return yCounter; }
@@ -556,7 +557,9 @@ public:
      *  @note     This function is not needed internally and only invoked by the GUI debug panel
      */
 	void setCharacterMemoryAddr(uint16_t addr);
-		
+    
+private:
+    
 	//! @brief    Peek fallthrough
 	uint8_t peek(uint16_t addr);
     
@@ -564,9 +567,9 @@ public:
 	void poke(uint16_t addr, uint8_t value);
     
     
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	//                                         Properties
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	
 public:
 		
@@ -656,13 +659,13 @@ public:
     inline uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
 	
 	
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	//                                DMA lines, BA signal and IRQs
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 
 private:
     
-    /*! @brief    Set to true in cycle 1, cycle 63 and cycle 65 iff yCounter equals contents of D012
+    /*! @brief    Set to true in cycle 1, cycle 63 and cycle 65 iff yCounter equals D012
      *  @details  Variable is needed to determine if a rasterline should be issued in cycle 1 or 2 
      */
     bool yCounterEqualsIrqRasterline;
@@ -697,7 +700,8 @@ private:
 public: 
 	
 	/*! @brief    Returns next interrupt rasterline
-     *  @details  In line 0, the interrupt is triggered in cycle 2. In all other lines, it is triggered in cycle 1
+     *  @details  In line 0, the interrupt is triggered in cycle 2. In all other lines,
+     *            it is triggered in cycle 1.
      */
 	inline uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 0x80) << 1) | iomem[0x12]; }
 
@@ -722,9 +726,9 @@ public:
 	void triggerLightPenInterrupt();
 
 	
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 	//                                              Sprites
-	// ------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
 
 private:
 

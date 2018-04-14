@@ -83,6 +83,7 @@ class Joystick;
 class CIA : public VirtualComponent {
     
     friend C64;
+    friend C64Memory;
     
     // ---------------------------------------------------------------------------------------
     //                                          Properties
@@ -261,7 +262,8 @@ public:
     //! @brief    Simulates a falling edge on the flag pin
     void triggerFallingEdgeOnFlagPin();
     
-    
+private:
+
     //
 	// Interrupt control
 	//
@@ -318,8 +320,6 @@ public:
 
     //! @brief    Poke function for the CIA's data port B direction register
     virtual void pokeDataPortDirectionB(uint8_t value) = 0;
-
-private:
     
     //
     //! @functiongroup Running the device

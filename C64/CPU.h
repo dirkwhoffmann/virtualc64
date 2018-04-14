@@ -251,7 +251,7 @@ public:
 	//! @brief    Returns current value of the Y register.
     uint8_t getY() { return Y; }
 
-    //! @brief    Initialize PC with its start up valie
+    //! @brief    Initialize PC with its start up value.
     void initPC() { PC = LO_HI(mem->peek(0xFFFC), mem->peek(0xFFFD)); }
 
 	//! @brief    Returns current value of the program counter.
@@ -263,9 +263,6 @@ public:
 	//! @brief    Returns current value of the program counter.
     uint8_t getSP() { return SP; }
 	
-	//! @brief    Returns current value of the memory cell addressed by the program counter.
-    uint8_t peekPC() { return mem->peek(PC); }
-
 	//! @brief    Returns 1, if Negative flag is set, 0 otherwise.
     uint8_t getN() { return (N ? N_FLAG : 0); }
     
@@ -416,14 +413,8 @@ public:
 	//! @brief    Returns the three letter mnemonic for a given opcode.
 	const char *getMnemonic(uint8_t opcode);
     
-	//! @brief    Returns the three letter mnemonic of the next instruction to execute.
-	const char *getMnemonic() { return getMnemonic(mem->peek(PC)); }
-    
 	//! @brief    Returns the adressing mode for a given opcode.
 	AddressingMode getAddressingMode(uint8_t opcode);
-    
-	//! @brief    Returns the adressing mode of the next instruction to execute.
-	AddressingMode getAddressingMode() { return getAddressingMode(mem->peek(PC)); }
     
 	/*! @brief    Returns the length in bytes of the instruction with the specified opcode.
 	 *  @result   Integer value between 1 and 3.
