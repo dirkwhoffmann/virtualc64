@@ -69,11 +69,25 @@ extension MyController {
    
     func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: JoystickProxy!) {
         
+        
         let menu =  popup.menu
-        let item1 = menu?.item(withTag: InputDevice.joystick1)
-        let item2 = menu?.item(withTag: InputDevice.joystick2)
-        item1?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
-        item2?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
+        let item0 = menu?.item(withTag: InputDevice.keyset1)
+        let item1 = menu?.item(withTag: InputDevice.keyset2)
+        let item2 = menu?.item(withTag: InputDevice.joystick1)
+        let item3 = menu?.item(withTag: InputDevice.joystick2)
+        
+        // Set images and titles
+        let defaultImage = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
+        item0?.image = (gamePadManager.gamePads[0]?.image)!
+        item1?.image = (gamePadManager.gamePads[1]?.image)!
+        item2?.image = gamePadManager.gamePads[2]?.image ?? defaultImage
+        item3?.image = gamePadManager.gamePads[3]?.image ?? defaultImage
+
+        item2?.title = gamePadManager.gamePads[2]?.name ?? "USB Device 1"
+        item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 2"
+        
+        item2?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
+        item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
         
         // Mark game pad connected to port
         popup.selectItem(withTag: selectedSlot)

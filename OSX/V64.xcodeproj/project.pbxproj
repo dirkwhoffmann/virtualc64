@@ -11,8 +11,7 @@
 		023024000DC902A700F8818A /* AudioDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 023023FF0DC902A700F8818A /* AudioDevice.mm */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */; };
-		38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick1_32.png */; };
-		38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */; };
+		38AF838C0C7BA24A00F6DBCE /* joystick32_speedlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */; };
 		38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF838B0C7BA24A00F6DBCE /* none32.png */; };
 		5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */; };
 		5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */; };
@@ -125,6 +124,8 @@
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5080F3591EE74784001313D4 /* commodore.png in Resources */ = {isa = PBXBuildFile; fileRef = 5080F3581EE74784001313D4 /* commodore.png */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
+		5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D8512081FF8A0026BAD5 /* joystick32_sony.png */; };
+		5087D858208202170026BAD5 /* joystick32_generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D857208202170026BAD5 /* joystick32_generic.png */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
@@ -275,8 +276,7 @@
 		32DBCF750370BD2300C91783 /* V64_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V64_Prefix.pch; sourceTree = "<group>"; };
 		389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
 		389E777F0C7A3B6F00BEAFA6 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
-		38AF83890C7BA24A00F6DBCE /* joystick1_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick1_32.png; sourceTree = "<group>"; };
-		38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick2_32.png; sourceTree = "<group>"; };
+		38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_speedlink.png; sourceTree = "<group>"; };
 		38AF838B0C7BA24A00F6DBCE /* none32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none32.png; sourceTree = "<group>"; };
 		5000471012DCE8890098D890 /* MyControllerCpuPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCpuPanel.h; sourceTree = "<group>"; };
 		5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCpuPanel.mm; sourceTree = "<group>"; };
@@ -423,6 +423,8 @@
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5080F3581EE74784001313D4 /* commodore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commodore.png; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		5087D8512081FF8A0026BAD5 /* joystick32_sony.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_sony.png; sourceTree = "<group>"; };
+		5087D857208202170026BAD5 /* joystick32_generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_generic.png; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
@@ -947,8 +949,9 @@
 				50E4BFA60C3CE95400CB6B43 /* floppy.png */,
 				50F97E04203D90070005E19C /* joystick.png */,
 				50355F36203E21F600163F80 /* joystick2.png */,
-				38AF83890C7BA24A00F6DBCE /* joystick1_32.png */,
-				38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */,
+				5087D857208202170026BAD5 /* joystick32_generic.png */,
+				38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */,
+				5087D8512081FF8A0026BAD5 /* joystick32_sony.png */,
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
 				50CCB1D31B84ACA8008D8C30 /* keyboard.png */,
 				38AF838B0C7BA24A00F6DBCE /* none32.png */,
@@ -1274,8 +1277,7 @@
 				50CCB1C61B84A185008D8C30 /* tb_inspect2.png in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				50FB74A4203323E700E05051 /* diskette_light.png in Resources */,
-				38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */,
-				38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */,
+				38AF838C0C7BA24A00F6DBCE /* joystick32_speedlink.png in Resources */,
 				504A22AD1BF71FD500B29BEB /* clock_yellow.png in Resources */,
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
 				504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */,
@@ -1311,6 +1313,7 @@
 				50D6954912E3759500D9C738 /* IconD64.icns in Resources */,
 				50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */,
 				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
+				5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */,
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
 				50F9955B203AC13D004C4856 /* key.png in Resources */,
@@ -1322,6 +1325,7 @@
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
 				5007A1692073A2A100E2D231 /* tb_snapshots2.png in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
+				5087D858208202170026BAD5 /* joystick32_generic.png in Resources */,
 				50C9CB241B826CD50054EE86 /* expansion.png in Resources */,
 				50FB74A02033193300E05051 /* serial.png in Resources */,
 				5039A31415BE89940038ACBC /* drive48.png in Resources */,

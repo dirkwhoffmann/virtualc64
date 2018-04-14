@@ -22,7 +22,7 @@
  *           keyboard emulates joysticks. The other two slots are dynamically added when,
  *           a USB joystick or game pad is plugged in.
  */
-@objc class GamePadManager: NSObject {
+class GamePadManager: NSObject {
     
     // private let inputLock = NSLock()
     // Such a thing is used here: TODO: Check if we need this
@@ -45,7 +45,7 @@
         super.init()
     }
     
-    @objc convenience init?(controller: MyController) {
+    convenience init?(controller: MyController) {
         
         self.init()
         self.controller = controller
@@ -97,7 +97,7 @@
     }
     
     //! @brief   Removes all registered devices
-    @objc func shutDown() {
+    func shutDown() {
         
         gamePads = [:];
 
@@ -108,14 +108,13 @@
     //
     
     //! @brief   Returns true iff the specified game pad slot is free
-    @objc public func slotIsEmpty(_ nr: Int) -> Bool {
+    public func slotIsEmpty(_ nr: Int) -> Bool {
         return gamePads[nr] == nil
     }
     
     //! @brief   Returns the lowest free slot number
     /*! @details Returns nil if all slots are already filled up
      */
-
     func findFreeSlot() -> Int? {
         
         var nr = 0
@@ -143,7 +142,7 @@
     //! @brief   Lookup gamePad by locationID
     /*! @details Returns slot number or -1, if no such gamePad was found
      */
-    @objc func lookupGamePad(locationID: Int) -> Int {
+    func lookupGamePad(locationID: Int) -> Int {
         
         for (slotNr, device) in gamePads {
             if (device.locationID == locationID) {
@@ -186,12 +185,6 @@
         
         return result
     }
-    
-    /*
-    @objc public func keysetOfDevice(_ slotNr: Int) -> KeyMap? {
-        return gamePads[slotNr]?.keymap
-    }
-    */
     
     //
     // HID stuff
@@ -327,7 +320,7 @@
         }
     }
     
-    @objc func restoreFactorySettings()
+    func restoreFactorySettings()
     {
         track()
     
