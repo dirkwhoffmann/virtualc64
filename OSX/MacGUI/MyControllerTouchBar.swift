@@ -16,8 +16,9 @@ extension NSTouchBarItem.Identifier {
     static let home       = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.home")
     static let del        = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.del")
     static let restore    = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.restore")
-    static let revertAuto = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.revauto")
-    static let revertUser = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.revuser")
+    static let rewind     = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.rewind")
+    static let snap       = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.snap")
+    static let revert     = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.revert")
 }
 
 @available(OSX 10.12.2, *)
@@ -59,8 +60,9 @@ extension MyController : NSTouchBarDelegate
             .home,
             .del,
             .restore,
-            .revertAuto,
-            .revertUser
+            .rewind,
+            .snap,
+            .revert
         ]
         
         // Make touchbar customizable
@@ -71,8 +73,9 @@ extension MyController : NSTouchBarDelegate
             .home,
             .del,
             .restore,
-            .revertAuto,
-            .revertUser
+            .rewind,
+            .snap,
+            .revert
         ]
         
         return touchBar
@@ -140,20 +143,30 @@ extension MyController : NSTouchBarDelegate
                                  action: #selector(homeKeyAction))
             return item
 */
-            
-        case NSTouchBarItem.Identifier.revertAuto:
+         
+        case NSTouchBarItem.Identifier.rewind:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name(rawValue: "tb_snapshots2.png"))!
+            let icon = NSImage(named: NSImage.Name(rawValue: "tb_rewind.png"))!
             let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Rewind"
             item.view = NSButton(image: resizedIcon,
                                  target: self,
                                  action: #selector(restoreLatestAutoSnapshotAction(_:)))
             return item
-        
-        case NSTouchBarItem.Identifier.revertUser:
+            
+        case NSTouchBarItem.Identifier.snap:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name(rawValue: "tb_snapshots3.png"))!
+            let icon = NSImage(named: NSImage.Name(rawValue: "tb_freeze.png"))!
+            let resizedIcon = icon.resizeImage(width: 24, height: 24)
+            item.customizationLabel = "Snap"
+            item.view = NSButton(image: resizedIcon,
+                                 target: self,
+                                 action: #selector(takeSnapshot(_:)))
+            return item
+        
+        case NSTouchBarItem.Identifier.revert:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name(rawValue: "tb_revert.png"))!
             let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Revert"
             item.view = NSButton(image: resizedIcon,
