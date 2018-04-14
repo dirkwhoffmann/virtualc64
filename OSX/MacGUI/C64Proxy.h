@@ -216,7 +216,6 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-// - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
 - (CIAInfo) getInfo;
 

@@ -265,7 +265,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->cia->dumpState(); }
-// - (bool) tracingEnabled { return wrapper->cia->tracingEnabled(); }
 - (void) setTraceMode:(bool)b {
     if (b) wrapper->cia->startTracing(b); else wrapper->cia->stopTracing(); }
 - (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
@@ -304,19 +303,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
 - (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
 
-
-
-/*
-- (BOOL) shiftKeyIsPressed { return wrapper->keyboard->shiftKeyIsPressed(); }
-- (BOOL) commodoreKeyIsPressed { return wrapper->keyboard->commodoreKeyIsPressed(); }
-- (BOOL) ctrlKeyIsPressed { return wrapper->keyboard->ctrlKeyIsPressed(); }
-- (BOOL) runstopKeyIsPressed { return wrapper->keyboard->runstopKeyIsPressed(); }
-
-- (void) toggleShiftKey { wrapper->keyboard->toggleShiftKey(); }
-- (void) toggleCommodoreKey { wrapper->keyboard->toggleCommodoreKey(); }
-- (void) toggleCtrlKey { wrapper->keyboard->toggleCtrlKey(); }
-- (void) toggleRunstopKey { wrapper->keyboard->toggleRunstopKey(); }
-*/
 @end
 
 
@@ -469,7 +455,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
 - (NSInteger)numTracks { return (NSInteger)wrapper->disk->numTracks; }
 
-
 @end
 
 // -------------------------------------------------------------------------
@@ -517,8 +502,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setWriteProtection:(bool)b { wrapper->vc1541->disk.setWriteProtection(b); }
 - (bool) DiskModified { return wrapper->vc1541->disk.isModified(); }
 - (void) setDiskModified:(bool)b { wrapper->vc1541->disk.setModified(b); }
-// - (bool) bitAccuracy { return wrapper->vc1541->getBitAccuracy(); }
-// - (void) setBitAccuracy:(bool)b { wrapper->vc1541->setBitAccuracy(b); }
 - (bool) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (NSInteger) halftrack { return wrapper->vc1541->getHalftrack(); }

@@ -143,7 +143,7 @@
     //! @brief   Lookup gamePad by locationID
     /*! @details Returns slot number or -1, if no such gamePad was found
      */
-    @objc func lookupGamePad(locationID: String) -> Int {
+    @objc func lookupGamePad(locationID: Int) -> Int {
         
         for (slotNr, device) in gamePads {
             if (device.locationID == locationID) {
@@ -218,9 +218,25 @@
         let productIDKey = kIOHIDProductIDKey as CFString
         let locationIDKey = kIOHIDLocationIDKey as CFString
 
+        var vendorID = 0
+        var productID = 0
+        var locationID = 0
+        
+        if let value = IOHIDDeviceGetProperty(device, vendorIDKey) as? Int {
+            vendorID = value
+        }
+        if let value = IOHIDDeviceGetProperty(device, productIDKey) as? Int {
+            productID = value
+        }
+        if let value = IOHIDDeviceGetProperty(device, locationIDKey) as? Int {
+            locationID = value
+        }
+    
+        /*
         let vendorID = String(describing: IOHIDDeviceGetProperty(device, vendorIDKey))
         let productID = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
         let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
+        */
         
         gamePads[slotNr] = GamePad(manager: self,
                                    vendorID: vendorID,
@@ -251,9 +267,14 @@
                           device: IOHIDDevice) {
         
         track()
-        
+    
         let locationIDKey = kIOHIDLocationIDKey as CFString
-        let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
+        var locationID = 0
+        if let value = IOHIDDeviceGetProperty(device, locationIDKey) as? Int {
+            locationID = value
+        }
+        
+        // let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
         
         // Search for a matching locationID and remove device
         for (slotNr, device) in gamePads {
@@ -295,13 +316,13 @@
     func listDevices() {
         
         for (slotNr, device) in gamePads {
-            if (device.locationID == nil) {
+            if (device.locationID == 0) {
                 NSLog("Game pad slot %d: Keyboard emulated device", slotNr)
             } else {
-                NSLog("Game pad slot %d: HID USB joystick", slotNr)
-                NSLog("  Vendor ID:   %@", device.vendorID ?? "UNKNOWN");
-                NSLog("  Product ID:  %@", device.productID ?? "UNKNOWN");
-                NSLog("  Location ID: %@", device.locationID ?? "UNKNOWN");
+                NSLog("Game pad slot %d: %@", slotNr, device.name)
+                NSLog("  Vendor ID:   %d", device.vendorID);
+                NSLog("  Product ID:  %d", device.productID);
+                NSLog("  Location ID: %d", device.locationID);
             }
         }
     }

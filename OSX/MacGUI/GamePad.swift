@@ -19,6 +19,11 @@
 import Foundation
 import IOKit.hid
 
+//
+// A GamePad object is created for each connected USB device
+// Creation and destruction is done by the GamePadManager
+//
+
 class GamePad
 {
     //! @brief    Keymap of the managed device
@@ -26,41 +31,94 @@ class GamePad
      */
     var keyMap: [MacKey:UInt32]?
     
+    //! @brief    Name of the connected controller
+    var name: String = "Generic Gamepad"
+    
     //! @brief    Vendor ID of the managed device
     /*! @details  Value is only used for HID devices
      */
-    var vendorID: String?
+    var vendorID: Int
 
     //! @brief    Product ID of the managed device
     /*! @details  Value is only used for HID devices
      */
-    var productID: String?
+    var productID: Int
 
     //! @brief    Location ID of the managed device
     /*! @details  Value is only used for HID devices
      */
-    var locationID: String?
+    var locationID: Int
 
+    //! @brief    Minimum value of analog axis event
+    var min : Int?
+    
+    //! @brief    Maximum value of analog axis event
+    var max : Int?
+    
     //! @brief    Rescued information from the last invocation of the action function
     /*! @details  Used to determine if a joystick event needs to be triggered.
      */
     var oldUsage: [Int : Int] = [:]
     
+    //! @brief    Cotroller dependent usage IDs for left and right gamepad joysticks
+    var lThumbXUsageID = kHIDUsage_GD_X;
+    var lThumbYUsageID = kHIDUsage_GD_Y;
+    var rThumbXUsageID = kHIDUsage_GD_Rz;
+    var rThumbYUsageID = kHIDUsage_GD_Z;
+
     /// Reference to the GamePadManager
     var manager: GamePadManager
     
     init(manager: GamePadManager,
-         vendorID: String?, productID: String?, locationID: String?) {
+         vendorID: Int, productID: Int, locationID: Int) {
+        
+        track();
         
         self.manager = manager
         self.vendorID = vendorID
         self.productID = productID
         self.locationID = locationID
+    
+        // Check for known devices
+        if (vendorID == 0x40B && productID == 0x6533) {
+            
+            name = "SpeedLink Competion Pro SL-6602"
+        
+        } else if (vendorID == 0x54C && productID == 0x268) {
+
+            name = "Sony DualShock 3"
+            rThumbXUsageID = kHIDUsage_GD_Z;
+            rThumbYUsageID = kHIDUsage_GD_Rz;
+        
+        } else if (vendorID == 0x54C && productID == 0x5C4) {
+            
+            name = "Sony DualShock 4"
+            rThumbXUsageID = kHIDUsage_GD_Z;
+            rThumbYUsageID = kHIDUsage_GD_Rz;
+
+        } else if (vendorID == 0x54C && productID == 0x9CC) {
+            
+            name = "Sony Dualshock 4 (2nd Gen)"
+            rThumbXUsageID = kHIDUsage_GD_Z;
+            rThumbYUsageID = kHIDUsage_GD_Rz;
+        }
     }
     
     convenience init(manager: GamePadManager) {
-        self.init(manager: manager, vendorID: nil, productID: nil, locationID: nil)
+        self.init(manager: manager, vendorID: 0, productID: 0, locationID: 0)
     }
+    
+    let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
+        let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)
+        this.hidDeviceAction(context: inContext, result: inResult, sender: inSender, value: value)
+    }
+}
+
+//
+// Keyboard emulation
+//
+
+extension GamePad {
     
     /// Assigns a keyboard emulation key
     func assign(key: MacKey, direction: JoystickDirection) {
@@ -139,26 +197,36 @@ class GamePad
     
         return false
     }
+}
+
+//
+// Event handling
+//
+
+extension GamePad {
     
-    let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
-        let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)
-        this.hidDeviceAction(context: inContext, result: inResult, sender: inSender, value: value)
-    }
+ 
     
     // Based on http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
-    func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int {
+    func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
         
-        let val = IOHIDValueGetIntegerValue(value);
-        let min = IOHIDElementGetLogicalMin(element);
-        let max = IOHIDElementGetLogicalMax(element);
+        if min == nil {
+            min = IOHIDElementGetLogicalMin(element)
+            track("Minumum axis value = \(min!)")
+        }
+        if max == nil {
+            max = IOHIDElementGetLogicalMax(element)
+            track("Maximum axis value = \(max!)")
+        }
+        let val = IOHIDValueGetIntegerValue(value)
         
-        var v = (Double) (val - min) / (Double) (max - min);
+        var v = (Double) (val - min!) / (Double) (max! - min!);
         v = v * 2.0 - 1.0;
         
-        if v < -0.6 { return -2 };
-        if v < -0.1 { return -1 };
+        if v < -0.45 { return -2 };
+        if v < -0.1 { return nil };  // dead zone
         if v <= 0.1 { return 0 };
-        if v <= 0.6 { return 1 };
+        if v <= 0.45 { return nil }; // dead zone
         return 2;
     }
     
@@ -172,99 +240,70 @@ class GamePad
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
-        // let analog    = Float(IOHIDValueGetScaledValue(value, IOHIDValueScaleType(kIOHIDValueScaleTypeCalibrated)))
         
         // Check button
         if usagePage == kHIDPage_Button {
+            // track("BUTTON")
             manager.joystickEvent(self, event: (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE)
             return
-            // event = (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE
         }
         
         // Check movement
         if (usagePage == kHIDPage_GenericDesktop) {
             
-            // var event: JoystickEvent
-            let v = mapAnalogAxis(value: value, element: element)
-            
-            
-            if (v == -1 || v == 1) {
+            guard let v = mapAnalogAxis(value: value, element: element) else {
                 return;
             }
-            
             if oldUsage[usage] == v {
                 return;
-            } else {
-                oldUsage[usage] = v
             }
+            oldUsage[usage] = v
             
-            
+            /*
             switch(usage) {
             case kHIDUsage_GD_X:
-                track("kHIDUsage_GD_X \(intValue) \(v)")
+                track("  kHIDUsage_GD_X \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Y:
                 track("kHIDUsage_GD_Y \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Z:
-                // track("kHIDUsage_GD_Z \(intValue) \(v)")
+                track("kHIDUsage_GD_Z \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Rx:
-                // track("kHIDUsage_GD_Rx \(intValue) \(v)")
+                track("kHIDUsage_GD_Rx \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Ry:
-                // track("kHIDUsage_GD_Ry \(intValue) \(v)")
+                track("kHIDUsage_GD_Ry \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Rz:
-                // track("kHIDUsage_GD_Rz \(intValue) \(v)")
+                track("kHIDUsage_GD_Rz \(intValue) \(v)")
                 break
             case kHIDUsage_GD_Hatswitch:
-                // track("kHIDUsage_GD_Hatswitch \(intValue) \(v)")
+                track("kHIDUsage_GD_Hatswitch \(intValue) \(v)")
                 break
             default:
                 break
             }
+            */
             
             switch(usage) {
                 
-            case kHIDUsage_GD_X, kHIDUsage_GD_Rz:
+            case lThumbXUsageID, rThumbXUsageID:
+                
                 let event = (v == 2 ? PULL_RIGHT : v == -2 ? PULL_LEFT : RELEASE_X)
                 manager.joystickEvent(self, event: event)
-                return
+                break
                 
-            case kHIDUsage_GD_Y, kHIDUsage_GD_Z:
+            case lThumbYUsageID, rThumbYUsageID:
+                
                 let event = (v == 2 ? PULL_DOWN : v == -2 ? PULL_UP : RELEASE_Y)
                 manager.joystickEvent(self, event: event)
-                return
-                
-            case kHIDUsage_GD_Hatswitch:
-                // The following values are based on Saitek's
-                // "Impact Dual Analog Rumble Pad".
-                // Not sure if this works for other controllers
-                if intValue == 8 || intValue == 1 || intValue == 2 {
-                    manager.joystickEvent(self, event: PULL_UP)
-                    return
-                }
-                if intValue == 2 || intValue == 3 || intValue == 4 {
-                    manager.joystickEvent(self, event: PULL_RIGHT)
-                    return
-                }
-                if intValue == 4 || intValue == 5 || intValue == 6 {
-                    manager.joystickEvent(self, event: PULL_DOWN)
-                    return
-                }
-                if intValue == 6 || intValue == 7 || intValue == 8 {
-                    manager.joystickEvent(self, event: PULL_LEFT)
-                    return
-                }
-                if intValue == 0 {
-                    manager.joystickEvent(self, event: RELEASE_XY)
-                    return
-                }
                 break
                 
             default:
-                print("USB device: Unknown HID usage: \(usage)")
+                // track("Ignored HID usage: \(usage)")
+                break
             }
         }
     }
