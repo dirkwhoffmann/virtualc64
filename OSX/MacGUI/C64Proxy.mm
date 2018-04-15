@@ -88,8 +88,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) Vflag { return wrapper->cpu->getV(); }
 - (void) setVflag:(bool)b { wrapper->cpu->setV(b); }
 
-- (uint16_t) peekPC {
-    return wrapper->cpu->mem->peek(wrapper->cpu->getPC_at_cycle_0()); }
+- (uint16_t) readPC {
+    return wrapper->cpu->mem->read(wrapper->cpu->getPC_at_cycle_0()); }
 - (uint8_t) lengthOfInstruction:(uint8_t)opcode {
     return wrapper->cpu->getLengthOfInstruction(opcode); }
 - (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr {

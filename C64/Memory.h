@@ -29,6 +29,8 @@ class CPU;
 
 class Memory : public VirtualComponent {
 
+    friend CPU;
+    
 public:
 
 	// --------------------------------------------------------------------------------
@@ -49,13 +51,10 @@ public:
 	//! @brief    Destructor
 	~Memory();
 
+    // --------------------------------------------------------------------------------
+    //                                    Read
+    // --------------------------------------------------------------------------------
     
-	// --------------------------------------------------------------------------------
-	//                                    Peek
-	// --------------------------------------------------------------------------------
-
-protected:	
-	
     //! @brief    Reads a byte from RAM.
     virtual uint8_t readRam(uint16_t addr) = 0;
     
@@ -63,17 +62,26 @@ protected:
     virtual uint8_t readRom(uint16_t addr) = 0;
     
     //! @brief    Reads a byte from I/O space.
-	virtual uint8_t peekIO(uint16_t addr) = 0;
-    
-    //! @brief    Reads a byte from I/O space.
     virtual uint8_t readIO(uint16_t addr) = 0;
-
-public:
-
-    /*! @brief    Reads a byte from the specified memory source.
-     *  @details  This functions is used by the GUI and does not cause any side effects.
-     */
+    
+    //! @brief    Reads a byte from the specified memory source.
     uint8_t readFrom(uint16_t addr, MemoryType source);
+
+    //! @brief    Same as peek, but without side effects
+    virtual uint8_t read(uint16_t addr) = 0;
+    
+    //! @brief    Reads two bytes in a row
+    uint16_t readWord(uint16_t addr) { return LO_HI(read(addr),read(addr+1)); }
+
+    
+	// --------------------------------------------------------------------------------
+	//                                    Peek
+	// --------------------------------------------------------------------------------
+
+private:
+	
+    //! @brief    Reads a byte from I/O space.
+	virtual uint8_t peekIO(uint16_t addr) = 0;
     
 	/*! @brief    Reads a byte from memory.
 	 *  @details  This function implements the native memory peek of the original C64
@@ -81,21 +89,15 @@ public:
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
 	
-    //! @brief    Same as peek, but without side effects
-    virtual uint8_t read(uint16_t addr) = 0;
-    
 	//! @brief    Convenience wrapper for peek
     uint8_t peek(uint8_t lo, uint8_t hi) { return peek(LO_HI(lo, hi)); }
 
-	//! @brief    Reads two bytes in a row
-    uint16_t readWord(uint16_t addr) { return LO_HI(read(addr),read(addr+1)); }
-
-
+    
 	// --------------------------------------------------------------------------------
 	//                                    Poke
 	// --------------------------------------------------------------------------------
 
-protected:	
+private:
 
 	//! @brief    Writes a byte into RAM
     virtual void pokeRam(uint16_t addr, uint8_t value) = 0;

@@ -86,7 +86,7 @@ struct ContainerWrapper;
 - (bool) Vflag;
 - (void) setVflag:(bool)b;
 
-- (uint16_t) peekPC;
+- (uint16_t) readPC;
 - (uint8_t) lengthOfInstruction:(uint8_t)opcode;
 - (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr;
 - (uint8_t) lengthOfCurrentInstruction;

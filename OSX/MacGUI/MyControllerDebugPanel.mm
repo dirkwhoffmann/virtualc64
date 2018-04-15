@@ -46,7 +46,7 @@
 {	
 	[[self document] updateChangeCount:NSChangeDone];
 	// Is the next instruction a JSR instruction?
-	uint8_t opcode = [[c64 cpu] peekPC];
+	uint8_t opcode = [[c64 cpu] readPC];
 	if (opcode == 0x20) {
 		// set soft breakpoint at next command
 		[[c64 cpu] setSoftBreakpoint:[[c64 cpu] addressOfNextInstruction]];	
