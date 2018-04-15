@@ -27,11 +27,8 @@ TOD::TOD()
     SnapshotItem items[] = {
                 
         { &tod.value,        sizeof(tod.value),        CLEAR_ON_RESET },
-        { &tod.oldValue,     sizeof(tod.oldValue),     CLEAR_ON_RESET },
         { &alarm.value,      sizeof(alarm.value),      CLEAR_ON_RESET },
-        { &alarm.oldValue,   sizeof(alarm.oldValue),   CLEAR_ON_RESET },
         { &latch.value,      sizeof(latch.value),      CLEAR_ON_RESET },
-        { &latch.oldValue,   sizeof(latch.oldValue),   CLEAR_ON_RESET },
         { &frozen,           sizeof(frozen),           CLEAR_ON_RESET },
         { &stopped,          sizeof(stopped),          CLEAR_ON_RESET },
         { &matching,         sizeof(matching),         CLEAR_ON_RESET },
@@ -82,8 +79,6 @@ TOD::getInfo()
 void
 TOD::increment()
 {
-    tod.oldValue = tod.value;
-    
     if (stopped)
         return;
     
@@ -142,16 +137,5 @@ TOD::checkForInterrupt()
     }
     
     matching = (tod.value == alarm.value);
-}
-
-
-bool
-TOD::alarming()
-{
-    // Skip test if value did not change since the last write or increment operation
-    if (tod.value == tod.oldValue && alarm.value == alarm.oldValue)
-        return false;
-    
-    return tod.value == alarm.value;
 }
 

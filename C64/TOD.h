@@ -141,35 +141,35 @@ private:
     
 
 	//! @brief    Sets the hours digits of the time of day clock.
-    void setTodHours(uint8_t value) { tod.oldValue = tod.value; tod.hours = value & 0x9F; checkForInterrupt(); }
+    void setTodHours(uint8_t value) { tod.hours = value & 0x9F; checkForInterrupt(); }
 	
 	//! @brief    Sets the minutes digits of the time of day clock.
     void setTodMinutes(uint8_t value) {
-        tod.oldValue = tod.value; tod.minutes = value & 0x7F; checkForInterrupt(); }
+        tod.minutes = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the seconds digits of the time of day clock.
     void setTodSeconds(uint8_t value) {
-        tod.oldValue = tod.value; tod.seconds = value & 0x7F; checkForInterrupt(); }
+        tod.seconds = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
 	void setTodTenth(uint8_t value) {
-        tod.oldValue = tod.value; tod.tenth = value & 0x0F; checkForInterrupt(); }
+        tod.tenth = value & 0x0F; checkForInterrupt(); }
 	
 	//! @brief    Sets the hours digits of the alarm time.
     void setAlarmHours(uint8_t value) {
-        alarm.oldValue = alarm.value; alarm.hours = value & 0x9F; checkForInterrupt(); }
+        alarm.hours = value & 0x9F; checkForInterrupt(); }
 	
 	//! @brief    Sets the minutes digits of the alarm time.
     void setAlarmMinutes(uint8_t value) {
-        alarm.oldValue = alarm.value; alarm.minutes = value & 0x7F; checkForInterrupt(); }
+        alarm.minutes = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the seconds digits of the alarm time.
     void setAlarmSeconds(uint8_t value) {
-        alarm.oldValue = alarm.value; alarm.seconds = value & 0x7F; checkForInterrupt(); }
+        alarm.seconds = value & 0x7F; checkForInterrupt(); }
 	
 	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
     void setAlarmTenth(uint8_t value) {
-        alarm.oldValue = alarm.value; alarm.tenth = value & 0x0F; checkForInterrupt(); }
+        alarm.tenth = value & 0x0F; checkForInterrupt(); }
 	
 	/*! @brief    Increments the TOD clock by one tenth of a second.
 	 *  @details  The function increments the TOD clock and is called after each frame.
@@ -181,12 +181,6 @@ private:
      *            trigger an interrupt.
      */
     void checkForInterrupt();
-
-     
-    
-    //! @brief    Returns true if current time matches alarm time
-    //! @deprecated
-    bool alarming();
 };
 
 #endif

@@ -330,11 +330,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
 			if (CRB & 0x80) {
 				tod.setAlarmTenth(value);
-                checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
                 tod.cont();
-                checkForTODInterrupt();
 			}
 			return;
 			
@@ -342,10 +340,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmSeconds(value);
-                checkForTODInterrupt();
             } else {
 				tod.setTodSeconds(value);
-                checkForTODInterrupt();
             }
 			return;
 			
@@ -353,10 +349,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
             if (CRB & 0x80) {
 				tod.setAlarmMinutes(value);
-                checkForTODInterrupt();
             } else {
 				tod.setTodMinutes(value);
-                checkForTODInterrupt();
             }
 			return;
 			
@@ -364,14 +358,12 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			if (CRB & 0x80) {
 				tod.setAlarmHours(value);
-                checkForTODInterrupt();
 			} else {
                 // Writing 12 pm into hour register turns to 12 am and vice versa.
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);
                 tod.stop();
-                checkForTODInterrupt();
 			}
 			return;
 			
@@ -563,17 +555,6 @@ CIA::incrementTOD()
 {
     wakeUp();
     tod.increment();
-    checkForTODInterrupt();
-}
-
-void
-CIA::checkForTODInterrupt()
-{
-    /*
-    if (tod.alarming()) {
-        delay |= TODInt0;
-    }
-     */
 }
 
 void

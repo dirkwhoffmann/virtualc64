@@ -347,10 +347,6 @@ private:
     //
     //! @functiongroup Handling interrupt requests
     //
-    
-    //! @brief    Triggers a TOD interrupt if current time matches alarm time
-    //! @deprecated
-    void checkForTODInterrupt();
 
 public:
     
