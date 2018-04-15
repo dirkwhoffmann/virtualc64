@@ -101,19 +101,19 @@ uint8_t
 CIA::peek(uint16_t addr)
 {
 	uint8_t result;
-	
+
     wakeUp();
-    
+
 	switch(addr) {
             
         case 0x00: // CIA_DATA_PORT_A
             
-            result = peekDataPortA();
+            result = readDataPortA();
             break;
             
         case 0x01: // CIA_DATA_PORT_B
             
-            result = peekDataPortB();
+            result = readDataPortB();
             break;
             
         case 0x02: // CIA_DATA_DIRECTION_A
@@ -148,6 +148,7 @@ CIA::peek(uint16_t addr)
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
 			
 			result = tod.getTodTenth();
+            tod.defreeze();
 			break;
 		
         case 0x09: // CIA_TIME_OF_DAY_SECONDS
@@ -162,6 +163,7 @@ CIA::peek(uint16_t addr)
 			
         case 0x0B: // CIA_TIME_OF_DAY_HOURS
 
+            tod.freeze();
 			result = tod.getTodHours();
 			break;
 			
@@ -208,6 +210,51 @@ CIA::peek(uint16_t addr)
 	}
 	
 	return result;
+}
+
+uint8_t
+CIA::read(uint16_t addr)
+{
+    uint8_t result;
+    bool running;
+
+    switch(addr) {
+            
+        case 0x04: // CIA_TIMER_A_LOW
+            
+            running = delay & CountA3;
+            result = LO_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
+            break;
+            
+        case 0x05: // CIA_TIMER_A_HIGH
+            
+            running = delay & CountA3;
+            result = HI_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
+            break;
+            
+        case 0x06: // CIA_TIMER_B_LOW
+            
+            running = delay & CountB3;
+            result = LO_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
+            break;
+            
+        case 0x07: // CIA_TIMER_B_HIGH
+            
+            running = delay & CountB3;
+            result = HI_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
+            break;
+            
+        case 0x0D: // CIA_INTERRUPT_CONTROL
+            
+            result = ICR;
+            break;
+            
+        default:
+            
+            result = peek(addr);
+    }
+    
+    return result;
 }
 
 void CIA::poke(uint16_t addr, uint8_t value)
@@ -285,6 +332,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
                 checkForTODInterrupt();
 			} else { 
 				tod.setTodTenth(value);
+                tod.cont();
                 checkForTODInterrupt();
 			}
 			return;
@@ -321,6 +369,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				if ((value & 0x1F) == 0x12)
 					value ^= 0x80;
 				tod.setTodHours(value);
+                tod.stop();
                 checkForTODInterrupt();
 			}
 			return;
@@ -591,30 +640,27 @@ CIA::dumpState()
 CIAInfo
 CIA::getInfo()
 {
-    bool runningA = delay & CountA3;
-    bool runningB = delay & CountB3;
-
     CIAInfo info;
     
-    info.portA.reg = peekDataPortA();
+    info.portA.reg = readDataPortA();
     info.portA.dir = DDRA;
 
-    info.portB.reg = peekDataPortB();
+    info.portB.reg = readDataPortB();
     info.portB.dir = DDRB;
 
-    info.timerA.running = runningA;
+    info.timerA.running = (delay & CountA3);
     info.timerA.oneShot = CRA & 0x08;
     info.timerA.interruptMask = IMR & 0x01;
     info.timerA.interruptData = ICR & 0x01;
-    info.timerA.count = counterA - (runningA ? (uint16_t)idleCounter() : 0);
+    info.timerA.count = LO_HI(read(0x04), read(0x05));
     info.timerA.latch = latchA;
     
-    info.timerB.running = runningB;
+    info.timerB.running = (delay & CountB3);
     info.timerB.oneShot = CRB & 0x08;
     info.timerB.interruptMask = IMR & 0x02;
     info.timerB.interruptData = ICR & 0x02;
     info.timerB.latch = latchB;
-    info.timerB.count = counterB - (runningB ? (uint16_t)idleCounter() : 0);
+    info.timerB.count = LO_HI(read(0x06), read(0x07));
 
     info.tod = tod.getInfo();
     info.todInterruptMask = ICR & 0x04;
@@ -1007,7 +1053,7 @@ CIA1::releaseInterruptLine()
 }
 
 uint8_t 
-CIA1::peekDataPortA()
+CIA1::readDataPortA()
 {
     uint8_t result = PA;
     uint8_t rows = PB & c64->joystickA.bitmask();
@@ -1021,7 +1067,7 @@ CIA1::peekDataPortA()
 }
 
 uint8_t
-CIA1::peekDataPortB()
+CIA1::readDataPortB()
 {
     uint8_t result = PB;
     uint8_t columns = PA & c64->joystickB.bitmask();
@@ -1116,7 +1162,7 @@ CIA2::releaseInterruptLine()
 }
 
 uint8_t 
-CIA2::peekDataPortA()
+CIA2::readDataPortA()
 {
     uint8_t result = PA;
     
@@ -1133,7 +1179,7 @@ CIA2::peekDataPortA()
 }
 
 uint8_t
-CIA2::peekDataPortB()
+CIA2::readDataPortB()
 {
     uint8_t result = PB;
     return result;

@@ -95,17 +95,11 @@ public:
     //! @brief    Starts the time of day clock.
     void cont() { stopped = false; }
 		
-	/*! @brief    Returns the hours digits of the time of day clock.
-	 *  @note     The TOD clock freezes when a read or write access occurrs.
-     */
-	uint8_t getTodHours() {
-        freeze(); return frozen ? latch.hours & 0x9F : tod.hours & 0x9F; }
+	//! @brief    Returns the hours digits of the time of day clock.
+	uint8_t getTodHours() { return frozen ? latch.hours & 0x9F : tod.hours & 0x9F; }
 		
-	/*! @brief    Sets the hours digits of the time of day clock.
-     *  @note     The TOD clock freezes when a read or write access occurrs.
-     */
-    void setTodHours(uint8_t value) {
-        tod.oldValue = tod.value; tod.hours = value & 0x9F; stop(); }
+	//! @brief    Sets the hours digits of the time of day clock.
+    void setTodHours(uint8_t value) { tod.oldValue = tod.value; tod.hours = value & 0x9F; }
 	
 	//! @brief    Returns the minutes digits of the time of day clock.
     uint8_t getTodMinutes() { return frozen ? latch.minutes & 0x7F : tod.minutes & 0x7F; }
@@ -121,20 +115,12 @@ public:
     void setTodSeconds(uint8_t value) {
         tod.oldValue = tod.value; tod.seconds = value & 0x7F; }
 	
-	/*! @brief    Returns the tenth-of-a-second digits of the time of day clock.
-	 *  @note     The TOD clock unfreezes on a read or write access.
-     */
-	uint8_t getTodTenth() {
-        uint8_t result = frozen ? latch.tenth & 0x0F : tod.tenth & 0x0F;
-        defreeze();
-        return result;
-    }
+	//! @brief    Returns the tenth-of-a-second digits of the time of day clock.
+	uint8_t getTodTenth() { return frozen ? latch.tenth & 0x0F : tod.tenth & 0x0F; }
 	
-	/*! @brief    Sets the tenth-of-a-second digits of the time of day clock.
-	 *  @note     The TOD clock unfreezes on a read or write access.
-     */
+	//! @brief    Sets the tenth-of-a-second digits of the time of day clock.
 	void setTodTenth(uint8_t value) {
-        tod.oldValue = tod.value; tod.tenth = value & 0x0F; cont(); }
+        tod.oldValue = tod.value; tod.tenth = value & 0x0F; }
 	
 	//! @brief    Returns the hours digits of the alarm time.
     uint8_t getAlarmHours() { return alarm.hours & 0x9F; }

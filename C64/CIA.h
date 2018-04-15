@@ -294,18 +294,31 @@ private:
 	
     
     //
-    //! @functiongroup Communicating via the I/O address space
+    //! @functiongroup Accessing the I/O address space
     //
+    
+private:
     
     //! @brief    Peek function for the CIA's I/O memory
     uint8_t peek(uint16_t addr);
 
-    //! @brief    Peek function for the CIA's data port A register
-    virtual uint8_t peekDataPortA() = 0;
+    /*! @brief    Returns the current value of the CIA's data port A register
+     *! @details  This method is implemented differently in CIA1 and CIA2
+     */
+    virtual uint8_t readDataPortA() = 0;
 
-    //! @brief    Peek function for the CIA's data port B register
-    virtual uint8_t peekDataPortB() = 0;
+    /*! @brief    Returns the current value of the CIA's data port B register
+     * @details  This method is implemented differently in CIA1 and CIA2
+     */
+    virtual uint8_t readDataPortB() = 0;
 
+public:
+    
+    //! @brief    Same as peek(), but without side affects.
+    uint8_t read(uint16_t addr);
+    
+private:
+    
     //! @brief    Poke function for the CIA's I/O memory
     void poke(uint16_t addr, uint8_t value);
     
@@ -376,8 +389,8 @@ private:
     
     void pullDownInterruptLine();
     void releaseInterruptLine();
-    uint8_t peekDataPortA();
-    uint8_t peekDataPortB();
+    uint8_t readDataPortA();
+    uint8_t readDataPortB();
     void pokeDataPortA(uint8_t value);
     void pokeDataPortB(uint8_t value);
     void pokeDataPortDirectionA(uint8_t value);
@@ -408,8 +421,8 @@ private:
 
     void pullDownInterruptLine();
     void releaseInterruptLine();
-    uint8_t peekDataPortA();
-    uint8_t peekDataPortB();
+    uint8_t readDataPortA();
+    uint8_t readDataPortB();
     void pokeDataPortA(uint8_t value);
     void pokeDataPortB(uint8_t value);
     void pokeDataPortDirectionA(uint8_t value);
