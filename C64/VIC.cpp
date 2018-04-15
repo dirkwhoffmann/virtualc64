@@ -512,16 +512,14 @@ VIC::peek(uint16_t addr)
 {
 	uint8_t result;
 		
-	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
+	assert(addr <= 0x3F);
 	
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
-			result = (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
-			return result;
+			return (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
             
 		case 0x12: // VIC_RASTER_READ_WRITE
-			result = yCounter & 0xff;
-			return result;
+			return yCounter & 0xff;
             
 		case 0x13: // LIGHTPEN X
 			return iomem[addr];
@@ -530,20 +528,16 @@ VIC::peek(uint16_t addr)
 			return iomem[addr];
             
         case 0x16:
-            result = p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
-            return result;
+            return p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
             
    		case 0x18:
-            result = iomem[addr] | 0x01; // Bit 1 is unused (always 1)
-            return result;
+            return iomem[addr] | 0x01; // Bit 1 is unused (always 1)
             
 		case 0x19:
-			result = iomem[addr] | 0x70; // Bits 4 to 6 are unused (always 1)
-			return result;
+			return iomem[addr] | 0x70; // Bits 4 to 6 are unused (always 1)
             
 		case 0x1A:
-			result = iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
-			return result;
+			return iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
             
         case 0x1D: // SPRITE_X_EXPAND
             return p.spriteXexpand;
@@ -592,6 +586,24 @@ VIC::peek(uint16_t addr)
 	
 	// Default action
 	return iomem[addr];
+}
+
+uint8_t
+VIC::read(uint16_t addr)
+{
+    assert(addr <= 0x003F);
+    
+    switch(addr) {
+            
+        case 0x1E:
+            return iomem[addr];
+            
+        case 0x1F:
+            return iomem[addr];
+            
+        default:
+            return peek(addr);
+    }
 }
 
 void

@@ -246,6 +246,9 @@ public:
     //! @brief    Reads a byte from I/O space.
     uint8_t peekIO(uint16_t addr);
 
+    //! @brief    Same as peekIO, but without side effects
+    uint8_t readIO(uint16_t addr);
+
     /*! @brief    Reads a byte from memory.
      *  @details  The memory source (RAM, ROM, or I/O space) is read from the poke lookup table.
      */

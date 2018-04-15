@@ -134,12 +134,21 @@ public:
     //! @brief    Peek fallthrough
     virtual uint8_t peek(uint16_t addr); 
     
+    //! @brief    Same as peek, but without side effects.
+    virtual uint8_t read(uint16_t addr) { return peek(addr); }
+    
     //! @brief    Peek fallthrough for I/O space 1
     virtual uint8_t peekIO1(uint16_t addr) { return 0; }
+
+    //! @brief    Same as peekIO1, but without side effects.
+    virtual uint8_t readIO1(uint16_t addr) { return peekIO1(addr); }
 
     //! @brief    Peek fallthrough for I/O space 2
     virtual uint8_t peekIO2(uint16_t addr) { return 0; }
 
+    //! @brief    Same as peekIO2, but without side effects.
+    virtual uint8_t readIO2(uint16_t addr) { return peekIO2(addr); }
+    
     //! @brief    Poke fallthrough for I/O space 1
     virtual void pokeIO1(uint16_t addr, uint8_t value) { }
 

@@ -153,9 +153,21 @@ ExpansionPort::peekIO1(uint16_t addr)
 }
 
 uint8_t
+ExpansionPort::readIO1(uint16_t addr)
+{
+    return cartridge ? cartridge->readIO1(addr) : c64->vic.prevDataBus;
+}
+
+uint8_t
 ExpansionPort::peekIO2(uint16_t addr)
 {
     return cartridge ? cartridge->peekIO2(addr) : c64->vic.prevDataBus;
+}
+
+uint8_t
+ExpansionPort::readIO2(uint16_t addr)
+{
+    return cartridge ? cartridge->readIO2(addr) : c64->vic.prevDataBus;
 }
 
 void

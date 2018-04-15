@@ -105,6 +105,7 @@ CIA::peek(uint16_t addr)
 
     wakeUp();
 
+    assert(addr <= 0x000F);
 	switch(addr) {
             
         case 0x00: // CIA_DATA_PORT_A
@@ -219,6 +220,7 @@ CIA::read(uint16_t addr)
     uint8_t result;
     bool running;
 
+    assert(addr <= 0x000F);
     switch(addr) {
             
         case 0x04: // CIA_TIMER_A_LOW

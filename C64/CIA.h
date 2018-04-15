@@ -298,26 +298,22 @@ private:
     //
     
 private:
-    
-    //! @brief    Peek function for the CIA's I/O memory
-    uint8_t peek(uint16_t addr);
 
     /*! @brief    Returns the current value of the CIA's data port A register
      *! @details  This method is implemented differently in CIA1 and CIA2
      */
     virtual uint8_t readDataPortA() = 0;
-
+    
     /*! @brief    Returns the current value of the CIA's data port B register
      * @details  This method is implemented differently in CIA1 and CIA2
      */
     virtual uint8_t readDataPortB() = 0;
-
-public:
     
-    //! @brief    Same as peek(), but without side affects.
+    //! @brief    Peek function for the CIA's I/O memory
+    uint8_t peek(uint16_t addr);
+    
+    //! @brief    Same as peek, but without side affects.
     uint8_t read(uint16_t addr);
-    
-private:
     
     //! @brief    Poke function for the CIA's I/O memory
     void poke(uint16_t addr, uint8_t value);

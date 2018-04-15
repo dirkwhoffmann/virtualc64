@@ -87,6 +87,8 @@ SIDWrapper::setNTSC()
 uint8_t 
 SIDWrapper::peek(uint16_t addr)
 {
+    assert(addr <= 0x1F);
+
     // Get SID up to date
     executeUntil(c64->getCycles());
     
@@ -103,6 +105,22 @@ SIDWrapper::peek(uint16_t addr)
     
     if (addr == 0x1B || addr == 0x1C) {
         latchedDataBus = 0;
+        return rand();
+    }
+    
+    return latchedDataBus;
+}
+
+uint8_t
+SIDWrapper::read(uint16_t addr)
+{
+    assert(addr <= 0x001F);
+    
+    if (addr == 0x19 || addr == 0x1A) {
+        return 0xFF;
+    }
+    
+    if (addr == 0x1B || addr == 0x1C) {
         return rand();
     }
     

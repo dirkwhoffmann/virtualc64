@@ -98,10 +98,15 @@ public:
     //! @brief    Peek fallthrough for I/O space 1
     uint8_t peekIO1(uint16_t addr);
     
+    //! @brief    Same as peekIO1, but without side effects
+    uint8_t readIO1(uint16_t addr);
+    
     //! @brief    Peek fallthrough for I/O space 2
     uint8_t peekIO2(uint16_t addr);
 
-
+    //! @brief    Same as peekIO2, but without side effects
+    uint8_t readIO2(uint16_t addr);
+    
     //! @brief    Poke fallthrough for I/O space 1
     void pokeIO1(uint16_t addr, uint8_t value);
     

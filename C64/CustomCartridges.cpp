@@ -160,6 +160,12 @@ SimonsBasic::peekIO1(uint16_t addr)
     return Cartridge::peekIO1(addr);
 }
 
+uint8_t
+SimonsBasic::readIO1(uint16_t addr)
+{
+    return Cartridge::peekIO1(addr);
+}
+
 void
 SimonsBasic::pokeIO1(uint16_t addr, uint8_t value)
 {
@@ -318,10 +324,14 @@ EpyxFastLoad::checkCapacitor()
 uint8_t
 EpyxFastLoad::peek(uint16_t addr)
 {
-    // debug("EpyxFasLoader %04X: Peeking %04X\n", c64->cpu.getPC_at_cycle_0(), addr);
     dischargeCapacitor();
-    uint8_t result = Cartridge::peek(addr);
-    return result;
+    return Cartridge::peek(addr);
+}
+
+uint8_t
+EpyxFastLoad::read(uint16_t addr)
+{
+    return Cartridge::peek(addr);
 }
 
 uint8_t
@@ -330,7 +340,13 @@ EpyxFastLoad::peekIO1(uint16_t addr)
     dischargeCapacitor();
     return 0;
 }
-    
+
+uint8_t
+EpyxFastLoad::readIO1(uint16_t addr)
+{
+    return 0;
+}
+
 uint8_t
 EpyxFastLoad::peekIO2(uint16_t addr)
 {
@@ -352,6 +368,12 @@ Westermann::peekIO2(uint16_t addr)
     return 0;
 }
 
+uint8_t
+Westermann::readIO2(uint16_t addr)
+{
+    return 0;
+}
+
 // -----------------------------------------------------------------------------------------
 //                                         Rex
 // -----------------------------------------------------------------------------------------
@@ -361,18 +383,22 @@ Rex::peekIO2(uint16_t addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM
     if (addr >= 0xDF00 && addr <= 0xDFBF) {
-        debug("Disable");
         c64->expansionport.setExromLine(1);
         c64->expansionport.setGameLine(1);
     }
     
     // Any read access to $DFC0 - $DFFF switches to 8KB configuration
     if (addr >= 0xDFC0 && addr <= 0xDFFF) {
-        debug("8 KB config");
         c64->expansionport.setExromLine(0);
         c64->expansionport.setGameLine(1);
     }
     
+    return 0;
+}
+
+uint8_t
+Rex::readIO2(uint16_t addr)
+{
     return 0;
 }
 
@@ -399,6 +425,12 @@ Zaxxon::peek(uint16_t addr)
         return Cartridge::peek(addr - 0x1000);
     }
     
+    return Cartridge::peek(addr);
+}
+
+uint8_t
+Zaxxon::read(uint16_t addr)
+{
     return Cartridge::peek(addr);
 }
 
@@ -447,14 +479,12 @@ Comal80::reset()
 uint8_t
 Comal80::peekIO1(uint16_t addr)
 {
-    // debug("Comal80::peekIO1(%04X)", addr);
     return regValue; // 'value' contains the latest value passed to pokeIO1()
 }
 
 uint8_t
 Comal80::peekIO2(uint16_t addr)
 {
-    // debug("Comal80::peekIO2(%04X)\n", addr);
     return 0;
 }
 

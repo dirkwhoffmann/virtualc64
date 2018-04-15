@@ -27,6 +27,7 @@
 
 class SIDWrapper : public VirtualComponent {
 
+    friend C64Memory;
     
 public:	
 	//! @brief    Start address of the SID I/O space.
@@ -159,12 +160,19 @@ public:
 	//                                       Getter and setter
 	// -----------------------------------------------------------------------------------
     
+private:
+    
 	//! @brief    Special peek function for the I/O memory range.
 	uint8_t peek(uint16_t addr);
 	
+    //! @brief    Same as peek, but without side effects.
+    uint8_t read(uint16_t addr);
+    
 	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);
 	
+public:
+    
     //! @brief    Reads next audio sample from the ringbuffer
 	float readData();
     

@@ -47,6 +47,7 @@ public:
     CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
     void reset();
     uint8_t peekIO1(uint16_t addr);
+    uint8_t readIO1(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
 };
 
@@ -110,7 +111,9 @@ public:
     void reset();
     void execute();
     uint8_t peek(uint16_t addr);
+    uint8_t read(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
+    uint8_t readIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
 };
 
@@ -121,6 +124,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
     uint8_t peekIO2(uint16_t addr);
+    uint8_t readIO2(uint16_t addr);
 };
 
 //! @brief    Type 12 cartridges
@@ -130,6 +134,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_REX; }
     uint8_t peekIO2(uint16_t addr);
+    uint8_t readIO2(uint16_t addr);
 };
 
 //! @brief    Type 18 cartridges
@@ -139,6 +144,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_ZAXXON; }
     uint8_t peek(uint16_t addr);
+    uint8_t read(uint16_t addr);
 };
 
 //! @brief    Type 19 cartridges

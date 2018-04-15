@@ -325,6 +325,50 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
+uint8_t C64Memory::readIO(uint16_t addr)
+{
+    assert(addr >= 0xD000 && addr <= 0xDFFF);
+    
+    switch ((addr >> 8) & 0xF) {
+            
+        case 0x0: // VIC
+        case 0x1: // VIC
+        case 0x2: // VIC
+        case 0x3: // VIC
+            
+            return c64->vic.read(addr & 0x003F);
+            
+        case 0x4: // SID
+        case 0x5: // SID
+        case 0x6: // SID
+        case 0x7: // SID
+            
+            return c64->sid.read(addr & 0x001F);
+            
+        case 0xC: // CIA 1
+            
+            // Only the lower 4 bits are used for adressing the CIA I/O space.
+            // As a result, CIA's I/O memory repeats every 16 bytes.
+            return c64->cia1.read(addr & 0x000F);
+            
+        case 0xD: // CIA 2
+            
+            return c64->cia2.read(addr & 0x000F);
+            
+        case 0xE: // I/O space 1
+            
+            return c64->expansionport.readIO1(addr);
+            
+        case 0xF: // I/O space 2
+            
+            return c64->expansionport.readIO2(addr);
+
+        default:
+            
+            return peek(addr);
+    }
+}
+
 uint8_t C64Memory::peek(uint16_t addr)
 {
     MemorySource src = peekSrc[addr >> 12];
