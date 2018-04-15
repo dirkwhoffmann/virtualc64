@@ -94,10 +94,12 @@ CPU::reset()
 
 void 
 CPU::dumpState()
-{    
+{
+    DisassembledInstruction instr = disassemble();
+    
 	msg("CPU:\n");
 	msg("----\n\n");
-    msg("%s\n", disassemble());
+    msg("%s\n", instr.formatted);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
     msg("      Nmi line : %02X\n", nmiLine);
     msg(" Edge detector : %02X\n", read8_delayed(edgeDetector));
@@ -184,121 +186,120 @@ CPU::getLengthOfInstruction(uint8_t opcode)
 	return 1;
 }
 
-char *
-CPU::disassemble()
+DisassembledInstruction
+CPU::disassemble(uint16_t addr, bool hex)
 {
-	char buf[64], msg[128];
-	int i, op;
-	
-	uint16_t pc = PC_at_cycle_0;
-	uint8_t opcode = mem->read(pc);
-	
-	strcpy(msg, "");
-	
-	// Program counter
-	sprintf(buf, "%04X: ", pc);
-	strcat(msg, buf);
-	
-	// Hex dump
-	for (i = 0; i < 3; i++) {
-		if (i < getLengthOfInstruction(opcode)) {
-			sprintf(buf, "%02X ", mem->read(pc+i));
-			strcat(msg, buf);
-		} else {
-			sprintf(buf, "   ");
-			strcat(msg, buf);
-		}
-	}
-	
-	// Register
-	sprintf(buf, "  %02X %02X %02X %02X ", A, X, Y, SP);
-	strcat(msg, buf);
-	
-	// Flags
-	sprintf(buf, "%c%c%c%c%c%c%c%c ",
-			N ? 'N' : 'n',
-			V ? 'V' : 'v',
-			'-',
-			B ? 'B' : 'b',
-			D ? 'D' : 'd',
-			I ? 'I' : 'i',
-			Z ? 'Z' : 'z',
-			C ? 'C' : 'c');
-	strcat(msg, buf);
-	
-	// Mnemonic
-	sprintf(buf, "%s ", getMnemonic(opcode));
-	strcat(msg, buf);
-	
-	// Get operand as number
-	switch (addressingMode[opcode]) {
-		case ADDR_IMMEDIATE:
-		case ADDR_ZERO_PAGE:
-		case ADDR_ZERO_PAGE_X:
-		case ADDR_ZERO_PAGE_Y:
-		case ADDR_INDIRECT_X:
-		case ADDR_INDIRECT_Y:
-			op = mem->read(pc+1);
-			break;
-		case ADDR_DIRECT:			
-		case ADDR_INDIRECT:
-		case ADDR_ABSOLUTE:
-		case ADDR_ABSOLUTE_X:
-		case ADDR_ABSOLUTE_Y:
-			op = mem->readWord(pc+1);
-			break;
-		case ADDR_RELATIVE:
-			op = pc + 2 + (int8_t)mem->read(pc+1);
-			break;
-		default:
-			op = -1;
-	}
-	
-	// Format operand
-	switch (addressingMode[opcode]) {
-		case ADDR_IMPLIED:
-		case ADDR_ACCUMULATOR:
-			sprintf(buf, " ");
-			break;
-		case ADDR_IMMEDIATE:					
-			sprintf(buf, "#%02X", op);
-			break;
-		case ADDR_ZERO_PAGE:	
-			sprintf(buf, "%02X", op);
-			break;
-		case ADDR_ZERO_PAGE_X:	
-			sprintf(buf, "%02X,X", op);
-			break;
-		case ADDR_ZERO_PAGE_Y:	
-			sprintf(buf, "%02X,Y", op);
-			break;
-		case ADDR_ABSOLUTE:	
-		case ADDR_DIRECT:
-			sprintf(buf, "%04X", op);
-			break;
-		case ADDR_ABSOLUTE_X:	
-			sprintf(buf, "%04X,X", op);
-			break;
-		case ADDR_ABSOLUTE_Y:	
-			sprintf(buf, "%04X,Y", op);
-			break;
-		case ADDR_INDIRECT:	
-			sprintf(buf, "(%04X)", op);
-			break;
-		case ADDR_INDIRECT_X:	
-			sprintf(buf, "(%04X,X)", op);
-			break;
-		case ADDR_INDIRECT_Y:	
-			sprintf(buf, "(%04X),Y", op);
-			break;
-		case ADDR_RELATIVE:
-			sprintf(buf, "%04X", op);
-			break;
-		default:
-			sprintf(buf, "???");
-	}
-	strcat(msg, buf);
-	return strdup(msg);
+    DisassembledInstruction instr;
+    
+    // Get opcode
+    uint8_t opcode = mem->read(addr);
+    
+    // Get operand
+    uint16_t operand;
+    switch (addressingMode[opcode]) {
+        case ADDR_IMMEDIATE:
+        case ADDR_ZERO_PAGE:
+        case ADDR_ZERO_PAGE_X:
+        case ADDR_ZERO_PAGE_Y:
+        case ADDR_INDIRECT_X:
+        case ADDR_INDIRECT_Y:
+            operand = mem->read(addr+1);
+            break;
+        case ADDR_DIRECT:
+        case ADDR_INDIRECT:
+        case ADDR_ABSOLUTE:
+        case ADDR_ABSOLUTE_X:
+        case ADDR_ABSOLUTE_Y:
+            operand = LO_HI(mem->read(addr+1),mem->read(addr+2));
+            break;
+        case ADDR_RELATIVE:
+            operand = addr + 2 + mem->read(addr+1);
+            break;
+        default:
+            operand = 0;
+            break;
+    }
+    
+    // Convert register contents to strings
+    sprintf(instr.pc, (hex ? "%04X" : "%05d"), addr);
+    sprintf(instr.A,  (hex ? "%02X" : "%03d"), A);
+    sprintf(instr.X,  (hex ? "%02X" : "%03d"), X);
+    sprintf(instr.Y,  (hex ? "%02X" : "%03d"), Y);
+    sprintf(instr.SP, (hex ? "%02X" : "%03d"), SP);
+
+    // Convert memory contents to strings
+    for (unsigned i = 0; i < 3; i++) {
+        if (i < getLengthOfInstruction(opcode)) {
+            sprintf(instr.byte[i], (hex ? "%02X" : "%03d"), mem->read(addr+i));
+        } else {
+            sprintf(instr.byte[i], (hex ? "  " : "   "));
+        }
+    }
+    
+    // Convert flags to a string
+    sprintf(instr.flags, "%c%c-%c%c%c%c%c",
+            N ? 'N' : 'n',
+            V ? 'V' : 'v',
+            B ? 'B' : 'b',
+            D ? 'D' : 'd',
+            I ? 'I' : 'i',
+            Z ? 'Z' : 'z',
+            C ? 'C' : 'c');
+
+    // Convert instruction to a string
+    const char *mnc = getMnemonic(opcode);
+    switch (addressingMode[opcode]) {
+        case ADDR_IMPLIED:
+        case ADDR_ACCUMULATOR:
+            sprintf(instr.instr, "%s", mnc);
+            break;
+        case ADDR_IMMEDIATE:
+            sprintf(instr.instr, (hex ? "%s #%02X" : "%s #%03d"), mnc, operand);
+            break;
+        case ADDR_ZERO_PAGE:
+            sprintf(instr.instr, (hex ? "%s %02X" : "%s %03d"), mnc, operand);
+            break;
+        case ADDR_ZERO_PAGE_X:
+            sprintf(instr.instr, (hex ? "%s %02X,X" : "%s %03d,X"), mnc, operand);
+            break;
+        case ADDR_ZERO_PAGE_Y:
+            sprintf(instr.instr, (hex ? "%s %02X,Y" : "%s %03d,Y"), mnc, operand);
+            break;
+        case ADDR_ABSOLUTE:
+        case ADDR_DIRECT:
+            sprintf(instr.instr, (hex ? "%s %04X" : "%s %05d"), mnc, operand);
+            break;
+        case ADDR_ABSOLUTE_X:
+            sprintf(instr.instr, (hex ? "%s %04X,X" : "%s %05d,X"), mnc, operand);
+            break;
+        case ADDR_ABSOLUTE_Y:
+            sprintf(instr.instr, (hex ? "%s %04X,Y" : "%s %05d,Y"), mnc, operand);
+            break;
+        case ADDR_INDIRECT:
+            sprintf(instr.instr, (hex ? "%s (%04X)" : "%s (%05d)"), mnc, operand);
+            break;
+        case ADDR_INDIRECT_X:
+            sprintf(instr.instr, (hex ? "%s (%04X,X)" : "%s (%05d,X)"), mnc, operand);
+            break;
+        case ADDR_INDIRECT_Y:
+            sprintf(instr.instr, (hex ? "%s (%04X),Y" : "%s (%05d),Y"), mnc, operand);
+            break;
+        case ADDR_RELATIVE:
+            sprintf(instr.instr, (hex ? "%s %04X" : "%s %05d"), mnc, operand);
+            break;
+        default:
+            sprintf(instr.instr, "???");
+    }
+    
+    // Put everything together
+    sprintf(instr.formatted, "%s: %s %s %s   %s %s %s %s %s %s",
+            instr.pc,
+            instr.byte[0], instr.byte[1], instr.byte[2],
+            instr.A, instr.X, instr.Y, instr.SP,
+            instr.flags,
+            instr.instr);
+    
+    return instr;
 }
 
 void 

@@ -61,7 +61,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->cpu->dumpState(); }
 - (bool) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
 - (void) setTraceMode:(bool)b {
-    if (b) wrapper->cpu->startSilentTracing(); else wrapper->cpu->stopTracing(); }
+    if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
 
 - (uint16_t) PC { return wrapper->cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
@@ -92,16 +92,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->cpu->mem->read(wrapper->cpu->getPC_at_cycle_0()); }
 - (uint8_t) lengthOfInstruction:(uint8_t)opcode {
     return wrapper->cpu->getLengthOfInstruction(opcode); }
-- (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr {
+ - (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr {
     return wrapper->cpu->getLengthOfInstructionAtAddress(addr); }
-- (uint8_t) lengthOfCurrentInstruction {
-    return wrapper->cpu->getLengthOfCurrentInstruction(); }
 - (uint16_t) addressOfNextInstruction {
     return wrapper->cpu->getAddressOfNextInstruction(); }
-- (const char *) mnemonic:(uint8_t)opcode {
-    return wrapper->cpu->getMnemonic(opcode); }
-- (AddressingMode) addressingMode:(uint8_t)opcode {
-    return wrapper->cpu->getAddressingMode(opcode); }
+- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
+    return wrapper->cpu->disassemble(addr, h);
+}
 
 - (int) topOfCallStack { return wrapper->cpu->getTopOfCallStack(); }
 - (int) breakpoint:(int)addr { return wrapper->cpu->getBreakpoint(addr); }

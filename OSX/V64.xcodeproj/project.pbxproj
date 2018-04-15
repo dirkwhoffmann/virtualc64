@@ -39,7 +39,6 @@
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
-		50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C710A6F7357009E80BD /* Disassembler.mm */; };
 		50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
@@ -329,8 +328,6 @@
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VIC.h; sourceTree = "<group>"; };
-		50176C700A6F7357009E80BD /* Disassembler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Disassembler.h; sourceTree = "<group>"; };
-		50176C710A6F7357009E80BD /* Disassembler.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Disassembler.mm; sourceTree = "<group>"; };
 		50176C720A6F7357009E80BD /* Formatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Formatter.h; sourceTree = "<group>"; };
 		50176C730A6F7357009E80BD /* Formatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Formatter.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
@@ -771,8 +768,6 @@
 			isa = PBXGroup;
 			children = (
 				50C8924D1BEF35FB00231B96 /* MetalView */,
-				50176C700A6F7357009E80BD /* Disassembler.h */,
-				50176C710A6F7357009E80BD /* Disassembler.mm */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
 				50176C730A6F7357009E80BD /* Formatter.mm */,
 				5077743112DE490B00D72088 /* CpuTableView.h */,
@@ -1373,7 +1368,6 @@
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
-				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,

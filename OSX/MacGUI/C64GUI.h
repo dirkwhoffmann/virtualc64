@@ -24,7 +24,6 @@
 
 #import "C64Proxy.h"
 
-#import "Disassembler.h"
 #import "Formatter.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"

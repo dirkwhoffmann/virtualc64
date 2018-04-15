@@ -59,16 +59,19 @@
     uint16_t addr = [self addressForRow:row];
 	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] read:addr]];
 	
-	if ([[aTableColumn identifier] isEqual:@"addr"]) 
+    if ([[aTableColumn identifier] isEqual:@"addr"]) {
 		return @((int)addr);
-	else if ([[aTableColumn identifier] isEqual:@"data01"]) 
+    } else if ([[aTableColumn identifier] isEqual:@"data01"]) {
 		return (length > 0 ? @((int)[[c64 mem] read:addr]) : nil);
-	else if ([[aTableColumn identifier] isEqual:@"data02"]) 
+    } else if ([[aTableColumn identifier] isEqual:@"data02"]) {
 		return (length > 1 ? @((int)[[c64 mem] read:(addr+1)]) : nil);
-	else if ([[aTableColumn identifier] isEqual:@"data03"]) 
+    } else if ([[aTableColumn identifier] isEqual:@"data03"]) {
 		return (length > 2 ? @((int)[[c64 mem] read:(addr+2)]) : nil);
-	else if ([[aTableColumn identifier] isEqual:@"ascii"]) 
-		return @((int)addr);
+    } else if ([[aTableColumn identifier] isEqual:@"ascii"]) {
+        DisassembledInstruction instr = [[c64 cpu] disassemble:addr hex:[c hex]];
+        return [NSString stringWithUTF8String:instr.instr];
+    }
+		// return @((int)addr);
 	
 	return @"???";
 }

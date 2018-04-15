@@ -88,12 +88,9 @@ struct ContainerWrapper;
 
 - (uint16_t) readPC;
 - (uint8_t) lengthOfInstruction:(uint8_t)opcode;
-- (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr;
-- (uint8_t) lengthOfCurrentInstruction;
+ - (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr;
 - (uint16_t) addressOfNextInstruction;
-- (const char *) mnemonic:(uint8_t)opcode;
-- (AddressingMode) addressingMode:(uint8_t)opcode;
-
+- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
 - (int) topOfCallStack;
 - (int) breakpoint:(int)addr;
 - (void) setBreakpoint:(int)addr tag:(uint8_t)t;

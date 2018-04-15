@@ -47,13 +47,6 @@
     KeyboardController *keyboardcontroller;
     
     IBOutlet MetalView *metalScreen;
-    
-	// Dialogs
-    // IBOutlet PropertiesDialog *propertiesDialog;
-    // IBOutlet HardwareDialog *hardwareDialog;
-    // IBOutlet MediaDialog *mediaDialog;
-	// IBOutlet MountDialog *mountDialog;
-    // IBOutlet TapeDialog *tapeDialog;
 	    
     // Toolbar
     IBOutlet NSPopUpButton *joystickPortA;
@@ -76,6 +69,8 @@
 	IBOutlet NSButton *warpIcon;
 	
 	// Debug panel (common)
+    BOOL hex;
+    
 	IBOutlet NSMatrix *dezHexSelector;
 	IBOutlet NSButton *stopAndGoButton;
 	IBOutlet NSButton *stepIntoButton;
@@ -294,6 +289,7 @@
 @property MemTableView *memTableView;
 @property Speedometer *speedometer;
 @property long animationCounter;
+@property BOOL hex;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
@@ -332,7 +328,7 @@
 
 // Refresh
 - (void)refresh;
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;
+- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter;
 - (void)enableUserEditing:(BOOL)enabled;
 
 @end

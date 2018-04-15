@@ -493,7 +493,8 @@ CPU::executeMicroInstruction()
             
             // Disassemble command if requested
             if (tracingEnabled()) {
-                trace("%s\n", disassemble());
+                DisassembledInstruction instr = disassemble();
+                trace("%s\n", instr.formatted);
             }
             
             // Check breakpoint tag

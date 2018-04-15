@@ -30,6 +30,8 @@
 @synthesize mountDialog;
 @synthesize tapeDialog;
 
+@synthesize hex;
+
 // Toolbar
 @synthesize joystickPortA;
 @synthesize joystickPortB;
@@ -82,7 +84,7 @@
 	[memTableView refresh];
 }
 
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threeDigitFormatter disassembler:(NSFormatter *)disassembler
+- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threeDigitFormatter
 {		
 	NSControl *ByteFormatterControls[] = { 
 		// CPU panel
@@ -137,7 +139,6 @@
 	[[[cpuTableView tableColumnWithIdentifier:@"data01"] dataCell] setFormatter:byteFormatter];
 	[[[cpuTableView tableColumnWithIdentifier:@"data02"] dataCell] setFormatter:byteFormatter];
 	[[[cpuTableView tableColumnWithIdentifier:@"data03"] dataCell] setFormatter:byteFormatter];
-	[[[cpuTableView tableColumnWithIdentifier:@"ascii"] dataCell] setFormatter:disassembler];
 	
 	[[[memTableView tableColumnWithIdentifier:@"addr"] dataCell] setFormatter:wordFormatter];
 	[[[memTableView tableColumnWithIdentifier:@"hex0"] dataCell] setFormatter:byteFormatter];

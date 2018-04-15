@@ -59,4 +59,17 @@ typedef enum {
     SOFT_BREAKPOINT = 0x02
 } Breakpoint;
 
+//! @brief    Disassembled instruction
+typedef struct {
+    char formatted[80];
+    char instr[16];
+    char pc[6];
+    char byte[3][4];
+    char A[4];
+    char X[4];
+    char Y[4];
+    char SP[4];
+    char flags[9];
+} DisassembledInstruction;
+
 #endif

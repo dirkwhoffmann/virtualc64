@@ -20,7 +20,6 @@
 
 // Forward declarations
 @class C64Proxy;
-// @class MyDocument;
 
 #define CPU_TABLE_VIEW_ITEMS 256
 
