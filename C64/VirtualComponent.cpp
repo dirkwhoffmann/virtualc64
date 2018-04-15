@@ -248,7 +248,7 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
     }
     
     if (*buffer - old != VirtualComponent::stateSize()) {
-        panic("loadFromBuffer: Snapshot size is wrong.");
+        panic("loadFromBuffer: Snapshot size is wrong.\n");
         assert(false);
     }
 }

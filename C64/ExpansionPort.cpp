@@ -69,7 +69,10 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     // Delete old cartridge (if any)
-    if (cartridge != NULL) delete cartridge;
+    if (cartridge != NULL) {
+        delete cartridge;
+        cartridge = NULL;
+    }
     
     // Read cartridge type
     CartridgeType cartridgeType = (CartridgeType)read16(buffer);
