@@ -18,12 +18,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _SIDWRAPPER_INC
-#define _SIDWRAPPER_INC
+#ifndef _SIDWRAPPER_H
+#define _SIDWRAPPER_H
 
 #include "VirtualComponent.h"
 #include "OldSID.h"
 #include "ReSID.h"
+#include "SID_types.h"
 
 class SIDWrapper : public VirtualComponent {
 

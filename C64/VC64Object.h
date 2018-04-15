@@ -22,7 +22,7 @@
 #define _VC64OBJECT_INC
 
 #include "basic.h"
-#include "C64_defs.h"
+#include "C64_types.h"
 
 /*! @brief    Common functionality of all VirtualC64 objects.
  *  @details  This class defines the base functionality of all objects such as 

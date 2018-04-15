@@ -25,6 +25,7 @@
 #define _CARTRIDGE_INC
 
 #include "VirtualComponent.h"
+#include "Cartridge_types.h"
 #include "CRTContainer.h"
 
 class ExpansionPort;

@@ -20,7 +20,7 @@
 #define _VIC_INC
 
 #include "VirtualComponent.h"
-#include "C64_defs.h"
+#include "C64_types.h"
 #include "VIC_globals.h"
 #include "PixelEngine.h"
 

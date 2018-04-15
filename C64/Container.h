@@ -22,7 +22,7 @@
 #define _CONTAINER_INC
 
 #include "VC64Object.h"
-#include "C64_defs.h"
+#include "C64_types.h"
 
 
 /*! @class    Container

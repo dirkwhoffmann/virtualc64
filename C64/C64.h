@@ -45,16 +45,19 @@
 //                simplify code. 
 //
 
-
-
 #ifndef _C64_INC
 #define _C64_INC
 
-// Disable assert checking in relase versions
+// Snapshot version number of this release
+#define V_MAJOR 1
+#define V_MINOR 9
+#define V_SUBMINOR 0
+
+// Disables assert checking in relase version
 #define NDEBUG
 
 // Data types and constants
-#include "C64_defs.h"
+#include "C64_types.h"
 
 // General
 #include "Message.h"

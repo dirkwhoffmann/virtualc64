@@ -22,7 +22,7 @@
 
 #include "VirtualComponent.h"
 #include "VIC_globals.h"
-#include "C64_defs.h"
+#include "C64_types.h"
 
 // Forward declarations
 class VIC;

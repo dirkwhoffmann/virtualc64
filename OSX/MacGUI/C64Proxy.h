@@ -17,7 +17,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "C64_defs.h"
+#import "C64_types.h"
 #import "VIC_globals.h"
 #import "basic.h"
 

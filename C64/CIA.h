@@ -19,10 +19,11 @@
  */
 
 
-#ifndef _CIA_INC
-#define _CIA_INC
+#ifndef _CIA_H
+#define _CIA_H
 
 #include "TOD.h"
+#include "CIA_types.h"
 
 // Forward declarations
 class VIC;

@@ -23,7 +23,7 @@
 #define JOYSTICK_H
 
 #include "VirtualComponent.h"
-#include "C64_defs.h"
+#include "Joystick_types.h"
 
 class Joystick : public VirtualComponent {
 

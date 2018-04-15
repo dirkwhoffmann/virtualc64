@@ -23,6 +23,7 @@
 
 #include "basic.h"
 #include "VirtualComponent.h"
+#include "Memory_types.h"
 
 // Forward declarations
 class CPU;

@@ -306,6 +306,13 @@
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
+		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
+		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
+		50171AA02083716000C07AAD /* CPU_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_types.h; sourceTree = "<group>"; };
+		50171AA12083722C00C07AAD /* Memory_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Memory_types.h; sourceTree = "<group>"; };
+		50171AA22083727400C07AAD /* Joystick_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick_types.h; sourceTree = "<group>"; };
+		50171AA3208372CF00C07AAD /* Cartridge_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge_types.h; sourceTree = "<group>"; };
+		50171AA4208373E600C07AAD /* TOD_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TOD_types.h; sourceTree = "<group>"; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
 		50176C500A6F72F3009E80BD /* basic.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = basic.h; sourceTree = "<group>"; };
 		50176C510A6F72F3009E80BD /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
@@ -515,7 +522,7 @@
 		50D1417B1417A34B0024FC74 /* wave8580_P_T.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave8580_P_T.cc; sourceTree = "<group>"; };
 		50D1417C1417A34B0024FC74 /* wave8580_PS_.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave8580_PS_.cc; sourceTree = "<group>"; };
 		50D1417D1417A34B0024FC74 /* wave8580_PST.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave8580_PST.cc; sourceTree = "<group>"; };
-		50D43B5B1EE5701A009D163C /* C64_defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64_defs.h; sourceTree = "<group>"; };
+		50D43B5B1EE5701A009D163C /* C64_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64_types.h; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
 		50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64Archive.cpp; sourceTree = "<group>"; };
@@ -694,11 +701,13 @@
 			children = (
 				50D141641417A34B0024FC74 /* resid */,
 				50176C520A6F72F3009E80BD /* C64.h */,
-				50D43B5B1EE5701A009D163C /* C64_defs.h */,
+				50D43B5B1EE5701A009D163C /* C64_types.h */,
 				50176C510A6F72F3009E80BD /* C64.cpp */,
 				50176C540A6F72F3009E80BD /* CIA.h */,
+				50171A9E2083708800C07AAD /* CIA_types.h */,
 				50176C530A6F72F3009E80BD /* CIA.cpp */,
 				500B6CA30B905CEC002C36EC /* TOD.h */,
+				50171AA4208373E600C07AAD /* TOD_types.h */,
 				500B6CA40B905CEC002C36EC /* TOD.cpp */,
 				501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
@@ -707,6 +716,7 @@
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
 				506D39D3141780FF00268AF6 /* SIDWrapper.h */,
+				50171A9F2083710E00C07AAD /* SID_types.h */,
 				506D39D1141780E500268AF6 /* SIDWrapper.cpp */,
 				506D39D5141788E700268AF6 /* ReSID.h */,
 				506D39D4141788E600268AF6 /* ReSID.cpp */,
@@ -715,6 +725,7 @@
 				020214250AF8E599008AB4EB /* SIDVoice.h */,
 				020214260AF8E599008AB4EB /* SIDVoice.cpp */,
 				50176C560A6F72F3009E80BD /* CPU.h */,
+				50171AA02083716000C07AAD /* CPU_types.h */,
 				50176C550A6F72F3009E80BD /* CPU.cpp */,
 				50176C580A6F72F3009E80BD /* Instructions.h */,
 				50176C570A6F72F3009E80BD /* Instructions.cpp */,
@@ -723,6 +734,7 @@
 				50176C5A0A6F72F3009E80BD /* Keyboard.h */,
 				50176C590A6F72F3009E80BD /* Keyboard.cpp */,
 				389E777F0C7A3B6F00BEAFA6 /* Joystick.h */,
+				50171AA22083727400C07AAD /* Joystick_types.h */,
 				389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,
 				5020F28B0BBABE3C0093C396 /* IEC.cpp */,
@@ -818,6 +830,7 @@
 			isa = PBXGroup;
 			children = (
 				50176C5C0A6F72F3009E80BD /* Memory.h */,
+				50171AA12083722C00C07AAD /* Memory_types.h */,
 				50176C5B0A6F72F3009E80BD /* Memory.cpp */,
 				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
@@ -858,6 +871,7 @@
 			isa = PBXGroup;
 			children = (
 				5054BF1020133BA2003D86D4 /* Cartridge.h */,
+				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
 				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				50B5861C201C673900742DB3 /* CustomCartridges.h */,
 				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,

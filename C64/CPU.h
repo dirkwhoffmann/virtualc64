@@ -21,6 +21,7 @@
 #ifndef _CPU_INC
 #define _CPU_INC
 
+#include "CPU_types.h"
 #include "Memory.h"
 
 /*! @class  The virtual 6502 / 6510 processor
