@@ -238,10 +238,10 @@ public:
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
     //! @brief    Reads a byte from RAM.
-    uint8_t peekRam(uint16_t addr) { return ram[addr]; }
+    uint8_t readRam(uint16_t addr) { return ram[addr]; }
 
     //! @brief    Reads a byte from ROM.
-    uint8_t peekRom(uint16_t addr) { return rom[addr]; }
+    uint8_t readRom(uint16_t addr) { return rom[addr]; }
 
     //! @brief    Reads a byte from I/O space.
     uint8_t peekIO(uint16_t addr);
@@ -254,6 +254,9 @@ public:
      */
     uint8_t peek(uint16_t addr);
 
+    //! @brief    Same as peek, but without side effects
+    uint8_t read(uint16_t addr);
+    
     //! @brief    Write a byte into RAM.
     void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }
 

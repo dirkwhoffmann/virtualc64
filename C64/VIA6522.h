@@ -128,19 +128,24 @@ public:
     void executeTimer2();
 	
 	/*! @brief    Special peek function for the I/O memory range
-	 *  @details  The peek function only handles those registers that are treated similarily by both VIA chips
+	 *  @details  The peek function only handles those registers that are treated
+     *            similarly by both VIA chips
      */
 	virtual uint8_t peek(uint16_t addr);
 	
+    //! @brief    Same as peek, but without side effects
+    virtual uint8_t read(uint16_t addr);
+    
 	/*! @brief    Special poke function for the I/O memory range
-	 *  @details  The poke function only handles those registers that are treated similarily by both VIA chips 
+	 *  @details  The poke function only handles those registers that are treated
+     *            similarly by both VIA chips
      */
 	virtual void poke(uint16_t addr, uint8_t value);
 
     
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     //                                Internal Configuration
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
 
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRunMode1() { return (io[0x0B] & 0x40) != 0; }
@@ -152,9 +157,9 @@ public:
     bool inputLatchingEnabledB() { return (GET_BIT(io[0x0B],1)); }
 
     
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     //                                        Ports
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
 
     //! Returns the current value on chip pin CA2
     bool CA2() {
@@ -167,9 +172,9 @@ public:
         }
     }
     
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     //                                   Interrupt handling
-    // -----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
 
     /*! @brief    Returns the value of the IRQ pin
      *  @details  This method updates the IRQ pin of the connected CPU as a side effect and is therefore
@@ -252,6 +257,9 @@ public:
     //! @brief    Peeks a value from VIAs I/O space
 	uint8_t peek(uint16_t addr);
 
+    //! @brief    Same as peek without side effects
+    uint8_t read(uint16_t addr);
+
     //! @brief    Pokes a value into VIAs I/O space
     void poke(uint16_t addr, uint8_t value);
 	
@@ -284,6 +292,9 @@ public:
     
     //! @brief    Peeks a value from VIAs I/O space
 	uint8_t peek(uint16_t addr);
+    
+    //! @brief    Same as peek without side effects
+    uint8_t read(uint16_t addr);
     
     //! @brief    Pokes a value into VIAs I/O space
 	void poke(uint16_t addr, uint8_t value);

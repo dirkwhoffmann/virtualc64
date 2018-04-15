@@ -137,8 +137,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->mem->peek(addr); }
 - (uint16_t) peekWord:(uint16_t)addr {
     return wrapper->mem->peekWord(addr); }
-- (uint8_t) peekFrom:(uint16_t)addr memtype:(MemoryType)type {
-    return wrapper->mem->peekFrom(addr, type); }
+- (uint8_t) readFrom:(uint16_t)addr memtype:(MemoryType)type {
+    return wrapper->mem->readFrom(addr, type); }
 - (void) poke:(uint16_t)addr value:(uint8_t)val {
     wrapper->mem->poke(addr, val); }
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)type {

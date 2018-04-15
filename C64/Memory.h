@@ -55,27 +55,37 @@ public:
 	// --------------------------------------------------------------------------------
 
 protected:	
-
-	//! @brief    Reads a byte from RAM.
-	virtual uint8_t peekRam(uint16_t addr) = 0;
 	
+    //! @brief    Reads a byte from RAM.
+    virtual uint8_t readRam(uint16_t addr) = 0;
+    
     //! @brief    Reads a byte from ROM.
-	virtual uint8_t peekRom(uint16_t addr) = 0;
-
+    virtual uint8_t readRom(uint16_t addr) = 0;
+    
     //! @brief    Reads a byte from I/O space.
 	virtual uint8_t peekIO(uint16_t addr) = 0;
+    
+    //! @brief    Reads a byte from I/O space.
+    virtual uint8_t readIO(uint16_t addr) = 0;
 
 public:
 
-	//! @brief    Reads a byte from the specified memory source.
-	uint8_t peekFrom(uint16_t addr, MemoryType source);
+    /*! @brief    Reads a byte from the specified memory source.
+     *  @details  This functions is used by the GUI and does not cause any side effects.
+     */
+    uint8_t readFrom(uint16_t addr, MemoryType source);
+    
 
 	/*! @brief    Reads a byte from memory.
-	 *  @details  This function implements the native memory peek of the original C64 including all side effects.
+	 *  @details  This function implements the native memory peek of the original C64
+     *            including all side effects.
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
 	
-	//! Wrapper around peek
+    //! @brief    Same as peek, but without side effects
+    virtual uint8_t read(uint16_t addr) = 0;
+    
+	//!  Wrapper around peek
 	/*!	Memory address is provided in LO/HIBYTE format.
 		\param lo Low-Byte of the memory address 
 		\param hi High-Byte of the memory address

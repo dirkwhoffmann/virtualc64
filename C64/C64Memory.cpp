@@ -417,6 +417,25 @@ uint8_t C64Memory::peek(uint16_t addr)
     }
 }
 
+uint8_t C64Memory::read(uint16_t addr)
+{
+    MemorySource src = peekSrc[addr >> 12];
+    
+    switch(src) {
+            
+        case M_IO:
+            return readIO(addr);
+            
+        case M_CRTLO:
+        case M_CRTHI:
+            
+            return c64->expansionport.read(addr);
+            
+        default:
+            
+            return peek(addr);
+    }
+}
 
 // --------------------------------------------------------------------------------
 //                                    Poke

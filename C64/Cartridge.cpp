@@ -239,7 +239,7 @@ Cartridge::peek(uint16_t addr)
     
     // No cartridge chip is mapped to this memory area
     // debug("Peeking from unmapped location: %04X\n", addr);
-    return c64->mem.peekRam(addr);
+    return c64->mem.ram[addr];
 }
 
 unsigned

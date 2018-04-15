@@ -140,6 +140,12 @@ ExpansionPort::peek(uint16_t addr)
 }
 
 uint8_t
+ExpansionPort::read(uint16_t addr)
+{
+    return cartridge ? cartridge->read(addr) : 0;
+}
+
+uint8_t
 ExpansionPort::peekIO1(uint16_t addr)
 {
     /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche

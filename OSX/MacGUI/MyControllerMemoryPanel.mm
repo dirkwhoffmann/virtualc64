@@ -68,7 +68,7 @@
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {
     NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];
+    [[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] readFrom:addr memtype:t] memtype:t];
     if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
     
     [[c64 mem] pokeTo:addr value:v memtype:t];
@@ -87,7 +87,7 @@
     if ([id isEqual:@"hex2"]) addr += 2;
     if ([id isEqual:@"hex3"]) addr += 3;
     
-    uint8_t oldValue = [[c64 mem] peekFrom:addr memtype:[self currentMemSource]];
+    uint8_t oldValue = [[c64 mem] readFrom:addr memtype:[self currentMemSource]];
     if (oldValue == value)
         return;
     

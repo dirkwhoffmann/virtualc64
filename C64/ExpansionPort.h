@@ -95,6 +95,9 @@ public:
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);
 
+    //! @brief    Same as peek, but without side effects
+    uint8_t read(uint16_t addr);
+
     //! @brief    Peek fallthrough for I/O space 1
     uint8_t peekIO1(uint16_t addr);
     

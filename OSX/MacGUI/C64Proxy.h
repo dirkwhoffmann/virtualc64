@@ -119,7 +119,7 @@ struct ContainerWrapper;
 
 - (uint8_t) peek:(uint16_t)addr;
 - (uint16_t) peekWord:(uint16_t)addr;
-- (uint8_t) peekFrom:(uint16_t)addr memtype:(MemoryType)source;
+- (uint8_t) readFrom:(uint16_t)addr memtype:(MemoryType)source;
 - (void) poke:(uint16_t)addr value:(uint8_t)val;
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)source;
 - (bool) isValidAddr:(uint16_t)addr memtype:(MemoryType)source;

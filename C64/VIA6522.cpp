@@ -257,6 +257,41 @@ VIA6522::peek(uint16_t addr)
     return io[addr];
 }
 
+uint8_t
+VIA6522::read(uint16_t addr)
+{
+    assert (addr <= 0xF);
+    
+    switch(addr) {
+            
+        case 0x4: // T1 low-order counter
+        
+            return LO_BYTE(t1);
+            
+        case 0x8: // T2 low-order latch/counter
+            
+            return LO_BYTE(t2);
+            
+        case 0xA: // Shift register
+        case 0xB: // Auxiliary control register
+        case 0xC: // Peripheral control register
+            
+            break; // TODO
+            
+        case 0xD: { // IFR - Interrupt Flag Register
+            
+            uint8_t ioD = io[0xD] & 0x7F;
+            uint8_t irq = (io[0xD] /* IFR */ & io[0xE] /* IER */) ? 0x80 : 0x00;
+            return ioD | irq;
+        }
+  
+        default:
+            return peek(addr);
+    }
+    
+    return io[addr];
+}
+
 void VIA6522::poke(uint16_t addr, uint8_t value)
 {
     assert (addr <= 0x0F);
@@ -435,6 +470,37 @@ uint8_t VIA1::peek(uint16_t addr)
     }
 }
 
+uint8_t VIA1::read(uint16_t addr)
+{
+    switch(addr) {
+            
+        case 0x0: { // ORB - Output register B
+            
+            // Port values (outside the chip)
+            uint8_t external =
+            (floppy->iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
+            (floppy->iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
+            (floppy->iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
+            
+            // Determine read value
+            uint8_t result =
+            (ddrb & orb) |      // Values of bits configured as outputs
+            (~ddrb & external); // Values of bits configured as inputs
+            
+            result &= 0x9F;
+            return result;
+        }
+            
+        case 0x1: // ORA - Output register A
+        case 0xF:
+   
+            return ora;
+            
+        default:
+            return VIA6522::read(addr);
+    }
+}
+
 void VIA1::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
@@ -552,6 +618,50 @@ uint8_t VIA2::peek(uint16_t addr)
         case 0x4:
             floppy->cpu.releaseIrqLine(CPU::VIA);
             return VIA6522::peek(addr);
+            
+        default:
+            return VIA6522::peek(addr);
+    }
+}
+
+uint8_t VIA2::read(uint16_t addr)
+{
+    switch(addr) {
+            
+        case 0x0: { // ORB - Output register B
+            
+            // Collect values on the external port lines
+            bool SYNC = floppy->getBitAccuracy() ? floppy->getSync() : floppy->getFastLoaderSync();
+            uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
+            (floppy->getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
+            (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
+            (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);
+            
+            uint8_t result =
+            (ddrb & orb) |      // Values of bits configured as outputs
+            (~ddrb & external); // Values of bits configures as inputs
+            
+            return result;
+        }
+            
+        case 0x1: // ORA - Output register A
+        case 0xF: {
+            
+            uint8_t result;
+            
+            if (inputLatchingEnabledA()) {
+                // This is the normal operation mode of the drive.
+                // Every byte that comes from
+                result =
+                (ddra & ora) | // Values of bits configured as outputs
+                (~ddra & ira); // Values of bits configures as inputs
+            } else {
+                warn("INPUT LATCHING OF VIA2 IS DISABLED!");
+                result = 0;
+            }
+        
+            return result;
+        }
             
         default:
             return VIA6522::peek(addr);

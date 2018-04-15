@@ -106,18 +106,6 @@ VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 }
 
 uint8_t 
-VC1541Memory::peekRam(uint16_t addr)
-{
-	return mem[addr];
-}
-
-uint8_t 
-VC1541Memory::peekRom(uint16_t addr)
-{
-	return mem[addr];
-}
-
-uint8_t 
 VC1541Memory::peekIO(uint16_t addr)
 {	
 	if ((addr & 0xFC00) == 0x1800) {
@@ -129,6 +117,18 @@ VC1541Memory::peekIO(uint16_t addr)
 		// VICE and Frodo are doing it that way
 		return (addr >> 8);
 	}
+}
+
+uint8_t
+VC1541Memory::readIO(uint16_t addr)
+{
+    if ((addr & 0xFC00) == 0x1800) {
+        return floppy->via1.read(addr & 0x000F);
+    } else if ((addr & 0xFC00) == 0x1c00) {
+        return floppy->via2.read(addr & 0x000F);
+    } else {
+        return (addr >> 8);
+    }
 }
 
 uint8_t 
@@ -149,7 +149,24 @@ VC1541Memory::peek(uint16_t addr)
 	
 	return result;
 }
-	
+
+uint8_t
+VC1541Memory::read(uint16_t addr)
+{
+    uint8_t result;
+    
+    if (addr >= 0xc000) {
+        // ROM
+        result = mem[addr];
+    } else if (addr < 0x1000) {
+        result = mem[addr & 0x07ff];
+    } else {
+        result = readIO(addr);
+    }
+    
+    return result;
+}
+
 void 
 VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
 {

@@ -68,27 +68,16 @@
 		if (![[c64 mem] isValidAddr:addr memtype:source])
 			return nil;
         
-        uint8_t c1 = [[c64 mem] peekFrom:(addr+0) memtype:source];
-        uint8_t c2 = [[c64 mem] peekFrom:(addr+1) memtype:source];
-        uint8_t c3 = [[c64 mem] peekFrom:(addr+2) memtype:source];
-        uint8_t c4 = [[c64 mem] peekFrom:(addr+3) memtype:source];
+        uint8_t c1 = [[c64 mem] readFrom:(addr+0) memtype:source];
+        uint8_t c2 = [[c64 mem] readFrom:(addr+1) memtype:source];
+        uint8_t c3 = [[c64 mem] readFrom:(addr+2) memtype:source];
+        uint8_t c4 = [[c64 mem] readFrom:(addr+3) memtype:source];
         
         return [NSString stringWithFormat:@"%c%c%c%c",
                 petscii2printable(c1, '.'),
                 petscii2printable(c2, '.'),
                 petscii2printable(c3, '.'),
                 petscii2printable(c4, '.')];
-        
-        // Convert memory bytes to unicode characters
-        // In C64ProMono font, a suitable mapping starts at 0xEE00
-        // unichar const base = (unichar)0xEE00;
-        /*
-        unichar chars[4];
-        for (unsigned i = 0; i < 4; i++)
-            chars[i] = (unichar)0xEE00 + [[c64 mem] peekFrom:(addr+i) memtype:source];
-        
-        return [NSString stringWithCharacters:chars length:4];
-         */
 	}
 	
 	// One of the hexadecimal columns...
@@ -99,7 +88,7 @@
 	if (![[c64 mem] isValidAddr:addr memtype:source])
 		return nil;
 	
-	return @((int)[[c64 mem] peekFrom:addr memtype:source]);
+	return @((int)[[c64 mem] readFrom:addr memtype:source]);
 	
 	return nil;
 }
@@ -125,7 +114,7 @@
         return;
     
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];
+	[[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] readFrom:addr memtype:t] memtype:t];
 	if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
 	
 	[[c64 mem] pokeTo:addr value:v memtype:t];
@@ -147,7 +136,7 @@
 	if ([id isEqual:@"hex2"]) addr += 2;
 	if ([id isEqual:@"hex3"]) addr += 3;
 	
-	uint8_t oldValue = [[c64 mem] peekFrom:addr memtype:source];
+	uint8_t oldValue = [[c64 mem] readFrom:addr memtype:source];
 	if (oldValue == value)
 		return; 
 	
