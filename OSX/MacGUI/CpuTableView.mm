@@ -57,16 +57,16 @@
         return nil;
     
     uint16_t addr = [self addressForRow:row];
-	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] peek:addr]];
+	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] read:addr]];
 	
 	if ([[aTableColumn identifier] isEqual:@"addr"]) 
 		return @((int)addr);
 	else if ([[aTableColumn identifier] isEqual:@"data01"]) 
-		return (length > 0 ? @((int)[[c64 mem] peek:addr]) : nil);
+		return (length > 0 ? @((int)[[c64 mem] read:addr]) : nil);
 	else if ([[aTableColumn identifier] isEqual:@"data02"]) 
-		return (length > 1 ? @((int)[[c64 mem] peek:(addr+1)]) : nil);
+		return (length > 1 ? @((int)[[c64 mem] read:(addr+1)]) : nil);
 	else if ([[aTableColumn identifier] isEqual:@"data03"]) 
-		return (length > 2 ? @((int)[[c64 mem] peek:(addr+2)]) : nil);
+		return (length > 2 ? @((int)[[c64 mem] read:(addr+2)]) : nil);
 	else if ([[aTableColumn identifier] isEqual:@"ascii"]) 
 		return @((int)addr);
 	

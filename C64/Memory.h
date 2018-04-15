@@ -75,7 +75,6 @@ public:
      */
     uint8_t readFrom(uint16_t addr, MemoryType source);
     
-
 	/*! @brief    Reads a byte from memory.
 	 *  @details  This function implements the native memory peek of the original C64
      *            including all side effects.
@@ -85,32 +84,11 @@ public:
     //! @brief    Same as peek, but without side effects
     virtual uint8_t read(uint16_t addr) = 0;
     
-	//!  Wrapper around peek
-	/*!	Memory address is provided in LO/HIBYTE format.
-		\param lo Low-Byte of the memory address 
-		\param hi High-Byte of the memory address
-		\return RAM, ROM, or I/O memory contents at address (hi << 8) + lo 
-	*/
-	inline uint8_t peek(uint8_t lo, uint8_t hi) { return peek(((uint16_t)hi << 8) + lo); }
+	//! @brief    Convenience wrapper for peek
+    uint8_t peek(uint8_t lo, uint8_t hi) { return peek(LO_HI(lo, hi)); }
 
-	//! Wrapper around peek
-	/*!	Memory address is provided in three parts.
-		\param lo Low-Byte of the memory address 
-		\param hi High-Byte of the memory address
-		\param index The effective address is computed by adding index
-		\return RAM, ROM, or I/O memory contents at address (hi << 8) + lo + index 
-	*/
-	inline uint8_t peek(uint8_t lo, uint8_t hi, uint8_t index) { return peek(((uint16_t)hi << 8) + lo + index); }
-
-	//! Wrapper around peek
-	/*!	Returns 16 bit value at the provided address
-		The functions first determines the correct memory source by the value of the processor port register.
-		Afterwards, the value is read either from RAM, ROM, or the I/O address space and returned.
-		\param addr Memory Addr
-		\return RAM, ROM, or I/O memory contents at addresses addr, addr+1
-		\remark The C64 is a little endian machine. Hence, the low byte comes first. 
-	*/	
-	inline uint16_t peekWord(uint16_t addr) { return ((uint16_t)peek(addr+1) << 8) | peek(addr); }
+	//! @brief    Reads two bytes in a row
+    uint16_t readWord(uint16_t addr) { return LO_HI(read(addr),read(addr+1)); }
 
 
 	// --------------------------------------------------------------------------------
@@ -149,7 +127,7 @@ public:
 		\param hi High-Byte of the memory address
 		\param value Value to write
 	*/
-	inline void poke(uint8_t lo, uint8_t hi, uint8_t value) 
+    void poke(uint8_t lo, uint8_t hi, uint8_t value)
 		{ poke(((uint16_t)hi << 8) + lo, value); }  
 
 	//! Wrapper around peek
@@ -159,7 +137,7 @@ public:
 		\param index The effective address is computed by adding index
 		\param value Value to write
 	*/
-	inline void poke(uint8_t lo, uint8_t hi, uint8_t index, uint8_t value) 
+    void poke(uint8_t lo, uint8_t hi, uint8_t index, uint8_t value)
 		{ poke((uint16_t)(hi << 8) + lo + index, value); }
 
 	//! Wrapper around peek
@@ -168,7 +146,7 @@ public:
 		\param value Value to write
 		\remark The C64 is a little endian machine. Hence, the low byte comes first. 
 	*/	
-	inline void pokeWord(uint16_t addr, uint16_t value)
+    void pokeWord(uint16_t addr, uint16_t value)
 		{ poke (addr, LO_BYTE(value)); poke (addr+1, HI_BYTE(value)); }
 
 	//! Load a ROM image into memory.

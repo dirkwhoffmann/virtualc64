@@ -133,10 +133,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->mem->dumpState(); }
 
-- (uint8_t) peek:(uint16_t)addr {
-    return wrapper->mem->peek(addr); }
-- (uint16_t) peekWord:(uint16_t)addr {
-    return wrapper->mem->peekWord(addr); }
+- (uint8_t) read:(uint16_t)addr {
+    return wrapper->mem->read(addr); }
+- (uint16_t) readWord:(uint16_t)addr {
+    return wrapper->mem->readWord(addr); }
 - (uint8_t) readFrom:(uint16_t)addr memtype:(MemoryType)type {
     return wrapper->mem->readFrom(addr, type); }
 - (void) poke:(uint16_t)addr value:(uint8_t)val {

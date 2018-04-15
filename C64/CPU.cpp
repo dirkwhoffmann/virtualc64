@@ -105,8 +105,8 @@ CPU::dumpState()
     msg("      Irq line : %02X\n", irqLine);
     msg("Level detector : %02X\n", read8_delayed(levelDetector));
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-	msg("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
-	msg("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
+	msg("   IRQ routine : %02X%02X\n", mem->read(0xFFFF), mem->read(0xFFFE));
+	msg("   NMI routine : %02X%02X\n", mem->read(0xFFFB), mem->read(0xFFFA));
 	msg("\n");
     
     c64->processorPort.dumpState();
@@ -191,7 +191,7 @@ CPU::disassemble()
 	int i, op;
 	
 	uint16_t pc = PC_at_cycle_0;
-	uint8_t opcode = mem->peek(pc);	
+	uint8_t opcode = mem->read(pc);
 	
 	strcpy(msg, "");
 	
@@ -202,7 +202,7 @@ CPU::disassemble()
 	// Hex dump
 	for (i = 0; i < 3; i++) {
 		if (i < getLengthOfInstruction(opcode)) {
-			sprintf(buf, "%02X ", mem->peek(pc+i));
+			sprintf(buf, "%02X ", mem->read(pc+i));
 			strcat(msg, buf);
 		} else {
 			sprintf(buf, "   ");
@@ -238,17 +238,17 @@ CPU::disassemble()
 		case ADDR_ZERO_PAGE_Y:
 		case ADDR_INDIRECT_X:
 		case ADDR_INDIRECT_Y:
-			op = mem->peek(pc+1);
+			op = mem->read(pc+1);
 			break;
 		case ADDR_DIRECT:			
 		case ADDR_INDIRECT:
 		case ADDR_ABSOLUTE:
 		case ADDR_ABSOLUTE_X:
 		case ADDR_ABSOLUTE_Y:
-			op = mem->peekWord(pc+1);
+			op = mem->readWord(pc+1);
 			break;
 		case ADDR_RELATIVE:
-			op = pc + 2 + (int8_t)mem->peek(pc+1);
+			op = pc + 2 + (int8_t)mem->read(pc+1);
 			break;
 		default:
 			op = -1;

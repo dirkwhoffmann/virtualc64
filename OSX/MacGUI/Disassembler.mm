@@ -49,7 +49,7 @@
         return nil;
 
 	addr     = (uint16_t)[anObject intValue];
-	opcode   = [[c64 mem] peek:addr];
+	opcode   = [[c64 mem] read:addr];
 	mnemonic = [[c64 cpu] mnemonic:opcode];
 		
 	// Display instruction
@@ -64,17 +64,17 @@
 		case ADDR_ZERO_PAGE_Y:
 		case ADDR_INDIRECT_X:
 		case ADDR_INDIRECT_Y:
-			op = [byteFormatter stringForObjectValue:@((int)[[c64 mem] peek:(addr+1)])];
+			op = [byteFormatter stringForObjectValue:@((int)[[c64 mem] read:(addr+1)])];
 			break;
 		case ADDR_DIRECT:			
 		case ADDR_INDIRECT:
 		case ADDR_ABSOLUTE:
 		case ADDR_ABSOLUTE_X:
 		case ADDR_ABSOLUTE_Y:
-            op = [wordFormatter stringForObjectValue:@((int)[[c64 mem] peekWord:(addr+1)])];
+            op = [wordFormatter stringForObjectValue:@((int)[[c64 mem] readWord:(addr+1)])];
 			break;
 		case ADDR_RELATIVE:
-			op = [wordFormatter stringForObjectValue:@(addr+2+(int8_t)[[c64 mem] peek:(addr+1)])];
+			op = [wordFormatter stringForObjectValue:@(addr+2+(int8_t)[[c64 mem] read:(addr+1)])];
 			break;
 	}
 			
