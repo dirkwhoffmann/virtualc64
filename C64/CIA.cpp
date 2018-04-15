@@ -288,7 +288,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
         case 0x04: // CIA_TIMER_A_LOW
 			
-			latchA = value;
+            latchA = (latchA & 0xFF00) | value;
 			if (delay & LoadA2) {
                 counterA = (counterA & 0xFF00) | value;
 			}
