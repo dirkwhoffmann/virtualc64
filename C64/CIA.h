@@ -344,13 +344,25 @@ private:
 	//! @brief    Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
-    //! @brief    Triggers a TOD interrupt if current time matches alarm time
-    void checkForTODInterrupt();
+    //
+    //! @functiongroup Handling interrupt requests
+    //
     
+    //! @brief    Triggers a TOD interrupt if current time matches alarm time
+    //! @deprecated
+    void checkForTODInterrupt();
+
+public:
+    
+    //! @brief    Handles an interrupt request from TOD
+    void todInterrupt(); 
+
     
     //
     //! @functiongroup Speeding up the emulation
     //
+    
+private:
     
     //! @brief    Puts the CIA chip into idle state
     virtual void sleep();

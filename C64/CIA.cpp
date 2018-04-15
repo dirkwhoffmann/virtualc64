@@ -57,6 +57,7 @@ CIA::CIA()
         { NULL,             0,                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
+    tod.cia = this; 
 }
 
 CIA::~CIA()
@@ -568,9 +569,17 @@ CIA::incrementTOD()
 void
 CIA::checkForTODInterrupt()
 {
+    /*
     if (tod.alarming()) {
         delay |= TODInt0;
     }
+     */
+}
+
+void
+CIA::todInterrupt()
+{
+    delay |= TODInt0;
 }
 
 void

@@ -127,6 +127,8 @@ C64::C64()
     // Setup references
     cpu.mem = &mem;
     mem.cpu = &cpu;
+    // cia1.tod.cia = &cia1;
+    // cia2.tod.cia = &cia2;
     floppy.cpu.mem = &c64->floppy.mem;
     floppy.mem.cpu = &c64->floppy.cpu;
     floppy.mem.iec = &c64->iec;

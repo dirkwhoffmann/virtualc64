@@ -34,6 +34,7 @@ TOD::TOD()
         { &latch.oldValue,   sizeof(latch.oldValue),   CLEAR_ON_RESET },
         { &frozen,           sizeof(frozen),           CLEAR_ON_RESET },
         { &stopped,          sizeof(stopped),          CLEAR_ON_RESET },
+        { &matching,         sizeof(matching),         CLEAR_ON_RESET },
         { &hz,               sizeof(hz),               CLEAR_ON_RESET },
         { &frequencyCounter, sizeof(frequencyCounter), CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
@@ -60,7 +61,7 @@ TOD::dumpState()
 	msg("            Time of day : %02X:%02X:%02X:%02X\n", tod.hours, tod.minutes, tod.seconds, tod.tenth);
 	msg("                  Alarm : %02X:%02X:%02X:%02X\n", alarm.hours, alarm.minutes, alarm.seconds, alarm.tenth);
 	msg("                  Latch : %02X:%02X:%02X:%02X\n", latch.hours, latch.minutes, latch.seconds, latch.tenth);
-	msg("                 Frozen : %s\n", isFrozen() ? "yes" : "no");
+	msg("                 Frozen : %s\n", frozen ? "yes" : "no");
 	msg("                Stopped : %s\n", stopped ? "yes" : "no");
 	msg("\n");
 }
@@ -128,8 +129,21 @@ TOD::increment()
     }
                 
     tod.hours = pm | hr;
+    
+    checkForInterrupt(); 
     return;
 }
+
+void
+TOD::checkForInterrupt()
+{
+    if (!matching && tod.value == alarm.value) {
+        cia->todInterrupt();
+    }
+    
+    matching = (tod.value == alarm.value);
+}
+
 
 bool
 TOD::alarming()
