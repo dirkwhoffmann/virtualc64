@@ -85,51 +85,51 @@ TOD::increment()
     tod.oldValue = tod.value;
     
     if (stopped)
-		return;
+        return;
     
     if (++frequencyCounter % hz != 0)
         return;
-
+    
     // 1/10 seconds
-	if (tod.tenth != 0x09) {
+    if (tod.tenth != 0x09) {
         tod.tenth = incBCD(tod.tenth);
-        return;
-    }
-    tod.tenth = 0;
-    
-    // Seconds
-    if (tod.seconds != 0x59) {
-        tod.seconds = incBCD(tod.seconds) & 0x7F;
-        return;
-    }
-    tod.seconds = 0;
-    
-    // Minutes
-    if (tod.minutes != 0x59) {
-        tod.minutes = incBCD(tod.minutes) & 0x7F;
-        return;
-    }
-    tod.minutes = 0;
-	
-    // Hours
-    uint8_t pm = tod.hours & 0x80;
-    uint8_t hr = tod.hours & 0x1F;
-				
-    if (hr == 0x11) {
-        pm ^= 0x80;
-    }
-    if (hr == 0x12) {
-        hr = 0x01;
-    } else if (hr == 0x09) {
-        hr = 0x10;
     } else {
-        uint8_t hr_lo = hr & 0x0F;
-        uint8_t hr_hi = hr & 0x10;
-        hr = hr_hi | ((hr_lo + 1) & 0x0F);
-    }
+        tod.tenth = 0;
+        
+        // Seconds
+        if (tod.seconds != 0x59) {
+            tod.seconds = incBCD(tod.seconds) & 0x7F;
+        } else {
+            tod.seconds = 0;
+            
+            // Minutes
+            if (tod.minutes != 0x59) {
+                tod.minutes = incBCD(tod.minutes) & 0x7F;
+            } else {
+                tod.minutes = 0;
                 
-    tod.hours = pm | hr;
-    
+                // Hours
+                uint8_t pm = tod.hours & 0x80;
+                uint8_t hr = tod.hours & 0x1F;
+                
+                if (hr == 0x11) {
+                    pm ^= 0x80;
+                }
+                if (hr == 0x12) {
+                    hr = 0x01;
+                } else if (hr == 0x09) {
+                    hr = 0x10;
+                } else {
+                    uint8_t hr_lo = hr & 0x0F;
+                    uint8_t hr_hi = hr & 0x10;
+                    hr = hr_hi | ((hr_lo + 1) & 0x0F);
+                }
+                
+                tod.hours = pm | hr;
+            }
+        }
+    }
+
     checkForInterrupt(); 
     return;
 }
