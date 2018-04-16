@@ -69,7 +69,7 @@
 		return (length > 2 ? @((int)[[c64 mem] read:(addr+2)]) : nil);
     } else if ([[aTableColumn identifier] isEqual:@"ascii"]) {
         DisassembledInstruction instr = [[c64 cpu] disassemble:addr hex:[c hex]];
-        return [NSString stringWithUTF8String:instr.instr];
+        return [NSString stringWithUTF8String:instr.command];
     }
 		// return @((int)addr);
 	

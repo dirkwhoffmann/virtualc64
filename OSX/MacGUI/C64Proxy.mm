@@ -97,7 +97,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (uint16_t) addressOfNextInstruction {
     return wrapper->cpu->getAddressOfNextInstruction(); }
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
-    return wrapper->cpu->disassemble(addr, h);
+    return wrapper->cpu->disassemble(addr, 0, h);
 }
 
 - (int) topOfCallStack { return wrapper->cpu->getTopOfCallStack(); }

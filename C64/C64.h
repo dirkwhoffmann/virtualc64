@@ -18,25 +18,11 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.9
+// RELEASE NOTES FOR NEXT RELEASE: 1.10
 //
-// The time-travel feature has been reworked. In addition to the old auto-saving feature, the emulator now supports user-saved snapshots. Four new toolbar icons have been added:
-// Rewind : Reloads the latest auto-saved snapshot
-// Revert : Reloads the latest user-saved snapshot
-// Snap : Takes a snapshot
-// Browse : Opens a window showing all snapshots taken
-// Sony's Dualshock 4 (2nd Gen) is now a supported controller.
-// Emulation accuracy of the CPU and the two CIA chips has been improved. The emulator now passes most CIA tests from the VICE test suite.
-// Due to speed optimizations in the CIA implementation, the emulator runs about 10% - 15% faster than the previous release.
 //
 // TODO:
 //
-// ASAP: Add a read() function to all components that have a peek() function.
-// read() is the same peek(), but without side effects.
-// Afterwards, remove peek from Proxy. peek and poke must never be called outside the execution thread
-//
-// Make all peek and poke methods private and add friend classes
-// This will guarantee that the GUI can never access these two methods
 // Introduce VIC::getInfo
 // Introduce CPU::getInfo
 
@@ -54,7 +40,7 @@
 #define V_SUBMINOR 0
 
 // Disables assert checking in relase version
-#define NDEBUG
+// #define NDEBUG
 
 // Data types and constants
 #include "C64_types.h"

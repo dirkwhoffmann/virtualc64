@@ -125,12 +125,31 @@ uint8_t petscii2printable(uint8_t c, uint8_t subst);
  */
 uint8_t ascii2pet(uint8_t asciichar);
 
+//! @brief    Writes an uint8_t value into a string in decimal format
+void sprint8d(char *s, uint8_t value);
+
+//! @brief    Writes an uint8_t value into a string in hexadecimal format
+void sprint8x(char *s, uint8_t value);
+
+//! @brief    Writes an uint8_t value into a string in binary format
+void sprint8b(char *s, uint8_t value);
+
+//! @brief    Writes an uint16_t value into a string in decimal format
+void sprint16d(char *s, uint16_t value);
+
+//! @brief    Writes an uint16_t value into a string in hexadecimal format
+void sprint16x(char *s, uint16_t value);
+
+//! @brief    Writes an uint16_t value into a string in binary format
+void sprint16b(char *s, uint16_t value);
+/*
 //! @brief    Writes the ASCII representation of 8 bit value to a string.
 void binary8_to_string(uint8_t value, char *s);
 
 //! @brief    Writes the ASCII representation of 32 bit value to a string.
 void binary32_to_string(uint32_t value, char *s);
-
+*/
+ 
 //! @brief    Converts a BCD number to a binary value.
 inline uint8_t BCDToBinary(uint8_t value) { return (10 * (value >> 4)) + (value & 0x0F); }
 

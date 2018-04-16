@@ -437,12 +437,14 @@ public:
      */
     uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
     
-    //! @brief    Disassembles instruction at provided address.
-    DisassembledInstruction disassemble(uint16_t addr, bool hex = true);
+    /*! @brief    Disassembles an instruction in memory
+     *  @details  If offset is zero, the instruction at addr is disassembled. If it is
+     *            greater than zero, addr is advanced by offset instructions first.
+     */
+    DisassembledInstruction disassemble(uint16_t addr, uint16_t offset, bool hex);
                                         
 	//! @brief    Disassembles the current instruction.
-    DisassembledInstruction disassemble(bool hex = true) {
-        return disassemble(PC_at_cycle_0, hex); }
+    DisassembledInstruction disassemble(bool hex) { return disassemble(PC_at_cycle_0, 0, hex); }
 				
 	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
     bool atBeginningOfNewCommand() { return next == fetch; }

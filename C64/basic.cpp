@@ -73,213 +73,68 @@ ascii2pet(uint8_t asciichar)
     }
 }
 
-
-
-#if 0
-uint8_t
-pet2ascii(uint8_t c)
-{
-    if (c <= 0x1A /* Z */) return c + (uint8_t)'@';
-    if (c >= 0x1B /* [ */ && c <= 0x1D /* ] */) return c + (uint8_t)'[';
-    return c;
-}
-
-uint8_t
-ascii2pet(uint8_t c)
-{
-    if (c >= (uint8_t)'@' && c <= (uint8_t)'Z') return c - (uint8_t)'@';
-    if (c >= (uint8_t)'[' && c <= (uint8_t)']') return c - 0x1B /* [ */;
-    return c;
-}
-
-uint8_t
-pet2printable(uint8_t c)
-{
-    if (c <= 0x1D /* ] */) return c;
-    if (c >= 0x20 /*' '*/ && c <= 0x3F /* ? */) return c;
-    return (uint8_t)' ';
-}
-
-uint8_t
-ascii2printable(uint8_t c, uint8_t subst)
-{
-    if (c >= 0x20 /*' '*/ && c <= 0x7E /* ~ */) return c;
-    return subst;
-}
-
-uint8_t
-ascii2pastable(uint8_t c)
-{
-    if (c >= 0x20 /*' '*/ && c <= 0x5D /* ] */) return c;
-    if (c >= (uint8_t)'a' && c <= (uint8_t)'z') return c - 0x20 /* uppercase */;
-    return (uint8_t)' ';
-}
-
-
 void
-petString2ascii(char *s)
+sprint8d(char *s, uint8_t value)
 {
-    assert(s != NULL);
-    for (; *s != 0; s++) *s = pet2ascii(*s);
-}
-
-void
-asciiString2pet(char *s)
-{
-    assert(s != NULL);
-    for (; *s != 0; s++) *s = ascii2pet(*s);
-}
-
-void
-asciiString2printable(char *s)
-{
-    assert(s != NULL);
-    for (; *s != 0; s++) *s = ascii2printable(*s, ' ');
-}
-
-void
-petString2printable(char *s)
-{
-    assert(s != NULL);
-    for (; *s != 0; s++) *s = pet2printable(*s);
-}
-
-void
-asciiString2pastable(char *s)
-{
-    assert(s != NULL);
-    for (; *s != 0; s++) *s = ascii2pastable(*s);
-}
-#endif
-
-
-// OLD CONVERSION ROUTINES. REMOVE AFTER UPPER ONES ARE TESTES
-
-#if 0
-
-uint16_t
-pet2unicode(uint8_t petchar)
-{
-    switch (petchar) {
-        case 0x05: return 0xF100; case 0x08: return 0xF118; case 0x09: return 0xF119; case 0x0D: return 0x000D;
-        case 0x0E: return 0x000E; case 0x11: return 0xF11C; case 0x12: return 0xF11A; case 0x13: return 0xF120;
-        case 0x14: return 0x007F; case 0x1C: return 0xF101; case 0x1D: return 0xF11D; case 0x1E: return 0xF102;
-        case 0x1F: return 0xF103;
+    for (int i = 2; i >= 0; i--) {
+        uint8_t digit = value % 10;
+        s[i] = '0' + digit;
+        value /= 10;
     }
+    s[3] = 0;
+}
 
-    if (petchar >= 0x20 && petchar <= 0x5B)
-        return (uint16_t)petchar;
-
-    switch (petchar) {
-        case 0x5C: return 0x00A3; case 0x5D: return 0x005D; case 0x5E: return 0x2191; case 0x5F: return 0x2190;
-        case 0x60: return 0x2501; case 0x61: return 0x2660; case 0x62: return 0x2502; case 0x63: return 0x2501;
-        case 0x64: return 0xF122; case 0x65: return 0xF123; case 0x66: return 0xF124; case 0x67: return 0xF126;
-        case 0x68: return 0xF128; case 0x69: return 0x256E; case 0x6A: return 0x2570; case 0x6B: return 0x256F;
-        case 0x6C: return 0xF12A; case 0x6D: return 0x2572; case 0x6E: return 0x2571; case 0x6F: return 0xF12B;
-        case 0x70: return 0xF12C; case 0x71: return 0x25CF; case 0x72: return 0xF125; case 0x73: return 0x2665;
-        case 0x74: return 0xF127; case 0x75: return 0x256D; case 0x76: return 0x2573; case 0x77: return 0x25CB;
-        case 0x78: return 0x2663; case 0x79: return 0xF129; case 0x7A: return 0x2666; case 0x7B: return 0x253C;
-        case 0x7C: return 0xF12E; case 0x7D: return 0x2502; case 0x7E: return 0x03C0; case 0x7F: return 0x25E5;
-        case 0x81: return 0xF104; case 0x85: return 0xF110; case 0x86: return 0xF112; case 0x87: return 0xF114;
-        case 0x88: return 0xF116; case 0x89: return 0xF111; case 0x8A: return 0xF113; case 0x8B: return 0xF115;
-        case 0x8C: return 0xF117; case 0x8D: return 0x000A; case 0x8E: return 0x000F; case 0x90: return 0xF105;
-        case 0x91: return 0xF11E; case 0x92: return 0xF11B; case 0x93: return 0x000C; case 0x94: return 0xF121;
-        case 0x95: return 0xF106; case 0x96: return 0xF107; case 0x97: return 0xF108; case 0x98: return 0xF109;
-        case 0x99: return 0xF10A; case 0x9A: return 0xF10B; case 0x9B: return 0xF10C; case 0x9C: return 0xF10D;
-        case 0x9D: return 0xF11D; case 0x9E: return 0xF10E; case 0x9F: return 0xF10F; case 0xA0: return 0x00A0;
-        case 0xA1: return 0x258C; case 0xA2: return 0x2584; case 0xA3: return 0x2594; case 0xA4: return 0x2581;
-        case 0xA5: return 0x258F; case 0xA6: return 0x2592; case 0xA7: return 0x2595; case 0xA8: return 0xF12F;
-        case 0xA9: return 0x25E4; case 0xAA: return 0xF130; case 0xAB: return 0x251C; case 0xAC: return 0xF134;
-        case 0xAD: return 0x2514; case 0xAE: return 0x2510; case 0xAF: return 0x2582; case 0xB0: return	0x250C;
-        case 0xB1: return 0x2534; case 0xB2: return 0x252C; case 0xB3: return 0x2524; case 0xB4: return 0x258E;
-        case 0xB5: return 0x258D; case 0xB6: return 0xF131; case 0xB7: return 0xF132; case 0xB8: return 0xF133;
-        case 0xB9: return 0x2583; case 0xBA: return 0xF12D; case 0xBB: return 0xF135; case 0xBC: return 0xF136;
-        case 0xBD: return 0x2518; case 0xBE: return 0xF137; case 0xBF: return 0xF138; case 0xC0: return 0x2501;
-        case 0xC1: return 0x2660; case 0xC2: return 0x2502; case 0xC3: return 0x2501; case 0xC4: return 0xF122;
-        case 0xC5: return 0xF123; case 0xC6: return 0xF124; case 0xC7: return 0xF126; case 0xC8: return 0xF128;
-        case 0xC9: return 0x256E; case 0xCA: return 0x2570; case 0xCB: return 0x256F; case 0xCC: return 0xF12A;
-        case 0xCD: return 0x2572; case 0xCE: return 0x2571; case 0xCF: return 0xF12B; case 0xD0: return 0xF12C;
-        case 0xD1: return 0x25CF; case 0xD2: return 0xF125; case 0xD3: return 0x2665; case 0xD4: return 0xF127;
-        case 0xD5: return 0x256D; case 0xD6: return 0x2573; case 0xD7: return 0x25CB; case 0xD8: return 0x2663;
-        case 0xD9: return 0xF129; case 0xDA: return 0x2666; case 0xDB: return 0x253C; case 0xDC: return 0xF12E;
-        case 0xDD: return 0x2502; case 0xDE: return 0x03C0; case 0xDF: return 0x25E5; case 0xE0: return 0x00A0;
-        case 0xE1: return 0x258C; case 0xE2: return 0x2584; case 0xE3: return 0x2594; case 0xE4: return 0x2581;
-        case 0xE5: return 0x258F; case 0xE6: return 0x2592; case 0xE7: return 0x2595; case 0xE8: return 0xF12F;
-        case 0xE9: return 0x25E4; case 0xEA: return 0xF130; case 0xEB: return 0x251C; case 0xEC: return 0xF134;
-        case 0xED: return 0x2514; case 0xEE: return 0x2510; case 0xEF: return 0x2582; case 0xF0: return 0x250C;
-        case 0xF1: return 0x2534; case 0xF2: return 0x252C; case 0xF3: return 0x2524; case 0xF4: return 0x258E;
-        case 0xF5: return 0x258D; case 0xF6: return 0xF131; case 0xF7: return 0xF132; case 0xF8: return 0xF133;
-        case 0xF9: return 0x2583; case 0xFA: return 0xF12D; case 0xFB: return 0xF135; case 0xFC: return 0xF136;
-        case 0xFD: return 0x2518; case 0xFE: return 0xF137; case 0xFF: return 0x03C0;
+void
+sprint8x(char *s, uint8_t value)
+{
+    for (int i = 1; i >= 0; i--) {
+        uint8_t digit = value % 16;
+        s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
+        value /= 16;
     }
-    
-    return 0x0000;
-}
-
-uint8_t
-pet2asciiOld(uint8_t petchar)
-{
-    if (petchar == 0x00)
-        return 0x00;
-
-    uint16_t unicodechar = pet2unicode(petchar);
-    return (unicodechar & 0xFF00) ? '.' : (uint8_t)unicodechar;
+    s[2] = 0;
 }
 
 void
-petString2asciiStringOld(char *petstring)
+sprint8b(char *s, uint8_t value)
 {
-assert(petstring != NULL);
-
-for (; *petstring != 0; petstring++)
-*petstring = pet2asciiOld(*petstring);
-}
-
-uint8_t
-ascii2petOld(uint8_t asciichar)
-{
-    if (asciichar == 0x00)
-        return 0x00;
-    
-    asciichar = toupper(asciichar);
-    
-    if (asciichar >= 0x20 && asciichar <= 0x5D) {
-        return asciichar;
-    } else {
-        return ' ';
+    for (int i = 7; i >= 0; i--) {
+        s[i] = (value & 0x01) ? '1' : '0';
+        value >>= 1;
     }
+    s[8] = 0;
 }
 
 void
-asciiString2petStringOld(char *asciistring)
+sprint16d(char *s, uint16_t value)
 {
-    assert(asciistring != NULL);
-    
-    for (; *asciistring != 0; asciistring++)
-        *asciistring = ascii2petOld(*asciistring);
-}
-
-#endif
-
-
-void
-binary8_to_string(uint8_t value, char *s)
-{
-	unsigned i;
-	for (i = 0; i < 8; i++) {
-		s[7-i] = (value & (1 << i)) ? '1' : '0';
-	}
-	s[i] = 0;
-}
-
-void
-binary32_to_string(uint32_t value, char *s)
-{
-    unsigned i;
-    for (i = 0; i < 32; i++) {
-        s[31-i] = (value & (1 << i)) ? '1' : '0';
+    for (int i = 4; i >= 0; i--) {
+        uint8_t digit = value % 10;
+        s[i] = '0' + digit;
+        value /= 10;
     }
-    s[i] = 0;
+    s[5] = 0;
+}
+
+void
+sprint16x(char *s, uint16_t value)
+{
+    for (int i = 3; i >= 0; i--) {
+        uint8_t digit = value % 16;
+        s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
+        value /= 16;
+    }
+    s[4] = 0;
+}
+
+void
+sprint16b(char *s, uint16_t value)
+{
+    for (int i = 15; i >= 0; i--) {
+        s[i] = (value & 0x01) ? '1' : '0';
+        value >>= 1;
+    }
+    s[16] = 0;
 }
 
 char *

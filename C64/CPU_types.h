@@ -61,8 +61,7 @@ typedef enum {
 
 //! @brief    Disassembled instruction
 typedef struct {
-    char formatted[80];
-    char instr[16];
+    char command[16];
     char pc[6];
     char byte[3][4];
     char A[4];
