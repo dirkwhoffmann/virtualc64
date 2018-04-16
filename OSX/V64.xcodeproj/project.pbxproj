@@ -109,6 +109,7 @@
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
+		5068AFC420852A550025776C /* CPUTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5068AFC320852A550025776C /* CPUTableView.swift */; };
 		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
@@ -409,6 +410,7 @@
 		506004651B78E9C500EBDD93 /* PixelEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelEngine.h; sourceTree = "<group>"; };
 		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
+		5068AFC320852A550025776C /* CPUTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUTableView.swift; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDWrapper.cpp; sourceTree = "<group>"; };
 		506D39D3141780FF00268AF6 /* SIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDWrapper.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
 				5077742F12DE490300D72088 /* MemTableView.mm */,
+				5068AFC320852A550025776C /* CPUTableView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
+				5068AFC420852A550025776C /* CPUTableView.swift in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,

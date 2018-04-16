@@ -92,14 +92,14 @@ struct ContainerWrapper;
 - (uint16_t) addressOfNextInstruction;
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
 - (int) topOfCallStack;
-- (int) breakpoint:(int)addr;
-- (void) setBreakpoint:(int)addr tag:(uint8_t)t;
-- (void) setHardBreakpoint:(int)addr;
-- (void) deleteHardBreakpoint:(int)addr;
-- (void) toggleHardBreakpoint:(int)addr;
-- (void) setSoftBreakpoint:(int)addr;
-- (void) deleteSoftBreakpoint:(int)addr;
-- (void) toggleSoftBreakpoint:(int)addr;
+- (int) breakpoint:(uint16_t)addr;
+- (void) setBreakpoint:(uint16_t)addr tag:(uint8_t)t;
+- (void) setHardBreakpoint:(uint16_t)addr;
+- (void) deleteHardBreakpoint:(uint16_t)addr;
+- (void) toggleHardBreakpoint:(uint16_t)addr;
+- (void) setSoftBreakpoint:(uint16_t)addr;
+- (void) deleteSoftBreakpoint:(uint16_t)addr;
+- (void) toggleSoftBreakpoint:(uint16_t)addr;
 
 @end
 
