@@ -55,20 +55,25 @@ C64Memory::~C64Memory()
 void
 C64Memory::reset()
 {
+    bool newc64 = false;
+    
     VirtualComponent::reset();
     
-    // Establish bindings
-    // cpu = &c64->cpu;
-    
-    // Initialize RAM with powerup pattern similar to Frodo and VICE
-    for (unsigned i = 0; i < sizeof(ram); i++)
-        ram[i] = (i & 0x40) ? 0xFF : 0x00;
+    // Initialize RAM with powerup pattern
+    if (newc64) {
+        for (unsigned i = 0; i < sizeof(ram); i++)
+            ram[i] = (i & 0x80) ? 0x00 : 0xFF;
+    } else {
+        for (unsigned i = 0; i < sizeof(ram); i++)
+            ram[i] = (i & 0x40) ? 0xFF : 0x00;
+    }
     
     // Clear out initially visible screen memory to make it look nicer on startup
     for (unsigned i = 0; i < 1000; i++)
         ram[0x400+i] = 0x00;
     
     // Initialize color RAM with random numbers
+    srand(1000);
     for (unsigned i = 0; i < sizeof(colorRam); i++) {
         colorRam[i] = (rand() & 0xFF);
     }
