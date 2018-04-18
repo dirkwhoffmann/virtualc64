@@ -420,6 +420,7 @@ public:
 
     CIA2();
     ~CIA2();
+    void reset(); 
     void dumpState();
     
 private:

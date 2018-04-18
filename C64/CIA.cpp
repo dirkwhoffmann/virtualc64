@@ -1133,6 +1133,15 @@ CIA2::~CIA2()
 	debug(3, "  Releasing CIA2...\n");
 }
 
+void
+CIA2::reset()
+{
+    CIA::reset();
+
+    counterA = 0xFFFF;
+    counterB = 0xFFFF;
+}
+
 void 
 CIA2::dumpState()
 {
