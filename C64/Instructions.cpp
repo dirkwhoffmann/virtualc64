@@ -6249,8 +6249,6 @@ inline uint8_t CPU::ror(uint8_t op)
             
         case SHA_abs_y_3:
             
-            debug("SHA_abs_y_3: A = %02X X = %02X Y = %02X addr = %02X%02X data = %02X\n", A, X, Y, addr_hi, addr_lo, data);
-            
             IDLE_READ_FROM_ADDRESS
             
             /* "There are two unstable conditions, the first is when a DMA is going on while
@@ -6276,10 +6274,6 @@ inline uint8_t CPU::ror(uint8_t op)
             
         case SHA_abs_y_4:
             
-            debug("SHA_abs_y_4: A = %02X X = %02X Y = %02X addr = %02X%02X\n", A, X, Y, addr_hi, addr_lo);
-            
-            debug("Writing %02X to %02X%02X\n", data, addr_hi, addr_lo);
-
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -6344,18 +6338,27 @@ inline uint8_t CPU::ror(uint8_t op)
             FETCH_ADDR_HI
             ADD_INDEX_Y
             CONTINUE
-            
+         
         case SHX_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
             
+            if (PAGE_BOUNDARY_CROSSED) {
+                FIX_ADDR_HI;
+                data = X & addr_hi;
+                addr_hi = X & addr_hi;
+            } else {
+                data = X & (addr_hi + 1);
+            }
+            
+            if (rdyLineUp == c64->cycle) {
+                data = X;
+            }
+            
+            CONTINUE
+           
         case SHX_abs_y_4:
             
-            debug("SHX_abs_y_4: A = %02X X = %02X addr_hi = %02X\n", A, X, addr_hi);
-            
-            data = X & (addr_hi + 1);
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -6383,12 +6386,23 @@ inline uint8_t CPU::ror(uint8_t op)
         case SHY_abs_x_3:
             
             IDLE_READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
+            
+            if (PAGE_BOUNDARY_CROSSED) {
+                FIX_ADDR_HI;
+                data = Y & addr_hi;
+                addr_hi = Y & addr_hi;
+            } else {
+                data = Y & (addr_hi + 1);
+            }
+            
+            if (rdyLineUp == c64->cycle) {
+                data = Y;
+            }
+            
             CONTINUE
             
         case SHY_abs_x_4:
             
-            data = 	data = Y & (addr_hi + 1);
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
