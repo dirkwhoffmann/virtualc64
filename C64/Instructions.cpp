@@ -460,10 +460,9 @@ CPU::executeMicroInstruction()
             
         case fetch:
             
-            
-            /*
-             if (PC == 0x981) {
-             startTracing();
+            /* DEBUG
+             if (PC == 0x0861) {
+                 startTracing(100);
              }
             */
             
@@ -6250,13 +6249,37 @@ inline uint8_t CPU::ror(uint8_t op)
             
         case SHA_abs_y_3:
             
+            debug("SHA_abs_y_3: A = %02X X = %02X Y = %02X addr = %02X%02X data = %02X\n", A, X, Y, addr_hi, addr_lo, data);
+            
             IDLE_READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
+            
+            /* "There are two unstable conditions, the first is when a DMA is going on while
+             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
+             *  drops off and the instruction becomes addr = A & X. The other unstable condition
+             *  is when the addressing/indexing causes a page boundary crossing, in that case
+             *  the highbyte of the target address may become equal to the value stored."
+             */
+            
+            if (PAGE_BOUNDARY_CROSSED) {
+                FIX_ADDR_HI;
+                data = A & X & addr_hi;
+                addr_hi = X & addr_hi;
+            } else {
+                data = A & X & (addr_hi + 1);
+            }
+            
+            if (rdyLineUp == c64->cycle) {
+                data = A & X;
+            }
+        
             CONTINUE
             
         case SHA_abs_y_4:
             
-            data = A & X & (addr_hi + 1);
+            debug("SHA_abs_y_4: A = %02X X = %02X Y = %02X addr = %02X%02X\n", A, X, Y, addr_hi, addr_lo);
+            
+            debug("Writing %02X to %02X%02X\n", data, addr_hi, addr_lo);
+
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -6281,12 +6304,23 @@ inline uint8_t CPU::ror(uint8_t op)
         case SHA_ind_y_4:
             
             IDLE_READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
+            
+            if (PAGE_BOUNDARY_CROSSED) {
+                FIX_ADDR_HI;
+                data = A & X & addr_hi;
+                addr_hi = X & addr_hi;
+            } else {
+                data = A & X & (addr_hi + 1);
+            }
+            
+            if (rdyLineUp == c64->cycle) {
+                data = A & X;
+            }
+            
             CONTINUE
             
         case SHA_ind_y_5:
             
-            data = A & X & (addr_hi + 1);
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -6318,6 +6352,8 @@ inline uint8_t CPU::ror(uint8_t op)
             CONTINUE
             
         case SHX_abs_y_4:
+            
+            debug("SHX_abs_y_4: A = %02X X = %02X addr_hi = %02X\n", A, X, addr_hi);
             
             data = X & (addr_hi + 1);
             WRITE_TO_ADDRESS
@@ -6862,7 +6898,6 @@ inline uint8_t CPU::ror(uint8_t op)
 
         case TAS_abs_y:
             
-            data = mem->peek(PC + 1) + 1;
             FETCH_ADDR_LO
             CONTINUE
             
@@ -6875,18 +6910,21 @@ inline uint8_t CPU::ror(uint8_t op)
         case TAS_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
+            SP = A & X;
+            data = (addr_hi + 1) & SP;
             if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
+                data = addr_hi & SP;
+                addr_hi = addr_hi & SP;
             }
-            // We always perform an extra cycle here, even if page boundary is not crossed.
-            // Otherwise, the CPUTIMING test fails.
             CONTINUE
             
         case TAS_abs_y_4:
             
-            IDLE_READ_FROM_ADDRESS
-            SP = A & X;
-            data &= SP;
+            /*
+            if (BA just released) {
+                data = SP;
+            }
+            */
             WRITE_TO_ADDRESS
             POLL_INT
             DONE

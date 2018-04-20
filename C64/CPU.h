@@ -144,6 +144,12 @@ private:
      */
 	bool rdyLine;
 	
+    //! @brief    Cycle of the most recent rising edge of the rdyLine
+    uint64_t rdyLineUp;
+    
+    //! @brief    Cycle of the most recent falling edge of the rdyLine
+    uint64_t rdyLineDown;
+    
     /*! @brief    NMI line (non maskable interrupts)
      *  @details  This variable is usually set to 0 which means that the NMI line is in
      *            high state. When an external component requests an NMI nterrupt, this line
@@ -404,7 +410,7 @@ public:
     void releaseIrqLine(InterruptSource source);
     
 	//! @brief    Sets the RDY line.
-    void setRDY(bool value) { rdyLine = value; }
+    void setRDY(bool value);
 		
     
     //

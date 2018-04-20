@@ -64,6 +64,8 @@ CPU::CPU()
         { &overflow,                sizeof(overflow),               CLEAR_ON_RESET },
         { &data,                    sizeof(data),                   CLEAR_ON_RESET },
         { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
+        { &rdyLineUp,               sizeof(rdyLineUp),              CLEAR_ON_RESET },
+        { &rdyLineDown,             sizeof(rdyLineDown),            CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
         { &edgeDetector,            sizeof(edgeDetector),           CLEAR_ON_RESET },
@@ -151,6 +153,21 @@ CPU::releaseIrqLine(InterruptSource source)
 {
     irqLine &= ~source;
     write8_delayed(levelDetector, irqLine);
+}
+
+void
+CPU::setRDY(bool value)
+{
+    if (rdyLine)
+    {
+        rdyLine = value;
+        if (!rdyLine) rdyLineDown = c64->cycle;
+    }
+    else
+    {
+        rdyLine = value;
+        if (rdyLine) rdyLineUp = c64->cycle;
+    }
 }
 
 // Instruction set
