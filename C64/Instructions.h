@@ -313,25 +313,25 @@ typedef enum {
 } MicroInstruction;
 
 // Atomic CPU tasks
-#define FETCH_OPCODE if (rdyLine) opcode = mem->peek(PC++); else return;
-#define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return;
-#define FETCH_ADDR_HI if (rdyLine) addr_hi = mem->peek(PC++); else return;
-#define FETCH_POINTER_ADDR if (rdyLine) ptr = mem->peek(PC++); else return;
-#define FETCH_ADDR_LO_INDIRECT if (rdyLine) addr_lo = mem->peek((uint16_t)ptr++); else return;
-#define FETCH_ADDR_HI_INDIRECT if (rdyLine) addr_hi = mem->peek((uint16_t)ptr++); else return;
+#define FETCH_OPCODE if (rdyLine) opcode = mem->peek(PC++); else return true;
+#define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return true;
+#define FETCH_ADDR_HI if (rdyLine) addr_hi = mem->peek(PC++); else return true;
+#define FETCH_POINTER_ADDR if (rdyLine) ptr = mem->peek(PC++); else return true;
+#define FETCH_ADDR_LO_INDIRECT if (rdyLine) addr_lo = mem->peek((uint16_t)ptr++); else return true;
+#define FETCH_ADDR_HI_INDIRECT if (rdyLine) addr_hi = mem->peek((uint16_t)ptr++); else return true;
 
-#define READ_RELATIVE if (rdyLine) data = mem->peek(PC); else return;
-#define READ_IMMEDIATE if (rdyLine) data = mem->peek(PC++); else return;
-#define READ_FROM_ADDRESS if (rdyLine) data = mem->peek((addr_hi << 8) | addr_lo); else return;
-#define READ_FROM_ZERO_PAGE if (rdyLine) data = mem->peek((uint16_t)addr_lo); else return;
-#define READ_FROM_ADDRESS_INDIRECT if (rdyLine) data = mem->peek((uint16_t)ptr); else return;
-#define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return;
-#define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return;
-#define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return;
-#define IDLE_READ_IMMEDIATE_SP if (rdyLine) (void)mem->peek(0x100 | SP++); else return;
-#define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return;
-#define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return;
-#define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return;
+#define READ_RELATIVE if (rdyLine) data = mem->peek(PC); else return true;
+#define READ_IMMEDIATE if (rdyLine) data = mem->peek(PC++); else return true;
+#define READ_FROM_ADDRESS if (rdyLine) data = mem->peek((addr_hi << 8) | addr_lo); else return true;
+#define READ_FROM_ZERO_PAGE if (rdyLine) data = mem->peek((uint16_t)addr_lo); else return true;
+#define READ_FROM_ADDRESS_INDIRECT if (rdyLine) data = mem->peek((uint16_t)ptr); else return true;
+#define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return true;
+#define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return true;
+#define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return true;
+#define IDLE_READ_IMMEDIATE_SP if (rdyLine) (void)mem->peek(0x100 | SP++); else return true;
+#define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return true;
+#define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return true;
+#define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return true;
 
 #define WRITE_TO_ADDRESS mem->poke((addr_hi << 8) | addr_lo, data);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS loadM((addr_hi << 8) | addr_lo, data);
@@ -348,10 +348,10 @@ typedef enum {
 #define PUSH_P mem->poke(0x100+(SP--), getP());
 #define PUSH_P_WITH_B_SET mem->poke(0x100+(SP--), getP() | B_FLAG);
 #define PUSH_A mem->poke(0x100+(SP--), A); 
-#define PULL_PCL if (rdyLine) setPCL(mem->peek(0x100 | SP)); else return;
-#define PULL_PCH if (rdyLine) setPCH(mem->peek(0x100 | SP)); else return;
-#define PULL_P if (rdyLine) setPWithoutB(mem->peek(0x100 | SP)); else return;
-#define PULL_A if (rdyLine) loadA(mem->peek(0x100 | SP)); else return;
+#define PULL_PCL if (rdyLine) setPCL(mem->peek(0x100 | SP)); else return true;
+#define PULL_PCH if (rdyLine) setPCH(mem->peek(0x100 | SP)); else return true;
+#define PULL_P if (rdyLine) setPWithoutB(mem->peek(0x100 | SP)); else return true;
+#define PULL_A if (rdyLine) loadA(mem->peek(0x100 | SP)); else return true;
 
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
@@ -361,8 +361,8 @@ typedef enum {
                  doNmi = read8_delayed(edgeDetector);
 #define POLL_INT_AGAIN doIrq |= (read8_delayed(levelDetector) && I == 0); \
                        doNmi |= read8_delayed(edgeDetector);
-#define CONTINUE next = (MicroInstruction)((int)next+1); return;
-#define DONE     next = fetch; return;
+#define CONTINUE next = (MicroInstruction)((int)next+1); return true;
+#define DONE     next = fetch; return true;
 
 
 //! Next microinstruction to be executed

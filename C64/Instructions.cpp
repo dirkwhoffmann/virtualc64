@@ -453,8 +453,8 @@ void CPU::registerInstructions()
 	registerIllegalInstructions();	
 }
 
-void
-CPU::executeMicroInstruction()
+bool
+CPU::executeOneCycle()
 {
     switch (next) {
             
@@ -476,14 +476,14 @@ CPU::executeMicroInstruction()
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
-                return;
+                return true;
                 
             } else if (doIrq) {
                 
                 if (tracingEnabled()) trace("IRQ (source = %02X)\n", irqLine);
                 next = irq_2;
                 doIrq = false;
-                return;
+                return true;
             }
             
             // Execute fetch phase
@@ -504,14 +504,16 @@ CPU::executeMicroInstruction()
             // Check breakpoint tag
             if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
                 if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
-                    breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
+                    // Soft breakpoints get deleted when reached
+                    breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT;
                     setErrorState(CPU_SOFT_BREAKPOINT_REACHED);
                 } else {
                     setErrorState(CPU_HARD_BREAKPOINT_REACHED);
                 }
                 debug(1, "Breakpoint reached\n");
+                return false;
             }
-            return;
+            return true;
             
         // -------------------------------------------------------------------------------
         // Illegal instructions
@@ -557,7 +559,7 @@ CPU::executeMicroInstruction()
                 // ... the processor will jump to the NMI vector instead of the IRQ vector
                 clear8_delayed(edgeDetector);
                 next = nmi_5;
-                return;
+                return true;
             }
             CONTINUE
             
@@ -1221,7 +1223,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1254,7 +1256,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1287,7 +1289,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1363,7 +1365,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1396,7 +1398,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1429,7 +1431,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1466,7 +1468,7 @@ CPU::executeMicroInstruction()
                 // ... the processor will jump to the NMI vector instead of the IRQ vector
                 clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
-                return;
+                return true;
                 
             } else {
                 CONTINUE
@@ -1552,7 +1554,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }
@@ -1598,7 +1600,7 @@ CPU::executeMicroInstruction()
             
             if (pc_hi != HI_BYTE(PC)) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return;
+                return true;
             }
             DONE
         }

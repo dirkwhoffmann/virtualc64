@@ -460,13 +460,11 @@ public:
     //! @functiongroup Executing the device
     //
     
-	/*! @brief    Runs the CPU for one cycle.
-	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
+	/*! @brief    Executes the next micro instruction.
+	 *  @return   true, if the micro instruction was processed successfully.
+     *            false, if the CPU was halted, e.g., by reaching a breakpoint
      */
-    bool executeOneCycle() { executeMicroInstruction(); return errorState == CPU_OK; }
-    
-    //! @brief    Executes the next micro instruction.
-    void executeMicroInstruction();
+    bool executeOneCycle();
     
 	//! @brief    Returns the current error state.
     ErrorState getErrorState() { return errorState; }
