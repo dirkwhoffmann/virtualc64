@@ -6893,7 +6893,6 @@ inline uint8_t CPU::ror(uint8_t op)
         // Flags:       N Z C I D V
         //              - - - - - -
         //
-        // TODO: THIS IS MOST LIKELY IMPLEMENTED WRONG
         // -------------------------------------------------------------------------------
 
         case TAS_abs_y:
@@ -6910,21 +6909,33 @@ inline uint8_t CPU::ror(uint8_t op)
         case TAS_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
+            
             SP = A & X;
-            data = (addr_hi + 1) & SP;
+            
+            /* "There are two unstable conditions, the first is when a DMA is going on while
+             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
+             *  drops off and the instruction becomes SP = A & X, addr = SP.
+             *  The other unstable condition is when the addressing/indexing causes a
+             *  page boundary crossing, in that case the highbyte of the target address may
+             *  become equal to the value stored."
+             */
+            
             if (PAGE_BOUNDARY_CROSSED) {
-                data = addr_hi & SP;
-                addr_hi = addr_hi & SP;
+                FIX_ADDR_HI;
+                data = SP & addr_hi;
+                addr_hi = SP & addr_hi;
+            } else {
+                data = SP & (addr_hi + 1);
             }
+            
+            if (rdyLineUp == c64->cycle) {
+                data = SP;
+            }
+            
             CONTINUE
             
         case TAS_abs_y_4:
             
-            /*
-            if (BA just released) {
-                data = SP;
-            }
-            */
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
