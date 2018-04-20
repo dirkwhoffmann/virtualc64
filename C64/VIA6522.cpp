@@ -41,6 +41,10 @@ VIA6522::VIA6522()
         { &t1_latch_lo,     sizeof(t1_latch_lo),    CLEAR_ON_RESET },
         { &t1_latch_hi,     sizeof(t1_latch_hi),    CLEAR_ON_RESET },
         { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
+        { &pcr,             sizeof(pcr),            CLEAR_ON_RESET },
+        { &acr,             sizeof(acr),            CLEAR_ON_RESET },
+        { &ier,             sizeof(ier),            CLEAR_ON_RESET },
+        { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
         { &t1_underflow,    sizeof(t1_underflow),   CLEAR_ON_RESET },
         { &t2_underflow,    sizeof(t2_underflow),   CLEAR_ON_RESET },
         { io,               sizeof(io),             CLEAR_ON_RESET },
@@ -83,9 +87,9 @@ VIA6522::dumpState()
 	msg("\n");
 }
 
-// -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 //                                    Execution functions
-// -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 
 // One-shot mode timing [F. K.]
 //               +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+
@@ -157,9 +161,9 @@ VIA6522::IRQ() {
     }
 }
 
-// -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 //                                Peek and Poke (Shared behaviour)
-// -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 
 uint8_t 
 VIA6522::peek(uint16_t addr)
@@ -222,17 +226,16 @@ VIA6522::peek(uint16_t addr)
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
-            // warn("peek(0xA): Shift register is not emulated!\n");
+            // floppy->cpu.releaseIrqLine(CPU::VIA);
             break;
 			
 		case 0xB: // Auxiliary control register
 
-            // warn("peek(0xB): Shift register is not emulated!\n");
-            break;
+            return acr;
 		
         case 0xC: // Peripheral control register
-            // TODO
-            break;
+
+            return pcr;
             
         case 0xD: { // IFR - Interrupt Flag Register
             
@@ -243,6 +246,8 @@ VIA6522::peek(uint16_t addr)
             io[0xD] &= 0x7F;
             uint8_t irq = (io[0xD] /* IFR */ & io[0xE] /* IER */) ? 0x80 : 0x00;
             return io[0xD] | irq;
+            
+            // TODO: CLEAR INTERRUPT LINE
             
 			// OLD: return io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0x00);
         }

@@ -57,15 +57,17 @@ public:
 	 *	           Register  bits  corresponding  to pins which are programmed as inputs. In this
 	 *	           case, however, the output signal is unaffected." [F. K.]
      */
-	uint8_t ddra, ddrb;
-	uint8_t ira, irb;
-    uint8_t ora, orb;
+    uint8_t orb, irb;
+    uint8_t ora, ira;
+    uint8_t ddrb;
+    uint8_t ddra;
 	
 // protected:
 public:
     
 	/*! @brief    VIA I/O Memory
 	 *  @details  Whenever a value is poked to the VIA address space, it is stored here. 
+     *  @deprecated
      */
 	uint8_t io[16];
 		
@@ -80,8 +82,9 @@ public:
      *             the  output  signal  on  a peripheral pin (PB7) each time it "times-out". Each
      *             of these modes is discussed separately below." [F. K.]
      */
-    uint16_t t1;
-    uint8_t t1_latch_lo, t1_latch_hi;
+    uint16_t t1; // T1C
+    uint8_t t1_latch_lo; // T1L_L
+    uint8_t t1_latch_hi; // T1L_H
 
 	/*! @brief    VIA timer 2
 	 *  @details  "Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
@@ -92,15 +95,26 @@ public:
      *             (T2C-H).  The  counter  registers  act as a 16-bit counter which decrements at
      *             02 rate." [F. K.]
      */
-    uint16_t t2;
-	uint8_t t2_latch_lo;
+    uint16_t t2; // T1C
+    uint8_t t2_latch_lo; // T2L_L
 	
+    //! @brief    Peripheral control register
+    uint8_t pcr;
+
+    //! @brief    Auxiliary register
+    uint8_t acr;
+
+    //! @brief    Interrupt enable register
+    uint8_t ier;
+
+    //! @brief    Interrupt flag register
+    uint8_t ifr;
+
     //! @brief    Indicates whether timer 1 has reached zero.
     bool t1_underflow;
 
     //! @brief    Indicates whether timer 2 has reached zero.
     bool t2_underflow;
-    
     
 public:	
 	//! @brief    Constructor
