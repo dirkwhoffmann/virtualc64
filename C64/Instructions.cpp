@@ -6253,23 +6253,21 @@ inline uint8_t CPU::ror(uint8_t op)
             
             /* "There are two unstable conditions, the first is when a DMA is going on while
              *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off and the instruction becomes addr = A & X. The other unstable condition
-             *  is when the addressing/indexing causes a page boundary crossing, in that case
-             *  the highbyte of the target address may become equal to the value stored."
+             *  drops off."
+             */
+            
+            data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            
+            /* "The other unstable condition is when the addressing/indexing causes a page
+             *  boundary crossing, in that case the highbyte of the target address may
+             *  become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                data = A & X & addr_hi;
-                addr_hi = X & addr_hi;
-            } else {
-                data = A & X & (addr_hi + 1);
+                addr_hi = A & X & addr_hi;
             }
             
-            if (rdyLineUp == c64->cycle) {
-                data = A & X;
-            }
-        
             CONTINUE
             
         case SHA_abs_y_4:
@@ -6299,18 +6297,23 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_FROM_ADDRESS
             
+            /* "There are two unstable conditions, the first is when a DMA is going on while
+             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
+             *  drops off."
+             */
+            
+            data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            
+            /* "The other unstable condition is when the addressing/indexing causes a page
+             *  boundary crossing, in that case the highbyte of the target address may
+             *  become equal to the value stored."
+             */
+            
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                data = A & X & addr_hi;
-                addr_hi = X & addr_hi;
-            } else {
-                data = A & X & (addr_hi + 1);
+                addr_hi = A & X & addr_hi;
             }
-            
-            if (rdyLineUp == c64->cycle) {
-                data = A & X;
-            }
-            
+
             CONTINUE
             
         case SHA_ind_y_5:
@@ -6343,16 +6346,21 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_FROM_ADDRESS
             
+            /* "There are two unstable conditions, the first is when a DMA is going on while
+             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
+             *  drops off."
+             */
+            
+            data = X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            
+            /* "The other unstable condition is when the addressing/indexing causes a page
+             *  boundary crossing, in that case the highbyte of the target address may
+             *  become equal to the value stored."
+             */
+            
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                data = X & addr_hi;
                 addr_hi = X & addr_hi;
-            } else {
-                data = X & (addr_hi + 1);
-            }
-            
-            if (rdyLineUp == c64->cycle) {
-                data = X;
             }
             
             CONTINUE
@@ -6387,18 +6395,23 @@ inline uint8_t CPU::ror(uint8_t op)
             
             IDLE_READ_FROM_ADDRESS
             
+            /* "There are two unstable conditions, the first is when a DMA is going on while
+             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
+             *  drops off."
+             */
+            
+            data = Y & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            
+            /* "The other unstable condition is when the addressing/indexing causes a page
+             *  boundary crossing, in that case the highbyte of the target address may
+             *  become equal to the value stored."
+             */
+            
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                data = Y & addr_hi;
                 addr_hi = Y & addr_hi;
-            } else {
-                data = Y & (addr_hi + 1);
             }
-            
-            if (rdyLineUp == c64->cycle) {
-                data = Y;
-            }
-            
+
             CONTINUE
             
         case SHY_abs_x_4:
@@ -6928,24 +6941,21 @@ inline uint8_t CPU::ror(uint8_t op)
             
             /* "There are two unstable conditions, the first is when a DMA is going on while
              *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off and the instruction becomes SP = A & X, addr = SP.
-             *  The other unstable condition is when the addressing/indexing causes a
-             *  page boundary crossing, in that case the highbyte of the target address may
+             *  drops off."
+             */
+            
+            data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            
+            /* "The other unstable condition is when the addressing/indexing causes a page
+             *  boundary crossing, in that case the highbyte of the target address may
              *  become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                data = SP & addr_hi;
-                addr_hi = SP & addr_hi;
-            } else {
-                data = SP & (addr_hi + 1);
+                addr_hi = A & X & addr_hi;
             }
-            
-            if (rdyLineUp == c64->cycle) {
-                data = SP;
-            }
-            
+
             CONTINUE
             
         case TAS_abs_y_4:
