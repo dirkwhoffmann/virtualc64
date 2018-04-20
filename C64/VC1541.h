@@ -115,12 +115,6 @@ public:
     //! @brief    Enables or disables sending of sound messages.
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
-    //! @brief    Returns true if drive is emulated bit accurately.
-    inline bool getBitAccuracy() { return bitAccuracy; }
-
-    //! @brief    Enables or disables bit accurate drive emulation.
-    void setBitAccuracy(bool b);
-
     
     //
     //! @functiongroup Accessing drive properties
@@ -268,14 +262,6 @@ private:
      */
     bool diskPartiallyInserted;
     
-    /*! @brief    Indicates whether VC1541 is simulated on the bit level
-     *  @details  Bit level simulation is the standard emulation mode. If it is disabled, the
-     *            emulator uses a fast load mechanism to make disk data available whenever the
-     *            VC1541 DOS waits for it. Right now, this is an experimental feature. Note, that
-     *            writing to disk is only works when bit level emulation is enabled.
-     */
-    bool bitAccuracy;
-
     //! @brief    Indicates whether the VC1541 shall provide sound notification messages to the GUI
     bool sendSoundMessages;
 
@@ -420,21 +406,6 @@ private:
 
     //! @brief Signals the CPU that a byte has been processed and load byte into input latch A of via 2
     inline void byteReady(uint8_t byte);
-   
-public:
-
-    /*! @brief    Performs read access of the fast loader
-     *  @details  This method is used to latch in a byte from disk when bit accurate emulation is disabled
-     */
-    void fastLoaderRead();
- 
-    /*! @brief    Fast loader sync detection
-     *  @details  Returns true when the drive head is currently inside a SYNC mark
-     */
-    bool getFastLoaderSync();
-    
-    //! @brief  Skip sync mark
-    inline void fastLoaderSkipSyncMark() { while (readByteFromHead() == 0xFF) rotateDiskByOneByte(); }
 };
 
 #endif

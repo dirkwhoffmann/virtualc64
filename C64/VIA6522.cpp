@@ -572,7 +572,7 @@ uint8_t VIA2::peek(uint16_t addr)
             // |       | (4 disk zones)|protect|       | motor | (head move)   |
             
             // Collect values on the external port lines
-            bool SYNC = floppy->getBitAccuracy() ? floppy->getSync() : floppy->getFastLoaderSync();
+            bool SYNC = floppy->getSync();
             uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
             (floppy->getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
             (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
@@ -594,10 +594,6 @@ uint8_t VIA2::peek(uint16_t addr)
             clearInterruptFlag_CA1();
             if (!CA2selectedAsIndependent())
                 clearInterruptFlag_CA2();
-
-            // If bit accurate emulation is disabled, we perform the read action here ...
-            if (!floppy->getBitAccuracy())
-                floppy->fastLoaderRead();
 
             if (inputLatchingEnabledA()) {
                 // This is the normal operation mode of the drive.
@@ -634,7 +630,7 @@ uint8_t VIA2::read(uint16_t addr)
         case 0x0: { // ORB - Output register B
             
             // Collect values on the external port lines
-            bool SYNC = floppy->getBitAccuracy() ? floppy->getSync() : floppy->getFastLoaderSync();
+            bool SYNC = floppy->getSync();
             uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
             (floppy->getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
             (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |

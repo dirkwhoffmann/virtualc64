@@ -35,7 +35,6 @@ VC1541::VC1541()
     SnapshotItem items[] = {
 
         // Configuration items
-        { &bitAccuracy,             sizeof(bitAccuracy),            KEEP_ON_RESET },
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         
         // Internal state
@@ -57,7 +56,6 @@ VC1541::VC1541()
     
     registerSnapshotItems(items, sizeof(items));
     
-    bitAccuracy = true;
     sendSoundMessages = true;
     resetDisk();
 }
@@ -138,11 +136,6 @@ VC1541::executeOneCycle() {
     // Only proceed if drive is active
     if (!rotating)
         return result;
-    
-    // If bit accurate emulation is enabled, we don't do anything here
-    if (!bitAccuracy) {
-        return result;
-    }
     
     // Wait until next bit is ready
     if (bitReadyTimer > 0) {
@@ -291,8 +284,8 @@ VC1541::moveHeadUp()
         // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
         alignHead();
         
-        debug(3, "Moving head up to halftrack %d (track %2.1f) bit accurate emulation: %s\n",
-              halftrack, (halftrack + 1) / 2.0, bitAccuracy ? "YES" : "NO");
+        debug(3, "Moving head up to halftrack %d (track %2.1f)\n",
+              halftrack, (halftrack + 1) / 2.0);
     }
    
     assert(disk.isValidDiskPositon(halftrack, bitoffset));
@@ -313,8 +306,8 @@ VC1541::moveHeadDown()
         // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
         alignHead();
         
-        debug(3, "Moving head down to halftrack %d (track %2.1f) bit accurate emulation: %s\n",
-              halftrack, (halftrack + 1) / 2.0, bitAccuracy ? "YES" : "NO");
+        debug(3, "Moving head down to halftrack %d (track %2.1f)\n",
+              halftrack, (halftrack + 1) / 2.0);
     }
     
     assert(disk.isValidDiskPositon(halftrack, bitoffset));
@@ -322,21 +315,6 @@ VC1541::moveHeadDown()
     c64->putMessage(MSG_VC1541_HEAD_DOWN);
     if (halftrack % 2 && sendSoundMessages)
         c64->putMessage(MSG_VC1541_HEAD_DOWN_SOUND); // play sound for full tracks, only
-}
-
-void
-VC1541::setBitAccuracy(bool b)
-{
-    bitAccuracy = b;
-    
-    if (!b) { // If bit accuracy is disabled, ...
-        
-        // we align the drive head to the beginning of a byte
-        alignHead();
-        
-        // and write-protect the disk.
-        disk.setWriteProtection(true);
-    }
 }
 
 bool
@@ -378,9 +356,6 @@ VC1541::insertDisk(Archive *a)
     c64->putMessage(MSG_VC1541_DISK);
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_DISK_SOUND);
-
-    // If bit accuracy is disabled, we write-protect the disk
-    disk.setWriteProtection(!bitAccuracy);
     
     return true; 
 }
@@ -448,23 +423,4 @@ VC1541::exportToD64(const char *filename)
     return true;
 }
 
-void
-VC1541::fastLoaderRead()
-{
-    uint8_t byteUnderHead = readByteFromHead();
-    byteReady(byteUnderHead);
-    
-    if (byteUnderHead == 0xFF) {
-        fastLoaderSkipSyncMark(); // If we're inside a SYNC mark, proceed to next data byte
-    } else {
-        rotateDiskByOneByte(); // If we're outside a SYNC mark, the next data byte is just one byte ahead
-    }
-}
 
-bool
-VC1541::getFastLoaderSync()
-{
-    uint8_t byteUnderHead = readByteFromHead();
-    rotateDiskByOneByte();
-    return byteUnderHead == 0xFF;
-}
