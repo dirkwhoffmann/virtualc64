@@ -45,6 +45,7 @@ VIA6522::VIA6522()
         { &acr,             sizeof(acr),            CLEAR_ON_RESET },
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
         { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
+        { &sr,              sizeof(sr),             CLEAR_ON_RESET },
         { &t1_underflow,    sizeof(t1_underflow),   CLEAR_ON_RESET },
         { &t2_underflow,    sizeof(t2_underflow),   CLEAR_ON_RESET },
         { io,               sizeof(io),             CLEAR_ON_RESET },
@@ -70,20 +71,22 @@ VIA6522::dumpState()
 {
 	msg("VIA:\n");
 	msg("----\n\n");
-	msg("          Input register (IRA) : %02X\n", ira);
-	msg("          Input register (IRB) : %02X\n", irb);
-	msg("         Output register (ORA) : %02X\n", ora);
-	msg("         Output register (ORB) : %02X\n", orb);
-	msg("Data direction register (DDRA) : %02X\n", ddra);
-	msg("Data direction register (DDRB) : %02X\n", ddrb);
+	msg("             Input register (IRA) : %02X\n", ira);
+	msg("             Input register (IRB) : %02X\n", irb);
+	msg("            Output register (ORA) : %02X\n", ora);
+	msg("            Output register (ORB) : %02X\n", orb);
+	msg("   Data direction register (DDRA) : %02X\n", ddra);
+	msg("   Data direction register (DDRB) : %02X\n", ddrb);
+    msg("Peripheral control register (PCR) : %02X\n", pcr);
+    msg("         Auxiliary register (ACR) : %02X\n", acr);
+    msg("  Interrupt enable register (IER) : %02X\n", ier);
+    msg("    Interrupt flag register (IFR) : %02X\n", ifr);
+    msg("              Shift register (SR) : %02X\n", sr);
 	msg("              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
 	msg("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
 	msg("                       Timer 1 : %d (latched: %d)\n", t1, LO_HI(t1_latch_lo, t1_latch_hi));
 	msg("                       Timer 2 : %d (latched: %d)\n", t2, LO_HI(t2_latch_lo, 0));
 	msg("                     IO memory : ");
-	for (int j = 0; j < 16; j ++) {
-		msg("%02X ", io[j]);
-	}
 	msg("\n");
 }
 
@@ -228,8 +231,7 @@ VIA6522::peek(uint16_t addr)
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
-            // floppy->cpu.releaseIrqLine(CPU::VIA);
-            break;
+            return sr;
 			
 		case 0xB: // Auxiliary control register
 
@@ -390,9 +392,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xA: // Shift register
             
             clearInterruptFlag_SR();
-            // warn("poke(0xA,%02X): Shift register is not emulated! (PC = %04X)\n",
-            //     value, c64->cpu->getPC_at_cycle_0());
-            break;
+            sr = value;
+            return;
             
         case 0xB: // Auxiliary control register
             
