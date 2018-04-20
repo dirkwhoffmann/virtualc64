@@ -162,13 +162,15 @@ public:
     // ----------------------------------------------------------------------------------------
 
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
-    bool freeRunMode1() { return (io[0x0B] & 0x40) != 0; }
+    bool freeRunMode1() {
+        assert(io[0x0B] == acr);
+        return (acr & 0x40) != 0; }
 
     //! @brief    Checks if input latching is enabled
-    bool inputLatchingEnabledA() { return (GET_BIT(io[0x0B],0)); }
+    bool inputLatchingEnabledA() { assert(io[0x0B] == acr); return (GET_BIT(acr,0)); }
 
     //! @brief    Checks if input latching is enabled
-    bool inputLatchingEnabledB() { return (GET_BIT(io[0x0B],1)); }
+    bool inputLatchingEnabledB() { assert(io[0x0B] == acr); return (GET_BIT(acr,1)); }
 
     
     // ----------------------------------------------------------------------------------------
@@ -177,7 +179,8 @@ public:
 
     //! Returns the current value on chip pin CA2
     bool CA2() {
-        switch ((io[0xC] >> 1) & 0x07) {
+        assert(pcr == io[0xC]);
+        switch ((pcr >> 1) & 0x07) {
             case 6: return false; // LOW OUTPUT
             case 7: return true; // HIGH OUTPUT
             default:
@@ -225,7 +228,8 @@ public:
     inline void setInterruptFlag_CB2() { SET_BIT(io[0xD],3); IRQ(); }
     inline void clearInterruptFlag_CB2() { CLR_BIT(io[0xD],3); IRQ(); }
     inline bool CB2selectedAsIndependent() {
-        uint8_t b765 = (io[0xC] >> 5) & 0x07; return (b765 == 0x01) || (b765 == 0x03); }
+        assert(pcr == io[0xC]);
+        uint8_t b765 = (pcr >> 5) & 0x07; return (b765 == 0x01) || (b765 == 0x03); }
 
     // Shift register - Set by:     8 shifts completed
     //                  Cleared by: Read or write to register 10 (0xA) (shift register)
@@ -245,7 +249,8 @@ public:
     inline void setInterruptFlag_CA2() { SET_BIT(io[0xD],0); IRQ(); }
     inline void clearInterruptFlag_CA2() { CLR_BIT(io[0xD],0); IRQ(); }
     inline bool CA2selectedAsIndependent() {
-        uint8_t b321 = (io[0xC] >> 1) & 0x07; return (b321 == 0x01) || (b321 == 0x03); }
+        assert(pcr == io[0xC]);
+        uint8_t b321 = (pcr >> 1) & 0x07; return (b321 == 0x01) || (b321 == 0x03); }
 };
 
 
@@ -325,7 +330,7 @@ public:
     //! @brief    Returns bit 3 of output register B
     bool redLEDshining() { return (orb & 0x08) != 0; }
     
-	bool overflowEnabled() { return (io[0x0C] & 0x02); }
+    bool overflowEnabled() { assert(pcr == io[0x0C]); return (pcr & 0x02); }
 
     void debug0xC();
 };

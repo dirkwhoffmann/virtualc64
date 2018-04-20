@@ -231,10 +231,12 @@ VIA6522::peek(uint16_t addr)
 			
 		case 0xB: // Auxiliary control register
 
+            assert(acr == io[addr]);
             return acr;
 		
         case 0xC: // Peripheral control register
 
+            assert(pcr == io[addr]);
             return pcr;
             
         case 0xD: { // IFR - Interrupt Flag Register
@@ -386,12 +388,12 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xB: // Auxiliary control register
             
-            // warn("poke(0xB,%02X): Shift register is not emulated! (PC = %04X)\n",
-            //     value, c64->cpu->getPC_at_cycle_0());
+            acr = value;
             break;
             
         case 0xC: // Peripheral control register
             
+            pcr = value;
             break;
             
         case 0xD: // IFR - Interrupt Flag Register
@@ -745,15 +747,18 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 
         case 0xC:
             
-            if (!(io[addr] & 0x20) && (value & 0x20)) {
+            assert(pcr == io[addr]);
+            
+            if (!(pcr & 0x20) && (value & 0x20)) {
                 
                 debug(2, "Switching to read mode mode\n");
             }
-            if ((io[addr] & 0x20) && !(value & 0x20)) {
+            if ((pcr & 0x20) && !(value & 0x20)) {
                 
                 debug(2, "Switching to write mode\n");
             }
 
+            pcr = value;
             io[addr] = value;
             return;
             
@@ -787,7 +792,7 @@ VIA2::~VIA2()
 
 void VIA2::debug0xC() {
     
-    uint8_t value = io[0xC];
+    uint8_t value = pcr; 
     
      debug(2,"CA1:\n");
      debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,0) ? "POSITIVE" : "NEGATIVE"));
