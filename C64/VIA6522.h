@@ -297,7 +297,8 @@ public:
     void poke(uint16_t addr, uint8_t value);
 	
     //! @brief    Returns true iff a change of the atn line can trigger interrups
-	inline bool atnInterruptsEnabled() { return io[0xE] & 0x02; }
+	inline bool atnInterruptsEnabled() {
+        assert(ier == io[0xE]); return ier & 0x02; }
 
     //! @brief    Indicates that an ATN interrupt has occured.
     inline void indicateAtnInterrupt() { ifr |= 0x02; io[0xD] |= 0x02; }

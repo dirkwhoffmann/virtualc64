@@ -153,7 +153,8 @@ VIA6522::executeTimer2()
 bool
 VIA6522::IRQ() {
     assert(ifr == io[0xD]);
-    if (ifr & io[0xE] /* IER */) {
+    assert(ier == io[0xE]);
+    if (ifr & ier) {
         floppy->cpu.pullDownIrqLine(CPU::VIA);
         return true;
     } else {
@@ -247,19 +248,21 @@ VIA6522::peek(uint16_t addr)
             //  x = logic AND, + = logic OR" [F. K.]
             
             assert(ifr == io[0xD]);
+            assert(ier == io[0xE]);
             ifr &= 0x7F; // DON'T DO THIS
             io[0xD] &= 0x7F;
-            uint8_t irq = (ifr & io[0xE] /* IER */) ? 0x80 : 0x00;
+            uint8_t irq = (ifr & ier) ? 0x80 : 0x00;
             return ifr | irq;
             
             // TODO: CLEAR INTERRUPT LINE
             
-			// OLD: return io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0x00);
         }
             
         case 0xE: // Interrupt enable register
             
-            return io[addr] | 0x80; // Bit 7 (set/clear bit) always shows up as 1
+            assert(ier == io[0xE]);
+            
+            return ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
 
         case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
 	}
@@ -291,8 +294,9 @@ VIA6522::read(uint16_t addr)
         case 0xD: { // IFR - Interrupt Flag Register
             
             assert(ifr == io[0xD]);
+            assert(ier == io[0xE]);
             uint8_t ioD = ifr & 0x7F;
-            uint8_t irq = (ifr & io[0xE] /* IER */) ? 0x80 : 0x00;
+            uint8_t irq = (ifr & ier) ? 0x80 : 0x00;
             return ioD | irq;
         }
   
@@ -416,8 +420,10 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             if (value & 0x80) {
                 io[addr] |= value & 0x7f;
+                ier |= value & 0x7F;
             } else {
                 io[addr] &= ~value;
+                ier &= ~value;
             }
             return;
             
