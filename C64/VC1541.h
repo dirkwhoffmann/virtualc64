@@ -336,10 +336,10 @@ private:
 public:
 
     //! @brief    Returns true iff drive is currently in read mode
-    bool readMode() { return (via2.io[0x0C] & 0x20); }
+    bool readMode() { return (via2.pcr & 0x20); }
 
     //! @brief    Returns true iff drive is currently in write mode
-    bool writeMode() { return !(via2.io[0x0C] & 0x20); }
+    bool writeMode() { return !(via2.pcr & 0x20); }
 
     //! @brief    Returns the current halftrack position of the drive head
     Halftrack getHalftrack() { return halftrack; }

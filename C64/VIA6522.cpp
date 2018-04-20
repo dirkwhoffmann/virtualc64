@@ -48,7 +48,6 @@ VIA6522::VIA6522()
         { &sr,              sizeof(sr),             CLEAR_ON_RESET },
         { &t1_underflow,    sizeof(t1_underflow),   CLEAR_ON_RESET },
         { &t2_underflow,    sizeof(t2_underflow),   CLEAR_ON_RESET },
-        { io,               sizeof(io),             CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -155,8 +154,6 @@ VIA6522::executeTimer2()
 
 bool
 VIA6522::IRQ() {
-    assert(ifr == io[0xD]);
-    assert(ier == io[0xE]);
     if (ifr & ier) {
         floppy->cpu.pullDownIrqLine(CPU::VIA);
         return true;
@@ -235,12 +232,10 @@ VIA6522::peek(uint16_t addr)
 			
 		case 0xB: // Auxiliary control register
 
-            assert(acr == io[addr]);
             return acr;
 		
         case 0xC: // Peripheral control register
 
-            assert(pcr == io[addr]);
             return pcr;
             
         case 0xD: { // IFR - Interrupt Flag Register
@@ -249,10 +244,7 @@ VIA6522::peek(uint16_t addr)
             //  IRQ = IFR6xIER6 + IFR5xIER5 + IFR4xIER4 + IFR3xIER3 + IFR2xIER2 + IFR1xIER1 + IFR0xIER0
             //  x = logic AND, + = logic OR" [F. K.]
             
-            assert(ifr == io[0xD]);
-            assert(ier == io[0xE]);
             ifr &= 0x7F; // DON'T DO THIS
-            io[0xD] &= 0x7F;
             uint8_t irq = (ifr & ier) ? 0x80 : 0x00;
             return ifr | irq;
             
@@ -262,14 +254,13 @@ VIA6522::peek(uint16_t addr)
             
         case 0xE: // Interrupt enable register
             
-            assert(ier == io[0xE]);
-            
             return ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
 
         case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
 	}
 
-    return io[addr];
+    assert(0);
+    return 0;
 }
 
 uint8_t
@@ -295,8 +286,6 @@ VIA6522::read(uint16_t addr)
             
         case 0xD: { // IFR - Interrupt Flag Register
             
-            assert(ifr == io[0xD]);
-            assert(ier == io[0xE]);
             uint8_t ioD = ifr & 0x7F;
             uint8_t irq = (ifr & ier) ? 0x80 : 0x00;
             return ioD | irq;
@@ -306,7 +295,7 @@ VIA6522::read(uint16_t addr)
             return peek(addr);
     }
     
-    return io[addr];
+    return 0;
 }
 
 void VIA6522::poke(uint16_t addr, uint8_t value)
@@ -410,7 +399,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             // "... individual flag bits may be cleared by writing a "1" into the appropriate bit of the IFR."
             
             ifr &= ~value;
-            io[addr] &= ~value;
             return;
             
         case 0xE: // IER - Interrupt Enable Register
@@ -420,18 +408,14 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             // If bit 7 is 0, each 1 in the provided value will clear the corresponding bit
             
             if (value & 0x80) {
-                io[addr] |= value & 0x7f;
                 ier |= value & 0x7F;
             } else {
-                io[addr] &= ~value;
                 ier &= ~value;
             }
             return;
             
         case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
     }
-    
-    io[addr] = value;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -759,8 +743,6 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 
         case 0xC:
             
-            assert(pcr == io[addr]);
-            
             if (!(pcr & 0x20) && (value & 0x20)) {
                 
                 debug(2, "Switching to read mode mode\n");
@@ -771,7 +753,6 @@ void VIA2::poke(uint16_t addr, uint8_t value)
             }
 
             pcr = value;
-            io[addr] = value;
             return;
             
 		default:

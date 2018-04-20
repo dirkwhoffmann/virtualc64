@@ -1526,24 +1526,11 @@ CPU::executeOneCycle()
             
             READ_IMMEDIATE
             POLL_INT
-            
-            if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
-                
-                // Special handling for the VC1541 CPU. Taken from Frodo
-                if (!((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV())) {
-                    CONTINUE
-                } else {
-                    DONE
-                }
-                
+    
+            if (!getV()) {
+                CONTINUE
             } else {
-                
-                // Standard CPU behavior
-                if (!getV()) {
-                    CONTINUE
-                } else {
-                    DONE
-                }
+                DONE
             }
             
         case BVC_rel_2:
@@ -1573,23 +1560,10 @@ CPU::executeOneCycle()
             READ_IMMEDIATE
             POLL_INT
             
-            if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
-                
-                // Special handling for the VC1541 CPU. Taken from Frodo
-                if ((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV()) {
-                    CONTINUE
-                } else {
-                    DONE
-                }
-                
+            if (getV()) {
+                CONTINUE
             } else {
-                
-                // Standard CPU behavior
-                if (getV()) {
-                    CONTINUE
-                } else {
-                    DONE
-                }
+                DONE
             }
             
         case BVS_rel_2:

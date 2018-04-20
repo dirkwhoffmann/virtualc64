@@ -65,12 +65,6 @@ public:
 // protected:
 public:
     
-	/*! @brief    VIA I/O Memory
-	 *  @details  Whenever a value is poked to the VIA address space, it is stored here. 
-     *  @deprecated
-     */
-	uint8_t io[16];
-		
 	/*! @brief    VIA timer 1
 	 *  @details  "Interval  Timer  T1  consists  of  two  8-bit latches and a 16-bit
      *             counter.  The  latches store data which is to be loaded into the
@@ -110,6 +104,9 @@ public:
     //! @brief    Interrupt flag register
     uint8_t ifr;
 
+    //! @brief    Shift register
+    uint8_t sr;
+    
     //! @brief    Indicates whether timer 1 has reached zero.
     bool t1_underflow;
 
@@ -163,14 +160,13 @@ public:
 
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRunMode1() {
-        assert(io[0x0B] == acr);
         return (acr & 0x40) != 0; }
 
     //! @brief    Checks if input latching is enabled
-    bool inputLatchingEnabledA() { assert(io[0x0B] == acr); return (GET_BIT(acr,0)); }
+    bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
 
     //! @brief    Checks if input latching is enabled
-    bool inputLatchingEnabledB() { assert(io[0x0B] == acr); return (GET_BIT(acr,1)); }
+    bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
 
     
     // ----------------------------------------------------------------------------------------
@@ -179,7 +175,6 @@ public:
 
     //! Returns the current value on chip pin CA2
     bool CA2() {
-        assert(pcr == io[0xC]);
         switch ((pcr >> 1) & 0x07) {
             case 6: return false; // LOW OUTPUT
             case 7: return true; // HIGH OUTPUT
@@ -208,62 +203,60 @@ public:
     //           Cleared by: Read t1 low or write t1 high
     
     inline void setInterruptFlag_T1() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,6); SET_BIT(io[0xD],6); IRQ(); }
+        SET_BIT(ifr,6); IRQ(); }
     inline void clearInterruptFlag_T1() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,6); CLR_BIT(io[0xD],6); IRQ(); }
+        CLR_BIT(ifr,6); IRQ(); }
 
     // Timer 2 - Set by:     Time-out of T2
     //           Cleared by: Read t2 low or write t2 high
     
     inline void setInterruptFlag_T2() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,5); SET_BIT(io[0xD],5); IRQ(); }
+        SET_BIT(ifr,5); IRQ(); }
     inline void clearInterruptFlag_T2() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,5); CLR_BIT(io[0xD],5); IRQ(); }
+        CLR_BIT(ifr,5); IRQ(); }
 
     // CB1 - Set by:     Active edge on CB1
     //       Cleared by: Read or write to register 0 (ORB)
     
     inline void setInterruptFlag_CB1() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,4); SET_BIT(io[0xD],4); IRQ(); }
+        SET_BIT(ifr,4); IRQ(); }
     inline void clearInterruptFlag_CB1() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,4); CLR_BIT(io[0xD],4); IRQ(); }
+        CLR_BIT(ifr,4); IRQ(); }
 
     // CB2 - Set by:     Active edge on CB2
     //       Cleared by: Read or write to register 0 (ORB) (only if CB2 is not selected as "INDEPENDENT")
     
     inline void setInterruptFlag_CB2() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,3);  SET_BIT(io[0xD],3); IRQ(); }
+        SET_BIT(ifr,3); IRQ(); }
     inline void clearInterruptFlag_CB2() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,3); CLR_BIT(io[0xD],3); IRQ(); }
+        CLR_BIT(ifr,3); IRQ(); }
     inline bool CB2selectedAsIndependent() {
-        assert(pcr == io[0xC]);
         uint8_t b765 = (pcr >> 5) & 0x07; return (b765 == 0x01) || (b765 == 0x03); }
 
     // Shift register - Set by:     8 shifts completed
     //                  Cleared by: Read or write to register 10 (0xA) (shift register)
     
     inline void setInterruptFlag_SR() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,2); SET_BIT(io[0xD],2); IRQ(); }
+        SET_BIT(ifr,2); IRQ(); }
     inline void clearInterruptFlag_SR() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,2); CLR_BIT(io[0xD],2); IRQ(); }
+        CLR_BIT(ifr,2); IRQ(); }
 
     // CA1 - Set by:     Active edge on CA1
     //       Cleared by: Read or write to register 1 (ORA)
     
     inline void setInterruptFlag_CA1() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,1); SET_BIT(io[0xD],1); IRQ(); }
+        SET_BIT(ifr,1); IRQ(); }
     inline void clearInterruptFlag_CA1() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,1); CLR_BIT(io[0xD],1); IRQ(); }
+        CLR_BIT(ifr,1); IRQ(); }
 
     // CA2 - Set by:     Active edge on CA2
     //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")
     
     inline void setInterruptFlag_CA2() {
-        assert(ifr == io[0xD]); SET_BIT(ifr,0); SET_BIT(io[0xD],0); IRQ(); }
+        SET_BIT(ifr,0); IRQ(); }
     inline void clearInterruptFlag_CA2() {
-        assert(ifr == io[0xD]); CLR_BIT(ifr,0); CLR_BIT(io[0xD],0); IRQ(); }
+        CLR_BIT(ifr,0); IRQ(); }
     inline bool CA2selectedAsIndependent() {
-        assert(pcr == io[0xC]);
         uint8_t b321 = (pcr >> 1) & 0x07; return (b321 == 0x01) || (b321 == 0x03); }
 };
 
@@ -297,14 +290,13 @@ public:
     void poke(uint16_t addr, uint8_t value);
 	
     //! @brief    Returns true iff a change of the atn line can trigger interrups
-	inline bool atnInterruptsEnabled() {
-        assert(ier == io[0xE]); return ier & 0x02; }
+	inline bool atnInterruptsEnabled() { return ier & 0x02; }
 
     //! @brief    Indicates that an ATN interrupt has occured.
-    inline void indicateAtnInterrupt() { ifr |= 0x02; io[0xD] |= 0x02; }
+    inline void indicateAtnInterrupt() { ifr |= 0x02; }
 
     //! @brief    Clears the ATN interrupt indication bit.
-    inline void clearAtnIndicator() { ifr &= ~0x02; io[0xD] &= (0xFF-0x02); }
+    inline void clearAtnIndicator() { ifr &= ~0x02; }
 };
 
 //! The second versatile interface adapter (VIA2)
@@ -345,7 +337,7 @@ public:
     //! @brief    Returns bit 3 of output register B
     bool redLEDshining() { return (orb & 0x08) != 0; }
     
-    bool overflowEnabled() { assert(pcr == io[0x0C]); return (pcr & 0x02); }
+    bool overflowEnabled() { return (pcr & 0x02); }
 
     void debug0xC();
 };
