@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@ VIA6522::VIA6522()
         { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
         { &fired1,          sizeof(fired1),         CLEAR_ON_RESET },
         { &fired2,          sizeof(fired2),         CLEAR_ON_RESET },
+        { &pb7toggle,       sizeof(pb7toggle),      CLEAR_ON_RESET },
+        { &pb7timerOut,     sizeof(pb7timerOut),    CLEAR_ON_RESET },
         { &pcr,             sizeof(pcr),            CLEAR_ON_RESET },
         { &acr,             sizeof(acr),            CLEAR_ON_RESET },
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
@@ -63,8 +65,14 @@ void VIA6522::reset()
 {
     VirtualComponent::reset();
 
-    // Establish bindings
-    // floppy = &c64->floppy;
+    
+    t1 = 0x01AA;
+    t2 = 0x01AA;
+    t1_latch_hi = 0x01;
+    t1_latch_lo = 0xAA;
+    t2_latch_lo = 0xAA;
+    
+    feed |= (VIACountA0 | VIACountB0);
 }
 
 void 
@@ -129,20 +137,50 @@ VIA6522::executeTimer1()
         t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
 
-    t1--;
+    if (delay & VIACountA1) {
+        t1--;
+    }
     
     if (t1 == 0) {
-        if (!fired1) {
-            
-            setInterruptFlag_T1();
-            fired1 = true;
-        }
         
-        // Timer 1 has the special ability to run in free-run mode that reloads automatically
-        // This generates a continous stream of interrupt events or a square wave on PB7 which
-        // get inverted every time the timer underflows.
         if (freeRunMode1()) {
-            delay |= VIAReloadA0;
+            
+            /* "In the free-running mode,
+             * (1) the interrupt flag is set and
+             * (2) the signal on PB7 is inverted each time the counter reaches zero.
+             * (3) However, instead of continuing to decrement from zero after a time-out,
+             *     the timer automatically transfers the contents of the latch into the
+             *     counter and continues to decrement from there."
+             */
+            
+            if (!fired1) {
+                setInterruptFlag_T1();  // (1)
+                pb7toggle = !pb7toggle; // (2)
+                delay |= VIAReloadA0;   // (3)
+            }
+            
+        } else {
+                
+            /* "The Timer 1 one-shot mode generates a single interrupt for each timer load
+             *  operation."
+             */
+            
+            if (!fired1) {
+                setInterruptFlag_T1();
+                pb7toggle = !pb7toggle;
+                fired1 = true;
+            }
+            
+            /* "In addition to generating a single interrupt, Timer 1 can be programmed
+             *  to produce a single negative pulse on the PB7 peripheral pin. With the
+             *  output enabled (ACR7=1) a "write T1C-H" operation will cause PB7 to go low.
+             *  PB7 will return high when Timer 1 times out. The result is a single
+             *  programmable width pulse."
+             */
+            
+            if (acr & 0x80) {
+                pb7timerOut = pb7toggle;
+            }
         }
     }
 }
@@ -150,7 +188,9 @@ VIA6522::executeTimer1()
 void
 VIA6522::executeTimer2()
 {
-    t2--;
+    if (delay & VIACountB1) {
+        t2--;
+    }
     
     if (t2 == 0) {
             
@@ -398,6 +438,29 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xB: // Auxiliary control register
             
             acr = value;
+            
+            if (acr & 0x20) {
+                
+                // In the pulse counting mode, T2 counts negative pulses on PB6,
+                // so we disable automatic counting.
+                
+                delay &= ~(VIACountB0);
+                feed &= ~VIACountB0;
+                
+            } else {
+                
+                // In the timed interrupt mode, T2 counts down every cycle.
+                
+                delay |= VIACountB0;
+                feed |= VIACountB0;
+            }
+            
+            if (acr & 0x80) {
+                
+                // Output shows up a port pin PB7
+                pb7timerOut = pb7toggle;
+            }
+            
             break;
             
         case 0xC: // Peripheral control register

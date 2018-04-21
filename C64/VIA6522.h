@@ -28,19 +28,19 @@
 
 class VC1541;
 
+#define VIACountA0      0x0000000000000001
+#define VIACountA1      0x0000000000000002
+// #define VIACountA2      0x0000000000000004
+// #define VIACountA3      0x0000000000000008
+#define VIACountB0      0x0000000000000010
+#define VIACountB1      0x0000000000000020
+// #define VIACountB2      0x0000000000000040
+// #define VIACountB3      0x0000000000000080
 #define VIAReloadA0     0x0000000000000100
 #define VIAReloadA1     0x0000000000000200
 #define VIAReloadA2     0x0000000000000400
 
 /*
-#define VIACountA0      0x0000000000000001
-#define VIACountA1      0x0000000000000002
-#define VIACountA2      0x0000000000000004
-#define VIACountA3      0x0000000000000008
-#define VIACountB0      0x0000000000000010
-#define VIACountB1      0x0000000000000020
-#define VIACountB2      0x0000000000000040
-#define VIACountB3      0x0000000000000080
 #define VIALoadA0       0x0000000000000100
 #define VIALoadA1       0x0000000000000200
 #define VIALoadA2       0x0000000000000400
@@ -49,7 +49,7 @@ class VC1541;
 #define VIALoadB2       0x0000000000002000
 */
 
-#define VIAClearBits  ~(0x0000000000040000 | VIAReloadA0)
+#define VIAClearBits  ~(0x0000000000040000 | VIACountA0 | VIACountB0 | VIAReloadA0)
 
 
 
@@ -123,6 +123,9 @@ public:
     //! @brief    Indicates that timer 2 has fired
     bool fired2;
     
+    bool pb7toggle;
+    bool pb7timerOut;
+    
     //! @brief    Peripheral control register
     uint8_t pcr;
 
@@ -190,8 +193,7 @@ public:
     // ----------------------------------------------------------------------------------------
 
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
-    bool freeRunMode1() {
-        return (acr & 0x40) != 0; }
+    bool freeRunMode1() { return (acr & 0x40) != 0; }
 
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
