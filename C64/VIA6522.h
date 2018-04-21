@@ -28,28 +28,17 @@
 
 class VC1541;
 
-#define VIACountA0      0x0000000000000001
-#define VIACountA1      0x0000000000000002
-// #define VIACountA2      0x0000000000000004
-// #define VIACountA3      0x0000000000000008
-#define VIACountB0      0x0000000000000010
-#define VIACountB1      0x0000000000000020
-// #define VIACountB2      0x0000000000000040
-// #define VIACountB3      0x0000000000000080
-#define VIAReloadA0     0x0000000000000100
-#define VIAReloadA1     0x0000000000000200
-#define VIAReloadA2     0x0000000000000400
+#define VIACountA0       0x0000000000000001
+#define VIACountA1       0x0000000000000002
+#define VIACountB0       0x0000000000000010
+#define VIACountB1       0x0000000000000020
+#define VIAReloadA0      0x0000000000000100
+#define VIAReloadA1      0x0000000000000200
+#define VIAReloadA2      0x0000000000000400
+#define VIAPostOneShotA0 0x0000000000000800
+#define VIAPostOneShotB0 0x0000000000001000
 
-/*
-#define VIALoadA0       0x0000000000000100
-#define VIALoadA1       0x0000000000000200
-#define VIALoadA2       0x0000000000000400
-#define VIALoadB0       0x0000000000000800
-#define VIALoadB1       0x0000000000001000
-#define VIALoadB2       0x0000000000002000
-*/
-
-#define VIAClearBits  ~(0x0000000000040000 | VIACountA0 | VIACountB0 | VIAReloadA0)
+#define VIAClearBits  ~(0x0000000000002000 | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0)
 
 
 
@@ -105,9 +94,6 @@ public:
     uint8_t t1_latch_lo; // T1L_L
     uint8_t t1_latch_hi; // T1L_H
 
-    //! @brief    Indicates that timer 1 has fired
-    bool fired1;
-
 	/*! @brief    VIA timer 2
 	 *  @details  "Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
      *             a  counter  for  counting  negative pulses on the PB6 peripheral pin. A single
@@ -119,10 +105,7 @@ public:
      */
     uint16_t t2; // T1C
     uint8_t t2_latch_lo; // T2L_L
-	
-    //! @brief    Indicates that timer 2 has fired
-    bool fired2;
-    
+	    
     bool pb7toggle;
     bool pb7timerOut;
     

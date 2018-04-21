@@ -41,8 +41,6 @@ VIA6522::VIA6522()
         { &t1_latch_lo,     sizeof(t1_latch_lo),    CLEAR_ON_RESET },
         { &t1_latch_hi,     sizeof(t1_latch_hi),    CLEAR_ON_RESET },
         { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
-        { &fired1,          sizeof(fired1),         CLEAR_ON_RESET },
-        { &fired2,          sizeof(fired2),         CLEAR_ON_RESET },
         { &pb7toggle,       sizeof(pb7toggle),      CLEAR_ON_RESET },
         { &pb7timerOut,     sizeof(pb7timerOut),    CLEAR_ON_RESET },
         { &pcr,             sizeof(pcr),            CLEAR_ON_RESET },
@@ -153,7 +151,7 @@ VIA6522::executeTimer1()
              *     counter and continues to decrement from there."
              */
             
-            if (!fired1) {
+            if (!(feed & VIAPostOneShotA0)) {
                 setInterruptFlag_T1();  // (1)
                 pb7toggle = !pb7toggle; // (2)
                 delay |= VIAReloadA0;   // (3)
@@ -165,22 +163,23 @@ VIA6522::executeTimer1()
              *  operation."
              */
             
-            if (!fired1) {
+            if (!(feed & VIAPostOneShotA0)) {
                 setInterruptFlag_T1();
                 pb7toggle = !pb7toggle;
-                fired1 = true;
             }
+        }
+        
+        feed |= VIAPostOneShotA0;
             
-            /* "In addition to generating a single interrupt, Timer 1 can be programmed
-             *  to produce a single negative pulse on the PB7 peripheral pin. With the
-             *  output enabled (ACR7=1) a "write T1C-H" operation will cause PB7 to go low.
-             *  PB7 will return high when Timer 1 times out. The result is a single
-             *  programmable width pulse."
-             */
+        /* "In addition to generating a single interrupt, Timer 1 can be programmed
+         *  to produce a single negative pulse on the PB7 peripheral pin. With the
+         *  output enabled (ACR7=1) a "write T1C-H" operation will cause PB7 to go low.
+         *  PB7 will return high when Timer 1 times out. The result is a single
+         *  programmable width pulse."
+         */
             
-            if (acr & 0x80) {
-                pb7timerOut = pb7toggle;
-            }
+        if (acr & 0x80) {
+            pb7timerOut = pb7toggle;
         }
     }
 }
@@ -195,7 +194,7 @@ VIA6522::executeTimer2()
     if (t2 == 0) {
             
         setInterruptFlag_T2();
-        fired2 = true;
+        feed |= VIAPostOneShotB0;
     }
 
 }
@@ -388,8 +387,13 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
             
             clearInterruptFlag_T1();
-            fired1 = false;
             c64->floppy.cpu.releaseIrqLine(CPU::VIA);
+            
+            feed &= ~(VIAPostOneShotA0);
+            
+            // Delay counting down for one cycle
+            delay &= ~(VIACountA1);
+            
             return;
             
         case 0x6: // T1 low-order latch
@@ -414,7 +418,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2_latch_lo = value;
             clearInterruptFlag_T2();
-            fired2 = false;
             c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
@@ -425,7 +428,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
-            fired2 = false;
+            feed &= ~(VIAPostOneShotB0);
+            
             c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
@@ -438,6 +442,12 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xB: // Auxiliary control register
             
             acr = value;
+            
+            // TODO (Hoxs64)
+            // if ((feed & VIAPostOneShotA0) != 0)
+            // {
+            //     bPB7Toggle = bPB7TimerMode ^ 0x80;
+            // }
             
             if (acr & 0x20) {
                 
