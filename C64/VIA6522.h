@@ -28,6 +28,25 @@
 
 class VC1541;
 
+#define VIACountA0      0x0000000000000001
+#define VIACountA1      0x0000000000000002
+#define VIACountA2      0x0000000000000004
+#define VIACountA3      0x0000000000000008
+#define VIACountB0      0x0000000000000010
+#define VIACountB1      0x0000000000000020
+#define VIACountB2      0x0000000000000040
+#define VIACountB3      0x0000000000000080
+#define VIALoadA0       0x0000000000000100
+#define VIALoadA1       0x0000000000000200
+#define VIALoadA2       0x0000000000000400
+#define VIALoadB0       0x0000000000000800
+#define VIALoadB1       0x0000000000001000
+#define VIALoadB2       0x0000000000002000
+
+#define VIAClearBits  ~(0x0000000000040000 | VIACountA0 | VIACountB0 | VIALoadA0 | VIALoadB0)
+
+
+
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
  */
@@ -36,6 +55,7 @@ class VIA6522 : public VirtualComponent {
 public:
 	
 	//! @brief    Reference to the connected disk drive.
+    //! @deprecated Use c64 reference instead
 	VC1541 *floppy;
 
 public:
@@ -62,7 +82,6 @@ public:
     uint8_t ddrb;
     uint8_t ddra;
 	
-// protected:
 public:
     
 	/*! @brief    VIA timer 1
@@ -106,7 +125,16 @@ public:
 
     //! @brief    Shift register
     uint8_t sr;
-        
+    
+protected:
+    
+    //! @brief    Event triggering queue
+    uint64_t delay;
+    
+    //! @brief    New bits to feed in
+    //! @details  Bits set in this variable makes a trigger event persistent.
+    uint64_t feed;
+    
 public:	
 	//! @brief    Constructor
 	VIA6522();

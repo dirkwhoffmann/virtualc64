@@ -46,6 +46,8 @@ VIA6522::VIA6522()
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
         { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
         { &sr,              sizeof(sr),             CLEAR_ON_RESET },
+        { &delay,           sizeof(delay),          CLEAR_ON_RESET },
+        { &feed,            sizeof(feed),           CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -96,6 +98,10 @@ VIA6522::execute()
 {
     executeTimer1();
     executeTimer2();
+    
+    // Move trigger event flags left and feed in new bits
+    delay = ((delay << 1) & VIAClearBits) | feed;
+
 }
 
 // One-shot mode timing [F. K.]
