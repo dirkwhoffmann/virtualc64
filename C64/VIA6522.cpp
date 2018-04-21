@@ -123,6 +123,10 @@ VIA6522::execute()
 void
 VIA6522::executeTimer1()
 {
+    if (delay & VIAReloadA2) {
+        t1 = HI_LO(t1_latch_hi, t1_latch_lo);
+    }
+    
     if (t1) {
         t1--;
     }
@@ -136,7 +140,7 @@ VIA6522::executeTimer1()
         // This generates a continous stream of interrupt events or a square wave on PB7 which
         // get inverted every time the timer underflows.
         if (freeRunMode1()) {
-            t1 = HI_LO(t1_latch_hi, t1_latch_lo);
+            delay |= VIAReloadA0;
         }
     }
 }
@@ -347,7 +351,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             floppy->cpu.releaseIrqLine(CPU::VIA);
             return;
             
-        case 0x6: // T1 low-order latct
+        case 0x6: // T1 low-order latch
             
             // "8 BITS LOADED INTO T1 LOW-ORDER LATCHES. THIS OPERATION IS NO DIFFERENT
             //  THAN A WRITE INTO REG 4" [F. K.]

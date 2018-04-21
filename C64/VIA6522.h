@@ -28,6 +28,11 @@
 
 class VC1541;
 
+#define VIAReloadA0     0x0000000000000100
+#define VIAReloadA1     0x0000000000000200
+#define VIAReloadA2     0x0000000000000400
+
+/*
 #define VIACountA0      0x0000000000000001
 #define VIACountA1      0x0000000000000002
 #define VIACountA2      0x0000000000000004
@@ -42,8 +47,9 @@ class VC1541;
 #define VIALoadB0       0x0000000000000800
 #define VIALoadB1       0x0000000000001000
 #define VIALoadB2       0x0000000000002000
+*/
 
-#define VIAClearBits  ~(0x0000000000040000 | VIACountA0 | VIACountB0 | VIALoadA0 | VIALoadB0)
+#define VIAClearBits  ~(0x0000000000040000 | VIAReloadA0)
 
 
 
