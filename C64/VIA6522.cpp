@@ -41,6 +41,8 @@ VIA6522::VIA6522()
         { &t1_latch_lo,     sizeof(t1_latch_lo),    CLEAR_ON_RESET },
         { &t1_latch_hi,     sizeof(t1_latch_hi),    CLEAR_ON_RESET },
         { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
+        { &fired1,          sizeof(fired1),         CLEAR_ON_RESET },
+        { &fired2,          sizeof(fired2),         CLEAR_ON_RESET },
         { &pcr,             sizeof(pcr),            CLEAR_ON_RESET },
         { &acr,             sizeof(acr),            CLEAR_ON_RESET },
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
@@ -62,7 +64,7 @@ void VIA6522::reset()
     VirtualComponent::reset();
 
     // Establish bindings
-    floppy = &c64->floppy;
+    // floppy = &c64->floppy;
 }
 
 void 
@@ -126,15 +128,15 @@ VIA6522::executeTimer1()
     if (delay & VIAReloadA2) {
         t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
-    
-    if (t1) {
-        t1--;
-    }
+
+    t1--;
     
     if (t1 == 0) {
-
-        setInterruptFlag_T1();
-        // TODO: PB7 output
+        if (!fired1) {
+            
+            setInterruptFlag_T1();
+            fired1 = true;
+        }
         
         // Timer 1 has the special ability to run in free-run mode that reloads automatically
         // This generates a continous stream of interrupt events or a square wave on PB7 which
@@ -148,14 +150,12 @@ VIA6522::executeTimer1()
 void
 VIA6522::executeTimer2()
 {
-    if (t2){
-        t2--;
-    }
+    t2--;
     
     if (t2 == 0) {
             
         setInterruptFlag_T2();
-        // TODO: PB7 output
+        fired2 = true;
     }
 
 }
@@ -163,10 +163,10 @@ VIA6522::executeTimer2()
 bool
 VIA6522::IRQ() {
     if (ifr & ier) {
-        floppy->cpu.pullDownIrqLine(CPU::VIA);
+        c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
         return true;
     } else {
-        floppy->cpu.releaseIrqLine(CPU::VIA);
+        c64->floppy.cpu.releaseIrqLine(CPU::VIA);
         return false;
     }
 }
@@ -199,7 +199,7 @@ VIA6522::peek(uint16_t addr)
             //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
             
             clearInterruptFlag_T1();
-            floppy->cpu.releaseIrqLine(CPU::VIA);
+            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return LO_BYTE(t1);
 
         case 0x5: // T1 high-order counter
@@ -225,7 +225,7 @@ VIA6522::peek(uint16_t addr)
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
-            floppy->cpu.releaseIrqLine(CPU::VIA);
+            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
 			return LO_BYTE(t2);
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
@@ -348,7 +348,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
             
             clearInterruptFlag_T1();
-            floppy->cpu.releaseIrqLine(CPU::VIA);
+            fired1 = false;
+            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
         case 0x6: // T1 low-order latch
@@ -373,7 +374,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2_latch_lo = value;
             clearInterruptFlag_T2();
-            floppy->cpu.releaseIrqLine(CPU::VIA);
+            fired2 = false;
+            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
         case 0x9: // T2 high-order counter
@@ -383,7 +385,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
-            floppy->cpu.releaseIrqLine(CPU::VIA);
+            fired2 = false;
+            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
         case 0xA: // Shift register
@@ -448,9 +451,9 @@ uint8_t VIA1::peek(uint16_t addr)
             
             // Port values (outside the chip)
             uint8_t external =
-            (floppy->iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
-            (floppy->iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
-            (floppy->iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
+            (c64->floppy.iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
+            (c64->floppy.iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
+            (c64->floppy.iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
             
             // Determine read value
             uint8_t result =
@@ -473,7 +476,7 @@ uint8_t VIA1::peek(uint16_t addr)
                 clearInterruptFlag_CA2();
 
             // Clean this up ...
-            floppy->cpu.releaseIrqLine(CPU::ATN);
+            c64->floppy.cpu.releaseIrqLine(CPU::ATN);
             return ora;
             
         default:
@@ -489,9 +492,9 @@ uint8_t VIA1::read(uint16_t addr)
             
             // Port values (outside the chip)
             uint8_t external =
-            (floppy->iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
-            (floppy->iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
-            (floppy->iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
+            (c64->floppy.iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
+            (c64->floppy.iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
+            (c64->floppy.iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
             
             // Determine read value
             uint8_t result =
@@ -529,7 +532,7 @@ void VIA1::poke(uint16_t addr, uint8_t value)
             // |  in   |               |  out  |  out  |  in   |  out  |  in   |
 
 			orb = value;
-			floppy->iec->updateDevicePins(orb, ddrb);
+			c64->floppy.iec->updateDevicePins(orb, ddrb);
 			return;
 
 		case 0x1: // ORA - Output register A
@@ -550,7 +553,7 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 		
 		case 0x2:
 			ddrb = value;
-			floppy->iec->updateDevicePins(orb, ddrb);
+			c64->floppy.iec->updateDevicePins(orb, ddrb);
 			return; 
 						
 		default:
@@ -580,11 +583,11 @@ uint8_t VIA2::peek(uint16_t addr)
             // |       | (4 disk zones)|protect|       | motor | (head move)   |
             
             // Collect values on the external port lines
-            bool SYNC = floppy->getSync();
+            bool SYNC = c64->floppy.getSync();
             uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
-            (floppy->getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
-            (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
-            (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);
+            (c64->floppy.getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
+            (c64->floppy.getRedLED() /* 3 */ ? 0x00 : 0x08) |
+            (c64->floppy.isRotating() /* 2 */ ? 0x00 : 0x04);
             
             uint8_t result =
             (ddrb & orb) |      // Values of bits configured as outputs
@@ -623,7 +626,7 @@ uint8_t VIA2::peek(uint16_t addr)
         }
             
         case 0x4:
-            floppy->cpu.releaseIrqLine(CPU::VIA);
+            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return VIA6522::peek(addr);
             
         default:
@@ -638,11 +641,11 @@ uint8_t VIA2::read(uint16_t addr)
         case 0x0: { // ORB - Output register B
             
             // Collect values on the external port lines
-            bool SYNC = floppy->getSync();
+            bool SYNC = c64->floppy.getSync();
             uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
-            (floppy->getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
-            (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
-            (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);
+            (c64->floppy.getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
+            (c64->floppy.getRedLED() /* 3 */ ? 0x00 : 0x08) |
+            (c64->floppy.isRotating() /* 2 */ ? 0x00 : 0x04);
             
             uint8_t result =
             (ddrb & orb) |      // Values of bits configured as outputs
@@ -695,13 +698,13 @@ void VIA2::poke(uint16_t addr, uint8_t value)
             value &= ddrb;
             
             // Bits 6 and 5
-            floppy->setZone((value >> 5) & 0x03);
+            c64->floppy.setZone((value >> 5) & 0x03);
             
             // Bit 3
-            floppy->setRedLED(GET_BIT(value,3));
+            c64->floppy.setRedLED(GET_BIT(value,3));
 
             // Bit 2
-            floppy->setRotating(GET_BIT(value,2));
+            c64->floppy.setRotating(GET_BIT(value,2));
 
             // Bits 1 and 0
 			if ((orb & 0x03) != (value & 0x03)) {
@@ -710,9 +713,9 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				// An increase (00-01-10-11-00...) moves the head up
                 
 				if ((value & 0x03) == ((orb+1) & 0x03)) {
-					floppy->moveHeadUp();
+					c64->floppy.moveHeadUp();
 				} else if ((value & 0x03) == ((orb-1) & 0x03)) {
-					floppy->moveHeadDown();
+					c64->floppy.moveHeadDown();
 				} else {
 					warn("Unexpected stepper motor control sequence in VC1541 detected\n");
 				}
@@ -801,8 +804,8 @@ void VIA2::debug0xC() {
      case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
      case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
      case 5: debug(2,"  PULSE OUTPUT\n"); break;
-     case 6: debug(2,"  LOW OUTPUT %04X\n", floppy->cpu.getPC_at_cycle_0()); break;
-     case 7: debug(2,"  HIGH OUTPUT %04X\n", floppy->cpu.getPC_at_cycle_0()); break;
+     case 6: debug(2,"  LOW OUTPUT %04X\n", c64->floppy.cpu.getPC_at_cycle_0()); break;
+     case 7: debug(2,"  HIGH OUTPUT %04X\n", c64->floppy.cpu.getPC_at_cycle_0()); break;
      }
     
     debug(2,"CB1:\n");

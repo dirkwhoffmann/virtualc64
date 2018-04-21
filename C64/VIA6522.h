@@ -62,7 +62,7 @@ public:
 	
 	//! @brief    Reference to the connected disk drive.
     //! @deprecated Use c64 reference instead
-	VC1541 *floppy;
+	// VC1541 *floppy;
 
 public:
 	
@@ -105,6 +105,9 @@ public:
     uint8_t t1_latch_lo; // T1L_L
     uint8_t t1_latch_hi; // T1L_H
 
+    //! @brief    Indicates that timer 1 has fired
+    bool fired1;
+
 	/*! @brief    VIA timer 2
 	 *  @details  "Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
      *             a  counter  for  counting  negative pulses on the PB6 peripheral pin. A single
@@ -117,6 +120,9 @@ public:
     uint16_t t2; // T1C
     uint8_t t2_latch_lo; // T2L_L
 	
+    //! @brief    Indicates that timer 2 has fired
+    bool fired2;
+    
     //! @brief    Peripheral control register
     uint8_t pcr;
 
