@@ -106,13 +106,7 @@ public:
 
     //! @brief    Shift register
     uint8_t sr;
-    
-    //! @brief    Indicates whether timer 1 has reached zero.
-    bool t1_underflow;
-
-    //! @brief    Indicates whether timer 2 has reached zero.
-    bool t2_underflow;
-    
+        
 public:	
 	//! @brief    Constructor
 	VIA6522();

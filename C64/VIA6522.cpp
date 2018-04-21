@@ -46,8 +46,6 @@ VIA6522::VIA6522()
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
         { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
         { &sr,              sizeof(sr),             CLEAR_ON_RESET },
-        { &t1_underflow,    sizeof(t1_underflow),   CLEAR_ON_RESET },
-        { &t2_underflow,    sizeof(t2_underflow),   CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -96,8 +94,8 @@ VIA6522::dumpState()
 void
 VIA6522::execute()
 {
-    if (t1 || t1_underflow) executeTimer1();
-    if (t2 || t2_underflow) executeTimer2();
+    executeTimer1();
+    executeTimer2();
 }
 
 // One-shot mode timing [F. K.]
@@ -121,13 +119,10 @@ VIA6522::executeTimer1()
 {
     if (t1) {
         t1--;
-        t1_underflow = (t1 == 0);
     }
     
-    assert(t1_underflow == (t1 == 0));
-    if (t1_underflow) {
+    if (t1 == 0) {
 
-        t1_underflow = false;
         setInterruptFlag_T1();
         // TODO: PB7 output
         
@@ -145,13 +140,10 @@ VIA6522::executeTimer2()
 {
     if (t2){
         t2--;
-        t2_underflow = (t2 == 0);
     }
     
-    assert(t2_underflow == (t2 == 0));
-    if (t2_underflow) {
+    if (t2 == 0) {
             
-        t2_underflow = false;
         setInterruptFlag_T2();
         // TODO: PB7 output
     }
