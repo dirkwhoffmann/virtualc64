@@ -93,6 +93,13 @@ VIA6522::dumpState()
 //                                    Execution functions
 // --------------------------------------------------------------------------------------------
 
+void
+VIA6522::execute()
+{
+    if (t1 || t1_underflow) executeTimer1();
+    if (t2 || t2_underflow) executeTimer2();
+}
+
 // One-shot mode timing [F. K.]
 //               +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+
 //          02 --+ +-+ +-+ +-+ +-+ +-+ +-#-+ +-+ +-+ +-+ +-+ +-+ +-
@@ -112,6 +119,12 @@ VIA6522::dumpState()
 void
 VIA6522::executeTimer1()
 {
+    if (t1) {
+        t1--;
+        t1_underflow = (t1 == 0);
+    }
+    
+    assert(t1_underflow == (t1 == 0));
     if (t1_underflow) {
 
         t1_underflow = false;
@@ -124,32 +137,25 @@ VIA6522::executeTimer1()
         if (freeRunMode1()) {
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
         }
-        
-        return;
-    }
-    
-    if (t1) {
-        // Keep on counting
-        t1_underflow = (--t1 == 0);
     }
 }
 
 void
 VIA6522::executeTimer2()
 {
+    if (t2){
+        t2--;
+        t2_underflow = (t2 == 0);
+    }
+    
+    assert(t2_underflow == (t2 == 0));
     if (t2_underflow) {
             
         t2_underflow = false;
         setInterruptFlag_T2();
         // TODO: PB7 output
-        
-        return;
     }
 
-    if (t2){
-        // Keep on counting
-        t2_underflow = (--t2 == 0);
-    }
 }
 
 bool

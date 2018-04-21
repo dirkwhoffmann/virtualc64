@@ -127,10 +127,7 @@ public:
     void dumpState();
 
     //! @brief    Executes the virtual VIA for one cycle.
-    inline void execute() {
-        if (t1 || t1_underflow) executeTimer1();
-        if (t2 || t2_underflow) executeTimer2();
-    }
+    void execute(); 
 
     //! @brief    Executes timer 1 for one cycle.
     void executeTimer1();
