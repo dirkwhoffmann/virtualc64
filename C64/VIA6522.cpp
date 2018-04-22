@@ -113,7 +113,7 @@ VIA6522::execute()
         delay |= VIAInterrupt0;
     }
     
-    // Trigger interrupt if necessary
+    // Trigger interrupt if requested
     if (delay & VIAInterrupt1) {
         c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
     }
@@ -233,23 +233,21 @@ VIA6522::peek(uint16_t addr)
 		
 	switch(addr) {
             
-        case 0x0: // ORB - Output register B (shared functionality of VIA1 and VIA2)
+        case 0x0: // ORB - Output register B
 
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CB1();
-            // if (!CB2selectedAsIndependent())
             if (shouldClearCB2onRead())
                 clearInterruptFlag_CB2();
-            return 0; // overwritten by VIA1 and VIA2
+            return 0;
             
-        case 0x1: // ORA - Output register A (shared functionality of VIA1 and VIA2)
+        case 0x1: // ORA - Output register A
 
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            // if (!CA2selectedAsIndependent())
             if (shouldClearCA2onRead())
                 clearInterruptFlag_CA2();
-            return 0; // overwritten by VIA1 and VIA2
+            return 0;
             
         case 0x2: // DDRB - Data direction register B
             
@@ -312,19 +310,11 @@ VIA6522::peek(uint16_t addr)
 
             return pcr;
             
-        case 0xD: { // IFR - Interrupt Flag Register
+        case 0xD: // IFR - Interrupt Flag Register
             
-            // "Bit 7 indicates the status of the IRQ output. This bit corresponds to the logic function:
-            //  IRQ = IFR6xIER6 + IFR5xIER5 + IFR4xIER4 + IFR3xIER3 + IFR2xIER2 + IFR1xIER1 + IFR0xIER0
-            //  x = logic AND, + = logic OR" [F. K.]
-            
-            ifr &= 0x7F; // DON'T DO THIS
-            uint8_t irq = (ifr & ier) ? 0x80 : 0x00;
-            return ifr | irq;
-            
-            // TODO: CLEAR INTERRUPT LINE
-            
-        }
+            assert((ifr & 0x80) == 0);
+            assert((ier & 0x80) == 0);
+            return ifr | ((ifr & ier) ? 0x80 : 0x00);
             
         case 0xE: // Interrupt enable register
             
@@ -334,10 +324,9 @@ VIA6522::peek(uint16_t addr)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            // if (!CA2selectedAsIndependent())
             if (shouldClearCA2onRead())
                 clearInterruptFlag_CA2();
-            return 0; // overwritten by VIA1 and VIA2
+            return 0;
     }
 
     assert(0);
@@ -389,19 +378,17 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CB1();
-            // if (!CB2selectedAsIndependent())
             if (shouldClearCB2onWrite())
                 clearInterruptFlag_CB2();
-            break;
+            return;
 
         case 0x1: // ORA - Output register A (shared functionality of VIA1 and VIA2)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            // if (!CA2selectedAsIndependent())
             if (shouldClearCA2onWrite())
                 clearInterruptFlag_CA2();
-            break;
+            return;
             
         case 0x2: // DDRB - Data direction register B
             
@@ -442,7 +429,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Delay counting down for one cycle
             delay &= ~(VIACountA1);
-            
             return;
             
         case 0x6: // T1 low-order latch
@@ -519,32 +505,32 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
                 // Output shows up a port pin PB7
                 pb7timerOut = pb7toggle;
             }
-            
-            break;
+            return;
             
         case 0xC: // Peripheral control register
             
             pcr = value;
-            break;
+            return;
             
         case 0xD: // IFR - Interrupt Flag Register
             
-            // "... individual flag bits may be cleared by writing a "1" into the appropriate bit of the IFR."
-            
+            // Writing 1 will clear the corresponding bit
             ifr &= ~value;
+            IRQ();
             return;
             
         case 0xE: // IER - Interrupt Enable Register
             
             // Bit 7 distinguishes between set and clear
-            // If bit 7 is 1, each 1 in the provided value will set the corresponding bit
-            // If bit 7 is 0, each 1 in the provided value will clear the corresponding bit
-            
+            // If bit 7 is 1, writing 1 will set the corresponding bit
+            // If bit 7 is 0, writing 1 will clear the corresponding bit
             if (value & 0x80) {
-                ier |= value & 0x7F;
+                ier |= value;
             } else {
                 ier &= ~value;
             }
+            ier &= 0x7F;
+            IRQ();
             return;
             
         case 0xF:
@@ -553,7 +539,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             clearInterruptFlag_CA1();
             if (shouldClearCA2onWrite())
                 clearInterruptFlag_CA2();
-            break;
+            return;
     }
 }
 
@@ -632,7 +618,6 @@ uint8_t VIA1::read(uint16_t addr)
             
         case 0x1: // ORA - Output register A
         case 0xF:
-   
             return ora;
             
         default:
@@ -645,7 +630,6 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 	switch(addr) {
 
         case 0x0: // ORB - Output register B
-
             VIA6522::poke(addr, value);
  
             // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
@@ -659,14 +643,8 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 
 		case 0x1: // ORA - Output register A
         case 0xF:
-            
             VIA6522::poke(addr, value);
-            
-            printf("VIA:pokeORA %02X\n", ora);
 			ora = value;
-            
-            // Clean this up ...
-			// floppy->cpu->clearIRQLineATN();
 			return;
 		
 		case 0x2:
