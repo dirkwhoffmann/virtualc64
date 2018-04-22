@@ -220,62 +220,86 @@ public:
     // Timer 1 - Set by:     Time-out of T1
     //           Cleared by: Read t1 low or write t1 high
     
-    inline void setInterruptFlag_T1() {
+    void setInterruptFlag_T1() {
         SET_BIT(ifr,6); IRQ(); }
-    inline void clearInterruptFlag_T1() {
+    void clearInterruptFlag_T1() {
         CLR_BIT(ifr,6); IRQ(); }
 
     // Timer 2 - Set by:     Time-out of T2
     //           Cleared by: Read t2 low or write t2 high
     
-    inline void setInterruptFlag_T2() {
+    void setInterruptFlag_T2() {
         SET_BIT(ifr,5); IRQ(); }
-    inline void clearInterruptFlag_T2() {
+    void clearInterruptFlag_T2() {
         CLR_BIT(ifr,5); IRQ(); }
 
     // CB1 - Set by:     Active edge on CB1
     //       Cleared by: Read or write to register 0 (ORB)
     
-    inline void setInterruptFlag_CB1() {
+    void setInterruptFlag_CB1() {
         SET_BIT(ifr,4); IRQ(); }
-    inline void clearInterruptFlag_CB1() {
+    void clearInterruptFlag_CB1() {
         CLR_BIT(ifr,4); IRQ(); }
 
     // CB2 - Set by:     Active edge on CB2
     //       Cleared by: Read or write to register 0 (ORB) (only if CB2 is not selected as "INDEPENDENT")
     
-    inline void setInterruptFlag_CB2() {
+    void setInterruptFlag_CB2() {
         SET_BIT(ifr,3); IRQ(); }
-    inline void clearInterruptFlag_CB2() {
+    void clearInterruptFlag_CB2() {
         CLR_BIT(ifr,3); IRQ(); }
-    inline bool CB2selectedAsIndependent() {
-        uint8_t b765 = (pcr >> 5) & 0x07; return (b765 == 0x01) || (b765 == 0x03); }
-
+    //bool CB2selectedAsIndependent() {
+    //     uint8_t b765 = (pcr >> 5) & 0x07; return (b765 == 0x01) || (b765 == 0x03); }
+    
+    //! @brief  Indicates if interrupt bit CB2 in IFR is to be cleared when reading from ORB
+    bool shouldClearCB2onRead() {
+        uint8_t b765 = (pcr >> 5) & 0x7;
+        return b765 == 0x0 || b765 == 0x2;
+    }
+    
+    //! @brief  Indicates if interrupt bit CB2 in IFR is to be cleared when writing to ORB
+    bool shouldClearCB2onWrite() {
+        uint8_t b765 = (pcr >> 5) & 0x7;
+        return b765 == 0x0 || b765 == 0x2 || b765 == 0x4 || b765 == 0x5;
+    }
+    
     // Shift register - Set by:     8 shifts completed
     //                  Cleared by: Read or write to register 10 (0xA) (shift register)
     
-    inline void setInterruptFlag_SR() {
+    void setInterruptFlag_SR() {
         SET_BIT(ifr,2); IRQ(); }
-    inline void clearInterruptFlag_SR() {
+    void clearInterruptFlag_SR() {
         CLR_BIT(ifr,2); IRQ(); }
 
     // CA1 - Set by:     Active edge on CA1
     //       Cleared by: Read or write to register 1 (ORA)
     
-    inline void setInterruptFlag_CA1() {
+    void setInterruptFlag_CA1() {
         SET_BIT(ifr,1); IRQ(); }
-    inline void clearInterruptFlag_CA1() {
+    void clearInterruptFlag_CA1() {
         CLR_BIT(ifr,1); IRQ(); }
 
     // CA2 - Set by:     Active edge on CA2
     //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")
     
-    inline void setInterruptFlag_CA2() {
+    void setInterruptFlag_CA2() {
         SET_BIT(ifr,0); IRQ(); }
-    inline void clearInterruptFlag_CA2() {
+    void clearInterruptFlag_CA2() {
         CLR_BIT(ifr,0); IRQ(); }
-    inline bool CA2selectedAsIndependent() {
-        uint8_t b321 = (pcr >> 1) & 0x07; return (b321 == 0x01) || (b321 == 0x03); }
+    // bool CA2selectedAsIndependent() {
+    //     uint8_t b321 = (pcr >> 1) & 0x07; return (b321 == 0x01) || (b321 == 0x03); }
+    
+    //! @brief  Indicates if interrupt bit CB2 in IFR is to be cleared when reading from ORA
+    bool shouldClearCA2onRead() {
+        uint8_t b321 = (pcr >> 1) & 0x7;
+        return b321 == 0x0 || b321 == 0x2 || b321 == 0x4 || b321 == 0x5;
+    }
+    
+    //! @brief  Indicates if interrupt bit CB2 in IFR is to be cleared when writing to ORA
+    bool shouldClearCA2onWrite() {
+        uint8_t b321 = (pcr >> 1) & 0x7;
+        return b321 == 0x0 || b321 == 0x2 || b321 == 0x4 || b321 == 0x5;
+    }
 };
 
 
@@ -308,13 +332,13 @@ public:
     void poke(uint16_t addr, uint8_t value);
 	
     //! @brief    Returns true iff a change of the atn line can trigger interrups
-	inline bool atnInterruptsEnabled() { return ier & 0x02; }
+	bool atnInterruptsEnabled() { return ier & 0x02; }
 
     //! @brief    Indicates that an ATN interrupt has occured.
-    inline void indicateAtnInterrupt() { ifr |= 0x02; }
+    void indicateAtnInterrupt() { ifr |= 0x02; }
 
     //! @brief    Clears the ATN interrupt indication bit.
-    inline void clearAtnIndicator() { ifr &= ~0x02; }
+    void clearAtnIndicator() { ifr &= ~0x02; }
 };
 
 //! The second versatile interface adapter (VIA2)

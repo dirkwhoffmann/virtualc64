@@ -237,7 +237,8 @@ VIA6522::peek(uint16_t addr)
 
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CB1();
-            if (!CB2selectedAsIndependent())
+            // if (!CB2selectedAsIndependent())
+            if (shouldClearCB2onRead())
                 clearInterruptFlag_CB2();
             return 0; // overwritten by VIA1 and VIA2
             
@@ -245,7 +246,8 @@ VIA6522::peek(uint16_t addr)
 
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
+            // if (!CA2selectedAsIndependent())
+            if (shouldClearCA2onRead())
                 clearInterruptFlag_CA2();
             return 0; // overwritten by VIA1 and VIA2
             
@@ -332,7 +334,8 @@ VIA6522::peek(uint16_t addr)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
+            // if (!CA2selectedAsIndependent())
+            if (shouldClearCA2onRead())
                 clearInterruptFlag_CA2();
             return 0; // overwritten by VIA1 and VIA2
     }
@@ -386,7 +389,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CB1();
-            if (!CB2selectedAsIndependent())
+            // if (!CB2selectedAsIndependent())
+            if (shouldClearCB2onWrite())
                 clearInterruptFlag_CB2();
             break;
 
@@ -394,7 +398,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
+            // if (!CA2selectedAsIndependent())
+            if (shouldClearCA2onWrite())
                 clearInterruptFlag_CA2();
             break;
             
@@ -546,7 +551,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
+            if (shouldClearCA2onWrite())
                 clearInterruptFlag_CA2();
             break;
     }
@@ -592,7 +597,7 @@ uint8_t VIA1::peek(uint16_t addr)
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
+            if (shouldClearCA2onRead())
                 clearInterruptFlag_CA2();
 
             // Clean this up ...
