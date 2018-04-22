@@ -263,7 +263,6 @@ VIA6522::peek(uint16_t addr)
             //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
             
             clearInterruptFlag_T1();
-            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return LO_BYTE(t1);
 
         case 0x5: // T1 high-order counter
@@ -289,7 +288,6 @@ VIA6522::peek(uint16_t addr)
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
-            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
 			return LO_BYTE(t2);
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
@@ -423,8 +421,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
             
             clearInterruptFlag_T1();
-            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
-            
             feed &= ~(VIAPostOneShotA0);
             
             // Delay counting down for one cycle
@@ -464,8 +460,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
             feed &= ~(VIAPostOneShotB0);
-            
-            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
         case 0xA: // Shift register
@@ -705,18 +699,11 @@ uint8_t VIA2::peek(uint16_t addr)
             } else {
                 warn("INPUT LATCHING OF VIA2 IS DISABLED!");
                 result = 0;
-            }
-            
-            if (tracingEnabled()) {
-                msg("%02X ", ora);
-            }
-            
-            // return ora;
-            return result; 
+            }            
+            return result;
         }
             
         case 0x4:
-            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return VIA6522::peek(addr);
             
         default:
