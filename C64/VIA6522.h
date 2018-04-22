@@ -28,17 +28,19 @@
 
 class VC1541;
 
-#define VIACountA0       0x0000000000000001
-#define VIACountA1       0x0000000000000002
-#define VIACountB0       0x0000000000000010
-#define VIACountB1       0x0000000000000020
-#define VIAReloadA0      0x0000000000000100
-#define VIAReloadA1      0x0000000000000200
-#define VIAReloadA2      0x0000000000000400
-#define VIAPostOneShotA0 0x0000000000000800
-#define VIAPostOneShotB0 0x0000000000001000
+#define VIACountA0       (1ULL << 0) // Timer 1 decrements every cycle
+#define VIACountA1       (1ULL << 1)
+#define VIACountB0       (1ULL << 2) // Timer 2 decrements every cycle
+#define VIACountB1       (1ULL << 3)
+#define VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload (free-run mode)
+#define VIAReloadA1      (1ULL << 5)
+#define VIAReloadA2      (1ULL << 6)
+#define VIAPostOneShotA0 (1ULL << 7) // Indicates that timer 1 has fired in one shot mode
+#define VIAPostOneShotB0 (1ULL << 8) // Indicates that timer 2 has fired in one shot mode
+#define VIAInterrupt0    (1ULL << 9)
+#define VIAInterrupt1    (1ULL << 10)
 
-#define VIAClearBits  ~(0x0000000000002000 | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0)
+#define VIAClearBits   ~((1ULL << 11) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0)
 
 
 

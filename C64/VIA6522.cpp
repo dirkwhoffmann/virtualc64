@@ -104,8 +104,19 @@ VIA6522::dumpState()
 void
 VIA6522::execute()
 {
+    // Execute timers
     executeTimer1();
     executeTimer2();
+    
+    // Check for interrupt condition
+    if (ifr & ier) {
+        delay |= VIAInterrupt0;
+    }
+    
+    // Trigger interrupt if necessary
+    if (delay & VIAInterrupt1) {
+        c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
+    }
     
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
@@ -152,7 +163,7 @@ VIA6522::executeTimer1()
              */
             
             if (!(feed & VIAPostOneShotA0)) {
-                setInterruptFlag_T1();  // (1)
+                SET_BIT(ifr,6);         // (1) 
                 pb7toggle = !pb7toggle; // (2)
                 delay |= VIAReloadA0;   // (3)
             }
@@ -164,7 +175,7 @@ VIA6522::executeTimer1()
              */
             
             if (!(feed & VIAPostOneShotA0)) {
-                setInterruptFlag_T1();
+                SET_BIT(ifr,6);
                 pb7toggle = !pb7toggle;
             }
         }
@@ -192,11 +203,12 @@ VIA6522::executeTimer2()
     }
     
     if (t2 == 0) {
-            
-        setInterruptFlag_T2();
-        feed |= VIAPostOneShotB0;
+        
+        if (!(delay & VIAPostOneShotB0)) {
+            SET_BIT(ifr,5);
+            feed |= VIAPostOneShotB0;
+        }
     }
-
 }
 
 bool
