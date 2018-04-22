@@ -233,9 +233,22 @@ VIA6522::peek(uint16_t addr)
 		
 	switch(addr) {
             
-        case 0x0: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
-        case 0x1: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
-						
+        case 0x0: // ORB - Output register B (shared functionality of VIA1 and VIA2)
+
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CB1();
+            if (!CB2selectedAsIndependent())
+                clearInterruptFlag_CB2();
+            return 0; // overwritten by VIA1 and VIA2
+            
+        case 0x1: // ORA - Output register A (shared functionality of VIA1 and VIA2)
+
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+            return 0; // overwritten by VIA1 and VIA2
+            
         case 0x2: // DDRB - Data direction register B
             
 			return ddrb;
@@ -315,8 +328,14 @@ VIA6522::peek(uint16_t addr)
             
             return ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
 
-        case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
-	}
+        case 0xF:
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+            return 0; // overwritten by VIA1 and VIA2
+    }
 
     assert(0);
     return 0;
@@ -363,8 +382,21 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
     
     switch(addr) {
             
-        case 0x0: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
-        case 0x1: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
+        case 0x0: // ORB - Output register B (shared functionality of VIA1 and VIA2)
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CB1();
+            if (!CB2selectedAsIndependent())
+                clearInterruptFlag_CB2();
+            break;
+
+        case 0x1: // ORA - Output register A (shared functionality of VIA1 and VIA2)
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+            break;
             
         case 0x2: // DDRB - Data direction register B
             
@@ -510,7 +542,13 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             }
             return;
             
-        case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
+        case 0xF:
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+            break;
     }
 }
 
@@ -524,10 +562,7 @@ uint8_t VIA1::peek(uint16_t addr)
             
         case 0x0: { // ORB - Output register B
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CB1();
-            if (!CB2selectedAsIndependent())
-                clearInterruptFlag_CB2();
+            (void)VIA6522::peek(addr);
             
             // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
             // -----------------------------------------------------------------
@@ -606,10 +641,7 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 
         case 0x0: // ORB - Output register B
 
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CB1();
-            if (!CB2selectedAsIndependent())
-                clearInterruptFlag_CB2();
+            VIA6522::poke(addr, value);
  
             // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
             // -----------------------------------------------------------------
@@ -623,11 +655,7 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 		case 0x1: // ORA - Output register A
         case 0xF:
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
-                clearInterruptFlag_CA2();
-
+            VIA6522::poke(addr, value);
             
             printf("VIA:pokeORA %02X\n", ora);
 			ora = value;
@@ -657,10 +685,7 @@ uint8_t VIA2::peek(uint16_t addr)
             
         case 0x0: { // ORB - Output register B
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CB1();
-            if (!CB2selectedAsIndependent())
-                clearInterruptFlag_CB2();
+            (void)VIA6522::peek(addr);
             
             // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
             // -----------------------------------------------------------------
@@ -686,11 +711,8 @@ uint8_t VIA2::peek(uint16_t addr)
             
             uint8_t result;
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
-                clearInterruptFlag_CA2();
-
+            (void)VIA6522::peek(addr);
+            
             if (inputLatchingEnabledA()) {
                 // This is the normal operation mode of the drive.
                 // Every byte that comes from
@@ -769,11 +791,8 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 
         case 0x0: { // ORB - Output register B
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CB1();
-            if (!CB2selectedAsIndependent())
-                clearInterruptFlag_CB2();
-
+            VIA6522::poke(addr, value);
+            
             // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
             // -----------------------------------------------------------------
             // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
@@ -813,17 +832,12 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 		case 0x1: // ORA - Output register A
         case 0xF:
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (!CA2selectedAsIndependent())
-                clearInterruptFlag_CA2();
-
+            VIA6522::poke(addr, value);
+            
             // Hard wired to the data lines of the Gate Array (U10) (read/write head)
             // TODO: Take care of ddra
-			if (tracingEnabled()) {
-				msg(" W%02X", value);
-			}
-			ora = value;
+
+            ora = value;
 			return;
 
 		case 0x3:
