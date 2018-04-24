@@ -748,6 +748,18 @@ uint8_t
 VIA2::portBoutside()
 {
     return 0xFF;
+    /*
+    bool sync     = c64->floppy.getSync();
+    bool barrier  = c64->floppy.getLightBarrier();
+    bool red      = c64->floppy.getRedLED();
+    bool rotating = c64->floppy.isRotating();
+    
+    return
+    (sync ? 0x00 : 0x80) |
+    (barrier ? 0x00 : 0x10) |
+    (red ? 0x00 : 0x08) |
+    (rotating ? 0x00 : 0x04);
+    */
 }
 
 void
@@ -762,30 +774,30 @@ VIA2::updatePB()
     // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
     // |       | (4 disk zones)|protect|       | motor | (head move)   |
     
-    // Disable bits that are not configured as outputs
-    // value &= ddrb;
-    
     // Bits 6 and 5
-    c64->floppy.setZone((pb >> 5) & 0x03);
+    if ((pb & 0x60) != (oldPb & 0x60))
+        c64->floppy.setZone((pb >> 5) & 0x03);
     
     // Bit 3
-    c64->floppy.setRedLED(GET_BIT(pb,3));
+    if (GET_BIT(pb, 3) != GET_BIT(oldPb, 3))
+        c64->floppy.setRedLED(GET_BIT(pb, 3));
     
     // Bit 2
-    c64->floppy.setRotating(GET_BIT(pb,2));
+    if (GET_BIT(pb, 2) != GET_BIT(oldPb, 2))
+        c64->floppy.setRotating(GET_BIT(pb, 2));
     
     // Bits 1 and 0
-    if ((oldPb & 0x03) != (pb & 0x03)) {
+    if ((pb & 0x03) != (oldPb & 0x03)) {
         
-        // A decrease (00-11-10-01-00...) moves the the head down
+        // A  decrease (00-11-10-01-00...) moves the head down
         // An increase (00-01-10-11-00...) moves the head up
         
-        if ((pb & 0x03) == ((oldPb+1) & 0x03)) {
+        if ((pb & 0x03) == ((oldPb + 1) & 0x03)) {
             c64->floppy.moveHeadUp();
-        } else if ((pb & 0x03) == ((oldPb-1) & 0x03)) {
+        } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
             c64->floppy.moveHeadDown();
         } else {
-            warn("Unexpected stepper motor control sequence in VC1541 detected\n");
+            warn("Unexpected stepper motor control sequence\n");
         }
     }
 }
