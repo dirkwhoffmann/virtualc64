@@ -217,42 +217,6 @@ VIA6522::executeTimer2()
     }
 }
 
-uint8_t
-VIA6522::portAinside()
-{
-    return 0xFF;
-}
-
-uint8_t
-VIA6522::portAoutside()
-{
-    return 0xFF;
-}
-
-void
-VIA6522::updatePA()
-{
-    pa = (portAinside() & ddra) | (portAoutside() & ~ddra);
-}
-
-uint8_t
-VIA6522::portBinside()
-{
-    return 0xFF;
-}
-
-uint8_t
-VIA6522::portBoutside()
-{
-    return 0xFF;
-}
-
-void
-VIA6522::updatePB()
-{
-    pb = (portBinside() & ddra) | (portBoutside() & ~ddra);
-}
-
 bool
 VIA6522::IRQ() {
     if (ifr & ier) {
@@ -579,9 +543,20 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
     }
 }
 
-// -----------------------------------------------------------------------------------------------
-//                                     Peek and Poke (VIA 1)
-// -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+//                                        VIA 1
+// --------------------------------------------------------------------------------------------
+
+VIA1::VIA1()
+{
+    setDescription("VIA1");
+    debug(3, "  Creating VIA1 at address %p...\n", this);
+}
+
+VIA1::~VIA1()
+{
+    debug(3, "  Releasing VIA1...\n");
+}
 
 uint8_t VIA1::peek(uint16_t addr)
 {
@@ -693,10 +668,127 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 	}
 }
 
+uint8_t
+VIA1::portAinside()
+{
+    return ora;
+}
 
-// -----------------------------------------------------------------------------------------------
-//                                     Peek and Poke (VIA 1)
-// -----------------------------------------------------------------------------------------------
+uint8_t
+VIA1::portAoutside()
+{
+    return 0xFF;
+}
+
+void
+VIA1::updatePA()
+{
+    pa = (portAinside() & ddra) | (portAoutside() & ~ddra);
+}
+
+uint8_t
+VIA1::portBinside()
+{
+    return orb;
+}
+
+uint8_t
+VIA1::portBoutside()
+{
+    return 0xFF;
+}
+
+void
+VIA1::updatePB()
+{
+    pb = (portBinside() & ddrb) | (portBoutside() & ~ddrb);
+}
+
+
+// --------------------------------------------------------------------------------------------
+//                                        VIA 2
+// --------------------------------------------------------------------------------------------
+
+VIA2::VIA2()
+{
+    setDescription("VIA2");
+	debug(3, "  Creating VIA2 at address %p...\n", this);
+}
+	
+VIA2::~VIA2()
+{
+	debug(3, "  Releasing VIA2...\n");
+}
+
+uint8_t
+VIA2::portAinside()
+{
+    return ora;
+}
+
+uint8_t
+VIA2::portAoutside()
+{
+    return 0xFF;
+}
+
+void
+VIA2::updatePA()
+{
+    pa = (portAinside() & ddra) | (portAoutside() & ~ddra);
+}
+
+uint8_t
+VIA2::portBinside()
+{
+    return orb;
+}
+
+uint8_t
+VIA2::portBoutside()
+{
+    return 0xFF;
+}
+
+void
+VIA2::updatePB()
+{
+    uint8_t oldPb = pb;
+    
+    pb = (portBinside() & ddrb) | (portBoutside() & ~ddrb);
+    
+    // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+    // -----------------------------------------------------------------
+    // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
+    // |       | (4 disk zones)|protect|       | motor | (head move)   |
+    
+    // Disable bits that are not configured as outputs
+    // value &= ddrb;
+    
+    // Bits 6 and 5
+    c64->floppy.setZone((pb >> 5) & 0x03);
+    
+    // Bit 3
+    c64->floppy.setRedLED(GET_BIT(pb,3));
+    
+    // Bit 2
+    c64->floppy.setRotating(GET_BIT(pb,2));
+    
+    // Bits 1 and 0
+    if ((oldPb & 0x03) != (pb & 0x03)) {
+        
+        // A decrease (00-11-10-01-00...) moves the the head down
+        // An increase (00-01-10-11-00...) moves the head up
+        
+        if ((pb & 0x03) == ((oldPb+1) & 0x03)) {
+            c64->floppy.moveHeadUp();
+        } else if ((pb & 0x03) == ((oldPb-1) & 0x03)) {
+            c64->floppy.moveHeadDown();
+        } else {
+            warn("Unexpected stepper motor control sequence in VC1541 detected\n");
+        }
+    }
+}
 
 uint8_t VIA2::peek(uint16_t addr)
 {
@@ -744,7 +836,7 @@ uint8_t VIA2::peek(uint16_t addr)
             }
             return result;
         }
-                        
+            
         default:
             return VIA6522::peek(addr);
     }
@@ -785,7 +877,7 @@ uint8_t VIA2::read(uint16_t addr)
                 warn("INPUT LATCHING OF VIA2 IS DISABLED!");
                 result = 0;
             }
-        
+            
             return result;
         }
             
@@ -796,66 +888,34 @@ uint8_t VIA2::read(uint16_t addr)
 
 void VIA2::poke(uint16_t addr, uint8_t value)
 {
-	switch(addr) {
-
+    switch(addr) {
+            
         case 0x0: { // ORB - Output register B
             
             VIA6522::poke(addr, value);
-            
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
-            // |       | (4 disk zones)|protect|       | motor | (head move)   |
-
-            // Disable bits that are not configured as outputs
-            value &= ddrb;
-            
-            // Bits 6 and 5
-            c64->floppy.setZone((value >> 5) & 0x03);
-            
-            // Bit 3
-            c64->floppy.setRedLED(GET_BIT(value,3));
-
-            // Bit 2
-            c64->floppy.setRotating(GET_BIT(value,2));
-
-            // Bits 1 and 0
-			if ((orb & 0x03) != (value & 0x03)) {
-                
-				// A decrease (00-11-10-01-00...) moves the the head down
-				// An increase (00-01-10-11-00...) moves the head up
-                
-				if ((value & 0x03) == ((orb+1) & 0x03)) {
-					c64->floppy.moveHeadUp();
-				} else if ((value & 0x03) == ((orb-1) & 0x03)) {
-					c64->floppy.moveHeadDown();
-				} else {
-					warn("Unexpected stepper motor control sequence in VC1541 detected\n");
-				}
-			}
-
-			orb = value;
-			return;
+            orb = value;
+            updatePB();
+            return;
         }
             
-		case 0x1: // ORA - Output register A
+        case 0x1: // ORA - Output register A
         case 0xF:
             
             VIA6522::poke(addr, value);
             
             // Hard wired to the data lines of the Gate Array (U10) (read/write head)
             // TODO: Take care of ddra
-
+            
             ora = value;
-			return;
-
-		case 0x3:
-			ddra = value;
-			if (ddra != 0x00 && ddra != 0xFF) {
-				debug(1, "Data direction bits of VC1541 contain suspicious values\n");
-			}
-			return;
-
+            return;
+            
+        case 0x3:
+            ddra = value;
+            if (ddra != 0x00 && ddra != 0xFF) {
+                debug(1, "Data direction bits of VC1541 contain suspicious values\n");
+            }
+            return;
+            
         case 0xC:
             
             if (!(pcr & 0x20) && (value & 0x20)) {
@@ -866,36 +926,13 @@ void VIA2::poke(uint16_t addr, uint8_t value)
                 
                 debug(2, "Switching to write mode\n");
             }
-
+            
             pcr = value;
             return;
             
-		default:
-			VIA6522::poke(addr, value);	
-	}
-}
-
-
-VIA1::VIA1()
-{
-    setDescription("VIA1");
-	debug(3, "  Creating VIA1 at address %p...\n", this);
-}
-	
-VIA1::~VIA1()
-{
-	debug(3, "  Releasing VIA1...\n");
-}
-
-VIA2::VIA2()
-{
-    setDescription("VIA2");
-	debug(3, "  Creating VIA2 at address %p...\n", this);
-}
-	
-VIA2::~VIA2()
-{
-	debug(3, "  Releasing VIA2...\n");
+        default:
+            VIA6522::poke(addr, value);
+    }
 }
 
 void VIA2::debug0xC() {

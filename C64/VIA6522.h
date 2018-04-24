@@ -239,26 +239,26 @@ public:
     // ----------------------------------------------------------------------------------------
 
     //! @brief   Bit values driving port A from inside the chip
-    uint8_t portAinside();
+    virtual uint8_t portAinside() = 0;
 
     //! @brief   Bit values driving port A from outside the chip
-    uint8_t portAoutside();
+    virtual uint8_t portAoutside() = 0;
 
     /*! @brief   Computes the current bit values visible at port A
      *  @details Value is stored in variable pa
      */
-    void updatePA();
+    virtual void updatePA() = 0;
 
     //! @brief   Bit values driving port B from inside the chip
-    uint8_t portBinside();
+    virtual uint8_t portBinside() = 0;
     
     //! @brief   Bit values driving port B from outside the chip
-    uint8_t portBoutside();
+    virtual uint8_t portBoutside() = 0;
     
     /*! @brief   Computes the current bit values visible at port B
      *  @details Value is stored in variable pb
      */
-    void updatePB();
+    virtual void updatePB() = 0;
     
     //! Returns the current value on chip pin CA2
     bool CA2() {
@@ -379,25 +379,18 @@ class VIA1 : public VIA6522 {
 	
 public:
 
-	//! @brief    Constructor
 	VIA1();
-	
-	//! @brief    Destructor
 	~VIA1();
     
-    //! @brief    Executes timer 1 for one cycle
-    void executeTimer1();
+    uint8_t portAinside();
+    uint8_t portAoutside();
+    void updatePA();
+    uint8_t portBinside();
+    uint8_t portBoutside();
+    void updatePB();
     
-    //! @brief    Executes timer 2 for one cycle
-    void executeTimer2();
-    
-    //! @brief    Peeks a value from VIAs I/O space
 	uint8_t peek(uint16_t addr);
-
-    //! @brief    Same as peek without side effects
     uint8_t read(uint16_t addr);
-
-    //! @brief    Pokes a value into VIAs I/O space
     void poke(uint16_t addr, uint8_t value);
 	
     //! @brief    Returns true iff a change of the atn line can trigger interrups
@@ -415,25 +408,20 @@ class VIA2 : public VIA6522 {
 	
 public:
 
-	//! @brief    Constructor
 	VIA2();
-	
-	//! @brief    Destructor
 	~VIA2();
+    // void executeTimer1();
+    // void executeTimer2();
+  
+    uint8_t portAinside();
+    uint8_t portAoutside();
+    void updatePA();
+    uint8_t portBinside();
+    uint8_t portBoutside();
+    void updatePB();
     
-    //! @brief    Executes timer 1 for one cycle
-    void executeTimer1();
-    
-    //! @brief    Executes timer 2 for one cycle
-    void executeTimer2();
-    
-    //! @brief    Peeks a value from VIAs I/O space
 	uint8_t peek(uint16_t addr);
-    
-    //! @brief    Same as peek without side effects
     uint8_t read(uint16_t addr);
-    
-    //! @brief    Pokes a value into VIAs I/O space
 	void poke(uint16_t addr, uint8_t value);
 
     //! @brief    Returns bit 0 of output register B
