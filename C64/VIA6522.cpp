@@ -30,6 +30,12 @@ VIA6522::VIA6522()
     
     // Register snapshot items
     SnapshotItem items[] = {
+        { &pa,              sizeof(pa),             CLEAR_ON_RESET },
+        { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
+        { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
+        { &pb,              sizeof(pb),             CLEAR_ON_RESET },
+        { &cb1,             sizeof(cb1),            CLEAR_ON_RESET },
+        { &cb2,             sizeof(cb2),            CLEAR_ON_RESET },
         { &ddra,            sizeof(ddra),           CLEAR_ON_RESET },
         { &ddrb,            sizeof(ddrb),           CLEAR_ON_RESET },
         { &ora,             sizeof(ora),            CLEAR_ON_RESET },
@@ -209,6 +215,42 @@ VIA6522::executeTimer2()
             feed |= VIAPostOneShotB0;
         }
     }
+}
+
+uint8_t
+VIA6522::portAinside()
+{
+    return 0xFF;
+}
+
+uint8_t
+VIA6522::portAoutside()
+{
+    return 0xFF;
+}
+
+void
+VIA6522::updatePA()
+{
+    pa = (portAinside() & ddra) | (portAoutside() & ~ddra);
+}
+
+uint8_t
+VIA6522::portBinside()
+{
+    return 0xFF;
+}
+
+uint8_t
+VIA6522::portBoutside()
+{
+    return 0xFF;
+}
+
+void
+VIA6522::updatePB()
+{
+    pb = (portBinside() & ddra) | (portBoutside() & ~ddra);
 }
 
 bool
@@ -699,13 +741,10 @@ uint8_t VIA2::peek(uint16_t addr)
             } else {
                 warn("INPUT LATCHING OF VIA2 IS DISABLED!");
                 result = 0;
-            }            
+            }
             return result;
         }
-            
-        case 0x4:
-            return VIA6522::peek(addr);
-            
+                        
         default:
             return VIA6522::peek(addr);
     }

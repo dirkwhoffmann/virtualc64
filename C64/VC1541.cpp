@@ -200,7 +200,7 @@ VC1541::executeByteReady()
         byteReady(read_shiftreg);
     }
     if (writeMode()) {
-        write_shiftreg = via2.ora;
+        write_shiftreg = via2.ora; // TODO: Must be pa 
         byteReady();
     }
 }
@@ -208,10 +208,12 @@ VC1541::executeByteReady()
 inline void
 VC1541::byteReady(uint8_t byte)
 {
-    // On the VC1541 logic board, the byte ready signal is computed by a NAND gate with three inputs.
-    // Two of them are clock lines ensuring that a signal is generated every eigths bit.
-    // The third signal is hard-wired to pin CA2 of VIA2. By pulling CA2 low, the CPU can silence the
-    // the byte ready line. E.g., this is done when moving the drive head to a different track
+    // On the VC1541 logic board, the byte ready signal is computed by a
+    // NAND gate with three inputs. Two of them are clock lines ensuring
+    // that a signal is generated every eigths bit. The third signal is
+    // hard-wired to pin CA2 of VIA2. By pulling CA2 low, the CPU can
+    // silence the byte ready line. E.g., this is done when moving
+    // the drive head to a different track.
     if (via2.CA2()) {
         via2.ira = byte;
         byteReady();

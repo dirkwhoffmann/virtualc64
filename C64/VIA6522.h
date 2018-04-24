@@ -42,68 +42,114 @@ class VC1541;
 
 #define VIAClearBits   ~((1ULL << 11) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0)
 
-
-
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
  */
 class VIA6522 : public VirtualComponent {
 	
-public:
-	
-	//! @brief    Reference to the connected disk drive.
-    //! @deprecated Use c64 reference instead
-	// VC1541 *floppy;
-
-public:
-	
-	/*! @brief    Peripheral ports
-	 *  @details  "The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
-     *             and each port has two associated control lines.
-     *
-	 *	           Each  8-bit  peripheral  port  has  a Data Direction Register (DDRA, DDRB) for
-	 * 	           specifying  whether  the  peripheral pins are to act as inputs or outputs. A 0
-     *             in  a  bit  of the Data Direction Register causes the corresponding peripheral
-     *             pin to act as an input. A 1 causes the pin to act as an output.
-     *
-     *             Each  peripheral  pin  is  also controlled  by  a  bit in the Output Register
-	 *	           (ORA,  ORB)  and  the Input Register (IRA, IRB). When the pin is programmed as
-	 *	           an  output,  the  voltage on the pin is controlled by the corresponding bit of
-	 *	           the  Output  Register.  A  1  in  the  Output Register causes the output to go
-	 *             high,  and  a  0  causes the output to go low. Data may be written into Output
-	 *	           Register  bits  corresponding  to pins which are programmed as inputs. In this
-	 *	           case, however, the output signal is unaffected." [F. K.]
+protected:
+    
+    //
+    // Peripheral interface
+    //
+    
+    //! @brief    Peripheral port A
+    /*! @details  "The Peripheral A port consists of 8 lines which can be
+     *             individually programmed to act as an input or an output
+     *             under control of a Data Direction Register. The polarity
+     *             of output pins is controlled by an Output Register and
+     *             input data can be latched into an internal register under
+     *             control of the CA1 line."
      */
-    uint8_t orb, irb;
-    uint8_t ora, ira;
-    uint8_t ddrb;
+    uint8_t pa;
+    
+    //! @brief    Peripheral A control lines
+    /*! @details  "The two peripheral A control lines act as interrupt inputs
+     *             or ashandshake outputs. Each linecon­ trols an internal
+     *             interrupt flag with a corresponding interrupt enable bit.
+     *             In addition, CA1controls the latching of data on
+     *             Peripheral A Port input lines. The various modes of
+     *             operation are controlled by the system processor through
+     *             the internal control registers."
+     */
+    bool ca1;
+    bool ca2;
+
+    //! @brief    Peripheral port B
+    /*! @details  "The Peripheral B port consists of 8 lines which can be
+     *             individually programmed to act as an input or an output
+     *             under control of a Data Direction Register. The polarity
+     *             of output pins is controlled by an Output Register and
+     *             input data can be latched into an internal register under
+     *             control of the CA1 line."
+     */
+    uint8_t pb;
+    
+    //! @brief
+    /*! @details  "The Peripheral B control lines act as interrupt inputs or
+     *             as handshake outputs. As with CA1 and CA2, each line
+     *             controls an interrupt flag with a corresponding interrupt
+     *             enable bit. In addition, these lines act as a serial port
+     *             under control of the Shift Register."
+     */
+    bool cb1;
+    bool cb2;
+     
+    //
+    // Port registers
+    //
+    
+    //! @brief    Data direction registers
+    /*! @details  "Each port has a Data Direction Register (DDRA, DDRB) for
+     *             specifying whether the peripheral pins are to act as
+     *             inputs or outputs. A 0 in a bit of the Data Direction
+     *             Register causes the corresponding peripheral pin to act
+     *             as an input. A 1 causes the pin to act as an output."
+     */
     uint8_t ddra;
-	
+    uint8_t ddrb;
+
+    //! @brief    Output registers
 public:
+    uint8_t ora;
+    uint8_t orb;
+
+    //! @brief    Input registers
+    uint8_t ira;
+    uint8_t irb;
+protected:
+    
+    //
+    // Timers
+    //
     
 	/*! @brief    VIA timer 1
-	 *  @details  "Interval  Timer  T1  consists  of  two  8-bit latches and a 16-bit
-     *             counter.  The  latches store data which is to be loaded into the
-     *             counter.  After  loading,  the  counter  decrements  at  02  clock  rate. Upon
-     *             reaching  zero,  an  interrupt  flag  is  set,  and  IRQ  goes  low  if the T1
-     *             interrupt  is  enabled.  Timer  1  then  disables  any  further  interrupts or
-     *             automatically  transfers  the  contents  of  the  latches into the counter and
-     *             continues  to  decrement.  In  addition, the timer may be programmed to invert
-     *             the  output  signal  on  a peripheral pin (PB7) each time it "times-out". Each
-     *             of these modes is discussed separately below." [F. K.]
+	 *  @details  "Interval Timer T1 consists of two 8-bit latches and a
+     *             16-bit counter. The latches store data which is to be
+     *             loaded into the counter. After loading, the counter
+     *             decrements at 02 clock rate. Upon reaching zero, an
+     *             interrupt flag is set, and IRQ goes low if the T1
+     *             interrupt is enabled. Timer 1 then disables any further
+     *             interrupts or automatically transfers the contents of
+     *             the latches into the counter and continues to decrement.
+     *             In addition, the timer may be programmed to invert the
+     *             output signal on a peripheral pin (PB7) each time it
+     *             "times-out."
      */
     uint16_t t1; // T1C
     uint8_t t1_latch_lo; // T1L_L
     uint8_t t1_latch_hi; // T1L_H
 
 	/*! @brief    VIA timer 2
-	 *  @details  "Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
-     *             a  counter  for  counting  negative pulses on the PB6 peripheral pin. A single
-     *             control  bit  in  the  Auxiliary  Control  Register  selects between these two
-     *             modes.  This  timer  is comprised of a "write-only" low-order latch (T2L-L), a
-     *             "read-only"  low-order  counter  (T2C-L)  and  a read/write high order counter
-     *             (T2C-H).  The  counter  registers  act as a 16-bit counter which decrements at
-     *             02 rate." [F. K.]
+	 *  @details  "Timer 2 operates as an interval timer (in the "one-shot"
+     *             mode only), or as a counter for counting negative pulses
+     *             on the PB6 peripheral pin. A single control bit in the
+     *             Auxiliary Control Register selects between these two
+     *             modes. This timer is comprised of a "write-only" low-order
+     *             latch (T2L-L), a "read-only" low-order counter (T2C-L) and
+     *             a read/write high order counter (T2C-H). The counter
+     *             registers act as a 16-bit counter which decrements at
+     *             02 rate."
      */
     uint16_t t2; // T1C
     uint8_t t2_latch_lo; // T2L_L
@@ -125,8 +171,6 @@ public:
 
     //! @brief    Shift register
     uint8_t sr;
-    
-protected:
     
     //! @brief    Event triggering queue
     uint64_t delay;
@@ -186,11 +230,36 @@ public:
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
 
+    //! @brief    Returns the current value of the peripheral control register
+    uint8_t getPcr() { return pcr & 0x20; }
+    
     
     // ----------------------------------------------------------------------------------------
     //                                        Ports
     // ----------------------------------------------------------------------------------------
 
+    //! @brief   Bit values driving port A from inside the chip
+    uint8_t portAinside();
+
+    //! @brief   Bit values driving port A from outside the chip
+    uint8_t portAoutside();
+
+    /*! @brief   Computes the current bit values visible at port A
+     *  @details Value is stored in variable pa
+     */
+    void updatePA();
+
+    //! @brief   Bit values driving port B from inside the chip
+    uint8_t portBinside();
+    
+    //! @brief   Bit values driving port B from outside the chip
+    uint8_t portBoutside();
+    
+    /*! @brief   Computes the current bit values visible at port B
+     *  @details Value is stored in variable pb
+     */
+    void updatePB();
+    
     //! Returns the current value on chip pin CA2
     bool CA2() {
         switch ((pcr >> 1) & 0x07) {
