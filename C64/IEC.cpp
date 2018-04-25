@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,10 +59,7 @@ IEC::~IEC()
 void 
 IEC::reset()
 {
-   VirtualComponent::reset();
-    
-    // Establish bindings
-    drive = &c64->floppy;
+    VirtualComponent::reset();
     
     driveConnected = 1;
 	atnLine = 1;
@@ -80,16 +77,14 @@ IEC::reset()
 	ciaAtnPin = 1;
 	ciaAtnIsOutput = 1;
 	
-	setDeviceClockPin(1);
-	setDeviceDataPin(1);
+    _updateIecLines();
 }
 
 void
 IEC::ping()
 {
-    drive->c64->putMessage(driveConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
-    drive->c64->putMessage(busActivity > 0 ? MSG_VC1541_DATA_ON : MSG_VC1541_DATA_OFF );
-    
+    c64->putMessage(driveConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
+    c64->putMessage(busActivity > 0 ? MSG_VC1541_DATA_ON : MSG_VC1541_DATA_OFF );
 }
 
 void 
@@ -132,9 +127,9 @@ void
 IEC::connectDrive() 
 { 
 	driveConnected = true; 
-	drive->c64->putMessage(MSG_VC1541_ATTACHED);
-    if (drive->soundMessagesEnabled())
-        drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND);
+	c64->putMessage(MSG_VC1541_ATTACHED);
+    if (c64->floppy.soundMessagesEnabled())
+        c64->putMessage(MSG_VC1541_ATTACHED_SOUND);
 }
 	
 void 
@@ -142,12 +137,12 @@ IEC::disconnectDrive()
 {
     // Disconnect drive from bus
 	driveConnected = false; 
-	drive->c64->putMessage(MSG_VC1541_DETACHED);
-    if (drive->soundMessagesEnabled())
-        drive->c64->putMessage(MSG_VC1541_DETACHED_SOUND);
+	c64->putMessage(MSG_VC1541_DETACHED);
+    if (c64->floppy.soundMessagesEnabled())
+        c64->putMessage(MSG_VC1541_DETACHED_SOUND);
 
     // Switch drive off and on
-    drive->powerUp();
+    c64->floppy.powerUp();
 }
 
 bool IEC::_updateIecLines(bool *atnedge)
@@ -194,14 +189,14 @@ void IEC::updateIecLines()
 
 	// Check if ATN edge occurred
 	if (atn_edge) {
-		drive->simulateAtnInterrupt();
+		c64->floppy.simulateAtnInterrupt();
 	}
 
 	if (signals_changed) {
 		if (busActivity == 0) {
 			// Bus activity detected
-			drive->c64->putMessage(MSG_VC1541_DATA_ON);
-			drive->c64->setWarp(drive->c64->getAlwaysWarp() || drive->c64->getWarpLoad());
+			c64->putMessage(MSG_VC1541_DATA_ON);
+			c64->setWarp(c64->getAlwaysWarp() || c64->getWarpLoad());
 		}
 		busActivity = 30;
 	}
@@ -248,147 +243,9 @@ void IEC::execute()
 		busActivity--;
 		if (busActivity == 0) {
 			// Bus is idle 
-			drive->c64->putMessage(MSG_VC1541_DATA_OFF);
-			drive->c64->setWarp(drive->c64->getAlwaysWarp());
+			c64->putMessage(MSG_VC1541_DATA_OFF);
+			c64->setWarp(c64->getAlwaysWarp());
 		}
 	}
 }
 
-// -------------------------------------------------------------------
-//                            Fast loader
-// -------------------------------------------------------------------
-
-#if 0
-
-uint8_t IEC::IECOutATN(uint8_t byte)
-{
-    // The upper four bits contain the command
-    // -01- : LISTEN
-    // -10- : TALK
-    // ---0 : on
-    // ---1 : off
-    // The lower four bits contain the device number
-    
-    switch (byte >> 4) {
-            
-        case 2: /* LISTEN */
-
-            debug(2, "Device %d is now listening\n", byte & 0x0F);
-            if ((byte & 0x0F) == 8) { // We only support device number 8
-                listening = true;
-                filename[0] = 0;
-                return IEC_OK;
-            } else {
-                listening = false;
-                return IEC_NOTPRESENT;
-            }
-            
-        case 3: /* UNLISTEN */
-
-            debug(2, "No longer listening\n");
-            listening = false;
-            return IEC_OK;
-            
-        case 4: /* TALK */
-
-            debug(2, "Device %d is now listening\n", byte & 0x0F);
-            if ((byte & 0x0F) == 8) { // We only support device number 8
-                talking = true;
-                return IEC_OK;
-            } else {
-                talking = false;
-                return IEC_NOTPRESENT;
-            }
-
-        case 5: /* UNTALK */
-            
-            debug(2, "No longer talking\n");
-            talking = false;
-            return IEC_OK;
-    }
-    
-    return IEC_TIMEOUT;
-}
-
-uint8_t IEC::IECOutSec(uint8_t byte)
-{
-    // byte: xxxx---- : Command to execute
-    //       ----xxxx : Secondary address
-    
-    if (listening) {
-        return IECOutSecWhileListening(byte);
-    }
-    
-    if (talking) {
-        return IECOutSecWhileTalking(byte);
-    }
-    
-    return IEC_TIMEOUT;
-}
-
-uint8_t IEC::IECOutSecWhileListening(uint8_t byte)
-{
-    command = (byte >> 4);
-    secondary = (byte & 0xF);
-    
-    switch (command) {
-        case IEC_CMD_OPEN:
-            debug(2, "Received command: OPEN\n");
-            return IEC_OK;
-        case IEC_CMD_CLOSE:
-            debug(2, "Received command: CLOSE\n");
-            // Turn on LED
-            return IEC_OK;
-    }
-    return IEC_OK;
-}
-
-uint8_t IEC::IECOutSecWhileTalking(uint8_t byte)
-{
-    command = (byte >> 4);
-    secondary = (byte & 0xF);
-    return IEC_OK;
-
-}
-
-uint8_t IEC::IECOut(uint8_t byte, bool eoi)
-{
-    char tmp[2] = { byte, 0 };
-    strncat(filename, tmp, 16);
-    
-    if (eoi) {
-        printf("Filename: ");
-        for (unsigned i = 0; i < strlen(filename); i++)
-            printf("%c", pet2ascii(filename[i]));
-        printf("\n");
-    }
-
-    return IEC_OK;
-}
-
-uint8_t IEC::IECIn(uint8_t *byte)
-{
-    *byte = 42;
-    return IEC_OK;
-}
-
-void IEC::IECSetATN()
-{
-    
-}
-
-void IEC::IECRelATN()
-{
-    
-}
-
-void IEC::IECTurnaround()
-{
-    
-}
-
-void IEC::IECRelease()
-{
-    
-}
-#endif

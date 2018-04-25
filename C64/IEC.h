@@ -23,31 +23,11 @@
 
 #include "VirtualComponent.h"
 
-#define IEC_READY 0
-#define IEC_ATTENTION 1
-#define IEC_READY_TO_SEND 2
-#define IEC_READY_FOR_DATA 3
-#define IEC_READY_FOR_FINAL_BYTE 4
-#define IEC_BYTE_RECEIVED 5
-#define IEC_EOI 6
-#define IEC_READY_TO_ANSWER 7
-#define IEC_SENDING_ANSWER 8
-#define IEC_ACKNOWLEDGE_TALKER 9
-#define IEC_ACK_TALKER2 10
-
-#define IEC_RECEIVING 1
-#define IEC_SENDING 2
-
 // Forward declarations
 class CIA2;
 class VC1541;
 
 class IEC : public VirtualComponent {
-
-public:
-	
-	//! Reference to the virtual disk drive
-	VC1541 *drive;
 
 private:
 
@@ -134,9 +114,6 @@ public:
 	//! Write trace output to console
 	void dumpTrace();
 	
-	//! Connect the virtual diesc drive to the IEC bus
-	void setDrive(VC1541 *d) { assert(drive == NULL); drive = d; }
-	
 	//! Connect drive to the IEC bus
 	void connectDrive();
 	
@@ -150,88 +127,23 @@ public:
 	void updateIecLines();
 	
     //! Updates the values of the CIA pin variables
-	//* This function is to be invoked by the cia chip, only.
+	//  This function is to be invoked by the cia chip, only.
 	void updateCiaPins(uint8_t cia_data, uint8_t cia_direction);	
 
     //! Updates the values of the device pin variables
-	//* This function is to be invoked by the VC1541 drive, only.
+	//  This function is to be invoked by the VC1541 drive, only.
 	void updateDevicePins(uint8_t device_data, uint8_t device_direction);	
 	
 	// Deprecated (won't drive them manually when the drive is constantly connected)
-	void setDeviceClockPin(bool value) { deviceClockPin = value; _updateIecLines(); } 
-	void setDeviceDataPin(bool value) { deviceDataPin = value; _updateIecLines(); }
-			
+	// void setDeviceClockPin(bool value) { deviceClockPin = value; _updateIecLines(); }
+	// void setDeviceDataPin(bool value) { deviceDataPin = value; _updateIecLines(); }
+    
 	bool getAtnLine() { return atnLine; }
 	bool getClockLine() { return clockLine; }
 	bool getDataLine() { return dataLine; }
-
-	bool atnPositiveEdge() { return oldAtnLine == 0 && atnLine == 1; }
-	bool atnNegativeEdge() { return oldAtnLine == 1 && atnLine == 0; }
-	bool clockPositiveEdge() { return oldClockLine == 0 && clockLine == 1; }
-	bool clockNegativeEdge() { return oldClockLine == 1 && clockLine == 0; }
-	bool dataPositiveEdge() { return oldDataLine == 0 && dataLine == 1; }
-	bool dataNegativeEdge() { return oldDataLine == 1 && dataLine == 0; }
-			
+    
 	//! Is invoked periodically by the run thread
 	void execute();
-    
-    // -------------------------------------------------------------------
-    //                     Frodo-style fast loader
-    // -------------------------------------------------------------------
-   
-private:
-    
-    //! Indicates if the simulated drive is currently listening
-    bool listening;
-
-    //! Indicates if the simulated drive is currently talking
-    bool talking;
-
-    //! Secondary address
-    uint8_t secondary;
-
-    //! Received command
-    uint8_t command;
-    
-    //! Filename storage
-    char filename[17]; 
-
-public:
-    
-    enum {
-        IEC_OK = 0x00,
-        IEC_READ_TIMEOUT = 0x02,    // Timeout on reading
-        IEC_TIMEOUT = 0x03,         // Timeout
-        IEC_EOF = 0x40,             // End of file
-        IEC_NOTPRESENT = 0x80       // Device not present
-    };
-    
-    enum {
-        IEC_CMD_DATA = 0x06,        // Data transfer
-        IEC_CMD_CLOSE = 0x0E,       // Close channel
-        IEC_CMD_OPEN = 0x0F         // Open channel
-    };
-#if 0
-    //! Sends the attention signal to all connected devices
-    uint8_t IECOutATN(uint8_t byte);
-
-    //! Puts the secondary address on the bus
-    uint8_t IECOutSec(uint8_t byte);
-    uint8_t IECOutSecWhileListening(uint8_t byte);
-    uint8_t IECOutSecWhileTalking(uint8_t byte);
-    
-    //! Write a data byte to the bus
-    /*! The last byte is signaled by setting eoi (end of information) to 1 */
-    uint8_t IECOut(uint8_t byte, bool eoi);
-
-    //! Read a data byte from the bus
-    uint8_t IECIn(uint8_t *byte);
-#endif 
-    
-    void IECSetATN();
-    void IECRelATN();
-    void IECTurnaround();
-    void IECRelease();
 };
 	
 #endif
