@@ -1,10 +1,9 @@
 /*!
  * @header      VIA.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2008 - 2016 Dirk W. Hoffmann
- * @brief       Declares VC1541 class
  * @details     The implementation is mainly based on the document
  *              "R6522 VERSATILE INTERFACE ADAPTER" by Frank Kontros [F. K.]
+ *              and the Hoxs64 implementation by David Horrocks.
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -239,10 +238,10 @@ public:
     // ----------------------------------------------------------------------------------------
 
     //! @brief   Bit values driving port A from inside the chip
-    virtual uint8_t portAinside() = 0;
+    virtual uint8_t portAinternal() = 0;
 
     //! @brief   Bit values driving port A from outside the chip
-    virtual uint8_t portAoutside() = 0;
+    virtual uint8_t portAexternal() = 0;
 
     /*! @brief   Computes the current bit values visible at port A
      *  @details Value is stored in variable pa
@@ -250,10 +249,10 @@ public:
     virtual void updatePA() = 0;
 
     //! @brief   Bit values driving port B from inside the chip
-    virtual uint8_t portBinside() = 0;
+    virtual uint8_t portBinternal() = 0;
     
     //! @brief   Bit values driving port B from outside the chip
-    virtual uint8_t portBoutside() = 0;
+    virtual uint8_t portBexternal() = 0;
     
     /*! @brief   Computes the current bit values visible at port B
      *  @details Value is stored in variable pb
@@ -382,11 +381,11 @@ public:
 	VIA1();
 	~VIA1();
     
-    uint8_t portAinside();
-    uint8_t portAoutside();
+    uint8_t portAinternal();
+    uint8_t portAexternal();
     void updatePA();
-    uint8_t portBinside();
-    uint8_t portBoutside();
+    uint8_t portBinternal();
+    uint8_t portBexternal();
     void updatePB();
     
 	uint8_t peek(uint16_t addr);
@@ -413,11 +412,11 @@ public:
     // void executeTimer1();
     // void executeTimer2();
   
-    uint8_t portAinside();
-    uint8_t portAoutside();
+    uint8_t portAinternal();
+    uint8_t portAexternal();
     void updatePA();
-    uint8_t portBinside();
-    uint8_t portBoutside();
+    uint8_t portBinternal();
+    uint8_t portBexternal();
     void updatePB();
     
 	uint8_t peek(uint16_t addr);

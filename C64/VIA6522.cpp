@@ -669,13 +669,13 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 }
 
 uint8_t
-VIA1::portAinside()
+VIA1::portAinternal()
 {
     return ora;
 }
 
 uint8_t
-VIA1::portAoutside()
+VIA1::portAexternal()
 {
     return 0xFF;
 }
@@ -683,17 +683,17 @@ VIA1::portAoutside()
 void
 VIA1::updatePA()
 {
-    pa = (portAinside() & ddra) | (portAoutside() & ~ddra);
+    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
 }
 
 uint8_t
-VIA1::portBinside()
+VIA1::portBinternal()
 {
     return orb;
 }
 
 uint8_t
-VIA1::portBoutside()
+VIA1::portBexternal()
 {
     return 0xFF;
 }
@@ -701,7 +701,7 @@ VIA1::portBoutside()
 void
 VIA1::updatePB()
 {
-    pb = (portBinside() & ddrb) | (portBoutside() & ~ddrb);
+    pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
 }
 
 
@@ -721,13 +721,13 @@ VIA2::~VIA2()
 }
 
 uint8_t
-VIA2::portAinside()
+VIA2::portAinternal()
 {
     return ora;
 }
 
 uint8_t
-VIA2::portAoutside()
+VIA2::portAexternal()
 {
     return 0xFF;
 }
@@ -735,19 +735,23 @@ VIA2::portAoutside()
 void
 VIA2::updatePA()
 {
-    pa = (portAinside() & ddra) | (portAoutside() & ~ddra);
+    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
 }
 
 uint8_t
-VIA2::portBinside()
+VIA2::portBinternal()
 {
     return orb;
 }
 
 uint8_t
-VIA2::portBoutside()
+VIA2::portBexternal()
 {
-    return 0xFF;
+    bool sync     = c64->floppy.getSync();
+    bool barrier  = c64->floppy.getLightBarrier();
+
+    return (sync ? 0x00 : 0x80) | (barrier ? 0x00 : 0x10) | 0x6F;
+
     /*
     bool sync     = c64->floppy.getSync();
     bool barrier  = c64->floppy.getLightBarrier();
@@ -767,7 +771,7 @@ VIA2::updatePB()
 {
     uint8_t oldPb = pb;
     
-    pb = (portBinside() & ddrb) | (portBoutside() & ~ddrb);
+    pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
     
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------
@@ -809,24 +813,8 @@ uint8_t VIA2::peek(uint16_t addr)
         case 0x0: { // ORB - Output register B
             
             (void)VIA6522::peek(addr);
-            
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
-            // |       | (4 disk zones)|protect|       | motor | (head move)   |
-            
-            // Collect values on the external port lines
-            bool SYNC = c64->floppy.getSync();
-            uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
-            (c64->floppy.getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
-            (c64->floppy.getRedLED() /* 3 */ ? 0x00 : 0x08) |
-            (c64->floppy.isRotating() /* 2 */ ? 0x00 : 0x04);
-            
-            uint8_t result =
-            (ddrb & orb) |      // Values of bits configured as outputs
-            (~ddrb & external); // Values of bits configures as inputs
-            
-            return result;
+            updatePB();
+            return pb;
         }
             
         case 0x1: // ORA - Output register A
