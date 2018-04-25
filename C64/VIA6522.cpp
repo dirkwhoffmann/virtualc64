@@ -400,6 +400,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORB REGISTER BIT" [F. K.]
             
             ddrb = value;
+            updatePB();
             return;
             
         case 0x3: // DDRB - Data direction register A
@@ -408,6 +409,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORA REGISTER BIT" [F. K.]
             
             ddra = value;
+            updatePA();
             return;
             
         case 0x4: // T1 low-order counter
@@ -558,116 +560,6 @@ VIA1::~VIA1()
     debug(3, "  Releasing VIA1...\n");
 }
 
-uint8_t VIA1::peek(uint16_t addr)
-{
-    switch(addr) {
-            
-        case 0x0: { // ORB - Output register B
-            
-            (void)VIA6522::peek(addr);
-            
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
-            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
-            
-            // Port values (outside the chip)
-            uint8_t external =
-            (c64->floppy.iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
-            (c64->floppy.iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
-            (c64->floppy.iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
-            
-            // Determine read value
-            uint8_t result =
-            (ddrb & orb) |      // Values of bits configured as outputs
-            (~ddrb & external); // Values of bits configured as inputs
-            
-            // Set device address to zero
-            // TODO: Device address is "hard-wired". Set it in "external", above
-            result &= 0x9F;
-            
-            return result;
-        }
-            
-        case 0x1: // ORA - Output register A
-        case 0xF:
-            
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (shouldClearCA2onRead())
-                clearInterruptFlag_CA2();
-
-            // Clean this up ...
-            c64->floppy.cpu.releaseIrqLine(CPU::ATN);
-            return ora;
-            
-        default:
-            return VIA6522::peek(addr);
-    }
-}
-
-uint8_t VIA1::read(uint16_t addr)
-{
-    switch(addr) {
-            
-        case 0x0: { // ORB - Output register B
-            
-            // Port values (outside the chip)
-            uint8_t external =
-            (c64->floppy.iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
-            (c64->floppy.iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
-            (c64->floppy.iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
-            
-            // Determine read value
-            uint8_t result =
-            (ddrb & orb) |      // Values of bits configured as outputs
-            (~ddrb & external); // Values of bits configured as inputs
-            
-            result &= 0x9F;
-            return result;
-        }
-            
-        case 0x1: // ORA - Output register A
-        case 0xF:
-            return ora;
-            
-        default:
-            return VIA6522::read(addr);
-    }
-}
-
-void VIA1::poke(uint16_t addr, uint8_t value)
-{
-	switch(addr) {
-
-        case 0x0: // ORB - Output register B
-            VIA6522::poke(addr, value);
- 
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
-            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
-
-			orb = value;
-			c64->floppy.iec->updateDevicePins(orb, ddrb);
-			return;
-
-		case 0x1: // ORA - Output register A
-        case 0xF:
-            VIA6522::poke(addr, value);
-			ora = value;
-			return;
-		
-		case 0x2:
-			ddrb = value;
-			c64->floppy.iec->updateDevicePins(orb, ddrb);
-			return; 
-						
-		default:
-			VIA6522::poke(addr, value);	
-	}
-}
-
 uint8_t
 VIA1::portAinternal()
 {
@@ -695,13 +587,102 @@ VIA1::portBinternal()
 uint8_t
 VIA1::portBexternal()
 {
-    return 0xFF;
+    // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+    // -----------------------------------------------------------------
+    // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
+    // |  in   |               |  out  |  out  |  in   |  out  |  in   |
+    
+    uint8_t external =
+    (c64->floppy.iec->getAtnLine() ? 0x00 : 0x80) |
+    (c64->floppy.iec->getClockLine() ? 0x00 : 0x04) |
+    (c64->floppy.iec->getDataLine() ? 0x00 : 0x01);
+    external &= 0x9F; // Device address 8
+    
+    return external;
 }
 
 void
 VIA1::updatePB()
 {
     pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+}
+
+uint8_t VIA1::peek(uint16_t addr)
+{
+    switch(addr) {
+            
+        case 0x0: // ORB - Output register B
+            
+            (void)VIA6522::peek(addr);
+            updatePB();
+            return pb;
+            
+        case 0x1: // ORA - Output register A
+        case 0xF:
+            
+            (void)VIA6522::peek(addr);
+            updatePB();
+
+            // Clean this up ...
+            c64->floppy.cpu.releaseIrqLine(CPU::ATN);
+            return ora;
+            
+        default:
+            return VIA6522::peek(addr);
+    }
+}
+
+uint8_t VIA1::read(uint16_t addr)
+{
+    switch(addr) {
+            
+        case 0x0: // ORB - Output register B
+            
+            return (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+            
+        case 0x1: // ORA - Output register A
+        case 0xF:
+            
+            return (portAinternal() & ddra) | (portAexternal() & ~ddra);
+            
+        default:
+            return VIA6522::read(addr);
+    }
+}
+
+void VIA1::poke(uint16_t addr, uint8_t value)
+{
+	switch(addr) {
+
+        case 0x0: // ORB - Output register B
+            VIA6522::poke(addr, value);
+ 
+            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+            // -----------------------------------------------------------------
+            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
+            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
+
+			orb = value;
+            updatePB();
+			c64->floppy.iec->updateDevicePins(orb, ddrb);
+			return;
+
+		case 0x1: // ORA - Output register A
+        case 0xF:
+            VIA6522::poke(addr, value);
+			ora = value;
+            updatePA();
+			return;
+		
+		case 0x2:
+			ddrb = value;
+            updatePB();
+			c64->floppy.iec->updateDevicePins(orb, ddrb);
+			return; 
+						
+		default:
+			VIA6522::poke(addr, value);	
+	}
 }
 
 
