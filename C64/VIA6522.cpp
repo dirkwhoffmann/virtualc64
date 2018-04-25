@@ -751,19 +751,6 @@ VIA2::portBexternal()
     bool barrier  = c64->floppy.getLightBarrier();
 
     return (sync ? 0x00 : 0x80) | (barrier ? 0x00 : 0x10) | 0x6F;
-
-    /*
-    bool sync     = c64->floppy.getSync();
-    bool barrier  = c64->floppy.getLightBarrier();
-    bool red      = c64->floppy.getRedLED();
-    bool rotating = c64->floppy.isRotating();
-    
-    return
-    (sync ? 0x00 : 0x80) |
-    (barrier ? 0x00 : 0x10) |
-    (red ? 0x00 : 0x08) |
-    (rotating ? 0x00 : 0x04);
-    */
 }
 
 void
@@ -846,21 +833,9 @@ uint8_t VIA2::read(uint16_t addr)
 {
     switch(addr) {
             
-        case 0x0: { // ORB - Output register B
+        case 0x0: // ORB - Output register B
             
-            // Collect values on the external port lines
-            bool SYNC = c64->floppy.getSync();
-            uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
-            (c64->floppy.getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
-            (c64->floppy.getRedLED() /* 3 */ ? 0x00 : 0x08) |
-            (c64->floppy.isRotating() /* 2 */ ? 0x00 : 0x04);
-            
-            uint8_t result =
-            (ddrb & orb) |      // Values of bits configured as outputs
-            (~ddrb & external); // Values of bits configures as inputs
-            
-            return result;
-        }
+            return (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
             
         case 0x1: // ORA - Output register A
         case 0xF: {
@@ -902,11 +877,8 @@ void VIA2::poke(uint16_t addr, uint8_t value)
         case 0xF:
             
             VIA6522::poke(addr, value);
-            
-            // Hard wired to the data lines of the Gate Array (U10) (read/write head)
-            // TODO: Take care of ddra
-            
             ora = value;
+            updatePA();
             return;
             
         case 0x3:
