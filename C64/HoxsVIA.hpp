@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "VirtualComponent.h"
 
 typedef int8_t bit8;
 typedef int16_t bit16;
@@ -93,13 +94,41 @@ typedef int64_t ICLKS;
 #define VIA_MINIMUM_STAY_IDLE 3
 #define VIA_MINIMUM_GO_IDLE_TIME 5
 
-class HoxsVIA
+class HoxsVIA : VirtualComponent
 {
     
     ICLK CurrentClock;
     ICLK DeviceClock;
 
+public:
     
+    //! @brief    Brings the VIA back to its initial state.
+    void reset();
+    
+    //! @brief    Dumps debug information.
+    void dumpState();
+    
+    //! @brief    Executes the virtual VIA for one cycle.
+    void execute();
+    
+    /*! @brief    Special peek function for the I/O memory range
+     *  @details  The peek function only handles those registers that are treated
+     *            similarly by both VIA chips
+     */
+    virtual uint8_t peek(uint16_t addr);
+    
+    //! @brief    Same as peek, but without side effects
+    virtual uint8_t read(uint16_t addr);
+    
+    /*! @brief    Special poke function for the I/O memory range
+     *  @details  The poke function only handles those registers that are treated
+     *            similarly by both VIA chips
+     */
+    virtual void poke(uint16_t addr, uint8_t value);
+    
+    
+    
+    // ORIGINAL HOXS STUFF...
 public:
     virtual void SetCA2Output(bit8)=0;
     virtual void SetCB2Output(bit8)=0;
