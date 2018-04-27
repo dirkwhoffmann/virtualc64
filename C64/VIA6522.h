@@ -38,8 +38,17 @@ class VC1541;
 #define VIAPostOneShotB0 (1ULL << 8) // Indicates that timer 2 has fired in one shot mode
 #define VIAInterrupt0    (1ULL << 9)
 #define VIAInterrupt1    (1ULL << 10)
+#define VIASetCA2out0    (1ULL << 11)
+#define VIASetCA2out1    (1ULL << 12)
+#define VIAClearCA2out0  (1ULL << 13)
+#define VIAClearCA2out1  (1ULL << 14)
+#define VIASetCB2out0    (1ULL << 15)
+#define VIASetCB2out1    (1ULL << 16)
+#define VIAClearCB2out0  (1ULL << 17)
+#define VIAClearCB2out1  (1ULL << 18)
 
-#define VIAClearBits   ~((1ULL << 11) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0)
+
+#define VIAClearBits   ~((1ULL << 11) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -64,7 +73,7 @@ protected:
     
     //! @brief    Peripheral A control lines
     /*! @details  "The two peripheral A control lines act as interrupt inputs
-     *             or ashandshake outputs. Each linecon­ trols an internal
+     *             or ashandshake outputs. Each line controls an internal
      *             interrupt flag with a corresponding interrupt enable bit.
      *             In addition, CA1controls the latching of data on
      *             Peripheral A Port input lines. The various modes of
@@ -73,7 +82,8 @@ protected:
      */
     bool ca1;
     bool ca2;
-
+    bool ca2_out;
+    
     //! @brief    Peripheral port B
     /*! @details  "The Peripheral B port consists of 8 lines which can be
      *             individually programmed to act as an input or an output
@@ -93,6 +103,7 @@ protected:
      */
     bool cb1;
     bool cb2;
+    bool cb2_out;
      
     //
     // Port registers
@@ -206,6 +217,12 @@ public:
      */
 	virtual uint8_t peek(uint16_t addr);
 	
+    //! @brief    Special peek function for output register A
+    uint8_t peekORA();
+
+    //! @brief    Special peek function for output register B
+    uint8_t peekORB();
+    
     //! @brief    Same as peek, but without side effects
     virtual uint8_t read(uint16_t addr);
     
@@ -214,6 +231,12 @@ public:
      *            similarly by both VIA chips
      */
 	virtual void poke(uint16_t addr, uint8_t value);
+
+    //! @brief    Special poke function for output register A
+    void pokeORA(uint8_t value);
+    
+    //! @brief    Special poke function for output register B
+    void pokeORB(uint8_t value);
 
     
     // ----------------------------------------------------------------------------------------
@@ -229,9 +252,30 @@ public:
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
 
+    // ----------------------------------------------------------------------------------------
+    //                          Peripheral control register
+    // ----------------------------------------------------------------------------------------
+    
     //! @brief    Returns the current value of the peripheral control register
     uint8_t getPcr() { return pcr & 0x20; }
+
+    //! @brief    Returns pcr bits 3, 2, and 1.
+    uint8_t pcr321() { return (pcr >> 1) & 0x07; }
+
     
+    //! @brief    Checks pcr for "input mode (negative transition)"
+    /*! @details  Set CA2 interrupt flag (IFRO) on a negative transition of
+     *            the input signal. Clear IFRO on a read or write of the
+     *            Peripheral A Output Register.
+     */
+    // bool isInputModeNeg() { return pcr321() == 0x0; }
+
+    //! @brief    Checks pcr for "independent interrupt input mode (negative transition)"
+    /*! @details  Set IFRO on a negative transition of the CA2 input signal.
+     *            Reading or writing ORA does not clear the CA2 interrupt flag.
+     */
+    // bool isIndependentInputModeNeg() { return pcr321() == 0x1; }
+
     
     // ----------------------------------------------------------------------------------------
     //                                        Ports
@@ -260,6 +304,7 @@ public:
     virtual void updatePB() = 0;
     
     //! Returns the current value on chip pin CA2
+    // DEPRECATED
     bool CA2() {
         switch ((pcr >> 1) & 0x07) {
             case 6: return false; // LOW OUTPUT
@@ -269,6 +314,17 @@ public:
                 return false;
         }
     }
+    
+    // ----------------------------------------------------------------------------------------
+    //                              Peripheral control lines
+    // ----------------------------------------------------------------------------------------
+
+    void setCA1(bool value);
+    void setCA2(bool value);
+    void setCB1(bool value);
+    void setCB2(bool value);
+
+    
     
     // ----------------------------------------------------------------------------------------
     //                                   Interrupt handling
@@ -391,7 +447,7 @@ public:
 	uint8_t peek(uint16_t addr);
     uint8_t read(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
-	
+
     //! @brief    Returns true iff a change of the atn line can trigger interrups
 	bool atnInterruptsEnabled() { return ier & 0x02; }
 

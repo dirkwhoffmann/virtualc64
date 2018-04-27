@@ -33,9 +33,11 @@ VIA6522::VIA6522()
         { &pa,              sizeof(pa),             CLEAR_ON_RESET },
         { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
         { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
+        { &ca2_out,         sizeof(ca2_out),        CLEAR_ON_RESET },
         { &pb,              sizeof(pb),             CLEAR_ON_RESET },
         { &cb1,             sizeof(cb1),            CLEAR_ON_RESET },
         { &cb2,             sizeof(cb2),            CLEAR_ON_RESET },
+        { &cb2_out,         sizeof(cb2_out),        CLEAR_ON_RESET },
         { &ddra,            sizeof(ddra),           CLEAR_ON_RESET },
         { &ddrb,            sizeof(ddrb),           CLEAR_ON_RESET },
         { &ora,             sizeof(ora),            CLEAR_ON_RESET },
@@ -124,6 +126,20 @@ VIA6522::execute()
         c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
     }
     
+    // Set or clear CA2 or CB2 if requested
+    if (delay & VIASetCA2out1) {
+        ca2_out = true;
+    }
+    if (delay & VIAClearCA2out1) {
+        ca2_out = false;
+    }
+    if (delay & VIASetCB2out1) {
+        cb2_out = true;
+    }
+    if (delay & VIAClearCB2out1) {
+        cb2_out = false;
+    }
+
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
 
@@ -240,27 +256,15 @@ VIA6522::peek(uint16_t addr)
 	switch(addr) {
             
         case 0x0: // ORB - Output register B
-
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CB1();
-            if (shouldClearCB2onRead())
-                clearInterruptFlag_CB2();
-            return 0;
+            return peekORB();
             
         case 0x1: // ORA - Output register A
-
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (shouldClearCA2onRead())
-                clearInterruptFlag_CA2();
-            return 0;
+            return peekORA();
             
         case 0x2: // DDRB - Data direction register B
-            
 			return ddrb;
 
         case 0x3: // DDRA - Data direction register A
-            
 			return ddra;
 			
         case 0x4: // T1 low-order counter
@@ -335,6 +339,78 @@ VIA6522::peek(uint16_t addr)
 
     assert(0);
     return 0;
+}
+
+uint8_t
+VIA6522::peekORA()
+{
+    clearInterruptFlag_CA1();
+    
+    // Take care of side effects
+    switch ((pcr >> 1) & 0x07) {
+        case 0: // Input mode: Interrupt on negative edge
+            clearInterruptFlag_CA2();
+            break;
+        case 1: // Input mode: Interrupt on negative edge, no register clearance
+            break;
+        case 2: // Input mode: Interrupt on positive edge
+            clearInterruptFlag_CA2();
+            break;
+        case 3: // Input mode: Interrupt on positive edge, no register clearance
+            break;
+        case 4: // Handshake output mode
+                // Set CA2 output low on a read or write of the Peripheral A Output
+                // Register. Reset CA2 high with an active transition on CAl.
+            clearInterruptFlag_CA2();
+            delay |= VIAClearCA2out1;
+            break;
+        case 5: // Pulse output mode
+                // CA2 goes low for one cycle following a read or write of the
+                // Peripheral A Output Register.
+            clearInterruptFlag_CA2();
+            delay |= VIAClearCA2out1 | VIASetCA2out0;
+            break;
+        case 6: // Manual output mode (keep line low)
+            break;
+        case 7: // Manual output mode (keep line low)
+            break;
+    }
+    
+    updatePA();
+    return pa;
+}
+
+uint8_t
+VIA6522::peekORB()
+{
+    clearInterruptFlag_CB1();
+    
+    // Take care of side effects
+    switch ((pcr >> 5) & 0x07) {
+        case 0: // Input mode: Interrupt on negative edge
+            clearInterruptFlag_CB2();
+            break;
+        case 1: // Input mode: Interrupt on negative edge, no register clearance
+            break;
+        case 2: // Input mode: Interrupt on positive edge
+            clearInterruptFlag_CB2();
+            break;
+        case 3: // Input mode: Interrupt on positive edge, no register clearance
+            break;
+        case 4: // Handshake output mode
+                // In contrast to CA2, CB2 is only affected on write accesses.
+            break;
+        case 5: // Pulse output mode
+                // In contrast to CA2, CB2 is only affected on write accesses.
+            break;
+        case 6: // Manual output mode (keep line low)
+            break;
+        case 7: // Manual output mode (keep line low)
+            break;
+    }
+    
+    updatePB();
+    return pb;
 }
 
 uint8_t
@@ -545,6 +621,78 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
     }
 }
 
+void
+VIA6522::pokeORA(uint8_t value)
+{
+    
+}
+
+void
+VIA6522::pokeORB(uint8_t value)
+{
+    
+}
+
+void
+VIA6522::setCA1(bool value)
+{
+    /* Bit 0 of the Peripheral Control Register selects the active transition
+     * of the input signal applied to the CA1 interrupt input pin.
+     */
+    bool pcr0 = pcr & 0x01;
+    
+    /* If this bit is a logic 0, the CAl interrupt flag will be set by a
+     * negative transition (high to low) of the signal on the CAl pin.
+     */
+    if (!pcr0 && ca1 && !value) {
+        ifr |= 0x02;
+    }
+    
+    /* If PCRO is a logic 1, the CAl interrupt flag will be set by a positive
+     * transition (low to high) of this signal.
+     */
+    if (pcr0 && !ca1 && value) {
+        ifr |= 0x02;
+    }
+    
+    ca1 = value;
+}
+
+void
+VIA6522::setCA2(bool value)
+{
+}
+
+void
+VIA6522::setCB1(bool value)
+{
+    /* Control of the active transition of the CBl input signal operates in
+     * exactly the same manner as that described above for CAl.
+     */
+    bool pcr4 = pcr & 0x10;
+    
+    /* If PCR4 is a logic 0 the CBl interrupt flag (IFR4) will be set by a
+     * negative transition of the CBl input signal.
+     */
+    if (!pcr4 && cb1 && !value) {
+        ifr |= 0x10;
+    }
+    
+    /* If PCR4 is a logic 1, IFR4 will be set by a positive transition of CBl.
+     */
+    if (pcr4 && !cb1 && value) {
+        ifr |= 0x10;
+    }
+    
+    cb1 = value;
+}
+
+void
+VIA6522::setCB2(bool value)
+{
+}
+
+
 // --------------------------------------------------------------------------------------------
 //                                        VIA 1
 // --------------------------------------------------------------------------------------------
@@ -611,25 +759,14 @@ uint8_t VIA1::peek(uint16_t addr)
 {
     switch(addr) {
             
-        case 0x0: // ORB - Output register B
-            
-            (void)VIA6522::peek(addr);
-            updatePB();
-            return pb;
-            
         case 0x1: // ORA - Output register A
         case 0xF:
-            
-            (void)VIA6522::peek(addr);
-            updatePB();
-
             // Clean this up ...
             c64->floppy.cpu.releaseIrqLine(CPU::ATN);
-            return ora;
-            
-        default:
-            return VIA6522::peek(addr);
+            break;
     }
+    
+    return VIA6522::peek(addr);
 }
 
 uint8_t VIA1::read(uint16_t addr)
