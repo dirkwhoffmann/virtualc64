@@ -259,7 +259,7 @@ VIA6522::peek(uint16_t addr)
             return peekORB();
             
         case 0x1: // ORA - Output register A
-            return peekORA();
+            return peekORA(true);
             
         case 0x2: // DDRB - Data direction register B
 			return ddrb;
@@ -328,13 +328,8 @@ VIA6522::peek(uint16_t addr)
             
             return ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
 
-        case 0xF:
-            
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (shouldClearCA2onRead())
-                clearInterruptFlag_CA2();
-            return 0;
+        case 0xF: // ORA - Output register A (handshake disabled)
+            return peekORA(false);
     }
 
     assert(0);
@@ -342,7 +337,7 @@ VIA6522::peek(uint16_t addr)
 }
 
 uint8_t
-VIA6522::peekORA()
+VIA6522::peekORA(bool handshake)
 {
     clearInterruptFlag_CA1();
     
@@ -362,13 +357,13 @@ VIA6522::peekORA()
                 // Set CA2 output low on a read or write of the Peripheral A Output
                 // Register. Reset CA2 high with an active transition on CAl.
             clearInterruptFlag_CA2();
-            delay |= VIAClearCA2out1;
+            if (handshake) delay |= VIAClearCA2out1;
             break;
         case 5: // Pulse output mode
                 // CA2 goes low for one cycle following a read or write of the
                 // Peripheral A Output Register.
             clearInterruptFlag_CA2();
-            delay |= VIAClearCA2out1 | VIASetCA2out0;
+            if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
             break;
         case 6: // Manual output mode (keep line low)
             break;
@@ -622,15 +617,73 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
 }
 
 void
-VIA6522::pokeORA(uint8_t value)
+VIA6522::pokeORA(uint8_t value, bool handshake)
 {
+    clearInterruptFlag_CA1();
     
+    // Take care of side effects
+    switch ((pcr >> 1) & 0x07) {
+        case 0: // Input mode: Interrupt on negative edge
+            clearInterruptFlag_CA2();
+            break;
+        case 1: // Input mode: Interrupt on negative edge, no register clearance
+            break;
+        case 2: // Input mode: Interrupt on positive edge
+            clearInterruptFlag_CA2();
+            break;
+        case 3: // Input mode: Interrupt on positive edge, no register clearance
+            break;
+        case 4: // Handshake output mode
+            clearInterruptFlag_CA2();
+            if (handshake) delay |= VIAClearCA2out1;
+            break;
+        case 5: // Pulse output mode
+            clearInterruptFlag_CA2();
+            if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
+            break;
+        case 6: // Manual output mode (keep line low)
+            break;
+        case 7: // Manual output mode (keep line low)
+            break;
+    }
+    
+    ora = value;
+    updatePA();
 }
 
 void
 VIA6522::pokeORB(uint8_t value)
 {
+    clearInterruptFlag_CB1();
+        
+    // Take care of side effects
+    switch ((pcr >> 5) & 0x07) {
+        case 0: // Input mode: Interrupt on negative edge
+            clearInterruptFlag_CB2();
+            break;
+        case 1: // Input mode: Interrupt on negative edge, no register clearance
+            break;
+        case 2: // Input mode: Interrupt on positive edge
+            clearInterruptFlag_CB2();
+            break;
+        case 3: // Input mode: Interrupt on positive edge, no register clearance
+            break;
+        case 4: // Handshake output mode
+            clearInterruptFlag_CB2();
+            delay |= VIAClearCB2out1;
+            break;
+        case 5: // Pulse output mode
+            clearInterruptFlag_CB2();
+            delay |= VIAClearCB2out1 | VIAClearCB2out0;
+            break;
+        case 6: // Manual output mode (keep line low)
+            break;
+        case 7: // Manual output mode (keep line low)
+            break;
+    }
     
+    orb = value;
+    updatePB();
 }
 
 void
@@ -916,10 +969,7 @@ uint8_t VIA2::peek(uint16_t addr)
     switch(addr) {
             
         case 0x0: { // ORB - Output register B
-            
-            (void)VIA6522::peek(addr);
-            updatePB();
-            return pb;
+            return VIA6522::peek(addr);;
         }
             
         case 0x1: // ORA - Output register A
@@ -983,20 +1033,12 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 {
     switch(addr) {
             
-        case 0x0: { // ORB - Output register B
-            
-            VIA6522::poke(addr, value);
-            orb = value;
-            updatePB();
+        case 0x0: // ORB - Output register B
+            pokeORB(value);
             return;
-        }
             
         case 0x1: // ORA - Output register A
-        case 0xF:
-            
-            VIA6522::poke(addr, value);
-            ora = value;
-            updatePA();
+            pokeORA(value, true);
             return;
             
         case 0x3:
@@ -1020,6 +1062,10 @@ void VIA2::poke(uint16_t addr, uint8_t value)
             pcr = value;
             return;
             
+        case 0xF: // ORA - Output register A (no handshake)
+            pokeORA(value, false);
+            return;
+
         default:
             VIA6522::poke(addr, value);
     }

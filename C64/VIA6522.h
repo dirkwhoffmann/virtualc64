@@ -218,7 +218,10 @@ public:
 	virtual uint8_t peek(uint16_t addr);
 	
     //! @brief    Special peek function for output register A
-    uint8_t peekORA();
+    /*! @details  Variable handshake is needed to distiguish if ORA is read
+     *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
+     */
+    uint8_t peekORA(bool handshake);
 
     //! @brief    Special peek function for output register B
     uint8_t peekORB();
@@ -233,7 +236,10 @@ public:
 	virtual void poke(uint16_t addr, uint8_t value);
 
     //! @brief    Special poke function for output register A
-    void pokeORA(uint8_t value);
+    /*! @details  Variable handshake is needed to distiguish if ORA is written
+     *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
+     */
+    void pokeORA(uint8_t value, bool handshake);
     
     //! @brief    Special poke function for output register B
     void pokeORB(uint8_t value);
