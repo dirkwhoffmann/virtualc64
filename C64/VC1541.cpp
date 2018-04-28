@@ -226,17 +226,6 @@ VC1541::byteReady()
     if (via2.overflowEnabled()) cpu.setV(1);
 }
 
-/*
-void 
-VC1541::simulateAtnInterrupt()
-{
-	if (via1.atnInterruptsEnabled()) {
-		via1.indicateAtnInterrupt();
-        cpu.pullDownIrqLine(CPU::ATN);
-	}
-}
-*/
-
 void
 VC1541::setZone(uint8_t z)
 {

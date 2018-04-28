@@ -449,18 +449,6 @@ public:
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
-    
-    uint8_t read(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
-
-    //! @brief    Returns true iff a change of the atn line can trigger interrups
-	// bool atnInterruptsEnabled() { return ier & 0x02; }
-
-    //! @brief    Indicates that an ATN interrupt has occured.
-    // void indicateAtnInterrupt() { ifr |= 0x02; }
-
-    //! @brief    Clears the ATN interrupt indication bit.
-    // void clearAtnIndicator() { ifr &= ~0x02; }
 };
 
 //! The second versatile interface adapter (VIA2)
@@ -477,24 +465,9 @@ public:
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
-    
-	void poke(uint16_t addr, uint8_t value);
 
-    //! @brief    Returns bit 0 of output register B
-	bool stepperActive0() { return (orb & 0x01) != 0; }
-
-    //! @brief    Returns bit 1 of output register B
-	bool stepperActive1() { return (orb & 0x02) != 0; }
-
-    //! @brief    Returns bit 2 of output register B
-	bool engineRunning() { return (orb & 0x04) != 0; }
-
-    //! @brief    Returns bit 3 of output register B
-    bool redLEDshining() { return (orb & 0x08) != 0; }
-    
+    // TODO: Which pin is exactly connected to V flag in CPU? 
     bool overflowEnabled() { return (pcr & 0x02); }
-
-    void debug0xC();
 };
 
 #endif

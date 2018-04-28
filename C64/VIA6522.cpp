@@ -328,7 +328,7 @@ VIA6522::peek(uint16_t addr)
             
             return ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
 
-        case 0xF: // ORA - Output register A (handshake disabled)
+        case 0xF: // ORA - Output register A (no handshake)
             return peekORA(false);
     }
 
@@ -449,20 +449,14 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
     
     switch(addr) {
             
-        case 0x0: // ORB - Output register B (shared functionality of VIA1 and VIA2)
+        case 0x0: // ORB - Output register B
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CB1();
-            if (shouldClearCB2onWrite())
-                clearInterruptFlag_CB2();
+            pokeORB(value);
             return;
 
-        case 0x1: // ORA - Output register A (shared functionality of VIA1 and VIA2)
+        case 0x1: // ORA - Output register A
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (shouldClearCA2onWrite())
-                clearInterruptFlag_CA2();
+            pokeORA(value, true);
             return;
             
         case 0x2: // DDRB - Data direction register B
@@ -606,12 +600,9 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             IRQ();
             return;
             
-        case 0xF:
+        case 0xF: // ORA - Output register A (no handshake)
             
-            // Clear flags in interrupt flag register (IFR)
-            clearInterruptFlag_CA1();
-            if (shouldClearCA2onWrite())
-                clearInterruptFlag_CA2();
+            pokeORA(value, false);
             return;
     }
 }
@@ -806,43 +797,8 @@ void
 VIA1::updatePB()
 {
     pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+    c64->floppy.iec->updateDevicePins(orb, ddrb);
 }
-
-void VIA1::poke(uint16_t addr, uint8_t value)
-{
-	switch(addr) {
-
-        case 0x0: // ORB - Output register B
-            VIA6522::poke(addr, value);
- 
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
-            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
-
-			orb = value;
-            updatePB();
-			c64->floppy.iec->updateDevicePins(orb, ddrb);
-			return;
-
-		case 0x1: // ORA - Output register A
-        case 0xF:
-            VIA6522::poke(addr, value);
-			ora = value;
-            updatePA();
-			return;
-		
-		case 0x2:
-			ddrb = value;
-            updatePB();
-			c64->floppy.iec->updateDevicePins(orb, ddrb);
-			return; 
-						
-		default:
-			VIA6522::poke(addr, value);	
-	}
-}
-
 
 // --------------------------------------------------------------------------------------------
 //                                        VIA 2
@@ -929,80 +885,5 @@ VIA2::updatePB()
         } else {
             warn("Unexpected stepper motor control sequence\n");
         }
-    }
-}
-
-void VIA2::poke(uint16_t addr, uint8_t value)
-{
-    switch(addr) {
-            
-        case 0x0: // ORB - Output register B
-            pokeORB(value);
-            return;
-            
-        case 0x1: // ORA - Output register A
-            pokeORA(value, true);
-            return;
-            
-        case 0x3:
-            ddra = value;
-            if (ddra != 0x00 && ddra != 0xFF) {
-                debug(1, "Data direction bits of VC1541 contain suspicious values\n");
-            }
-            return;
-            
-        case 0xC:
-            
-            if (!(pcr & 0x20) && (value & 0x20)) {
-                
-                debug(2, "Switching to read mode mode\n");
-            }
-            if ((pcr & 0x20) && !(value & 0x20)) {
-                
-                debug(2, "Switching to write mode\n");
-            }
-            
-            pcr = value;
-            return;
-            
-        case 0xF: // ORA - Output register A (no handshake)
-            pokeORA(value, false);
-            return;
-
-        default:
-            VIA6522::poke(addr, value);
-    }
-}
-
-void VIA2::debug0xC() {
-    
-    uint8_t value = pcr; 
-    
-     debug(2,"CA1:\n");
-     debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,0) ? "POSITIVE" : "NEGATIVE"));
-     debug(2,"CA2:\n");
-     switch ((value >> 1) & 0x07) {
-     case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
-     case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
-     case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
-     case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
-     case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
-     case 5: debug(2,"  PULSE OUTPUT\n"); break;
-     case 6: debug(2,"  LOW OUTPUT %04X\n", c64->floppy.cpu.getPC_at_cycle_0()); break;
-     case 7: debug(2,"  HIGH OUTPUT %04X\n", c64->floppy.cpu.getPC_at_cycle_0()); break;
-     }
-    
-    debug(2,"CB1:\n");
-    debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,4) ? "POSITIVE" : "NEGATIVE"));
-    debug(2,"CB2:\n");
-    switch ((value >> 5) & 0x07) {
-        case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
-        case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
-        case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
-        case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
-        case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
-        case 5: debug(2,"  PULSE OUTPUT\n"); break;
-        case 6: debug(2,"  LOW OUTPUT\n"); break;
-        case 7: debug(2,"  HIGH OUTPUT\n"); break;
     }
 }
