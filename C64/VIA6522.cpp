@@ -480,58 +480,44 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             updatePA();
             return;
             
-        case 0x4: // T1 low-order counter
-            
-            // "8 BITS LOADED INTO T1 LOW-ORDER LATCHES. LATCH CONTENTS ARE TRANSFERRED
-            //  INTO LOW-ORDER COUNTER AT THE TIME THE HIGH-ORDER COUNTER IS LOADED (REG 5)" [F. K.]
+        case 0x4: // T1L-L (write) / T1C-L (read)
             
             t1_latch_lo = value;
             return;
             
-        case 0x5: // T1 high-order counter
+        case 0x5: // T1C-H (read and write)
             
-            // "8 BITS LOADED INTO T1 HIGH-ORDER LATCHES. ALSO AT THIS TIME BOTH HIGH- AND
-            //  LOW-ORDER LATCHES TRANSFERRED INTO T1 COUNTER. T1 INTERRUPT FLAG ALSO IS RESET" [F. K.]
-            
+            // (1) Loads value into T1C-L.
             t1_latch_hi = value;
+
+            // (2) Transfers latch contents into counter.
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
-            
+
+            // (3) T1 interrupt flag is reset.
             clearInterruptFlag_T1();
-            feed &= ~(VC64VIAPostOneShotA0);
             
-            // Delay counting down for one cycle
-            delay &= ~(VC64VIACountA1);
+            feed &= ~(VC64VIAPostOneShotA0);
+            delay &= ~(VC64VIACountA1); // Delay counting down for one cycle
             return;
             
-        case 0x6: // T1 low-order latch
-            
-            // "8 BITS LOADED INTO T1 LOW-ORDER LATCHES. THIS OPERATION IS NO DIFFERENT
-            //  THAN A WRITE INTO REG 4" [F. K.]
+        case 0x6: // T1L-L (read and write)
             
             t1_latch_lo = value;
             return;
             
-        case 0x7: // T1 high-order latch
-            
-            // "8 BITS LOADED INTO T1 HIGH-ORDER LATCHES. UNLIKE REG 4 OPERATION NO LATCH TO
-            //  COUNTER TRANSFERS TAKE PLACE" [F. K.]
+        case 0x7: // T1L-H (read and write)
             
             t1_latch_hi = value;
             return;
             
-        case 0x8: // T2 low-order latch/counter
-            
-            // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
+        case 0x8: // T2L-L (write) / T2C-L (read)
             
             t2_latch_lo = value;
             clearInterruptFlag_T2();
             c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
-        case 0x9: // T2 high-order counter
-            
-            // "8 BITS LOADED INTO T2 HIGH-ORDER COUNTER. ALSO, LOW-ORDER LATCH TRANSFERRED
-            //  TO LOW-ORDER COUNTER. IN ADDITION T2 INTERRUPT FLAG IS RESET" [F. K.]
+        case 0x9: // T2C-H
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
