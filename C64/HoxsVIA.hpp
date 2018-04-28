@@ -94,7 +94,7 @@ typedef int64_t ICLKS;
 #define VIA_MINIMUM_STAY_IDLE 3
 #define VIA_MINIMUM_GO_IDLE_TIME 5
 
-class HoxsVIA : VirtualComponent
+class HoxsVIA : public VirtualComponent
 {
     
     ICLK CurrentClock;
@@ -224,6 +224,26 @@ private:
     void TransitionCB1();
     void TransitionCB2();
     
+};
+
+class HoxsVIA1 : public HoxsVIA
+{
+public:
+    
+    HoxsVIA1();
+    
+    bool Init(int ID);
+    virtual void ExecuteDevices(ICLK sysclock);
+    void SetCA2Output(bit8 value);
+    void SetCB2Output(bit8 value);
+    bit8 ReadPinsPortA();
+    bit8 ReadPinsPortB();
+    void SetPinsPortA(bit8);
+    void SetPinsPortB(bit8);
+    void SetSystemInterrupt();
+    void ClearSystemInterrupt();
+    void InitReset(ICLK sysclock, bool poweronreset);
+    void Reset(ICLK sysclock, bool poweronreset);
 };
 
 #endif /* HoxsVIA_hpp */

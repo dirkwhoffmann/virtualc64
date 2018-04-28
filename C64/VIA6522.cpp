@@ -78,7 +78,7 @@ void VIA6522::reset()
     t1_latch_lo = 0xAA;
     t2_latch_lo = 0xAA;
     
-    feed |= (VIACountA0 | VIACountB0);
+    feed |= (VC64VIACountA0 | VC64VIACountB0);
 }
 
 void 
@@ -118,30 +118,31 @@ VIA6522::execute()
     
     // Check for interrupt condition
     if (ifr & ier) {
-        delay |= VIAInterrupt0;
+        if (ifr & 0x02) debug("ifr = %02X ier = %02X\n", ifr, ier);
+        delay |= VC64VIAInterrupt0;
     }
     
     // Trigger interrupt if requested
-    if (delay & VIAInterrupt1) {
+    if (delay & VC64VIAInterrupt1) {
         c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
     }
     
     // Set or clear CA2 or CB2 if requested
-    if (delay & VIASetCA2out1) {
+    if (delay & VC64VIASetCA2out1) {
         ca2_out = true;
     }
-    if (delay & VIAClearCA2out1) {
+    if (delay & VC64VIAClearCA2out1) {
         ca2_out = false;
     }
-    if (delay & VIASetCB2out1) {
+    if (delay & VC64VIASetCB2out1) {
         cb2_out = true;
     }
-    if (delay & VIAClearCB2out1) {
+    if (delay & VC64VIAClearCB2out1) {
         cb2_out = false;
     }
 
     // Move trigger event flags left and feed in new bits
-    delay = ((delay << 1) & VIAClearBits) | feed;
+    delay = ((delay << 1) & VC64VIAClearBits) | feed;
 
 }
 
@@ -164,11 +165,11 @@ VIA6522::execute()
 void
 VIA6522::executeTimer1()
 {
-    if (delay & VIAReloadA2) {
+    if (delay & VC64VIAReloadA2) {
         t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
 
-    if (delay & VIACountA1) {
+    if (delay & VC64VIACountA1) {
         t1--;
     }
     
@@ -184,10 +185,10 @@ VIA6522::executeTimer1()
              *     counter and continues to decrement from there."
              */
             
-            if (!(feed & VIAPostOneShotA0)) {
+            if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);         // (1) 
                 pb7toggle = !pb7toggle; // (2)
-                delay |= VIAReloadA0;   // (3)
+                delay |= VC64VIAReloadA0;   // (3)
             }
             
         } else {
@@ -196,13 +197,13 @@ VIA6522::executeTimer1()
              *  operation."
              */
             
-            if (!(feed & VIAPostOneShotA0)) {
+            if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);
                 pb7toggle = !pb7toggle;
             }
         }
         
-        feed |= VIAPostOneShotA0;
+        feed |= VC64VIAPostOneShotA0;
             
         /* "In addition to generating a single interrupt, Timer 1 can be programmed
          *  to produce a single negative pulse on the PB7 peripheral pin. With the
@@ -220,15 +221,15 @@ VIA6522::executeTimer1()
 void
 VIA6522::executeTimer2()
 {
-    if (delay & VIACountB1) {
+    if (delay & VC64VIACountB1) {
         t2--;
     }
     
     if (t2 == 0) {
         
-        if (!(delay & VIAPostOneShotB0)) {
+        if (!(delay & VC64VIAPostOneShotB0)) {
             SET_BIT(ifr,5);
-            feed |= VIAPostOneShotB0;
+            feed |= VC64VIAPostOneShotB0;
         }
     }
 }
@@ -339,7 +340,13 @@ VIA6522::peek(uint16_t addr)
 uint8_t
 VIA6522::peekORA(bool handshake)
 {
+    uint8_t oldifr = ifr;
+    
     clearInterruptFlag_CA1();
+    
+    if (oldifr & 0x02) {
+        debug("oldifr %02X newifr %02X\n", oldifr, ifr);
+    }
     
     // Take care of side effects
     switch ((pcr >> 1) & 0x07) {
@@ -357,13 +364,13 @@ VIA6522::peekORA(bool handshake)
                 // Set CA2 output low on a read or write of the Peripheral A Output
                 // Register. Reset CA2 high with an active transition on CAl.
             clearInterruptFlag_CA2();
-            if (handshake) delay |= VIAClearCA2out1;
+            if (handshake) delay |= VC64VIAClearCA2out1;
             break;
         case 5: // Pulse output mode
                 // CA2 goes low for one cycle following a read or write of the
                 // Peripheral A Output Register.
             clearInterruptFlag_CA2();
-            if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
+            if (handshake) delay |= VC64VIAClearCA2out1 | VC64VIASetCA2out0;
             break;
         case 6: // Manual output mode (keep line low)
             break;
@@ -500,10 +507,10 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
             
             clearInterruptFlag_T1();
-            feed &= ~(VIAPostOneShotA0);
+            feed &= ~(VC64VIAPostOneShotA0);
             
             // Delay counting down for one cycle
-            delay &= ~(VIACountA1);
+            delay &= ~(VC64VIACountA1);
             return;
             
         case 0x6: // T1 low-order latch
@@ -538,7 +545,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
-            feed &= ~(VIAPostOneShotB0);
+            feed &= ~(VC64VIAPostOneShotB0);
             return;
             
         case 0xA: // Shift register
@@ -562,15 +569,15 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
                 // In the pulse counting mode, T2 counts negative pulses on PB6,
                 // so we disable automatic counting.
                 
-                delay &= ~(VIACountB0);
-                feed &= ~VIACountB0;
+                delay &= ~(VC64VIACountB0);
+                feed &= ~VC64VIACountB0;
                 
             } else {
                 
                 // In the timed interrupt mode, T2 counts down every cycle.
                 
-                delay |= VIACountB0;
-                feed |= VIACountB0;
+                delay |= VC64VIACountB0;
+                feed |= VC64VIACountB0;
             }
             
             if (acr & 0x80) {
@@ -635,11 +642,11 @@ VIA6522::pokeORA(uint8_t value, bool handshake)
             break;
         case 4: // Handshake output mode
             clearInterruptFlag_CA2();
-            if (handshake) delay |= VIAClearCA2out1;
+            if (handshake) delay |= VC64VIAClearCA2out1;
             break;
         case 5: // Pulse output mode
             clearInterruptFlag_CA2();
-            if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
+            if (handshake) delay |= VC64VIAClearCA2out1 | VC64VIASetCA2out0;
             break;
         case 6: // Manual output mode (keep line low)
             break;
@@ -670,11 +677,11 @@ VIA6522::pokeORB(uint8_t value)
             break;
         case 4: // Handshake output mode
             clearInterruptFlag_CB2();
-            delay |= VIAClearCB2out1;
+            delay |= VC64VIAClearCB2out1;
             break;
         case 5: // Pulse output mode
             clearInterruptFlag_CB2();
-            delay |= VIAClearCB2out1 | VIAClearCB2out0;
+            delay |= VC64VIAClearCB2out1 | VC64VIAClearCB2out0;
             break;
         case 6: // Manual output mode (keep line low)
             break;
@@ -810,6 +817,7 @@ VIA1::updatePB()
 
 uint8_t VIA1::peek(uint16_t addr)
 {
+    /*
     switch(addr) {
             
         case 0x1: // ORA - Output register A
@@ -818,6 +826,7 @@ uint8_t VIA1::peek(uint16_t addr)
             c64->floppy.cpu.releaseIrqLine(CPU::ATN);
             break;
     }
+    */
     
     return VIA6522::peek(addr);
 }

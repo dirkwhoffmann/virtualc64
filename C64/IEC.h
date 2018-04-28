@@ -92,7 +92,7 @@ private:
 	uint32_t busActivity;
 	
 	//! Update IEC bus lines depending on the CIA and device pins
-	bool _updateIecLines(bool *atnedge = NULL);
+	bool _updateIecLines();
 
 public:
 
@@ -133,11 +133,7 @@ public:
     //! Updates the values of the device pin variables
 	//  This function is to be invoked by the VC1541 drive, only.
 	void updateDevicePins(uint8_t device_data, uint8_t device_direction);	
-	
-	// Deprecated (won't drive them manually when the drive is constantly connected)
-	// void setDeviceClockPin(bool value) { deviceClockPin = value; _updateIecLines(); }
-	// void setDeviceDataPin(bool value) { deviceDataPin = value; _updateIecLines(); }
-    
+	    
 	bool getAtnLine() { return atnLine; }
 	bool getClockLine() { return clockLine; }
 	bool getDataLine() { return dataLine; }

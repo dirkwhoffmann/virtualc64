@@ -27,28 +27,28 @@
 
 class VC1541;
 
-#define VIACountA0       (1ULL << 0) // Timer 1 decrements every cycle
-#define VIACountA1       (1ULL << 1)
-#define VIACountB0       (1ULL << 2) // Timer 2 decrements every cycle
-#define VIACountB1       (1ULL << 3)
-#define VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload (free-run mode)
-#define VIAReloadA1      (1ULL << 5)
-#define VIAReloadA2      (1ULL << 6)
-#define VIAPostOneShotA0 (1ULL << 7) // Indicates that timer 1 has fired in one shot mode
-#define VIAPostOneShotB0 (1ULL << 8) // Indicates that timer 2 has fired in one shot mode
-#define VIAInterrupt0    (1ULL << 9)
-#define VIAInterrupt1    (1ULL << 10)
-#define VIASetCA2out0    (1ULL << 11)
-#define VIASetCA2out1    (1ULL << 12)
-#define VIAClearCA2out0  (1ULL << 13)
-#define VIAClearCA2out1  (1ULL << 14)
-#define VIASetCB2out0    (1ULL << 15)
-#define VIASetCB2out1    (1ULL << 16)
-#define VIAClearCB2out0  (1ULL << 17)
-#define VIAClearCB2out1  (1ULL << 18)
+#define VC64VIACountA0       (1ULL << 0) // Timer 1 decrements every cycle
+#define VC64VIACountA1       (1ULL << 1)
+#define VC64VIACountB0       (1ULL << 2) // Timer 2 decrements every cycle
+#define VC64VIACountB1       (1ULL << 3)
+#define VC64VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload (free-run mode)
+#define VC64VIAReloadA1      (1ULL << 5)
+#define VC64VIAReloadA2      (1ULL << 6)
+#define VC64VIAPostOneShotA0 (1ULL << 7) // Indicates that timer 1 has fired in one shot mode
+#define VC64VIAPostOneShotB0 (1ULL << 8) // Indicates that timer 2 has fired in one shot mode
+#define VC64VIAInterrupt0    (1ULL << 9)
+#define VC64VIAInterrupt1    (1ULL << 10)
+#define VC64VIASetCA2out0    (1ULL << 11)
+#define VC64VIASetCA2out1    (1ULL << 12)
+#define VC64VIAClearCA2out0  (1ULL << 13)
+#define VC64VIAClearCA2out1  (1ULL << 14)
+#define VC64VIASetCB2out0    (1ULL << 15)
+#define VC64VIASetCB2out1    (1ULL << 16)
+#define VC64VIAClearCB2out0  (1ULL << 17)
+#define VC64VIAClearCB2out1  (1ULL << 18)
 
 
-#define VIAClearBits   ~((1ULL << 11) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0)
+#define VC64VIAClearBits   ~((1ULL << 11) | VC64VIACountA0 | VC64VIACountB0 | VC64VIAReloadA0 | VC64VIAPostOneShotA0 | VC64VIAPostOneShotB0 | VC64VIAInterrupt0 | VC64VIASetCA2out0 | VC64VIAClearCA2out0 | VC64VIASetCB2out0 | VC64VIAClearCB2out0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -455,13 +455,13 @@ public:
     void poke(uint16_t addr, uint8_t value);
 
     //! @brief    Returns true iff a change of the atn line can trigger interrups
-	bool atnInterruptsEnabled() { return ier & 0x02; }
+	// bool atnInterruptsEnabled() { return ier & 0x02; }
 
     //! @brief    Indicates that an ATN interrupt has occured.
-    void indicateAtnInterrupt() { ifr |= 0x02; }
+    // void indicateAtnInterrupt() { ifr |= 0x02; }
 
     //! @brief    Clears the ATN interrupt indication bit.
-    void clearAtnIndicator() { ifr &= ~0x02; }
+    // void clearAtnIndicator() { ifr &= ~0x02; }
 };
 
 //! The second versatile interface adapter (VIA2)

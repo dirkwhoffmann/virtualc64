@@ -145,7 +145,7 @@ IEC::disconnectDrive()
     c64->floppy.powerUp();
 }
 
-bool IEC::_updateIecLines(bool *atnedge)
+bool IEC::_updateIecLines()
 {
 	// save current values
 	oldAtnLine = atnLine;
@@ -172,9 +172,11 @@ bool IEC::_updateIecLines(bool *atnedge)
 		dataLine &= atnLine;
 	
 	// Check atn line for a negative edge
+    /*
 	if (atnedge != NULL) 
 		*atnedge = (oldAtnLine == 1 && atnLine == 0);
-	
+	*/
+    
 	// did any signal change its value?
 	return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);	
 }
@@ -182,16 +184,13 @@ bool IEC::_updateIecLines(bool *atnedge)
 void IEC::updateIecLines()
 {
 	bool signals_changed;
-	bool atn_edge;
 			
 	// Update port lines
-	signals_changed = _updateIecLines(&atn_edge);	
+	signals_changed = _updateIecLines();	
 
-	// Check if ATN edge occurred
-	if (atn_edge) {
-		c64->floppy.simulateAtnInterrupt();
-	}
-
+    // ATN signal is connected to CA1 pin of VIA 1
+    c64->floppy.via1.setCA1(!getAtnLine());
+    
 	if (signals_changed) {
 		if (busActivity == 0) {
 			// Bus activity detected
