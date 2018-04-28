@@ -118,7 +118,6 @@ VIA6522::execute()
     
     // Check for interrupt condition
     if (ifr & ier) {
-        if (ifr & 0x02) debug("ifr = %02X ier = %02X\n", ifr, ier);
         delay |= VC64VIAInterrupt0;
     }
     
@@ -340,13 +339,7 @@ VIA6522::peek(uint16_t addr)
 uint8_t
 VIA6522::peekORA(bool handshake)
 {
-    uint8_t oldifr = ifr;
-    
     clearInterruptFlag_CA1();
-    
-    if (oldifr & 0x02) {
-        debug("oldifr %02X newifr %02X\n", oldifr, ifr);
-    }
     
     // Take care of side effects
     switch ((pcr >> 1) & 0x07) {
@@ -815,40 +808,6 @@ VIA1::updatePB()
     pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
 }
 
-uint8_t VIA1::peek(uint16_t addr)
-{
-    /*
-    switch(addr) {
-            
-        case 0x1: // ORA - Output register A
-        case 0xF:
-            // Clean this up ...
-            c64->floppy.cpu.releaseIrqLine(CPU::ATN);
-            break;
-    }
-    */
-    
-    return VIA6522::peek(addr);
-}
-
-uint8_t VIA1::read(uint16_t addr)
-{
-    switch(addr) {
-            
-        case 0x0: // ORB - Output register B
-            
-            return (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
-            
-        case 0x1: // ORA - Output register A
-        case 0xF:
-            
-            return (portAinternal() & ddra) | (portAexternal() & ~ddra);
-            
-        default:
-            return VIA6522::read(addr);
-    }
-}
-
 void VIA1::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
@@ -909,7 +868,7 @@ VIA2::portAinternal()
 uint8_t
 VIA2::portAexternal()
 {
-    return 0xFF;
+    return ira;
 }
 
 void
@@ -970,71 +929,6 @@ VIA2::updatePB()
         } else {
             warn("Unexpected stepper motor control sequence\n");
         }
-    }
-}
-
-uint8_t VIA2::peek(uint16_t addr)
-{
-    switch(addr) {
-            
-        case 0x0: { // ORB - Output register B
-            return VIA6522::peek(addr);;
-        }
-            
-        case 0x1: // ORA - Output register A
-        case 0xF: {
-            
-            uint8_t result;
-            
-            (void)VIA6522::peek(addr);
-            
-            if (inputLatchingEnabledA()) {
-                // This is the normal operation mode of the drive.
-                // Every byte that comes from
-                result =
-                (ddra & ora) | // Values of bits configured as outputs
-                (~ddra & ira); // Values of bits configures as inputs
-            } else {
-                warn("INPUT LATCHING OF VIA2 IS DISABLED!");
-                result = 0;
-            }
-            return result;
-        }
-            
-        default:
-            return VIA6522::peek(addr);
-    }
-}
-
-uint8_t VIA2::read(uint16_t addr)
-{
-    switch(addr) {
-            
-        case 0x0: // ORB - Output register B
-            
-            return (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
-            
-        case 0x1: // ORA - Output register A
-        case 0xF: {
-            
-            uint8_t result;
-            
-            if (inputLatchingEnabledA()) {
-                // This is the normal operation mode of the drive.
-                // Every byte that comes from
-                result =
-                (ddra & ora) | // Values of bits configured as outputs
-                (~ddra & ira); // Values of bits configures as inputs
-            } else {
-                warn("INPUT LATCHING OF VIA2 IS DISABLED!");
-                result = 0;
-            }
-            
-            return result;
-        }
-            
-        default:
-            return VIA6522::peek(addr);
     }
 }
 

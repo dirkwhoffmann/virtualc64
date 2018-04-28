@@ -450,7 +450,6 @@ public:
     uint8_t portBexternal();
     void updatePB();
     
-	uint8_t peek(uint16_t addr);
     uint8_t read(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
 
@@ -471,9 +470,7 @@ public:
 
 	VIA2();
 	~VIA2();
-    // void executeTimer1();
-    // void executeTimer2();
-  
+ 
     uint8_t portAinternal();
     uint8_t portAexternal();
     void updatePA();
@@ -481,8 +478,6 @@ public:
     uint8_t portBexternal();
     void updatePB();
     
-	uint8_t peek(uint16_t addr);
-    uint8_t read(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 
     //! @brief    Returns bit 0 of output register B
