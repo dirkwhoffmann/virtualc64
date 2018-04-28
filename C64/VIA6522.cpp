@@ -164,30 +164,29 @@ VIA6522::execute()
 void
 VIA6522::executeTimer1()
 {
+    /*
     if (delay & VC64VIAReloadA2) {
+        // debug("Reloading timer 1 with %04X\n", HI_LO(t1_latch_hi, t1_latch_lo));
         t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
-
-    if (delay & VC64VIACountA1) {
-        t1--;
-    }
+    */
     
     if (t1 == 0) {
+        
+        // Reload timer from latch
+        // delay |= VC64VIAReloadA1;
+        t1 = HI_LO(t1_latch_hi, t1_latch_lo);
         
         if (freeRunMode1()) {
             
             /* "In the free-running mode,
              * (1) the interrupt flag is set and
-             * (2) the signal on PB7 is inverted each time the counter reaches zero.
-             * (3) However, instead of continuing to decrement from zero after a time-out,
-             *     the timer automatically transfers the contents of the latch into the
-             *     counter and continues to decrement from there."
+             * (2) the signal on PB7 is inverted each time the counter reaches zero."
              */
             
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);             // (1)
                 pb7toggle = !pb7toggle;     // (2)
-                delay |= VC64VIAReloadA0;   // (3)
             }
             
         } else {
@@ -214,6 +213,11 @@ VIA6522::executeTimer1()
         if (acr & 0x80) {
             // pb7timerOut = pb7toggle;
             pb7timerOut = true;
+        }
+        
+    } else {
+        if (delay & VC64VIACountA1) {
+            t1--;
         }
     }
 }
@@ -487,7 +491,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x5: // T1C-H (read and write)
             
-            // (1) Loads value into T1C-L.
+            // debug("Poke(VIA05, %02X) (latch_hi, transfer)\n", value);
+            // (1) Loads value into T1L-H.
             t1_latch_hi = value;
 
             // (2) Transfers latch contents into counter.
@@ -507,6 +512,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x7: // T1L-H (read and write)
             
+            // debug("Poke(VIA07, %02X)\n", value);
             t1_latch_hi = value;
             return;
             
@@ -532,6 +538,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xB: // Auxiliary control register
             
+            // debug("Poking %02X to ACR\n", value);
             acr = value;
             
             // TODO (Hoxs64)

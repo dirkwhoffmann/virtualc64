@@ -31,9 +31,9 @@ class VC1541;
 #define VC64VIACountA1       (1ULL << 1)
 #define VC64VIACountB0       (1ULL << 2) // Timer 2 decrements every cycle
 #define VC64VIACountB1       (1ULL << 3)
-#define VC64VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload (free-run mode)
-#define VC64VIAReloadA1      (1ULL << 5)
-#define VC64VIAReloadA2      (1ULL << 6)
+// #define VC64VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload (free-run mode)
+// #define VC64VIAReloadA1      (1ULL << 5)
+// #define VC64VIAReloadA2      (1ULL << 6)
 #define VC64VIAPostOneShotA0 (1ULL << 7) // Indicates that timer 1 has fired in one shot mode
 #define VC64VIAPostOneShotB0 (1ULL << 8) // Indicates that timer 2 has fired in one shot mode
 #define VC64VIAInterrupt0    (1ULL << 9)
@@ -48,7 +48,7 @@ class VC1541;
 #define VC64VIAClearCB2out1  (1ULL << 18)
 
 
-#define VC64VIAClearBits   ~((1ULL << 11) | VC64VIACountA0 | VC64VIACountB0 | VC64VIAReloadA0 | VC64VIAPostOneShotA0 | VC64VIAPostOneShotB0 | VC64VIAInterrupt0 | VC64VIASetCA2out0 | VC64VIAClearCA2out0 | VC64VIASetCB2out0 | VC64VIAClearCB2out0)
+#define VC64VIAClearBits   ~((1ULL << 11) | VC64VIACountA0 | VC64VIACountB0 | /* VC64VIAReloadA0 | */ VC64VIAPostOneShotA0 | VC64VIAPostOneShotB0 | VC64VIAInterrupt0 | VC64VIASetCA2out0 | VC64VIAClearCA2out0 | VC64VIASetCB2out0 | VC64VIAClearCB2out0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
