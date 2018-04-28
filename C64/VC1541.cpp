@@ -223,7 +223,7 @@ VC1541::byteReady(uint8_t byte)
 inline void
 VC1541::byteReady()
 {
-    if (via2.overflowEnabled()) cpu.setV(1);
+    cpu.setV(1);
 }
 
 void
