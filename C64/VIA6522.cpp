@@ -185,8 +185,8 @@ VIA6522::executeTimer1()
              */
             
             if (!(feed & VC64VIAPostOneShotA0)) {
-                SET_BIT(ifr,6);         // (1) 
-                pb7toggle = !pb7toggle; // (2)
+                SET_BIT(ifr,6);             // (1)
+                pb7toggle = !pb7toggle;     // (2)
                 delay |= VC64VIAReloadA0;   // (3)
             }
             
@@ -200,10 +200,10 @@ VIA6522::executeTimer1()
                 SET_BIT(ifr,6);
                 pb7toggle = !pb7toggle;
             }
-        }
         
-        feed |= VC64VIAPostOneShotA0;
-            
+            feed |= VC64VIAPostOneShotA0;
+        }
+
         /* "In addition to generating a single interrupt, Timer 1 can be programmed
          *  to produce a single negative pulse on the PB7 peripheral pin. With the
          *  output enabled (ACR7=1) a "write T1C-H" operation will cause PB7 to go low.
@@ -212,7 +212,8 @@ VIA6522::executeTimer1()
          */
             
         if (acr & 0x80) {
-            pb7timerOut = pb7toggle;
+            // pb7timerOut = pb7toggle;
+            pb7timerOut = true;
         }
     }
 }
@@ -245,7 +246,7 @@ VIA6522::IRQ() {
 }
 
 // --------------------------------------------------------------------------------------------
-//                                Peek and Poke (Shared behaviour)
+//                             Peeking and poking registers
 // --------------------------------------------------------------------------------------------
 
 uint8_t 
@@ -341,8 +342,9 @@ VIA6522::peekORA(bool handshake)
 {
     clearInterruptFlag_CA1();
     
-    // Take care of side effects
-    switch ((pcr >> 1) & 0x07) {
+    uint8_t CA2control = (pcr >> 1) & 0x07; // ----xxx-
+    
+    switch (CA2control) {
         case 0: // Input mode: Interrupt on negative edge
             clearInterruptFlag_CA2();
             break;
@@ -380,8 +382,9 @@ VIA6522::peekORB()
 {
     clearInterruptFlag_CB1();
     
-    // Take care of side effects
-    switch ((pcr >> 5) & 0x07) {
+    uint8_t CB2control = (pcr >> 5) & 0x07; // xxx-----
+    
+    switch (CB2control) {
         case 0: // Input mode: Interrupt on negative edge
             clearInterruptFlag_CB2();
             break;
@@ -680,62 +683,88 @@ VIA6522::pokeORB(uint8_t value)
 void
 VIA6522::setCA1(bool value)
 {
-    /* Bit 0 of the Peripheral Control Register selects the active transition
-     * of the input signal applied to the CA1 interrupt input pin.
-     */
-    bool pcr0 = pcr & 0x01;
-    
-    /* If this bit is a logic 0, the CAl interrupt flag will be set by a
-     * negative transition (high to low) of the signal on the CAl pin.
-     */
-    if (!pcr0 && ca1 && !value) {
-        ifr |= 0x02;
-    }
-    
-    /* If PCRO is a logic 1, the CAl interrupt flag will be set by a positive
-     * transition (low to high) of this signal.
-     */
-    if (pcr0 && !ca1 && value) {
-        ifr |= 0x02;
-    }
+    if (ca1 == value) return;
     
     ca1 = value;
+    
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = ca1Control();
+    bool active = (!ca1 && ctrl == 0) || (ca1 && ctrl == 1);
+    if (!active) return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CA1();
+    
+    // Check for handshake mode (ctrl == 100b)
+    // In handshake mode, CA2 goes high on an active transition of CA1
+    if (ctrl == 0x4)
+        setCA2out(true);
 }
 
 void
 VIA6522::setCA2(bool value)
 {
+    if (ca2 == value) return;
+    
+    ca2 = value;
+    
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = ca2Control();
+    bool active = (!ca2 && (ctrl == 0 || ctrl == 1)) || (ca2 && (ctrl == 2 || ctrl == 3));
+    if (!active) return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CA1();
 }
 
 void
 VIA6522::setCB1(bool value)
 {
-    /* Control of the active transition of the CBl input signal operates in
-     * exactly the same manner as that described above for CAl.
-     */
-    bool pcr4 = pcr & 0x10;
-    
-    /* If PCR4 is a logic 0 the CBl interrupt flag (IFR4) will be set by a
-     * negative transition of the CBl input signal.
-     */
-    if (!pcr4 && cb1 && !value) {
-        ifr |= 0x10;
-    }
-    
-    /* If PCR4 is a logic 1, IFR4 will be set by a positive transition of CBl.
-     */
-    if (pcr4 && !cb1 && value) {
-        ifr |= 0x10;
-    }
+    if (cb1 == value) return;
     
     cb1 = value;
+    
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = cb1Control();
+    bool active = (!cb1 && ctrl == 0) || (cb1 && ctrl == 1);
+    if (!active) return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CB1();
+    
+    // Check for handshake mode (ctrl == 100b)
+    // In handshake mode, CB2 goes high on an active transition of CB1
+    if (ctrl == 0x4)
+        setCB2out(true);
 }
 
 void
 VIA6522::setCB2(bool value)
 {
+    if (cb2 == value) return;
+    
+    cb2 = value;
+    
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = cb2Control();
+    bool active = (!cb2 && (ctrl == 0 || ctrl == 1)) || (cb2 && (ctrl == 2 || ctrl == 3));
+    if (!active) return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CB2();
 }
 
+void
+VIA6522::setCA2out(bool value)
+{
+    ca2_out = value;
+}
+
+void
+VIA6522::setCB2out(bool value)
+{
+    cb2_out = value;
+}
 
 // --------------------------------------------------------------------------------------------
 //                                        VIA 1

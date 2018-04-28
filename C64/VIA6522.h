@@ -259,28 +259,23 @@ public:
     bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
 
     // ----------------------------------------------------------------------------------------
-    //                          Peripheral control register
+    //                         Peripheral Control Register (PCR)
     // ----------------------------------------------------------------------------------------
     
     //! @brief    Returns the current value of the peripheral control register
     uint8_t getPcr() { return pcr & 0x20; }
 
-    //! @brief    Returns pcr bits 3, 2, and 1.
-    uint8_t pcr321() { return (pcr >> 1) & 0x07; }
-
+    //! @brief    Returns the CA1 control bit of the peripheral control register
+    uint8_t ca1Control() { return (pcr >> 0) & 0x01; }
     
-    //! @brief    Checks pcr for "input mode (negative transition)"
-    /*! @details  Set CA2 interrupt flag (IFRO) on a negative transition of
-     *            the input signal. Clear IFRO on a read or write of the
-     *            Peripheral A Output Register.
-     */
-    // bool isInputModeNeg() { return pcr321() == 0x0; }
+    //! @brief    Returns the three CA2 control bits of the peripheral control register
+    uint8_t ca2Control() { return (pcr >> 1) & 0x07; }
 
-    //! @brief    Checks pcr for "independent interrupt input mode (negative transition)"
-    /*! @details  Set IFRO on a negative transition of the CA2 input signal.
-     *            Reading or writing ORA does not clear the CA2 interrupt flag.
-     */
-    // bool isIndependentInputModeNeg() { return pcr321() == 0x1; }
+    //! @brief    Returns the CB1 control bit of the peripheral control register
+    uint8_t cb1Control() { return (pcr >> 4) & 0x01; }
+    
+    //! @brief    Returns the three CB2 control bits of the peripheral control register
+    uint8_t cb2Control() { return (pcr >> 5) & 0x07; }
 
     
     // ----------------------------------------------------------------------------------------
@@ -329,6 +324,8 @@ public:
     void setCA2(bool value);
     void setCB1(bool value);
     void setCB2(bool value);
+    virtual void setCA2out(bool value);
+    virtual void setCB2out(bool value);
 
     
     
@@ -392,7 +389,8 @@ public:
 
 
 /*! @brief   First virtual VIA6522 controller
- *  @details VIA1 serves as hardware interface between the VC1541 CPU and the IEC bus.
+ *  @details VIA1 serves as hardware interface between the VC1541 CPU
+ *           and the IEC bus.
  */
 class VIA1 : public VIA6522 {
 	
@@ -409,7 +407,10 @@ public:
     void updatePB();
 };
 
-//! The second versatile interface adapter (VIA2)
+/*! @brief   Second virtual VIA6522 controller
+ *  @details VIA2 serves as hardware interface between the VC1541 CPU
+ *           and the drive logic.
+ */
 class VIA2 : public VIA6522 {
 	
 public:
