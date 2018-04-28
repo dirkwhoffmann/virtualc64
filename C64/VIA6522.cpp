@@ -128,16 +128,16 @@ VIA6522::execute()
     
     // Set or clear CA2 or CB2 if requested
     if (delay & VC64VIASetCA2out1) {
-        ca2_out = true;
+        setCA2out(true);
     }
     if (delay & VC64VIAClearCA2out1) {
-        ca2_out = false;
+        setCA2out(false);
     }
     if (delay & VC64VIASetCB2out1) {
-        cb2_out = true;
+        setCB2out(true);
     }
     if (delay & VC64VIAClearCB2out1) {
-        cb2_out = false;
+        setCB2out(false);
     }
 
     // Move trigger event flags left and feed in new bits
@@ -579,7 +579,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xC: // Peripheral control register
             
-            pcr = value;
+            pokePCR(value);
             return;
             
         case 0xD: // IFR - Interrupt Flag Register
@@ -680,6 +680,48 @@ VIA6522::pokeORB(uint8_t value)
     updatePB();
 }
 
+void
+VIA6522::pokePCR(uint8_t value)
+{
+    pcr = value;
+    
+    // Check CA2 control bits
+    switch(ca2Control()) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            setCA2out(true);
+            break;
+        case 6: // Hold CA2 low
+            setCA2out(false);
+            break;
+        case 7: // Hold CA2 high
+            setCA2out(true);
+            break;
+    }
+    
+    // Check CB2 control bits
+    switch(cb2Control()) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            setCB2out(true);
+            break;
+        case 6: // Hold CB2 low
+            setCB2out(false);
+            break;
+        case 7: // Hold CB2 high
+            setCB2out(true);
+            break;
+    }
+}
+    
 void
 VIA6522::setCA1(bool value)
 {

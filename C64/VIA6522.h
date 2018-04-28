@@ -244,6 +244,9 @@ public:
     //! @brief    Special poke function for output register B
     void pokeORB(uint8_t value);
 
+    //! @brief    Special poke function for the PCR register
+    void pokePCR(uint8_t value);
+    
     
     // ----------------------------------------------------------------------------------------
     //                                Internal Configuration
