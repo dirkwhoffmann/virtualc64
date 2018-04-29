@@ -150,22 +150,29 @@ public:
     //! @brief    PB outputs bits 6 and 7 in toggle mode
 	uint8_t PB67Toggle;
 		
-	//
-    // Ports
+    //
+    // Port registers
     //
     
-    //! @brief    Bbuffered output value of port A
+    //! @brief    Peripheral data register A
     uint8_t PRA;
-
-    //! @brief    Bbuffered output value of port B
+    
+    //! @brief    Peripheral data register B
     uint8_t PRB;
     
-    //! @brief    Data directon register for port A (0 = input, 1 = output)
-	uint8_t DDRA;
-
-    //! @brief    Data directon register for port B (0 = input, 1 = output)
+    //! @brief    Data directon register A (0 = input, 1 = output)
+    uint8_t DDRA;
+    
+    //! @brief    Data directon register B (0 = input, 1 = output)
     uint8_t DDRB;
+    
+    //! @brief    Peripheral port A (pins PA0 to PA7)
+    uint8_t PA;
+    
+    //! @brief    Peripheral port A (pins PB0 to PB7)
+    uint8_t PB;
 	
+    
     //
     // Shift register logic
     //
@@ -293,6 +300,30 @@ private:
      */
     void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
 	
+private:
+    
+    //
+    // Port registers
+    //
+    
+    //! @brief   Values driving port A from inside the chip
+    virtual uint8_t portAinternal() = 0;
+    
+    //! @brief   Values driving port A from outside the chip
+    virtual uint8_t portAexternal() = 0;
+    
+    //! @brief   Computes the values which we currently see at port A
+    virtual void updatePA();
+    
+    //! @brief   Values driving port B from inside the chip
+    virtual uint8_t portBinternal() = 0;
+    
+    //! @brief   Values driving port B from outside the chip
+    virtual uint8_t portBexternal() = 0;
+    
+    //! @brief   Computes the values which we currently see at port B
+    virtual void updatePB();
+
     
     //
     //! @functiongroup Accessing the I/O address space
@@ -394,6 +425,11 @@ private:
     
     void pullDownInterruptLine();
     void releaseInterruptLine();
+    uint8_t portAinternal();
+    uint8_t portAexternal();
+    uint8_t portBinternal();
+    uint8_t portBexternal();
+
     uint8_t readDataPortA();
     uint8_t readDataPortB();
     void pokeDataPortA(uint8_t value);
@@ -427,6 +463,11 @@ private:
 
     void pullDownInterruptLine();
     void releaseInterruptLine();
+    uint8_t portAinternal();
+    uint8_t portAexternal();
+    uint8_t portBinternal();
+    uint8_t portBexternal();
+    
     uint8_t readDataPortA();
     uint8_t readDataPortB();
     void pokeDataPortA(uint8_t value);

@@ -98,6 +98,18 @@ CIA::triggerFallingEdgeOnFlagPin()
     }
 }
 
+void
+CIA::updatePA()
+{
+    PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
+}
+
+void
+CIA::updatePB()
+{
+    PB = (portBinternal() & DDRB) | (portBexternal() & DDRB);
+}
+
 uint8_t
 CIA::peek(uint16_t addr)
 {
@@ -1044,6 +1056,38 @@ CIA1::releaseInterruptLine()
     c64->cpu.releaseIrqLine(CPU::CIA);
 }
 
+uint8_t
+CIA1::portAinternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
+uint8_t
+CIA1::portAexternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
+uint8_t
+CIA1::portBinternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
+uint8_t
+CIA1::portBexternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
 uint8_t 
 CIA1::readDataPortA()
 {
@@ -1160,6 +1204,38 @@ void
 CIA2::releaseInterruptLine()
 {
     c64->cpu.releaseNmiLine(CPU::CIA);
+}
+
+uint8_t
+CIA2::portAinternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
+uint8_t
+CIA2::portAexternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
+uint8_t
+CIA2::portBinternal()
+{
+    // TODO
+    assert(0);
+    return 0;
+}
+
+uint8_t
+CIA2::portBexternal()
+{
+    // TODO
+    assert(0);
+    return 0;
 }
 
 uint8_t 
