@@ -736,7 +736,19 @@ VIA6522::pokePCR(uint8_t value)
             break;
     }
 }
-    
+
+void
+VIA6522::updatePA()
+{
+    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
+}
+
+void
+VIA6522::updatePB()
+{
+    pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+}
+
 void
 VIA6522::setCA1(bool value)
 {
@@ -850,12 +862,6 @@ VIA1::portAexternal()
     return 0xFF;
 }
 
-void
-VIA1::updatePA()
-{
-    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
-}
-
 uint8_t
 VIA1::portBinternal()
 {
@@ -882,7 +888,7 @@ VIA1::portBexternal()
 void
 VIA1::updatePB()
 {
-    pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+    VIA6522::updatePB();
     c64->floppy.iec->updateDevicePins(orb, ddrb);
 }
 
@@ -913,12 +919,6 @@ VIA2::portAexternal()
     return ira;
 }
 
-void
-VIA2::updatePA()
-{
-    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
-}
-
 uint8_t
 VIA2::portBinternal()
 {
@@ -939,7 +939,7 @@ VIA2::updatePB()
 {
     uint8_t oldPb = pb;
     
-    pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+    VIA6522::updatePB();
     
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------

@@ -300,7 +300,7 @@ public:
     /*! @brief   Computes the current bit values visible at port A
      *  @details Value is stored in variable pa
      */
-    virtual void updatePA() = 0;
+    virtual void updatePA();
 
     //! @brief   Bit values driving port B from inside the chip
     virtual uint8_t portBinternal() = 0;
@@ -311,7 +311,7 @@ public:
     /*! @brief   Computes the current bit values visible at port B
      *  @details Value is stored in variable pb
      */
-    virtual void updatePB() = 0;
+    virtual void updatePB();
     
     //! Returns the current value on chip pin CA2
     // DEPRECATED
@@ -410,7 +410,6 @@ public:
     
     uint8_t portAinternal();
     uint8_t portAexternal();
-    void updatePA();
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
@@ -429,7 +428,6 @@ public:
  
     uint8_t portAinternal();
     uint8_t portAexternal();
-    void updatePA();
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
