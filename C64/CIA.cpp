@@ -42,15 +42,15 @@ CIA::CIA()
         { &PB67TimerMode,   sizeof(PB67TimerMode),  CLEAR_ON_RESET },
         { &PB67TimerOut,    sizeof(PB67TimerOut),   CLEAR_ON_RESET },
         { &PB67Toggle,      sizeof(PB67Toggle),     CLEAR_ON_RESET },
-        { &PALatch,         sizeof(PALatch),        CLEAR_ON_RESET },
-        { &PBLatch,         sizeof(PBLatch),        CLEAR_ON_RESET },
+        { &PRA,         sizeof(PRA),        CLEAR_ON_RESET },
+        { &PRB,         sizeof(PRB),        CLEAR_ON_RESET },
         { &DDRA,            sizeof(DDRA),           CLEAR_ON_RESET },
         { &DDRB,            sizeof(DDRB),           CLEAR_ON_RESET },
         { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
         { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
         { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
-        { &PA,              sizeof(PA),             CLEAR_ON_RESET },
-        { &PB,              sizeof(PB),             CLEAR_ON_RESET },
+        { &oldstylePA,              sizeof(oldstylePA),             CLEAR_ON_RESET },
+        { &oldstylePB,              sizeof(oldstylePB),             CLEAR_ON_RESET },
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
         { &INT,             sizeof(INT),            CLEAR_ON_RESET },
         { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
@@ -69,8 +69,8 @@ CIA::reset()
 {
     VirtualComponent::reset();
     
-    PA = 0xFF;
-    PB = 0xFF;
+    oldstylePA = 0xFF;
+    oldstylePB = 0xFF;
 
 	CNT = true;
 	INT = 1;
@@ -473,7 +473,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // TODO: We need to react on a change of this bit
             tod.setHz((value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */);
             
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+			oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			CRA = value;
 			
 			return;
@@ -541,7 +541,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // 1------- : Writing into TOD registers sets alarm time
             
             
-			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+			oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			CRB = value;
 			
 			return;			
@@ -599,9 +599,9 @@ CIA::dumpTrace()
 			delay & OneShotB0 ? "1ShotB0 " : "");
 
 	debug(1, "%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
-		  indent, counterA, latchA, PA, PALatch, DDRA, CRA);
+		  indent, counterA, latchA, oldstylePA, PRA, DDRA, CRA);
 	debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-		  indent, counterB, latchB, PB, PBLatch, DDRB, CRB);
+		  indent, counterB, latchB, oldstylePB, PRB, DDRB, CRB);
 }
 
 void
@@ -872,7 +872,7 @@ CIA::executeOneCycle()
 
 	
 	// Write new PB 
-	PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+	oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 	
 	
 	//
@@ -1047,8 +1047,8 @@ CIA1::releaseInterruptLine()
 uint8_t 
 CIA1::readDataPortA()
 {
-    uint8_t result = PA;
-    uint8_t rows = PB & c64->joystickA.bitmask();
+    uint8_t result = oldstylePA;
+    uint8_t rows = oldstylePB & c64->joystickA.bitmask();
     uint8_t columnBits = c64->keyboard.getColumnValues(rows);
     
     // Clear joystick and keyboard bits
@@ -1061,8 +1061,8 @@ CIA1::readDataPortA()
 uint8_t
 CIA1::readDataPortB()
 {
-    uint8_t result = PB;
-    uint8_t columns = PA & c64->joystickB.bitmask();
+    uint8_t result = oldstylePB;
+    uint8_t columns = oldstylePA & c64->joystickB.bitmask();
     uint8_t rowBits = c64->keyboard.getRowValues(columns);
     
     // Clear joystick and keyboard bits
@@ -1075,19 +1075,19 @@ CIA1::readDataPortB()
 void 
 CIA1::pokeDataPortA(uint8_t value)
 {
-    PALatch = value;
-    PA = PALatch | ~DDRA;
+    PRA = value;
+    oldstylePA = PRA | ~DDRA;
 }
 
 void
 CIA1::pokeDataPortB(uint8_t value)
 {
-    uint8_t PBold = PB;
+    uint8_t PBold = oldstylePB;
     
-    PBLatch = value;
-    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    PRB = value;
+    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
     
-    if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
+    if ((PBold & 0x10) != (oldstylePB & 0x10)) { // edge on lightpen bit?
         c64->vic.triggerLightPenInterrupt();
     }
 }
@@ -1096,18 +1096,18 @@ void
 CIA1::pokeDataPortDirectionA(uint8_t value)
 {
     DDRA = value;
-    PA = PALatch | ~DDRA;
+    oldstylePA = PRA | ~DDRA;
 }
 
 void
 CIA1::pokeDataPortDirectionB(uint8_t value)
 {
-    uint8_t PBold = PB;
+    uint8_t PBold = oldstylePB;
     
     DDRB = value;
-    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
     
-    if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
+    if ((PBold & 0x10) != (oldstylePB & 0x10)) { // edge on lightpen bit?
         c64->vic.triggerLightPenInterrupt();
     }
 }
@@ -1165,7 +1165,7 @@ CIA2::releaseInterruptLine()
 uint8_t 
 CIA2::readDataPortA()
 {
-    uint8_t result = PA;
+    uint8_t result = oldstylePA;
     
     // The two upper bits are connected to the clock line and the data line
     result &= 0x3F;
@@ -1182,28 +1182,28 @@ CIA2::readDataPortA()
 uint8_t
 CIA2::readDataPortB()
 {
-    uint8_t result = PB;
+    uint8_t result = oldstylePB;
     return result;
 }
 
 void 
 CIA2::pokeDataPortA(uint8_t value)
 {
-    PALatch = value;
-    PA = PALatch | ~DDRA;
+    PRA = value;
+    oldstylePA = PRA | ~DDRA;
     
     // Bits 0 and 1 determine the memory bank seen the VIC
-    c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+    c64->vic.setMemoryBankAddr((~oldstylePA & 0x03) << 14);
     
     // Bits 3 to 5 of PA are connected to the IEC bus
-    c64->iec.updateCiaPins(PALatch, DDRA);
+    c64->iec.updateCiaPins(PRA, DDRA);
 }
 
 void
 CIA2::pokeDataPortB(uint8_t value)
 {
-    PBLatch = value;
-    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    PRB = value;
+    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
     // oldPB = PB;
 }
 
@@ -1211,20 +1211,20 @@ void
 CIA2::pokeDataPortDirectionA(uint8_t value)
 {
     DDRA = value;
-    PA = PALatch | ~DDRA;
+    oldstylePA = PRA | ~DDRA;
     
     // Bits 0 and 1 determine the memory bank seen the VIC
-    c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+    c64->vic.setMemoryBankAddr((~oldstylePA & 0x03) << 14);
     
     // Bits 3 to 5 of PA are connected to the IEC bus
-    c64->iec.updateCiaPins(PALatch, DDRA);
+    c64->iec.updateCiaPins(PRA, DDRA);
 }
 
 void
 CIA2::pokeDataPortDirectionB(uint8_t value)
 {
     DDRB = value;
-    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
     // oldPB = PB;
 }
 

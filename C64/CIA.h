@@ -155,10 +155,10 @@ public:
     //
     
     //! @brief    Bbuffered output value of port A
-    uint8_t PALatch;
+    uint8_t PRA;
 
     //! @brief    Bbuffered output value of port B
-    uint8_t PBLatch;
+    uint8_t PRB;
     
     //! @brief    Data directon register for port A (0 = input, 1 = output)
 	uint8_t DDRA;
@@ -209,8 +209,8 @@ public:
 	// Chip interface (port pins)
     //
     
-	uint8_t PA;
-	uint8_t PB;
+	uint8_t oldstylePA;
+	uint8_t oldstylePB;
     
     //! @brief    Serial clock or input timer clock or timer gate
 	bool CNT;
