@@ -180,31 +180,30 @@ VIA6522::executeTimer1()
     
     if (t1 == 0) {
         
+        // Reload counter in 2 cycles
+        delay |= VC64VIAReloadA0;
+        
         if (freeRun()) {
             
             /* "In the free-running mode,
              * (1) the interrupt flag is set and
              * (2) the signal on PB7 is inverted each time the counter reaches zero."
              */
-            
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);             // (1)
                 pb7toggle = !pb7toggle;     // (2)
             }
-            delay |= VC64VIAReloadA0;
             
         } else {
                 
             /* "The Timer 1 one-shot mode generates a single interrupt for each timer load
              *  operation."
              */
-            
-            if (!(delay & VC64VIAPostOneShotA0)) {
+            if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);
                 pb7toggle = !pb7toggle;
             }
         
-            delay |= VC64VIAReloadA0;
             feed |= VC64VIAPostOneShotA0;
         }
 
