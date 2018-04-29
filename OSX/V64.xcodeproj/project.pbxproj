@@ -22,7 +22,6 @@
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
-		500D80B4209376C800FEEEEE /* HoxsVIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D80B2209376C800FEEEEE /* HoxsVIA.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
 		500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */; };
@@ -296,8 +295,6 @@
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
-		500D80B2209376C800FEEEEE /* HoxsVIA.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HoxsVIA.cpp; sourceTree = "<group>"; };
-		500D80B3209376C800FEEEEE /* HoxsVIA.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HoxsVIA.hpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		500EC05010E4DCC4005A19A3 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
 		500EF688203EB0210043F4FC /* HardwarePrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HardwarePrefs.xib; sourceTree = "<group>"; };
@@ -894,8 +891,6 @@
 				50775E0E1B8EE8A9002EB58D /* Disk525.cpp */,
 				50F681E91BEA3BE4008568E3 /* Datasette.h */,
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
-				500D80B2209376C800FEEEEE /* HoxsVIA.cpp */,
-				500D80B3209376C800FEEEEE /* HoxsVIA.hpp */,
 			);
 			name = Peripherals;
 			sourceTree = "<group>";
@@ -1421,7 +1416,6 @@
 				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
-				500D80B4209376C800FEEEEE /* HoxsVIA.cpp in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,

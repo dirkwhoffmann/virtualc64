@@ -258,6 +258,9 @@ public:
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRun() { return (acr & 0x40) != 0; }
 
+    //! @brief    Returns true iff timer 2 counts pulses on pin PB6
+    bool countPulses() { return (acr & 0x20) != 0; }
+    
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
 

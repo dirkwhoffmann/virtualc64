@@ -238,7 +238,8 @@ VIA6522::executeTimer2()
     
     // Check for underflow condition
     if (t2 == 0 && (delay & VC64VIACountB0)) {
-        
+    // if (t2 == 0) {
+
         if (!(delay & VC64VIAPostOneShotB0)) {
             SET_BIT(ifr,5);
             feed |= VC64VIAPostOneShotB0;
