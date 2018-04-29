@@ -164,18 +164,21 @@ VIA6522::execute()
 void
 VIA6522::executeTimer1()
 {
-    /*
+    // Reload counter
     if (delay & VC64VIAReloadA2) {
-        // debug("Reloading timer 1 with %04X\n", HI_LO(t1_latch_hi, t1_latch_lo));
-        t1 = HI_LO(t1_latch_hi, t1_latch_lo);
+        /*
+        if (t1_latch_lo != 0)
+            debug("Reloading timer 1 with %04X\n", HI_LO(t1_latch_hi, t1_latch_lo));
+         */
+         t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
-    */
+    
+    // Decrement counter
+    else if (delay & VC64VIACountA1) {
+        t1--;
+    }
     
     if (t1 == 0) {
-        
-        // Reload timer from latch
-        // delay |= VC64VIAReloadA1;
-        t1 = HI_LO(t1_latch_hi, t1_latch_lo);
         
         if (freeRunMode1()) {
             
@@ -187,6 +190,7 @@ VIA6522::executeTimer1()
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);             // (1)
                 pb7toggle = !pb7toggle;     // (2)
+                delay |= VC64VIAReloadA0;
             }
             
         } else {
@@ -200,6 +204,7 @@ VIA6522::executeTimer1()
                 pb7toggle = !pb7toggle;
             }
         
+            delay |= VC64VIAReloadA0;
             feed |= VC64VIAPostOneShotA0;
         }
 
@@ -215,27 +220,30 @@ VIA6522::executeTimer1()
             pb7timerOut = true;
         }
         
-    } else {
-        if (delay & VC64VIACountA1) {
-            t1--;
-        }
     }
 }
 
 void
 VIA6522::executeTimer2()
 {
-    if (delay & VC64VIACountB1) {
+    // Check for reload condition
+    if (delay & VC64VIAReloadB2) {
+        // t2 = HI_LO(???, ???);
+    }
+    
+    // Otherwise, check for decrement condition
+    else if (delay & VC64VIACountB1) {
         t2--;
     }
     
+    // Check for underflow condition
     if (t2 == 0) {
         
         if (!(delay & VC64VIAPostOneShotB0)) {
             SET_BIT(ifr,5);
             feed |= VC64VIAPostOneShotB0;
         }
-    }
+    } 
 }
 
 bool
@@ -486,6 +494,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x4: // T1L-L (write) / T1C-L (read)
             
+            debug("Writing %02X to ti_latch_lo\n", value);
             t1_latch_lo = value;
             return;
             
@@ -501,8 +510,10 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             // (3) T1 interrupt flag is reset.
             clearInterruptFlag_T1();
             
+            delay |= VC64VIAReloadA2;
             feed &= ~(VC64VIAPostOneShotA0);
-            delay &= ~(VC64VIACountA1); // Delay counting down for one cycle
+            delay &= ~(VC64VIAPostOneShotA0);
+            delay &= ~(VC64VIACountA1 | VC64VIAReloadA1);
             return;
             
         case 0x6: // T1L-L (read and write)
@@ -519,8 +530,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0x8: // T2L-L (write) / T2C-L (read)
             
             t2_latch_lo = value;
-            clearInterruptFlag_T2();
-            c64->floppy.cpu.releaseIrqLine(CPU::VIA);
+            // c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
         case 0x9: // T2C-H
@@ -528,6 +538,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
             feed &= ~(VC64VIAPostOneShotB0);
+            delay &= ~(VC64VIAPostOneShotB0);
+            delay &= ~(VC64VIACountB1 | VC64VIAReloadB1);
             return;
             
         case 0xA: // Shift register
@@ -583,6 +595,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             return;
             
         case 0xE: // IER - Interrupt Enable Register
+            
+            debug("Writing %02X into IER\n", value);
             
             // Bit 7 distinguishes between set and clear
             // If bit 7 is 1, writing 1 will set the corresponding bit
