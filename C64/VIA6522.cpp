@@ -180,7 +180,7 @@ VIA6522::executeTimer1()
     
     if (t1 == 0) {
         
-        if (freeRunMode1()) {
+        if (freeRun()) {
             
             /* "In the free-running mode,
              * (1) the interrupt flag is set and
@@ -237,13 +237,13 @@ VIA6522::executeTimer2()
     }
     
     // Check for underflow condition
-    if (t2 == 0) {
+    if (t2 == 0 && (delay & VC64VIACountB0)) {
         
         if (!(delay & VC64VIAPostOneShotB0)) {
             SET_BIT(ifr,5);
             feed |= VC64VIAPostOneShotB0;
         }
-    } 
+    }
 }
 
 bool
@@ -333,6 +333,7 @@ VIA6522::peek(uint16_t addr)
             
         case 0xD: // IFR - Interrupt Flag Register
             
+            // debug("Reading %02X from IFR\n", ifr | ((ifr & ier) ? 0x80 : 0x00));
             assert((ifr & 0x80) == 0);
             assert((ier & 0x80) == 0);
             return ifr | ((ifr & ier) ? 0x80 : 0x00);
@@ -494,21 +495,21 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x4: // T1L-L (write) / T1C-L (read)
             
-            debug("Writing %02X to ti_latch_lo\n", value);
-            t1_latch_lo = value;
+            // (1) Write low order latch.
+            
+            t1_latch_lo = value; // (1)
             return;
             
         case 0x5: // T1C-H (read and write)
             
-            // debug("Poke(VIA05, %02X) (latch_hi, transfer)\n", value);
-            // (1) Loads value into T1L-H.
-            t1_latch_hi = value;
-
-            // (2) Transfers latch contents into counter.
-            t1 = HI_LO(t1_latch_hi, t1_latch_lo);
-
-            // (3) T1 interrupt flag is reset.
-            clearInterruptFlag_T1();
+            // (1) Write into high order latch.
+            // (2) Write into high order counter.
+            // (3) Transfer low order latch into low order counter.
+            // (4) Reset T1 interrupt flag.
+            
+            t1_latch_hi = value; // (1)
+            t1 = HI_LO(t1_latch_hi, t1_latch_lo); // (2), (3)
+            clearInterruptFlag_T1(); // (4)
             
             delay |= VC64VIAReloadA2;
             feed &= ~(VC64VIAPostOneShotA0);
@@ -518,13 +519,18 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x6: // T1L-L (read and write)
             
-            t1_latch_lo = value;
+            // (1) Write low order latch.
+            
+            t1_latch_lo = value; // (1)
             return;
             
         case 0x7: // T1L-H (read and write)
             
-            // debug("Poke(VIA07, %02X)\n", value);
-            t1_latch_hi = value;
+            // (1) Write high order latch.
+            // (2) Reset Tl interrupt flag.
+            
+            t1_latch_hi = value; // (1)
+            clearInterruptFlag_T1(); // (2)
             return;
             
         case 0x8: // T2L-L (write) / T2C-L (read)
@@ -550,7 +556,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xB: // Auxiliary control register
             
-            // debug("Poking %02X to ACR\n", value);
+            debug("Poking %02X to ACR\n", value);
             acr = value;
             
             // TODO (Hoxs64)
@@ -561,7 +567,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             if (acr & 0x20) {
                 
-                // In the pulse counting mode, T2 counts negative pulses on PB6,
+                // In pulse counting mode, T2 counts negative pulses on PB6,
                 // so we disable automatic counting.
                 
                 delay &= ~(VC64VIACountB0);
@@ -569,7 +575,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
                 
             } else {
                 
-                // In the timed interrupt mode, T2 counts down every cycle.
+                // In timed interrupt mode, T2 counts down every cycle.
                 
                 delay |= VC64VIACountB0;
                 feed |= VC64VIACountB0;
@@ -588,6 +594,8 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             return;
             
         case 0xD: // IFR - Interrupt Flag Register
+            
+            debug("Poking %02X to IFR\n", value);
             
             // Writing 1 will clear the corresponding bit
             ifr &= ~value;

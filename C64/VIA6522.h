@@ -256,7 +256,7 @@ public:
     // ----------------------------------------------------------------------------------------
 
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
-    bool freeRunMode1() { return (acr & 0x40) != 0; }
+    bool freeRun() { return (acr & 0x40) != 0; }
 
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
