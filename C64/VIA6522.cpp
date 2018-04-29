@@ -190,8 +190,8 @@ VIA6522::executeTimer1()
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);             // (1)
                 pb7toggle = !pb7toggle;     // (2)
-                delay |= VC64VIAReloadA0;
             }
+            delay |= VC64VIAReloadA0;
             
         } else {
                 
@@ -199,7 +199,7 @@ VIA6522::executeTimer1()
              *  operation."
              */
             
-            if (!(feed & VC64VIAPostOneShotA0)) {
+            if (!(delay & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);
                 pb7toggle = !pb7toggle;
             }
