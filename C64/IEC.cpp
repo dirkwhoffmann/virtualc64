@@ -170,14 +170,8 @@ bool IEC::_updateIecLines()
 	// to detect a connected drive without any interaction by the drive itself.
 	if (driveConnected && deviceAtnPin == 1)
 		dataLine &= atnLine;
-	
-	// Check atn line for a negative edge
-    /*
-	if (atnedge != NULL) 
-		*atnedge = (oldAtnLine == 1 && atnLine == 0);
-	*/
     
-	// did any signal change its value?
+	// Did any signal change its value?
 	return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);	
 }
 
@@ -207,8 +201,7 @@ void IEC::updateIecLines()
 	
 void IEC::updateCiaPins(uint8_t cia_data, uint8_t cia_direction)
 {
-	// Note: On the pyhsical pins, 0 is dominant. 
-	// I.e., a single 0-source will bring the signal down to 0
+	// 0 is dominant on the bus. A single 0-source brings the signal down
 	
 	ciaAtnIsOutput = (cia_direction & 0x08) ? 1 : 0;
 	ciaClockIsOutput = (cia_direction & 0x10) ? 1 : 0;
@@ -222,8 +215,7 @@ void IEC::updateCiaPins(uint8_t cia_data, uint8_t cia_direction)
 
 void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
 {
-	// Note: On the pyhsical pins, 0 is dominant. 
-	// I.e., a single 0-source will bring the signal down to 0
+	// 0 is dominant on the bus. A single 0-source brings the signal down
 	
 	deviceAtnIsOutput = (device_direction & 0x10) ? 1 : 0;
 	deviceClockIsOutput = (device_direction & 0x08) ? 1 : 0;

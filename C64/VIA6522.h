@@ -261,6 +261,9 @@ public:
     //! @brief    Returns true iff timer 2 counts pulses on pin PB6
     bool countPulses() { return (acr & 0x20) != 0; }
     
+    //! @brief    Returns true iff an output pulse is generated on each T1 load operation
+    bool generateOutputPulse() { return (acr & 0x80) != 0; }
+    
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }
 
@@ -303,7 +306,7 @@ public:
     virtual void updatePA();
 
     //! @brief   Bit values driving port B from inside the chip
-    virtual uint8_t portBinternal() = 0;
+    virtual uint8_t portBinternal();
     
     //! @brief   Bit values driving port B from outside the chip
     virtual uint8_t portBexternal() = 0;
@@ -410,7 +413,6 @@ public:
     
     uint8_t portAinternal();
     uint8_t portAexternal();
-    uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
 };
@@ -428,7 +430,6 @@ public:
  
     uint8_t portAinternal();
     uint8_t portAexternal();
-    uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
 };
