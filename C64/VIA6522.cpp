@@ -567,7 +567,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xB: // Auxiliary control register
             
-            debug("Poking %02X to ACR\n", value);
+            // debug("Poking %02X to ACR\n", value);
             acr = value;
             
             // TODO (Hoxs64)
@@ -606,7 +606,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xD: // IFR - Interrupt Flag Register
             
-            debug("Poking %02X to IFR\n", value);
+            // debug("Poking %02X to IFR\n", value);
             
             // Writing 1 will clear the corresponding bit
             ifr &= ~value;
@@ -615,7 +615,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xE: // IER - Interrupt Enable Register
             
-            debug("Writing %02X into IER\n", value);
+            // debug("Writing %02X into IER\n", value);
             
             // Bit 7 distinguishes between set and clear
             // If bit 7 is 1, writing 1 will set the corresponding bit
@@ -758,9 +758,12 @@ uint8_t
 VIA6522::portBinternal()
 {
     uint8_t result = orb;
-    if (c64->floppy.cpu.tracingEnabled())
+    /*
+     if (c64->floppy.cpu.tracingEnabled()) {
         debug("portBinternal: acr = %02X ddrb = %02X orb = %02X\n", acr, ddrb, orb);
-    if (generateOutputPulse()) {
+     }
+     */
+     if (generateOutputPulse()) {
         // debug("portBinternal: pb7timerOut = %d\n", pb7timerOut);
         if (pb7timerOut)
             SET_BIT(result, 7);
@@ -775,8 +778,6 @@ void
 VIA6522::updatePB()
 {
     pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
-    if (c64->floppy.cpu.tracingEnabled()) debug("updatePB: db = %02X\n", pb);
-
 }
 
 void
