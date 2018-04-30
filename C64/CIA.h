@@ -313,7 +313,7 @@ private:
     virtual uint8_t portAexternal() = 0;
     
     //! @brief   Computes the values which we currently see at port A
-    virtual void updatePA();
+    virtual void updatePA() = 0;
     
     //! @brief   Values driving port B from inside the chip
     virtual uint8_t portBinternal() = 0;
@@ -322,7 +322,7 @@ private:
     virtual uint8_t portBexternal() = 0;
     
     //! @brief   Computes the values which we currently see at port B
-    virtual void updatePB();
+    virtual void updatePB() = 0;
 
     
     //
@@ -427,9 +427,11 @@ private:
     void releaseInterruptLine();
     uint8_t portAinternal();
     uint8_t portAexternal();
+    void updatePA();
     uint8_t portBinternal();
     uint8_t portBexternal();
-
+    void updatePB();
+    
     uint8_t readDataPortA();
     uint8_t readDataPortB();
     void pokeDataPortA(uint8_t value);
@@ -465,8 +467,10 @@ private:
     void releaseInterruptLine();
     uint8_t portAinternal();
     uint8_t portAexternal();
+    void updatePA();
     uint8_t portBinternal();
     uint8_t portBexternal();
+    void updatePB();
     
     uint8_t readDataPortA();
     uint8_t readDataPortB();

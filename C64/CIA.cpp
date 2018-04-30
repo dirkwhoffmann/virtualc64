@@ -98,18 +98,6 @@ CIA::triggerFallingEdgeOnFlagPin()
     }
 }
 
-void
-CIA::updatePA()
-{
-    PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
-}
-
-void
-CIA::updatePB()
-{
-    PB = (portBinternal() & DDRB) | (portBexternal() & DDRB);
-}
-
 uint8_t
 CIA::peek(uint16_t addr)
 {
@@ -122,14 +110,18 @@ CIA::peek(uint16_t addr)
             
         case 0x00: // CIA_DATA_PORT_A
             
-            result = readDataPortA();
-            break;
+            // result = readDataPortA();
+            // break;
+            updatePA();
+            return PA;
             
         case 0x01: // CIA_DATA_PORT_B
             
-            result = readDataPortB();
-            break;
-            
+            // result = readDataPortB();
+            // break;
+            updatePB();
+            return PB;
+
         case 0x02: // CIA_DATA_DIRECTION_A
 
 			result = DDRA;
@@ -281,21 +273,29 @@ void CIA::poke(uint16_t addr, uint8_t value)
         case 0x00: // CIA_DATA_PORT_A
             
             pokeDataPortA(value);
+            PRA = value;
+            updatePA();
             return;
             
         case 0x01: // CIA_DATA_PORT_B
             
             pokeDataPortB(value);
+            PRB = value;
+            updatePB();
             return;
             
         case 0x02: // CIA_DATA_DIRECTION_A
             
             pokeDataPortDirectionA(value);
+            DDRA = value;
+            updatePA();
             return;
             
         case 0x03: // CIA_DATA_DIRECTION_B
             
             pokeDataPortDirectionB(value);
+            DDRB = value;
+            updatePB();
             return;
             
         case 0x04: // CIA_TIMER_A_LOW
@@ -1056,36 +1056,80 @@ CIA1::releaseInterruptLine()
     c64->cpu.releaseIrqLine(CPU::CIA);
 }
 
+//                    -------
+//   JOYB0, COL0 <--> | PA0 |
+//   JOYB1, COL1 <--> | PA1 |
+//   JOYB2, COL2 <--> | PA2 |
+//   JOYB3, COL3 <--> | PA3 |
+//   BTNB,  COL4 <--> | PA4 |
+//          COL5 <--> | PA5 |
+//          COL6 <--> | PA6 |
+//          COL  <--> | PA7 |
+//                    -------
+
 uint8_t
 CIA1::portAinternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    return PRA;
 }
 
 uint8_t
 CIA1::portAexternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    return c64->keyboard.getColumnValues(PB);
 }
+
+void
+CIA1::updatePA()
+{
+    // PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
+    PA = readDataPortA();
+    // The control port can always bring the port lines low,
+    // no matter what the data direction register says.
+    PA &= c64->joystickB.bitmask();
+}
+
+//                    -------
+//   JOYA0, ROW0 <--> | PB0 |
+//   JOYA1, ROW1 <--> | PB1 |
+//   JOYA2, ROW2 <--> | PB2 |
+//   JOYA3, ROW3 <--> | PB3 |
+// BTNA/LP, ROW4 <--> | PB4 |
+//          ROW5 <--> | PB5 |
+//          ROW6 <--> | PB6 |
+//          ROW  <--> | PB7 |
+//                    -------
 
 uint8_t
 CIA1::portBinternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    uint8_t result = PRB;
+    
+    // Check if timer A underflow shows up on PB6
+    if (GET_BIT(PB67TimerMode, 6))
+        COPY_BIT(PB67TimerOut, result, 6);
+
+    // Check if timer B underflow shows up on PB7
+    if (GET_BIT(PB67TimerMode, 7))
+        COPY_BIT(PB67TimerOut, result, 7);
+    
+    return result;
 }
 
 uint8_t
 CIA1::portBexternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    return c64->keyboard.getRowValues(PA);
+}
+
+void
+CIA1::updatePB()
+{
+    PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
+ 
+    // The control port can always bring the port lines low,
+    // no matter what the data direction register says.
+    PB &= c64->joystickA.bitmask();
 }
 
 uint8_t 
@@ -1222,6 +1266,12 @@ CIA2::portAexternal()
     return 0;
 }
 
+void
+CIA2::updatePA()
+{
+    PA = readDataPortA();
+}
+
 uint8_t
 CIA2::portBinternal()
 {
@@ -1236,6 +1286,12 @@ CIA2::portBexternal()
     // TODO
     assert(0);
     return 0;
+}
+
+void
+CIA2::updatePB()
+{
+    PB = readDataPortB();
 }
 
 uint8_t 
