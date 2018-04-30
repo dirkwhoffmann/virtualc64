@@ -20,7 +20,9 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.10
 //
-//
+// This release contains various compatibility improvements
+// Fixed a bug that caused the GUI to crash when double-clicking an empty row in the mount window.
+
 // TODO:
 //
 // Introduce VIC::getInfo
@@ -36,7 +38,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 9
+#define V_MINOR 10
 #define V_SUBMINOR 0
 
 // Disables assert checking in relase version

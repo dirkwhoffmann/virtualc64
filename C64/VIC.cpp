@@ -47,6 +47,7 @@ VIC::VIC()
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
         
         // Internal state
+        { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
         { &prevDataBus,                 sizeof(prevDataBus),                    CLEAR_ON_RESET },
@@ -535,12 +536,10 @@ VIC::peek(uint16_t addr)
    		case 0x18:
             return iomem[addr] | 0x01; // Bit 1 is unused (always 1)
             
-		case 0x19:
-            // return iomem[addr] | 0x70; // Bits 4 to 6 are unused (always 1)
+		case 0x19: // Interrupt Request Register (IRR)
             return (irr & imr) ? (irr | 0xF0) : (irr | 0x70);
                         
-		case 0x1A:
-            // return iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
+		case 0x1A: // Interrupt Mask Register (IMR)
             return imr | 0xF0;
             
         case 0x1D: // SPRITE_X_EXPAND
@@ -710,7 +709,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             iomem[addr] = value;
 			return;
 			
-		case 0x19: // Interrupt Request Register
+		case 0x19: // Interrupt Request Register (IRR)
             
             // Bits are cleared by writing '1'
             irr &= (~value & 0x0F);
@@ -718,21 +717,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             if (!(irr & imr)) {
                 c64->cpu.releaseIrqLine(CPU::VIC);
             }
-            
-            /*
-			iomem[addr] &= (~value & 0x0F);
-            
-            if (!(iomem[0x19] & iomem[0x1A])) {
-                c64->cpu.releaseIrqLine(CPU::VIC);
-            }
-            
-            // MOVE TO PEEK
-			if (iomem[0x19] & iomem[0x1A])
-				iomem[addr] |= 0x80;
-             */
 			return;
             
-		case 0x1A: // IRQ mask
+		case 0x1A: // Interrupt Mask Register (IMR)
             
             imr = value & 0x0F;
             
@@ -741,18 +728,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             } else {
                 c64->cpu.releaseIrqLine(CPU::VIC);
             }
-            
-            /*
-			iomem[addr] = value & 0x0F;
-            
-			if (iomem[0x19] & iomem[0x19]) {
-				iomem[0x19] |= 0x80; // MOVE TO PEEK
-                c64->cpu.pullDownIrqLine(CPU::VIC);
-			} else {
-				iomem[0x19] &= 0x7f; // MOVE TO PEEK
-                c64->cpu.releaseIrqLine(CPU::VIC);
-			}
-            */
 			return;		
 			
         case 0x1D: // SPRITE_X_EXPAND
@@ -855,39 +830,47 @@ VIC::triggerIRQ(uint8_t source)
     if (irr & imr) {
         c64->cpu.pullDownIrqLine(CPU::VIC);
     }
+}
+
+uint16_t
+VIC::vicXPosFromCycle(uint8_t cycle, uint16_t offset)
+{
+    uint16_t x = (cycle < 14) ? (cycle * 8 + 0x18C) : ((cycle - 14) * 8 + 4);
+    uint16_t result = (x + offset + 0x1f8) % 0x1f8;
     
-    /*
-    iomem[0x19] |= source;
-	if (iomem[0x1A] & source) {
-		// Interrupt is enabled
-		iomem[0x19] |= 0x80;
-        c64->cpu.pullDownIrqLine(CPU::VIC);
-		// debug("Interrupting at rasterline %x %d\n", yCounter, yCounter);
-	}
-    */
+    if (result != xCounter) {
+        // debug("result = %d xCounter = %d", result, xCounter);
+    }
+
+    return result;
 }
 
 void
-VIC::triggerLightPenInterrupt()
+VIC::setLP(bool value)
 {
-    // https://svn.code.sf.net/p/vice-emu/code/testprogs/VICII/lp-trigger/
-
-    if (!lightpenIRQhasOccured) {
-
-		// lightpen interrupts can only occur once per frame
-		lightpenIRQhasOccured = true;
-
-		// determine current coordinates
-        int x = xCounter - 4; // Is this correct?
-        int y = yCounter;
-				
-		// latch coordinates 
-		iomem[0x13] = x / 2; // value equals the current x coordinate divided by 2
-		iomem[0x14] = y;
-
-		// Simulate interrupt
-		triggerIRQ(0x08);
-	}
+    // An interrupt occurrs iff
+    // (1) There is a negative edge on the LP pin
+    // (2) No previous interrupt has occured in the current frame
+    // (3) We are above the last PAL rasterline
+    if (lp != 0 && value == 0 && !lightpenIRQhasOccured && yCounter != PAL_HEIGHT - 1) {
+        
+        // Determine lightpen coordinates
+        uint16_t x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+        uint16_t y = yCounter;
+        if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
+        
+        // Latch coordinates
+        iomem[0x13] = x / 2;
+        iomem[0x14] = y;
+        
+        // Simulate interrupt
+        triggerIRQ(0x08);
+        
+        // Lightpen interrupts can only occur once per frame
+        lightpenIRQhasOccured = true;
+    }
+    
+    lp = value;
 }
 
 // -----------------------------------------------------------------------------------------------

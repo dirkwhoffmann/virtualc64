@@ -1086,7 +1086,7 @@ CIA1::updatePA()
 //   JOYA1, ROW1 <--> | PB1 |
 //   JOYA2, ROW2 <--> | PB2 |
 //   JOYA3, ROW3 <--> | PB3 |
-// BTNA/LP, ROW4 <--> | PB4 |
+// BTNA/LP, ROW4 <--> | PB4 | --> LP (VIC)
 //          ROW5 <--> | PB5 |
 //          ROW6 <--> | PB6 |
 //          ROW  <--> | PB7 |
@@ -1116,12 +1116,15 @@ CIA1::portBexternal()
 
 void
 CIA1::updatePB()
-{    
+{
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
     // The control port can always bring the port lines low,
     // no matter what the data direction register says.
     PB &= c64->joystickA.bitmask();
+    
+    // PB4 is connected to the VIC (LP pin).
+    c64->vic.setLP(GET_BIT(PB, 4) != 0);
 }
 
 uint64_t CIA1::wakeUpCycle() { return c64->wakeUpCycleCIA1; }

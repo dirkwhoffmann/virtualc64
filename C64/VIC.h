@@ -64,6 +64,11 @@ public:
     //! @brief    Selected chip model (determines whether video mode is PAL or NTSC)
     VICChipModel chipModel;
     
+    //! @brief    LP pin
+    /*! @details  A negative edge on this pin triggers a lightpen interrupt.
+     */
+     bool lp;
+     
     /*! @brief    Address bus
      * @details  Whenever VIC performs a memory read, the generated memory address is stored here
      */
@@ -728,12 +733,14 @@ public:
 	//! @brief    Enable or disable rasterline interrupts
     inline void toggleRasterInterruptFlag() { TOGGLE_BIT(imr, 1); }
 	
-	/*! @brief    Simulate a light pen event
-	 *  @details  Although we do not support hardware lightpens, we need to take care of it because lightpen 
-     *            interrupts can be triggered by software. It is used by some games to determine the current 
-     *            X position within the current rasterline. 
+    //! @brief    Method from Hoxs64
+    //! @details  Used to determine X coordinate when a lightpen interrupt takes place
+    uint16_t vicXPosFromCycle(uint8_t cycle, uint16_t offset);
+    
+	/*! @brief    Sets the value of the LP pin
+	 *  @details  The LP pin is connected to bit 4 of control port A
      */
-	void triggerLightPenInterrupt();
+	void setLP(bool value);
 
 	
 	// ---------------------------------------------------------------------------------------
