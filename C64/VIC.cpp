@@ -736,7 +736,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             imr = value & 0x0F;
             
-            if (imr & imr) {
+            if (irr & imr) {
                 c64->cpu.pullDownIrqLine(CPU::VIC);
             } else {
                 c64->cpu.releaseIrqLine(CPU::VIC);
