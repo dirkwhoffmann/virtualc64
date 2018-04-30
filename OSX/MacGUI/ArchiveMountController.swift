@@ -99,6 +99,11 @@ class ArchiveMountController : UserDialogController {
     
     @IBAction func performDoubleClick(_ sender: Any!) {
         
+        // Only proceed if a row is selected
+        if contents.selectedRow == -1 {
+            return
+        }
+        
         // Flash file into memory
         c64.flushArchive(archive, item: contents.selectedRow)
         
