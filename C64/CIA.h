@@ -331,16 +331,6 @@ private:
     
 private:
 
-    /*! @brief    Returns the current value of the CIA's data port A register
-     *! @details  This method is implemented differently in CIA1 and CIA2
-     */
-    virtual uint8_t readDataPortA() = 0;
-    
-    /*! @brief    Returns the current value of the CIA's data port B register
-     * @details  This method is implemented differently in CIA1 and CIA2
-     */
-    virtual uint8_t readDataPortB() = 0;
-    
     //! @brief    Peek function for the CIA's I/O memory
     uint8_t peek(uint16_t addr);
     

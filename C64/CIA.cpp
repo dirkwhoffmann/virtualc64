@@ -110,16 +110,12 @@ CIA::peek(uint16_t addr)
             
         case 0x00: // CIA_DATA_PORT_A
             
-            // result = readDataPortA();
-            // break;
-            updatePA();
+            updatePA(); // Remove here. Move to all sources connected to PA
             return PA;
             
         case 0x01: // CIA_DATA_PORT_B
             
-            // result = readDataPortB();
-            // break;
-            updatePB();
+            updatePB(); // Remove here. Move to all sources connected to PA
             return PB;
 
         case 0x02: // CIA_DATA_DIRECTION_A
@@ -646,10 +642,10 @@ CIA::getInfo()
 {
     CIAInfo info;
     
-    info.portA.reg = readDataPortA();
+    info.portA.reg = PRA;
     info.portA.dir = DDRA;
 
-    info.portB.reg = readDataPortB();
+    info.portB.reg = PRB;
     info.portB.dir = DDRB;
 
     info.timerA.running = (delay & CountA3);
@@ -1082,8 +1078,8 @@ CIA1::portAexternal()
 void
 CIA1::updatePA()
 {
-    // PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
-    PA = readDataPortA();
+    PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
+
     // The control port can always bring the port lines low,
     // no matter what the data direction register says.
     PA &= c64->joystickB.bitmask();
@@ -1130,34 +1126,6 @@ CIA1::updatePB()
     // The control port can always bring the port lines low,
     // no matter what the data direction register says.
     PB &= c64->joystickA.bitmask();
-}
-
-uint8_t 
-CIA1::readDataPortA()
-{
-    uint8_t result = oldstylePA;
-    uint8_t rows = oldstylePB & c64->joystickA.bitmask();
-    uint8_t columnBits = c64->keyboard.getColumnValues(rows);
-    
-    // Clear joystick and keyboard bits
-    result &= c64->joystickB.bitmask();
-    result &= columnBits;
-    
-    return result;
-}
-
-uint8_t
-CIA1::readDataPortB()
-{
-    uint8_t result = oldstylePB;
-    uint8_t columns = oldstylePA & c64->joystickB.bitmask();
-    uint8_t rowBits = c64->keyboard.getRowValues(columns);
-    
-    // Clear joystick and keyboard bits
-    result &= c64->joystickA.bitmask();
-    result &= rowBits;
-    
-    return result;
 }
 
 void 
@@ -1250,72 +1218,77 @@ CIA2::releaseInterruptLine()
     c64->cpu.releaseNmiLine(CPU::CIA);
 }
 
+//                        -------
+//              VA14 <--- | PA0 |
+//              VA15 <--- | PA1 |
+// User port (pin M) <--> | PA2 |
+//               ATN <--- | PA3 |
+//               CLK <--- | PA4 |
+//              DATA <--- | PA5 |
+//               CLK ---> | PA6 |
+//              DATA ---> | PA7 |
+//                        -------
+
 uint8_t
 CIA2::portAinternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    return PRA;
 }
 
 uint8_t
 CIA2::portAexternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    uint8_t result = 0x3F;
+    result |= (c64->iec.getClockLine() ? 0x40 : 0x00);
+    result |= (c64->iec.getDataLine() ? 0x80 : 0x00);
+    
+    return result;
 }
 
 void
 CIA2::updatePA()
 {
-    PA = readDataPortA();
+    PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 }
+
+//                        -------
+// User port (pin C) <--> | PB0 |
+// User port (pin D) <--> | PB1 |
+// User port (pin E) <--> | PB2 |
+// User port (pin F) <--> | PB3 |
+// User port (pin H) <--> | PB4 |
+// User port (pin J) <--> | PB5 |
+// User port (pin K) <--> | PB6 |
+// User port (pin L) <--> | PB7 |
+//                        -------
 
 uint8_t
 CIA2::portBinternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    uint8_t result = PRB;
+    
+    // Check if timer A underflow shows up on PB6
+    if (GET_BIT(PB67TimerMode, 6))
+        COPY_BIT(PB67TimerOut, result, 6);
+    
+    // Check if timer B underflow shows up on PB7
+    if (GET_BIT(PB67TimerMode, 7))
+        COPY_BIT(PB67TimerOut, result, 7);
+    
+    return result;
 }
 
 uint8_t
 CIA2::portBexternal()
 {
-    // TODO
-    assert(0);
-    return 0;
+    // User port is not implemented. All pins are high if nothing is connected.
+    return 0xFF;
 }
 
 void
 CIA2::updatePB()
 {
-    PB = readDataPortB();
-}
-
-uint8_t 
-CIA2::readDataPortA()
-{
-    uint8_t result = oldstylePA;
-    
-    // The two upper bits are connected to the clock line and the data line
-    result &= 0x3F;
-    result |= (c64->iec.getClockLine() ? 0x40 : 0x00);
-    result |= (c64->iec.getDataLine() ? 0x80 : 0x00);
-    
-    // The external port lines can pull down any bit, even if it configured as output.
-    // Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
-    // result &= (portLinesB | 0x03);
-    
-    return result;
-}
-
-uint8_t
-CIA2::readDataPortB()
-{
-    uint8_t result = oldstylePB;
-    return result;
+    PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
 }
 
 void 
