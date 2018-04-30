@@ -340,17 +340,6 @@ private:
     //! @brief    Poke function for the CIA's I/O memory
     void poke(uint16_t addr, uint8_t value);
     
-    //! @brief    Poke function for the CIA's data port A register
-    virtual void pokeDataPortA(uint8_t value) = 0;
-
-    //! @brief    Poke function for the CIA's data port B register
-    virtual void pokeDataPortB(uint8_t value) = 0;
-
-    //! @brief    Poke function for the CIA's data port A direction register
-    virtual void pokeDataPortDirectionA(uint8_t value) = 0;
-
-    //! @brief    Poke function for the CIA's data port B direction register
-    virtual void pokeDataPortDirectionB(uint8_t value) = 0;
     
     //
     //! @functiongroup Running the device
@@ -415,6 +404,7 @@ private:
     
     void pullDownInterruptLine();
     void releaseInterruptLine();
+    
     uint8_t portAinternal();
     uint8_t portAexternal();
     void updatePA();
@@ -422,12 +412,6 @@ private:
     uint8_t portBexternal();
     void updatePB();
     
-    uint8_t readDataPortA();
-    uint8_t readDataPortB();
-    void pokeDataPortA(uint8_t value);
-    void pokeDataPortB(uint8_t value);
-    void pokeDataPortDirectionA(uint8_t value);
-    void pokeDataPortDirectionB(uint8_t value);
     uint64_t wakeUpCycle();
     void setWakeUpCycle(uint64_t cycle);
     uint64_t idleCounter();
@@ -455,6 +439,7 @@ private:
 
     void pullDownInterruptLine();
     void releaseInterruptLine();
+    
     uint8_t portAinternal();
     uint8_t portAexternal();
     void updatePA();
@@ -462,12 +447,6 @@ private:
     uint8_t portBexternal();
     void updatePB();
     
-    uint8_t readDataPortA();
-    uint8_t readDataPortB();
-    void pokeDataPortA(uint8_t value);
-    void pokeDataPortB(uint8_t value);
-    void pokeDataPortDirectionA(uint8_t value);
-    void pokeDataPortDirectionB(uint8_t value);
     uint64_t wakeUpCycle();
     void setWakeUpCycle(uint64_t cycle);
     uint64_t idleCounter();

@@ -268,28 +268,24 @@ void CIA::poke(uint16_t addr, uint8_t value)
 		
         case 0x00: // CIA_DATA_PORT_A
             
-            pokeDataPortA(value);
             PRA = value;
             updatePA();
             return;
             
         case 0x01: // CIA_DATA_PORT_B
             
-            pokeDataPortB(value);
             PRB = value;
             updatePB();
             return;
             
         case 0x02: // CIA_DATA_DIRECTION_A
             
-            pokeDataPortDirectionA(value);
             DDRA = value;
             updatePA();
             return;
             
         case 0x03: // CIA_DATA_DIRECTION_B
             
-            pokeDataPortDirectionB(value);
             DDRB = value;
             updatePB();
             return;
@@ -1121,49 +1117,16 @@ CIA1::portBexternal()
 void
 CIA1::updatePB()
 {
+    uint8_t oldPB = PB;
+    
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
     // The control port can always bring the port lines low,
     // no matter what the data direction register says.
     PB &= c64->joystickA.bitmask();
-}
-
-void 
-CIA1::pokeDataPortA(uint8_t value)
-{
-    PRA = value;
-    oldstylePA = PRA | ~DDRA;
-}
-
-void
-CIA1::pokeDataPortB(uint8_t value)
-{
-    uint8_t PBold = oldstylePB;
     
-    PRB = value;
-    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-    
-    if ((PBold & 0x10) != (oldstylePB & 0x10)) { // edge on lightpen bit?
-        c64->vic.triggerLightPenInterrupt();
-    }
-}
-
-void
-CIA1::pokeDataPortDirectionA(uint8_t value)
-{
-    DDRA = value;
-    oldstylePA = PRA | ~DDRA;
-}
-
-void
-CIA1::pokeDataPortDirectionB(uint8_t value)
-{
-    uint8_t PBold = oldstylePB;
-    
-    DDRB = value;
-    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-    
-    if ((PBold & 0x10) != (oldstylePB & 0x10)) { // edge on lightpen bit?
+    // TODO: FIX THIS. THIS IS MOST LIKELY BOGUS
+    if ((oldPB & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
         c64->vic.triggerLightPenInterrupt();
     }
 }
@@ -1249,6 +1212,12 @@ void
 CIA2::updatePA()
 {
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
+    
+    // PA0 (VA14) and PA1 (VA15) determine the memory bank seen the VIC
+    c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+    
+    // Update values on IEC bus
+    c64->iec.updateCiaPins(PRA, DDRA);
 }
 
 //                        -------
@@ -1289,48 +1258,6 @@ void
 CIA2::updatePB()
 {
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
-}
-
-void 
-CIA2::pokeDataPortA(uint8_t value)
-{
-    PRA = value;
-    oldstylePA = PRA | ~DDRA;
-    
-    // Bits 0 and 1 determine the memory bank seen the VIC
-    c64->vic.setMemoryBankAddr((~oldstylePA & 0x03) << 14);
-    
-    // Bits 3 to 5 of PA are connected to the IEC bus
-    c64->iec.updateCiaPins(PRA, DDRA);
-}
-
-void
-CIA2::pokeDataPortB(uint8_t value)
-{
-    PRB = value;
-    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-    // oldPB = PB;
-}
-
-void
-CIA2::pokeDataPortDirectionA(uint8_t value)
-{
-    DDRA = value;
-    oldstylePA = PRA | ~DDRA;
-    
-    // Bits 0 and 1 determine the memory bank seen the VIC
-    c64->vic.setMemoryBankAddr((~oldstylePA & 0x03) << 14);
-    
-    // Bits 3 to 5 of PA are connected to the IEC bus
-    c64->iec.updateCiaPins(PRA, DDRA);
-}
-
-void
-CIA2::pokeDataPortDirectionB(uint8_t value)
-{
-    DDRB = value;
-    oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-    // oldPB = PB;
 }
 
 uint64_t CIA2::wakeUpCycle() { return c64->wakeUpCycleCIA2; }
