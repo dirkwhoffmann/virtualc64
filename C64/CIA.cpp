@@ -1116,19 +1116,12 @@ CIA1::portBexternal()
 
 void
 CIA1::updatePB()
-{
-    uint8_t oldPB = PB;
-    
+{    
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
     // The control port can always bring the port lines low,
     // no matter what the data direction register says.
     PB &= c64->joystickA.bitmask();
-    
-    // TODO: FIX THIS. THIS IS MOST LIKELY BOGUS
-    if ((oldPB & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
-        c64->vic.triggerLightPenInterrupt();
-    }
 }
 
 uint64_t CIA1::wakeUpCycle() { return c64->wakeUpCycleCIA1; }
