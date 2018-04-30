@@ -64,6 +64,25 @@ public:
     //! @brief    Selected chip model (determines whether video mode is PAL or NTSC)
     VICChipModel chipModel;
     
+    /*! @brief    Address bus
+     * @details  Whenever VIC performs a memory read, the generated memory address is stored here
+     */
+    uint16_t addrBus;
+    
+    /*! @brief    Data bus
+     *  @details  Whenever VIC performs a memory read, the result is stored here
+     */
+    uint8_t dataBus;
+    
+    //! @brief    Value of data bus one access earlier
+    uint8_t prevDataBus;
+    
+    //! @brief    Interrupt Request Register ($D019)
+    uint8_t irr;
+
+    //! @brief    Interrupt Mask Register ($D01A)
+    uint8_t imr;
+
     //! @brief    Indicates whether the currently drawn rasterline belongs to VBLANK area
     bool vblank;
     
@@ -104,19 +123,6 @@ public:
      *             von 256 DRAM-Zeilenadressen benutzt." [C.B.] 
      */
     uint8_t refreshCounter;
-    
-    /*! @brief    Address bus
-     * @details  Whenever VIC performs a memory read, the generated memory address is stored here
-     */
-    uint16_t addrBus;
-
-    /*! @brief    Data bus
-     *  @details  Whenever VIC performs a memory read, the result is stored here
-     */
-    uint8_t dataBus;
-    
-    //! @brief    Value of data bus one access earlier
-    uint8_t prevDataBus;
     
     //! @brief    Display mode in latest gAccess
     uint8_t gAccessDisplayMode;
@@ -394,9 +400,9 @@ private:
 	// ----------------------------------------------------------------------------------------
 	
 	/*! @brief    Indicates whether the lightpen has triggered
-	 *  @details  This variable ndicates whether a lightpen interrupt has occurred within the current 
-     *            frame. The variable is needed, because a lightpen interrupt can only occur once in 
-     *            a frame. It is set to false at the beginning of each frame. 
+	 *  @details  This variable indicates whether a lightpen interrupt has occurred
+     *            within the current frame. The variable is needed, because a lightpen
+     *            interrupt can only occur once per frame.
      */
 	bool lightpenIRQhasOccured;
 	
@@ -696,7 +702,8 @@ private:
     void setBAlow(uint8_t value);
 	
 	/*! @brief    Trigger a VIC interrupt
-	 *  @details  VIC interrupts can be triggered from multiple sources. Each one is associated with a specific bit 
+	 *  @details  VIC interrupts can be triggered from multiple sources.
+     *            Each one is associated with a specific bit
      */
 	void triggerIRQ(uint8_t source);
 		
@@ -713,13 +720,13 @@ public:
         iomem[0x12] = line & 0xFF; if (line > 0xFF) p.registerCTRL1 |= 0x80; else p.registerCTRL1 &= 0x7F; }
 	
 	//! @brief    Returns true, iff rasterline interrupts are enabled
-    inline bool rasterInterruptEnabled() { return GET_BIT(iomem[0x1A], 1); }
+    inline bool rasterInterruptEnabled() { return GET_BIT(imr, 1); }
 
 	//! @brief    Enable or disable rasterline interrupts
-    inline void setRasterInterruptEnable(bool b) { WRITE_BIT(iomem[0x1A], 1, b); }
+    inline void setRasterInterruptEnable(bool b) { WRITE_BIT(imr, 1, b); }
 	
 	//! @brief    Enable or disable rasterline interrupts
-    inline void toggleRasterInterruptFlag() { TOGGLE_BIT(iomem[0x1A], 1); }
+    inline void toggleRasterInterruptFlag() { TOGGLE_BIT(imr, 1); }
 	
 	/*! @brief    Simulate a light pen event
 	 *  @details  Although we do not support hardware lightpens, we need to take care of it because lightpen 
@@ -813,19 +820,20 @@ public:
     inline void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
 	
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
-    inline bool spriteBackgroundInterruptEnabled() { return GET_BIT(iomem[0x1A], 1); }
+    inline bool spriteBackgroundInterruptEnabled() { return GET_BIT(imr, 1); }
 
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
-    inline bool spriteSpriteInterruptEnabled() { return GET_BIT(iomem[0x1A], 2); }
+    inline bool spriteSpriteInterruptEnabled() { return GET_BIT(imr, 2); }
 
 	//! @brief    Returns true, iff a rasterline interrupt has occurred.
-    inline bool rasterInterruptOccurred() { return GET_BIT(iomem[0x19], 0); }
+    // inline bool rasterInterruptOccurred() { return GET_BIT(iomem[0x19], 0); }
+    inline bool rasterInterruptOccurred() { return GET_BIT(irr, 0); }
 
 	//! @brief    Returns true, iff a sprite/background interrupt has occurred.
-    inline bool spriteBackgroundInterruptOccurred() { return GET_BIT(iomem[0x19], 1); }
+    inline bool spriteBackgroundInterruptOccurred() { return GET_BIT(irr, 1); }
 
 	//! @brief    Returns true, iff a sprite/sprite interrupt has occurred.
-    inline bool spriteSpriteInterruptOccurred() { return GET_BIT(iomem[0x19], 1); }
+    inline bool spriteSpriteInterruptOccurred() { return GET_BIT(irr, 2); }
 
 	//! @brief    Returns true, iff sprites are drawn behind the scenary.
 	inline bool spriteIsDrawnInBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }

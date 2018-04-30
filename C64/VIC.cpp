@@ -47,6 +47,11 @@ VIC::VIC()
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
         
         // Internal state
+        { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
+        { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
+        { &prevDataBus,                 sizeof(prevDataBus),                    CLEAR_ON_RESET },
+        { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
+        { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
         { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
         { &p.registerCTRL1,             sizeof(p.registerCTRL1),                CLEAR_ON_RESET },
@@ -72,9 +77,6 @@ VIC::VIC()
         { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
         { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
-        { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
-        { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
-        { &prevDataBus,                 sizeof(prevDataBus),                    CLEAR_ON_RESET },
         { &gAccessDisplayMode,          sizeof(gAccessDisplayMode),             CLEAR_ON_RESET },
         { &gAccessfgColor,              sizeof(gAccessfgColor),                 CLEAR_ON_RESET },
         { &gAccessbgColor,              sizeof(gAccessbgColor),                 CLEAR_ON_RESET },
@@ -534,10 +536,12 @@ VIC::peek(uint16_t addr)
             return iomem[addr] | 0x01; // Bit 1 is unused (always 1)
             
 		case 0x19:
-			return iomem[addr] | 0x70; // Bits 4 to 6 are unused (always 1)
-            
+            // return iomem[addr] | 0x70; // Bits 4 to 6 are unused (always 1)
+            return (irr & imr) ? (irr | 0xF0) : (irr | 0x70);
+                        
 		case 0x1A:
-			return iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            // return iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            return imr | 0xF0;
             
         case 0x1D: // SPRITE_X_EXPAND
             return p.spriteXexpand;
@@ -706,53 +710,49 @@ VIC::poke(uint16_t addr, uint8_t value)
             iomem[addr] = value;
 			return;
 			
-		case 0x19: // IRQ flags
-			// A bit is cleared when a "1" is written
-			iomem[addr] &= (~value & 0x0f);
-            c64->cpu.releaseIrqLine(CPU::VIC);
-			if (iomem[addr] & iomem[0x1a])
-				iomem[addr] |= 0x80;
-			return;
-
-        case 0x20: // Border color
-            p.borderColor = value & 0x0F;
-            return;
-
-        case 0x21: // Backgrund color
-        case 0x22: // Extended background color 1
-        case 0x23: // Extended background color 2
-        case 0x24: // Extended background color 3
-            cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            return;
-
-        case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            spriteExtraColor1 = value & 0x0F;
-            return;
-
-        case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            spriteExtraColor2 = value & 0x0F;
-            return;
-
-        case 0x27: // Sprite color 1
-        case 0x28: // Sprite color 2
-        case 0x29: // Sprite color 3
-        case 0x2A: // Sprite color 4
-        case 0x2B: // Sprite color 5
-        case 0x2C: // Sprite color 6
-        case 0x2D: // Sprite color 7
-        case 0x2E: // Sprite color 8
-            spriteColor[addr - 0x27] = value & 0x0F;
-            return;
+		case 0x19: // Interrupt Request Register
             
-		case 0x1a: // IRQ mask
-			iomem[addr] = value & 0x0f;
-			if (iomem[addr] & iomem[0x19]) {
-				iomem[0x19] |= 0x80; // set uppermost bit (is directly connected to the IRQ line)
+            // Bits are cleared by writing '1'
+            irr &= (~value & 0x0F);
+    
+            if (!(irr & imr)) {
+                c64->cpu.releaseIrqLine(CPU::VIC);
+            }
+            
+            /*
+			iomem[addr] &= (~value & 0x0F);
+            
+            if (!(iomem[0x19] & iomem[0x1A])) {
+                c64->cpu.releaseIrqLine(CPU::VIC);
+            }
+            
+            // MOVE TO PEEK
+			if (iomem[0x19] & iomem[0x1A])
+				iomem[addr] |= 0x80;
+             */
+			return;
+            
+		case 0x1A: // IRQ mask
+            
+            imr = value & 0x0F;
+            
+            if (imr & imr) {
+                c64->cpu.pullDownIrqLine(CPU::VIC);
+            } else {
+                c64->cpu.releaseIrqLine(CPU::VIC);
+            }
+            
+            /*
+			iomem[addr] = value & 0x0F;
+            
+			if (iomem[0x19] & iomem[0x19]) {
+				iomem[0x19] |= 0x80; // MOVE TO PEEK
                 c64->cpu.pullDownIrqLine(CPU::VIC);
 			} else {
-				iomem[0x19] &= 0x7f; // clear uppermost bit
+				iomem[0x19] &= 0x7f; // MOVE TO PEEK
                 c64->cpu.releaseIrqLine(CPU::VIC);
 			}
+            */
 			return;		
 			
         case 0x1D: // SPRITE_X_EXPAND
@@ -763,6 +763,36 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x1F:
 			// Writing has no effect
 			return;
+            
+        case 0x20: // Border color
+            p.borderColor = value & 0x0F;
+            return;
+            
+        case 0x21: // Backgrund color
+        case 0x22: // Extended background color 1
+        case 0x23: // Extended background color 2
+        case 0x24: // Extended background color 3
+            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            return;
+            
+        case 0x25: // Sprite extra color 1 (for multicolor sprites)
+            spriteExtraColor1 = value & 0x0F;
+            return;
+            
+        case 0x26: // Sprite extra color 2 (for multicolor sprites)
+            spriteExtraColor2 = value & 0x0F;
+            return;
+            
+        case 0x27: // Sprite color 1
+        case 0x28: // Sprite color 2
+        case 0x29: // Sprite color 3
+        case 0x2A: // Sprite color 4
+        case 0x2B: // Sprite color 5
+        case 0x2C: // Sprite color 6
+        case 0x2D: // Sprite color 7
+        case 0x2E: // Sprite color 8
+            spriteColor[addr - 0x27] = value & 0x0F;
+            return;
     }
 	
 	// Default action
@@ -821,13 +851,20 @@ VIC::BApulledDownForAtLeastThreeCycles()
 void 
 VIC::triggerIRQ(uint8_t source)
 {
-	iomem[0x19] |= source;
+    irr |= source;
+    if (irr & imr) {
+        c64->cpu.pullDownIrqLine(CPU::VIC);
+    }
+    
+    /*
+    iomem[0x19] |= source;
 	if (iomem[0x1A] & source) {
 		// Interrupt is enabled
-		iomem[0x19] |= 128;
+		iomem[0x19] |= 0x80;
         c64->cpu.pullDownIrqLine(CPU::VIC);
 		// debug("Interrupting at rasterline %x %d\n", yCounter, yCounter);
 	}
+    */
 }
 
 void
