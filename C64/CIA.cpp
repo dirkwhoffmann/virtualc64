@@ -176,11 +176,11 @@ CIA::peek(uint16_t addr)
             
 			// Release interrupt request
 			if (INT == 0) {
-                // delay |= ReleaseIRQ0;
-                
+                delay |= ReleaseIRQ0;
+                /*
 				INT = 1;
                 releaseInterruptLine();
-                
+                */
 			}
 			
 			// Discard pending interrupts
