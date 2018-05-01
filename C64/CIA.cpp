@@ -42,15 +42,13 @@ CIA::CIA()
         { &PB67TimerMode,   sizeof(PB67TimerMode),  CLEAR_ON_RESET },
         { &PB67TimerOut,    sizeof(PB67TimerOut),   CLEAR_ON_RESET },
         { &PB67Toggle,      sizeof(PB67Toggle),     CLEAR_ON_RESET },
-        { &PRA,         sizeof(PRA),        CLEAR_ON_RESET },
-        { &PRB,         sizeof(PRB),        CLEAR_ON_RESET },
+        { &PRA,             sizeof(PRA),            CLEAR_ON_RESET },
+        { &PRB,             sizeof(PRB),            CLEAR_ON_RESET },
         { &DDRA,            sizeof(DDRA),           CLEAR_ON_RESET },
         { &DDRB,            sizeof(DDRB),           CLEAR_ON_RESET },
         { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
         { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
         { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
-        { &oldstylePA,              sizeof(oldstylePA),             CLEAR_ON_RESET },
-        { &oldstylePB,              sizeof(oldstylePB),             CLEAR_ON_RESET },
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
         { &INT,             sizeof(INT),            CLEAR_ON_RESET },
         { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
@@ -69,9 +67,6 @@ CIA::reset()
 {
     VirtualComponent::reset();
     
-    oldstylePA = 0xFF;
-    oldstylePB = 0xFF;
-
 	CNT = true;
 	INT = 1;
 	
@@ -477,7 +472,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // TODO: We need to react on a change of this bit
             tod.setHz((value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */);
             
-			oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			CRA = value;
 			
 			return;
@@ -544,8 +538,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // 0------- : Writing into TOD registers sets TOD
             // 1------- : Writing into TOD registers sets alarm time
             
-            
-			oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			CRB = value;
 			
 			return;			
@@ -603,9 +595,9 @@ CIA::dumpTrace()
 			delay & OneShotB0 ? "1ShotB0 " : "");
 
 	debug(1, "%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
-		  indent, counterA, latchA, oldstylePA, PRA, DDRA, CRA);
+		  indent, counterA, latchA, PA, PRA, DDRA, CRA);
 	debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-		  indent, counterB, latchB, oldstylePB, PRB, DDRB, CRB);
+		  indent, counterB, latchB, PB, PRB, DDRB, CRB);
 }
 
 void
@@ -874,10 +866,6 @@ CIA::executeOneCycle()
 	if (delay & PB7Low1)
 		PB67TimerOut &= ~0x80;
 
-	
-	// Write new PB 
-	oldstylePB = ((PRB | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-	
 	
 	//
 	// Interrupt logic

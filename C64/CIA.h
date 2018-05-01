@@ -215,10 +215,7 @@ public:
     //
 	// Chip interface (port pins)
     //
-    
-	uint8_t oldstylePA;
-	uint8_t oldstylePB;
-    
+        
     //! @brief    Serial clock or input timer clock or timer gate
 	bool CNT;
 	bool INT;
