@@ -3491,6 +3491,7 @@ CPU::executeOneCycle()
             
         case ORA_abs_2:
             FETCH_ADDR_HI
+            // POLL_INT
             CONTINUE
             
         case ORA_abs_3:

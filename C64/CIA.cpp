@@ -83,6 +83,7 @@ CIA::triggerRisingEdgeOnFlagPin()
 void
 CIA::triggerFallingEdgeOnFlagPin()
 {
+    // TODO: CLEAN THIS UP (USE CORRECT TIMING Interrupt0 etc.)
     ICR |= 0x10; // Note: FLAG pin is inverted
         
     // Trigger interrupt, if enabled
@@ -175,8 +176,11 @@ CIA::peek(uint16_t addr)
             
 			// Release interrupt request
 			if (INT == 0) {
+                // delay |= ReleaseIRQ0;
+                
 				INT = 1;
                 releaseInterruptLine();
+                
 			}
 			
 			// Discard pending interrupts
@@ -472,6 +476,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // TODO: We need to react on a change of this bit
             tod.setHz((value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */);
             
+            updatePB(); // Because PB67timerMode and PB6TimerOut may have changed
 			CRA = value;
 			
 			return;
@@ -538,6 +543,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
             // 0------- : Writing into TOD registers sets TOD
             // 1------- : Writing into TOD registers sets alarm time
             
+            updatePB(); // Because PB67timerMode and PB6TimerOut may have changed
 			CRB = value;
 			
 			return;			
@@ -949,6 +955,10 @@ CIA::executeOneCycle()
             pullDownInterruptLine();
         }
     }
+    if (delay & ReleaseIRQ0) {
+        INT = 1;
+        releaseInterruptLine();
+    }
     
 	// Move delay flags left and feed in new bits
 	delay = ((delay << 1) & DelayMask) | feed;
@@ -1083,17 +1093,7 @@ CIA1::updatePA()
 uint8_t
 CIA1::portBinternal()
 {
-    uint8_t result = PRB;
-    
-    // Check if timer A underflow shows up on PB6
-    if (GET_BIT(PB67TimerMode, 6))
-        COPY_BIT(PB67TimerOut, result, 6);
-
-    // Check if timer B underflow shows up on PB7
-    if (GET_BIT(PB67TimerMode, 7))
-        COPY_BIT(PB67TimerOut, result, 7);
-    
-    return result;
+    return PRB;
 }
 
 uint8_t
@@ -1107,6 +1107,14 @@ CIA1::updatePB()
 {
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
+    // Check if timer A underflow shows up on PB6
+    if (GET_BIT(PB67TimerMode, 6))
+        COPY_BIT(PB67TimerOut, PB, 6);
+    
+    // Check if timer B underflow shows up on PB7
+    if (GET_BIT(PB67TimerMode, 7))
+        COPY_BIT(PB67TimerOut, PB, 7);
+    
     // The control port can always bring the port lines low,
     // no matter what the data direction register says.
     PB &= c64->joystickA.bitmask();

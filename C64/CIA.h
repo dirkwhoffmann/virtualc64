@@ -71,8 +71,9 @@ class Joystick;
 #define SerClk1     0x0000001000000000
 #define SerClk2     0x0000002000000000
 #define SerClk3     0x0000004000000000
+#define ReleaseIRQ0 0x0000008000000000
 
-#define DelayMask ~(0x0000008000000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | SerInt0 | SerLoad0 | SerClk0)
+#define DelayMask ~(0x0000010000000000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | SerInt0 | SerLoad0 | SerClk0 | ReleaseIRQ0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
