@@ -176,7 +176,7 @@ CIA::peek(uint16_t addr)
             
 			// Release interrupt request
 			if (INT == 0) {
-                delay |= ReleaseIRQ0;
+                delay |= ClearInt0;
                 /*
 				INT = 1;
                 releaseInterruptLine();
@@ -184,7 +184,7 @@ CIA::peek(uint16_t addr)
 			}
 			
 			// Discard pending interrupts
-			delay &= ~(Interrupt0 | Interrupt1);
+			delay &= ~(SetInt0 | SetInt1);
 
 			// Clear all bits except bit 7
 			ICR &= 0x80;
@@ -391,13 +391,13 @@ void CIA::poke(uint16_t addr, uint8_t value)
             
 			// Raise an interrupt in the next cycle if conditions match
 			if ((IMR & ICR & 0x1F) && INT) {
-                delay |= (Interrupt0 | SetIcr0);
+                delay |= (SetInt0 | SetIcr0);
 			}
             
             // Clear pending interrupt if a write has occurred in the previous cycle
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
             else if (delay & ClearIcr2) {
-                delay &= ~(Interrupt1 | SetIcr1);
+                delay &= ~(SetInt1 | SetIcr1);
             }
             
 			return;
@@ -595,8 +595,8 @@ CIA::dumpTrace()
 			delay & PB6Low1 ? "PB6Lo1 " : "",
 			delay & PB7Low0 ? "PB7Lo0 " : "",
 			delay & PB7Low1 ? "PB7Lo1 " : "",
-			delay & Interrupt0 ? "Int0 " : "",
-			delay & Interrupt1 ? "Int1 " : "",
+			delay & SetInt0 ? "Int0 " : "",
+			delay & SetInt1 ? "Int1 " : "",
 			delay & OneShotA0 ? "1ShotA0 " : "",
 			delay & OneShotB0 ? "1ShotB0 " : "");
 
@@ -920,7 +920,7 @@ CIA::executeOneCycle()
     
     // Check for timer interrupt
     if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) { // (11)
-		delay |= Interrupt0;
+		delay |= SetInt0;
         delay |= SetIcr0;
     }
 
@@ -928,7 +928,7 @@ CIA::executeOneCycle()
     if (delay & TODInt0) {
         ICR |= 0x04;
         if (IMR & 0x04) {
-            delay |= Interrupt0;
+            delay |= SetInt0;
             delay |= SetIcr0;
         }
     }
@@ -937,12 +937,12 @@ CIA::executeOneCycle()
     if (delay & SerInt2) {
         ICR |= 0x08;
         if (IMR & 0x08) {
-            delay |= Interrupt0;
+            delay |= SetInt0;
             delay |= SetIcr0;
         }
     }
     
-    if (delay & (ClearIcr1 | SetIcr1 | Interrupt1)) {
+    if (delay & (ClearIcr1 | SetIcr1 | SetInt1 | ClearInt0)) {
         
         if (delay & ClearIcr1) { // (12)
             ICR &= 0x7F;
@@ -950,16 +950,16 @@ CIA::executeOneCycle()
         if (delay & SetIcr1) { // (13)
             ICR |= 0x80;
         }
-        if (delay & Interrupt1) { // (14)
+        if (delay & SetInt1) { // (14)
             INT = 0;
             pullDownInterruptLine();
         }
+        if (delay & ClearInt0) { // (14)
+            INT = 1;
+            releaseInterruptLine();
+        }
     }
-    if (delay & ReleaseIRQ0) {
-        INT = 1;
-        releaseInterruptLine();
-    }
-    
+
 	// Move delay flags left and feed in new bits
 	delay = ((delay << 1) & DelayMask) | feed;
     
