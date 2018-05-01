@@ -340,7 +340,8 @@ public:
     void encodeArchive(NIBArchive *a);
 
     /*! @brief   Converts a D64 archive into a virtual floppy disk
-     *  @details The method creates sync marks, GRC encoded header and data blocks, checksums and gaps
+     *  @details The method creates sync marks, GRC encoded header and data blocks,
+     *           checksums and gaps.
      */
     void encodeArchive(D64Archive *a);
 

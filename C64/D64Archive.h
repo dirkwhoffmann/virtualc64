@@ -144,11 +144,11 @@ public:
     //! @brief    Class function that returns the total number of sectors in a specific track
     static unsigned numberOfSectors(unsigned trackNr);
 
-	//! @brief    Returns the low byte of the disk ID
-	uint8_t diskIdLow() { return data[offset(18, 0) + 0xA2]; }
+	//! @brief    Returns the first disk ID character
+	uint8_t diskId1() { return data[offset(18, 0) + 0xA2]; }
 
-	//! @brief    Returns the high byte of the disk ID
-	uint8_t diskIdHi() { return data[offset(18, 0) + 0xA3]; }
+	//! @brief    Returns the second disk ID character
+	uint8_t diskId2() { return data[offset(18, 0) + 0xA3]; }
 
  
     //
@@ -164,7 +164,7 @@ private:
         
     //! Translates a track and sector number into an offset
     int offset(int track, int sector);
-
+    
     //! @brief Returns true iff offset points to the last byte of a sector
     bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }
     
