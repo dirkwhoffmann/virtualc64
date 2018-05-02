@@ -363,11 +363,6 @@ public:
      */
     void setZone(uint8_t z);
 
-    /*! @brief    Triggers an ATN interrupt
-     *  @details  This function is called by the IEC bus when the ATN signal raises. 
-     */
-    // void simulateAtnInterrupt();
-
     /*! @brief    Reads a single bit from the disk head
      *  @result   0 or 1
      */

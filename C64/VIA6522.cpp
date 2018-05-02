@@ -481,12 +481,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             // "0"  ASSOCIATED PB PIN IS AN INPUT (HIGH IMPEDANCE)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORB REGISTER BIT" [F. K.]
             
-            /*
-            if (value == 0x00) {
-                debug("Setting ddrb to 0 at PC = %04X\n", c64->floppy.cpu.getPC_at_cycle_0()); // 03C8
-                c64->floppy.cpu.startTracing(200);
-            }
-             */
             ddrb = value;
             updatePB();
             return;

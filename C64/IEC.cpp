@@ -99,7 +99,10 @@ IEC::dumpState()
 	msg("        old ATN : %d\n", oldAtnLine);
 	msg("        old CLK : %d\n", oldClockLine);
 	msg("       old DATA : %d\n", oldDataLine);
-	msg("\n");	
+    msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.ddrb);
+    msg("    DDRA (CIA2) : %02X\n", c64->cia2.DDRA);
+
+    msg("\n");
 }
 
 void 
@@ -164,6 +167,14 @@ bool IEC::_updateIecLines()
 	if (ciaDataIsOutput) dataLine &= ciaDataPin;
 	if (driveConnected && deviceDataIsOutput) dataLine &= deviceDataPin;
 
+    // Hypthesis: If an output pin (CLKout), (DATAout) is configured as input, it pulls
+    // down the bus line as a side effect.
+    uint8_t ddrb = c64->floppy.via1.ddrb;
+    if (GET_BIT(ddrb, 1) == 0)
+        dataLine = 0;
+    if (GET_BIT(ddrb,3) == 0)
+        clockLine = 0;
+    
 	// Note: The device atn pin is not connected to the ATN line.
 	// It implements an auto acknowledge feature. When set to 1, the ATN signal
 	// is automatically acknowledged by the drive. This feature allows the C64
@@ -223,7 +234,7 @@ void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
 	deviceAtnPin = (device_data & 0x10) ? 0 : 1; // Pin and line are connected via an inverter
 	deviceClockPin = (device_data & 0x08) ? 0 : 1; // Pin and line are connected via an inverter
 	deviceDataPin = (device_data & 0x02) ? 0 : 1; // Pin and line are connected via an inverter
-				
+    
 	updateIecLines(); 
 }
 

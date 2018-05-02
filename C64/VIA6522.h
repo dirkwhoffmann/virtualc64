@@ -112,6 +112,8 @@ protected:
     // Port registers
     //
     
+public:
+    
     //! @brief    Data direction registers
     /*! @details  "Each port has a Data Direction Register (DDRA, DDRB) for
      *             specifying whether the peripheral pins are to act as
@@ -123,7 +125,6 @@ protected:
     uint8_t ddrb;
 
     //! @brief    Output registers
-public:
     uint8_t ora;
     uint8_t orb;
 
