@@ -27,31 +27,31 @@
 
 class VC1541;
 
-#define VC64VIACountA0       (1ULL << 0) // Forces timer 1 to decrement every cycle
-#define VC64VIACountA1       (1ULL << 1)
-#define VC64VIACountB0       (1ULL << 2) // Forces timer 2 to decrement every cycle
-#define VC64VIACountB1       (1ULL << 3)
-#define VC64VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload
-#define VC64VIAReloadA1      (1ULL << 5)
-#define VC64VIAReloadA2      (1ULL << 6)
-#define VC64VIAReloadB0      (1ULL << 7) // Forces timer 2 to reload
-#define VC64VIAReloadB1      (1ULL << 8)
-#define VC64VIAReloadB2      (1ULL << 9)
-#define VC64VIAPostOneShotA0 (1ULL << 10) // Indicates that timer 1 has fired in one shot mode
-#define VC64VIAPostOneShotB0 (1ULL << 11) // Indicates that timer 2 has fired in one shot mode
-#define VC64VIAInterrupt0    (1ULL << 12) // Triggers an interrupt
-#define VC64VIAInterrupt1    (1ULL << 13)
-#define VC64VIASetCA2out0    (1ULL << 14) // Sets CA2 pin high
-#define VC64VIASetCA2out1    (1ULL << 15)
-#define VC64VIAClearCA2out0  (1ULL << 16) // Sets CA2 pin low
-#define VC64VIAClearCA2out1  (1ULL << 17)
-#define VC64VIASetCB2out0    (1ULL << 18) // Sets CB2 pin high
-#define VC64VIASetCB2out1    (1ULL << 19)
-#define VC64VIAClearCB2out0  (1ULL << 20) // Sets CB2 pin low
-#define VC64VIAClearCB2out1  (1ULL << 21)
-#define VC64VIAPB7out0       (1ULL << 22) // Current value of PB7 pin (if output is enabled)
+#define VIACountA0       (1ULL << 0) // Forces timer 1 to decrement every cycle
+#define VIACountA1       (1ULL << 1)
+#define VIACountB0       (1ULL << 2) // Forces timer 2 to decrement every cycle
+#define VIACountB1       (1ULL << 3)
+#define VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload
+#define VIAReloadA1      (1ULL << 5)
+#define VIAReloadA2      (1ULL << 6)
+#define VIAReloadB0      (1ULL << 7) // Forces timer 2 to reload
+#define VIAReloadB1      (1ULL << 8)
+#define VIAReloadB2      (1ULL << 9)
+#define VIAPostOneShotA0 (1ULL << 10) // Indicates that timer 1 has fired in one shot mode
+#define VIAPostOneShotB0 (1ULL << 11) // Indicates that timer 2 has fired in one shot mode
+#define VIAInterrupt0    (1ULL << 12) // Triggers an interrupt
+#define VIAInterrupt1    (1ULL << 13)
+#define VIASetCA2out0    (1ULL << 14) // Sets CA2 pin high
+#define VIASetCA2out1    (1ULL << 15)
+#define VIAClearCA2out0  (1ULL << 16) // Sets CA2 pin low
+#define VIAClearCA2out1  (1ULL << 17)
+#define VIASetCB2out0    (1ULL << 18) // Sets CB2 pin high
+#define VIASetCB2out1    (1ULL << 19)
+#define VIAClearCB2out0  (1ULL << 20) // Sets CB2 pin low
+#define VIAClearCB2out1  (1ULL << 21)
+#define VIAPB7out0       (1ULL << 22) // Current value of PB7 pin (if output is enabled)
 
-#define VC64VIAClearBits   ~((1ULL << 23) | VC64VIACountA0 | VC64VIACountB0 | VC64VIAReloadA0 | VC64VIAReloadB0 | VC64VIAPostOneShotA0 | VC64VIAPostOneShotB0 | VC64VIAInterrupt0 | VC64VIASetCA2out0 | VC64VIAClearCA2out0 | VC64VIASetCB2out0 | VC64VIAClearCB2out0 | VC64VIAPB7out0)
+#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -344,11 +344,10 @@ public:
     //                                   Interrupt handling
     // ----------------------------------------------------------------------------------------
 
-    /*! @brief    Returns the value of the IRQ pin
-     *  @details  This method updates the IRQ pin of the connected CPU as a side effect and is therefore
-     *            invoked on every change in register IFR or register IER.
+    /*! @brief    Updates the IRQ line
+     *  @details  This method is invoked whenever register IFR or register IER changes.
      */
-    bool IRQ();
+    void IRQ();
 
     //
     // |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
