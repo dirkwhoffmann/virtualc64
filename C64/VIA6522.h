@@ -168,10 +168,7 @@ public:
      */
     uint16_t t2; // T1C
     uint8_t t2_latch_lo; // T2L_L
-	    
-    bool pb7toggle;
-    bool pb7timerOut;
-    
+	        
     //! @brief    Peripheral control register
     uint8_t pcr;
 

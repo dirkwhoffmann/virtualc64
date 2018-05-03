@@ -45,12 +45,10 @@ VIA6522::VIA6522()
         { &ira,             sizeof(ira),            CLEAR_ON_RESET },
         { &irb,             sizeof(irb),            CLEAR_ON_RESET },
         { &t1,              sizeof(t1),             CLEAR_ON_RESET },
-        { &t2,              sizeof(t2),             CLEAR_ON_RESET },
         { &t1_latch_lo,     sizeof(t1_latch_lo),    CLEAR_ON_RESET },
         { &t1_latch_hi,     sizeof(t1_latch_hi),    CLEAR_ON_RESET },
+        { &t2,              sizeof(t2),             CLEAR_ON_RESET },
         { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
-        { &pb7toggle,       sizeof(pb7toggle),      CLEAR_ON_RESET },
-        { &pb7timerOut,     sizeof(pb7timerOut),    CLEAR_ON_RESET },
         { &pcr,             sizeof(pcr),            CLEAR_ON_RESET },
         { &acr,             sizeof(acr),            CLEAR_ON_RESET },
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
@@ -166,10 +164,6 @@ VIA6522::executeTimer1()
 {
     // Reload counter
     if (delay & VC64VIAReloadA2) {
-        /*
-        if (t1_latch_lo != 0)
-            debug("Reloading timer 1 with %04X\n", HI_LO(t1_latch_hi, t1_latch_lo));
-         */
          t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
     
@@ -192,7 +186,6 @@ VIA6522::executeTimer1()
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);             // (1)
                 feed ^= VC64VIAPB7out0;     // (2)
-                pb7toggle = !pb7toggle;     // (2)
             }
             
         } else {
@@ -203,24 +196,10 @@ VIA6522::executeTimer1()
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);
                 feed ^= VC64VIAPB7out0;
-                pb7toggle = !pb7toggle;
             }
         
             feed |= VC64VIAPostOneShotA0;
         }
-
-        /* "In addition to generating a single interrupt, Timer 1 can be programmed
-         *  to produce a single negative pulse on the PB7 peripheral pin. With the
-         *  output enabled (ACR7=1) a "write T1C-H" operation will cause PB7 to go low.
-         *  PB7 will return high when Timer 1 times out. The result is a single
-         *  programmable width pulse."
-         */
-            
-        if (PB7OutputEnabled()) {
-            // pb7timerOut = pb7toggle;
-            pb7timerOut = true;
-        }
-        
     }
 }
 
@@ -335,7 +314,6 @@ VIA6522::peek(uint16_t addr)
             
         case 0xD: // IFR - Interrupt Flag Register
             
-            // debug("Reading %02X from IFR\n", ifr | ((ifr & ier) ? 0x80 : 0x00));
             assert((ifr & 0x80) == 0);
             assert((ier & 0x80) == 0);
             return ifr | ((ifr & ier) ? 0x80 : 0x00);
@@ -423,7 +401,6 @@ VIA6522::peekORB()
     }
     
     updatePB();
-    // debug("ORB: %02X ",pb);
     return pb;
 }
 
@@ -482,10 +459,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // "0"  ASSOCIATED PB PIN IS AN INPUT (HIGH IMPEDANCE)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORB REGISTER BIT" [F. K.]
-            if (value == 0) {
-                debug("Setting DDRB = %02X (PC = %04X)\n", value, c64->floppy.cpu.getPC_at_cycle_0());
-                c64->floppy.cpu.startTracing(100);
-            }
             ddrb = value;
             updatePB();
             return;
@@ -508,23 +481,21 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x5: // T1C-H (read and write)
             
-            // (1) Write into high order latch.
-            // (2) Write into high order counter.
-            // (3) Transfer low order latch into low order counter.
-            // (4) Reset T1 interrupt flag.
-            // (5) If ACR7 = 1, a "write T1C-H" operation will cause PB7 to go low.
+            // Write into high order latch.
+            t1_latch_hi = value;
             
-            t1_latch_hi = value; // (1)
-            t1 = HI_LO(t1_latch_hi, t1_latch_lo); // (2), (3)
-            clearInterruptFlag_T1();  // (4)
-            if (PB7OutputEnabled()) { // (5)
-                // debug("Pulling PBout low");
-                pb7timerOut = false;
+            // Write into high order counter
+            // and transfer low order latch into low order counter.
+            t1 = HI_LO(value, t1_latch_lo);
+            
+            // Reset T1 interrupt flag.
+            clearInterruptFlag_T1();
+            
+            // If ACR7 = 1, a "write T1C-H" operation will cause PB7 to go low.
+            if (PB7OutputEnabled()) {
                 feed ^= VC64VIAPB7out0;
             }
             
-            
-            // debug("Force load at PC = %04X\n", c64->floppy.cpu.getPC());
             delay |= VC64VIAReloadA2;
             feed &= ~(VC64VIAPostOneShotA0);
             delay &= ~(VC64VIAPostOneShotA0);
@@ -534,24 +505,24 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0x6: // T1L-L (read and write)
             
-            // (1) Write low order latch.
+            // Write low order latch.
+            t1_latch_lo = value;
             
-            t1_latch_lo = value; // (1)
             return;
             
         case 0x7: // T1L-H (read and write)
             
-            // (1) Write high order latch.
-            // (2) Reset Tl interrupt flag.
+            // Write high order latch.
+            t1_latch_hi = value;
             
-            t1_latch_hi = value; // (1)
-            clearInterruptFlag_T1(); // (2)
+            // (2) Reset Tl interrupt flag.
+            clearInterruptFlag_T1();
+            
             return;
             
         case 0x8: // T2L-L (write) / T2C-L (read)
             
             t2_latch_lo = value;
-            // c64->floppy.cpu.releaseIrqLine(CPU::VIA);
             return;
             
         case 0x9: // T2C-H
@@ -571,20 +542,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xB: // Auxiliary control register
             
-            // debug("Poking %02X to ACR\n", value);
             acr = value;
-            
-            // TODO (Hoxs64)
-            /*
-            if (PB7OutputEnabled() && (feed & VC64VIAPostOneShotA0)) {
-                feed ^= VC64VIAPB7out0;
-            }
-             */
-            /*
-            if (feed & VIAPostOneShotA0) {
-                feed &= ~VC64VIAPB7out0;
-            }
-            */
             
             if (acr & 0x20) {
                 
@@ -601,7 +559,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             }
             
             if (acr & 0x80) {
-                // Output shows up at port pin PB7
+                // Output shows up at port pin PB7, starting with '1'.
                 feed |= VC64VIAPB7out0;
             }
             updatePB();
@@ -614,16 +572,12 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xD: // IFR - Interrupt Flag Register
             
-            // debug("Poking %02X to IFR\n", value);
-            
             // Writing 1 will clear the corresponding bit
             ifr &= ~value;
             IRQ();
             return;
             
         case 0xE: // IER - Interrupt Enable Register
-            
-            // debug("Writing %02X into IER\n", value);
             
             // Bit 7 distinguishes between set and clear
             // If bit 7 is 1, writing 1 will set the corresponding bit
