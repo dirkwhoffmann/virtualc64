@@ -461,8 +461,8 @@ CPU::executeOneCycle()
         case fetch:
             
             /* DEBUG
-             if (PC == 0x0861) {
-                 startTracing(100);
+             if (PC == 0x03B6) {
+                 startTracing(200);
              }
             */
             
@@ -499,6 +499,7 @@ CPU::executeOneCycle()
                         instr.A, instr.X, instr.Y, instr.SP,
                         instr.flags,
                         instr.command);
+                msg("VIA: T1: %04X T2: %04X\n", c64->floppy.via1.t1, c64->floppy.via1.t2);
             }
             
             // Check breakpoint tag

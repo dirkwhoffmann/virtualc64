@@ -27,9 +27,9 @@
 
 class VC1541;
 
-#define VC64VIACountA0       (1ULL << 0) // Timer 1 decrements every cycle
+#define VC64VIACountA0       (1ULL << 0) // Forces timer 1 to decrement every cycle
 #define VC64VIACountA1       (1ULL << 1)
-#define VC64VIACountB0       (1ULL << 2) // Timer 2 decrements every cycle
+#define VC64VIACountB0       (1ULL << 2) // Forces timer 2 to decrement every cycle
 #define VC64VIACountB1       (1ULL << 3)
 #define VC64VIAReloadA0      (1ULL << 4) // Forces timer 1 to reload
 #define VC64VIAReloadA1      (1ULL << 5)
@@ -39,19 +39,19 @@ class VC1541;
 #define VC64VIAReloadB2      (1ULL << 9)
 #define VC64VIAPostOneShotA0 (1ULL << 10) // Indicates that timer 1 has fired in one shot mode
 #define VC64VIAPostOneShotB0 (1ULL << 11) // Indicates that timer 2 has fired in one shot mode
-#define VC64VIAInterrupt0    (1ULL << 12)
+#define VC64VIAInterrupt0    (1ULL << 12) // Triggers an interrupt
 #define VC64VIAInterrupt1    (1ULL << 13)
-#define VC64VIASetCA2out0    (1ULL << 14)
+#define VC64VIASetCA2out0    (1ULL << 14) // Sets CA2 pin high
 #define VC64VIASetCA2out1    (1ULL << 15)
-#define VC64VIAClearCA2out0  (1ULL << 16)
+#define VC64VIAClearCA2out0  (1ULL << 16) // Sets CA2 pin low
 #define VC64VIAClearCA2out1  (1ULL << 17)
-#define VC64VIASetCB2out0    (1ULL << 18)
+#define VC64VIASetCB2out0    (1ULL << 18) // Sets CB2 pin high
 #define VC64VIASetCB2out1    (1ULL << 19)
-#define VC64VIAClearCB2out0  (1ULL << 20)
+#define VC64VIAClearCB2out0  (1ULL << 20) // Sets CB2 pin low
 #define VC64VIAClearCB2out1  (1ULL << 21)
+#define VC64VIAPB7out0       (1ULL << 22) // Current value of PB7 pin (if output is enabled)
 
-
-#define VC64VIAClearBits   ~((1ULL << 11) | VC64VIACountA0 | VC64VIACountB0 | VC64VIAReloadA0 | VC64VIAReloadB0 | VC64VIAPostOneShotA0 | VC64VIAPostOneShotB0 | VC64VIAInterrupt0 | VC64VIASetCA2out0 | VC64VIAClearCA2out0 | VC64VIASetCB2out0 | VC64VIAClearCB2out0)
+#define VC64VIAClearBits   ~((1ULL << 23) | VC64VIACountA0 | VC64VIACountB0 | VC64VIAReloadA0 | VC64VIAReloadB0 | VC64VIAPostOneShotA0 | VC64VIAPostOneShotB0 | VC64VIAInterrupt0 | VC64VIASetCA2out0 | VC64VIAClearCA2out0 | VC64VIASetCB2out0 | VC64VIAClearCB2out0 | VC64VIAPB7out0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -131,7 +131,8 @@ public:
     //! @brief    Input registers
     uint8_t ira;
     uint8_t irb;
-protected:
+
+public:
     
     //
     // Timers
@@ -263,7 +264,7 @@ public:
     bool countPulses() { return (acr & 0x20) != 0; }
     
     //! @brief    Returns true iff an output pulse is generated on each T1 load operation
-    bool generateOutputPulse() { return (acr & 0x80) != 0; }
+    bool PB7OutputEnabled() { return (acr & 0x80) != 0; }
     
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(acr,0)); }

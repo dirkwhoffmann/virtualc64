@@ -191,6 +191,7 @@ VIA6522::executeTimer1()
              */
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);             // (1)
+                feed ^= VC64VIAPB7out0;     // (2)
                 pb7toggle = !pb7toggle;     // (2)
             }
             
@@ -201,6 +202,7 @@ VIA6522::executeTimer1()
              */
             if (!(feed & VC64VIAPostOneShotA0)) {
                 SET_BIT(ifr,6);
+                feed ^= VC64VIAPB7out0;
                 pb7toggle = !pb7toggle;
             }
         
@@ -214,7 +216,7 @@ VIA6522::executeTimer1()
          *  programmable width pulse."
          */
             
-        if (generateOutputPulse()) {
+        if (PB7OutputEnabled()) {
             // pb7timerOut = pb7toggle;
             pb7timerOut = true;
         }
@@ -480,12 +482,15 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // "0"  ASSOCIATED PB PIN IS AN INPUT (HIGH IMPEDANCE)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORB REGISTER BIT" [F. K.]
-            
+            if (value == 0) {
+                debug("Setting DDRB = %02X (PC = %04X)\n", value, c64->floppy.cpu.getPC_at_cycle_0());
+                c64->floppy.cpu.startTracing(100);
+            }
             ddrb = value;
             updatePB();
             return;
             
-        case 0x3: // DDRB - Data direction register A
+        case 0x3: // DDRA - Data direction register A
             
             // "0"  ASSOCIATED PB PIN IS AN INPUT (HIGH IMPEDANCE)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORA REGISTER BIT" [F. K.]
@@ -511,15 +516,20 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t1_latch_hi = value; // (1)
             t1 = HI_LO(t1_latch_hi, t1_latch_lo); // (2), (3)
-            clearInterruptFlag_T1(); // (4)
-            if (generateOutputPulse()) // (5)
+            clearInterruptFlag_T1();  // (4)
+            if (PB7OutputEnabled()) { // (5)
+                // debug("Pulling PBout low");
                 pb7timerOut = false;
-
+                feed ^= VC64VIAPB7out0;
+            }
+            
+            
+            // debug("Force load at PC = %04X\n", c64->floppy.cpu.getPC());
             delay |= VC64VIAReloadA2;
             feed &= ~(VC64VIAPostOneShotA0);
             delay &= ~(VC64VIAPostOneShotA0);
             delay &= ~(VC64VIACountA1 | VC64VIAReloadA1);
-            
+            updatePB();
             return;
             
         case 0x6: // T1L-L (read and write)
@@ -565,32 +575,36 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             acr = value;
             
             // TODO (Hoxs64)
-            // if ((feed & VIAPostOneShotA0) != 0)
-            // {
-            //     bPB7Toggle = bPB7TimerMode ^ 0x80;
-            // }
+            /*
+            if (PB7OutputEnabled() && (feed & VC64VIAPostOneShotA0)) {
+                feed ^= VC64VIAPB7out0;
+            }
+             */
+            /*
+            if (feed & VIAPostOneShotA0) {
+                feed &= ~VC64VIAPB7out0;
+            }
+            */
             
             if (acr & 0x20) {
                 
                 // In pulse counting mode, T2 counts negative pulses on PB6,
                 // so we disable automatic counting.
-                
                 delay &= ~(VC64VIACountB0);
                 feed &= ~VC64VIACountB0;
                 
             } else {
                 
                 // In timed interrupt mode, T2 counts down every cycle.
-                
                 delay |= VC64VIACountB0;
                 feed |= VC64VIACountB0;
             }
             
             if (acr & 0x80) {
-                
-                // Output shows up a port pin PB7
-                // pb7timerOut = pb7toggle;
+                // Output shows up at port pin PB7
+                feed |= VC64VIAPB7out0;
             }
+            updatePB();
             return;
             
         case 0xC: // Peripheral control register
@@ -751,27 +765,21 @@ VIA6522::updatePA()
 uint8_t
 VIA6522::portBinternal()
 {
-    uint8_t result = orb;
-    /*
-     if (c64->floppy.cpu.tracingEnabled()) {
-        debug("portBinternal: acr = %02X ddrb = %02X orb = %02X\n", acr, ddrb, orb);
-     }
-     */
-     if (generateOutputPulse()) {
-        // debug("portBinternal: pb7timerOut = %d\n", pb7timerOut);
-        if (pb7timerOut)
-            SET_BIT(result, 7);
-        else
-            CLR_BIT(result, 7);
-    }
-    
-    return result;
+    return orb;
 }
 
 void
 VIA6522::updatePB()
 {
     pb = (portBinternal() & ddrb) | (portBexternal() & ~ddrb);
+    
+    if (PB7OutputEnabled()) {
+        if (feed & VC64VIAPB7out0) {
+            SET_BIT(pb, 7);
+        } else {
+            CLR_BIT(pb, 7);
+        }
+    }
 }
 
 void
@@ -780,7 +788,7 @@ VIA6522::setCA1(bool value)
     if (ca1 == value) return;
     
     ca1 = value;
-    
+
     // Check for active transition (positive or negative edge)
     uint8_t ctrl = ca1Control();
     bool active = (!ca1 && ctrl == 0) || (ca1 && ctrl == 1);
