@@ -215,7 +215,7 @@ bool IEC::_updateIecLines()
     //
     //                        ----
     // ATNA (VIA) -----------|    |    ---
-    //               ---     | =1 |---| 1 |o---> DATA (IEC)
+    //               ---     | =1 |---| 1 |o---> & DATA (IEC)
     //  ATN (IEC) --| 1 |o---|    |    ---
     //               ---      ----     UB1
     //               UA1      UD3

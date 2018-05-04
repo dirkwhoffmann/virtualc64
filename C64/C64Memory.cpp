@@ -509,13 +509,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 void C64Memory::poke(uint16_t addr, uint8_t value)
 {	
 	MemorySource target = pokeTarget[addr >> 12];
-	
-    /*
-    if (addr == 0xFEF) {
-        debug("Writing %02X to %04X (PC = %04X)\n", value, addr, c64->cpu.getPC_at_cycle_0());
-    }
-    */
-    
+	    
 	switch(target) {
 			
 		case M_RAM:
