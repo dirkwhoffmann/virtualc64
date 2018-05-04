@@ -1,7 +1,7 @@
 /*!
  * @header      IEC.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
+ * @copyright   2006 - 2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
 
 #include "VirtualComponent.h"
 
-// Forward declarations
-class CIA2;
-class VC1541;
-
 class IEC : public VirtualComponent {
 
 private:
@@ -37,20 +33,11 @@ private:
 	//! Current value of the IEC bus atn line	
 	bool atnLine;
 
-	//! Previous value of the IEC bus atn line	
-	bool oldAtnLine;
-
 	//! Current value of the IEC bus clock line	
 	bool clockLine;
 
-	//! Previous value of the IEC bus clock line	
-	bool oldClockLine;
-
 	//! Current value of the IEC bus data line
 	bool dataLine;
-
-	//! Previous value of the IEC bus data line
-	bool oldDataLine;
 	 	
 	//! Current value of the atn pin of the connected external device
 	bool deviceAtnPin;

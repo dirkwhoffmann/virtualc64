@@ -28,11 +28,8 @@ IEC::IEC()
         
         { &driveConnected,      sizeof(driveConnected),         CLEAR_ON_RESET },
         { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
-        { &oldAtnLine,          sizeof(oldAtnLine),             CLEAR_ON_RESET },
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
-        { &oldClockLine,        sizeof(oldClockLine),           CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
-        { &oldDataLine,         sizeof(oldDataLine),            CLEAR_ON_RESET },
         { &deviceAtnPin,        sizeof(deviceAtnPin),           CLEAR_ON_RESET },
         { &deviceAtnIsOutput,   sizeof(deviceAtnIsOutput),      CLEAR_ON_RESET },
         { &deviceDataPin,       sizeof(deviceDataPin),          CLEAR_ON_RESET },
@@ -63,11 +60,8 @@ IEC::reset()
     
     driveConnected = 1;
 	atnLine = 1;
-	oldAtnLine = 1;
 	clockLine = 1;
-	oldClockLine = 1;
 	dataLine = 1;
-	oldDataLine = 1;
 	deviceDataPin = 1;
 	deviceClockPin = 1;
 	ciaDataPin = 1;
@@ -96,9 +90,6 @@ IEC::dumpState()
 	dumpTrace();
 	msg("\n");
 	msg("Drive connected : %s\n", driveConnected ? "yes" : "no");
-	msg("        old ATN : %d\n", oldAtnLine);
-	msg("        old CLK : %d\n", oldClockLine);
-	msg("       old DATA : %d\n", oldDataLine);
     msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.ddrb);
     msg("    DDRA (CIA2) : %02X\n", c64->cia2.DDRA);
 
@@ -151,9 +142,9 @@ IEC::disconnectDrive()
 bool IEC::_updateIecLines()
 {
 	// save current values
-	oldAtnLine = atnLine;
-	oldClockLine = clockLine;
-	oldDataLine = dataLine;
+	bool oldAtnLine = atnLine;
+	bool oldClockLine = clockLine;
+	bool oldDataLine = dataLine;
 
 	// determine new values
 	atnLine = 1;

@@ -460,9 +460,10 @@ CPU::executeOneCycle()
             
         case fetch:
             
-            /* DEBUG
-             if (PC == 0x03B6) {
-                 startTracing(200);
+            /* DEBUG */
+            /*
+             if (PC == 0x46AA) {
+                 startTracing(2);
              }
             */
             
