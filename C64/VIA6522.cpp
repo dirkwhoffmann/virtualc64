@@ -818,7 +818,7 @@ VIA1::portBexternal()
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------
     // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
-    // |  in   |               |  out  |  out  |  in   |  out  |  in   |
+    // |  in   |               |  ack  |  out  |  in   |  out  |  in   |
     
     uint8_t external =
     (c64->floppy.iec->getAtnLine() ? 0x00 : 0x80) |

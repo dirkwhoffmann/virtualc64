@@ -58,7 +58,7 @@ class VC1541;
  */
 class VIA6522 : public VirtualComponent {
 	
-protected:
+public:
     
     //
     // Peripheral interface

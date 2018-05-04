@@ -139,6 +139,7 @@ IEC::disconnectDrive()
     c64->floppy.powerUp();
 }
 
+/*
 bool IEC::_updateIecLines()
 {
 	// save current values
@@ -170,11 +171,62 @@ bool IEC::_updateIecLines()
 	// It implements an auto acknowledge feature. When set to 1, the ATN signal
 	// is automatically acknowledged by the drive. This feature allows the C64
 	// to detect a connected drive without any interaction by the drive itself.
-	if (driveConnected && deviceAtnPin == 1)
+    if (driveConnected && deviceAtnPin == 1)
 		dataLine &= atnLine;
     
 	// Did any signal change its value?
 	return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);	
+}
+*/
+
+bool IEC::_updateIecLines()
+{
+    // Save current values
+    bool oldAtnLine = atnLine;
+    bool oldClockLine = clockLine;
+    bool oldDataLine = dataLine;
+    
+    // Get bus signals from device side
+    uint8_t deviceBits = c64->floppy.via1.pb;
+    bool deviceAtn = (deviceBits & 0x10) ? 1 : 0;
+    bool deviceClock = (deviceBits & 0x08) ? 1 : 0;
+    bool deviceData = (deviceBits & 0x02) ? 1 : 0;
+
+    // Get bus signals from c64 side
+    uint8_t ciaBits = c64->cia2.PA;
+    bool ciaAtn = (ciaBits & 0x08) ? 1 : 0;
+    bool ciaClock = (ciaBits & 0x10) ? 1 : 0;
+    bool ciaData = (ciaBits & 0x20) ? 1 : 0;
+    
+    // Compute bus signals (inverted and "wired AND")
+    atnLine = !ciaAtn;
+    clockLine = !deviceClock && !ciaClock;
+    dataLine = !deviceData && !ciaData;
+    
+    // Auto-acknowdlege logic
+    
+    // From the SERVICE MANUAL MODEL 1540/1541 DISK DRIVE (PN-314002-01)
+    //
+    // "ATN (Attention) is an input on pin 3 of P2 and P3 that is sensed
+    //  at PB7 and CA1 of UC3 after being inverted by UA1. ATNA (Attention
+    //  Acknowledge) is an output from PB4 of UC3 which is sensed on the data
+    // line pin 5 of P2 and P3 after being exclusively "ored" by UD3 and
+    // inverted by UB1."
+    //
+    //                        ----
+    // ATNA (VIA) -----------|    |    ---
+    //               ---     | =1 |---| 1 |o---> DATA (IEC)
+    //  ATN (IEC) --| 1 |o---|    |    ---
+    //               ---      ----     UB1
+    //               UA1      UD3
+    
+    bool UA1 = !atnLine;
+    bool UD3 = UA1 ^ deviceAtn;
+    bool UB1 = !UD3;
+    dataLine &= UB1;
+    
+    // Return true iff one of the three bus signals changed.
+    return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);
 }
 
 void IEC::updateIecLines()
@@ -188,16 +240,19 @@ void IEC::updateIecLines()
     c64->floppy.via1.setCA1(!getAtnLine());
     
 	if (signals_changed) {
+        
+        if (tracingEnabled()) {
+            dumpTrace();
+        }
+        
 		if (busActivity == 0) {
-			// Bus activity detected
+			// Bus activated
 			c64->putMessage(MSG_VC1541_DATA_ON);
 			c64->setWarp(c64->getAlwaysWarp() || c64->getWarpLoad());
 		}
+        
+        // Reset watchdog counter
 		busActivity = 30;
-	}
-
-	if (signals_changed && tracingEnabled()) {
-		dumpTrace();
 	}
 }
 	
