@@ -181,6 +181,7 @@ public class MetalView: MTKView {
     
     override open func keyDown(with event: NSEvent)
     {
+        // track()
         controller.keyboardcontroller.keyDown(with: event)
     }
     

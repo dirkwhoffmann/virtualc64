@@ -1066,7 +1066,8 @@ CIA1::portAinternal()
 uint8_t
 CIA1::portAexternal()
 {
-    return c64->keyboard.getColumnValues(PB);
+    return 0xFF;
+    // return c64->keyboard.getColumnValues(PB);
 }
 
 void
@@ -1074,8 +1075,13 @@ CIA1::updatePA()
 {
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 
-    // The control port can always bring the port lines low,
-    // no matter what the data direction register says.
+    // Get lines which are driven actively low by port B
+    uint8_t rowMask = ~PRB & DDRB & c64->joystickA.bitmask();
+    
+    // Pull lines low that are connected by a pressed key
+    PA &= c64->keyboard.getColumnValues(rowMask);
+    
+    // The control port can always bring the port lines low
     PA &= c64->joystickB.bitmask();
 }
 
@@ -1099,7 +1105,8 @@ CIA1::portBinternal()
 uint8_t
 CIA1::portBexternal()
 {
-    return c64->keyboard.getRowValues(PA);
+    return 0xFF;
+    // return c64->keyboard.getRowValues(PA);
 }
 
 void
@@ -1107,6 +1114,12 @@ CIA1::updatePB()
 {
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
+    // Get lines which are driven actively low by port A
+    uint8_t columnMask = ~PRA & DDRA & c64->joystickB.bitmask();
+    
+    // Pull lines low that are connected by a pressed key
+    PB &= c64->keyboard.getRowValues(columnMask);
+    
     // Check if timer A underflow shows up on PB6
     if (GET_BIT(PB67TimerMode, 6))
         COPY_BIT(PB67TimerOut, PB, 6);
@@ -1115,8 +1128,7 @@ CIA1::updatePB()
     if (GET_BIT(PB67TimerMode, 7))
         COPY_BIT(PB67TimerOut, PB, 7);
     
-    // The control port can always bring the port lines low,
-    // no matter what the data direction register says.
+    // The control port can always bring the port lines low
     PB &= c64->joystickA.bitmask();
     
     // PB4 is connected to the VIC (LP pin).

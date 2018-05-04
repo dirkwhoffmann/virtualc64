@@ -36,7 +36,9 @@
  *            the contents of the keyboard matrix into the virtual C64.
  */
 class Keyboard : public VirtualComponent {
-	
+
+protected:
+    
 	//! @brief    The C64 keyboard matrix indexed by row
 	uint8_t kbMatrixRow[8];
 
@@ -45,7 +47,7 @@ class Keyboard : public VirtualComponent {
 
     //! @brief    True iff shift lock is pressed
     bool shiftLock;
-			
+    
 public:
     
 	//! @brief    Constructor

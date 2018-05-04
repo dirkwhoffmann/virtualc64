@@ -82,8 +82,8 @@ Keyboard::getRowValues(uint8_t columnMask)
 {
 	uint8_t result = 0xff;
 		
-	for (int i = 0; i < 8; i++) {
-		if ((columnMask & (1 << i)) == 0) {
+	for (unsigned i = 0; i < 8; i++) {
+		if (GET_BIT(columnMask, i)) {
 			result &= kbMatrixRow[i];
 		}
 	}
@@ -96,8 +96,8 @@ Keyboard::getColumnValues(uint8_t rowMask)
 {
     uint8_t result = 0xff;
     
-    for (int i = 0; i < 8; i++) {
-        if ((rowMask & (1 << i)) == 0) {
+    for (unsigned i = 0; i < 8; i++) {
+        if (GET_BIT(rowMask, i)) {
             result &= kbMatrixCol[i];
         }
     }
@@ -112,8 +112,8 @@ Keyboard::pressKey(uint8_t row, uint8_t col)
     assert(row < 8);
     assert(col < 8);
     
-    kbMatrixRow[row] &= 255 - (1 << col);
-    kbMatrixCol[col] &= 255 - (1 << row);
+    kbMatrixRow[row] &= ~(1 << col);
+    kbMatrixCol[col] &= ~(1 << row);
 
     // debug("Set(%d %d)\n",row,col);
     // dumpState();
