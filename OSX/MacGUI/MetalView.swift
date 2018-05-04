@@ -174,6 +174,28 @@ public class MetalView: MTKView {
         setupDragAndDrop()
     }
     
+    override public var acceptsFirstResponder: Bool
+    {
+        get { return true }
+    }
+    
+    override open func keyDown(with event: NSEvent)
+    {
+        controller.keyboardcontroller.keyDown(with: event)
+    }
+    
+    override open func keyUp(with event: NSEvent)
+    {
+        controller.keyboardcontroller.keyUp(with: event)
+    }
+    
+    override open func flagsChanged(with event: NSEvent) {
+        
+        // Save modifier flags. They are needed in TouchBar code
+        controller.modifierFlags = event.modifierFlags
+        controller.keyboardcontroller.flagsChanged(with: event)
+    }
+    
     //! Adjusts view height by a certain number of pixels
     func adjustHeight(_ height: CGFloat) {
     

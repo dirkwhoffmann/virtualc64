@@ -400,24 +400,8 @@ extension MyController {
     //  Keyboard events
     // --------------------------------------------------------------------------------
 
-    override open func keyDown(with event: NSEvent) {
-
-        keyboardcontroller.keyDown(with: event)
-    }
-    
-    override open func keyUp(with event: NSEvent) {
-        
-        keyboardcontroller.keyUp(with: event)
-    }
-    
-    override open func flagsChanged(with event: NSEvent) {
-        
-        // Save modifier flags. They are needed in TouchBar code
-        modifierFlags = event.modifierFlags
-        
-        keyboardcontroller.flagsChanged(with: event)
-    }
-    
+    // Keyboard events are handled by the emulator window.
+    // If they are handled here, some keys such as 'TAB' don't trigger an event.
  
     // --------------------------------------------------------------------------------
     //  Game pad events
