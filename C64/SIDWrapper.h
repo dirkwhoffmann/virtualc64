@@ -1,7 +1,7 @@
 /*!
  * @header      SidWrapper.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2011 - 2016 Dirk W. Hoffmann
+ * @copyright   2011 - 2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -51,12 +51,15 @@ private:
     bool useReSID;
     
     //! @brief    Remembers latest written value
+    /*! @details  Test case SID/busvalue:
+     *            "Reading from a write-only or non-existing register
+     *             returns the value left on the internal data bus,
+     *             which is refreshed not only on writes but also on
+     *             valid reads from the read-only registers.
+     */
     uint8_t latchedDataBus;
     
 public:
-    //! @brief    Returns true if the addr is located in the I/O range of the SID chip.
-	static inline bool isSidAddr(uint16_t addr) 
-	{ return (SID_START_ADDR <= addr && addr <= SID_END_ADDR); }
 	
 	//! @brief    Constructor
 	SIDWrapper();
@@ -68,9 +71,9 @@ public:
 	void dumpState();
 	
     
-    // -----------------------------------------------------------------------------------
-	//                                         Configuring
-	// -----------------------------------------------------------------------------------
+    //
+	// Configuring the device
+	//
 
     //! @brief    Configures the SID chip for being used in PAL machines.
     void setPAL();
@@ -129,9 +132,9 @@ public:
     void rampDown() { resid->rampDown(); }
 
 
-    // -----------------------------------------------------------------------------------
-	//                                           Execution
-	// -----------------------------------------------------------------------------------
+    //
+	// Running the device
+	//
 
 private:
     
@@ -157,9 +160,9 @@ public:
 	void halt();
 
     
-	// -----------------------------------------------------------------------------------
-	//                                       Getter and setter
-	// -----------------------------------------------------------------------------------
+	//
+	// Accessig device data
+	//
     
 private:
     
@@ -167,7 +170,7 @@ private:
 	uint8_t peek(uint16_t addr);
 	
     //! @brief    Same as peek, but without side effects.
-    uint8_t read(uint16_t addr);
+    uint8_t spy(uint16_t addr);
     
 	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);

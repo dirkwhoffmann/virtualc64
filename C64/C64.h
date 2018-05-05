@@ -42,7 +42,7 @@
 #define V_SUBMINOR 0
 
 // Disables assert checking in relase version
-#define NDEBUG
+// #define NDEBUG
 
 // Data types and constants
 #include "C64_types.h"

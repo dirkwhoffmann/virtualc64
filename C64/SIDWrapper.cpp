@@ -34,6 +34,7 @@ SIDWrapper::SIDWrapper()
         
         // Configuration items
         { &useReSID,        sizeof(useReSID),       KEEP_ON_RESET },
+        
         // Internal state
         { &latchedDataBus,  sizeof(latchedDataBus), CLEAR_ON_RESET },
         { &cycles,          sizeof(cycles),         CLEAR_ON_RESET },
@@ -89,7 +90,9 @@ SIDWrapper::peek(uint16_t addr)
 {
     assert(addr <= 0x1F);
 
-    // Get SID up to date
+    uint8_t result = latchedDataBus;
+    
+    // Get SID up to datex
     executeUntil(c64->getCycles());
     
     // Take care of possible side effects, but discard value
@@ -99,20 +102,19 @@ SIDWrapper::peek(uint16_t addr)
         (void)oldsid->peek(addr);
 
     if (addr == 0x19 || addr == 0x1A) {
-        latchedDataBus = 0;
-        return 0xFF;
+        result = 0xFF;
     }
     
     if (addr == 0x1B || addr == 0x1C) {
-        latchedDataBus = 0;
-        return rand();
+        result = rand();
     }
     
-    return latchedDataBus;
+    latchedDataBus = result;
+    return result;
 }
 
 uint8_t
-SIDWrapper::read(uint16_t addr)
+SIDWrapper::spy(uint16_t addr)
 {
     assert(addr <= 0x001F);
     

@@ -348,7 +348,7 @@ uint8_t C64Memory::readIO(uint16_t addr)
         case 0x6: // SID
         case 0x7: // SID
             
-            return c64->sid.read(addr & 0x001F);
+            return c64->sid.spy(addr & 0x001F);
             
         case 0xC: // CIA 1
             
