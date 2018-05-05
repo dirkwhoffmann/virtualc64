@@ -173,6 +173,7 @@ SIDWrapper::halt()
     resid->halt();
 }
 
+/*
 float 
 SIDWrapper::readData()
 {
@@ -181,6 +182,7 @@ SIDWrapper::readData()
     else
         return oldsid->readData();
 }
+*/
 
 void
 SIDWrapper::readMonoSamples(float *target, size_t n)

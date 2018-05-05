@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020214260AF8E599008AB4EB /* SIDVoice.cpp */; };
 		023024000DC902A700F8818A /* AudioDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 023023FF0DC902A700F8818A /* AudioDevice.mm */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */; };
@@ -258,8 +257,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		020214250AF8E599008AB4EB /* SIDVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDVoice.h; sourceTree = "<group>"; };
-		020214260AF8E599008AB4EB /* SIDVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDVoice.cpp; sourceTree = "<group>"; };
 		023023FE0DC902A700F8818A /* AudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDevice.h; sourceTree = "<group>"; };
 		023023FF0DC902A700F8818A /* AudioDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioDevice.mm; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
@@ -728,8 +725,6 @@
 				506D39D4141788E600268AF6 /* ReSID.cpp */,
 				50CA0D500A9076FD00A5A08D /* OldSID.h */,
 				50CA0D510A9076FD00A5A08D /* OldSID.cpp */,
-				020214250AF8E599008AB4EB /* SIDVoice.h */,
-				020214260AF8E599008AB4EB /* SIDVoice.cpp */,
 				50176C560A6F72F3009E80BD /* CPU.h */,
 				50171AA02083716000C07AAD /* CPU_types.h */,
 				50176C550A6F72F3009E80BD /* CPU.cpp */,
@@ -1405,7 +1400,6 @@
 				50169F17209E10F700CB3536 /* lib.c in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
-				020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
