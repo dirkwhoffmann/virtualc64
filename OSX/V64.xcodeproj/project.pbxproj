@@ -104,7 +104,6 @@
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505739E31C01FC5700B80646 /* NIBArchive.cpp */; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
-		505ABE85209D9D2C00ED62F0 /* _SnapshotImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505ABE84209D9D2C00ED62F0 /* _SnapshotImageView.swift */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
@@ -405,7 +404,6 @@
 		505739E41C01FC5700B80646 /* NIBArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIBArchive.h; sourceTree = "<group>"; };
 		5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPort.cpp; sourceTree = "<group>"; };
 		5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpansionPort.h; sourceTree = "<group>"; };
-		505ABE84209D9D2C00ED62F0 /* _SnapshotImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _SnapshotImageView.swift; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506004641B78E9C500EBDD93 /* PixelEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelEngine.cpp; sourceTree = "<group>"; };
@@ -1010,7 +1008,6 @@
 				50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
-				505ABE84209D9D2C00ED62F0 /* _SnapshotImageView.swift */,
 			);
 			name = "User Dialog Controllers";
 			sourceTree = "<group>";
@@ -1379,7 +1376,6 @@
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
-				505ABE85209D9D2C00ED62F0 /* _SnapshotImageView.swift in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
