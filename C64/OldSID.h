@@ -20,6 +20,7 @@
 #define _OLDSID_INC
 
 #include "VirtualComponent.h"
+#include "fastsid.h"
 
 //! The virtual sound interface device (SID)
 /*! SID is the sound chip of the Commodore 64.
@@ -27,6 +28,58 @@
 */
 class OldSID : public VirtualComponent {
 
+private:
+    
+    sound_s st;
+
+    /*! @brief   Currently used chip model.
+     *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
+     *           This chip must be selected to hear synthesized speech.
+     *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
+     */
+    int chipModel;
+    
+    /*! @brief   Sample rate
+     *  @details By default, a sample rate of 44.1 kHz is used.
+     */
+    uint32_t sampleRate;
+    
+    /*! @brief   Sampling method used by the reSID library
+     */
+    int samplingMethod;
+    
+    /*! @brief   Current CPU frequency
+     *  @details This variable must always mirror the frequency of the C64 CPU to get the
+     *           proper audio samples at the right time. The CPU frequency differs in PAL and NTSC mode.
+     */
+    uint32_t cpuFrequency;
+    
+    /*! @brief   Configuration option offered by the reSID library
+     */
+    bool audioFilter;
+    
+    /*! @brief   Configuration option offered by the reSID library
+     */
+    bool externalAudioFilter;
+    
+    /*! @brief   Size of the audio samples ringbuffer.
+     *  @see     ringBuffer
+     */
+    static constexpr size_t bufferSize = 12288;
+    
+    /*! @brief   The audio sample ringbuffer.
+     *  @details This ringbuffer serves as the data interface between the SID emulation code and
+     *           computers audio API (CoreAudio on Mac OS X).
+     */
+    float ringBuffer[bufferSize];
+    
+    /*! @brief   Scaling value for sound samples
+     *  @details All sound samples produced by reSID are scaled by this value
+     *           before they are written into the ringBuffer
+     */
+    static constexpr float scale = 0.000005f;
+    
+    
 public:
     
 	//! Constructor.
