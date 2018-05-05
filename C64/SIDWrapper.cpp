@@ -89,18 +89,17 @@ uint8_t
 SIDWrapper::peek(uint16_t addr)
 {
     assert(addr <= 0x1F);
-
-    uint8_t result = latchedDataBus;
     
-    // Get SID up to datex
+    // Get SID up to date
     executeUntil(c64->getCycles());
     
-    // Take care of possible side effects, but discard value
-    if (useReSID)
-        (void)resid->peek(addr);
-    else
-        (void)oldsid->peek(addr);
-
+    if (useReSID) {
+        return resid->peek(addr);
+    }
+    
+    // Old SID implementation (deprecated)
+    uint8_t result = latchedDataBus;
+    
     if (addr == 0x19 || addr == 0x1A) {
         result = 0xFF;
     }

@@ -163,21 +163,34 @@ int SID::output(int bits)
 // (remember that an intermediate write to another register would yield that
 // value instead). With this in mind we return the last value written to
 // any SID register for $2000 cycles without modeling the bit fading.
+//
+// Modified by Dirk Hoffmann, 5.5.18
+// The data bus is refreshed not only on writes but also on valid reads
+// from the read-only registers.
 // ----------------------------------------------------------------------------
 reg8 SID::read(reg8 offset)
 {
-  switch (offset) {
-  case 0x19:
-    return potx.readPOT();
-  case 0x1a:
-    return poty.readPOT();
-  case 0x1b:
-    return voice[2].wave.readOSC();
-  case 0x1c:
-    return voice[2].envelope.readENV();
-  default:
-    return bus_value;
-  }
+    reg8 result;
+    
+    switch (offset) {
+        case 0x19:
+            result = potx.readPOT();
+            break;
+        case 0x1a:
+            result = poty.readPOT();
+            break;
+        case 0x1b:
+            result = voice[2].wave.readOSC();
+            break;
+        case 0x1c:
+            result = voice[2].envelope.readENV();
+            break;
+        default:
+            result = bus_value;
+            break;
+    }
+    bus_value = result;
+    return result;
 }
 
 
@@ -385,7 +398,7 @@ void SID::write_state(const State& state)
 
   bus_value = state.bus_value;
   bus_value_ttl = state.bus_value_ttl;
-
+    
   for (i = 0; i < 3; i++) {
     voice[i].wave.accumulator = state.accumulator[i];
     voice[i].wave.shift_register = state.shift_register[i];
