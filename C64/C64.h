@@ -200,21 +200,21 @@ public:
     // Sub components
     //
     
-	//! @brief    The C64s virtual memory (ROM, RAM, and color RAM)
-	C64Memory mem;
-	
-	//! @brief    The C64s virtual CPU
+    //! @brief    The C64s virtual memory (ROM, RAM, and color RAM)
+    C64Memory mem;
+    
+    //! @brief    The C64s virtual CPU
     CPU cpu;
-	
+    
     //! @brief    The C64s processor port
     ProcessorPort processorPort;
 
-	//! @brief    The C64s video controller chip
-	VIC vic;
-	
-	//! @brief    The C64s first versatile interface adapter
-	CIA1 cia1;
-	
+    //! @brief    The C64s video controller chip
+    VIC vic;
+    
+    //! @brief    The C64s first versatile interface adapter
+    CIA1 cia1;
+    
     //! @brief    Wakeup cycle for CIA1
     uint64_t wakeUpCycleCIA1;
     
@@ -222,7 +222,7 @@ public:
     uint64_t idleCounterCIA1;
     
     //! @brief    The C64s second versatile interface adapter
-	CIA2 cia2;
+    CIA2 cia2;
 
     //! @brief    Wakeup cycle for CIA2
     uint64_t wakeUpCycleCIA2;
@@ -231,25 +231,25 @@ public:
     uint64_t idleCounterCIA2;
 
     //! @brief    The C64s sound chip
-	SIDWrapper sid;
-	
+    SIDWrapper sid;
+    
     //! @brief    The C64s virtual keyboard
-	Keyboard keyboard;
-	
+    Keyboard keyboard;
+    
     //! @brief    The C64s first virtual joystick (plugged into CONTROL PORT 1)
-	Joystick joystickA = Joystick(1);
+    Joystick joystickA = Joystick(1);
 
     //! @brief    The C64s second virtual joystick (plugged into CONTROL PORT 2)
     Joystick joystickB = Joystick(2);
 
-	//! @brief    The C64s interface bus connecting the VC1541 drive
-	IEC iec;
+    //! @brief    The C64s interface bus connecting the VC1541 drive
+    IEC iec;
 
     //! @brief    The C64s virtual expansion port (cartdrige slot)
     ExpansionPort expansionport;
 
     //! @brief    A virtual VC1541 floppy drive
-	VC1541 floppy;
+    VC1541 floppy;
 
     //! @brief    A virtual datasette
     Datasette datasette;
@@ -350,27 +350,27 @@ private:
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
     
-	// ---------------------------------------------------------------------------------------
-	//                                             Methods
-	// ---------------------------------------------------------------------------------------
-	
+    // ---------------------------------------------------------------------------------------
+    //                                             Methods
+    // ---------------------------------------------------------------------------------------
+    
 public:
-	
-	//! @brief    Constructor
-	C64();
-	
-	//! @brief    Destructor
-	~C64();
+    
+    //! @brief    Constructor
+    C64();
+    
+    //! @brief    Destructor
+    ~C64();
 
-	//! @brief    Resets the virtual C64 and all of its sub components.
+    //! @brief    Resets the virtual C64 and all of its sub components.
     void reset();
      
     //! @brief    Dumps current configuration into message queue
     void ping();
 
-	//! @brief    Prints debugging information
-	void dumpState();
-	
+    //! @brief    Prints debugging information
+    void dumpState();
+    
     //! @brief    Returns true if the executable was compiled for development
     /*! @details  In release mode, assertion checking should be switched off
      */
@@ -380,32 +380,32 @@ public:
     #endif
         return false;
     }
-			
+            
     //
     //! @functiongroup Configuring the emulator
     //
-	
-	//! @brief    Returns true if the emulator is currently running in PAL mode
+    
+    //! @brief    Returns true if the emulator is currently running in PAL mode
     bool isPAL() { return vic.isPAL(); }
 
-	/*! @brief    Puts the emulator in PAL mode
+    /*! @brief    Puts the emulator in PAL mode
      *  @details  This method plugs in a PAL VIC chip and reconfigures SID with the proper timing information 
      */
-	void setPAL();
-	
+    void setPAL();
+    
     //! @brief    Returns true if the emulator is currently running in NTSC mode
     bool isNTSC() { return !vic.isPAL(); }
 
     /*! @brief    Puts the emulator in PAL mode
      *  @details  This method plugs in a PAL VIC chip and reconfigures SID with the proper timing information
      */
-	void setNTSC();
+    void setNTSC();
 
     //! @brief    Returns true iff audio filters are enabled.
     bool getAudioFilter() { return sid.getAudioFilter(); }
 
-	//! @brief    Enables or disables SID audio filters.
-	void setAudioFilter(bool value) { sid.setAudioFilter(value); }
+    //! @brief    Enables or disables SID audio filters.
+    void setAudioFilter(bool value) { sid.setAudioFilter(value); }
       
     //! @brief    Returns true if reSID library is used
     bool getReSID() { return sid.getReSID(); }
@@ -414,16 +414,16 @@ public:
     void setReSID(bool value) { sid.setReSID(value); }
 
     //! @brief    Gets the sampling method
-    sampling_method getSamplingMethod() { return sid.getSamplingMethod(); }
+    reSID::sampling_method getSamplingMethod() { return sid.getSamplingMethod(); }
     
     //! @brief    Sets the sampling method
-    void setSamplingMethod(sampling_method value) { sid.setSamplingMethod(value); }
+    void setSamplingMethod(reSID::sampling_method value) { sid.setSamplingMethod(value); }
     
     //! @brief    Gets the SID chip model
-    chip_model getChipModel() { return sid.getChipModel(); }
+    reSID::chip_model getChipModel() { return sid.getChipModel(); }
     
     //! @brief    Sets the SID chip model
-    void setChipModel(chip_model value) { sid.setChipModel(value); }
+    void setChipModel(reSID::chip_model value) { sid.setChipModel(value); }
 
     
     //
@@ -456,30 +456,30 @@ public:
     //! @brief    Returns true iff the virtual C64 is able to run (i.e., all ROMs are loaded)
     bool isRunnable();
     
-	//! @brief    Returns true iff the virtual C64 is in the "running" state
-	bool isRunning();
-	
-	//! @brief    Returns true iff the virtual C64 is in the "halted" state
-	bool isHalted();
-	
-	/*! @brief    Executes one CPU instruction
+    //! @brief    Returns true iff the virtual C64 is in the "running" state
+    bool isRunning();
+    
+    //! @brief    Returns true iff the virtual C64 is in the "halted" state
+    bool isHalted();
+    
+    /*! @brief    Executes one CPU instruction
      *  @details  This method implements the "step" action of the debugger
      */
-	void step(); 
-	
-	//! @brief    Executes until the end of the rasterline
-	bool executeOneLine();
+    void step(); 
+    
+    //! @brief    Executes until the end of the rasterline
+    bool executeOneLine();
     
 private:
-	
+    
     //! @brief    Executes virtual C64 for one cycle
     bool executeOneCycle();
     
-	//! @brief    Invoked before executing the first cycle of rasterline
-	void beginOfRasterline();
-	
+    //! @brief    Invoked before executing the first cycle of rasterline
+    void beginOfRasterline();
+    
     //! @brief    Invoked after executing the last cycle of rasterline
-	void endOfRasterline();
+    void endOfRasterline();
 
     //! @brief    Invoked after executing the last rasterline of a frame
     void endOfFrame();
@@ -659,11 +659,11 @@ public:
     //! @functiongroup Handling disks, tapes, and cartridges
     //
     
-	/*! @brief    Flushes a single item from an archive into memory.
+    /*! @brief    Flushes a single item from an archive into memory.
      */
-	bool flushArchive(Archive *a, int item);
-	
-	/*! @brief    Inserts an archive into the floppy drive as a virtual disk.
+    bool flushArchive(Archive *a, int item);
+    
+    /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @details  Only D64 and G64 archives are supported.
      */
     bool insertDisk(Archive *a);
@@ -672,21 +672,21 @@ public:
      *  @details  Only D64 and G64 archives are supported.
      *  @deprecated Use insertDisk instead
      */
-	bool mountArchive(Archive *a);
+    bool mountArchive(Archive *a);
 
     /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.
      */
     bool insertTape(TAPContainer *a);
 
-	//! @brief    Attaches a cartridge to the expansion port.
-	bool attachCartridgeAndReset(CRTContainer *c);
+    //! @brief    Attaches a cartridge to the expansion port.
+    bool attachCartridgeAndReset(CRTContainer *c);
 
-	//! @brief    Detaches a cartridge from the expansion port.
-	void detachCartridgeAndReset();
+    //! @brief    Detaches a cartridge from the expansion port.
+    void detachCartridgeAndReset();
 
-	//! @brief    Returns true iff a cartridge is attached.
-	bool isCartridgeAttached();
+    //! @brief    Returns true iff a cartridge is attached.
+    bool isCartridgeAttached();
 
     
     //

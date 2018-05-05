@@ -1,6 +1,6 @@
 //  ---------------------------------------------------------------------------
 //  This file is part of reSID, a MOS6581 SID emulator engine.
-//  Copyright (C) 2004  Dag Lem <resid@nimrod.no>
+//  Copyright (C) 2010  Dag Lem <resid@nimrod.no>
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //  ---------------------------------------------------------------------------
 
-#define __EXTFILT_CC__
+#define RESID_EXTFILT_CC
+
 #include "extfilt.h"
 
-RESID_NAMESPACE_START
+namespace reSID
+{
 
 // ----------------------------------------------------------------------------
 // Constructor.
@@ -29,8 +31,15 @@ ExternalFilter::ExternalFilter()
 {
   reset();
   enable_filter(true);
-  set_sampling_parameter(15915.6);
-  set_chip_model(MOS6581);
+
+  // Low-pass:  R = 10 kOhm, C = 1000 pF; w0l = 1/RC = 1/(1e4*1e-9) = 100 000
+  // High-pass: R =  1 kOhm, C =   10 uF; w0h = 1/RC = 1/(1e3*1e-5) =     100
+
+  // Assume a 1MHz clock.
+  // Cutoff frequency accuracy (4 bits) is traded off for filter signal
+  // accuracy (27 bits). This is crucial since w0lp and w0hp are so far apart.
+  w0lp_1_s7 = int(100000*1.0e-6*(1 << 7) + 0.5);
+  w0hp_1_s17 = int(100*1.0e-6*(1 << 17) + 0.5);
 }
 
 
@@ -44,43 +53,6 @@ void ExternalFilter::enable_filter(bool enable)
 
 
 // ----------------------------------------------------------------------------
-// Setup of the external filter sampling parameters.
-// ----------------------------------------------------------------------------
-void ExternalFilter::set_sampling_parameter(double pass_freq)
-{
-  static const double pi = 3.1415926535897932385;
-
-  // Low-pass:  R = 10kOhm, C = 1000pF; w0l = 1/RC = 1/(1e4*1e-9) = 100000
-  // High-pass: R =  1kOhm, C =   10uF; w0h = 1/RC = 1/(1e3*1e-5) =    100
-  // Multiply with 1.048576 to facilitate division by 1 000 000 by right-
-  // shifting 20 times (2 ^ 20 = 1048576).
-
-  w0hp = 105;
-  w0lp = (sound_sample) (pass_freq * (2.0 * pi * 1.048576));
-  if (w0lp > 104858)
-    w0lp = 104858;
-}
-
-
-// ----------------------------------------------------------------------------
-// Set chip model.
-// ----------------------------------------------------------------------------
-void ExternalFilter::set_chip_model(chip_model model)
-{
-  if (model == MOS6581) {
-    // Maximum mixer DC output level; to be removed if the external
-    // filter is turned off: ((wave DC + voice DC)*voices + mixer DC)*volume
-    // See voice.cc and filter.cc for an explanation of the values.
-    mixer_DC = ((((0x800 - 0x380) + 0x800)*0xff*3 - 0xfff*0xff/18) >> 7)*0x0f;
-  }
-  else {
-    // No DC offsets in the MOS8580.
-    mixer_DC = 0;
-  }
-}
-
-
-// ----------------------------------------------------------------------------
 // SID reset.
 // ----------------------------------------------------------------------------
 void ExternalFilter::reset()
@@ -88,7 +60,6 @@ void ExternalFilter::reset()
   // State of filter.
   Vlp = 0;
   Vhp = 0;
-  Vo = 0;
 }
 
-RESID_NAMESPACE_STOP
+} // namespace reSID

@@ -1,6 +1,6 @@
 //  ---------------------------------------------------------------------------
 //  This file is part of reSID, a MOS6581 SID emulator engine.
-//  Copyright (C) 2004  Dag Lem <resid@nimrod.no>
+//  Copyright (C) 2010  Dag Lem <resid@nimrod.no>
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,19 +17,86 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //  ---------------------------------------------------------------------------
 
-#define __WAVE_CC__
-#include "wave.h"
+#define RESID_WAVE_CC
 
-RESID_NAMESPACE_START
+#include "wave.h"
+#include "dac.h"
+
+namespace reSID
+{
+
+// Waveform lookup tables.
+unsigned short WaveformGenerator::model_wave[2][8][1 << 12] = {
+  {
+    {0},
+    {0},
+    {0},
+#include "wave6581__ST.h"
+    {0},
+#include "wave6581_P_T.h"
+#include "wave6581_PS_.h"
+#include "wave6581_PST.h"
+  },
+  {
+    {0},
+    {0},
+    {0},
+#include "wave8580__ST.h"
+    {0},
+#include "wave8580_P_T.h"
+#include "wave8580_PS_.h"
+#include "wave8580_PST.h"
+  }
+};
+
+
+// DAC lookup tables.
+unsigned short WaveformGenerator::model_dac[2][1 << 12] = {
+  {0},
+  {0},
+};
+
 
 // ----------------------------------------------------------------------------
 // Constructor.
 // ----------------------------------------------------------------------------
 WaveformGenerator::WaveformGenerator()
 {
+  static bool class_init;
+
+  if (!class_init) {
+    // Calculate tables for normal waveforms.
+    accumulator = 0;
+    for (int i = 0; i < (1 << 12); i++) {
+      reg24 msb = accumulator & 0x800000;
+
+      // Noise mask, triangle, sawtooth, pulse mask.
+      // The triangle calculation is made branch-free, just for the hell of it.
+      model_wave[0][0][i] = model_wave[1][0][i] = 0xfff;
+      model_wave[0][1][i] = model_wave[1][1][i] = ((accumulator ^ -!!msb) >> 11) & 0xffe;
+      model_wave[0][2][i] = model_wave[1][2][i] = accumulator >> 12;
+      model_wave[0][4][i] = model_wave[1][4][i] = 0xfff;
+
+      accumulator += 0x1000;
+    }
+
+    // Build DAC lookup tables for 12-bit DACs.
+    // MOS 6581: 2R/R ~ 2.20, missing termination resistor.
+    build_dac_table(model_dac[0], 12, 2.20, false);
+    // MOS 8580: 2R/R ~ 2.00, correct termination.
+    build_dac_table(model_dac[1], 12, 2.00, true);
+
+    class_init = true;
+  }
+
   sync_source = this;
 
-  set_chip_model(MOS6581);
+  sid_model = MOS6581;
+
+  // Accumulator's even bits are high on powerup
+  accumulator = 0x555555;
+
+  tri_saw_pipeline = 0x555;
 
   reset();
 }
@@ -50,18 +117,8 @@ void WaveformGenerator::set_sync_source(WaveformGenerator* source)
 // ----------------------------------------------------------------------------
 void WaveformGenerator::set_chip_model(chip_model model)
 {
-  if (model == MOS6581) {
-    wave__ST = wave6581__ST;
-    wave_P_T = wave6581_P_T;
-    wave_PS_ = wave6581_PS_;
-    wave_PST = wave6581_PST;
-  }
-  else {
-    wave__ST = wave8580__ST;
-    wave_P_T = wave8580_P_T;
-    wave_PS_ = wave8580_PS_;
-    wave_PST = wave8580_PST;
-  }
+  sid_model = model;
+  wave = model_wave[model][waveform & 0x7];
 }
 
 
@@ -81,51 +138,116 @@ void WaveformGenerator::writeFREQ_HI(reg8 freq_hi)
 void WaveformGenerator::writePW_LO(reg8 pw_lo)
 {
   pw = (pw & 0xf00) | (pw_lo & 0x0ff);
+  // Push next pulse level into pulse level pipeline.
+  pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
 }
 
 void WaveformGenerator::writePW_HI(reg8 pw_hi)
 {
   pw = ((pw_hi << 8) & 0xf00) | (pw & 0x0ff);
+  // Push next pulse level into pulse level pipeline.
+  pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
+}
+
+bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
+{
+    // no writeback without combined waveforms
+    if (likely(waveform_prev <= 0x8))
+        return false;
+    // This need more investigation
+    if (waveform == 8)
+        return false;
+    // What's happening here?
+    if (is6581 &&
+            ((((waveform_prev & 0x3) == 0x1) && ((waveform & 0x3) == 0x2))
+            || (((waveform_prev & 0x3) == 0x2) && ((waveform & 0x3) == 0x1))))
+        return false;
+    // ok do the writeback
+    return true;
 }
 
 void WaveformGenerator::writeCONTROL_REG(reg8 control)
 {
+  reg8 waveform_prev = waveform;
+  reg8 test_prev = test;
   waveform = (control >> 4) & 0x0f;
+  test = control & 0x08;
   ring_mod = control & 0x04;
   sync = control & 0x02;
 
-  reg8 test_next = control & 0x08;
+  // Set up waveform table.
+  wave = model_wave[sid_model][waveform & 0x7];
 
-  // Test bit set.
-  // The accumulator and the shift register are both cleared.
-  // NB! The shift register is not really cleared immediately. It seems like
-  // the individual bits in the shift register start to fade down towards
-  // zero when test is set. All bits reach zero within approximately
-  // $2000 - $4000 cycles.
-  // This is not modeled. There should fortunately be little audible output
-  // from this peculiar behavior.
-  if (test_next) {
+  // Substitution of accumulator MSB when sawtooth = 0, ring_mod = 1.
+  ring_msb_mask = ((~control >> 5) & (control >> 2) & 0x1) << 23;
+
+  // no_noise and no_pulse are used in set_waveform_output() as bitmasks to
+  // only let the noise or pulse influence the output when the noise or pulse
+  // waveforms are selected.
+  no_noise = waveform & 0x8 ? 0x000 : 0xfff;
+  no_noise_or_noise_output = no_noise | noise_output;
+  no_pulse = waveform & 0x4 ? 0x000 : 0xfff;
+
+  // Test bit rising.
+  // The accumulator is cleared, while the the shift register is prepared for
+  // shifting by interconnecting the register bits. The internal SRAM cells
+  // start to slowly rise up towards one. The SRAM cells reach one within
+  // approximately $8000 cycles, yielding a shift register value of
+  // 0x7fffff.
+  if (!test_prev && test) {
+    // Reset accumulator.
     accumulator = 0;
-    shift_register = 0;
+
+    // Flush shift pipeline.
+    shift_pipeline = 0;
+
+    // Set reset time for shift register.
+    shift_register_reset = 0x8000;
+
+    // The test bit sets pulse high.
+    pulse_output = 0xfff;
   }
-  // Test bit cleared.
-  // The accumulator starts counting, and the shift register is reset to
-  // the value 0x7ffff8.
-  // NB! The shift register will not actually be set to this exact value if the
-  // shift register bits have not had time to fade to zero.
-  // This is not modeled.
-  else if (test) {
-    shift_register = 0x7ffff8;
+  else if (test_prev && !test) {
+    // When the test bit is falling, the second phase of the shift is
+    // completed by enabling SRAM write.
+
+    // During first phase of the shift the bits are interconnected
+    // and the output of each bit is latched into the following.
+    // The output may overwrite the latched value.
+    if (do_pre_writeback(waveform_prev, waveform, sid_model == MOS6581)) {
+        write_shift_register();
+    }
+
+    // bit0 = (bit22 | test) ^ bit17 = 1 ^ bit17 = ~bit17
+    reg24 bit0 = (~shift_register >> 17) & 0x1;
+    shift_register = ((shift_register << 1) | bit0) & 0x7fffff;
+
+    // Set new noise waveform output.
+    set_noise_output();
   }
 
-  test = test_next;
+  if (waveform) {
+    // Set new waveform output.
+    set_waveform_output();
+  }
+  else if (waveform_prev) {
+    // Change to floating DAC input.
+    // Reset fading time for floating DAC input.
+    //
+    // We have two SOAS/C samplings showing that floating DAC
+    // keeps its state for at least 0x14000 cycles.
+    //
+    // This can't be found via sampling OSC3, it seems that
+    // the actual analog output must be sampled and timed.
+    floating_output_ttl = 0x14000;
+  }
 
   // The gate bit is handled by the EnvelopeGenerator.
 }
 
 reg8 WaveformGenerator::readOSC()
 {
-  return output() >> 4;
+  return osc3 >> 4;
 }
 
 // ----------------------------------------------------------------------------
@@ -133,16 +255,30 @@ reg8 WaveformGenerator::readOSC()
 // ----------------------------------------------------------------------------
 void WaveformGenerator::reset()
 {
-  accumulator = 0;
-  shift_register = 0x7ffff8;
+  // accumulator is not changed on reset
   freq = 0;
   pw = 0;
 
+  msb_rising = false;
+
+  waveform = 0;
   test = 0;
   ring_mod = 0;
   sync = 0;
 
-  msb_rising = false;
+  wave = model_wave[sid_model][0];
+
+  ring_msb_mask = 0;
+  no_noise = 0xfff;
+  no_pulse = 0xfff;
+  pulse_output = 0xfff;
+
+  reset_shift_register();
+  shift_pipeline = 0;
+
+  waveform_output = 0;
+  osc3 = 0;
+  floating_output_ttl = 0;
 }
 
-RESID_NAMESPACE_STOP
+} // namespace reSID

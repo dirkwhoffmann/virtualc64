@@ -1,6 +1,6 @@
 //  ---------------------------------------------------------------------------
 //  This file is part of reSID, a MOS6581 SID emulator engine.
-//  Copyright (C) 2004  Dag Lem <resid@nimrod.no>
+//  Copyright (C) 2010  Dag Lem <resid@nimrod.no>
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,11 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //  ---------------------------------------------------------------------------
 
-#ifndef __SPLINE_H__
-#define __SPLINE_H__
+#ifndef RESID_SPLINE_H
+#define RESID_SPLINE_H
 
-RESID_NAMESPACE_START
+namespace reSID
+{
 
 // Our objective is to construct a smooth interpolating single-valued function
 // y = f(x).
@@ -128,8 +129,8 @@ RESID_NAMESPACE_START
 // ----------------------------------------------------------------------------
 inline
 void cubic_coefficients(double x1, double y1, double x2, double y2,
-			double k1, double k2,
-			double& a, double& b, double& c, double& d)
+                double k1, double k2,
+                double& a, double& b, double& c, double& d)
 {
   double dx = x2 - x1, dy = y2 - y1;
 
@@ -145,8 +146,8 @@ void cubic_coefficients(double x1, double y1, double x2, double y2,
 template<class PointPlotter>
 inline
 void interpolate_brute_force(double x1, double y1, double x2, double y2,
-			     double k1, double k2,
-			     PointPlotter plot, double res)
+                                double k1, double k2,
+                                PointPlotter plot, double res)
 {
   double a, b, c, d;
   cubic_coefficients(x1, y1, x2, y2, k1, k2, a, b, c, d);
@@ -164,8 +165,8 @@ void interpolate_brute_force(double x1, double y1, double x2, double y2,
 template<class PointPlotter>
 inline
 void interpolate_forward_difference(double x1, double y1, double x2, double y2,
-				    double k1, double k2,
-				    PointPlotter plot, double res)
+                                    double k1, double k2,
+                                    PointPlotter plot, double res)
 {
   double a, b, c, d;
   cubic_coefficients(x1, y1, x2, y2, k1, k2, a, b, c, d);
@@ -266,10 +267,10 @@ class PointPlotter
       y = 0;
     }
 
-    f[F(x)] = F(y);
+    f[int(x)] = F(y + 0.5);
   }
 };
 
-RESID_NAMESPACE_STOP
+} // namespace reSID
 
-#endif // not __SPLINE_H__
+#endif // not RESID_SPLINE_H

@@ -223,13 +223,13 @@ SIDWrapper::setAudioFilter(bool enable)
 }
 
 void
-SIDWrapper::setSamplingMethod(sampling_method value)
+SIDWrapper::setSamplingMethod(reSID::sampling_method value)
 {
      resid->setSamplingMethod(value);
 }
 
 void 
-SIDWrapper::setChipModel(chip_model value)
+SIDWrapper::setChipModel(reSID::chip_model value)
 {
     resid->setChipModel(value);
 }

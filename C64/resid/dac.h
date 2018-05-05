@@ -17,6 +17,14 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //  ---------------------------------------------------------------------------
 
-#define RESID_VERSION_CC
+#ifndef RESID_DAC_H
+#define RESID_DAC_H
 
-#include "resid-config.h"
+namespace reSID
+{
+
+void build_dac_table(unsigned short* dac, int bits, double _2R_div_R, bool term);
+
+} // namespace reSID
+
+#endif // not RESID_DAC_H

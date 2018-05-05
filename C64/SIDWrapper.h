@@ -88,10 +88,10 @@ public:
     void setReSID(bool enable);
     
     //! @brief    Returns the simulated chip model.
-    inline chip_model getChipModel() { return resid->getChipModel(); }
+    inline reSID::chip_model getChipModel() { return resid->getChipModel(); }
     
     //! @brief    Sets chip model (ReSID only)
-    void setChipModel(chip_model value);
+    void setChipModel(reSID::chip_model value);
     
     //! @brief    Returns true iff audio filters are enabled.
     inline bool getAudioFilter() { return resid->getExternalAudioFilter(); }
@@ -100,10 +100,10 @@ public:
     void setAudioFilter(bool enable);
     
     //! @brief    Returns the sampling method.
-    inline sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
+    inline reSID::sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
     
     //! @brief    Sets the sampling method (ReSID only).
-    void setSamplingMethod(sampling_method value);
+    void setSamplingMethod(reSID::sampling_method value);
 
     //! @brief    Returns the sample rate.
 	inline uint32_t getSampleRate() { return resid->getSampleRate(); }

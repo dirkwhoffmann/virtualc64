@@ -31,14 +31,14 @@ class ReSID : public VirtualComponent {
 
 private:
     
-    SID *sid;
+    reSID::SID *sid;
     
     /*! @brief   Currently used chip model.
      *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
      *           This chip must be selected to hear synthesized speech.
      *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
      */
-    chip_model chipModel;
+    reSID::chip_model chipModel;
 	
 	/*! @brief   Sample rate
      *  @details By default, a sample rate of 44.1 kHz is used. 
@@ -47,7 +47,7 @@ private:
 	
     /*! @brief   Sampling method used by the reSID library
      */
-    sampling_method samplingMethod;
+    reSID::sampling_method samplingMethod;
     
     /*! @brief   Current CPU frequency
      *  @details This variable must always mirror the frequency of the C64 CPU to get the
@@ -81,7 +81,7 @@ private:
     static constexpr float scale = 0.000005f;
 
     //! ReSID state
-    SID::State st;
+    reSID::SID::State st;
     
 public:
     /*! @brief   Ring buffer read pointer
@@ -194,16 +194,16 @@ public:
 	void setSampleRate(uint32_t sr);
     
     //! Get sampling method
-    inline sampling_method getSamplingMethod() { return samplingMethod; }
+    inline reSID::sampling_method getSamplingMethod() { return samplingMethod; }
     
     //! Set sampling method
-    void setSamplingMethod(sampling_method value);
+    void setSamplingMethod(reSID::sampling_method value);
     
     //! Get chip model 
-    inline chip_model getChipModel() { return chipModel; }
+    inline reSID::chip_model getChipModel() { return chipModel; }
     
     //! Set chip model 
-    void setChipModel(chip_model value);
+    void setChipModel(reSID::chip_model value);
     
     //! Get clock frequency
     uint32_t getClockFrequency() { return cpuFrequency; }

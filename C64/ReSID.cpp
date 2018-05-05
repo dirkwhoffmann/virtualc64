@@ -23,7 +23,7 @@ ReSID::ReSID()
 	setDescription("ReSID");
 	debug(3, "  Creating ReSID at address %p...\n", this);
 
-    sid = new SID();
+    sid = new reSID::SID();
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -75,10 +75,10 @@ ReSID::ReSID()
     registerSnapshotItems(items, sizeof(items));
     
     // Set default values
-    setChipModel(MOS6581); 
+    setChipModel(reSID::MOS6581);
     
     cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
-    samplingMethod = SAMPLE_FAST;
+    samplingMethod = reSID::SAMPLE_FAST;
     sampleRate = 44100;
     sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
     
@@ -103,11 +103,11 @@ ReSID::reset()
 }
 
 void
-ReSID::setChipModel(chip_model model)
+ReSID::setChipModel(reSID::chip_model model)
 {
-    if (model != MOS6581 && model != MOS8580) {
+    if (model != reSID::MOS6581 && model != reSID::MOS8580) {
         warn("Unknown chip model (%d). Using  MOS8580\n", model);
-        model = MOS8580;
+        model = reSID::MOS8580;
     }
     
     chipModel = model;
@@ -129,24 +129,24 @@ ReSID::setExternalAudioFilter(bool enable)
 }
 
 void 
-ReSID::setSamplingMethod(sampling_method method)
+ReSID::setSamplingMethod(reSID::sampling_method method)
 {
     switch (method) {
-        case SAMPLE_FAST:
+        case reSID::SAMPLE_FAST:
             debug(2, "Using sample method SAMPLE_FAST\n");
             break;
-        case SAMPLE_INTERPOLATE:
+        case reSID::SAMPLE_INTERPOLATE:
             debug(2, "Using sample method SAMPLE_INTERPOLATE\n");
             break;
-        case SAMPLE_RESAMPLE_INTERPOLATE:
-            debug(2, "Using sample method SAMPLE_RESAMPLE_INTERPOLATE\n");
+        case reSID::SAMPLE_RESAMPLE:
+            debug(2, "Using sample method SAMPLE_RESAMPLE\n");
             break;
-        case SAMPLE_RESAMPLE_FAST:
-            debug(2, "Using sample method SAMPLE_RESAMPLE_FAST\n");
+        case reSID::SAMPLE_RESAMPLE_FASTMEM:
+            debug(2, "Using sample method SAMPLE_RESAMPLE_FASTMEM\n");
             break;
         default:
             warn("Unknown sample method. Using SAMPLE_FAST\n");
-            method = SAMPLE_FAST;
+            method = reSID::SAMPLE_FAST;
     }
     
     samplingMethod = method;
@@ -202,7 +202,7 @@ ReSID::execute(uint64_t elapsedCycles)
 {
     short buf[2049];
     int buflength = 2048;
-    cycle_count delta_t = (cycle_count)elapsedCycles;
+    reSID::cycle_count delta_t = (reSID::cycle_count)elapsedCycles;
     int bufindex = 0;
     
     // Let reSID compute some sound samples
