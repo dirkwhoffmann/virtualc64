@@ -28,16 +28,8 @@
 #define VICE_FASTSID_H
 
 #include "sid.h"
-// #include "sid-snapshot.h"
 
-typedef unsigned short WORD;
-#define BYTE unsigned char
-
-// typedef signed short SWORD;
-// typedef unsigned int DWORD;
-// typedef signed int SDWORD;
-
-extern sid_engine_t fastsid_hooks;
+// extern sid_engine_t fastsid_hooks;
 
 /*
 extern void fastsid_state_read(struct sound_s *psid, struct sid_fastsid_snapshot_state_s *sid_state);
