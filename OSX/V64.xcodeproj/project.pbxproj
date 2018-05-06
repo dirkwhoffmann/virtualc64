@@ -40,7 +40,6 @@
 		50169F0A209E045A00CB3536 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EFE209E045800CB3536 /* dac.cc */; };
 		50169F0B209E045A00CB3536 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169F00209E045800CB3536 /* extfilt.cc */; };
 		50169F10209E0B1900CB3536 /* fastsid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50169F0E209E0B1900CB3536 /* fastsid.cpp */; };
-		50169F17209E10F700CB3536 /* lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 50169F16209E10F700CB3536 /* lib.c */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -329,12 +328,9 @@
 		50169F0C209E055B00CB3536 /* siddefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
 		50169F0E209E0B1900CB3536 /* fastsid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fastsid.cpp; sourceTree = "<group>"; };
 		50169F0F209E0B1900CB3536 /* fastsid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastsid.h; sourceTree = "<group>"; };
-		50169F11209E0C3E00CB3536 /* sid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
 		50169F12209E0EE700CB3536 /* fixpoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixpoint.h; sourceTree = "<group>"; };
 		50169F13209E0F2000CB3536 /* wave6581.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wave6581.h; sourceTree = "<group>"; };
 		50169F14209E0F2100CB3536 /* wave8580.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wave8580.h; sourceTree = "<group>"; };
-		50169F15209E10F700CB3536 /* lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lib.h; sourceTree = "<group>"; };
-		50169F16209E10F700CB3536 /* lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lib.c; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
 		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
 		50171AA02083716000C07AAD /* CPU_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_types.h; sourceTree = "<group>"; };
@@ -850,12 +846,9 @@
 			children = (
 				50169F0E209E0B1900CB3536 /* fastsid.cpp */,
 				50169F0F209E0B1900CB3536 /* fastsid.h */,
-				50169F11209E0C3E00CB3536 /* sid.h */,
 				50169F12209E0EE700CB3536 /* fixpoint.h */,
 				50169F13209E0F2000CB3536 /* wave6581.h */,
 				50169F14209E0F2100CB3536 /* wave8580.h */,
-				50169F16209E10F700CB3536 /* lib.c */,
-				50169F15209E10F700CB3536 /* lib.h */,
 			);
 			path = fastsid;
 			sourceTree = "<group>";
@@ -1402,7 +1395,6 @@
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
-				50169F17209E10F700CB3536 /* lib.c in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,

@@ -34,17 +34,6 @@
 #include <math.h>
 
 #include "fastsid.h"
-#include "lib.h"
-// #include "log.h"
-// #include "machine.h"
-// #include "maincpu.h"
-// #include "resources.h"
-// #include "sid-snapshot.h"
-// #include "sid.h"
-// #include "sound.h"
-// #include "snapshot.h"
-// #include "types.h"
-
 
 #include "fixpoint.h"
 
@@ -162,32 +151,32 @@ inline static void dofilter(voice_t *pVoice)
 
     if (pVoice->s->filterType) {
         if (pVoice->s->filterType == 0x20) {
-            pVoice->filtLow += REAL_MULT(pVoice->filtRef, pVoice->s->filterDy);
+            pVoice->filtLow += pVoice->filtRef * pVoice->s->filterDy;
             pVoice->filtRef +=
-                REAL_MULT(REAL_VALUE(pVoice->filtIO) - pVoice->filtLow -
+                REAL_MULT(pVoice->filtIO - pVoice->filtLow -
                           REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy),
                           pVoice->s->filterDy);
             pVoice->filtIO = (signed char) (REAL_TO_INT(pVoice->filtRef - pVoice->filtLow / 4));
         } else if (pVoice->s->filterType == 0x40) {
             vreal_t sample;
             pVoice->filtLow += (vreal_t)(REAL_MULT(REAL_MULT(pVoice->filtRef,
-                                              pVoice->s->filterDy), REAL_VALUE(0.1)));
-            pVoice->filtRef += REAL_MULT(REAL_VALUE(pVoice->filtIO) - pVoice->filtLow -
+                                              pVoice->s->filterDy), 0.1));
+            pVoice->filtRef += REAL_MULT(pVoice->filtIO - pVoice->filtLow -
                           REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy),
                           pVoice->s->filterDy);
-            sample = pVoice->filtRef - REAL_VALUE(pVoice->filtIO / 8);
-            if (sample < REAL_VALUE(-128)) {
-                sample = REAL_VALUE(-128);
+            sample = pVoice->filtRef - (pVoice->filtIO / 8);
+            if (sample < -128) {
+                sample = -128;
             }
-            if (sample > REAL_VALUE(127)) {
-                sample = REAL_VALUE(127);
+            if (sample > 127) {
+                sample = 127;
             }
             pVoice->filtIO = (signed char)(REAL_TO_INT(sample));
         } else {
             int tmp;
             vreal_t sample, sample2;
             pVoice->filtLow += REAL_MULT(pVoice->filtRef, pVoice->s->filterDy );
-            sample = REAL_VALUE(pVoice->filtIO);
+            sample = pVoice->filtIO;
             sample2 = sample - pVoice->filtLow;
             tmp = (int)(REAL_TO_INT(sample2));
             sample2 -= REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy);
@@ -388,8 +377,8 @@ inline static void setup_sid(sound_t *psid)
         }
         psid->filterResDy = filterResTable[psid->d[0x17] >> 4]
                             - psid->filterDy;
-        if (psid->filterResDy < REAL_VALUE(1.0)) {
-            psid->filterResDy = REAL_VALUE(1.0);
+        if (psid->filterResDy < 1.0) {
+            psid->filterResDy = 1.0;
         }
     } else {
         psid->v[0].filter = 0;
@@ -691,7 +680,7 @@ static void init_filter(sound_t *psid, int freq)
         if (h > yMax) {
             h = yMax;
         }
-        lowPassParam[uk] = REAL_VALUE(h);
+        lowPassParam[uk] = h;
     }
 
     yMax = (float)0.22;
@@ -700,17 +689,17 @@ static void init_filter(sound_t *psid, int freq)
     yTmp = yMin;
 
     for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        bandPassParam[uk] = REAL_VALUE((yTmp * filterRefFreq) / freq);
+        bandPassParam[uk] = (yTmp * filterRefFreq) / freq;
         yTmp += yAdd;
     }
 
     for (uk = 0; uk < 16; uk++) {
-        filterResTable[uk] = REAL_VALUE(resDy);
+        filterResTable[uk] = resDy;
         resDy -= ((resDyMin - resDyMax ) / 15);
     }
 
-    filterResTable[0] = REAL_VALUE(resDyMin);
-    filterResTable[15] = REAL_VALUE(resDyMax);
+    filterResTable[0] = resDyMin;
+    filterResTable[15] = resDyMax;
 
     /* XXX: if psid->emulatefilter = 0, ampMod1x8 is never referenced */
     if (psid->emulatefilter) {
@@ -724,17 +713,6 @@ static void init_filter(sound_t *psid, int freq)
     }
 }
 
-/* SID initialization routine */
-static sound_t *fastsid_open(uint8_t *sidstate)
-{
-    sound_t *psid;
-
-    psid = (sound_t *)calloc(1, sizeof(sound_t));
-
-    memcpy(psid->d, sidstate, 32);
-
-    return psid;
-}
 
 int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
 {
@@ -823,17 +801,6 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
 
     return 1;
 }
-
-static void fastsid_close(sound_t *psid)
-{
-    free(psid);
-
-    if (buf) {
-        free(buf);
-        buf = NULL;
-    }
-}
-
 
 uint8_t fastsid_read(sound_t *psid, uint16_t addr)
 {
@@ -932,52 +899,7 @@ void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
     psid->d[addr] = byte;
     psid->laststore = byte;
     psid->laststorebit = 8;
-    // psid->laststoreclk = maincpu_clk;
 }
-
-static void fastsid_reset(sound_t *psid, uint64_t cpu_clk)
-{
-    uint16_t addr;
-
-    for (addr = 0; addr < 32; addr++) {
-        fastsid_store(psid, addr, 0);
-    }
-
-    psid->laststoreclk = cpu_clk;
-}
-
-static void fastsid_prevent_clk_overflow(sound_t *psid, uint64_t sub)
-{
-    psid->laststoreclk -= sub;
-}
-
-/*
-static void fastsid_resid_state_read(sound_t *psid, sid_snapshot_state_t *sid_state)
-{
-}
-
-static void fastsid_resid_state_write(sound_t *psid, sid_snapshot_state_t *sid_state)
-{
-}
-*/
-
-sid_engine_t fastsid_hooks =
-{
-    fastsid_open,
-    fastsid_init,
-    fastsid_close,
-    fastsid_read,
-    fastsid_store,
-    fastsid_reset,
-    fastsid_calculate_samples,
-    fastsid_prevent_clk_overflow,
-    NULL,
-    NULL,
-    NULL
-    // fastsid_dump_state,
-    // fastsid_resid_state_read,
-    // fastsid_resid_state_write
-};
 
 /* ---------------------------------------------------------------------*/
 

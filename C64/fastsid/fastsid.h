@@ -27,8 +27,9 @@
 #ifndef VICE_FASTSID_H
 #define VICE_FASTSID_H
 
-#include "sid.h"
-#include "fixpoint.h"
+#include "fastsid.h"
+
+typedef float vreal_t;
 
 /* needed data for one voice */
 typedef struct voice_s {
@@ -144,6 +145,9 @@ struct sound_s {
     uint8_t filterCurType;
     uint16_t filterValue;
 };
+
+typedef struct sound_s sound_t;
+
 
 int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor);
 uint8_t fastsid_read(sound_t *psid, uint16_t addr);
