@@ -21,65 +21,20 @@
 
 #include "VirtualComponent.h"
 #include "fastsid.h"
+#include "SIDbase.h"
+#include "resid/sid.h"
 
 //! The virtual sound interface device (SID)
 /*! SID is the sound chip of the Commodore 64.
 	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
 */
-class OldSID : public VirtualComponent {
+class OldSID : public SIDbase {
 
 private:
     
+    // Fast SID state
     sound_s st;
 
-    /*! @brief   Currently used chip model.
-     *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
-     *           This chip must be selected to hear synthesized speech.
-     *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
-     */
-    int chipModel;
-    
-    /*! @brief   Sample rate
-     *  @details By default, a sample rate of 44.1 kHz is used.
-     */
-    uint32_t sampleRate;
-    
-    /*! @brief   Sampling method used by the reSID library
-     */
-    int samplingMethod;
-    
-    /*! @brief   Current CPU frequency
-     *  @details This variable must always mirror the frequency of the C64 CPU to get the
-     *           proper audio samples at the right time. The CPU frequency differs in PAL and NTSC mode.
-     */
-    uint32_t cpuFrequency;
-    
-    /*! @brief   Configuration option offered by the reSID library
-     */
-    bool audioFilter;
-    
-    /*! @brief   Configuration option offered by the reSID library
-     */
-    bool externalAudioFilter;
-    
-    /*! @brief   Size of the audio samples ringbuffer.
-     *  @see     ringBuffer
-     */
-    static constexpr size_t bufferSize = 12288;
-    
-    /*! @brief   The audio sample ringbuffer.
-     *  @details This ringbuffer serves as the data interface between the SID emulation code and
-     *           computers audio API (CoreAudio on Mac OS X).
-     */
-    float ringBuffer[bufferSize];
-    
-    /*! @brief   Scaling value for sound samples
-     *  @details All sound samples produced by reSID are scaled by this value
-     *           before they are written into the ringBuffer
-     */
-    static constexpr float scale = 0.000005f;
-    
-    
 public:
     
 	//! Constructor.
@@ -88,69 +43,65 @@ public:
 	//! Destructor.
 	~OldSID();
 	
-	//! Bring the SID chip back to it's initial state.
-	void reset();
-	
-    //! Size of internal state
-    size_t stateSize();
-
-	//! Load state
-	void loadFromBuffer(uint8_t **buffer);
-	
-	//! Save state
-	void saveToBuffer(uint8_t **buffer);	
-	
-	//! Dump internal state to console
-	void dumpState();
-	
-	//! Special peek function for the I/O memory range
-	uint8_t peek(uint16_t addr);
-	
-	//! Special poke function for the I/O memory range
-	void poke(uint16_t addr, uint8_t value);
-	
-	//! Execute SID
-	void execute(uint64_t cycles);
-	
-    //! Notifies the SID chip that the emulator has started
-    void run();
-	
-	//! Notifies the SID chip that the emulator has started
-	void halt();
-
-    //! @brief  Reads one audio sample from ringbuffer
-	float readData();
-	
-    //! @brief  Reads n mono sample from ringbuffer
-    void readMonoSamples(float *target, size_t n);
+    //! Bring the SID chip back to it's initial state.
+    void reset();
     
-    //! @brief  Reads n mono sample from ringbuffer
-    void readStereoSamples(float *target1, float *target2, size_t n);
+    //! Load state
+    void loadFromBuffer(uint8_t **buffer);
     
-    //! @brief  Reads n mono sample from ringbuffer
-    void readStereoSamplesInterleaved(float *target, size_t n);
+    //! Save state
+    void saveToBuffer(uint8_t **buffer);
     
-	//! Enable or disable filters of SID.
-	/*!
-		By default filters of SID are disabled.
-		\param enable True to switch filters on, else false.
-	*/
-    void setAudioFilter(bool enable);
-
-	//! Return volumeControl value
-    float getVolumeControl();
-	
-	//! Set volume control value
-    void setVolumeControl(float value);
-		
-	//! Sets samplerate of SID and it's 3 voices.
-    void setSampleRate(uint32_t sr);
-	
-	//! Returns samplerate of SID.
-    uint32_t getSampleRate(); 
-	
-	//! Set clock frequency
-    void setClockFrequency(uint32_t frequency);
+    //! Dump internal state to console
+    void dumpState();
+    
+    //! Special peek function for the I/O memory range.
+    uint8_t peek(uint16_t addr);
+    
+    //! Special poke function for the I/O memory range.
+    void poke(uint16_t addr, uint8_t value);
+    
+    /*! @brief   Execute SID
+     *  @details Runs reSID for the specified amount of CPU cycles and writes
+     *           the generated sound samples into the internal ring buffer.
+     */
+    void execute(uint64_t cycles);
+    
+    
+    // Configuring
+    
+    //! Returns true iff audio filters are enabled.
+    bool getAudioFilter() { return st.emulatefilter; }
+    
+    //! Enable or disable reSIDs audio filtering capability
+    void setAudioFilter(bool enable) { st.emulatefilter = enable; }
+    
+    //! Return samplerate.
+    uint32_t getSampleRate() { return 0; } // TODO
+    
+    //! Set sample rate
+    void setSampleRate(uint32_t sr) { } // TODO
+    
+    //! Get sampling method
+    reSID::sampling_method getSamplingMethod() { return reSID::SAMPLE_FAST; }
+    
+    //! Set sampling method
+    void setSamplingMethod(reSID::sampling_method value) { }
+    
+    //! Get chip model
+    reSID::chip_model getChipModel() {
+        return st.newsid ? reSID::chip_model::MOS8580 : reSID::chip_model::MOS6581; }
+    
+    //! Set chip model
+    void setChipModel(reSID::chip_model value) {
+        st.newsid = (value == reSID::chip_model::MOS8580);
+    }
+    
+    //! Get clock frequency
+    uint32_t getClockFrequency() { return 0; }
+    
+    //! Set clock frequency
+    void setClockFrequency(uint32_t f) { };
 };
 
 #endif

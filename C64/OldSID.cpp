@@ -17,13 +17,29 @@
  */
 
 #include "C64.h"
+#include "fastsid/sid.h"
+#include "fastsid/fastsid.h"
 
 OldSID::OldSID()
 {
 	setDescription("SID");
 	debug(3, "  Creating FastSID at address %p...\n", this);
     
-
+    fastsid_init(&st, 44100, PAL_CYCLES_PER_SECOND, 1000);
+    // Set default values
+    // setChipModel(reSID::MOS6581);
+    st.newsid = false; 
+    
+    /*
+    cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
+    samplingMethod = reSID::SAMPLE_FAST;
+    sampleRate = 44100;
+     */
+    // sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
+    setAudioFilter(false);
+    
+    volume = 100000;
+    targetVolume = 100000;
 }
 
 OldSID::~OldSID()
@@ -31,113 +47,76 @@ OldSID::~OldSID()
 
 }
 
+//! Bring the SID chip back to it's initial state.
 void
 OldSID::reset()
 {
-    VirtualComponent::reset();
-}
-
-void
-OldSID::setAudioFilter(bool enable)
-{
     
 }
 
-float
-OldSID::getVolumeControl()
-{
-    return 1.0;
-}
-
+//! Load state
 void
-OldSID::setVolumeControl(float value)
-{
-    
-}
-
-void
-OldSID::setSampleRate(uint32_t sr)
-{
-    
-}
-
-uint32_t
-OldSID::getSampleRate()
-{
-    return 42;
-}
-
-void 
-OldSID::setClockFrequency(uint32_t frequency)
-{
-
-}
-
-size_t
-OldSID::stateSize()
-{
-    return 0;
-}
-
-void 
 OldSID::loadFromBuffer(uint8_t **buffer)
 {
+    
 }
 
+//! Save state
 void
 OldSID::saveToBuffer(uint8_t **buffer)
 {
+    
 }
 
-uint8_t 
+//! Dump internal state to console
+void
+OldSID::dumpState()
+{
+    
+}
+
+//! Special peek function for the I/O memory range.
+uint8_t
 OldSID::peek(uint16_t addr)
-{	
-    return 0;
+{
+    return fastsid_read(&st, addr);
 }
 
-void 
+//! Special poke function for the I/O memory range.
+void
 OldSID::poke(uint16_t addr, uint8_t value)
 {
+    fastsid_store(&st, addr, value);
 }
 
+/*! @brief   Execute SID
+ *  @details Runs reSID for the specified amount of CPU cycles and writes
+ *           the generated sound samples into the internal ring buffer.
+ */
 void
-OldSID::execute(uint64_t elapsedCycles)
+OldSID::execute(uint64_t cycles)
 {
-}
-
-void
-OldSID::run()
-{
-}
-
-void
-OldSID::halt()
-{
-}
-
-void
-OldSID::readMonoSamples(float *target, size_t n)
-{
-}
-
-void
-OldSID::readStereoSamples(float *target1, float *target2, size_t n)
-{
-}
-
-void
-OldSID::readStereoSamplesInterleaved(float *target, size_t n)
-{
-}
-
-/*
-void OldSID::writeData(float data)
-{
-}
-*/
-
-void OldSID::dumpState()
-{
+    int16_t buf[2049];
+    int buflength = 2048;
+    
+    // debug("executing for %d cycles\n", cycles);
+    
+    // How many samples do we need?
+    // For now, we assume a sample rate of 44100
+    int numSamples = (int)(cycles * 44100 / PAL_CYCLES_PER_SECOND);
+    if (numSamples > buflength) {
+        debug("Number of samples exceeds buffer size\n");
+        numSamples = buflength;
+    }
+    // Let FastSID compute
+    st.factor = 1000; // ??? CORRECT?
+    int computed = fastsid_calculate_samples(&st, buf, numSamples, 1, NULL);
+    assert(computed == numSamples);
+    
+    // Write samples into ringbuffer
+    if (computed) {
+        writeData(buf, computed);
+    }
 }
 
 

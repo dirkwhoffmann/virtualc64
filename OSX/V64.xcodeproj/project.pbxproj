@@ -39,7 +39,7 @@
 		50169F09209E045A00CB3536 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF9209E045700CB3536 /* version.cc */; };
 		50169F0A209E045A00CB3536 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EFE209E045800CB3536 /* dac.cc */; };
 		50169F0B209E045A00CB3536 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169F00209E045800CB3536 /* extfilt.cc */; };
-		50169F10209E0B1900CB3536 /* fastsid.c in Sources */ = {isa = PBXBuildFile; fileRef = 50169F0E209E0B1900CB3536 /* fastsid.c */; };
+		50169F10209E0B1900CB3536 /* fastsid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50169F0E209E0B1900CB3536 /* fastsid.cpp */; };
 		50169F17209E10F700CB3536 /* lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 50169F16209E10F700CB3536 /* lib.c */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
@@ -65,6 +65,7 @@
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
+		502C3606209F238800DE8B6D /* SIDbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502C3604209F238800DE8B6D /* SIDbase.cpp */; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
 		502F57F41B93441A00D1077E /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F31B93441A00D1077E /* LEDred.png */; };
 		502F57F61B93442100D1077E /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F51B93442100D1077E /* LEDgray.png */; };
@@ -326,7 +327,7 @@
 		50169F01209E045900CB3536 /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
 		50169F02209E045900CB3536 /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581__ST.h; sourceTree = "<group>"; };
 		50169F0C209E055B00CB3536 /* siddefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
-		50169F0E209E0B1900CB3536 /* fastsid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fastsid.c; sourceTree = "<group>"; };
+		50169F0E209E0B1900CB3536 /* fastsid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fastsid.cpp; sourceTree = "<group>"; };
 		50169F0F209E0B1900CB3536 /* fastsid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastsid.h; sourceTree = "<group>"; };
 		50169F11209E0C3E00CB3536 /* sid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
 		50169F12209E0EE700CB3536 /* fixpoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixpoint.h; sourceTree = "<group>"; };
@@ -377,6 +378,8 @@
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
+		502C3604209F238800DE8B6D /* SIDbase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDbase.cpp; sourceTree = "<group>"; };
+		502C3605209F238800DE8B6D /* SIDbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDbase.h; sourceTree = "<group>"; };
 		502F57F11B93441400D1077E /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
 		502F57F31B93441A00D1077E /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
 		502F57F51B93442100D1077E /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgray.png; sourceTree = "<group>"; };
@@ -721,6 +724,8 @@
 				506D39D3141780FF00268AF6 /* SIDWrapper.h */,
 				50171A9F2083710E00C07AAD /* SID_types.h */,
 				506D39D1141780E500268AF6 /* SIDWrapper.cpp */,
+				502C3605209F238800DE8B6D /* SIDbase.h */,
+				502C3604209F238800DE8B6D /* SIDbase.cpp */,
 				506D39D5141788E700268AF6 /* ReSID.h */,
 				506D39D4141788E600268AF6 /* ReSID.cpp */,
 				50CA0D500A9076FD00A5A08D /* OldSID.h */,
@@ -843,7 +848,7 @@
 		50169F0D209E0AF200CB3536 /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
-				50169F0E209E0B1900CB3536 /* fastsid.c */,
+				50169F0E209E0B1900CB3536 /* fastsid.cpp */,
 				50169F0F209E0B1900CB3536 /* fastsid.h */,
 				50169F11209E0C3E00CB3536 /* sid.h */,
 				50169F12209E0EE700CB3536 /* fixpoint.h */,
@@ -1435,7 +1440,7 @@
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
-				50169F10209E0B1900CB3536 /* fastsid.c in Sources */,
+				50169F10209E0B1900CB3536 /* fastsid.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
@@ -1453,6 +1458,7 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50169F05209E045A00CB3536 /* sid.cc in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
+				502C3606209F238800DE8B6D /* SIDbase.cpp in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,

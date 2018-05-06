@@ -139,17 +139,17 @@ static signed char ampMod1x8[256];
 
 /* manage temporary buffers. if the requested size is smaller or equal to the
  * size of the already allocated buffer, reuse it.  */
-static int16_t *buf = NULL;
-static int blen = 0;
+int16_t *buf = NULL;
+int blen = 0;
 
 static int16_t *getbuf(int len)
 {
     if ((buf == NULL) || (blen < len)) {
         if (buf) {
-            lib_free(buf);
+            free(buf);
         }
         blen = len;
-        buf = lib_calloc(len, 1);
+        buf = (int16_t *)calloc(len, 1);
     }
     return buf;
 }
@@ -327,6 +327,7 @@ static void trigger_adsr(voice_t *pv)
     }
 }
 
+/*
 static void print_voice(char *buf, voice_t *pv)
 {
     const char *m = "ADSRI";
@@ -353,21 +354,7 @@ static void print_voice(char *buf, voice_t *pv)
 #endif
             );
 }
-
-static char *fastsid_dump_state(sound_t *psid)
-{
-    int i;
-    char buf[1024];
-
-    sprintf(buf, "#SID: v=%d s3=%d\n",
-            psid->vol, psid->has3);
-
-    for (i = 0; i < 3; i++) {
-        print_voice(buf + strlen(buf), &psid->v[i]);
-    }
-
-    return lib_stralloc(buf);
-}
+*/
 
 /* update SID structure */
 inline static void setup_sid(sound_t *psid)
@@ -648,7 +635,7 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
     return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * psid->vol);
 }
 
-static int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
+int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
                                      int interleave, int *delta_t)
 {
     int i;
@@ -742,14 +729,14 @@ static sound_t *fastsid_open(uint8_t *sidstate)
 {
     sound_t *psid;
 
-    psid = lib_calloc(1, sizeof(sound_t));
+    psid = (sound_t *)calloc(1, sizeof(sound_t));
 
     memcpy(psid->d, sidstate, 32);
 
     return psid;
 }
 
-static int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
+int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
 {
     uint32_t i;
     int sid_model;
@@ -839,16 +826,16 @@ static int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor
 
 static void fastsid_close(sound_t *psid)
 {
-    lib_free(psid);
+    free(psid);
 
     if (buf) {
-        lib_free(buf);
+        free(buf);
         buf = NULL;
     }
 }
 
 
-static uint8_t fastsid_read(sound_t *psid, uint16_t addr)
+uint8_t fastsid_read(sound_t *psid, uint16_t addr)
 {
     uint8_t ret;
     uint16_t ffix;
@@ -869,11 +856,11 @@ static uint8_t fastsid_read(sound_t *psid, uint16_t addr)
             ffix = (uint16_t)(42 * psid->v[2].fs);
             rvstore = psid->v[2].rv;
             if (
-#ifdef WAVETABLES
+// #ifdef WAVETABLES
                 psid->v[2].noise
-#else
-                psid->v[2].fm == NOISEWAVE
-#endif
+//#else
+ //               psid->v[2].fm == NOISEWAVE
+//#endif
                 && psid->v[2].f + ffix < psid->v[2].f) {
                 psid->v[2].rv = NSHIFT(psid->v[2].rv, 16);
             }
@@ -899,7 +886,7 @@ static uint8_t fastsid_read(sound_t *psid, uint16_t addr)
     return ret;
 }
 
-static void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
+void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
 {
     switch (addr) {
         case 4:
@@ -984,7 +971,10 @@ sid_engine_t fastsid_hooks =
     fastsid_reset,
     fastsid_calculate_samples,
     fastsid_prevent_clk_overflow,
-    fastsid_dump_state,
+    NULL,
+    NULL,
+    NULL
+    // fastsid_dump_state,
     // fastsid_resid_state_read,
     // fastsid_resid_state_write
 };

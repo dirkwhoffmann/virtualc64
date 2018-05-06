@@ -145,7 +145,11 @@ struct sound_s {
     uint16_t filterValue;
 };
 
-
+int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor);
+uint8_t fastsid_read(sound_t *psid, uint16_t addr);
+void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte);
+int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
+                              int interleave, int *delta_t);
 
 // extern sid_engine_t fastsid_hooks;
 
