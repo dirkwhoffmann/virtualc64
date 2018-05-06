@@ -35,16 +35,6 @@
 
 #include "fastsid.h"
 
-#include "fixpoint.h"
-
-#ifndef TRUE
-#define TRUE 1
-#endif
-
-#ifndef FALSE
-#define FALSE 0
-#endif
-
 /* use wavetables (sampled waveforms) */
 #define WAVETABLES
 
@@ -153,17 +143,17 @@ inline static void dofilter(voice_t *pVoice)
         if (pVoice->s->filterType == 0x20) {
             pVoice->filtLow += pVoice->filtRef * pVoice->s->filterDy;
             pVoice->filtRef +=
-                REAL_MULT(pVoice->filtIO - pVoice->filtLow -
-                          REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy),
-                          pVoice->s->filterDy);
+                (pVoice->filtIO - pVoice->filtLow -
+                          (pVoice->filtRef * pVoice->s->filterResDy)) *
+                          pVoice->s->filterDy;
             pVoice->filtIO = (signed char)(pVoice->filtRef - pVoice->filtLow / 4);
         } else if (pVoice->s->filterType == 0x40) {
             vreal_t sample;
-            pVoice->filtLow += (vreal_t)(REAL_MULT(REAL_MULT(pVoice->filtRef,
-                                              pVoice->s->filterDy), 0.1));
-            pVoice->filtRef += REAL_MULT(pVoice->filtIO - pVoice->filtLow -
-                          REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy),
-                          pVoice->s->filterDy);
+            pVoice->filtLow += (vreal_t)((pVoice->filtRef *
+                                              pVoice->s->filterDy) * 0.1);
+            pVoice->filtRef += (pVoice->filtIO - pVoice->filtLow -
+                          (pVoice->filtRef * pVoice->s->filterResDy)) *
+                          pVoice->s->filterDy;
             sample = pVoice->filtRef - (pVoice->filtIO / 8);
             if (sample < -128) {
                 sample = -128;
@@ -175,12 +165,12 @@ inline static void dofilter(voice_t *pVoice)
         } else {
             int tmp;
             vreal_t sample, sample2;
-            pVoice->filtLow += REAL_MULT(pVoice->filtRef, pVoice->s->filterDy );
+            pVoice->filtLow += pVoice->filtRef * pVoice->s->filterDy;
             sample = pVoice->filtIO;
             sample2 = sample - pVoice->filtLow;
             tmp = (int)sample2;
-            sample2 -= REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy);
-            pVoice->filtRef += REAL_MULT(sample2, pVoice->s->filterDy);
+            sample2 -= pVoice->filtRef * pVoice->s->filterResDy;
+            pVoice->filtRef += sample2 * pVoice->s->filterDy;
 
             pVoice->filtIO = pVoice->s->filterType == 0x10
                              ? (signed char)pVoice->filtLow :
