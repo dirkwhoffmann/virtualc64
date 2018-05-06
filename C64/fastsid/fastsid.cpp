@@ -1,14 +1,16 @@
 /*
- * fastsid.c - MOS6581 (SID) emulation.
+ * This file belongs to the FastSID implementation of VirtualC64,
+ * an adaption of the code used in VICE 3.1, the Versatile Commodore Emulator.
  *
- * Written by
+ * Originally written by
  *  Teemu Rantanen <tvr@cs.hut.fi>
  *  Michael Schwendt <sidplay@geocities.com>
  *  Ettore Perazzoli <ettore@comm2000.it>
  *
- * This file is part of VICE, the Versatile Commodore Emulator.
- * See README for copyright notice.
- *
+ * Adapted for VirtualC64 by
+ *  Dirk Hoffmann
+ */
+/*
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -26,8 +28,6 @@
  *
  */
 
-// #include "vice.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,14 +36,14 @@
 #include "fastsid.h"
 #include "waves.h"
 
-/* ADSR state */
+// ADSR state
 #define ATTACK   0
 #define DECAY    1
 #define SUSTAIN  2
 #define RELEASE  3
 #define IDLE     4
 
-/* noise magic */
+// Noise magic
 #define NSHIFT(v, n) \
     (((v) << (n))    \
      | ((((v) >> (23 - (n))) ^ (v >> (18 - (n)))) & ((1 << (n)) - 1)))
@@ -54,6 +54,7 @@
 
 #define NSEED 0x7ffff8
 
+// Wave tables
 static uint16_t wavetable00[2];
 static uint16_t wavetable10[4096];
 static uint16_t wavetable20[4096];
@@ -63,34 +64,29 @@ static uint16_t wavetable50[8192];
 static uint16_t wavetable60[8192];
 static uint16_t wavetable70[8192];
 
-/* Noise tables */
-#define NOISETABLESIZE 256
-static uint8_t noiseMSB[NOISETABLESIZE];
-static uint8_t noiseMID[NOISETABLESIZE];
-static uint8_t noiseLSB[NOISETABLESIZE];
+// Noise tables
+static uint8_t noiseMSB[256];
+static uint8_t noiseMID[256];
+static uint8_t noiseLSB[256];
 
-
-
-/* XXX: check these */
-/* table for internal ADSR counter step calculations */
+// Table for internal ADSR counter step calculations
 static uint16_t adrtable[16] =
 {
     1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
 };
 
-/* XXX: check these */
-/* table for pseudo-exponential ADSR calculations */
+// Table for pseudo-exponential ADSR calculations
 static uint32_t exptable[6] =
 {
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
 
-/* clockcycles for each dropping bit when write-only register read is done */
+// Clockcycles for each dropping bit when write-only register read is done
 static uint32_t sidreadclocks[9];
 
-static vreal_t lowPassParam[0x800];
-static vreal_t bandPassParam[0x800];
-static vreal_t filterResTable[16];
+static float lowPassParam[0x800];
+static float bandPassParam[0x800];
+static float filterResTable[16];
 static const float filterRefFreq = 44100.0;
 static signed char ampMod1x8[256];
 
@@ -126,8 +122,8 @@ inline static void dofilter(voice_t *pVoice)
                           pVoice->s->filterDy;
             pVoice->filtIO = (signed char)(pVoice->filtRef - pVoice->filtLow / 4);
         } else if (pVoice->s->filterType == 0x40) {
-            vreal_t sample;
-            pVoice->filtLow += (vreal_t)((pVoice->filtRef *
+            float sample;
+            pVoice->filtLow += (float)((pVoice->filtRef *
                                               pVoice->s->filterDy) * 0.1);
             pVoice->filtRef += (pVoice->filtIO - pVoice->filtLow -
                           (pVoice->filtRef * pVoice->s->filterResDy)) *
@@ -142,7 +138,7 @@ inline static void dofilter(voice_t *pVoice)
             pVoice->filtIO = (signed char)sample;
         } else {
             int tmp;
-            vreal_t sample, sample2;
+            float sample, sample2;
             pVoice->filtLow += pVoice->filtRef * pVoice->s->filterDy;
             sample = pVoice->filtIO;
             sample2 = sample - pVoice->filtLow;
@@ -507,7 +503,7 @@ int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
 static void init_filter(sound_t *psid, int freq)
 {
     uint16_t uk;
-    vreal_t rk;
+    float rk;
     long int si;
 
     float yMax = 1.0;
@@ -646,7 +642,7 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
         }
     }
 
-    for (i = 0; i < NOISETABLESIZE; i++) {
+    for (i = 0; i < 256; i++) {
         noiseLSB[i] = (uint8_t)((((i >> (7 - 2)) & 0x04) | ((i >> (4 - 1)) & 0x02)
                               | ((i >> (2 - 0)) & 0x01)));
         noiseMID[i] = (uint8_t)((((i >> (13 - 8 - 4)) & 0x10)
@@ -872,8 +868,8 @@ void fastsid_state_write(struct sound_s *psid, struct sid_fastsid_snapshot_state
     psid->laststorebit = sid_state->laststorebit;
     psid->laststoreclk = (CLOCK)sid_state->laststoreclk;
     psid->emulatefilter = (int)sid_state->emulatefilter;
-    psid->filterDy = (vreal_t)sid_state->filterDy;
-    psid->filterResDy = (vreal_t)sid_state->filterResDy;
+    psid->filterDy = (float)sid_state->filterDy;
+    psid->filterResDy = (float)sid_state->filterResDy;
     psid->filterType = psid->filterType;
     psid->filterCurType = sid_state->filterCurType;
     psid->filterValue = sid_state->filterValue;
@@ -929,8 +925,8 @@ void fastsid_state_write(struct sound_s *psid, struct sid_fastsid_snapshot_state
         psid->v[i].wtr[0] = sid_state->v_wtr[0][i];
         psid->v[i].wtr[1] = sid_state->v_wtr[1][i];
         psid->v[i].filtIO = (signed char)sid_state->v_filtIO[i];
-        psid->v[i].filtLow = (vreal_t)sid_state->v_filtLow[i];
-        psid->v[i].filtRef = (vreal_t)sid_state->v_filtRef[i];
+        psid->v[i].filtLow = (float)sid_state->v_filtLow[i];
+        psid->v[i].filtRef = (float)sid_state->v_filtRef[i];
     }
 }
 */

@@ -1,12 +1,14 @@
 /*
- * fastsid.h - MOS6581 (SID) emulation.
+ * This file belongs to the FastSID implementation of VirtualC64,
+ * an adaption of the code used in VICE 3.1, the Versatile Commodore Emulator.
  *
- * Written by
+ * Originally written by
  *  Teemu Rantanen <tvr@cs.hut.fi>
  *
- * This file is part of VICE, the Versatile Commodore Emulator.
- * See README for copyright notice.
- *
+ * Adapted for VirtualC64 by
+ *  Dirk Hoffmann
+ */
+/*
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -28,8 +30,6 @@
 #define VICE_FASTSID_H
 
 #include "fastsid.h"
-
-typedef float vreal_t;
 
 /* needed data for one voice */
 typedef struct voice_s {
@@ -100,7 +100,7 @@ typedef struct voice_s {
     uint16_t wtr[2];
     
     signed char filtIO;
-    vreal_t filtLow, filtRef;
+    float filtLow, filtRef;
 } voice_t;
 
 /* needed data for SID */
@@ -139,8 +139,8 @@ struct sound_s {
     int emulatefilter;
     
     /* filter variables */
-    vreal_t filterDy;
-    vreal_t filterResDy;
+    float filterDy;
+    float filterResDy;
     uint8_t filterType;
     uint8_t filterCurType;
     uint16_t filterValue;
