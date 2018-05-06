@@ -2,7 +2,7 @@
  * This file belongs to the FastSID implementation of VirtualC64,
  * an adaption of the code used in VICE 3.1, the Versatile Commodore Emulator.
  *
- * Originally written by
+ * Original code written by
  *  Teemu Rantanen <tvr@cs.hut.fi>
  *
  * Adapted for VirtualC64 by
@@ -26,13 +26,14 @@
  *
  */
 
-#ifndef VICE_FASTSID_H
-#define VICE_FASTSID_H
+#ifndef FASTSID_H
+#define FASTSID_H
 
 #include "fastsid.h"
 
 /* needed data for one voice */
 typedef struct voice_s {
+    
     struct sound_s      *s;
     struct voice_s      *vprev;
     struct voice_s      *vnext;
@@ -40,6 +41,7 @@ typedef struct voice_s {
     
     /* counter value */
     uint32_t f;
+    
     /* counter step / sample */
     uint32_t fs;
 

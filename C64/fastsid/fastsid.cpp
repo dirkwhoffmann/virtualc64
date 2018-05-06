@@ -2,7 +2,7 @@
  * This file belongs to the FastSID implementation of VirtualC64,
  * an adaption of the code used in VICE 3.1, the Versatile Commodore Emulator.
  *
- * Originally written by
+ * Original code written by
  *  Teemu Rantanen <tvr@cs.hut.fi>
  *  Michael Schwendt <sidplay@geocities.com>
  *  Ettore Perazzoli <ettore@comm2000.it>
