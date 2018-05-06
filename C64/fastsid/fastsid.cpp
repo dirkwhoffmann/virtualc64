@@ -34,6 +34,7 @@
 #include <math.h>
 
 #include "fastsid.h"
+#include "waves.h"
 
 /* ADSR state */
 #define ATTACK   0
@@ -52,9 +53,6 @@
      | noiseMSB[(v >> 16) & 0xff])
 
 #define NSEED 0x7ffff8
-
-#include "wave6581.h"
-#include "wave8580.h"
 
 static uint16_t wavetable00[2];
 static uint16_t wavetable10[4096];
