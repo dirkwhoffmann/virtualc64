@@ -35,28 +35,12 @@
 
 #include "fastsid.h"
 
-/* use wavetables (sampled waveforms) */
-#define WAVETABLES
-
 /* ADSR state */
 #define ATTACK   0
 #define DECAY    1
 #define SUSTAIN  2
 #define RELEASE  3
 #define IDLE     4
-
-#ifndef WAVETABLES
-/* Current waveform */
-#define TESTWAVE          0
-#define PULSEWAVE         1
-#define SAWTOOTHWAVE      2
-#define TRIANGLEWAVE      3
-#define NOISEWAVE         4
-#define NOWAVE            5
-#define RINGWAVE          6
-#define PULSETRIANGLEWAVE 7
-#define PULSESAWTOOTHWAVE 8
-#endif
 
 /* noise magic */
 #define NSHIFT(v, n) \
@@ -69,8 +53,6 @@
 
 #define NSEED 0x7ffff8
 
-#ifdef WAVETABLES
-
 #include "wave6581.h"
 #include "wave8580.h"
 
@@ -82,8 +64,6 @@ static uint16_t wavetable40[8192];
 static uint16_t wavetable50[8192];
 static uint16_t wavetable60[8192];
 static uint16_t wavetable70[8192];
-
-#endif
 
 /* Noise tables */
 #define NOISETABLESIZE 256
@@ -192,7 +172,6 @@ inline static void dofilter(voice_t *pVoice)
 }
 
 /* 15-bit oscillator value */
-#ifdef WAVETABLES
 inline static uint32_t doosc(voice_t *pv)
 {
     if (pv->noise) {
@@ -200,43 +179,6 @@ inline static uint32_t doosc(voice_t *pv)
     }
     return pv->wt[(pv->f + pv->wtpf) >> pv->wtl] ^ pv->wtr[pv->vprev->f >> 31];
 }
-#else
-static uint32_t doosc(voice_t *pv)
-{
-    uint32_t f = pv->f;
-
-    switch (pv->fm) {
-        case PULSESAWTOOTHWAVE:
-            if (f <= pv->pw) {
-                return 0x0000;
-            }
-        case SAWTOOTHWAVE:
-            return f >> 17;
-        case RINGWAVE:
-            f ^= pv->vprev->f & 0x80000000;
-        case TRIANGLEWAVE:
-            if (f < 0x80000000) {
-                return f >> 16;
-            }
-            return 0xffff - (f >> 16);
-        case PULSETRIANGLEWAVE:
-            if (f <= pv->pw) {
-                return 0x0000;
-            }
-            if (f < 0x80000000) {
-                return f >> 16;
-            }
-            return 0xffff - (f >> 16);
-        case NOISEWAVE:
-            return ((uint32_t)NVALUE(NSHIFT(pv->rv, pv->f >> 28))) << 7;
-        case PULSEWAVE:
-            if (f >= pv->pw) {
-                return 0x7fff;
-            }
-    }
-    return 0x0000;
-}
-#endif
 
 /* change ADSR state and all related variables */
 static void set_adsr(voice_t *pv, uint8_t fm)
@@ -304,35 +246,6 @@ static void trigger_adsr(voice_t *pv)
     }
 }
 
-/*
-static void print_voice(char *buf, voice_t *pv)
-{
-    const char *m = "ADSRI";
-#ifdef WAVETABLES
-    const char *w = "0123456789abcdef";
-#else
-    const char *w = "TPSTN-R5";
-#endif
-    sprintf(buf,
-            "#SID: V%d: e=%5.1f%%(%c) w=%6.1fHz(%c) f=%5.1f%% p=%5.1f%%\n",
-            pv->nr,
-            (double)pv->adsr * 100.0 / (((uint32_t)1 << 31) - 1), m[pv->adsrm],
-            (double)pv->fs / (pv->s->speed1 * 16),
-#ifdef WAVETABLES
-            w[pv->d[4] >> 4],
-#else
-            w[pv->fm],
-#endif
-            (double)pv->f * 100.0 / ((uint32_t) -1),
-#ifdef WAVETABLES
-            (double)(pv->d[2] + (pv->d[3] & 0x0f) * 0x100) / 40.95
-#else
-            (double)pv->pw * 100.0 / ((uint32_t) -1)
-#endif
-            );
-}
-*/
-
 /* update SID structure */
 inline static void setup_sid(sound_t *psid)
 {
@@ -387,12 +300,9 @@ inline static void setup_voice(voice_t *pv)
     pv->decay = pv->d[5] & 0x0f;
     pv->sustain = pv->d[6] / 0x10;
     pv->release = pv->d[6] & 0x0f;
-#ifndef WAVETABLES
-    pv->pw = (pv->d[2] + (pv->d[3] & 0x0f) * 0x100) * 0x100100;
-#endif
     pv->sync = pv->d[4] & 0x02 ? 1 : 0;
     pv->fs = pv->s->speed1 * (pv->d[0] + pv->d[1] * 0x100);
-#ifdef WAVETABLES
+
     if (pv->d[4] & 0x08) {
         pv->f = pv->fs = 0;
         pv->rv = NSEED;
@@ -462,43 +372,7 @@ inline static void setup_voice(voice_t *pv)
             pv->wt = wavetable00;
             pv->wtl = 31;
     }
-#else
-    if (pv->d[4] & 0x08) {
-        pv->fm = TESTWAVE;
-        pv->pw = pv->f = pv->fs = 0;
-        pv->rv = NSEED;
-    } else {
-        switch ((pv->d[4] & 0xf0) >> 4) {
-            case 4:
-                pv->fm = PULSEWAVE;
-                break;
-            case 2:
-                pv->fm = SAWTOOTHWAVE;
-                break;
-            case 1:
-                if (pv->d[4] & 0x04) {
-                    pv->fm = RINGWAVE;
-                } else {
-                    pv->fm = TRIANGLEWAVE;
-                }
-                break;
-            case 8:
-                pv->fm = NOISEWAVE;
-                break;
-            case 0:
-                pv->fm = NOWAVE;
-                break;
-            case 5:
-                pv->fm = PULSETRIANGLEWAVE;
-                break;
-            case 6:
-                pv->fm = PULSESAWTOOTHWAVE;
-                break;
-            default:
-                pv->fm = NOWAVE;
-        }
-    }
-#endif
+
     switch (pv->adsrm) {
         case ATTACK:
         case DECAY:
@@ -737,7 +611,7 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
         psid->v[i].update = 1;
         setup_voice(&psid->v[i]);
     }
-#ifdef WAVETABLES
+
     /*
     if (resources_get_int("SidModel", &sid_model) < 0) {
         return 0;
@@ -773,7 +647,7 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
             wavetable70[i + 4096] = 0;
         }
     }
-#endif
+
     for (i = 0; i < NOISETABLESIZE; i++) {
         noiseLSB[i] = (uint8_t)((((i >> (7 - 2)) & 0x04) | ((i >> (4 - 1)) & 0x02)
                               | ((i >> (2 - 0)) & 0x01)));
@@ -810,13 +684,7 @@ uint8_t fastsid_read(sound_t *psid, uint16_t addr)
             /* osc3 / random */
             ffix = (uint16_t)(42 * psid->v[2].fs);
             rvstore = psid->v[2].rv;
-            if (
-// #ifdef WAVETABLES
-                psid->v[2].noise
-//#else
- //               psid->v[2].fm == NOISEWAVE
-//#endif
-                && psid->v[2].f + ffix < psid->v[2].f) {
+            if (psid->v[2].noise && psid->v[2].f + ffix < psid->v[2].f) {
                 psid->v[2].rv = NSHIFT(psid->v[2].rv, 16);
             }
             psid->v[2].f += ffix;
