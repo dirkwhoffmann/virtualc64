@@ -28,7 +28,7 @@
 #define VICE_FIXPOINT_H
 
 #define REAL_MULT(x, y) (x * y)
-#define REAL_TO_INT(x)  ((int)(x))
+// #define REAL_TO_INT(x)  ((int)(x))
 
 /* sound clk specific */
 typedef double soundclk_t;

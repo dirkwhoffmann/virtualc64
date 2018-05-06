@@ -156,7 +156,7 @@ inline static void dofilter(voice_t *pVoice)
                 REAL_MULT(pVoice->filtIO - pVoice->filtLow -
                           REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy),
                           pVoice->s->filterDy);
-            pVoice->filtIO = (signed char) (REAL_TO_INT(pVoice->filtRef - pVoice->filtLow / 4));
+            pVoice->filtIO = (signed char)(pVoice->filtRef - pVoice->filtLow / 4);
         } else if (pVoice->s->filterType == 0x40) {
             vreal_t sample;
             pVoice->filtLow += (vreal_t)(REAL_MULT(REAL_MULT(pVoice->filtRef,
@@ -171,32 +171,30 @@ inline static void dofilter(voice_t *pVoice)
             if (sample > 127) {
                 sample = 127;
             }
-            pVoice->filtIO = (signed char)(REAL_TO_INT(sample));
+            pVoice->filtIO = (signed char)sample;
         } else {
             int tmp;
             vreal_t sample, sample2;
             pVoice->filtLow += REAL_MULT(pVoice->filtRef, pVoice->s->filterDy );
             sample = pVoice->filtIO;
             sample2 = sample - pVoice->filtLow;
-            tmp = (int)(REAL_TO_INT(sample2));
+            tmp = (int)sample2;
             sample2 -= REAL_MULT(pVoice->filtRef, pVoice->s->filterResDy);
             pVoice->filtRef += REAL_MULT(sample2, pVoice->s->filterDy);
 
             pVoice->filtIO = pVoice->s->filterType == 0x10
-                             ? (signed char)
-                             (REAL_TO_INT(pVoice->filtLow)) :
+                             ? (signed char)pVoice->filtLow :
                              (pVoice->s->filterType == 0x30
-                              ? (signed char)
-                              (REAL_TO_INT(pVoice->filtLow)) :
+                              ? (signed char)pVoice->filtLow :
                               (pVoice->s->filterType == 0x50
                                    ? (signed char)
-                                   (REAL_TO_INT(sample) - (tmp >> 1)) :
+                                   ((int)(sample) - (tmp >> 1)) :
                                    (pVoice->s->filterType == 0x60
                                    ? (signed char)
                                    tmp :
                                    (pVoice->s->filterType == 0x70
                                    ? (signed char)
-                                   (REAL_TO_INT(sample) - (tmp >> 1)) : 0))));
+                                   ((int)(sample) - (tmp >> 1)) : 0))));
         }
     } else { /* filterType == 0x00 */
         pVoice->filtIO = 0;
