@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 
 #include "fastsid.h"
 #include "waves.h"
@@ -89,6 +90,24 @@ static float bandPassParam[0x800];
 static float filterResTable[16];
 static const float filterRefFreq = 44100.0;
 static signed char ampMod1x8[256];
+
+//
+// Voice class
+//
+
+uint32_t
+Voice::doosc()
+{
+    uint32_t result;
+    
+    if (vt.noise) {
+        result = ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
+    } else {
+        result = vt.wt[(vt.f + vt.wtpf) >> vt.wtl] ^ vt.wtr[vt.vprev->f >> 31];
+    }
+    
+    return result;
+}
 
 /* manage temporary buffers. if the requested size is smaller or equal to the
  * size of the already allocated buffer, reuse it.  */
@@ -166,13 +185,19 @@ inline static void dofilter(voice_t *pVoice)
 }
 
 /* 15-bit oscillator value */
-inline static uint32_t doosc(voice_t *pv)
+/*
+uint32_t doosc(voice_t *pv)
 {
+    uint32_t result;
+    
     if (pv->noise) {
-        return ((uint32_t)NVALUE(NSHIFT(pv->rv, pv->f >> 28))) << 7;
+        result = ((uint32_t)NVALUE(NSHIFT(pv->rv, pv->f >> 28))) << 7;
+    } else {
+        result = pv->wt[(pv->f + pv->wtpf) >> pv->wtl] ^ pv->wtr[pv->vprev->f >> 31];
     }
-    return pv->wt[(pv->f + pv->wtpf) >> pv->wtl] ^ pv->wtr[pv->vprev->f >> 31];
+    return result;
 }
+*/
 
 /* change ADSR state and all related variables */
 static void set_adsr(voice_t *pv, uint8_t fm)
@@ -454,13 +479,13 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
     o1 = v1->vt.adsr >> 16;
     o2 = v2->vt.adsr >> 16;
     if (o0) {
-        o0 *= doosc(&v0->vt);
+        o0 *= v0->doosc();
     }
     if (o1) {
-        o1 *= doosc(&v1->vt);
+        o1 *= v1->doosc();
     }
     if (psid->has3 && o2) {
-        o2 *= doosc(&v2->vt);
+        o2 *= v2->doosc();
     } else {
         o2 = 0;
     }
@@ -682,7 +707,7 @@ uint8_t fastsid_read(sound_t *psid, uint16_t addr)
                 psid->v[2].vt.rv = NSHIFT(psid->v[2].vt.rv, 16);
             }
             psid->v[2].vt.f += ffix;
-            ret = (uint8_t)(doosc(&psid->v[2].vt) >> 7);
+            ret = (uint8_t)(psid->v[2].doosc() >> 7);
             psid->v[2].vt.f -= ffix;
             psid->v[2].vt.rv = rvstore;
             break;

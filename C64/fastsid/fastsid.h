@@ -110,6 +110,9 @@ public:
     
     // Voice data (move inside class later)
     voice_t vt;
+    
+    // 15-bit oscillator value
+    uint32_t doosc();
 };
 
 /* needed data for SID */
