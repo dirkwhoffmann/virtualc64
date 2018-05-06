@@ -31,7 +31,6 @@
 
 #include "fastsid.h"
 
-/* needed data for one voice */
 typedef struct voice_s {
     
     struct sound_s      *s;
@@ -105,13 +104,23 @@ typedef struct voice_s {
     float filtLow, filtRef;
 } voice_t;
 
+class Voice {
+ 
+public:
+    
+    // Voice data (move inside class later)
+    voice_t vt;
+};
+
 /* needed data for SID */
 struct sound_s {
     /* speed factor */
     int factor;
     
     /* number of voices */
-    voice_t v[3];
+    // voice_t v[3];
+    Voice v[3];
+    
     /* SID registers */
     uint8_t d[32];
     /* is voice 3 enabled? */

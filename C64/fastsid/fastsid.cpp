@@ -251,18 +251,18 @@ inline static void setup_sid(sound_t *psid)
     psid->has3 = ((psid->d[0x18] & 0x80) && !(psid->d[0x17] & 0x04)) ? 0 : 1;
 
     if (psid->emulatefilter) {
-        psid->v[0].filter = psid->d[0x17] & 0x01 ? 1 : 0;
-        psid->v[1].filter = psid->d[0x17] & 0x02 ? 1 : 0;
-        psid->v[2].filter = psid->d[0x17] & 0x04 ? 1 : 0;
+        psid->v[0].vt.filter = psid->d[0x17] & 0x01 ? 1 : 0;
+        psid->v[1].vt.filter = psid->d[0x17] & 0x02 ? 1 : 0;
+        psid->v[2].vt.filter = psid->d[0x17] & 0x04 ? 1 : 0;
         psid->filterType = psid->d[0x18] & 0x70;
         if (psid->filterType != psid->filterCurType) {
             psid->filterCurType = psid->filterType;
-            psid->v[0].filtLow = 0;
-            psid->v[0].filtRef = 0;
-            psid->v[1].filtLow = 0;
-            psid->v[1].filtRef = 0;
-            psid->v[2].filtLow = 0;
-            psid->v[2].filtRef = 0;
+            psid->v[0].vt.filtLow = 0;
+            psid->v[0].vt.filtRef = 0;
+            psid->v[1].vt.filtLow = 0;
+            psid->v[1].vt.filtRef = 0;
+            psid->v[2].vt.filtLow = 0;
+            psid->v[2].vt.filtRef = 0;
         }
         psid->filterValue = 0x7ff & ((psid->d[0x15] & 7) | ((uint16_t)psid->d[0x16]) << 3);
         if (psid->filterType == 0x20) {
@@ -276,9 +276,9 @@ inline static void setup_sid(sound_t *psid)
             psid->filterResDy = 1.0;
         }
     } else {
-        psid->v[0].filter = 0;
-        psid->v[1].filter = 0;
-        psid->v[2].filter = 0;
+        psid->v[0].vt.filter = 0;
+        psid->v[1].vt.filter = 0;
+        psid->v[2].vt.filter = 0;
     }
     psid->update = 0;
 }
@@ -394,87 +394,87 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
 {
     uint32_t o0, o1, o2;
     int dosync1, dosync2;
-    voice_t *v0, *v1, *v2;
+    Voice *v0, *v1, *v2;
 
     setup_sid(psid);
     v0 = &psid->v[0];
-    setup_voice(v0);
+    setup_voice(&v0->vt);
     v1 = &psid->v[1];
-    setup_voice(v1);
+    setup_voice(&v1->vt);
     v2 = &psid->v[2];
-    setup_voice(v2);
+    setup_voice(&v2->vt);
 
     /* addfptrs, noise & hard sync test */
     dosync1 = 0;
-    if ((v0->f += v0->fs) < v0->fs) {
-        v0->rv = NSHIFT(v0->rv, 16);
-        if (v1->sync) {
+    if ((v0->vt.f += v0->vt.fs) < v0->vt.fs) {
+        v0->vt.rv = NSHIFT(v0->vt.rv, 16);
+        if (v1->vt.sync) {
             dosync1 = 1;
         }
     }
     dosync2 = 0;
-    if ((v1->f += v1->fs) < v1->fs) {
-        v1->rv = NSHIFT(v1->rv, 16);
-        if (v2->sync) {
+    if ((v1->vt.f += v1->vt.fs) < v1->vt.fs) {
+        v1->vt.rv = NSHIFT(v1->vt.rv, 16);
+        if (v2->vt.sync) {
             dosync2 = 1;
         }
     }
-    if ((v2->f += v2->fs) < v2->fs) {
-        v2->rv = NSHIFT(v2->rv, 16);
-        if (v0->sync) {
+    if ((v2->vt.f += v2->vt.fs) < v2->vt.fs) {
+        v2->vt.rv = NSHIFT(v2->vt.rv, 16);
+        if (v0->vt.sync) {
             /* hard sync */
-            v0->rv = NSHIFT(v0->rv, v0->f >> 28);
-            v0->f = 0;
+            v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
+            v0->vt.f = 0;
         }
     }
 
     /* hard sync */
     if (dosync2) {
-        v2->rv = NSHIFT(v2->rv, v2->f >> 28);
-        v2->f = 0;
+        v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
+        v2->vt.f = 0;
     }
     if (dosync1) {
-        v1->rv = NSHIFT(v1->rv, v1->f >> 28);
-        v1->f = 0;
+        v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
+        v1->vt.f = 0;
     }
 
     /* do adsr */
-    if ((v0->adsr += v0->adsrs) + 0x80000000 < v0->adsrz + 0x80000000) {
-        trigger_adsr(v0);
+    if ((v0->vt.adsr += v0->vt.adsrs) + 0x80000000 < v0->vt.adsrz + 0x80000000) {
+        trigger_adsr(&v0->vt);
     }
-    if ((v1->adsr += v1->adsrs) + 0x80000000 < v1->adsrz + 0x80000000) {
-        trigger_adsr(v1);
+    if ((v1->vt.adsr += v1->vt.adsrs) + 0x80000000 < v1->vt.adsrz + 0x80000000) {
+        trigger_adsr(&v1->vt);
     }
-    if ((v2->adsr += v2->adsrs) + 0x80000000 < v2->adsrz + 0x80000000) {
-        trigger_adsr(v2);
+    if ((v2->vt.adsr += v2->vt.adsrs) + 0x80000000 < v2->vt.adsrz + 0x80000000) {
+        trigger_adsr(&v2->vt);
     }
 
     /* oscillators */
-    o0 = v0->adsr >> 16;
-    o1 = v1->adsr >> 16;
-    o2 = v2->adsr >> 16;
+    o0 = v0->vt.adsr >> 16;
+    o1 = v1->vt.adsr >> 16;
+    o2 = v2->vt.adsr >> 16;
     if (o0) {
-        o0 *= doosc(v0);
+        o0 *= doosc(&v0->vt);
     }
     if (o1) {
-        o1 *= doosc(v1);
+        o1 *= doosc(&v1->vt);
     }
     if (psid->has3 && o2) {
-        o2 *= doosc(v2);
+        o2 *= doosc(&v2->vt);
     } else {
         o2 = 0;
     }
     /* sample */
     if (psid->emulatefilter) {
-        v0->filtIO = ampMod1x8[(o0 >> 22)];
-        dofilter(v0);
-        o0 = ((uint32_t)(v0->filtIO) + 0x80) << (7 + 15);
-        v1->filtIO = ampMod1x8[(o1 >> 22)];
-        dofilter(v1);
-        o1 = ((uint32_t)(v1->filtIO) + 0x80) << (7 + 15);
-        v2->filtIO = ampMod1x8[(o2 >> 22)];
-        dofilter(v2);
-        o2 = ((uint32_t)(v2->filtIO) + 0x80) << (7 + 15);
+        v0->vt.filtIO = ampMod1x8[(o0 >> 22)];
+        dofilter(&v0->vt);
+        o0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
+        v1->vt.filtIO = ampMod1x8[(o1 >> 22)];
+        dofilter(&v1->vt);
+        o1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
+        v2->vt.filtIO = ampMod1x8[(o2 >> 22)];
+        dofilter(&v2->vt);
+        o2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
     }
 
     return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * psid->vol);
@@ -593,17 +593,17 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     init_filter(psid, speed);
     setup_sid(psid);
     for (i = 0; i < 3; i++) {
-        psid->v[i].vprev = &psid->v[(i + 2) % 3];
-        psid->v[i].vnext = &psid->v[(i + 1) % 3];
-        psid->v[i].nr = i;
-        psid->v[i].d = psid->d + i * 7;
-        psid->v[i].s = psid;
-        psid->v[i].rv = NSEED;
-        psid->v[i].filtLow = 0;
-        psid->v[i].filtRef = 0;
-        psid->v[i].filtIO = 0;
-        psid->v[i].update = 1;
-        setup_voice(&psid->v[i]);
+        psid->v[i].vt.vprev = &psid->v[(i + 2) % 3].vt;
+        psid->v[i].vt.vnext = &psid->v[(i + 1) % 3].vt;
+        psid->v[i].vt.nr = i;
+        psid->v[i].vt.d = psid->d + i * 7;
+        psid->v[i].vt.s = psid;
+        psid->v[i].vt.rv = NSEED;
+        psid->v[i].vt.filtLow = 0;
+        psid->v[i].vt.filtRef = 0;
+        psid->v[i].vt.filtIO = 0;
+        psid->v[i].vt.update = 1;
+        setup_voice(&psid->v[i].vt);
     }
 
     /*
@@ -676,18 +676,18 @@ uint8_t fastsid_read(sound_t *psid, uint16_t addr)
             break;
         case 0x1b:
             /* osc3 / random */
-            ffix = (uint16_t)(42 * psid->v[2].fs);
-            rvstore = psid->v[2].rv;
-            if (psid->v[2].noise && psid->v[2].f + ffix < psid->v[2].f) {
-                psid->v[2].rv = NSHIFT(psid->v[2].rv, 16);
+            ffix = (uint16_t)(42 * psid->v[2].vt.fs);
+            rvstore = psid->v[2].vt.rv;
+            if (psid->v[2].vt.noise && psid->v[2].vt.f + ffix < psid->v[2].vt.f) {
+                psid->v[2].vt.rv = NSHIFT(psid->v[2].vt.rv, 16);
             }
-            psid->v[2].f += ffix;
-            ret = (uint8_t)(doosc(&psid->v[2]) >> 7);
-            psid->v[2].f -= ffix;
-            psid->v[2].rv = rvstore;
+            psid->v[2].vt.f += ffix;
+            ret = (uint8_t)(doosc(&psid->v[2].vt) >> 7);
+            psid->v[2].vt.f -= ffix;
+            psid->v[2].vt.rv = rvstore;
             break;
         case 0x1c:
-            ret = (uint8_t)(psid->v[2].adsr >> 23);
+            ret = (uint8_t)(psid->v[2].vt.adsr >> 23);
             break;
         default:
             /*
@@ -708,7 +708,7 @@ void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
     switch (addr) {
         case 4:
             if ((psid->d[addr] ^ byte) & 1) {
-                psid->v[0].gateflip = 1;
+                psid->v[0].vt.gateflip = 1;
             }
         case 0:
         case 1:
@@ -716,11 +716,11 @@ void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
         case 3:
         case 5:
         case 6:
-            psid->v[0].update = 1;
+            psid->v[0].vt.update = 1;
             break;
         case 11:
             if ((psid->d[addr] ^ byte) & 1) {
-                psid->v[1].gateflip = 1;
+                psid->v[1].vt.gateflip = 1;
             }
         case 7:
         case 8:
@@ -728,11 +728,11 @@ void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
         case 10:
         case 12:
         case 13:
-            psid->v[1].update = 1;
+            psid->v[1].vt.update = 1;
             break;
         case 18:
             if ((psid->d[addr] ^ byte) & 1) {
-                psid->v[2].gateflip = 1;
+                psid->v[2].vt.gateflip = 1;
             }
         case 14:
         case 15:
@@ -740,7 +740,7 @@ void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte)
         case 17:
         case 19:
         case 20:
-            psid->v[2].update = 1;
+            psid->v[2].vt.update = 1;
             break;
         default:
             psid->update = 1;
