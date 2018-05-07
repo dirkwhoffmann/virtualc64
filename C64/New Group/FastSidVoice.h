@@ -77,7 +77,7 @@ typedef struct voice_s {
     uint32_t adsrz;
     
     /* does this voice use hard sync? */
-    uint8_t sync;
+    // uint8_t sync;
     
     /* does this voice use filter? */
     uint8_t filter;
@@ -157,8 +157,8 @@ public:
     //! @brief    Initialize
     void init(sound_s *psid, unsigned voiceNr);
 
-    //! @brief    Update internal parameters
-    void setup(unsigned chipModel);
+    //! @brief    Prepares the voice for computing samples
+    void prepare();
     
     //! @brief  Change ADSR state and all related variables
     void set_adsr(uint8_t fm);
@@ -166,13 +166,32 @@ public:
     //! @brief ADSR counter triggered state change
     void trigger_adsr();
     
+    //! @brief Apply filter effect
+    void applyFilter();
+    
+    
     //
     // Querying the current configuration
     //
     
-    //! @brief   Returns the currently set oscillator frequency owing equation:
+    //! @brief   Returns the currently set oscillator frequency
     uint16_t frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
     
+    //! @brief   Returns the gate bit for this voice
+    /*! @details The gate bit controls the Envelope Generator. When this
+     *           bit is set to a one, the Envelope Generator is Gated
+     *           (triggered) and the attack/decay/sustain cycle is initiated.
+     *           When the bit is reset to a zero, the release cycle begins.
+     */
+    bool gateBit() { return sidreg[0x04] & 0x01; }
+    
+    //! @brief   Returns the sync bit for this voice
+    /*! @details The SYNC bit, when set to a one, synchronizes the
+     *           fundamental frequency of Oscillator 1 with the fundamental
+     *           frequency of Oscillator 3, producing “hard sync” effects.
+     */
+    bool hardSync() { return (sidreg[0x04] & 0x02) != 0; }
+        
     //! @brief   Returns the attack rate for the envelope generator
     /*! @details The attack rate is a 4 bit value which determines how rapidly
      *           the output of the voice rises from zero to peak amplitude when

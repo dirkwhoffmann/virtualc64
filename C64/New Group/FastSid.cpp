@@ -56,78 +56,6 @@ static signed char ampMod1x8[256];
 int16_t *buf = NULL;
 int blen = 0;
 
-inline static void dofilter(voice_t *pVoice)
-{
-    if (!pVoice->filter) {
-        return;
-    }
-
-    if (pVoice->s->filterType) {
-        if (pVoice->s->filterType == 0x20) {
-            pVoice->filtLow += pVoice->filtRef * pVoice->s->filterDy;
-            pVoice->filtRef +=
-                (pVoice->filtIO - pVoice->filtLow -
-                          (pVoice->filtRef * pVoice->s->filterResDy)) *
-                          pVoice->s->filterDy;
-            pVoice->filtIO = (signed char)(pVoice->filtRef - pVoice->filtLow / 4);
-        } else if (pVoice->s->filterType == 0x40) {
-            float sample;
-            pVoice->filtLow += (float)((pVoice->filtRef *
-                                              pVoice->s->filterDy) * 0.1);
-            pVoice->filtRef += (pVoice->filtIO - pVoice->filtLow -
-                          (pVoice->filtRef * pVoice->s->filterResDy)) *
-                          pVoice->s->filterDy;
-            sample = pVoice->filtRef - (pVoice->filtIO / 8);
-            if (sample < -128) {
-                sample = -128;
-            }
-            if (sample > 127) {
-                sample = 127;
-            }
-            pVoice->filtIO = (signed char)sample;
-        } else {
-            int tmp;
-            float sample, sample2;
-            pVoice->filtLow += pVoice->filtRef * pVoice->s->filterDy;
-            sample = pVoice->filtIO;
-            sample2 = sample - pVoice->filtLow;
-            tmp = (int)sample2;
-            sample2 -= pVoice->filtRef * pVoice->s->filterResDy;
-            pVoice->filtRef += sample2 * pVoice->s->filterDy;
-
-            pVoice->filtIO = pVoice->s->filterType == 0x10
-                             ? (signed char)pVoice->filtLow :
-                             (pVoice->s->filterType == 0x30
-                              ? (signed char)pVoice->filtLow :
-                              (pVoice->s->filterType == 0x50
-                                   ? (signed char)
-                                   ((int)(sample) - (tmp >> 1)) :
-                                   (pVoice->s->filterType == 0x60
-                                   ? (signed char)
-                                   tmp :
-                                   (pVoice->s->filterType == 0x70
-                                   ? (signed char)
-                                   ((int)(sample) - (tmp >> 1)) : 0))));
-        }
-    } else { /* filterType == 0x00 */
-        pVoice->filtIO = 0;
-    }
-}
-
-/* 15-bit oscillator value */
-/*
-uint32_t doosc(voice_t *pv)
-{
-    uint32_t result;
-    
-    if (pv->noise) {
-        result = ((uint32_t)NVALUE(NSHIFT(pv->rv, pv->f >> 28))) << 7;
-    } else {
-        result = pv->wt[(pv->f + pv->wtpf) >> pv->wtl] ^ pv->wtr[pv->vprev->f >> 31];
-    }
-    return result;
-}
-*/
 
 
 
@@ -179,55 +107,42 @@ inline static void setup_sid(sound_t *psid)
 int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
 {
     uint32_t o0, o1, o2;
-    int dosync1, dosync2;
-    Voice *v0, *v1, *v2;
-
+    uint32_t osc0, osc1, osc2;
+    Voice *v0 = &psid->v[0];
+    Voice *v1 = &psid->v[1];
+    Voice *v2 = &psid->v[2];
+    
     setup_sid(psid);
-    v0 = &psid->v[0];
-    // setup_voice(&v0->vt);
-    v0->setup(psid->newsid);
-    v1 = &psid->v[1];
-    //setup_voice(&v1->vt);
-    v1->setup(psid->newsid);
-    v2 = &psid->v[2];
-    // setup_voice(&v2->vt);
-    v2->setup(psid->newsid);
+    v0->prepare();
+    v1->prepare();
+    v2->prepare();
 
-    /* addfptrs, noise & hard sync test */
-    dosync1 = 0;
+    // addfptrs, noise
     if ((v0->vt.f += v0->vt.fs) < v0->vt.fs) {
         v0->vt.rv = NSHIFT(v0->vt.rv, 16);
-        if (v1->vt.sync) {
-            dosync1 = 1;
-        }
     }
-    dosync2 = 0;
     if ((v1->vt.f += v1->vt.fs) < v1->vt.fs) {
         v1->vt.rv = NSHIFT(v1->vt.rv, 16);
-        if (v2->vt.sync) {
-            dosync2 = 1;
-        }
     }
     if ((v2->vt.f += v2->vt.fs) < v2->vt.fs) {
         v2->vt.rv = NSHIFT(v2->vt.rv, 16);
-        if (v0->vt.sync) {
-            /* hard sync */
-            v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
-            v0->vt.f = 0;
-        }
     }
 
-    /* hard sync */
-    if (dosync2) {
+    // Hard sync
+    if (v0->hardSync()) {
+        v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
+        v0->vt.f = 0;
+    }
+    if (v2->hardSync()) {
         v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
         v2->vt.f = 0;
     }
-    if (dosync1) {
+    if (v1->hardSync()) {
         v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
         v1->vt.f = 0;
     }
 
-    /* do adsr */
+    // Do adsr
     if ((v0->vt.adsr += v0->vt.adsrs) + 0x80000000 < v0->vt.adsrz + 0x80000000) {
         v0->trigger_adsr();
     }
@@ -238,31 +153,26 @@ int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
         v2->trigger_adsr();
     }
 
-    /* oscillators */
+    // Oscillators
     o0 = v0->vt.adsr >> 16;
     o1 = v1->vt.adsr >> 16;
     o2 = v2->vt.adsr >> 16;
-    if (o0) {
-        o0 *= v0->doosc();
-    }
-    if (o1) {
-        o1 *= v1->doosc();
-    }
-    if (psid->has3 && o2) {
-        o2 *= v2->doosc();
-    } else {
-        o2 = 0;
-    }
-    /* sample */
+    osc0 = (v0->vt.adsr >> 16) * v0->doosc();
+    osc1 = (v1->vt.adsr >> 16) * v1->doosc();
+    osc2 = psid->has3 ? ((v2->vt.adsr >> 16) * v2->doosc()) : 0;
+    
+    // Sample
     if (psid->emulatefilter) {
         v0->vt.filtIO = ampMod1x8[(o0 >> 22)];
-        dofilter(&v0->vt);
+        v0->applyFilter();
         o0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
+        
         v1->vt.filtIO = ampMod1x8[(o1 >> 22)];
-        dofilter(&v1->vt);
+        v1->applyFilter();
         o1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
+        
         v2->vt.filtIO = ampMod1x8[(o2 >> 22)];
-        dofilter(&v2->vt);
+        v2->applyFilter();
         o2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
     }
 
@@ -375,7 +285,7 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec)
     // Voices
     for (i = 0; i < 3; i++) {
         psid->v[i].init(psid, i);
-        psid->v[i].setup(psid->newsid);
+        psid->v[i].prepare();
     }
     
     switch (sid_model) {

@@ -116,16 +116,17 @@ Voice::init(sound_s *psid, unsigned voiceNr)
 }
 
 void
-Voice::setup(unsigned chipModel)
+Voice::prepare()
 {
+    uint8_t chipModel = vt.s->newsid;
     assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);
     
     if (!vt.update) {
         return;
     }
     
-    vt.sync = sidreg[4] & 0x02 ? 1 : 0;
-    vt.fs = vt.s->speed1 * frequency(); // (sidreg[0] + sidreg[1] * 0x100);
+    // vt.sync = sidreg[4] & 0x02 ? 1 : 0;
+    vt.fs = vt.s->speed1 * frequency();
     
     if (sidreg[4] & 0x08) {
         vt.f = vt.fs = 0;
@@ -198,18 +199,26 @@ Voice::setup(unsigned chipModel)
     }
     
     switch (adsrm) {
+            
         case FASTSID_ATTACK:
         case FASTSID_DECAY:
         case FASTSID_SUSTAIN:
-            if (sidreg[4] & 0x01) {
+            
+            if (gateBit()) {
+                
+                // Initiate attack phase
                 set_adsr((uint8_t)(vt.gateflip ? FASTSID_ATTACK : adsrm));
             } else {
+                
+                // Proceed immediately to release phase
                 set_adsr(FASTSID_RELEASE);
             }
             break;
+            
         case FASTSID_RELEASE:
         case FASTSID_IDLE:
-            if (sidreg[4] & 0x01) {
+            
+            if (gateBit()) {
                 set_adsr(FASTSID_ATTACK);
             } else {
                 set_adsr(adsrm);
@@ -296,5 +305,64 @@ Voice::trigger_adsr()
             }
             set_adsr(adsrm);
             break;
+    }
+}
+
+void
+Voice::applyFilter()
+{
+    if (!vt.filter) {
+        return;
+    }
+    
+    if (vt.s->filterType) {
+        if (vt.s->filterType == 0x20) {
+            vt.filtLow += vt.filtRef * vt.s->filterDy;
+            vt.filtRef +=
+            (vt.filtIO - vt.filtLow -
+             (vt.filtRef * vt.s->filterResDy)) *
+            vt.s->filterDy;
+            vt.filtIO = (signed char)(vt.filtRef - vt.filtLow / 4);
+        } else if (vt.s->filterType == 0x40) {
+            float sample;
+            vt.filtLow += (float)((vt.filtRef *
+                                        vt.s->filterDy) * 0.1);
+            vt.filtRef += (vt.filtIO - vt.filtLow -
+                                (vt.filtRef * vt.s->filterResDy)) *
+            vt.s->filterDy;
+            sample = vt.filtRef - (vt.filtIO / 8);
+            if (sample < -128) {
+                sample = -128;
+            }
+            if (sample > 127) {
+                sample = 127;
+            }
+            vt.filtIO = (signed char)sample;
+        } else {
+            int tmp;
+            float sample, sample2;
+            vt.filtLow += vt.filtRef * vt.s->filterDy;
+            sample = vt.filtIO;
+            sample2 = sample - vt.filtLow;
+            tmp = (int)sample2;
+            sample2 -= vt.filtRef * vt.s->filterResDy;
+            vt.filtRef += sample2 * vt.s->filterDy;
+            
+            vt.filtIO = vt.s->filterType == 0x10
+            ? (signed char)vt.filtLow :
+            (vt.s->filterType == 0x30
+             ? (signed char)vt.filtLow :
+             (vt.s->filterType == 0x50
+              ? (signed char)
+              ((int)(sample) - (tmp >> 1)) :
+              (vt.s->filterType == 0x60
+               ? (signed char)
+               tmp :
+               (vt.s->filterType == 0x70
+                ? (signed char)
+                ((int)(sample) - (tmp >> 1)) : 0))));
+        }
+    } else { /* filterType == 0x00 */
+        vt.filtIO = 0;
     }
 }
