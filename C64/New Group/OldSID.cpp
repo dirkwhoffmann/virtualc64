@@ -17,7 +17,6 @@
  */
 
 #include "C64.h"
-#include "FastSid.h"
 
 OldSID::OldSID()
 {
@@ -83,14 +82,100 @@ OldSID::dumpState()
 uint8_t
 OldSID::peek(uint16_t addr)
 {
-    return fastsid_read(&st, addr);
+    switch (addr) {
+            
+        case 0x19: // POTX
+        case 0x1A: // POTY
+
+            return 0xFF;
+  
+        case 0x1B: { // OSC 3/RANDOM
+            
+            // This register allows the microprocessor to read the
+            // upper 8 output bits of oscillator 3.
+            
+            uint16_t ffix = (uint16_t)(42 * st.v[2].vt.fs);
+            uint32_t rvstore = st.v[2].vt.rv;
+            if (st.v[2].noise && st.v[2].vt.f + ffix < st.v[2].vt.f) {
+                st.v[2].vt.rv = NSHIFT(st.v[2].vt.rv, 16);
+            }
+            st.v[2].vt.f += ffix;
+            uint8_t ret = (uint8_t)(st.v[2].doosc() >> 7);
+            st.v[2].vt.f -= ffix;
+            st.v[2].vt.rv = rvstore;
+            return ret;
+        }
+            // return (uint8_t)(st.v[2].doosc() >> 7);
+            
+        case 0x1C:
+            
+            // This register allows the microprocessor to read the
+            // output of the voice 3 envelope generator.
+            return (uint8_t)(st.v[2].vt.adsr >> 23);
+            
+        default:
+            /*
+             while ((tmp = psid->laststorebit) &&
+             (tmp = psid->laststoreclk + sidreadclocks[tmp]) < maincpu_clk) {
+             psid->laststoreclk = tmp;
+             psid->laststore &= 0xfeff >> psid->laststorebit--;
+             }
+             */
+            return st.laststore;
+    }
 }
 
 //! Special poke function for the I/O memory range.
 void
 OldSID::poke(uint16_t addr, uint8_t value)
 {
-    fastsid_store(&st, addr, value);
+    switch (addr) {
+ 
+        case 0: // VOICE 1
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            st.v[0].vt.update = 1;
+            break;
+  
+        case 7: // VOICE 2
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+            st.v[1].vt.update = 1;
+            break;
+
+        case 14: // VOICE 3
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+            st.v[2].vt.update = 1;
+            break;
+            
+        default: // GENERAL SID
+            st.update = 1;
+    }
+    
+    // For each voice, check if gate bit flips
+    if (addr == 0x04 && ((st.d[addr] ^ value) & 1))
+        st.v[0].vt.gateflip = 1;
+    if (addr == 0x0B && ((st.d[addr] ^ value) & 1))
+        st.v[1].vt.gateflip = 1;
+    if (addr == 0x12 && ((st.d[addr] ^ value) & 1))
+        st.v[2].vt.gateflip = 1;
+
+    st.d[addr] = value;
+    st.laststore = value;
+    // st.laststorebit = 8;
 }
 
 /*! @brief   Execute SID
@@ -177,9 +262,11 @@ OldSID::init(int sampleRate, int cycles_per_sec)
             break;
     }
     
+    /*
     for (i = 0; i < 9; i++) {
         sidreadclocks[i] = 13;
     }
+    */
     
     return 1;
 }
@@ -263,7 +350,6 @@ OldSID::prepare()
         return;
     }
     
-    st.vol = st.d[0x18] & 0x0f;
     st.has3 = ((st.d[0x18] & 0x80) && !(st.d[0x17] & 0x04)) ? 0 : 1;
     
     if (st.emulatefilter) {
@@ -372,5 +458,6 @@ OldSID::fastsid_calculate_single_sample()
         o2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
     }
     
-    return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * st.vol);
+    int32_t volume = st.d[0x18] & 0x0F;
+    return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * volume);
 }

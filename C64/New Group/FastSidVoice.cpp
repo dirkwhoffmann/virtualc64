@@ -28,7 +28,7 @@
  *
  */
 
-#include "FastSid.h"
+#include "OldSID.h"
 #include "waves.h"
 
 uint16_t Voice::wavetable00[2][2];

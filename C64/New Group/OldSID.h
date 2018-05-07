@@ -20,9 +20,53 @@
 #define _OLDSID_INC
 
 #include "VirtualComponent.h"
-#include "FastSid.h"
+#include "FastSidVoice.h"
 #include "SIDbase.h"
 #include "../resid/sid.h"
+
+/* needed data for SID */
+struct sound_s {
+    
+    /* number of voices */
+    Voice v[3];
+    
+    /* SID registers */
+    uint8_t d[32];
+    
+    /* is voice 3 enabled? */
+    uint8_t has3;
+    
+    /* ADSR counter step values for each adsr values */
+    int32_t adrs[16];
+    /* sustain values compared to 31-bit ADSR counter */
+    uint32_t sz[16];
+    
+    /* internal constant used for sample rate dependent calculations */
+    uint32_t speed1;
+    
+    /* does this structure need updating before next sample? */
+    uint8_t update;
+    
+    /* do we have a new sid or an old one? */
+    uint8_t newsid;
+    
+    /* constants needed to implement write-only register reads */
+    uint8_t laststore;
+    uint8_t laststorebit;
+    uint64_t laststoreclk;
+    /* do we want to use filters? */
+    int emulatefilter;
+    
+    /* filter variables */
+    float filterDy;
+    float filterResDy;
+    uint8_t filterType;
+    uint8_t filterCurType;
+    uint16_t filterValue;
+};
+
+typedef struct sound_s sound_t;
+
 
 //! The virtual sound interface device (SID)
 /*! SID is the sound chip of the Commodore 64.
@@ -35,6 +79,11 @@ private:
     // Fast SID state
     sound_s st;
 
+    float lowPassParam[0x800];
+    float bandPassParam[0x800];
+    float filterResTable[16];
+    signed char ampMod1x8[256];
+    
 public:
     
 	//! Constructor.
@@ -114,11 +163,4 @@ private:
     int16_t fastsid_calculate_single_sample();
 };
 
-// extern void setup_sid(sound_t *psid);
-extern signed char ampMod1x8[256];
-extern void init_filter(sound_t *psid, int freq);
-extern uint32_t sidreadclocks[9];
-extern float lowPassParam[0x800];
-extern float bandPassParam[0x800];
-extern float filterResTable[16];
 #endif
