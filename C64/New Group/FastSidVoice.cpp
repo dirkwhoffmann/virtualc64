@@ -203,12 +203,12 @@ Voice::setup(unsigned chipModel)
             vt.wtl = 31;
     }
     
-    switch (vt.adsrm) {
+    switch (adsrm) {
         case FASTSID_ATTACK:
         case FASTSID_DECAY:
         case FASTSID_SUSTAIN:
             if (sidreg[4] & 0x01) {
-                set_adsr((uint8_t)(vt.gateflip ? FASTSID_ATTACK : vt.adsrm));
+                set_adsr((uint8_t)(vt.gateflip ? FASTSID_ATTACK : adsrm));
             } else {
                 set_adsr(FASTSID_RELEASE);
             }
@@ -218,7 +218,7 @@ Voice::setup(unsigned chipModel)
             if (sidreg[4] & 0x01) {
                 set_adsr(FASTSID_ATTACK);
             } else {
-                set_adsr(vt.adsrm);
+                set_adsr(adsrm);
             }
             break;
     }
@@ -227,67 +227,80 @@ Voice::setup(unsigned chipModel)
 }
 
 void
-Voice::set_adsr(uint8_t fm)
+Voice::set_adsr(uint8_t phase)
 {
     int i;
     
-    switch (fm) {
+    adsrm = phase;
+    
+    switch (phase) {
+            
         case FASTSID_ATTACK:
             vt.adsrs = vt.s->adrs[attackRate()];
             vt.adsrz = 0;
-            break;
+            return;
+            
         case FASTSID_DECAY:
-            /* XXX: fix this */
+         
             if (vt.adsr <= vt.s->sz[sustainRate()]) {
                 set_adsr(FASTSID_SUSTAIN);
-                return;
+            } else {
+                for (i = 0; vt.adsr < exptable[i]; i++) {}
+                vt.adsrs = -vt.s->adrs[decayRate()] >> i;
+                vt.adsrz = vt.s->sz[sustainRate()];
+                if (exptable[i] > vt.adsrz) {
+                    vt.adsrz = exptable[i];
+                }
             }
-            for (i = 0; vt.adsr < exptable[i]; i++) {}
-            vt.adsrs = -vt.s->adrs[decayRate()] >> i;
-            vt.adsrz = vt.s->sz[sustainRate()];
-            if (exptable[i] > vt.adsrz) {
-                vt.adsrz = exptable[i];
-            }
-            break;
+            return;
+            
         case FASTSID_SUSTAIN:
+            
             if (vt.adsr > vt.s->sz[sustainRate()]) {
                 set_adsr(FASTSID_DECAY);
-                return;
+            } else {
+                vt.adsrs = 0;
+                vt.adsrz = 0;
             }
-            vt.adsrs = 0;
-            vt.adsrz = 0;
-            break;
+            return;
+
         case FASTSID_RELEASE:
+            
             if (!vt.adsr) {
                 set_adsr(FASTSID_IDLE);
-                return;
+            } else {
+                for (i = 0; vt.adsr < exptable[i]; i++) {}
+                vt.adsrs = -vt.s->adrs[releaseRate()] >> i;
+                vt.adsrz = exptable[i];
             }
-            for (i = 0; vt.adsr < exptable[i]; i++) {}
-            vt.adsrs = -vt.s->adrs[releaseRate()] >> i;
-            vt.adsrz = exptable[i];
-            break;
-        case FASTSID_IDLE:
+            return;
+            
+        default:
+            
+            assert(phase == FASTSID_IDLE);
             vt.adsrs = 0;
             vt.adsrz = 0;
-            break;
+            return;
     }
-    vt.adsrm = fm;
 }
 
 void
 Voice::trigger_adsr()
 {
-    switch (vt.adsrm) {
+    switch (adsrm) {
+            
         case FASTSID_ATTACK:
             vt.adsr = 0x7fffffff;
             set_adsr(FASTSID_DECAY);
             break;
+            
         case FASTSID_DECAY:
         case FASTSID_RELEASE:
+            
             if (vt.adsr >= 0x80000000) {
                 vt.adsr = 0;
             }
-            set_adsr(vt.adsrm);
+            set_adsr(adsrm);
             break;
     }
 }

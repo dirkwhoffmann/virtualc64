@@ -87,9 +87,6 @@ typedef struct voice_s {
     /* did we do multiple gate flips after last calculated sample? */
     uint8_t gateflip;
     
-    /* ADSR mode */
-    uint8_t adsrm;
- 
     /* noise shift register. Note! rv may be 0 to 15 shifts 'behind' the
      real noise shift register value. Remaining shifts are done when
      it is referenced */
@@ -142,6 +139,9 @@ public:
     
     //! @brief   Do we have noise enabled?
     bool noise;
+    
+    //! @brief   Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
+    uint8_t adsrm;
     
     // Voice data (move inside class later)
     voice_t vt;
