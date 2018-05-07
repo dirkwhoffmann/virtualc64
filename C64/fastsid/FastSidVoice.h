@@ -52,17 +52,17 @@
 
 typedef struct voice_s {
     
-    struct sound_s      *s;
-    int nr;
+    // TODO: REPLACE BY REFERENCE TO FastSID class
+    struct sound_s *s;
+    
+    //! @brief   Voice number (1,2,3)
+    uint8_t nr;
     
     /* counter value */
     uint32_t f;
     
     /* counter step / sample */
     uint32_t fs;
-    
-    /* do we have noise enabled? */
-    uint8_t noise;
     
     /* waveform that we use */
     uint8_t fm;
@@ -140,8 +140,11 @@ private:
     static uint8_t noiseMSB[256];
     static uint8_t noiseMID[256];
     static uint8_t noiseLSB[256];
-        
+    
 public:
+    
+    //! @brief   Do we have noise enabled?
+    bool noise;
     
     // Voice data (move inside class later)
     voice_t vt;

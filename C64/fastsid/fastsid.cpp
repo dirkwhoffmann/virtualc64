@@ -460,7 +460,7 @@ uint8_t fastsid_read(sound_t *psid, uint16_t addr)
             /* osc3 / random */
             ffix = (uint16_t)(42 * psid->v[2].vt.fs);
             rvstore = psid->v[2].vt.rv;
-            if (psid->v[2].vt.noise && psid->v[2].vt.f + ffix < psid->v[2].vt.f) {
+            if (psid->v[2].noise && psid->v[2].vt.f + ffix < psid->v[2].vt.f) {
                 psid->v[2].vt.rv = NSHIFT(psid->v[2].vt.rv, 16);
             }
             psid->v[2].vt.f += ffix;

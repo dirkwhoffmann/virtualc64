@@ -93,7 +93,7 @@ Voice::doosc()
     uint32_t result;
     Voice *prevVoice = &vt.s->v[(vt.nr + 2) % 3];
     
-    if (vt.noise) {
+    if (noise) {
         result = ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
     } else {
         result = vt.wt[(vt.f + vt.wtpf) >> vt.wtl] ^ vt.wtr[prevVoice->vt.f >> 31];
@@ -122,7 +122,7 @@ Voice::setup(unsigned chipModel)
         vt.f = vt.fs = 0;
         vt.rv = NSEED;
     }
-    vt.noise = 0;
+    noise = false;
     vt.wtl = 20;
     vt.wtpf = 0;
     vt.wtr[1] = 0;
@@ -177,7 +177,7 @@ Voice::setup(unsigned chipModel)
             }
             break;
         case 8:
-            vt.noise = 1;
+            noise = true;
             vt.wt = NULL;
             vt.wtl = 0;
             break;
