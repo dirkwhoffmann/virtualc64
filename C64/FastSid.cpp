@@ -402,7 +402,7 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     init_filter(psid, speed);
     setup_sid(psid);
     for (i = 0; i < 3; i++) {
-        psid->v[i].vt.nr = i;
+        psid->v[i].nr = i;
         psid->v[i].vt.d = psid->d + i * 7;
         psid->v[i].vt.s = psid;
         psid->v[i].vt.rv = NSEED;
