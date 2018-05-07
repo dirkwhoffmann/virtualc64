@@ -43,11 +43,11 @@
 // Clockcycles for each dropping bit when write-only register read is done
 static uint32_t sidreadclocks[9];
 
-static float lowPassParam[0x800];
-static float bandPassParam[0x800];
-static float filterResTable[16];
-static const float filterRefFreq = 44100.0;
-static signed char ampMod1x8[256];
+float lowPassParam[0x800];
+float bandPassParam[0x800];
+float filterResTable[16];
+const float filterRefFreq = 44100.0;
+signed char ampMod1x8[256];
 
 
 
@@ -60,7 +60,7 @@ int blen = 0;
 
 
 /* update SID structure */
-inline static void setup_sid(sound_t *psid)
+void setup_sid(sound_t *psid)
 {
     if (!psid->update) {
         return;
@@ -104,80 +104,7 @@ inline static void setup_sid(sound_t *psid)
 
 
 
-int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
-{
-    uint32_t o0, o1, o2;
-    uint32_t osc0, osc1, osc2;
-    Voice *v0 = &psid->v[0];
-    Voice *v1 = &psid->v[1];
-    Voice *v2 = &psid->v[2];
-    
-    setup_sid(psid);
-    v0->prepare();
-    v1->prepare();
-    v2->prepare();
 
-    // addfptrs, noise
-    if ((v0->vt.f += v0->vt.fs) < v0->vt.fs) {
-        v0->vt.rv = NSHIFT(v0->vt.rv, 16);
-    }
-    if ((v1->vt.f += v1->vt.fs) < v1->vt.fs) {
-        v1->vt.rv = NSHIFT(v1->vt.rv, 16);
-    }
-    if ((v2->vt.f += v2->vt.fs) < v2->vt.fs) {
-        v2->vt.rv = NSHIFT(v2->vt.rv, 16);
-    }
-
-    // Hard sync
-    if (v0->hardSync()) {
-        v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
-        v0->vt.f = 0;
-    }
-    if (v2->hardSync()) {
-        v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
-        v2->vt.f = 0;
-    }
-    if (v1->hardSync()) {
-        v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
-        v1->vt.f = 0;
-    }
-
-    // Do adsr
-    if ((v0->vt.adsr += v0->vt.adsrs) + 0x80000000 < v0->vt.adsrz + 0x80000000) {
-        v0->trigger_adsr();
-    }
-    if ((v1->vt.adsr += v1->vt.adsrs) + 0x80000000 < v1->vt.adsrz + 0x80000000) {
-        v1->trigger_adsr();
-    }
-    if ((v2->vt.adsr += v2->vt.adsrs) + 0x80000000 < v2->vt.adsrz + 0x80000000) {
-        v2->trigger_adsr();
-    }
-
-    // Oscillators
-    o0 = v0->vt.adsr >> 16;
-    o1 = v1->vt.adsr >> 16;
-    o2 = v2->vt.adsr >> 16;
-    osc0 = (v0->vt.adsr >> 16) * v0->doosc();
-    osc1 = (v1->vt.adsr >> 16) * v1->doosc();
-    osc2 = psid->has3 ? ((v2->vt.adsr >> 16) * v2->doosc()) : 0;
-    
-    // Sample
-    if (psid->emulatefilter) {
-        v0->vt.filtIO = ampMod1x8[(o0 >> 22)];
-        v0->applyFilter();
-        o0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
-        
-        v1->vt.filtIO = ampMod1x8[(o1 >> 22)];
-        v1->applyFilter();
-        o1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
-        
-        v2->vt.filtIO = ampMod1x8[(o2 >> 22)];
-        v2->applyFilter();
-        o2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
-    }
-
-    return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * psid->vol);
-}
 
 static void init_filter(sound_t *psid, int freq)
 {

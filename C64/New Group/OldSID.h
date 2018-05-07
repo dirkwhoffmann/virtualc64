@@ -105,11 +105,10 @@ public:
     
 private:
     
-    /*
-    void fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, unsigned num, unsigned interleave);
-     */
+    int16_t fastsid_calculate_single_sample(int i);
 };
 
-extern int16_t fastsid_calculate_single_sample(sound_t *psid, int i);
+extern void setup_sid(sound_t *psid);
+extern signed char ampMod1x8[256];
 
 #endif

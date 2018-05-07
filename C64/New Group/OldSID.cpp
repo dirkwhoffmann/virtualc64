@@ -116,20 +116,85 @@ OldSID::execute(uint64_t cycles)
     
     // Compute samples
     for (unsigned i = 0; i < numSamples; i++) {
-        buf[i] = fastsid_calculate_single_sample(&st, i);
+        buf[i] = fastsid_calculate_single_sample(i);
     }
     
     // Write samples into ringbuffer
     writeData(buf, numSamples);
 }
 
-/*
-void
-OldSID::fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, unsigned num, unsigned interleave)
+int16_t
+OldSID::fastsid_calculate_single_sample()
 {
-    for (unsigned i = 0; i < num; i++) {
-        pbuf[i * interleave] = fastsid_calculate_single_sample(psid, i);
+    uint32_t o0, o1, o2;
+    uint32_t osc0, osc1, osc2;
+    Voice *v0 = &st.v[0];
+    Voice *v1 = &st.v[1];
+    Voice *v2 = &st.v[2];
+    
+    setup_sid(&st);
+    v0->prepare();
+    v1->prepare();
+    v2->prepare();
+    
+    // addfptrs, noise
+    if ((v0->vt.f += v0->vt.fs) < v0->vt.fs) {
+        v0->vt.rv = NSHIFT(v0->vt.rv, 16);
     }
+    if ((v1->vt.f += v1->vt.fs) < v1->vt.fs) {
+        v1->vt.rv = NSHIFT(v1->vt.rv, 16);
+    }
+    if ((v2->vt.f += v2->vt.fs) < v2->vt.fs) {
+        v2->vt.rv = NSHIFT(v2->vt.rv, 16);
+    }
+    
+    // Hard sync
+    if (v0->hardSync()) {
+        v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
+        v0->vt.f = 0;
+    }
+    if (v2->hardSync()) {
+        v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
+        v2->vt.f = 0;
+    }
+    if (v1->hardSync()) {
+        v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
+        v1->vt.f = 0;
+    }
+    
+    // Do adsr
+    if ((v0->vt.adsr += v0->vt.adsrs) + 0x80000000 < v0->vt.adsrz + 0x80000000) {
+        v0->trigger_adsr();
+    }
+    if ((v1->vt.adsr += v1->vt.adsrs) + 0x80000000 < v1->vt.adsrz + 0x80000000) {
+        v1->trigger_adsr();
+    }
+    if ((v2->vt.adsr += v2->vt.adsrs) + 0x80000000 < v2->vt.adsrz + 0x80000000) {
+        v2->trigger_adsr();
+    }
+    
+    // Oscillators
+    o0 = v0->vt.adsr >> 16;
+    o1 = v1->vt.adsr >> 16;
+    o2 = v2->vt.adsr >> 16;
+    osc0 = (v0->vt.adsr >> 16) * v0->doosc();
+    osc1 = (v1->vt.adsr >> 16) * v1->doosc();
+    osc2 = st.has3 ? ((v2->vt.adsr >> 16) * v2->doosc()) : 0;
+    
+    // Sample
+    if (st.emulatefilter) {
+        v0->vt.filtIO = ampMod1x8[(o0 >> 22)];
+        v0->applyFilter();
+        o0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
+        
+        v1->vt.filtIO = ampMod1x8[(o1 >> 22)];
+        v1->applyFilter();
+        o1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
+        
+        v2->vt.filtIO = ampMod1x8[(o2 >> 22)];
+        v2->applyFilter();
+        o2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
+    }
+    
+    return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * st.vol);
 }
-*/
-
