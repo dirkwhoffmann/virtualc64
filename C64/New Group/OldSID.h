@@ -22,7 +22,7 @@
 #include "VirtualComponent.h"
 #include "FastSid.h"
 #include "SIDbase.h"
-#include "resid/sid.h"
+#include "../resid/sid.h"
 
 //! The virtual sound interface device (SID)
 /*! SID is the sound chip of the Commodore 64.
@@ -105,10 +105,19 @@ public:
     
 private:
     
-    int16_t fastsid_calculate_single_sample(int i);
+    int init(int speed, int cycles_per_sec);
+    
+    //! @brief    Prepares FastSID for computing samples
+    void prepare();
+    
+    int16_t fastsid_calculate_single_sample();
 };
 
-extern void setup_sid(sound_t *psid);
+// extern void setup_sid(sound_t *psid);
 extern signed char ampMod1x8[256];
-
+extern void init_filter(sound_t *psid, int freq);
+extern uint32_t sidreadclocks[9];
+extern float lowPassParam[0x800];
+extern float bandPassParam[0x800];
+extern float filterResTable[16];
 #endif

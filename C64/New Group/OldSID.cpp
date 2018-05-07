@@ -27,7 +27,7 @@ OldSID::OldSID()
     // Initialize wave and noise tables
     Voice::initWaveTables();
     
-    fastsid_init(&st, 44100, PAL_CYCLES_PER_SECOND);
+    init(44100, PAL_CYCLES_PER_SECOND);
     
     
     // Set default values
@@ -116,11 +116,115 @@ OldSID::execute(uint64_t cycles)
     
     // Compute samples
     for (unsigned i = 0; i < numSamples; i++) {
-        buf[i] = fastsid_calculate_single_sample(i);
+        buf[i] = fastsid_calculate_single_sample();
     }
     
     // Write samples into ringbuffer
     writeData(buf, numSamples);
+}
+
+int
+OldSID::init(int speed, int cycles_per_sec)
+{
+    uint32_t i;
+    int sid_model;
+    
+    // Table for internal ADSR counter step calculations
+    uint16_t adrtable[16] = {
+        1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
+    };
+    
+    st.speed1 = (cycles_per_sec << 8) / speed;
+    for (i = 0; i < 16; i++) {
+        st.adrs[i] = 500 * 8 * st.speed1 / adrtable[i];
+        st.sz[i] = 0x8888888 * i;
+    }
+    st.update = 1;
+    
+    /*
+     if (resources_get_int("SidFilters", &(psid->emulatefilter)) < 0) {
+     return 0;
+     }
+     */
+    
+    init_filter(&st, speed);
+    prepare();
+    
+    /*
+     if (resources_get_int("SidModel", &sid_model) < 0) {
+     return 0;
+     }
+     */
+    sid_model = 0;
+    st.newsid = 0;
+    
+    // Voices
+    for (i = 0; i < 3; i++) {
+        st.v[i].init(&st, i);
+        st.v[i].prepare();
+    }
+    
+    switch (sid_model) {
+        default:
+        case 0: /* 6581 */
+        case 3: /* 6581R4 */
+        case 4: /* DTVSID */
+            st.newsid = 0;
+            break;
+        case 1: /* 8580 */
+        case 2: /* 8580 + digi boost */
+            st.newsid = 1;
+            break;
+    }
+    
+    for (i = 0; i < 9; i++) {
+        sidreadclocks[i] = 13;
+    }
+    
+    return 1;
+}
+
+void
+OldSID::prepare()
+{
+    if (!st.update) {
+        return;
+    }
+    
+    st.vol = st.d[0x18] & 0x0f;
+    st.has3 = ((st.d[0x18] & 0x80) && !(st.d[0x17] & 0x04)) ? 0 : 1;
+    
+    if (st.emulatefilter) {
+        st.v[0].vt.filter = st.d[0x17] & 0x01 ? 1 : 0;
+        st.v[1].vt.filter = st.d[0x17] & 0x02 ? 1 : 0;
+        st.v[2].vt.filter = st.d[0x17] & 0x04 ? 1 : 0;
+        st.filterType = st.d[0x18] & 0x70;
+        if (st.filterType != st.filterCurType) {
+            st.filterCurType = st.filterType;
+            st.v[0].vt.filtLow = 0;
+            st.v[0].vt.filtRef = 0;
+            st.v[1].vt.filtLow = 0;
+            st.v[1].vt.filtRef = 0;
+            st.v[2].vt.filtLow = 0;
+            st.v[2].vt.filtRef = 0;
+        }
+        st.filterValue = 0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3);
+        if (st.filterType == 0x20) {
+            st.filterDy = bandPassParam[st.filterValue];
+        } else {
+            st.filterDy = lowPassParam[st.filterValue];
+        }
+        st.filterResDy = filterResTable[st.d[0x17] >> 4]
+        - st.filterDy;
+        if (st.filterResDy < 1.0) {
+            st.filterResDy = 1.0;
+        }
+    } else {
+        st.v[0].vt.filter = 0;
+        st.v[1].vt.filter = 0;
+        st.v[2].vt.filter = 0;
+    }
+    st.update = 0;
 }
 
 int16_t
@@ -132,7 +236,7 @@ OldSID::fastsid_calculate_single_sample()
     Voice *v1 = &st.v[1];
     Voice *v2 = &st.v[2];
     
-    setup_sid(&st);
+    prepare();
     v0->prepare();
     v1->prepare();
     v2->prepare();

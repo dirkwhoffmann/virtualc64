@@ -41,7 +41,7 @@
 
 
 // Clockcycles for each dropping bit when write-only register read is done
-static uint32_t sidreadclocks[9];
+uint32_t sidreadclocks[9];
 
 float lowPassParam[0x800];
 float bandPassParam[0x800];
@@ -59,54 +59,11 @@ int blen = 0;
 
 
 
-/* update SID structure */
-void setup_sid(sound_t *psid)
-{
-    if (!psid->update) {
-        return;
-    }
-
-    psid->vol = psid->d[0x18] & 0x0f;
-    psid->has3 = ((psid->d[0x18] & 0x80) && !(psid->d[0x17] & 0x04)) ? 0 : 1;
-
-    if (psid->emulatefilter) {
-        psid->v[0].vt.filter = psid->d[0x17] & 0x01 ? 1 : 0;
-        psid->v[1].vt.filter = psid->d[0x17] & 0x02 ? 1 : 0;
-        psid->v[2].vt.filter = psid->d[0x17] & 0x04 ? 1 : 0;
-        psid->filterType = psid->d[0x18] & 0x70;
-        if (psid->filterType != psid->filterCurType) {
-            psid->filterCurType = psid->filterType;
-            psid->v[0].vt.filtLow = 0;
-            psid->v[0].vt.filtRef = 0;
-            psid->v[1].vt.filtLow = 0;
-            psid->v[1].vt.filtRef = 0;
-            psid->v[2].vt.filtLow = 0;
-            psid->v[2].vt.filtRef = 0;
-        }
-        psid->filterValue = 0x7ff & ((psid->d[0x15] & 7) | ((uint16_t)psid->d[0x16]) << 3);
-        if (psid->filterType == 0x20) {
-            psid->filterDy = bandPassParam[psid->filterValue];
-        } else {
-            psid->filterDy = lowPassParam[psid->filterValue];
-        }
-        psid->filterResDy = filterResTable[psid->d[0x17] >> 4]
-                            - psid->filterDy;
-        if (psid->filterResDy < 1.0) {
-            psid->filterResDy = 1.0;
-        }
-    } else {
-        psid->v[0].vt.filter = 0;
-        psid->v[1].vt.filter = 0;
-        psid->v[2].vt.filter = 0;
-    }
-    psid->update = 0;
-}
 
 
 
 
-
-static void init_filter(sound_t *psid, int freq)
+void init_filter(sound_t *psid, int freq)
 {
     uint16_t uk;
     float rk;
@@ -175,65 +132,6 @@ static void init_filter(sound_t *psid, int freq)
     }
 }
 
-int fastsid_init(sound_t *psid, int speed, int cycles_per_sec)
-{
-    uint32_t i;
-    int sid_model;
-
-    // Table for internal ADSR counter step calculations
-    uint16_t adrtable[16] = {
-        1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
-    };
-    
-    psid->speed1 = (cycles_per_sec << 8) / speed;
-    for (i = 0; i < 16; i++) {
-        psid->adrs[i] = 500 * 8 * psid->speed1 / adrtable[i];
-        psid->sz[i] = 0x8888888 * i;
-    }
-    psid->update = 1;
-
-    /*
-    if (resources_get_int("SidFilters", &(psid->emulatefilter)) < 0) {
-        return 0;
-    }
-    */
-    
-    init_filter(psid, speed);
-    setup_sid(psid);
-    
-    /*
-    if (resources_get_int("SidModel", &sid_model) < 0) {
-        return 0;
-    }
-    */
-    sid_model = 0;
-    psid->newsid = 0;
-    
-    // Voices
-    for (i = 0; i < 3; i++) {
-        psid->v[i].init(psid, i);
-        psid->v[i].prepare();
-    }
-    
-    switch (sid_model) {
-        default:
-        case 0: /* 6581 */
-        case 3: /* 6581R4 */
-        case 4: /* DTVSID */
-            psid->newsid = 0;
-            break;
-        case 1: /* 8580 */
-        case 2: /* 8580 + digi boost */
-            psid->newsid = 1;
-            break;
-    }
-
-    for (i = 0; i < 9; i++) {
-        sidreadclocks[i] = 13;
-    }
-
-    return 1;
-}
 
 uint8_t fastsid_read(sound_t *psid, uint16_t addr)
 {

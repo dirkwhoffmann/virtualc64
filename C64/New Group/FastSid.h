@@ -77,7 +77,7 @@ struct sound_s {
 
 typedef struct sound_s sound_t;
 
-int fastsid_init(sound_t *psid, int speed, int cycles_per_sec);
+// int fastsid_init(sound_t *psid, int speed, int cycles_per_sec);
 uint8_t fastsid_read(sound_t *psid, uint16_t addr);
 void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte);
 
