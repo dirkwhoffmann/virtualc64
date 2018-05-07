@@ -179,7 +179,7 @@
 		50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB2B1B826FF20054EE86 /* graphics.png */; };
 		50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB361B83561E0054EE86 /* pref_vic.png */; };
 		50C9CB391B8356280054EE86 /* pref_sid.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB381B8356280054EE86 /* pref_sid.png */; };
-		50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* OldSID.cpp */; };
+		50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* FastSID.cpp */; };
 		50CCB1BA1B8499C6008D8C30 /* tb_motherboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1B91B8499C6008D8C30 /* tb_motherboard2.png */; };
 		50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1BB1B8499DE008D8C30 /* tb_setup.png */; };
 		50CCB1C51B84A185008D8C30 /* tb_inspect.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1C31B84A185008D8C30 /* tb_inspect.png */; };
@@ -509,8 +509,8 @@
 		50C9CB2B1B826FF20054EE86 /* graphics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphics.png; sourceTree = "<group>"; };
 		50C9CB361B83561E0054EE86 /* pref_vic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref_vic.png; sourceTree = "<group>"; };
 		50C9CB381B8356280054EE86 /* pref_sid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref_sid.png; sourceTree = "<group>"; };
-		50CA0D500A9076FD00A5A08D /* OldSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldSID.h; sourceTree = "<group>"; };
-		50CA0D510A9076FD00A5A08D /* OldSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OldSID.cpp; sourceTree = "<group>"; };
+		50CA0D500A9076FD00A5A08D /* FastSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSID.h; sourceTree = "<group>"; };
+		50CA0D510A9076FD00A5A08D /* FastSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSID.cpp; sourceTree = "<group>"; };
 		50CCB1B91B8499C6008D8C30 /* tb_motherboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard2.png; sourceTree = "<group>"; };
 		50CCB1BB1B8499DE008D8C30 /* tb_setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_setup.png; sourceTree = "<group>"; };
 		50CCB1C31B84A185008D8C30 /* tb_inspect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_inspect.png; sourceTree = "<group>"; };
@@ -1029,8 +1029,8 @@
 				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
 				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
 				504DDB5320A0431E00FFD5B2 /* waves.h */,
-				50CA0D500A9076FD00A5A08D /* OldSID.h */,
-				50CA0D510A9076FD00A5A08D /* OldSID.cpp */,
+				50CA0D500A9076FD00A5A08D /* FastSID.h */,
+				50CA0D510A9076FD00A5A08D /* FastSID.cpp */,
 			);
 			name = fastsid;
 			path = "New Group";
@@ -1393,7 +1393,7 @@
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
-				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
+				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,

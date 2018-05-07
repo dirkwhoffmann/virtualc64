@@ -1,23 +1,33 @@
 /*
- * (C) 2006 Dirk W. Hoffmann, Jérôme Lang. All rights reserved.
+ * This file belongs to the FastSID implementation of VirtualC64,
+ * an adaption of the code used in VICE 3.1, the Versatile Commodore Emulator.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * Original code written by
+ *  Teemu Rantanen <tvr@cs.hut.fi>
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Adapted for VirtualC64 by
+ *  Dirk Hoffmann
+ */
+/*
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+ *  02111-1307  USA.
+ *
  */
 
-#ifndef _OLDSID_INC
-#define _OLDSID_INC
+#ifndef _FASTSID_INC
+#define _FASTSID_INC
 
 #include "VirtualComponent.h"
 #include "FastSidVoice.h"
