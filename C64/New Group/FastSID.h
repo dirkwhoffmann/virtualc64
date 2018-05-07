@@ -59,10 +59,7 @@ struct sound_s {
     uint8_t laststore;
     uint8_t laststorebit;
     uint64_t laststoreclk;
-    
-    /* do we want to use filters? */
-    // int emulatefilter;
-    
+        
     /* filter variables */
     float filterDy;
     float filterResDy;

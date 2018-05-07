@@ -51,7 +51,8 @@ FastSID::FastSID()
     sampleRate = 44100;
      */
     // sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
-    setAudioFilter(false);
+    // setAudioFilter(false);
+    emulateFilter = true;
     
     volume = 100000;
     targetVolume = 100000;
@@ -356,10 +357,13 @@ FastSID::prepare()
     if (!isDirty) return;
     
     if (emulateFilter) {
-        
         st.v[0].vt.filter = st.d[0x17] & 0x01 ? 1 : 0;
         st.v[1].vt.filter = st.d[0x17] & 0x02 ? 1 : 0;
         st.v[2].vt.filter = st.d[0x17] & 0x04 ? 1 : 0;
+        assert(filterEnabled(0) == ((st.d[0x17] & 0x01) != 0));
+        assert(filterEnabled(1) == ((st.d[0x17] & 0x02) != 0));
+        assert(filterEnabled(2) == ((st.d[0x17] & 0x04) != 0));
+
         st.filterType = st.d[0x18] & 0x70;
         if (st.filterType != st.filterCurType) {
             st.filterCurType = st.filterType;
