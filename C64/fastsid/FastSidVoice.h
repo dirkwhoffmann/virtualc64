@@ -31,24 +31,6 @@
 
 #include "VirtualComponent.h"
 
-
-// Wave tables
-extern uint16_t wavetable00[2];
-extern uint16_t wavetable10[4096];
-extern uint16_t wavetable20[4096];
-extern uint16_t wavetable30[4096];
-extern uint16_t wavetable40[8192];
-extern uint16_t wavetable50[8192];
-extern uint16_t wavetable60[8192];
-extern uint16_t wavetable70[8192];
-
-// Noise tables
-extern uint8_t noiseMSB[256];
-extern uint8_t noiseMID[256];
-extern uint8_t noiseLSB[256];
-
-
-
 // ADSR state
 #define FASTSID_ATTACK   0
 #define FASTSID_DECAY    1
@@ -145,6 +127,22 @@ class Voice : public VirtualComponent {
     
 private:
     
+    //! @brief   Wave tables
+    //! @details The first index determines the chip model (0 = old, 1 = new).
+    static uint16_t wavetable00[2][2];
+    static uint16_t wavetable10[2][4096];
+    static uint16_t wavetable20[2][4096];
+    static uint16_t wavetable30[2][4096];
+    static uint16_t wavetable40[2][8192];
+    static uint16_t wavetable50[2][8192];
+    static uint16_t wavetable60[2][8192];
+    static uint16_t wavetable70[2][8192];
+    
+    //! @brief   Noise tables
+    static uint8_t noiseMSB[256];
+    static uint8_t noiseMID[256];
+    static uint8_t noiseLSB[256];
+    
     //! @brief  Pointer to next voice (1 -> 2 -> 3 -> 1)
     Voice *next;
     
@@ -159,8 +157,13 @@ public:
     // 15-bit oscillator value
     uint32_t doosc();
     
-    //! @brief  Update internal parameters
-    void setup();
+    //! @brief    Initializes the wave tables
+    /*! @details  This static method needs to be called before using the class.
+     */
+    static void initWaveTables();
+
+    //! @brief    Update internal parameters
+    void setup(unsigned chipModel);
     
     //! @brief  Change ADSR state and all related variables
     void set_adsr(uint8_t fm);
@@ -170,7 +173,5 @@ public:
     
     
 };
-
-
 
 #endif

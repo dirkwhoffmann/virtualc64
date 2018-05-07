@@ -86,9 +86,5 @@ void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte);
 int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
                               int interleave, int *delta_t);
 
-/*
-extern void fastsid_state_read(struct sound_s *psid, struct sid_fastsid_snapshot_state_s *sid_state);
-extern void fastsid_state_write(struct sound_s *psid, struct sid_fastsid_snapshot_state_s *sid_state);
-*/
 
 #endif

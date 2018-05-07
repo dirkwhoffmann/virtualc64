@@ -24,7 +24,12 @@ OldSID::OldSID()
 	setDescription("SID");
 	debug(3, "  Creating FastSID at address %p...\n", this);
     
+    // Initialize wave and noise tables
+    Voice::initWaveTables();
+    
     fastsid_init(&st, 44100, PAL_CYCLES_PER_SECOND, 1000);
+    
+    
     // Set default values
     // setChipModel(reSID::MOS6581);
     st.newsid = false; 

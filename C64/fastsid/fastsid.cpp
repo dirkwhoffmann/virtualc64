@@ -34,41 +34,7 @@
 #include <math.h>
 #include <assert.h>
 
-#include "fastsid.h"
-#include "waves.h"
-
-// ADSR state
-#define ATTACK   0
-#define DECAY    1
-#define SUSTAIN  2
-#define RELEASE  3
-#define IDLE     4
-
-// Noise magic
-#define NSHIFT(v, n) \
-    (((v) << (n))    \
-     | ((((v) >> (23 - (n))) ^ (v >> (18 - (n)))) & ((1 << (n)) - 1)))
-
-#define NVALUE(v)                                   \
-    (noiseLSB[v & 0xff] | noiseMID[(v >> 8) & 0xff] \
-     | noiseMSB[(v >> 16) & 0xff])
-
-#define NSEED 0x7ffff8
-
-// Wave tables
-static uint16_t wavetable00[2];
-static uint16_t wavetable10[4096];
-static uint16_t wavetable20[4096];
-static uint16_t wavetable30[4096];
-static uint16_t wavetable40[8192];
-static uint16_t wavetable50[8192];
-static uint16_t wavetable60[8192];
-static uint16_t wavetable70[8192];
-
-// Noise tables
-static uint8_t noiseMSB[256];
-static uint8_t noiseMID[256];
-static uint8_t noiseLSB[256];
+#include "FastSid.h"
 
 // Table for internal ADSR counter step calculations
 static uint16_t adrtable[16] =
@@ -76,11 +42,7 @@ static uint16_t adrtable[16] =
     1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
 };
 
-// Table for pseudo-exponential ADSR calculations
-static uint32_t exptable[6] =
-{
-    0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
-};
+
 
 // Clockcycles for each dropping bit when write-only register read is done
 static uint32_t sidreadclocks[9];
@@ -91,196 +53,6 @@ static float filterResTable[16];
 static const float filterRefFreq = 44100.0;
 static signed char ampMod1x8[256];
 
-//
-// Voice class
-//
-
-uint32_t
-Voice::doosc()
-{
-    uint32_t result;
-    
-    if (vt.noise) {
-        result = ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
-    } else {
-        result = vt.wt[(vt.f + vt.wtpf) >> vt.wtl] ^ vt.wtr[vt.vprev->f >> 31];
-    }
-    
-    return result;
-}
-
-void
-Voice::setup()
-{
-    if (!vt.update) {
-        return;
-    }
-    
-    vt.attack = vt.d[5] / 0x10;
-    vt.decay = vt.d[5] & 0x0f;
-    vt.sustain = vt.d[6] / 0x10;
-    vt.release = vt.d[6] & 0x0f;
-    vt.sync = vt.d[4] & 0x02 ? 1 : 0;
-    vt.fs = vt.s->speed1 * (vt.d[0] + vt.d[1] * 0x100);
-    
-    if (vt.d[4] & 0x08) {
-        vt.f = vt.fs = 0;
-        vt.rv = NSEED;
-    }
-    vt.noise = 0;
-    vt.wtl = 20;
-    vt.wtpf = 0;
-    vt.wtr[1] = 0;
-    
-    switch ((vt.d[4] & 0xf0) >> 4) {
-        case 0:
-            vt.wt = wavetable00;
-            vt.wtl = 31;
-            break;
-        case 1:
-            vt.wt = wavetable10;
-            if (vt.d[4] & 0x04) {
-                vt.wtr[1] = 0x7fff;
-            }
-            break;
-        case 2:
-            vt.wt = wavetable20;
-            break;
-        case 3:
-            vt.wt = wavetable30;
-            if (vt.d[4] & 0x04) {
-                vt.wtr[1] = 0x7fff;
-            }
-            break;
-        case 4:
-            if (vt.d[4] & 0x08) {
-                vt.wt = &wavetable40[4096];
-            } else {
-                vt.wt = &wavetable40[4096 - (vt.d[2]
-                                              + (vt.d[3] & 0x0f) * 0x100)];
-            }
-            break;
-        case 5:
-            vt.wt = &wavetable50[vt.wtpf = 4096 - (vt.d[2]
-                                                     + (vt.d[3] & 0x0f) * 0x100)];
-            vt.wtpf <<= 20;
-            if (vt.d[4] & 0x04) {
-                vt.wtr[1] = 0x7fff;
-            }
-            break;
-        case 6:
-            vt.wt = &wavetable60[vt.wtpf = 4096 - (vt.d[2]
-                                                     + (vt.d[3] & 0x0f) * 0x100)];
-            vt.wtpf <<= 20;
-            break;
-        case 7:
-            vt.wt = &wavetable70[vt.wtpf = 4096 - (vt.d[2]
-                                                     + (vt.d[3] & 0x0f) * 0x100)];
-            vt.wtpf <<= 20;
-            if (vt.d[4] & 0x04 && vt.s->newsid) {
-                vt.wtr[1] = 0x7fff;
-            }
-            break;
-        case 8:
-            vt.noise = 1;
-            vt.wt = NULL;
-            vt.wtl = 0;
-            break;
-        default:
-            /* XXX: noise locking correct? */
-            vt.rv = 0;
-            vt.wt = wavetable00;
-            vt.wtl = 31;
-    }
-    
-    switch (vt.adsrm) {
-        case ATTACK:
-        case DECAY:
-        case SUSTAIN:
-            if (vt.d[4] & 0x01) {
-                set_adsr((uint8_t)(vt.gateflip ? ATTACK : vt.adsrm));
-            } else {
-                set_adsr(RELEASE);
-            }
-            break;
-        case RELEASE:
-        case IDLE:
-            if (vt.d[4] & 0x01) {
-                set_adsr(ATTACK);
-            } else {
-                set_adsr(vt.adsrm);
-            }
-            break;
-    }
-    vt.update = 0;
-    vt.gateflip = 0;
-}
-
-void
-Voice::set_adsr(uint8_t fm)
-{
-    int i;
-    
-    switch (fm) {
-        case ATTACK:
-            vt.adsrs = vt.s->adrs[vt.attack];
-            vt.adsrz = 0;
-            break;
-        case DECAY:
-            /* XXX: fix this */
-            if (vt.adsr <= vt.s->sz[vt.sustain]) {
-                set_adsr(SUSTAIN);
-                return;
-            }
-            for (i = 0; vt.adsr < exptable[i]; i++) {}
-            vt.adsrs = -vt.s->adrs[vt.decay] >> i;
-            vt.adsrz = vt.s->sz[vt.sustain];
-            if (exptable[i] > vt.adsrz) {
-                vt.adsrz = exptable[i];
-            }
-            break;
-        case SUSTAIN:
-            if (vt.adsr > vt.s->sz[vt.sustain]) {
-                set_adsr(DECAY);
-                return;
-            }
-            vt.adsrs = 0;
-            vt.adsrz = 0;
-            break;
-        case RELEASE:
-            if (!vt.adsr) {
-                set_adsr(IDLE);
-                return;
-            }
-            for (i = 0; vt.adsr < exptable[i]; i++) {}
-            vt.adsrs = -vt.s->adrs[vt.release] >> i;
-            vt.adsrz = exptable[i];
-            break;
-        case IDLE:
-            vt.adsrs = 0;
-            vt.adsrz = 0;
-            break;
-    }
-    vt.adsrm = fm;
-}
-
-void
-Voice::trigger_adsr()
-{
-    switch (vt.adsrm) {
-        case ATTACK:
-            vt.adsr = 0x7fffffff;
-            set_adsr(DECAY);
-            break;
-        case DECAY:
-        case RELEASE:
-            if (vt.adsr >= 0x80000000) {
-                vt.adsr = 0;
-            }
-            set_adsr(vt.adsrm);
-            break;
-    }
-}
 
 
 
@@ -434,13 +206,13 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
     setup_sid(psid);
     v0 = &psid->v[0];
     // setup_voice(&v0->vt);
-    v0->setup();
+    v0->setup(psid->newsid);
     v1 = &psid->v[1];
     //setup_voice(&v1->vt);
-    v1->setup();
+    v1->setup(psid->newsid);
     v2 = &psid->v[2];
     // setup_voice(&v2->vt);
-    v2->setup();
+    v2->setup(psid->newsid);
 
     /* addfptrs, noise & hard sync test */
     dosync1 = 0;
@@ -642,7 +414,7 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
         psid->v[i].vt.filtIO = 0;
         psid->v[i].vt.update = 1;
         // setup_voice(&psid->v[i].vt);
-        psid->v[i].setup();
+        psid->v[i].setup(psid->newsid);
     }
 
     /*
@@ -665,31 +437,6 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
             break;
     }
 
-    for (i = 0; i < 4096; i++) {
-        wavetable10[i] = (uint16_t)(i < 2048 ? i << 4 : 0xffff - (i << 4));
-        wavetable20[i] = (uint16_t)(i << 3);
-        wavetable30[i] = waveform30_8580[i] << 7;
-        wavetable40[i + 4096] = 0x7fff;
-        if (psid->newsid) {
-            wavetable50[i + 4096] = waveform50_8580[i] << 7;
-            wavetable60[i + 4096] = waveform60_8580[i] << 7;
-            wavetable70[i + 4096] = waveform70_8580[i] << 7;
-        } else {
-            wavetable50[i + 4096] = waveform50_6581[i >> 3] << 7;
-            wavetable60[i + 4096] = 0;
-            wavetable70[i + 4096] = 0;
-        }
-    }
-
-    for (i = 0; i < 256; i++) {
-        noiseLSB[i] = (uint8_t)((((i >> (7 - 2)) & 0x04) | ((i >> (4 - 1)) & 0x02)
-                              | ((i >> (2 - 0)) & 0x01)));
-        noiseMID[i] = (uint8_t)((((i >> (13 - 8 - 4)) & 0x10)
-                              | ((i << (3 - (11 - 8))) & 0x08)));
-        noiseMSB[i] = (uint8_t)((((i << (7 - (22 - 16))) & 0x80)
-                              | ((i << (6 - (20 - 16))) & 0x40)
-                              | ((i << (5 - (16 - 16))) & 0x20)));
-    }
     for (i = 0; i < 9; i++) {
         sidreadclocks[i] = 13;
     }

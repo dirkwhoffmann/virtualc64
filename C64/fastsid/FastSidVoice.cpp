@@ -29,12 +29,62 @@
  */
 
 #include "FastSid.h"
+#include "waves.h"
+
+uint16_t Voice::wavetable00[2][2];
+uint16_t Voice::wavetable10[2][4096];
+uint16_t Voice::wavetable20[2][4096];
+uint16_t Voice::wavetable30[2][4096];
+uint16_t Voice::wavetable40[2][8192];
+uint16_t Voice::wavetable50[2][8192];
+uint16_t Voice::wavetable60[2][8192];
+uint16_t Voice::wavetable70[2][8192];
+uint8_t Voice::noiseMSB[256];
+uint8_t Voice::noiseMID[256];
+uint8_t Voice::noiseLSB[256];
+
 
 // Table for pseudo-exponential ADSR calculations
 static uint32_t exptable[6] =
 {
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
+
+void
+Voice::initWaveTables()
+{
+    // Most tables are the same for SID6581 and SID8580, so let's initialize both.
+    for (unsigned m = 0; m < 2; m++) {
+        for (unsigned i = 0; i < 4096; i++) {
+            wavetable10[m][i] = (uint16_t)(i < 2048 ? i << 4 : 0xffff - (i << 4));
+            wavetable20[m][i] = (uint16_t)(i << 3);
+            wavetable30[m][i] = waveform30_8580[i] << 7;
+            wavetable40[m][i + 4096] = 0x7fff;
+            wavetable50[m][i + 4096] = waveform50_6581[i >> 3] << 7;
+            wavetable60[m][i + 4096] = 0;
+            wavetable70[m][i + 4096] = 0;
+        }
+    }
+    
+    // Modify some tables for SID8580
+    for (unsigned i = 0; i < 4096; i++) {
+        wavetable50[1][i + 4096] = waveform50_8580[i] << 7;
+        wavetable60[1][i + 4096] = waveform60_8580[i] << 7;
+        wavetable70[1][i + 4096] = waveform70_8580[i] << 7;
+    }
+    
+    // Noise tables are the same for both SID models
+    for (unsigned i = 0; i < 256; i++) {
+        noiseLSB[i] = (uint8_t)((((i >> (7 - 2)) & 0x04) | ((i >> (4 - 1)) & 0x02)
+                                 | ((i >> (2 - 0)) & 0x01)));
+        noiseMID[i] = (uint8_t)((((i >> (13 - 8 - 4)) & 0x10)
+                                 | ((i << (3 - (11 - 8))) & 0x08)));
+        noiseMSB[i] = (uint8_t)((((i << (7 - (22 - 16))) & 0x80)
+                                 | ((i << (6 - (20 - 16))) & 0x40)
+                                 | ((i << (5 - (16 - 16))) & 0x20)));
+    }
+}
+
 
 uint32_t
 Voice::doosc()
@@ -51,8 +101,10 @@ Voice::doosc()
 }
 
 void
-Voice::setup()
+Voice::setup(unsigned chipModel)
 {
+    assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);
+    
     if (!vt.update) {
         return;
     }
@@ -75,34 +127,34 @@ Voice::setup()
     
     switch ((vt.d[4] & 0xf0) >> 4) {
         case 0:
-            vt.wt = wavetable00;
+            vt.wt = wavetable00[chipModel];
             vt.wtl = 31;
             break;
         case 1:
-            vt.wt = wavetable10;
+            vt.wt = wavetable10[chipModel];
             if (vt.d[4] & 0x04) {
                 vt.wtr[1] = 0x7fff;
             }
             break;
         case 2:
-            vt.wt = wavetable20;
+            vt.wt = wavetable20[chipModel];
             break;
         case 3:
-            vt.wt = wavetable30;
+            vt.wt = wavetable30[chipModel];
             if (vt.d[4] & 0x04) {
                 vt.wtr[1] = 0x7fff;
             }
             break;
         case 4:
             if (vt.d[4] & 0x08) {
-                vt.wt = &wavetable40[4096];
+                vt.wt = &wavetable40[chipModel][4096];
             } else {
-                vt.wt = &wavetable40[4096 - (vt.d[2]
+                vt.wt = &wavetable40[chipModel][4096 - (vt.d[2]
                                              + (vt.d[3] & 0x0f) * 0x100)];
             }
             break;
         case 5:
-            vt.wt = &wavetable50[vt.wtpf = 4096 - (vt.d[2]
+            vt.wt = &wavetable50[chipModel][vt.wtpf = 4096 - (vt.d[2]
                                                    + (vt.d[3] & 0x0f) * 0x100)];
             vt.wtpf <<= 20;
             if (vt.d[4] & 0x04) {
@@ -110,12 +162,12 @@ Voice::setup()
             }
             break;
         case 6:
-            vt.wt = &wavetable60[vt.wtpf = 4096 - (vt.d[2]
+            vt.wt = &wavetable60[chipModel][vt.wtpf = 4096 - (vt.d[2]
                                                    + (vt.d[3] & 0x0f) * 0x100)];
             vt.wtpf <<= 20;
             break;
         case 7:
-            vt.wt = &wavetable70[vt.wtpf = 4096 - (vt.d[2]
+            vt.wt = &wavetable70[chipModel][vt.wtpf = 4096 - (vt.d[2]
                                                    + (vt.d[3] & 0x0f) * 0x100)];
             vt.wtpf <<= 20;
             if (vt.d[4] & 0x04 && vt.s->newsid) {
@@ -130,7 +182,7 @@ Voice::setup()
         default:
             /* XXX: noise locking correct? */
             vt.rv = 0;
-            vt.wt = wavetable00;
+            vt.wt = wavetable00[chipModel];
             vt.wtl = 31;
     }
     
