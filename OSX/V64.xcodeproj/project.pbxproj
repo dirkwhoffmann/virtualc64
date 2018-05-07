@@ -99,6 +99,8 @@
 		504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A81BF71FD500B29BEB /* clock_red.png */; };
 		504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A91BF71FD500B29BEB /* pin_red.png */; };
 		504A22B01BF71FD500B29BEB /* pin_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22AA1BF71FD500B29BEB /* pin_black.png */; };
+		504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */; };
+		504DDB5620A0431F00FFD5B2 /* FastSid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5120A0431E00FFD5B2 /* FastSid.cpp */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
 		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
@@ -407,6 +409,11 @@
 		504A22A81BF71FD500B29BEB /* clock_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_red.png; sourceTree = "<group>"; };
 		504A22A91BF71FD500B29BEB /* pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_red.png; sourceTree = "<group>"; };
 		504A22AA1BF71FD500B29BEB /* pin_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_black.png; sourceTree = "<group>"; };
+		504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSidVoice.cpp; sourceTree = "<group>"; };
+		504DDB5120A0431E00FFD5B2 /* FastSid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSid.cpp; sourceTree = "<group>"; };
+		504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSidVoice.h; sourceTree = "<group>"; };
+		504DDB5320A0431E00FFD5B2 /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
+		504DDB5420A0431E00FFD5B2 /* FastSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSid.h; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_door_closed_2.aiff; sourceTree = "<group>"; };
@@ -694,6 +701,7 @@
 		5000473C12DCEC060098D890 /* Computer */ = {
 			isa = PBXGroup;
 			children = (
+				504DDB4F20A0431E00FFD5B2 /* fastsid */,
 				50D141641417A34B0024FC74 /* resid */,
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50D43B5B1EE5701A009D163C /* C64_types.h */,
@@ -889,6 +897,18 @@
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
 			);
 			name = Peripherals;
+			sourceTree = "<group>";
+		};
+		504DDB4F20A0431E00FFD5B2 /* fastsid */ = {
+			isa = PBXGroup;
+			children = (
+				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
+				504DDB5120A0431E00FFD5B2 /* FastSid.cpp */,
+				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
+				504DDB5320A0431E00FFD5B2 /* waves.h */,
+				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
+			);
+			path = fastsid;
 			sourceTree = "<group>";
 		};
 		5051A1501B8842F100CBFB5A /* Sounds */ = {
@@ -1403,6 +1423,7 @@
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
+				504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
 				50169F03209E045A00CB3536 /* envelope.cc in Sources */,
@@ -1447,6 +1468,7 @@
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
+				504DDB5620A0431F00FFD5B2 /* FastSid.cpp in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
