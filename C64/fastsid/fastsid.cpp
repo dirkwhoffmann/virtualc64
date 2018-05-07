@@ -402,8 +402,6 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     init_filter(psid, speed);
     setup_sid(psid);
     for (i = 0; i < 3; i++) {
-        psid->v[i].vt.vprev = &psid->v[(i + 2) % 3].vt;
-        psid->v[i].vt.vnext = &psid->v[(i + 1) % 3].vt;
         psid->v[i].vt.nr = i;
         psid->v[i].vt.d = psid->d + i * 7;
         psid->v[i].vt.s = psid;
@@ -412,7 +410,6 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
         psid->v[i].vt.filtRef = 0;
         psid->v[i].vt.filtIO = 0;
         psid->v[i].vt.update = 1;
-        // setup_voice(&psid->v[i].vt);
         psid->v[i].setup(psid->newsid);
     }
 

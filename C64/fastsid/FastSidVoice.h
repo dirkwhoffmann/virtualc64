@@ -53,8 +53,6 @@
 typedef struct voice_s {
     
     struct sound_s      *s;
-    // struct voice_s      *vprev;
-    // struct voice_s      *vnext;
     int nr;
     
     /* counter value */

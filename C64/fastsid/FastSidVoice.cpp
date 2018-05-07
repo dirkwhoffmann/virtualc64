@@ -50,6 +50,7 @@ static uint32_t exptable[6] =
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
 
+
 void
 Voice::initWaveTables()
 {
@@ -90,11 +91,12 @@ uint32_t
 Voice::doosc()
 {
     uint32_t result;
+    Voice *prevVoice = &vt.s->v[(vt.nr + 2) % 3];
     
     if (vt.noise) {
         result = ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
     } else {
-        result = vt.wt[(vt.f + vt.wtpf) >> vt.wtl] ^ vt.wtr[vt.vprev->f >> 31];
+        result = vt.wt[(vt.f + vt.wtpf) >> vt.wtl] ^ vt.wtr[prevVoice->vt.f >> 31];
     }
     
     return result;
