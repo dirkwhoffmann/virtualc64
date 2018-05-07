@@ -100,7 +100,6 @@
 		504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A91BF71FD500B29BEB /* pin_red.png */; };
 		504A22B01BF71FD500B29BEB /* pin_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22AA1BF71FD500B29BEB /* pin_black.png */; };
 		504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */; };
-		504DDB5620A0431F00FFD5B2 /* FastSid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5120A0431E00FFD5B2 /* FastSid.cpp */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
 		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
@@ -410,7 +409,6 @@
 		504A22A91BF71FD500B29BEB /* pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_red.png; sourceTree = "<group>"; };
 		504A22AA1BF71FD500B29BEB /* pin_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_black.png; sourceTree = "<group>"; };
 		504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSidVoice.cpp; sourceTree = "<group>"; };
-		504DDB5120A0431E00FFD5B2 /* FastSid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSid.cpp; sourceTree = "<group>"; };
 		504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSidVoice.h; sourceTree = "<group>"; };
 		504DDB5320A0431E00FFD5B2 /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
 		504DDB5420A0431E00FFD5B2 /* FastSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSid.h; sourceTree = "<group>"; };
@@ -905,7 +903,6 @@
 				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
 				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
 				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
-				504DDB5120A0431E00FFD5B2 /* FastSid.cpp */,
 				504DDB5320A0431E00FFD5B2 /* waves.h */,
 			);
 			path = fastsid;
@@ -1468,7 +1465,6 @@
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
-				504DDB5620A0431F00FFD5B2 /* FastSid.cpp in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
