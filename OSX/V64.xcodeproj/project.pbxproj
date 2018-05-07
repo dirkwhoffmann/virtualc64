@@ -701,11 +701,7 @@
 		5000473C12DCEC060098D890 /* Computer */ = {
 			isa = PBXGroup;
 			children = (
-				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
-				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
-				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
-				504DDB5320A0431E00FFD5B2 /* waves.h */,
-				502747FC20A049BB00D505B7 /* FastSid.cpp */,
+				5083D5D320A04CA400C1B4EE /* fastsid */,
 				50D141641417A34B0024FC74 /* resid */,
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50D43B5B1EE5701A009D163C /* C64_types.h */,
@@ -1030,6 +1026,19 @@
 				5020434D1EE71BB8006C3FD3 /* runstop.png */,
 			);
 			name = "TouchBar Icons";
+			sourceTree = "<group>";
+		};
+		5083D5D320A04CA400C1B4EE /* fastsid */ = {
+			isa = PBXGroup;
+			children = (
+				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
+				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
+				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
+				504DDB5320A0431E00FFD5B2 /* waves.h */,
+				502747FC20A049BB00D505B7 /* FastSid.cpp */,
+			);
+			name = fastsid;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
