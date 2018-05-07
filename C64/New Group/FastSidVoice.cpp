@@ -124,14 +124,8 @@ Voice::setup(unsigned chipModel)
         return;
     }
     
-    /*
-    vt.attack = sidreg[5] / 0x10;
-    vt.decay = sidreg[5] & 0x0f;
-    vt.sustain = sidreg[6] / 0x10;
-    vt.release = sidreg[6] & 0x0f;
-     */
     vt.sync = sidreg[4] & 0x02 ? 1 : 0;
-    vt.fs = vt.s->speed1 * (sidreg[0] + sidreg[1] * 0x100);
+    vt.fs = vt.s->speed1 * frequency(); // (sidreg[0] + sidreg[1] * 0x100);
     
     if (sidreg[4] & 0x08) {
         vt.f = vt.fs = 0;

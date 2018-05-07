@@ -170,6 +170,9 @@ public:
     // Querying the current configuration
     //
     
+    //! @brief   Returns the currently set oscillator frequency owing equation:
+    uint16_t frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
+    
     //! @brief   Returns the attack rate for the envelope generator
     /*! @details The attack rate is a 4 bit value which determines how rapidly
      *           the output of the voice rises from zero to peak amplitude when
