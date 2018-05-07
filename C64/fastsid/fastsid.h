@@ -106,6 +106,14 @@ typedef struct voice_s {
 
 class Voice {
  
+private:
+    
+    //! @brief  Pointer to next voice (1 -> 2 -> 3 -> 1)
+    Voice *next;
+
+    //! @brief  Pointer to previous voice (1 -> 3 -> 2 -> 1)
+    Voice *prev;
+
 public:
     
     // Voice data (move inside class later)
@@ -113,6 +121,17 @@ public:
     
     // 15-bit oscillator value
     uint32_t doosc();
+    
+    //! @brief  Update internal parameters
+    void setup();
+    
+    //! @brief  Change ADSR state and all related variables
+    void set_adsr(uint8_t fm);
+    
+    //! @brief ADSR counter triggered state change
+    void trigger_adsr();
+    
+    
 };
 
 /* needed data for SID */
@@ -121,7 +140,6 @@ struct sound_s {
     int factor;
     
     /* number of voices */
-    // voice_t v[3];
     Voice v[3];
     
     /* SID registers */
@@ -168,8 +186,6 @@ uint8_t fastsid_read(sound_t *psid, uint16_t addr);
 void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte);
 int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
                               int interleave, int *delta_t);
-
-// extern sid_engine_t fastsid_hooks;
 
 /*
 extern void fastsid_state_read(struct sound_s *psid, struct sid_fastsid_snapshot_state_s *sid_state);

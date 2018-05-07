@@ -109,6 +109,185 @@ Voice::doosc()
     return result;
 }
 
+void
+Voice::setup()
+{
+    if (!vt.update) {
+        return;
+    }
+    
+    vt.attack = vt.d[5] / 0x10;
+    vt.decay = vt.d[5] & 0x0f;
+    vt.sustain = vt.d[6] / 0x10;
+    vt.release = vt.d[6] & 0x0f;
+    vt.sync = vt.d[4] & 0x02 ? 1 : 0;
+    vt.fs = vt.s->speed1 * (vt.d[0] + vt.d[1] * 0x100);
+    
+    if (vt.d[4] & 0x08) {
+        vt.f = vt.fs = 0;
+        vt.rv = NSEED;
+    }
+    vt.noise = 0;
+    vt.wtl = 20;
+    vt.wtpf = 0;
+    vt.wtr[1] = 0;
+    
+    switch ((vt.d[4] & 0xf0) >> 4) {
+        case 0:
+            vt.wt = wavetable00;
+            vt.wtl = 31;
+            break;
+        case 1:
+            vt.wt = wavetable10;
+            if (vt.d[4] & 0x04) {
+                vt.wtr[1] = 0x7fff;
+            }
+            break;
+        case 2:
+            vt.wt = wavetable20;
+            break;
+        case 3:
+            vt.wt = wavetable30;
+            if (vt.d[4] & 0x04) {
+                vt.wtr[1] = 0x7fff;
+            }
+            break;
+        case 4:
+            if (vt.d[4] & 0x08) {
+                vt.wt = &wavetable40[4096];
+            } else {
+                vt.wt = &wavetable40[4096 - (vt.d[2]
+                                              + (vt.d[3] & 0x0f) * 0x100)];
+            }
+            break;
+        case 5:
+            vt.wt = &wavetable50[vt.wtpf = 4096 - (vt.d[2]
+                                                     + (vt.d[3] & 0x0f) * 0x100)];
+            vt.wtpf <<= 20;
+            if (vt.d[4] & 0x04) {
+                vt.wtr[1] = 0x7fff;
+            }
+            break;
+        case 6:
+            vt.wt = &wavetable60[vt.wtpf = 4096 - (vt.d[2]
+                                                     + (vt.d[3] & 0x0f) * 0x100)];
+            vt.wtpf <<= 20;
+            break;
+        case 7:
+            vt.wt = &wavetable70[vt.wtpf = 4096 - (vt.d[2]
+                                                     + (vt.d[3] & 0x0f) * 0x100)];
+            vt.wtpf <<= 20;
+            if (vt.d[4] & 0x04 && vt.s->newsid) {
+                vt.wtr[1] = 0x7fff;
+            }
+            break;
+        case 8:
+            vt.noise = 1;
+            vt.wt = NULL;
+            vt.wtl = 0;
+            break;
+        default:
+            /* XXX: noise locking correct? */
+            vt.rv = 0;
+            vt.wt = wavetable00;
+            vt.wtl = 31;
+    }
+    
+    switch (vt.adsrm) {
+        case ATTACK:
+        case DECAY:
+        case SUSTAIN:
+            if (vt.d[4] & 0x01) {
+                set_adsr((uint8_t)(vt.gateflip ? ATTACK : vt.adsrm));
+            } else {
+                set_adsr(RELEASE);
+            }
+            break;
+        case RELEASE:
+        case IDLE:
+            if (vt.d[4] & 0x01) {
+                set_adsr(ATTACK);
+            } else {
+                set_adsr(vt.adsrm);
+            }
+            break;
+    }
+    vt.update = 0;
+    vt.gateflip = 0;
+}
+
+void
+Voice::set_adsr(uint8_t fm)
+{
+    int i;
+    
+    switch (fm) {
+        case ATTACK:
+            vt.adsrs = vt.s->adrs[vt.attack];
+            vt.adsrz = 0;
+            break;
+        case DECAY:
+            /* XXX: fix this */
+            if (vt.adsr <= vt.s->sz[vt.sustain]) {
+                set_adsr(SUSTAIN);
+                return;
+            }
+            for (i = 0; vt.adsr < exptable[i]; i++) {}
+            vt.adsrs = -vt.s->adrs[vt.decay] >> i;
+            vt.adsrz = vt.s->sz[vt.sustain];
+            if (exptable[i] > vt.adsrz) {
+                vt.adsrz = exptable[i];
+            }
+            break;
+        case SUSTAIN:
+            if (vt.adsr > vt.s->sz[vt.sustain]) {
+                set_adsr(DECAY);
+                return;
+            }
+            vt.adsrs = 0;
+            vt.adsrz = 0;
+            break;
+        case RELEASE:
+            if (!vt.adsr) {
+                set_adsr(IDLE);
+                return;
+            }
+            for (i = 0; vt.adsr < exptable[i]; i++) {}
+            vt.adsrs = -vt.s->adrs[vt.release] >> i;
+            vt.adsrz = exptable[i];
+            break;
+        case IDLE:
+            vt.adsrs = 0;
+            vt.adsrz = 0;
+            break;
+    }
+    vt.adsrm = fm;
+}
+
+void
+Voice::trigger_adsr()
+{
+    switch (vt.adsrm) {
+        case ATTACK:
+            vt.adsr = 0x7fffffff;
+            set_adsr(DECAY);
+            break;
+        case DECAY:
+        case RELEASE:
+            if (vt.adsr >= 0x80000000) {
+                vt.adsr = 0;
+            }
+            set_adsr(vt.adsrm);
+            break;
+    }
+}
+
+
+
+
+
+
+
 /* manage temporary buffers. if the requested size is smaller or equal to the
  * size of the already allocated buffer, reuse it.  */
 int16_t *buf = NULL;
@@ -199,71 +378,7 @@ uint32_t doosc(voice_t *pv)
 }
 */
 
-/* change ADSR state and all related variables */
-static void set_adsr(voice_t *pv, uint8_t fm)
-{
-    int i;
 
-    switch (fm) {
-        case ATTACK:
-            pv->adsrs = pv->s->adrs[pv->attack];
-            pv->adsrz = 0;
-            break;
-        case DECAY:
-            /* XXX: fix this */
-            if (pv->adsr <= pv->s->sz[pv->sustain]) {
-                set_adsr(pv, SUSTAIN);
-                return;
-            }
-            for (i = 0; pv->adsr < exptable[i]; i++) {}
-            pv->adsrs = -pv->s->adrs[pv->decay] >> i;
-            pv->adsrz = pv->s->sz[pv->sustain];
-            if (exptable[i] > pv->adsrz) {
-                pv->adsrz = exptable[i];
-            }
-            break;
-        case SUSTAIN:
-            if (pv->adsr > pv->s->sz[pv->sustain]) {
-                set_adsr(pv, DECAY);
-                return;
-            }
-            pv->adsrs = 0;
-            pv->adsrz = 0;
-            break;
-        case RELEASE:
-            if (!pv->adsr) {
-                set_adsr(pv, IDLE);
-                return;
-            }
-            for (i = 0; pv->adsr < exptable[i]; i++) {}
-            pv->adsrs = -pv->s->adrs[pv->release] >> i;
-            pv->adsrz = exptable[i];
-            break;
-        case IDLE:
-            pv->adsrs = 0;
-            pv->adsrz = 0;
-            break;
-    }
-    pv->adsrm = fm;
-}
-
-/* ADSR counter triggered state change */
-static void trigger_adsr(voice_t *pv)
-{
-    switch (pv->adsrm) {
-        case ATTACK:
-            pv->adsr = 0x7fffffff;
-            set_adsr(pv, DECAY);
-            break;
-        case DECAY:
-        case RELEASE:
-            if (pv->adsr >= 0x80000000) {
-                pv->adsr = 0;
-            }
-            set_adsr(pv, pv->adsrm);
-            break;
-    }
-}
 
 /* update SID structure */
 inline static void setup_sid(sound_t *psid)
@@ -308,112 +423,7 @@ inline static void setup_sid(sound_t *psid)
     psid->update = 0;
 }
 
-/* update voice structure */
-inline static void setup_voice(voice_t *pv)
-{
-    if (!pv->update) {
-        return;
-    }
 
-    pv->attack = pv->d[5] / 0x10;
-    pv->decay = pv->d[5] & 0x0f;
-    pv->sustain = pv->d[6] / 0x10;
-    pv->release = pv->d[6] & 0x0f;
-    pv->sync = pv->d[4] & 0x02 ? 1 : 0;
-    pv->fs = pv->s->speed1 * (pv->d[0] + pv->d[1] * 0x100);
-
-    if (pv->d[4] & 0x08) {
-        pv->f = pv->fs = 0;
-        pv->rv = NSEED;
-    }
-    pv->noise = 0;
-    pv->wtl = 20;
-    pv->wtpf = 0;
-    pv->wtr[1] = 0;
-
-    switch ((pv->d[4] & 0xf0) >> 4) {
-        case 0:
-            pv->wt = wavetable00;
-            pv->wtl = 31;
-            break;
-        case 1:
-            pv->wt = wavetable10;
-            if (pv->d[4] & 0x04) {
-                pv->wtr[1] = 0x7fff;
-            }
-            break;
-        case 2:
-            pv->wt = wavetable20;
-            break;
-        case 3:
-            pv->wt = wavetable30;
-            if (pv->d[4] & 0x04) {
-                pv->wtr[1] = 0x7fff;
-            }
-            break;
-        case 4:
-            if (pv->d[4] & 0x08) {
-                pv->wt = &wavetable40[4096];
-            } else {
-                pv->wt = &wavetable40[4096 - (pv->d[2]
-                                              + (pv->d[3] & 0x0f) * 0x100)];
-            }
-            break;
-        case 5:
-            pv->wt = &wavetable50[pv->wtpf = 4096 - (pv->d[2]
-                                                     + (pv->d[3] & 0x0f) * 0x100)];
-            pv->wtpf <<= 20;
-            if (pv->d[4] & 0x04) {
-                pv->wtr[1] = 0x7fff;
-            }
-            break;
-        case 6:
-            pv->wt = &wavetable60[pv->wtpf = 4096 - (pv->d[2]
-                                                     + (pv->d[3] & 0x0f) * 0x100)];
-            pv->wtpf <<= 20;
-            break;
-        case 7:
-            pv->wt = &wavetable70[pv->wtpf = 4096 - (pv->d[2]
-                                                     + (pv->d[3] & 0x0f) * 0x100)];
-            pv->wtpf <<= 20;
-            if (pv->d[4] & 0x04 && pv->s->newsid) {
-                pv->wtr[1] = 0x7fff;
-            }
-            break;
-        case 8:
-            pv->noise = 1;
-            pv->wt = NULL;
-            pv->wtl = 0;
-            break;
-        default:
-            /* XXX: noise locking correct? */
-            pv->rv = 0;
-            pv->wt = wavetable00;
-            pv->wtl = 31;
-    }
-
-    switch (pv->adsrm) {
-        case ATTACK:
-        case DECAY:
-        case SUSTAIN:
-            if (pv->d[4] & 0x01) {
-                set_adsr(pv, (uint8_t)(pv->gateflip ? ATTACK : pv->adsrm));
-            } else {
-                set_adsr(pv, RELEASE);
-            }
-            break;
-        case RELEASE:
-        case IDLE:
-            if (pv->d[4] & 0x01) {
-                set_adsr(pv, ATTACK);
-            } else {
-                set_adsr(pv, pv->adsrm);
-            }
-            break;
-    }
-    pv->update = 0;
-    pv->gateflip = 0;
-}
 
 static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
 {
@@ -423,11 +433,14 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
 
     setup_sid(psid);
     v0 = &psid->v[0];
-    setup_voice(&v0->vt);
+    // setup_voice(&v0->vt);
+    v0->setup();
     v1 = &psid->v[1];
-    setup_voice(&v1->vt);
+    //setup_voice(&v1->vt);
+    v1->setup();
     v2 = &psid->v[2];
-    setup_voice(&v2->vt);
+    // setup_voice(&v2->vt);
+    v2->setup();
 
     /* addfptrs, noise & hard sync test */
     dosync1 = 0;
@@ -465,13 +478,13 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
 
     /* do adsr */
     if ((v0->vt.adsr += v0->vt.adsrs) + 0x80000000 < v0->vt.adsrz + 0x80000000) {
-        trigger_adsr(&v0->vt);
+        v0->trigger_adsr();
     }
     if ((v1->vt.adsr += v1->vt.adsrs) + 0x80000000 < v1->vt.adsrz + 0x80000000) {
-        trigger_adsr(&v1->vt);
+        v1->trigger_adsr();
     }
     if ((v2->vt.adsr += v2->vt.adsrs) + 0x80000000 < v2->vt.adsrz + 0x80000000) {
-        trigger_adsr(&v2->vt);
+        v2->trigger_adsr();
     }
 
     /* oscillators */
@@ -628,7 +641,8 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
         psid->v[i].vt.filtRef = 0;
         psid->v[i].vt.filtIO = 0;
         psid->v[i].vt.update = 1;
-        setup_voice(&psid->v[i].vt);
+        // setup_voice(&psid->v[i].vt);
+        psid->v[i].setup();
     }
 
     /*
