@@ -124,10 +124,12 @@ Voice::setup(unsigned chipModel)
         return;
     }
     
+    /*
     vt.attack = sidreg[5] / 0x10;
     vt.decay = sidreg[5] & 0x0f;
     vt.sustain = sidreg[6] / 0x10;
     vt.release = sidreg[6] & 0x0f;
+     */
     vt.sync = sidreg[4] & 0x02 ? 1 : 0;
     vt.fs = vt.s->speed1 * (sidreg[0] + sidreg[1] * 0x100);
     
@@ -231,24 +233,24 @@ Voice::set_adsr(uint8_t fm)
     
     switch (fm) {
         case FASTSID_ATTACK:
-            vt.adsrs = vt.s->adrs[vt.attack];
+            vt.adsrs = vt.s->adrs[attackRate()];
             vt.adsrz = 0;
             break;
         case FASTSID_DECAY:
             /* XXX: fix this */
-            if (vt.adsr <= vt.s->sz[vt.sustain]) {
+            if (vt.adsr <= vt.s->sz[sustainRate()]) {
                 set_adsr(FASTSID_SUSTAIN);
                 return;
             }
             for (i = 0; vt.adsr < exptable[i]; i++) {}
-            vt.adsrs = -vt.s->adrs[vt.decay] >> i;
-            vt.adsrz = vt.s->sz[vt.sustain];
+            vt.adsrs = -vt.s->adrs[decayRate()] >> i;
+            vt.adsrz = vt.s->sz[sustainRate()];
             if (exptable[i] > vt.adsrz) {
                 vt.adsrz = exptable[i];
             }
             break;
         case FASTSID_SUSTAIN:
-            if (vt.adsr > vt.s->sz[vt.sustain]) {
+            if (vt.adsr > vt.s->sz[sustainRate()]) {
                 set_adsr(FASTSID_DECAY);
                 return;
             }
@@ -261,7 +263,7 @@ Voice::set_adsr(uint8_t fm)
                 return;
             }
             for (i = 0; vt.adsr < exptable[i]; i++) {}
-            vt.adsrs = -vt.s->adrs[vt.release] >> i;
+            vt.adsrs = -vt.s->adrs[releaseRate()] >> i;
             vt.adsrz = exptable[i];
             break;
         case FASTSID_IDLE:

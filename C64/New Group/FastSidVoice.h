@@ -89,16 +89,7 @@ typedef struct voice_s {
     
     /* ADSR mode */
     uint8_t adsrm;
-    /* 4-bit attack value */
-    uint8_t attack;
-    /* 4-bit decay value */
-    uint8_t decay;
-    /* 4-bit sustain value */
-    uint8_t sustain;
-    /* 4-bit release value */
-    uint8_t release;
-    
-    
+ 
     /* noise shift register. Note! rv may be 0 to 15 shifts 'behind' the
      real noise shift register value. Remaining shifts are done when
      it is referenced */
@@ -175,7 +166,45 @@ public:
     //! @brief ADSR counter triggered state change
     void trigger_adsr();
     
+    //
+    // Querying the current configuration
+    //
     
+    //! @brief   Returns the attack rate for the envelope generator
+    /*! @details The attack rate is a 4 bit value which determines how rapidly
+     *           the output of the voice rises from zero to peak amplitude when
+     *           the envelope generator is gated.
+     */
+    uint8_t attackRate() { return sidreg[0x05] >> 4; }
+
+    //! @brief   Returns the decay rate for the envelope generator
+    /*! @details The decay cycle follows the attack cycle and the decay rate
+     *           determines how rapidly the output falls from the peak amplitude
+     *           to the selected sustain level.
+     */
+    uint8_t decayRate() { return sidreg[0x05] & 0x0F; }
+
+    //! @brief   Returns the decay rate for the envelope generator
+    /*! @details The sustain cycle follows the decay cycle and the output of
+     *           the voice will remain at the selected sustain amplitude as
+     *           long as the gate bit remains set. The sustain levels range
+     *           from zero to peak amplitude in 16 linear steps, with a sustain
+     *           value of 0 selecting zero amplitude and a sustain value of 15
+     *           selecting the peak amplitude.
+     *           A sustain value of 8 would cause the voice to sustain at an
+     *           amplitude one-half the peak amplitude reached by the attack
+     *           cycle.
+     */
+    uint8_t sustainRate() { return sidreg[0x06] >> 4; }
+
+    //! @brief   Returns the release rate for the envelope generator
+    /*! @details The release cycle follows the sustain cycle when the Gate bit is
+     *           reset to zero. At this time, the output of Voice 1 will fall
+     *           from the sustain amplitude to zero amplitude at the selected
+     *           release rate. The 16 release rates are identical to the decay
+     *           rates.
+     */
+    uint8_t releaseRate() { return sidreg[0x06] & 0x0F; }
 };
 
 #endif

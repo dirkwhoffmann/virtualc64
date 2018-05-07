@@ -56,18 +56,6 @@ static signed char ampMod1x8[256];
 int16_t *buf = NULL;
 int blen = 0;
 
-static int16_t *getbuf(int len)
-{
-    if ((buf == NULL) || (blen < len)) {
-        if (buf) {
-            free(buf);
-        }
-        blen = len;
-        buf = (int16_t *)calloc(len, 1);
-    }
-    return buf;
-}
-
 inline static void dofilter(voice_t *pVoice)
 {
     if (!pVoice->filter) {
