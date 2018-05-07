@@ -82,8 +82,6 @@ typedef struct voice_s {
     /* does this voice use filter? */
     uint8_t filter;
     
-    /* does this structure need updating before next sample? */
-    uint8_t update;
     /* did we do multiple gate flips after last calculated sample? */
     uint8_t gateflip;
     
@@ -111,6 +109,8 @@ typedef struct voice_s {
 
 class Voice : public VirtualComponent {
     
+    friend class OldSID;
+    
 private:
     
     //! @brief   Wave tables
@@ -128,6 +128,9 @@ private:
     static uint8_t noiseMSB[256];
     static uint8_t noiseMID[256];
     static uint8_t noiseLSB[256];
+    
+    //! @brief   Indicates if prepare() needs to be called prior to computing samples
+    bool isDirty;
     
 public:
     

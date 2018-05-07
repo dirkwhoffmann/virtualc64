@@ -150,7 +150,7 @@ OldSID::poke(uint16_t addr, uint8_t value)
         case 4:
         case 5:
         case 6:
-            st.v[0].vt.update = 1;
+            st.v[0].isDirty = true;
             break;
   
         case 7: // VOICE 2
@@ -160,7 +160,7 @@ OldSID::poke(uint16_t addr, uint8_t value)
         case 11:
         case 12:
         case 13:
-            st.v[1].vt.update = 1;
+            st.v[1].isDirty = true;
             break;
 
         case 14: // VOICE 3
@@ -170,11 +170,11 @@ OldSID::poke(uint16_t addr, uint8_t value)
         case 18:
         case 19:
         case 20:
-            st.v[2].vt.update = 1;
+            st.v[2].isDirty = true;
             break;
             
         default: // GENERAL SID
-            st.update = 1;
+            isDirty = true;
     }
     
     // For each voice, check if gate bit flips
@@ -236,7 +236,6 @@ OldSID::init(int sampleRate, int cycles_per_sec)
         st.adrs[i] = 500 * 8 * st.speed1 / adrtable[i];
         st.sz[i] = 0x8888888 * i;
     }
-    st.update = 1;
     
     /*
      if (resources_get_int("SidFilters", &(psid->emulatefilter)) < 0) {
@@ -245,6 +244,8 @@ OldSID::init(int sampleRate, int cycles_per_sec)
      */
     
     init_filter(sampleRate);
+    
+    isDirty = true;
     prepare();
     
     /*
@@ -358,9 +359,7 @@ OldSID::init_filter(int sampleRate)
 void
 OldSID::prepare()
 {
-    if (!st.update) {
-        return;
-    }
+    if (!isDirty) return;
     
     st.has3 = ((st.d[0x18] & 0x80) && !(st.d[0x17] & 0x04)) ? 0 : 1;
     
@@ -394,7 +393,8 @@ OldSID::prepare()
         st.v[1].vt.filter = 0;
         st.v[2].vt.filter = 0;
     }
-    st.update = 0;
+    
+    isDirty = false;
 }
 
 int16_t

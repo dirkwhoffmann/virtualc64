@@ -54,9 +54,6 @@ struct sound_s {
     /* internal constant used for sample rate dependent calculations */
     uint32_t speed1;
     
-    /* does this structure need updating before next sample? */
-    uint8_t update;
-    
     /* do we have a new sid or an old one? */
     uint8_t newsid;
     
@@ -93,6 +90,9 @@ private:
     float bandPassParam[0x800];
     float filterResTable[16];
     signed char ampMod1x8[256];
+    
+    //! @brief   Indicates if prepare() needs to be called prior to computing samples
+    bool isDirty;
     
 public:
     

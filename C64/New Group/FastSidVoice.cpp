@@ -112,18 +112,16 @@ Voice::init(sound_s *psid, unsigned voiceNr)
     vt.filtLow = 0;
     vt.filtRef = 0;
     vt.filtIO = 0;
-    vt.update = 1;
+    isDirty = true;
 }
 
 void
 Voice::prepare()
 {
+    if (!isDirty) return;
+
     uint8_t chipModel = vt.s->newsid;
     assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);
-    
-    if (!vt.update) {
-        return;
-    }
     
     // vt.sync = sidreg[4] & 0x02 ? 1 : 0;
     vt.fs = vt.s->speed1 * frequency();
@@ -225,7 +223,8 @@ Voice::prepare()
             }
             break;
     }
-    vt.update = 0;
+    
+    isDirty = false;
     vt.gateflip = 0;
 }
 
