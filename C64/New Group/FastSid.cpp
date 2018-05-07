@@ -55,11 +55,6 @@ static signed char ampMod1x8[256];
 
 
 
-
-
-
-
-
 /* manage temporary buffers. if the requested size is smaller or equal to the
  * size of the already allocated buffer, reuse it.  */
 int16_t *buf = NULL;
