@@ -399,7 +399,6 @@ FastSID::prepare()
 int16_t
 FastSID::fastsid_calculate_single_sample()
 {
-    uint32_t o0, o1, o2;
     uint32_t osc0, osc1, osc2;
     Voice *v0 = &st.v[0];
     Voice *v1 = &st.v[1];
@@ -447,9 +446,6 @@ FastSID::fastsid_calculate_single_sample()
     }
     
     // Oscillators
-    o0 = v0->vt.adsr >> 16;
-    o1 = v1->vt.adsr >> 16;
-    o2 = v2->vt.adsr >> 16;
     osc0 = (v0->vt.adsr >> 16) * v0->doosc();
     osc1 = (v1->vt.adsr >> 16) * v1->doosc();
     osc2 = (v2->vt.adsr >> 16) * v2->doosc();
@@ -461,19 +457,19 @@ FastSID::fastsid_calculate_single_sample()
     
     // Sample
     if (emulateFilter) {
-        v0->vt.filtIO = ampMod1x8[(o0 >> 22)];
+        v0->vt.filtIO = ampMod1x8[(osc0 >> 22)];
         v0->applyFilter();
-        o0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
+        osc0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
         
-        v1->vt.filtIO = ampMod1x8[(o1 >> 22)];
+        v1->vt.filtIO = ampMod1x8[(osc1 >> 22)];
         v1->applyFilter();
-        o1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
+        osc1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
         
-        v2->vt.filtIO = ampMod1x8[(o2 >> 22)];
+        v2->vt.filtIO = ampMod1x8[(osc2 >> 22)];
         v2->applyFilter();
-        o2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
+        osc2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
     }
     
     int32_t volume = st.d[0x18] & 0x0F;
-    return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * volume);
+    return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * volume);
 }
