@@ -20,7 +20,7 @@
 #define _OLDSID_INC
 
 #include "VirtualComponent.h"
-#include "fastsid/FastSid.h"
+#include "FastSid.h"
 #include "SIDbase.h"
 #include "resid/sid.h"
 

@@ -706,7 +706,6 @@
 				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
 				504DDB5320A0431E00FFD5B2 /* waves.h */,
 				502747FC20A049BB00D505B7 /* FastSid.cpp */,
-				504DDB4F20A0431E00FFD5B2 /* fastsid */,
 				50D141641417A34B0024FC74 /* resid */,
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50D43B5B1EE5701A009D163C /* C64_types.h */,
@@ -902,13 +901,6 @@
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
 			);
 			name = Peripherals;
-			sourceTree = "<group>";
-		};
-		504DDB4F20A0431E00FFD5B2 /* fastsid */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = fastsid;
 			sourceTree = "<group>";
 		};
 		5051A1501B8842F100CBFB5A /* Sounds */ = {
