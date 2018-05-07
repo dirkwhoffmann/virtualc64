@@ -1034,8 +1034,8 @@
 				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
 				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
 				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
-				504DDB5320A0431E00FFD5B2 /* waves.h */,
 				502747FC20A049BB00D505B7 /* FastSid.cpp */,
+				504DDB5320A0431E00FFD5B2 /* waves.h */,
 			);
 			name = fastsid;
 			path = "New Group";

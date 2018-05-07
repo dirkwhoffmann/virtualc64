@@ -31,7 +31,7 @@
 
 #include "VirtualComponent.h"
 
-// ADSR state
+// ADSR state (Attack, Decay, Sustain, Release)
 #define FASTSID_ATTACK   0
 #define FASTSID_DECAY    1
 #define FASTSID_SUSTAIN  2
@@ -156,6 +156,9 @@ public:
     /*! @details  This static method needs to be called before using the class.
      */
     static void initWaveTables();
+
+    //! @brief    Initialize
+    void init(sound_s *psid, unsigned voiceNr);
 
     //! @brief    Update internal parameters
     void setup(unsigned chipModel);

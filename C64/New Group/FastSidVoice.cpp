@@ -103,6 +103,19 @@ Voice::doosc()
 }
 
 void
+Voice::init(sound_s *psid, unsigned voiceNr)
+{
+    nr = voiceNr;
+    vt.d = psid->d + (voiceNr * 7);
+    vt.s = psid;
+    vt.rv = NSEED;
+    vt.filtLow = 0;
+    vt.filtRef = 0;
+    vt.filtIO = 0;
+    vt.update = 1;
+}
+
+void
 Voice::setup(unsigned chipModel)
 {
     assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);

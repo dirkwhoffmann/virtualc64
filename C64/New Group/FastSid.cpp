@@ -36,11 +36,7 @@
 
 #include "FastSid.h"
 
-// Table for internal ADSR counter step calculations
-static uint16_t adrtable[16] =
-{
-    1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
-};
+
 
 
 
@@ -379,6 +375,11 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     uint32_t i;
     int sid_model;
 
+    // Table for internal ADSR counter step calculations
+    uint16_t adrtable[16] = {
+        1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
+    };
+    
     psid->factor = factor;
 
     psid->speed1 = (cycles_per_sec << 8) / speed;
@@ -396,15 +397,10 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     
     init_filter(psid, speed);
     setup_sid(psid);
+    
+    // Voices
     for (i = 0; i < 3; i++) {
-        psid->v[i].nr = i;
-        psid->v[i].vt.d = psid->d + i * 7;
-        psid->v[i].vt.s = psid;
-        psid->v[i].vt.rv = NSEED;
-        psid->v[i].vt.filtLow = 0;
-        psid->v[i].vt.filtRef = 0;
-        psid->v[i].vt.filtIO = 0;
-        psid->v[i].vt.update = 1;
+        psid->v[i].init(psid, i);
         psid->v[i].setup(psid->newsid);
     }
 
