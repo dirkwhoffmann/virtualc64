@@ -62,6 +62,7 @@
 		50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DE91A7E1CFE00C04290 /* LEDnewRed.png */; };
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
+		502747FD20A049BB00D505B7 /* FastSid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502747FC20A049BB00D505B7 /* FastSid.cpp */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
 		502C3606209F238800DE8B6D /* SIDbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502C3604209F238800DE8B6D /* SIDbase.cpp */; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
@@ -368,6 +369,7 @@
 		50271DE91A7E1CFE00C04290 /* LEDnewRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewRed.png; sourceTree = "<group>"; };
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
+		502747FC20A049BB00D505B7 /* FastSid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSid.cpp; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
 		502C3604209F238800DE8B6D /* SIDbase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDbase.cpp; sourceTree = "<group>"; };
 		502C3605209F238800DE8B6D /* SIDbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDbase.h; sourceTree = "<group>"; };
@@ -904,6 +906,7 @@
 				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
 				504DDB5420A0431E00FFD5B2 /* FastSid.h */,
 				504DDB5320A0431E00FFD5B2 /* waves.h */,
+				502747FC20A049BB00D505B7 /* FastSid.cpp */,
 			);
 			path = fastsid;
 			sourceTree = "<group>";
@@ -1465,6 +1468,7 @@
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
+				502747FD20A049BB00D505B7 /* FastSid.cpp in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
