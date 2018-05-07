@@ -379,7 +379,6 @@ static void init_filter(sound_t *psid, int freq)
     }
 }
 
-
 int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
 {
     uint32_t i;

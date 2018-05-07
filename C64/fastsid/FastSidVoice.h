@@ -53,8 +53,8 @@
 typedef struct voice_s {
     
     struct sound_s      *s;
-    struct voice_s      *vprev;
-    struct voice_s      *vnext;
+    // struct voice_s      *vprev;
+    // struct voice_s      *vnext;
     int nr;
     
     /* counter value */
@@ -142,13 +142,7 @@ private:
     static uint8_t noiseMSB[256];
     static uint8_t noiseMID[256];
     static uint8_t noiseLSB[256];
-    
-    //! @brief  Pointer to next voice (1 -> 2 -> 3 -> 1)
-    Voice *next;
-    
-    //! @brief  Pointer to previous voice (1 -> 3 -> 2 -> 1)
-    Voice *prev;
-    
+        
 public:
     
     // Voice data (move inside class later)

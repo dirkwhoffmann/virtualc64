@@ -17,7 +17,7 @@
  */
 
 #include "C64.h"
-#include "FastSid.h"
+#include "fastsid/FastSid.h"
 
 OldSID::OldSID()
 {
