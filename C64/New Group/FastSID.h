@@ -43,11 +43,9 @@ struct sound_s {
     /* SID registers */
     uint8_t d[32];
     
-    /* is voice 3 enabled? */
-    uint8_t has3;
-    
     /* ADSR counter step values for each adsr values */
     int32_t adrs[16];
+    
     /* sustain values compared to 31-bit ADSR counter */
     uint32_t sz[16];
     
@@ -61,8 +59,9 @@ struct sound_s {
     uint8_t laststore;
     uint8_t laststorebit;
     uint64_t laststoreclk;
+    
     /* do we want to use filters? */
-    int emulatefilter;
+    // int emulatefilter;
     
     /* filter variables */
     float filterDy;
@@ -79,7 +78,7 @@ typedef struct sound_s sound_t;
 /*! SID is the sound chip of the Commodore 64.
 	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
 */
-class OldSID : public SIDbase {
+class FastSID : public SIDbase {
 
 private:
     
@@ -97,10 +96,10 @@ private:
 public:
     
 	//! Constructor.
-	OldSID();
+	FastSID();
 	
 	//! Destructor.
-	~OldSID();
+	~FastSID();
 	
     //! Bring the SID chip back to it's initial state.
     void reset();
@@ -128,12 +127,6 @@ public:
     
     
     // Configuring
-    
-    //! Returns true iff audio filters are enabled.
-    bool getAudioFilter() { return st.emulatefilter; }
-    
-    //! Enable or disable reSIDs audio filtering capability
-    void setAudioFilter(bool enable) { st.emulatefilter = enable; }
     
     //! Return samplerate.
     uint32_t getSampleRate() { return 0; } // TODO
@@ -166,6 +159,16 @@ private:
     
     int init(int sampleRate, int cycles_per_sec);
     void init_filter(int sampleRate);
+    
+    //! @brief    Returns true iff filtering is enabled for the specified voice
+    bool filterEnabled(unsigned voice) { return GET_BIT(st.d[0x17], voice) != 0; }
+    
+    //! @brief    Returns true iff voice 3 is disconnected from the audio output
+    /*! @details  Setting voice 3 to bypass the filter (FILT3 = 0) and setting
+     *            bit 7 in the Mod/Vol register to one prevents voice 3 from
+     *            reaching the audio output.
+     */
+    bool voiceThreeDisconnected() { return !filterEnabled(2) && (st.d[0x18] & 0x80); }
     
     //! @brief    Prepares FastSID for computing samples
     void prepare();

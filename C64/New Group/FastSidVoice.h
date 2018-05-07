@@ -109,7 +109,7 @@ typedef struct voice_s {
 
 class Voice : public VirtualComponent {
     
-    friend class OldSID;
+    friend class FastSID;
     
 private:
     

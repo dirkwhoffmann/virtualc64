@@ -22,7 +22,7 @@ SIDWrapper::SIDWrapper()
 {
 	setDescription("SIDWrapper");
     
-    oldsid = new OldSID();
+    oldsid = new FastSID();
     resid = new ReSID();
     
     // Register sub components

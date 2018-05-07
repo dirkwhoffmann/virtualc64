@@ -30,7 +30,7 @@
 
 #include "C64.h"
 
-OldSID::OldSID()
+FastSID::FastSID()
 {
 	setDescription("SID");
 	debug(3, "  Creating FastSID at address %p...\n", this);
@@ -57,42 +57,42 @@ OldSID::OldSID()
     targetVolume = 100000;
 }
 
-OldSID::~OldSID()
+FastSID::~FastSID()
 {
 
 }
 
 //! Bring the SID chip back to it's initial state.
 void
-OldSID::reset()
+FastSID::reset()
 {
     
 }
 
 //! Load state
 void
-OldSID::loadFromBuffer(uint8_t **buffer)
+FastSID::loadFromBuffer(uint8_t **buffer)
 {
     
 }
 
 //! Save state
 void
-OldSID::saveToBuffer(uint8_t **buffer)
+FastSID::saveToBuffer(uint8_t **buffer)
 {
     
 }
 
 //! Dump internal state to console
 void
-OldSID::dumpState()
+FastSID::dumpState()
 {
     
 }
 
 //! Special peek function for the I/O memory range.
 uint8_t
-OldSID::peek(uint16_t addr)
+FastSID::peek(uint16_t addr)
 {
     switch (addr) {
             
@@ -139,7 +139,7 @@ OldSID::peek(uint16_t addr)
 
 //! Special poke function for the I/O memory range.
 void
-OldSID::poke(uint16_t addr, uint8_t value)
+FastSID::poke(uint16_t addr, uint8_t value)
 {
     switch (addr) {
  
@@ -195,7 +195,7 @@ OldSID::poke(uint16_t addr, uint8_t value)
  *           the generated sound samples into the internal ring buffer.
  */
 void
-OldSID::execute(uint64_t cycles)
+FastSID::execute(uint64_t cycles)
 {
     int16_t buf[2049];
     int buflength = 2048;
@@ -221,7 +221,7 @@ OldSID::execute(uint64_t cycles)
 }
 
 int
-OldSID::init(int sampleRate, int cycles_per_sec)
+FastSID::init(int sampleRate, int cycles_per_sec)
 {
     uint32_t i;
     int sid_model;
@@ -285,7 +285,7 @@ OldSID::init(int sampleRate, int cycles_per_sec)
 }
 
 void
-OldSID::init_filter(int sampleRate)
+FastSID::init_filter(int sampleRate)
 {
     uint16_t uk;
     float rk;
@@ -343,13 +343,7 @@ OldSID::init_filter(int sampleRate)
     
     filterResTable[0] = resDyMin;
     filterResTable[15] = resDyMax;
-    
-    /* XXX: if psid->emulatefilter = 0, ampMod1x8 is never referenced */
-    if (st.emulatefilter) {
-        filterAmpl = (float)0.7;
-    } else {
-        filterAmpl = (float)1.0;
-    }
+    filterAmpl = emulateFilter ? 0.7 : 1.0;
     
     for (uk = 0, si = 0; si < 256; si++, uk++) {
         ampMod1x8[uk] = (signed char)((si - 0x80) * filterAmpl);
@@ -357,13 +351,12 @@ OldSID::init_filter(int sampleRate)
 }
 
 void
-OldSID::prepare()
+FastSID::prepare()
 {
     if (!isDirty) return;
     
-    st.has3 = ((st.d[0x18] & 0x80) && !(st.d[0x17] & 0x04)) ? 0 : 1;
-    
-    if (st.emulatefilter) {
+    if (emulateFilter) {
+        
         st.v[0].vt.filter = st.d[0x17] & 0x01 ? 1 : 0;
         st.v[1].vt.filter = st.d[0x17] & 0x02 ? 1 : 0;
         st.v[2].vt.filter = st.d[0x17] & 0x04 ? 1 : 0;
@@ -388,7 +381,9 @@ OldSID::prepare()
         if (st.filterResDy < 1.0) {
             st.filterResDy = 1.0;
         }
+        
     } else {
+        
         st.v[0].vt.filter = 0;
         st.v[1].vt.filter = 0;
         st.v[2].vt.filter = 0;
@@ -398,7 +393,7 @@ OldSID::prepare()
 }
 
 int16_t
-OldSID::fastsid_calculate_single_sample()
+FastSID::fastsid_calculate_single_sample()
 {
     uint32_t o0, o1, o2;
     uint32_t osc0, osc1, osc2;
@@ -453,10 +448,15 @@ OldSID::fastsid_calculate_single_sample()
     o2 = v2->vt.adsr >> 16;
     osc0 = (v0->vt.adsr >> 16) * v0->doosc();
     osc1 = (v1->vt.adsr >> 16) * v1->doosc();
-    osc2 = st.has3 ? ((v2->vt.adsr >> 16) * v2->doosc()) : 0;
+    osc2 = (v2->vt.adsr >> 16) * v2->doosc();
+    
+    // Silence voice 3 if it is disconnected from the output
+    if (voiceThreeDisconnected()) {
+        osc2 = 0;
+    }
     
     // Sample
-    if (st.emulatefilter) {
+    if (emulateFilter) {
         v0->vt.filtIO = ampMod1x8[(o0 >> 22)];
         v0->applyFilter();
         o0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);

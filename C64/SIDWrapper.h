@@ -40,7 +40,7 @@ public:
 private:
 
     //! @brief    Old SID implementation
-    OldSID *oldsid;
+    FastSID *oldsid;
 
 public:
     //! @brief    Implementation based on the ReSID library

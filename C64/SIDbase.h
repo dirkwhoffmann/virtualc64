@@ -36,6 +36,11 @@ public:
      */
     reSID::chip_model chipModel;
     
+    /*! @brief   Switches filter emulation on or off.
+     *  @details Switching off filter emulation slightly improves emulation speed.
+     */
+    bool emulateFilter;
+    
     /*! @brief   Sample rate
      *  @details By default, a sample rate of 44.1 kHz is used.
      */
@@ -128,11 +133,11 @@ public:
     // Configuring the device
     //
     
-    //! Returns true iff audio filters are enabled.
-    virtual bool getAudioFilter() = 0;
+    //! Returns true iff audio filters should be emulated.
+    virtual bool getAudioFilter() { return emulateFilter; }
     
-    //! Enable or disable reSIDs audio filtering capability
-    virtual void setAudioFilter(bool enable) = 0;
+    //! Enable or disable audio filter emulation
+    virtual void setAudioFilter(bool value) { emulateFilter = value; }
     
     //! Return samplerate.
     virtual uint32_t getSampleRate() = 0;
