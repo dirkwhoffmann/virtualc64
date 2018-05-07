@@ -55,9 +55,6 @@ typedef struct voice_s {
     // TODO: REPLACE BY REFERENCE TO FastSID class
     struct sound_s *s;
     
-    //! @brief   Voice number (1,2,3)
-    uint8_t nr;
-    
     /* counter value */
     uint32_t f;
     
@@ -142,6 +139,9 @@ private:
     static uint8_t noiseLSB[256];
     
 public:
+    
+    //! @brief   The SID voice which is represented by this object (1,2, or 3)
+    uint8_t nr;
     
     //! @brief   Do we have noise enabled?
     bool noise;

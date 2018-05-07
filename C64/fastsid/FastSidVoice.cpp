@@ -91,7 +91,7 @@ uint32_t
 Voice::doosc()
 {
     uint32_t result;
-    Voice *prevVoice = &vt.s->v[(vt.nr + 2) % 3];
+    Voice *prevVoice = &vt.s->v[(nr + 2) % 3];
     
     if (noise) {
         result = ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
