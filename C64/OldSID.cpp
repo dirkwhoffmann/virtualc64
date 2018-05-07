@@ -27,7 +27,7 @@ OldSID::OldSID()
     // Initialize wave and noise tables
     Voice::initWaveTables();
     
-    fastsid_init(&st, 44100, PAL_CYCLES_PER_SECOND, 1000);
+    fastsid_init(&st, 44100, PAL_CYCLES_PER_SECOND);
     
     
     // Set default values
@@ -108,19 +108,28 @@ OldSID::execute(uint64_t cycles)
     // How many samples do we need?
     // For now, we assume a sample rate of 44100
     int numSamples = (int)(cycles * 44100 / PAL_CYCLES_PER_SECOND);
+    
     if (numSamples > buflength) {
         debug("Number of samples exceeds buffer size\n");
         numSamples = buflength;
     }
-    // Let FastSID compute
-    st.factor = 1000; // ??? CORRECT?
-    int computed = fastsid_calculate_samples(&st, buf, numSamples, 1, NULL);
-    assert(computed == numSamples);
+    
+    // Compute samples
+    for (unsigned i = 0; i < numSamples; i++) {
+        buf[i] = fastsid_calculate_single_sample(&st, i);
+    }
     
     // Write samples into ringbuffer
-    if (computed) {
-        writeData(buf, computed);
-    }
+    writeData(buf, numSamples);
 }
 
+/*
+void
+OldSID::fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, unsigned num, unsigned interleave)
+{
+    for (unsigned i = 0; i < num; i++) {
+        pbuf[i * interleave] = fastsid_calculate_single_sample(psid, i);
+    }
+}
+*/
 

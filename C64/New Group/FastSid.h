@@ -35,8 +35,6 @@
 
 /* needed data for SID */
 struct sound_s {
-    /* speed factor */
-    int factor;
     
     /* number of voices */
     Voice v[3];
@@ -79,11 +77,9 @@ struct sound_s {
 
 typedef struct sound_s sound_t;
 
-int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor);
+int fastsid_init(sound_t *psid, int speed, int cycles_per_sec);
 uint8_t fastsid_read(sound_t *psid, uint16_t addr);
 void fastsid_store(sound_t *psid, uint16_t addr, uint8_t byte);
-int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
-                              int interleave, int *delta_t);
 
 
 #endif

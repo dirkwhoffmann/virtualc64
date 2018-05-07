@@ -102,6 +102,14 @@ public:
     
     //! Set clock frequency
     void setClockFrequency(uint32_t f) { };
+    
+private:
+    
+    /*
+    void fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, unsigned num, unsigned interleave);
+     */
 };
+
+extern int16_t fastsid_calculate_single_sample(sound_t *psid, int i);
 
 #endif

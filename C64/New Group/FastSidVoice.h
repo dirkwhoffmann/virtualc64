@@ -63,20 +63,25 @@ typedef struct voice_s {
     
     /* waveform that we use */
     uint8_t fm;
+    
     /* pulse threshold compared to the 32-bit counter */
     uint32_t pw;
     
     /* 31-bit adsr counter */
     uint32_t adsr;
+    
     /* adsr counter step / sample */
     int32_t adsrs;
+    
     /* adsr sustain level compared to the 31-bit counter */
     uint32_t adsrz;
     
     /* does this voice use hard sync? */
     uint8_t sync;
+    
     /* does this voice use filter? */
     uint8_t filter;
+    
     /* does this structure need updating before next sample? */
     uint8_t update;
     /* did we do multiple gate flips after last calculated sample? */
@@ -93,8 +98,6 @@ typedef struct voice_s {
     /* 4-bit release value */
     uint8_t release;
     
-    /* pointer to registers of this voice */
-    uint8_t *d;
     
     /* noise shift register. Note! rv may be 0 to 15 shifts 'behind' the
      real noise shift register value. Remaining shifts are done when
@@ -142,6 +145,9 @@ public:
     
     //! @brief   The SID voice which is represented by this object (1,2, or 3)
     uint8_t nr;
+    
+    //! @brief   Pointer to SID registers controlling this voice
+    uint8_t *sidreg;
     
     //! @brief   Do we have noise enabled?
     bool noise;

@@ -188,7 +188,7 @@ inline static void setup_sid(sound_t *psid)
 
 
 
-static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
+int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
 {
     uint32_t o0, o1, o2;
     int dosync1, dosync2;
@@ -281,26 +281,6 @@ static int16_t fastsid_calculate_single_sample(sound_t *psid, int i)
     return (int16_t)(((int32_t)((o0 + o1 + o2) >> 20) - 0x600) * psid->vol);
 }
 
-int fastsid_calculate_samples(sound_t *psid, int16_t *pbuf, int nr,
-                                     int interleave, int *delta_t)
-{
-    int i;
-    int16_t *tmp_buf;
-
-    if (psid->factor == 1000) {
-        for (i = 0; i < nr; i++) {
-            pbuf[i * interleave] = fastsid_calculate_single_sample(psid, i);
-        }
-        return nr;
-    }
-    tmp_buf = getbuf(2 * nr * psid->factor / 1000);
-    for (i = 0; i < (nr * psid->factor / 1000); i++) {
-        tmp_buf[i * interleave] = fastsid_calculate_single_sample(psid, i);
-    }
-    memcpy(pbuf, tmp_buf, 2 * nr);
-    return nr;
-}
-
 static void init_filter(sound_t *psid, int freq)
 {
     uint16_t uk;
@@ -370,7 +350,7 @@ static void init_filter(sound_t *psid, int freq)
     }
 }
 
-int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
+int fastsid_init(sound_t *psid, int speed, int cycles_per_sec)
 {
     uint32_t i;
     int sid_model;
@@ -380,8 +360,6 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
         1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
     };
     
-    psid->factor = factor;
-
     psid->speed1 = (cycles_per_sec << 8) / speed;
     for (i = 0; i < 16; i++) {
         psid->adrs[i] = 500 * 8 * psid->speed1 / adrtable[i];
@@ -398,12 +376,6 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     init_filter(psid, speed);
     setup_sid(psid);
     
-    // Voices
-    for (i = 0; i < 3; i++) {
-        psid->v[i].init(psid, i);
-        psid->v[i].setup(psid->newsid);
-    }
-
     /*
     if (resources_get_int("SidModel", &sid_model) < 0) {
         return 0;
@@ -411,6 +383,13 @@ int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor)
     */
     sid_model = 0;
     psid->newsid = 0;
+    
+    // Voices
+    for (i = 0; i < 3; i++) {
+        psid->v[i].init(psid, i);
+        psid->v[i].setup(psid->newsid);
+    }
+    
     switch (sid_model) {
         default:
         case 0: /* 6581 */

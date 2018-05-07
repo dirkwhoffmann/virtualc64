@@ -106,7 +106,7 @@ void
 Voice::init(sound_s *psid, unsigned voiceNr)
 {
     nr = voiceNr;
-    vt.d = psid->d + (voiceNr * 7);
+    sidreg = psid->d + (voiceNr * 7);
     vt.s = psid;
     vt.rv = NSEED;
     vt.filtLow = 0;
@@ -124,14 +124,14 @@ Voice::setup(unsigned chipModel)
         return;
     }
     
-    vt.attack = vt.d[5] / 0x10;
-    vt.decay = vt.d[5] & 0x0f;
-    vt.sustain = vt.d[6] / 0x10;
-    vt.release = vt.d[6] & 0x0f;
-    vt.sync = vt.d[4] & 0x02 ? 1 : 0;
-    vt.fs = vt.s->speed1 * (vt.d[0] + vt.d[1] * 0x100);
+    vt.attack = sidreg[5] / 0x10;
+    vt.decay = sidreg[5] & 0x0f;
+    vt.sustain = sidreg[6] / 0x10;
+    vt.release = sidreg[6] & 0x0f;
+    vt.sync = sidreg[4] & 0x02 ? 1 : 0;
+    vt.fs = vt.s->speed1 * (sidreg[0] + sidreg[1] * 0x100);
     
-    if (vt.d[4] & 0x08) {
+    if (sidreg[4] & 0x08) {
         vt.f = vt.fs = 0;
         vt.rv = NSEED;
     }
@@ -140,14 +140,14 @@ Voice::setup(unsigned chipModel)
     vt.wtpf = 0;
     vt.wtr[1] = 0;
     
-    switch ((vt.d[4] & 0xf0) >> 4) {
+    switch ((sidreg[4] & 0xf0) >> 4) {
         case 0:
             vt.wt = wavetable00[chipModel];
             vt.wtl = 31;
             break;
         case 1:
             vt.wt = wavetable10[chipModel];
-            if (vt.d[4] & 0x04) {
+            if (sidreg[4] & 0x04) {
                 vt.wtr[1] = 0x7fff;
             }
             break;
@@ -156,36 +156,36 @@ Voice::setup(unsigned chipModel)
             break;
         case 3:
             vt.wt = wavetable30[chipModel];
-            if (vt.d[4] & 0x04) {
+            if (sidreg[4] & 0x04) {
                 vt.wtr[1] = 0x7fff;
             }
             break;
         case 4:
-            if (vt.d[4] & 0x08) {
+            if (sidreg[4] & 0x08) {
                 vt.wt = &wavetable40[chipModel][4096];
             } else {
-                vt.wt = &wavetable40[chipModel][4096 - (vt.d[2]
-                                             + (vt.d[3] & 0x0f) * 0x100)];
+                vt.wt = &wavetable40[chipModel][4096 - (sidreg[2]
+                                             + (sidreg[3] & 0x0f) * 0x100)];
             }
             break;
         case 5:
-            vt.wt = &wavetable50[chipModel][vt.wtpf = 4096 - (vt.d[2]
-                                                   + (vt.d[3] & 0x0f) * 0x100)];
+            vt.wt = &wavetable50[chipModel][vt.wtpf = 4096 - (sidreg[2]
+                                                   + (sidreg[3] & 0x0f) * 0x100)];
             vt.wtpf <<= 20;
-            if (vt.d[4] & 0x04) {
+            if (sidreg[4] & 0x04) {
                 vt.wtr[1] = 0x7fff;
             }
             break;
         case 6:
-            vt.wt = &wavetable60[chipModel][vt.wtpf = 4096 - (vt.d[2]
-                                                   + (vt.d[3] & 0x0f) * 0x100)];
+            vt.wt = &wavetable60[chipModel][vt.wtpf = 4096 - (sidreg[2]
+                                                   + (sidreg[3] & 0x0f) * 0x100)];
             vt.wtpf <<= 20;
             break;
         case 7:
-            vt.wt = &wavetable70[chipModel][vt.wtpf = 4096 - (vt.d[2]
-                                                   + (vt.d[3] & 0x0f) * 0x100)];
+            vt.wt = &wavetable70[chipModel][vt.wtpf = 4096 - (sidreg[2]
+                                                   + (sidreg[3] & 0x0f) * 0x100)];
             vt.wtpf <<= 20;
-            if (vt.d[4] & 0x04 && vt.s->newsid) {
+            if (sidreg[4] & 0x04 && vt.s->newsid) {
                 vt.wtr[1] = 0x7fff;
             }
             break;
@@ -205,7 +205,7 @@ Voice::setup(unsigned chipModel)
         case FASTSID_ATTACK:
         case FASTSID_DECAY:
         case FASTSID_SUSTAIN:
-            if (vt.d[4] & 0x01) {
+            if (sidreg[4] & 0x01) {
                 set_adsr((uint8_t)(vt.gateflip ? FASTSID_ATTACK : vt.adsrm));
             } else {
                 set_adsr(FASTSID_RELEASE);
@@ -213,7 +213,7 @@ Voice::setup(unsigned chipModel)
             break;
         case FASTSID_RELEASE:
         case FASTSID_IDLE:
-            if (vt.d[4] & 0x01) {
+            if (sidreg[4] & 0x01) {
                 set_adsr(FASTSID_ATTACK);
             } else {
                 set_adsr(vt.adsrm);
