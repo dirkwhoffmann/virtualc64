@@ -39,7 +39,7 @@
 		50169F09209E045A00CB3536 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF9209E045700CB3536 /* version.cc */; };
 		50169F0A209E045A00CB3536 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EFE209E045800CB3536 /* dac.cc */; };
 		50169F0B209E045A00CB3536 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169F00209E045800CB3536 /* extfilt.cc */; };
-		50169F10209E0B1900CB3536 /* fastsid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50169F0E209E0B1900CB3536 /* fastsid.cpp */; };
+		50169F10209E0B1900CB3536 /* FastSid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50169F0E209E0B1900CB3536 /* FastSid.cpp */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -199,6 +199,7 @@
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
 		50DB328B1B948489000FB839 /* kext.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB328A1B948489000FB839 /* kext.png */; };
 		50DBB44B2025CE5700489271 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Basics.swift */; };
+		50DD48DB20A02A280003B8BE /* FastSidVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DD48D920A02A280003B8BE /* FastSidVoice.cpp */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
@@ -326,8 +327,8 @@
 		50169F01209E045900CB3536 /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
 		50169F02209E045900CB3536 /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581__ST.h; sourceTree = "<group>"; };
 		50169F0C209E055B00CB3536 /* siddefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
-		50169F0E209E0B1900CB3536 /* fastsid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fastsid.cpp; sourceTree = "<group>"; };
-		50169F0F209E0B1900CB3536 /* fastsid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastsid.h; sourceTree = "<group>"; };
+		50169F0E209E0B1900CB3536 /* FastSid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSid.cpp; sourceTree = "<group>"; };
+		50169F0F209E0B1900CB3536 /* FastSid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSid.h; sourceTree = "<group>"; };
 		50169F14209E0F2100CB3536 /* waves.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
 		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
@@ -535,6 +536,8 @@
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
 		50DB328A1B948489000FB839 /* kext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kext.png; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
+		50DD48D920A02A280003B8BE /* FastSidVoice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FastSidVoice.cpp; sourceTree = "<group>"; };
+		50DD48DA20A02A280003B8BE /* FastSidVoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastSidVoice.h; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
@@ -842,8 +845,10 @@
 		50169F0D209E0AF200CB3536 /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
-				50169F0F209E0B1900CB3536 /* fastsid.h */,
-				50169F0E209E0B1900CB3536 /* fastsid.cpp */,
+				50169F0F209E0B1900CB3536 /* FastSid.h */,
+				50169F0E209E0B1900CB3536 /* FastSid.cpp */,
+				50DD48DA20A02A280003B8BE /* FastSidVoice.h */,
+				50DD48D920A02A280003B8BE /* FastSidVoice.cpp */,
 				50169F14209E0F2100CB3536 /* waves.h */,
 			);
 			path = fastsid;
@@ -1385,6 +1390,7 @@
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
+				50DD48DB20A02A280003B8BE /* FastSidVoice.cpp in Sources */,
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
@@ -1428,7 +1434,7 @@
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
-				50169F10209E0B1900CB3536 /* fastsid.cpp in Sources */,
+				50169F10209E0B1900CB3536 /* FastSid.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
