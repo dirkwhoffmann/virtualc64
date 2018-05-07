@@ -46,7 +46,6 @@ uint32_t sidreadclocks[9];
 float lowPassParam[0x800];
 float bandPassParam[0x800];
 float filterResTable[16];
-const float filterRefFreq = 44100.0;
 signed char ampMod1x8[256];
 
 
@@ -63,74 +62,6 @@ int blen = 0;
 
 
 
-void init_filter(sound_t *psid, int freq)
-{
-    uint16_t uk;
-    float rk;
-    long int si;
-
-    float yMax = 1.0;
-    float yMin = (float)0.01;
-    float resDyMax = 1.0;
-    float resDyMin = 2.0;
-    float resDy = resDyMin;
-
-    float yAdd, yTmp;
-
-    float filterFs = 400.0;
-    float filterFm = 60.0;
-    float filterFt = (float)0.05;
-
-    float filterAmpl = 1.0;
-
-    psid->filterValue = 0;
-    psid->filterType = 0;
-    psid->filterCurType = 0;
-    psid->filterDy = 0;
-    psid->filterResDy = 0;
-
-    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        float h;
-
-        h = (float)((((exp(rk / 2048 * log(filterFs)) / filterFm) + filterFt) * filterRefFreq) / freq);
-        if (h < yMin) {
-            h = yMin;
-        }
-        if (h > yMax) {
-            h = yMax;
-        }
-        lowPassParam[uk] = h;
-    }
-
-    yMax = (float)0.22;
-    yMin = (float)0.002;
-    yAdd = (float)((yMax - yMin) / 2048.0);
-    yTmp = yMin;
-
-    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        bandPassParam[uk] = (yTmp * filterRefFreq) / freq;
-        yTmp += yAdd;
-    }
-
-    for (uk = 0; uk < 16; uk++) {
-        filterResTable[uk] = resDy;
-        resDy -= ((resDyMin - resDyMax ) / 15);
-    }
-
-    filterResTable[0] = resDyMin;
-    filterResTable[15] = resDyMax;
-
-    /* XXX: if psid->emulatefilter = 0, ampMod1x8 is never referenced */
-    if (psid->emulatefilter) {
-        filterAmpl = (float)0.7;
-    } else {
-        filterAmpl = (float)1.0;
-    }
-
-    for (uk = 0, si = 0; si < 256; si++, uk++) {
-        ampMod1x8[uk] = (signed char)((si - 0x80) * filterAmpl);
-    }
-}
 
 
 uint8_t fastsid_read(sound_t *psid, uint16_t addr)

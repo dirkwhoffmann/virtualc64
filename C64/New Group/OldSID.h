@@ -105,7 +105,8 @@ public:
     
 private:
     
-    int init(int speed, int cycles_per_sec);
+    int init(int sampleRate, int cycles_per_sec);
+    void init_filter(int sampleRate);
     
     //! @brief    Prepares FastSID for computing samples
     void prepare();

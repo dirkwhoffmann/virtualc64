@@ -124,7 +124,7 @@ OldSID::execute(uint64_t cycles)
 }
 
 int
-OldSID::init(int speed, int cycles_per_sec)
+OldSID::init(int sampleRate, int cycles_per_sec)
 {
     uint32_t i;
     int sid_model;
@@ -134,7 +134,7 @@ OldSID::init(int speed, int cycles_per_sec)
         1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
     };
     
-    st.speed1 = (cycles_per_sec << 8) / speed;
+    st.speed1 = (cycles_per_sec << 8) / sampleRate;
     for (i = 0; i < 16; i++) {
         st.adrs[i] = 500 * 8 * st.speed1 / adrtable[i];
         st.sz[i] = 0x8888888 * i;
@@ -147,7 +147,7 @@ OldSID::init(int speed, int cycles_per_sec)
      }
      */
     
-    init_filter(&st, speed);
+    init_filter(sampleRate);
     prepare();
     
     /*
@@ -182,6 +182,78 @@ OldSID::init(int speed, int cycles_per_sec)
     }
     
     return 1;
+}
+
+void
+OldSID::init_filter(int sampleRate)
+{
+    uint16_t uk;
+    float rk;
+    long int si;
+    
+    const float filterRefFreq = 44100.0;
+    
+    float yMax = 1.0;
+    float yMin = (float)0.01;
+    float resDyMax = 1.0;
+    float resDyMin = 2.0;
+    float resDy = resDyMin;
+    
+    float yAdd, yTmp;
+    
+    float filterFs = 400.0;
+    float filterFm = 60.0;
+    float filterFt = (float)0.05;
+    
+    float filterAmpl = 1.0;
+    
+    st.filterValue = 0;
+    st.filterType = 0;
+    st.filterCurType = 0;
+    st.filterDy = 0;
+    st.filterResDy = 0;
+    
+    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
+        float h;
+        
+        h = (float)((((exp(rk / 2048 * log(filterFs)) / filterFm) + filterFt) * filterRefFreq) / sampleRate);
+        if (h < yMin) {
+            h = yMin;
+        }
+        if (h > yMax) {
+            h = yMax;
+        }
+        lowPassParam[uk] = h;
+    }
+    
+    yMax = (float)0.22;
+    yMin = (float)0.002;
+    yAdd = (float)((yMax - yMin) / 2048.0);
+    yTmp = yMin;
+    
+    for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
+        bandPassParam[uk] = (yTmp * filterRefFreq) / sampleRate;
+        yTmp += yAdd;
+    }
+    
+    for (uk = 0; uk < 16; uk++) {
+        filterResTable[uk] = resDy;
+        resDy -= ((resDyMin - resDyMax ) / 15);
+    }
+    
+    filterResTable[0] = resDyMin;
+    filterResTable[15] = resDyMax;
+    
+    /* XXX: if psid->emulatefilter = 0, ampMod1x8 is never referenced */
+    if (st.emulatefilter) {
+        filterAmpl = (float)0.7;
+    } else {
+        filterAmpl = (float)1.0;
+    }
+    
+    for (uk = 0, si = 0; si < 256; si++, uk++) {
+        ampMod1x8[uk] = (signed char)((si - 0x80) * filterAmpl);
+    }
 }
 
 void
