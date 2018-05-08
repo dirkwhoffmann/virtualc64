@@ -82,9 +82,6 @@ typedef struct voice_s {
     /* adsr sustain level compared to the 31-bit counter */
     uint32_t adsrz;
     
-    /* does this voice use filter? */
-    uint8_t filter;
-    
     /* did we do multiple gate flips after last calculated sample? */
     uint8_t gateflip;
     
@@ -133,7 +130,7 @@ private:
     
     //! @brief   Indicates if prepare() needs to be called prior to computing samples
     bool isDirty;
-    
+        
     //! @brief   Set to true if the oscillator should ring modulate
     bool ringmod;
     

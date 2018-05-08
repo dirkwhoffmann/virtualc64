@@ -323,11 +323,7 @@ Voice::trigger_adsr()
 
 void
 Voice::applyFilter()
-{
-    if (!vt.filter) {
-        return;
-    }
-    
+{    
     if (vt.s->filterType) {
         if (vt.s->filterType == 0x20) {
             vt.filtLow += vt.filtRef * vt.s->filterDy;

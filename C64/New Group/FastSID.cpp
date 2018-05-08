@@ -335,16 +335,8 @@ FastSID::init_filter(int sampleRate)
 void
 FastSID::prepare()
 {
-    if (!isDirty) return;
-    
-    if (emulateFilter) {
-        st.v[0].vt.filter = st.d[0x17] & 0x01 ? 1 : 0;
-        st.v[1].vt.filter = st.d[0x17] & 0x02 ? 1 : 0;
-        st.v[2].vt.filter = st.d[0x17] & 0x04 ? 1 : 0;
-        assert(filterEnabled(0) == ((st.d[0x17] & 0x01) != 0));
-        assert(filterEnabled(1) == ((st.d[0x17] & 0x02) != 0));
-        assert(filterEnabled(2) == ((st.d[0x17] & 0x04) != 0));
-
+    if (isDirty && emulateFilter) {
+        
         st.filterType = st.d[0x18] & 0x70;
         if (st.filterType != st.filterCurType) {
             st.filterCurType = st.filterType;
@@ -366,12 +358,6 @@ FastSID::prepare()
         if (st.filterResDy < 1.0) {
             st.filterResDy = 1.0;
         }
-        
-    } else {
-        
-        st.v[0].vt.filter = 0;
-        st.v[1].vt.filter = 0;
-        st.v[2].vt.filter = 0;
     }
     
     isDirty = false;
@@ -439,15 +425,15 @@ FastSID::fastsid_calculate_single_sample()
     // Sample
     if (emulateFilter) {
         v0->vt.filtIO = ampMod1x8[(osc0 >> 22)];
-        v0->applyFilter();
+        if (filterEnabled(0)) v0->applyFilter();
         osc0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
         
         v1->vt.filtIO = ampMod1x8[(osc1 >> 22)];
-        v1->applyFilter();
+        if (filterEnabled(1)) v1->applyFilter();
         osc1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
         
         v2->vt.filtIO = ampMod1x8[(osc2 >> 22)];
-        v2->applyFilter();
+        if (filterEnabled(2)) v2->applyFilter();
         osc2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
     }
     
