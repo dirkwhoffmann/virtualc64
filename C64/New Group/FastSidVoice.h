@@ -82,9 +82,6 @@ typedef struct voice_s {
     /* adsr sustain level compared to the 31-bit counter */
     uint32_t adsrz;
     
-    /* does this voice use hard sync? */
-    // uint8_t sync;
-    
     /* does this voice use filter? */
     uint8_t filter;
     
@@ -140,8 +137,8 @@ private:
     //! @brief   Set to true if the oscillator should ring modulate
     bool ringmod;
     
-    //! @brief   Pointer to active wavetable
-    uint16_t *wt;
+    //! @brief   Pointer to the active wavetable
+    uint16_t *wavetable;
     
 public:
     
