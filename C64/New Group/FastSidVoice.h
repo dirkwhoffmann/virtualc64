@@ -31,6 +31,12 @@
 
 #include "VirtualComponent.h"
 
+// Waveform types
+#define FASTSID_TRIANGLE 0x10
+#define FASTSID_SAW      0x20
+#define FASTSID_PULSE    0x40
+#define FASTSID_NOISE    0x80
+
 // ADSR state (Attack, Decay, Sustain, Release)
 #define FASTSID_ATTACK   0
 #define FASTSID_DECAY    1
@@ -90,8 +96,6 @@ typedef struct voice_s {
      it is referenced */
     uint32_t rv;
     
-    /* pointer to wavetable data */
-    uint16_t *wt;
     /* 32-bit offset to add to the counter before referencing the wavetable.
      This is used on combined waveforms, when other waveforms are combined
      with pulse */
@@ -99,9 +103,10 @@ typedef struct voice_s {
     /* length of wavetable (actually number of shifts needed for 32-bit
      counter) */
     uint32_t wtl;
+    
     /* kludge for ring modulation. Set wtr[1] = 0x7fff if ring modulation is
      used */
-    uint16_t wtr[2];
+    // uint16_t wtr[2];
     
     signed char filtIO;
     float filtLow, filtRef;
@@ -132,6 +137,12 @@ private:
     //! @brief   Indicates if prepare() needs to be called prior to computing samples
     bool isDirty;
     
+    //! @brief   Set to true if the oscillator should ring modulate
+    bool ringmod;
+    
+    //! @brief   Pointer to active wavetable
+    uint16_t *wt;
+    
 public:
     
     //! @brief   The SID voice which is represented by this object (1,2, or 3)
@@ -139,9 +150,6 @@ public:
     
     //! @brief   Pointer to SID registers controlling this voice
     uint8_t *sidreg;
-    
-    //! @brief   Do we have noise enabled?
-    bool noise;
     
     //! @brief   Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
     uint8_t adsrm;
@@ -179,8 +187,14 @@ public:
     
     //! @brief   Returns the currently set oscillator frequency
     uint16_t frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
-    
-    //! @brief   Returns the gate bit for this voice
+
+    //! @brief   Returns the pulse width of the pulse waveform
+    /*! @details The pulse width is a 12-bit number which linearly controls
+     *           the pulse width (duty cycle) of the pulse waveform.
+     */
+    uint16_t pulseWidth() { return ((sidreg[3] & 0x0F) << 8) | sidreg[0x02]; }
+
+    //! @brief   Returns the GATE bit for this voice
     /*! @details The gate bit controls the Envelope Generator. When this
      *           bit is set to a one, the Envelope Generator is Gated
      *           (triggered) and the attack/decay/sustain cycle is initiated.
@@ -188,13 +202,45 @@ public:
      */
     bool gateBit() { return sidreg[0x04] & 0x01; }
     
-    //! @brief   Returns the sync bit for this voice
+    //! @brief   Returns the SYNC bit for this voice
     /*! @details The SYNC bit, when set to a one, synchronizes the
      *           fundamental frequency of Oscillator 1 with the fundamental
      *           frequency of Oscillator 3, producing “hard sync” effects.
      */
-    bool hardSync() { return (sidreg[0x04] & 0x02) != 0; }
-        
+    bool syncBit() { return (sidreg[0x04] & 0x02) != 0; }
+    
+    //! @brief   Returns the RING MOD bit of the control register
+    /*! @details The RING MOD bit, when set to a one, replaces the
+     *           Triangle waveform output of Oscillator 1 with a
+     *           “Ring Modulated” combination of Oscillators 1 and 3.
+     */
+    bool ringModBit() { return (sidreg[0x04] & 0x04) != 0; }
+    
+    //! @brief   Returns the TEST bit of the control register
+    /*! @details The TEST bit, when set to a one, resets and
+     *           locks Oscillator 1 at zero until the TEST bit
+     *           is cleared. The Noise waveform output of
+     *           Oscillator 1 is also reset and the Pulse waveform
+     *           output is held at a DC level.
+     */
+    bool testBit() { return (sidreg[0x04] & 0x08) != 0; }
+
+    //! @brief   Returns the waveform bits of the control register
+    uint8_t waveform() { return sidreg[0x04] & 0xF0; }
+    
+    //! @brief   Returns the TRIANGLE bit of the control register
+    // bool triangle() { return (sidreg[0x04] & 0x10) != 0; }
+
+    //! @brief   Returns the SAW bit of the control register
+    // bool saw() { return (sidreg[0x04] & 0x20) != 0; }
+    
+    //! @brief   Returns the PULSE bit of the control register
+    // bool pulse() { return (sidreg[0x04] & 0x40) != 0; }
+    
+    //! @brief   Returns the NOISE bit of the control register
+    // bool noiseBit() { return (sidreg[0x04] & 0x80) != 0; }
+    
+    
     //! @brief   Returns the attack rate for the envelope generator
     /*! @details The attack rate is a 4 bit value which determines how rapidly
      *           the output of the voice rises from zero to peak amplitude when

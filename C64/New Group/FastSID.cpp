@@ -102,24 +102,12 @@ FastSID::peek(uint16_t addr)
 
             return 0xFF;
   
-        case 0x1B: { // OSC 3/RANDOM
+        case 0x1B: // OSC 3/RANDOM
             
             // This register allows the microprocessor to read the
             // upper 8 output bits of oscillator 3.
-            
-            uint16_t ffix = (uint16_t)(42 * st.v[2].vt.fs);
-            uint32_t rvstore = st.v[2].vt.rv;
-            if (st.v[2].noise && st.v[2].vt.f + ffix < st.v[2].vt.f) {
-                st.v[2].vt.rv = NSHIFT(st.v[2].vt.rv, 16);
-            }
-            st.v[2].vt.f += ffix;
-            uint8_t ret = (uint8_t)(st.v[2].doosc() >> 7);
-            st.v[2].vt.f -= ffix;
-            st.v[2].vt.rv = rvstore;
-            return ret;
-        }
-            // return (uint8_t)(st.v[2].doosc() >> 7);
-            
+            return (uint8_t)(st.v[2].doosc() >> 7);
+
         case 0x1C:
             
             // This register allows the microprocessor to read the
@@ -127,13 +115,7 @@ FastSID::peek(uint16_t addr)
             return (uint8_t)(st.v[2].vt.adsr >> 23);
             
         default:
-            /*
-             while ((tmp = psid->laststorebit) &&
-             (tmp = psid->laststoreclk + sidreadclocks[tmp]) < maincpu_clk) {
-             psid->laststoreclk = tmp;
-             psid->laststore &= 0xfeff >> psid->laststorebit--;
-             }
-             */
+            
             return st.laststore;
     }
 }
@@ -144,33 +126,33 @@ FastSID::poke(uint16_t addr, uint8_t value)
 {
     switch (addr) {
  
-        case 0: // VOICE 1
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
+        case 0x00: // VOICE 1
+        case 0x01:
+        case 0x02:
+        case 0x03:
+        case 0x04:
+        case 0x05:
+        case 0x06:
             st.v[0].isDirty = true;
             break;
   
-        case 7: // VOICE 2
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
+        case 0x07: // VOICE 2
+        case 0x08:
+        case 0x09:
+        case 0x0A:
+        case 0x0B:
+        case 0x0C:
+        case 0x0D:
             st.v[1].isDirty = true;
             break;
 
-        case 14: // VOICE 3
-        case 15:
-        case 16:
-        case 17:
-        case 18:
-        case 19:
-        case 20:
+        case 0x0E: // VOICE 3
+        case 0x0F:
+        case 0x10:
+        case 0x11:
+        case 0x12:
+        case 0x13:
+        case 0x14:
             st.v[2].isDirty = true;
             break;
             
@@ -188,7 +170,6 @@ FastSID::poke(uint16_t addr, uint8_t value)
 
     st.d[addr] = value;
     st.laststore = value;
-    // st.laststorebit = 8;
 }
 
 /*! @brief   Execute SID
@@ -421,15 +402,15 @@ FastSID::fastsid_calculate_single_sample()
     }
     
     // Hard sync
-    if (v0->hardSync()) {
+    if (v0->syncBit()) {
         v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
         v0->vt.f = 0;
     }
-    if (v2->hardSync()) {
+    if (v2->syncBit()) {
         v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
         v2->vt.f = 0;
     }
-    if (v1->hardSync()) {
+    if (v1->syncBit()) {
         v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
         v1->vt.f = 0;
     }
