@@ -63,7 +63,7 @@
 
 typedef struct voice_s {
     
-    // TODO: REPLACE BY REFERENCE TO FastSID class
+    // TODO: REMOVE LATER
     struct sound_s *s;
     
     /* counter value */
@@ -99,9 +99,7 @@ typedef struct voice_s {
      This is used on combined waveforms, when other waveforms are combined
      with pulse */
     uint32_t wtpf;
-    /* length of wavetable (actually number of shifts needed for 32-bit
-     counter) */
-    uint32_t wtl;
+    
     
     signed char filtIO;
     float filtLow, filtRef;
@@ -115,7 +113,6 @@ private:
     
     //! @brief   Wave tables
     //! @details The first index determines the chip model (0 = old, 1 = new).
-    static uint16_t wavetable00[2][2];
     static uint16_t wavetable10[2][4096];
     static uint16_t wavetable20[2][4096];
     static uint16_t wavetable30[2][4096];
@@ -137,6 +134,9 @@ private:
     
     //! @brief   Pointer to the active wavetable
     uint16_t *wavetable;
+    
+    //! @brief   Shift value for scaling the wavetable offset
+    uint8_t wtl;
     
 public:
     

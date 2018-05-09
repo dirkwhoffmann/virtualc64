@@ -31,7 +31,6 @@
 #include "FastSID.h"
 #include "waves.h"
 
-uint16_t Voice::wavetable00[2][2];
 uint16_t Voice::wavetable10[2][4096];
 uint16_t Voice::wavetable20[2][4096];
 uint16_t Voice::wavetable30[2][4096];
@@ -94,13 +93,16 @@ Voice::doosc()
         return ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
     }
     
-    if (ringmod) {
-        if ((prev->vt.f >> 31) == 1) {
-            return wavetable[(vt.f + vt.wtpf) >> vt.wtl] ^ 0x7FFF;
+    if (wavetable) {
+        if (ringmod) {
+            if ((prev->vt.f >> 31) == 1) {
+                return wavetable[(vt.f + vt.wtpf) >> 20 /* 12 bit */] ^ 0x7FFF;
+            }
         }
+        return wavetable[(vt.f + vt.wtpf) >> 20 /* 12 bit */];
     }
     
-    return wavetable[(vt.f + vt.wtpf) >> vt.wtl];
+    return 0;
 }
 
 void
@@ -133,7 +135,7 @@ Voice::prepare()
         vt.f = vt.fs = 0;
         vt.rv = NSEED;
     }
-    vt.wtl = 20;
+    wtl = 20;
     vt.wtpf = 0;
     
     assert(pulseWidth() == (sidreg[2] + (sidreg[3] & 0x0f) * 0x100));
@@ -143,8 +145,7 @@ Voice::prepare()
     switch (waveform()) {
          
         case 0:
-            wavetable = wavetable00[chipModel];
-            vt.wtl = 31;
+            wavetable = NULL;
             ringmod = false;
             break;
 
@@ -200,15 +201,13 @@ Voice::prepare()
         case FASTSID_NOISE:
             assert(waveform() == 0x80);
             wavetable = NULL;
-            vt.wtl = 0;
             ringmod = false;
             break;
             
         default:
             
             vt.rv = 0;
-            wavetable = wavetable00[chipModel];
-            vt.wtl = 31;
+            wavetable = NULL;
             ringmod = false;
     }
     
