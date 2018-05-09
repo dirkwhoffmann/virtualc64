@@ -143,6 +143,9 @@ public:
     //! @brief   The SID voice which is represented by this object (1,2, or 3)
     uint8_t nr;
     
+    //! @brief   Pointer to previous voice
+    Voice *prev;
+    
     //! @brief   Pointer to SID registers controlling this voice
     uint8_t *sidreg;
     
@@ -161,7 +164,7 @@ public:
     static void initWaveTables();
 
     //! @brief    Initialize
-    void init(sound_s *psid, unsigned voiceNr);
+    void init(sound_s *psid, unsigned voiceNr, Voice *prevVoice);
 
     //! @brief    Prepares the voice for computing samples
     void prepare();

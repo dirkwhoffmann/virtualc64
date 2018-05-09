@@ -37,9 +37,7 @@
 /* needed data for SID */
 struct sound_s {
     
-    /* number of voices */
-    Voice v[3];
-    
+
     /* SID registers */
     uint8_t d[32];
     
@@ -78,6 +76,9 @@ typedef struct sound_s sound_t;
 class FastSID : public SIDbase {
 
 private:
+    
+    //! The three SID voices
+    Voice voice[3];
     
     // Fast SID state
     sound_s st;

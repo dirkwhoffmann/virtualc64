@@ -95,8 +95,7 @@ Voice::doosc()
     }
     
     if (ringmod) {
-        Voice *prevVoice = &vt.s->v[(nr + 2) % 3];
-        if ((prevVoice->vt.f >> 31) == 1) {
+        if ((prev->vt.f >> 31) == 1) {
             return wavetable[(vt.f + vt.wtpf) >> vt.wtl] ^ 0x7FFF;
         }
     }
@@ -105,9 +104,12 @@ Voice::doosc()
 }
 
 void
-Voice::init(sound_s *psid, unsigned voiceNr)
+Voice::init(sound_s *psid, unsigned voiceNr, Voice *prevVoice)
 {
+    assert(prevVoice != NULL);
+    
     nr = voiceNr;
+    prev = prevVoice;
     sidreg = psid->d + (voiceNr * 7);
     vt.s = psid;
     vt.rv = NSEED;

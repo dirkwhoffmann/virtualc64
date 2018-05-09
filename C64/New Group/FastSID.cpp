@@ -106,13 +106,13 @@ FastSID::peek(uint16_t addr)
             
             // This register allows the microprocessor to read the
             // upper 8 output bits of oscillator 3.
-            return (uint8_t)(st.v[2].doosc() >> 7);
+            return (uint8_t)(voice[2].doosc() >> 7);
 
         case 0x1C:
             
             // This register allows the microprocessor to read the
             // output of the voice 3 envelope generator.
-            return (uint8_t)(st.v[2].vt.adsr >> 23);
+            return (uint8_t)(voice[2].vt.adsr >> 23);
             
         default:
             
@@ -133,7 +133,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
         case 0x04:
         case 0x05:
         case 0x06:
-            st.v[0].isDirty = true;
+            voice[0].isDirty = true;
             break;
   
         case 0x07: // VOICE 2
@@ -143,7 +143,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
         case 0x0B:
         case 0x0C:
         case 0x0D:
-            st.v[1].isDirty = true;
+            voice[1].isDirty = true;
             break;
 
         case 0x0E: // VOICE 3
@@ -153,7 +153,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
         case 0x12:
         case 0x13:
         case 0x14:
-            st.v[2].isDirty = true;
+            voice[2].isDirty = true;
             break;
             
         default: // GENERAL SID
@@ -162,11 +162,11 @@ FastSID::poke(uint16_t addr, uint8_t value)
     
     // For each voice, check if gate bit flips
     if (addr == 0x04 && ((st.d[addr] ^ value) & 1))
-        st.v[0].vt.gateflip = 1;
+        voice[0].vt.gateflip = 1;
     if (addr == 0x0B && ((st.d[addr] ^ value) & 1))
-        st.v[1].vt.gateflip = 1;
+        voice[1].vt.gateflip = 1;
     if (addr == 0x12 && ((st.d[addr] ^ value) & 1))
-        st.v[2].vt.gateflip = 1;
+        voice[2].vt.gateflip = 1;
 
     st.d[addr] = value;
     st.laststore = value;
@@ -239,10 +239,9 @@ FastSID::init(int sampleRate, int cycles_per_sec)
     st.newsid = 0;
     
     // Voices
-    for (i = 0; i < 3; i++) {
-        st.v[i].init(&st, i);
-        st.v[i].prepare();
-    }
+    voice[0].init(&st, 0, &voice[3]);
+    voice[1].init(&st, 1, &voice[0]);
+    voice[2].init(&st, 2, &voice[1]);
     
     switch (sid_model) {
         default:
@@ -343,12 +342,12 @@ FastSID::prepare()
         st.filterType = filterType();
         if (st.filterType != st.filterCurType) {
             st.filterCurType = st.filterType;
-            st.v[0].vt.filtLow = 0;
-            st.v[0].vt.filtRef = 0;
-            st.v[1].vt.filtLow = 0;
-            st.v[1].vt.filtRef = 0;
-            st.v[2].vt.filtLow = 0;
-            st.v[2].vt.filtRef = 0;
+            voice[0].vt.filtLow = 0;
+            voice[0].vt.filtRef = 0;
+            voice[1].vt.filtLow = 0;
+            voice[1].vt.filtRef = 0;
+            voice[2].vt.filtLow = 0;
+            voice[2].vt.filtRef = 0;
         }
         
         //st.filterValue = 0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3);
@@ -376,9 +375,9 @@ int16_t
 FastSID::fastsid_calculate_single_sample()
 {
     uint32_t osc0, osc1, osc2;
-    Voice *v0 = &st.v[0];
-    Voice *v1 = &st.v[1];
-    Voice *v2 = &st.v[2];
+    Voice *v0 = &voice[0];
+    Voice *v1 = &voice[1];
+    Voice *v2 = &voice[2];
     
     prepare();
     v0->prepare();
