@@ -82,9 +82,22 @@ private:
     // Fast SID state
     sound_s st;
 
+    //! @brief   Low pass filter lookup table
+    /*! @details Needs to be updated when the sample rate changes
+     */
     float lowPassParam[0x800];
+
+    //! @brief   Band pass filter lookup table
+    /*! @details Needs to be updated when the sample rate changes
+     */
     float bandPassParam[0x800];
+    
+    //! @brief   Filter resonance lookup table
+    /*! @details Needs to be updated when the sample rate changes
+     */
     float filterResTable[16];
+    
+    //! @brief   Amplifier lookup table
     signed char ampMod1x8[256];
     
     //! @brief   Indicates if prepare() needs to be called prior to computing samples
@@ -154,18 +167,47 @@ public:
     
 private:
     
+    //! @brief   Initializes SID
     int init(int sampleRate, int cycles_per_sec);
-    void init_filter(int sampleRate);
     
-    //! @brief    Returns true iff filtering is enabled for the specified voice
-    bool filterEnabled(unsigned voice) { return GET_BIT(st.d[0x17], voice) != 0; }
+    //! @brief   Initializes filter lookup tables
+    void initFilter(int sampleRate);
+    
+    
+    //
+    // Querying configuration items
+    //
+    
+    //! @brief   Returns the currently set SID volume
+    uint8_t sidVolume() { return st.d[0x18] & 0x0F; }
     
     //! @brief    Returns true iff voice 3 is disconnected from the audio output
     /*! @details  Setting voice 3 to bypass the filter (FILT3 = 0) and setting
      *            bit 7 in the Mod/Vol register to one prevents voice 3 from
      *            reaching the audio output.
      */
-    bool voiceThreeDisconnected() { return !filterEnabled(2) && (st.d[0x18] & 0x80); }
+    bool voiceThreeDisconnected() { return filterOff(2) && (st.d[0x18] & 0x80); }
+    
+    // Filter related configuration items
+    
+    //! @brief   Returns the filter cutoff frequency (11 bit value)
+    uint16_t filterCutoff() { return (st.d[0x16] << 3) | (st.d[0x15] & 0x07); }
+
+    //! @brief    Returns the filter resonance (4 bit value)
+    uint8_t filterResonance() { return st.d[0x17] >> 4; }
+
+    //! @brief    Returns true iff the specified voice schould be filtered
+    bool filterOn(unsigned voice) { return GET_BIT(st.d[0x17], voice) != 0; }
+
+    //! @brief    Returns true iff the specified voice schould not be filtered
+    bool filterOff(unsigned voice) { return GET_BIT(st.d[0x17], voice) == 0; }
+
+    //! @brief    Returns true iff the EXTERNAL filter bit is set
+    bool filterExtBit() { return st.d[0x17] & 0x08; }
+
+    //! @brief   Returns the currently set filter type
+    uint8_t filterType() { return st.d[0x18] & 0x70; }
+    
     
     //! @brief    Prepares FastSID for computing samples
     void prepare();

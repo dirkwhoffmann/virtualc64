@@ -37,6 +37,11 @@
 #define FASTSID_PULSE    0x40
 #define FASTSID_NOISE    0x80
 
+// Filter types
+#define FASTSID_HIGH_PASS 0x40
+#define FASTSID_BAND_PASS 0x20
+#define FASTSID_LOW_PASS  0x10
+
 // ADSR state (Attack, Decay, Sustain, Release)
 #define FASTSID_ATTACK   0
 #define FASTSID_DECAY    1
@@ -97,10 +102,6 @@ typedef struct voice_s {
     /* length of wavetable (actually number of shifts needed for 32-bit
      counter) */
     uint32_t wtl;
-    
-    /* kludge for ring modulation. Set wtr[1] = 0x7fff if ring modulation is
-     used */
-    // uint16_t wtr[2];
     
     signed char filtIO;
     float filtLow, filtRef;
@@ -174,11 +175,10 @@ public:
     //! @brief Apply filter effect
     void applyFilter();
     
-    
     //
-    // Querying the current configuration
+    // Querying configuration items
     //
-    
+        
     //! @brief   Returns the currently set oscillator frequency
     uint16_t frequency() { return HI_LO(sidreg[0x01], sidreg[0x00]); }
 

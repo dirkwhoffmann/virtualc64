@@ -225,7 +225,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
      }
      */
     
-    init_filter(sampleRate);
+    initFilter(sampleRate);
     
     isDirty = true;
     prepare();
@@ -267,7 +267,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
 }
 
 void
-FastSID::init_filter(int sampleRate)
+FastSID::initFilter(int sampleRate)
 {
     uint16_t uk;
     float rk;
@@ -295,10 +295,10 @@ FastSID::init_filter(int sampleRate)
     st.filterDy = 0;
     st.filterResDy = 0;
     
+    // Low pass lookup table
     for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        float h;
         
-        h = (float)((((exp(rk / 2048 * log(filterFs)) / filterFm) + filterFt) * filterRefFreq) / sampleRate);
+        float h = (float)((((exp(rk / 2048 * log(filterFs)) / filterFm) + filterFt) * filterRefFreq) / sampleRate);
         if (h < yMin) {
             h = yMin;
         }
@@ -308,25 +308,26 @@ FastSID::init_filter(int sampleRate)
         lowPassParam[uk] = h;
     }
     
+    // Band pass lookup table
     yMax = (float)0.22;
     yMin = (float)0.002;
     yAdd = (float)((yMax - yMin) / 2048.0);
     yTmp = yMin;
-    
     for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
         bandPassParam[uk] = (yTmp * filterRefFreq) / sampleRate;
         yTmp += yAdd;
     }
     
+    // Resonance lookup table
     for (uk = 0; uk < 16; uk++) {
         filterResTable[uk] = resDy;
         resDy -= ((resDyMin - resDyMax ) / 15);
     }
-    
     filterResTable[0] = resDyMin;
     filterResTable[15] = resDyMax;
     filterAmpl = emulateFilter ? 0.7 : 1.0;
     
+    // Amplifier lookup table
     for (uk = 0, si = 0; si < 256; si++, uk++) {
         ampMod1x8[uk] = (signed char)((si - 0x80) * filterAmpl);
     }
@@ -335,9 +336,11 @@ FastSID::init_filter(int sampleRate)
 void
 FastSID::prepare()
 {
+    assert((st.d[0x18] & 0x70) == filterType());
+    assert (filterCutoff() == (0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3)));
+    
     if (isDirty && emulateFilter) {
-        
-        st.filterType = st.d[0x18] & 0x70;
+        st.filterType = filterType();
         if (st.filterType != st.filterCurType) {
             st.filterCurType = st.filterType;
             st.v[0].vt.filtLow = 0;
@@ -347,17 +350,23 @@ FastSID::prepare()
             st.v[2].vt.filtLow = 0;
             st.v[2].vt.filtRef = 0;
         }
-        st.filterValue = 0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3);
-        if (st.filterType == 0x20) {
+        
+        //st.filterValue = 0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3);
+        st.filterValue = filterCutoff();
+        
+        assert((st.filterType == 0x20) == (filterType() == FASTSID_BAND_PASS));
+        
+        // if (st.filterType == 0x20) {
+        if (filterType() == FASTSID_BAND_PASS) {
             st.filterDy = bandPassParam[st.filterValue];
         } else {
             st.filterDy = lowPassParam[st.filterValue];
         }
-        st.filterResDy = filterResTable[st.d[0x17] >> 4]
-        - st.filterDy;
-        if (st.filterResDy < 1.0) {
-            st.filterResDy = 1.0;
-        }
+        assert((st.d[0x17] >> 4) == (filterResonance()));
+        // st.filterResDy = filterResTable[st.d[0x17] >> 4] - st.filterDy;
+        st.filterResDy = filterResTable[filterResonance()] - st.filterDy;
+        st.filterResDy = MAX(st.filterResDy, 1.0);
+        assert(st.filterResDy >= 1.0);
     }
     
     isDirty = false;
@@ -425,18 +434,17 @@ FastSID::fastsid_calculate_single_sample()
     // Sample
     if (emulateFilter) {
         v0->vt.filtIO = ampMod1x8[(osc0 >> 22)];
-        if (filterEnabled(0)) v0->applyFilter();
+        if (filterOn(0)) v0->applyFilter();
         osc0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
         
         v1->vt.filtIO = ampMod1x8[(osc1 >> 22)];
-        if (filterEnabled(1)) v1->applyFilter();
+        if (filterOn(1)) v1->applyFilter();
         osc1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
         
         v2->vt.filtIO = ampMod1x8[(osc2 >> 22)];
-        if (filterEnabled(2)) v2->applyFilter();
+        if (filterOn(2)) v2->applyFilter();
         osc2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
     }
     
-    int32_t volume = st.d[0x18] & 0x0F;
-    return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * volume);
+    return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume());
 }
