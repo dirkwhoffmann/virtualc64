@@ -22,14 +22,11 @@ SIDBridge::SIDBridge()
 {
 	setDescription("SIDWrapper");
     
-    fastsid = new FastSID();
-    fastsid->bridge = this;
+    fastsid.bridge = this;
+    resid.bridge = this;
     
-    resid = new ReSID();
-    resid->bridge = this;
-
     // Register sub components
-    VirtualComponent *subcomponents[] = { fastsid, resid, NULL };
+    VirtualComponent *subcomponents[] = { &fastsid, &resid, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
 
     // Register snapshot items
@@ -49,8 +46,6 @@ SIDBridge::SIDBridge()
 
 SIDBridge::~SIDBridge()
 {
-    delete fastsid;
-    delete resid;
 }
 
 void
@@ -59,6 +54,8 @@ SIDBridge::reset()
     VirtualComponent::reset();
     
     clearRingbuffer();
+    resid.reset();
+    fastsid.reset();
     volume = 100000;
     targetVolume = 100000;
 }
@@ -73,21 +70,18 @@ SIDBridge::loadFromBuffer(uint8_t **buffer)
 void 
 SIDBridge::setReSID(bool enable)
 {
-    if (enable)
-        debug(2, "Using ReSID\n");
-    else
-        debug(2, "Using FastSID\n");
-    
     useReSID = enable;
+    debug(2, enable ? "Using ReSID\n" : "Using FastSID\n");
+    dumpState(); 
 }
 
 void 
 SIDBridge::dumpState()
 {
     if (useReSID) {
-        resid->dumpState();
+        resid.dumpState();
     } else {
-        fastsid->dumpState();
+        fastsid.dumpState();
     }
 }
 
@@ -114,17 +108,16 @@ SIDBridge::peek(uint16_t addr)
     executeUntil(c64->getCycles());
     
     if (useReSID) {
-        return resid->peek(addr);
+        return resid.peek(addr);
     } else {
-        return fastsid->peek(addr);
+        return fastsid.peek(addr);
     }
 }
 
 uint8_t
 SIDBridge::spy(uint16_t addr)
 {
-    assert(addr <= 0x001F);
-
+    assert(addr <= 0x1F);
     return peek(addr);
 }
 
@@ -135,8 +128,8 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
     executeUntil(c64->getCycles());
 
     // Keep both SID implementations up to date all the time
-    fastsid->poke(addr, value);
-    resid->poke(addr, value);
+    resid.poke(addr, value);
+    fastsid.poke(addr, value);
 }
 
 void
@@ -154,9 +147,9 @@ SIDBridge::execute(uint64_t numCycles)
         return;
     
     if (useReSID) {
-        resid->execute(numCycles);
+        resid.execute(numCycles);
     } else {
-        fastsid->execute(numCycles);
+        fastsid.execute(numCycles);
     }
 }
 
@@ -164,85 +157,52 @@ void
 SIDBridge::run()
 {
     clearRingbuffer();
-    fastsid->run(); // TODO: DELETE
-    resid->run(); // TODO: DELETE
 }
 
 void 
 SIDBridge::halt()
 {
     clearRingbuffer();
-    fastsid->halt(); // TODO: DELETE
-    resid->halt(); // TODO: DELETE
 }
-
-/*
-void
-SIDBridge::readMonoSamples(float *target, size_t n)
-{
-    if (useReSID)
-        resid->readMonoSamples(target, n);
-    else
-        fastsid->readMonoSamples(target, n);
-}
-
-void
-SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
-{
-    if (useReSID)
-        resid->readStereoSamples(target1, target2, n);
-    else
-        fastsid->readStereoSamples(target1, target2, n);
-}
-
-void
-SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
-{
-    if (useReSID)
-        resid->readStereoSamplesInterleaved(target, n);
-    else
-        fastsid->readStereoSamplesInterleaved(target, n);
-}
-*/
 
 bool
 SIDBridge::getAudioFilter()
 {
     if (useReSID) {
-        return resid->getAudioFilter();
+        return resid.getAudioFilter();
     } else {
-        return fastsid->getAudioFilter();
+        return fastsid.getAudioFilter();
     }
 }
 
 void 
 SIDBridge::setAudioFilter(bool value)
 {
-    resid->setAudioFilter(value);
-    fastsid->setAudioFilter(value);
+    resid.setAudioFilter(value);
+    fastsid.setAudioFilter(value);
 }
 
 SamplingMethod
 SIDBridge::getSamplingMethod()
 {
-    // This option is ReSID only
-    return resid->getSamplingMethod();
+    // Option is ReSID only
+    return resid.getSamplingMethod();
 }
 
 void
 SIDBridge::setSamplingMethod(SamplingMethod value)
 {
-    // This option is ReSID only
-    resid->setSamplingMethod(value);
+    // Option is ReSID only
+    resid.setSamplingMethod(value);
 }
 
 SIDChipModel
 SIDBridge::getChipModel()
 {
     if (useReSID) {
-        return resid->getChipModel();
+        return resid.getChipModel();
     } else {
-        return fastsid->getChipModel();
+        return fastsid.getChipModel();
     }
 }
 
@@ -254,42 +214,42 @@ SIDBridge::setChipModel(SIDChipModel model)
         model = MOS_8580;
     }
     
-    resid->setChipModel(model);
-    fastsid->setChipModel(model);
+    resid.setChipModel(model);
+    fastsid.setChipModel(model);
 }
 
 uint32_t
 SIDBridge::getSampleRate()
 {
     if (useReSID) {
-        return resid->getSampleRate();
+        return resid.getSampleRate();
     } else {
-        return fastsid->getSampleRate();
+        return fastsid.getSampleRate();
     }
 }
 
 void 
 SIDBridge::setSampleRate(uint32_t rate)
 {
-    resid->setSampleRate(rate);
-    fastsid->setSampleRate(rate);
+    resid.setSampleRate(rate);
+    fastsid.setSampleRate(rate);
 }
 
 uint32_t
 SIDBridge::getClockFrequency()
 {
     if (useReSID) {
-        return resid->getClockFrequency();
+        return resid.getClockFrequency();
     } else {
-        return fastsid->getClockFrequency();
+        return fastsid.getClockFrequency();
     }
 }
 
 void 
 SIDBridge::setClockFrequency(uint32_t frequency)
 {
-    resid->setClockFrequency(frequency);
-    fastsid->setClockFrequency(frequency);
+    resid.setClockFrequency(frequency);
+    fastsid.setClockFrequency(frequency);
 }
 
 

@@ -86,6 +86,7 @@ ReSID::~ReSID()
 void
 ReSID::reset()
 {
+    debug("ReSID::reset\n");
     VirtualComponent::reset();
     sid->reset();
 }
@@ -156,7 +157,6 @@ ReSID::peek(uint16_t addr)
 void 
 ReSID::poke(uint16_t addr, uint8_t value)
 {
-    // addr &= 0x1F;
     sid->write(addr, value);
 }
 
@@ -165,6 +165,10 @@ ReSID::execute(uint64_t elapsedCycles)
 {
     short buf[2049];
     int buflength = 2048;
+    
+    if (elapsedCycles > PAL_CYCLES_PER_SECOND)
+        elapsedCycles = PAL_CYCLES_PER_SECOND;
+    
     reSID::cycle_count delta_t = (reSID::cycle_count)elapsedCycles;
     int bufindex = 0;
     
