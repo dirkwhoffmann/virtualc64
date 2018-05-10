@@ -49,8 +49,7 @@ struct sound_s {
     // uint64_t laststoreclk;
         
     /* filter variables */
-    float filterDy;
-    float filterResDy;
+
     uint8_t filterType;
     uint8_t filterCurType;
 };

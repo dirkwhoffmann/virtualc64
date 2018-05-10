@@ -250,8 +250,6 @@ FastSID::initFilter(int sampleRate)
     
     st.filterType = 0;
     st.filterCurType = 0;
-    st.filterDy = 0;
-    st.filterResDy = 0;
     
     // Low pass lookup table
     for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
@@ -307,12 +305,17 @@ FastSID::updateInternals()
     }
     
     if (filterType() == FASTSID_BAND_PASS) {
-        st.filterDy = bandPassParam[filterCutoff()];
+        voice[0].filterDy = bandPassParam[filterCutoff()];
+        voice[1].filterDy = bandPassParam[filterCutoff()];
+        voice[2].filterDy = bandPassParam[filterCutoff()];
     } else {
-        st.filterDy = lowPassParam[filterCutoff()];
+        voice[0].filterDy = lowPassParam[filterCutoff()];
+        voice[1].filterDy = lowPassParam[filterCutoff()];
+        voice[2].filterDy = lowPassParam[filterCutoff()];
     }
-    st.filterResDy = filterResTable[filterResonance()] - st.filterDy;
-    st.filterResDy = MAX(st.filterResDy, 1.0);
+    voice[0].filterResDy = MAX(filterResTable[filterResonance()] - voice[0].filterDy, 1.0);
+    voice[1].filterResDy = MAX(filterResTable[filterResonance()] - voice[1].filterDy, 1.0);
+    voice[2].filterResDy = MAX(filterResTable[filterResonance()] - voice[2].filterDy, 1.0);
 }
 
 int16_t

@@ -153,11 +153,13 @@ private:
     // Filter
     //
     
-    //! @brief   Filter state
+    //! @brief   Filter related variables
     signed char filterIO;
     uint8_t filterType;
     float filterLow;
     float filterRef;
+    float filterDy;
+    float filterResDy;
     
 public:
     
