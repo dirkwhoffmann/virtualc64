@@ -49,6 +49,41 @@ static uint32_t exptable[6] =
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
 
+Voice::Voice()
+{
+    setDescription("Voice");
+    debug(3, "  Creating Voice at address %p...\n", this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { &waveTableOffset,  sizeof(waveTableOffset),  CLEAR_ON_RESET },
+        { &waveTableCounter, sizeof(waveTableCounter), CLEAR_ON_RESET },
+        { &step,             sizeof(step),             CLEAR_ON_RESET },
+        { &ringmod,          sizeof(ringmod),          CLEAR_ON_RESET },
+        { &adsrm,            sizeof(adsrm),            CLEAR_ON_RESET },
+        { &adsr,             sizeof(adsr),             CLEAR_ON_RESET },
+        { &adsrInc,          sizeof(adsrInc),          CLEAR_ON_RESET },
+        { &adsrCmp,          sizeof(adsrCmp),          CLEAR_ON_RESET },
+        { &lsfr,             sizeof(lsfr),             CLEAR_ON_RESET },
+        { &filtIO,           sizeof(filtIO),           CLEAR_ON_RESET },
+        { &filtLow,          sizeof(filtLow),          CLEAR_ON_RESET },
+        { &filtRef,          sizeof(filtRef),          CLEAR_ON_RESET },
+        { NULL,              0,                        0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
+}
+
+Voice::~Voice()
+{
+    debug(3, "  Releasing Voice %d...\n", nr);
+}
+
+void
+Voice::reset()
+{
+    VirtualComponent::reset();
+    lsfr = NSEED;
+}
 
 void
 Voice::initWaveTables()
@@ -85,41 +120,15 @@ Voice::initWaveTables()
     }
 }
 
-
-uint32_t
-Voice::doosc()
-{
-    if (waveform() == FASTSID_NOISE) {
-        return ((uint32_t)NVALUE(NSHIFT(lsfr, counter >> 28))) << 7;
-    }
-    
-    if (wavetable) {
-        if (ringmod) {
-            if ((prev->counter >> 31) == 1) {
-                return wavetable[(counter + tableOffset) >> 20 /* 12 bit */] ^ 0x7FFF;
-            }
-        }
-        return wavetable[(counter + tableOffset) >> 20 /* 12 bit */];
-    }
-    
-    return 0;
-}
-
 void
 Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
 {
     assert(prevVoice != NULL);
     
-    fastsid = owner; 
     nr = voiceNr;
+    fastsid = owner; 
     prev = prevVoice;
     sidreg = owner->st.d + (voiceNr * 7);
-    lsfr = NSEED;
-    filtLow = 0;
-    filtRef = 0;
-    filtIO = 0;
-    
-    updateInternals(true);
 }
 
 void
@@ -129,7 +138,7 @@ Voice::updateInternals(bool gateBitFlipped)
     assert(chipModel == MOS_6581 || chipModel == MOS_8580);
     
     if (testBit()) {
-        counter = 0;
+        waveTableCounter = 0;
         step = 0;
         lsfr = NSEED;
     } else {
@@ -147,21 +156,21 @@ Voice::updateInternals(bool gateBitFlipped)
         case FASTSID_TRIANGLE:
             assert(waveform() == 0x10);
             wavetable = wavetable10[chipModel];
-            tableOffset = 0;
+            waveTableOffset = 0;
             ringmod = ringModBit();
             break;
             
         case FASTSID_SAW:
             assert(waveform() == 0x20);
             wavetable = wavetable20[chipModel];
-            tableOffset = 0;
+            waveTableOffset = 0;
             ringmod = false;
             break;
 
         case FASTSID_SAW | FASTSID_TRIANGLE:
             assert(waveform() == 0x30);
             wavetable = wavetable30[chipModel];
-            tableOffset = 0;
+            waveTableOffset = 0;
             ringmod = ringModBit();
             break;
             
@@ -169,7 +178,7 @@ Voice::updateInternals(bool gateBitFlipped)
             assert(waveform() == 0x40);
             offset = testBit() ? 0 : pulseWidth();
             wavetable = wavetable40[chipModel] + (4096 - offset);
-            tableOffset = 0;
+            waveTableOffset = 0;
             ringmod = false;
             break;
         
@@ -177,7 +186,7 @@ Voice::updateInternals(bool gateBitFlipped)
             assert(waveform() == 0x50);
             offset = 4096 - pulseWidth();
             wavetable = wavetable50[chipModel] + offset;
-            tableOffset = offset << 20;
+            waveTableOffset = offset << 20;
             ringmod = ringModBit();
             break;
 
@@ -185,7 +194,7 @@ Voice::updateInternals(bool gateBitFlipped)
             assert(waveform() == 0x60);
             offset = 4096 - pulseWidth();
             wavetable = wavetable60[chipModel] + offset;
-            tableOffset = offset << 20;
+            waveTableOffset = offset << 20;
             ringmod = false;
             break;
 
@@ -193,7 +202,7 @@ Voice::updateInternals(bool gateBitFlipped)
             assert(waveform() == 0x70);
             offset = 4096 - pulseWidth();
             wavetable = wavetable70[chipModel] + offset;
-            tableOffset = offset << 20;
+            waveTableOffset = offset << 20;
             ringmod = ringModBit();
             break;
             
@@ -310,6 +319,26 @@ Voice::trigger_adsr()
             set_adsr(adsrm);
             break;
     }
+}
+
+uint32_t
+Voice::doosc()
+{
+    if (waveform() == FASTSID_NOISE) {
+        return ((uint32_t)NVALUE(NSHIFT(lsfr, waveTableCounter >> 28))) << 7;
+    }
+    
+    if (wavetable) {
+        uint32_t index = (waveTableCounter + waveTableOffset) >> 20; /* 12 bit value */
+        if (ringmod) {
+            if ((prev->waveTableCounter >> 31) == 1) {
+                return wavetable[index] ^ 0x7FFF;
+            }
+        }
+        return wavetable[index];
+    }
+    
+    return 0;
 }
 
 void

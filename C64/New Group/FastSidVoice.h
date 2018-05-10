@@ -85,15 +85,19 @@ private:
     static uint8_t noiseMID[256];
     static uint8_t noiseLSB[256];
     
+    //! @brief   The SID voice which is represented by this object (1,2, or 3)
+    uint8_t nr;
+
     //! @brief   Pointer to parent SID object
     class FastSID *fastsid;
-            
-    //! @brief   Set to true if the oscillator should ring modulate
-    bool ringmod;
     
-    //! @brief   Indicates if the gate bit has been toggled
-    // bool gateflip;
+    //! @brief   Pointer to previous voice
+    Voice *prev;
     
+    //! @brief   Pointer to SID registers controlling this voice
+    uint8_t *sidreg;
+    
+
     //
     // Wave tables
     //
@@ -106,19 +110,25 @@ private:
      *           referencing the wavetable. It is used when other
      *           waveforms are combined with pulse
      */
-    uint32_t tableOffset;
+    uint32_t waveTableOffset;
     
     //! @brief   Counter value
-    uint32_t counter;
+    uint32_t waveTableCounter;
     
     //! @brief   Counter steps
     /*! @details After each sample, the counter is incremented by this amount.
      */
     uint32_t step;
     
+    //! @brief   Set to true if the oscillator should ring modulate
+    bool ringmod;
+    
     //
     // Waveform generator
     //
+    
+    //! @brief   Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
+    uint8_t adsrm;
     
     //! @brief   31-bit adsr counter
     uint32_t adsr;
@@ -150,29 +160,24 @@ private:
     
 public:
     
-    //! @brief   The SID voice which is represented by this object (1,2, or 3)
-    uint8_t nr;
+    //! @brief    Constructor
+    Voice();
     
-    //! @brief   Pointer to previous voice
-    Voice *prev;
+    //! @brief    Destructor
+    ~Voice();
     
-    //! @brief   Pointer to SID registers controlling this voice
-    uint8_t *sidreg;
-    
-    //! @brief   Current envelope phase (ATTACK, DECAY, SUSTAIN, RELEASE, or IDLE)
-    uint8_t adsrm;
-    
-    // 15-bit oscillator value
-    uint32_t doosc();
-    
+    //! @brief    Method from VirtualComponent
+    void reset();
+
     //! @brief    Initializes the wave tables
-    /*! @details  This static method needs to be called before using the class.
+    /*! @details  Needs to be called once prior to using this class
      */
     static void initWaveTables();
-
+    
     //! @brief    Initialize
+    //! @details  Needs to be called once for each voice object
     void init(FastSID *owner, unsigned voiceNr, Voice *prevVoice);
-
+    
     //! @brief    Updates internal data structures
     //! @details  This method is called on each voice related register change
     void updateInternals(bool gateBitFlipped);
@@ -182,6 +187,9 @@ public:
     
     //! @brief ADSR counter triggered state change
     void trigger_adsr();
+    
+    // 15-bit oscillator value
+    uint32_t doosc();
     
     //! @brief Apply filter effect
     void applyFilter();
