@@ -154,9 +154,10 @@ private:
     //
     
     //! @brief   Filter state
-    signed char filtIO;
-    float filtLow;
-    float filtRef;
+    signed char filterIO;
+    uint8_t filterType;
+    float filterLow;
+    float filterRef;
     
 public:
     

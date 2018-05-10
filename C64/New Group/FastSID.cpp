@@ -246,7 +246,6 @@ FastSID::initFilter(int sampleRate)
     float filterFs = 400.0;
     float filterFm = 60.0;
     float filterFt = (float)0.05;
-    
     float filterAmpl = 1.0;
     
     st.filterType = 0;
@@ -299,12 +298,12 @@ FastSID::updateInternals()
     
     if (st.filterType != st.filterCurType) {
         st.filterCurType = st.filterType;
-        voice[0].filtLow = 0;
-        voice[0].filtRef = 0;
-        voice[1].filtLow = 0;
-        voice[1].filtRef = 0;
-        voice[2].filtLow = 0;
-        voice[2].filtRef = 0;
+        voice[0].filterLow = 0;
+        voice[0].filterRef = 0;
+        voice[1].filterLow = 0;
+        voice[1].filterRef = 0;
+        voice[2].filterLow = 0;
+        voice[2].filterRef = 0;
     }
     
     if (filterType() == FASTSID_BAND_PASS) {
@@ -388,17 +387,17 @@ FastSID::fastsid_calculate_single_sample()
     
     // Apply filter
     if (emulateFilter) {
-        v0->filtIO = ampMod1x8[(osc0 >> 22)];
+        v0->filterIO = ampMod1x8[(osc0 >> 22)];
         if (filterOn(0)) v0->applyFilter();
-        osc0 = ((uint32_t)(v0->filtIO) + 0x80) << (7 + 15);
+        osc0 = ((uint32_t)(v0->filterIO) + 0x80) << (7 + 15);
         
-        v1->filtIO = ampMod1x8[(osc1 >> 22)];
+        v1->filterIO = ampMod1x8[(osc1 >> 22)];
         if (filterOn(1)) v1->applyFilter();
-        osc1 = ((uint32_t)(v1->filtIO) + 0x80) << (7 + 15);
+        osc1 = ((uint32_t)(v1->filterIO) + 0x80) << (7 + 15);
         
-        v2->filtIO = ampMod1x8[(osc2 >> 22)];
+        v2->filterIO = ampMod1x8[(osc2 >> 22)];
         if (filterOn(2)) v2->applyFilter();
-        osc2 = ((uint32_t)(v2->filtIO) + 0x80) << (7 + 15);
+        osc2 = ((uint32_t)(v2->filterIO) + 0x80) << (7 + 15);
     }
     
     return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume());

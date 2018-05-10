@@ -65,9 +65,9 @@ Voice::Voice()
         { &adsrInc,          sizeof(adsrInc),          CLEAR_ON_RESET },
         { &adsrCmp,          sizeof(adsrCmp),          CLEAR_ON_RESET },
         { &lsfr,             sizeof(lsfr),             CLEAR_ON_RESET },
-        { &filtIO,           sizeof(filtIO),           CLEAR_ON_RESET },
-        { &filtLow,          sizeof(filtLow),          CLEAR_ON_RESET },
-        { &filtRef,          sizeof(filtRef),          CLEAR_ON_RESET },
+        { &filterIO,         sizeof(filterIO),         CLEAR_ON_RESET },
+        { &filterLow,        sizeof(filterLow),        CLEAR_ON_RESET },
+        { &filterRef,        sizeof(filterRef),        CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -381,41 +381,41 @@ Voice::applyFilter()
 {    
     if (fastsid->st.filterType) {
         if (fastsid->st.filterType == 0x20) {
-            filtLow += filtRef * fastsid->st.filterDy;
-            filtRef +=
-            (filtIO - filtLow -
-             (filtRef * fastsid->st.filterResDy)) *
+            filterLow += filterRef * fastsid->st.filterDy;
+            filterRef +=
+            (filterIO - filterLow -
+             (filterRef * fastsid->st.filterResDy)) *
             fastsid->st.filterDy;
-            filtIO = (signed char)(filtRef - filtLow / 4);
+            filterIO = (signed char)(filterRef - filterLow / 4);
         } else if (fastsid->st.filterType == 0x40) {
             float sample;
-            filtLow += (float)((filtRef *
+            filterLow += (float)((filterRef *
                                         fastsid->st.filterDy) * 0.1);
-            filtRef += (filtIO - filtLow -
-                                (filtRef * fastsid->st.filterResDy)) *
+            filterRef += (filterIO - filterLow -
+                                (filterRef * fastsid->st.filterResDy)) *
             fastsid->st.filterDy;
-            sample = filtRef - (filtIO / 8);
+            sample = filterRef - (filterIO / 8);
             if (sample < -128) {
                 sample = -128;
             }
             if (sample > 127) {
                 sample = 127;
             }
-            filtIO = (signed char)sample;
+            filterIO = (signed char)sample;
         } else {
             int tmp;
             float sample, sample2;
-            filtLow += filtRef * fastsid->st.filterDy;
-            sample = filtIO;
-            sample2 = sample - filtLow;
+            filterLow += filterRef * fastsid->st.filterDy;
+            sample = filterIO;
+            sample2 = sample - filterLow;
             tmp = (int)sample2;
-            sample2 -= filtRef * fastsid->st.filterResDy;
-            filtRef += sample2 * fastsid->st.filterDy;
+            sample2 -= filterRef * fastsid->st.filterResDy;
+            filterRef += sample2 * fastsid->st.filterDy;
             
-            filtIO = fastsid->st.filterType == 0x10
-            ? (signed char)filtLow :
+            filterIO = fastsid->st.filterType == 0x10
+            ? (signed char)filterLow :
             (fastsid->st.filterType == 0x30
-             ? (signed char)filtLow :
+             ? (signed char)filterLow :
              (fastsid->st.filterType == 0x50
               ? (signed char)
               ((int)(sample) - (tmp >> 1)) :
@@ -427,6 +427,6 @@ Voice::applyFilter()
                 ((int)(sample) - (tmp >> 1)) : 0))));
         }
     } else { /* filterType == 0x00 */
-        filtIO = 0;
+        filterIO = 0;
     }
 }
