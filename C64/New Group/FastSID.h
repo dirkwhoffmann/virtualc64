@@ -115,9 +115,6 @@ public:
     //! Load state
     void loadFromBuffer(uint8_t **buffer);
     
-    //! Save state
-    void saveToBuffer(uint8_t **buffer);
-    
     //! Dump internal state to console
     void dumpState();
     

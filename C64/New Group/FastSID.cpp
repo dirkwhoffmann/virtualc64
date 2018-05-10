@@ -35,25 +35,26 @@ FastSID::FastSID()
 	setDescription("SID");
 	debug(3, "  Creating FastSID at address %p...\n", this);
     
+    // Register sub components
+    VirtualComponent *subcomponents[] = { &voice[0], &voice[1], &voice[2], NULL };
+    registerSubComponents(subcomponents, sizeof(subcomponents));
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { &st,               sizeof(st),               CLEAR_ON_RESET },
+        { NULL,              0,                        0 }};
+    registerSnapshotItems(items, sizeof(items));
+    
     // Initialize wave and noise tables
     Voice::initWaveTables();
     
-    init(44100, PAL_CYCLES_PER_SECOND);
+    // Initialize voices
+    voice[0].init(this, 0, &voice[3]);
+    voice[1].init(this, 1, &voice[0]);
+    voice[2].init(this, 2, &voice[1]);
     
-    
-    // Set default values
-    // setChipModel(reSID::MOS6581);
     chipModel = MOS_6581;
-    
-    /*
-    cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
-    samplingMethod = reSID::SAMPLE_FAST;
-    sampleRate = 44100;
-     */
-    // sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
-    // setAudioFilter(false);
     emulateFilter = true;
-    
     volume = 100000;
     targetVolume = 100000;
 }
@@ -63,25 +64,17 @@ FastSID::~FastSID()
 
 }
 
-//! Bring the SID chip back to it's initial state.
 void
 FastSID::reset()
 {
-    
+    VirtualComponent::reset();
+    init(44100, PAL_CYCLES_PER_SECOND);
 }
 
-//! Load state
 void
 FastSID::loadFromBuffer(uint8_t **buffer)
 {
-    
-}
-
-//! Save state
-void
-FastSID::saveToBuffer(uint8_t **buffer)
-{
-    
+    VirtualComponent::loadFromBuffer(buffer);
 }
 
 //! Dump internal state to console
@@ -229,17 +222,6 @@ FastSID::init(int sampleRate, int cycles_per_sec)
     
     initFilter(sampleRate);
     updateInternals();
-    
-    /*
-     if (resources_get_int("SidModel", &sid_model) < 0) {
-     return 0;
-     }
-     */
-    
-    // Voices
-    voice[0].init(this, 0, &voice[3]);
-    voice[1].init(this, 1, &voice[0]);
-    voice[2].init(this, 2, &voice[1]);
     
     return 1;
 }
