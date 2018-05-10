@@ -43,6 +43,7 @@ FastSID::FastSID()
     SnapshotItem items[] = {
         { &st,               sizeof(st),               CLEAR_ON_RESET },
         { &chipModel,        sizeof(chipModel),        CLEAR_ON_RESET },
+        { &emulateFilter,    sizeof(emulateFilter),    CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
     registerSnapshotItems(items, sizeof(items));
     

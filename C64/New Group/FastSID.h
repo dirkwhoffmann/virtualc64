@@ -73,6 +73,11 @@ private:
     //! @brief   Chip model.
     SIDChipModel chipModel;
     
+    /*! @brief   Switches filter emulation on or off.
+     *  @details Switching off filters slightly improves emulation speed.
+     */
+    bool emulateFilter;
+    
     //! @brief   Last value on the data bus
     uint8_t latchedDataBus;
     
@@ -125,6 +130,12 @@ public:
     
     
     // Configuring
+    
+    //! Returns true iff audio filters should be emulated.
+    bool getAudioFilter() { return emulateFilter; }
+    
+    //! Enable or disable audio filter emulation
+    void setAudioFilter(bool value) { emulateFilter = value; }
     
     //! Return samplerate.
     uint32_t getSampleRate() { return 0; } // TODO

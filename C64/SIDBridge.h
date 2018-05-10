@@ -41,22 +41,6 @@ private:
     //! @brief    SID selector
     bool useReSID;
     
-    /*! @brief   Chip model.
-     *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
-     *           This chip must be selected to hear synthesized speech.
-     *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
-     */
-    SIDChipModel chipModel;
-    
-    //! @brief    Remembers latest written value
-    /*! @details  Test case SID/busvalue:
-     *            "Reading from a write-only or non-existing register
-     *             returns the value left on the internal data bus,
-     *             which is refreshed not only on writes but also on
-     *             valid reads from the read-only registers.
-     */
-    uint8_t latchedDataBus;
-    
 public:
 	
 	//! @brief    Constructor

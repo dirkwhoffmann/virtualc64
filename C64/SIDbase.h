@@ -34,7 +34,7 @@ public:
     /*! @brief   Switches filter emulation on or off.
      *  @details Switching off filter emulation slightly improves emulation speed.
      */
-    bool emulateFilter;
+    // bool emulateFilter;
     
     /*! @brief   Sample rate
      *  @details By default, a sample rate of 44.1 kHz is used.
@@ -129,10 +129,10 @@ public:
     //
     
     //! Returns true iff audio filters should be emulated.
-    virtual bool getAudioFilter() { return emulateFilter; }
+    // virtual bool getAudioFilter() { return emulateFilter; }
     
     //! Enable or disable audio filter emulation
-    virtual void setAudioFilter(bool value) { emulateFilter = value; }
+    // virtual void setAudioFilter(bool value) { emulateFilter = value; }
     
     //! Return samplerate.
     virtual uint32_t getSampleRate() = 0;
