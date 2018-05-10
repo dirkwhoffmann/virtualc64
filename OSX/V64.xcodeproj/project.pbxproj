@@ -63,7 +63,6 @@
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
-		502C3606209F238800DE8B6D /* SIDbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502C3604209F238800DE8B6D /* SIDbase.cpp */; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
 		502F57F41B93441A00D1077E /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F31B93441A00D1077E /* LEDred.png */; };
 		502F57F61B93442100D1077E /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F51B93442100D1077E /* LEDgray.png */; };
@@ -369,8 +368,6 @@
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
-		502C3604209F238800DE8B6D /* SIDbase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDbase.cpp; sourceTree = "<group>"; };
-		502C3605209F238800DE8B6D /* SIDbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDbase.h; sourceTree = "<group>"; };
 		502F57F11B93441400D1077E /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
 		502F57F31B93441A00D1077E /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
 		502F57F51B93442100D1077E /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgray.png; sourceTree = "<group>"; };
@@ -718,8 +715,6 @@
 				50171A9F2083710E00C07AAD /* SID_types.h */,
 				506D39D3141780FF00268AF6 /* SIDBridge.h */,
 				506D39D1141780E500268AF6 /* SIDBridge.cpp */,
-				502C3605209F238800DE8B6D /* SIDbase.h */,
-				502C3604209F238800DE8B6D /* SIDbase.cpp */,
 				506D39D5141788E700268AF6 /* ReSID.h */,
 				506D39D4141788E600268AF6 /* ReSID.cpp */,
 				50176C560A6F72F3009E80BD /* CPU.h */,
@@ -1447,7 +1442,6 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50169F05209E045A00CB3536 /* sid.cc in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
-				502C3606209F238800DE8B6D /* SIDbase.cpp in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,

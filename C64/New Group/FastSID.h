@@ -31,7 +31,6 @@
 
 #include "VirtualComponent.h"
 #include "FastSidVoice.h"
-#include "SIDbase.h"
 
 /* needed data for SID */
 struct sound_s {

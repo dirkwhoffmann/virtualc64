@@ -177,11 +177,6 @@ ReSID::execute(uint64_t elapsedCycles)
     if (bufindex) {
         bridge->writeData(buf, bufindex);
     }
-    /*
-    for (int i = 0; i < bufindex; i++) {
-        writeData((float)buf[i]);
-    }
-    */
 }
 
 void

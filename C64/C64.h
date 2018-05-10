@@ -74,7 +74,6 @@
 #include "VIC.h"
 #include "PixelEngine.h"
 #include "SIDBridge.h"
-#include "SIDbase.h"
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
