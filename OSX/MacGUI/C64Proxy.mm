@@ -642,8 +642,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) reSID { return wrapper->c64->getReSID(); }
 - (void) setReSID:(bool)b { wrapper->c64->setReSID(b); }
 - (int) samplingMethod { return (int)(wrapper->c64->getSamplingMethod()); }
-- (void) setSamplingMethod:(long)value { wrapper->c64->setSamplingMethod((reSID::sampling_method)value); }
-- (int) chipModel { return (reSID::chip_model)(wrapper->c64->getChipModel()); }
+- (void) setSamplingMethod:(long)value { wrapper->c64->setSamplingMethod((SamplingMethod)value); }
+- (int) chipModel { return (int)(wrapper->c64->getChipModel()); }
 - (void) setChipModel:(long)value {wrapper->c64->setChipModel((SIDChipModel)value); }
 - (void) rampUp { wrapper->c64->sid.rampUp(); }
 - (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }

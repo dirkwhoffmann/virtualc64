@@ -100,10 +100,10 @@ public:
     void setAudioFilter(bool enable);
     
     //! @brief    Returns the sampling method.
-    inline reSID::sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
+    inline SamplingMethod getSamplingMethod() { return (SamplingMethod)resid->getSamplingMethod(); }
     
     //! @brief    Sets the sampling method (ReSID only).
-    void setSamplingMethod(reSID::sampling_method value);
+    void setSamplingMethod(SamplingMethod value);
 
     //! @brief    Returns the sample rate.
 	inline uint32_t getSampleRate() { return resid->getSampleRate(); }

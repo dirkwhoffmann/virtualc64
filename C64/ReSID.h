@@ -91,10 +91,10 @@ public:
 	void setSampleRate(uint32_t sr);
     
     //! Get sampling method
-    reSID::sampling_method getSamplingMethod() { return samplingMethod; }
+    SamplingMethod getSamplingMethod() { return (SamplingMethod)samplingMethod; }
     
     //! Set sampling method
-    void setSamplingMethod(reSID::sampling_method value);
+    void setSamplingMethod(SamplingMethod value);
     
     //! Get chip model 
     SIDChipModel getChipModel() { return (SIDChipModel)chipModel; }

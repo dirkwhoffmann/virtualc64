@@ -225,9 +225,9 @@ SIDWrapper::setAudioFilter(bool enable)
 }
 
 void
-SIDWrapper::setSamplingMethod(reSID::sampling_method value)
+SIDWrapper::setSamplingMethod(SamplingMethod value)
 {
-     resid->setSamplingMethod(value);
+    resid->setSamplingMethod(value);
 }
 
 void 

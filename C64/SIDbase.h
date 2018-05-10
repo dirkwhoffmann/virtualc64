@@ -23,7 +23,7 @@
 #define _SIDBASE_INC
 
 #include "VirtualComponent.h"
-#include "resid/sid.h"
+// #include "resid/sid.h"
 
 class SIDbase : public VirtualComponent {
     
@@ -48,7 +48,7 @@ public:
     
     /*! @brief   Sampling method used by the reSID library
      */
-    reSID::sampling_method samplingMethod;
+    SamplingMethod samplingMethod;
     
     /*! @brief   Current CPU frequency
      *  @details This variable must always mirror the frequency of the C64 CPU to get the
@@ -146,10 +146,10 @@ public:
     virtual void setSampleRate(uint32_t sr) = 0;
     
     //! Get sampling method
-    virtual reSID::sampling_method getSamplingMethod() = 0;
+    virtual SamplingMethod getSamplingMethod() = 0;
     
     //! Set sampling method
-    virtual void setSamplingMethod(reSID::sampling_method value) = 0;
+    virtual void setSamplingMethod(SamplingMethod value) = 0;
     
     //! Get chip model
     virtual SIDChipModel getChipModel() = 0;

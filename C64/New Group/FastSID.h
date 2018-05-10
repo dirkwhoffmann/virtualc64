@@ -32,7 +32,6 @@
 #include "VirtualComponent.h"
 #include "FastSidVoice.h"
 #include "SIDbase.h"
-#include "../resid/sid.h"
 
 /* needed data for SID */
 struct sound_s {
@@ -131,10 +130,10 @@ public:
     void setSampleRate(uint32_t sr) { } // TODO
     
     //! Get sampling method
-    reSID::sampling_method getSamplingMethod() { return reSID::SAMPLE_FAST; }
+    SamplingMethod getSamplingMethod() { return SID_SAMPLE_FAST; }
     
     //! Set sampling method
-    void setSamplingMethod(reSID::sampling_method value) { }
+    void setSamplingMethod(SamplingMethod value) { }
     
     //! Get chip model
     SIDChipModel getChipModel() { return chipModel; /* TODO: Update structures? */ }

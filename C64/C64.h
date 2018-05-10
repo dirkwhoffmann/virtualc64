@@ -416,10 +416,10 @@ public:
     void setReSID(bool value) { sid.setReSID(value); }
 
     //! @brief    Gets the sampling method
-    reSID::sampling_method getSamplingMethod() { return sid.getSamplingMethod(); }
+    SamplingMethod getSamplingMethod() { return sid.getSamplingMethod(); }
     
     //! @brief    Sets the sampling method
-    void setSamplingMethod(reSID::sampling_method value) { sid.setSamplingMethod(value); }
+    void setSamplingMethod(SamplingMethod value) { sid.setSamplingMethod(value); }
     
     //! @brief    Gets the SID chip model
     SIDChipModel getChipModel() { return sid.getChipModel(); }

@@ -78,9 +78,9 @@ ReSID::ReSID()
     setChipModel(MOS_6581);
     
     cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
-    samplingMethod = reSID::SAMPLE_FAST;
+    samplingMethod = SID_SAMPLE_FAST;
     sampleRate = 44100;
-    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
+    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
     
     setAudioFilter(false);
     setExternalAudioFilter(false);
@@ -129,42 +129,42 @@ ReSID::setExternalAudioFilter(bool enable)
 }
 
 void 
-ReSID::setSamplingMethod(reSID::sampling_method method)
+ReSID::setSamplingMethod(SamplingMethod method)
 {
     switch (method) {
-        case reSID::SAMPLE_FAST:
+        case SID_SAMPLE_FAST:
             debug(2, "Using sample method SAMPLE_FAST\n");
             break;
-        case reSID::SAMPLE_INTERPOLATE:
+        case SID_SAMPLE_INTERPOLATE:
             debug(2, "Using sample method SAMPLE_INTERPOLATE\n");
             break;
-        case reSID::SAMPLE_RESAMPLE:
+        case SID_SAMPLE_RESAMPLE:
             debug(2, "Using sample method SAMPLE_RESAMPLE\n");
             break;
-        case reSID::SAMPLE_RESAMPLE_FASTMEM:
+        case SID_SAMPLE_RESAMPLE_FASTMEM:
             debug(2, "Using sample method SAMPLE_RESAMPLE_FASTMEM\n");
             break;
         default:
             warn("Unknown sample method. Using SAMPLE_FAST\n");
-            method = reSID::SAMPLE_FAST;
+            method = SID_SAMPLE_FAST;
     }
     
     samplingMethod = method;
-    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate); 
+    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
 }
 
 void
 ReSID::setSampleRate(uint32_t sr)
 {
     sampleRate = sr;
-    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
+    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
 }
 
 void 
 ReSID::setClockFrequency(uint32_t frequency)
 { 
 	cpuFrequency = frequency;
-    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
+    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
 }
 
 
