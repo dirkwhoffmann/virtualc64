@@ -45,9 +45,6 @@ struct sound_s {
     /* internal constant used for sample rate dependent calculations */
     uint32_t speed1;
     
-    /* do we have a new sid or an old one? */
-    // uint8_t newsid;
-    
     /* constants needed to implement write-only register reads */
     uint8_t laststore;
     uint8_t laststorebit;
@@ -81,11 +78,11 @@ public:
     //! @brief   Sustain comparison values loopup table
     uint32_t sz[16];
     
-private:
-        
     // Fast SID state
     sound_s st;
 
+    private:
+    
     //! @brief   Low pass filter lookup table
     /*! @details Needs to be updated when the sample rate changes
      */

@@ -126,47 +126,45 @@ FastSID::poke(uint16_t addr, uint8_t value)
 {
     switch (addr) {
  
-        case 0x00: // VOICE 1
+        case 0x00: // Voice 1 registers
         case 0x01:
         case 0x02:
         case 0x03:
         case 0x04:
+            voice[0].gateflip = (st.d[0x04] ^ value) & 1;
+            // Fallthrough
         case 0x05:
         case 0x06:
             voice[0].isDirty = true;
             break;
   
-        case 0x07: // VOICE 2
+        case 0x07: // Voice 2 registers
         case 0x08:
         case 0x09:
         case 0x0A:
         case 0x0B:
+            voice[1].gateflip = (st.d[0x0B] ^ value) & 1;
+            // Fallthrough
         case 0x0C:
         case 0x0D:
             voice[1].isDirty = true;
             break;
 
-        case 0x0E: // VOICE 3
+        case 0x0E: // Voice 3 registers
         case 0x0F:
         case 0x10:
         case 0x11:
         case 0x12:
+            voice[2].gateflip = (st.d[0x12] ^ value) & 1;
+            // Fallthrough
         case 0x13:
         case 0x14:
             voice[2].isDirty = true;
             break;
             
-        default: // GENERAL SID
+        default: // Voice independent registers
             isDirty = true;
     }
-    
-    // For each voice, check if gate bit flips
-    if (addr == 0x04 && ((st.d[addr] ^ value) & 1))
-        voice[0].vt.gateflip = 1;
-    if (addr == 0x0B && ((st.d[addr] ^ value) & 1))
-        voice[1].vt.gateflip = 1;
-    if (addr == 0x12 && ((st.d[addr] ^ value) & 1))
-        voice[2].vt.gateflip = 1;
 
     st.d[addr] = value;
     st.laststore = value;
@@ -236,9 +234,9 @@ FastSID::init(int sampleRate, int cycles_per_sec)
      */
     
     // Voices
-    voice[0].init(this, &st, 0, &voice[3]);
-    voice[1].init(this, &st, 1, &voice[0]);
-    voice[2].init(this, &st, 2, &voice[1]);
+    voice[0].init(this, 0, &voice[3]);
+    voice[1].init(this, 1, &voice[0]);
+    voice[2].init(this, 2, &voice[1]);
     
     return 1;
 }
@@ -404,13 +402,13 @@ FastSID::fastsid_calculate_single_sample()
     v2->adsr += v2->adsrInc;
     
     // Check if we need to perform state changes
-    if (v0->adsr + 0x80000000 < v0->vt.adsrz + 0x80000000) {
+    if (v0->adsr + 0x80000000 < v0->adsrCmp + 0x80000000) {
         v0->trigger_adsr();
     }
-    if (v1->adsr + 0x80000000 < v1->vt.adsrz + 0x80000000) {
+    if (v1->adsr + 0x80000000 < v1->adsrCmp + 0x80000000) {
         v1->trigger_adsr();
     }
-    if (v2->adsr + 0x80000000 < v2->vt.adsrz + 0x80000000) {
+    if (v2->adsr + 0x80000000 < v2->adsrCmp + 0x80000000) {
         v2->trigger_adsr();
     }
     

@@ -68,13 +68,10 @@
 typedef struct voice_s {
     
     // TODO: REMOVE LATER
-    struct sound_s *s;
+    // struct sound_s *s;
     
-    /* adsr sustain level compared to the 31-bit counter */
-    uint32_t adsrz;
-    
-    /* did we do multiple gate flips after last calculated sample? */
-    uint8_t gateflip;
+
+
     
 
 } voice_t;
@@ -111,6 +108,9 @@ private:
     //! @brief   Set to true if the oscillator should ring modulate
     bool ringmod;
     
+    //! @brief   Indicates if the gate bit has been toggled
+    bool gateflip;
+    
     //
     // Wave tables
     //
@@ -143,6 +143,8 @@ private:
     //! @brief   adsr counter step per sample
     int32_t adsrInc;
     
+    //! @brief   adsr sustain level comparision value
+    uint32_t adsrCmp;
     
     //
     // Noise generator
@@ -189,7 +191,7 @@ public:
     static void initWaveTables();
 
     //! @brief    Initialize
-    void init(FastSID *owner, sound_s *psid, unsigned voiceNr, Voice *prevVoice);
+    void init(FastSID *owner, unsigned voiceNr, Voice *prevVoice);
 
     //! @brief    Prepares the voice for computing samples
     void prepare();
