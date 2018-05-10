@@ -92,7 +92,7 @@ private:
     bool ringmod;
     
     //! @brief   Indicates if the gate bit has been toggled
-    bool gateflip;
+    // bool gateflip;
     
     //
     // Wave tables
@@ -175,7 +175,7 @@ public:
 
     //! @brief    Updates internal data structures
     //! @details  This method is called on each voice related register change
-    void updateInternals();
+    void updateInternals(bool gateBitFlipped);
     
     //! @brief  Change ADSR state and all related variables
     void set_adsr(uint8_t fm);

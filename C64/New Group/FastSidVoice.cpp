@@ -119,11 +119,11 @@ Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
     filtRef = 0;
     filtIO = 0;
     
-    updateInternals(); 
+    updateInternals(true);
 }
 
 void
-Voice::updateInternals()
+Voice::updateInternals(bool gateBitFlipped)
 {
     SIDChipModel chipModel = fastsid->chipModel;
     assert(chipModel == MOS_6581 || chipModel == MOS_8580);
@@ -218,7 +218,7 @@ Voice::updateInternals()
             if (gateBit()) {
                 
                 // Initiate attack phase
-                set_adsr((uint8_t)(gateflip ? FASTSID_ATTACK : adsrm));
+                set_adsr((uint8_t)(gateBitFlipped ? FASTSID_ATTACK : adsrm));
             } else {
                 
                 // Proceed immediately to release phase
@@ -236,8 +236,6 @@ Voice::updateInternals()
             }
             break;
     }
-    
-    gateflip = false;
 }
 
 void

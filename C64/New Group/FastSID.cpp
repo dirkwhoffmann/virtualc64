@@ -124,6 +124,8 @@ FastSID::peek(uint16_t addr)
 void
 FastSID::poke(uint16_t addr, uint8_t value)
 {
+    bool gateBitFlipped = false;
+    
     switch (addr) {
  
         case 0x00: // Voice 1 registers
@@ -131,11 +133,12 @@ FastSID::poke(uint16_t addr, uint8_t value)
         case 0x02:
         case 0x03:
         case 0x04:
-            voice[0].gateflip = (st.d[0x04] ^ value) & 1;
+            // voice[0].gateflip = (st.d[0x04] ^ value) & 1;
+            gateBitFlipped = (st.d[0x04] ^ value) & 1;
             // Fallthrough
         case 0x05:
         case 0x06:
-            voice[0].updateInternals();
+            voice[0].updateInternals(gateBitFlipped);
             break;
   
         case 0x07: // Voice 2 registers
@@ -143,11 +146,12 @@ FastSID::poke(uint16_t addr, uint8_t value)
         case 0x09:
         case 0x0A:
         case 0x0B:
-            voice[1].gateflip = (st.d[0x0B] ^ value) & 1;
+            // voice[1].gateflip = (st.d[0x0B] ^ value) & 1;
+            gateBitFlipped = (st.d[0x0B] ^ value) & 1;
             // Fallthrough
         case 0x0C:
         case 0x0D:
-            voice[1].updateInternals();
+            voice[1].updateInternals(gateBitFlipped);
             break;
 
         case 0x0E: // Voice 3 registers
@@ -155,11 +159,12 @@ FastSID::poke(uint16_t addr, uint8_t value)
         case 0x10:
         case 0x11:
         case 0x12:
-            voice[2].gateflip = (st.d[0x12] ^ value) & 1;
+            // voice[2].gateflip = (st.d[0x12] ^ value) & 1;
+            gateBitFlipped = (st.d[0x12] ^ value) & 1;
             // Fallthrough
         case 0x13:
         case 0x14:
-            voice[2].updateInternals();
+            voice[2].updateInternals(gateBitFlipped);
             break;
             
         default: // Voice independent registers
