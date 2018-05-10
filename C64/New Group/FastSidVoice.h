@@ -95,11 +95,6 @@ typedef struct voice_s {
      it is referenced */
     uint32_t rv;
     
-    /* 32-bit offset to add to the counter before referencing the wavetable.
-     This is used on combined waveforms, when other waveforms are combined
-     with pulse */
-    uint32_t wtpf;
-    
     
     signed char filtIO;
     float filtLow, filtRef;
@@ -135,8 +130,15 @@ private:
     //! @brief   Pointer to the active wavetable
     uint16_t *wavetable;
     
+    //! @brief   Wavetable offset
+    /*! @details This 32-bit offset is added to the counter before
+     *           referencing the wavetable. It is used when other
+     *           waveforms are combined with pulse
+     */
+    uint32_t tableOffset;
+    
     //! @brief   Shift value for scaling the wavetable offset
-    uint8_t wtl;
+    // uint8_t wtl;
     
 public:
     

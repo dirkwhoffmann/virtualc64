@@ -96,10 +96,10 @@ Voice::doosc()
     if (wavetable) {
         if (ringmod) {
             if ((prev->vt.f >> 31) == 1) {
-                return wavetable[(vt.f + vt.wtpf) >> 20 /* 12 bit */] ^ 0x7FFF;
+                return wavetable[(vt.f + tableOffset) >> 20 /* 12 bit */] ^ 0x7FFF;
             }
         }
-        return wavetable[(vt.f + vt.wtpf) >> 20 /* 12 bit */];
+        return wavetable[(vt.f + tableOffset) >> 20 /* 12 bit */];
     }
     
     return 0;
@@ -135,8 +135,6 @@ Voice::prepare()
         vt.f = vt.fs = 0;
         vt.rv = NSEED;
     }
-    wtl = 20;
-    vt.wtpf = 0;
     
     assert(pulseWidth() == (sidreg[2] + (sidreg[3] & 0x0f) * 0x100));
     assert(((sidreg[4] & 0x08) != 0) == testBit());
@@ -152,18 +150,21 @@ Voice::prepare()
         case FASTSID_TRIANGLE:
             assert(waveform() == 0x10);
             wavetable = wavetable10[chipModel];
+            tableOffset = 0;
             ringmod = ringModBit();
             break;
             
         case FASTSID_SAW:
             assert(waveform() == 0x20);
             wavetable = wavetable20[chipModel];
+            tableOffset = 0;
             ringmod = false;
             break;
 
         case FASTSID_SAW | FASTSID_TRIANGLE:
             assert(waveform() == 0x30);
             wavetable = wavetable30[chipModel];
+            tableOffset = 0;
             ringmod = ringModBit();
             break;
             
@@ -171,6 +172,7 @@ Voice::prepare()
             assert(waveform() == 0x40);
             offset = testBit() ? 0 : pulseWidth();
             wavetable = wavetable40[chipModel] + (4096 - offset);
+            tableOffset = 0;
             ringmod = false;
             break;
         
@@ -178,7 +180,7 @@ Voice::prepare()
             assert(waveform() == 0x50);
             offset = 4096 - pulseWidth();
             wavetable = wavetable50[chipModel] + offset;
-            vt.wtpf = offset << 20;
+            tableOffset = offset << 20;
             ringmod = ringModBit();
             break;
 
@@ -186,7 +188,7 @@ Voice::prepare()
             assert(waveform() == 0x60);
             offset = 4096 - pulseWidth();
             wavetable = wavetable60[chipModel] + offset;
-            vt.wtpf = offset << 20;
+            tableOffset = offset << 20;
             ringmod = false;
             break;
 
@@ -194,7 +196,7 @@ Voice::prepare()
             assert(waveform() == 0x70);
             offset = 4096 - pulseWidth();
             wavetable = wavetable70[chipModel] + offset;
-            vt.wtpf = offset << 20;
+            tableOffset = offset << 20;
             ringmod = ringModBit();
             break;
             
@@ -205,7 +207,6 @@ Voice::prepare()
             break;
             
         default:
-            
             vt.rv = 0;
             wavetable = NULL;
             ringmod = false;
