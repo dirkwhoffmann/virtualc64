@@ -86,15 +86,7 @@ typedef struct voice_s {
     /* did we do multiple gate flips after last calculated sample? */
     uint8_t gateflip;
     
-    //! @brief   Noise shift register
-    /*! @details The Noise waveform is created using a 23-bit pseudo-random
-     *           sequence generator.
-     */
-    uint32_t rv;
-    
-    
-    signed char filtIO;
-    float filtLow, filtRef;
+
 } voice_t;
 
 class Voice : public VirtualComponent {
@@ -138,6 +130,17 @@ private:
     /*! @details Stored the counter steps per sample.
      */
     uint32_t step;
+    
+    //! @brief   Noise shift register
+    /*! @details The Noise waveform is created using a 23-bit pseudo-random
+     *           sequence generator (Linear Feedback Shift Register, LSFR)
+     */
+    uint32_t lsfr;
+    
+    //! @brief   Filter state
+    signed char filtIO;
+    float filtLow;
+    float filtRef;
     
 public:
     

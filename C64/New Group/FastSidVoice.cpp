@@ -90,7 +90,7 @@ uint32_t
 Voice::doosc()
 {
     if (waveform() == FASTSID_NOISE) {
-        return ((uint32_t)NVALUE(NSHIFT(vt.rv, vt.f >> 28))) << 7;
+        return ((uint32_t)NVALUE(NSHIFT(lsfr, vt.f >> 28))) << 7;
     }
     
     if (wavetable) {
@@ -114,10 +114,10 @@ Voice::init(sound_s *psid, unsigned voiceNr, Voice *prevVoice)
     prev = prevVoice;
     sidreg = psid->d + (voiceNr * 7);
     vt.s = psid;
-    vt.rv = NSEED;
-    vt.filtLow = 0;
-    vt.filtRef = 0;
-    vt.filtIO = 0;
+    lsfr = NSEED;
+    filtLow = 0;
+    filtRef = 0;
+    filtIO = 0;
     isDirty = true;
 }
 
@@ -131,7 +131,7 @@ Voice::prepare()
     
     if (testBit()) {
         vt.f = step = 0;
-        vt.rv = NSEED;
+        lsfr = NSEED;
     } else {
         step = vt.s->speed1 * frequency();
     }
@@ -207,7 +207,7 @@ Voice::prepare()
             break;
             
         default:
-            vt.rv = 0;
+            lsfr = 0;
             wavetable = NULL;
             ringmod = false;
     }
@@ -328,41 +328,41 @@ Voice::applyFilter()
 {    
     if (vt.s->filterType) {
         if (vt.s->filterType == 0x20) {
-            vt.filtLow += vt.filtRef * vt.s->filterDy;
-            vt.filtRef +=
-            (vt.filtIO - vt.filtLow -
-             (vt.filtRef * vt.s->filterResDy)) *
+            filtLow += filtRef * vt.s->filterDy;
+            filtRef +=
+            (filtIO - filtLow -
+             (filtRef * vt.s->filterResDy)) *
             vt.s->filterDy;
-            vt.filtIO = (signed char)(vt.filtRef - vt.filtLow / 4);
+            filtIO = (signed char)(filtRef - filtLow / 4);
         } else if (vt.s->filterType == 0x40) {
             float sample;
-            vt.filtLow += (float)((vt.filtRef *
+            filtLow += (float)((filtRef *
                                         vt.s->filterDy) * 0.1);
-            vt.filtRef += (vt.filtIO - vt.filtLow -
-                                (vt.filtRef * vt.s->filterResDy)) *
+            filtRef += (filtIO - filtLow -
+                                (filtRef * vt.s->filterResDy)) *
             vt.s->filterDy;
-            sample = vt.filtRef - (vt.filtIO / 8);
+            sample = filtRef - (filtIO / 8);
             if (sample < -128) {
                 sample = -128;
             }
             if (sample > 127) {
                 sample = 127;
             }
-            vt.filtIO = (signed char)sample;
+            filtIO = (signed char)sample;
         } else {
             int tmp;
             float sample, sample2;
-            vt.filtLow += vt.filtRef * vt.s->filterDy;
-            sample = vt.filtIO;
-            sample2 = sample - vt.filtLow;
+            filtLow += filtRef * vt.s->filterDy;
+            sample = filtIO;
+            sample2 = sample - filtLow;
             tmp = (int)sample2;
-            sample2 -= vt.filtRef * vt.s->filterResDy;
-            vt.filtRef += sample2 * vt.s->filterDy;
+            sample2 -= filtRef * vt.s->filterResDy;
+            filtRef += sample2 * vt.s->filterDy;
             
-            vt.filtIO = vt.s->filterType == 0x10
-            ? (signed char)vt.filtLow :
+            filtIO = vt.s->filterType == 0x10
+            ? (signed char)filtLow :
             (vt.s->filterType == 0x30
-             ? (signed char)vt.filtLow :
+             ? (signed char)filtLow :
              (vt.s->filterType == 0x50
               ? (signed char)
               ((int)(sample) - (tmp >> 1)) :
@@ -374,6 +374,6 @@ Voice::applyFilter()
                 ((int)(sample) - (tmp >> 1)) : 0))));
         }
     } else { /* filterType == 0x00 */
-        vt.filtIO = 0;
+        filtIO = 0;
     }
 }

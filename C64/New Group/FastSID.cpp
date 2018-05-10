@@ -342,12 +342,12 @@ FastSID::prepare()
         st.filterType = filterType();
         if (st.filterType != st.filterCurType) {
             st.filterCurType = st.filterType;
-            voice[0].vt.filtLow = 0;
-            voice[0].vt.filtRef = 0;
-            voice[1].vt.filtLow = 0;
-            voice[1].vt.filtRef = 0;
-            voice[2].vt.filtLow = 0;
-            voice[2].vt.filtRef = 0;
+            voice[0].filtLow = 0;
+            voice[0].filtRef = 0;
+            voice[1].filtLow = 0;
+            voice[1].filtRef = 0;
+            voice[2].filtLow = 0;
+            voice[2].filtRef = 0;
         }
         
         //st.filterValue = 0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3);
@@ -394,29 +394,29 @@ FastSID::fastsid_calculate_single_sample()
     
     // Check for counter overflows (waveform loops)
     if (v0->vt.f < v0->step) {
-        v0->vt.rv = NSHIFT(v0->vt.rv, 16);
+        v0->lsfr = NSHIFT(v0->lsfr, 16);
         sync0 = v0->syncBit();
     }
     if (v1->vt.f < v1->step) {
-        v1->vt.rv = NSHIFT(v1->vt.rv, 16);
+        v1->lsfr = NSHIFT(v1->lsfr, 16);
         sync1 = v1->syncBit();
     }
     if (v2->vt.f < v2->step) {
-        v2->vt.rv = NSHIFT(v2->vt.rv, 16);
+        v2->lsfr = NSHIFT(v2->lsfr, 16);
         sync2 = v2->syncBit();
     }
     
     // Perform hard sync
     if (sync0) {
-        v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
+        v0->lsfr = NSHIFT(v0->lsfr, v0->vt.f >> 28);
         v0->vt.f = 0;
     }
     if (sync1) {
-        v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
+        v1->lsfr = NSHIFT(v1->lsfr, v1->vt.f >> 28);
         v1->vt.f = 0;
     }
     if (sync2) {
-        v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
+        v2->lsfr = NSHIFT(v2->lsfr, v2->vt.f >> 28);
         v2->vt.f = 0;
     }
     
@@ -441,19 +441,19 @@ FastSID::fastsid_calculate_single_sample()
         osc2 = 0;
     }
     
-    // Sample
+    // Apply filter
     if (emulateFilter) {
-        v0->vt.filtIO = ampMod1x8[(osc0 >> 22)];
+        v0->filtIO = ampMod1x8[(osc0 >> 22)];
         if (filterOn(0)) v0->applyFilter();
-        osc0 = ((uint32_t)(v0->vt.filtIO) + 0x80) << (7 + 15);
+        osc0 = ((uint32_t)(v0->filtIO) + 0x80) << (7 + 15);
         
-        v1->vt.filtIO = ampMod1x8[(osc1 >> 22)];
+        v1->filtIO = ampMod1x8[(osc1 >> 22)];
         if (filterOn(1)) v1->applyFilter();
-        osc1 = ((uint32_t)(v1->vt.filtIO) + 0x80) << (7 + 15);
+        osc1 = ((uint32_t)(v1->filtIO) + 0x80) << (7 + 15);
         
-        v2->vt.filtIO = ampMod1x8[(osc2 >> 22)];
+        v2->filtIO = ampMod1x8[(osc2 >> 22)];
         if (filterOn(2)) v2->applyFilter();
-        osc2 = ((uint32_t)(v2->vt.filtIO) + 0x80) << (7 + 15);
+        osc2 = ((uint32_t)(v2->filtIO) + 0x80) << (7 + 15);
     }
     
     return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume());
