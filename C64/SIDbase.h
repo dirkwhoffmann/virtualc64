@@ -28,37 +28,7 @@
 class SIDbase : public VirtualComponent {
     
 public:
-    
-
-    
-    /*! @brief   Switches filter emulation on or off.
-     *  @details Switching off filter emulation slightly improves emulation speed.
-     */
-    // bool emulateFilter;
-    
-    /*! @brief   Sample rate
-     *  @details By default, a sample rate of 44.1 kHz is used.
-     */
-    // uint32_t sampleRate;
-    
-    /*! @brief   Sampling method used by the reSID library
-     */
-    // SamplingMethod samplingMethod;
-    
-    /*! @brief   Current CPU frequency
-     *  @details This variable must always mirror the frequency of the C64 CPU to get the
-     *           proper audio samples at the right time. The CPU frequency differs in PAL and NTSC mode.
-     */
-    // uint32_t cpuFrequency;
-    
-    /*! @brief   Configuration option offered by the reSID library
-     */
-    bool audioFilter;
-    
-    /*! @brief   Configuration option offered by the reSID library
-     */
-    bool externalAudioFilter;
-    
+  
     /*! @brief   Size of the audio samples ringbuffer.
      *  @see     ringBuffer
      */
@@ -116,41 +86,13 @@ public:
      *  @details Runs reSID for the specified amount of CPU cycles and writes
      *           the generated sound samples into the internal ring buffer.
      */
-    virtual void execute(uint64_t cycles) = 0;
+    // virtual void execute(uint64_t cycles) = 0;
     
     //! Notifies the SID chip that the emulator has started
     void run();
     
     //! Notifies the SID chip that the emulator has started
     void halt();
-    
-    //
-    // Configuring the device
-    //
-    
-    //! Returns true iff audio filters should be emulated.
-    // virtual bool getAudioFilter() { return emulateFilter; }
-    
-    //! Enable or disable audio filter emulation
-    // virtual void setAudioFilter(bool value) { emulateFilter = value; }
-    
-    //! Return samplerate.
-    // virtual uint32_t getSampleRate() = 0;
-    
-    //! Set sample rate
-    // virtual void setSampleRate(uint32_t sr) = 0;
-    
-    //! Get chip model
-    // virtual SIDChipModel getChipModel() = 0;
-    
-    //! Set chip model
-    // virtual void setChipModel(SIDChipModel value) = 0;
-    
-    //! Get clock frequency
-    // virtual uint32_t getClockFrequency() = 0;
-    
-    //! Set clock frequency
-    // virtual void setClockFrequency(uint32_t f) = 0;
     
     //
     // Volume control
@@ -225,7 +167,7 @@ public:
     //! @brief   Moves write pointer forward or backward
     void advanceWritePtr(int steps) { writePtr = (writePtr + bufferSize + steps) % bufferSize; }
     
-    //! @brief   Returns number of stored sampes in ringbuffer
+    //! @brief   Returns number of stored samples in ringbuffer
     unsigned samplesInBuffer() { return (writePtr + bufferSize - readPtr) % bufferSize; }
     
     //! @brief   Returns remaining storage capacity of ringbuffer

@@ -60,8 +60,6 @@ FastSID::FastSID()
     
     chipModel = MOS_6581;
     emulateFilter = true;
-    volume = 100000;
-    targetVolume = 100000;
     
     reset();
 }
@@ -235,7 +233,7 @@ FastSID::execute(uint64_t cycles)
     }
     
     // Write samples into ringbuffer
-    writeData(buf, numSamples);
+    bridge->writeData(buf, numSamples);
 }
 
 void

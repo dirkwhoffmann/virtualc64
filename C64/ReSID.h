@@ -28,10 +28,11 @@
 #include "SIDbase.h"
 #include "resid/sid.h"
 
-class ReSID : public SIDbase {
+class ReSID : public VirtualComponent {
 
 private:
     
+    // ReSID object
     reSID::SID *sid;
     
     //! ReSID state
@@ -40,15 +41,21 @@ private:
     //! @brief   Sample rate (44.1 kHz per default)
     uint32_t sampleRate;
     
+    //! @brief   Switches filter emulation on or off.
+    bool emulateFilter;
+    
 public:
 		
+    //! Pointer to bridge object
+    SIDBridge *bridge;
+    
 	//! Constructor.
 	ReSID();
 	
 	//! Destructor.
 	~ReSID();
 	
-	//! Bring the SID chip back to it's initial state.
+	//! Method from VirtualComponent
 	void reset();
 	
     //! Load state
@@ -94,7 +101,7 @@ public:
     void setSampleRate(uint32_t rate);
     
     //! Returns true iff audio filters should be emulated.
-    bool getAudioFilter() { return audioFilter; }
+    bool getAudioFilter() { return emulateFilter; }
     
     //! Enable or disable audio filter emulation
 	void setAudioFilter(bool enable);

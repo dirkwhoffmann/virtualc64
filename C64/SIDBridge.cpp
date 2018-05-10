@@ -23,8 +23,11 @@ SIDBridge::SIDBridge()
 	setDescription("SIDWrapper");
     
     fastsid = new FastSID();
-    resid = new ReSID();
+    fastsid->bridge = this;
     
+    resid = new ReSID();
+    resid->bridge = this;
+
     // Register sub components
     VirtualComponent *subcomponents[] = { fastsid, resid, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
@@ -48,6 +51,23 @@ SIDBridge::~SIDBridge()
 {
     delete fastsid;
     delete resid;
+}
+
+void
+SIDBridge::reset()
+{
+    VirtualComponent::reset();
+    
+    clearRingbuffer();
+    volume = 100000;
+    targetVolume = 100000;
+}
+
+void
+SIDBridge::loadFromBuffer(uint8_t **buffer)
+{
+    VirtualComponent::loadFromBuffer(buffer);
+    clearRingbuffer();
 }
 
 void 
@@ -142,18 +162,21 @@ SIDBridge::execute(uint64_t numCycles)
 
 void 
 SIDBridge::run()
-{   
-    fastsid->run();
-    resid->run();
+{
+    clearRingbuffer();
+    fastsid->run(); // TODO: DELETE
+    resid->run(); // TODO: DELETE
 }
 
 void 
 SIDBridge::halt()
-{   
-    fastsid->halt();
-    resid->halt();
+{
+    clearRingbuffer();
+    fastsid->halt(); // TODO: DELETE
+    resid->halt(); // TODO: DELETE
 }
 
+/*
 void
 SIDBridge::readMonoSamples(float *target, size_t n)
 {
@@ -180,6 +203,7 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
     else
         fastsid->readStereoSamplesInterleaved(target, n);
 }
+*/
 
 bool
 SIDBridge::getAudioFilter()
@@ -267,3 +291,125 @@ SIDBridge::setClockFrequency(uint32_t frequency)
     resid->setClockFrequency(frequency);
     fastsid->setClockFrequency(frequency);
 }
+
+
+
+void
+SIDBridge::clearRingbuffer()
+{
+    debug(4,"Clearing ringbuffer\n");
+    
+    // Reset ringbuffer contents
+    for (unsigned i = 0; i < bufferSize; i++) {
+        ringBuffer[i] = 0.0f;
+    }
+    
+    // Reset pointer positions
+    readPtr = 0;
+    alignWritePtr();
+}
+
+float
+SIDBridge::readData()
+{
+    // Read sound sample
+    float value = ringBuffer[readPtr];
+    
+    // Adjust volume
+    if (volume != targetVolume) {
+        if (volume < targetVolume) {
+            volume += MIN(volumeDelta, targetVolume - volume);
+        } else {
+            volume -= MIN(volumeDelta, volume - targetVolume);
+        }
+    }
+    value = (volume <= 0) ? 0.0f : value * (float)volume / 100000.0f;
+    
+    // Advance read pointer
+    advanceReadPtr();
+    
+    return value;
+}
+
+void
+SIDBridge::readMonoSamples(float *target, size_t n)
+{
+    // Check for buffer underflow
+    if (samplesInBuffer() < n) {
+        handleBufferUnderflow();
+    }
+    
+    // Read samples
+    for (size_t i = 0; i < n; i++) {
+        float value = readData();
+        target[i] = value;
+    }
+}
+
+void
+SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
+{
+    // Check for buffer underflow
+    if (samplesInBuffer() < n) {
+        handleBufferUnderflow();
+    }
+    
+    // Read samples
+    for (unsigned i = 0; i < n; i++) {
+        float value = readData();
+        target1[i] = target2[i] = value;
+    }
+}
+
+void
+SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
+{
+    // Check for buffer underflow
+    if (samplesInBuffer() < n) {
+        handleBufferUnderflow();
+    }
+    
+    // Read samples
+    for (unsigned i = 0; i < n; i++) {
+        float value = readData();
+        target[i*2] = value;
+        target[i*2+1] = value;
+    }
+}
+
+void
+SIDBridge::writeData(short *data, size_t count)
+{
+    // Check for buffer overflow
+    if (bufferCapacity() < count) {
+        handleBufferOverflow();
+    }
+    
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (unsigned i = 0; i < count; i++) {
+        ringBuffer[writePtr] = float(data[i]) * scale;
+        advanceWritePtr();
+    }
+}
+
+void
+SIDBridge::handleBufferUnderflow()
+{
+    debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+}
+
+void
+SIDBridge::handleBufferOverflow()
+{
+    debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+    
+    if (!c64->getWarp()) {
+        // In real-time mode, we readjust the write pointer
+        alignWritePtr();
+    } else {
+        // In warp mode, we don't advance the write ptr to avoid crack noises
+        return;
+    }
+}
+
+

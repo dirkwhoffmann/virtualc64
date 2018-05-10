@@ -52,9 +52,12 @@ typedef struct sound_s sound_t;
 /*! SID is the sound chip of the Commodore 64.
 	The SID chip occupied the memory mapped I/O space from address 0xD400 to 0xD7FF. 
 */
-class FastSID : public SIDbase {
+class FastSID : public VirtualComponent {
 
 public:
+    
+    //! Pointer to bridge object
+    class SIDBridge *bridge;
     
     //! @brief   The three SID voices
     Voice voice[3];
@@ -79,9 +82,7 @@ private:
     //! @brief   Sample rate (44.1 kHz per default)
     uint32_t sampleRate;
     
-    /*! @brief   Switches filter emulation on or off.
-     *  @details Switching off filters slightly improves emulation speed.
-     */
+    //! @brief   Switches filter emulation on or off.
     bool emulateFilter;
     
     //! @brief   Last value on the data bus
@@ -113,9 +114,9 @@ public:
 	//! Destructor.
 	~FastSID();
 	
-    //! Bring the SID chip back to it's initial state.
+    //! Method from VirtualComponent
     void reset();
-    
+
     //! Load state
     void loadFromBuffer(uint8_t **buffer);
     

@@ -29,14 +29,8 @@ ReSID::ReSID()
     SnapshotItem items[] = {
         
         // Configuration items
-        // { &chipModel,           sizeof(chipModel),              KEEP_ON_RESET },
         { &sampleRate,          sizeof(sampleRate),             KEEP_ON_RESET },
-        // { &samplingMethod,      sizeof(samplingMethod),         KEEP_ON_RESET },
-        // { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
-        // { &audioFilter,         sizeof(audioFilter),            KEEP_ON_RESET },
-        // { &externalAudioFilter, sizeof(externalAudioFilter),    KEEP_ON_RESET },
-        { &volume,              sizeof(volume),                 KEEP_ON_RESET },
-        { &targetVolume,        sizeof(targetVolume),           KEEP_ON_RESET },
+        { &emulateFilter,       sizeof(emulateFilter),          KEEP_ON_RESET },
         
         // ReSID state
         { st.sid_register,                  sizeof(st.sid_register),                    KEEP_ON_RESET },
@@ -82,9 +76,6 @@ ReSID::ReSID()
                                  (double)sampleRate);
     
     setAudioFilter(true);
-    
-    volume = 100000;
-    targetVolume = 100000;
 }
 
 ReSID::~ReSID()
@@ -96,7 +87,6 @@ void
 ReSID::reset()
 {
     VirtualComponent::reset();
-    clearRingbuffer();
     sid->reset();
 }
 
@@ -129,7 +119,7 @@ ReSID::setSampleRate(uint32_t value)
 void 
 ReSID::setAudioFilter(bool value)
 {
-    audioFilter = value;
+    emulateFilter = value;
     sid->enable_filter(value);
 }
 
@@ -147,8 +137,6 @@ void
 ReSID::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
-
-    clearRingbuffer();
     sid->write_state(st);
 }
 
@@ -187,7 +175,7 @@ ReSID::execute(uint64_t elapsedCycles)
     
     // Write samples into ringbuffer
     if (bufindex) {
-        writeData(buf, bufindex);
+        bridge->writeData(buf, bufindex);
     }
     /*
     for (int i = 0; i < bufindex; i++) {
@@ -203,7 +191,6 @@ ReSID::dumpState()
 	msg("---\n\n");
     msg("   Sample rate : %d\n", getSampleRate());
     msg(" CPU frequency : %d\n", getClockFrequency());
-	msg("   Buffer size : %d\n", bufferSize);
 	msg("\n");
 }
 
