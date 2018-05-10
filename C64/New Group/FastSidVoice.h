@@ -169,6 +169,9 @@ public:
     //! @brief    Method from VirtualComponent
     void reset();
 
+    //! @brief    Loads the current state from a buffer
+    void loadFromBuffer(uint8_t **buffer);
+    
     //! @brief    Initializes the wave tables
     /*! @details  Needs to be called once prior to using this class
      */
@@ -177,7 +180,10 @@ public:
     //! @brief    Initialize
     //! @details  Needs to be called once for each voice object
     void init(FastSID *owner, unsigned voiceNr, Voice *prevVoice);
-    
+
+    //! @brief    Updates the wavetable pointer
+    void updateWaveTablePtr();
+
     //! @brief    Updates internal data structures
     //! @details  This method is called on each voice related register change
     void updateInternals(bool gateBitFlipped);

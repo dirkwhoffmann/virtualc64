@@ -82,7 +82,15 @@ void
 Voice::reset()
 {
     VirtualComponent::reset();
+    updateWaveTablePtr(); 
     lsfr = NSEED;
+}
+
+void
+Voice::loadFromBuffer(uint8_t **buffer)
+{
+    VirtualComponent::loadFromBuffer(buffer);
+    updateWaveTablePtr();
 }
 
 void
@@ -132,10 +140,55 @@ Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
 }
 
 void
-Voice::updateInternals(bool gateBitFlipped)
+Voice::updateWaveTablePtr()
 {
     SIDChipModel chipModel = fastsid->chipModel;
     assert(chipModel == MOS_6581 || chipModel == MOS_8580);
+    
+    unsigned offset;
+    switch (waveform()) {
+            
+        case FASTSID_TRIANGLE:
+            wavetable = wavetable10[chipModel];
+            break;
+            
+        case FASTSID_SAW:
+            wavetable = wavetable20[chipModel];
+            break;
+            
+        case FASTSID_SAW | FASTSID_TRIANGLE:
+            wavetable = wavetable30[chipModel];
+            break;
+            
+        case FASTSID_PULSE:
+            offset = testBit() ? 0 : pulseWidth();
+            wavetable = wavetable40[chipModel] + (4096 - offset);
+            break;
+            
+        case FASTSID_PULSE | FASTSID_TRIANGLE:
+            offset = 4096 - pulseWidth();
+            wavetable = wavetable50[chipModel] + offset;
+            break;
+            
+        case FASTSID_PULSE | FASTSID_SAW:
+            offset = 4096 - pulseWidth();
+            wavetable = wavetable60[chipModel] + offset;
+            break;
+            
+        case FASTSID_PULSE | FASTSID_SAW | FASTSID_TRIANGLE:
+            offset = 4096 - pulseWidth();
+            wavetable = wavetable70[chipModel] + offset;
+            break;
+            
+        default:
+            wavetable = NULL;
+    }
+}
+
+void
+Voice::updateInternals(bool gateBitFlipped)
+{
+    updateWaveTablePtr();
     
     if (testBit()) {
         waveTableCounter = 0;
@@ -149,72 +202,54 @@ Voice::updateInternals(bool gateBitFlipped)
     switch (waveform()) {
          
         case 0:
-            wavetable = NULL;
             ringmod = false;
             break;
 
         case FASTSID_TRIANGLE:
-            assert(waveform() == 0x10);
-            wavetable = wavetable10[chipModel];
             waveTableOffset = 0;
             ringmod = ringModBit();
             break;
             
         case FASTSID_SAW:
-            assert(waveform() == 0x20);
-            wavetable = wavetable20[chipModel];
             waveTableOffset = 0;
             ringmod = false;
             break;
 
         case FASTSID_SAW | FASTSID_TRIANGLE:
-            assert(waveform() == 0x30);
-            wavetable = wavetable30[chipModel];
             waveTableOffset = 0;
             ringmod = ringModBit();
             break;
             
         case FASTSID_PULSE:
-            assert(waveform() == 0x40);
             offset = testBit() ? 0 : pulseWidth();
-            wavetable = wavetable40[chipModel] + (4096 - offset);
             waveTableOffset = 0;
             ringmod = false;
             break;
         
         case FASTSID_PULSE | FASTSID_TRIANGLE:
-            assert(waveform() == 0x50);
             offset = 4096 - pulseWidth();
-            wavetable = wavetable50[chipModel] + offset;
             waveTableOffset = offset << 20;
             ringmod = ringModBit();
             break;
 
         case FASTSID_PULSE | FASTSID_SAW:
-            assert(waveform() == 0x60);
             offset = 4096 - pulseWidth();
-            wavetable = wavetable60[chipModel] + offset;
             waveTableOffset = offset << 20;
             ringmod = false;
             break;
 
         case FASTSID_PULSE | FASTSID_SAW | FASTSID_TRIANGLE:
-            assert(waveform() == 0x70);
             offset = 4096 - pulseWidth();
-            wavetable = wavetable70[chipModel] + offset;
             waveTableOffset = offset << 20;
             ringmod = ringModBit();
             break;
             
         case FASTSID_NOISE:
-            assert(waveform() == 0x80);
-            wavetable = NULL;
             ringmod = false;
             break;
             
         default:
             lsfr = 0;
-            wavetable = NULL;
             ringmod = false;
     }
     
