@@ -27,7 +27,7 @@ struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct JoystickWrapper { Joystick *joystick; };
-struct SidWrapperWrapper { SIDWrapper *sid; };
+struct SidWrapperWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct Via6522Wrapper { VIA6522 *via; };
@@ -329,7 +329,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation SIDProxy
 
-- (instancetype) initWithSID:(SIDWrapper *)sid
+- (instancetype) initWithSID:(SIDBridge *)sid
 {
     if (self = [super init]) {
         wrapper = new SidWrapperWrapper();

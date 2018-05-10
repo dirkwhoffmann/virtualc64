@@ -26,7 +26,7 @@
 #include "ReSID.h"
 #include "SID_types.h"
 
-class SIDWrapper : public VirtualComponent {
+class SIDBridge : public VirtualComponent {
 
     friend C64Memory;
 
@@ -54,10 +54,10 @@ private:
 public:
 	
 	//! @brief    Constructor
-	SIDWrapper();
+	SIDBridge();
 	
 	//! @brief    Destructor
-	~SIDWrapper();
+	~SIDBridge();
 			
 	//! @brief    Prints debug information
 	void dumpState();

@@ -120,7 +120,7 @@
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		5068AFC420852A550025776C /* CPUTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5068AFC320852A550025776C /* CPUTableView.swift */; };
-		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
+		506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDBridge.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
@@ -436,8 +436,8 @@
 		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		5068AFC320852A550025776C /* CPUTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUTableView.swift; sourceTree = "<group>"; };
-		506D39D1141780E500268AF6 /* SIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDWrapper.cpp; sourceTree = "<group>"; };
-		506D39D3141780FF00268AF6 /* SIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDWrapper.h; sourceTree = "<group>"; };
+		506D39D1141780E500268AF6 /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
+		506D39D3141780FF00268AF6 /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -716,8 +716,8 @@
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
 				50171A9F2083710E00C07AAD /* SID_types.h */,
-				506D39D3141780FF00268AF6 /* SIDWrapper.h */,
-				506D39D1141780E500268AF6 /* SIDWrapper.cpp */,
+				506D39D3141780FF00268AF6 /* SIDBridge.h */,
+				506D39D1141780E500268AF6 /* SIDBridge.cpp */,
 				502C3605209F238800DE8B6D /* SIDbase.h */,
 				502C3604209F238800DE8B6D /* SIDbase.cpp */,
 				506D39D5141788E700268AF6 /* ReSID.h */,
@@ -1461,7 +1461,7 @@
 				50169F04209E045A00CB3536 /* pot.cc in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
-				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
+				506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,

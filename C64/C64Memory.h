@@ -25,7 +25,7 @@
 
 // Forward declarations
 class VIC;
-class SIDWrapper;
+class SIDBridge;
 
 /*! @brief    This class represents the RAM and ROM of a virtual C64
  *  @details  Note that the RAM, ROM, and the I/O space are superposed and therefore share the same locations 

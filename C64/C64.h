@@ -73,7 +73,7 @@
 #include "VC1541Memory.h"
 #include "VIC.h"
 #include "PixelEngine.h"
-#include "SIDWrapper.h"
+#include "SIDBridge.h"
 #include "SIDbase.h"
 #include "TOD.h"
 #include "CIA.h"
@@ -233,7 +233,7 @@ public:
     uint64_t idleCounterCIA2;
 
     //! @brief    The C64s sound chip
-    SIDWrapper sid;
+    SIDBridge sid;
     
     //! @brief    The C64s virtual keyboard
     Keyboard keyboard;

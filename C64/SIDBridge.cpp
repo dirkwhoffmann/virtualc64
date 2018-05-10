@@ -18,7 +18,7 @@
 
 #include "C64.h"
 
-SIDWrapper::SIDWrapper()
+SIDBridge::SIDBridge()
 {
 	setDescription("SIDWrapper");
     
@@ -45,14 +45,14 @@ SIDWrapper::SIDWrapper()
     useReSID = true;
 }
 
-SIDWrapper::~SIDWrapper()
+SIDBridge::~SIDBridge()
 {
     delete fastsid;
     delete resid;
 }
 
 void 
-SIDWrapper::setReSID(bool enable)
+SIDBridge::setReSID(bool enable)
 {
     if (enable)
         debug(2, "Using ReSID\n");
@@ -63,7 +63,7 @@ SIDWrapper::setReSID(bool enable)
 }
 
 void 
-SIDWrapper::dumpState()
+SIDBridge::dumpState()
 {
     if (useReSID) {
         resid->dumpState();
@@ -73,21 +73,21 @@ SIDWrapper::dumpState()
 }
 
 void
-SIDWrapper::setPAL()
+SIDBridge::setPAL()
 {
     debug(2, "SIDWrapper::setPAL\n");
     setClockFrequency(PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE);
 }
 
 void
-SIDWrapper::setNTSC()
+SIDBridge::setNTSC()
 {
     debug(2, "SIDWrapper::setNTSC\n");
     setClockFrequency(NTSC_CYCLES_PER_FRAME * NTSC_REFRESH_RATE);
 }
 
 uint8_t 
-SIDWrapper::peek(uint16_t addr)
+SIDBridge::peek(uint16_t addr)
 {
     assert(addr <= 0x1F);
     
@@ -102,7 +102,7 @@ SIDWrapper::peek(uint16_t addr)
 }
 
 uint8_t
-SIDWrapper::spy(uint16_t addr)
+SIDBridge::spy(uint16_t addr)
 {
     assert(addr <= 0x001F);
 
@@ -110,7 +110,7 @@ SIDWrapper::spy(uint16_t addr)
 }
 
 void 
-SIDWrapper::poke(uint16_t addr, uint8_t value)
+SIDBridge::poke(uint16_t addr, uint8_t value)
 {
     // Get SID up to date
     executeUntil(c64->getCycles());
@@ -121,14 +121,14 @@ SIDWrapper::poke(uint16_t addr, uint8_t value)
 }
 
 void
-SIDWrapper::executeUntil(uint64_t targetCycle)
+SIDBridge::executeUntil(uint64_t targetCycle)
 {
     execute(targetCycle - cycles);
     cycles = targetCycle;
 }
 
 inline void
-SIDWrapper::execute(uint64_t numCycles)
+SIDBridge::execute(uint64_t numCycles)
 {
     // printf("Execute SID for %lld cycles", numCycles);
     if (numCycles == 0)
@@ -142,21 +142,21 @@ SIDWrapper::execute(uint64_t numCycles)
 }
 
 void 
-SIDWrapper::run()
+SIDBridge::run()
 {   
     fastsid->run();
     resid->run();
 }
 
 void 
-SIDWrapper::halt()
+SIDBridge::halt()
 {   
     fastsid->halt();
     resid->halt();
 }
 
 void
-SIDWrapper::readMonoSamples(float *target, size_t n)
+SIDBridge::readMonoSamples(float *target, size_t n)
 {
     if (useReSID)
         resid->readMonoSamples(target, n);
@@ -165,7 +165,7 @@ SIDWrapper::readMonoSamples(float *target, size_t n)
 }
 
 void
-SIDWrapper::readStereoSamples(float *target1, float *target2, size_t n)
+SIDBridge::readStereoSamples(float *target1, float *target2, size_t n)
 {
     if (useReSID)
         resid->readStereoSamples(target1, target2, n);
@@ -174,7 +174,7 @@ SIDWrapper::readStereoSamples(float *target1, float *target2, size_t n)
 }
 
 void
-SIDWrapper::readStereoSamplesInterleaved(float *target, size_t n)
+SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
 {
     if (useReSID)
         resid->readStereoSamplesInterleaved(target, n);
@@ -183,7 +183,7 @@ SIDWrapper::readStereoSamplesInterleaved(float *target, size_t n)
 }
 
 void 
-SIDWrapper::setAudioFilter(bool enable)
+SIDBridge::setAudioFilter(bool enable)
 {
     if (enable)
         debug(2, "Enabling audio filters\n");
@@ -196,27 +196,27 @@ SIDWrapper::setAudioFilter(bool enable)
 }
 
 void
-SIDWrapper::setSamplingMethod(SamplingMethod value)
+SIDBridge::setSamplingMethod(SamplingMethod value)
 {
     resid->setSamplingMethod(value);
 }
 
 void 
-SIDWrapper::setChipModel(SIDChipModel value)
+SIDBridge::setChipModel(SIDChipModel value)
 {
     resid->setChipModel(value);
     fastsid->setChipModel(value);
 }
 
 void 
-SIDWrapper::setSampleRate(uint32_t sr)
+SIDBridge::setSampleRate(uint32_t sr)
 {
     resid->setSampleRate(sr);
     fastsid->setSampleRate(sr);
 }
 
 uint32_t
-SIDWrapper::getClockFrequency()
+SIDBridge::getClockFrequency()
 {
     if (useReSID) {
         return resid->getClockFrequency();
@@ -226,7 +226,7 @@ SIDWrapper::getClockFrequency()
 }
 
 void 
-SIDWrapper::setClockFrequency(uint32_t frequency)
+SIDBridge::setClockFrequency(uint32_t frequency)
 {
     resid->setClockFrequency(frequency);
     fastsid->setClockFrequency(frequency);
