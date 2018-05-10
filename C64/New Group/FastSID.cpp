@@ -163,7 +163,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
             break;
             
         default: // Voice independent registers
-            isDirty = true;
+            updateInternals();
     }
 
     st.d[addr] = value;
@@ -223,9 +223,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
      */
     
     initFilter(sampleRate);
-    
-    isDirty = true;
-    prepare();
+    updateInternals();
     
     /*
      if (resources_get_int("SidModel", &sid_model) < 0) {
@@ -309,12 +307,12 @@ FastSID::initFilter(int sampleRate)
 }
 
 void
-FastSID::prepare()
+FastSID::updateInternals()
 {
     assert((st.d[0x18] & 0x70) == filterType());
     assert (filterCutoff() == (0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3)));
     
-    if (isDirty && emulateFilter) {
+    if (emulateFilter) {
         st.filterType = filterType();
         if (st.filterType != st.filterCurType) {
             st.filterCurType = st.filterType;
@@ -343,8 +341,6 @@ FastSID::prepare()
         st.filterResDy = MAX(st.filterResDy, 1.0);
         assert(st.filterResDy >= 1.0);
     }
-    
-    isDirty = false;
 }
 
 int16_t
@@ -357,8 +353,6 @@ FastSID::fastsid_calculate_single_sample()
     bool sync0 = false;
     bool sync1 = false;
     bool sync2 = false;
-
-    prepare();
     
     // Advance wavetable counters
     v0->counter += v0->step;

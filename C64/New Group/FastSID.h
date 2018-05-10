@@ -101,9 +101,6 @@ public:
     //! @brief   Amplifier lookup table
     signed char ampMod1x8[256];
     
-    //! @brief   Indicates if prepare() needs to be called prior to computing samples
-    bool isDirty;
-    
 public:
     
 	//! Constructor.
@@ -206,9 +203,9 @@ private:
     //! @brief   Returns the currently set filter type
     uint8_t filterType() { return st.d[0x18] & 0x70; }
     
-    
-    //! @brief    Prepares FastSID for computing samples
-    void prepare();
+    //! @brief    Updates internal data structures
+    //! @details  This method is called on each filter related register change
+    void updateInternals();
     
     int16_t fastsid_calculate_single_sample();
 };
