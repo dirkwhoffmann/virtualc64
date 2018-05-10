@@ -127,8 +127,8 @@ Voice::prepare()
 {
     if (!isDirty) return;
 
-    uint8_t chipModel = vt.s->newsid;
-    assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);
+    SIDChipModel chipModel = fastsid->chipModel;
+    assert(chipModel == MOS_6581 || chipModel == MOS_8580);
     
     if (testBit()) {
         counter = 0;

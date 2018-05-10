@@ -88,10 +88,10 @@ public:
     void setReSID(bool enable);
     
     //! @brief    Returns the simulated chip model.
-    inline reSID::chip_model getChipModel() { return resid->getChipModel(); }
+    inline SIDChipModel getChipModel() { return resid->getChipModel(); }
     
-    //! @brief    Sets chip model (ReSID only)
-    void setChipModel(reSID::chip_model value);
+    //! @brief    Sets chip model
+    void setChipModel(SIDChipModel value);
     
     //! @brief    Returns true iff audio filters are enabled.
     inline bool getAudioFilter() { return resid->getExternalAudioFilter(); }

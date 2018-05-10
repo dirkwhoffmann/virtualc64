@@ -46,7 +46,7 @@ struct sound_s {
     uint32_t speed1;
     
     /* do we have a new sid or an old one? */
-    uint8_t newsid;
+    // uint8_t newsid;
     
     /* constants needed to implement write-only register reads */
     uint8_t laststore;
@@ -82,7 +82,7 @@ public:
     uint32_t sz[16];
     
 private:
-    
+        
     // Fast SID state
     sound_s st;
 
@@ -155,13 +155,10 @@ public:
     void setSamplingMethod(reSID::sampling_method value) { }
     
     //! Get chip model
-    reSID::chip_model getChipModel() {
-        return st.newsid ? reSID::chip_model::MOS8580 : reSID::chip_model::MOS6581; }
+    SIDChipModel getChipModel() { return chipModel; /* TODO: Update structures? */ }
     
     //! Set chip model
-    void setChipModel(reSID::chip_model value) {
-        st.newsid = (value == reSID::chip_model::MOS8580);
-    }
+    void setChipModel(SIDChipModel value) { chipModel = value; /* TODO: Update structures? */ }
     
     //! Get clock frequency
     uint32_t getClockFrequency() { return 0; }

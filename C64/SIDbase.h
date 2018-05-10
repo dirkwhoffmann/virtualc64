@@ -34,7 +34,7 @@ public:
      *           This chip must be selected to hear synthesized speech.
      *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
      */
-    reSID::chip_model chipModel;
+    SIDChipModel chipModel;
     
     /*! @brief   Switches filter emulation on or off.
      *  @details Switching off filter emulation slightly improves emulation speed.
@@ -152,10 +152,10 @@ public:
     virtual void setSamplingMethod(reSID::sampling_method value) = 0;
     
     //! Get chip model
-    virtual reSID::chip_model getChipModel() = 0;
+    virtual SIDChipModel getChipModel() = 0;
     
     //! Set chip model
-    virtual void setChipModel(reSID::chip_model value) = 0;
+    virtual void setChipModel(SIDChipModel value) = 0;
     
     //! Get clock frequency
     virtual uint32_t getClockFrequency() = 0;

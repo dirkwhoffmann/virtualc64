@@ -231,7 +231,7 @@ SIDWrapper::setSamplingMethod(reSID::sampling_method value)
 }
 
 void 
-SIDWrapper::setChipModel(reSID::chip_model value)
+SIDWrapper::setChipModel(SIDChipModel value)
 {
     resid->setChipModel(value);
 }

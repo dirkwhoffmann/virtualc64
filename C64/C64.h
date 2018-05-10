@@ -422,10 +422,10 @@ public:
     void setSamplingMethod(reSID::sampling_method value) { sid.setSamplingMethod(value); }
     
     //! @brief    Gets the SID chip model
-    reSID::chip_model getChipModel() { return sid.getChipModel(); }
+    SIDChipModel getChipModel() { return sid.getChipModel(); }
     
     //! @brief    Sets the SID chip model
-    void setChipModel(reSID::chip_model value) { sid.setChipModel(value); }
+    void setChipModel(SIDChipModel value) { sid.setChipModel(value); }
 
     
     //

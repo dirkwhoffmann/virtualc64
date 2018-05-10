@@ -43,7 +43,7 @@ FastSID::FastSID()
     
     // Set default values
     // setChipModel(reSID::MOS6581);
-    st.newsid = false; 
+    chipModel = MOS_6581;
     
     /*
     cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
@@ -206,7 +206,6 @@ int
 FastSID::init(int sampleRate, int cycles_per_sec)
 {
     uint32_t i;
-    int sid_model;
     
     // Table for internal ADSR counter step calculations
     uint16_t adrtable[16] = {
@@ -235,32 +234,11 @@ FastSID::init(int sampleRate, int cycles_per_sec)
      return 0;
      }
      */
-    sid_model = 0;
-    st.newsid = 0;
     
     // Voices
     voice[0].init(this, &st, 0, &voice[3]);
     voice[1].init(this, &st, 1, &voice[0]);
     voice[2].init(this, &st, 2, &voice[1]);
-    
-    switch (sid_model) {
-        default:
-        case 0: /* 6581 */
-        case 3: /* 6581R4 */
-        case 4: /* DTVSID */
-            st.newsid = 0;
-            break;
-        case 1: /* 8580 */
-        case 2: /* 8580 + digi boost */
-            st.newsid = 1;
-            break;
-    }
-    
-    /*
-    for (i = 0; i < 9; i++) {
-        sidreadclocks[i] = 13;
-    }
-    */
     
     return 1;
 }

@@ -97,10 +97,10 @@ public:
     void setSamplingMethod(reSID::sampling_method value);
     
     //! Get chip model 
-    reSID::chip_model getChipModel() { return chipModel; }
+    SIDChipModel getChipModel() { return (SIDChipModel)chipModel; }
     
     //! Set chip model 
-    void setChipModel(reSID::chip_model value);
+    void setChipModel(SIDChipModel value);
     
     //! Get clock frequency
     uint32_t getClockFrequency() { return cpuFrequency; }

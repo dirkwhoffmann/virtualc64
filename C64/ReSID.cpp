@@ -75,7 +75,7 @@ ReSID::ReSID()
     registerSnapshotItems(items, sizeof(items));
     
     // Set default values
-    setChipModel(reSID::MOS6581);
+    setChipModel(MOS_6581);
     
     cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
     samplingMethod = reSID::SAMPLE_FAST;
@@ -103,15 +103,15 @@ ReSID::reset()
 }
 
 void
-ReSID::setChipModel(reSID::chip_model model)
+ReSID::setChipModel(SIDChipModel model)
 {
-    if (model != reSID::MOS6581 && model != reSID::MOS8580) {
+    if (model != MOS_6581 && model != MOS_8580) {
         warn("Unknown chip model (%d). Using  MOS8580\n", model);
-        model = reSID::MOS8580;
+        model = MOS_8580;
     }
     
     chipModel = model;
-    sid->set_chip_model(model);
+    sid->set_chip_model((reSID::chip_model)model);
 }
 
 void 
