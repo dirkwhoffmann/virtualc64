@@ -87,10 +87,7 @@ private:
     
     //! @brief   Pointer to parent SID object
     class FastSID *fastsid;
-    
-    //! @brief   Indicates if prepare() needs to be called prior to computing samples
-    bool isDirty;
-        
+            
     //! @brief   Set to true if the oscillator should ring modulate
     bool ringmod;
     
@@ -176,8 +173,9 @@ public:
     //! @brief    Initialize
     void init(FastSID *owner, unsigned voiceNr, Voice *prevVoice);
 
-    //! @brief    Prepares the voice for computing samples
-    void prepare();
+    //! @brief    Updates internal data structures
+    //! @details  This method is called on each voice related register change
+    void updateInternals();
     
     //! @brief  Change ADSR state and all related variables
     void set_adsr(uint8_t fm);

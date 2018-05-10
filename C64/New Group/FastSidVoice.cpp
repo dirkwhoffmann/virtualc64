@@ -118,14 +118,13 @@ Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
     filtLow = 0;
     filtRef = 0;
     filtIO = 0;
-    isDirty = true;
+    
+    updateInternals(); 
 }
 
 void
-Voice::prepare()
+Voice::updateInternals()
 {
-    if (!isDirty) return;
-
     SIDChipModel chipModel = fastsid->chipModel;
     assert(chipModel == MOS_6581 || chipModel == MOS_8580);
     
@@ -136,9 +135,6 @@ Voice::prepare()
     } else {
         step = fastsid->st.speed1 * frequency();
     }
-    
-    assert(pulseWidth() == (sidreg[2] + (sidreg[3] & 0x0f) * 0x100));
-    assert(((sidreg[4] & 0x08) != 0) == testBit());
     
     unsigned offset;
     switch (waveform()) {
@@ -241,7 +237,6 @@ Voice::prepare()
             break;
     }
     
-    isDirty = false;
     gateflip = false;
 }
 

@@ -135,7 +135,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
             // Fallthrough
         case 0x05:
         case 0x06:
-            voice[0].isDirty = true;
+            voice[0].updateInternals();
             break;
   
         case 0x07: // Voice 2 registers
@@ -147,7 +147,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
             // Fallthrough
         case 0x0C:
         case 0x0D:
-            voice[1].isDirty = true;
+            voice[1].updateInternals();
             break;
 
         case 0x0E: // Voice 3 registers
@@ -159,7 +159,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
             // Fallthrough
         case 0x13:
         case 0x14:
-            voice[2].isDirty = true;
+            voice[2].updateInternals();
             break;
             
         default: // Voice independent registers
@@ -359,9 +359,6 @@ FastSID::fastsid_calculate_single_sample()
     bool sync2 = false;
 
     prepare();
-    v0->prepare();
-    v1->prepare();
-    v2->prepare();
     
     // Advance wavetable counters
     v0->counter += v0->step;
