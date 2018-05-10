@@ -45,13 +45,6 @@ struct sound_s {
     
     /* constants needed to implement write-only register reads */
     uint8_t laststore;
-    // uint8_t laststorebit;
-    // uint64_t laststoreclk;
-        
-    /* filter variables */
-
-    uint8_t filterType;
-    uint8_t filterCurType;
 };
 
 typedef struct sound_s sound_t;

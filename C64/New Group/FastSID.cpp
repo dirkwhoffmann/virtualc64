@@ -248,9 +248,6 @@ FastSID::initFilter(int sampleRate)
     float filterFt = (float)0.05;
     float filterAmpl = 1.0;
     
-    st.filterType = 0;
-    st.filterCurType = 0;
-    
     // Low pass lookup table
     for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
         
@@ -292,17 +289,9 @@ FastSID::initFilter(int sampleRate)
 void
 FastSID::updateInternals()
 {
-    st.filterType = filterType();
-    
-    if (st.filterType != st.filterCurType) {
-        st.filterCurType = st.filterType;
-        voice[0].filterLow = 0;
-        voice[0].filterRef = 0;
-        voice[1].filterLow = 0;
-        voice[1].filterRef = 0;
-        voice[2].filterLow = 0;
-        voice[2].filterRef = 0;
-    }
+    voice[0].setFilterType(filterType());
+    voice[1].setFilterType(filterType());
+    voice[2].setFilterType(filterType());
     
     if (filterType() == FASTSID_BAND_PASS) {
         voice[0].filterDy = bandPassParam[filterCutoff()];

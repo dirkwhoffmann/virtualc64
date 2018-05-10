@@ -285,6 +285,17 @@ Voice::updateInternals(bool gateBitFlipped)
 }
 
 void
+Voice::setFilterType(uint8_t type)
+{
+    if (filterType == type)
+        return;
+    
+    filterType = type;
+    filterLow = 0.0;
+    filterRef = 0.0;
+}
+
+void
 Voice::set_adsr(uint8_t phase)
 {
     int i;
@@ -383,19 +394,19 @@ Voice::applyFilter()
 {
     float sample, sample2;
     
-    if (fastsid->st.filterType == 0) {
+    if (filterType == 0) {
         filterIO = 0;
         return;
     }
     
-    if (fastsid->st.filterType == FASTSID_BAND_PASS) {
+    if (filterType == FASTSID_BAND_PASS) {
         filterLow += filterRef * filterDy;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         filterIO = (signed char)(filterRef - filterLow / 4);
         return;
     }
     
-    if (fastsid->st.filterType == FASTSID_HIGH_PASS) {
+    if (filterType == FASTSID_HIGH_PASS) {
         filterLow += filterRef * filterDy * 0.1;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         sample = filterRef - (filterIO / 8);
@@ -412,7 +423,7 @@ Voice::applyFilter()
     sample2 -= filterRef * filterResDy;
     filterRef += sample2 * filterDy;
     
-    switch (fastsid->st.filterType) {
+    switch (filterType) {
             
         case FASTSID_LOW_PASS:
         case FASTSID_BAND_PASS | FASTSID_LOW_PASS:

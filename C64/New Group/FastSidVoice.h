@@ -190,7 +190,10 @@ public:
     //! @brief    Updates internal data structures
     //! @details  This method is called on each voice related register change
     void updateInternals(bool gateBitFlipped);
-    
+
+    //! @brief  Sets the current filter type
+    void setFilterType(uint8_t type);
+
     //! @brief  Change ADSR state and all related variables
     void set_adsr(uint8_t fm);
     
