@@ -249,7 +249,6 @@ FastSID::initFilter(int sampleRate)
     
     float filterAmpl = 1.0;
     
-    st.filterValue = 0;
     st.filterType = 0;
     st.filterCurType = 0;
     st.filterDy = 0;
@@ -296,38 +295,25 @@ FastSID::initFilter(int sampleRate)
 void
 FastSID::updateInternals()
 {
-    assert((st.d[0x18] & 0x70) == filterType());
-    assert (filterCutoff() == (0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3)));
+    st.filterType = filterType();
     
-    if (emulateFilter) {
-        st.filterType = filterType();
-        if (st.filterType != st.filterCurType) {
-            st.filterCurType = st.filterType;
-            voice[0].filtLow = 0;
-            voice[0].filtRef = 0;
-            voice[1].filtLow = 0;
-            voice[1].filtRef = 0;
-            voice[2].filtLow = 0;
-            voice[2].filtRef = 0;
-        }
-        
-        //st.filterValue = 0x7ff & ((st.d[0x15] & 7) | ((uint16_t)st.d[0x16]) << 3);
-        st.filterValue = filterCutoff();
-        
-        assert((st.filterType == 0x20) == (filterType() == FASTSID_BAND_PASS));
-        
-        // if (st.filterType == 0x20) {
-        if (filterType() == FASTSID_BAND_PASS) {
-            st.filterDy = bandPassParam[st.filterValue];
-        } else {
-            st.filterDy = lowPassParam[st.filterValue];
-        }
-        assert((st.d[0x17] >> 4) == (filterResonance()));
-        // st.filterResDy = filterResTable[st.d[0x17] >> 4] - st.filterDy;
-        st.filterResDy = filterResTable[filterResonance()] - st.filterDy;
-        st.filterResDy = MAX(st.filterResDy, 1.0);
-        assert(st.filterResDy >= 1.0);
+    if (st.filterType != st.filterCurType) {
+        st.filterCurType = st.filterType;
+        voice[0].filtLow = 0;
+        voice[0].filtRef = 0;
+        voice[1].filtLow = 0;
+        voice[1].filtRef = 0;
+        voice[2].filtLow = 0;
+        voice[2].filtRef = 0;
     }
+    
+    if (filterType() == FASTSID_BAND_PASS) {
+        st.filterDy = bandPassParam[filterCutoff()];
+    } else {
+        st.filterDy = lowPassParam[filterCutoff()];
+    }
+    st.filterResDy = filterResTable[filterResonance()] - st.filterDy;
+    st.filterResDy = MAX(st.filterResDy, 1.0);
 }
 
 int16_t

@@ -37,25 +37,22 @@
 /* needed data for SID */
 struct sound_s {
     
-
     /* SID registers */
     uint8_t d[32];
-    
     
     /* internal constant used for sample rate dependent calculations */
     uint32_t speed1;
     
     /* constants needed to implement write-only register reads */
     uint8_t laststore;
-    uint8_t laststorebit;
-    uint64_t laststoreclk;
+    // uint8_t laststorebit;
+    // uint64_t laststoreclk;
         
     /* filter variables */
     float filterDy;
     float filterResDy;
     uint8_t filterType;
     uint8_t filterCurType;
-    uint16_t filterValue;
 };
 
 typedef struct sound_s sound_t;
