@@ -29,12 +29,7 @@ class SIDbase : public VirtualComponent {
     
 public:
     
-    /*! @brief   Currently used chip model.
-     *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
-     *           This chip must be selected to hear synthesized speech.
-     *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
-     */
-    SIDChipModel chipModel;
+
     
     /*! @brief   Switches filter emulation on or off.
      *  @details Switching off filter emulation slightly improves emulation speed.

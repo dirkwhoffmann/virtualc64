@@ -34,7 +34,8 @@ SIDBridge::SIDBridge()
         
         // Configuration items
         { &useReSID,        sizeof(useReSID),       KEEP_ON_RESET },
-        
+        { &chipModel,       sizeof(chipModel),      KEEP_ON_RESET },
+
         // Internal state
         { &latchedDataBus,  sizeof(latchedDataBus), CLEAR_ON_RESET },
         { &cycles,          sizeof(cycles),         CLEAR_ON_RESET },
@@ -182,37 +183,74 @@ SIDBridge::readStereoSamplesInterleaved(float *target, size_t n)
         fastsid->readStereoSamplesInterleaved(target, n);
 }
 
-void 
-SIDBridge::setAudioFilter(bool enable)
+bool
+SIDBridge::getAudioFilter()
 {
-    if (enable)
-        debug(2, "Enabling audio filters\n");
-    else
-        debug(2, "Disabling audio filters\n");
+    if (useReSID) {
+        return resid->getAudioFilter();
+    } else {
+        return fastsid->getAudioFilter();
+    }
+}
 
-    // resid->setAudioFilter(enable);
-    resid->setExternalAudioFilter(enable); 
-    fastsid->setAudioFilter(enable);
+void 
+SIDBridge::setAudioFilter(bool value)
+{
+    resid->setAudioFilter(value);
+    fastsid->setAudioFilter(value);
+}
+
+SamplingMethod
+SIDBridge::getSamplingMethod()
+{
+    // This option is ReSID only
+    return resid->getSamplingMethod();
 }
 
 void
 SIDBridge::setSamplingMethod(SamplingMethod value)
 {
+    // This option is ReSID only
     resid->setSamplingMethod(value);
 }
 
-void 
-SIDBridge::setChipModel(SIDChipModel value)
+SIDChipModel
+SIDBridge::getChipModel()
 {
-    resid->setChipModel(value);
-    fastsid->setChipModel(value);
+    if (useReSID) {
+        return resid->getChipModel();
+    } else {
+        return fastsid->getChipModel();
+    }
 }
 
 void 
-SIDBridge::setSampleRate(uint32_t sr)
+SIDBridge::setChipModel(SIDChipModel model)
 {
-    resid->setSampleRate(sr);
-    fastsid->setSampleRate(sr);
+    if (model != MOS_6581 && model != MOS_8580) {
+        warn("Unknown chip model (%d). Using  MOS8580\n", model);
+        model = MOS_8580;
+    }
+    
+    resid->setChipModel(model);
+    fastsid->setChipModel(model);
+}
+
+uint32_t
+SIDBridge::getSampleRate()
+{
+    if (useReSID) {
+        return resid->getSampleRate();
+    } else {
+        return fastsid->getSampleRate();
+    }
+}
+
+void 
+SIDBridge::setSampleRate(uint32_t rate)
+{
+    resid->setSampleRate(rate);
+    fastsid->setSampleRate(rate);
 }
 
 uint32_t

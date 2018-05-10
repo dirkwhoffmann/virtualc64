@@ -32,15 +32,21 @@ class SIDBridge : public VirtualComponent {
 
 private:
 
-    //! @brief    Old SID implementation
+    //! @brief    FastSID (Adapted from VICE 3.1)
     FastSID *fastsid;
 
-    //! @brief    Implementation based on the ReSID library
+    //! @brief    ReSID (Taken from VICE 3.1)
     ReSID *resid;
    
-private:
     //! @brief    SID selector
     bool useReSID;
+    
+    /*! @brief   Chip model.
+     *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
+     *           This chip must be selected to hear synthesized speech.
+     *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
+     */
+    SIDChipModel chipModel;
     
     //! @brief    Remembers latest written value
     /*! @details  Test case SID/busvalue:
@@ -74,37 +80,37 @@ public:
     void setNTSC();
     
     //! @brief    Returns true, whether ReSID or the old implementation should be used.
-    inline bool getReSID() { return useReSID; }
+    bool getReSID() { return useReSID; }
     
     //! @brief    Enables or disables the ReSID library.
     void setReSID(bool enable);
     
     //! @brief    Returns the simulated chip model.
-    inline SIDChipModel getChipModel() { return resid->getChipModel(); }
+    SIDChipModel getChipModel();
     
     //! @brief    Sets chip model
     void setChipModel(SIDChipModel value);
     
     //! @brief    Returns true iff audio filters are enabled.
-    inline bool getAudioFilter() { return resid->getExternalAudioFilter(); }
+    bool getAudioFilter();
     
     //! @brief    Enables or disables filters of SID.
     void setAudioFilter(bool enable);
     
     //! @brief    Returns the sampling method.
-    inline SamplingMethod getSamplingMethod() { return (SamplingMethod)resid->getSamplingMethod(); }
+    SamplingMethod getSamplingMethod();
     
     //! @brief    Sets the sampling method (ReSID only).
     void setSamplingMethod(SamplingMethod value);
 
     //! @brief    Returns the sample rate.
-	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
+    uint32_t getSampleRate();
     
 	//! @brief    Sets the samplerate of SID and it's 3 voices.
 	void setSampleRate(uint32_t sr);
     
     //! @brief    Returns the clock frequency.
-    inline uint32_t getClockFrequency();
+    uint32_t getClockFrequency();
     
 	//! @brief    Sets the clock frequency.
 	void setClockFrequency(uint32_t frequency);	

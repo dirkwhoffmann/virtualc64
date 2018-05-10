@@ -42,6 +42,7 @@ FastSID::FastSID()
     // Register snapshot items
     SnapshotItem items[] = {
         { &st,               sizeof(st),               CLEAR_ON_RESET },
+        { &chipModel,        sizeof(chipModel),        CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
     registerSnapshotItems(items, sizeof(items));
     
@@ -77,11 +78,21 @@ FastSID::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 }
 
-//! Dump internal state to console
 void
 FastSID::dumpState()
 {
     
+}
+
+void
+FastSID::setChipModel(SIDChipModel model)
+{
+    chipModel = model;
+    
+    // Switch wave tables according to new model
+    voice[0].updateWaveTablePtr();
+    voice[1].updateWaveTablePtr();
+    voice[2].updateWaveTablePtr();
 }
 
 //! Special peek function for the I/O memory range.

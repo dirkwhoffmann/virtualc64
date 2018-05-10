@@ -70,6 +70,9 @@ public:
 
 private:
     
+    //! @brief   Chip model.
+    SIDChipModel chipModel;
+    
     //! @brief   Last value on the data bus
     uint8_t latchedDataBus;
     
@@ -136,10 +139,10 @@ public:
     void setSamplingMethod(SamplingMethod value) { }
     
     //! Get chip model
-    SIDChipModel getChipModel() { return chipModel; /* TODO: Update structures? */ }
+    SIDChipModel getChipModel() { return chipModel; }
     
     //! Set chip model
-    void setChipModel(SIDChipModel value) { chipModel = value; /* TODO: Update structures? */ }
+    void setChipModel(SIDChipModel model);
     
     //! Get clock frequency
     uint32_t getClockFrequency() { return 0; }

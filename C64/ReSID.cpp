@@ -29,7 +29,7 @@ ReSID::ReSID()
     SnapshotItem items[] = {
         
         // Configuration items
-        { &chipModel,           sizeof(chipModel),              KEEP_ON_RESET },
+        // { &chipModel,           sizeof(chipModel),              KEEP_ON_RESET },
         { &sampleRate,          sizeof(sampleRate),             KEEP_ON_RESET },
         { &samplingMethod,      sizeof(samplingMethod),         KEEP_ON_RESET },
         { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
@@ -102,15 +102,15 @@ ReSID::reset()
     sid->reset();
 }
 
+SIDChipModel
+ReSID::getChipModel()
+{
+    return (SIDChipModel)sid->sid_model;
+}
+
 void
 ReSID::setChipModel(SIDChipModel model)
 {
-    if (model != MOS_6581 && model != MOS_8580) {
-        warn("Unknown chip model (%d). Using  MOS8580\n", model);
-        model = MOS_8580;
-    }
-    
-    chipModel = model;
     sid->set_chip_model((reSID::chip_model)model);
 }
 
@@ -162,7 +162,8 @@ ReSID::setSampleRate(uint32_t sr)
 
 void 
 ReSID::setClockFrequency(uint32_t frequency)
-{ 
+{
+    debug("Setting clock freq to %d\n", frequency);
 	cpuFrequency = frequency;
     sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
 }

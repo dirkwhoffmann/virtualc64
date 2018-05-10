@@ -97,7 +97,7 @@ public:
     void setSamplingMethod(SamplingMethod value);
     
     //! Get chip model 
-    SIDChipModel getChipModel() { return (SIDChipModel)chipModel; }
+    SIDChipModel getChipModel();
     
     //! Set chip model 
     void setChipModel(SIDChipModel value);

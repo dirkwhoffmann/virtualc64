@@ -96,7 +96,9 @@ public:
   // 16-bit output (AUDIO OUT).
   short output();
 
- protected:
+ //protected:
+public:
+    
   static double I0(double x);
   int clock_fast(cycle_count& delta_t, short* buf, int n, int interleave);
   int clock_interpolate(cycle_count& delta_t, short* buf, int n, int interleave);
