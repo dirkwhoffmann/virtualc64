@@ -70,10 +70,7 @@ typedef struct voice_s {
     // TODO: REMOVE LATER
     struct sound_s *s;
     
-    /* counter value */
-    uint32_t f;
-    
-    
+
     /* 31-bit adsr counter */
     uint32_t adsr;
     
@@ -126,8 +123,11 @@ private:
      */
     uint32_t tableOffset;
     
+    //! @brief   Counter value
+    uint32_t counter;
+    
     //! @brief   Counter steps
-    /*! @details Stored the counter steps per sample.
+    /*! @details After each sample, the counter is incremented by this amount.
      */
     uint32_t step;
     

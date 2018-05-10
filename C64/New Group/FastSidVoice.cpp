@@ -90,16 +90,16 @@ uint32_t
 Voice::doosc()
 {
     if (waveform() == FASTSID_NOISE) {
-        return ((uint32_t)NVALUE(NSHIFT(lsfr, vt.f >> 28))) << 7;
+        return ((uint32_t)NVALUE(NSHIFT(lsfr, counter >> 28))) << 7;
     }
     
     if (wavetable) {
         if (ringmod) {
-            if ((prev->vt.f >> 31) == 1) {
-                return wavetable[(vt.f + tableOffset) >> 20 /* 12 bit */] ^ 0x7FFF;
+            if ((prev->counter >> 31) == 1) {
+                return wavetable[(counter + tableOffset) >> 20 /* 12 bit */] ^ 0x7FFF;
             }
         }
-        return wavetable[(vt.f + tableOffset) >> 20 /* 12 bit */];
+        return wavetable[(counter + tableOffset) >> 20 /* 12 bit */];
     }
     
     return 0;
@@ -130,7 +130,8 @@ Voice::prepare()
     assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);
     
     if (testBit()) {
-        vt.f = step = 0;
+        counter = 0;
+        step = 0;
         lsfr = NSEED;
     } else {
         step = vt.s->speed1 * frequency();

@@ -388,36 +388,36 @@ FastSID::fastsid_calculate_single_sample()
     v2->prepare();
     
     // Advance counters
-    v0->vt.f += v0->step;
-    v1->vt.f += v1->step;
-    v2->vt.f += v2->step;
+    v0->counter += v0->step;
+    v1->counter += v1->step;
+    v2->counter += v2->step;
     
     // Check for counter overflows (waveform loops)
-    if (v0->vt.f < v0->step) {
+    if (v0->counter < v0->step) {
         v0->lsfr = NSHIFT(v0->lsfr, 16);
-        sync0 = v0->syncBit();
-    }
-    if (v1->vt.f < v1->step) {
-        v1->lsfr = NSHIFT(v1->lsfr, 16);
         sync1 = v1->syncBit();
     }
-    if (v2->vt.f < v2->step) {
-        v2->lsfr = NSHIFT(v2->lsfr, 16);
+    if (v1->counter < v1->step) {
+        v1->lsfr = NSHIFT(v1->lsfr, 16);
         sync2 = v2->syncBit();
+    }
+    if (v2->counter < v2->step) {
+        v2->lsfr = NSHIFT(v2->lsfr, 16);
+        sync0 = v0->syncBit();
     }
     
     // Perform hard sync
     if (sync0) {
-        v0->lsfr = NSHIFT(v0->lsfr, v0->vt.f >> 28);
-        v0->vt.f = 0;
+        v0->lsfr = NSHIFT(v0->lsfr, v0->counter >> 28);
+        v0->counter = 0;
     }
     if (sync1) {
-        v1->lsfr = NSHIFT(v1->lsfr, v1->vt.f >> 28);
-        v1->vt.f = 0;
+        v1->lsfr = NSHIFT(v1->lsfr, v1->counter >> 28);
+        v1->counter = 0;
     }
     if (sync2) {
-        v2->lsfr = NSHIFT(v2->lsfr, v2->vt.f >> 28);
-        v2->vt.f = 0;
+        v2->lsfr = NSHIFT(v2->lsfr, v2->counter >> 28);
+        v2->counter = 0;
     }
     
     // Do adsr
