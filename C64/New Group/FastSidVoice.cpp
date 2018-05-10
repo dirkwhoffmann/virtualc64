@@ -106,10 +106,11 @@ Voice::doosc()
 }
 
 void
-Voice::init(sound_s *psid, unsigned voiceNr, Voice *prevVoice)
+Voice::init(FastSID *owner, sound_s *psid, unsigned voiceNr, Voice *prevVoice)
 {
     assert(prevVoice != NULL);
     
+    fastsid = owner; 
     nr = voiceNr;
     prev = prevVoice;
     sidreg = psid->d + (voiceNr * 7);
@@ -255,18 +256,17 @@ Voice::set_adsr(uint8_t phase)
     switch (phase) {
             
         case FASTSID_ATTACK:
-            vt.adsrs = vt.s->adrs[attackRate()];
+            adsrInc = fastsid->adrs[attackRate()];
             vt.adsrz = 0;
             return;
             
         case FASTSID_DECAY:
-         
-            if (vt.adsr <= vt.s->sz[sustainRate()]) {
+            if (adsr <= fastsid->sz[sustainRate()]) {
                 set_adsr(FASTSID_SUSTAIN);
             } else {
-                for (i = 0; vt.adsr < exptable[i]; i++) {}
-                vt.adsrs = -vt.s->adrs[decayRate()] >> i;
-                vt.adsrz = vt.s->sz[sustainRate()];
+                for (i = 0; adsr < exptable[i]; i++) {}
+                adsrInc = -fastsid->adrs[decayRate()] >> i;
+                vt.adsrz = fastsid->sz[sustainRate()];
                 if (exptable[i] > vt.adsrz) {
                     vt.adsrz = exptable[i];
                 }
@@ -274,30 +274,27 @@ Voice::set_adsr(uint8_t phase)
             return;
             
         case FASTSID_SUSTAIN:
-            
-            if (vt.adsr > vt.s->sz[sustainRate()]) {
+            if (adsr > fastsid->sz[sustainRate()]) {
                 set_adsr(FASTSID_DECAY);
             } else {
-                vt.adsrs = 0;
+                adsrInc = 0;
                 vt.adsrz = 0;
             }
             return;
 
         case FASTSID_RELEASE:
-            
-            if (!vt.adsr) {
+            if (!adsr) {
                 set_adsr(FASTSID_IDLE);
             } else {
-                for (i = 0; vt.adsr < exptable[i]; i++) {}
-                vt.adsrs = -vt.s->adrs[releaseRate()] >> i;
+                for (i = 0; adsr < exptable[i]; i++) {}
+                adsrInc = -fastsid->adrs[releaseRate()] >> i;
                 vt.adsrz = exptable[i];
             }
             return;
             
         default:
-            
             assert(phase == FASTSID_IDLE);
-            vt.adsrs = 0;
+            adsrInc = 0;
             vt.adsrz = 0;
             return;
     }
@@ -309,15 +306,14 @@ Voice::trigger_adsr()
     switch (adsrm) {
             
         case FASTSID_ATTACK:
-            vt.adsr = 0x7fffffff;
+            adsr = 0x7fffffff;
             set_adsr(FASTSID_DECAY);
             break;
             
         case FASTSID_DECAY:
         case FASTSID_RELEASE:
-            
-            if (vt.adsr >= 0x80000000) {
-                vt.adsr = 0;
+            if (adsr >= 0x80000000) {
+                adsr = 0;
             }
             set_adsr(adsrm);
             break;

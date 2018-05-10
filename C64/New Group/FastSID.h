@@ -41,11 +41,6 @@ struct sound_s {
     /* SID registers */
     uint8_t d[32];
     
-    /* ADSR counter step values for each adsr values */
-    int32_t adrs[16];
-    
-    /* sustain values compared to 31-bit ADSR counter */
-    uint32_t sz[16];
     
     /* internal constant used for sample rate dependent calculations */
     uint32_t speed1;
@@ -75,10 +70,18 @@ typedef struct sound_s sound_t;
 */
 class FastSID : public SIDbase {
 
-private:
+public:
     
-    //! The three SID voices
+    //! @brief   The three SID voices
     Voice voice[3];
+    
+    //! @brief   ADSR counter step lookup table
+    int32_t adrs[16];
+    
+    //! @brief   Sustain comparison values loopup table
+    uint32_t sz[16];
+    
+private:
     
     // Fast SID state
     sound_s st;

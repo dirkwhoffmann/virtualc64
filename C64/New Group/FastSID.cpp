@@ -112,7 +112,7 @@ FastSID::peek(uint16_t addr)
             
             // This register allows the microprocessor to read the
             // output of the voice 3 envelope generator.
-            return (uint8_t)(voice[2].vt.adsr >> 23);
+            return (uint8_t)(voice[2].adsr >> 23);
             
         default:
             
@@ -215,8 +215,8 @@ FastSID::init(int sampleRate, int cycles_per_sec)
     
     st.speed1 = (cycles_per_sec << 8) / sampleRate;
     for (i = 0; i < 16; i++) {
-        st.adrs[i] = 500 * 8 * st.speed1 / adrtable[i];
-        st.sz[i] = 0x8888888 * i;
+        adrs[i] = 500 * 8 * st.speed1 / adrtable[i];
+        sz[i] = 0x8888888 * i;
     }
     
     /*
@@ -239,9 +239,9 @@ FastSID::init(int sampleRate, int cycles_per_sec)
     st.newsid = 0;
     
     // Voices
-    voice[0].init(&st, 0, &voice[3]);
-    voice[1].init(&st, 1, &voice[0]);
-    voice[2].init(&st, 2, &voice[1]);
+    voice[0].init(this, &st, 0, &voice[3]);
+    voice[1].init(this, &st, 1, &voice[0]);
+    voice[2].init(this, &st, 2, &voice[1]);
     
     switch (sid_model) {
         default:
@@ -387,7 +387,7 @@ FastSID::fastsid_calculate_single_sample()
     v1->prepare();
     v2->prepare();
     
-    // Advance counters
+    // Advance wavetable counters
     v0->counter += v0->step;
     v1->counter += v1->step;
     v2->counter += v2->step;
@@ -420,21 +420,26 @@ FastSID::fastsid_calculate_single_sample()
         v2->counter = 0;
     }
     
-    // Do adsr
-    if ((v0->vt.adsr += v0->vt.adsrs) + 0x80000000 < v0->vt.adsrz + 0x80000000) {
+    // Advance ADSR counters
+    v0->adsr += v0->adsrInc;
+    v1->adsr += v1->adsrInc;
+    v2->adsr += v2->adsrInc;
+    
+    // Check if we need to perform state changes
+    if (v0->adsr + 0x80000000 < v0->vt.adsrz + 0x80000000) {
         v0->trigger_adsr();
     }
-    if ((v1->vt.adsr += v1->vt.adsrs) + 0x80000000 < v1->vt.adsrz + 0x80000000) {
+    if (v1->adsr + 0x80000000 < v1->vt.adsrz + 0x80000000) {
         v1->trigger_adsr();
     }
-    if ((v2->vt.adsr += v2->vt.adsrs) + 0x80000000 < v2->vt.adsrz + 0x80000000) {
+    if (v2->adsr + 0x80000000 < v2->vt.adsrz + 0x80000000) {
         v2->trigger_adsr();
     }
     
     // Oscillators
-    osc0 = (v0->vt.adsr >> 16) * v0->doosc();
-    osc1 = (v1->vt.adsr >> 16) * v1->doosc();
-    osc2 = (v2->vt.adsr >> 16) * v2->doosc();
+    osc0 = (v0->adsr >> 16) * v0->doosc();
+    osc1 = (v1->adsr >> 16) * v1->doosc();
+    osc2 = (v2->adsr >> 16) * v2->doosc();
     
     // Silence voice 3 if it is disconnected from the output
     if (voiceThreeDisconnected()) {

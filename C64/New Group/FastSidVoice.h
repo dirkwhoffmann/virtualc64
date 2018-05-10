@@ -70,13 +70,6 @@ typedef struct voice_s {
     // TODO: REMOVE LATER
     struct sound_s *s;
     
-
-    /* 31-bit adsr counter */
-    uint32_t adsr;
-    
-    /* adsr counter step / sample */
-    int32_t adsrs;
-    
     /* adsr sustain level compared to the 31-bit counter */
     uint32_t adsrz;
     
@@ -85,6 +78,8 @@ typedef struct voice_s {
     
 
 } voice_t;
+
+class FastSID;
 
 class Voice : public VirtualComponent {
     
@@ -107,11 +102,18 @@ private:
     static uint8_t noiseMID[256];
     static uint8_t noiseLSB[256];
     
+    //! @brief   Pointer to parent SID object
+    FastSID *fastsid;
+    
     //! @brief   Indicates if prepare() needs to be called prior to computing samples
     bool isDirty;
         
     //! @brief   Set to true if the oscillator should ring modulate
     bool ringmod;
+    
+    //
+    // Wave tables
+    //
     
     //! @brief   Pointer to the active wavetable
     uint16_t *wavetable;
@@ -131,11 +133,30 @@ private:
      */
     uint32_t step;
     
+    //
+    // Waveform generator
+    //
+    
+    //! @brief   31-bit adsr counter
+    uint32_t adsr;
+    
+    //! @brief   adsr counter step per sample
+    int32_t adsrInc;
+    
+    
+    //
+    // Noise generator
+    //
+    
     //! @brief   Noise shift register
     /*! @details The Noise waveform is created using a 23-bit pseudo-random
      *           sequence generator (Linear Feedback Shift Register, LSFR)
      */
     uint32_t lsfr;
+    
+    //
+    // Filter
+    //
     
     //! @brief   Filter state
     signed char filtIO;
@@ -168,7 +189,7 @@ public:
     static void initWaveTables();
 
     //! @brief    Initialize
-    void init(sound_s *psid, unsigned voiceNr, Voice *prevVoice);
+    void init(FastSID *owner, sound_s *psid, unsigned voiceNr, Voice *prevVoice);
 
     //! @brief    Prepares the voice for computing samples
     void prepare();
