@@ -29,20 +29,12 @@
 class SIDWrapper : public VirtualComponent {
 
     friend C64Memory;
-    
-public:	
-	//! @brief    Start address of the SID I/O space.
-	static const uint16_t SID_START_ADDR = 0xD400;
-    
-	//! @brief    End address of the SID I/O space.
-	static const uint16_t SID_END_ADDR = 0xD7FF;
 
 private:
 
     //! @brief    Old SID implementation
-    FastSID *oldsid;
+    FastSID *fastsid;
 
-public:
     //! @brief    Implementation based on the ReSID library
     ReSID *resid;
    

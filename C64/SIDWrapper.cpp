@@ -22,11 +22,11 @@ SIDWrapper::SIDWrapper()
 {
 	setDescription("SIDWrapper");
     
-    oldsid = new FastSID();
+    fastsid = new FastSID();
     resid = new ReSID();
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { oldsid, resid, NULL };
+    VirtualComponent *subcomponents[] = { fastsid, resid, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
 
     // Register snapshot items
@@ -47,7 +47,7 @@ SIDWrapper::SIDWrapper()
 
 SIDWrapper::~SIDWrapper()
 {
-    delete oldsid;
+    delete fastsid;
     delete resid;
 }
 
@@ -55,9 +55,9 @@ void
 SIDWrapper::setReSID(bool enable)
 {
     if (enable)
-        debug(2, "Using ReSID library\n");
+        debug(2, "Using ReSID\n");
     else
-        debug(2, "Using old SID implementation\n");
+        debug(2, "Using FastSID\n");
     
     useReSID = enable;
 }
@@ -65,10 +65,11 @@ SIDWrapper::setReSID(bool enable)
 void 
 SIDWrapper::dumpState()
 {
-    if (useReSID)
+    if (useReSID) {
         resid->dumpState();
-    else
-        oldsid->dumpState();
+    } else {
+        fastsid->dumpState();
+    }
 }
 
 void
@@ -95,37 +96,17 @@ SIDWrapper::peek(uint16_t addr)
     
     if (useReSID) {
         return resid->peek(addr);
+    } else {
+        return fastsid->peek(addr);
     }
-    
-    // Old SID implementation (deprecated)
-    uint8_t result = latchedDataBus;
-    
-    if (addr == 0x19 || addr == 0x1A) {
-        result = 0xFF;
-    }
-    
-    if (addr == 0x1B || addr == 0x1C) {
-        result = rand();
-    }
-    
-    latchedDataBus = result;
-    return result;
 }
 
 uint8_t
 SIDWrapper::spy(uint16_t addr)
 {
     assert(addr <= 0x001F);
-    
-    if (addr == 0x19 || addr == 0x1A) {
-        return 0xFF;
-    }
-    
-    if (addr == 0x1B || addr == 0x1C) {
-        return rand();
-    }
-    
-    return latchedDataBus;
+
+    return peek(addr);
 }
 
 void 
@@ -134,8 +115,8 @@ SIDWrapper::poke(uint16_t addr, uint8_t value)
     // Get SID up to date
     executeUntil(c64->getCycles());
 
-    latchedDataBus = value;
-    oldsid->poke(addr, value);
+    // Keep both SID implementations up to date all the time
+    fastsid->poke(addr, value);
     resid->poke(addr, value);
 }
 
@@ -153,36 +134,26 @@ SIDWrapper::execute(uint64_t numCycles)
     if (numCycles == 0)
         return;
     
-    if (useReSID)
+    if (useReSID) {
         resid->execute(numCycles);
-    else
-        oldsid->execute(numCycles);
+    } else {
+        fastsid->execute(numCycles);
+    }
 }
 
 void 
 SIDWrapper::run()
 {   
-    oldsid->run();
+    fastsid->run();
     resid->run();
 }
 
 void 
 SIDWrapper::halt()
 {   
-    oldsid->halt();
+    fastsid->halt();
     resid->halt();
 }
-
-/*
-float 
-SIDWrapper::readData()
-{
-    if (useReSID)
-        return resid->readData();
-    else
-        return oldsid->readData();
-}
-*/
 
 void
 SIDWrapper::readMonoSamples(float *target, size_t n)
@@ -190,7 +161,7 @@ SIDWrapper::readMonoSamples(float *target, size_t n)
     if (useReSID)
         resid->readMonoSamples(target, n);
     else
-        oldsid->readMonoSamples(target, n);
+        fastsid->readMonoSamples(target, n);
 }
 
 void
@@ -199,7 +170,7 @@ SIDWrapper::readStereoSamples(float *target1, float *target2, size_t n)
     if (useReSID)
         resid->readStereoSamples(target1, target2, n);
     else
-        oldsid->readStereoSamples(target1, target2, n);
+        fastsid->readStereoSamples(target1, target2, n);
 }
 
 void
@@ -208,7 +179,7 @@ SIDWrapper::readStereoSamplesInterleaved(float *target, size_t n)
     if (useReSID)
         resid->readStereoSamplesInterleaved(target, n);
     else
-        oldsid->readStereoSamplesInterleaved(target, n);
+        fastsid->readStereoSamplesInterleaved(target, n);
 }
 
 void 
@@ -219,9 +190,9 @@ SIDWrapper::setAudioFilter(bool enable)
     else
         debug(2, "Disabling audio filters\n");
 
-    oldsid->setAudioFilter(enable);
     // resid->setAudioFilter(enable);
     resid->setExternalAudioFilter(enable); 
+    fastsid->setAudioFilter(enable);
 }
 
 void
@@ -234,24 +205,29 @@ void
 SIDWrapper::setChipModel(SIDChipModel value)
 {
     resid->setChipModel(value);
+    fastsid->setChipModel(value);
 }
 
 void 
 SIDWrapper::setSampleRate(uint32_t sr)
 {
-    oldsid->setSampleRate(sr);
     resid->setSampleRate(sr);
+    fastsid->setSampleRate(sr);
 }
 
 uint32_t
 SIDWrapper::getClockFrequency()
 {
-    return resid->getClockFrequency();
+    if (useReSID) {
+        return resid->getClockFrequency();
+    } else {
+        return fastsid->getClockFrequency();
+    }
 }
 
 void 
 SIDWrapper::setClockFrequency(uint32_t frequency)
 {
-    oldsid->setClockFrequency(frequency);
     resid->setClockFrequency(frequency);
+    fastsid->setClockFrequency(frequency);
 }
