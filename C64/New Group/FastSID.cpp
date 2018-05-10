@@ -378,35 +378,46 @@ FastSID::fastsid_calculate_single_sample()
     Voice *v0 = &voice[0];
     Voice *v1 = &voice[1];
     Voice *v2 = &voice[2];
-    
+    bool sync0 = false;
+    bool sync1 = false;
+    bool sync2 = false;
+
     prepare();
     v0->prepare();
     v1->prepare();
     v2->prepare();
     
-    // addfptrs, noise
-    if ((v0->vt.f += v0->vt.fs) < v0->vt.fs) {
+    // Advance counters
+    v0->vt.f += v0->step;
+    v1->vt.f += v1->step;
+    v2->vt.f += v2->step;
+    
+    // Check for counter overflows (waveform loops)
+    if (v0->vt.f < v0->step) {
         v0->vt.rv = NSHIFT(v0->vt.rv, 16);
+        sync0 = v0->syncBit();
     }
-    if ((v1->vt.f += v1->vt.fs) < v1->vt.fs) {
+    if (v1->vt.f < v1->step) {
         v1->vt.rv = NSHIFT(v1->vt.rv, 16);
+        sync1 = v1->syncBit();
     }
-    if ((v2->vt.f += v2->vt.fs) < v2->vt.fs) {
+    if (v2->vt.f < v2->step) {
         v2->vt.rv = NSHIFT(v2->vt.rv, 16);
+        sync2 = v2->syncBit();
     }
     
-    // Hard sync
-    if (v0->syncBit()) {
+    // Perform hard sync
+    if (sync0) {
         v0->vt.rv = NSHIFT(v0->vt.rv, v0->vt.f >> 28);
         v0->vt.f = 0;
     }
-    if (v2->syncBit()) {
-        v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
-        v2->vt.f = 0;
-    }
-    if (v1->syncBit()) {
+    if (sync1) {
         v1->vt.rv = NSHIFT(v1->vt.rv, v1->vt.f >> 28);
         v1->vt.f = 0;
+    }
+    if (sync2) {
+        v2->vt.rv = NSHIFT(v2->vt.rv, v2->vt.f >> 28);
+        v2->vt.f = 0;
     }
     
     // Do adsr

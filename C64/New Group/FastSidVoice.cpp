@@ -129,11 +129,11 @@ Voice::prepare()
     uint8_t chipModel = vt.s->newsid;
     assert(chipModel == 0 /* 6581 */ || chipModel == 1 /* 8580 */);
     
-    vt.fs = vt.s->speed1 * frequency();
-    
-    if (sidreg[4] & 0x08) {
-        vt.f = vt.fs = 0;
+    if (testBit()) {
+        vt.f = step = 0;
         vt.rv = NSEED;
+    } else {
+        step = vt.s->speed1 * frequency();
     }
     
     assert(pulseWidth() == (sidreg[2] + (sidreg[3] & 0x0f) * 0x100));
