@@ -61,7 +61,7 @@ FastSID::FastSID()
 
 FastSID::~FastSID()
 {
-
+    debug(3, "  Releasing FastSID...\n");
 }
 
 void
@@ -109,7 +109,7 @@ FastSID::peek(uint16_t addr)
             
         default:
             
-            return st.laststore;
+            return latchedDataBus;
     }
 }
 
@@ -165,7 +165,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
     }
 
     st.d[addr] = value;
-    st.laststore = value;
+    latchedDataBus = value;
 }
 
 /*! @brief   Execute SID
@@ -198,7 +198,7 @@ FastSID::execute(uint64_t cycles)
     writeData(buf, numSamples);
 }
 
-int
+void
 FastSID::init(int sampleRate, int cycles_per_sec)
 {
     uint32_t i;
@@ -214,16 +214,8 @@ FastSID::init(int sampleRate, int cycles_per_sec)
         sz[i] = 0x8888888 * i;
     }
     
-    /*
-     if (resources_get_int("SidFilters", &(psid->emulatefilter)) < 0) {
-     return 0;
-     }
-     */
-    
     initFilter(sampleRate);
     updateInternals();
-    
-    return 1;
 }
 
 void
@@ -289,24 +281,23 @@ FastSID::initFilter(int sampleRate)
 void
 FastSID::updateInternals()
 {
-    voice[0].setFilterType(filterType());
-    voice[1].setFilterType(filterType());
-    voice[2].setFilterType(filterType());
+    uint8_t type = filterType();
+    uint8_t res = filterResonance();
+    uint16_t cutoff = filterCutoff();
     
-    if (filterType() == FASTSID_BAND_PASS) {
-        voice[0].filterDy = bandPassParam[filterCutoff()];
-        voice[1].filterDy = bandPassParam[filterCutoff()];
-        voice[2].filterDy = bandPassParam[filterCutoff()];
-    } else {
-        voice[0].filterDy = lowPassParam[filterCutoff()];
-        voice[1].filterDy = lowPassParam[filterCutoff()];
-        voice[2].filterDy = lowPassParam[filterCutoff()];
+    for (unsigned i = 0; i < 3; i++) {
+    
+        voice[i].setFilterType(type);
+        
+        if (type == FASTSID_BAND_PASS) {
+            voice[i].filterDy = bandPassParam[cutoff];
+        } else {
+            voice[i].filterDy = lowPassParam[cutoff];
+        }
+        voice[i].filterResDy = MAX(filterResTable[res] - voice[i].filterDy, 1.0);
     }
-    voice[0].filterResDy = MAX(filterResTable[filterResonance()] - voice[0].filterDy, 1.0);
-    voice[1].filterResDy = MAX(filterResTable[filterResonance()] - voice[1].filterDy, 1.0);
-    voice[2].filterResDy = MAX(filterResTable[filterResonance()] - voice[2].filterDy, 1.0);
 }
-
+    
 int16_t
 FastSID::fastsid_calculate_single_sample()
 {
