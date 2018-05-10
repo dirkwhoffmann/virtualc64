@@ -73,6 +73,12 @@ private:
     //! @brief   Chip model.
     SIDChipModel chipModel;
     
+    //! @brief   Current CPU frequency
+    uint32_t cpuFrequency;
+    
+    //! @brief   Sample rate (44.1 kHz per default)
+    uint32_t sampleRate;
+    
     /*! @brief   Switches filter emulation on or off.
      *  @details Switching off filters slightly improves emulation speed.
      */
@@ -131,35 +137,29 @@ public:
     
     // Configuring
     
+    //! Returns the chip model
+    SIDChipModel getChipModel() { return chipModel; }
+    
+    //! Sets the chip model
+    void setChipModel(SIDChipModel model);
+    
+    //! Returns the clock frequency
+    uint32_t getClockFrequency() { return cpuFrequency; }
+    
+    //! Sets the clock frequency
+    void setClockFrequency(uint32_t frequency);
+    
+    //! Returns the sample rate
+    uint32_t getSampleRate() { return sampleRate; }
+    
+    //! Sets the sample rate
+    void setSampleRate(uint32_t rate);
+    
     //! Returns true iff audio filters should be emulated.
     bool getAudioFilter() { return emulateFilter; }
     
     //! Enable or disable audio filter emulation
     void setAudioFilter(bool value) { emulateFilter = value; }
-    
-    //! Return samplerate.
-    uint32_t getSampleRate() { return 0; } // TODO
-    
-    //! Set sample rate
-    void setSampleRate(uint32_t sr) { } // TODO
-    
-    //! Get sampling method
-    SamplingMethod getSamplingMethod() { return SID_SAMPLE_FAST; }
-    
-    //! Set sampling method
-    void setSamplingMethod(SamplingMethod value) { }
-    
-    //! Get chip model
-    SIDChipModel getChipModel() { return chipModel; }
-    
-    //! Set chip model
-    void setChipModel(SIDChipModel model);
-    
-    //! Get clock frequency
-    uint32_t getClockFrequency() { return 0; }
-    
-    //! Set clock frequency
-    void setClockFrequency(uint32_t f) { };
     
 private:
     

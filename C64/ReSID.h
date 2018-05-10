@@ -37,6 +37,9 @@ private:
     //! ReSID state
     reSID::SID::State st;
     
+    //! @brief   Sample rate (44.1 kHz per default)
+    uint32_t sampleRate;
+    
 public:
 		
 	//! Constructor.
@@ -72,41 +75,37 @@ public:
 
     // Configuring
     
-    //! Returns true iff audio filters are enabled.
-    bool getAudioFilter() { return audioFilter; }
-
-    //! Returns true iff external audio filters are enabled.
-    bool getExternalAudioFilter() { return externalAudioFilter; }
-
-	//! Enable or disable reSIDs audio filtering capability
-	void setAudioFilter(bool enable);
-
-    //! Enable or disable reSIDs external audio filtering capability
-    void setExternalAudioFilter(bool enable);
-
-    //! Return samplerate.
+    //! Returns the chip model
+    SIDChipModel getChipModel() { return (SIDChipModel)sid->sid_model; }
+    
+    //! Sets the chip model
+    void setChipModel(SIDChipModel value);
+    
+    //! Returns the clock frequency
+    uint32_t getClockFrequency() { return (uint32_t)sid->clock_frequency; }
+    
+    //! Sets the clock frequency
+    void setClockFrequency(uint32_t frequency);
+    
+    //! Returns the sample rate
     uint32_t getSampleRate() { return sampleRate; }
     
-	//! Set sample rate 
-	void setSampleRate(uint32_t sr);
+    //! Sets the sample rate
+    void setSampleRate(uint32_t rate);
     
+    //! Returns true iff audio filters should be emulated.
+    bool getAudioFilter() { return audioFilter; }
+    
+    //! Enable or disable audio filter emulation
+	void setAudioFilter(bool enable);
+
     //! Get sampling method
-    SamplingMethod getSamplingMethod() { return (SamplingMethod)samplingMethod; }
+    SamplingMethod getSamplingMethod() { return (SamplingMethod)sid->sampling; }
     
     //! Set sampling method
     void setSamplingMethod(SamplingMethod value);
     
-    //! Get chip model 
-    SIDChipModel getChipModel();
-    
-    //! Set chip model 
-    void setChipModel(SIDChipModel value);
-    
-    //! Get clock frequency
-    uint32_t getClockFrequency() { return cpuFrequency; }
-    
-	//! Set clock frequency
-    void setClockFrequency(uint32_t f);
+ 
 
 };
 

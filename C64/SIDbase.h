@@ -39,17 +39,17 @@ public:
     /*! @brief   Sample rate
      *  @details By default, a sample rate of 44.1 kHz is used.
      */
-    uint32_t sampleRate;
+    // uint32_t sampleRate;
     
     /*! @brief   Sampling method used by the reSID library
      */
-    SamplingMethod samplingMethod;
+    // SamplingMethod samplingMethod;
     
     /*! @brief   Current CPU frequency
      *  @details This variable must always mirror the frequency of the C64 CPU to get the
      *           proper audio samples at the right time. The CPU frequency differs in PAL and NTSC mode.
      */
-    uint32_t cpuFrequency;
+    // uint32_t cpuFrequency;
     
     /*! @brief   Configuration option offered by the reSID library
      */
@@ -135,28 +135,22 @@ public:
     // virtual void setAudioFilter(bool value) { emulateFilter = value; }
     
     //! Return samplerate.
-    virtual uint32_t getSampleRate() = 0;
+    // virtual uint32_t getSampleRate() = 0;
     
     //! Set sample rate
-    virtual void setSampleRate(uint32_t sr) = 0;
-    
-    //! Get sampling method
-    virtual SamplingMethod getSamplingMethod() = 0;
-    
-    //! Set sampling method
-    virtual void setSamplingMethod(SamplingMethod value) = 0;
+    // virtual void setSampleRate(uint32_t sr) = 0;
     
     //! Get chip model
-    virtual SIDChipModel getChipModel() = 0;
+    // virtual SIDChipModel getChipModel() = 0;
     
     //! Set chip model
-    virtual void setChipModel(SIDChipModel value) = 0;
+    // virtual void setChipModel(SIDChipModel value) = 0;
     
     //! Get clock frequency
-    virtual uint32_t getClockFrequency() = 0;
+    // virtual uint32_t getClockFrequency() = 0;
     
     //! Set clock frequency
-    virtual void setClockFrequency(uint32_t f) = 0;
+    // virtual void setClockFrequency(uint32_t f) = 0;
     
     //
     // Volume control

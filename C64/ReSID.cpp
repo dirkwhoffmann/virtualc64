@@ -31,10 +31,10 @@ ReSID::ReSID()
         // Configuration items
         // { &chipModel,           sizeof(chipModel),              KEEP_ON_RESET },
         { &sampleRate,          sizeof(sampleRate),             KEEP_ON_RESET },
-        { &samplingMethod,      sizeof(samplingMethod),         KEEP_ON_RESET },
-        { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
-        { &audioFilter,         sizeof(audioFilter),            KEEP_ON_RESET },
-        { &externalAudioFilter, sizeof(externalAudioFilter),    KEEP_ON_RESET },
+        // { &samplingMethod,      sizeof(samplingMethod),         KEEP_ON_RESET },
+        // { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
+        // { &audioFilter,         sizeof(audioFilter),            KEEP_ON_RESET },
+        // { &externalAudioFilter, sizeof(externalAudioFilter),    KEEP_ON_RESET },
         { &volume,              sizeof(volume),                 KEEP_ON_RESET },
         { &targetVolume,        sizeof(targetVolume),           KEEP_ON_RESET },
         
@@ -75,15 +75,13 @@ ReSID::ReSID()
     registerSnapshotItems(items, sizeof(items));
     
     // Set default values
-    setChipModel(MOS_6581);
-    
-    cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
-    samplingMethod = SID_SAMPLE_FAST;
+    sid->set_chip_model(reSID::MOS6581);
     sampleRate = 44100;
-    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
+    sid->set_sampling_parameters((double)PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE,
+                                 reSID::SAMPLE_FAST,
+                                 (double)sampleRate);
     
-    setAudioFilter(false);
-    setExternalAudioFilter(false);
+    setAudioFilter(true);
     
     volume = 100000;
     targetVolume = 100000;
@@ -102,72 +100,48 @@ ReSID::reset()
     sid->reset();
 }
 
-SIDChipModel
-ReSID::getChipModel()
-{
-    return (SIDChipModel)sid->sid_model;
-}
-
 void
 ReSID::setChipModel(SIDChipModel model)
 {
     sid->set_chip_model((reSID::chip_model)model);
 }
 
-void 
-ReSID::setAudioFilter(bool enable)
-{
-    audioFilter = enable;
-    sid->enable_filter(enable);
-}
-
 void
-ReSID::setExternalAudioFilter(bool enable)
+ReSID::setClockFrequency(uint32_t value)
 {
-    externalAudioFilter = enable;
-    sid->enable_external_filter(enable);
-}
-
-void 
-ReSID::setSamplingMethod(SamplingMethod method)
-{
-    switch (method) {
-        case SID_SAMPLE_FAST:
-            debug(2, "Using sample method SAMPLE_FAST\n");
-            break;
-        case SID_SAMPLE_INTERPOLATE:
-            debug(2, "Using sample method SAMPLE_INTERPOLATE\n");
-            break;
-        case SID_SAMPLE_RESAMPLE:
-            debug(2, "Using sample method SAMPLE_RESAMPLE\n");
-            break;
-        case SID_SAMPLE_RESAMPLE_FASTMEM:
-            debug(2, "Using sample method SAMPLE_RESAMPLE_FASTMEM\n");
-            break;
-        default:
-            warn("Unknown sample method. Using SAMPLE_FAST\n");
-            method = SID_SAMPLE_FAST;
-    }
+    double frequency = (double)value;
+    reSID::sampling_method method = sid->sampling;
+    double rate = (double)sampleRate;
     
-    samplingMethod = method;
-    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
+    sid->set_sampling_parameters(frequency, method, rate);
 }
 
 void
-ReSID::setSampleRate(uint32_t sr)
+ReSID::setSampleRate(uint32_t value)
 {
-    sampleRate = sr;
-    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
+    double frequency = sid->clock_frequency;
+    reSID::sampling_method method = sid->sampling;
+    double rate = (double)value;
+    
+    sid->set_sampling_parameters(frequency, method, rate);
 }
 
 void 
-ReSID::setClockFrequency(uint32_t frequency)
+ReSID::setAudioFilter(bool value)
 {
-    debug("Setting clock freq to %d\n", frequency);
-	cpuFrequency = frequency;
-    sid->set_sampling_parameters(cpuFrequency, (reSID::sampling_method)samplingMethod, sampleRate);
+    audioFilter = value;
+    sid->enable_filter(value);
 }
 
+void 
+ReSID::setSamplingMethod(SamplingMethod value)
+{
+    double frequency = sid->clock_frequency;
+    reSID::sampling_method method = (reSID::sampling_method)value;
+    double rate = (double)sampleRate;
+    
+    sid->set_sampling_parameters(frequency, method, rate);
+}
 
 void
 ReSID::loadFromBuffer(uint8_t **buffer)
@@ -227,8 +201,8 @@ ReSID::dumpState()
 {
 	msg("SID\n");
 	msg("---\n\n");
-	msg("   Sample rate : %d\n", sampleRate);
-	msg(" CPU frequency : %d\n", cpuFrequency);
+    msg("   Sample rate : %d\n", getSampleRate());
+    msg(" CPU frequency : %d\n", getClockFrequency());
 	msg("   Buffer size : %d\n", bufferSize);
 	msg("\n");
 }

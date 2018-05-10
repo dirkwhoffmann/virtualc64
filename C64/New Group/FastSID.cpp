@@ -42,8 +42,11 @@ FastSID::FastSID()
     // Register snapshot items
     SnapshotItem items[] = {
         { &st,               sizeof(st),               CLEAR_ON_RESET },
-        { &chipModel,        sizeof(chipModel),        CLEAR_ON_RESET },
+        { &chipModel,        sizeof(chipModel),        KEEP_ON_RESET },
+        { &cpuFrequency,     sizeof(cpuFrequency),     CLEAR_ON_RESET },
+        { &sampleRate,       sizeof(sampleRate),       CLEAR_ON_RESET },
         { &emulateFilter,    sizeof(emulateFilter),    CLEAR_ON_RESET },
+        { &latchedDataBus,   sizeof(latchedDataBus),   CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
     registerSnapshotItems(items, sizeof(items));
     
@@ -59,6 +62,8 @@ FastSID::FastSID()
     emulateFilter = true;
     volume = 100000;
     targetVolume = 100000;
+    
+    reset();
 }
 
 FastSID::~FastSID()
@@ -70,7 +75,12 @@ void
 FastSID::reset()
 {
     VirtualComponent::reset();
-    init(44100, PAL_CYCLES_PER_SECOND);
+    
+    cpuFrequency = PAL_CYCLES_PER_SECOND;
+    sampleRate = 44100;
+    emulateFilter = true;
+    
+    init(sampleRate, cpuFrequency);
 }
 
 void
@@ -94,6 +104,24 @@ FastSID::setChipModel(SIDChipModel model)
     voice[0].updateWaveTablePtr();
     voice[1].updateWaveTablePtr();
     voice[2].updateWaveTablePtr();
+}
+
+void
+FastSID::setClockFrequency(uint32_t frequency)
+{
+    cpuFrequency = frequency;
+    
+    // Recompute frequency dependent data structures
+    init(sampleRate, cpuFrequency);
+}
+
+void
+FastSID::setSampleRate(uint32_t rate)
+{
+    sampleRate = rate;
+    
+    // Recompute sample rate dependent data structures
+    init(sampleRate, cpuFrequency);
 }
 
 //! Special peek function for the I/O memory range.
