@@ -381,61 +381,55 @@ Voice::doosc()
 void
 Voice::applyFilter()
 {
+    float sample, sample2;
+    
     if (fastsid->st.filterType == 0) {
         filterIO = 0;
         return;
     }
     
-    if (fastsid->st.filterType == 0x20) {
+    if (fastsid->st.filterType == FASTSID_BAND_PASS) {
         filterLow += filterRef * filterDy;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         filterIO = (signed char)(filterRef - filterLow / 4);
-    } else if (fastsid->st.filterType == 0x40) {
-        float sample;
-        filterLow += (float)((filterRef * filterDy) * 0.1);
-        filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
-        sample = filterRef - (filterIO / 8);
-        if (sample < -128) {
-            sample = -128;
-        }
-        if (sample > 127) {
-            sample = 127;
-        }
-        filterIO = (signed char)sample;
-    } else {
-        int tmp;
-        float sample, sample2;
-        filterLow += filterRef * filterDy;
-        sample = filterIO;
-        sample2 = sample - filterLow;
-        tmp = (int)sample2;
-        sample2 -= filterRef * filterResDy;
-        filterRef += sample2 * filterDy;
-        
-        assert(FASTSID_LOW_PASS == 0x10);
-        assert((FASTSID_BAND_PASS | FASTSID_LOW_PASS) == 0x30);
-        assert((FASTSID_HIGH_PASS | FASTSID_LOW_PASS) == 0x50);
-        assert((FASTSID_HIGH_PASS | FASTSID_BAND_PASS) == 0x60);
-        switch (fastsid->st.filterType) {
-                
-            case FASTSID_LOW_PASS:
-            case FASTSID_BAND_PASS | FASTSID_LOW_PASS:
-                filterIO = (signed char)filterLow;
-                break;
-                
-            case FASTSID_HIGH_PASS | FASTSID_LOW_PASS:
-            case FASTSID_HIGH_PASS | FASTSID_BAND_PASS | FASTSID_LOW_PASS:
-                filterIO = (signed char)((int)(sample) - (tmp >> 1));
-                break;
-                
-            case FASTSID_HIGH_PASS | FASTSID_BAND_PASS:
-                filterIO = (signed char)tmp;
-                break;
-                
-            default:
-                filterIO = 0;
-        }
+        return;
     }
     
-
+    if (fastsid->st.filterType == FASTSID_HIGH_PASS) {
+        filterLow += filterRef * filterDy * 0.1;
+        filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
+        sample = filterRef - (filterIO / 8);
+        sample = MAX(sample, -128);
+        sample = MIN(sample, 127);
+        filterIO = (signed char)sample;
+        return;
+    }
+    
+    filterLow += filterRef * filterDy;
+    sample = filterIO;
+    sample2 = sample - filterLow;
+    int tmp = (int)sample2;
+    sample2 -= filterRef * filterResDy;
+    filterRef += sample2 * filterDy;
+    
+    switch (fastsid->st.filterType) {
+            
+        case FASTSID_LOW_PASS:
+        case FASTSID_BAND_PASS | FASTSID_LOW_PASS:
+            filterIO = (signed char)filterLow;
+            break;
+            
+        case FASTSID_HIGH_PASS | FASTSID_LOW_PASS:
+        case FASTSID_HIGH_PASS | FASTSID_BAND_PASS | FASTSID_LOW_PASS:
+            filterIO = (signed char)((int)(sample) - (tmp >> 1));
+            break;
+            
+        case FASTSID_HIGH_PASS | FASTSID_BAND_PASS:
+            filterIO = (signed char)tmp;
+            break;
+            
+        default:
+            assert(false); 
+            filterIO = 0;
+    }
 }
