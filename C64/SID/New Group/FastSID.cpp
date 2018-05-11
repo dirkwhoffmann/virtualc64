@@ -95,7 +95,14 @@ void
 FastSID::dumpState()
 {
     SIDInfo info = getInfo();
-    
+
+    msg("    Chip model: %s\n",
+        (chipModel == MOS_6581) ? "6581" :
+        (chipModel == MOS_8580) ? "8580" : "???");
+    msg(" Sampling rate: %d\n", sampleRate);
+    msg(" CPU frequency: %d\n", cpuFrequency);
+    msg("Emulate filter: %s\n", emulateFilter ? "yes" : "no");
+
     uint8_t ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
     msg("   Filter type: %s\n",

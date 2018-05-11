@@ -95,6 +95,10 @@ void
 ReSID::setChipModel(SIDChipModel model)
 {
     sid->set_chip_model((reSID::chip_model)model);
+    
+    debug("Emulating SID model %s.\n",
+          (model == reSID::MOS6581) ? "MOS6581" :
+          (model == reSID::MOS8580) ? "MOS8580" : "?");
 }
 
 void
@@ -105,6 +109,8 @@ ReSID::setClockFrequency(uint32_t value)
     double rate = (double)sampleRate;
     
     sid->set_sampling_parameters(frequency, method, rate);
+    
+    debug("Changing clock frequency to %d\n", value);
 }
 
 void
@@ -115,6 +121,8 @@ ReSID::setSampleRate(uint32_t value)
     double rate = (double)value;
     
     sid->set_sampling_parameters(frequency, method, rate);
+    
+    debug("Changing sample rate to %d\n", value);
 }
 
 void 
@@ -122,6 +130,8 @@ ReSID::setAudioFilter(bool value)
 {
     emulateFilter = value;
     sid->enable_filter(value);
+    
+    debug("%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
 }
 
 void 
@@ -132,6 +142,12 @@ ReSID::setSamplingMethod(SamplingMethod value)
     double rate = (double)sampleRate;
     
     sid->set_sampling_parameters(frequency, method, rate);
+    
+    debug("Changing ReSID sampling method to %s.\n",
+          (method == reSID::SAMPLE_FAST) ? "SAMPLE_FAST" :
+          (method == reSID::SAMPLE_INTERPOLATE) ? "SAMPLE_INTERPOLATE" :
+          (method == reSID::SAMPLE_RESAMPLE) ? "SAMPLE_RESAMPLE" :
+          (method == reSID::SAMPLE_RESAMPLE_FASTMEM) ? "SAMPLE_RESAMPLE_FASTMEM" : "?");
 }
 
 void
@@ -166,9 +182,11 @@ ReSID::execute(uint64_t elapsedCycles)
     short buf[2049];
     int buflength = 2048;
     
-    if (elapsedCycles > PAL_CYCLES_PER_SECOND)
+    if (elapsedCycles > PAL_CYCLES_PER_SECOND) {
+        warn("Number of missing SID cycles is far too large.\n");
         elapsedCycles = PAL_CYCLES_PER_SECOND;
-    
+    }
+
     reSID::cycle_count delta_t = (reSID::cycle_count)elapsedCycles;
     int bufindex = 0;
     

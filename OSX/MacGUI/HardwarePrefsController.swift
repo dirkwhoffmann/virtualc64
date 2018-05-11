@@ -21,9 +21,9 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var driveNoise: NSButton!
     
     // Audio
-    @IBOutlet weak var SIDFilter: NSButton!
-    @IBOutlet weak var SIDUseReSID: NSButton!
     @IBOutlet weak var SIDChipModel: NSPopUpButton!
+    @IBOutlet weak var SIDFilter: NSButton!
+    @IBOutlet weak var SIDEngine: NSPopUpButton!
     @IBOutlet weak var SIDSamplingMethod: NSPopUpButton!
 
     override func awakeFromNib() {
@@ -50,11 +50,9 @@ class HardwarePrefsController : UserDialogController {
         driveNoise.state = c64.vc1541.soundMessagesEnabled() ? .on : .off
         
         // Audio
-        SIDUseReSID.state = c64.reSID() ? .on : .off
-        SIDFilter.isEnabled = c64.reSID()
-        SIDFilter.state = c64.audioFilter() ? .on : .off
-        SIDChipModel.isEnabled = c64.reSID()
         SIDChipModel.selectItem(withTag: Int(c64.chipModel()))
+        SIDFilter.state = c64.audioFilter() ? .on : .off
+        SIDEngine.selectItem(withTag: (c64.reSID() ? 1 : 0))
         SIDSamplingMethod.isEnabled = c64.reSID()
         SIDSamplingMethod.selectItem(withTag: Int(c64.samplingMethod()))
     }
@@ -94,10 +92,10 @@ class HardwarePrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func SIDReSIDAction(_ sender: Any!) {
+    @IBAction func SIDEngineAction(_ sender: Any!) {
     
-        let sender = sender as! NSButton
-        c64.setReSID(sender.state == .on)
+        let sender = sender as! NSPopUpButton
+        c64.setReSID(sender.selectedTag() == 1);
         update()
     }
     
