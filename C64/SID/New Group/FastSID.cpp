@@ -46,6 +46,9 @@ FastSID::FastSID()
         { &chipModel,        sizeof(chipModel),        KEEP_ON_RESET },
         { &cpuFrequency,     sizeof(cpuFrequency),     CLEAR_ON_RESET },
         { &sampleRate,       sizeof(sampleRate),       CLEAR_ON_RESET },
+        { &samplesPerCycle,  sizeof(samplesPerCycle),  CLEAR_ON_RESET },
+        { &executedCycles,   sizeof(executedCycles),   CLEAR_ON_RESET },
+        { &computedSamples,  sizeof(computedSamples),  CLEAR_ON_RESET },
         { &emulateFilter,    sizeof(emulateFilter),    CLEAR_ON_RESET },
         { &latchedDataBus,   sizeof(latchedDataBus),   CLEAR_ON_RESET },
         { NULL,              0,                        0 }};
@@ -105,19 +108,19 @@ FastSID::dumpState()
         
         uint8_t wf = info.voice[i].waveform;
         msg("Voice %d:       Frequency: %d\n", i, info.voice[i].frequency);
-        msg("              Pulse width: %d\n", info.voice[i].pulseWidth);
-        msg("                 Waveform: %s\n",
+        msg("             Pulse width: %d\n", info.voice[i].pulseWidth);
+        msg("                Waveform: %s\n",
             (wf == FASTSID_NOISE) ? "NOISE" :
             (wf == FASTSID_PULSE) ? "PULSE" :
             (wf == FASTSID_SAW) ? "SAW" :
             (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
-        msg("          Ring modulation: %s\n", info.voice[i].ringMod ? "yes" : "no");
-        msg("                Hard sync: %s\n", info.voice[i].hardSync ? "yes" : "no");
-        msg("              Attack rate: %d\n", info.voice[i].attackRate);
-        msg("               Decay rate: %d\n", info.voice[i].decayRate);
-        msg("             Sustain rate: %d\n", info.voice[i].sustainRate);
-        msg("             Release rate: %d\n", info.voice[i].releaseRate);
-        msg("             Apply filter: %s\n\n", info.voice[i].filterOn ? "yes" : "no");
+        msg("         Ring modulation: %s\n", info.voice[i].ringMod ? "yes" : "no");
+        msg("               Hard sync: %s\n", info.voice[i].hardSync ? "yes" : "no");
+        msg("             Attack rate: %d\n", info.voice[i].attackRate);
+        msg("              Decay rate: %d\n", info.voice[i].decayRate);
+        msg("            Sustain rate: %d\n", info.voice[i].sustainRate);
+        msg("            Release rate: %d\n", info.voice[i].releaseRate);
+        msg("            Apply filter: %s\n\n", info.voice[i].filterOn ? "yes" : "no");
     }
 }
 
@@ -267,19 +270,23 @@ FastSID::execute(uint64_t cycles)
 {
     int16_t buf[2049];
     int buflength = 2048;
+
+    executedCycles += cycles;
+
+    // Compute how many sound samples should have been computed
+    uint64_t shouldHave = executedCycles * samplesPerCycle;
     
-    // debug("executing for %d cycles\n", cycles);
+    // How many sound samples are missing?
+    uint64_t numSamples = shouldHave - computedSamples;
+    computedSamples = shouldHave;
     
-    // How many samples do we need?
-    // For now, we assume a sample rate of 44100
-    int numSamples = (int)(cycles * 44100 / PAL_CYCLES_PER_SECOND);
-    
+    // Do some consistency checking
     if (numSamples > buflength) {
-        debug("Number of samples exceeds buffer size\n");
+        debug("Number of missing sound samples exceeds buffer size\n");
         numSamples = buflength;
     }
     
-    // Compute samples
+    // Compute missing samples
     for (unsigned i = 0; i < numSamples; i++) {
         buf[i] = calculateSingleSample();
     }
@@ -293,6 +300,11 @@ FastSID::init(int sampleRate, int cycles_per_sec)
 {
     uint32_t i;
     
+    // Recompute sample/cycle ratio and reset counters
+    samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
+    executedCycles = 0LL;
+    computedSamples = 0LL;
+
     // Table for internal ADSR counter step calculations
     uint16_t adrtable[16] = {
         1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000

@@ -64,6 +64,15 @@ private:
     //! @brief   Sample rate (44.1 kHz per default)
     uint32_t sampleRate;
     
+    //! @brief    Ratio between sample rate and cpu frequency
+    double   samplesPerCycle;
+    
+    //! @brief   Stores for how many cycles FastSID was executed so far
+    uint64_t executedCycles;
+
+    //! @brief   Stores how many sound samples were computed so far
+    uint64_t computedSamples;
+
     //! @brief   Switches filter emulation on or off.
     bool emulateFilter;
     

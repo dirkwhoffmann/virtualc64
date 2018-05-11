@@ -20,7 +20,7 @@
 
 SIDBridge::SIDBridge()
 {
-	setDescription("SIDWrapper");
+	setDescription("SIDBridge");
     
     fastsid.bridge = this;
     resid.bridge = this;
@@ -133,14 +133,21 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
 void
 SIDBridge::executeUntil(uint64_t targetCycle)
 {
-    execute(targetCycle - cycles);
+    uint64_t missingCycles = targetCycle - cycles;
+    
+    if (missingCycles > PAL_CYCLES_PER_SECOND) {
+        debug("Far too many SID cycles are missing.\n");
+        missingCycles = PAL_CYCLES_PER_SECOND;
+    }
+    
+    execute(missingCycles);
     cycles = targetCycle;
 }
 
-inline void
+void
 SIDBridge::execute(uint64_t numCycles)
 {
-    // printf("Execute SID for %lld cycles", numCycles);
+    // debug("Execute SID for %lld cycles (%d samples in buffer)\n", numCycles, samplesInBuffer());
     if (numCycles == 0)
         return;
     
@@ -353,13 +360,13 @@ SIDBridge::writeData(short *data, size_t count)
 void
 SIDBridge::handleBufferUnderflow()
 {
-    debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+    debug(3, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
 }
 
 void
 SIDBridge::handleBufferOverflow()
 {
-    debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+    debug(3, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
     
     if (!c64->getWarp()) {
         // In real-time mode, we readjust the write pointer
