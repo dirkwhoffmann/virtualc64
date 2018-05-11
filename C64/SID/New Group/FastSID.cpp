@@ -41,7 +41,8 @@ FastSID::FastSID()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        { &st,               sizeof(st),               CLEAR_ON_RESET },
+        { &sidreg,           sizeof(sidreg),           CLEAR_ON_RESET },
+        { &speed1,           sizeof(speed1),           CLEAR_ON_RESET },
         { &chipModel,        sizeof(chipModel),        KEEP_ON_RESET },
         { &cpuFrequency,     sizeof(cpuFrequency),     CLEAR_ON_RESET },
         { &sampleRate,       sizeof(sampleRate),       CLEAR_ON_RESET },
@@ -161,7 +162,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
             
         // Voice 1 registers
         case 0x04:
-            gateBitFlipped = (st.d[0x04] ^ value) & 1;
+            gateBitFlipped = (sidreg[0x04] ^ value) & 1;
             // Fallthrough
         case 0x00:
         case 0x01:
@@ -174,7 +175,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
   
         // Voice 2 registers
         case 0x0B:
-            gateBitFlipped = (st.d[0x0B] ^ value) & 1;
+            gateBitFlipped = (sidreg[0x0B] ^ value) & 1;
             // Fallthrough
         case 0x07:
         case 0x08:
@@ -187,7 +188,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
 
         // Voice 3 registers
         case 0x12:
-            gateBitFlipped = (st.d[0x12] ^ value) & 1;
+            gateBitFlipped = (sidreg[0x12] ^ value) & 1;
             // Fallthrough
         case 0x0E:
         case 0x0F:
@@ -202,7 +203,7 @@ FastSID::poke(uint16_t addr, uint8_t value)
             updateInternals();
     }
 
-    st.d[addr] = value;
+    sidreg[addr] = value;
     latchedDataBus = value;
 }
 
@@ -246,9 +247,9 @@ FastSID::init(int sampleRate, int cycles_per_sec)
         1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
     };
     
-    st.speed1 = (cycles_per_sec << 8) / sampleRate;
+    speed1 = (cycles_per_sec << 8) / sampleRate;
     for (i = 0; i < 16; i++) {
-        adrs[i] = 500 * 8 * st.speed1 / adrtable[i];
+        adrs[i] = 500 * 8 * speed1 / adrtable[i];
         sz[i] = 0x8888888 * i;
     }
     

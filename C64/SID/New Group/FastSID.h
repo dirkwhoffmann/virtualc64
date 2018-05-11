@@ -32,20 +32,6 @@
 #include "VirtualComponent.h"
 #include "FastSidVoice.h"
 
-/* needed data for SID */
-struct sound_s {
-    
-    /* SID registers */
-    uint8_t d[32];
-    
-    /* internal constant used for sample rate dependent calculations */
-    uint32_t speed1;
-    
-
-};
-
-typedef struct sound_s sound_t;
-
 
 //! The virtual sound interface device (SID)
 /*! SID is the sound chip of the Commodore 64.
@@ -58,20 +44,17 @@ public:
     //! Pointer to bridge object
     class SIDBridge *bridge;
     
-    //! @brief   The three SID voices
-    Voice voice[3];
+    //! @brief   SID registers
+    uint8_t sidreg[32];
     
-    //! @brief   ADSR counter step lookup table
-    int32_t adrs[16];
+    //! @brief   Internal constant used for sample rate dependent calculations
+    uint32_t speed1;
     
-    //! @brief   Sustain comparison values loopup table
-    uint32_t sz[16];
-    
-    // Fast SID state
-    sound_s st;
-
 private:
     
+    //! @brief   The three SID voices
+    Voice voice[3];
+        
     //! @brief   Chip model.
     SIDChipModel chipModel;
     
@@ -86,6 +69,16 @@ private:
     
     //! @brief   Last value on the data bus
     uint8_t latchedDataBus;
+    
+public:
+    
+    //! @brief   ADSR counter step lookup table
+    int32_t adrs[16];
+    
+    //! @brief   Sustain comparison values loopup table
+    uint32_t sz[16];
+    
+private:
     
     //! @brief   Low pass filter lookup table
     /*! @details Needs to be updated when the sample rate changes
@@ -175,34 +168,34 @@ private:
     //
     
     //! @brief   Returns the currently set SID volume
-    uint8_t sidVolume() { return st.d[0x18] & 0x0F; }
+    uint8_t sidVolume() { return sidreg[0x18] & 0x0F; }
     
     //! @brief    Returns true iff voice 3 is disconnected from the audio output
     /*! @details  Setting voice 3 to bypass the filter (FILT3 = 0) and setting
      *            bit 7 in the Mod/Vol register to one prevents voice 3 from
      *            reaching the audio output.
      */
-    bool voiceThreeDisconnected() { return filterOff(2) && (st.d[0x18] & 0x80); }
+    bool voiceThreeDisconnected() { return filterOff(2) && (sidreg[0x18] & 0x80); }
     
     // Filter related configuration items
     
     //! @brief   Returns the filter cutoff frequency (11 bit value)
-    uint16_t filterCutoff() { return (st.d[0x16] << 3) | (st.d[0x15] & 0x07); }
+    uint16_t filterCutoff() { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
 
     //! @brief    Returns the filter resonance (4 bit value)
-    uint8_t filterResonance() { return st.d[0x17] >> 4; }
+    uint8_t filterResonance() { return sidreg[0x17] >> 4; }
 
     //! @brief    Returns true iff the specified voice schould be filtered
-    bool filterOn(unsigned voice) { return GET_BIT(st.d[0x17], voice) != 0; }
+    bool filterOn(unsigned voice) { return GET_BIT(sidreg[0x17], voice) != 0; }
 
     //! @brief    Returns true iff the specified voice schould not be filtered
-    bool filterOff(unsigned voice) { return GET_BIT(st.d[0x17], voice) == 0; }
+    bool filterOff(unsigned voice) { return GET_BIT(sidreg[0x17], voice) == 0; }
 
     //! @brief    Returns true iff the EXTERNAL filter bit is set
-    bool filterExtBit() { return st.d[0x17] & 0x08; }
+    bool filterExtBit() { return sidreg[0x17] & 0x08; }
 
     //! @brief   Returns the currently set filter type
-    uint8_t filterType() { return st.d[0x18] & 0x70; }
+    uint8_t filterType() { return sidreg[0x18] & 0x70; }
     
     //! @brief    Updates internal data structures
     //! @details  This method is called on each filter related register change

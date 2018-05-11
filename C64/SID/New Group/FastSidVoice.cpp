@@ -138,7 +138,7 @@ Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
     nr = voiceNr;
     fastsid = owner; 
     prev = prevVoice;
-    sidreg = owner->st.d + (voiceNr * 7);
+    sidreg = owner->sidreg + (voiceNr * 7);
 }
 
 void
@@ -197,7 +197,7 @@ Voice::updateInternals(bool gateBitFlipped)
         step = 0;
         lsfr = NSEED;
     } else {
-        step = fastsid->st.speed1 * frequency();
+        step = fastsid->speed1 * frequency();
     }
     
     unsigned offset;
