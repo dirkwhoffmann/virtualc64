@@ -41,6 +41,16 @@ private:
     //! @brief    SID selector
     bool useReSID;
     
+    //! @brief    Current clock cycle since power up
+    uint64_t cycles;
+    
+    //! @brief    Value of X potentiometer
+    uint8_t potX;
+
+    //! @brief    Value of Y potentiometer
+    uint8_t potY;
+
+    
     //
     // Audio ringbuffer
     //
@@ -257,11 +267,6 @@ public:
      */
     void alignWritePtr() { writePtr = (readPtr + (8 * 735)) % bufferSize; }
     
-private:
-    
-    //! @brief    Current clock cycle since power up
-    uint64_t cycles;
-
 public:
     
     /*! @brief    Executes SID until a certain cycle is reached
@@ -276,7 +281,7 @@ public:
 
     
 	//
-	// Accessig device data
+	// Accessig device properties
 	//
     
 public:
@@ -289,6 +294,12 @@ public:
     
 	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);
+    
+    //! @brief    Sets the X potentiometer value
+    void setPotX(uint8_t value) { potX = value; }
+
+    //! @brief    Sets the Y potentiometer value
+    void setPotY(uint8_t value) { potY = value; }
 };
 
 #endif

@@ -9,10 +9,61 @@ import Foundation
 
 extension MyController : NSWindowDelegate {
     
+    open override func mouseDown(with event: NSEvent) {
+
+        track();
+    }
+    
+    open override func mouseMoved(with event: NSEvent) {
+       
+        // let x = Int(NSEvent.mouseLocation.x)
+        // let y = Int(NSEvent.mouseLocation.y)
+        
+        // Compute mouse position relative to the emulator window
+        let locationInView = metalScreen.convert(event.locationInWindow, from: nil)
+        let width = metalScreen.frame.width
+        let height = metalScreen.frame.height
+        let x = (width == 0) ? 0 : Double(locationInView.x / width)
+        let y = (height == 0) ? 0 : Double(locationInView.y / height)
+        
+        // Translate into C64 coordinates (this is a hack)
+        let scalex = 380
+        let scaley = 267 
+        var c64x = Int(x * Double(scalex)) + 22
+        var c64y = Int(y * Double(scaley)) + 10
+        c64x = (c64x < 0) ? 0 : (c64x > scalex) ? scalex : c64x
+        c64y = (c64y < 0) ? 0 : (c64y > scaley) ? scaley : c64y
+
+        track("Location = (\(x),\(y)) (\(c64x),\(c64y))");
+        
+        /* Mouse  movement  is  tracked internally within the mouse. The
+         * position of the mouse MOD 64  is  transmitted to the SID  POTX
+         * and  POTY  registers  every  512  microsecond  and requires no
+         * software intervention.
+         * The  POTX  register  is  used  to read X position of the mouse
+         * and the POTY register is used to read Y position of the mouse.
+         * The register contents are as follows:
+         *
+         *                  +-------------------------------+
+         * Bit Position     | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+         *                  +---+---+---+---+---+---+---+---+
+         * POT Register     | X | P5| P4| P3| P2| P1| P0| N |
+         *                  +-------------------------------+
+         */
+        let potX = UInt8((c64x % 64) << 1)
+        let potY = UInt8((c64y % 64) << 1)
+
+        c64.sid.setPotX(potX)
+        c64.sid.setPotY(potY)
+    }
+    
     public func windowDidBecomeMain(_ notification: Notification) {
         
         // track()
         c64.enableAudio()
+        
+        // Register for mouse move events
+        window?.acceptsMouseMovedEvents = true
     }
     
     public func windowDidResignMain(_ notification: Notification) {

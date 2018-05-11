@@ -40,7 +40,7 @@ struct VicWrapper;
 struct CiaWrapper;
 struct KeyboardWrapper;
 struct JoystickWrapper;
-struct SidWrapperWrapper; // Yes, it's a double wrapper
+struct SidBridgeWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
 struct Via6522Wrapper;
@@ -291,16 +291,18 @@ struct ContainerWrapper;
 
 @interface SIDProxy : NSObject {
     
-	struct SidWrapperWrapper *wrapper;
+	struct SidBridgeWrapper *wrapper;
 }
 
 - (void) dump;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
-- (float) getSample;
+// - (float) getSample;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
+- (void) setPotX:(uint8_t)value;
+- (void) setPotY:(uint8_t)value;
 
 @end
 

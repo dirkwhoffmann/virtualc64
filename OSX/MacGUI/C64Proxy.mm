@@ -27,7 +27,7 @@ struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct JoystickWrapper { Joystick *joystick; };
-struct SidWrapperWrapper { SIDBridge *sid; };
+struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct Via6522Wrapper { VIA6522 *via; };
@@ -332,7 +332,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (instancetype) initWithSID:(SIDBridge *)sid
 {
     if (self = [super init]) {
-        wrapper = new SidWrapperWrapper();
+        wrapper = new SidBridgeWrapper();
         wrapper->sid = sid;
     }
     return self;
@@ -341,11 +341,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->sid->dumpState(); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
+/*
 - (float) getSample {
     float sample;
     [self readMonoSamples:&sample size:1];
     return sample;
 }
+ */
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
     wrapper->sid->readMonoSamples(target, n);
 }
@@ -355,6 +357,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
     wrapper->sid->readStereoSamplesInterleaved(target, n);
 }
+
+- (void) setPotX:(uint8_t)value { wrapper->sid->setPotX(value); }
+- (void) setPotY:(uint8_t)value { wrapper->sid->setPotY(value); }
 
 @end
 
