@@ -71,8 +71,6 @@ void
 SIDBridge::setReSID(bool enable)
 {
     useReSID = enable;
-    debug(2, enable ? "Using ReSID\n" : "Using FastSID\n");
-    dumpState(); 
 }
 
 void 

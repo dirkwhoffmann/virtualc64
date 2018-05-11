@@ -26,4 +26,25 @@ typedef enum {
     SID_SAMPLE_RESAMPLE_FASTMEM
 } SamplingMethod;
 
+/*! @brief    SID info
+ *  @details  Used by SIDBridge::getInfo() to collect debug information
+ */
+typedef struct {
+    struct {
+        uint16_t frequency;
+        uint16_t pulseWidth;
+        uint8_t waveform;
+        bool ringMod;
+        bool hardSync;
+        uint8_t attackRate;
+        uint8_t decayRate;
+        uint8_t sustainRate;
+        uint8_t releaseRate;
+        bool filterOn;
+    } voice[3];
+    uint8_t volume; 
+    uint16_t filterCutoff;
+    uint8_t filterType;
+} SIDInfo;
+
 #endif

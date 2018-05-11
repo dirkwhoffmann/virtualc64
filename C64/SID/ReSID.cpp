@@ -186,8 +186,8 @@ ReSID::execute(uint64_t elapsedCycles)
 void
 ReSID::dumpState()
 {
-	msg("SID\n");
-	msg("---\n\n");
+	msg("ReSID\n");
+	msg("-----\n\n");
     msg("   Sample rate : %d\n", getSampleRate());
     msg(" CPU frequency : %d\n", getClockFrequency());
 	msg("\n");

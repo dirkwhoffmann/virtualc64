@@ -91,7 +91,58 @@ FastSID::loadFromBuffer(uint8_t **buffer)
 void
 FastSID::dumpState()
 {
+    SIDInfo info = getInfo();
     
+    uint8_t ft = info.filterType;
+    msg("        Volume: %d\n", info.volume);
+    msg("   Filter type: %s\n",
+        (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
+        (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
+        (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
+    msg("Filter cut off: %d\n\n", info.filterCutoff);
+
+    for (unsigned i = 0; i < 3; i++) {
+        
+        uint8_t wf = info.voice[i].waveform;
+        msg("Voice %d:       Frequency: %d\n", i, info.voice[i].frequency);
+        msg("              Pulse width: %d\n", info.voice[i].pulseWidth);
+        msg("                 Waveform: %s\n",
+            (wf == FASTSID_NOISE) ? "NOISE" :
+            (wf == FASTSID_PULSE) ? "PULSE" :
+            (wf == FASTSID_SAW) ? "SAW" :
+            (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
+        msg("          Ring modulation: %s\n", info.voice[i].ringMod ? "yes" : "no");
+        msg("                Hard sync: %s\n", info.voice[i].hardSync ? "yes" : "no");
+        msg("              Attack rate: %d\n", info.voice[i].attackRate);
+        msg("               Decay rate: %d\n", info.voice[i].decayRate);
+        msg("             Sustain rate: %d\n", info.voice[i].sustainRate);
+        msg("             Release rate: %d\n", info.voice[i].releaseRate);
+        msg("             Apply filter: %s\n\n", info.voice[i].filterOn ? "yes" : "no");
+    }
+}
+
+SIDInfo
+FastSID::getInfo()
+{
+    SIDInfo info;
+ 
+    for (unsigned i = 0; i < 3; i++) {
+        info.voice[i].frequency = voice[i].frequency();
+        info.voice[i].pulseWidth = voice[i].pulseWidth();
+        info.voice[i].waveform = voice[i].waveform();
+        info.voice[i].ringMod = voice[i].ringModBit();
+        info.voice[i].hardSync = voice[i].syncBit();
+        info.voice[i].attackRate = voice[i].attackRate();
+        info.voice[i].decayRate = voice[i].decayRate();
+        info.voice[i].sustainRate = voice[i].sustainRate();
+        info.voice[i].releaseRate = voice[i].releaseRate();
+        info.voice[i].filterOn = filterOn(i);
+    }
+    info.volume = sidVolume();
+    info.filterType = filterType();
+    info.filterCutoff = filterCutoff();
+    
+    return info;
 }
 
 void
@@ -230,7 +281,7 @@ FastSID::execute(uint64_t cycles)
     
     // Compute samples
     for (unsigned i = 0; i < numSamples; i++) {
-        buf[i] = fastsid_calculate_single_sample();
+        buf[i] = calculateSingleSample();
     }
     
     // Write samples into ringbuffer
@@ -338,7 +389,7 @@ FastSID::updateInternals()
 }
     
 int16_t
-FastSID::fastsid_calculate_single_sample()
+FastSID::calculateSingleSample()
 {
     uint32_t osc0, osc1, osc2;
     Voice *v0 = &voice[0];

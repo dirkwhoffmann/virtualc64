@@ -115,6 +115,9 @@ public:
     //! Dump internal state to console
     void dumpState();
     
+    //! @brief    Gathers the debug information which is printed out by dumpState().
+    SIDInfo getInfo();
+    
     //! Special peek function for the I/O memory range.
     uint8_t peek(uint16_t addr);
     
@@ -127,8 +130,13 @@ public:
      */
     void execute(uint64_t cycles);
     
+    //! @brief   Computes a single sound sample
+    int16_t calculateSingleSample();
     
-    // Configuring
+    
+    //
+    //! @functiongroup Configuring the device
+    //
     
     //! Returns the chip model
     SIDChipModel getChipModel() { return chipModel; }
@@ -164,7 +172,7 @@ private:
     
     
     //
-    // Querying configuration items
+    //! @functiongroup Accessing device properties
     //
     
     //! @brief   Returns the currently set SID volume
@@ -197,11 +205,10 @@ private:
     //! @brief   Returns the currently set filter type
     uint8_t filterType() { return sidreg[0x18] & 0x70; }
     
+    
     //! @brief    Updates internal data structures
     //! @details  This method is called on each filter related register change
     void updateInternals();
-    
-    int16_t fastsid_calculate_single_sample();
 };
 
 #endif
