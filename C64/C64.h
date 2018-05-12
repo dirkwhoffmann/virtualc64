@@ -24,8 +24,8 @@
 
 // TODO:
 // Rename Joystick to ControlPort (DONE)
-// Move targetPotX stuff to ControlPort
-// Add menu option (hide mouse)
+// Move targetPotX stuff to ControlPort (DONE)
+// Add menu option "Hide mouse" (DONE)
 // Add "Analog mouse" to Control port options
 // Simulate mouse button presses
 //

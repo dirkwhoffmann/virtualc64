@@ -75,6 +75,9 @@ extension MyController {
         
         // Enable fullscreen mode
         window?.collectionBehavior = .fullScreenPrimary
+        
+        // Disable area tracking
+        trackingArea = nil
     }
     
     func setListener() {

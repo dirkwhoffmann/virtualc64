@@ -238,14 +238,6 @@ public class MetalView: MTKView {
                                   width: rect.width / C64Texture.orig.width,
                                   height: rect.height / C64Texture.orig.height)
         
-
-        /*
-        textureXStart = Float(rect.minX / C64Texture.orig.width)
-        textureXEnd = Float(rect.maxX / C64Texture.orig.width)
-        textureYStart = Float(rect.minY / C64Texture.orig.height)
-        textureYEnd = Float(rect.maxY / C64Texture.orig.height)
-        */
-        
         // Enable this for debugging (will display the whole texture)
         // textureXStart = 0.0;
         // textureXEnd = 1.0;

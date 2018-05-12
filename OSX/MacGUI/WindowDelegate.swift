@@ -30,29 +30,23 @@ extension MyController : NSWindowDelegate {
         return NSMakePoint(c64x,c64y)
     }
     
+    open override func mouseEntered(with event: NSEvent) {
+        track()
+        NSCursor.hide();
+    }
+    
+    open override func mouseExited(with event: NSEvent) {
+        track()
+        NSCursor.unhide();
+    }
+    
     open override func mouseMoved(with event: NSEvent) {
        
         // Compute mouse position relative to the emulator window
         let locationInView = metalScreen.convert(event.locationInWindow, from: nil)
         let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
         
-        // track("Location = (\(locationInView.x),\(locationInView.y)) (\(locationInC64.x),\(locationInC64.y))");
-        
-        /* Mouse  movement  is  tracked internally within the mouse. The
-         * position of the mouse MOD 64  is  transmitted to the SID  POTX
-         * and  POTY  registers  every  512  microsecond  and requires no
-         * software intervention.
-         * The  POTX  register  is  used  to read X position of the mouse
-         * and the POTY register is used to read Y position of the mouse.
-         * The register contents are as follows:
-         *
-         *                  +-------------------------------+
-         * Bit Position     | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-         *                  +---+---+---+---+---+---+---+---+
-         * POT Register     | X | P5| P4| P3| P2| P1| P0| N |
-         *                  +-------------------------------+
-         */
-
+        // Pass coordinate to control port
         c64.port1.setMouseTargetX(Int(locationInC64.x))
         c64.port1.setMouseTargetY(Int(locationInC64.y))
     }

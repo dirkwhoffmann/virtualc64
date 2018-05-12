@@ -17,6 +17,11 @@ extension MyController {
             return true
         }
         
+        if item.action == #selector(MyController.hideMouseAction(_:)) {
+            item.title = (trackingArea == nil) ? "Hide Mouse Cursor" : "Show Mouse Cursor"
+            return true
+        }
+        
         // Keyboard menu
         if item.action == #selector(MyController.mapKeysByPositionAction(_:)) {
             item.state = keyboardcontroller.mapKeysByPosition ? .on : .off
@@ -228,7 +233,26 @@ extension MyController {
             statusBar = false
         }
     }
+    
+    @IBAction func hideMouseAction(_ sender: Any!) {
         
+        undoManager?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.hideMouseAction(sender)
+        }
+        
+        if trackingArea != nil {
+            metalScreen.removeTrackingArea(trackingArea)
+            trackingArea = nil
+        } else {
+            trackingArea = NSTrackingArea(rect: metalScreen.bounds,
+                                          options: [.mouseEnteredAndExited,
+                                                    .activeInKeyWindow],
+                                          owner: self,
+                                          userInfo: nil)
+            metalScreen.addTrackingArea(trackingArea)
+        }
+    }
+    
     // -----------------------------------------------------------------
     // Action methods (Keyboard menu)
     // -----------------------------------------------------------------

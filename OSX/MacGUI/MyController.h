@@ -279,6 +279,9 @@
     
     //! @brief   Indicates if user dialog should be skipped when opening archives
     bool autoMount;
+    
+    //! @brief   Tracking area for receiving mouseEntered, mouseExited events
+    NSTrackingArea *trackingArea;
 }
 
 @property (strong) C64Proxy *c64;
@@ -322,6 +325,7 @@
 @property NSInteger gamepadSlotA;
 @property NSInteger gamepadSlotB;
 @property bool autoMount;
+@property NSTrackingArea *trackingArea;
 
 @property NSTimer *timer;
 @property NSLock *timerLock;
