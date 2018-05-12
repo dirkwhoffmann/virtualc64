@@ -1075,14 +1075,14 @@ CIA1::updatePA()
 {
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 
-    // Get lines which are driven actively low by port B
-    uint8_t rowMask = ~PRB & DDRB & c64->joystickA.bitmask();
+    // Get lines which are driven actively low by port 2
+    uint8_t rowMask = ~PRB & DDRB & c64->port1.bitmask();
     
     // Pull lines low that are connected by a pressed key
     PA &= c64->keyboard.getColumnValues(rowMask);
     
     // The control port can always bring the port lines low
-    PA &= c64->joystickB.bitmask();
+    PA &= c64->port2.bitmask();
 }
 
 //                    -------
@@ -1114,8 +1114,8 @@ CIA1::updatePB()
 {
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
-    // Get lines which are driven actively low by port A
-    uint8_t columnMask = ~PRA & DDRA & c64->joystickB.bitmask();
+    // Get lines which are driven actively low by port 1
+    uint8_t columnMask = ~PRA & DDRA & c64->port2.bitmask();
     
     // Pull lines low that are connected by a pressed key
     PB &= c64->keyboard.getRowValues(columnMask);
@@ -1129,7 +1129,7 @@ CIA1::updatePB()
         COPY_BIT(PB67TimerOut, PB, 7);
     
     // The control port can always bring the port lines low
-    PB &= c64->joystickA.bitmask();
+    PB &= c64->port1.bitmask();
     
     // PB4 is connected to the VIC (LP pin).
     c64->vic.setLP(GET_BIT(PB, 4) != 0);

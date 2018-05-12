@@ -244,10 +244,10 @@ public:
     Keyboard keyboard;
     
     //! @brief    Control port 1
-    ControlPort joystickA = ControlPort(1);
+    ControlPort port1 = ControlPort(1);
 
     //! @brief    Control port 2
-    ControlPort joystickB = ControlPort(2);
+    ControlPort port2 = ControlPort(2);
 
     //! @brief    Bus interface for connecting the VC1541 drive
     IEC iec;

@@ -31,7 +31,7 @@ private:
     //! @brief    Indicates whether this object represents control port 1 or control port 2
     /*! @details  Value must be either 1 or 2
      */
-    int port;
+    int nr;
     
     //! @brief    True, if button is pressed
     bool button;
@@ -61,8 +61,8 @@ public:
     //! @brief    Method from VirtualComponent
     void dumpState();
 
-    int getPort() { return port; }
-    void setPort(int p) { assert(p == 1 || p == 2); port = p; }
+    // int getPortNr() { return nr; }
+    // void setPort(int p) { assert(p == 1 || p == 2); port = p; }
     
     //! @brief   Triggers a joystick event
     void trigger(JoystickEvent event);

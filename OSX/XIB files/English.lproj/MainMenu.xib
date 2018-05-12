@@ -311,7 +311,7 @@ CA
                                                                         <action selector="dumpC64SID:" target="-1" id="490"/>
                                                                     </connections>
                                                                 </menuItem>
-                                                                <menuItem title="Expansion port" id="527">
+                                                                <menuItem title="Expansion Port" id="527">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="dumpC64ExpansionPort:" target="-1" id="530"/>
@@ -369,19 +369,19 @@ CA
                                                             <action selector="dumpKeyboard:" target="-1" id="508"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Joystick port 1" id="531">
+                                                    <menuItem title="Control Port 1" id="531">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="dumpC64JoystickA:" target="-1" id="T6M-Xr-kHQ"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Joystick port 2" id="537">
+                                                    <menuItem title="Control Port 2" id="537">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="dumpC64JoystickB:" target="-1" id="Wk0-ml-hsq"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="IEC bus" id="439">
+                                                    <menuItem title="IEC Bus" id="439">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="dumpIEC:" target="-1" id="499"/>

@@ -98,8 +98,8 @@ C64::C64()
         &floppy,
         &datasette,
         &keyboard,
-        &joystickA,
-        &joystickB,
+        &port1,
+        &port2,
         NULL };
     
     registerSubComponents(subcomponents, sizeof(subcomponents));

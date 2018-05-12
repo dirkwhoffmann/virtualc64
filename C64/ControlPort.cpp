@@ -20,12 +20,13 @@
  
 #include "C64.h"
 
-ControlPort::ControlPort(int p) {
+ControlPort::ControlPort(int portNr) {
 
-    assert(p == 1 || p == 2);
+    assert(portNr == 1 || portNr == 2);
     
+    nr = portNr;
     setDescription("ControlPort");
-    debug(3, "    Creating controlPort %d at address %p...\n", p, this);
+    debug(3, "    Creating controlPort %d at address %p...\n", nr, this);
 }
 
 ControlPort::~ControlPort()
@@ -54,7 +55,7 @@ ControlPort::loadFromBuffer(uint8_t **buffer)
 void
 ControlPort::dumpState()
 {
-    msg("ControlPort port %d\n", port);
+    msg("ControlPort port %d\n", nr);
     msg("------------------\n");
     msg("Button:  %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
     msg("Bitmask: %02X\n", bitmask());
