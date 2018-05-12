@@ -67,7 +67,7 @@ extension MyController {
         return true
     }
    
-    func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: JoystickProxy!) {
+    func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
         
         
         let menu =  popup.menu

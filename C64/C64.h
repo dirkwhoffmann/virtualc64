@@ -18,12 +18,18 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.10
+// RELEASE NOTES FOR NEXT RELEASE: 1.11
 //
-// This release contains various compatibility improvements
-// Fixed a bug that caused the GUI to crash when double-clicking an empty row in the mount window.
+// Sound engines from VICE 3.1 have been ported to VirtualC64 (both ReSID and FastSID)
 
 // TODO:
+// Rename Joystick to ControlPort
+// Move targetPotX stuff to ControlPort
+// Add menu option (hide mouse)
+// Add "Analog mouse" to Control port options
+// Simulate mouse button presses
+//
+//
 //
 // Introduce VIC::getInfo
 // Introduce CPU::getInfo
@@ -67,7 +73,7 @@
 #include "ExpansionPort.h"
 #include "IEC.h"
 #include "Keyboard.h"
-#include "Joystick.h"
+#include "ControlPort.h"
 #include "Memory.h"
 #include "C64Memory.h"
 #include "VC1541Memory.h"
@@ -231,28 +237,28 @@ public:
     //! @brief    Number of skipped executions of CIA2
     uint64_t idleCounterCIA2;
 
-    //! @brief    The C64s sound chip
+    //! @brief    Sound chip
     SIDBridge sid;
     
-    //! @brief    The C64s virtual keyboard
+    //! @brief    Virtual keyboard
     Keyboard keyboard;
     
-    //! @brief    The C64s first virtual joystick (plugged into CONTROL PORT 1)
-    Joystick joystickA = Joystick(1);
+    //! @brief    Control port 1
+    ControlPort joystickA = ControlPort(1);
 
-    //! @brief    The C64s second virtual joystick (plugged into CONTROL PORT 2)
-    Joystick joystickB = Joystick(2);
+    //! @brief    Control port 2
+    ControlPort joystickB = ControlPort(2);
 
-    //! @brief    The C64s interface bus connecting the VC1541 drive
+    //! @brief    Bus interface for connecting the VC1541 drive
     IEC iec;
 
-    //! @brief    The C64s virtual expansion port (cartdrige slot)
+    //! @brief    Expansion port (cartdrige slot)
     ExpansionPort expansionport;
 
-    //! @brief    A virtual VC1541 floppy drive
+    //! @brief    Commodore VC1541 floppy drive
     VC1541 floppy;
 
-    //! @brief    A virtual datasette
+    //! @brief    Commodore 1530 (C2N) Datasette
     Datasette datasette;
 
     //

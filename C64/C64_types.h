@@ -9,7 +9,7 @@
 #include "SID_types.h"
 #include "Memory_types.h"
 #include "Cartridge_types.h"
-#include "Joystick_types.h"
+#include "ControlPort_types.h"
 
 /*! @brief    Color schemes
  *  @details  Predefined RGB color values

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		023024000DC902A700F8818A /* AudioDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 023023FF0DC902A700F8818A /* AudioDevice.mm */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
-		389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */; };
+		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		38AF838C0C7BA24A00F6DBCE /* joystick32_speedlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */; };
 		38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF838B0C7BA24A00F6DBCE /* none32.png */; };
 		5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */; };
@@ -266,8 +266,8 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* V64_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V64_Prefix.pch; sourceTree = "<group>"; };
-		389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
-		389E777F0C7A3B6F00BEAFA6 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
+		389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
+		389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPort.h; sourceTree = "<group>"; };
 		38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_speedlink.png; sourceTree = "<group>"; };
 		38AF838B0C7BA24A00F6DBCE /* none32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none32.png; sourceTree = "<group>"; };
 		5000471012DCE8890098D890 /* MyControllerCpuPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCpuPanel.h; sourceTree = "<group>"; };
@@ -329,7 +329,7 @@
 		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
 		50171AA02083716000C07AAD /* CPU_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_types.h; sourceTree = "<group>"; };
 		50171AA12083722C00C07AAD /* Memory_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Memory_types.h; sourceTree = "<group>"; };
-		50171AA22083727400C07AAD /* Joystick_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick_types.h; sourceTree = "<group>"; };
+		50171AA22083727400C07AAD /* ControlPort_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlPort_types.h; sourceTree = "<group>"; };
 		50171AA3208372CF00C07AAD /* Cartridge_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge_types.h; sourceTree = "<group>"; };
 		50171AA4208373E600C07AAD /* TOD_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TOD_types.h; sourceTree = "<group>"; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
@@ -720,9 +720,9 @@
 				50FF16FB205D17F5000A729A /* ProcessorPort.cpp */,
 				50176C5A0A6F72F3009E80BD /* Keyboard.h */,
 				50176C590A6F72F3009E80BD /* Keyboard.cpp */,
-				389E777F0C7A3B6F00BEAFA6 /* Joystick.h */,
-				50171AA22083727400C07AAD /* Joystick_types.h */,
-				389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */,
+				389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */,
+				50171AA22083727400C07AAD /* ControlPort_types.h */,
+				389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,
 				5020F28B0BBABE3C0093C396 /* IEC.cpp */,
 			);
@@ -1412,7 +1412,7 @@
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
 				50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */,
-				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
+				389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				50169F0A209E045A00CB3536 /* dac.cc in Sources */,

@@ -26,7 +26,7 @@ struct MemoryWrapper { Memory *mem; };
 struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
-struct JoystickWrapper { Joystick *joystick; };
+struct ControlPortWrapper { ControlPort *joystick; };
 struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
@@ -307,13 +307,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-@implementation JoystickProxy
+@implementation ControlPortProxy
 
-- (instancetype) initWithJoystick:(Joystick *)joystick
+- (instancetype) initWithJoystick:(ControlPort *)port
 {
     if (self = [super init]) {
-        wrapper = new JoystickWrapper();
-        wrapper->joystick = joystick;
+        wrapper = new ControlPortWrapper();
+        wrapper->joystick = port;
     }
     return self;
 }
@@ -606,8 +606,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
 	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
-    joystickA = [[JoystickProxy alloc] initWithJoystick:&c64->joystickA];
-    joystickB = [[JoystickProxy alloc] initWithJoystick:&c64->joystickB];
+    joystickA = [[ControlPortProxy alloc] initWithJoystick:&c64->joystickA];
+    joystickB = [[ControlPortProxy alloc] initWithJoystick:&c64->joystickB];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];

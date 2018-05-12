@@ -1,38 +1,39 @@
-/*
- * Authors: Benjamin Klein (Original)
- *          Dirk W. Hoffmann (Further development) 
+/*!
+ * @header      ControlPort.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2018 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
 #include "C64.h"
 
-Joystick::Joystick(int p) {
+ControlPort::ControlPort(int p) {
 
     assert(p == 1 || p == 2);
     
-    setDescription("Joystick");
-    debug(3, "    Creating game port %c at address %p...\n", p, this);
+    setDescription("ControlPort");
+    debug(3, "    Creating controlPort %d at address %p...\n", p, this);
 }
 
-Joystick::~Joystick()
+ControlPort::~ControlPort()
 {
 }
 
 void
-Joystick::reset()
+ControlPort::reset()
 {
     VirtualComponent::reset();
 
@@ -42,7 +43,7 @@ Joystick::reset()
 }
 
 void
-Joystick::loadFromBuffer(uint8_t **buffer)
+ControlPort::loadFromBuffer(uint8_t **buffer)
 {
     // Discard any active joystick movements
     button = false;
@@ -51,16 +52,16 @@ Joystick::loadFromBuffer(uint8_t **buffer)
 }
 
 void
-Joystick::dumpState()
+ControlPort::dumpState()
 {
-    msg("Joystick port\n");
-    msg("-------------\n");
+    msg("ControlPort port %d\n", port);
+    msg("------------------\n");
     msg("Button:  %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
     msg("Bitmask: %02X\n", bitmask());
 }
 
 void
-Joystick::trigger(JoystickEvent event)
+ControlPort::trigger(JoystickEvent event)
 {
     switch (event) {
             
@@ -98,7 +99,7 @@ Joystick::trigger(JoystickEvent event)
 }
 
 uint8_t
-Joystick::bitmask() {
+ControlPort::bitmask() {
     
     uint8_t result = 0xFF;
     

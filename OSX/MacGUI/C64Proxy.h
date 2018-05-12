@@ -39,7 +39,7 @@ struct MemoryWrapper;
 struct VicWrapper;
 struct CiaWrapper;
 struct KeyboardWrapper;
-struct JoystickWrapper;
+struct ControlPortWrapper;
 struct SidBridgeWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
@@ -258,9 +258,9 @@ struct ContainerWrapper;
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-@interface JoystickProxy : NSObject {
+@interface ControlPortProxy : NSObject {
     
-    struct JoystickWrapper *wrapper;
+    struct ControlPortWrapper *wrapper;
 }
 
 - (void) trigger:(JoystickEvent)event; 
@@ -488,8 +488,8 @@ struct ContainerWrapper;
 	CIAProxy *cia2;
 	SIDProxy *sid;
 	KeyboardProxy *keyboard;
-    JoystickProxy *joystickA;
-    JoystickProxy *joystickB;
+    ControlPortProxy *joystickA;
+    ControlPortProxy *joystickB;
 	IECProxy *iec;
     ExpansionPortProxy *expansionport;
 	VC1541Proxy *vc1541;
@@ -512,8 +512,8 @@ struct ContainerWrapper;
 @property (readonly) CIAProxy *cia2;
 @property (readonly) SIDProxy *sid;
 @property (readonly) KeyboardProxy *keyboard;
-@property (readonly) JoystickProxy *joystickA;
-@property (readonly) JoystickProxy *joystickB;
+@property (readonly) ControlPortProxy *joystickA;
+@property (readonly) ControlPortProxy *joystickB;
 @property (readonly) IECProxy *iec;
 @property (readonly) ExpansionPortProxy *expansionport;
 @property (readonly) VC1541Proxy *vc1541;

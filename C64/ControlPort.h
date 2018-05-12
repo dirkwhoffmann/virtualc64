@@ -1,7 +1,7 @@
 /*!
- * @header      Joystick.h
- * @author      Original code by Benjamin Klein, rewritten by Dirk W. Hoffmann
- * @copyright   All rights reserved.
+ * @header      ControlPort.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -18,14 +18,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-#ifndef JOYSTICK_H
-#define JOYSTICK_H
+#ifndef CONTROLPORT_H
+#define CONTROLPORT_H
 
 #include "VirtualComponent.h"
-#include "Joystick_types.h"
+#include "ControlPort_types.h"
 
-class Joystick : public VirtualComponent {
+class ControlPort : public VirtualComponent {
 
 private:
     
@@ -48,28 +47,29 @@ private:
 public:
 
     //! @brief    Constructor
-    Joystick(int p);
+    ControlPort(int p);
     
     //! @brief    Destructor
-    ~Joystick();
+    ~ControlPort();
     
-    //! @brief    Restores the initial state
+    //! @brief    Method from VirtualComponent
     void reset();
 
-    //! @brief    Inherited from VirtualComponent
+    //! @brief    Method from VirtualComponent
     void loadFromBuffer(uint8_t **buffer);
     
-    //! @brief    Prints debugging information
+    //! @brief    Method from VirtualComponent
     void dumpState();
 
     int getPort() { return port; }
     void setPort(int p) { assert(p == 1 || p == 2); port = p; }
     
-    //! @brief   Trigger a joystick event
+    //! @brief   Triggers a joystick event
     void trigger(JoystickEvent event);
     
     /*! @brief   Returns the current joystick movement in form a bit mask
-     *  @details The bits are in the same order as they show up in the CIA's data port registers
+     *  @details The bits are in the same order as they show up in the
+     *           CIA's data port registers
      */
     uint8_t bitmask();
     
