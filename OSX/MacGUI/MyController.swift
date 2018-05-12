@@ -413,12 +413,12 @@ extension MyController {
     func joystickEvent(slot: Int, event: JoystickEvent) -> Bool {
         
         if (slot == gamepadSlotA) {
-            c64.joystickA.trigger(event)
+            c64.port1.trigger(event)
             return true
         }
 
         if (slot == gamepadSlotB) {
-            c64.joystickB.trigger(event)
+            c64.port2.trigger(event)
             return true
         }
         

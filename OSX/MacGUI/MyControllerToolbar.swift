@@ -95,8 +95,8 @@ extension MyController {
     
     @objc func validateJoystickToolbarItems() {
     
-        validateJoystickToolbarItem(joystickPortA, selectedSlot: gamepadSlotA, port: c64.joystickA)
-        validateJoystickToolbarItem(joystickPortB, selectedSlot: gamepadSlotB, port: c64.joystickB)
+        validateJoystickToolbarItem(joystickPortA, selectedSlot: gamepadSlotA, port: c64.port1)
+        validateJoystickToolbarItem(joystickPortB, selectedSlot: gamepadSlotB, port: c64.port2)
     }
         
     @IBAction func portAAction(_ sender: NSPopUpButton) {

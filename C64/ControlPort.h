@@ -60,9 +60,6 @@ public:
     
     //! @brief    Method from VirtualComponent
     void dumpState();
-
-    // int getPortNr() { return nr; }
-    // void setPort(int p) { assert(p == 1 || p == 2); port = p; }
     
     //! @brief   Triggers a joystick event
     void trigger(JoystickEvent event);
@@ -72,25 +69,6 @@ public:
      *           CIA's data port registers
      */
     uint8_t bitmask();
-    
-    // DEPRECATED
-    inline bool getButton() { return button; }
-    inline void setButton(bool pressed) { button = pressed; }
-    inline void pressButton() { setButton(true); }
-    inline void releaseButton() { setButton(false); }
-    inline bool isPulledUp() { return axisY == -1; }
-    inline bool isPulledDown() { return axisY == 1; }
-    inline bool isPulledLeft() { return axisX == -1; }
-    inline bool isPulledRight() { return axisX == 1; }
-    inline void setXAxis(int value) { axisX = value; }
-    inline void setYAxis(int value) { axisY = value; }
-    inline void pullUp() { setYAxis(-1); }
-    inline void pullDown() { setYAxis(1); }
-    inline void pullLeft() { setXAxis(-1); }
-    inline void pullRight() { setXAxis(1); }
-    inline void releaseXAxis() { setXAxis(0); }
-    inline void releaseYAxis() { setYAxis(0); }
-    inline void releaseAxes() { releaseXAxis(); releaseYAxis(); }
 };
 
 #endif

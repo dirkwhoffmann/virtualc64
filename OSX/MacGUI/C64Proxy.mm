@@ -583,7 +583,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
-@synthesize joystickA, joystickB;
+@synthesize port1, port2;
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (instancetype) init
@@ -606,8 +606,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
 	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
-    joystickA = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
-    joystickB = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
+    port1 = [[ControlPortProxy alloc] initWithJoystick:&c64->port1];
+    port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
