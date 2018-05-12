@@ -301,8 +301,12 @@ struct ContainerWrapper;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
-- (void) setPotX:(uint8_t)value;
-- (void) setPotY:(uint8_t)value;
+- (NSInteger) potX;
+- (void) setPotX:(NSInteger)value;
+- (NSInteger) potY;
+- (void) setPotY:(NSInteger)value;
+- (void) setTargetX:(NSInteger)value;
+- (void) setTargetY:(NSInteger)value;
 
 @end
 

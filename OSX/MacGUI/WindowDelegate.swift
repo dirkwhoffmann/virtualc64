@@ -14,27 +14,29 @@ extension MyController : NSWindowDelegate {
         track();
     }
     
+    func convertC64(_ point: NSPoint, frame: NSRect) -> NSPoint
+    {
+        let x = (frame.width == 0) ? 0 : (point.x / frame.width)
+        let y = (frame.height == 0) ? 0 : (point.y / frame.height)
+        
+        // Translate into C64 coordinate system (this is a hack)
+        let xmax = CGFloat(380.0)
+        let ymax = CGFloat(268.0)
+        var c64x = x * xmax + 22
+        var c64y = y * ymax + 10
+        c64x = (c64x < 0.0) ? 0.0 : (c64x > xmax) ? xmax : c64x
+        c64y = (c64y < 0.0) ? 0.0 : (c64y > ymax) ? ymax : c64y
+        
+        return NSMakePoint(c64x,c64y)
+    }
+    
     open override func mouseMoved(with event: NSEvent) {
        
-        // let x = Int(NSEvent.mouseLocation.x)
-        // let y = Int(NSEvent.mouseLocation.y)
-        
         // Compute mouse position relative to the emulator window
         let locationInView = metalScreen.convert(event.locationInWindow, from: nil)
-        let width = metalScreen.frame.width
-        let height = metalScreen.frame.height
-        let x = (width == 0) ? 0 : Double(locationInView.x / width)
-        let y = (height == 0) ? 0 : Double(locationInView.y / height)
+        let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
         
-        // Translate into C64 coordinates (this is a hack)
-        let scalex = 380
-        let scaley = 267 
-        var c64x = Int(x * Double(scalex)) + 22
-        var c64y = Int(y * Double(scaley)) + 10
-        c64x = (c64x < 0) ? 0 : (c64x > scalex) ? scalex : c64x
-        c64y = (c64y < 0) ? 0 : (c64y > scaley) ? scaley : c64y
-
-        track("Location = (\(x),\(y)) (\(c64x),\(c64y))");
+        // track("Location = (\(locationInView.x),\(locationInView.y)) (\(locationInC64.x),\(locationInC64.y))");
         
         /* Mouse  movement  is  tracked internally within the mouse. The
          * position of the mouse MOD 64  is  transmitted to the SID  POTX
@@ -50,11 +52,24 @@ extension MyController : NSWindowDelegate {
          * POT Register     | X | P5| P4| P3| P2| P1| P0| N |
          *                  +-------------------------------+
          */
-        let potX = UInt8((c64x % 64) << 1)
-        let potY = UInt8((c64y % 64) << 1)
 
-        c64.sid.setPotX(potX)
-        c64.sid.setPotY(potY)
+        c64.sid.setTargetX(Int(locationInC64.x))
+        c64.sid.setTargetY(Int(locationInC64.y))
+    }
+    
+    override open func rightMouseUp(with event: NSEvent) {
+        
+        track()
+        
+        // Compute mouse position relative to the emulator window
+        let locationInView = metalScreen.convert(event.locationInWindow, from: nil)
+        let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
+        
+        // Calibrate mouse position
+        c64.sid.setPotX(Int(locationInC64.x))
+        c64.sid.setPotY(Int(locationInC64.y))
+        c64.sid.setTargetX(Int(locationInC64.x))
+        c64.sid.setTargetY(Int(locationInC64.y))
     }
     
     public func windowDidBecomeMain(_ notification: Notification) {

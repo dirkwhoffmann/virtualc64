@@ -45,10 +45,26 @@ private:
     uint64_t cycles;
     
     //! @brief    Value of X potentiometer
-    uint8_t potX;
+    /*! @details  The 6 least significant bits of this value will show up in
+     *            register 0x19 when a mouse is connected.
+     */
+    uint32_t potX;
 
     //! @brief    Value of Y potentiometer
-    uint8_t potY;
+    /*! @details  The 6 least significant bits of this value will show up in
+     *            register 0x1A when a mouse is connected.
+     */
+    uint32_t potY;
+
+    //! @brief    Target value of potX
+    /*! @details  This value is changed to simulate a horizontal mouse move
+     */
+    uint32_t targetX;
+
+    //! @brief    Target value of potY
+    /*! @details  This value is changed to simulate a vertical mouse move
+     */
+    uint32_t targetY;
 
     
     //
@@ -279,7 +295,9 @@ public:
      */
 	void execute(uint64_t numCycles);
 
-    
+    //! @brief    Shifts potX, potY towards targetX, targetY
+    void executePotXY();
+     
 	//
 	// Accessig device properties
 	//
@@ -294,12 +312,22 @@ public:
     
 	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);
-    
+
+    uint8_t getPotX() { return (potX >> 1) & 0x3F; }
+    uint8_t getPotY() { return (potY >> 1) & 0x3F; }
+
     //! @brief    Sets the X potentiometer value
-    void setPotX(uint8_t value) { potX = value; }
+    void setPotX(uint32_t value) { potX = value; }
+
+    //! @brief    Sets the target X potentiometer value
+    void setTargetX(int32_t value) { targetX = value; }
 
     //! @brief    Sets the Y potentiometer value
-    void setPotY(uint8_t value) { potY = value; }
+    void setPotY(uint32_t value) { potY = value; }
+
+    //! @brief    Sets the target Y potentiometer value
+    void setTargetY(int32_t value) { targetY = value; }
+
 };
 
 #endif

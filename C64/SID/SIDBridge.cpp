@@ -55,8 +55,8 @@ SIDBridge::reset()
 {
     VirtualComponent::reset();
     
-    potX = 0xFF;
-    potY = 0xFF;
+    potX = targetX = 0;
+    potY = targetY = 0;
     
     clearRingbuffer();
     resid.reset();
@@ -111,12 +111,12 @@ SIDBridge::peek(uint16_t addr)
     executeUntil(c64->getCycles());
     
     if (addr == 0x19) {
-        debug("Reading potX: %d\n", (potX >> 1) & 0x7F);
-        return potX;
+        // debug("Reading potX: %d\n", (potX >> 1) & 0x7F);
+        return (potX & 0x3F) << 1;
     }
     if (addr == 0x1A) {
-        debug("Reading potY: %d\n", (potY >> 1) & 0x7F);
-        return potY;
+        // debug("Reading potY: %d\n", (potY >> 1) & 0x7F);
+        return (potY & 0x3F) << 1;
     }
     
     if (useReSID) {
@@ -170,6 +170,18 @@ SIDBridge::execute(uint64_t numCycles)
     } else {
         fastsid.execute(numCycles);
     }
+}
+
+void
+SIDBridge::executePotXY()
+{
+    if (potX == targetX && potY == targetY)
+        return;
+    
+    if (targetX < potX) potX -= MIN(potX - targetX, 31);
+    else if (targetX > potX) potX += MIN(targetX - potX, 31);
+    if (targetY < potY) potY -= MIN(potY - targetY, 31);
+    else if (targetY > potY) potY += MIN(targetY - potY, 31);
 }
 
 void 

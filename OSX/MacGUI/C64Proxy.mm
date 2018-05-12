@@ -358,8 +358,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->sid->readStereoSamplesInterleaved(target, n);
 }
 
-- (void) setPotX:(uint8_t)value { wrapper->sid->setPotX(value); }
-- (void) setPotY:(uint8_t)value { wrapper->sid->setPotY(value); }
+- (NSInteger) potX { return wrapper->sid->getPotX(); }
+- (void) setPotX:(NSInteger)value { wrapper->sid->setPotX((int32_t)value); }
+- (NSInteger) potY { return wrapper->sid->getPotY(); }
+- (void) setPotY:(NSInteger)value { wrapper->sid->setPotY((int32_t)value); }
+- (void) setTargetX:(NSInteger)value { wrapper->sid->setTargetX((int32_t)value); }
+- (void) setTargetY:(NSInteger)value { wrapper->sid->setTargetY((int32_t)value); }
 
 @end
 
