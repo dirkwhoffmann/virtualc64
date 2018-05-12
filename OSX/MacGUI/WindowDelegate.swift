@@ -9,9 +9,11 @@ import Foundation
 
 extension MyController : NSWindowDelegate {
     
-    open override func mouseDown(with event: NSEvent) {
-
-        track();
+    func mousePort() -> ControlPortProxy?
+    {
+        return
+            (gamepadSlot1 == InputDevice.analogMouse) ? c64.port1 :
+                (gamepadSlot2 == InputDevice.analogMouse) ? c64.port2 : nil
     }
     
     func convertC64(_ point: NSPoint, frame: NSRect) -> NSPoint
@@ -40,15 +42,37 @@ extension MyController : NSWindowDelegate {
         NSCursor.unhide();
     }
     
+    open override func mouseDown(with event: NSEvent) {
+        track();
+        mousePort()?.trigger(PRESS_FIRE)
+    }
+    
+    open override func mouseUp(with event: NSEvent) {
+        track();
+        mousePort()?.trigger(RELEASE_FIRE)
+    }
+    
     open override func mouseMoved(with event: NSEvent) {
-       
+
+        var port : ControlPortProxy
+        
+        // Check if mouse is connected to one of the control ports
+        
+        if gamepadSlot1 == InputDevice.analogMouse {
+            port = c64.port1
+        } else if gamepadSlot2 == InputDevice.analogMouse {
+            port = c64.port2
+        } else {
+            return
+        }
+        
         // Compute mouse position relative to the emulator window
         let locationInView = metalScreen.convert(event.locationInWindow, from: nil)
         let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
         
-        // Pass coordinate to control port
-        c64.port1.setMouseTargetX(Int(locationInC64.x))
-        c64.port1.setMouseTargetY(Int(locationInC64.y))
+        // Pass values to control port
+        port.setMouseTargetX(Int(locationInC64.x))
+        port.setMouseTargetY(Int(locationInC64.y))
     }
     
     override open func rightMouseUp(with event: NSEvent) {

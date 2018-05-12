@@ -51,8 +51,6 @@ ControlPort::reset()
     button = false;
     axisX = 0;
     axisY = 0;
-    mouseX = mouseTargetX = 0x7F;
-    mouseY = mouseTargetY = 0x7F;
 }
 
 void
@@ -139,7 +137,7 @@ ControlPort::execute()
     else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
     
     // Let the new mouse coordinate show up in the SID register
-    c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x80;
-    c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x80;
+    c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x00;
+    c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x00;
 }
 

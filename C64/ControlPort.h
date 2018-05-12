@@ -47,11 +47,9 @@ private:
 public:
     
     //! @brief    Horizontal mouse coordinate of a connected analog mouse
-    //! @details  Set to 0x7F if no mouse is connected.
     uint32_t mouseX;
     
     //! @brief    Vertical mouse coordinate of a connected analog mouse
-    //! @details  Set to 0x7F if no mouse is connected.
     uint32_t mouseY;
     
     //! @brief    Target mouse X position

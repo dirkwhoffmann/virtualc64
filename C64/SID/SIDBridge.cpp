@@ -55,9 +55,13 @@ SIDBridge::reset()
 {
     VirtualComponent::reset();
 
+    potX = 0xFF;
+    potY = 0xFF;
+
     clearRingbuffer();
     resid.reset();
     fastsid.reset();
+    
     volume = 100000;
     targetVolume = 100000;
 }
