@@ -49,8 +49,8 @@
     IBOutlet MetalView *metalScreen;
 	    
     // Toolbar
-    IBOutlet NSPopUpButton *joystickPortA;
-    IBOutlet NSPopUpButton *joystickPortB;
+    IBOutlet NSPopUpButton *controlPort1;
+    IBOutlet NSPopUpButton *controlPort2;
 
     // Main screen
 	IBOutlet NSDrawer *debugPanel;
@@ -272,10 +272,10 @@
     bool statusBar;
     
     //! @brief   Selected game pad slot for joystick in port A
-    NSInteger gamepadSlotA;
+    NSInteger gamepadSlot1;
 
     //! @brief   Selected game pad slot for joystick in port B
-    NSInteger gamepadSlotB;
+    NSInteger gamepadSlot2;
     
     //! @brief   Indicates if user dialog should be skipped when opening archives
     bool autoMount;
@@ -301,8 +301,8 @@
 @property TapeDialog *tapeDialog;
 
 // Toolbar
-@property NSPopUpButton *joystickPortA;
-@property NSPopUpButton *joystickPortB;
+@property NSPopUpButton *controlPort1;
+@property NSPopUpButton *controlPort2;
 
 // Main screen
 @property NSDrawer *debugPanel;
@@ -322,8 +322,8 @@
 @property NSMenuItem *menuItemFinalIII;
 @property NSEventModifierFlags modifierFlags;
 @property bool statusBar;
-@property NSInteger gamepadSlotA;
-@property NSInteger gamepadSlotB;
+@property NSInteger gamepadSlot1;
+@property NSInteger gamepadSlot2;
 @property bool autoMount;
 @property NSTrackingArea *trackingArea;
 

@@ -88,6 +88,11 @@ class GamePad
             name = "Keyboard emulated device"
             image = NSImage(named: NSImage.Name(rawValue: "keyboard32"))
             
+        } else if (vendorID == 1) {
+            
+            name = "Analog mouse"
+            image = NSImage(named: NSImage.Name(rawValue: "mouse2"))
+            
         } else if (vendorID == 0x40B && productID == 0x6533) {
             
             name = "Competition Pro SL-6602"

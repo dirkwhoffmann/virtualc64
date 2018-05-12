@@ -35,8 +35,8 @@ extension MyController {
             track("Failed to create game pad manager")
             return
         }
-        gamepadSlotA = -1 // No gampad assigned
-        gamepadSlotB = -1
+        gamepadSlot1 = -1 // No gampad assigned
+        gamepadSlot2 = -1
         validateJoystickToolbarItems()
         
         // Setup window properties
@@ -414,13 +414,13 @@ extension MyController {
     /// - Returns: true, iff a joystick event has been triggered on port A or port B
     @discardableResult
     func joystickEvent(slot: Int, event: JoystickEvent) -> Bool {
-        
-        if (slot == gamepadSlotA) {
+                
+        if (slot == gamepadSlot1) {
             c64.port1.trigger(event)
             return true
         }
 
-        if (slot == gamepadSlotB) {
+        if (slot == gamepadSlot2) {
             c64.port2.trigger(event)
             return true
         }

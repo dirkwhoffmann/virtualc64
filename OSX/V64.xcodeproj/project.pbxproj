@@ -132,6 +132,8 @@
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		507B258A20724BE200B6CDBC /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 507B258920724BE200B6CDBC /* trash.png */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
+		507E0B2020A70137001A048C /* mouse32.png in Resources */ = {isa = PBXBuildFile; fileRef = 507E0B1F20A70137001A048C /* mouse32.png */; };
+		507E0B2220A702AF001A048C /* mouse2.png in Resources */ = {isa = PBXBuildFile; fileRef = 507E0B2120A702AF001A048C /* mouse2.png */; };
 		5080F3591EE74784001313D4 /* commodore.png in Resources */ = {isa = PBXBuildFile; fileRef = 5080F3581EE74784001313D4 /* commodore.png */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D8512081FF8A0026BAD5 /* joystick32_sony.png */; };
@@ -451,6 +453,8 @@
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
 		507B258920724BE200B6CDBC /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
+		507E0B1F20A70137001A048C /* mouse32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse32.png; sourceTree = "<group>"; };
+		507E0B2120A702AF001A048C /* mouse2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse2.png; sourceTree = "<group>"; };
 		5080F3581EE74784001313D4 /* commodore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commodore.png; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5087D8512081FF8A0026BAD5 /* joystick32_sony.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_sony.png; sourceTree = "<group>"; };
@@ -970,6 +974,8 @@
 				5087D8512081FF8A0026BAD5 /* joystick32_sony.png */,
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
 				50CCB1D31B84ACA8008D8C30 /* keyboard.png */,
+				507E0B1F20A70137001A048C /* mouse32.png */,
+				507E0B2120A702AF001A048C /* mouse2.png */,
 				38AF838B0C7BA24A00F6DBCE /* none32.png */,
 				50CCB1D11B84AC10008D8C30 /* none.png */,
 				50A3E08B0E66F7C400D3564D /* pause32.png */,
@@ -1261,6 +1267,7 @@
 				5080F3591EE74784001313D4 /* commodore.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
+				507E0B2220A702AF001A048C /* mouse2.png in Resources */,
 				50DB328B1B948489000FB839 /* kext.png in Resources */,
 				502F57F61B93442100D1077E /* LEDgray.png in Resources */,
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
@@ -1349,6 +1356,7 @@
 				50D6954912E3759500D9C738 /* IconD64.icns in Resources */,
 				50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */,
 				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
+				507E0B2020A70137001A048C /* mouse32.png in Resources */,
 				5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */,
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,

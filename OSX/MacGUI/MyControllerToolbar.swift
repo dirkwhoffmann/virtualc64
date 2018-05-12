@@ -13,8 +13,9 @@ extension MyController {
         static let none = -1
         static let keyset1 = 0
         static let keyset2 = 1
-        static let joystick1 = 2
-        static let joystick2 = 3
+        static let analogMouse = 2
+        static let joystick1 = 3
+        static let joystick2 = 4
     }
     
     // NSDrawerState is deprected an not available natively in Swift
@@ -73,21 +74,23 @@ extension MyController {
         let menu =  popup.menu
         let item0 = menu?.item(withTag: InputDevice.keyset1)
         let item1 = menu?.item(withTag: InputDevice.keyset2)
-        let item2 = menu?.item(withTag: InputDevice.joystick1)
-        let item3 = menu?.item(withTag: InputDevice.joystick2)
-        
+        let item2 = menu?.item(withTag: InputDevice.analogMouse)
+        let item3 = menu?.item(withTag: InputDevice.joystick1)
+        let item4 = menu?.item(withTag: InputDevice.joystick2)
+
         // Set images and titles
         let defaultImage = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
         item0?.image = (gamePadManager.gamePads[0]?.image)!
         item1?.image = (gamePadManager.gamePads[1]?.image)!
-        item2?.image = gamePadManager.gamePads[2]?.image ?? defaultImage
+        item2?.image = (gamePadManager.gamePads[2]?.image)!
         item3?.image = gamePadManager.gamePads[3]?.image ?? defaultImage
+        item4?.image = gamePadManager.gamePads[4]?.image ?? defaultImage
 
-        item2?.title = gamePadManager.gamePads[2]?.name ?? "USB Device 1"
-        item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 2"
+        item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 1"
+        item4?.title = gamePadManager.gamePads[4]?.name ?? "USB Device 2"
         
-        item2?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
-        item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
+        item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
+        item4?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
         
         // Mark game pad connected to port
         popup.selectItem(withTag: selectedSlot)
@@ -95,28 +98,32 @@ extension MyController {
     
     @objc func validateJoystickToolbarItems() {
     
-        validateJoystickToolbarItem(joystickPortA, selectedSlot: gamepadSlotA, port: c64.port1)
-        validateJoystickToolbarItem(joystickPortB, selectedSlot: gamepadSlotB, port: c64.port2)
+        validateJoystickToolbarItem(controlPort1, selectedSlot: gamepadSlot1, port: c64.port1)
+        validateJoystickToolbarItem(controlPort2, selectedSlot: gamepadSlot2, port: c64.port2)
     }
         
-    @IBAction func portAAction(_ sender: NSPopUpButton) {
+    @IBAction func port1Action(_ sender: NSPopUpButton) {
+        
+        track()
         
         // Remember selection
-        gamepadSlotA = sender.selectedTag();
+        gamepadSlot1 = sender.selectedTag();
 
         // Avoid double mappings
-        gamepadSlotB = (gamepadSlotA == gamepadSlotB) ? InputDevice.none : gamepadSlotB
+        gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
         
         validateJoystickToolbarItems();
     }
     
-    @IBAction func portBAction(_ sender: NSPopUpButton) {
+    @IBAction func port2Action(_ sender: NSPopUpButton) {
+        
+        track()
         
         // Remember selection
-        gamepadSlotB = sender.selectedTag();
+        gamepadSlot2 = sender.selectedTag();
         
         // Avoid double mappings
-        gamepadSlotA = (gamepadSlotA == gamepadSlotB) ? InputDevice.none : gamepadSlotA
+        gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
         
         validateJoystickToolbarItems();
     }

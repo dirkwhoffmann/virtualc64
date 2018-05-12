@@ -33,8 +33,8 @@
 @synthesize hex;
 
 // Toolbar
-@synthesize joystickPortA;
-@synthesize joystickPortB;
+@synthesize controlPort1;
+@synthesize controlPort2;
 
 // Main screen
 @synthesize debugPanel;
@@ -55,8 +55,8 @@
 @synthesize gamePadManager;
 @synthesize modifierFlags;
 @synthesize statusBar;
-@synthesize gamepadSlotA;
-@synthesize gamepadSlotB;
+@synthesize gamepadSlot1;
+@synthesize gamepadSlot2;
 @synthesize autoMount;
 
 @synthesize keyboardcontroller;

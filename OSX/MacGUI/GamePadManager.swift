@@ -18,9 +18,9 @@
 
 
 //! @brief   Holds and manages an array of GamePad objects
-/*! @details Up to four devices are managed. The first two are always present and represent
- *           keyboard emulates joysticks. The other two slots are dynamically added when,
- *           a USB joystick or game pad is plugged in.
+/*! @details Up to five devices are managed. The first three are always present
+ *           and represent two keyset and an analog mouse. All other objects
+ *           are dynamically added when a USB joystick or game pad is plugged in.
  */
 class GamePadManager: NSObject {
     
@@ -50,9 +50,10 @@ class GamePadManager: NSObject {
         self.init()
         self.controller = controller
         
-        // Add  generic devices (two keyboard emulated joysticks)
+        // Add  generic devices (two keyboard emulated joysticks and a mouse)
         gamePads[0] = GamePad(manager: self)
         gamePads[1] = GamePad(manager: self)
+        gamePads[2] = GamePad(manager: self, vendorID: 1, productID: 0, locationID: 0)
         restoreFactorySettings()
 
         // Prepare for accepting HID devices
@@ -122,8 +123,8 @@ class GamePadManager: NSObject {
             nr += 1
         }
         
-        // We support four devices max
-        return (nr < 4) ? nr : nil
+        // We support five devices max
+        return (nr < 5) ? nr : nil
     }
     
     //! @brief   Lookup gamePad
@@ -224,13 +225,7 @@ class GamePadManager: NSObject {
         if let value = IOHIDDeviceGetProperty(device, locationIDKey) as? Int {
             locationID = value
         }
-    
-        /*
-        let vendorID = String(describing: IOHIDDeviceGetProperty(device, vendorIDKey))
-        let productID = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
-        let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
-        */
-        
+            
         gamePads[slotNr] = GamePad(manager: self,
                                    vendorID: vendorID,
                                    productID: productID,
