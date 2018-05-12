@@ -54,15 +54,12 @@ extension MyController : NSWindowDelegate {
     
     open override func mouseMoved(with event: NSEvent) {
 
-        var port : ControlPortProxy
+        // var port : ControlPortProxy
         
-        // Check if mouse is connected to one of the control ports
+        // Return if no virtual mouse is connected
         
-        if gamepadSlot1 == InputDevice.analogMouse {
-            port = c64.port1
-        } else if gamepadSlot2 == InputDevice.analogMouse {
-            port = c64.port2
-        } else {
+        if (gamepadSlot1 != InputDevice.analogMouse) &&
+            (gamepadSlot2 != InputDevice.analogMouse) {
             return
         }
         
@@ -70,9 +67,9 @@ extension MyController : NSWindowDelegate {
         let locationInView = metalScreen.convert(event.locationInWindow, from: nil)
         let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
         
-        // Pass values to control port
-        port.setMouseTargetX(Int(locationInC64.x))
-        port.setMouseTargetY(Int(locationInC64.y))
+        // Pass values to mouse
+        c64.setMouseTargetX(Int(locationInC64.x))
+        c64.setMouseTargetY(Int(locationInC64.y))
     }
     
     override open func rightMouseUp(with event: NSEvent) {
@@ -84,10 +81,10 @@ extension MyController : NSWindowDelegate {
         let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
         
         // Calibrate mouse position
-        c64.port1.setMouseX(Int(locationInC64.x))
-        c64.port1.setMouseTargetX(Int(locationInC64.x))
-        c64.port1.setMouseY(Int(locationInC64.y))
-        c64.port1.setMouseTargetY(Int(locationInC64.y))
+        c64.setMouseX(Int(locationInC64.x))
+        c64.setMouseTargetX(Int(locationInC64.x))
+        c64.setMouseY(Int(locationInC64.y))
+        c64.setMouseTargetY(Int(locationInC64.y))
     }
     
     public func windowDidBecomeMain(_ notification: Notification) {

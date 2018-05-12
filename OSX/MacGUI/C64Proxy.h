@@ -264,10 +264,6 @@ struct ContainerWrapper;
 }
 
 - (void) trigger:(JoystickEvent)event;
-- (void) setMouseX:(NSInteger)value;
-- (void) setMouseY:(NSInteger)value;
-- (void) setMouseTargetX:(NSInteger)value;
-- (void) setMouseTargetY:(NSInteger)value;
 - (void) dump;
 
 @end
@@ -572,6 +568,11 @@ struct ContainerWrapper;
 - (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
 - (bool) insertTape:(TAPProxy *)a;
+
+- (void) setMouseX:(NSInteger)value;
+- (void) setMouseY:(NSInteger)value;
+- (void) setMouseTargetX:(NSInteger)value;
+- (void) setMouseTargetY:(NSInteger)value;
 
 - (bool) warp;
 - (void) setWarp:(bool)b;

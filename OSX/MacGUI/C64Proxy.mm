@@ -322,11 +322,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->port->dumpState(); }
 // - (NSInteger) potX { return wrapper->sid->getPotX(); }
 // - (NSInteger) potY { return wrapper->sid->getPotY(); }
-- (void) setMouseX:(NSInteger)value { wrapper->port->mouseX = (uint32_t)value; }
-- (void) setMouseY:(NSInteger)value { wrapper->port->mouseY = (uint32_t)value; }
-- (void) setMouseTargetX:(NSInteger)value { wrapper->port->mouseTargetX = (uint32_t)value; }
-- (void) setMouseTargetY:(NSInteger)value { wrapper->port->mouseTargetY = (uint32_t)value; }
-
 
 @end
 
@@ -760,6 +755,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     TAPContainer *container = (TAPContainer *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
 }
+
+- (void) setMouseX:(NSInteger)value { wrapper->c64->mouse1351.mouseX = (uint32_t)value; }
+- (void) setMouseY:(NSInteger)value { wrapper->c64->mouse1351.mouseY = (uint32_t)value; }
+- (void) setMouseTargetX:(NSInteger)value { wrapper->c64->mouse1351.mouseTargetX = (uint32_t)value; }
+- (void) setMouseTargetY:(NSInteger)value { wrapper->c64->mouse1351.mouseTargetY = (uint32_t)value; }
+
 - (bool) warp { return wrapper->c64->getWarp(); }
 - (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }
 - (bool) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }

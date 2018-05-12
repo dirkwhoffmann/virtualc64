@@ -91,6 +91,7 @@
 // Peripherals
 #include "VC1541.h"
 #include "Datasette.h"
+#include "Mouse1351.h"
 
 /*
 Overall architecture:
@@ -261,6 +262,9 @@ public:
     //! @brief    Commodore 1530 (C2N) Datasette
     Datasette datasette;
 
+    //! @brief    Commodore Mouse 1351
+    Mouse1351 mouse1351;
+    
     //
     // Executed cycle, rasterline, and frame
     //

@@ -20,8 +20,8 @@
  
 #include "C64.h"
 
-ControlPort::ControlPort(int portNr) {
-
+ControlPort::ControlPort(int portNr)
+{
     assert(portNr == 1 || portNr == 2);
     
     nr = portNr;
@@ -29,14 +29,12 @@ ControlPort::ControlPort(int portNr) {
     debug(3, "    Creating ControlPort %d at address %p...\n", nr, this);
     
     // Register snapshot items
+    /*
     SnapshotItem items[] = {
-        { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
-        { &mouseTargetX,    sizeof(mouseTargetX),   CLEAR_ON_RESET },
-        { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
-        { &mouseTargetY,    sizeof(mouseTargetY),   CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
+     */
 }
 
 ControlPort::~ControlPort()
@@ -125,19 +123,4 @@ ControlPort::bitmask() {
     return result;
 }
 
-void
-ControlPort::execute()
-{
-    if (mouseX == mouseTargetX && mouseY == mouseTargetY)
-        return;
-    
-    if (mouseTargetX < mouseX) mouseX -= MIN(mouseX - mouseTargetX, 31);
-    else if (mouseTargetX > mouseX) mouseX += MIN(mouseTargetX - mouseX, 31);
-    if (mouseTargetY < mouseY) mouseY -= MIN(mouseY - mouseTargetY, 31);
-    else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
-    
-    // Let the new mouse coordinate show up in the SID register
-    c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x00;
-    c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x00;
-}
 

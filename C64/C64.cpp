@@ -97,6 +97,7 @@ C64::C64()
         &expansionport,
         &floppy,
         &datasette,
+        &mouse1351,
         &keyboard,
         &port1,
         &port2,
@@ -541,8 +542,7 @@ C64::endOfFrame()
     sid.executeUntil(cycle);
     
     // Execute other components
-    port1.execute();
-    port2.execute();
+    mouse1351.execute();
     iec.execute();
     expansionport.execute();
     

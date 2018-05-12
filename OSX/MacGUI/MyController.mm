@@ -58,6 +58,7 @@
 @synthesize gamepadSlot1;
 @synthesize gamepadSlot2;
 @synthesize autoMount;
+@synthesize trackingArea;
 
 @synthesize keyboardcontroller;
 @synthesize metalScreen;
