@@ -23,7 +23,7 @@
 // Sound engines from VICE 3.1 have been ported to VirtualC64 (both ReSID and FastSID)
 
 // TODO:
-// Rename Joystick to ControlPort
+// Rename Joystick to ControlPort (DONE)
 // Move targetPotX stuff to ControlPort
 // Add menu option (hide mouse)
 // Add "Analog mouse" to Control port options

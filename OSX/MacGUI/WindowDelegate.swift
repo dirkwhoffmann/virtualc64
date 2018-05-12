@@ -53,8 +53,8 @@ extension MyController : NSWindowDelegate {
          *                  +-------------------------------+
          */
 
-        c64.sid.setTargetX(Int(locationInC64.x))
-        c64.sid.setTargetY(Int(locationInC64.y))
+        c64.port1.setMouseTargetX(Int(locationInC64.x))
+        c64.port1.setMouseTargetY(Int(locationInC64.y))
     }
     
     override open func rightMouseUp(with event: NSEvent) {
@@ -66,10 +66,10 @@ extension MyController : NSWindowDelegate {
         let locationInC64 = convertC64(locationInView, frame: metalScreen.frame)
         
         // Calibrate mouse position
-        c64.sid.setPotX(Int(locationInC64.x))
-        c64.sid.setPotY(Int(locationInC64.y))
-        c64.sid.setTargetX(Int(locationInC64.x))
-        c64.sid.setTargetY(Int(locationInC64.y))
+        c64.port1.setMouseX(Int(locationInC64.x))
+        c64.port1.setMouseTargetX(Int(locationInC64.x))
+        c64.port1.setMouseY(Int(locationInC64.y))
+        c64.port1.setMouseTargetY(Int(locationInC64.y))
     }
     
     public func windowDidBecomeMain(_ notification: Notification) {

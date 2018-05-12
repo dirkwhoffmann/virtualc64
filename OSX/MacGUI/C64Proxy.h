@@ -263,24 +263,11 @@ struct ContainerWrapper;
     struct ControlPortWrapper *wrapper;
 }
 
-- (void) trigger:(JoystickEvent)event; 
-
-// DEPRECATED
-/*
-- (void) setButton:(NSInteger)pressed;
-- (void) pressButton;
-- (void) releaseButton;
-- (void) pullUp;
-- (void) pullDown;
-- (void) pullLeft;
-- (void) pullRight;
-- (void) releaseAxes;
-- (void) setXAxis:(NSInteger)value;
-- (void) setYAxis:(NSInteger)value;
-- (void) releaseXAxis;
-- (void) releaseYAxis;
-*/
-
+- (void) trigger:(JoystickEvent)event;
+- (void) setMouseX:(NSInteger)value;
+- (void) setMouseY:(NSInteger)value;
+- (void) setMouseTargetX:(NSInteger)value;
+- (void) setMouseTargetY:(NSInteger)value;
 - (void) dump;
 
 @end
@@ -297,16 +284,9 @@ struct ContainerWrapper;
 - (void) dump;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
-// - (float) getSample;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
-- (NSInteger) potX;
-- (void) setPotX:(NSInteger)value;
-- (NSInteger) potY;
-- (void) setPotY:(NSInteger)value;
-- (void) setTargetX:(NSInteger)value;
-- (void) setTargetY:(NSInteger)value;
 
 @end
 

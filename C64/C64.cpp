@@ -540,10 +540,9 @@ C64::endOfFrame()
     // Execute remaining SID cycles
     sid.executeUntil(cycle);
     
-    // Update mouse coordinates (if any)
-    sid.executePotXY();
-    
     // Execute other components
+    port1.execute();
+    port2.execute();
     iec.execute();
     expansionport.execute();
     

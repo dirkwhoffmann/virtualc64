@@ -45,6 +45,32 @@ private:
     int axisY;
     
 public:
+    
+    //! @brief    Horizontal mouse coordinate of a connected analog mouse
+    //! @details  Set to 0x7F if no mouse is connected.
+    uint32_t mouseX;
+    
+    //! @brief    Vertical mouse coordinate of a connected analog mouse
+    //! @details  Set to 0x7F if no mouse is connected.
+    uint32_t mouseY;
+    
+    //! @brief    Target mouse X position
+    /*! @details  In order to achieve a smooth mouse movement, a new horizontal
+     *            mouse coordinate is not written directly into mouseX.
+     *            Instead, this variable is set. In execute(), mouseX is shifted
+     *            smoothly towards the target position.
+     */
+    uint32_t mouseTargetX;
+    
+    //! @brief    Target mouse Y position
+    /*! @details  In order to achieve a smooth mouse movement, a new vertical
+     *            mouse coordinate is not written directly into mouseY.
+     *            Instead, this variable is set. In execute(), mouseY is shifted
+     *            smoothly towards the target position.
+     */
+    uint32_t mouseTargetY;
+
+public:
 
     //! @brief    Constructor
     ControlPort(int p);
@@ -69,6 +95,12 @@ public:
      *           CIA's data port registers
      */
     uint8_t bitmask();
+    
+    //! @brief   Execution function (called once for each frame)
+    /*! @details Shifts mouseX, mouseY smoothly towards mouseTargetX, mouseTargetY
+     */
+    void execute();
+    
 };
 
 #endif

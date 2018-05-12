@@ -26,7 +26,17 @@ ControlPort::ControlPort(int portNr) {
     
     nr = portNr;
     setDescription("ControlPort");
-    debug(3, "    Creating controlPort %d at address %p...\n", nr, this);
+    debug(3, "    Creating ControlPort %d at address %p...\n", nr, this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
+        { &mouseTargetX,    sizeof(mouseTargetX),   CLEAR_ON_RESET },
+        { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
+        { &mouseTargetY,    sizeof(mouseTargetY),   CLEAR_ON_RESET },
+        { NULL,             0,                      0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 ControlPort::~ControlPort()
@@ -41,11 +51,15 @@ ControlPort::reset()
     button = false;
     axisX = 0;
     axisY = 0;
+    mouseX = mouseTargetX = 0x7F;
+    mouseY = mouseTargetY = 0x7F;
 }
 
 void
 ControlPort::loadFromBuffer(uint8_t **buffer)
 {
+    VirtualComponent::loadFromBuffer(buffer);
+    
     // Discard any active joystick movements
     button = false;
     axisX = 0;
@@ -111,5 +125,21 @@ ControlPort::bitmask() {
     if (button)      CLR_BIT(result, 4);
     
     return result;
+}
+
+void
+ControlPort::execute()
+{
+    if (mouseX == mouseTargetX && mouseY == mouseTargetY)
+        return;
+    
+    if (mouseTargetX < mouseX) mouseX -= MIN(mouseX - mouseTargetX, 31);
+    else if (mouseTargetX > mouseX) mouseX += MIN(mouseTargetX - mouseX, 31);
+    if (mouseTargetY < mouseY) mouseY -= MIN(mouseY - mouseTargetY, 31);
+    else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
+    
+    // Let the new mouse coordinate show up in the SID register
+    c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x80;
+    c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x80;
 }
 

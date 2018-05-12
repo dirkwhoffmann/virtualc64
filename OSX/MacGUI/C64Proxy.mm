@@ -320,6 +320,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) trigger:(JoystickEvent)event { wrapper->port->trigger(event); }
 - (void) dump { wrapper->port->dumpState(); }
+// - (NSInteger) potX { return wrapper->sid->getPotX(); }
+// - (NSInteger) potY { return wrapper->sid->getPotY(); }
+- (void) setMouseX:(NSInteger)value { wrapper->port->mouseX = (uint32_t)value; }
+- (void) setMouseY:(NSInteger)value { wrapper->port->mouseY = (uint32_t)value; }
+- (void) setMouseTargetX:(NSInteger)value { wrapper->port->mouseTargetX = (uint32_t)value; }
+- (void) setMouseTargetY:(NSInteger)value { wrapper->port->mouseTargetY = (uint32_t)value; }
+
 
 @end
 
@@ -341,13 +348,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->sid->dumpState(); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
-/*
-- (float) getSample {
-    float sample;
-    [self readMonoSamples:&sample size:1];
-    return sample;
-}
- */
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
     wrapper->sid->readMonoSamples(target, n);
 }
@@ -357,13 +357,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
     wrapper->sid->readStereoSamplesInterleaved(target, n);
 }
-
-- (NSInteger) potX { return wrapper->sid->getPotX(); }
-- (void) setPotX:(NSInteger)value { wrapper->sid->setPotX((int32_t)value); }
-- (NSInteger) potY { return wrapper->sid->getPotY(); }
-- (void) setPotY:(NSInteger)value { wrapper->sid->setPotY((int32_t)value); }
-- (void) setTargetX:(NSInteger)value { wrapper->sid->setTargetX((int32_t)value); }
-- (void) setTargetY:(NSInteger)value { wrapper->sid->setTargetY((int32_t)value); }
 
 @end
 
