@@ -1,5 +1,5 @@
 /*
- * (C) 2017 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2017 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,10 +50,11 @@ class GamePadManager: NSObject {
         self.init()
         self.controller = controller
         
-        // Add  generic devices (two keyboard emulated joysticks and a mouse)
+        // Add  generic devices (two keyboard emulated joysticks and two analog mice)
         gamePads[0] = GamePad(manager: self)
         gamePads[1] = GamePad(manager: self)
         gamePads[2] = GamePad(manager: self, vendorID: 1, productID: 0, locationID: 0)
+        gamePads[3] = GamePad(manager: self, vendorID: 1, productID: 0, locationID: 0)
         restoreFactorySettings()
 
         // Prepare for accepting HID devices
@@ -123,8 +124,8 @@ class GamePadManager: NSObject {
             nr += 1
         }
         
-        // We support five devices max
-        return (nr < 5) ? nr : nil
+        // We support six devices max
+        return (nr < 6) ? nr : nil
     }
     
     //! @brief   Lookup gamePad

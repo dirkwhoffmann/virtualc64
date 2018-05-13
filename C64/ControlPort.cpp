@@ -120,6 +120,8 @@ ControlPort::bitmask() {
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
     
+    result &= c64->neosMouse.read(nr);
+    
     return result;
 }
 

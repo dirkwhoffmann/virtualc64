@@ -92,6 +92,7 @@
 #include "VC1541.h"
 #include "Datasette.h"
 #include "Mouse1351.h"
+#include "NeosMouse.h"
 
 /*
 Overall architecture:
@@ -264,7 +265,10 @@ public:
 
     //! @brief    Commodore Mouse 1351
     Mouse1351 mouse1351;
-    
+
+    //! @brief    Commodore Mouse 1351
+    NeosMouse neosMouse;
+
     //
     // Executed cycle, rasterline, and frame
     //

@@ -756,18 +756,28 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->c64->insertTape(container);
 }
 
-/*
-- (void) setMouseX:(NSInteger)value { wrapper->c64->mouse1351.mouseX = (uint32_t)value; }
-- (void) setMouseY:(NSInteger)value { wrapper->c64->mouse1351.mouseY = (uint32_t)value; }
-- (void) setMouseTargetX:(NSInteger)value { wrapper->c64->mouse1351.mouseTargetX = (uint32_t)value; }
-- (void) setMouseTargetY:(NSInteger)value { wrapper->c64->mouse1351.mouseTargetY = (uint32_t)value; }
-*/
-- (void) connectMouse:(NSInteger)toPort { wrapper->c64->mouse1351.connect((unsigned)toPort); }
-- (void) disconnectMouse { wrapper->c64->mouse1351.disconnect(); }
+- (void) connect1351Mouse:(NSInteger)toPort {
+    wrapper->c64->mouse1351.connect((unsigned)toPort); }
+- (void) disconnect1351Mouse {
+    wrapper->c64->mouse1351.disconnect();
+}
+- (void) connectNeosMouse:(NSInteger)toPort {
+    wrapper->c64->neosMouse.connect((unsigned)toPort); }
+- (void) disconnectNeosMouse {
+    wrapper->c64->neosMouse.disconnect();
+}
 - (void) setMouseXY:(NSPoint)pos silent:(BOOL)b {
-    wrapper->c64->mouse1351.setXY(pos.x, pos.y, b); }
-- (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse1351.setLeftButton(pressed); }
-- (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse1351.setRightButton(pressed); }
+    wrapper->c64->mouse1351.setXY(pos.x, pos.y, b);
+    wrapper->c64->neosMouse.setXY(pos.x, pos.y, b);
+}
+- (void) setMouseLeftButton:(BOOL)pressed {
+    wrapper->c64->mouse1351.setLeftButton(pressed);
+    wrapper->c64->neosMouse.setLeftButton(pressed);
+}
+- (void) setMouseRightButton:(BOOL)pressed {
+    wrapper->c64->mouse1351.setRightButton(pressed);
+    wrapper->c64->neosMouse.setRightButton(pressed);
+}
 
 - (bool) warp { return wrapper->c64->getWarp(); }
 - (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }

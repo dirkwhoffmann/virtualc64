@@ -98,6 +98,7 @@ C64::C64()
         &floppy,
         &datasette,
         &mouse1351,
+        &neosMouse,
         &keyboard,
         &port1,
         &port2,
@@ -543,6 +544,7 @@ C64::endOfFrame()
     
     // Execute other components
     mouse1351.execute();
+    neosMouse.execute();
     iec.execute();
     expansionport.execute();
     

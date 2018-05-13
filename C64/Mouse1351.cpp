@@ -1,5 +1,5 @@
 /*!
- * @header      Mouse1351.h
+ * @header      Mouse1351.cpp
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2018 Dirk W. Hoffmann
  */
@@ -18,14 +18,12 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Mouse1351.h"
-
 #include "C64.h"
 
 Mouse1351::Mouse1351() {
     
     setDescription("Mouse1351");
-    debug(3, "    Creating Mouse1351 %d at address %p...\n", this);
+    debug(3, "    Creating Mouse1351 at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -53,7 +51,7 @@ Mouse1351::connect(unsigned port)
 {
     assert(port == 0 || port == 1 || port == 2);
     
-    debug("Connecting analog mouse to port %d\n", port);
+    debug("Connecting Mouse1351 to port %d\n", port);
     this->port = port;
     
     if (port == 0) {

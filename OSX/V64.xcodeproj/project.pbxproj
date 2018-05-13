@@ -114,7 +114,7 @@
 		505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505739E31C01FC5700B80646 /* NIBArchive.cpp */; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
 		5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */; };
-		5058F0F220A77EDC008BFA92 /* NeoMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0F020A77EDC008BFA92 /* NeoMouse.cpp */; };
+		5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
@@ -433,8 +433,8 @@
 		5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpansionPort.h; sourceTree = "<group>"; };
 		5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1351.cpp; sourceTree = "<group>"; };
 		5058F0EE20A77E90008BFA92 /* Mouse1351.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
-		5058F0F020A77EDC008BFA92 /* NeoMouse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NeoMouse.cpp; sourceTree = "<group>"; };
-		5058F0F120A77EDC008BFA92 /* NeoMouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeoMouse.h; sourceTree = "<group>"; };
+		5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NeosMouse.cpp; sourceTree = "<group>"; };
+		5058F0F120A77EDC008BFA92 /* NeosMouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeosMouse.h; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506004641B78E9C500EBDD93 /* PixelEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelEngine.cpp; sourceTree = "<group>"; };
@@ -893,8 +893,8 @@
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
 				5058F0EE20A77E90008BFA92 /* Mouse1351.h */,
 				5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */,
-				5058F0F120A77EDC008BFA92 /* NeoMouse.h */,
-				5058F0F020A77EDC008BFA92 /* NeoMouse.cpp */,
+				5058F0F120A77EDC008BFA92 /* NeosMouse.h */,
+				5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */,
 			);
 			name = Peripherals;
 			sourceTree = "<group>";
@@ -1426,7 +1426,7 @@
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
 				50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */,
-				5058F0F220A77EDC008BFA92 /* NeoMouse.cpp in Sources */,
+				5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */,
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
 				50169F0B209E045A00CB3536 /* extfilt.cc in Sources */,
 				50169F07209E045A00CB3536 /* wave.cc in Sources */,

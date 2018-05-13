@@ -356,19 +356,20 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port A">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
-                                        <menuItem title="None" image="none32" tag="-1" id="VD3-Wr-Ufe"/>
+                                        <menuItem title="None" state="on" image="none32" tag="-1" id="VD3-Wr-Ufe"/>
                                         <menuItem title="Keyset 1" image="keyboard32" id="L2h-xt-iO6"/>
                                         <menuItem title="Keyset 2" image="keyboard32" tag="1" id="Ohe-Pi-c1S"/>
-                                        <menuItem title="Analog Mouse" image="mouse2" tag="2" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
+                                        <menuItem title="Commodore Mouse 1351 " image="mouse2" tag="2" id="yOc-MG-77p"/>
+                                        <menuItem title="Neos Mouse" image="mouse2" tag="3" id="t5S-bt-wjE"/>
+                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="4" id="1PP-xx-NoT" userLabel="USB Joystick 1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="4" id="7sJ-UA-Pfj">
+                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="5" id="7sJ-UA-Pfj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -386,19 +387,20 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" image="joystick32_generic" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
-                                        <menuItem title="None" image="none32" tag="-1" id="xyt-eC-0im"/>
+                                        <menuItem title="None" state="on" image="none32" tag="-1" id="xyt-eC-0im"/>
                                         <menuItem title="Keyset 1" image="keyboard32" id="PAa-za-K8O"/>
                                         <menuItem title="Keyset 2" image="keyboard32" tag="1" id="1M8-Dz-dop"/>
-                                        <menuItem title="Analog Mouse" state="on" image="mouse2" tag="2" id="JM3-8Y-xZU"/>
-                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="3" id="Ahc-WA-2jp">
+                                        <menuItem title="Commodore Mouse 1351 " image="mouse2" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="Neos Mouse" image="mouse2" tag="3" id="IBn-DL-4tj"/>
+                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="4" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="4" id="L3T-8p-gOj">
+                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="5" id="L3T-8p-gOj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>

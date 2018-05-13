@@ -13,9 +13,10 @@ extension MyController {
         static let none = -1
         static let keyset1 = 0
         static let keyset2 = 1
-        static let analogMouse = 2
-        static let joystick1 = 3
-        static let joystick2 = 4
+        static let mouse1351 = 2
+        static let neosMouse = 3
+        static let joystick1 = 4
+        static let joystick2 = 5
     }
     
     // NSDrawerState is deprected an not available natively in Swift
@@ -70,27 +71,30 @@ extension MyController {
    
     func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
         
-        
         let menu =  popup.menu
         let item0 = menu?.item(withTag: InputDevice.keyset1)
         let item1 = menu?.item(withTag: InputDevice.keyset2)
-        let item2 = menu?.item(withTag: InputDevice.analogMouse)
-        let item3 = menu?.item(withTag: InputDevice.joystick1)
-        let item4 = menu?.item(withTag: InputDevice.joystick2)
+        let item2 = menu?.item(withTag: InputDevice.mouse1351)
+        let item3 = menu?.item(withTag: InputDevice.neosMouse)
+        let item4 = menu?.item(withTag: InputDevice.joystick1)
+        let item5 = menu?.item(withTag: InputDevice.joystick2)
 
-        // Set images and titles
-        let defaultImage = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
+        // Keyset items
         item0?.image = (gamePadManager.gamePads[0]?.image)!
         item1?.image = (gamePadManager.gamePads[1]?.image)!
-        item2?.image = (gamePadManager.gamePads[2]?.image)!
-        item3?.image = gamePadManager.gamePads[3]?.image ?? defaultImage
-        item4?.image = gamePadManager.gamePads[4]?.image ?? defaultImage
 
-        item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 1"
-        item4?.title = gamePadManager.gamePads[4]?.name ?? "USB Device 2"
-        
-        item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
-        item4?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
+        // Analog mice
+        item2?.image = (gamePadManager.gamePads[2]?.image)!
+        item3?.image = (gamePadManager.gamePads[3]?.image)!
+
+        // USB joysticks
+        let defaultImage = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
+        item4?.image = gamePadManager.gamePads[4]?.image ?? defaultImage
+        item5?.image = gamePadManager.gamePads[5]?.image ?? defaultImage
+        item4?.title = gamePadManager.gamePads[4]?.name ?? "USB Device 1"
+        item5?.title = gamePadManager.gamePads[5]?.name ?? "USB Device 2"
+        item4?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
+        item5?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
         
         // Mark game pad connected to port
         popup.selectItem(withTag: selectedSlot)
@@ -113,7 +117,8 @@ extension MyController {
         gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
         
         // Connect or disconnect analog mouse
-        c64.connectMouse(gamepadSlot1 == InputDevice.analogMouse ? 1 : 0);
+        c64.connect1351Mouse(gamepadSlot1 == InputDevice.mouse1351 ? 1 : 0);
+        c64.connectNeosMouse(gamepadSlot1 == InputDevice.neosMouse ? 1 : 0);
 
         validateJoystickToolbarItems();
     }
@@ -129,7 +134,8 @@ extension MyController {
         gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
         
         // Connect or disconnect analog mouse
-        c64.connectMouse(gamepadSlot2 == InputDevice.analogMouse ? 2 : 0);
+        c64.connect1351Mouse(gamepadSlot2 == InputDevice.mouse1351 ? 2 : 0);
+        c64.connectNeosMouse(gamepadSlot2 == InputDevice.neosMouse ? 2 : 0);
         
         validateJoystickToolbarItems();
     }
