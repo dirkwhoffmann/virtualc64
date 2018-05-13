@@ -9,16 +9,11 @@ import Foundation
 
 class HardwarePrefsController : UserDialogController {
 
-    // System
+    // VIC
     @IBOutlet weak var machineType: NSPopUpButton!
     @IBOutlet weak var flag: NSImageView!
     @IBOutlet weak var systemText: NSTextField!
     @IBOutlet weak var systemText2: NSTextField!
-    
-    // VC1541
-    @IBOutlet weak var warpLoad: NSButton!
-    @IBOutlet weak var warpText: NSTextField!
-    @IBOutlet weak var driveNoise: NSButton!
     
     // Audio
     @IBOutlet weak var SIDChipModel: NSPopUpButton!
@@ -26,6 +21,13 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var SIDEngine: NSPopUpButton!
     @IBOutlet weak var SIDSamplingMethod: NSPopUpButton!
 
+    // VC1541
+    @IBOutlet weak var warpLoad: NSButton!
+    @IBOutlet weak var driveNoise: NSButton!
+    
+    // Mouse
+    @IBOutlet weak var mouseModel: NSPopUpButton!
+    
     override func awakeFromNib() {
         update()
     }
@@ -71,20 +73,6 @@ class HardwarePrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func warpLoadAction(_ sender: Any!) {
-    
-        let sender = sender as! NSButton
-        c64.setWarpLoad(sender.state == .on)
-        update()
-    }
-    
-    @IBAction func driveNoiseAction(_ sender: Any!) {
-    
-        let sender = sender as! NSButton
-        c64.vc1541.setSendSoundMessages(sender.state == .on)
-        update()
-    }
-    
     @IBAction func SIDFilterAction(_ sender: Any!) {
     
         let sender = sender as! NSButton
@@ -110,6 +98,27 @@ class HardwarePrefsController : UserDialogController {
     
         let sender = sender as! NSPopUpButton
         c64.setChipModel(sender.selectedTag())
+        update()
+    }
+    
+    @IBAction func warpLoadAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        c64.setWarpLoad(sender.state == .on)
+        update()
+    }
+    
+    @IBAction func driveNoiseAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        c64.vc1541.setSendSoundMessages(sender.state == .on)
+        update()
+    }
+    
+    @IBAction func mouseModelAction(_ sender: Any!) {
+        
+        let sender = sender as! NSPopUpButton
+        track("mouse model = \(sender.selectedTag())")
         update()
     }
     

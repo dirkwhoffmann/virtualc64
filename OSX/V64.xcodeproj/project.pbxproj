@@ -83,6 +83,7 @@
 		5039A31415BE89940038ACBC /* drive48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31315BE89940038ACBC /* drive48.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
+		503B9D6320A89246000CFC79 /* mouse256.png in Resources */ = {isa = PBXBuildFile; fileRef = 503B9D6220A89245000CFC79 /* mouse256.png */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
 		50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* CRTContainer.cpp */; };
@@ -393,6 +394,7 @@
 		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		503B9D6220A89245000CFC79 /* mouse256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256.png; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTContainer.cpp; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				5087D8512081FF8A0026BAD5 /* joystick32_sony.png */,
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
 				50CCB1D31B84ACA8008D8C30 /* keyboard.png */,
+				503B9D6220A89245000CFC79 /* mouse256.png */,
 				507E0B1F20A70137001A048C /* mouse32.png */,
 				507E0B2120A702AF001A048C /* mouse2.png */,
 				38AF838B0C7BA24A00F6DBCE /* none32.png */,
@@ -1336,6 +1339,7 @@
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
 				504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */,
 				38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */,
+				503B9D6320A89246000CFC79 /* mouse256.png in Resources */,
 				50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */,
 				50C892531BEFB48600231B96 /* cntrlPause.png in Resources */,
 				5094197D0E426C13008D6F71 /* cartridge.png in Resources */,

@@ -37,11 +37,17 @@ public extension MetalView {
     
     func scaledMouseCoordinate(with event: NSEvent) -> NSPoint
     {
+        // Get coordinate relative to view
         let locationInView = convert(event.locationInWindow, from: nil)
-        let viewWidth = frame.width
-        let viewHeight = frame.height
-        let x = (viewWidth == 0) ? 0 : (locationInView.x / viewWidth)
-        let y = (viewHeight == 0) ? 0 : (locationInView.y / viewHeight)
+        
+        // Scale into range 0..1
+        var x = (frame.width == 0) ? 0.0 : (locationInView.x / frame.width)
+        var y = (frame.height == 0) ? 0.0 : (locationInView.y / frame.height)
+
+        // Clamp
+        x = (x < 0.0) ? 0.0 : (x > 1.0) ? 1.0 : x
+        y = (y < 0.0) ? 0.0 : (y > 1.0) ? 1.0 : y
+        
         return NSMakePoint(x, y)
     }
     

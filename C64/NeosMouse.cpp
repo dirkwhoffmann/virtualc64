@@ -158,10 +158,10 @@ NeosMouse::setXY(double x, double y, bool s)
     // Translate into C64 coordinate system (this is a hack)
     const double xmax = 190.0; // 320; // 380.0;
     const double ymax = 268.0;
-    x = x * xmax + 22;
-    y = y * ymax + 10;
-    mouseTargetX = (uint32_t)MIN(MAX(x, 0.0), xmax);
-    mouseTargetY = (uint32_t)MIN(MAX(y, 0.0), ymax);
+    x = x * xmax;
+    y = y * ymax;
+    mouseTargetX = (uint32_t)x; // (uint32_t)MIN(MAX(x, 0.0), xmax);
+    mouseTargetY = (uint32_t)y; // (uint32_t)MIN(MAX(y, 0.0), ymax);
     silent = s;
 }
 
@@ -211,9 +211,9 @@ NeosMouse::latchPosition()
     deltaX = (uint8_t)dx;
     deltaY = (uint8_t)dy;
     
-    debug("Latching X:%04X(%04X) %d Y:%04X(%04X) %d state = %d\n",
-          mouseX, latchedX, deltaX,
-          mouseY, latchedY, deltaY, state);
+    //debug("Latching X:%04X(%04X) %d Y:%04X(%04X) %d state = %d\n",
+    //       mouseX, latchedX, deltaX,
+    //       mouseY, latchedY, deltaY, state);
     
     latchedX = mouseX;
     latchedY = mouseY;
