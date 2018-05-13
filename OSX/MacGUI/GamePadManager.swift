@@ -50,11 +50,10 @@ class GamePadManager: NSObject {
         self.init()
         self.controller = controller
         
-        // Add  generic devices (two keyboard emulated joysticks and two analog mice)
+        // Add  generic devices (two keyboard emulated joysticks and a mouse)
         gamePads[0] = GamePad(manager: self)
         gamePads[1] = GamePad(manager: self)
         gamePads[2] = GamePad(manager: self, vendorID: 1, productID: 0, locationID: 0)
-        gamePads[3] = GamePad(manager: self, vendorID: 1, productID: 0, locationID: 0)
         restoreFactorySettings()
 
         // Prepare for accepting HID devices
@@ -124,8 +123,8 @@ class GamePadManager: NSObject {
             nr += 1
         }
         
-        // We support six devices max
-        return (nr < 6) ? nr : nil
+        // We support up to 5 devices
+        return (nr < 5) ? nr : nil
     }
     
     //! @brief   Lookup gamePad
