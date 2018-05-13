@@ -569,10 +569,17 @@ struct ContainerWrapper;
 
 - (bool) insertTape:(TAPProxy *)a;
 
+/*
 - (void) setMouseX:(NSInteger)value;
 - (void) setMouseY:(NSInteger)value;
 - (void) setMouseTargetX:(NSInteger)value;
 - (void) setMouseTargetY:(NSInteger)value;
+*/
+- (void) connectMouse:(NSInteger)toPort;
+- (void) disconnectMouse;
+- (void) setMouseXY:(NSPoint)position silent:(BOOL)b;
+- (void) setMouseLeftButton:(BOOL)pressed;
+- (void) setMouseRightButton:(BOOL)pressed;
 
 - (bool) warp;
 - (void) setWarp:(bool)b;

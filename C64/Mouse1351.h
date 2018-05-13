@@ -25,6 +25,12 @@
 
 class Mouse1351 : public VirtualComponent {
     
+private:
+    
+    //! @brief    Control port this mouse is connected to
+    //! @details  0 = unconnected, 1 = Port 1, 2 = Port 2
+    uint8_t port;
+    
 public:
     
     //! @brief    Horizontal mouse position
@@ -49,6 +55,12 @@ public:
      */
     uint32_t mouseTargetY;
     
+    //! @brief    Silent coordinate updates
+    /*! @details  If set to true, no coordinate updates are transmitted to the C64.
+     *            This is used for callibration to disable the mouse temporarily.
+     */
+    bool silent;
+    
     //! @brief    Constructor
     Mouse1351();
     
@@ -57,7 +69,23 @@ public:
     
     //! @brief    Method from VirtualComponent
     void reset();
-        
+    
+    //! @brief   Connects the mouse to one of the two control ports
+    void connect(unsigned port);
+
+    //! @brief   Disconnects the mouse
+    void disconnect() { connect(0); }
+
+    //! @brief   Updates the mouse coordinates
+    //! @details Coordinates must range from 0.0 to 1.0
+    void setXY(double x, double y, bool s = false);
+
+    //! @brief   Sets or releases the left mouse button
+    void setLeftButton(bool pressed);
+
+    //! @brief   Sets or releases the rigt mouse button
+    void setRightButton(bool pressed);
+
     //! @brief   Execution function (called once for each frame)
     /*! @details Shifts mouseX, mouseY smoothly towards mouseTargetX, mouseTargetY
      */

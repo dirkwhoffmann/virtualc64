@@ -48,12 +48,57 @@ Mouse1351::reset()
     VirtualComponent::reset();
 }
 
+void
+Mouse1351::connect(unsigned port)
+{
+    assert(port == 0 || port == 1 || port == 2);
+    
+    debug("Connecting analog mouse to port %d\n", port);
+    this->port = port;
+    
+    if (port == 0) {
+        // Clean up SID side
+        c64->sid.potX = 0xFF;
+        c64->sid.potY = 0xFF;
+    }
+}
+
+void
+Mouse1351::setXY(double x, double y, bool s)
+{
+    // Translate into C64 coordinate system (this is a hack)
+    const double xmax = 380.0;
+    const double ymax = 268.0;
+    x = x * xmax + 22;
+    y = y * ymax + 10;
+    mouseTargetX = (uint32_t)MIN(MAX(x, 0.0), xmax);
+    mouseTargetY = (uint32_t)MIN(MAX(y, 0.0), ymax);
+    silent = s;
+}
+
+void
+Mouse1351::setLeftButton(bool pressed)
+{
+    ControlPort *p = (port == 1) ? &c64->port1 : (port == 2) ? &c64->port2 : NULL;
+
+    if (p) {
+        p->trigger(pressed ? PRESS_FIRE : RELEASE_FIRE);
+    }
+}
+
+void
+Mouse1351::setRightButton(bool pressed)
+{
+    ControlPort *p = (port == 1) ? &c64->port1 : (port == 2) ? &c64->port2 : NULL;
+    
+    if (p) {
+        // WHAT TO DO HERE? 
+    }
+}
 
 void
 Mouse1351::execute()
 {
-    debug("Executing mouse (x = %d y = %d)\n", mouseX, mouseY);
-    
     if (mouseX == mouseTargetX && mouseY == mouseTargetY)
         return;
     
@@ -62,7 +107,9 @@ Mouse1351::execute()
     if (mouseTargetY < mouseY) mouseY -= MIN(mouseY - mouseTargetY, 31);
     else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
     
-    // Let the new mouse coordinate show up in the SID register
-    c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x00;
-    c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x00;
+    // Update SID registers if mouse is connected
+    if (port != 0 && !silent) {
+        c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x00;
+        c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x00;
+    }
 }

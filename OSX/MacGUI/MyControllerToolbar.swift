@@ -112,6 +112,9 @@ extension MyController {
         // Avoid double mappings
         gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
         
+        // Connect or disconnect analog mouse
+        c64.connectMouse(gamepadSlot1 == InputDevice.analogMouse ? 1 : 0);
+
         validateJoystickToolbarItems();
     }
     
@@ -124,6 +127,9 @@ extension MyController {
         
         // Avoid double mappings
         gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
+        
+        // Connect or disconnect analog mouse
+        c64.connectMouse(gamepadSlot2 == InputDevice.analogMouse ? 2 : 0);
         
         validateJoystickToolbarItems();
     }

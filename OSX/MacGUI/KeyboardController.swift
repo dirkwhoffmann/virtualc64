@@ -48,6 +48,7 @@ class KeyboardController: NSObject {
     var shift: Bool = false
     var control: Bool = false
     var option: Bool = false
+    var command: Bool = false
     
     /**
      Remembers the currently pressed keys and their assigned C64 key list
@@ -155,6 +156,8 @@ class KeyboardController: NSObject {
             option = false
             keyUp(with: MacKey.option)
         }
+        
+        command = mod.contains(.command)
     }
     
     func keyDown(with macKey: MacKey) {
