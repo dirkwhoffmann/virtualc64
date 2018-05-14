@@ -269,6 +269,18 @@ C64::connectMouse(unsigned port)
     mousePort = port;
 }
 
+uint8_t
+C64::mouseBits(unsigned port)
+{
+    // Return 0xFF if the mouse is not connected to this port
+    if (mousePort != port)
+        return 0xFF;
+    
+    if (mouseModel == MOUSE1351)
+        return mouse1351.readControlPort();
+    else
+        return neosMouse.readControlPort();
+}
 
 //
 // Running the emulator

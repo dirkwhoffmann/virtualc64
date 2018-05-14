@@ -38,8 +38,6 @@ private:
     //! @brief    CPU cycle of the most recent trigger event
     uint64_t triggerCycle;
     
-public:
-    
     //! @brief    Horizontal mouse position
     int64_t mouseX;
     int64_t latchedX;
@@ -70,6 +68,14 @@ public:
      */
     int64_t mouseTargetY;
     
+    //! @brief    Control port bits
+    // uint8_t controlPort;
+
+    //! @brief    Indicates if left button is pressed
+    bool leftButton;
+
+public:
+    
     //! @brief    Constructor
     NeosMouse();
     
@@ -92,17 +98,20 @@ public:
     void fallingStrobe(int portNr);
 
     //! @brief    Current values of the control port bits
-    uint8_t read(int portNr);
+    // uint8_t read(int portNr);
     
     //! @brief   Updates the mouse coordinates
     //! @details Coordinates must range from 0.0 to 1.0
     void setXY(int64_t x, int64_t y);
     
-    //! @brief   Sets or releases the left mouse button
+    //! @brief   Pushes or releases the left mouse button
     void setLeftButton(bool pressed);
     
-    //! @brief   Sets or releases the rigt mouse button
+    //! @brief   Pushes or releases the rigt mouse button
     void setRightButton(bool pressed);
+    
+    //! @brief   Returns the control port bits triggered by the mouse
+    uint8_t readControlPort();
     
     //! @brief   Execution function (called once for each frame)
     /*! @details Shifts mouseX, mouseY smoothly towards mouseTargetX, mouseTargetY

@@ -450,6 +450,10 @@ public:
     //! @brief    Connect mouse to control port
     void connectMouse(unsigned port);
     
+    //! @brief    Read the control port mouse bits
+    uint8_t mouseBits(unsigned port);
+    
+    
     //
     //! @functiongroup Running the emulator
     //

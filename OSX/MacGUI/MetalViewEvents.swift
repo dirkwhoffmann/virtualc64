@@ -51,39 +51,35 @@ public extension MetalView {
         return NSMakePoint(x, y)
     }
     
+    /*
     override public func mouseEntered(with event: NSEvent)
     {
-        // track()
         NSCursor.hide();
     }
     
     override public func mouseExited(with event: NSEvent)
     {
-        // track()
         NSCursor.unhide()
     }
+    */
     
-    override public func mouseDown(with event: NSEvent) {
-        
-        // track()
+    override public func mouseDown(with event: NSEvent)
+    {
         controller.c64.setMouseLeftButton(true)
     }
     
     override public func mouseUp(with event: NSEvent)
     {
-        // track()
         controller.c64.setMouseLeftButton(false)
     }
     
     override public func rightMouseUp(with event: NSEvent)
     {
-        // track()
         controller.c64.setMouseRightButton(false)
     }
     
     override public func rightMouseDown(with event: NSEvent)
     {
-        // track()
         controller.c64.setMouseRightButton(true)
     }
     
@@ -96,8 +92,8 @@ public extension MetalView {
         controller.mouseXY.y += dy
 
         // Make coordinate independent of window size
-        let scaleX = frame.width / 1000.0
-        let scaleY = frame.height / 1000.0
+        let scaleX = 400.0 / frame.width
+        let scaleY = 300.0 / frame.height
         let newX = controller.mouseXY.x * scaleX
         let newY = controller.mouseXY.y * scaleY
 

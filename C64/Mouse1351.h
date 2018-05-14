@@ -31,8 +31,6 @@ private:
     //! @details  0 = unconnected, 1 = Port 1, 2 = Port 2
     uint8_t port;
     
-public:
-    
     //! @brief    Horizontal mouse position
     int64_t mouseX;
     
@@ -55,6 +53,11 @@ public:
      */
     int64_t targetY;
     
+    //! @brief    Control port bits
+    uint8_t controlPort; 
+    
+public:
+    
     //! @brief    Constructor
     Mouse1351();
     
@@ -73,12 +76,15 @@ public:
     //! @brief   Updates the mouse coordinates
     void setXY(int64_t x, int64_t y);
 
-    //! @brief   Sets or releases the left mouse button
+    //! @brief   Pushes or releases the left mouse button
     void setLeftButton(bool pressed);
 
-    //! @brief   Sets or releases the rigt mouse button
+    //! @brief   Pushes or releases the rigt mouse button
     void setRightButton(bool pressed);
 
+    //! @brief   Returns the control port bits triggered by the mouse
+    uint8_t readControlPort() { return controlPort; }
+    
     //! @brief   Execution function (called once for each frame)
     /*! @details Shifts mouseX, mouseY smoothly towards mouseTargetX, mouseTargetY
      */

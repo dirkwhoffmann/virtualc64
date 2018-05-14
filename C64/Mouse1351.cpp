@@ -31,6 +31,7 @@ Mouse1351::Mouse1351() {
         { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
         { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
         { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
+        { &controlPort,     sizeof(controlPort),    CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -44,6 +45,7 @@ void
 Mouse1351::reset()
 {
     VirtualComponent::reset();
+    controlPort = 0xFF;
 }
 
 void
@@ -87,20 +89,20 @@ Mouse1351::setXY(int64_t x, int64_t y)
 void
 Mouse1351::setLeftButton(bool pressed)
 {
-    ControlPort *p = (port == 1) ? &c64->port1 : (port == 2) ? &c64->port2 : NULL;
-
-    if (p) {
-        p->trigger(pressed ? PRESS_FIRE : RELEASE_FIRE);
+    if (pressed) {
+        CLR_BIT(controlPort, 4);
+    } else {
+        SET_BIT(controlPort, 4);
     }
 }
 
 void
 Mouse1351::setRightButton(bool pressed)
 {
-    ControlPort *p = (port == 1) ? &c64->port1 : (port == 2) ? &c64->port2 : NULL;
-    
-    if (p) {
-        // WHAT TO DO HERE? 
+    if (pressed) {
+        SET_BIT(controlPort, 0);
+    } else {
+        CLR_BIT(controlPort, 0);
     }
 }
 

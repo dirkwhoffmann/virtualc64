@@ -37,6 +37,7 @@ NeosMouse::NeosMouse() {
         { &mouseTargetY,    sizeof(mouseTargetY),   CLEAR_ON_RESET },
         { &deltaX,          sizeof(deltaX),         CLEAR_ON_RESET },
         { &deltaY,          sizeof(deltaY),         CLEAR_ON_RESET },
+        { &leftButton,      sizeof(leftButton),     CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -114,44 +115,6 @@ NeosMouse::fallingStrobe(int portNr)
     triggerCycle = c64->cycle;
 }
 
-uint8_t
-NeosMouse::read(int portNr)
-{
-    // Check if mouse is connected to the specified port
-    if (port != portNr)
-        return 0xFF;
- 
-    // debug("NEOS read at cycle %d\n", c64->cycle);
-    
-    // Check for time out
-    if (state != 0 && c64->cycle > triggerCycle + (2*232) /* from VICE */) {
-        // debug("    TIME OUT\n");
-        state = 0;
-        latchPosition();
-    }
-    
-    // debug("Reading %d %d from port %d (state = %d)\n", deltaX, deltaY, portNr, state);
-    
-    switch (state) {
-        
-        case 0: // Transmit X_HIGH
-            return 0xF0 | (((uint8_t)deltaX >> 4) & 0x0F);
-            
-        case 1: // Transmit X_LOW
-            return 0xF0 | ((uint8_t)deltaX & 0x0F);
-
-        case 2: // Transmit Y_HIGH
-            return 0xF0 | (((uint8_t)deltaY >> 4) & 0x0F);
-            
-        case 3: // Transmit Y_LOW
-            return 0xF0 | ((uint8_t)deltaY & 0x0F);
-            
-        default:
-            assert(false);
-            return 0xFF;
-    }
-}
-
 void
 NeosMouse::setXY(int64_t x, int64_t y)
 {
@@ -172,21 +135,51 @@ NeosMouse::setXY(int64_t x, int64_t y)
 void
 NeosMouse::setLeftButton(bool pressed)
 {
-    ControlPort *p = (port == 1) ? &c64->port1 : (port == 2) ? &c64->port2 : NULL;
-    
-    if (p) {
-        p->trigger(pressed ? PRESS_FIRE : RELEASE_FIRE);
-    }
+    leftButton = pressed;
 }
 
 void
 NeosMouse::setRightButton(bool pressed)
 {
-    ControlPort *p = (port == 1) ? &c64->port1 : (port == 2) ? &c64->port2 : NULL;
+    // The right mouse button is connected to the POTX control port pin
+    // We don't emulate this button
+}
+
+uint8_t
+NeosMouse::readControlPort()
+{
+    uint8_t result = leftButton ? 0xE0 : 0xF0;
     
-    if (p) {
-        // WHAT TO DO HERE?
+    // debug("NEOS read at cycle %d\n", c64->cycle);
+    
+    // Check for time out
+    if (state != 0 && c64->cycle > triggerCycle + (2*232) /* from VICE */) {
+        // debug("    TIME OUT\n");
+        state = 0;
+        latchPosition();
     }
+    
+    // debug("Reading %d %d from port %d (state = %d)\n", deltaX, deltaY, portNr, state);
+    
+    switch (state) {
+            
+        case 0: // Transmit X_HIGH
+            result |= (((uint8_t)deltaX >> 4) & 0x0F);
+            
+        case 1: // Transmit X_LOW
+            result |= ((uint8_t)deltaX & 0x0F);
+            
+        case 2: // Transmit Y_HIGH
+            result |= (((uint8_t)deltaY >> 4) & 0x0F);
+            
+        case 3: // Transmit Y_LOW
+            result |= ((uint8_t)deltaY & 0x0F);
+            
+        default:
+            assert(false);
+    }
+    
+    return result;
 }
 
 void
