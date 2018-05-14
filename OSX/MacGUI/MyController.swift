@@ -22,6 +22,9 @@ extension MyController {
  
         track()
 
+        // Reset mouse coordinates
+        mouseXY = NSZeroPoint
+
         // Create keyboard controller
         keyboardcontroller = KeyboardController(controller: self)
         if (keyboardcontroller == nil) {
@@ -136,7 +139,7 @@ extension MyController {
             msg = c64.message()
         }
         */
-        
+
         // Do 12 times a second ...
         if (animationCounter % 1) == 0 {
  

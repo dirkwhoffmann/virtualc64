@@ -114,8 +114,7 @@ extension MyController {
         gamepadSlot2 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot2
         
         // Connect or disconnect analog mouse
-        // c64.connect1351Mouse(gamepadSlot1 == InputDevice.mouse ? 1 : 0);
-        c64.connectNeosMouse(gamepadSlot1 == InputDevice.mouse ? 1 : 0);
+        c64.connectMouse(gamepadSlot1 == InputDevice.mouse ? 1 : 0);
 
         validateJoystickToolbarItems();
     }
@@ -131,8 +130,7 @@ extension MyController {
         gamepadSlot1 = (gamepadSlot1 == gamepadSlot2) ? InputDevice.none : gamepadSlot1
         
         // Connect or disconnect analog mouse
-        // c64.connect1351Mouse(gamepadSlot2 == InputDevice.mouse ? 2 : 0);
-        c64.connectNeosMouse(gamepadSlot2 == InputDevice.mouse ? 2 : 0);
+        c64.connectMouse(gamepadSlot2 == InputDevice.mouse ? 2 : 0);
         
         validateJoystickToolbarItems();
     }

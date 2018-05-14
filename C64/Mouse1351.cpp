@@ -28,9 +28,9 @@ Mouse1351::Mouse1351() {
     // Register snapshot items
     SnapshotItem items[] = {
         { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
-        { &mouseTargetX,    sizeof(mouseTargetX),   CLEAR_ON_RESET },
+        { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
         { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
-        { &mouseTargetY,    sizeof(mouseTargetY),   CLEAR_ON_RESET },
+        { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -62,16 +62,26 @@ Mouse1351::connect(unsigned port)
 }
 
 void
-Mouse1351::setXY(double x, double y, bool s)
+Mouse1351::setXY(int64_t x, int64_t y)
 {
+    targetX = x;
+    targetY = y;
+    
+    if (abs(targetX - mouseX) > 255) mouseX = targetX;
+    if (abs(targetY - mouseY) > 255) mouseY = targetY;
+
+    debug("x = %lld, y = %lld mouseX = %lld mouseY = %lld targetX = %lld targetY = %lld\n", x, y, mouseX, mouseY, targetX, targetY);
+    
+    
     // Translate into C64 coordinate system (this is a hack)
+    /*
     const double xmax = 380.0;
     const double ymax = 268.0;
     x = x * xmax + 22;
     y = y * ymax + 10;
     mouseTargetX = (uint32_t)MIN(MAX(x, 0.0), xmax);
     mouseTargetY = (uint32_t)MIN(MAX(y, 0.0), ymax);
-    silent = s;
+    */
 }
 
 void
@@ -97,16 +107,17 @@ Mouse1351::setRightButton(bool pressed)
 void
 Mouse1351::execute()
 {
-    if (mouseX == mouseTargetX && mouseY == mouseTargetY)
+    if (mouseX == targetX && mouseY == targetY)
         return;
     
-    if (mouseTargetX < mouseX) mouseX -= MIN(mouseX - mouseTargetX, 31);
-    else if (mouseTargetX > mouseX) mouseX += MIN(mouseTargetX - mouseX, 31);
-    if (mouseTargetY < mouseY) mouseY -= MIN(mouseY - mouseTargetY, 31);
-    else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, 31);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, 31);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, 31);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, 31);
+    
     
     // Update SID registers if mouse is connected
-    if (port != 0 && !silent) {
+    if (c64->mouseModel == MOUSE1351 && c64->mousePort != 0) {
         c64->sid.potX = ((mouseX & 0x3F) << 1) | 0x00;
         c64->sid.potY = ((mouseY & 0x3F) << 1) | 0x00;
     }

@@ -153,16 +153,20 @@ NeosMouse::read(int portNr)
 }
 
 void
-NeosMouse::setXY(double x, double y, bool s)
+NeosMouse::setXY(int64_t x, int64_t y)
 {
+    mouseX = x;
+    mouseY = y;
+    
     // Translate into C64 coordinate system (this is a hack)
+    /*
     const double xmax = 190.0; // 320; // 380.0;
     const double ymax = 268.0;
     x = x * xmax;
     y = y * ymax;
     mouseTargetX = (uint32_t)x; // (uint32_t)MIN(MAX(x, 0.0), xmax);
     mouseTargetY = (uint32_t)y; // (uint32_t)MIN(MAX(y, 0.0), ymax);
-    silent = s;
+     */
 }
 
 void
@@ -195,18 +199,13 @@ NeosMouse::execute()
     else if (mouseTargetX > mouseX) mouseX += MIN(mouseTargetX - mouseX, 31);
     if (mouseTargetY < mouseY) mouseY -= MIN(mouseY - mouseTargetY, 31);
     else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
-    
-    if (silent) {
-        latchedX = mouseX;
-        latchedY = mouseY;
-    }
 }
 
 void
 NeosMouse::latchPosition()
 {
-    int32_t dx = MAX(MIN((latchedX - mouseX), 127), -128);
-    int32_t dy = MAX(MIN((mouseY - latchedY), 127), -128);
+    int64_t dx = MAX(MIN((latchedX - mouseX), 127), -128);
+    int64_t dy = MAX(MIN((mouseY - latchedY), 127), -128);
     
     deltaX = (uint8_t)dx;
     deltaY = (uint8_t)dy;

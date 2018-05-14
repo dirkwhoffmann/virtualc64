@@ -756,19 +756,15 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->c64->insertTape(container);
 }
 
-- (void) connect1351Mouse:(NSInteger)toPort {
-    wrapper->c64->mouse1351.connect((unsigned)toPort); }
-- (void) disconnect1351Mouse {
-    wrapper->c64->mouse1351.disconnect();
+- (void) connectMouse:(NSInteger)toPort {
+    wrapper->c64->mousePort = (unsigned)toPort;
 }
-- (void) connectNeosMouse:(NSInteger)toPort {
-    wrapper->c64->neosMouse.connect((unsigned)toPort); }
-- (void) disconnectNeosMouse {
-    wrapper->c64->neosMouse.disconnect();
+- (void) disconnectMouse {
+    wrapper->c64->mousePort = 0;
 }
-- (void) setMouseXY:(NSPoint)pos silent:(BOOL)b {
-    wrapper->c64->mouse1351.setXY(pos.x, pos.y, b);
-    wrapper->c64->neosMouse.setXY(pos.x, pos.y, b);
+- (void) setMouseXY:(NSPoint)pos {
+    wrapper->c64->mouse1351.setXY((uint64_t)pos.x, (uint64_t)pos.y);
+    wrapper->c64->neosMouse.setXY((uint64_t)pos.x, (uint64_t)pos.y);
 }
 - (void) setMouseLeftButton:(BOOL)pressed {
     wrapper->c64->mouse1351.setLeftButton(pressed);

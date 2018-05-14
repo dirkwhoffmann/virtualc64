@@ -575,11 +575,9 @@ struct ContainerWrapper;
 - (void) setMouseTargetX:(NSInteger)value;
 - (void) setMouseTargetY:(NSInteger)value;
 */
-- (void) connect1351Mouse:(NSInteger)toPort;
-- (void) disconnect1351Mouse;
-- (void) connectNeosMouse:(NSInteger)toPort;
-- (void) disconnectNeosMouse;
-- (void) setMouseXY:(NSPoint)position silent:(BOOL)b;
+- (void) connectMouse:(NSInteger)toPort;
+- (void) disconnectMouse;
+- (void) setMouseXY:(NSPoint)position;
 - (void) setMouseLeftButton:(BOOL)pressed;
 - (void) setMouseRightButton:(BOOL)pressed;
 

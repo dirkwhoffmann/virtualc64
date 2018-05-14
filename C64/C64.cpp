@@ -137,7 +137,9 @@ C64::C64()
     floppy.mem.floppy = &c64->floppy;
     floppy.iec = &c64->iec;
     
-    // Configure VIC
+    // Set initial hardware configuration
+    mouseModel = MOUSE1351;
+    mousePort = 0; 
     setPAL();
 			
     // Initialize mach timer info

@@ -34,10 +34,10 @@ private:
 public:
     
     //! @brief    Horizontal mouse position
-    uint32_t mouseX;
+    int64_t mouseX;
     
     //! @brief    Vertical mouse position
-    uint32_t mouseY;
+    int64_t mouseY;
     
     //! @brief    Target mouse X position
     /*! @details  In order to achieve a smooth mouse movement, a new horizontal
@@ -45,7 +45,7 @@ public:
      *            Instead, this variable is set. In execute(), mouseX is shifted
      *            smoothly towards the target position.
      */
-    uint32_t mouseTargetX;
+    int64_t targetX;
     
     //! @brief    Target mouse Y position
     /*! @details  In order to achieve a smooth mouse movement, a new vertical
@@ -53,13 +53,7 @@ public:
      *            Instead, this variable is set. In execute(), mouseY is shifted
      *            smoothly towards the target position.
      */
-    uint32_t mouseTargetY;
-    
-    //! @brief    Silent coordinate updates
-    /*! @details  If set to true, no coordinate updates are transmitted to the C64.
-     *            This is used for callibration to disable the mouse temporarily.
-     */
-    bool silent;
+    int64_t targetY;
     
     //! @brief    Constructor
     Mouse1351();
@@ -77,8 +71,7 @@ public:
     void disconnect() { connect(0); }
 
     //! @brief   Updates the mouse coordinates
-    //! @details Coordinates must range from 0.0 to 1.0
-    void setXY(double x, double y, bool s = false);
+    void setXY(int64_t x, int64_t y);
 
     //! @brief   Sets or releases the left mouse button
     void setLeftButton(bool pressed);

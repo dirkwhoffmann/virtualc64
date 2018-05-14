@@ -54,6 +54,7 @@
 @synthesize menuItemFinalIII;
 @synthesize gamePadManager;
 @synthesize modifierFlags;
+@synthesize mouseXY;
 @synthesize statusBar;
 @synthesize gamepadSlot1;
 @synthesize gamepadSlot2;

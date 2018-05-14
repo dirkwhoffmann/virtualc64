@@ -89,14 +89,21 @@ public extension MetalView {
     
     override public func mouseMoved(with event: NSEvent) {
         
-        // Check for Command key (mouse callibration mode)
-        let cmdKeyPressed = controller.keyboardcontroller.command
+        let dx = event.deltaX
+        let dy = -event.deltaY
         
-        // Compute mouse position relative to the emulator window
-        let locationInView = scaledMouseCoordinate(with: event)
-        
-        // track("\(locationInView.x) \(locationInView.y)\n");
-        controller.c64.setMouseXY(locationInView, silent: cmdKeyPressed)
+        controller.mouseXY.x += dx
+        controller.mouseXY.y += dy
+
+        // Make coordinate independent of window size
+        let scaleX = frame.width / 1000.0
+        let scaleY = frame.height / 1000.0
+        let newX = controller.mouseXY.x * scaleX
+        let newY = controller.mouseXY.y * scaleY
+
+        let newLocation = NSMakePoint(newX, newY)
+        controller.c64.setMouseXY(newLocation)
+        // track("\(dx) \(dy)\n");
     }
     
     override public func mouseDragged(with event: NSEvent)

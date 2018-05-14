@@ -199,10 +199,6 @@ It has the same effect as switching a real C64 off and on again. Note that a
 //! @class    A complete virtual C64
 class C64 : public VirtualComponent {
 
-    // ---------------------------------------------------------------------------------------
-    //                                          Properties
-    // ---------------------------------------------------------------------------------------
-
 public:
     
     //
@@ -269,6 +265,18 @@ public:
     //! @brief    Commodore Mouse 1351
     NeosMouse neosMouse;
 
+    //
+    // Mouse
+    //
+    
+    //! @brief    Mouse hardware type
+    MouseModel mouseModel;
+
+    //! @brief    Control port of plugged in mouse
+    /*! @details  0 = unconnected, 1,2 = connected to port 1 or 2
+     */
+    unsigned mousePort;
+    
     //
     // Executed cycle, rasterline, and frame
     //
@@ -364,10 +372,6 @@ private:
     //! @brief    Storage for user-taken snapshots
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
-    
-    // ---------------------------------------------------------------------------------------
-    //                                             Methods
-    // ---------------------------------------------------------------------------------------
     
 public:
     

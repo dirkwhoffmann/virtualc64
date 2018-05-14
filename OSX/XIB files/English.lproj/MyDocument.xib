@@ -405,7 +405,7 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <action selector="portBAction:" target="-2" id="hbD-K5-rhc"/>
+                                <action selector="port2Action:" target="-2" id="tNW-Lk-3IB"/>
                             </connections>
                         </popUpButton>
                         <connections>

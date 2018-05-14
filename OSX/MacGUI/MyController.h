@@ -1,5 +1,5 @@
 /*
- * (C) 2011 - 2017 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2011 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -268,6 +268,9 @@
      */
     NSEventModifierFlags modifierFlags;
     
+    //! @brief   Current mouse coordinate
+    NSPoint mouseXY;
+    
     //! @brief   Indicates if a status bar is shown
     bool statusBar;
     
@@ -321,6 +324,7 @@
 
 @property NSMenuItem *menuItemFinalIII;
 @property NSEventModifierFlags modifierFlags;
+@property NSPoint mouseXY;
 @property bool statusBar;
 @property NSInteger gamepadSlot1;
 @property NSInteger gamepadSlot2;
