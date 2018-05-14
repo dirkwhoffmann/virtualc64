@@ -242,6 +242,33 @@ C64::setNTSC()
 	resume();
 }
 
+void
+C64::setMouseModel(MouseModel value)
+{
+    mouseModel = value;
+    
+    switch(value) {
+        case MOUSE1351:
+            mouse1351.reset();
+            return;
+            
+        case NEOSMOUSE:
+            neosMouse.reset();
+            return;
+            
+        default:
+            warn("Unsupported mouse model selected.\n");
+            mouseModel = MOUSE1351;
+    }
+}
+
+void
+C64::connectMouse(unsigned port)
+{
+    assert(port <= 2);
+    mousePort = port;
+}
+
 
 //
 // Running the emulator

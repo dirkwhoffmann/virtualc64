@@ -638,10 +638,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setAudioFilter:(bool)b { wrapper->c64->setAudioFilter(b); }
 - (bool) reSID { return wrapper->c64->getReSID(); }
 - (void) setReSID:(bool)b { wrapper->c64->setReSID(b); }
-- (int) samplingMethod { return (int)(wrapper->c64->getSamplingMethod()); }
-- (void) setSamplingMethod:(long)value { wrapper->c64->setSamplingMethod((SamplingMethod)value); }
-- (int) chipModel { return (int)(wrapper->c64->getChipModel()); }
-- (void) setChipModel:(long)value {wrapper->c64->setChipModel((SIDChipModel)value); }
+- (NSInteger) samplingMethod { return (NSInteger)(wrapper->c64->getSamplingMethod()); }
+- (void) setSamplingMethod:(NSInteger)value { wrapper->c64->setSamplingMethod((SamplingMethod)value); }
+- (NSInteger) chipModel { return (int)(wrapper->c64->getChipModel()); }
+- (void) setChipModel:(NSInteger)value {wrapper->c64->setChipModel((SIDChipModel)value); }
 - (void) rampUp { wrapper->c64->sid.rampUp(); }
 - (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
 - (void) rampDown { wrapper->c64->sid.rampDown(); }
@@ -756,12 +756,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->c64->insertTape(container);
 }
 
-- (void) connectMouse:(NSInteger)toPort {
-    wrapper->c64->mousePort = (unsigned)toPort;
-}
-- (void) disconnectMouse {
-    wrapper->c64->mousePort = 0;
-}
+- (NSInteger) mouseModel { return (NSInteger)wrapper->c64->getMouseModel(); }
+- (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
+- (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }
+- (void) disconnectMouse { wrapper->c64->connectMouse(0); }
 - (void) setMouseXY:(NSPoint)pos {
     wrapper->c64->mouse1351.setXY((uint64_t)pos.x, (uint64_t)pos.y);
     wrapper->c64->neosMouse.setXY((uint64_t)pos.x, (uint64_t)pos.y);

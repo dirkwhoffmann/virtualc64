@@ -47,16 +47,20 @@ class HardwarePrefsController : UserDialogController {
             systemText2.stringValue = "65 cycles per rasterline"
         }
         
+        // Audio
+        SIDChipModel.selectItem(withTag: c64.chipModel())
+        SIDFilter.state = c64.audioFilter() ? .on : .off
+        SIDEngine.selectItem(withTag: (c64.reSID() ? 1 : 0))
+        SIDSamplingMethod.isEnabled = c64.reSID()
+        SIDSamplingMethod.selectItem(withTag: c64.samplingMethod())
+        
         // VC1541
         warpLoad.state = c64.warpLoad() ? .on : .off
         driveNoise.state = c64.vc1541.soundMessagesEnabled() ? .on : .off
         
-        // Audio
-        SIDChipModel.selectItem(withTag: Int(c64.chipModel()))
-        SIDFilter.state = c64.audioFilter() ? .on : .off
-        SIDEngine.selectItem(withTag: (c64.reSID() ? 1 : 0))
-        SIDSamplingMethod.isEnabled = c64.reSID()
-        SIDSamplingMethod.selectItem(withTag: Int(c64.samplingMethod()))
+        // Mouse
+        track("Mouse model = \(c64.mouseModel())")
+        mouseModel.selectItem(withTag: c64.mouseModel())
     }
     
     @IBAction func setPalAction(_ sender: Any!) {
@@ -118,7 +122,7 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func mouseModelAction(_ sender: Any!) {
         
         let sender = sender as! NSPopUpButton
-        track("mouse model = \(sender.selectedTag())")
+        c64.setMouseModel(sender.selectedTag())
         update()
     }
     
@@ -143,7 +147,9 @@ class HardwarePrefsController : UserDialogController {
         // VC1541
         c64.setWarpLoad(true)
         c64.vc1541.setSendSoundMessages(true)
-        // c64.vc1541.setBitAccuracy(defaults.bool(forKey: VC64Keys.bitAccuracy))
+        
+        // Mouse
+        c64.setMouseModel(0)
 
         update()
     }

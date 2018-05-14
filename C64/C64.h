@@ -432,18 +432,26 @@ public:
     //! @brief    Turns reSID library on or off
     void setReSID(bool value) { sid.setReSID(value); }
 
-    //! @brief    Gets the sampling method
+    //! @brief    Returns the sampling method
     SamplingMethod getSamplingMethod() { return sid.getSamplingMethod(); }
     
     //! @brief    Sets the sampling method
     void setSamplingMethod(SamplingMethod value) { sid.setSamplingMethod(value); }
     
-    //! @brief    Gets the SID chip model
+    //! @brief    Returns the SID chip model
     SIDChipModel getChipModel() { return sid.getChipModel(); }
     
     //! @brief    Sets the SID chip model
     void setChipModel(SIDChipModel value) { sid.setChipModel(value); }
 
+    //! @brief    Returns the mouse hardware model
+    MouseModel getMouseModel() { return mouseModel; }
+    
+    //! @brief    Sets the mouse hardware model
+    void setMouseModel(MouseModel value);
+
+    //! @brief    Connect mouse to control port
+    void connectMouse(unsigned port);
     
     //
     //! @functiongroup Running the emulator

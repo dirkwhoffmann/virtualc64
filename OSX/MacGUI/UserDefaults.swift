@@ -37,15 +37,16 @@ struct VC64Keys {
     
     // Hardware preferences dialog
     static let ntsc = "VC64PALorNTSCKey"
-    
-    static let warpLoad    = "VC64WarpLoadKey"
-    static let driveNoise  = "VC64DriveNoiseKey"
-    // static let bitAccuracy = "VC64BitAccuracyKey"
 
     static let reSID          = "VC64SIDReSIDKey"
     static let audioChip      = "VC64SIDChipModelKey"
     static let audioFilter    = "VC64SIDFilterKey"
     static let samplingMethod = "VC64SIDSamplingMethodKey"
+
+    static let warpLoad    = "VC64WarpLoadKey"
+    static let driveNoise  = "VC64DriveNoiseKey"
+
+    static let mouseModel = "VC64MouseModelKey"
 }
 
 /// This class extension handles the UserDefaults management
@@ -78,7 +79,7 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
     
-    /// Registers the default values for all proporties that are set in the hardware dialog
+    /// Registers the default values for all emulator dialog properties
     static func registerEmulatorUserDefaults() {
         
         track()
@@ -101,22 +102,23 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
     
-    /// Registers the default values for all proporties that are set in the hardware dialog
+    /// Registers the default values for all hardware dialog properties
     static func registerHardwareUserDefaults() {
         
         track()
         let dictionary : [String:Any] = [
         
             VC64Keys.ntsc: false,
-        
-            VC64Keys.warpLoad: true,
-            VC64Keys.driveNoise: true,
-            // VC64Keys.bitAccuracy: true,
-        
+            
             VC64Keys.reSID: true,
             VC64Keys.audioChip: 1,
             VC64Keys.audioFilter: false,
-            VC64Keys.samplingMethod: 0
+            VC64Keys.samplingMethod: 0,
+
+            VC64Keys.warpLoad: true,
+            VC64Keys.driveNoise: true,
+
+            VC64Keys.mouseModel: 0
         ]
         
         let defaults = UserDefaults.standard
@@ -172,13 +174,13 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         c64.setNTSC(defaults.bool(forKey: VC64Keys.ntsc))
-        c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
-        c64.vc1541.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
-        // c64.vc1541.setBitAccuracy(defaults.bool(forKey: VC64Keys.bitAccuracy))
         c64.setReSID(defaults.bool(forKey: VC64Keys.reSID))
         c64.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
+        c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
+        c64.vc1541.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
     }
     
     func loadKeyMapUserDefaults() {
@@ -236,13 +238,13 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         defaults.set(c64.isNTSC(), forKey: VC64Keys.ntsc)
-        defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
-        defaults.set(c64.vc1541.soundMessagesEnabled(), forKey: VC64Keys.driveNoise)
-        // defaults.set(c64.vc1541.bitAccuracy(), forKey: VC64Keys.bitAccuracy)
         defaults.set(c64.reSID(), forKey: VC64Keys.reSID)
         defaults.set(c64.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.samplingMethod(), forKey: VC64Keys.samplingMethod)
+        defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
+        defaults.set(c64.vc1541.soundMessagesEnabled(), forKey: VC64Keys.driveNoise)
+        defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
     
     func saveKeyMapUserDefaults() {
