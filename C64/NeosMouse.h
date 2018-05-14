@@ -26,13 +26,13 @@
 class NeosMouse : public VirtualComponent {
     
 private:
-    
-    //! @brief    Control port this mouse is connected to
-    /*! @details  0 = unconnected, 1 = Port 1, 2 = Port 2
-     */
-    uint8_t port;
-    
+        
     //! @brief    Mouse state
+    /*! @details  When the mouse switches to state 0, the current mouse
+     *            position is latched and the deltaX and deltaY are computed.
+     *            After that, the mouse cycles through the other states and
+     *            writes the delta values onto the control port, nibble by nibble.
+     */
     uint8_t state;
 
     //! @brief    CPU cycle of the most recent trigger event
@@ -40,10 +40,14 @@ private:
     
     //! @brief    Horizontal mouse position
     int64_t mouseX;
-    int64_t latchedX;
     
     //! @brief    Vertical mouse position
     int64_t mouseY;
+    
+    //! @brief    Latched horizontal mouse position
+    int64_t latchedX;
+    
+    //! @brief    Latched vertical mouse position
     int64_t latchedY;
     
     //! @brief    The least signifanct value is transmitted to the C64
@@ -52,24 +56,21 @@ private:
     //! @brief    The least signifanct value is transmitted to the C64
     int8_t deltaY;
     
-    //! @brief    Target mouse X position
+    //! @brief    Target vertical mouse position
     /*! @details  In order to achieve a smooth mouse movement, a new horizontal
      *            mouse coordinate is not written directly into mouseX.
      *            Instead, this variable is set. In execute(), mouseX is shifted
      *            smoothly towards the target position.
      */
-    int64_t mouseTargetX;
+    int64_t targetX;
     
-    //! @brief    Target mouse Y position
+    //! @brief    Target vertical mouse position
     /*! @details  In order to achieve a smooth mouse movement, a new vertical
      *            mouse coordinate is not written directly into mouseY.
      *            Instead, this variable is set. In execute(), mouseY is shifted
      *            smoothly towards the target position.
      */
-    int64_t mouseTargetY;
-    
-    //! @brief    Control port bits
-    // uint8_t controlPort;
+    int64_t targetY;
 
     //! @brief    Indicates if left button is pressed
     bool leftButton;
@@ -84,22 +85,7 @@ public:
     
     //! @brief    Method from VirtualComponent
     void reset();
-    
-    //! @brief   Connects the mouse to one of the two control ports
-    void connect(unsigned port);
-    
-    //! @brief   Disconnects the mouse
-    void disconnect() { connect(0); }
-    
-    //! @brief    Triggers a state change (rising edge on control port line)
-    void risingStrobe(int portNr);
 
-    //! @brief    Triggers a state change (falling edge on control port line)
-    void fallingStrobe(int portNr);
-
-    //! @brief    Current values of the control port bits
-    // uint8_t read(int portNr);
-    
     //! @brief   Updates the mouse coordinates
     //! @details Coordinates must range from 0.0 to 1.0
     void setXY(int64_t x, int64_t y);
@@ -109,6 +95,12 @@ public:
     
     //! @brief   Pushes or releases the rigt mouse button
     void setRightButton(bool pressed);
+    
+    //! @brief    Triggers a state change (rising edge on control port line)
+    void risingStrobe(int portNr);
+    
+    //! @brief    Triggers a state change (falling edge on control port line)
+    void fallingStrobe(int portNr);
     
     //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();

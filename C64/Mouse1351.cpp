@@ -72,7 +72,7 @@ Mouse1351::setXY(int64_t x, int64_t y)
     if (abs(targetX - mouseX) > 255) mouseX = targetX;
     if (abs(targetY - mouseY) > 255) mouseY = targetY;
 
-    debug("x = %lld, y = %lld mouseX = %lld mouseY = %lld targetX = %lld targetY = %lld\n", x, y, mouseX, mouseY, targetX, targetY);
+    // debug("x = %lld, y = %lld mouseX = %lld mouseY = %lld targetX = %lld targetY = %lld\n", x, y, mouseX, mouseY, targetX, targetY);
     
     
     // Translate into C64 coordinate system (this is a hack)

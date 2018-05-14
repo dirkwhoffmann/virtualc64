@@ -30,11 +30,11 @@ NeosMouse::NeosMouse() {
         { &state,           sizeof(state),          CLEAR_ON_RESET },
         { &triggerCycle,    sizeof(triggerCycle),   CLEAR_ON_RESET },
         { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
-        { &latchedX,        sizeof(latchedX),       CLEAR_ON_RESET },
         { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
+        { &latchedX,        sizeof(latchedX),       CLEAR_ON_RESET },
         { &latchedY,        sizeof(latchedY),       CLEAR_ON_RESET },
-        { &mouseTargetX,    sizeof(mouseTargetX),   CLEAR_ON_RESET },
-        { &mouseTargetY,    sizeof(mouseTargetY),   CLEAR_ON_RESET },
+        { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
+        { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
         { &deltaX,          sizeof(deltaX),         CLEAR_ON_RESET },
         { &deltaY,          sizeof(deltaY),         CLEAR_ON_RESET },
         { &leftButton,      sizeof(leftButton),     CLEAR_ON_RESET },
@@ -54,23 +54,33 @@ NeosMouse::reset()
 }
 
 void
-NeosMouse::connect(unsigned port)
+NeosMouse::setXY(int64_t x, int64_t y)
 {
-    assert(port == 0 || port == 1 || port == 2);
+    targetX = x / 2;
+    targetY = y;
     
-    debug("Connecting NeosMouse to port %d\n", port);
-    this->port = port;
-    
-    if (port == 0) {
-        // Disconnection stuff
-    }
+    if (abs(targetX - mouseX) > 255) mouseX = targetX;
+    if (abs(targetY - mouseY) > 255) mouseY = targetY;
+}
+
+void
+NeosMouse::setLeftButton(bool pressed)
+{
+    leftButton = pressed;
+}
+
+void
+NeosMouse::setRightButton(bool pressed)
+{
+    // The right mouse button is connected to the POTX control port pin
+    // We don't emulate this button
 }
 
 void
 NeosMouse::risingStrobe(int portNr)
 {
     // Check if mouse is connected to the specified port
-    if (port != portNr)
+    if (c64->mouseModel != NEOSMOUSE || c64->mousePort != portNr)
         return;
     
     // Perform rising edge state changes
@@ -78,14 +88,12 @@ NeosMouse::risingStrobe(int portNr)
         case 0:  /* X_HIGH -> X_LOW */
             state = 1;
             break;
-
+            
         case 2: /* Y_HIGH -> Y_LOW */
             state = 3;
             break;
     }
     
-    // debug("State change to %d\n", state);
-
     // Remember trigger cycle
     triggerCycle = c64->cycle;
 }
@@ -94,7 +102,7 @@ void
 NeosMouse::fallingStrobe(int portNr)
 {
     // Check if mouse is connected to the specified port
-    if (port != portNr)
+    if (c64->mouseModel != NEOSMOUSE || c64->mousePort != portNr)
         return;
     
     // Perform falling edge state changes
@@ -115,36 +123,6 @@ NeosMouse::fallingStrobe(int portNr)
     triggerCycle = c64->cycle;
 }
 
-void
-NeosMouse::setXY(int64_t x, int64_t y)
-{
-    mouseX = x;
-    mouseY = y;
-    
-    // Translate into C64 coordinate system (this is a hack)
-    /*
-    const double xmax = 190.0; // 320; // 380.0;
-    const double ymax = 268.0;
-    x = x * xmax;
-    y = y * ymax;
-    mouseTargetX = (uint32_t)x; // (uint32_t)MIN(MAX(x, 0.0), xmax);
-    mouseTargetY = (uint32_t)y; // (uint32_t)MIN(MAX(y, 0.0), ymax);
-     */
-}
-
-void
-NeosMouse::setLeftButton(bool pressed)
-{
-    leftButton = pressed;
-}
-
-void
-NeosMouse::setRightButton(bool pressed)
-{
-    // The right mouse button is connected to the POTX control port pin
-    // We don't emulate this button
-}
-
 uint8_t
 NeosMouse::readControlPort()
 {
@@ -159,21 +137,25 @@ NeosMouse::readControlPort()
         latchPosition();
     }
     
-    // debug("Reading %d %d from port %d (state = %d)\n", deltaX, deltaY, portNr, state);
+    debug("Reading %d %d from control port (state = %d)\n", deltaX, deltaY, state);
     
     switch (state) {
             
         case 0: // Transmit X_HIGH
             result |= (((uint8_t)deltaX >> 4) & 0x0F);
+            break;
             
         case 1: // Transmit X_LOW
             result |= ((uint8_t)deltaX & 0x0F);
+            break;
             
         case 2: // Transmit Y_HIGH
             result |= (((uint8_t)deltaY >> 4) & 0x0F);
+            break;
             
         case 3: // Transmit Y_LOW
             result |= ((uint8_t)deltaY & 0x0F);
+            break;
             
         default:
             assert(false);
@@ -185,13 +167,13 @@ NeosMouse::readControlPort()
 void
 NeosMouse::execute()
 {
-    if (mouseX == mouseTargetX && mouseY == mouseTargetY)
+    if (mouseX == targetX && mouseY == targetY)
         return;
     
-    if (mouseTargetX < mouseX) mouseX -= MIN(mouseX - mouseTargetX, 31);
-    else if (mouseTargetX > mouseX) mouseX += MIN(mouseTargetX - mouseX, 31);
-    if (mouseTargetY < mouseY) mouseY -= MIN(mouseY - mouseTargetY, 31);
-    else if (mouseTargetY > mouseY) mouseY += MIN(mouseTargetY - mouseY, 31);
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, 31);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, 31);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, 31);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, 31);
 }
 
 void
@@ -202,10 +184,6 @@ NeosMouse::latchPosition()
     
     deltaX = (uint8_t)dx;
     deltaY = (uint8_t)dy;
-    
-    //debug("Latching X:%04X(%04X) %d Y:%04X(%04X) %d state = %d\n",
-    //       mouseX, latchedX, deltaX,
-    //       mouseY, latchedY, deltaY, state);
     
     latchedX = mouseX;
     latchedY = mouseY;
