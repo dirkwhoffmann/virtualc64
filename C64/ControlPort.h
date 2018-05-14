@@ -69,6 +69,13 @@ public:
      *           CIA's data port registers
      */
     uint8_t bitmask();
+
+    //! @brief   Returns the potentiometer X value (analog mouse)
+    uint8_t potX();
+
+    //! @brief   Returns the potentiometer Y value (analog mouse)
+    uint8_t potY();
+
 };
 
 #endif

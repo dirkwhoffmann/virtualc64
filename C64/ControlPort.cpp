@@ -121,7 +121,9 @@ ControlPort::bitmask() {
     if (button)      CLR_BIT(result, 4);
     
     result &= c64->mouseBits(nr);
-    
+    if (c64->mouseBits(nr) != 0xFF) {
+        debug("Mouse bits = %02X\n", c64->mouseBits(nr));
+    }
     return result;
 }
 

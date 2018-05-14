@@ -282,6 +282,23 @@ C64::mouseBits(unsigned port)
         return neosMouse.readControlPort();
 }
 
+uint8_t
+C64::potXBits()
+{
+    // Check if Commodore 1351 mouse is connected to port 1 or port 2
+    bool connected = (mouseModel == MOUSE1351 && mousePort != 0);
+    return connected ? mouse1351.mouseXBits() : 0xFF;
+}
+
+uint8_t
+C64::potYBits()
+{
+    // Check if Commodore 1351 mouse is connected to port 1 or port 2
+    bool connected = (mouseModel == MOUSE1351 && mousePort != 0);
+    return connected ? mouse1351.mouseYBits() : 0xFF;
+}
+
+
 //
 // Running the emulator
 //

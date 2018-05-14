@@ -44,14 +44,6 @@ private:
     //! @brief    Current clock cycle since power up
     uint64_t cycles;
     
-public:
-    
-    //! @brief    Value of X potentiometer
-    uint8_t potX;
-
-    //! @brief    Value of Y potentiometer
-    uint8_t potY;
-
 private:
     
     //

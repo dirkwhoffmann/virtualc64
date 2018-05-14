@@ -37,8 +37,6 @@ SIDBridge::SIDBridge()
 
         // Internal state
         { &cycles,          sizeof(cycles),         CLEAR_ON_RESET },
-        { &potX,            sizeof(potX),           CLEAR_ON_RESET },
-        { &potY,            sizeof(potY),           CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -54,9 +52,6 @@ void
 SIDBridge::reset()
 {
     VirtualComponent::reset();
-
-    potX = 0xFF;
-    potY = 0xFF;
 
     clearRingbuffer();
     resid.reset();
@@ -112,10 +107,10 @@ SIDBridge::peek(uint16_t addr)
     executeUntil(c64->getCycles());
     
     if (addr == 0x19) {
-        return potX;
+        return c64->potXBits();
     }
     if (addr == 0x1A) {
-        return potY;
+        return c64->potYBits();
     }
     
     if (useReSID) {

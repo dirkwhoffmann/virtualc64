@@ -453,7 +453,12 @@ public:
     //! @brief    Read the control port mouse bits
     uint8_t mouseBits(unsigned port);
     
-    
+    //! @brief    Returns the potX bits as they show up in the SID register
+    uint8_t potXBits();
+
+    //! @brief    Returns the potY bits as they show up in the SID register
+    uint8_t potYBits();
+
     //
     //! @functiongroup Running the emulator
     //

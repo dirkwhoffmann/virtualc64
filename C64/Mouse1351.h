@@ -27,10 +27,6 @@ class Mouse1351 : public VirtualComponent {
     
 private:
     
-    //! @brief    Control port this mouse is connected to
-    //! @details  0 = unconnected, 1 = Port 1, 2 = Port 2
-    uint8_t port;
-    
     //! @brief    Horizontal mouse position
     int64_t mouseX;
     
@@ -67,11 +63,11 @@ public:
     //! @brief    Method from VirtualComponent
     void reset();
     
-    //! @brief   Connects the mouse to one of the two control ports
-    void connect(unsigned port);
+    //! @brief   Returns the mouse X bits as they show up in the SID register
+    uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }
 
-    //! @brief   Disconnects the mouse
-    void disconnect() { connect(0); }
+    //! @brief   Returns the mouse Y bits as they show up in the SID register
+    uint8_t mouseYBits() { return (mouseY & 0x3F) << 1; }
 
     //! @brief   Updates the mouse coordinates
     void setXY(int64_t x, int64_t y);
