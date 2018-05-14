@@ -79,6 +79,8 @@ NeosMouse::setRightButton(bool pressed)
 void
 NeosMouse::risingStrobe(int portNr)
 {
+    // debug("Rising strobe at cycle %lld (state = %d)\n", c64->cycle, state);
+
     // Check if mouse is connected to the specified port
     if (c64->mouseModel != NEOSMOUSE || c64->mousePort != portNr)
         return;
@@ -101,6 +103,8 @@ NeosMouse::risingStrobe(int portNr)
 void
 NeosMouse::fallingStrobe(int portNr)
 {
+    // debug("Falling strobe at cycle %lld (state = %d)\n", c64->cycle, state);
+    
     // Check if mouse is connected to the specified port
     if (c64->mouseModel != NEOSMOUSE || c64->mousePort != portNr)
         return;
@@ -131,13 +135,13 @@ NeosMouse::readControlPort()
     // debug("NEOS read at cycle %d\n", c64->cycle);
     
     // Check for time out
-    if (state != 0 && c64->cycle > triggerCycle + (2*232) /* from VICE */) {
+    if (state != 0 && c64->cycle > (triggerCycle + 232) /* from VICE */) {
         // debug("    TIME OUT\n");
         state = 0;
         latchPosition();
     }
     
-    debug("Reading %d %d from control port (state = %d)\n", deltaX, deltaY, state);
+    // debug("Reading %d %d from control port (state = %d)\n", deltaX, deltaY, state);
     
     switch (state) {
             
@@ -161,6 +165,7 @@ NeosMouse::readControlPort()
             assert(false);
     }
     
+    // debug("Transmitting %02X at state %d\n", result, state);
     return result;
 }
 

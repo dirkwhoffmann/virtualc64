@@ -72,9 +72,9 @@ void
 Mouse1351::setRightButton(bool pressed)
 {
     if (pressed) {
-        SET_BIT(controlPort, 0);
-    } else {
         CLR_BIT(controlPort, 0);
+    } else {
+        SET_BIT(controlPort, 0);
     }
 }
 
