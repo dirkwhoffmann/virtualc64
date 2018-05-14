@@ -270,7 +270,10 @@
     
     //! @brief   Current mouse coordinate
     NSPoint mouseXY;
-    
+
+    //! @brief   Indicates if mouse is currently hidden
+    bool hideMouse;
+
     //! @brief   Indicates if a status bar is shown
     bool statusBar;
     
@@ -284,7 +287,7 @@
     bool autoMount;
     
     //! @brief   Tracking area for receiving mouseEntered, mouseExited events
-    NSTrackingArea *trackingArea;
+    // NSTrackingArea *trackingArea;
 }
 
 @property (strong) C64Proxy *c64;
@@ -325,11 +328,12 @@
 @property NSMenuItem *menuItemFinalIII;
 @property NSEventModifierFlags modifierFlags;
 @property NSPoint mouseXY;
+@property bool hideMouse;
 @property bool statusBar;
 @property NSInteger gamepadSlot1;
 @property NSInteger gamepadSlot2;
 @property bool autoMount;
-@property NSTrackingArea *trackingArea;
+// @property NSTrackingArea *trackingArea;
 
 @property NSTimer *timer;
 @property NSLock *timerLock;

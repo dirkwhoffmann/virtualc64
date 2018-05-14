@@ -18,7 +18,7 @@ extension MyController {
         }
         
         if item.action == #selector(MyController.hideMouseAction(_:)) {
-            item.title = (trackingArea == nil) ? "Hide Mouse Cursor" : "Show Mouse Cursor"
+            item.title = hideMouse ? "Show Mouse Cursor" : "Hide Mouse Cursor"
             return true
         }
         
@@ -240,6 +240,17 @@ extension MyController {
             targetSelf in targetSelf.hideMouseAction(sender)
         }
         
+        if (hideMouse) {
+            NSCursor.unhide()
+            CGAssociateMouseAndMouseCursorPosition(boolean_t(truncating: true))
+        } else {
+            NSCursor.hide()
+            CGAssociateMouseAndMouseCursorPosition(boolean_t(truncating: false))
+        }
+        
+        hideMouse = !hideMouse
+        
+        /*
         if trackingArea != nil {
             metalScreen.removeTrackingArea(trackingArea)
             trackingArea = nil
@@ -251,6 +262,7 @@ extension MyController {
                                           userInfo: nil)
             metalScreen.addTrackingArea(trackingArea)
         }
+        */
     }
     
     // -----------------------------------------------------------------

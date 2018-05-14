@@ -24,7 +24,8 @@ extension MyController {
 
         // Reset mouse coordinates
         mouseXY = NSZeroPoint
-
+        hideMouse = false
+        
         // Create keyboard controller
         keyboardcontroller = KeyboardController(controller: self)
         if (keyboardcontroller == nil) {
@@ -80,7 +81,7 @@ extension MyController {
         window?.collectionBehavior = .fullScreenPrimary
         
         // Disable area tracking
-        trackingArea = nil
+        // trackingArea = nil
     }
     
     func setListener() {

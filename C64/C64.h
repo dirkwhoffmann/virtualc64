@@ -23,13 +23,10 @@
 // Sound engines from VICE 3.1 have been ported to VirtualC64 (both ReSID and FastSID)
 
 // TODO:
-// Rename Joystick to ControlPort (DONE)
-// Move targetPotX stuff to ControlPort (DONE)
-// Add menu option "Hide mouse" (DONE)
-// Add "Analog mouse" to Control port options
-// Simulate mouse button presses
-//
-//
+// Add menu option "Hide mouse"
+// Emulate mouse buttons
+// Refactor NeosMouse
+// Implement c64.executeMouse
 //
 // Introduce VIC::getInfo
 // Introduce CPU::getInfo

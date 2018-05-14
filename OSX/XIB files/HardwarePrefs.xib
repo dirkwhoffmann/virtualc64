@@ -275,6 +275,10 @@
                         <rect key="frame" x="8" y="140" width="501" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-WG-k2k">
+                        <rect key="frame" x="8" y="59" width="501" height="5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    </box>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dmm-sM-iA9">
                         <rect key="frame" x="85" y="13" width="192" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -345,15 +349,6 @@ DQ
                             <action selector="SIDFilterAction:" target="-2" id="xGF-Bk-lW5"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kny-Ei-yd8">
-                        <rect key="frame" x="81" y="70" width="426" height="34"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Special C64 software such as GEOS is required to use the mouse inside the emulator." id="yCs-Rz-qNF">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b0F-jc-lUR">
                         <rect key="frame" x="212" y="232" width="114" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -390,10 +385,15 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-WG-k2k">
-                        <rect key="frame" x="8" y="59" width="501" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    </box>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kny-Ei-yd8">
+                        <rect key="frame" x="81" y="78" width="192" height="34"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Special C64 software such as GEOS is required to use the mouse." id="yCs-Rz-qNF">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <point key="canvasLocation" x="889" y="-259.5"/>

@@ -427,8 +427,7 @@ CA
                                     <action selector="toggleFullScreen:" target="-1" id="zFC-jn-Li0"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Hide Mouse" id="9zf-pV-mFk">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Hide Mouse" keyEquivalent="i" id="9zf-pV-mFk">
                                 <connections>
                                     <action selector="hideMouseAction:" target="-1" id="jcw-FB-gQz"/>
                                 </connections>

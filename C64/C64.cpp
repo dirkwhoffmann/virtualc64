@@ -572,10 +572,16 @@ C64::endOfFrame()
     sid.executeUntil(cycle);
     
     // Execute other components
-    mouse1351.execute();
-    neosMouse.execute();
     iec.execute();
     expansionport.execute();
+    
+    // Update mouse coordinates
+    if (mousePort != 0) {
+        if (mouseModel == MOUSE1351)
+            mouse1351.execute();
+        else
+            neosMouse.execute();
+    }
     
     // Take a snapshot once in a while
     if (autoSaveSnapshots && frame % (vic.getFramesPerSecond() * autoSaveInterval) == 0) {

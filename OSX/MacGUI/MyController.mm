@@ -55,11 +55,12 @@
 @synthesize gamePadManager;
 @synthesize modifierFlags;
 @synthesize mouseXY;
+@synthesize hideMouse;
 @synthesize statusBar;
 @synthesize gamepadSlot1;
 @synthesize gamepadSlot2;
 @synthesize autoMount;
-@synthesize trackingArea;
+// @synthesize trackingArea;
 
 @synthesize keyboardcontroller;
 @synthesize metalScreen;
