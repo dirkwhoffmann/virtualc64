@@ -38,6 +38,7 @@ NeosMouse::NeosMouse() {
         { &deltaX,          sizeof(deltaX),         CLEAR_ON_RESET },
         { &deltaY,          sizeof(deltaY),         CLEAR_ON_RESET },
         { &leftButton,      sizeof(leftButton),     CLEAR_ON_RESET },
+        { &rightButton,     sizeof(rightButton),    CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -72,8 +73,7 @@ NeosMouse::setLeftButton(bool pressed)
 void
 NeosMouse::setRightButton(bool pressed)
 {
-    // The right mouse button is connected to the POTX control port pin
-    // We don't emulate this button
+    rightButton = pressed;
 }
 
 void
@@ -165,7 +165,6 @@ NeosMouse::readControlPort()
             assert(false);
     }
     
-    // debug("Transmitting %02X at state %d\n", result, state);
     return result;
 }
 

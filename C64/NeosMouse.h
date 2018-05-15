@@ -72,11 +72,14 @@ private:
      */
     int64_t targetY;
 
+public:
+    
     //! @brief    Indicates if left button is pressed
     bool leftButton;
 
-public:
-    
+    //! @brief    Indicates if right button is pressed
+    bool rightButton;
+
     //! @brief    Constructor
     NeosMouse();
     

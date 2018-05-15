@@ -285,17 +285,36 @@ C64::mouseBits(unsigned port)
 uint8_t
 C64::potXBits()
 {
-    // Check if Commodore 1351 mouse is connected to port 1 or port 2
-    bool connected = (mouseModel == MOUSE1351 && mousePort != 0);
-    return connected ? mouse1351.mouseXBits() : 0xFF;
+    // Check if mouse if connected
+    if (mousePort != 0) {
+        
+        // The Commodore 1351 mouse transmits the mouse X coordinate in potX
+        if (mouseModel == MOUSE1351) {
+            return mouse1351.mouseXBits();
+        }
+        
+        // The Commodore 1351 mouse transmits the mouse X coordinate in potX
+        if (mouseModel == NEOSMOUSE) {
+            return neosMouse.rightButton ? 0xFF : 0x00;
+        }
+    }
+    
+    return 0xFF;
 }
 
 uint8_t
 C64::potYBits()
 {
-    // Check if Commodore 1351 mouse is connected to port 1 or port 2
-    bool connected = (mouseModel == MOUSE1351 && mousePort != 0);
-    return connected ? mouse1351.mouseYBits() : 0xFF;
+    // Check if mouse if connected
+    if (mousePort != 0) {
+        
+        // The Commodore 1351 mouse transmits the mouse Y coordinate in potY
+        if (mouseModel == MOUSE1351) {
+            return mouse1351.mouseYBits();
+        }
+    }
+    
+    return 0xFF;
 }
 
 
