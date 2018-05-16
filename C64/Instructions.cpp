@@ -500,7 +500,6 @@ CPU::executeOneCycle()
                         instr.A, instr.X, instr.Y, instr.SP,
                         instr.flags,
                         instr.command);
-                msg("VIA: T1: %04X T2: %04X\n", c64->floppy.via1.t1, c64->floppy.via1.t2);
             }
             
             // Check breakpoint tag

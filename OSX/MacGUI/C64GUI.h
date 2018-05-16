@@ -25,7 +25,6 @@
 #import "C64Proxy.h"
 
 #import "Formatter.h"
-#import "CpuTableView.h"
 #import "MemTableView.h"
 
 #import "MyController.h"

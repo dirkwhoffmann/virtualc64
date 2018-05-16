@@ -90,12 +90,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (uint16_t) readPC {
     return wrapper->cpu->mem->read(wrapper->cpu->getPC_at_cycle_0()); }
-- (uint8_t) lengthOfInstruction:(uint8_t)opcode {
-    return wrapper->cpu->getLengthOfInstruction(opcode); }
- - (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr {
-    return wrapper->cpu->getLengthOfInstructionAtAddress(addr); }
 - (uint16_t) addressOfNextInstruction {
-    return wrapper->cpu->getAddressOfNextInstruction(); }
+     return wrapper->cpu->getAddressOfNextInstruction(); }
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
     return wrapper->cpu->disassemble(addr, 0, h);
 }

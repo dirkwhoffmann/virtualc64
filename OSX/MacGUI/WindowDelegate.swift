@@ -38,6 +38,7 @@ extension MyController : NSWindowDelegate {
         memTableView.delegate = nil
         cpuTableView.dataSource = nil
         cpuTableView.delegate = nil
+        cpuTableView.c = nil
         
         // Stop metal view
         metalScreen.cleanup()

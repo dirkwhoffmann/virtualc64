@@ -247,7 +247,7 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
             break;
         }
         case ADDR_RELATIVE: {
-            uint16_t value = addr + 2 + mem->read(addr+1);
+            uint16_t value = addr + 2 + (int8_t)mem->read(addr+1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -314,48 +314,42 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
     strncpy(instr.command, mnc, 3);
     
     // Convert register contents to strings
-    sprintf(instr.pc, (hex ? "%04X" : "%05d"), addr);
-    sprintf(instr.A,  (hex ? "%02X" : "%03d"), A);
-    sprintf(instr.X,  (hex ? "%02X" : "%03d"), X);
-    sprintf(instr.Y,  (hex ? "%02X" : "%03d"), Y);
-    sprintf(instr.SP, (hex ? "%02X" : "%03d"), SP);
+    hex ? sprint16x(instr.pc, PC_at_cycle_0) : sprint16d(instr.pc, PC_at_cycle_0);
+    hex ? sprint8x(instr.A, A) : sprint8d(instr.A, A);
+    hex ? sprint8x(instr.X, X) : sprint8d(instr.X, X);
+    hex ? sprint8x(instr.Y, Y) : sprint8d(instr.Y, Y);
+    hex ? sprint8x(instr.SP, SP) : sprint8d(instr.SP, SP);
 
     // Convert memory contents to strings
-    instr.byte1[0] = 0;
-    instr.byte2[0] = 0;
-    instr.byte3[0] = 0;
     if (instr.size >= 1) {
         uint8_t byte = mem->read(addr);
         hex ? sprint8x(instr.byte1, byte) : sprint8d(instr.byte1, byte);
+    } else {
+        hex ? strcpy(instr.byte1, "  ") : strcpy(instr.byte1, "   ");
     }
     if (instr.size >= 2) {
         uint8_t byte = mem->read(addr + 1);
         hex ? sprint8x(instr.byte2, byte) : sprint8d(instr.byte2, byte);
+    } else {
+        hex ? strcpy(instr.byte2, "  ") : strcpy(instr.byte2, "   ");
     }
     if (instr.size >= 3) {
         uint8_t byte = mem->read(addr + 2);
         hex ? sprint8x(instr.byte3, byte) : sprint8d(instr.byte3, byte);
+    } else {
+        hex ? strcpy(instr.byte3, "  ") : strcpy(instr.byte3, "   ");
     }
-
-    /*
-    for (unsigned i = 0; i < 3; i++) {
-        if (i < instr.size) {
-            sprintf(instr.byte[i], (hex ? "%02X" : "%03d"), mem->read(addr+i));
-        } else {
-            sprintf(instr.byte[i], (hex ? "  " : "   "));
-        }
-    }
-    */
     
     // Convert flags to a string
-    sprintf(instr.flags, "%c%c-%c%c%c%c%c",
-            N ? 'N' : 'n',
-            V ? 'V' : 'v',
-            B ? 'B' : 'b',
-            D ? 'D' : 'd',
-            I ? 'I' : 'i',
-            Z ? 'Z' : 'z',
-            C ? 'C' : 'c');
+    instr.flags[0] = N ? 'N' : 'n';
+    instr.flags[1] = V ? 'V' : 'v';
+    instr.flags[2] = '-';
+    instr.flags[3] = B ? 'B' : 'b';
+    instr.flags[4] = D ? 'D' : 'd';
+    instr.flags[5] = I ? 'I' : 'i';
+    instr.flags[6] = Z ? 'Z' : 'z';
+    instr.flags[7] = C ? 'C' : 'c';
+    instr.flags[8] = 0;
     
     return instr;
 }

@@ -9,7 +9,7 @@ import Foundation
 
 @objc class CPUTableView : NSTableView {
     
-    var c : MyController!
+    var c : MyController? = nil
     
     var instructionAtRow : [Int:DisassembledInstruction] = [:]
     var rowForAddress : [UInt16:Int] = [:]
@@ -30,34 +30,45 @@ import Foundation
         let row = sender.selectedRow
         
         if let instr = instructionAtRow[row] {
-            c.c64.cpu.toggleHardBreakpoint(instr.addr)
+            c?.c64.cpu.toggleHardBreakpoint(instr.addr)
             reloadData()
         }
     }
 
     @objc func setHex(_ value: Bool) {
+        
         hex = value
+        updateDisplayedAddresses()
     }
     
     func updateDisplayedAddresses(startAddr: UInt16) {
+
+        if c == nil { return }
         
         var addr = startAddr
-        
         rowForAddress = [:]
         
         for i in 0...255 {
-            instructionAtRow[i] = c.c64.cpu.disassemble(addr, hex: hex)
+            instructionAtRow[i] = c!.c64.cpu.disassemble(addr, hex: hex)
             rowForAddress[addr] = i
             addr += UInt16(instructionAtRow[i]!.size)
         }
+        
+        reloadData()
     }
 
+    func updateDisplayedAddresses() {
+        
+        if c == nil { return }
+        
+        updateDisplayedAddresses(startAddr: c!.c64.cpu.pc())
+    }
+    
     @objc func refresh() {
+    
+        if c == nil { return }
         
-        // let addr = c.c64.cpu.pc()
-        
-        track("rowForAddress = \(rowForAddress)")
-        if let row = rowForAddress[c.c64.cpu.pc()] {
+        if let row = rowForAddress[c!.c64.cpu.pc()] {
             
             // If PC points to an address which is already displayed,
             // we simply select the corresponding row.
@@ -68,12 +79,10 @@ import Foundation
             
             // If PC points to an address that is not displayed,
             // we update the whole view and display PC in the first row.
-            updateDisplayedAddresses(startAddr: c.c64.cpu.pc())
+            updateDisplayedAddresses()
             scrollRowToVisible(0)
             selectRowIndexes([0], byExtendingSelection: false)
         }
-        
-        reloadData()
     }
 }
 
@@ -86,13 +95,11 @@ extension CPUTableView : NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         var instr = instructionAtRow[row]!
-        let addr = instr.addr
-        let size = instr.size
         
         switch(tableColumn?.identifier.rawValue) {
             
         case "addr":
-            return addr
+            return String.init(utf8String:&instr.pc.0)
            
         case "data01":
             return String.init(utf8String:&instr.byte1.0)
@@ -116,10 +123,12 @@ extension CPUTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
+        if c == nil { return }
+        
         let cell = cell as! NSTextFieldCell
         let instr = instructionAtRow[row]!
         
-        if c.c64.cpu.breakpoint(instr.addr) == Int32(HARD_BREAKPOINT.rawValue) {
+        if c!.c64.cpu.breakpoint(instr.addr) == Int32(HARD_BREAKPOINT.rawValue) {
             cell.textColor = NSColor.red
         } else {
             cell.textColor = NSColor.black

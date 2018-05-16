@@ -87,8 +87,6 @@ struct ContainerWrapper;
 - (void) setVflag:(bool)b;
 
 - (uint16_t) readPC;
-- (uint8_t) lengthOfInstruction:(uint8_t)opcode;
- - (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr;
 - (uint16_t) addressOfNextInstruction;
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
 - (int) topOfCallStack;
