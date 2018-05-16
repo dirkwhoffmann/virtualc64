@@ -218,10 +218,13 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
         addr += getLengthOfInstructionAtAddress(addr);
     }
     
-    // Convert command
+    // Get opcode
     uint8_t opcode = mem->read(addr);
-    char operand[6];
+    instr.addr = addr; 
+    instr.size = getLengthOfInstruction(opcode);
     
+    // Convert command
+    char operand[6];
     switch (addressingMode[opcode]) {
             
         case ADDR_IMMEDIATE:
@@ -319,7 +322,7 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
 
     // Convert memory contents to strings
     for (unsigned i = 0; i < 3; i++) {
-        if (i < getLengthOfInstruction(opcode)) {
+        if (i < instr.size) {
             sprintf(instr.byte[i], (hex ? "%02X" : "%03d"), mem->read(addr+i));
         } else {
             sprintf(instr.byte[i], (hex ? "  " : "   "));

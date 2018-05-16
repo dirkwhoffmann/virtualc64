@@ -11,8 +11,11 @@ class CPUTableView : NSTableView {
     
     
     var c : MyController!
-    var addressForRow : [Int:UInt16] = [:]
+    
+    var instructionAtRow : [Int:DisassembledInstruction] = [:]
     var rowForAddress : [UInt16:Int] = [:]
+    
+    var hex = true
     
     override func awakeFromNib() {
         
@@ -21,7 +24,7 @@ class CPUTableView : NSTableView {
         target = self
         doubleAction = #selector(doubleClickAction(_:))
         
-        reloadData()
+        refresh()
     }
     
     @IBAction func doubleClickAction(_ sender: Any!) {
@@ -29,22 +32,47 @@ class CPUTableView : NSTableView {
         let sender = sender as! NSTableView
         let row = sender.selectedRow
         
-        if let addr = addressForRow[row] {
-            c.c64.cpu.toggleHardBreakpoint(addr)
+        if let instr = instructionAtRow[row] {
+            c.c64.cpu.toggleHardBreakpoint(instr.addr)
             reloadData()
         }
     }
 
     func updateDisplayedAddresses(startAddr: UInt16) {
+        
+        var addr = startAddr
+        
+        rowForAddress = [:]
+        
+        for i in 0...255 {
+            instructionAtRow[i] = c.c64.cpu.disassemble(addr, hex: hex)
+            rowForAddress[addr] = i
+            addr += UInt16(instructionAtRow[i]!.size)
+        }
     }
 
     func refresh() {
         
+        // let addr = c.c64.cpu.pc()
+        
+        if let row = rowForAddress[c.c64.cpu.pc()] {
+            
+            // If PC points to an address which is already displayed,
+            // we simply select the corresponding row.
+            scrollRowToVisible(row)
+            selectRowIndexes([row], byExtendingSelection: false)
+            
+        } else {
+            
+            // If PC points to an address that is not displayed,
+            // we update the whole view and display PC in the first row.
+            updateDisplayedAddresses(startAddr: c.c64.cpu.pc())
+            scrollRowToVisible(0)
+            selectRowIndexes([0], byExtendingSelection: false)
+        }
+        
+        reloadData()
     }
-}
-
-extension CPUTableView : NSTableViewDelegate {
-    
 }
 
 extension CPUTableView : NSTableViewDataSource {
@@ -55,8 +83,9 @@ extension CPUTableView : NSTableViewDataSource {
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        let addr = addressForRow[row]!
-        let length = c.c64.cpu.length(ofInstruction: c.c64.mem.read(addr))
+        let instr = instructionAtRow[row]!
+        let addr = instr.addr
+        let size = instr.size
         
         switch(tableColumn?.identifier.rawValue) {
             
@@ -64,30 +93,32 @@ extension CPUTableView : NSTableViewDataSource {
             return addr
            
         case "data01":
-            return length > 0 ? c.c64.mem.read(addr) : nil
+            return size > 0 ? c.c64.mem.read(addr) : nil
 
         case "data02":
-            return length > 1 ? c.c64.mem.read(addr + 1) : nil
+            return size > 1 ? c.c64.mem.read(addr + 1) : nil
 
         case "data03":
-            return length > 2 ? c.c64.mem.read(addr + 2) : nil
+            return size > 2 ? c.c64.mem.read(addr + 2) : nil
 
         case "ascii":
-            
-            let instr = c.c64.cpu.disassemble(addr, hex: c.hex)
-            return instr.command
+            return "HOLLA DIE WALDFEE"
+            // return instr.command
             
         default:
             return "?"
         }
     }
+}
+
+extension CPUTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
         let cell = cell as! NSTextFieldCell
-        let addr = addressForRow[row]!
+        let instr = instructionAtRow[row]!
         
-        if c.c64.cpu.breakpoint(addr) == Int32(HARD_BREAKPOINT.rawValue) {
+        if c.c64.cpu.breakpoint(instr.addr) == Int32(HARD_BREAKPOINT.rawValue) {
             cell.textColor = NSColor.red
         } else {
             cell.textColor = NSColor.black

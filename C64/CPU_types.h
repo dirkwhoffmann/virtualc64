@@ -8,6 +8,8 @@
 #ifndef CPU_TYPES_H
 #define CPU_TYPES_H
 
+#include <stdint.h>
+
 //! @brief    Processor models
 typedef enum {
     MOS_6510 = 0,
@@ -61,14 +63,16 @@ typedef enum {
 
 //! @brief    Disassembled instruction
 typedef struct {
-    char command[16];
-    char pc[6];
+    uint16_t addr; 
+    uint8_t size;
     char byte[3][4];
+    char pc[6];
     char A[4];
     char X[4];
     char Y[4];
     char SP[4];
     char flags[9];
+    char command[16];
 } DisassembledInstruction;
 
 #endif
