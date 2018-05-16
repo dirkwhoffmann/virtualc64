@@ -65,7 +65,9 @@ typedef enum {
 typedef struct {
     uint16_t addr; 
     uint8_t size;
-    char byte[3][4];
+    char byte1[4];
+    char byte2[4];
+    char byte3[4];
     char pc[6];
     char A[4];
     char X[4];

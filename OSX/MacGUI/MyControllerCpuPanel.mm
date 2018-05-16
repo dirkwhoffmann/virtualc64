@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Bridging-Header.h"
 
 @implementation MyController(CpuPanel) 
 
@@ -140,6 +141,7 @@
 	[self refresh];
 }
 
+/*
 - (IBAction)setHardBreakpointAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
@@ -147,8 +149,9 @@
 	if (![undo isUndoing]) [undo setActionName:@"Breakpoint"];
 	
 	[[c64 cpu] toggleHardBreakpoint:[sender intValue]];
-	[cpuTableView reloadData]; // [self refresh];
+    [cpuTableView refresh];
 }
+*/
 
 - (void)refreshCPU
 {

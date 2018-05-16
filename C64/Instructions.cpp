@@ -496,7 +496,7 @@ CPU::executeOneCycle()
                 DisassembledInstruction instr = disassemble(true /* hex output */);
                 trace("%s: %s %s %s   %s %s %s %s %s %s\n",
                         instr.pc,
-                        instr.byte[0], instr.byte[1], instr.byte[2],
+                        instr.byte1, instr.byte2, instr.byte3,
                         instr.A, instr.X, instr.Y, instr.SP,
                         instr.flags,
                         instr.command);

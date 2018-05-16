@@ -103,7 +103,7 @@ CPU::dumpState()
 	msg("----\n\n");
     msg("%s: %s %s %s   %s %s %s %s %s %s\n",
         instr.pc,
-        instr.byte[0], instr.byte[1], instr.byte[2],
+        instr.byte1, instr.byte2, instr.byte3,
         instr.A, instr.X, instr.Y, instr.SP,
         instr.flags,
         instr.command);
@@ -321,6 +321,23 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
     sprintf(instr.SP, (hex ? "%02X" : "%03d"), SP);
 
     // Convert memory contents to strings
+    instr.byte1[0] = 0;
+    instr.byte2[0] = 0;
+    instr.byte3[0] = 0;
+    if (instr.size >= 1) {
+        uint8_t byte = mem->read(addr);
+        hex ? sprint8x(instr.byte1, byte) : sprint8d(instr.byte1, byte);
+    }
+    if (instr.size >= 2) {
+        uint8_t byte = mem->read(addr + 1);
+        hex ? sprint8x(instr.byte2, byte) : sprint8d(instr.byte2, byte);
+    }
+    if (instr.size >= 3) {
+        uint8_t byte = mem->read(addr + 2);
+        hex ? sprint8x(instr.byte3, byte) : sprint8d(instr.byte3, byte);
+    }
+
+    /*
     for (unsigned i = 0; i < 3; i++) {
         if (i < instr.size) {
             sprintf(instr.byte[i], (hex ? "%02X" : "%03d"), mem->read(addr+i));
@@ -328,6 +345,7 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
             sprintf(instr.byte[i], (hex ? "  " : "   "));
         }
     }
+    */
     
     // Convert flags to a string
     sprintf(instr.flags, "%c%c-%c%c%c%c%c",

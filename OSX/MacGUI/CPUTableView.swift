@@ -7,8 +7,7 @@
 
 import Foundation
 
-class CPUTableView : NSTableView {
-    
+@objc class CPUTableView : NSTableView {
     
     var c : MyController!
     
@@ -23,8 +22,6 @@ class CPUTableView : NSTableView {
         dataSource = self
         target = self
         doubleAction = #selector(doubleClickAction(_:))
-        
-        refresh()
     }
     
     @IBAction func doubleClickAction(_ sender: Any!) {
@@ -38,6 +35,10 @@ class CPUTableView : NSTableView {
         }
     }
 
+    @objc func setHex(_ value: Bool) {
+        hex = value
+    }
+    
     func updateDisplayedAddresses(startAddr: UInt16) {
         
         var addr = startAddr
@@ -51,10 +52,11 @@ class CPUTableView : NSTableView {
         }
     }
 
-    func refresh() {
+    @objc func refresh() {
         
         // let addr = c.c64.cpu.pc()
         
+        track("rowForAddress = \(rowForAddress)")
         if let row = rowForAddress[c.c64.cpu.pc()] {
             
             // If PC points to an address which is already displayed,
@@ -83,7 +85,7 @@ extension CPUTableView : NSTableViewDataSource {
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        let instr = instructionAtRow[row]!
+        var instr = instructionAtRow[row]!
         let addr = instr.addr
         let size = instr.size
         
@@ -93,17 +95,16 @@ extension CPUTableView : NSTableViewDataSource {
             return addr
            
         case "data01":
-            return size > 0 ? c.c64.mem.read(addr) : nil
+            return String.init(utf8String:&instr.byte1.0)
 
         case "data02":
-            return size > 1 ? c.c64.mem.read(addr + 1) : nil
+            return String.init(utf8String:&instr.byte2.0)
 
         case "data03":
-            return size > 2 ? c.c64.mem.read(addr + 2) : nil
+            return String.init(utf8String:&instr.byte3.0)
 
         case "ascii":
-            return "HOLLA DIE WALDFEE"
-            // return instr.command
+            return String.init(utf8String:&instr.command.0)
             
         default:
             return "?"

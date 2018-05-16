@@ -16,6 +16,7 @@ extension MyController {
     override open func awakeFromNib() {
 
         track()
+        cpuTableView.c = self
     }
     
     override open func windowDidLoad() {
@@ -48,7 +49,6 @@ extension MyController {
         
         // TODO: GET RID OF THIS: Move to it's own window controller
         setHexadecimalAction(self)
-        cpuTableView.setController(self)
         memTableView.setController(self)
         
         // Get metal running

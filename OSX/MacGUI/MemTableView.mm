@@ -36,7 +36,7 @@
 
 	// prepare to get mouse click events
 	[self setTarget:self];
-	[self setDoubleAction:@selector(doubleClickAction:)];
+	// [self setDoubleAction:@selector(doubleClickAction:)];
 
 	[self reloadData];
 }

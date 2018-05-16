@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation MyController(DebugPanel) 
 
@@ -95,6 +96,7 @@
 - (IBAction)setDecimalAction:(id)sender
 {
     hex = NO;
+    [cpuTableView setHex:NO];
     
 	Formatter *bF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,3}" outFormat:@"%03d"];
 	Formatter *sF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,3}" outFormat:@"%03d"];
@@ -107,6 +109,7 @@
 - (IBAction)setHexadecimalAction:(id)sender
 {
     hex = YES;
+    [cpuTableView setHex:YES];
     
 	Formatter *bF  = [[Formatter alloc] init:HEXADECIMAL_FORMATTER inFormat:@"[0-9,a-f,A-F]{0,2}" outFormat:@"%02X"];
 	Formatter *sF  = [[Formatter alloc] init:HEXADECIMAL_FORMATTER inFormat:@"[0-9,a-f,A-F]{0,3}" outFormat:@"%03X"];
