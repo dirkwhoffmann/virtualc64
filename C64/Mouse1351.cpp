@@ -31,7 +31,6 @@ Mouse1351::Mouse1351() {
         { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
         { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
         { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
-        { &controlPort,     sizeof(controlPort),    CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -45,47 +44,18 @@ void
 Mouse1351::reset()
 {
     VirtualComponent::reset();
-    controlPort = 0xFF;
+    Mouse::reset(); 
+    shiftX = 31;
+    shiftY = 31;
 }
 
-void
-Mouse1351::setXY(int64_t x, int64_t y)
+uint8_t
+Mouse1351::readControlPort()
 {
-    targetX = x;
-    targetY = y;
+    uint8_t result = 0xFF;
     
-    if (abs(targetX - mouseX) > 255) mouseX = targetX;
-    if (abs(targetY - mouseY) > 255) mouseY = targetY;
-}
+    if (leftButton) CLR_BIT(result, 4);
+    if (rightButton) CLR_BIT(result, 0);
 
-void
-Mouse1351::setLeftButton(bool pressed)
-{
-    if (pressed) {
-        CLR_BIT(controlPort, 4);
-    } else {
-        SET_BIT(controlPort, 4);
-    }
-}
-
-void
-Mouse1351::setRightButton(bool pressed)
-{
-    if (pressed) {
-        CLR_BIT(controlPort, 0);
-    } else {
-        SET_BIT(controlPort, 0);
-    }
-}
-
-void
-Mouse1351::execute()
-{
-    if (mouseX == targetX && mouseY == targetY)
-        return;
-    
-    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, 31);
-    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, 31);
-    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, 31);
-    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, 31);
+    return result;
 }

@@ -52,79 +52,15 @@ void
 NeosMouse::reset()
 {
     VirtualComponent::reset();
+    Mouse::reset(); 
+    shiftX = 127;
+    shiftY = 127;
 }
 
 void
 NeosMouse::setXY(int64_t x, int64_t y)
 {
-    targetX = x / 2;
-    targetY = y;
-    
-    if (abs(targetX - mouseX) > 255) mouseX = targetX;
-    if (abs(targetY - mouseY) > 255) mouseY = targetY;
-}
-
-void
-NeosMouse::setLeftButton(bool pressed)
-{
-    leftButton = pressed;
-}
-
-void
-NeosMouse::setRightButton(bool pressed)
-{
-    rightButton = pressed;
-}
-
-void
-NeosMouse::risingStrobe(int portNr)
-{
-    // debug("Rising strobe at cycle %lld (state = %d)\n", c64->cycle, state);
-
-    // Check if mouse is connected to the specified port
-    if (c64->mouseModel != NEOSMOUSE || c64->mousePort != portNr)
-        return;
-    
-    // Perform rising edge state changes
-    switch (state) {
-        case 0:  /* X_HIGH -> X_LOW */
-            state = 1;
-            break;
-            
-        case 2: /* Y_HIGH -> Y_LOW */
-            state = 3;
-            break;
-    }
-    
-    // Remember trigger cycle
-    triggerCycle = c64->cycle;
-}
-
-void
-NeosMouse::fallingStrobe(int portNr)
-{
-    // debug("Falling strobe at cycle %lld (state = %d)\n", c64->cycle, state);
-    
-    // Check if mouse is connected to the specified port
-    if (c64->mouseModel != NEOSMOUSE || c64->mousePort != portNr)
-        return;
-    
-    // Perform falling edge state changes
-    switch (state) {
-        case 1:  /* X_LOW -> Y_HIGH */
-            state = 2;
-            break;
-            
-        case 3: /* Y_LOW -> X_HIGH */
-            state = 0;
-            latchPosition();
-            break;
-    }
-    
-    // debug("State change to %d\n", state);
-    
-    // Remember trigger cycle
-    triggerCycle = c64->cycle;
+    Mouse::setXY(x / 2, y);
 }
 
 uint8_t
@@ -132,16 +68,11 @@ NeosMouse::readControlPort()
 {
     uint8_t result = leftButton ? 0xE0 : 0xF0;
     
-    // debug("NEOS read at cycle %d\n", c64->cycle);
-    
     // Check for time out
     if (state != 0 && c64->cycle > (triggerCycle + 232) /* from VICE */) {
-        // debug("    TIME OUT\n");
         state = 0;
         latchPosition();
     }
-    
-    // debug("Reading %d %d from control port (state = %d)\n", deltaX, deltaY, state);
     
     switch (state) {
             
@@ -169,15 +100,40 @@ NeosMouse::readControlPort()
 }
 
 void
-NeosMouse::execute()
+NeosMouse::risingStrobe(int portNr)
 {
-    if (mouseX == targetX && mouseY == targetY)
-        return;
+    // Perform rising edge state changes
+    switch (state) {
+        case 0:  /* X_HIGH -> X_LOW */
+            state = 1;
+            break;
+            
+        case 2: /* Y_HIGH -> Y_LOW */
+            state = 3;
+            break;
+    }
     
-    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, 31);
-    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, 31);
-    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, 31);
-    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, 31);
+    // Remember trigger cycle
+    triggerCycle = c64->cycle;
+}
+
+void
+NeosMouse::fallingStrobe(int portNr)
+{
+    // Perform falling edge state changes
+    switch (state) {
+        case 1:  /* X_LOW -> Y_HIGH */
+            state = 2;
+            break;
+            
+        case 3: /* Y_LOW -> X_HIGH */
+            state = 0;
+            latchPosition();
+            break;
+    }
+    
+    // Remember trigger cycle
+    triggerCycle = c64->cycle;
 }
 
 void
@@ -192,3 +148,5 @@ NeosMouse::latchPosition()
     latchedX = mouseX;
     latchedY = mouseY;
 }
+
+

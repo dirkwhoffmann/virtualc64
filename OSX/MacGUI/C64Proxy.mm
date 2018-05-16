@@ -765,12 +765,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->c64->neosMouse.setXY((uint64_t)pos.x, (uint64_t)pos.y);
 }
 - (void) setMouseLeftButton:(BOOL)pressed {
-    wrapper->c64->mouse1351.setLeftButton(pressed);
-    wrapper->c64->neosMouse.setLeftButton(pressed);
+    wrapper->c64->mouse1351.leftButton = pressed;
+    wrapper->c64->neosMouse.leftButton = pressed;
 }
 - (void) setMouseRightButton:(BOOL)pressed {
-    wrapper->c64->mouse1351.setRightButton(pressed);
-    wrapper->c64->neosMouse.setRightButton(pressed);
+    wrapper->c64->mouse1351.rightButton = pressed;
+    wrapper->c64->neosMouse.rightButton = pressed;
 }
 
 - (bool) warp { return wrapper->c64->getWarp(); }

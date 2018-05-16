@@ -1,7 +1,7 @@
 /*!
- * @header      Mouse1351.h
- * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2018 Dirk W. Hoffmann
+ * @header      Mouse.cpp
+ * @author      Dirk W. Hoffmann
+ * @copyright   2018. All rights reserved.
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -18,35 +18,46 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MOUSE1351_H
-#define MOUSE1351_H
+#include "C64.h"
 
-#include "VirtualComponent.h"
-#include "Mouse.h"
+Mouse::Mouse()
+{
+    // reset();
+}
 
-class Mouse1351 : public VirtualComponent, public Mouse {
-    
-public:
-    
-    //! @brief    Constructor
-    Mouse1351();
-    
-    //! @brief    Destructor
-    ~Mouse1351();
-    
-    //! @brief    Method from VirtualComponent
-    void reset();
-    
-    //! @brief   Returns the mouse X bits as they show up in the SID register
-    uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }
+Mouse::~Mouse()
+{
+}
 
-    //! @brief   Returns the mouse Y bits as they show up in the SID register
-    uint8_t mouseYBits() { return (mouseY & 0x3F) << 1; }
+void Mouse::reset()
+{
+    leftButton = false;
+    rightButton = false;
+    mouseX = 0;
+    mouseY = 0;
+    targetX = 0;
+    targetY = 0;
+}
 
-    //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort();
+void
+Mouse::setXY(int64_t x, int64_t y)
+{
+    targetX = x;
+    targetY = y;
     
-};
+    if (abs(targetX - mouseX) > 255) mouseX = targetX;
+    if (abs(targetY - mouseY) > 255) mouseY = targetY;
+}
 
+void
+Mouse::execute()
+{
+    if (mouseX == targetX && mouseY == targetY)
+        return;
+    
+    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
+}
 
-#endif

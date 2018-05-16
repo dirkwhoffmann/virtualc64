@@ -22,8 +22,9 @@
 #define NEOSMOUSE_H
 
 #include "VirtualComponent.h"
+#include "Mouse.h"
 
-class NeosMouse : public VirtualComponent {
+class NeosMouse : public VirtualComponent, public Mouse {
     
 private:
         
@@ -37,12 +38,6 @@ private:
 
     //! @brief    CPU cycle of the most recent trigger event
     uint64_t triggerCycle;
-    
-    //! @brief    Horizontal mouse position
-    int64_t mouseX;
-    
-    //! @brief    Vertical mouse position
-    int64_t mouseY;
     
     //! @brief    Latched horizontal mouse position
     int64_t latchedX;
@@ -74,12 +69,6 @@ private:
 
 public:
     
-    //! @brief    Indicates if left button is pressed
-    bool leftButton;
-
-    //! @brief    Indicates if right button is pressed
-    bool rightButton;
-
     //! @brief    Constructor
     NeosMouse();
     
@@ -88,16 +77,12 @@ public:
     
     //! @brief    Method from VirtualComponent
     void reset();
-
-    //! @brief   Updates the mouse coordinates
-    //! @details Coordinates must range from 0.0 to 1.0
+    
+    //! @brief   From Mouse class
     void setXY(int64_t x, int64_t y);
-    
-    //! @brief   Pushes or releases the left mouse button
-    void setLeftButton(bool pressed);
-    
-    //! @brief   Pushes or releases the rigt mouse button
-    void setRightButton(bool pressed);
+
+    //! @brief   Returns the control port bits triggered by the mouse
+    uint8_t readControlPort();
     
     //! @brief    Triggers a state change (rising edge on control port line)
     void risingStrobe(int portNr);
@@ -105,19 +90,10 @@ public:
     //! @brief    Triggers a state change (falling edge on control port line)
     void fallingStrobe(int portNr);
     
-    //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort();
-    
-    //! @brief   Execution function (called once for each frame)
-    /*! @details Shifts mouseX, mouseY smoothly towards mouseTargetX, mouseTargetY
-     */
-    void execute();
-    
 private:
     
     //! @brief  Latches the current mouse position and computed deltas
     void latchPosition();
-    
 };
 
 #endif

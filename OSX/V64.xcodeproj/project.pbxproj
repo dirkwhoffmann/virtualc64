@@ -243,6 +243,7 @@
 		50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B372039B3C5006CE7C7 /* C64Key.swift */; };
 		50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FF16FB205D17F5000A729A /* ProcessorPort.cpp */; };
 		50FF818F1F88D9100004548A /* GamePad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF818E1F88D9100004548A /* GamePad.swift */; };
+		50FFF52320AB495B00758683 /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FFF52220AB495B00758683 /* Mouse.cpp */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -591,6 +592,8 @@
 		50FF16FB205D17F5000A729A /* ProcessorPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorPort.cpp; sourceTree = "<group>"; };
 		50FF16FC205D17F5000A729A /* ProcessorPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorPort.h; sourceTree = "<group>"; };
 		50FF818E1F88D9100004548A /* GamePad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePad.swift; sourceTree = "<group>"; };
+		50FFF52120AB495B00758683 /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
+		50FFF52220AB495B00758683 /* Mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse.cpp; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* VirtualC64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualC64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -883,6 +886,7 @@
 			isa = PBXGroup;
 			children = (
 				503C8BFA2014AC99000494A0 /* Cartridges */,
+				50FFF52420AB498000758683 /* Mouse */,
 				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
 				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
@@ -893,10 +897,6 @@
 				50775E0E1B8EE8A9002EB58D /* Disk525.cpp */,
 				50F681E91BEA3BE4008568E3 /* Datasette.h */,
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
-				5058F0EE20A77E90008BFA92 /* Mouse1351.h */,
-				5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */,
-				5058F0F120A77EDC008BFA92 /* NeosMouse.h */,
-				5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */,
 			);
 			name = Peripherals;
 			sourceTree = "<group>";
@@ -1214,6 +1214,19 @@
 			name = "Keyboard Controller";
 			sourceTree = "<group>";
 		};
+		50FFF52420AB498000758683 /* Mouse */ = {
+			isa = PBXGroup;
+			children = (
+				50FFF52120AB495B00758683 /* Mouse.h */,
+				50FFF52220AB495B00758683 /* Mouse.cpp */,
+				5058F0EE20A77E90008BFA92 /* Mouse1351.h */,
+				5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */,
+				5058F0F120A77EDC008BFA92 /* NeosMouse.h */,
+				5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */,
+			);
+			name = Mouse;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1420,6 +1433,7 @@
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
+				50FFF52320AB495B00758683 /* Mouse.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
