@@ -21,7 +21,7 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
-//! @brief Commodore 1531 mouse emulation
+//! @brief Base class for all mouse emulations
 class Mouse {
 
 public:
@@ -68,8 +68,7 @@ public:
     //! @brief   Execution function
     /*! @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
      */
-    void execute();
-    
+    virtual void execute();
 };
 
 #endif

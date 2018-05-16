@@ -26,6 +26,7 @@ NeosMouse::NeosMouse() {
     debug(3, "    Creating NeosMouse at address %p...\n", this);
     
     // Register snapshot items
+    /*
     SnapshotItem items[] = {
         { &state,           sizeof(state),          CLEAR_ON_RESET },
         { &triggerCycle,    sizeof(triggerCycle),   CLEAR_ON_RESET },
@@ -42,6 +43,7 @@ NeosMouse::NeosMouse() {
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
+     */
 }
 
 NeosMouse::~NeosMouse()
@@ -52,9 +54,17 @@ void
 NeosMouse::reset()
 {
     VirtualComponent::reset();
-    Mouse::reset(); 
+    Mouse::reset();
+    
     shiftX = 127;
     shiftY = 127;
+
+    state = 0;
+    triggerCycle = 0;
+    latchedX = 0;
+    latchedY = 0;
+    deltaX = 0;
+    deltaY = 0;
 }
 
 void

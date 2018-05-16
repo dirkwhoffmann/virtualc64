@@ -1,5 +1,5 @@
 /*!
- * @header      Mouse1351.cpp
+ * @header      Mouse1350.cpp
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2018 Dirk W. Hoffmann
  */
@@ -20,45 +20,50 @@
 
 #include "C64.h"
 
-Mouse1351::Mouse1351() {
+Mouse1350::Mouse1350() {
     
-    setDescription("Mouse1351");
-    debug(3, "    Creating Mouse1351 at address %p...\n", this);
-    
-    // Register snapshot items
-    /*
-    SnapshotItem items[] = {
-        { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
-        { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
-        { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
-        { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    */
+    setDescription("Mouse1350");
+    debug(3, "    Creating Mouse1350 at address %p...\n", this);
 }
 
-Mouse1351::~Mouse1351()
+Mouse1350::~Mouse1350()
 {
 }
 
 void
-Mouse1351::reset()
+Mouse1350::reset()
 {
     VirtualComponent::reset();
     Mouse::reset();
-    
-    shiftX = 31;
-    shiftY = 31;
+
+    shiftX = 127;
+    shiftY = 127;
+
+    latchedX = 0;
+    latchedY = 0;
+    controlPort = 0xFF;
 }
 
 uint8_t
-Mouse1351::readControlPort()
+Mouse1350::readControlPort()
 {
-    uint8_t result = 0xFF;
-    
-    if (leftButton) CLR_BIT(result, 4);
-    if (rightButton) CLR_BIT(result, 0);
+    return controlPort & (leftButton ? 0xEF : 0xFF);
+}
 
-    return result;
+void
+Mouse1350::execute()
+{
+    int64_t deltaX = mouseX - latchedX;
+    int64_t deltaY = mouseY - latchedY;
+    
+    debug("dX = %d dY = %d\n", deltaX, deltaY);
+
+    latchedX = mouseX;
+    latchedY = mouseY;
+    
+    controlPort = 0xFF;
+    if (deltaY < -5) CLR_BIT(controlPort, 0);
+    if (deltaY > 5)  CLR_BIT(controlPort, 1);
+    if (deltaX < -5) CLR_BIT(controlPort, 2);
+    if (deltaX > 5)  CLR_BIT(controlPort, 3);
 }

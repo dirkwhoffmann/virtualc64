@@ -88,6 +88,7 @@
 // Peripherals
 #include "VC1541.h"
 #include "Datasette.h"
+#include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
 

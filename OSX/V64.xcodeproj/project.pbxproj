@@ -192,6 +192,7 @@
 		50CCB1D21B84AC10008D8C30 /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1D11B84AC10008D8C30 /* none.png */; };
 		50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
+		50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D19B8620ACA0C40004C47B /* Mouse1350.cpp */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D6954812E3759500D9C738 /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954312E3759500D9C738 /* IconCRT.icns */; };
 		50D6954912E3759500D9C738 /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954412E3759500D9C738 /* IconD64.icns */; };
@@ -529,6 +530,8 @@
 		50CCB1D31B84ACA8008D8C30 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
 		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
+		50D19B8620ACA0C40004C47B /* Mouse1350.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1350.cpp; sourceTree = "<group>"; };
+		50D19B8720ACA0C40004C47B /* Mouse1350.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse1350.h; sourceTree = "<group>"; };
 		50D43B5B1EE5701A009D163C /* C64_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64_types.h; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
@@ -1214,6 +1217,8 @@
 			children = (
 				50FFF52120AB495B00758683 /* Mouse.h */,
 				50FFF52220AB495B00758683 /* Mouse.cpp */,
+				50D19B8720ACA0C40004C47B /* Mouse1350.h */,
+				50D19B8620ACA0C40004C47B /* Mouse1350.cpp */,
 				5058F0EE20A77E90008BFA92 /* Mouse1351.h */,
 				5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */,
 				5058F0F120A77EDC008BFA92 /* NeosMouse.h */,
@@ -1469,6 +1474,7 @@
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
+				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,

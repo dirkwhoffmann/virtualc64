@@ -99,7 +99,7 @@ public extension MetalView {
 
         let newLocation = NSMakePoint(newX, newY)
         controller.c64.setMouseXY(newLocation)
-        // track("\(dx) \(dy)\n");
+        //track("\(dx) \(dy)\n");
     }
     
     override public func mouseDragged(with event: NSEvent)

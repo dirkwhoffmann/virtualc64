@@ -1,5 +1,5 @@
 /*!
- * @header      Mouse1351.h
+ * @header      Mouse1350.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2018 Dirk W. Hoffmann
  */
@@ -18,34 +18,41 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MOUSE1351_H
-#define MOUSE1351_H
+#ifndef MOUSE1350_H
+#define MOUSE1350_H
 
 #include "VirtualComponent.h"
 #include "Mouse.h"
 
-class Mouse1351 : public VirtualComponent, public Mouse {
+class Mouse1350 : public VirtualComponent, public Mouse {
+    
+private:
+    
+    //! @brief    Control port bits
+    uint8_t controlPort;
+    
+    //! @brief    Latched horizontal mouse position
+    int64_t latchedX;
+    
+    //! @brief    Latched vertical mouse position
+    int64_t latchedY;
     
 public:
     
     //! @brief    Constructor
-    Mouse1351();
+    Mouse1350();
     
     //! @brief    Destructor
-    ~Mouse1351();
+    ~Mouse1350();
     
     //! @brief    Method from VirtualComponent
     void reset();
     
-    //! @brief   Returns the mouse X bits as they show up in the SID register
-    uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }
-
-    //! @brief   Returns the mouse Y bits as they show up in the SID register
-    uint8_t mouseYBits() { return (mouseY & 0x3F) << 1; }
-
     //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();
     
+    //! @brief   Translates movement deltas periodically into joystick movements
+    virtual void execute();
 };
 
 #endif
