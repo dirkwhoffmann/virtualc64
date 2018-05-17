@@ -50,6 +50,10 @@ protected:
     //! @brief    Shift deltas for each execution step
     int64_t shiftX;
     int64_t shiftY;
+    
+    //! @brief    Scaling dividers applied to raw coordinates in setXY()
+    int dividerX;
+    int dividerY;
 
 public:
     

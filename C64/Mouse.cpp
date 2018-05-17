@@ -22,7 +22,6 @@
 
 Mouse::Mouse()
 {
-    // reset();
 }
 
 Mouse::~Mouse()
@@ -37,16 +36,22 @@ void Mouse::reset()
     mouseY = 0;
     targetX = 0;
     targetY = 0;
+    shiftX = INT_MAX;
+    shiftY = INT_MAX;
+    dividerX = 1;
+    dividerY = 1;
 }
 
 void
 Mouse::setXY(int64_t x, int64_t y)
 {
-    targetX = x;
-    targetY = y;
+    targetX = x / dividerX;
+    targetY = y / dividerY;
     
-    if (abs(targetX - mouseX) > 255) mouseX = targetX;
-    if (abs(targetY - mouseY) > 255) mouseY = targetY;
+    // Sync mouse coords with target coords if more than 8 shifts would
+    // be needed to reach target coords
+    if (abs(targetX - mouseX) / 8 > shiftX) mouseX = targetX;
+    if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
 }
 
 void

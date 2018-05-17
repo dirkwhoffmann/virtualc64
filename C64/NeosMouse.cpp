@@ -24,26 +24,6 @@ NeosMouse::NeosMouse() {
     
     setDescription("NeosMouse");
     debug(3, "    Creating NeosMouse at address %p...\n", this);
-    
-    // Register snapshot items
-    /*
-    SnapshotItem items[] = {
-        { &state,           sizeof(state),          CLEAR_ON_RESET },
-        { &triggerCycle,    sizeof(triggerCycle),   CLEAR_ON_RESET },
-        { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
-        { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
-        { &latchedX,        sizeof(latchedX),       CLEAR_ON_RESET },
-        { &latchedY,        sizeof(latchedY),       CLEAR_ON_RESET },
-        { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
-        { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
-        { &deltaX,          sizeof(deltaX),         CLEAR_ON_RESET },
-        { &deltaY,          sizeof(deltaY),         CLEAR_ON_RESET },
-        { &leftButton,      sizeof(leftButton),     CLEAR_ON_RESET },
-        { &rightButton,     sizeof(rightButton),    CLEAR_ON_RESET },
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-     */
 }
 
 NeosMouse::~NeosMouse()
@@ -58,6 +38,8 @@ NeosMouse::reset()
     
     shiftX = 127;
     shiftY = 127;
+    dividerX = 512;
+    dividerY = 256;
 
     state = 0;
     triggerCycle = 0;
@@ -65,12 +47,6 @@ NeosMouse::reset()
     latchedY = 0;
     deltaX = 0;
     deltaY = 0;
-}
-
-void
-NeosMouse::setXY(int64_t x, int64_t y)
-{
-    Mouse::setXY(x / 2, y);
 }
 
 uint8_t

@@ -51,22 +51,6 @@ private:
     //! @brief    The least signifanct value is transmitted to the C64
     int8_t deltaY;
     
-    //! @brief    Target vertical mouse position
-    /*! @details  In order to achieve a smooth mouse movement, a new horizontal
-     *            mouse coordinate is not written directly into mouseX.
-     *            Instead, this variable is set. In execute(), mouseX is shifted
-     *            smoothly towards the target position.
-     */
-    int64_t targetX;
-    
-    //! @brief    Target vertical mouse position
-    /*! @details  In order to achieve a smooth mouse movement, a new vertical
-     *            mouse coordinate is not written directly into mouseY.
-     *            Instead, this variable is set. In execute(), mouseY is shifted
-     *            smoothly towards the target position.
-     */
-    int64_t targetY;
-
 public:
     
     //! @brief    Constructor
@@ -78,9 +62,6 @@ public:
     //! @brief    Method from VirtualComponent
     void reset();
     
-    //! @brief   From Mouse class
-    void setXY(int64_t x, int64_t y);
-
     //! @brief   Returns the control port bits triggered by the mouse
     uint8_t readControlPort();
     

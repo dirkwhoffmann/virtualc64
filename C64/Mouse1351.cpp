@@ -24,18 +24,6 @@ Mouse1351::Mouse1351() {
     
     setDescription("Mouse1351");
     debug(3, "    Creating Mouse1351 at address %p...\n", this);
-    
-    // Register snapshot items
-    /*
-    SnapshotItem items[] = {
-        { &mouseX,          sizeof(mouseX),         CLEAR_ON_RESET },
-        { &targetX,         sizeof(targetX),        CLEAR_ON_RESET },
-        { &mouseY,          sizeof(mouseY),         CLEAR_ON_RESET },
-        { &targetY,         sizeof(targetY),        CLEAR_ON_RESET },
-        { NULL,             0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    */
 }
 
 Mouse1351::~Mouse1351()
@@ -50,6 +38,8 @@ Mouse1351::reset()
     
     shiftX = 31;
     shiftY = 31;
+    dividerX = 256;
+    dividerY = 256;
 }
 
 uint8_t

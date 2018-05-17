@@ -31,11 +31,9 @@ private:
     //! @brief    Control port bits
     uint8_t controlPort;
     
-    //! @brief    Latched horizontal mouse position
-    int64_t latchedX;
-    
-    //! @brief    Latched vertical mouse position
-    int64_t latchedY;
+    //! @brief    Latched mouse positions
+    int64_t latchedX[3];
+    int64_t latchedY[3];
     
 public:
     

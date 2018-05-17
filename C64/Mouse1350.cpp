@@ -35,13 +35,15 @@ Mouse1350::reset()
 {
     VirtualComponent::reset();
     Mouse::reset();
-
-    shiftX = 127;
-    shiftY = 127;
-
-    latchedX = 0;
-    latchedY = 0;
+    
+    shiftX = INT_MAX;
+    shiftY = INT_MAX;
+    dividerX = 64;
+    dividerY = 64;
     controlPort = 0xFF;
+    
+    for (unsigned i = 0; i < 3; i++)
+        latchedX[i] = latchedY[i] = 0;
 }
 
 uint8_t
@@ -53,17 +55,36 @@ Mouse1350::readControlPort()
 void
 Mouse1350::execute()
 {
-    int64_t deltaX = mouseX - latchedX;
-    int64_t deltaY = mouseY - latchedY;
-    
-    debug("dX = %d dY = %d\n", deltaX, deltaY);
-
-    latchedX = mouseX;
-    latchedY = mouseY;
+    Mouse::execute();
     
     controlPort = 0xFF;
-    if (deltaY < -5) CLR_BIT(controlPort, 0);
-    if (deltaY > 5)  CLR_BIT(controlPort, 1);
-    if (deltaX < -5) CLR_BIT(controlPort, 2);
-    if (deltaX > 5)  CLR_BIT(controlPort, 3);
+    
+    double deltaX = (mouseX - latchedX[0]);
+    double deltaY = (latchedY[0] - mouseY);
+    double absDeltaX = abs(deltaX);
+    double absDeltaY = abs(deltaY);
+    double max = (absDeltaX > absDeltaY) ? absDeltaX : absDeltaY;
+    
+    if (max) {
+        
+        deltaX /= max;
+        deltaY /= max;
+        
+        debug("dX = %f dY = %f\n", deltaX, deltaY);
+        
+        if (deltaY < -0.5) { CLR_BIT(controlPort, 0); msg("UP "); }
+        if (deltaY > 0.5)  { CLR_BIT(controlPort, 1); msg("DOWN "); }
+        if (deltaX < -0.5) { CLR_BIT(controlPort, 2); msg("LEFT "); }
+        if (deltaX > 0.5)  { CLR_BIT(controlPort, 3); msg("RIGHT "); }
+        msg("\n");
+    }
+    
+    // Update latch pipeline
+    for (unsigned i = 0; i < 2; i++) {
+        latchedX[i] = latchedX[i+1];
+        latchedY[i] = latchedY[i+1];
+    }
+    latchedX[2] = mouseX;
+    latchedY[2] = mouseY;
 }
+

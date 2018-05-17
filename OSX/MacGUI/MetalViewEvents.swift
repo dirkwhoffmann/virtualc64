@@ -92,8 +92,8 @@ public extension MetalView {
         controller.mouseXY.y += dy
 
         // Make coordinate independent of window size
-        let scaleX = 400.0 / frame.width
-        let scaleY = 300.0 / frame.height
+        let scaleX = (256.0 * 400.0) / frame.width
+        let scaleY = (256.0 * 300.0) / frame.height
         let newX = controller.mouseXY.x * scaleX
         let newY = controller.mouseXY.y * scaleY
 
