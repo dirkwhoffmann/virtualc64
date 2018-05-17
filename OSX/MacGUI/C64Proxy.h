@@ -384,6 +384,7 @@ struct ContainerWrapper;
 - (void) setTraceMode:(bool)b;
 - (bool) hasRedLED;
 - (bool) hasDisk;
+- (bool) hasModifiedDisk;
 - (void) ejectDisk;
 - (bool) writeProtection;
 - (void) setWriteProtection:(bool)b;

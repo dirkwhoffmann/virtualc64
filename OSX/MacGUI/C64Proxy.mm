@@ -487,6 +487,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (b) wrapper->vc1541->startTracing(); else wrapper->vc1541->stopTracing(); }
 - (bool) hasRedLED { return wrapper->vc1541->getRedLED(); }
 - (bool) hasDisk { return wrapper->vc1541->hasDisk(); }
+- (bool) hasModifiedDisk { return wrapper->vc1541->hasModifiedDisk(); }
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
 - (bool) writeProtection { return wrapper->vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(bool)b { wrapper->vc1541->disk.setWriteProtection(b); }

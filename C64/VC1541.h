@@ -140,6 +140,9 @@ public:
     //! @brief    Returns true if a disk is inserted.
     inline bool hasDisk() { return diskInserted; }
 
+    //! @brief    Returns true if a modified disk is inserted.
+    bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
+
     /*! @brief    Inserts an archive as a virtual disk.
      *  @details  This function consumes some time as it needs to perform various conversions.
      *            E.g., if you provide a T64 archive, it is first converted to an D64 archive.

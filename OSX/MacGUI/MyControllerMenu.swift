@@ -353,7 +353,7 @@ extension MyController {
 
     @IBAction func driveEjectAction(_ sender: Any!) {
         
-        if !c64.vc1541.diskModified() ||
+        if !c64.vc1541.hasModifiedDisk() ||
             showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
             
             c64.vc1541.ejectDisk()
@@ -372,11 +372,8 @@ extension MyController {
 
     @IBAction func insertBlankDisk(_ sender: Any!) {
         
-        if !c64.vc1541.diskModified() ||
-            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
-
-            c64.insertDisk(ArchiveProxy.make())
-        }
+        driveEjectAction(sender)
+        c64.insertDisk(ArchiveProxy.make())
     }
     
     @IBAction func exportDisk(_ sender: Any!) {
