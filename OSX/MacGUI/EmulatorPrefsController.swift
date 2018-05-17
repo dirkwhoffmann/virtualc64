@@ -190,7 +190,7 @@ class EmulatorPrefsController : UserDialogController {
 
         // Check for ESC key
         if macKey == MacKey.escape {
-            perform(#selector(cancelAction(_:)))
+            cancelAction(self)
             return
         }
         
