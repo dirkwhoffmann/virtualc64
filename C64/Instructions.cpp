@@ -3760,16 +3760,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
         // -------------------------------------------------------------------------------
-
-            /*
-inline uint8_t CPU::rol(uint8_t op)
-{
-	uint8_t bit8    = (op & 128);
-	uint8_t shifted = (op << 1) + (getC() ? 1 : 0); 
-	setC(bit8);
-	return shifted;
-}	
-*/
             
         #define DO_ROL if (getC()) { setC(data & 128); data = (data << 1) + 1; } else { setC(data & 128); data = (data << 1); }
 
@@ -3951,16 +3941,6 @@ inline uint8_t CPU::rol(uint8_t op)
         // Flags:       N Z C I D V
         //              / / / - - -
         // -------------------------------------------------------------------------------
-
-    /*
-inline uint8_t CPU::ror(uint8_t op)
-{
-	uint8_t bit1    = (op & 1);
-	uint8_t shifted = (op >> 1) + (getC() ? 128 : 0); 
-	setC(bit1);
-	return shifted;
-}	
- */
     
         #define DO_ROR if (getC()) { setC(data & 1); data = (data >> 1) + 128; } else { setC(data & 1); data = (data >> 1); }
 

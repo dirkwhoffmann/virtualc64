@@ -29,25 +29,27 @@ class D64Archive;
 class G64Archive;
 class NIBArchive;
 
-// -----------------------------------------------------------------------------------------------
-//                                      Types and constants
-// -----------------------------------------------------------------------------------------------
+//
+// Types and constants
+//
 
 /*
  *
- *                      -----------------------------------------------------------------------------
- * Track layout:        |  1  | 1.5 |  2  | 2.5 |  3  | 3.5 | ... |  35  | 35.5 | ... |  42  | 42.5 |
- *                      -----------------------------------------------------------------------------
- * Halftrack addressing:|  1  |  2  |  3  |  4  |  5  |  6  |     |  69  |  70  |     |  83  |  84  |
- * Track addressing:    |  1  |     |  2  |     |  3  |     |     |  35  |      |     |  42  |      |
- *                      -----------------------------------------------------------------------------
+ *                       -----------------------------------------------------------------
+ * Track layout:         |  1  | 1.5 |  2  | 2.5 | ... |  35  | 35.5 | ... |  42  | 42.5 |
+ *                       -----------------------------------------------------------------
+ * Halftrack addressing: |  1  |  2  |  3  |  4  |     |  69  |  70  |     |  83  |  84  |
+ * Track addressing:     |  1  |     |  2  |     |     |  35  |      |     |  42  |      |
+ *                       -----------------------------------------------------------------
  */
 
 /*! @brief    Data type for addressing half and full tracks on disk
- *  @details  The VC1541 drive head can move between position 1 and 85. The odd numbers between
- *            1 and 70 mark the 35 tracks that are used by VC1541 DOS. This means that DOS moves
- *            the drive head always two positions up or down. If programmed manually, the head can
- *            also be position on half tracks and on tracks beyond 35.
+ *  @details  The VC1541 drive head can move between position 1 and 85.
+ *            The odd numbers between 1 and 70 mark the 35 tracks that
+ *            are used by VC1541 DOS. This means that DOS moves the
+ *            drive head always two positions up or down. If programmed
+ *            manually, the head can also be position on half tracks
+ *            and on tracks beyond 35.
  *  @see      Track
  */
 typedef unsigned Halftrack;
@@ -73,9 +75,9 @@ inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 const unsigned MAX_FILES_ON_DISK = 144;
 
 
-// -----------------------------------------------------------------------------------------------
-//                                               Disk525
-// -----------------------------------------------------------------------------------------------
+//
+// Disk525
+//
 
 /*! @brief    A virtual 5,25" floppy disk
  */
@@ -108,9 +110,9 @@ private:
     uint8_t invgcr[32];
 
     
-    // --------------------------------------------------------------------------------------------
-    //                                      Disk data
-    // --------------------------------------------------------------------------------------------
+    //
+    // Disk data
+    //
 
 public:
     
@@ -173,19 +175,19 @@ public:
     
     /*! @brief Returns write protection flag 
      */
-    inline bool isWriteProtected() { return writeProtected; }
+    bool isWriteProtected() { return writeProtected; }
 
     /*! @brief Sets write protection flag 
      */
-    inline void setWriteProtection(bool b) { writeProtected = b; }
+    void setWriteProtection(bool b) { writeProtected = b; }
 
     /*! @brief Returns modified flag
      */
-    inline bool isModified() { return modified; }
+    bool isModified() { return modified; }
     
     /*! @brief Sets modified flag
      */
-    inline void setModified(bool b) { modified = b; }
+    void setModified(bool b) { modified = b; }
 
     
 public:
@@ -199,7 +201,7 @@ public:
      *  @param   offset  Number of bit to read (first bit has offset 0)
      *  @result  0 or 1
      */
-    inline uint8_t readBit(uint8_t *data, unsigned offset) {
+    uint8_t readBit(uint8_t *data, unsigned offset) {
         return (data[offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0; }
 
     /*! @brief   Reads a single bit from disk
@@ -207,7 +209,7 @@ public:
      *  @param   offset  Number of bit to read (first bit has offset 0)
      *  @result	 0 or 1
      */
-    inline uint8_t readBitFromHalftrack(Halftrack ht, unsigned offset) {
+    uint8_t readBitFromHalftrack(Halftrack ht, unsigned offset) {
         assert(isHalftrackNumber(ht));
         return readBit(data.halftrack[ht], offset % length.halftrack[ht]);
     }
@@ -217,7 +219,7 @@ public:
      *  @param   offset  Position of first bit to read (first bit has offset 0)
      *  @result	 0 .. 255
      */
-    inline uint8_t readByte(uint8_t *data, unsigned offset) {
+    uint8_t readByte(uint8_t *data, unsigned offset) {
         uint8_t result = 0;
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             if (readBit(data, offset + i)) result |= mask;
@@ -229,7 +231,7 @@ public:
      *  @param   offset  Position of first bit to read (first bit has offset 0)
      *  @result	 returns 0 or 1
      */
-    inline uint8_t readByteFromHalftrack(Halftrack ht, unsigned offset) {
+    uint8_t readByteFromHalftrack(Halftrack ht, unsigned offset) {
         uint8_t result = 0;
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             if (readBitFromHalftrack(ht, offset + i)) result |= mask;
@@ -245,20 +247,20 @@ public:
      *  @param  data   Pointer to the first data byte of a track
      *  @param  offset Number of bit to set to 1 (first bit has offset 0)
      */
-    inline void setBit(uint8_t *data, unsigned offset) { data[offset / 8] |= (0x80 >> (offset % 8)); }
+    void setBit(uint8_t *data, unsigned offset) { data[offset / 8] |= (0x80 >> (offset % 8)); }
     
     /*! @brief  Sets a single bit on disk to 0
      *  @param  data   Pointer to the first data byte of a track
      *  @param  offset Number of bit to clear (first bit has offset 0)
      */
-    inline void clearBit(uint8_t *data, unsigned offset) { data[offset / 8] &= ~(0x80 >> (offset % 8)); }
+    void clearBit(uint8_t *data, unsigned offset) { data[offset / 8] &= ~(0x80 >> (offset % 8)); }
 
     /*! @brief  Writes a single bit to disk
      *  @param  data   Pointer to the first data byte of a track
      *  @param  offset Number of bit to write (first bit has offset 0)
      *  @param  bit    0 for a '0' bit, every other value for a '1' bit
      */
-    inline void writeBit(uint8_t *data, unsigned offset, uint8_t bit) {
+    void writeBit(uint8_t *data, unsigned offset, uint8_t bit) {
         if (bit) setBit(data, offset); else clearBit(data, offset); }
     
     /*! @brief  Writes a single bit to disk
@@ -266,7 +268,7 @@ public:
      *  @param  offset Number of bit to write (first bit has offset 0)
      *  @param  bit    0 for a '0' bit, every other value for a '1' bit
      */
-    inline void writeBitToHalftrack(Halftrack ht, unsigned offset, uint8_t bit) {
+    void writeBitToHalftrack(Halftrack ht, unsigned offset, uint8_t bit) {
         assert(isHalftrackNumber(ht)); writeBit(data.halftrack[ht], offset % length.halftrack[ht], bit); }
  
     /*! @brief  Writes a single byte to disk
@@ -274,7 +276,7 @@ public:
      *  @param  offset Number of fist bit to write
      *  @param  byte   Byte to write
      */
-    inline void writeByte(uint8_t *data, unsigned offset, uint8_t byte) {
+    void writeByte(uint8_t *data, unsigned offset, uint8_t byte) {
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             writeBit(data, offset + i, byte & mask);
     }
@@ -284,7 +286,7 @@ public:
      *  @param  offset Number of fist bit to write
      *  @param  byte   Byte to write
      */
-    inline void writeByteToHalftrack(Halftrack ht, unsigned offset, uint8_t byte) {
+    void writeByteToHalftrack(Halftrack ht, unsigned offset, uint8_t byte) {
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             writeBitToHalftrack(ht, offset + i, byte & mask);
     }

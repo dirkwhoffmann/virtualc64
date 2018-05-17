@@ -170,11 +170,11 @@ private:
     
     //! Returns the next logical track number following this sector
     /*! The track number is stored in the first byte of the current track */
-    inline int nextTrack(int offset) { return data[offset & (~0xFF)]; }
+    int nextTrack(int offset) { return data[offset & (~0xFF)]; }
     
     //! Returns the next logical sector number following this sector
     /*! The track number is stored in the second byte of the current track */
-    inline int nextSector(int offset) { return data[(offset & (~0xFF)) + 1]; }
+    int nextSector(int offset) { return data[(offset & (~0xFF)) + 1]; }
     
     //! @brief Return the next physical track and sector
     bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
@@ -233,12 +233,12 @@ private:
     
     //! Returns the track number of the first file block
     /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */
-    inline uint8_t firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
+    uint8_t firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
 
     //! @brief    Returns the sector number of the first file block
     /*! @details  Example usage: firstSectorOfFile(findDirectoryEntry(42)) 
      */
-    inline uint8_t firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
+    uint8_t firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
     
     /*! @brief    Returns true iff offset points to the last byte of a file 
      */

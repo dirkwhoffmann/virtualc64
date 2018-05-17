@@ -284,7 +284,7 @@ uint8_t VIC::memIdleAccess()
     return memAccess(0x3FFF);
 }
 
-inline void VIC::cAccess()
+void VIC::cAccess()
 {
     // Only proceed if the BA line is pulled down
     if (!badLineCondition)
@@ -324,7 +324,7 @@ inline void VIC::cAccess()
     }
 }
 
-inline void VIC::gAccess()
+void VIC::gAccess()
 {
     uint16_t addr;
     
@@ -378,7 +378,7 @@ inline void VIC::gAccess()
     }
 }
 
-inline void VIC::pAccess(unsigned sprite)
+void VIC::pAccess(unsigned sprite)
 {
     assert(sprite < 8);
 
@@ -387,7 +387,7 @@ inline void VIC::pAccess(unsigned sprite)
 
 }
 
-inline void VIC::sFirstAccess(unsigned sprite)
+void VIC::sFirstAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -407,7 +407,7 @@ inline void VIC::sFirstAccess(unsigned sprite)
     pixelEngine.sprite_sr[sprite].chunk1 = data;
 }
 
-inline void VIC::sSecondAccess(unsigned sprite)
+void VIC::sSecondAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -436,7 +436,7 @@ inline void VIC::sSecondAccess(unsigned sprite)
     pixelEngine.sprite_sr[sprite].chunk2 = data;
 }
 
-inline void VIC::sThirdAccess(unsigned sprite)
+void VIC::sThirdAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -455,7 +455,7 @@ inline void VIC::sThirdAccess(unsigned sprite)
 }
 
 
-inline void VIC::sFinalize(unsigned sprite)
+void VIC::sFinalize(unsigned sprite)
 {
     assert(sprite < 8);
     isSecondDMAcycle = 0;
@@ -807,7 +807,7 @@ VIC::getScreenGeometry()
 //                                DMA lines, BA signal and IRQs
 // -----------------------------------------------------------------------------------------------
 
-inline void
+void
 VIC::setBAlow(uint8_t value)
 {
     if (!BAlow && value)
@@ -817,7 +817,7 @@ VIC::setBAlow(uint8_t value)
     c64->cpu.setRDY(value == 0);
 }
 
-inline bool
+bool
 VIC::BApulledDownForAtLeastThreeCycles()
 {
     return BAlow && (c64->getCycles() - BAwentLowAtCycle > 2);
@@ -1076,7 +1076,7 @@ VIC::endRasterline()
     pixelEngine.endRasterline();
 }
 
-inline bool
+bool
 VIC::yCounterOverflow()
 {
     // PAL machines reset yCounter in cycle 2 in the first physical rasterline

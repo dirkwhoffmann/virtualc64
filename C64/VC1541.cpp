@@ -205,7 +205,7 @@ VC1541::executeByteReady()
     }
 }
 
-inline void
+void
 VC1541::byteReady(uint8_t byte)
 {
     // On the VC1541 logic board, the byte ready signal is computed by a
@@ -220,7 +220,7 @@ VC1541::byteReady(uint8_t byte)
     }
 }
 
-inline void
+void
 VC1541::byteReady()
 {
     cpu.setV(1);

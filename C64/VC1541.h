@@ -110,10 +110,10 @@ public:
     //
     
     //! @brief    Returns true if sound messages are sent to the GUI.
-    inline bool soundMessagesEnabled() { return sendSoundMessages; }
+    bool soundMessagesEnabled() { return sendSoundMessages; }
 
     //! @brief    Enables or disables sending of sound messages.
-    inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
+    void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
     
     //
@@ -121,13 +121,13 @@ public:
     //
     
     //! @brief    Returns true iff the red drive LED is shining.
-    inline bool getRedLED() { return redLED; };
+    bool getRedLED() { return redLED; };
 
     //! @brief    Turns red drive LED on or off.
     void setRedLED(bool b);
 
     //! @brief    Returns true iff the drive engine is on.
-    inline bool isRotating() { return rotating; };
+    bool isRotating() { return rotating; };
 
     //! @brief    Turns the drive engine on or off.
     void setRotating(bool b);
@@ -138,7 +138,7 @@ public:
     //
 
     //! @brief    Returns true if a disk is inserted.
-    inline bool hasDisk() { return diskInserted; }
+    bool hasDisk() { return diskInserted; }
 
     //! @brief    Returns true if a modified disk is inserted.
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
@@ -151,15 +151,15 @@ public:
     bool insertDisk(Archive *a);
     
     //! @brief    Returns true if a disk is partially inserted.
-    inline bool isDiskPartiallyInserted() { return diskPartiallyInserted; }
+    bool isDiskPartiallyInserted() { return diskPartiallyInserted; }
 
     //! @brief    Sets if a disk is partially inserted.
-    inline void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
+    void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
 
     /*! @brief    Returns the current status of the write protection light barrier
      *  @details  If the light barrier is blocked, the drive head is unable to change data bits
      */
-    inline bool getLightBarrier() { return isDiskPartiallyInserted() || disk.isWriteProtected(); }
+    bool getLightBarrier() { return isDiskPartiallyInserted() || disk.isWriteProtected(); }
 
     /*! @brief    Ejects the virtual disk
      *  @details  Does nothing, if no disk is present. Beware that this function causes a considerable time delay,
@@ -356,10 +356,10 @@ public:
     void moveHeadDown();
 
     //! @brief    Returns the current value of the sync signal
-    inline bool getSync() { return sync; }
+    bool getSync() { return sync; }
 
     //! @brief    Returns the current track zone (0 to 3)
-    inline bool getZone() { return zone; }
+    bool getZone() { return zone; }
 
     /*! @brief    Sets the current track zone
      *  @param    z drive zone (0 to 3)
@@ -369,41 +369,41 @@ public:
     /*! @brief    Reads a single bit from the disk head
      *  @result   0 or 1
      */
-    inline uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, bitoffset); }
+    uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, bitoffset); }
 
     /*! @brief    Reads a single byte from the disk head
      *  @result   0 ... 255
      */
-    inline uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
+    uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
     
     //! @brief Writes a single bit to the disk head
-    inline void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
+    void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
     
     //! @brief Writes a single byte to the disk head
-    inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
+    void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
 
     //! @brief  Advances drive head position by one bit
-    inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
+    void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
 
     //! @brief  Moves drive head position back by one bit
-    inline void rotateBack() { bitoffset = (bitoffset > 0) ? (bitoffset - 1) : (disk.length.halftrack[halftrack] - 1); }
+    void rotateBack() { bitoffset = (bitoffset > 0) ? (bitoffset - 1) : (disk.length.halftrack[halftrack] - 1); }
 
 private:
     
     //! @brief  Advances drive head position by eight bits
-    inline void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
+    void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
 
     //! @brief  Moves drive head position back by eight bits
-    inline void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
+    void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
 
     //! @brief  Align drive head to the beginning of a byte
-    inline void alignHead() { bitoffset &= 0xFFF8; byteReadyCounter = 0; }
+    void alignHead() { bitoffset &= 0xFFF8; byteReadyCounter = 0; }
 
     //! @brief Signals the CPU that a byte has been processed
-    inline void byteReady();
+    void byteReady();
 
     //! @brief Signals the CPU that a byte has been processed and load byte into input latch A of via 2
-    inline void byteReady(uint8_t byte);
+    void byteReady(uint8_t byte);
 };
 
 #endif
