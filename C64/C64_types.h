@@ -14,7 +14,8 @@
 /*! @brief    Analog mouse models
  */
 typedef enum {
-    MOUSE1351 = 0,
+    MOUSE1350 = 0,
+    MOUSE1351,
     NEOSMOUSE
 } MouseModel;
 

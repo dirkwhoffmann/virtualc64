@@ -54,6 +54,7 @@
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
+		501B33AC20AE33510047C050 /* mouse256_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 501B33AB20AE33510047C050 /* mouse256_2.png */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
@@ -69,6 +70,11 @@
 		502F57F81B93445300D1077E /* LEDyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F71B93445300D1077E /* LEDyellow.png */; };
 		502F57FA1B93457200D1077E /* fast.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F91B93457200D1077E /* fast.png */; };
 		502F57FC1B93457700D1077E /* slow.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57FB1B93457700D1077E /* slow.png */; };
+		5030B2A220AEBD1A00E591BE /* oxygen_keys.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030B29D20AEBD1A00E591BE /* oxygen_keys.png */; };
+		5030B2A320AEBD1A00E591BE /* crystal_gamepad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030B29E20AEBD1A00E591BE /* crystal_gamepad.png */; };
+		5030B2A420AEBD1A00E591BE /* oygen_key.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030B29F20AEBD1A00E591BE /* oygen_key.png */; };
+		5030B2A520AEBD1A00E591BE /* oxygen_mouse.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030B2A020AEBD1A00E591BE /* oxygen_mouse.png */; };
+		5030B2A620AEBD1A00E591BE /* oxygen_none.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030B2A120AEBD1A00E591BE /* oxygen_none.png */; };
 		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5034F2E0208239080068AA4B /* tb_revert.png in Resources */ = {isa = PBXBuildFile; fileRef = 5034F2DC208239070068AA4B /* tb_revert.png */; };
@@ -365,6 +371,7 @@
 		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
+		501B33AB20AE33510047C050 /* mouse256_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256_2.png; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
@@ -381,6 +388,11 @@
 		502F57F71B93445300D1077E /* LEDyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDyellow.png; sourceTree = "<group>"; };
 		502F57F91B93457200D1077E /* fast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fast.png; sourceTree = "<group>"; };
 		502F57FB1B93457700D1077E /* slow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slow.png; sourceTree = "<group>"; };
+		5030B29D20AEBD1A00E591BE /* oxygen_keys.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oxygen_keys.png; sourceTree = "<group>"; };
+		5030B29E20AEBD1A00E591BE /* crystal_gamepad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crystal_gamepad.png; sourceTree = "<group>"; };
+		5030B29F20AEBD1A00E591BE /* oygen_key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oygen_key.png; sourceTree = "<group>"; };
+		5030B2A020AEBD1A00E591BE /* oxygen_mouse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oxygen_mouse.png; sourceTree = "<group>"; };
+		5030B2A120AEBD1A00E591BE /* oxygen_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oxygen_none.png; sourceTree = "<group>"; };
 		5031D599200B47B70088C802 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5034F2DC208239070068AA4B /* tb_revert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_revert.png; sourceTree = "<group>"; };
@@ -868,6 +880,18 @@
 			path = MacGUI;
 			sourceTree = "<group>";
 		};
+		5030B2A720AEBD2200E591BE /* GameDevices */ = {
+			isa = PBXGroup;
+			children = (
+				5030B29E20AEBD1A00E591BE /* crystal_gamepad.png */,
+				5030B29D20AEBD1A00E591BE /* oxygen_keys.png */,
+				5030B2A020AEBD1A00E591BE /* oxygen_mouse.png */,
+				5030B2A120AEBD1A00E591BE /* oxygen_none.png */,
+				5030B29F20AEBD1A00E591BE /* oygen_key.png */,
+			);
+			name = GameDevices;
+			sourceTree = "<group>";
+		};
 		503C8BFA2014AC99000494A0 /* Cartridges */ = {
 			isa = PBXGroup;
 			children = (
@@ -935,6 +959,7 @@
 				5080F3511EE7469C001313D4 /* TouchBar Icons */,
 				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
 				50D6955012E375A800D9C738 /* Icons */,
+				5030B2A720AEBD2200E591BE /* GameDevices */,
 				50FD96A41BF65861009134A4 /* 1541.png */,
 				50F483AA203B1A0B008F74FD /* c64.png */,
 				50F9955A203AC13D004C4856 /* key.png */,
@@ -987,6 +1012,7 @@
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
 				50CCB1D31B84ACA8008D8C30 /* keyboard.png */,
 				503B9D6220A89245000CFC79 /* mouse256.png */,
+				501B33AB20AE33510047C050 /* mouse256_2.png */,
 				507E0B1F20A70137001A048C /* mouse32.png */,
 				507E0B2120A702AF001A048C /* mouse2.png */,
 				38AF838B0C7BA24A00F6DBCE /* none32.png */,
@@ -1295,6 +1321,7 @@
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				5080F3591EE74784001313D4 /* commodore.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
+				5030B2A520AEBD1A00E591BE /* oxygen_mouse.png in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
 				507E0B2220A702AF001A048C /* mouse2.png in Resources */,
 				50DB328B1B948489000FB839 /* kext.png in Resources */,
@@ -1314,6 +1341,8 @@
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
 				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
+				5030B2A220AEBD1A00E591BE /* oxygen_keys.png in Resources */,
+				501B33AC20AE33510047C050 /* mouse256_2.png in Resources */,
 				504A22B01BF71FD500B29BEB /* pin_black.png in Resources */,
 				504A22AB1BF71FD500B29BEB /* clock_blue.png in Resources */,
 				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
@@ -1323,12 +1352,14 @@
 				50A7494F203B52C100EDFDA2 /* keyboard.png in Resources */,
 				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
 				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
+				5030B2A620AEBD1A00E591BE /* oxygen_none.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				500FF3921BD7F4DF0038245B /* rom_light.png in Resources */,
 				50355F3D203E277000163F80 /* monitor.png in Resources */,
 				50F873211EE7E42500B30DBD /* restore.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
+				5030B2A420AEBD1A00E591BE /* oygen_key.png in Resources */,
 				504A22AC1BF71FD500B29BEB /* clock_green.png in Resources */,
 				50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */,
 				5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */,
@@ -1373,6 +1404,7 @@
 				502F57F81B93445300D1077E /* LEDyellow.png in Resources */,
 				50CCB1D01B84A5DD008D8C30 /* tb_virtualmachine.png in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
+				5030B2A320AEBD1A00E591BE /* crystal_gamepad.png in Resources */,
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
 				50CCB1CC1B84A19F008D8C30 /* tb_timetravel2.png in Resources */,
 				50CCB1C51B84A185008D8C30 /* tb_inspect.png in Resources */,

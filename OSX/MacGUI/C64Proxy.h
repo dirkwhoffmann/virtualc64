@@ -390,8 +390,6 @@ struct ContainerWrapper;
 - (void) setWriteProtection:(bool)b;
 - (bool) DiskModified;
 - (void) setDiskModified:(bool)b;
-// - (bool) bitAccuracy;
-// - (void) setBitAccuracy:(bool)b;
 - (bool) soundMessagesEnabled;
 - (void) setSendSoundMessages:(bool)b;
 
@@ -568,12 +566,6 @@ struct ContainerWrapper;
 
 - (bool) insertTape:(TAPProxy *)a;
 
-/*
-- (void) setMouseX:(NSInteger)value;
-- (void) setMouseY:(NSInteger)value;
-- (void) setMouseTargetX:(NSInteger)value;
-- (void) setMouseTargetY:(NSInteger)value;
-*/
 - (NSInteger) mouseModel;
 - (void) setMouseModel:(NSInteger)model;
 - (void) connectMouse:(NSInteger)toPort;

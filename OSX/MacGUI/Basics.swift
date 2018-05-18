@@ -41,16 +41,27 @@ struct DragType {
 // -------------------------------------------------------------------
 
 extension NSImage {
-    func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
+    
+    func resizeImage(width: CGFloat, height: CGFloat, cutout: NSRect) -> NSImage {
+        
         let img = NSImage(size: CGSize(width:width, height:height))
         
         img.lockFocus()
         let ctx = NSGraphicsContext.current
         ctx?.imageInterpolation = .high
-        self.draw(in: NSMakeRect(0, 0, width, height), from: NSMakeRect(0, 0, size.width, size.height), operation: .copy, fraction: 1)
+        self.draw(in: cutout,
+                  from: NSMakeRect(0, 0, size.width, size.height),
+                  operation: .copy,
+                  fraction: 1)
         img.unlockFocus()
         
         return img
+    }
+    
+    func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
+        
+        let cutout = NSMakeRect(0, 0, width, height)
+        return resizeImage(width: width, height: height, cutout: cutout)
     }
     
     func makeGlossy() {

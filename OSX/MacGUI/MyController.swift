@@ -42,9 +42,9 @@ extension MyController {
         }
         gamepadSlot1 = -1 // No gampad assigned
         gamepadSlot2 = -1
-        validateJoystickToolbarItems()
-        
-        // Setup window properties
+
+        // Configure toolbar and window
+        configureToolbar()
         configureWindow()
         
         // TODO: GET RID OF THIS: Move to it's own window controller
@@ -82,6 +82,39 @@ extension MyController {
         
         // Disable area tracking
         // trackingArea = nil
+    }
+    
+    func configureToolbar() {
+        
+        // Get and resize images
+        let cutout = NSMakeRect(2, 0, 28, 28)
+        
+        var none = NSImage(named: NSImage.Name(rawValue: "oxygen_none.png"))
+        none = none?.resizeImage(width: 32, height: 32, cutout: cutout)
+        var keyset = NSImage(named: NSImage.Name(rawValue: "oxygen_keys.png"))
+        keyset = keyset?.resizeImage(width: 32, height: 32, cutout: cutout)
+        var mouse = NSImage(named: NSImage.Name(rawValue: "oxygen_mouse.png"))
+        mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
+        var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad.png"))
+        gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
+
+        // Assign images
+        controlPort1.item(at: 0)?.image = none
+        controlPort1.item(at: 1)?.image = keyset
+        controlPort1.item(at: 2)?.image = keyset
+        controlPort1.item(at: 3)?.image = mouse
+        controlPort1.item(at: 4)?.image = gamepad
+        controlPort1.item(at: 5)?.image = gamepad
+
+        // Assign images
+        controlPort2.item(at: 0)?.image = none
+        controlPort2.item(at: 1)?.image = keyset
+        controlPort2.item(at: 2)?.image = keyset
+        controlPort2.item(at: 3)?.image = mouse
+        controlPort2.item(at: 4)?.image = gamepad
+        controlPort2.item(at: 5)?.image = gamepad
+        
+        validateJoystickToolbarItems()
     }
     
     func setListener() {

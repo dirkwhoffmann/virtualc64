@@ -97,6 +97,7 @@ C64::C64()
         &expansionport,
         &floppy,
         &datasette,
+        &mouse1350,
         &mouse1351,
         &neosMouse,
         &keyboard,
@@ -248,14 +249,15 @@ C64::setMouseModel(MouseModel value)
     mouseModel = value;
     
     switch(value) {
+        case MOUSE1350:
+            mouse1350.reset();
+            return;
         case MOUSE1351:
             mouse1351.reset();
             return;
-            
         case NEOSMOUSE:
             neosMouse.reset();
             return;
-            
         default:
             warn("Unsupported mouse model selected.\n");
             mouseModel = MOUSE1351;
@@ -267,6 +269,38 @@ C64::connectMouse(unsigned port)
 {
     assert(port <= 2);
     mousePort = port;
+}
+
+void
+C64::setMouseXY(int64_t x, int64_t y)
+{
+    switch(mouseModel) {
+        case MOUSE1350:
+            mouse1350.setXY(x, y);
+            return;
+        case MOUSE1351:
+            mouse1351.setXY(x, y);
+            return;
+        case NEOSMOUSE:
+            neosMouse.setXY(x, y);
+            return;
+    }
+}
+
+void
+C64::setLeftMouseButton(bool value)
+{
+    mouse1350.leftButton = value;
+    mouse1351.leftButton = value;
+    neosMouse.leftButton = value;
+}
+
+void
+C64::setRightMouseButton(bool value)
+{
+    mouse1350.rightButton = value;
+    mouse1351.rightButton = value;
+    neosMouse.rightButton = value;
 }
 
 uint8_t

@@ -27,7 +27,8 @@ class HardwarePrefsController : UserDialogController {
     
     // Mouse
     @IBOutlet weak var mouseModel: NSPopUpButton!
-    
+    @IBOutlet weak var mouseInfo: NSTextField!
+
     override func awakeFromNib() {
         update()
     }
@@ -38,13 +39,13 @@ class HardwarePrefsController : UserDialogController {
         if c64.isPAL() {
             machineType.selectItem(withTag: 0)
             flag.image = NSImage(named: NSImage.Name(rawValue: "flag_eu.png"))
-            systemText.stringValue = "PAL machine"
-            systemText2.stringValue = "63 cycles per rasterline"
+            systemText.stringValue = "PAL"
+            systemText2.stringValue = "0.985 MHz"
         } else {
             machineType.selectItem(withTag: 1)
             flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa.png"))
-            systemText.stringValue = "NTSC machine"
-            systemText2.stringValue = "65 cycles per rasterline"
+            systemText.stringValue = "NTSC"
+            systemText2.stringValue = "1.023 MHz"
         }
         
         // Audio
@@ -59,8 +60,9 @@ class HardwarePrefsController : UserDialogController {
         driveNoise.state = c64.vc1541.soundMessagesEnabled() ? .on : .off
         
         // Mouse
-        track("Mouse model = \(c64.mouseModel())")
-        mouseModel.selectItem(withTag: c64.mouseModel())
+        let model = c64.mouseModel()
+        mouseModel.selectItem(withTag: model)
+        mouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
     
     @IBAction func setPalAction(_ sender: Any!) {

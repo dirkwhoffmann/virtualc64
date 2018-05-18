@@ -349,7 +349,7 @@
                             <action selector="stepOverAction:" target="-2" id="1865"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" image="none32" id="kR6-IR-lNs" userLabel="Port A">
+                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" id="kR6-IR-lNs" userLabel="Port A">
                         <nil key="toolTip"/>
                         <size key="minSize" width="10" height="20"/>
                         <size key="maxSize" width="56" height="80"/>
@@ -361,14 +361,14 @@
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
-                                        <menuItem title="None" state="on" image="none32" tag="-1" id="VD3-Wr-Ufe"/>
-                                        <menuItem title="Keyset 1" image="keyboard32" id="L2h-xt-iO6"/>
-                                        <menuItem title="Keyset 2" image="keyboard32" tag="1" id="Ohe-Pi-c1S"/>
-                                        <menuItem title="Analog mouse" image="mouse2" tag="2" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
+                                        <menuItem title="None" state="on" tag="-1" id="VD3-Wr-Ufe"/>
+                                        <menuItem title="Keyset 1" id="L2h-xt-iO6"/>
+                                        <menuItem title="Keyset 2" tag="1" id="Ohe-Pi-c1S"/>
+                                        <menuItem title="Mouse" tag="2" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 1" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="4" id="7sJ-UA-Pfj">
+                                        <menuItem title="USB Joystick 2" tag="4" id="7sJ-UA-Pfj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -379,26 +379,26 @@
                             </connections>
                         </popUpButton>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port B" paletteLabel="Port B" tag="11" image="none32" id="Klt-YL-0mv" userLabel="Port B">
+                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port B" paletteLabel="Port B" tag="11" id="Klt-YL-0mv" userLabel="Port B">
                         <nil key="toolTip"/>
                         <size key="minSize" width="10" height="20"/>
                         <size key="maxSize" width="56" height="80"/>
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" image="none32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
-                                        <menuItem title="None" state="on" image="none32" tag="-1" id="xyt-eC-0im"/>
-                                        <menuItem title="Keyset 1" image="keyboard32" id="PAa-za-K8O"/>
-                                        <menuItem title="Keyset 2" image="keyboard32" tag="1" id="1M8-Dz-dop"/>
-                                        <menuItem title="Analog mouse" image="mouse2" tag="2" id="JM3-8Y-xZU"/>
-                                        <menuItem title="USB Joystick 1" image="joystick32_generic" tag="3" id="Ahc-WA-2jp">
+                                        <menuItem title="None" state="on" tag="-1" id="xyt-eC-0im"/>
+                                        <menuItem title="Keyset 1" id="PAa-za-K8O"/>
+                                        <menuItem title="Keyset 2" tag="1" id="1M8-Dz-dop"/>
+                                        <menuItem title="Analog mouse" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="USB Joystick 1" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" image="joystick32_generic" tag="4" id="L3T-8p-gOj">
+                                        <menuItem title="USB Joystick 2" tag="4" id="L3T-8p-gOj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -758,7 +758,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
                                             <rect key="frame" x="1" y="0.0" width="266" height="459"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CPUTableView" customModule="VirtualC64" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="266" height="442"/>
@@ -2800,10 +2800,6 @@
         <image name="cartridge" width="128" height="128"/>
         <image name="diskette" width="101" height="97"/>
         <image name="fast" width="128" height="128"/>
-        <image name="joystick32_generic" width="32" height="32"/>
-        <image name="keyboard32" width="34" height="35"/>
-        <image name="mouse2" width="32" height="32"/>
-        <image name="none32" width="39" height="39"/>
         <image name="pause32" width="32" height="32"/>
         <image name="restart32" width="128" height="128"/>
         <image name="stepInto32" width="32" height="32"/>

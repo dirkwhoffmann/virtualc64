@@ -257,10 +257,13 @@ public:
     //! @brief    Commodore 1530 (C2N) Datasette
     Datasette datasette;
 
+    //! @brief    Commodore Mouse 1350
+    Mouse1350 mouse1350;
+
     //! @brief    Commodore Mouse 1351
     Mouse1351 mouse1351;
 
-    //! @brief    Commodore Mouse 1351
+    //! @brief    Neos Mouse
     NeosMouse neosMouse;
 
     //
@@ -442,6 +445,10 @@ public:
     //! @brief    Sets the SID chip model
     void setChipModel(SIDChipModel value) { sid.setChipModel(value); }
 
+    //
+    //! @functiongroup Handling mice
+    //
+    
     //! @brief    Returns the mouse hardware model
     MouseModel getMouseModel() { return mouseModel; }
     
@@ -451,6 +458,15 @@ public:
     //! @brief    Connect mouse to control port
     void connectMouse(unsigned port);
     
+    //! @brief    Moves the mouse to a new location
+    void setMouseXY(int64_t x, int64_t y);
+
+    //! @brief    Presses or releases the left mouse button
+    void setLeftMouseButton(bool value);
+
+    //! @brief    Presses or releases the right mouse button
+    void setRightMouseButton(bool value);
+
     //! @brief    Read the control port mouse bits
     uint8_t mouseBits(unsigned port);
     
