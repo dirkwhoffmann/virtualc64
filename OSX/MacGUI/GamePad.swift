@@ -32,10 +32,10 @@ class GamePad
     var keyMap: [MacKey:UInt32]?
     
     //! @brief    Name of the connected controller
-    var name: String!
+    var name: String?
     
     //! @brief    Image of the connected controller
-    var image: NSImage!
+    var image: NSImage?
     
     //! @brief    Vendor ID of the managed device
     /*! @details  Value is only used for HID devices
@@ -83,17 +83,7 @@ class GamePad
         self.locationID = locationID
     
         // Check for known devices
-        if (vendorID == 0) {
-            
-            name = "Keyboard emulated device"
-            image = NSImage(named: NSImage.Name(rawValue: "keyboard48"))
-            
-        } else if (vendorID == 1) {
-            
-            name = "Analog mouse"
-            image = NSImage(named: NSImage.Name(rawValue: "mouse48"))
-            
-        } else if (vendorID == 0x40B && productID == 0x6533) {
+        if (vendorID == 0x40B && productID == 0x6533) {
             
             name = "Competition Pro SL-6602"
             image = NSImage(named: NSImage.Name(rawValue: "joystick32_speedlink"))
@@ -121,8 +111,8 @@ class GamePad
         
         } else {
         
-            name = "Generic Gamepad"
-            image = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
+            // name = "Generic Gamepad"
+            // image = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
         }
     }
     

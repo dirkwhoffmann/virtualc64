@@ -59,10 +59,11 @@ public:
     //! @brief    Destructor
     ~NeosMouse();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Methods from VirtualComponent class
     void reset();
     
-    //! @brief   Returns the control port bits triggered by the mouse
+    //! @brief   Methods from Mouse class
+    MouseModel mouseModel() { return NEOSMOUSE; }
     uint8_t readControlPort();
     
     //! @brief    Triggers a state change (rising edge on control port line)

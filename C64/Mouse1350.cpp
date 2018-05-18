@@ -70,12 +70,12 @@ Mouse1350::execute()
         deltaX /= max;
         deltaY /= max;
         
-        debug("dX = %f dY = %f\n", deltaX, deltaY);
+        // debug("dX = %f dY = %f\n", deltaX, deltaY);
         
-        if (deltaY < -0.5) { CLR_BIT(controlPort, 0); msg("UP "); }
-        if (deltaY > 0.5)  { CLR_BIT(controlPort, 1); msg("DOWN "); }
-        if (deltaX < -0.5) { CLR_BIT(controlPort, 2); msg("LEFT "); }
-        if (deltaX > 0.5)  { CLR_BIT(controlPort, 3); msg("RIGHT "); }
+        if (deltaY < -0.5) { CLR_BIT(controlPort, 0); } // msg("UP "); }
+        if (deltaY > 0.5)  { CLR_BIT(controlPort, 1); } // msg("DOWN "); }
+        if (deltaX < -0.5) { CLR_BIT(controlPort, 2); } // msg("LEFT "); }
+        if (deltaX > 0.5)  { CLR_BIT(controlPort, 3); } // msg("RIGHT "); }
         msg("\n");
     }
     

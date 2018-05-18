@@ -283,6 +283,9 @@
     //! @brief   Selected game pad slot for joystick in port B
     NSInteger gamepadSlot2;
     
+    //! @brief   Default image for USB devices
+    NSImage *genericDeviceImage;
+    
     //! @brief   Indicates if user dialog should be skipped when opening archives
     bool autoMount;
     
@@ -332,6 +335,7 @@
 @property bool statusBar;
 @property NSInteger gamepadSlot1;
 @property NSInteger gamepadSlot2;
+@property NSImage *genericDeviceImage;
 @property bool autoMount;
 // @property NSTrackingArea *trackingArea;
 

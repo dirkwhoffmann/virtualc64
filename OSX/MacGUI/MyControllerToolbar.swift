@@ -71,23 +71,13 @@ extension MyController {
     func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
         
         let menu =  popup.menu
-        let item0 = menu?.item(withTag: InputDevice.keyset1)
-        let item1 = menu?.item(withTag: InputDevice.keyset2)
-        let item2 = menu?.item(withTag: InputDevice.mouse)
+        // let item2 = menu?.item(withTag: InputDevice.mouse)
         let item3 = menu?.item(withTag: InputDevice.joystick1)
         let item4 = menu?.item(withTag: InputDevice.joystick2)
         
-        // Keyset items
-        // item0?.image = (gamePadManager.gamePads[0]?.image)!
-        // item1?.image = (gamePadManager.gamePads[1]?.image)!
-
-        // Analog mouse
-        // item2?.image = (gamePadManager.gamePads[2]?.image)!
-
         // USB joysticks
-        // let defaultImage = NSImage(named: NSImage.Name(rawValue: "game48"))
-        // item3?.image = gamePadManager.gamePads[3]?.image ?? defaultImage
-        // item4?.image = gamePadManager.gamePads[4]?.image ?? defaultImage
+        item3?.image = gamePadManager.gamePads[3]?.image ?? genericDeviceImage
+        item4?.image = gamePadManager.gamePads[4]?.image ?? genericDeviceImage
         item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 1"
         item4?.title = gamePadManager.gamePads[4]?.name ?? "USB Device 2"
         item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)

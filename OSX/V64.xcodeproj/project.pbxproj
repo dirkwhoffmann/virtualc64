@@ -393,6 +393,7 @@
 		5030B29F20AEBD1A00E591BE /* oygen_key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oygen_key.png; sourceTree = "<group>"; };
 		5030B2A020AEBD1A00E591BE /* oxygen_mouse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oxygen_mouse.png; sourceTree = "<group>"; };
 		5030B2A120AEBD1A00E591BE /* oxygen_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = oxygen_none.png; sourceTree = "<group>"; };
+		5030B2A820AEE44600E591BE /* Mouse_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse_types.h; sourceTree = "<group>"; };
 		5031D599200B47B70088C802 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5034F2DC208239070068AA4B /* tb_revert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_revert.png; sourceTree = "<group>"; };
@@ -1242,6 +1243,7 @@
 			isa = PBXGroup;
 			children = (
 				50FFF52120AB495B00758683 /* Mouse.h */,
+				5030B2A820AEE44600E591BE /* Mouse_types.h */,
 				50FFF52220AB495B00758683 /* Mouse.cpp */,
 				50D19B8720ACA0C40004C47B /* Mouse1350.h */,
 				50D19B8620ACA0C40004C47B /* Mouse1350.cpp */,

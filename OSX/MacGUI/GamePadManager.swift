@@ -50,10 +50,10 @@ class GamePadManager: NSObject {
         self.init()
         self.controller = controller
         
-        // Add  generic devices (two keyboard emulated joysticks and a mouse)
-        gamePads[0] = GamePad(manager: self)
-        gamePads[1] = GamePad(manager: self)
-        gamePads[2] = GamePad(manager: self, vendorID: 1, productID: 0, locationID: 0)
+        // Add generic devices
+        gamePads[0] = GamePad(manager: self) // Keyset 1
+        gamePads[1] = GamePad(manager: self) // Keyset 2
+        gamePads[2] = GamePad(manager: self) // Mouse
         restoreFactorySettings()
 
         // Prepare for accepting HID devices
@@ -303,14 +303,13 @@ class GamePadManager: NSObject {
  
     func listDevices() {
         
-        for (slotNr, device) in gamePads {
-            if (device.locationID == 0) {
-                NSLog("Game pad slot %d: Keyboard emulated device", slotNr)
+        for (slotNr, dev) in gamePads {
+            
+            print("Game pad slot \(slotNr): ", terminator:"")
+            if let name = dev.name {
+                print("\(name) (\(dev.vendorID), \(dev.productID), \(dev.locationID))")
             } else {
-                NSLog("Game pad slot %d: %@", slotNr, device.name)
-                NSLog("  Vendor ID:   %d", device.vendorID);
-                NSLog("  Product ID:  %d", device.productID);
-                NSLog("  Location ID: %d", device.locationID);
+                print("Placeholder device")
             }
         }
     }

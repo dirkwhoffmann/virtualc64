@@ -97,7 +97,8 @@ extension MyController {
         mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
         var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad.png"))
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
-
+        genericDeviceImage = gamepad
+        
         // Assign images
         controlPort1.item(at: 0)?.image = none
         controlPort1.item(at: 1)?.image = keyset

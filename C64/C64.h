@@ -265,14 +265,15 @@ public:
 
     //! @brief    Neos Mouse
     NeosMouse neosMouse;
-
+    
     //
     // Mouse
     //
     
-    //! @brief    Mouse hardware type
-    MouseModel mouseModel;
-
+    //! @brief    Selected mouse model
+    //! @details  Points to mouse130, mouse1351, or neosMouse
+    Mouse *mouse;
+    
     //! @brief    Control port of plugged in mouse
     /*! @details  0 = unconnected, 1,2 = connected to port 1 or 2
      */
@@ -450,7 +451,7 @@ public:
     //
     
     //! @brief    Returns the mouse hardware model
-    MouseModel getMouseModel() { return mouseModel; }
+    MouseModel getMouseModel() { return mouse->mouseModel(); }
     
     //! @brief    Sets the mouse hardware model
     void setMouseModel(MouseModel value);
@@ -458,15 +459,6 @@ public:
     //! @brief    Connect mouse to control port
     void connectMouse(unsigned port);
     
-    //! @brief    Moves the mouse to a new location
-    void setMouseXY(int64_t x, int64_t y);
-
-    //! @brief    Presses or releases the left mouse button
-    void setLeftMouseButton(bool value);
-
-    //! @brief    Presses or releases the right mouse button
-    void setRightMouseButton(bool value);
-
     //! @brief    Read the control port mouse bits
     uint8_t mouseBits(unsigned port);
     

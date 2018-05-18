@@ -59,6 +59,7 @@
 @synthesize statusBar;
 @synthesize gamepadSlot1;
 @synthesize gamepadSlot2;
+@synthesize genericDeviceImage;
 @synthesize autoMount;
 // @synthesize trackingArea;
 

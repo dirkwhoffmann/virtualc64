@@ -31,21 +31,21 @@ public:
     //! @brief    Constructor
     Mouse1351();
     
-    //! @brief    Destructor
+    //! @brief   Destructor
     ~Mouse1351();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief   Methods from VirtualComponent class
     void reset();
+    
+    //! @brief   Methods from Mouse class
+    MouseModel mouseModel() { return MOUSE1351; }
+    uint8_t readControlPort();
     
     //! @brief   Returns the mouse X bits as they show up in the SID register
     uint8_t mouseXBits() { return (mouseX & 0x3F) << 1; }
 
     //! @brief   Returns the mouse Y bits as they show up in the SID register
-    uint8_t mouseYBits() { return (mouseY & 0x3F) << 1; }
-
-    //! @brief   Returns the control port bits triggered by the mouse
-    uint8_t readControlPort();
-    
+    uint8_t mouseYBits() { return (mouseY & 0x3F) << 1; }    
 };
 
 #endif

@@ -130,8 +130,6 @@ C64::C64()
     // Setup references
     cpu.mem = &mem;
     mem.cpu = &cpu;
-    // cia1.tod.cia = &cia1;
-    // cia2.tod.cia = &cia2;
     floppy.cpu.mem = &c64->floppy.mem;
     floppy.mem.cpu = &c64->floppy.cpu;
     floppy.mem.iec = &c64->iec;
@@ -139,8 +137,8 @@ C64::C64()
     floppy.iec = &c64->iec;
     
     // Set initial hardware configuration
-    mouseModel = MOUSE1351;
-    mousePort = 0; 
+    mouse = &mouse1350;
+    mousePort = 0;
     setPAL();
 			
     // Initialize mach timer info
@@ -246,22 +244,25 @@ C64::setNTSC()
 void
 C64::setMouseModel(MouseModel value)
 {
-    mouseModel = value;
+    suspend();
     
     switch(value) {
         case MOUSE1350:
-            mouse1350.reset();
-            return;
+            mouse = &mouse1350;
+            break;
         case MOUSE1351:
-            mouse1351.reset();
-            return;
+            mouse = &mouse1351;
+            break;
         case NEOSMOUSE:
-            neosMouse.reset();
-            return;
+            mouse = &neosMouse;
+            break;
         default:
-            warn("Unsupported mouse model selected.\n");
-            mouseModel = MOUSE1351;
+            warn("Unknown mouse model selected.\n");
+            mouse = &mouse1350;
     }
+    
+    mouse->reset();
+    resume();
 }
 
 void
@@ -271,84 +272,40 @@ C64::connectMouse(unsigned port)
     mousePort = port;
 }
 
-void
-C64::setMouseXY(int64_t x, int64_t y)
-{
-    switch(mouseModel) {
-        case MOUSE1350:
-            mouse1350.setXY(x, y);
-            return;
-        case MOUSE1351:
-            mouse1351.setXY(x, y);
-            return;
-        case NEOSMOUSE:
-            neosMouse.setXY(x, y);
-            return;
-    }
-}
-
-void
-C64::setLeftMouseButton(bool value)
-{
-    mouse1350.leftButton = value;
-    mouse1351.leftButton = value;
-    neosMouse.leftButton = value;
-}
-
-void
-C64::setRightMouseButton(bool value)
-{
-    mouse1350.rightButton = value;
-    mouse1351.rightButton = value;
-    neosMouse.rightButton = value;
-}
-
 uint8_t
 C64::mouseBits(unsigned port)
 {
-    // Return 0xFF if the mouse is not connected to this port
-    if (mousePort != port)
+    if (mousePort != port) {
         return 0xFF;
-    
-    if (mouseModel == MOUSE1351)
-        return mouse1351.readControlPort();
-    else
-        return neosMouse.readControlPort();
+    } else {
+        return mouse->readControlPort();
+    }
 }
 
 uint8_t
 C64::potXBits()
 {
-    // Check if mouse if connected
     if (mousePort != 0) {
-        
-        // The Commodore 1351 mouse transmits the mouse X coordinate in potX
-        if (mouseModel == MOUSE1351) {
-            return mouse1351.mouseXBits();
-        }
-        
-        // The Commodore 1351 mouse transmits the mouse X coordinate in potX
-        if (mouseModel == NEOSMOUSE) {
-            return neosMouse.rightButton ? 0xFF : 0x00;
+        switch (mouse->mouseModel()) {
+            case MOUSE1350:
+                return mouse1350.rightButton ? 0x00 : 0xFF;
+            case MOUSE1351:
+                return mouse1351.mouseXBits();
+            case NEOSMOUSE:
+                return neosMouse.rightButton ? 0xFF : 0x00;
         }
     }
-    
     return 0xFF;
 }
 
 uint8_t
 C64::potYBits()
 {
-    // Check if mouse if connected
-    if (mousePort != 0) {
-        
-        // The Commodore 1351 mouse transmits the mouse Y coordinate in potY
-        if (mouseModel == MOUSE1351) {
-            return mouse1351.mouseYBits();
-        }
+    if (mousePort != 0 && mouse->mouseModel() == MOUSE1351) {
+        return mouse1351.mouseYBits();
+    } else {
+        return 0xFF;
     }
-    
-    return 0xFF;
 }
 
 
@@ -658,12 +615,7 @@ C64::endOfFrame()
     expansionport.execute();
     
     // Update mouse coordinates
-    if (mousePort != 0) {
-        if (mouseModel == MOUSE1351)
-            mouse1351.execute();
-        else
-            neosMouse.execute();
-    }
+    if (mousePort != 0) mouse->execute();
     
     // Take a snapshot once in a while
     if (autoSaveSnapshots && frame % (vic.getFramesPerSecond() * autoSaveInterval) == 0) {

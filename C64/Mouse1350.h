@@ -37,16 +37,17 @@ private:
     
 public:
     
-    //! @brief    Constructor
+    //! @brief   Constructor
     Mouse1350();
     
-    //! @brief    Destructor
+    //! @brief   Destructor
     ~Mouse1350();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief   Methods from VirtualComponent class
     void reset();
     
-    //! @brief   Returns the control port bits triggered by the mouse
+    //! @brief   Methods from Mouse class
+    MouseModel mouseModel() { return MOUSE1350; }
     uint8_t readControlPort();
     
     //! @brief   Translates movement deltas periodically into joystick movements

@@ -10,14 +10,7 @@
 #include "Memory_types.h"
 #include "Cartridge_types.h"
 #include "ControlPort_types.h"
-
-/*! @brief    Analog mouse models
- */
-typedef enum {
-    MOUSE1350 = 0,
-    MOUSE1351,
-    NEOSMOUSE
-} MouseModel;
+#include "Mouse_types.h"
 
 /*! @brief    Color schemes
  *  @details  Predefined RGB color values

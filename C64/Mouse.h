@@ -21,6 +21,8 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
+#include "Mouse_types.h"
+
 //! @brief Base class for all mouse emulations
 class Mouse {
 
@@ -65,9 +67,15 @@ public:
     
     //! @brief   Reset
     void reset();
+
+    //! @brief   Returns the model of this mouse
+    virtual MouseModel mouseModel() = 0;
     
     //! @brief   Updates the mouse coordinates
     void setXY(int64_t x, int64_t y);
+    
+    //! @brief   Returns the control port bits triggered by the mouse
+    virtual uint8_t readControlPort() = 0;
     
     //! @brief   Execution function
     /*! @details Shifts mouseX and mouseY smoothly towards targetX and targetX.
