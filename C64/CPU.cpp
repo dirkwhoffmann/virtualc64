@@ -209,15 +209,10 @@ CPU::getLengthOfInstruction(uint8_t opcode)
 }
 
 DisassembledInstruction
-CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
+CPU::disassemble(uint16_t addr, bool hex)
 {
     DisassembledInstruction instr;
-    
-    // Determine address of instruction to be disassembled
-    for (unsigned i = 0; i < offset; i++) {
-        addr += getLengthOfInstructionAtAddress(addr);
-    }
-    
+        
     // Get opcode
     uint8_t opcode = mem->read(addr);
     instr.addr = addr; 
@@ -314,7 +309,7 @@ CPU::disassemble(uint16_t addr, uint16_t offset, bool hex)
     strncpy(instr.command, mnc, 3);
     
     // Convert register contents to strings
-    hex ? sprint16x(instr.pc, PC_at_cycle_0) : sprint16d(instr.pc, PC_at_cycle_0);
+    hex ? sprint16x(instr.pc, addr) : sprint16d(instr.pc, addr);
     hex ? sprint8x(instr.A, A) : sprint8d(instr.A, A);
     hex ? sprint8x(instr.X, X) : sprint8d(instr.X, X);
     hex ? sprint8x(instr.Y, Y) : sprint8d(instr.Y, Y);

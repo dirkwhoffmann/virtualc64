@@ -11,7 +11,6 @@
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		38AF838C0C7BA24A00F6DBCE /* joystick32_speedlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */; };
-		38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF838B0C7BA24A00F6DBCE /* none32.png */; };
 		5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */; };
 		5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */; };
 		5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */; };
@@ -54,7 +53,7 @@
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
-		501B33AC20AE33510047C050 /* mouse256_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 501B33AB20AE33510047C050 /* mouse256_2.png */; };
+		501B33AC20AE33510047C050 /* mouse256.png in Resources */ = {isa = PBXBuildFile; fileRef = 501B33AB20AE33510047C050 /* mouse256.png */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
@@ -83,13 +82,10 @@
 		5034F2E3208239080068AA4B /* tb_rewind.png in Resources */ = {isa = PBXBuildFile; fileRef = 5034F2DF208239080068AA4B /* tb_rewind.png */; };
 		50355F35203E19E000163F80 /* keyRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F34203E19E000163F80 /* keyRed.png */; };
 		50355F37203E21F600163F80 /* joystick2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F36203E21F600163F80 /* joystick2.png */; };
-		50355F39203E242A00163F80 /* keys.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F38203E242A00163F80 /* keys.png */; };
-		50355F3B203E254700163F80 /* keys2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F3A203E254700163F80 /* keys2.png */; };
 		50355F3D203E277000163F80 /* monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F3C203E276F00163F80 /* monitor.png */; };
 		5039A31415BE89940038ACBC /* drive48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31315BE89940038ACBC /* drive48.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
-		503B9D6320A89246000CFC79 /* mouse256.png in Resources */ = {isa = PBXBuildFile; fileRef = 503B9D6220A89245000CFC79 /* mouse256.png */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
 		50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* CRTContainer.cpp */; };
@@ -140,12 +136,9 @@
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		507B258A20724BE200B6CDBC /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 507B258920724BE200B6CDBC /* trash.png */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
-		507E0B2020A70137001A048C /* mouse32.png in Resources */ = {isa = PBXBuildFile; fileRef = 507E0B1F20A70137001A048C /* mouse32.png */; };
-		507E0B2220A702AF001A048C /* mouse2.png in Resources */ = {isa = PBXBuildFile; fileRef = 507E0B2120A702AF001A048C /* mouse2.png */; };
 		5080F3591EE74784001313D4 /* commodore.png in Resources */ = {isa = PBXBuildFile; fileRef = 5080F3581EE74784001313D4 /* commodore.png */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D8512081FF8A0026BAD5 /* joystick32_sony.png */; };
-		5087D858208202170026BAD5 /* joystick32_generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D857208202170026BAD5 /* joystick32_generic.png */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
@@ -154,7 +147,6 @@
 		509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 509A26062027AA1100D28827 /* DiskMountDialog.xib */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
-		509DF2480A9F681900AE0859 /* keyboard32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2470A9F681900AE0859 /* keyboard32.png */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
 		50A3E08A0E66F7BC00D3564D /* play32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A3E0890E66F7BC00D3564D /* play32.png */; };
@@ -162,7 +154,6 @@
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
-		50A7494F203B52C100EDFDA2 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A7494E203B52C100EDFDA2 /* keyboard.png */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
@@ -195,7 +186,6 @@
 		50CCB1C61B84A185008D8C30 /* tb_inspect2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1C41B84A185008D8C30 /* tb_inspect2.png */; };
 		50CCB1CC1B84A19F008D8C30 /* tb_timetravel2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1CA1B84A19F008D8C30 /* tb_timetravel2.png */; };
 		50CCB1D01B84A5DD008D8C30 /* tb_virtualmachine.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1CF1B84A5DD008D8C30 /* tb_virtualmachine.png */; };
-		50CCB1D21B84AC10008D8C30 /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1D11B84AC10008D8C30 /* none.png */; };
 		50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D19B8620ACA0C40004C47B /* Mouse1350.cpp */; };
@@ -282,7 +272,6 @@
 		389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
 		389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPort.h; sourceTree = "<group>"; };
 		38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_speedlink.png; sourceTree = "<group>"; };
-		38AF838B0C7BA24A00F6DBCE /* none32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none32.png; sourceTree = "<group>"; };
 		5000471012DCE8890098D890 /* MyControllerCpuPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCpuPanel.h; sourceTree = "<group>"; };
 		5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCpuPanel.mm; sourceTree = "<group>"; };
 		5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerMemoryPanel.mm; sourceTree = "<group>"; };
@@ -371,7 +360,7 @@
 		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
-		501B33AB20AE33510047C050 /* mouse256_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256_2.png; sourceTree = "<group>"; };
+		501B33AB20AE33510047C050 /* mouse256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256.png; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
@@ -402,13 +391,10 @@
 		5034F2DF208239080068AA4B /* tb_rewind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_rewind.png; sourceTree = "<group>"; };
 		50355F34203E19E000163F80 /* keyRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyRed.png; sourceTree = "<group>"; };
 		50355F36203E21F600163F80 /* joystick2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick2.png; sourceTree = "<group>"; };
-		50355F38203E242A00163F80 /* keys.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keys.png; sourceTree = "<group>"; };
-		50355F3A203E254700163F80 /* keys2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keys2.png; sourceTree = "<group>"; };
 		50355F3C203E276F00163F80 /* monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monitor.png; sourceTree = "<group>"; };
 		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		503B9D6220A89245000CFC79 /* mouse256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256.png; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTContainer.cpp; sourceTree = "<group>"; };
@@ -474,12 +460,9 @@
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		507B258920724BE200B6CDBC /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
-		507E0B1F20A70137001A048C /* mouse32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse32.png; sourceTree = "<group>"; };
-		507E0B2120A702AF001A048C /* mouse2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse2.png; sourceTree = "<group>"; };
 		5080F3581EE74784001313D4 /* commodore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commodore.png; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5087D8512081FF8A0026BAD5 /* joystick32_sony.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_sony.png; sourceTree = "<group>"; };
-		5087D857208202170026BAD5 /* joystick32_generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_generic.png; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
@@ -492,7 +475,6 @@
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
 		509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = P00Archive.cpp; sourceTree = "<group>"; };
-		509DF2470A9F681900AE0859 /* keyboard32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard32.png; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A3E0890E66F7BC00D3564D /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play32.png; sourceTree = "<group>"; };
@@ -501,7 +483,6 @@
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50A52A170C2FD43700A1377F /* D64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64Archive.h; sourceTree = "<group>"; };
 		50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64Archive.cpp; sourceTree = "<group>"; };
-		50A7494E203B52C100EDFDA2 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romMissing.png; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
@@ -539,8 +520,6 @@
 		50CCB1C41B84A185008D8C30 /* tb_inspect2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_inspect2.png; sourceTree = "<group>"; };
 		50CCB1CA1B84A19F008D8C30 /* tb_timetravel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_timetravel2.png; sourceTree = "<group>"; };
 		50CCB1CF1B84A5DD008D8C30 /* tb_virtualmachine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_virtualmachine.png; sourceTree = "<group>"; };
-		50CCB1D11B84AC10008D8C30 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none.png; sourceTree = "<group>"; };
-		50CCB1D31B84ACA8008D8C30 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
 		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D19B8620ACA0C40004C47B /* Mouse1350.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1350.cpp; sourceTree = "<group>"; };
@@ -964,10 +943,7 @@
 				50FD96A41BF65861009134A4 /* 1541.png */,
 				50F483AA203B1A0B008F74FD /* c64.png */,
 				50F9955A203AC13D004C4856 /* key.png */,
-				50355F38203E242A00163F80 /* keys.png */,
-				50355F3A203E254700163F80 /* keys2.png */,
 				50355F34203E19E000163F80 /* keyRed.png */,
-				50A7494E203B52C100EDFDA2 /* keyboard.png */,
 				50FB749F2033193300E05051 /* serial.png */,
 				504A22A61BF71FD500B29BEB /* clock_green.png */,
 				504A22A71BF71FD500B29BEB /* clock_yellow.png */,
@@ -1007,17 +983,9 @@
 				50E4BFA60C3CE95400CB6B43 /* floppy.png */,
 				50F97E04203D90070005E19C /* joystick.png */,
 				50355F36203E21F600163F80 /* joystick2.png */,
-				5087D857208202170026BAD5 /* joystick32_generic.png */,
 				38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */,
 				5087D8512081FF8A0026BAD5 /* joystick32_sony.png */,
-				509DF2470A9F681900AE0859 /* keyboard32.png */,
-				50CCB1D31B84ACA8008D8C30 /* keyboard.png */,
-				503B9D6220A89245000CFC79 /* mouse256.png */,
-				501B33AB20AE33510047C050 /* mouse256_2.png */,
-				507E0B1F20A70137001A048C /* mouse32.png */,
-				507E0B2120A702AF001A048C /* mouse2.png */,
-				38AF838B0C7BA24A00F6DBCE /* none32.png */,
-				50CCB1D11B84AC10008D8C30 /* none.png */,
+				501B33AB20AE33510047C050 /* mouse256.png */,
 				50A3E08B0E66F7C400D3564D /* pause32.png */,
 				50A3E0890E66F7BC00D3564D /* play32.png */,
 				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
@@ -1325,7 +1293,6 @@
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
 				5030B2A520AEBD1A00E591BE /* oxygen_mouse.png in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
-				507E0B2220A702AF001A048C /* mouse2.png in Resources */,
 				50DB328B1B948489000FB839 /* kext.png in Resources */,
 				502F57F61B93442100D1077E /* LEDgray.png in Resources */,
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
@@ -1338,20 +1305,18 @@
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				507B258A20724BE200B6CDBC /* trash.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
-				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
 				50C8925A1BEFB64500231B96 /* cntrlRewind.png in Resources */,
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
 				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
 				5030B2A220AEBD1A00E591BE /* oxygen_keys.png in Resources */,
-				501B33AC20AE33510047C050 /* mouse256_2.png in Resources */,
+				501B33AC20AE33510047C050 /* mouse256.png in Resources */,
 				504A22B01BF71FD500B29BEB /* pin_black.png in Resources */,
 				504A22AB1BF71FD500B29BEB /* clock_blue.png in Resources */,
 				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
 				500FF3911BD7F4DF0038245B /* rom.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				50F483AB203B1A0B008F74FD /* c64.png in Resources */,
-				50A7494F203B52C100EDFDA2 /* keyboard.png in Resources */,
 				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
 				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
 				5030B2A620AEBD1A00E591BE /* oxygen_none.png in Resources */,
@@ -1375,7 +1340,6 @@
 				50F97E05203D90070005E19C /* joystick.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
-				50CCB1D21B84AC10008D8C30 /* none.png in Resources */,
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,
 				50CCB1C61B84A185008D8C30 /* tb_inspect2.png in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
@@ -1384,8 +1348,6 @@
 				504A22AD1BF71FD500B29BEB /* clock_yellow.png in Resources */,
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
 				504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */,
-				38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */,
-				503B9D6320A89246000CFC79 /* mouse256.png in Resources */,
 				50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */,
 				50C892531BEFB48600231B96 /* cntrlPause.png in Resources */,
 				5094197D0E426C13008D6F71 /* cartridge.png in Resources */,
@@ -1396,7 +1358,6 @@
 				506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */,
 				5034F2E1208239080068AA4B /* tb_browse.png in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
-				50355F39203E242A00163F80 /* keys.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 				502F57F41B93441A00D1077E /* LEDred.png in Resources */,
 				50355F37203E21F600163F80 /* joystick2.png in Resources */,
@@ -1412,7 +1373,6 @@
 				50CCB1C51B84A185008D8C30 /* tb_inspect.png in Resources */,
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
 				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
-				50355F3B203E254700163F80 /* keys2.png in Resources */,
 				500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */,
 				50F23D0812DF932800B1F275 /* glossy.png in Resources */,
 				50D6954812E3759500D9C738 /* IconCRT.icns in Resources */,
@@ -1420,7 +1380,6 @@
 				50D6954912E3759500D9C738 /* IconD64.icns in Resources */,
 				50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */,
 				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
-				507E0B2020A70137001A048C /* mouse32.png in Resources */,
 				5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */,
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
@@ -1431,7 +1390,6 @@
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
-				5087D858208202170026BAD5 /* joystick32_generic.png in Resources */,
 				50C9CB241B826CD50054EE86 /* expansion.png in Resources */,
 				5034F2E2208239080068AA4B /* tb_freeze.png in Resources */,
 				50FB74A02033193300E05051 /* serial.png in Resources */,

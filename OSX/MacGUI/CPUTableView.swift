@@ -45,13 +45,17 @@ import Foundation
 
         if c == nil { return }
         
-        var addr = startAddr
+        var addr = Int(startAddr)
         rowForAddress = [:]
         
         for i in 0...255 {
-            instructionAtRow[i] = c!.c64.cpu.disassemble(addr, hex: hex)
-            rowForAddress[addr] = i
-            addr += UInt16(instructionAtRow[i]!.size)
+            if (addr <= 0xFFFF) {
+                instructionAtRow[i] = c!.c64.cpu.disassemble(UInt16(addr), hex: hex)
+                rowForAddress[UInt16(addr)] = i
+                addr += Int(instructionAtRow[i]!.size)
+            } else {
+                instructionAtRow[i] = nil;
+            }
         }
         
         reloadData()
@@ -94,28 +98,25 @@ extension CPUTableView : NSTableViewDataSource {
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        var instr = instructionAtRow[row]!
-        
-        switch(tableColumn?.identifier.rawValue) {
+        if var instr = instructionAtRow[row] {
             
-        case "addr":
-            return String.init(utf8String:&instr.pc.0)
-           
-        case "data01":
-            return String.init(utf8String:&instr.byte1.0)
-
-        case "data02":
-            return String.init(utf8String:&instr.byte2.0)
-
-        case "data03":
-            return String.init(utf8String:&instr.byte3.0)
-
-        case "ascii":
-            return String.init(utf8String:&instr.command.0)
-            
-        default:
-            return "?"
+            switch(tableColumn?.identifier.rawValue) {
+                
+            case "addr":
+                return String.init(utf8String:&instr.pc.0)
+            case "data01":
+                return String.init(utf8String:&instr.byte1.0)
+            case "data02":
+                return String.init(utf8String:&instr.byte2.0)
+            case "data03":
+                return String.init(utf8String:&instr.byte3.0)
+            case "ascii":
+                return String.init(utf8String:&instr.command.0)
+            default:
+                return "?"
+            }
         }
+        return ""
     }
 }
 
@@ -126,12 +127,14 @@ extension CPUTableView : NSTableViewDelegate {
         if c == nil { return }
         
         let cell = cell as! NSTextFieldCell
-        let instr = instructionAtRow[row]!
         
-        if c!.c64.cpu.breakpoint(instr.addr) == Int32(HARD_BREAKPOINT.rawValue) {
-            cell.textColor = NSColor.red
-        } else {
-            cell.textColor = NSColor.black
+        if  let instr = instructionAtRow[row] {
+            
+            if c!.c64.cpu.breakpoint(instr.addr) == Int32(HARD_BREAKPOINT.rawValue) {
+                cell.textColor = NSColor.red
+            } else {
+                cell.textColor = NSColor.black
+            }
         }
     }
 }

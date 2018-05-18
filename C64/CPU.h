@@ -446,10 +446,10 @@ public:
      *  @details  If offset is zero, the instruction at addr is disassembled. If it is
      *            greater than zero, addr is advanced by offset instructions first.
      */
-    DisassembledInstruction disassemble(uint16_t addr, uint16_t offset, bool hex);
+    DisassembledInstruction disassemble(uint16_t addr, bool hex);
                                         
 	//! @brief    Disassembles the current instruction.
-    DisassembledInstruction disassemble(bool hex) { return disassemble(PC_at_cycle_0, 0, hex); }
+    DisassembledInstruction disassemble(bool hex) { return disassemble(PC_at_cycle_0, hex); }
 				
 	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
     bool atBeginningOfNewCommand() { return next == fetch; }
