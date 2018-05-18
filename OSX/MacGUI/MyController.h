@@ -91,8 +91,7 @@
 	IBOutlet NSButton *Bflag;
 	IBOutlet NSButton *Dflag;
 	IBOutlet NSButton *Vflag;
-	IBOutlet NSTextField *breakpoint;
-	
+
 	// Debug panel (Memory)
 	IBOutlet MemTableView *memTableView;
 	IBOutlet NSSearchField *addr_search;	
@@ -288,9 +287,6 @@
     
     //! @brief   Indicates if user dialog should be skipped when opening archives
     bool autoMount;
-    
-    //! @brief   Tracking area for receiving mouseEntered, mouseExited events
-    // NSTrackingArea *trackingArea;
 }
 
 @property (strong) C64Proxy *c64;
@@ -337,7 +333,6 @@
 @property NSInteger gamepadSlot2;
 @property NSImage *genericDeviceImage;
 @property bool autoMount;
-// @property NSTrackingArea *trackingArea;
 
 @property NSTimer *timer;
 @property NSLock *timerLock;

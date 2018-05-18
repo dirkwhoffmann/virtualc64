@@ -141,18 +141,6 @@
 	[self refresh];
 }
 
-/*
-- (IBAction)setHardBreakpointAction:(id)sender
-{
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] setHardBreakpointAction:@((int)[sender intValue])];
-	if (![undo isUndoing]) [undo setActionName:@"Breakpoint"];
-	
-	[[c64 cpu] toggleHardBreakpoint:[sender intValue]];
-    [cpuTableView refresh];
-}
-*/
-
 - (void)refreshCPU
 {
 	[a setIntValue:[[c64 cpu] A]];

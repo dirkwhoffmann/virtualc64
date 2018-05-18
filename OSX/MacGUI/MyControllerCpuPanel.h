@@ -34,8 +34,6 @@
 - (IBAction)DAction:(id)sender;
 - (IBAction)VAction:(id)sender;
 
-// - (IBAction)setHardBreakpointAction:(id)sender;
-
 - (void)refreshCPU;
 
 @end

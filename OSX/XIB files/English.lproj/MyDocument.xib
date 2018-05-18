@@ -96,7 +96,6 @@
                 <outlet property="alarm2Minutes" destination="2537" id="2679"/>
                 <outlet property="alarm2Seconds" destination="2539" id="2680"/>
                 <outlet property="alarm2Tenth" destination="2541" id="2681"/>
-                <outlet property="breakpoint" destination="512" id="632"/>
                 <outlet property="cartridgeIcon" destination="2003" id="2010"/>
                 <outlet property="cia1DataPortA" destination="2626" id="2629"/>
                 <outlet property="cia1DataPortB" destination="713" id="2638"/>
@@ -732,36 +731,15 @@
                                             <action selector="CAction:" target="-2" id="2022"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" id="511">
-                                        <rect key="frame" x="165" y="8" width="57" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Break at" id="1731">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" id="512">
-                                        <rect key="frame" x="216" y="4" width="59" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1732">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <connections>
-                                            <action selector="setHardBreakpointAction:" target="-2" id="2016"/>
-                                        </connections>
-                                    </textField>
-                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="766">
-                                        <rect key="frame" x="7" y="36" width="268" height="460"/>
+                                    <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="766">
+                                        <rect key="frame" x="7" y="2" width="268" height="494"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
-                                            <rect key="frame" x="1" y="0.0" width="266" height="459"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <rect key="frame" x="1" y="0.0" width="266" height="493"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CPUTableView" customModule="VirtualC64" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="266" height="442"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="266" height="476"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

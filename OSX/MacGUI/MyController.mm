@@ -61,7 +61,6 @@
 @synthesize gamepadSlot2;
 @synthesize genericDeviceImage;
 @synthesize autoMount;
-// @synthesize trackingArea;
 
 @synthesize keyboardcontroller;
 @synthesize metalScreen;
@@ -104,7 +103,7 @@
 	
 	NSControl *WordFormatterControls[] = { 
 		// CPU panel
-		pc, breakpoint,
+		pc,
 		// Memory panel
 		addr_search,
 		// CIA panel
