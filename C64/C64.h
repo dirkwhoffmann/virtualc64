@@ -41,11 +41,11 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 11
-#define V_SUBMINOR 0
+#define V_MINOR 10
+#define V_SUBMINOR 1
 
 // Disables assert checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Data types and constants
 #include "C64_types.h"
