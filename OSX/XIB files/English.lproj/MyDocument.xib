@@ -393,7 +393,7 @@
                                         <menuItem title="None" state="on" tag="-1" id="xyt-eC-0im"/>
                                         <menuItem title="Keyset 1" id="PAa-za-K8O"/>
                                         <menuItem title="Keyset 2" tag="1" id="1M8-Dz-dop"/>
-                                        <menuItem title="Analog mouse" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="Mouse" tag="2" id="JM3-8Y-xZU"/>
                                         <menuItem title="USB Joystick 1" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>

@@ -26,7 +26,7 @@ SIDBridge::SIDBridge()
     resid.bridge = this;
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { &fastsid, &resid, NULL };
+    VirtualComponent *subcomponents[] = { &resid, &fastsid, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
 
     // Register snapshot items
@@ -88,14 +88,14 @@ void
 SIDBridge::setPAL()
 {
     debug(2, "SIDWrapper::setPAL\n");
-    setClockFrequency(PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE);
+    setClockFrequency(PAL_CYCLES_PER_SECOND);
 }
 
 void
 SIDBridge::setNTSC()
 {
     debug(2, "SIDWrapper::setNTSC\n");
-    setClockFrequency(NTSC_CYCLES_PER_FRAME * NTSC_REFRESH_RATE);
+    setClockFrequency(NTSC_CYCLES_PER_SECOND);
 }
 
 uint8_t 
@@ -133,7 +133,7 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
     // Get SID up to date
     executeUntil(c64->getCycles());
 
-    // Keep both SID implementations up to date all the time
+    // Keep both SID implementations up to date
     resid.poke(addr, value);
     fastsid.poke(addr, value);
 }

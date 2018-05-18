@@ -66,6 +66,7 @@ Voice::Voice()
         { &adsrCmp,          sizeof(adsrCmp),          CLEAR_ON_RESET },
         { &lsfr,             sizeof(lsfr),             CLEAR_ON_RESET },
         { &filterIO,         sizeof(filterIO),         CLEAR_ON_RESET },
+        { &filterType,       sizeof(filterType),       CLEAR_ON_RESET },
         { &filterLow,        sizeof(filterLow),        CLEAR_ON_RESET },
         { &filterRef,        sizeof(filterRef),        CLEAR_ON_RESET },
         { &filterDy,         sizeof(filterDy),         CLEAR_ON_RESET },

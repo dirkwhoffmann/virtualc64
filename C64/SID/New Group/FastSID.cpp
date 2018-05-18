@@ -63,9 +63,11 @@ FastSID::FastSID()
     voice[2].init(this, 2, &voice[1]);
     
     chipModel = MOS_6581;
+    cpuFrequency = PAL_CYCLES_PER_SECOND;
+    sampleRate = 44100;
     emulateFilter = true;
     
-    reset();
+    // reset();
 }
 
 FastSID::~FastSID()
@@ -199,13 +201,16 @@ FastSID::peek(uint16_t addr)
             
             // This register allows the microprocessor to read the
             // upper 8 output bits of oscillator 3.
-            return (uint8_t)(voice[2].doosc() >> 7);
+            // debug("doosc = %d\n", voice[2].doosc());
+            // return (uint8_t)(voice[2].doosc() >> 7);
+            return (uint8_t)rand();
 
         case 0x1C:
             
             // This register allows the microprocessor to read the
             // output of the voice 3 envelope generator.
-            return (uint8_t)(voice[2].adsr >> 23);
+            // return (uint8_t)(voice[2].adsr >> 23);
+            return (uint8_t)rand();
             
         default:
             
@@ -305,6 +310,8 @@ FastSID::execute(uint64_t cycles)
 void
 FastSID::init(int sampleRate, int cycles_per_sec)
 {
+    debug("******** FastSID::init\n");
+    
     uint32_t i;
     
     // Recompute sample/cycle ratio and reset counters
@@ -325,11 +332,16 @@ FastSID::init(int sampleRate, int cycles_per_sec)
     
     initFilter(sampleRate);
     updateInternals();
+    voice[0].updateInternals(false);
+    voice[1].updateInternals(false);
+    voice[2].updateInternals(false);
 }
 
 void
 FastSID::initFilter(int sampleRate)
 {
+    debug("******** FastSID::initFilter\n");
+    
     uint16_t uk;
     float rk;
     long int si;
