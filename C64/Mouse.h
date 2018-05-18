@@ -66,7 +66,7 @@ public:
     ~Mouse();
     
     //! @brief   Reset
-    void reset();
+    virtual void reset();
 
     //! @brief   Returns the model of this mouse
     virtual MouseModel mouseModel() = 0;

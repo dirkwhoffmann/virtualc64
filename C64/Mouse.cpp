@@ -50,8 +50,14 @@ Mouse::setXY(int64_t x, int64_t y)
     
     // Sync mouse coords with target coords if more than 8 shifts would
     // be needed to reach target coords
-    if (abs(targetX - mouseX) / 8 > shiftX) mouseX = targetX;
-    if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
+    if (abs(targetX - mouseX) / 8 > shiftX) {
+        // printf("Resetting x\n");
+        mouseX = targetX;
+    }
+    if (abs(targetY - mouseY) / 8 > shiftY) {
+        // printf("Resetting y\n");
+        mouseY = targetY;
+    }
 }
 
 void
