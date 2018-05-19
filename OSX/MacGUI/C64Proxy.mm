@@ -96,12 +96,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->cpu->disassemble(addr, h);
 }
 
-- (int) topOfCallStack { return wrapper->cpu->getTopOfCallStack(); }
-- (int) breakpoint:(uint16_t)addr { return wrapper->cpu->getBreakpoint(addr); }
-- (void) setBreakpoint:(uint16_t)addr tag:(uint8_t)t { wrapper->cpu->setBreakpoint(addr, t); }
+// - (NSInteger) topOfCallStack { return wrapper->cpu->getTopOfCallStack(); }
+//- (NSInteger) breakpoint:(uint16_t)addr { return wrapper->cpu->getBreakpoint(addr); }
+// - (void) setBreakpoint:(uint16_t)addr tag:(uint8_t)t { wrapper->cpu->setBreakpoint(addr, t); }
+- (BOOL) hardBreakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
 - (void) setHardBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }
 - (void) deleteHardBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
 - (void) toggleHardBreakpoint:(uint16_t)addr { wrapper->cpu->toggleHardBreakpoint(addr); }
+- (BOOL) softBreakpoint:(uint16_t)addr { return wrapper->cpu->softBreakpoint(addr); }
 - (void) setSoftBreakpoint:(uint16_t)addr { wrapper->cpu->setSoftBreakpoint(addr); }
 - (void) deleteSoftBreakpoint:(uint16_t)addr { wrapper->cpu->deleteSoftBreakpoint(addr); }
 - (void) toggleSoftBreakpoint:(uint16_t)addr { wrapper->cpu->toggleSoftBreakpoint(addr); }

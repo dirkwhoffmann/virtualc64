@@ -8,16 +8,20 @@
 import Foundation
 
 extension MyController {
-    
-    // --------------------------------------------------------------------------------
+
+    // Get the undo manager from the first responder (metalScreen)
+    override open var undoManager: UndoManager? { get { return metalScreen.undoManager } }
+
+    //
     // Initialization
-    // --------------------------------------------------------------------------------
+    //
 
     override open func awakeFromNib() {
 
         track()
         cpuTableView.c = self
     }
+    
     
     override open func windowDidLoad() {
  

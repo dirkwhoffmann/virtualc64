@@ -90,7 +90,6 @@ extension MyController {
         }
         if item.action == #selector(MyController.continueAction(_:)) ||
             item.action == #selector(MyController.stepIntoAction(_:)) ||
-            item.action == #selector(MyController.stepOutAction(_:)) ||
             item.action == #selector(MyController.stepOverAction(_:)) ||
             item.action == #selector(MyController.stopAndGoAction(_:)) {
             return c64.isHalted();

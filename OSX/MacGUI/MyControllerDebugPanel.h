@@ -22,7 +22,7 @@
 
 // Debug panel (common area)
 - (IBAction)stepIntoAction:(id)sender;
-- (IBAction)stepOutAction:(id)sender;
+// - (IBAction)stepOutAction:(id)sender;
 - (IBAction)stepOverAction:(id)sender;
 - (IBAction)stopAndGoAction:(id)sender;
 - (IBAction)pauseAction:(id)sender;

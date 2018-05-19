@@ -102,12 +102,14 @@ C64Memory::dumpState()
 	msg("    Basic ROM :%s loaded\n", basicRomIsLoaded() ? "" : " not");
 	msg("Character ROM :%s loaded\n", charRomIsLoaded() ? "" : " not");
 	msg("   Kernal ROM :%s loaded\n", kernalRomIsLoaded() ? "" : " not");
-	for (uint16_t i = 0; i < 0xFFFF; i++) {
-		uint8_t tag = cpu->getBreakpointTag(i);
-		if (tag != NO_BREAKPOINT) {
-			msg("Breakpoint at %0x4X %s\n", i, tag == SOFT_BREAKPOINT ? "(soft)" : "");
-		}
+	
+    for (uint16_t addr = 0; addr < 0xFFFF; addr++) {
+        if (cpu->hardBreakpoint(addr))
+			msg("Hard breakpoint at %04X\n", addr);
+        if (cpu->softBreakpoint(addr))
+            msg("Soft breakpoint at %04X\n", addr);
 	}
+    
 	msg("\n");
 }
 

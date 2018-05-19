@@ -28,6 +28,7 @@
 	[self refresh];
 }
 
+/*
 - (IBAction)stepOutAction:(id)sender
 {	
 	[[self document] updateChangeCount:NSChangeDone];
@@ -41,7 +42,7 @@
 	[[c64 cpu] setSoftBreakpoint:(addr+1)];	
 	[c64 run];
 }
-
+*/
 
 - (IBAction)stepOverAction:(id)sender
 {	

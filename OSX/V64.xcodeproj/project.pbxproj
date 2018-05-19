@@ -53,6 +53,8 @@
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
+		50195C2820AFF884003844FB /* stop32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50195C2720AFF884003844FB /* stop32.png */; };
+		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
 		501B33AC20AE33510047C050 /* mouse256.png in Resources */ = {isa = PBXBuildFile; fileRef = 501B33AB20AE33510047C050 /* mouse256.png */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
@@ -360,6 +362,8 @@
 		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
+		50195C2720AFF884003844FB /* stop32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop32.png; sourceTree = "<group>"; };
+		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		501B33AB20AE33510047C050 /* mouse256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256.png; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
@@ -797,6 +801,7 @@
 				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
+				50195C2920B007A1003844FB /* Debugger.swift */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
@@ -858,6 +863,19 @@
 				5000474312DCED190098D890 /* Misc */,
 			);
 			path = MacGUI;
+			sourceTree = "<group>";
+		};
+		50195C2620AFF874003844FB /* Debugger */ = {
+			isa = PBXGroup;
+			children = (
+				50195C2720AFF884003844FB /* stop32.png */,
+				50471FE50A7B679A00A8DB94 /* stepInto32.png */,
+				50287EEA0A7CA86900292533 /* stepOut32.png */,
+				50471FE70A7B67A100A8DB94 /* stepOver32.png */,
+				50A3E08B0E66F7C400D3564D /* pause32.png */,
+				50A3E0890E66F7BC00D3564D /* play32.png */,
+			);
+			name = Debugger;
 			sourceTree = "<group>";
 		};
 		5030B2A720AEBD2200E591BE /* GameDevices */ = {
@@ -936,10 +954,11 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				5080F3511EE7469C001313D4 /* TouchBar Icons */,
-				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
+				5080F3511EE7469C001313D4 /* TouchBar */,
+				50CCB1B81B84999E008D8C30 /* Toolbar */,
 				50D6955012E375A800D9C738 /* Icons */,
 				5030B2A720AEBD2200E591BE /* GameDevices */,
+				50195C2620AFF874003844FB /* Debugger */,
 				50FD96A41BF65861009134A4 /* 1541.png */,
 				50F483AA203B1A0B008F74FD /* c64.png */,
 				50F9955A203AC13D004C4856 /* key.png */,
@@ -986,17 +1005,12 @@
 				38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */,
 				5087D8512081FF8A0026BAD5 /* joystick32_sony.png */,
 				501B33AB20AE33510047C050 /* mouse256.png */,
-				50A3E08B0E66F7C400D3564D /* pause32.png */,
-				50A3E0890E66F7BC00D3564D /* play32.png */,
 				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
 				500FF38F1BD7F4DF0038245B /* rom.png */,
 				505529BB2033014B006004B3 /* rom_medium.png */,
 				500FF3901BD7F4DF0038245B /* rom_light.png */,
 				5094197C0E426C13008D6F71 /* cartridge.png */,
 				50A8F9E90E472BA800ACE17D /* romMissing.png */,
-				50471FE50A7B679A00A8DB94 /* stepInto32.png */,
-				50287EEA0A7CA86900292533 /* stepOut32.png */,
-				50471FE70A7B67A100A8DB94 /* stepOver32.png */,
 				50E4BFA90C3CEAB700CB6B43 /* warpOff.png */,
 				50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */,
 				502F57F91B93457200D1077E /* fast.png */,
@@ -1028,7 +1042,7 @@
 			name = "User Dialog Controllers";
 			sourceTree = "<group>";
 		};
-		5080F3511EE7469C001313D4 /* TouchBar Icons */ = {
+		5080F3511EE7469C001313D4 /* TouchBar */ = {
 			isa = PBXGroup;
 			children = (
 				50F873201EE7E42500B30DBD /* restore.png */,
@@ -1037,7 +1051,7 @@
 				5080F3581EE74784001313D4 /* commodore.png */,
 				5020434D1EE71BB8006C3FD3 /* runstop.png */,
 			);
-			name = "TouchBar Icons";
+			name = TouchBar;
 			sourceTree = "<group>";
 		};
 		5083D5D320A04CA400C1B4EE /* fastsid */ = {
@@ -1130,7 +1144,7 @@
 			name = MetalView;
 			sourceTree = "<group>";
 		};
-		50CCB1B81B84999E008D8C30 /* Toolbar icons */ = {
+		50CCB1B81B84999E008D8C30 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
 				5034F2DD208239070068AA4B /* tb_browse.png */,
@@ -1145,7 +1159,7 @@
 				50CCB1BB1B8499DE008D8C30 /* tb_setup.png */,
 				50CCB1CA1B84A19F008D8C30 /* tb_timetravel2.png */,
 			);
-			name = "Toolbar icons";
+			name = Toolbar;
 			sourceTree = "<group>";
 		};
 		50D141641417A34B0024FC74 /* resid */ = {
@@ -1286,6 +1300,7 @@
 				50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
+				50195C2820AFF884003844FB /* stop32.png in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
@@ -1509,6 +1524,7 @@
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
+				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
 				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,

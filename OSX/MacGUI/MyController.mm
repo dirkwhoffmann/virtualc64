@@ -30,7 +30,24 @@
 @synthesize mountDialog;
 @synthesize tapeDialog;
 
+// Debugger
 @synthesize hex;
+
+// Debugger (CPU panel)
+@synthesize pc;
+@synthesize sp;
+@synthesize a;
+@synthesize x;
+@synthesize y;
+@synthesize Nflag;
+@synthesize Zflag;
+@synthesize Cflag;
+@synthesize Iflag;
+@synthesize Bflag;
+@synthesize Dflag;
+@synthesize Vflag;
+@synthesize breakAt;
+
 
 // Toolbar
 @synthesize controlPort1;
@@ -103,7 +120,7 @@
 	
 	NSControl *WordFormatterControls[] = { 
 		// CPU panel
-		pc,
+		pc, breakAt,
 		// Memory panel
 		addr_search,
 		// CIA panel

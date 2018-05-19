@@ -21,19 +21,19 @@
 @interface MyController(CpuPanel)
 
 // Debug panel (CPU)
-- (IBAction)aAction:(id)sender;
-- (IBAction)xAction:(id)sender;
-- (IBAction)yAction:(id)sender;
-- (IBAction)pcAction:(id)sender;
-- (IBAction)spAction:(id)sender;
-- (IBAction)NAction:(id)sender;
-- (IBAction)ZAction:(id)sender;
-- (IBAction)CAction:(id)sender;
-- (IBAction)IAction:(id)sender;
-- (IBAction)BAction:(id)sender;
-- (IBAction)DAction:(id)sender;
-- (IBAction)VAction:(id)sender;
+// - (IBAction)aAction:(id)sender;
+// - (IBAction)xAction:(id)sender;
+// - (IBAction)yAction:(id)sender;
+// - (IBAction)pcAction:(id)sender;
+// - (IBAction)spAction:(id)sender;
+// - (IBAction)NAction:(id)sender;
+// - (IBAction)ZAction:(id)sender;
+// - (IBAction)CAction:(id)sender;
+// - (IBAction)IAction:(id)sender;
+// - (IBAction)BAction:(id)sender;
+// - (IBAction)DAction:(id)sender;
+// - (IBAction)VAction:(id)sender;
 
-- (void)refreshCPU;
+// - (void)refreshCPU;
 
 @end

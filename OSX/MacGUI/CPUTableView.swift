@@ -30,6 +30,7 @@ import Foundation
         let row = sender.selectedRow
         
         if let instr = instructionAtRow[row] {
+            track("Toggling breakpoint at \(instr.addr)")
             c?.c64.cpu.toggleHardBreakpoint(instr.addr)
             reloadData()
         }
@@ -101,7 +102,13 @@ extension CPUTableView : NSTableViewDataSource {
         if var instr = instructionAtRow[row] {
             
             switch(tableColumn?.identifier.rawValue) {
-                
+
+            case "break":
+                if (c?.c64.cpu.hardBreakpoint(instr.addr))! {
+                    return "⛔"
+                } else {
+                    return " "
+                }
             case "addr":
                 return String.init(utf8String:&instr.pc.0)
             case "data01":
@@ -124,13 +131,11 @@ extension CPUTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
-        if c == nil { return }
-        
         let cell = cell as! NSTextFieldCell
         
         if  let instr = instructionAtRow[row] {
             
-            if c!.c64.cpu.breakpoint(instr.addr) == Int32(HARD_BREAKPOINT.rawValue) {
+            if (c?.c64.cpu.hardBreakpoint(instr.addr))! {
                 cell.textColor = NSColor.red
             } else {
                 cell.textColor = NSColor.black

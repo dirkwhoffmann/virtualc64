@@ -480,28 +480,34 @@ public:
     //
     
 	//! @brief    Returns breakpoint tag for the specified address.
-    uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
+    // uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
 	
 	//! @brief    Returns the breakpoint tag for the specified address.
-	uint8_t getBreakpoint(uint16_t addr) { return breakpoint[addr]; }
+	// uint8_t getBreakpoint(uint16_t addr) { return breakpoint[addr]; }
 
 	//! @brief    Sets a breakpoint tag at the specified address.
-	void setBreakpoint(uint16_t addr, uint8_t tag) { breakpoint[addr] = tag; }
+	// void setBreakpoint(uint16_t addr, uint8_t tag) { breakpoint[addr] = tag; }
 	
+    //! @brief    Returns true iff a hard breakpoint is set at the specified address
+    bool hardBreakpoint(uint16_t addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
+    
 	//! @brief    Sets a hard breakpoint at the specified address.
     void setHardBreakpoint(uint16_t addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
 	
 	//! @brief    Deletes a hard breakpoint at the specified address.
-	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= (255-HARD_BREAKPOINT); }
+	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= (0XFF - HARD_BREAKPOINT); }
 	
 	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleHardBreakpoint(uint16_t addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
     
+    //! @brief    Returns true iff a hard breakpoint is set at the specified address
+    bool softBreakpoint(uint16_t addr) { return (breakpoint[addr] & SOFT_BREAKPOINT) != 0; }
+
 	//! @brief    Sets a soft breakpoint at the specified address.
 	void setSoftBreakpoint(uint16_t addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
     
 	//! @brief    Deletes a soft breakpoint at the specified address.
-	void deleteSoftBreakpoint(uint16_t addr) { breakpoint[addr] &= (255-SOFT_BREAKPOINT); }
+	void deleteSoftBreakpoint(uint16_t addr) { breakpoint[addr] &= (0xFF - SOFT_BREAKPOINT); }
     
 	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }

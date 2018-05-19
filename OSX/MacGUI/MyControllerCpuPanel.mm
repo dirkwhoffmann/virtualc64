@@ -21,6 +21,7 @@
 
 @implementation MyController(CpuPanel) 
 
+/*
 - (IBAction)aAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
@@ -70,7 +71,7 @@
 	[[c64 cpu] setSP:[sender intValue]];
 	[self refresh];
 }
-
+ 
 - (IBAction)NAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
@@ -157,5 +158,7 @@
 	[Zflag setIntValue:[[c64 cpu] Zflag]];
 	[Cflag setIntValue:[[c64 cpu] Cflag]];
 }
+
+ */
 
 @end

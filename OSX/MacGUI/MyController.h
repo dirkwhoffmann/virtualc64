@@ -91,7 +91,8 @@
 	IBOutlet NSButton *Bflag;
 	IBOutlet NSButton *Dflag;
 	IBOutlet NSButton *Vflag;
-
+    IBOutlet NSTextField *breakAt;
+    
 	// Debug panel (Memory)
 	IBOutlet MemTableView *memTableView;
 	IBOutlet NSSearchField *addr_search;	
@@ -297,7 +298,24 @@
 @property MemTableView *memTableView;
 @property Speedometer *speedometer;
 @property long animationCounter;
+
+// Debugger
 @property BOOL hex;
+
+// Debugger (CPU panel)
+@property NSTextField *pc;
+@property NSTextField *sp;
+@property NSTextField *a;
+@property NSTextField *x;
+@property NSTextField *y;
+@property NSButton *Nflag;
+@property NSButton *Zflag;
+@property NSButton *Cflag;
+@property NSButton *Iflag;
+@property NSButton *Bflag;
+@property NSButton *Dflag;
+@property NSButton *Vflag;
+@property NSTextField *breakAt;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
