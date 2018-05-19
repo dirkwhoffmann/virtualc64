@@ -2572,7 +2572,6 @@ CPU::executeOneCycle()
         case JSR:
             
             FETCH_ADDR_LO
-            callStack[callStackPointer++] = PC;
             CONTINUE
             
         case JSR_2:

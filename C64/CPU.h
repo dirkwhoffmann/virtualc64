@@ -215,15 +215,6 @@ private:
 	//! @brief    Breakpoint tag for each memory cell
 	uint8_t breakpoint[65536];
 	
-	/*! @brief    Records all subroutine calls
-	 *  @details  Whenever a JSR instruction is executed, the address of the instruction is recorded 
-     *            in the callstack.
-     */
-	uint16_t callStack[256];
-		
-	//! @brief    Location of the next free cell of the callstack.
-	uint8_t callStackPointer;
-
 #include "Instructions.h"
 		
 public:
@@ -511,15 +502,6 @@ public:
     
 	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
-
-    
-    //
-    //! @functiongroup Querying the callstack
-    //
-    
-	//! @brief    Reads entry from callstack.
-	int getTopOfCallStack() { return (callStackPointer > 0) ? callStack[callStackPointer-1] : -1; }
-
 };
 
 #endif

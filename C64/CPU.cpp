@@ -73,8 +73,8 @@ CPU::CPU()
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
         { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
-        { &callStack,               sizeof(callStack),              CLEAR_ON_RESET | WORD_FORMAT },
-        { &callStackPointer,        sizeof(callStackPointer),       CLEAR_ON_RESET },
+        // { &callStack,               sizeof(callStack),              CLEAR_ON_RESET | WORD_FORMAT },
+        // { &callStackPointer,        sizeof(callStackPointer),       CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
