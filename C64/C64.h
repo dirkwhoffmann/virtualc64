@@ -20,17 +20,14 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.11
 //
-// Sound engines from VICE 3.1 have been ported to VirtualC64 (both ReSID and FastSID)
+// Mouse emulation has been added. Three mouse models are supported (Commodore 1530, Commodore 1531, and Neos).
+// Sound engines from VICE 3.1 have been ported to VirtualC64 (ReSID 2010 and FastSID)
 
 // TODO:
-// Add menu option "Hide mouse"
-// Emulate mouse buttons
-// Refactor NeosMouse
-// Implement c64.executeMouse
 //
-// Introduce VIC::getInfo
-// Introduce CPU::getInfo
-
+// Add VIC::getInfo
+// Add CPU::getInfo
+//
 // CLEANUP:
 // Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
 //                simplify code. 
@@ -45,7 +42,7 @@
 #define V_SUBMINOR 0
 
 // Disables assert checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Data types and constants
 #include "C64_types.h"

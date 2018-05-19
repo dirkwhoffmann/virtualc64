@@ -28,22 +28,6 @@
 	[self refresh];
 }
 
-/*
-- (IBAction)stepOutAction:(id)sender
-{	
-	[[self document] updateChangeCount:NSChangeDone];
-	
-	// Get return address from callstack
-	int addr = [[c64 cpu] topOfCallStack];
-	if (addr < 0)
-		return;
-	
-	// Set soft breakpoint at next command and run
-	[[c64 cpu] setSoftBreakpoint:(addr+1)];	
-	[c64 run];
-}
-*/
-
 - (IBAction)stepOverAction:(id)sender
 {	
 	[[self document] updateChangeCount:NSChangeDone];
