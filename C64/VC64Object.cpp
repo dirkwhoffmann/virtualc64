@@ -28,12 +28,9 @@ VC64Object::VC64Object()
 
 VC64Object::~VC64Object()
 {
-    if (logfile)
-        fclose(logfile);
 }
 
 unsigned VC64Object::defaultDebugLevel = 1;
-FILE *VC64Object::logfile = NULL;
 char VC64Object::traceBuffer[512][256];
 unsigned VC64Object::tracePtr = 0;
 
@@ -90,7 +87,7 @@ void
 VC64Object::msg(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
-    fprintf(logfile ? logfile : stderr, "%s", buf);
+    fprintf(stderr, "%s", buf);
 }
 
 void
@@ -100,7 +97,7 @@ VC64Object::msg(int level, const char *fmt, ...)
         return;
     
     VC64OBJ_PARSE;
-    fprintf(logfile ? logfile : stderr, "%s", buf);
+    fprintf(stderr, "%s", buf);
 }
 
 void
@@ -108,9 +105,9 @@ VC64Object::debug(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     if (description)
-        fprintf(logfile ? logfile : stderr, "%s: %s", description, buf);
+        fprintf(stderr, "%s: %s", description, buf);
     else
-        fprintf(logfile ? logfile : stderr, "%s", buf);
+        fprintf(stderr, "%s", buf);
 }
 
 void
@@ -121,9 +118,9 @@ VC64Object::debug(int level, const char *fmt, ...)
     
     VC64OBJ_PARSE;
     if (description)
-        fprintf(logfile ? logfile : stderr, "%s: %s", description, buf);
+        fprintf(stderr, "%s: %s", description, buf);
     else
-        fprintf(logfile ? logfile : stderr, "%s", buf);
+        fprintf(stderr, "%s", buf);
 }
 
 void
@@ -131,9 +128,9 @@ VC64Object::warn(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     if (description)
-        fprintf(logfile ? logfile : stderr, "%s: WARNING: %s", description, buf);
+        fprintf(stderr, "%s: WARNING: %s", description, buf);
     else
-        fprintf(logfile ? logfile : stderr, "WARNING: %s", buf);
+        fprintf(stderr, "WARNING: %s", buf);
 }
 
 void
@@ -141,9 +138,9 @@ VC64Object::panic(const char *fmt, ...)
 {
     VC64OBJ_PARSE;
     if (description)
-        fprintf(logfile ? logfile : stderr, "%s: PANIC: %s", description, buf);
+        fprintf(stderr, "%s: PANIC: %s", description, buf);
     else
-        fprintf(logfile ? logfile : stderr, "PANIC: %s", buf);
+        fprintf(stderr, "PANIC: %s", buf);
 
     assert(0);
 }

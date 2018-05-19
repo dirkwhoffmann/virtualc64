@@ -32,13 +32,6 @@ class VC64Object {
 
 private:
 
-    /*! @brief    Log file.
-     *  @details  By default, this variable is NULL and all debug and trace messages are sent to
-     *            stdout or stderr. Assign a file handle, if you wish to send debug output to a file.
-     *  @note     logfile is a class member, i.e., it is shared among all objects
-     */
-    static FILE *logfile;
-
     /*! @brief    Tracing ringbuffer
      *  @details  All trace messages are written to a ringbuffer.
      *  @seealso  backtrace()
@@ -86,10 +79,6 @@ public:
     //! @functiongroup Initializing the component
     //
     
-    /*! @brief    Sets the logfile.
-     */
-    static void setLogfile(FILE *file) { logfile = file; }
-
     /*! @brief    Sets the default debug level.
      */
     static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }

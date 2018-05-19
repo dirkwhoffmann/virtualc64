@@ -310,8 +310,6 @@ FastSID::execute(uint64_t cycles)
 void
 FastSID::init(int sampleRate, int cycles_per_sec)
 {
-    debug("******** FastSID::init\n");
-    
     uint32_t i;
     
     // Recompute sample/cycle ratio and reset counters
@@ -340,8 +338,6 @@ FastSID::init(int sampleRate, int cycles_per_sec)
 void
 FastSID::initFilter(int sampleRate)
 {
-    debug("******** FastSID::initFilter\n");
-    
     uint16_t uk;
     float rk;
     long int si;
