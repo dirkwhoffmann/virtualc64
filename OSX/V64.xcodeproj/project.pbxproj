@@ -134,7 +134,6 @@
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
-		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507B258A20724BE200B6CDBC /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 507B258920724BE200B6CDBC /* trash.png */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
@@ -458,8 +457,6 @@
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
-		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
-		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		507B258920724BE200B6CDBC /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
@@ -772,8 +769,6 @@
 				50C8924D1BEF35FB00231B96 /* MetalView */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
 				50176C730A6F7357009E80BD /* Formatter.mm */,
-				5077742E12DE490300D72088 /* MemTableView.h */,
-				5077742F12DE490300D72088 /* MemTableView.mm */,
 				5068AFC320852A550025776C /* CPUTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 			);
@@ -1493,7 +1488,6 @@
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
-				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50169F05209E045A00CB3536 /* sid.cc in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,

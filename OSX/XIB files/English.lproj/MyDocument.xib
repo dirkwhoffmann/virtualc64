@@ -518,7 +518,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="46">
-                                        <rect key="frame" x="19" y="525" width="22" height="15"/>
+                                        <rect key="frame" x="3" y="525" width="22" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="PC" id="1712">
                                             <font key="font" metaFont="smallSystem"/>
@@ -527,7 +527,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="47">
-                                        <rect key="frame" x="38" y="523" width="50" height="22"/>
+                                        <rect key="frame" x="22" y="523" width="50" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1713">
                                             <font key="font" metaFont="system"/>
@@ -539,7 +539,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="62">
-                                        <rect key="frame" x="91" y="525" width="16" height="15"/>
+                                        <rect key="frame" x="75" y="525" width="16" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="A" id="1719">
                                             <font key="font" metaFont="smallSystem"/>
@@ -547,8 +547,8 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" id="51">
-                                        <rect key="frame" x="103" y="523" width="33" height="22"/>
+                                    <textField verticalHuggingPriority="750" misplaced="YES" id="51">
+                                        <rect key="frame" x="87" y="523" width="33" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1715">
                                             <font key="font" metaFont="system"/>
@@ -560,7 +560,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="2120">
-                                        <rect key="frame" x="140" y="525" width="14" height="15"/>
+                                        <rect key="frame" x="124" y="525" width="14" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="X" id="2121">
                                             <font key="font" metaFont="smallSystem"/>
@@ -568,8 +568,8 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" id="63">
-                                        <rect key="frame" x="152" y="523" width="33" height="22"/>
+                                    <textField verticalHuggingPriority="750" misplaced="YES" id="63">
+                                        <rect key="frame" x="136" y="523" width="33" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1720">
                                             <font key="font" metaFont="system"/>
@@ -581,7 +581,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="2122">
-                                        <rect key="frame" x="189" y="525" width="17" height="15"/>
+                                        <rect key="frame" x="173" y="525" width="17" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Y" id="2123">
                                             <font key="font" metaFont="smallSystem"/>
@@ -589,8 +589,8 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" id="54">
-                                        <rect key="frame" x="201" y="523" width="33" height="22"/>
+                                    <textField verticalHuggingPriority="750" misplaced="YES" id="54">
+                                        <rect key="frame" x="185" y="523" width="33" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1717">
                                             <font key="font" metaFont="system"/>
@@ -602,7 +602,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="52">
-                                        <rect key="frame" x="238" y="525" width="22" height="15"/>
+                                        <rect key="frame" x="222" y="525" width="22" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="SP" id="1716">
                                             <font key="font" metaFont="smallSystem"/>
@@ -610,8 +610,8 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" id="158">
-                                        <rect key="frame" x="256" y="523" width="33" height="22"/>
+                                    <textField verticalHuggingPriority="750" misplaced="YES" id="158">
+                                        <rect key="frame" x="240" y="523" width="33" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1721">
                                             <font key="font" metaFont="system"/>
@@ -623,7 +623,7 @@
                                         </connections>
                                     </textField>
                                     <button misplaced="YES" id="45">
-                                        <rect key="frame" x="20" y="501" width="31" height="21"/>
+                                        <rect key="frame" x="4" y="501" width="31" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="N" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1711">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -634,7 +634,7 @@
                                         </connections>
                                     </button>
                                     <button misplaced="YES" id="185">
-                                        <rect key="frame" x="60" y="501" width="30" height="21"/>
+                                        <rect key="frame" x="44" y="501" width="30" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="V" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1722">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -645,7 +645,7 @@
                                         </connections>
                                     </button>
                                     <button misplaced="YES" id="187">
-                                        <rect key="frame" x="100" y="501" width="29" height="21"/>
+                                        <rect key="frame" x="84" y="501" width="29" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="B" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1724">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -656,7 +656,7 @@
                                         </connections>
                                     </button>
                                     <button misplaced="YES" id="188">
-                                        <rect key="frame" x="140" y="501" width="31" height="21"/>
+                                        <rect key="frame" x="124" y="501" width="31" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="D" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1725">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -667,7 +667,7 @@
                                         </connections>
                                     </button>
                                     <button misplaced="YES" id="189">
-                                        <rect key="frame" x="180" y="501" width="26" height="21"/>
+                                        <rect key="frame" x="164" y="501" width="26" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="I" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1726">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -678,7 +678,7 @@
                                         </connections>
                                     </button>
                                     <button misplaced="YES" id="190">
-                                        <rect key="frame" x="221" y="501" width="29" height="21"/>
+                                        <rect key="frame" x="205" y="501" width="29" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Z" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1727">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -689,7 +689,7 @@
                                         </connections>
                                     </button>
                                     <button misplaced="YES" id="191">
-                                        <rect key="frame" x="261" y="501" width="30" height="21"/>
+                                        <rect key="frame" x="245" y="501" width="30" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="C" bezelStyle="regularSquare" imagePosition="right" alignment="center" controlSize="small" inset="2" id="1728">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -700,7 +700,7 @@
                                         </connections>
                                     </button>
                                     <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="766">
-                                        <rect key="frame" x="21" y="36" width="268" height="460"/>
+                                        <rect key="frame" x="5" y="36" width="268" height="460"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
                                             <rect key="frame" x="1" y="0.0" width="266" height="459"/>
@@ -813,7 +813,7 @@
                                         </tableHeaderView>
                                     </scrollView>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="D6T-6b-vx3">
-                                        <rect key="frame" x="239" y="5" width="50" height="22"/>
+                                        <rect key="frame" x="223" y="5" width="50" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="aMj-IM-IdV">
                                             <font key="font" metaFont="system"/>
@@ -825,7 +825,7 @@
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="3bH-UP-AGB">
-                                        <rect key="frame" x="177" y="8" width="58" height="17"/>
+                                        <rect key="frame" x="161" y="8" width="58" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Break at:" id="5NS-wM-stx">
                                             <font key="font" metaFont="system"/>
