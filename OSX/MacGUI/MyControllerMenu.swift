@@ -516,7 +516,7 @@ extension MyController {
     @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.vc1541.dump() }
     @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.dump() }
     @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.vc1541.via2.dump() }
-    @IBAction func dumpVC1541Memory(_ sender: Any!) { c64.vc1541.mem.dump() }
+    @IBAction func dumpDisk(_ sender: Any!) { c64.vc1541.disk.dump() }
     @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump() }
     @IBAction func dumpC64JoystickA(_ sender: Any!) { c64.port1.dump() }
     @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.port2.dump(); gamePadManager.listDevices()}

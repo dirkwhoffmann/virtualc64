@@ -240,18 +240,6 @@ struct ContainerWrapper;
 - (void) lockShift;
 - (void) unlockShift;
 
-/*
-- (BOOL) shiftKeyIsPressed;
-- (BOOL) commodoreKeyIsPressed;
-- (BOOL) ctrlKeyIsPressed;
-- (BOOL) runstopKeyIsPressed;
-
-- (void) toggleShiftKey;
-- (void) toggleCommodoreKey;
-- (void) toggleCtrlKey;
-- (void) toggleRunstopKey;
-*/
-
 @end 
 
 // --------------------------------------------------------------------------
@@ -348,6 +336,7 @@ struct ContainerWrapper;
     struct Disk525Wrapper *wrapper;
 }
 
+- (void) dump;
 - (BOOL)isWriteProtected;
 - (void)setWriteProtection:(BOOL)b;
 - (BOOL)isModified;
@@ -366,7 +355,6 @@ struct ContainerWrapper;
     
     // sub proxys
 	CPUProxy *cpu;
-	MemoryProxy *mem;
 	VIAProxy *via1;
 	VIAProxy *via2;
     Disk525Proxy *disk;
@@ -374,7 +362,6 @@ struct ContainerWrapper;
 
 @property (readonly) struct Vc1541Wrapper *wrapper;
 @property (readonly) CPUProxy *cpu;
-@property (readonly) MemoryProxy *mem;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
 @property (readonly) Disk525Proxy *disk;

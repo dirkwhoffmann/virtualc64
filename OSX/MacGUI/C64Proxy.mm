@@ -22,7 +22,7 @@
 
 struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU *cpu; };
-struct MemoryWrapper { Memory *mem; };
+struct MemoryWrapper { C64Memory *mem; };
 struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
@@ -96,9 +96,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->cpu->disassemble(addr, h);
 }
 
-// - (NSInteger) topOfCallStack { return wrapper->cpu->getTopOfCallStack(); }
-//- (NSInteger) breakpoint:(uint16_t)addr { return wrapper->cpu->getBreakpoint(addr); }
-// - (void) setBreakpoint:(uint16_t)addr tag:(uint8_t)t { wrapper->cpu->setBreakpoint(addr, t); }
 - (BOOL) hardBreakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
 - (void) setHardBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }
 - (void) deleteHardBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
@@ -117,7 +114,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation MemoryProxy
 
-- (instancetype) initWithMemory:(Memory *)mem
+- (instancetype) initWithMemory:(C64Memory *)mem
 {
     if (self = [super init]) {
         wrapper = new MemoryWrapper();
@@ -441,6 +438,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
+- (void) dump { wrapper->disk->dumpState(); }
 - (BOOL)isWriteProtected { return wrapper->disk->isWriteProtected(); }
 - (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
 - (BOOL)isModified { return wrapper->disk->isModified(); }
@@ -455,7 +453,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation VC1541Proxy
 
-@synthesize wrapper, cpu, mem, via1, via2, disk;
+@synthesize wrapper, cpu, via1, via2, disk;
 
 - (instancetype) initWithVC1541:(VC1541 *)vc1541
 {
@@ -463,7 +461,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
         wrapper = new Vc1541Wrapper();
         wrapper->vc1541 = vc1541;
         cpu = [[CPUProxy alloc] initWithCPU:&vc1541->cpu];
-        mem = [[MemoryProxy alloc] initWithMemory:&vc1541->mem];
         via1 = [[VIAProxy alloc] initWithVIA:&vc1541->via1];
         via2 = [[VIAProxy alloc] initWithVIA:&vc1541->via2];
         disk = [[Disk525Proxy alloc] initWithDisk525:&vc1541->disk];
