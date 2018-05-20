@@ -124,29 +124,6 @@ public:
      */
     static bool isRom(const char *filename);
 
-    /*! @brief    Returns true, iff the provided address is in the Basic ROM address range.
-     */
-    static bool isBasicRomAddr(uint16_t addr) { return (0xA000 <= addr && addr <= 0xBFFF); }
-    
-    /*! @brief    Returns true, iff the provided address is in the Character ROM address range.
-     */
-    static bool isCharRomAddr(uint16_t addr) { return (0xD000 <= addr && addr <= 0xDFFF); }
-    
-    /*! @brief    Returns true, iff the provided address is in the Kernal ROM address range.
-     */
-    static bool isKernalRomAddr(uint16_t addr) { return (0xE000 <= addr); }
-    
-    /*! @brief    Returns true, iff the provided address is in the possible cartridge address ranges.
-     */
-    static bool isCartridgeRomAddr(uint16_t addr)
-    { return (0x8000 <= addr && addr <= 0x9FFF)||(0xA000 <= addr && addr <= 0xBFFF)||(0xE000 <= addr && addr <= 0xFFFE); }
-    
-    /*! @brief    Returns true, iff the provided address is in one of the three ROM address ranges.
-     */
-    static bool isRomAddr(uint16_t addr)
-    { return isCharRomAddr(addr) || isKernalRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
-
-    
 private:
 	
 	/*! @brief    File name of the Character ROM image.
@@ -218,10 +195,6 @@ public:
      *  @details  The lookup values depend on three processor port bits and the cartridge exrom and game lines 
      */
     void updatePeekPokeLookupTables();
-
-    //! @brief    Returns true iff the provided address is a valid address of the specified type
-    //! @deprecated
-	bool isValidAddr(uint16_t addr, MemoryType type);
 
     //! @brief    Returns the current peek source of the specified memory address
     MemorySource peekSource(uint16_t addr) { return peekSrc[addr >> 12]; }

@@ -210,21 +210,6 @@ C64Memory::loadKernalRom(const char *filename)
 //                              Memory access methods
 // --------------------------------------------------------------------------------
 
-bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
-{
-	switch (type) {
-		case MEM_RAM: 
-			return true;
-		case MEM_ROM:
-			return isRomAddr(addr);
-		case MEM_IO:
-			return isCharRomAddr(addr);
-		default:
-			assert(false);
-			return false;
-	}
-}
-
 void 
 C64Memory::updatePeekPokeLookupTables()
 {

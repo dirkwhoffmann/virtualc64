@@ -27,7 +27,7 @@ struct MemoryHighlighting {
     static let ioCia = 9
 }
 
-@objc class MEMTableView : NSTableView {
+@objc class MemTableView : NSTableView {
     
     var c : MyController? = nil
     var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
@@ -114,7 +114,7 @@ struct MemoryHighlighting {
     }
 }
 
-extension MEMTableView : NSTableViewDataSource {
+extension MemTableView : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
@@ -178,7 +178,7 @@ extension MEMTableView : NSTableViewDataSource {
     }
 }
 
-extension MEMTableView : NSTableViewDelegate {
+extension MemTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         

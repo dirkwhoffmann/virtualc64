@@ -84,38 +84,6 @@ VC1541Memory::dumpState()
 	msg("\n");
 }
 
-bool 
-VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
-{
-	switch (type) {
-		case MEM_RAM: 
-			return (addr < 0x800);
-		case MEM_ROM:
-			return (addr >= 0xC000);
-		case MEM_IO:
-			return (addr >= 0x1800 && addr <= 0x1c00) || (addr >= 0x1c00 && addr <= 0x2000);
-		default:
-			assert(false);
-			return false;
-	}
-}
-
-/*
-uint8_t 
-VC1541Memory::peekIO(uint16_t addr)
-{	
-	if ((addr & 0xFC00) == 0x1800) {
-		return floppy->via1.peek(addr & 0x000F);
-	} else if ((addr & 0xFC00) == 0x1c00) {
-		return floppy->via2.peek(addr & 0x000F);
-	} else {
-		// Return high byte of addr 
-		// VICE and Frodo are doing it that way
-		return (addr >> 8);
-	}
-}
-*/
-
 uint8_t
 VC1541Memory::readIO(uint16_t addr)
 {
@@ -153,24 +121,6 @@ VC1541Memory::peek(uint16_t addr)
         floppy->via2.peek(addr & 0xF);
     }
 }
-
-/*
-	uint8_t result;
-	
-	if (addr >= 0xc000) { 
-		// ROM
-		result = mem[addr];
-	} else if (addr < 0x1000) { // TODO: Check if 0x1000 is the correct value
-		// RAM (bitmask is applied because RAM repeats multiple times)
-		result = mem[addr & 0x07ff]; 		
-	} else { 
-		// IO space
-		result = peekIO(addr);
-	}
-	
-	return result;
-}
-*/
      
 uint8_t
 VC1541Memory::spy(uint16_t addr)
@@ -189,22 +139,6 @@ VC1541Memory::spy(uint16_t addr)
     return result;
 }
 
-uint8_t
-VC1541Memory::readFrom(uint16_t addr, MemoryType source)
-{
-    switch (source) {
-        case MEM_RAM:
-            return readRam(addr);
-        case MEM_ROM:
-            return readRom(addr);
-        case MEM_IO:
-            return readIO(addr);
-        default:
-            assert(false);
-            return 0;
-    }
-}
-
 void 
 VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
 {
@@ -216,20 +150,6 @@ VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
 {
 	mem[addr] = value;
 }
-
-/*
-void 
-VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
-{	
-	if ((addr & 0xFC00) == 0x1800) {
-		floppy->via1.poke(addr & 0x000F, value);
-	} else if ((addr & 0xFC00) == 0x1c00) {
-		floppy->via2.poke(addr & 0X000F, value);
-	} else {
-		// No memory here, nothing happens
-	}
-}
-*/
 
 void 
 VC1541Memory::poke(uint16_t addr, uint8_t value)

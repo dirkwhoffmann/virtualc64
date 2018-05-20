@@ -29,8 +29,8 @@
 @class MountDialog;
 @class TapeDialog;
 @class MetalView;
-@class CPUTableView;
-@class MEMTableView;
+@class CpuTableView;
+@class MemTableView;
 @class Speedometer;
 
 @interface MyController : NSWindowController 
@@ -78,7 +78,7 @@
 	IBOutlet NSButton *stepOutButton;
 	
 	// Debug panel (CPU)
-	IBOutlet CPUTableView *cpuTableView;
+	IBOutlet CpuTableView *cpuTableView;
 	IBOutlet NSTextField *pc;
 	IBOutlet NSTextField *sp;
 	IBOutlet NSTextField *a;
@@ -94,7 +94,7 @@
     IBOutlet NSTextField *breakAt;
     
 	// Debug panel (Memory)
-	IBOutlet MEMTableView *memTableView;
+	IBOutlet MemTableView *memTableView;
 	IBOutlet NSSearchField *addr_search;	
 	IBOutlet NSButtonCell *ramSource;
 	IBOutlet NSButtonCell *romSource;
@@ -294,8 +294,8 @@
 @property GamePadManager *gamePadManager;
 @property KeyboardController *keyboardcontroller;
 @property MetalView *metalScreen;
-@property CPUTableView *cpuTableView;
-@property MEMTableView *memTableView;
+@property CpuTableView *cpuTableView;
+@property MemTableView *memTableView;
 @property Speedometer *speedometer;
 @property long animationCounter;
 

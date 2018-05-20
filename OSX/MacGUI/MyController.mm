@@ -95,9 +95,7 @@
 
 - (void)refresh
 {
-    // NSLog(@"Refresh");
 	[self refreshCPU];
-	[self refreshMemory];
 	[self refreshCIA];
 	[self refreshVIC];
 	[cpuTableView refresh];
