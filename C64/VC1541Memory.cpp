@@ -68,7 +68,7 @@ VC1541Memory::is1541Rom(const char *filename)
 		
 	return true;
 }
-
+ 
 bool 
 VC1541Memory::loadRom(const char *filename)
 {
