@@ -555,20 +555,31 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 }
 
 void
-C64Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType dest)
+C64Memory::pokeTo(uint16_t addr, uint8_t value, MemorySource target)
 {
-    switch (dest) {
-        case MEM_RAM:
-            pokeRam(addr, value);
-            break;
-        case MEM_ROM:
-            pokeRom(addr, value);
-            break;
-        case MEM_IO:
+    switch(target) {
+            
+        case M_RAM:
+            ram[addr] = value;
+            return;
+            
+        case M_IO:
             pokeIO(addr, value);
-            break;
-        default:
-            assert(false);
+            return;
+            
+        case M_PP:
+            
+            if (addr == 0x0000) {
+                c64->processorPort.writeDirection(value);
+            } else if (addr == 0x0001) {
+                c64->processorPort.write(value);
+            } else {
+                ram[addr] = value;
+            }
+            return;
+            
+        default: // ignore
+            return;
     }
 }
 

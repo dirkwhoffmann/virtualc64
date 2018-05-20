@@ -19,18 +19,17 @@ struct MemoryHighlighting {
     static let basicRom = 1
     static let charRom = 2
     static let kernelRom = 3
-    static let vicIO = 4
-    static let sidIO = 5
-    static let ciaIO = 6
-    static let crtLO = 7
-    static let crtHI = 8
+    static let crtRom = 4
+    static let vicIO = 5
+    static let sidIO = 6
+    static let ciaIO = 7
 }
 
 @objc class MEMTableView : NSTableView {
     
     var c : MyController? = nil
     var memView = MemoryView.cpuView
-    var highlighting = MemoryHighlighting.kernelRom
+    var highlighting = MemoryHighlighting.none
     
     override func awakeFromNib() {
         
@@ -84,16 +83,14 @@ struct MemoryHighlighting {
             return src == M_ROM && addr >= 0xD000 && addr <= 0xDFFF
         case MemoryHighlighting.kernelRom:
             return src == M_ROM && addr >= 0xE000 && addr <= 0xFFFF
+        case MemoryHighlighting.crtRom:
+            return src == M_CRTLO || src == M_CRTHI
         case MemoryHighlighting.vicIO:
             return src == M_IO && addr >= 0xD000 && addr <= 0xD3FF
         case MemoryHighlighting.sidIO:
             return src == M_IO && addr >= 0xD400 && addr <= 0xD7FF
         case MemoryHighlighting.ciaIO:
             return src == M_IO && addr >= 0xDC00 && addr <= 0xDDFF
-        case MemoryHighlighting.crtLO:
-            return src == M_CRTLO
-        case MemoryHighlighting.crtHI:
-            return src == M_CRTHI
         default:
             return false
         }
@@ -111,15 +108,15 @@ extension MEMTableView : NSTableViewDataSource {
         
         var addr = UInt16(4 * row)
         
-        if !shouldDisplay(addr) {
-            return ""
-        }
         switch(tableColumn?.identifier.rawValue) {
             
         case "addr":
             return addr
             
         case "ascii":
+            if !shouldDisplay(addr) {
+                break
+            }
             var chars = [Character](repeating:".", count:4)
             let src = source(addr)
             for i in 0...3 {
@@ -142,6 +139,9 @@ extension MEMTableView : NSTableViewDataSource {
             fallthrough
             
         case "hex0":
+            if !shouldDisplay(addr) {
+                break
+            }
             let src = source(addr)
             return c?.c64.mem.spy(addr, source: src) ?? ""
             
@@ -158,6 +158,28 @@ extension MEMTableView : NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
         let cell = cell as! NSTextFieldCell
-        cell.textColor = NSColor.blue
+        if shouldHighlight(UInt16(4 * row)) {
+            cell.textColor = NSColor.red
+        } else {
+            cell.textColor = NSColor.black
+        }
+    }
+    
+    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
+        
+        var addr = UInt16(4 * row)
+        switch(tableColumn?.identifier.rawValue) {
+        case "hex0": break
+        case "hex1": addr += 1; break
+        case "hex2": addr += 2; break
+        case "hex3": addr += 3; break
+        default: return
+        }
+        
+        let src = source(addr)
+        if let value = object as? UInt8 {
+            track("Poking \(value) to \(addr) (src = \(src))")
+            c?.c64.mem.poke(to: addr, value: value, memtype: src)
+        }
     }
 }

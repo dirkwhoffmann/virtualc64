@@ -249,10 +249,9 @@ public:
     void poke(uint16_t addr, uint8_t value);
     
     //! @brief    Writes a byte into memory.
-    /*! @details  This method is only used by the debugger. In contrast to to the poke,
-     *            which is used by the emulator, it also modifies ROM values.
+    /*! @details  This method is only used by the debugger only.
      */
-    void pokeTo(uint16_t addr, uint8_t value, MemoryType dest);
+    void pokeTo(uint16_t addr, uint8_t value, MemorySource target);
 };
 
 #endif
