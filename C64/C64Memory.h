@@ -220,17 +220,18 @@ public:
     void updatePeekPokeLookupTables();
 
     //! @brief    Returns true iff the provided address is a valid address of the specified type
+    //! @deprecated
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
-    // uint8_t readRam(uint16_t addr) { return ram[addr]; }
-    // uint8_t readRom(uint16_t addr) { return rom[addr]; }
+    //! @brief    Returns the current peek source of the specified memory address
+    MemorySource peekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
     
     uint8_t peek(uint16_t addr);
     uint8_t peekIO(uint16_t addr);
     
     uint8_t spy(uint16_t addr);
     uint8_t spyIO(uint16_t addr);
-    uint8_t spy(uint16_t addr, MemoryType source);
+    uint8_t spy(uint16_t addr, MemorySource src);
     
     
     //! @brief    Write a byte into RAM.

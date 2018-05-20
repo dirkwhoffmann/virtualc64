@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MyController {
+extension MyController { // CPU
  
     //
     // Registers

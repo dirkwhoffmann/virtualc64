@@ -51,6 +51,7 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row 
 {
+    /*
     C64Proxy *c64 = [c c64];
     if (c64 == nil)
         return nil;
@@ -68,10 +69,10 @@
 		if (![[c64 mem] isValidAddr:addr memtype:source])
 			return nil;
         
-        uint8_t c1 = [[c64 mem] readFrom:(addr+0) memtype:source];
-        uint8_t c2 = [[c64 mem] readFrom:(addr+1) memtype:source];
-        uint8_t c3 = [[c64 mem] readFrom:(addr+2) memtype:source];
-        uint8_t c4 = [[c64 mem] readFrom:(addr+3) memtype:source];
+        uint8_t c1 = [[c64 mem] spy:(addr+0) source:source];
+        uint8_t c2 = [[c64 mem] spy:(addr+1) source:source];
+        uint8_t c3 = [[c64 mem] spy:(addr+2) source:source];
+        uint8_t c4 = [[c64 mem] spy:(addr+3) source:source];
         
         return [NSString stringWithFormat:@"%c%c%c%c",
                 petscii2printable(c1, '.'),
@@ -90,6 +91,7 @@
 	
 	return @((int)[[c64 mem] readFrom:addr memtype:source]);
 	
+     */
 	return nil;
 }
 
@@ -109,6 +111,7 @@
 
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {
+    /*
     C64Proxy *c64 = [c c64];
     if (c64 == nil)
         return;
@@ -118,11 +121,13 @@
 	if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
 	
 	[[c64 mem] pokeTo:addr value:v memtype:t];
-	[self refresh];	
+	[self refresh];
+     */
 }
 
 - (void)setMemObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
+    /*
     C64Proxy *c64 = [c c64];
     if (c64 == nil)
         return;
@@ -141,6 +146,7 @@
 		return; 
 	
 	[self changeMemValue:addr value:value memtype:source];
+     */
 }
 
 - (void)refresh 

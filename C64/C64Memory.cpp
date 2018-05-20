@@ -232,7 +232,6 @@ C64Memory::updatePeekPokeLookupTables()
     uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
     uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
 
-    
     // Set ultimax flag
     c64->setUltimax(exrom && !game);
 
@@ -417,9 +416,18 @@ uint8_t C64Memory::peek(uint16_t addr)
 
 uint8_t C64Memory::spy(uint16_t addr)
 {
-    MemorySource src = peekSrc[addr >> 12];
-    
+    return spy(addr, peekSrc[addr >> 12]);
+}
+
+uint8_t C64Memory::spy(uint16_t addr, MemorySource src)
+{
     switch(src) {
+            
+        case M_RAM:
+            return ram[addr];
+            
+        case M_ROM:
+            return rom[addr];
             
         case M_IO:
             return spyIO(addr);
@@ -429,23 +437,21 @@ uint8_t C64Memory::spy(uint16_t addr)
             
             return c64->expansionport.read(addr);
             
-        default:
+        case M_PP:
             
-            return peek(addr);
-    }
-}
-
-uint8_t C64Memory::spy(uint16_t addr, MemoryType source)
-{
-    switch (source) {
-        case MEM_RAM:
+            if (addr == 0x0000)
+                return c64->processorPort.readDirection();
+            
+            if (addr == 0x0001)
+                return c64->processorPort.read();
+            
             return ram[addr];
-        case MEM_ROM:
-            return rom[addr];
-        case MEM_IO:
-            return spyIO(addr);
+            
+        case M_NONE:
+            return ram[addr];
+            
         default:
-            assert(false);
+            assert(0);
             return 0;
     }
 }

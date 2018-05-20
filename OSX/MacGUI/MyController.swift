@@ -20,6 +20,7 @@ extension MyController {
 
         track()
         cpuTableView.c = self
+        memTableView.c = self
     }
     
     
@@ -53,7 +54,6 @@ extension MyController {
         
         // TODO: GET RID OF THIS: Move to it's own window controller
         setHexadecimalAction(self)
-        memTableView.setController(self)
         
         // Get metal running
         metalScreen.setupMetal()

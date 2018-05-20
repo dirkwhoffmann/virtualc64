@@ -125,16 +125,19 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->mem->dumpState(); }
 
-- (uint8_t) read:(uint16_t)addr {
+- (uint8_t) spy:(uint16_t)addr {
     return wrapper->mem->spy(addr); }
-- (uint8_t) readFrom:(uint16_t)addr memtype:(MemoryType)type {
-    return wrapper->mem->spy(addr, type); }
+- (uint8_t) spy:(uint16_t)addr source:(MemorySource)src {
+    return wrapper->mem->spy(addr, src); }
 - (void) poke:(uint16_t)addr value:(uint8_t)val {
     wrapper->mem->poke(addr, val); }
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)type {
     wrapper->mem->pokeTo(addr, val, type); }
 - (bool) isValidAddr:(uint16_t)addr memtype:(MemoryType)type {
     return wrapper->mem->isValidAddr(addr, type); }
+- (MemorySource) peekSource:(uint16_t)addr {
+    return wrapper->mem->peekSource(addr);
+}
 
 @end
 

@@ -22,34 +22,44 @@
 
 - (IBAction)searchAction:(id)sender
 {
+    /*
 	uint16_t addr = [sender intValue];
 	[memTableView scrollRowToVisible:addr/4];
 	[self refresh];
+     */
 }
 
 - (IBAction)setMemSourceToRAM:(id)sender
 {
+    /*
 	[memTableView setSource:MEM_RAM];
 	[memTableView refresh];
+     */
 }
 
 - (IBAction)setMemSourceToROM:(id)sender
 {
+    /*
 	[memTableView setSource:MEM_ROM];
 	[memTableView refresh];
+     */
 }
 
 - (IBAction)setMemSourceToIO:(id)sender
 {
+    /*
 	[memTableView setSource:MEM_IO];
 	[memTableView refresh];
+     */
 }
 
 - (void)refreshMemory
 {
+    /*
 	[memTableView reloadData];
+     */
 }
-
+ 
 - (MemoryType)currentMemSource
 {
     if ([ramSource intValue]) return MEM_RAM;
@@ -67,17 +77,19 @@
 
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {
+    /*
     NSUndoManager *undo = [self undoManager];
     [[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] readFrom:addr memtype:t] memtype:t];
     if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
     
     [[c64 mem] pokeTo:addr value:v memtype:t];
     [self refresh];
+     */
 }
 
 - (void)setMemObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
-    
+    /*
     uint16_t addr = row * 4;
     int16_t value = [anObject intValue];
     NSString *id  = [aTableColumn identifier];
@@ -92,6 +104,7 @@
         return;
     
     [self changeMemValue:addr value:value memtype:[self currentMemSource]];
+     */
 }
 
 @end
