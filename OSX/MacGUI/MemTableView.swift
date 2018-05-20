@@ -30,6 +30,7 @@ struct MemoryHighlighting {
 @objc class MEMTableView : NSTableView {
     
     var c : MyController? = nil
+    var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
     private var memView = MemoryView.cpuView
     private var highlighting = MemoryHighlighting.none
     
@@ -123,8 +124,15 @@ extension MEMTableView : NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         var addr = UInt16(4 * row)
+        let src = source(addr)
         
         switch(tableColumn?.identifier.rawValue) {
+            
+        case "src":
+            return (src == M_RAM || src == M_PP) ? "RAM" :
+                (src == M_ROM) ? "ROM" :
+                (src == M_IO) ? "IO" :
+                (src == M_CRTLO || src == M_CRTHI) ? "CRT" : ""
             
         case "addr":
             return addr
@@ -175,17 +183,21 @@ extension MEMTableView : NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
         let cell = cell as! NSTextFieldCell
-        if shouldHighlight(UInt16(4 * row)) {
-            cell.textColor = .systemRed
+
+        if (tableColumn?.identifier.rawValue == "src") {
+            cell.font = NSFont.systemFont(ofSize: 9)
+            cell.textColor = .gray
         } else {
             cell.textColor = .black
         }
         
         if (tableColumn?.identifier.rawValue == "ascii") {
-            if let cbmfont = NSFont.init(name: "C64ProMono", size: 9) {
-                cell.font = cbmfont
-            }
+            cell.font = cbmfont
         }
+        
+        if shouldHighlight(UInt16(4 * row)) {
+            cell.textColor = .systemRed
+        } 
     }
     
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
