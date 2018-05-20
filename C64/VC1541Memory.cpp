@@ -44,11 +44,6 @@ void
 VC1541Memory::reset()
 {
     VirtualComponent::reset();
-    
-    // Establish bindings
-    // cpu = &c64->cpu;
-    // iec = &c64->iec;
-    // floppy = &c64->floppy;
 }
 
 bool 
@@ -105,6 +100,7 @@ VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 	}
 }
 
+/*
 uint8_t 
 VC1541Memory::peekIO(uint16_t addr)
 {	
@@ -118,6 +114,7 @@ VC1541Memory::peekIO(uint16_t addr)
 		return (addr >> 8);
 	}
 }
+*/
 
 uint8_t
 VC1541Memory::readIO(uint16_t addr)
@@ -134,6 +131,30 @@ VC1541Memory::readIO(uint16_t addr)
 uint8_t 
 VC1541Memory::peek(uint16_t addr)
 {
+    if (addr >= 0x8000) {
+        
+        // 0xC000 - 0xFFFF : ROM
+        // 0x8000 - 0xBFFF : ROM (repeated)
+        return mem[addr | 0xC000];
+        
+    } else {
+        
+        // Map to range 0x0000 - 0x1FFF
+        addr &= 0x1FFF;
+        
+        // 0x0000 - 0x07FF : RAM
+        // 0x0800 - 0x17FF : unmapped
+        // 0x1800 - 0x1BFF : VIA 1 (repeats every 16 bytes)
+        // 0x1C00 - 0x1FFF : VIA 2 (repeats every 16 bytes)
+        return
+        (addr < 0x0800) ? mem[addr] :
+        (addr < 0x1800) ? addr >> 8 :
+        (addr < 0x1C00) ? floppy->via1.peek(addr & 0xF) :
+        floppy->via2.peek(addr & 0xF);
+    }
+}
+
+/*
 	uint8_t result;
 	
 	if (addr >= 0xc000) { 
@@ -149,9 +170,10 @@ VC1541Memory::peek(uint16_t addr)
 	
 	return result;
 }
-
+*/
+     
 uint8_t
-VC1541Memory::read(uint16_t addr)
+VC1541Memory::spy(uint16_t addr)
 {
     uint8_t result;
     
@@ -194,7 +216,8 @@ VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
 {
 	mem[addr] = value;
 }
-             
+
+/*
 void 
 VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 {	
@@ -206,18 +229,31 @@ VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 		// No memory here, nothing happens
 	}
 }
-			 			 
+*/
+
 void 
 VC1541Memory::poke(uint16_t addr, uint8_t value)
 {
-	if (addr < 0x1000) {
-		// RAM (repeats multiply times, hence we apply a bitmask)
-		mem[addr & 0x7ff] = value;
-	} else if (addr >= 0xc000) { 
-		// ROM (poking to ROM has no effect)
-	} else {
-		// IO space
-		pokeIO(addr, value);
-	}
+    if (addr >= 0x8000) { // ROM
+        return;
+    }
+    
+    // Map to range 0x0000 - 0x1FFF
+    addr &= 0x1FFF;
+    
+    if (addr < 0x0800) { // RAM
+        mem[addr] = value;
+        return;
+    }
+    
+    if (addr >= 0x1C00) { // VIA 2
+        floppy->via2.poke(addr & 0xF, value);
+        return;
+    }
+    
+    if (addr >= 0x1800) { // VIA 1
+        floppy->via1.poke(addr & 0xF, value);
+        return;
+    }
 }
 

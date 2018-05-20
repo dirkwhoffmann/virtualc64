@@ -32,23 +32,6 @@ Memory::~Memory()
 //                                     Poke
 // --------------------------------------------------------------------------------
 
-void Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType dest)
-{
-	switch (dest) {
-		case MEM_RAM: 
-			pokeRam(addr, value);
-			break;
-		case MEM_ROM: 
-			pokeRom(addr, value);
-			break;
-		case MEM_IO:
-			pokeIO(addr, value);
-			break;
-		default: 
-			assert(false);
-	}
-}
-
 void Memory::flashRom(const char *filename, uint16_t start)
 {
 	FILE *file;

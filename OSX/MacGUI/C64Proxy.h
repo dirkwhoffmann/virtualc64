@@ -115,7 +115,6 @@ struct ContainerWrapper;
 - (void) dump;
 
 - (uint8_t) read:(uint16_t)addr;
-- (uint16_t) readWord:(uint16_t)addr;
 - (uint8_t) readFrom:(uint16_t)addr memtype:(MemoryType)source;
 - (void) poke:(uint16_t)addr value:(uint8_t)val;
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)source;

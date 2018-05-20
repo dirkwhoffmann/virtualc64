@@ -33,21 +33,6 @@ class SIDBridge;
  */
 class C64Memory : public Memory {
 
-    //! @brief    Memory source identifiers used inside the peek and poke lookup tables
-    enum MemorySource
-    {
-        M_RAM = 1,
-        M_ROM,
-        M_CHAR = M_ROM,
-        M_KERNAL = M_ROM,
-        M_BASIC = M_ROM,
-        M_IO,
-        M_CRTLO,
-        M_CRTHI,
-        M_PP,
-        M_NONE
-    };
-    
     //! @brief    C64 bank mapping
     //
     // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
@@ -237,20 +222,16 @@ public:
     //! @brief    Returns true iff the provided address is a valid address of the specified type
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
-    //! @brief    Methods from Memory class
-    uint8_t readRam(uint16_t addr) { return ram[addr]; }
-    uint8_t readRom(uint16_t addr) { return rom[addr]; }
-    uint8_t readIO(uint16_t addr);
-    uint8_t readFrom(uint16_t addr, MemoryType source);
-    uint8_t read(uint16_t addr);
+    // uint8_t readRam(uint16_t addr) { return ram[addr]; }
+    // uint8_t readRom(uint16_t addr) { return rom[addr]; }
     
-    uint8_t peekIO(uint16_t addr);
-
-    
-    /*! @brief    Reads a byte from memory.
-     *  @details  The memory source (RAM, ROM, or I/O space) is read from the poke lookup table.
-     */
     uint8_t peek(uint16_t addr);
+    uint8_t peekIO(uint16_t addr);
+    
+    uint8_t spy(uint16_t addr);
+    uint8_t spyIO(uint16_t addr);
+    uint8_t spy(uint16_t addr, MemoryType source);
+    
     
     //! @brief    Write a byte into RAM.
     void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }
@@ -265,6 +246,12 @@ public:
      *  @details  The memory target (RAM, ROM, or I/O space) is read from the poke lookup table. 
      */
     void poke(uint16_t addr, uint8_t value);
+    
+    //! @brief    Writes a byte into memory.
+    /*! @details  This method is only used by the debugger. In contrast to to the poke,
+     *            which is used by the emulator, it also modifies ROM values.
+     */
+    void pokeTo(uint16_t addr, uint8_t value, MemoryType dest);
 };
 
 #endif

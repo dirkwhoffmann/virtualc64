@@ -89,7 +89,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setVflag:(bool)b { wrapper->cpu->setV(b); }
 
 - (uint16_t) readPC {
-    return wrapper->cpu->mem->read(wrapper->cpu->getPC_at_cycle_0()); }
+    return wrapper->cpu->mem->spy(wrapper->cpu->getPC_at_cycle_0()); }
 - (uint16_t) addressOfNextInstruction {
      return wrapper->cpu->getAddressOfNextInstruction(); }
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
@@ -126,11 +126,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->mem->dumpState(); }
 
 - (uint8_t) read:(uint16_t)addr {
-    return wrapper->mem->read(addr); }
-- (uint16_t) readWord:(uint16_t)addr {
-    return wrapper->mem->readWord(addr); }
+    return wrapper->mem->spy(addr); }
 - (uint8_t) readFrom:(uint16_t)addr memtype:(MemoryType)type {
-    return wrapper->mem->readFrom(addr, type); }
+    return wrapper->mem->spy(addr, type); }
 - (void) poke:(uint16_t)addr value:(uint8_t)val {
     wrapper->mem->poke(addr, val); }
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)type {

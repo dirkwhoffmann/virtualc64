@@ -17,4 +17,21 @@ typedef enum {
     MEM_IO
 } MemoryType;
 
+//! @brief    Memory source identifiers
+/*! @details  The identifiers are used inside the peek and poke lookup tables
+ *            to indicate the source and target of a peek or poke operation.
+ */
+typedef enum {
+    M_RAM = 1,
+    M_ROM,
+    M_CHAR = M_ROM,
+    M_KERNAL = M_ROM,
+    M_BASIC = M_ROM,
+    M_IO,
+    M_CRTLO,
+    M_CRTHI,
+    M_PP,
+    M_NONE
+} MemorySource;
+
 #endif

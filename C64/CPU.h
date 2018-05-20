@@ -249,7 +249,7 @@ public:
     uint8_t getY() { return Y; }
 
     //! @brief    Initialize PC with its start up value.
-    void initPC() { PC = LO_HI(mem->read(0xFFFC), mem->read(0xFFFD)); }
+    void initPC() { PC = LO_HI(mem->spy(0xFFFC), mem->spy(0xFFFD)); }
 
 	//! @brief    Returns current value of the program counter.
     uint16_t getPC() { return PC; }
@@ -421,7 +421,7 @@ public:
 	/*! @brief    Returns the length in bytes of the instruction with the specified address.
      *  @result   Integer value between 1 and 3.
      */
-    int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->read(addr)); }
+    int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->spy(addr)); }
     
 	/*! @brief    Returns the length in bytes of the next instruction to execute.
      *  @result   Integer value between 1 and 3.

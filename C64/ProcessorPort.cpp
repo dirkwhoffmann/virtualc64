@@ -29,14 +29,6 @@ ProcessorPort::~ProcessorPort()
 {
 }
 
-/*
-void
-ProcessorPort::reset()
-{
-    VirtualComponent::reset();
-}
-*/
-
 void
 ProcessorPort::dumpState()
 {

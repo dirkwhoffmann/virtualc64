@@ -104,9 +104,9 @@ C64Memory::dumpState()
 	msg("   Kernal ROM :%s loaded\n", kernalRomIsLoaded() ? "" : " not");
 	
     for (uint16_t addr = 0; addr < 0xFFFF; addr++) {
-        if (cpu->hardBreakpoint(addr))
+        if (c64->cpu.hardBreakpoint(addr))
 			msg("Hard breakpoint at %04X\n", addr);
-        if (cpu->softBreakpoint(addr))
+        if (c64->cpu.softBreakpoint(addr))
             msg("Soft breakpoint at %04X\n", addr);
 	}
     
@@ -230,7 +230,6 @@ C64Memory::updatePeekPokeLookupTables()
 {
     uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
     uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
-    // uint8_t index = (cpu->getPortLines() & 0x07) | exrom | game;
     uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
 
     
@@ -332,7 +331,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
-uint8_t C64Memory::readIO(uint16_t addr)
+uint8_t C64Memory::spyIO(uint16_t addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -379,14 +378,6 @@ uint8_t C64Memory::readIO(uint16_t addr)
 uint8_t C64Memory::peek(uint16_t addr)
 {
     MemorySource src = peekSrc[addr >> 12];
-
-    /*
-    if (addr == 0x91) {
-        if (tmp == 2) c64->cpu.setTraceMode(true);
-        tmp++;
-        printf("Peek 0x91 PC: %04X\n", c64->cpu.getPC());
-    }
-    */
     
     switch(src) {
             
@@ -424,14 +415,14 @@ uint8_t C64Memory::peek(uint16_t addr)
     }
 }
 
-uint8_t C64Memory::read(uint16_t addr)
+uint8_t C64Memory::spy(uint16_t addr)
 {
     MemorySource src = peekSrc[addr >> 12];
     
     switch(src) {
             
         case M_IO:
-            return readIO(addr);
+            return spyIO(addr);
             
         case M_CRTLO:
         case M_CRTHI:
@@ -444,15 +435,15 @@ uint8_t C64Memory::read(uint16_t addr)
     }
 }
 
-uint8_t C64Memory::readFrom(uint16_t addr, MemoryType source)
+uint8_t C64Memory::spy(uint16_t addr, MemoryType source)
 {
     switch (source) {
         case MEM_RAM:
-            return readRam(addr);
+            return ram[addr];
         case MEM_ROM:
-            return readRom(addr);
+            return rom[addr];
         case MEM_IO:
-            return readIO(addr);
+            return spyIO(addr);
         default:
             assert(false);
             return 0;
@@ -557,4 +548,21 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 	}
 }
 
+void
+C64Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType dest)
+{
+    switch (dest) {
+        case MEM_RAM:
+            pokeRam(addr, value);
+            break;
+        case MEM_ROM:
+            pokeRom(addr, value);
+            break;
+        case MEM_IO:
+            pokeIO(addr, value);
+            break;
+        default:
+            assert(false);
+    }
+}
 
