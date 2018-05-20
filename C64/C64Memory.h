@@ -33,21 +33,6 @@ class SIDBridge;
  */
 class C64Memory : public Memory {
 
-    //! @brief    Memory source identifiers used inside the peek and poke lookup tables
-    enum MemorySource
-    {
-        M_RAM = 1,
-        M_ROM,
-        M_CHAR = M_ROM,
-        M_KERNAL = M_ROM,
-        M_BASIC = M_ROM,
-        M_IO,
-        M_CRTLO,
-        M_CRTHI,
-        M_PP,
-        M_NONE
-    };
-    
     //! @brief    C64 bank mapping
     //
     // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
@@ -139,29 +124,6 @@ public:
      */
     static bool isRom(const char *filename);
 
-    /*! @brief    Returns true, iff the provided address is in the Basic ROM address range.
-     */
-    static bool isBasicRomAddr(uint16_t addr) { return (0xA000 <= addr && addr <= 0xBFFF); }
-    
-    /*! @brief    Returns true, iff the provided address is in the Character ROM address range.
-     */
-    static bool isCharRomAddr(uint16_t addr) { return (0xD000 <= addr && addr <= 0xDFFF); }
-    
-    /*! @brief    Returns true, iff the provided address is in the Kernal ROM address range.
-     */
-    static bool isKernalRomAddr(uint16_t addr) { return (0xE000 <= addr); }
-    
-    /*! @brief    Returns true, iff the provided address is in the possible cartridge address ranges.
-     */
-    static bool isCartridgeRomAddr(uint16_t addr)
-    { return (0x8000 <= addr && addr <= 0x9FFF)||(0xA000 <= addr && addr <= 0xBFFF)||(0xE000 <= addr && addr <= 0xFFFE); }
-    
-    /*! @brief    Returns true, iff the provided address is in one of the three ROM address ranges.
-     */
-    static bool isRomAddr(uint16_t addr)
-    { return isCharRomAddr(addr) || isKernalRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
-
-    
 private:
 	
 	/*! @brief    File name of the Character ROM image.
@@ -234,28 +196,16 @@ public:
      */
     void updatePeekPokeLookupTables();
 
-    //! @brief    Returns true iff the provided address is a valid address of the specified type
-	bool isValidAddr(uint16_t addr, MemoryType type);
-
-    //! @brief    Reads a byte from RAM.
-    uint8_t readRam(uint16_t addr) { return ram[addr]; }
-
-    //! @brief    Reads a byte from ROM.
-    uint8_t readRom(uint16_t addr) { return rom[addr]; }
-
-    //! @brief    Reads a byte from I/O space.
-    uint8_t peekIO(uint16_t addr);
-
-    //! @brief    Same as peekIO, but without side effects
-    uint8_t readIO(uint16_t addr);
-
-    /*! @brief    Reads a byte from memory.
-     *  @details  The memory source (RAM, ROM, or I/O space) is read from the poke lookup table.
-     */
+    //! @brief    Returns the current peek source of the specified memory address
+    MemorySource peekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
+    
     uint8_t peek(uint16_t addr);
-
-    //! @brief    Same as peek, but without side effects
-    uint8_t read(uint16_t addr);
+    uint8_t peekIO(uint16_t addr);
+    
+    uint8_t spy(uint16_t addr);
+    uint8_t spyIO(uint16_t addr);
+    uint8_t spy(uint16_t addr, MemorySource src);
+    
     
     //! @brief    Write a byte into RAM.
     void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }
@@ -270,6 +220,11 @@ public:
      *  @details  The memory target (RAM, ROM, or I/O space) is read from the poke lookup table. 
      */
     void poke(uint16_t addr, uint8_t value);
+    
+    //! @brief    Writes a byte into memory.
+    /*! @details  This method is only used by the debugger only.
+     */
+    void pokeTo(uint16_t addr, uint8_t value, MemorySource target);
 };
 
 #endif

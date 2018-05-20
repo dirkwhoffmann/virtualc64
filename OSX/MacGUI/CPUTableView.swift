@@ -13,7 +13,6 @@ import Foundation
     
     var instructionAtRow : [Int:DisassembledInstruction] = [:]
     var rowForAddress : [UInt16:Int] = [:]
-    
     var hex = true
     
     override func awakeFromNib() {

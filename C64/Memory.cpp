@@ -27,46 +27,10 @@ Memory::~Memory()
 {
 }
 
-// --------------------------------------------------------------------------------
-//                                     Peek
-// --------------------------------------------------------------------------------
-
-uint8_t Memory::readFrom(uint16_t addr, MemoryType source)
-{
-    switch (source) {
-        case MEM_RAM:
-            return readRam(addr);
-        case MEM_ROM:
-            return readRom(addr);
-        case MEM_IO:
-            return readIO(addr);
-        default:
-            assert(false);
-            return 0;
-    }
-}
-
 
 // --------------------------------------------------------------------------------
 //                                     Poke
 // --------------------------------------------------------------------------------
-
-void Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType dest)
-{
-	switch (dest) {
-		case MEM_RAM: 
-			pokeRam(addr, value);
-			break;
-		case MEM_ROM: 
-			pokeRom(addr, value);
-			break;
-		case MEM_IO:
-			pokeIO(addr, value);
-			break;
-		default: 
-			assert(false);
-	}
-}
 
 void Memory::flashRom(const char *filename, uint16_t start)
 {

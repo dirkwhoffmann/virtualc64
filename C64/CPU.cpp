@@ -114,8 +114,8 @@ CPU::dumpState()
     msg("      Irq line : %02X\n", irqLine);
     msg("Level detector : %02X\n", read8_delayed(levelDetector));
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-	msg("   IRQ routine : %02X%02X\n", mem->read(0xFFFF), mem->read(0xFFFE));
-	msg("   NMI routine : %02X%02X\n", mem->read(0xFFFB), mem->read(0xFFFA));
+	msg("   IRQ routine : %02X%02X\n", mem->spy(0xFFFF), mem->spy(0xFFFE));
+	msg("   NMI routine : %02X%02X\n", mem->spy(0xFFFB), mem->spy(0xFFFA));
 	msg("\n");
     
     c64->processorPort.dumpState();
@@ -214,7 +214,7 @@ CPU::disassemble(uint16_t addr, bool hex)
     DisassembledInstruction instr;
         
     // Get opcode
-    uint8_t opcode = mem->read(addr);
+    uint8_t opcode = mem->spy(addr);
     instr.addr = addr; 
     instr.size = getLengthOfInstruction(opcode);
     
@@ -228,7 +228,7 @@ CPU::disassemble(uint16_t addr, bool hex)
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
         case ADDR_INDIRECT_Y: {
-            uint8_t value = mem->read(addr+1);
+            uint8_t value = mem->spy(addr+1);
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
         }
@@ -237,12 +237,12 @@ CPU::disassemble(uint16_t addr, bool hex)
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
         case ADDR_ABSOLUTE_Y: {
-            uint16_t value = LO_HI(mem->read(addr+1),mem->read(addr+2));
+            uint16_t value = LO_HI(mem->spy(addr+1),mem->spy(addr+2));
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
         case ADDR_RELATIVE: {
-            uint16_t value = addr + 2 + (int8_t)mem->read(addr+1);
+            uint16_t value = addr + 2 + (int8_t)mem->spy(addr+1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -317,19 +317,19 @@ CPU::disassemble(uint16_t addr, bool hex)
 
     // Convert memory contents to strings
     if (instr.size >= 1) {
-        uint8_t byte = mem->read(addr);
+        uint8_t byte = mem->spy(addr);
         hex ? sprint8x(instr.byte1, byte) : sprint8d(instr.byte1, byte);
     } else {
         hex ? strcpy(instr.byte1, "  ") : strcpy(instr.byte1, "   ");
     }
     if (instr.size >= 2) {
-        uint8_t byte = mem->read(addr + 1);
+        uint8_t byte = mem->spy(addr + 1);
         hex ? sprint8x(instr.byte2, byte) : sprint8d(instr.byte2, byte);
     } else {
         hex ? strcpy(instr.byte2, "  ") : strcpy(instr.byte2, "   ");
     }
     if (instr.size >= 3) {
-        uint8_t byte = mem->read(addr + 2);
+        uint8_t byte = mem->spy(addr + 2);
         hex ? sprint8x(instr.byte3, byte) : sprint8d(instr.byte3, byte);
     } else {
         hex ? strcpy(instr.byte3, "  ") : strcpy(instr.byte3, "   ");

@@ -51,9 +51,9 @@ public:
     void ping();
 
 
-	// ----------------------------------------------------------------------------------------
-	//                                     Internal state
-	// ----------------------------------------------------------------------------------------
+	//
+	// Internal state
+	//
 
     //! @brief    Main pixel engine pipe
     PixelEnginePipe p;
@@ -208,28 +208,28 @@ public:
     void checkFrameFlipflopsRight(uint16_t comparisonValue);
 
     //! @brief    Returns in which cycle the frame flipflop is checked for the left border
-    inline uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
+    uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
 
     //! @brief    Returns in which cycle the frame flipflop is checked for the right border
-    inline uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
+    uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
 
     //! @brief    Returns in which cycle the frame flipflop is checked for the upper border
-    inline uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
+    uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
     
     //! @brief    Returns in which cycle the frame flipflop is checked for the lower border
-    inline uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
+    uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
     
 	/*! @brief    Clear main frame flipflop
      *  @details  "Das vertikale Rahmenflipflop dient zur Unterstützung bei der Darstellung
      *             des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
      *             nicht gelöscht werden." [C.B.] 
      */
-    inline void clearMainFrameFF() { if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false; }
+    void clearMainFrameFF() { if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false; }
      
     
-	// ----------------------------------------------------------------------------------------
-	//                              I/O memory handling and RAM access
-	// ----------------------------------------------------------------------------------------
+	//
+	// I/O memory handling and RAM access
+	//
 
 public:
 	
@@ -265,14 +265,14 @@ private:
     uint8_t memAccess(uint16_t addr);
 
     /*! @brief    Simulates an idle memory access.
-     *  @details  An idle memory access is an access of memory location 0x3fff. 
+     *  @details  An idle memory access is an access of memory location 0x3fff.
      */
     uint8_t memIdleAccess();
-
     
-// -------------------------------------------------------------------------------------------
-//                                  Character access (cAccess)
-// -------------------------------------------------------------------------------------------
+    
+    //
+    // Character access (cAccess)
+    //
     
     /*! @brief    Performs a character access (cAccess)
      *  @details  During a cAccess, VIC accesses the video matrix
@@ -292,9 +292,9 @@ private:
     uint8_t colorSpace[40];
     
     
-    // ----------------------------------------------------------------------------------------
-    //                                  Graphics access (gAccess)
-    // ----------------------------------------------------------------------------------------
+    //
+    // Graphics access (gAccess)
+    //
 
     /*! @brief    Performs a graphics access (gAccess)
      *  @details  During a gAccess, VIC reads graphics data (character or bitmap patterns)
@@ -304,9 +304,9 @@ private:
     void gAccess();
     
 
-    // ----------------------------------------------------------------------------------------
-    //                             Sprite accesses (pAccess and sAccess)
-    // ----------------------------------------------------------------------------------------
+    //
+    // Sprite accesses (pAccess and sAccess)
+    //
     
     //! @brief    Performs a sprite pointer access (sAccess)
     void pAccess(unsigned sprite);
@@ -338,20 +338,20 @@ private:
     uint8_t isSecondDMAcycle;
 
     
-    // ----------------------------------------------------------------------------------------
-    //                           Memory refresh accesses (rAccess)
-    // ----------------------------------------------------------------------------------------
+    //
+    // Memory refresh accesses (rAccess)
+    //
     
     //! @brief    Performs a DRAM refresh
-    inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
+    void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
     
     //! @brief    Performs a DRAM idle access
-    inline void rIdleAccess() { (void)memIdleAccess(); }
+    void rIdleAccess() { (void)memIdleAccess(); }
     
 
-	// ------------------------------------------------------------------------------------------
-	//                                         Sprites
-	// ------------------------------------------------------------------------------------------
+	//
+	// Sprites
+	//
 
 	/*! @brief    MOB data counter.
 	 *  @details  A 6 bit counter, one for each sprite.
@@ -400,9 +400,9 @@ private:
     uint8_t spriteExtraColor2;
     
     
-	// ----------------------------------------------------------------------------------------
-	//                                             Lightpen
-	// ----------------------------------------------------------------------------------------
+	//
+	// Lightpen
+	//
 	
 	/*! @brief    Indicates whether the lightpen has triggered
 	 *  @details  This variable indicates whether a lightpen interrupt has occurred
@@ -412,9 +412,9 @@ private:
 	bool lightpenIRQhasOccured;
 	
 	
-	// ------------------------------------------------------------------------------------------
-	//                                             Debugging
-	// ------------------------------------------------------------------------------------------
+	//
+	// Debugging
+	//
 	
 	/*! @brief    Determines whether sprites are drawn or not
 	 *  @details  During normal emulation, the value is always true. For debugging purposes, the value 
@@ -452,9 +452,9 @@ private:
 	bool markDMALines;
 
 	
-	// ------------------------------------------------------------------------------------------
-	//                                             Methods
-	// ------------------------------------------------------------------------------------------
+	//
+	// Methods
+	//
 
 public:
 	
@@ -465,7 +465,7 @@ public:
 	~VIC();
 	
 	//! @brief    Returns the screen buffer that is currently stable.
-    inline void *screenBuffer() { return pixelEngine.screenBuffer(); }
+    void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
 	//! @brief    Restores the initial state.
 	void reset();
@@ -474,20 +474,20 @@ public:
 	void dumpState();	
 	
     
-	// ------------------------------------------------------------------------------------------
-	//                                         Configuring
-	// ------------------------------------------------------------------------------------------
+	//
+	// Configuring
+	//
 	
 public:
 	
     //! @brief    Returns true iff a PAL chip is plugged in.
-    inline bool isPAL() { return chipModel == MOS6569_PAL; }
+    bool isPAL() { return chipModel == MOS6569_PAL; }
 
     //! @brief    Returns true iff a NTSC chip is plugged in.
-    inline bool isNTSC() { return chipModel == MOS6567_NTSC; }
+    bool isNTSC() { return chipModel == MOS6567_NTSC; }
 
 	//! @brief    Returns the currently plugged in chip model.
-    inline VICChipModel getChipModel() { return chipModel; }
+    VICChipModel getChipModel() { return chipModel; }
 
     //! @brief    Sets the chip model.
     void setChipModel(VICChipModel model);
@@ -512,36 +512,33 @@ public:
     void setColorScheme(ColorScheme scheme);
 
     // @brief    Returns the number of frames per second.
-    inline unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
+    unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     
     //! @brief    Returns the number of rasterlines per frame.
-    inline int getRasterlinesPerFrame() { return isPAL() ? PAL_HEIGHT : NTSC_HEIGHT; }
+    int getRasterlinesPerFrame() { return isPAL() ? PAL_HEIGHT : NTSC_HEIGHT; }
     
     //! @brief    Returns the number of CPU cycles performed per rasterline.
-    inline int getCyclesPerRasterline() { return isPAL() ? PAL_CYCLES_PER_RASTERLINE : NTSC_CYCLES_PER_RASTERLINE; }
+    int getCyclesPerRasterline() { return isPAL() ? PAL_CYCLES_PER_RASTERLINE : NTSC_CYCLES_PER_RASTERLINE; }
     
     //! @brief    Returns the number of CPU cycles performed per frame.
-    inline int getCyclesPerFrame() {
+    int getCyclesPerFrame() {
         return isPAL() ? (PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE) : (NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE); }
     
     //! @brief    Returns the time interval between two frames in nanoseconds.
-    inline uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
+    uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
 
     
-	// ---------------------------------------------------------------------------------------
-	//                                       Getter and setter
-	// ---------------------------------------------------------------------------------------
+	//
+	// Getter and setter
+	//
 
 public:
 	
-	//! @brief    Returns true if the specified address lies in the VIC I/O range
-	// static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
-		
 	//! @brief    Returns the current scanline
-	inline uint16_t getScanline() { return yCounter; }
+    uint16_t getScanline() { return yCounter; }
 			
 	//! @brief    Sets the rasterline
-	inline void setScanline(uint16_t line) { yCounter = line; }
+    void setScanline(uint16_t line) { yCounter = line; }
 
 	//! @brief    Returns the memory bank start address
 	uint16_t getMemoryBankAddr();
@@ -575,60 +572,60 @@ private:
 	uint8_t peek(uint16_t addr);
     
     //! @brief    Same as peek, but without side affects.
-    uint8_t read(uint16_t addr);
+    uint8_t spy(uint16_t addr);
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
     
     
-	// ---------------------------------------------------------------------------------------
-	//                                         Properties
-	// ---------------------------------------------------------------------------------------
+	//
+	// Properties
+	//
 	
 public:
 		
     //! @brief    Returns the current value of the DEN bit (Display Enabled).
-    inline bool DENbit() { return GET_BIT(p.registerCTRL1, 4); }
+    bool DENbit() { return GET_BIT(p.registerCTRL1, 4); }
 
     //! @brief    Returns the value of the DEN bit in the previous cycle.
     // inline bool DENbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 4); }
 
     //! @brief    Returns the current value of the BMM bit (Bit Map Mode).
-    inline bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
+    bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
 
     //! @brief    Returns the value of the BMM bit in the previous cycle.
-    inline bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 5); }
+    bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 5); }
     
     //! @brief    Returns the current value of the ECM bit (Extended Character Mode).
-    inline bool ECMbit() { return GET_BIT(p.registerCTRL1, 6); }
+    bool ECMbit() { return GET_BIT(p.registerCTRL1, 6); }
 
     //! @brief    Returns the value of the ECM bit in the previous cycle.
-    inline bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 6); }
+    bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 6); }
 
     //! @brief    Returns the masked CB13 bit (controls memory access).
-    inline uint8_t CB13() { return iomem[0x18] & 0x08; }
+    uint8_t CB13() { return iomem[0x18] & 0x08; }
 
     //! @brief    Returns the masked CB13/CB12/CB11 bits (controls memory access).
-    inline uint8_t CB13CB12CB11() { return iomem[0x18] & 0x0E; }
+    uint8_t CB13CB12CB11() { return iomem[0x18] & 0x0E; }
 
     //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits (controls memory access).
-    inline uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
+    uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
-    inline bool isCSEL() { return GET_BIT(p.registerCTRL2, 3); }
+    bool isCSEL() { return GET_BIT(p.registerCTRL2, 3); }
 	
 	//! @brief    Returns the state of the RSEL bit.
-    inline bool isRSEL() { return GET_BIT(p.registerCTRL1, 3); }
+    bool isRSEL() { return GET_BIT(p.registerCTRL1, 3); }
     
 	/*! @brief    Returns the current display mode.
 	 *  @details  The display mode is determined by bits 5 and 6 of control register 1 and 
      *            bit 4 of control register 2. 
      */
-	inline DisplayMode getDisplayMode() 
+    DisplayMode getDisplayMode()
 	{ return (DisplayMode)((p.registerCTRL1 & 0x60) | (p.registerCTRL2 & 0x10)); }
 	
 	//! @brief    Sets the display mode.
-	inline void setDisplayMode(DisplayMode m) {
+    void setDisplayMode(DisplayMode m) {
         p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
         p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10); }
 	
@@ -639,43 +636,43 @@ public:
 	void setScreenGeometry(ScreenGeometry mode);
 	
 	//! @brief    Returns the number of rows to be drawn (24 or 25).
-	inline int numberOfRows() { return GET_BIT(p.registerCTRL1, 3) ? 25 : 24; }
+    int numberOfRows() { return GET_BIT(p.registerCTRL1, 3) ? 25 : 24; }
 	
 	//! @brief    Sets the number of rows to be drawn (24 or 25).
-	inline void setNumberOfRows(int rs) { assert(rs == 24 || rs == 25); WRITE_BIT(p.registerCTRL1, 3, rs == 25); }
+    void setNumberOfRows(int rs) { assert(rs == 24 || rs == 25); WRITE_BIT(p.registerCTRL1, 3, rs == 25); }
 	
 	//! @brief    Returns the number of columns to be drawn (38 or 40).
-	inline int numberOfColumns() { return GET_BIT(p.registerCTRL2, 3) ? 40 : 38; }
+    int numberOfColumns() { return GET_BIT(p.registerCTRL2, 3) ? 40 : 38; }
 
 	//! @brief    Sets the number of columns to be drawn (38 or 40).
-    inline void setNumberOfColumns(int cs) { assert(cs == 38 || cs == 40); WRITE_BIT(p.registerCTRL2, 3, cs == 40); }
+    void setNumberOfColumns(int cs) { assert(cs == 38 || cs == 40); WRITE_BIT(p.registerCTRL2, 3, cs == 40); }
 		
 	/*! @brief    Returns the vertical raster scroll offset (0 to 7).
 	 *  @details  The vertical raster offset is usally used by games for smoothly scrolling the screen.
      */
-	inline uint8_t getVerticalRasterScroll() { return p.registerCTRL1 & 0x07; }
+    uint8_t getVerticalRasterScroll() { return p.registerCTRL1 & 0x07; }
 	
 	//! @brief    Sets the vertical raster scroll offset (0 to 7).
-	inline void setVerticalRasterScroll(uint8_t offset) { p.registerCTRL1 = (p.registerCTRL1 & 0xF8) | (offset & 0x07); }
+    void setVerticalRasterScroll(uint8_t offset) { p.registerCTRL1 = (p.registerCTRL1 & 0xF8) | (offset & 0x07); }
 	
 	/*! @brief    Returns the horizontal raster scroll offset (0 to 7).
 	 *  @details  The vertical raster offset is usally used by games for smoothly scrolling the screen.
      */
-	inline uint8_t getHorizontalRasterScroll() { return p.registerCTRL2 & 0x07; }
+    uint8_t getHorizontalRasterScroll() { return p.registerCTRL2 & 0x07; }
 	
 	//! @brief    Sets the horizontan raster scroll offset (0 to 7).
-	inline void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
+    void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
     
 	//! @brief    Returns the background color.
-    inline uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
+    uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
 	
 	//! Returns extra background color (for multicolor modes).
-    inline uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
+    uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
 	
 	
-	// ---------------------------------------------------------------------------------------
-	//                                DMA lines, BA signal and IRQs
-	// ---------------------------------------------------------------------------------------
+	//
+	// DMA lines, BA signal and IRQs
+	//
 
 private:
     
@@ -691,7 +688,7 @@ private:
      *             [2] die unteren drei Bits von RASTER mit YSCROLL übereinstimmen
      *             [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." [C.B.] 
      */
-    inline void updateBadLineCondition() {
+    void updateBadLineCondition() {
         badLineCondition =
             yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
             (yCounter & 0x07) == getVerticalRasterScroll() /* [2] */ &&
@@ -701,7 +698,7 @@ private:
     /*! @brief    Update display state
      *  @details  Invoked at the end of each VIC cycle
      */
-    inline void updateDisplayState() { if (badLineCondition) displayState = true; }
+    void updateDisplayState() { if (badLineCondition) displayState = true; }
     
     //! @brief    Set BA line
     void setBAlow(uint8_t value);
@@ -718,20 +715,20 @@ public:
      *  @details  In line 0, the interrupt is triggered in cycle 2. In all other lines,
      *            it is triggered in cycle 1.
      */
-	inline uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 0x80) << 1) | iomem[0x12]; }
+    uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 0x80) << 1) | iomem[0x12]; }
 
 	//! @brief    Set interrupt rasterline
-	inline void setRasterInterruptLine(uint16_t line) {
+    void setRasterInterruptLine(uint16_t line) {
         iomem[0x12] = line & 0xFF; if (line > 0xFF) p.registerCTRL1 |= 0x80; else p.registerCTRL1 &= 0x7F; }
 	
 	//! @brief    Returns true, iff rasterline interrupts are enabled
-    inline bool rasterInterruptEnabled() { return GET_BIT(imr, 1); }
+    bool rasterInterruptEnabled() { return GET_BIT(imr, 1); }
 
 	//! @brief    Enable or disable rasterline interrupts
-    inline void setRasterInterruptEnable(bool b) { WRITE_BIT(imr, 1, b); }
+    void setRasterInterruptEnable(bool b) { WRITE_BIT(imr, 1, b); }
 	
 	//! @brief    Enable or disable rasterline interrupts
-    inline void toggleRasterInterruptFlag() { TOGGLE_BIT(imr, 1); }
+    void toggleRasterInterruptFlag() { TOGGLE_BIT(imr, 1); }
 	
     //! @brief    Method from Hoxs64
     //! @details  Used to determine X coordinate when a lightpen interrupt takes place
@@ -743,9 +740,9 @@ public:
 	void setLP(bool value);
 
 	
-	// ---------------------------------------------------------------------------------------
-	//                                              Sprites
-	// ---------------------------------------------------------------------------------------
+	//
+	// Sprites
+	//
 
 private:
 
@@ -776,28 +773,28 @@ private:
 	/*! @brief    Gets depth of a sprite.
 	 *  @details  The value is written to the z buffer to resolve overlapping pixels.
      */
-	inline uint8_t spriteDepth(uint8_t nr) {
+    uint8_t spriteDepth(uint8_t nr) {
         return spriteIsDrawnInBackground(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
 	
 public: 
 	
 	//! @brief    Returns color code of multicolor sprites (extra color 1).
-    inline uint8_t getSpriteExtraColor1() { return spriteExtraColor1; }
+    uint8_t getSpriteExtraColor1() { return spriteExtraColor1; }
 	
 	//! @brief    Returns color code of multicolor sprites (extra color 2).
-	inline uint8_t getSpriteExtraColor2() { return spriteExtraColor2; }
+    uint8_t getSpriteExtraColor2() { return spriteExtraColor2; }
 	
 	//! @brief    Returns the color of a sprite.
-    inline uint8_t getSpriteColor(uint8_t nr) { return spriteColor[nr]; }
+    uint8_t getSpriteColor(uint8_t nr) { return spriteColor[nr]; }
 
 	//! @brief    Sets the color of a sprite.
-	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); spriteColor[nr] = color; }
+    void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); spriteColor[nr] = color; }
 		
 	//! @brief    Returns the X coordinate of a sprite.
-    inline uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }
+    uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }
 
 	//! @brief    Set the X coordinate of a sprite.
-	inline void setSpriteX(uint8_t nr, uint16_t x) {
+    void setSpriteX(uint8_t nr, uint16_t x) {
         if (x < 512) {
             p.spriteX[nr] = x;
             iomem[2*nr] = x & 0xFF;
@@ -806,88 +803,88 @@ public:
     }
     
 	//! @brief    Returns the Y coordinate of a sprite.
-	inline uint8_t getSpriteY(uint8_t nr) { assert(nr < 8); return iomem[1+2*nr]; }
+    uint8_t getSpriteY(uint8_t nr) { assert(nr < 8); return iomem[1+2*nr]; }
 
 	//! @brief    Sets the Y coordinate of sprite.
-    inline void setSpriteY(uint8_t nr, uint8_t y) { iomem[1+2*nr] = y; }
+    void setSpriteY(uint8_t nr, uint8_t y) { iomem[1+2*nr] = y; }
 	
     //! @brief    Compares the Y coordinates of all sprites with an eight bit value.
-    inline uint8_t compareSpriteY(uint8_t y) { return
+    uint8_t compareSpriteY(uint8_t y) { return
         ((iomem[1] == y) << 0) | ((iomem[3] == y) << 1) | ((iomem[5] == y) << 2) | ((iomem[7] == y) << 3) |
         ((iomem[9] == y) << 4) | ((iomem[11] == y) << 5) | ((iomem[13] == y) << 6) | ((iomem[15] == y) << 7);
     }
     
 	//! @brief    Returns true, if sprite is enabled (drawn on the screen).
-    inline bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
+    bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
 
 	//! @brief    Enables or disables a sprite.
-    inline void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
+    void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
 
 	//! @brief    Enables or disables a sprite.
-    inline void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
+    void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
 	
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
-    inline bool spriteBackgroundInterruptEnabled() { return GET_BIT(imr, 1); }
+    bool spriteBackgroundInterruptEnabled() { return GET_BIT(imr, 1); }
 
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
-    inline bool spriteSpriteInterruptEnabled() { return GET_BIT(imr, 2); }
+    bool spriteSpriteInterruptEnabled() { return GET_BIT(imr, 2); }
 
 	//! @brief    Returns true, iff a rasterline interrupt has occurred.
     // inline bool rasterInterruptOccurred() { return GET_BIT(iomem[0x19], 0); }
-    inline bool rasterInterruptOccurred() { return GET_BIT(irr, 0); }
+    bool rasterInterruptOccurred() { return GET_BIT(irr, 0); }
 
 	//! @brief    Returns true, iff a sprite/background interrupt has occurred.
-    inline bool spriteBackgroundInterruptOccurred() { return GET_BIT(irr, 1); }
+    bool spriteBackgroundInterruptOccurred() { return GET_BIT(irr, 1); }
 
 	//! @brief    Returns true, iff a sprite/sprite interrupt has occurred.
-    inline bool spriteSpriteInterruptOccurred() { return GET_BIT(irr, 2); }
+    bool spriteSpriteInterruptOccurred() { return GET_BIT(irr, 2); }
 
 	//! @brief    Returns true, iff sprites are drawn behind the scenary.
-	inline bool spriteIsDrawnInBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
+    bool spriteIsDrawnInBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
 
 	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    inline void setSpriteInBackground(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
+    void setSpriteInBackground(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
 
 	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-	inline void spriteToggleBackgroundPriorityFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
+    void spriteToggleBackgroundPriorityFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
 	
 	//! @brief    Returns true, iff sprite is a multicolor sprite.
-    inline bool spriteIsMulticolor(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1C], nr); }
+    bool spriteIsMulticolor(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1C], nr); }
 
 	//! @brief    Sets single color or multi color mode for sprite.
-    inline void setSpriteMulticolor(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1C], nr, b); }
+    void setSpriteMulticolor(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1C], nr, b); }
 
 	//! @brief    Switches between single color or multi color mode.
-	inline void toggleMulticolorFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1C], nr); }
+    void toggleMulticolorFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1C], nr); }
 		
 	//! @brief    Returns true, iff the sprite is vertically stretched.
-    inline bool spriteHeightIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x17], nr); }
+    bool spriteHeightIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x17], nr); }
 
 	//! @brief    Stretches or shrinks a sprite vertically.
-    inline void setSpriteStretchY(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x17], nr, b); }
+    void setSpriteStretchY(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x17], nr, b); }
 
 	//! @brief    Stretches or shrinks a sprite vertically.
-	inline void spriteToggleStretchYFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x17], nr); }
+    void spriteToggleStretchYFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x17], nr); }
 
 	//! @brief    Returns true, iff the sprite is horizontally stretched.
-	inline bool spriteWidthIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(p.spriteXexpand, nr); }
+    bool spriteWidthIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(p.spriteXexpand, nr); }
 
 	//! @brief    Stretches or shrinks sprite horizontally.
-    inline void setSpriteStretchX(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(p.spriteXexpand, nr, b); }
+    void setSpriteStretchX(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(p.spriteXexpand, nr, b); }
 
 	//! @brief    Stretches or shrinks sprite horizontally.
-	inline void spriteToggleStretchXFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(p.spriteXexpand, nr); }
+    void spriteToggleStretchXFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(p.spriteXexpand, nr); }
 
 	//! @brief    Returns true, iff sprite collides with another sprite.
-    inline bool spriteCollidesWithSprite(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1E], nr); }
+    bool spriteCollidesWithSprite(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1E], nr); }
 
 	//! @brief    Returns true, iff sprite collides with background.
-	inline bool spriteCollidesWithBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1F], nr); }
+    bool spriteCollidesWithBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1F], nr); }
 
 	
-	// -----------------------------------------------------------------------------------------------
-	//                                    Execution functions
-	// -----------------------------------------------------------------------------------------------
+	//
+	//  Execution functions
+	//
 
 public:
 	
@@ -912,7 +909,7 @@ public:
 	void endFrame();
 	
     //! @brief    Pushes portions of the VIC state into the pixel engine.
-    inline void preparePixelEngine() {
+    void preparePixelEngine() {
         uint8_t ctrl1 = pixelEngine.pipe.registerCTRL1;
         pixelEngine.pipe = p;
         pixelEngine.pipe.previousCTRL1 = ctrl1;
@@ -939,9 +936,9 @@ private:
     void debug_cycle(unsigned cycle);
 
     
-	// -----------------------------------------------------------------------------------------------
-	//                                              Debugging
-	// -----------------------------------------------------------------------------------------------
+	//
+	// Debugging
+	//
 
 public: 
 	

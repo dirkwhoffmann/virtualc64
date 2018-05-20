@@ -354,10 +354,10 @@ CA
                                                                         <action selector="dumpVC1541VIA2:" target="-1" id="507"/>
                                                                     </connections>
                                                                 </menuItem>
-                                                                <menuItem title="Memory" id="450">
+                                                                <menuItem title="Disk" id="450">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
-                                                                        <action selector="dumpVC1541Memory:" target="-1" id="487"/>
+                                                                        <action selector="dumpDisk:" target="-1" id="9Lg-2s-MEl"/>
                                                                     </connections>
                                                                 </menuItem>
                                                             </items>

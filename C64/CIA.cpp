@@ -214,49 +214,69 @@ CIA::peek(uint16_t addr)
 }
 
 uint8_t
-CIA::read(uint16_t addr)
+CIA::spy(uint16_t addr)
 {
-    uint8_t result;
     bool running;
 
     assert(addr <= 0x000F);
     switch(addr) {
+          
+        case 0x00: // CIA_DATA_PORT_A
+            return PA;
+            
+        case 0x01: // CIA_DATA_PORT_B
+            return PB;
+            
+        case 0x02: // CIA_DATA_DIRECTION_A
+            return DDRA;
+            
+        case 0x03: // CIA_DATA_DIRECTION_B
+            return DDRB;
             
         case 0x04: // CIA_TIMER_A_LOW
-            
             running = delay & CountA3;
-            result = LO_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
-            break;
+            return LO_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
             
         case 0x05: // CIA_TIMER_A_HIGH
-            
             running = delay & CountA3;
-            result = HI_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
-            break;
+            return HI_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
             
         case 0x06: // CIA_TIMER_B_LOW
-            
             running = delay & CountB3;
-            result = LO_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
-            break;
+            return LO_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
             
         case 0x07: // CIA_TIMER_B_HIGH
-            
             running = delay & CountB3;
-            result = HI_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
-            break;
+            return HI_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
+            
+        case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
+            return tod.getTodTenth();
+            
+        case 0x09: // CIA_TIME_OF_DAY_SECONDS
+            return tod.getTodSeconds();
+            
+        case 0x0A: // CIA_TIME_OF_DAY_MINUTES
+            return tod.getTodMinutes();
+            
+        case 0x0B: // CIA_TIME_OF_DAY_HOURS
+            return tod.getTodHours();
+            
+        case 0x0C: // CIA_SERIAL_DATA_REGISTER
+            return SDR;
             
         case 0x0D: // CIA_INTERRUPT_CONTROL
+            return ICR;
             
-            result = ICR;
-            break;
+        case 0x0E: // CIA_CONTROL_REG_A
+            return CRA & ~0x10;
+            
+        case 0x0F: // CIA_CONTROL_REG_B
+            return CRB & ~0x10;
             
         default:
-            
-            result = peek(addr);
+            assert(0);
+            return 0;
     }
-    
-    return result;
 }
 
 void CIA::poke(uint16_t addr, uint8_t value)
@@ -646,7 +666,7 @@ CIA::getInfo()
     info.timerA.oneShot = CRA & 0x08;
     info.timerA.interruptMask = IMR & 0x01;
     info.timerA.interruptData = ICR & 0x01;
-    info.timerA.count = LO_HI(read(0x04), read(0x05));
+    info.timerA.count = LO_HI(spy(0x04), spy(0x05));
     info.timerA.latch = latchA;
     
     info.timerB.running = (delay & CountB3);
@@ -654,7 +674,7 @@ CIA::getInfo()
     info.timerB.interruptMask = IMR & 0x02;
     info.timerB.interruptData = ICR & 0x02;
     info.timerB.latch = latchB;
-    info.timerB.count = LO_HI(read(0x06), read(0x07));
+    info.timerB.count = LO_HI(spy(0x06), spy(0x07));
 
     info.tod = tod.getInfo();
     info.todInterruptMask = ICR & 0x04;

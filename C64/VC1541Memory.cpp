@@ -44,11 +44,6 @@ void
 VC1541Memory::reset()
 {
     VirtualComponent::reset();
-    
-    // Establish bindings
-    // cpu = &c64->cpu;
-    // iec = &c64->iec;
-    // floppy = &c64->floppy;
 }
 
 bool 
@@ -89,36 +84,6 @@ VC1541Memory::dumpState()
 	msg("\n");
 }
 
-bool 
-VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
-{
-	switch (type) {
-		case MEM_RAM: 
-			return (addr < 0x800);
-		case MEM_ROM:
-			return (addr >= 0xC000);
-		case MEM_IO:
-			return (addr >= 0x1800 && addr <= 0x1c00) || (addr >= 0x1c00 && addr <= 0x2000);
-		default:
-			assert(false);
-			return false;
-	}
-}
-
-uint8_t 
-VC1541Memory::peekIO(uint16_t addr)
-{	
-	if ((addr & 0xFC00) == 0x1800) {
-		return floppy->via1.peek(addr & 0x000F);
-	} else if ((addr & 0xFC00) == 0x1c00) {
-		return floppy->via2.peek(addr & 0x000F);
-	} else {
-		// Return high byte of addr 
-		// VICE and Frodo are doing it that way
-		return (addr >> 8);
-	}
-}
-
 uint8_t
 VC1541Memory::readIO(uint16_t addr)
 {
@@ -134,24 +99,31 @@ VC1541Memory::readIO(uint16_t addr)
 uint8_t 
 VC1541Memory::peek(uint16_t addr)
 {
-	uint8_t result;
-	
-	if (addr >= 0xc000) { 
-		// ROM
-		result = mem[addr];
-	} else if (addr < 0x1000) { // TODO: Check if 0x1000 is the correct value
-		// RAM (bitmask is applied because RAM repeats multiple times)
-		result = mem[addr & 0x07ff]; 		
-	} else { 
-		// IO space
-		result = peekIO(addr);
-	}
-	
-	return result;
+    if (addr >= 0x8000) {
+        
+        // 0xC000 - 0xFFFF : ROM
+        // 0x8000 - 0xBFFF : ROM (repeated)
+        return mem[addr | 0xC000];
+        
+    } else {
+        
+        // Map to range 0x0000 - 0x1FFF
+        addr &= 0x1FFF;
+        
+        // 0x0000 - 0x07FF : RAM
+        // 0x0800 - 0x17FF : unmapped
+        // 0x1800 - 0x1BFF : VIA 1 (repeats every 16 bytes)
+        // 0x1C00 - 0x1FFF : VIA 2 (repeats every 16 bytes)
+        return
+        (addr < 0x0800) ? mem[addr] :
+        (addr < 0x1800) ? addr >> 8 :
+        (addr < 0x1C00) ? floppy->via1.peek(addr & 0xF) :
+        floppy->via2.peek(addr & 0xF);
+    }
 }
-
+     
 uint8_t
-VC1541Memory::read(uint16_t addr)
+VC1541Memory::spy(uint16_t addr)
 {
     uint8_t result;
     
@@ -178,30 +150,30 @@ VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
 {
 	mem[addr] = value;
 }
-             
-void 
-VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
-{	
-	if ((addr & 0xFC00) == 0x1800) {
-		floppy->via1.poke(addr & 0x000F, value);
-	} else if ((addr & 0xFC00) == 0x1c00) {
-		floppy->via2.poke(addr & 0X000F, value);
-	} else {
-		// No memory here, nothing happens
-	}
-}
-			 			 
+
 void 
 VC1541Memory::poke(uint16_t addr, uint8_t value)
 {
-	if (addr < 0x1000) {
-		// RAM (repeats multiply times, hence we apply a bitmask)
-		mem[addr & 0x7ff] = value;
-	} else if (addr >= 0xc000) { 
-		// ROM (poking to ROM has no effect)
-	} else {
-		// IO space
-		pokeIO(addr, value);
-	}
+    if (addr >= 0x8000) { // ROM
+        return;
+    }
+    
+    // Map to range 0x0000 - 0x1FFF
+    addr &= 0x1FFF;
+    
+    if (addr < 0x0800) { // RAM
+        mem[addr] = value;
+        return;
+    }
+    
+    if (addr >= 0x1C00) { // VIA 2
+        floppy->via2.poke(addr & 0xF, value);
+        return;
+    }
+    
+    if (addr >= 0x1800) { // VIA 1
+        floppy->via1.poke(addr & 0xF, value);
+        return;
+    }
 }
 

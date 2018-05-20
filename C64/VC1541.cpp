@@ -115,7 +115,7 @@ VC1541::dumpState()
 	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
-    disk.dumpState();
+    mem.dumpState();
 }
 
 void

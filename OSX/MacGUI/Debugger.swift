@@ -7,11 +7,13 @@
 
 import Foundation
 
+//
+// CPU debug panel
+//
+
 extension MyController {
  
-    //
     // Registers
-    //
     
     func _pcAction(_ value: UInt16) {
         
@@ -118,9 +120,7 @@ extension MyController {
         }
     }
     
-    //
-    // Flags
-    //
+    // Processor flags
     
     func _nAction(_ value: Bool) {
         
@@ -293,6 +293,25 @@ extension MyController {
         iflag.intValue = c64.cpu.iflag() ? 1 : 0
         zflag.intValue = c64.cpu.zflag() ? 1 : 0
         cflag.intValue = c64.cpu.cflag() ? 1 : 0
+    }
+}
+
+//
+// Memory debug panel
+//
+
+extension MyController {
+
+    @IBAction func setMemSource(_ sender: Any!) {
+        
+        let sender = sender as! NSPopUpButton
+        memTableView.setMemView(sender.selectedTag())
+    }
+    
+    @IBAction func setHighlighting(_ sender: Any!) {
+        
+        let sender = sender as! NSPopUpButton
+        memTableView.setHighlighting(sender.selectedTag())
     }
 }
 

@@ -8,13 +8,21 @@
 #ifndef MEMORY_TYPES_H
 #define MEMORY_TYPES_H
 
-/*! @brief    Memory type
- *  @details  This datatype defines a constant value for the different kinds of memory.
+//! @brief    Memory source identifiers
+/*! @details  The identifiers are used inside the peek and poke lookup tables
+ *            to indicate the source and target of a peek or poke operation.
  */
 typedef enum {
-    MEM_RAM,
-    MEM_ROM,
-    MEM_IO
-} MemoryType;
+    M_RAM = 1,
+    M_ROM,
+    M_CHAR = M_ROM,
+    M_KERNAL = M_ROM,
+    M_BASIC = M_ROM,
+    M_IO,
+    M_CRTLO,
+    M_CRTHI,
+    M_PP,
+    M_NONE
+} MemorySource;
 
 #endif
