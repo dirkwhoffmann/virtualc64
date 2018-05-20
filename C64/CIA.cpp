@@ -214,7 +214,7 @@ CIA::peek(uint16_t addr)
 }
 
 uint8_t
-CIA::read(uint16_t addr)
+CIA::spy(uint16_t addr)
 {
     uint8_t result;
     bool running;
@@ -646,7 +646,7 @@ CIA::getInfo()
     info.timerA.oneShot = CRA & 0x08;
     info.timerA.interruptMask = IMR & 0x01;
     info.timerA.interruptData = ICR & 0x01;
-    info.timerA.count = LO_HI(read(0x04), read(0x05));
+    info.timerA.count = LO_HI(spy(0x04), spy(0x05));
     info.timerA.latch = latchA;
     
     info.timerB.running = (delay & CountB3);
@@ -654,7 +654,7 @@ CIA::getInfo()
     info.timerB.interruptMask = IMR & 0x02;
     info.timerB.interruptData = ICR & 0x02;
     info.timerB.latch = latchB;
-    info.timerB.count = LO_HI(read(0x06), read(0x07));
+    info.timerB.count = LO_HI(spy(0x06), spy(0x07));
 
     info.tod = tod.getInfo();
     info.todInterruptMask = ICR & 0x04;

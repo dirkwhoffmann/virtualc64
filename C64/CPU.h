@@ -470,15 +470,6 @@ public:
     //! @functiongroup Handling breakpoints
     //
     
-	//! @brief    Returns breakpoint tag for the specified address.
-    // uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
-	
-	//! @brief    Returns the breakpoint tag for the specified address.
-	// uint8_t getBreakpoint(uint16_t addr) { return breakpoint[addr]; }
-
-	//! @brief    Sets a breakpoint tag at the specified address.
-	// void setBreakpoint(uint16_t addr, uint8_t tag) { breakpoint[addr] = tag; }
-	
     //! @brief    Returns true iff a hard breakpoint is set at the specified address
     bool hardBreakpoint(uint16_t addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
     

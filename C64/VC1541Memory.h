@@ -83,6 +83,7 @@ public:
     uint8_t readRom(uint16_t addr) { return mem[addr]; }
 	uint8_t peekIO(uint16_t addr);
     uint8_t readIO(uint16_t addr);
+    uint8_t readFrom(uint16_t addr, MemoryType source);
 	uint8_t peek(uint16_t addr);
     uint8_t read(uint16_t addr);
 

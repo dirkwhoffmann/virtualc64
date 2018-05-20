@@ -333,7 +333,7 @@ private:
     uint8_t peek(uint16_t addr);
     
     //! @brief    Same as peek, but without side affects.
-    uint8_t read(uint16_t addr);
+    uint8_t spy(uint16_t addr);
     
     //! @brief    Poke function for the CIA's I/O memory
     void poke(uint16_t addr, uint8_t value);

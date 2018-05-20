@@ -237,25 +237,20 @@ public:
     //! @brief    Returns true iff the provided address is a valid address of the specified type
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
-    //! @brief    Reads a byte from RAM.
+    //! @brief    Methods from Memory class
     uint8_t readRam(uint16_t addr) { return ram[addr]; }
-
-    //! @brief    Reads a byte from ROM.
     uint8_t readRom(uint16_t addr) { return rom[addr]; }
-
-    //! @brief    Reads a byte from I/O space.
+    uint8_t readIO(uint16_t addr);
+    uint8_t readFrom(uint16_t addr, MemoryType source);
+    uint8_t read(uint16_t addr);
+    
     uint8_t peekIO(uint16_t addr);
 
-    //! @brief    Same as peekIO, but without side effects
-    uint8_t readIO(uint16_t addr);
-
+    
     /*! @brief    Reads a byte from memory.
      *  @details  The memory source (RAM, ROM, or I/O space) is read from the poke lookup table.
      */
     uint8_t peek(uint16_t addr);
-
-    //! @brief    Same as peek, but without side effects
-    uint8_t read(uint16_t addr);
     
     //! @brief    Write a byte into RAM.
     void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }

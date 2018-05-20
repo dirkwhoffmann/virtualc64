@@ -167,6 +167,22 @@ VC1541Memory::read(uint16_t addr)
     return result;
 }
 
+uint8_t
+VC1541Memory::readFrom(uint16_t addr, MemoryType source)
+{
+    switch (source) {
+        case MEM_RAM:
+            return readRam(addr);
+        case MEM_ROM:
+            return readRom(addr);
+        case MEM_IO:
+            return readIO(addr);
+        default:
+            assert(false);
+            return 0;
+    }
+}
+
 void 
 VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
 {

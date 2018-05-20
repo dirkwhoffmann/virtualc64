@@ -343,7 +343,7 @@ uint8_t C64Memory::readIO(uint16_t addr)
         case 0x2: // VIC
         case 0x3: // VIC
             
-            return c64->vic.read(addr & 0x003F);
+            return c64->vic.spy(addr & 0x003F);
             
         case 0x4: // SID
         case 0x5: // SID
@@ -356,11 +356,11 @@ uint8_t C64Memory::readIO(uint16_t addr)
             
             // Only the lower 4 bits are used for adressing the CIA I/O space.
             // As a result, CIA's I/O memory repeats every 16 bytes.
-            return c64->cia1.read(addr & 0x000F);
+            return c64->cia1.spy(addr & 0x000F);
             
         case 0xD: // CIA 2
             
-            return c64->cia2.read(addr & 0x000F);
+            return c64->cia2.spy(addr & 0x000F);
             
         case 0xE: // I/O space 1
             
@@ -441,6 +441,21 @@ uint8_t C64Memory::read(uint16_t addr)
         default:
             
             return peek(addr);
+    }
+}
+
+uint8_t C64Memory::readFrom(uint16_t addr, MemoryType source)
+{
+    switch (source) {
+        case MEM_RAM:
+            return readRam(addr);
+        case MEM_ROM:
+            return readRom(addr);
+        case MEM_IO:
+            return readIO(addr);
+        default:
+            assert(false);
+            return 0;
     }
 }
 

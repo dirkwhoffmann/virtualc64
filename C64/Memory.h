@@ -66,7 +66,7 @@ public:
     virtual uint8_t readIO(uint16_t addr) = 0;
     
     //! @brief    Reads a byte from the specified memory source.
-    uint8_t readFrom(uint16_t addr, MemoryType source);
+    virtual uint8_t readFrom(uint16_t addr, MemoryType source) = 0;
 
     //! @brief    Same as peek, but without side effects
     virtual uint8_t read(uint16_t addr) = 0;

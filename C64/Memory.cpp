@@ -27,25 +27,6 @@ Memory::~Memory()
 {
 }
 
-// --------------------------------------------------------------------------------
-//                                     Peek
-// --------------------------------------------------------------------------------
-
-uint8_t Memory::readFrom(uint16_t addr, MemoryType source)
-{
-    switch (source) {
-        case MEM_RAM:
-            return readRam(addr);
-        case MEM_ROM:
-            return readRom(addr);
-        case MEM_IO:
-            return readIO(addr);
-        default:
-            assert(false);
-            return 0;
-    }
-}
-
 
 // --------------------------------------------------------------------------------
 //                                     Poke
