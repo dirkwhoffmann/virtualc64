@@ -983,13 +983,15 @@
                                             <menu key="menu" id="s2i-HY-2La">
                                                 <items>
                                                     <menuItem title="none" state="on" id="r10-a2-cms"/>
-                                                    <menuItem title="Basic ROM" tag="1" id="E4t-Ob-dBj"/>
-                                                    <menuItem title="Char ROM" tag="2" id="Fvl-O6-Q9u"/>
-                                                    <menuItem title="Kernel ROM" tag="3" id="Z9z-ke-QIk"/>
-                                                    <menuItem title="Cartridge ROM" tag="4" id="u3y-BE-YL0"/>
-                                                    <menuItem title="VIC I/O" tag="5" id="MYW-nc-27y"/>
-                                                    <menuItem title="SID I/O" tag="6" id="ovl-Ac-Vfx"/>
-                                                    <menuItem title="CIA I/O" tag="7" id="lut-9Q-YVm"/>
+                                                    <menuItem title="ROM" tag="1" id="E4t-Ob-dBj"/>
+                                                    <menuItem title="Basic ROM" tag="2" id="B2K-aa-MDb"/>
+                                                    <menuItem title="Character ROM" tag="3" id="Fvl-O6-Q9u"/>
+                                                    <menuItem title=" Kernal ROM" tag="4" id="Z9z-ke-QIk"/>
+                                                    <menuItem title="Cartridge ROM" tag="5" id="u3y-BE-YL0"/>
+                                                    <menuItem title="I/O space" tag="6" id="MYW-nc-27y"/>
+                                                    <menuItem title="VIC registers" tag="7" id="t0h-B5-ekf"/>
+                                                    <menuItem title="SID registers" tag="8" id="ovl-Ac-Vfx"/>
+                                                    <menuItem title="CIA registers" tag="9" id="lut-9Q-YVm"/>
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
@@ -998,9 +1000,9 @@
                                         </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="7xi-Lj-vqK">
-                                        <rect key="frame" x="81" y="12" width="52" height="14"/>
+                                        <rect key="frame" x="72" y="12" width="61" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Highlight" id="baU-k2-RHt">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Emphasize" id="baU-k2-RHt">
                                             <font key="font" metaFont="system" size="11"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

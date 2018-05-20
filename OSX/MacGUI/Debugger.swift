@@ -305,15 +305,13 @@ extension MyController {
     @IBAction func setMemSource(_ sender: Any!) {
         
         let sender = sender as! NSPopUpButton
-        memTableView.memView = sender.selectedTag()
-        track("memView = \(memTableView.memView)")
+        memTableView.setMemView(sender.selectedTag())
     }
     
     @IBAction func setHighlighting(_ sender: Any!) {
         
         let sender = sender as! NSPopUpButton
-        memTableView.highlighting = sender.selectedTag()
-        track("highlighting = \(memTableView.highlighting)")
+        memTableView.setHighlighting(sender.selectedTag())
     }
 }
 

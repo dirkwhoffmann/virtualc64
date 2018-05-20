@@ -16,20 +16,22 @@ struct MemoryView {
 
 struct MemoryHighlighting {
     static let none = 0
-    static let basicRom = 1
-    static let charRom = 2
-    static let kernelRom = 3
-    static let crtRom = 4
-    static let vicIO = 5
-    static let sidIO = 6
-    static let ciaIO = 7
+    static let rom = 1
+    static let romBasic = 2
+    static let romChar = 3
+    static let romKernal = 4
+    static let crt = 5
+    static let io = 6
+    static let ioVic = 7
+    static let ioSid = 8
+    static let ioCia = 9
 }
 
 @objc class MEMTableView : NSTableView {
     
     var c : MyController? = nil
-    var memView = MemoryView.cpuView
-    var highlighting = MemoryHighlighting.none
+    private var memView = MemoryView.cpuView
+    private var highlighting = MemoryHighlighting.none
     
     override func awakeFromNib() {
         
@@ -41,6 +43,16 @@ struct MemoryHighlighting {
     @objc func refresh() {
         
         reloadData()
+    }
+    
+    func setMemView(_ value : Int) {
+        memView = value
+        refresh()
+    }
+    
+    func setHighlighting(_ value : Int) {
+        highlighting = value
+        refresh()
     }
     
     // Returns the memory source for the specified address
@@ -77,19 +89,23 @@ struct MemoryHighlighting {
         
         let src = source(addr)
         switch highlighting {
-        case MemoryHighlighting.basicRom:
+        case MemoryHighlighting.rom:
+            return src == M_ROM || src == M_CRTLO || src == M_CRTHI
+        case MemoryHighlighting.romBasic:
             return src == M_ROM && addr >= 0xA000 && addr <= 0xBFFF
-        case MemoryHighlighting.charRom:
+        case MemoryHighlighting.romChar:
             return src == M_ROM && addr >= 0xD000 && addr <= 0xDFFF
-        case MemoryHighlighting.kernelRom:
+        case MemoryHighlighting.romKernal:
             return src == M_ROM && addr >= 0xE000 && addr <= 0xFFFF
-        case MemoryHighlighting.crtRom:
+        case MemoryHighlighting.crt:
             return src == M_CRTLO || src == M_CRTHI
-        case MemoryHighlighting.vicIO:
+        case MemoryHighlighting.io:
+            return src == M_IO
+        case MemoryHighlighting.ioVic:
             return src == M_IO && addr >= 0xD000 && addr <= 0xD3FF
-        case MemoryHighlighting.sidIO:
+        case MemoryHighlighting.ioSid:
             return src == M_IO && addr >= 0xD400 && addr <= 0xD7FF
-        case MemoryHighlighting.ciaIO:
+        case MemoryHighlighting.ioCia:
             return src == M_IO && addr >= 0xDC00 && addr <= 0xDDFF
         default:
             return false
@@ -117,14 +133,15 @@ extension MEMTableView : NSTableViewDataSource {
             if !shouldDisplay(addr) {
                 break
             }
-            var chars = [Character](repeating:".", count:4)
+            var str = ""
             let src = source(addr)
             for i in 0...3 {
-                let byte = c!.c64.mem.spy(addr, source: src)
-                let converted = byte // petscii2printable(byte, 45 /* '.' */)
-                chars[i] = Character(UnicodeScalar(converted))
+                var byte = Int(c!.c64.mem.spy(addr + UInt16(i), source: src))
+                if (byte < 32 || byte > 90) { byte = 46 }
+                let scalar = UnicodeScalar(byte + 0xE000)
+                str.unicodeScalars.append(scalar!)
             }
-            return String(chars)
+            return str
             
         case "hex3":
             addr += 1
@@ -159,9 +176,15 @@ extension MEMTableView : NSTableViewDelegate {
         
         let cell = cell as! NSTextFieldCell
         if shouldHighlight(UInt16(4 * row)) {
-            cell.textColor = NSColor.red
+            cell.textColor = .systemRed
         } else {
-            cell.textColor = NSColor.black
+            cell.textColor = .black
+        }
+        
+        if (tableColumn?.identifier.rawValue == "ascii") {
+            if let cbmfont = NSFont.init(name: "C64ProMono", size: 9) {
+                cell.font = cbmfont
+            }
         }
     }
     
@@ -177,6 +200,10 @@ extension MEMTableView : NSTableViewDelegate {
         }
         
         let src = source(addr)
+        if (src == M_ROM || src == M_CRTLO || src == M_CRTHI) {
+            NSSound.beep()
+            return
+        }
         if let value = object as? UInt8 {
             track("Poking \(value) to \(addr) (src = \(src))")
             c?.c64.mem.poke(to: addr, value: value, memtype: src)

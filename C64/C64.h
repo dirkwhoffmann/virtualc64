@@ -18,12 +18,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.11
+// RELEASE NOTES FOR NEXT RELEASE: 1.11.1 or 1.12
 //
-// Mouse emulation has been added. Three mouse models are supported (Commodore 1530, Commodore 1531, and Neos).
-// Sound engines from VICE 3.1 have been ported to VirtualC64 (ReSID 2010 and FastSID)
-
+// Debugger has been cleaned up
+//
 // TODO:
+// Add first column "chip" RAM, ROM, CRT, IO
+// Use CBM font
 //
 // Add VIC::getInfo
 // Add CPU::getInfo
