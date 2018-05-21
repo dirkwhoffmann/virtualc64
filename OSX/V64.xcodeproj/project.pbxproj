@@ -11,7 +11,6 @@
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		38AF838C0C7BA24A00F6DBCE /* joystick32_speedlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */; };
-		5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
@@ -272,8 +271,6 @@
 		389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
 		389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPort.h; sourceTree = "<group>"; };
 		38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_speedlink.png; sourceTree = "<group>"; };
-		5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCiaPanel.h; sourceTree = "<group>"; };
-		5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCiaPanel.mm; sourceTree = "<group>"; };
 		5000C80D0D13CE680011A2E9 /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		5000C80E0D13CE680011A2E9 /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
 		5000C8220D13CEE10011A2E9 /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
@@ -787,8 +784,6 @@
 				5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */,
 				50FBE90912DC992B0093194C /* MyControllerVicPanel.h */,
 				50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */,
-				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
-				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50195C2920B007A1003844FB /* Debugger.swift */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
@@ -1479,7 +1474,6 @@
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				5068AFC420852A550025776C /* CpuTableView.swift in Sources */,
-				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,

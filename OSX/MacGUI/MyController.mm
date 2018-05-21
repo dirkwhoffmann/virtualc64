@@ -48,6 +48,48 @@
 @synthesize Vflag;
 @synthesize breakAt;
 
+// Debugger (CIA panel)
+@synthesize ciaSelector;
+
+@synthesize ciaPA;
+@synthesize ciaPAbinary;
+@synthesize ciaPRA;
+@synthesize ciaDDRA;
+
+@synthesize ciaPB;
+@synthesize ciaPBbinary;
+@synthesize ciaPRB;
+@synthesize ciaDDRB;
+
+@synthesize ciaTimerA;
+@synthesize ciaLatchA;
+@synthesize ciaRunningA;
+@synthesize ciaToggleA;
+@synthesize ciaPBoutA;
+@synthesize ciaOneShotA;
+
+@synthesize ciaTimerB;
+@synthesize ciaLatchB;
+@synthesize ciaRunningB;
+@synthesize ciaToggleB;
+@synthesize ciaPBoutB;
+@synthesize ciaOneShotB;
+
+@synthesize todHours;
+@synthesize todMinutes;
+@synthesize todSeconds;
+@synthesize todTenth;
+@synthesize todIntEnable;
+@synthesize alarmHours;
+@synthesize alarmMinutes;
+@synthesize alarmSeconds;
+@synthesize alarmTenth;
+
+@synthesize ciaIcr;
+@synthesize ciaIcrBinary;
+@synthesize ciaImr;
+@synthesize ciaImrBinary;
+@synthesize ciaIntLineLow;
 
 // Toolbar
 @synthesize controlPort1;

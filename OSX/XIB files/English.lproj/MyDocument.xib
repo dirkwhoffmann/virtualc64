@@ -1084,7 +1084,7 @@
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="STh-BL-Qfe">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="STh-BL-Qfe">
                                                     <rect key="frame" x="59" y="90" width="73" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="00000000" drawsBackground="YES" id="i62-TM-Gr7">
@@ -1093,7 +1093,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="brs-z3-EAC">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="brs-z3-EAC">
                                                     <rect key="frame" x="194" y="89" width="73" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="00000000" drawsBackground="YES" id="44a-tf-NRl">
@@ -1102,7 +1102,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="98p-Rg-m2I">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="98p-Rg-m2I">
                                                     <rect key="frame" x="194" y="64" width="73" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="00000000" drawsBackground="YES" id="kfQ-R6-t9r">
@@ -1111,7 +1111,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="A0E-jZ-cMv">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="A0E-jZ-cMv">
                                                     <rect key="frame" x="194" y="38" width="73" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="00000000" drawsBackground="YES" id="Bxb-Ys-xxH">
@@ -1120,7 +1120,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="q1G-xj-a5Z">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="q1G-xj-a5Z">
                                                     <rect key="frame" x="100" y="64" width="32" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="BOE-Hq-YN8">
@@ -1138,7 +1138,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="4cw-rk-ajv">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="4cw-rk-ajv">
                                                     <rect key="frame" x="100" y="12" width="32" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="dQa-4p-z4H">
@@ -1147,7 +1147,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="GqH-U7-BOD">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="GqH-U7-BOD">
                                                     <rect key="frame" x="194" y="12" width="73" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="00000000" drawsBackground="YES" id="TzT-P4-dI9">
@@ -1491,7 +1491,7 @@
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
                                                 </button>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="nnJ-wZ-AYk">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="nnJ-wZ-AYk">
                                                     <rect key="frame" x="9" y="102" width="49" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="65536" drawsBackground="YES" id="aLK-FH-yBG">
@@ -1500,7 +1500,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="43J-aC-LUo">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="43J-aC-LUo">
                                                     <rect key="frame" x="79" y="102" width="49" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="65536" drawsBackground="YES" id="zNi-xs-wbX">
@@ -1518,7 +1518,7 @@
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="1GG-3l-DKu">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="1GG-3l-DKu">
                                                     <rect key="frame" x="148" y="102" width="49" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="65536" drawsBackground="YES" id="d41-tr-Zwb">
@@ -1527,7 +1527,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" id="1Fl-ub-sO2">
+                                                <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="1Fl-ub-sO2">
                                                     <rect key="frame" x="218" y="102" width="49" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="65536" drawsBackground="YES" id="SXq-af-3j5">

@@ -297,6 +297,50 @@
 @property NSButton *Vflag;
 @property NSTextField *breakAt;
 
+// Debugger (CIA panel)
+@property NSSegmentedControl *ciaSelector;
+
+@property NSTextField *ciaPA;
+@property NSTextField *ciaPAbinary;
+@property NSTextField *ciaPRA;
+@property NSTextField *ciaDDRA;
+
+@property NSTextField *ciaPB;
+@property NSTextField *ciaPBbinary;
+@property NSTextField *ciaPRB;
+@property NSTextField *ciaDDRB;
+
+@property NSTextField *ciaTimerA;
+@property NSTextField *ciaLatchA;
+@property NSButton *ciaRunningA;
+@property NSButton *ciaToggleA;
+@property NSButton *ciaPBoutA;
+@property NSButton *ciaOneShotA;
+
+@property NSTextField *ciaTimerB;
+@property NSTextField *ciaLatchB;
+@property NSButton *ciaRunningB;
+@property NSButton *ciaToggleB;
+@property NSButton *ciaPBoutB;
+@property NSButton *ciaOneShotB;
+
+@property NSTextField *todHours;
+@property NSTextField *todMinutes;
+@property NSTextField *todSeconds;
+@property NSTextField *todTenth;
+@property NSButton *todIntEnable;
+@property NSTextField *alarmHours;
+@property NSTextField *alarmMinutes;
+@property NSTextField *alarmSeconds;
+@property NSTextField *alarmTenth;
+
+@property NSTextField *ciaIcr;
+@property NSTextField *ciaIcrBinary;
+@property NSTextField *ciaImr;
+@property NSTextField *ciaImrBinary;
+@property NSButton *ciaIntLineLow;
+
+
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
 @property MediaDialog *mediaDialog;

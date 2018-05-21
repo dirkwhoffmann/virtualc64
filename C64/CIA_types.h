@@ -21,10 +21,12 @@ typedef enum {
  */
 typedef struct {
     struct {
+        uint8_t port;
         uint8_t reg;
         uint8_t dir;
     } portA;
     struct {
+        uint8_t port;
         uint8_t reg;
         uint8_t dir;
     } portB;
@@ -46,8 +48,9 @@ typedef struct {
     } timerB;
     uint8_t icr;
     uint8_t imr;
+    bool intLine;
     TODInfo tod;
-    bool todInterruptMask;
+    bool todIntEnable;
 } CIAInfo;
 
 
