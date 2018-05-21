@@ -257,7 +257,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		023023FE0DC902A700F8818A /* AudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDevice.h; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -798,7 +797,6 @@
 				5081AB621EF29E6400D6F616 /* AudioEngine.swift */,
 				50FF818E1F88D9100004548A /* GamePad.swift */,
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
-				023023FE0DC902A700F8818A /* AudioDevice.h */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 			);
 			name = Misc;
