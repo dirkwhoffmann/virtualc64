@@ -28,45 +28,45 @@ int debugirq = 0;
 void 
 threadCleanup(void* thisC64)
 {
-	assert(thisC64 != NULL);
-	
-	C64 *c64 = (C64 *)thisC64;
-	c64->threadCleanup();
+    assert(thisC64 != NULL);
+    
+    C64 *c64 = (C64 *)thisC64;
+    c64->threadCleanup();
 
     c64->sid.halt();
-	c64->debug(1, "Execution thread terminated\n");
-	c64->putMessage(MSG_HALT);
+    c64->debug(1, "Execution thread terminated\n");
+    c64->putMessage(MSG_HALT);
 }
 
 void 
 *runThread(void *thisC64) {
-		
-	assert(thisC64 != NULL);
-	
-	C64 *c64 = (C64 *)thisC64;
-	c64->debug(1, "Execution thread started\n");
-	c64->putMessage(MSG_RUN);
-	
-    // Configure thread properties...
-	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
-	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
-	pthread_cleanup_push(threadCleanup, thisC64);
-	
-	// Prepare to run...
-	c64->cpu.clearErrorState();
-	c64->floppy.cpu.clearErrorState();
-	c64->restartTimer();
+        
+    assert(thisC64 != NULL);
     
-	while (1) {		
-		if (!c64->executeOneLine())
-			break;		
+    C64 *c64 = (C64 *)thisC64;
+    c64->debug(1, "Execution thread started\n");
+    c64->putMessage(MSG_RUN);
+    
+    // Configure thread properties...
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
+    pthread_cleanup_push(threadCleanup, thisC64);
+    
+    // Prepare to run...
+    c64->cpu.clearErrorState();
+    c64->floppy.cpu.clearErrorState();
+    c64->restartTimer();
+    
+    while (1) {        
+        if (!c64->executeOneLine())
+            break;        
 
-		if (c64->getRasterline() == 0 && c64->getFrame() % 8 == 0)
-			pthread_testcancel(); // Check if thread was requested to terminate
-	}
-	
-	pthread_cleanup_pop(1);
-	pthread_exit(NULL);	
+        if (c64->getRasterline() == 0 && c64->getFrame() % 8 == 0)
+            pthread_testcancel(); // Check if thread was requested to terminate
+    }
+    
+    pthread_cleanup_pop(1);
+    pthread_exit(NULL);    
 }
 
 
@@ -76,14 +76,14 @@ void
 
 C64::C64()
 {
-	setDescription("C64");
-	debug("Creating virtual C64[%p]\n", this);
+    setDescription("C64");
+    debug("Creating virtual C64[%p]\n", this);
 
-	p = NULL;    
+    p = NULL;    
     warp = false;
     alwaysWarp = false;
     warpLoad = false;
-	
+    
     // Register sub components
     VirtualComponent *subcomponents[] = {
         
@@ -138,13 +138,13 @@ C64::C64()
     mouse = &mouse1350;
     mousePort = 0;
     setPAL();
-			
+            
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
-	// Initialize snapshot ringbuffers
+    // Initialize snapshot ringbuffers
     for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
-		autoSavedSnapshots[i] = new Snapshot();
+        autoSavedSnapshots[i] = new Snapshot();
     }
     for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
         userSavedSnapshots[i] = new Snapshot();
@@ -158,7 +158,7 @@ C64::C64()
 C64::~C64()
 {
     debug(1, "Destroying virtual C64[%p]\n", this);
-	halt();
+    halt();
 }
 
 void
@@ -166,7 +166,7 @@ C64::reset()
 {
     debug(1, "Resetting virtual C64[%p]\n", this);
     
-	// suspend();
+    // suspend();
 
     // Reset all sub components
     VirtualComponent::reset();
@@ -181,10 +181,10 @@ C64::reset()
     // Make memory ready to go
     // mem.updatePeekPokeLookupTables();
     
-	rasterlineCycle = 1;
+    rasterlineCycle = 1;
     nanoTargetTime = 0UL;
     ping();
-	// resume();
+    // resume();
 }
 
 void C64::ping()
@@ -195,21 +195,21 @@ void C64::ping()
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
     putMessage(alwaysWarp ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
 }
-	
+    
 void 
 C64::dumpState() {
-	msg("C64:\n");
-	msg("----\n\n");
-	msg("            Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
-	msg("       Frames per second : %d\n", vic.getFramesPerSecond());
-	msg("   Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
-	msg("   Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
-	msg("           Current cycle : %llu\n", cycle);
-	msg("           Current frame : %d\n", frame);
-	msg("      Current rasterline : %d\n", rasterline);
-	msg("Current rasterline cycle : %d\n", rasterlineCycle);
+    msg("C64:\n");
+    msg("----\n\n");
+    msg("            Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
+    msg("       Frames per second : %d\n", vic.getFramesPerSecond());
+    msg("   Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
+    msg("   Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
+    msg("           Current cycle : %llu\n", cycle);
+    msg("           Current frame : %d\n", frame);
+    msg("      Current rasterline : %d\n", rasterline);
+    msg("Current rasterline cycle : %d\n", rasterlineCycle);
     msg("            Ultimax mode : %s\n", getUltimax() ? "YES" : "NO");
-	msg("\n");
+    msg("\n");
 }
 
 
@@ -224,8 +224,8 @@ C64::setPAL()
 
     suspend();
     vic.setChipModel(MOS6569_PAL);
-	sid.setPAL();
-	resume();
+    sid.setPAL();
+    resume();
 }
 
 void 
@@ -233,10 +233,10 @@ C64::setNTSC()
 {
     debug(2, "C64::setNTSC\n");
 
-	suspend();
+    suspend();
     vic.setChipModel(MOS6567_NTSC);
-	sid.setNTSC();
-	resume();
+    sid.setNTSC();
+    resume();
 }
 
 void
@@ -540,7 +540,7 @@ C64::executeOneCycle()
             // This is the last cycle on PAL machines
             if (vic.getCyclesPerRasterline() == 63) {
                 endOfRasterline();
-            }			
+            }            
             break;
         case 64: 
             vic.cycle64();
@@ -671,7 +671,7 @@ C64::setAlwaysWarp(bool b)
 void
 C64::setWarpLoad(bool b)
 {
-	warpLoad = b;
+    warpLoad = b;
 }
 
 void
@@ -972,24 +972,24 @@ C64::deleteUserSnapshot(unsigned index)
 bool 
 C64::flushArchive(Archive *a, int item)
 {
-	uint16_t addr;
-	int data;
-	
-	if (a == NULL)
-		return false;
-	
-	addr = a->getDestinationAddrOfItem(item);
+    uint16_t addr;
+    int data;
+    
+    if (a == NULL)
+        return false;
+    
+    addr = a->getDestinationAddrOfItem(item);
     debug("Flushing at addr: %04X %d\n", addr, addr);
-	a->selectItem(item);
-	while (1) {
-		data = a->getByte();
-		if (data < 0) break;
-		mem.pokeRam(addr, (uint8_t)data);
-		if (addr == 0xFFFF) break;
-		
-		addr++;
-	}
-	return true;
+    a->selectItem(item);
+    while (1) {
+        data = a->getByte();
+        if (data < 0) break;
+        mem.pokeRam(addr, (uint8_t)data);
+        if (addr == 0xFFFF) break;
+        
+        addr++;
+    }
+    return true;
 }
 
 bool
@@ -1004,12 +1004,12 @@ C64::insertDisk(Archive *a)
 
 bool 
 C64::mountArchive(Archive *a)
-{	
-	if (a == NULL)
-		return false;
-		
-	floppy.insertDisk(a);
-	return true;
+{    
+    if (a == NULL)
+        return false;
+        
+    floppy.insertDisk(a);
+    return true;
 }
 
 bool

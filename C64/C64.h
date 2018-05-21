@@ -23,8 +23,6 @@
 // Debugger has been cleaned up
 //
 // TODO:
-// Add first column "chip" RAM, ROM, CRT, IO
-// Use CBM font
 //
 // Add VIC::getInfo
 // Add CPU::getInfo
