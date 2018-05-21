@@ -31,6 +31,7 @@
     // CIA 1
     info = [[c64 cia1] getInfo];
     
+    /*
     // CIA 1
     [cia1DataPortA setIntValue:info.portA.reg];
     [cia1DataPortDirectionA setIntValue:info.portA.dir];
@@ -91,6 +92,7 @@
 	[alarm2Seconds setIntValue:info.tod.alarm.seconds];
 	[alarm2Tenth setIntValue:info.tod.alarm.tenth];
 	[tod2InterruptEnabled setIntValue:info.todInterruptMask];
+    */
 }
 
 @end

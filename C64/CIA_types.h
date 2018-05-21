@@ -32,18 +32,20 @@ typedef struct {
         uint32_t count;
         uint32_t latch;
         bool running;
+        bool toggle;
+        bool pbout;
         bool oneShot;
-        bool interruptMask;
-        bool interruptData;
     } timerA;
     struct {
         uint32_t count;
         uint32_t latch;
         bool running;
+        bool toggle;
+        bool pbout;
         bool oneShot;
-        bool interruptMask;
-        bool interruptData;
     } timerB;
+    uint8_t icr;
+    uint8_t imr;
     TODInfo tod;
     bool todInterruptMask;
 } CIAInfo;

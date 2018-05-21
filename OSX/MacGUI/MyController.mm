@@ -108,10 +108,10 @@
 		// CPU panel
 		sp, a, x, y,
 		// CIA panel
-		cia1DataPortA, cia1DataPortDirectionA, cia1DataPortB, cia1DataPortDirectionB,
-		tod1Hours, tod1Minutes, tod1Seconds, tod1Tenth, alarm1Hours, alarm1Minutes, alarm1Seconds, alarm1Tenth,
-		cia2DataPortA, cia2DataPortDirectionA, cia2DataPortB, cia2DataPortDirectionB,
-		tod2Hours, tod2Minutes, tod2Seconds, tod2Tenth, alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth,
+        ciaPA, ciaPB,
+		todHours, todMinutes, todSeconds, todTenth,
+        alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
+        ciaImr, ciaIcr,
 		// VIC panel
 		VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
  		NULL };
@@ -122,8 +122,7 @@
 		// Memory panel
 		addr_search,
 		// CIA panel
-		cia1TimerA, cia1LatchedTimerA, cia1TimerB, cia1LatchedTimerB,
-		cia2TimerA, cia2LatchedTimerA, cia2TimerB, cia2LatchedTimerB,
+		ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
 		// VIC panel
 		VicRasterline, VicRasterInterrupt,
 		NULL };
