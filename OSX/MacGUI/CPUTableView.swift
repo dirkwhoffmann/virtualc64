@@ -1,5 +1,5 @@
 //
-//  CPUTableView.swift
+//  CpuTableView.swift
 //  VirtualC64
 //
 //  Created by Dirk Hoffmann on 16.04.18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc class CPUTableView : NSTableView {
+@objc class CpuTableView : NSTableView {
     
     var c : MyController? = nil
     
@@ -90,7 +90,7 @@ import Foundation
     }
 }
 
-extension CPUTableView : NSTableViewDataSource {
+extension CpuTableView : NSTableViewDataSource {
    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return 256;
@@ -126,7 +126,7 @@ extension CPUTableView : NSTableViewDataSource {
     }
 }
 
-extension CPUTableView : NSTableViewDelegate {
+extension CpuTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
