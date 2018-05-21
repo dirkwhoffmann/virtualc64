@@ -41,25 +41,6 @@ class MyFormatter : Formatter {
         let result = Int(string, radix: radix)
         obj?.pointee = result as AnyObject?
         return true
-        
-        /*
-        let scanner = Scanner.init(string: string)
-        if hex {
-            var result : UInt32 = 0
-            if scanner.scanHexInt32(&result) {
-                obj?.pointee = result as AnyObject?
-                return true
-            }
-        } else {
-            var result : Int32 = 0
-            if scanner.scanInt32(&result) {
-                obj?.pointee = result as AnyObject?
-                return true
-            }
-        }
-        obj?.pointee = 0 as AnyObject?
-        return false
-        */
     }
         
     override func string(for obj: Any?) -> String? {
