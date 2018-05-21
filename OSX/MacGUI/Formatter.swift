@@ -9,16 +9,16 @@ import Foundation
 
 class MyFormatter : Formatter {
     
-    var hex : Bool = true
-    var inFormat: String = ""
-    var outFormat: String = ""
+    var radix : Int
+    var inFormat: String
+    var outFormat: String
     
-    init(inFormat: String, outFormat: String, hex: Bool) {
-        
-        super.init()
-        self.hex = hex
+    init(inFormat: String, outFormat: String, radix: Int) {
+
+        self.radix = radix
         self.inFormat = inFormat
         self.outFormat = outFormat
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,8 +38,12 @@ class MyFormatter : Formatter {
     
     override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
         
-        let scanner = Scanner.init(string: string)
+        let result = Int(string, radix: radix)
+        obj?.pointee = result as AnyObject?
+        return true
         
+        /*
+        let scanner = Scanner.init(string: string)
         if hex {
             var result : UInt32 = 0
             if scanner.scanHexInt32(&result) {
@@ -55,14 +59,33 @@ class MyFormatter : Formatter {
         }
         obj?.pointee = 0 as AnyObject?
         return false
+        */
     }
         
     override func string(for obj: Any?) -> String? {
     
-        if let number = obj as? Int {
-            return String.init(format: outFormat, number)
-        } else {
+        guard let number = obj as? Int else {
             return nil
+        }
+        
+        switch radix {
+        case 2:
+            let bits: [Character] = [number & 0x80 != 0 ? "1" : "0",
+                                     number & 0x40 != 0 ? "1" : "0",
+                                     number & 0x20 != 0 ? "1" : "0",
+                                     number & 0x10 != 0 ? "1" : "0",
+                                     number & 0x08 != 0 ? "1" : "0",
+                                     number & 0x04 != 0 ? "1" : "0",
+                                     number & 0x02 != 0 ? "1" : "0",
+                                     number & 0x01 != 0 ? "1" : "0"]
+            return String.init(bits)
+            
+        case 10, 16:
+            return String.init(format: outFormat, number)
+        
+        default:
+            assert(false)
+            return "?"
         }
     }
 }

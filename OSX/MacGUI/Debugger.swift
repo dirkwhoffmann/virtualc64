@@ -7,6 +7,26 @@
 
 import Foundation
 
+extension MyController {
+    
+    func setupDebugger() {
+        
+        // Start with hexadecimal number format
+        setHexadecimalAction(self)
+        
+        // Create and assign binary number formatter
+        let bF = MyFormatter.init(inFormat: "[0-1]{0,7}", outFormat: "", radix: 2)
+        ciaPAbinary.formatter = bF
+        ciaPRA.formatter = bF
+        ciaDDRA.formatter = bF
+        ciaPBbinary.formatter = bF
+        ciaPRB.formatter = bF
+        ciaDDRB.formatter = bF
+        ciaIcrBinary.formatter = bF
+        ciaImrBinary.formatter = bF
+    }
+}
+
 //
 // Panel independent controls
 //
@@ -73,9 +93,9 @@ extension MyController {
         hex = false
         cpuTableView.setHex(false)
 
-        let bF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", hex: false)
-        let sF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", hex: false)
-        let wF = MyFormatter.init(inFormat: "[0-9]{0,5}", outFormat: "%05d", hex: false)
+        let bF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", radix: 10)
+        let sF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", radix: 10)
+        let wF = MyFormatter.init(inFormat: "[0-9]{0,5}", outFormat: "%05d", radix: 10)
         refresh(bF, word: wF, threedigit: sF)
     }
     
@@ -84,9 +104,9 @@ extension MyController {
         hex = true
         cpuTableView.setHex(true)
 
-        let bF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,2}", outFormat: "%02X", hex: true)
-        let sF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,3}", outFormat: "%03X", hex: true)
-        let wF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,4}", outFormat: "%04X", hex: true)
+        let bF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,2}", outFormat: "%02X", radix: 16)
+        let sF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,3}", outFormat: "%03X", radix: 16)
+        let wF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,4}", outFormat: "%04X", radix: 16)
         refresh(bF, word: wF, threedigit: sF)
     }
 }

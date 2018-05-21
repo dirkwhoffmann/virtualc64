@@ -48,12 +48,10 @@ extension MyController {
         gamepadSlot1 = -1 // No gampad assigned
         gamepadSlot2 = -1
 
-        // Configure toolbar and window
+        // Setup toolbar, window, and debugger
         configureToolbar()
         configureWindow()
-        
-        // TODO: GET RID OF THIS: Move to it's own window controller
-        setHexadecimalAction(self)
+        setupDebugger()
         
         // Get metal running
         metalScreen.setupMetal()
