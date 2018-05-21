@@ -24,7 +24,7 @@
 
 #import "C64Proxy.h"
 
-#import "Formatter.h"
+#import "OldFormatter.h"
 
 #import "MyController.h"
 #import "MyControllerDebugPanel.h"

@@ -21,7 +21,7 @@
 #define DECIMAL_FORMATTER 0
 #define HEXADECIMAL_FORMATTER 1
 
-@interface Formatter : NSFormatter {	 
+@interface OldFormatter : NSFormatter {	 
 
 	int type;
 	NSString *inFormat;

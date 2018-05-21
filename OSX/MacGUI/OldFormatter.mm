@@ -19,7 +19,7 @@
 #import "C64GUI.h"
 
 
-@implementation Formatter
+@implementation OldFormatter
 
 - (id)init
 {
