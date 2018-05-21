@@ -161,8 +161,6 @@
 	NSControl *WordFormatterControls[] = { 
 		// CPU panel
 		pc, breakAt,
-		// Memory panel
-		addr_search,
 		// CIA panel
 		ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
 		// VIC panel

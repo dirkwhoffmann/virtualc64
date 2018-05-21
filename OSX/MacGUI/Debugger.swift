@@ -8,6 +8,90 @@
 import Foundation
 
 //
+// Panel independent controls
+//
+
+extension MyController {
+    
+    @IBAction func stepIntoAction(_ sender: Any!) {
+        
+        document?.updateChangeCount(.changeDone)
+        c64.step()
+        refresh()
+    }
+  
+    @IBAction func stepOverAction(_ sender: Any!) {
+
+        document?.updateChangeCount(.changeDone)
+        
+        // If the next instruction is a JSR instruction, ...
+        if (c64.cpu.readPC() == 0x20) {
+
+            // we set soft breakpoint at next command
+            c64.cpu.setSoftBreakpoint(c64.cpu.addressOfNextInstruction())
+            c64.run()
+
+        } else {
+            
+            // Same as step
+            stepIntoAction(self)
+        }
+    }
+    
+    @IBAction func stopAndGoAction(_ sender: Any!) {
+    
+        document?.updateChangeCount(.changeDone)
+        if c64.isHalted() {
+            c64.run()
+        } else {
+            c64.halt()
+            debugPanel.open()
+        }
+        refresh()
+    }
+    
+    @IBAction func pauseAction(_ sender: Any!) {
+        
+        if c64.isRunning() {
+            c64.halt()
+            debugPanel.open()
+        }
+        refresh()
+    }
+    
+    @IBAction func continueAction(_ sender: Any!) {
+        
+        document?.updateChangeCount(.changeDone)
+        if c64.isHalted() {
+            c64.run()
+        }
+        refresh()
+    }
+    
+    @IBAction func setDecimalAction(_ sender: Any!) {
+  
+        hex = false
+        cpuTableView.setHex(false)
+
+        let bF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", hex: false)
+        let sF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", hex: false)
+        let wF = MyFormatter.init(inFormat: "[0-9]{0,5}", outFormat: "%05d", hex: false)
+        refresh(bF, word: wF, threedigit: sF)
+    }
+    
+    @IBAction func setHexadecimalAction(_ sender: Any!) {
+        
+        hex = true
+        cpuTableView.setHex(true)
+
+        let bF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,2}", outFormat: "%02X", hex: true)
+        let sF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,3}", outFormat: "%03X", hex: true)
+        let wF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,4}", outFormat: "%04X", hex: true)
+        refresh(bF, word: wF, threedigit: sF)
+    }
+}
+
+//
 // CPU debug panel
 //
 

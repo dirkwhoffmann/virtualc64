@@ -42,7 +42,6 @@
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
-		50176C7D0A6F7357009E80BD /* OldFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* OldFormatter.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
@@ -138,7 +137,6 @@
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D8512081FF8A0026BAD5 /* joystick32_sony.png */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
-		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5094197D0E426C13008D6F71 /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* cartridge.png */; };
@@ -341,8 +339,6 @@
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VIC.h; sourceTree = "<group>"; };
-		50176C720A6F7357009E80BD /* OldFormatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = OldFormatter.h; sourceTree = "<group>"; };
-		50176C730A6F7357009E80BD /* OldFormatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = OldFormatter.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportScreenshotController.swift; sourceTree = "<group>"; };
@@ -456,8 +452,6 @@
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5087D8512081FF8A0026BAD5 /* joystick32_sony.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_sony.png; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
-		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
-		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
 		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
@@ -760,8 +754,6 @@
 			isa = PBXGroup;
 			children = (
 				50C8924D1BEF35FB00231B96 /* MetalView */,
-				50176C720A6F7357009E80BD /* OldFormatter.h */,
-				50176C730A6F7357009E80BD /* OldFormatter.mm */,
 				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
 				50DC89C720B2EB53005E0557 /* CpuTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
@@ -780,8 +772,6 @@
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
-				5088A6D412E0676200378033 /* MyControllerDebugPanel.h */,
-				5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */,
 				50FBE90912DC992B0093194C /* MyControllerVicPanel.h */,
 				50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */,
 				50195C2920B007A1003844FB /* Debugger.swift */,
@@ -1416,7 +1406,6 @@
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
-				50176C7D0A6F7357009E80BD /* OldFormatter.mm in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
@@ -1476,7 +1465,6 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50169F05209E045A00CB3536 /* sid.cc in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
-				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,

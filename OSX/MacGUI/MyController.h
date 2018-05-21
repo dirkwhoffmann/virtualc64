@@ -95,10 +95,6 @@
     
 	// Debug panel (Memory)
 	IBOutlet MemTableView *memTableView;
-	IBOutlet NSSearchField *addr_search;	
-	IBOutlet NSButtonCell *ramSource;
-	IBOutlet NSButtonCell *romSource;
-	IBOutlet NSButtonCell *ioSource;	
 	
 	// Debug pabel (CIA)
     IBOutlet NSSegmentedControl *ciaSelector;
