@@ -21,6 +21,7 @@
 #define RESID_FILTER_H
 
 #include "resid-config.h"
+#include "stdio.h"
 
 namespace reSID
 {
@@ -1537,8 +1538,9 @@ int Filter::solve_gain(opamp_t* opamp, int n, int vi, int& x, model_filter_t& mf
     int f = a*int(unsigned(b_vx)*unsigned(b_vx) >> 12) - c - int(unsigned(b_vo)*unsigned(b_vo) >> 5);
     // The divisor is scaled by m*2^11.
     // Dirk Hoffmann: Old code causes overflow
+    // printf("b_vx = %d dvx = %d \n", b_vx, dvx);
     // int df = (b_vo*(dvx + (1 << 11)) - a*(b_vx*dvx >> 7)) >> 15;
-    int df = (b_vo*(dvx + (1 << 11)) - (long)a*(b_vx*dvx >> 7)) >> 15;
+    int df = (int)((b_vo*(dvx + (1 << 11)) - (long)a*(b_vx*dvx >> 7)) >> 15);
     // The resulting quotient is thus scaled by m*2^16.
 
     // Newton-Raphson step: xk1 = xk - f(xk)/f'(xk)
