@@ -124,6 +124,12 @@ SIDBridge::dumpState()
     dumpState(fastsid.getInfo());
 }
 
+SIDInfo
+SIDBridge::getInfo()
+{
+    return useReSID ? resid.getInfo() : fastsid.getInfo();
+}
+
 void
 SIDBridge::setPAL()
 {
