@@ -29,10 +29,12 @@
 
 class ReSID : public VirtualComponent {
 
-private:
+public:
     
     // ReSID object
     reSID::SID *sid;
+    
+private:
     
     //! ReSID state
     reSID::SID::State st;

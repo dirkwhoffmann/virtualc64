@@ -176,6 +176,9 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
     // Keep both SID implementations up to date
     resid.poke(addr, value);
     fastsid.poke(addr, value);
+    
+    // Run ReSID for at least one cycle to make pipelined writes work
+    if (!useReSID) resid.sid->clock();
 }
 
 void
