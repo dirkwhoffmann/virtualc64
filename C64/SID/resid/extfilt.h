@@ -95,7 +95,7 @@ void ExternalFilter::clock(short Vi)
   // Vhp = Vhp + w0hp*(Vlp - Vhp)*delta_t;
   // Vo  = Vlp - Vhp;
 
-  int dVlp = w0lp_1_s7*((Vi << 11) - Vlp) >> 7;
+  int dVlp = w0lp_1_s7*((Vi * 2048) - Vlp) >> 7;
   int dVhp = w0hp_1_s17*(Vlp - Vhp) >> 17;
   Vlp += dVlp;
   Vhp += dVhp;
@@ -129,7 +129,9 @@ void ExternalFilter::clock(cycle_count delta_t, short Vi)
     // Vhp = Vhp + w0hp*(Vlp - Vhp)*delta_t;
     // Vo  = Vlp - Vhp;
 
-    int dVlp = (w0lp_1_s7*delta_t_flt >> 3)*((Vi << 11) - Vlp) >> 4;
+    // Dirk Hoffmann: << 11 on negative value is undefined
+    // int dVlp = (w0lp_1_s7*delta_t_flt >> 3)*((Vi << 11) - Vlp) >> 4;
+    int dVlp = (w0lp_1_s7*delta_t_flt >> 3)*((Vi * 2048) - Vlp) >> 4;
     int dVhp = (w0hp_1_s17*delta_t_flt >> 3)*(Vlp - Vhp) >> 14;
     Vlp += dVlp;
     Vhp += dVhp;
