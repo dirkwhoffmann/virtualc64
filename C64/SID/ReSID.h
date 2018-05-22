@@ -66,6 +66,9 @@ public:
 	//! Dump internal state to console
 	void dumpState();
 	
+    //! @brief    Gathers all values that are displayed in the debugger
+    SIDInfo getInfo();
+    
 	//! Special peek function for the I/O memory range.
 	uint8_t peek(uint16_t addr);
 	

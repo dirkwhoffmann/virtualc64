@@ -33,38 +33,56 @@ ReSID::ReSID()
         { &emulateFilter,       sizeof(emulateFilter),          KEEP_ON_RESET },
         
         // ReSID state
-        { st.sid_register,                  sizeof(st.sid_register),                    KEEP_ON_RESET },
-        { &st.bus_value,                    sizeof(st.bus_value),                       KEEP_ON_RESET },
-        { &st.bus_value_ttl,                sizeof(st.bus_value_ttl),                   KEEP_ON_RESET },
-        { &st.accumulator[0],               sizeof(st.accumulator[0]),                  KEEP_ON_RESET },
-        { &st.accumulator[1],               sizeof(st.accumulator[1]),                  KEEP_ON_RESET },
-        { &st.accumulator[2],               sizeof(st.accumulator[2]),                  KEEP_ON_RESET },
-        { &st.shift_register[0],            sizeof(&st.shift_register[0]),              KEEP_ON_RESET },
-        { &st.shift_register[1],            sizeof(&st.shift_register[1]),              KEEP_ON_RESET },
-        { &st.shift_register[2],            sizeof(&st.shift_register[2]),              KEEP_ON_RESET },
-        { &st.rate_counter[0],              sizeof(st.rate_counter[0]),                 KEEP_ON_RESET },
-        { &st.rate_counter[1],              sizeof(st.rate_counter[1]),                 KEEP_ON_RESET },
-        { &st.rate_counter[2],              sizeof(st.rate_counter[2]),                 KEEP_ON_RESET },
-        { &st.rate_counter_period[0],       sizeof(st.rate_counter_period[0]),          KEEP_ON_RESET },
-        { &st.rate_counter_period[1],       sizeof(st.rate_counter_period[1]),          KEEP_ON_RESET },
-        { &st.rate_counter_period[2],       sizeof(st.rate_counter_period[2]),          KEEP_ON_RESET },
-        { &st.exponential_counter[0],       sizeof(st.exponential_counter[0]),          KEEP_ON_RESET },
-        { &st.exponential_counter[1],       sizeof(st.exponential_counter[1]),          KEEP_ON_RESET },
-        { &st.exponential_counter[2],       sizeof(st.exponential_counter[2]),          KEEP_ON_RESET },
-        { &st.exponential_counter_period[0],sizeof(st.exponential_counter_period[0]),   KEEP_ON_RESET },
-        { &st.exponential_counter_period[1],sizeof(st.exponential_counter_period[1]),   KEEP_ON_RESET },
-        { &st.exponential_counter_period[2],sizeof(st.exponential_counter_period[2]),   KEEP_ON_RESET },
-        { &st.envelope_counter[0],          sizeof(st.envelope_counter[0]),             KEEP_ON_RESET },
-        { &st.envelope_counter[1],          sizeof(st.envelope_counter[1]),             KEEP_ON_RESET },
-        { &st.envelope_counter[2],          sizeof(st.envelope_counter[2]),             KEEP_ON_RESET },
-        { &st.envelope_state[0],            sizeof(st.envelope_state[0]),               KEEP_ON_RESET },
-        { &st.envelope_state[1],            sizeof(st.envelope_state[1]),               KEEP_ON_RESET },
-        { &st.envelope_state[2],            sizeof(st.envelope_state[2]),               KEEP_ON_RESET },
-        { &st.hold_zero[0],                 sizeof(st.hold_zero[0]),                    KEEP_ON_RESET },
-        { &st.hold_zero[1],                 sizeof(st.hold_zero[1]),                    KEEP_ON_RESET },
-        { &st.hold_zero[2],                 sizeof(st.hold_zero[2]),                    KEEP_ON_RESET },
+        { st.sid_register,                  sizeof(st.sid_register),                  KEEP_ON_RESET },
+        { &st.bus_value,                    sizeof(st.bus_value),                     KEEP_ON_RESET },
+        { &st.bus_value_ttl,                sizeof(st.bus_value_ttl),                 KEEP_ON_RESET },
+        { &st.write_pipeline,               sizeof(st.write_pipeline),                KEEP_ON_RESET },
+        { &st.write_address,                sizeof(st.write_address),                 KEEP_ON_RESET },
+        { &st.voice_mask,                   sizeof(st.voice_mask),                    KEEP_ON_RESET },
+        { &st.accumulator[0],               sizeof(st.accumulator[0]),                KEEP_ON_RESET },
+        { &st.accumulator[1],               sizeof(st.accumulator[1]),                KEEP_ON_RESET },
+        { &st.accumulator[2],               sizeof(st.accumulator[2]),                KEEP_ON_RESET },
+        { &st.shift_register[0],            sizeof(&st.shift_register[0]),            KEEP_ON_RESET },
+        { &st.shift_register[1],            sizeof(&st.shift_register[1]),            KEEP_ON_RESET },
+        { &st.shift_register[2],            sizeof(&st.shift_register[2]),            KEEP_ON_RESET },
+        { &st.shift_register_reset[0],      sizeof(&st.shift_register_reset[0]),      KEEP_ON_RESET },
+        { &st.shift_register_reset[1],      sizeof(&st.shift_register_reset[1]),      KEEP_ON_RESET },
+        { &st.shift_register_reset[2],      sizeof(&st.shift_register_reset[2]),      KEEP_ON_RESET },
+        { &st.shift_pipeline[0],            sizeof(&st.shift_pipeline[0]),            KEEP_ON_RESET },
+        { &st.shift_pipeline[1],            sizeof(&st.shift_pipeline[1]),            KEEP_ON_RESET },
+        { &st.shift_pipeline[2],            sizeof(&st.shift_pipeline[2]),            KEEP_ON_RESET },
+        { &st.pulse_output[0],              sizeof(&st.pulse_output[0]),              KEEP_ON_RESET },
+        { &st.pulse_output[1],              sizeof(&st.pulse_output[1]),              KEEP_ON_RESET },
+        { &st.pulse_output[2],              sizeof(&st.pulse_output[2]),              KEEP_ON_RESET },
+        { &st.floating_output_ttl[0],       sizeof(&st.floating_output_ttl[0]),       KEEP_ON_RESET },
+        { &st.floating_output_ttl[1],       sizeof(&st.floating_output_ttl[1]),       KEEP_ON_RESET },
+        { &st.floating_output_ttl[2],       sizeof(&st.floating_output_ttl[2]),       KEEP_ON_RESET },
+        { &st.rate_counter[0],              sizeof(st.rate_counter[0]),               KEEP_ON_RESET },
+        { &st.rate_counter[1],              sizeof(st.rate_counter[1]),               KEEP_ON_RESET },
+        { &st.rate_counter[2],              sizeof(st.rate_counter[2]),               KEEP_ON_RESET },
+        { &st.rate_counter_period[0],       sizeof(st.rate_counter_period[0]),        KEEP_ON_RESET },
+        { &st.rate_counter_period[1],       sizeof(st.rate_counter_period[1]),        KEEP_ON_RESET },
+        { &st.rate_counter_period[2],       sizeof(st.rate_counter_period[2]),        KEEP_ON_RESET },
+        { &st.exponential_counter[0],       sizeof(st.exponential_counter[0]),        KEEP_ON_RESET },
+        { &st.exponential_counter[1],       sizeof(st.exponential_counter[1]),        KEEP_ON_RESET },
+        { &st.exponential_counter[2],       sizeof(st.exponential_counter[2]),        KEEP_ON_RESET },
+        { &st.exponential_counter_period[0],sizeof(st.exponential_counter_period[0]), KEEP_ON_RESET },
+        { &st.exponential_counter_period[1],sizeof(st.exponential_counter_period[1]), KEEP_ON_RESET },
+        { &st.exponential_counter_period[2],sizeof(st.exponential_counter_period[2]), KEEP_ON_RESET },
+        { &st.envelope_counter[0],          sizeof(st.envelope_counter[0]),           KEEP_ON_RESET },
+        { &st.envelope_counter[1],          sizeof(st.envelope_counter[1]),           KEEP_ON_RESET },
+        { &st.envelope_counter[2],          sizeof(st.envelope_counter[2]),           KEEP_ON_RESET },
+        { &st.envelope_state[0],            sizeof(st.envelope_state[0]),             KEEP_ON_RESET },
+        { &st.envelope_state[1],            sizeof(st.envelope_state[1]),             KEEP_ON_RESET },
+        { &st.envelope_state[2],            sizeof(st.envelope_state[2]),             KEEP_ON_RESET },
+        { &st.hold_zero[0],                 sizeof(st.hold_zero[0]),                  KEEP_ON_RESET },
+        { &st.hold_zero[1],                 sizeof(st.hold_zero[1]),                  KEEP_ON_RESET },
+        { &st.hold_zero[2],                 sizeof(st.hold_zero[2]),                  KEEP_ON_RESET },
+        { &st.envelope_pipeline[0],         sizeof(st.envelope_pipeline[0]),          KEEP_ON_RESET },
+        { &st.envelope_pipeline[1],         sizeof(st.envelope_pipeline[1]),          KEEP_ON_RESET },
+        { &st.envelope_pipeline[2],         sizeof(st.envelope_pipeline[2]),          KEEP_ON_RESET },
         
-        { NULL,                             0,                                          0 }};
+        { NULL,                             0,                                        0 }};
     
     registerSnapshotItems(items, sizeof(items));
     
@@ -209,6 +227,32 @@ ReSID::dumpState()
     msg("   Sample rate : %d\n", getSampleRate());
     msg(" CPU frequency : %d\n", getClockFrequency());
 	msg("\n");
+}
+
+SIDInfo
+ReSID::getInfo()
+{
+    SIDInfo info;
+    reSID::SID::State state = sid->read_state();
+
+    for (unsigned i = 0; i < 3; i++) {
+        uint8_t *sidreg = (uint8_t *)state.sid_register + (i * 7);
+        info.voice[i].frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
+        info.voice[i].pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
+        info.voice[i].waveform = sidreg[0x04] & 0xF0;
+        info.voice[i].ringMod = (sidreg[0x04] & 0x04) != 0;
+        info.voice[i].hardSync = (sidreg[0x04] & 0x02) != 0;
+        info.voice[i].attackRate = sidreg[0x05] >> 4;
+        info.voice[i].decayRate = sidreg[0x05] & 0x0F;
+        info.voice[i].sustainRate = sidreg[0x06] >> 4;
+        info.voice[i].releaseRate = sidreg[0x06] & 0x0F;
+        info.voice[i].filterOn = GET_BIT(state.sid_register[0x17], i) != 0;
+    }
+    info.volume = state.sid_register[0x18] & 0x0F;
+    info.filterType = state.sid_register[0x18] & 0x70;
+    info.filterCutoff = (state.sid_register[0x16] << 3) | (state.sid_register[0x15] & 0x07);
+    
+    return info;
 }
 
 

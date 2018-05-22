@@ -113,9 +113,9 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     
 	//! @brief    Prints debug information
-	void dumpState();
-	
-    
+    void dumpState(SIDInfo info);
+    void dumpState();
+
     //
 	// Configuring the device
 	//
