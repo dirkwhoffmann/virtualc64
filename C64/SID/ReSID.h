@@ -34,6 +34,10 @@ public:
     // ReSID object
     reSID::SID *sid;
     
+public:
+    
+    void clock() { sid->clock(); }
+    
 private:
     
     //! ReSID state
@@ -75,9 +79,6 @@ public:
 
     //! Save state
     void saveToBuffer(uint8_t **buffer);
-
-	//! Dump internal state to console
-	void dumpState();
 	
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

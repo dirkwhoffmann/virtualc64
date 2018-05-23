@@ -129,7 +129,7 @@ ReSID::setChipModel(SIDChipModel model)
     
     c64->suspend();
     sid->set_chip_model((reSID::chip_model)chipModel);
-    // sid->reset();
+    sid->filter.reset();
     c64->resume();
     
     assert((SIDChipModel)sid->sid_model == chipModel);
@@ -174,6 +174,7 @@ ReSID::setAudioFilter(bool value)
     
     c64->suspend();
     sid->enable_filter(value);
+    sid->filter.reset();
     c64->resume();
     
     debug("%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
@@ -247,16 +248,6 @@ ReSID::execute(uint64_t elapsedCycles)
     if (bufindex) {
         bridge->writeData(buf, bufindex);
     }
-}
-
-void
-ReSID::dumpState()
-{
-	msg("ReSID\n");
-	msg("-----\n\n");
-    msg("   Sample rate : %d\n", getSampleRate());
-    msg(" CPU frequency : %d\n", getClockFrequency());
-	msg("\n");
 }
 
 SIDInfo

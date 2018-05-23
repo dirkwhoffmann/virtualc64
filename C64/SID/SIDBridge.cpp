@@ -123,6 +123,13 @@ SIDBridge::dumpState()
     msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
     msg("\n");
     dumpState(fastsid.getInfo());
+    
+    resid.sid->voice[0].wave.reset(); // reset_shift_register();
+    resid.sid->voice[1].wave.reset(); // reset_shift_register();
+    resid.sid->voice[2].wave.reset(); // reset_shift_register();
+    resid.sid->voice[0].envelope.reset();
+    resid.sid->voice[1].envelope.reset();
+    resid.sid->voice[2].envelope.reset();
 }
 
 SIDInfo
@@ -188,7 +195,7 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
     fastsid.poke(addr, value);
     
     // Run ReSID for at least one cycle to make pipelined writes work
-    if (!useReSID) resid.sid->clock();
+    if (!useReSID) resid.clock();
 }
 
 void
