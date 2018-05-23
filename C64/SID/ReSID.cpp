@@ -23,8 +23,9 @@ ReSID::ReSID()
 	setDescription("ReSID");
 	debug(3, "  Creating ReSID at address %p...\n", this);
 
-    sampleRate = 44100;
+    chipModel = MOS_6581;
     emulateFilter = true;
+    sampleRate = 44100;
 
     sid = new reSID::SID();
     sid->set_chip_model(reSID::MOS6581);
@@ -106,12 +107,6 @@ ReSID::reset()
     debug("ReSID::reset\n");
     VirtualComponent::reset();
     
-    // Lookup current configuration
-    reSID::chip_model model = (reSID::chip_model)bridge->getChipModel();
-    double clockFrequency = (double)bridge->getClockFrequency();
-    reSID::sampling_method method = (reSID::sampling_method)bridge->getSamplingMethod();
-    uint32_t sampleFrequency = (double)bridge->getSampleRate();
-    
     // Create new reSID object
     // Note: We don't use reSID::reset() which only performs a soft reset
     assert(sid != NULL);
@@ -119,8 +114,10 @@ ReSID::reset()
     sid = new reSID::SID();
     
     // Reconfigure reSID
-    sid->set_chip_model(model);
-    sid->set_sampling_parameters(clockFrequency, method, sampleFrequency);
+    sid->set_chip_model((reSID::chip_model)chipModel);
+    sid->set_sampling_parameters((double)clockFrequency,
+                                 (reSID::sampling_method)samplingMethod,
+                                 (double)sampleRate);
     sid->enable_filter(emulateFilter);
 }
 
@@ -128,43 +125,46 @@ void
 ReSID::setChipModel(SIDChipModel model)
 {
     assert(model == 0 || model == 1);
+    chipModel = model;
     
     c64->suspend();
-    sid->set_chip_model((reSID::chip_model)model);
-    sid->reset();
+    sid->set_chip_model((reSID::chip_model)chipModel);
+    // sid->reset();
     c64->resume();
     
+    assert((SIDChipModel)sid->sid_model == chipModel);
     debug("Emulating SID model %s.\n",
-          (model == reSID::MOS6581) ? "MOS6581" :
-          (model == reSID::MOS8580) ? "MOS8580" : "?");
+          (chipModel == reSID::MOS6581) ? "MOS6581" :
+          (chipModel == reSID::MOS8580) ? "MOS8580" : "?");
 }
 
 void
 ReSID::setClockFrequency(uint32_t value)
 {
-    double frequency = (double)value;
-    reSID::sampling_method method = sid->sampling;
-    double rate = (double)sampleRate;
+    clockFrequency = value;
     
     c64->suspend();
-    sid->set_sampling_parameters(frequency, method, rate);
+    sid->set_sampling_parameters((double)clockFrequency,
+                                 (reSID::sampling_method)samplingMethod,
+                                 (double)sampleRate);
     c64->resume();
     
-    debug("Changing clock frequency to %d\n", value);
+    assert((uint32_t)sid->clock_frequency == clockFrequency);
+    debug("Setting clock frequency to %d cycles per second.\n", clockFrequency);
 }
 
 void
 ReSID::setSampleRate(uint32_t value)
 {
-    double frequency = sid->clock_frequency;
-    reSID::sampling_method method = sid->sampling;
-    double rate = (double)value;
+    sampleRate = value;
     
     c64->suspend();
-    sid->set_sampling_parameters(frequency, method, rate);
+    sid->set_sampling_parameters((double)clockFrequency,
+                                 (reSID::sampling_method)samplingMethod,
+                                 (double)sampleRate);
     c64->resume();
     
-    debug("Changing sample rate to %d\n", value);
+    debug("Setting sample rate to %d samples per second.\n", sampleRate);
 }
 
 void 
@@ -182,19 +182,20 @@ ReSID::setAudioFilter(bool value)
 void 
 ReSID::setSamplingMethod(SamplingMethod value)
 {
-    double frequency = sid->clock_frequency;
-    reSID::sampling_method method = (reSID::sampling_method)value;
-    double rate = (double)sampleRate;
+    samplingMethod = value;
     
     c64->suspend();
-    sid->set_sampling_parameters(frequency, method, rate);
+    sid->set_sampling_parameters((double)clockFrequency,
+                                 (reSID::sampling_method)samplingMethod,
+                                 (double)sampleRate);
     c64->resume();
     
-    debug("Changing ReSID sampling method to %s.\n",
-          (method == reSID::SAMPLE_FAST) ? "SAMPLE_FAST" :
-          (method == reSID::SAMPLE_INTERPOLATE) ? "SAMPLE_INTERPOLATE" :
-          (method == reSID::SAMPLE_RESAMPLE) ? "SAMPLE_RESAMPLE" :
-          (method == reSID::SAMPLE_RESAMPLE_FASTMEM) ? "SAMPLE_RESAMPLE_FASTMEM" : "?");
+    assert((SamplingMethod)sid->sampling == samplingMethod);
+    debug("Setting reSID sampling method to %s.\n",
+          (samplingMethod == SID_SAMPLE_FAST) ? "SAMPLE_FAST" :
+          (samplingMethod == SID_SAMPLE_INTERPOLATE) ? "SAMPLE_INTERPOLATE" :
+          (samplingMethod == SID_SAMPLE_RESAMPLE) ? "SAMPLE_RESAMPLE" :
+          (samplingMethod == SID_SAMPLE_RESAMPLE_FASTMEM) ? "SAMPLE_RESAMPLE_FASTMEM" : "?");
 }
 
 void

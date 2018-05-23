@@ -200,6 +200,8 @@ VIC::dumpState()
 void
 VIC::setChipModel(VICChipModel model)
 {
+    debug(2, "VIC::setChipModel\n");
+
     chipModel = model;
     pixelEngine.resetScreenBuffers();
     c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);

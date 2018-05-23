@@ -39,8 +39,19 @@ private:
     //! ReSID state
     reSID::SID::State st;
     
-    //! @brief   Sample rate (44.1 kHz per default)
+    //! @brief   The emulated chip model
+    SIDChipModel chipModel;
+    
+    //! @brief   Clock frequency
+    /*! @details Either PAL_CYCLES_PER_SECOND or NTSC_CYCLES_PER_SECOND
+     */
+    uint32_t clockFrequency;
+    
+    //! @brief   Sample rate (usually set to 44.1 kHz)
     uint32_t sampleRate;
+    
+    //! @brief   Sampling method
+    SamplingMethod samplingMethod;
     
     //! @brief   Switches filter emulation on or off.
     bool emulateFilter;
@@ -87,13 +98,19 @@ public:
     // Configuring
     
     //! Returns the chip model
-    SIDChipModel getChipModel() { return (SIDChipModel)sid->sid_model; }
+    SIDChipModel getChipModel() {
+        assert((SIDChipModel)sid->sid_model == chipModel);
+        return chipModel;
+    }
     
     //! Sets the chip model
     void setChipModel(SIDChipModel value);
     
     //! Returns the clock frequency
-    uint32_t getClockFrequency() { return (uint32_t)sid->clock_frequency; }
+    uint32_t getClockFrequency() {
+        assert((uint32_t)sid->clock_frequency == clockFrequency);
+        return (uint32_t)sid->clock_frequency;
+    }
     
     //! Sets the clock frequency
     void setClockFrequency(uint32_t frequency);
@@ -111,13 +128,13 @@ public:
 	void setAudioFilter(bool enable);
 
     //! Get sampling method
-    SamplingMethod getSamplingMethod() { return (SamplingMethod)sid->sampling; }
+    SamplingMethod getSamplingMethod() {
+        assert((SamplingMethod)sid->sampling == samplingMethod);
+        return samplingMethod;
+    }
     
     //! Set sampling method
     void setSamplingMethod(SamplingMethod value);
-    
- 
-
 };
 
 #endif
