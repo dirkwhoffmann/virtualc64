@@ -89,7 +89,8 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func SIDEngineAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
-        c64.setReSID(sender.selectedTag() == 1);
+        c64.setReSID(sender.selectedTag() == 1)
+        // parent.waveformView.initAutoScaler()
         update()
     }
     

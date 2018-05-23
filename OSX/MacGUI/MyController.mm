@@ -91,6 +91,35 @@
 @synthesize ciaImrBinary;
 @synthesize ciaIntLineLow;
 
+// Debugger (SID)
+@synthesize volume;
+@synthesize potX;
+@synthesize potY;
+
+@synthesize voiceSelector;
+@synthesize waveform;
+@synthesize frequency;
+@synthesize pulseWidth;
+@synthesize attackRate;
+@synthesize delayRate;
+@synthesize sustainRate;
+@synthesize releaseRate;
+@synthesize gateBit;
+@synthesize testBit;
+@synthesize syncBit;
+@synthesize ringBit;
+
+@synthesize filterType;
+@synthesize filterCutoff;
+@synthesize filterResonance;
+@synthesize filter1;
+@synthesize filter2;
+@synthesize filter3;
+
+@synthesize waveformView;
+@synthesize audioBufferLevel;
+@synthesize audioBufferLevelText;
+
 // Toolbar
 @synthesize controlPort1;
 @synthesize controlPort2;
@@ -140,6 +169,7 @@
 	[self refreshCPU];
 	[self refreshCIA];
 	[self refreshVIC];
+    [self refreshSID];
 	[cpuTableView refresh];
 	[memTableView refresh];
 }

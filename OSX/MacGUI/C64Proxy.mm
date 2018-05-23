@@ -335,6 +335,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->sid->dumpState(); }
+- (SIDInfo) getInfo { return wrapper->sid->getInfo(); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
@@ -345,6 +346,15 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
     wrapper->sid->readStereoSamplesInterleaved(target, n);
+}
+- (NSInteger) ringbufferSize { return wrapper->sid->ringbufferSize(); }
+- (NSInteger) readPtr { return wrapper->sid->getReadPtr(); }
+- (NSInteger) writePtr { return wrapper->sid->getWritePtr(); }
+- (float) snoop:(NSInteger)offset {
+    return wrapper->sid->snoop(offset);
+}
+- (float) snoop:(NSInteger)offset range:(NSInteger)range {
+    return wrapper->sid->snoop(offset, (unsigned)range);
 }
 
 @end

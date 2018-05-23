@@ -114,22 +114,22 @@ FastSID::dumpState()
     msg("Filter cut off: %d\n\n", info.filterCutoff);
 
     for (unsigned i = 0; i < 3; i++) {
-        
-        uint8_t wf = info.voice[i].waveform;
-        msg("Voice %d:       Frequency: %d\n", i, info.voice[i].frequency);
-        msg("             Pulse width: %d\n", info.voice[i].pulseWidth);
+        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
+        uint8_t wf = vinfo->waveform;
+        msg("Voice %d:       Frequency: %d\n", i, vinfo->frequency);
+        msg("             Pulse width: %d\n", vinfo->pulseWidth);
         msg("                Waveform: %s\n",
             (wf == FASTSID_NOISE) ? "NOISE" :
             (wf == FASTSID_PULSE) ? "PULSE" :
             (wf == FASTSID_SAW) ? "SAW" :
             (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
-        msg("         Ring modulation: %s\n", info.voice[i].ringMod ? "yes" : "no");
-        msg("               Hard sync: %s\n", info.voice[i].hardSync ? "yes" : "no");
-        msg("             Attack rate: %d\n", info.voice[i].attackRate);
-        msg("              Decay rate: %d\n", info.voice[i].decayRate);
-        msg("            Sustain rate: %d\n", info.voice[i].sustainRate);
-        msg("            Release rate: %d\n", info.voice[i].releaseRate);
-        msg("            Apply filter: %s\n\n", info.voice[i].filterOn ? "yes" : "no");
+        msg("         Ring modulation: %s\n", vinfo->ringMod ? "yes" : "no");
+        msg("               Hard sync: %s\n", vinfo->hardSync ? "yes" : "no");
+        msg("             Attack rate: %d\n", vinfo->attackRate);
+        msg("              Decay rate: %d\n", vinfo->decayRate);
+        msg("            Sustain rate: %d\n", vinfo->sustainRate);
+        msg("            Release rate: %d\n", vinfo->releaseRate);
+        msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
     }
 }
 
@@ -139,16 +139,19 @@ FastSID::getInfo()
     SIDInfo info;
  
     for (unsigned i = 0; i < 3; i++) {
-        info.voice[i].frequency = voice[i].frequency();
-        info.voice[i].pulseWidth = voice[i].pulseWidth();
-        info.voice[i].waveform = voice[i].waveform();
-        info.voice[i].ringMod = voice[i].ringModBit();
-        info.voice[i].hardSync = voice[i].syncBit();
-        info.voice[i].attackRate = voice[i].attackRate();
-        info.voice[i].decayRate = voice[i].decayRate();
-        info.voice[i].sustainRate = voice[i].sustainRate();
-        info.voice[i].releaseRate = voice[i].releaseRate();
-        info.voice[i].filterOn = filterOn(i);
+        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
+        vinfo->frequency = voice[i].frequency();
+        vinfo->pulseWidth = voice[i].pulseWidth();
+        vinfo->waveform = voice[i].waveform();
+        vinfo->ringMod = voice[i].ringModBit();
+        vinfo->hardSync = voice[i].syncBit();
+        vinfo->gateBit = voice[i].gateBit();
+        vinfo->testBit = voice[i].testBit();
+        vinfo->attackRate = voice[i].attackRate();
+        vinfo->decayRate = voice[i].decayRate();
+        vinfo->sustainRate = voice[i].sustainRate();
+        vinfo->releaseRate = voice[i].releaseRate();
+        vinfo->filterOn = filterOn(i);
     }
     info.volume = sidVolume();
     info.filterType = filterType();
@@ -500,5 +503,5 @@ FastSID::calculateSingleSample()
         osc2 = ((uint32_t)(v2->filterIO) + 0x80) << (7 + 15);
     }
     
-    return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume());
+    return (int16_t)(((int32_t)((osc0 + osc1 + osc2) >> 20) - 0x600) * sidVolume() * 0.75);
 }

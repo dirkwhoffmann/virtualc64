@@ -86,22 +86,22 @@ SIDBridge::dumpState(SIDInfo info)
     msg("Filter cut off: %d\n\n", info.filterCutoff);
     
     for (unsigned i = 0; i < 3; i++) {
-        
-        uint8_t wf = info.voice[i].waveform;
-        msg("Voice %d:       Frequency: %d\n", i, info.voice[i].frequency);
-        msg("             Pulse width: %d\n", info.voice[i].pulseWidth);
+        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
+        uint8_t wf = vinfo->waveform;
+        msg("Voice %d:       Frequency: %d\n", i, vinfo->frequency);
+        msg("             Pulse width: %d\n", vinfo->pulseWidth);
         msg("                Waveform: %s\n",
             (wf == FASTSID_NOISE) ? "NOISE" :
             (wf == FASTSID_PULSE) ? "PULSE" :
             (wf == FASTSID_SAW) ? "SAW" :
             (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
-        msg("         Ring modulation: %s\n", info.voice[i].ringMod ? "yes" : "no");
-        msg("               Hard sync: %s\n", info.voice[i].hardSync ? "yes" : "no");
-        msg("             Attack rate: %d\n", info.voice[i].attackRate);
-        msg("              Decay rate: %d\n", info.voice[i].decayRate);
-        msg("            Sustain rate: %d\n", info.voice[i].sustainRate);
-        msg("            Release rate: %d\n", info.voice[i].releaseRate);
-        msg("            Apply filter: %s\n\n", info.voice[i].filterOn ? "yes" : "no");
+        msg("         Ring modulation: %s\n", vinfo->ringMod ? "yes" : "no");
+        msg("               Hard sync: %s\n", vinfo->hardSync ? "yes" : "no");
+        msg("             Attack rate: %d\n", vinfo->attackRate);
+        msg("              Decay rate: %d\n", vinfo->decayRate);
+        msg("            Sustain rate: %d\n", vinfo->sustainRate);
+        msg("            Release rate: %d\n", vinfo->releaseRate);
+        msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
     }
 }
 
@@ -127,7 +127,10 @@ SIDBridge::dumpState()
 SIDInfo
 SIDBridge::getInfo()
 {
-    return useReSID ? resid.getInfo() : fastsid.getInfo();
+    SIDInfo info = useReSID ? resid.getInfo() : fastsid.getInfo();
+    info.potX = c64->potXBits();
+    info.potY = c64->potYBits();
+    return info;
 }
 
 void
@@ -345,12 +348,29 @@ SIDBridge::readData()
             volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
-    value = (volume <= 0) ? 0.0f : value * (float)volume / 100000.0f;
+    float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
+    value = (volume <= 0) ? 0.0f : value * (float)volume / divider;
     
     // Advance read pointer
     advanceReadPtr();
     
     return value;
+}
+
+float
+SIDBridge::snoop(size_t offset)
+{
+    return ringBuffer[(readPtr + offset) % bufferSize];
+}
+
+float
+SIDBridge::snoop(size_t offset, unsigned range)
+{
+    float result = 0.0;
+    for (unsigned i = 0; i < range; i++) {
+        result += snoop(i);
+    }
+    return result / range;
 }
 
 void

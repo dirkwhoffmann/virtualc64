@@ -205,11 +205,24 @@ public:
     // Ringbuffer handling
     //
     
+    //! @brief  Returns the size of the ringbuffer
+    size_t ringbufferSize() { return bufferSize; }
+    
+    //! @brief  Returns the position of the read pointer
+    uint32_t getReadPtr() { return readPtr; }
+
+    //! @brief  Returns the position of the write pointer
+    uint32_t getWritePtr() { return writePtr; }
+
     //! @brief  Clears the ringbuffer and resets the read and write pointer
     void clearRingbuffer();
     
     //! @brief  Reads a single audio sample from the ringbuffer
     float readData();
+    
+    //! @brief  Reads a single audio sample without moving the read pointer
+    float snoop(size_t offset);
+    float snoop(size_t offset, unsigned range);
     
     /*! @brief   Reads a certain amount of samples from ringbuffer
      *  @details Samples are stored in a single mono stream

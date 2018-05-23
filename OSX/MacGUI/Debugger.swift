@@ -477,7 +477,21 @@ extension MyController {
         ciaImrBinary.intValue = Int32(info.imr)
         ciaIntLineLow.state = info.intLine ? .off : .on
     }
-
 }
 
+//
+// SID debug panel
+//
 
+extension MyController {
+
+    @objc func refreshSID() {
+        
+        let info = c64.sid.getInfo()
+        let i = voiceSelector.indexOfSelectedItem
+        let vinfo = (i == 0) ? info.voice1 : (i == 1) ? info.voice2 : info.voice3
+        frequency.intValue = Int32(vinfo.frequency)
+        
+        waveformView.needsDisplay = true
+    }
+}

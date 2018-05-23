@@ -237,16 +237,19 @@ ReSID::getInfo()
 
     for (unsigned i = 0; i < 3; i++) {
         uint8_t *sidreg = (uint8_t *)state.sid_register + (i * 7);
-        info.voice[i].frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
-        info.voice[i].pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
-        info.voice[i].waveform = sidreg[0x04] & 0xF0;
-        info.voice[i].ringMod = (sidreg[0x04] & 0x04) != 0;
-        info.voice[i].hardSync = (sidreg[0x04] & 0x02) != 0;
-        info.voice[i].attackRate = sidreg[0x05] >> 4;
-        info.voice[i].decayRate = sidreg[0x05] & 0x0F;
-        info.voice[i].sustainRate = sidreg[0x06] >> 4;
-        info.voice[i].releaseRate = sidreg[0x06] & 0x0F;
-        info.voice[i].filterOn = GET_BIT(state.sid_register[0x17], i) != 0;
+        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
+        vinfo->frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
+        vinfo->pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
+        vinfo->waveform = sidreg[0x04] & 0xF0;
+        vinfo->ringMod = (sidreg[0x04] & 0x04) != 0;
+        vinfo->hardSync = (sidreg[0x04] & 0x02) != 0;
+        vinfo->gateBit = (sidreg[0x04] & 0x01) != 0;
+        vinfo->testBit = (sidreg[0x04] & 0x08) != 0;
+        vinfo->attackRate = sidreg[0x05] >> 4;
+        vinfo->decayRate = sidreg[0x05] & 0x0F;
+        vinfo->sustainRate = sidreg[0x06] >> 4;
+        vinfo->releaseRate = sidreg[0x06] & 0x0F;
+        vinfo->filterOn = GET_BIT(state.sid_register[0x17], i) != 0;
     }
     info.volume = state.sid_register[0x18] & 0x0F;
     info.filterType = state.sid_register[0x18] & 0x70;

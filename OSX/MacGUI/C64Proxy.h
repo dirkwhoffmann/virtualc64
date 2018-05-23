@@ -265,12 +265,17 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+- (SIDInfo) getInfo;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
-
+- (NSInteger) ringbufferSize;
+- (NSInteger) readPtr;
+- (NSInteger) writePtr;
+- (float) snoop:(NSInteger)offset;
+- (float) snoop:(NSInteger)offset range:(NSInteger)range;
 @end
 
 // --------------------------------------------------------------------------

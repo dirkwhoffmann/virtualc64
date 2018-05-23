@@ -1,0 +1,58 @@
+//
+//  WaveformView.swift
+//  VirtualC64
+//
+//  Created by Dirk Hoffmann on 23.05.18.
+//
+
+import Foundation
+
+@objc class WaveformView: NSView {
+ 
+    @IBOutlet var controller: MyController!
+    
+    // Remembers the highest amplitude (used for auto scaling)
+    var highestAmplitude: Float = 0.001
+    
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
+ 
+    required override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+    }
+  
+    // Restarts the auto scaling mechanism
+    func initAutoScaler() {
+        // track()
+        highestAmplitude = 0.001
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        
+        super.draw(dirtyRect)
+    
+        let context = NSGraphicsContext.current?.cgContext
+        
+        NSColor.clear.set()
+        context?.fill(dirtyRect)
+        
+        let w = Int(frame.width)
+        let baseline = Float(frame.height / 2)
+        let normalizer = highestAmplitude
+        highestAmplitude = 0.001
+        
+        for x in 0...w {
+            let sample = controller!.c64.sid.snoop(40 * x)
+            let absvalue = abs(sample)
+            highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
+            var scaledsample = absvalue / normalizer * baseline
+            let from = CGPoint(x: x, y: Int(baseline + scaledsample + 1))
+            let to = CGPoint(x: x, y: Int(baseline - scaledsample))
+            context?.move(to: from)
+            context?.addLine(to: to)
+        }
+        NSColor.gray.setStroke()
+        context?.strokePath()
+    }
+}

@@ -25,6 +25,7 @@
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
+		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50169F03209E045A00CB3536 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EE8209E045300CB3536 /* envelope.cc */; };
 		50169F04209E045A00CB3536 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EE9209E045300CB3536 /* pot.cc */; };
 		50169F05209E045A00CB3536 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EEA209E045300CB3536 /* sid.cc */; };
@@ -288,6 +289,7 @@
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
+		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50169EE8209E045300CB3536 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
 		50169EE9209E045300CB3536 /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
 		50169EEA209E045300CB3536 /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
@@ -757,6 +759,7 @@
 				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
 				50DC89C720B2EB53005E0557 /* CpuTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
+				5015F36520B546A30024B4AA /* WaveformView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1480,6 +1483,7 @@
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
+				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,

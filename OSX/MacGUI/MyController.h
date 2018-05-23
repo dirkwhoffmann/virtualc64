@@ -31,6 +31,7 @@
 @class MetalView;
 @class CpuTableView;
 @class MemTableView;
+@class WaveformView;
 @class Speedometer;
 
 @interface MyController : NSWindowController 
@@ -68,7 +69,7 @@
 	IBOutlet NSLevelIndicator *clockSpeedBar;
 	IBOutlet NSButton *warpIcon;
 	
-	// Debug panel (common)
+	// Debug panel (commons)
     BOOL hex;
     
 	IBOutlet NSMatrix *dezHexSelector;
@@ -96,7 +97,7 @@
 	// Debug panel (Memory)
 	IBOutlet MemTableView *memTableView;
 	
-	// Debug pabel (CIA)
+	// Debug panel (CIA)
     IBOutlet NSSegmentedControl *ciaSelector;
     
     IBOutlet NSTextField *ciaPA;
@@ -220,7 +221,37 @@
 	IBOutlet NSTextField *VicRasterline;
 	IBOutlet NSButton *VicEnableRasterInterrupt;
 	IBOutlet NSTextField *VicRasterInterrupt;
-		
+	
+    // Debugger (SID panel)
+    IBOutlet NSTextField *volume;
+    IBOutlet NSTextField *potX;
+    IBOutlet NSTextField *potY;
+
+    IBOutlet NSSegmentedControl *voiceSelector;
+    IBOutlet NSPopUpButton *waveform;
+    IBOutlet NSTextField *frequency;
+    IBOutlet NSTextField *pulseWidth;
+    IBOutlet NSTextField *attackRate;
+    IBOutlet NSTextField *delayRate;
+    IBOutlet NSTextField *sustainRate;
+    IBOutlet NSTextField *releaseRate;
+    IBOutlet NSButton *gateBit;
+    IBOutlet NSButton *testBit;
+    IBOutlet NSButton *syncBit;
+    IBOutlet NSButton *ringBit;
+
+    IBOutlet NSPopUpButton *filterType;
+    IBOutlet NSTextField *filterCutoff;
+    IBOutlet NSTextField *filterResonance;
+    IBOutlet NSButton *filter1;
+    IBOutlet NSButton *filter2;
+    IBOutlet NSButton *filter3;
+    
+    IBOutlet WaveformView *waveformView;
+    IBOutlet NSLevelIndicator *audioBufferLevel;
+    IBOutlet NSTextField *audioBufferLevelText;
+
+    
 	/*! @brief   Update loop timer
      *  @details The update task activated 60 times a second
      *           and performs everything from drawing frames or 
@@ -335,6 +366,35 @@
 @property NSTextField *ciaImr;
 @property NSTextField *ciaImrBinary;
 @property NSButton *ciaIntLineLow;
+
+// Debugger (SID Panel)
+@property NSTextField *volume;
+@property NSTextField *potX;
+@property NSTextField *potY;
+
+@property NSSegmentedControl *voiceSelector;
+@property NSPopUpButton *waveform;
+@property NSTextField *frequency;
+@property NSTextField *pulseWidth;
+@property NSTextField *attackRate;
+@property NSTextField *delayRate;
+@property NSTextField *sustainRate;
+@property NSTextField *releaseRate;
+@property NSButton *gateBit;
+@property NSButton *testBit;
+@property NSButton *syncBit;
+@property NSButton *ringBit;
+
+@property NSPopUpButton *filterType;
+@property NSTextField *filterCutoff;
+@property NSTextField *filterResonance;
+@property NSButton *filter1;
+@property NSButton *filter2;
+@property NSButton *filter3;
+
+@property WaveformView *waveformView;
+@property NSLevelIndicator *audioBufferLevel;
+@property NSTextField *audioBufferLevelText;
 
 
 @property PropertiesDialog *propertiesDialog;
