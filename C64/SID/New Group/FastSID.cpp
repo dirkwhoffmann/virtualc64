@@ -55,7 +55,7 @@ FastSID::FastSID()
     registerSnapshotItems(items, sizeof(items));
     
     // Initialize wave and noise tables
-    Voice::initWaveTables();
+    FastVoice::initWaveTables();
     
     // Initialize voices
     voice[0].init(this, 0, &voice[3]);
@@ -424,9 +424,9 @@ int16_t
 FastSID::calculateSingleSample()
 {
     uint32_t osc0, osc1, osc2;
-    Voice *v0 = &voice[0];
-    Voice *v1 = &voice[1];
-    Voice *v2 = &voice[2];
+    FastVoice *v0 = &voice[0];
+    FastVoice *v1 = &voice[1];
+    FastVoice *v2 = &voice[2];
     bool sync0 = false;
     bool sync1 = false;
     bool sync2 = false;

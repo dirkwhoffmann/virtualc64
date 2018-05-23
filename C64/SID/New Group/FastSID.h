@@ -30,7 +30,7 @@
 #define _FASTSID_INC
 
 #include "VirtualComponent.h"
-#include "FastSidVoice.h"
+#include "FastVoice.h"
 
 
 //! The virtual sound interface device (SID)
@@ -53,7 +53,7 @@ public:
 private:
     
     //! @brief   The three SID voices
-    Voice voice[3];
+    FastVoice voice[3];
         
     //! @brief   Chip model.
     SIDChipModel chipModel;

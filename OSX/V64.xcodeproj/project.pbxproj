@@ -26,15 +26,15 @@
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
-		50169F03209E045A00CB3536 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EE8209E045300CB3536 /* envelope.cc */; };
-		50169F04209E045A00CB3536 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EE9209E045300CB3536 /* pot.cc */; };
-		50169F05209E045A00CB3536 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EEA209E045300CB3536 /* sid.cc */; };
-		50169F06209E045A00CB3536 /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EED209E045400CB3536 /* voice.cc */; };
-		50169F07209E045A00CB3536 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF1209E045500CB3536 /* wave.cc */; };
-		50169F08209E045A00CB3536 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF2209E045500CB3536 /* filter.cc */; };
-		50169F09209E045A00CB3536 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF9209E045700CB3536 /* version.cc */; };
-		50169F0A209E045A00CB3536 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EFE209E045800CB3536 /* dac.cc */; };
-		50169F0B209E045A00CB3536 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169F00209E045800CB3536 /* extfilt.cc */; };
+		5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39120B5E3C50024B4AA /* voice.cc */; };
+		5015F3AD20B5E3C80024B4AA /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39A20B5E3C60024B4AA /* version.cc */; };
+		5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39B20B5E3C60024B4AA /* dac.cc */; };
+		5015F3AF20B5E3C80024B4AA /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39D20B5E3C60024B4AA /* wave.cc */; };
+		5015F3B020B5E3C80024B4AA /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A020B5E3C70024B4AA /* pot.cc */; };
+		5015F3B120B5E3C80024B4AA /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A620B5E3C70024B4AA /* filter.cc */; };
+		5015F3B220B5E3C80024B4AA /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A820B5E3C80024B4AA /* envelope.cc */; };
+		5015F3B320B5E3C80024B4AA /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3AA20B5E3C80024B4AA /* extfilt.cc */; };
+		5015F3B420B5E3C80024B4AA /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3AB20B5E3C80024B4AA /* sid.cc */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -99,7 +99,7 @@
 		504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A81BF71FD500B29BEB /* clock_red.png */; };
 		504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A91BF71FD500B29BEB /* pin_red.png */; };
 		504A22B01BF71FD500B29BEB /* pin_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22AA1BF71FD500B29BEB /* pin_black.png */; };
-		504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */; };
+		504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
 		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
@@ -290,34 +290,34 @@
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
-		50169EE8209E045300CB3536 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
-		50169EE9209E045300CB3536 /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
-		50169EEA209E045300CB3536 /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
-		50169EEB209E045300CB3536 /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580__ST.h; sourceTree = "<group>"; };
-		50169EEC209E045400CB3536 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
-		50169EED209E045400CB3536 /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
-		50169EEE209E045400CB3536 /* wave6581_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_P_T.h; sourceTree = "<group>"; };
-		50169EEF209E045400CB3536 /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_PST.h; sourceTree = "<group>"; };
-		50169EF0209E045400CB3536 /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
-		50169EF1209E045500CB3536 /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
-		50169EF2209E045500CB3536 /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
-		50169EF3209E045500CB3536 /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
-		50169EF4209E045600CB3536 /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
-		50169EF5209E045600CB3536 /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_P_T.h; sourceTree = "<group>"; };
-		50169EF6209E045600CB3536 /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
-		50169EF7209E045600CB3536 /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
-		50169EF8209E045600CB3536 /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
-		50169EF9209E045700CB3536 /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
-		50169EFA209E045700CB3536 /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "resid-config.h"; sourceTree = "<group>"; };
-		50169EFB209E045700CB3536 /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_PS_.h; sourceTree = "<group>"; };
-		50169EFC209E045800CB3536 /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PS_.h; sourceTree = "<group>"; };
-		50169EFD209E045800CB3536 /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PST.h; sourceTree = "<group>"; };
-		50169EFE209E045800CB3536 /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dac.cc; sourceTree = "<group>"; };
-		50169EFF209E045800CB3536 /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
-		50169F00209E045800CB3536 /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
-		50169F01209E045900CB3536 /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
-		50169F02209E045900CB3536 /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581__ST.h; sourceTree = "<group>"; };
-		50169F0C209E055B00CB3536 /* siddefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
+		5015F39020B5E3C40024B4AA /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "resid-config.h"; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/resid-config.h"; sourceTree = "<group>"; };
+		5015F39120B5E3C50024B4AA /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
+		5015F39220B5E3C50024B4AA /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
+		5015F39320B5E3C50024B4AA /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
+		5015F39420B5E3C50024B4AA /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
+		5015F39520B5E3C50024B4AA /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
+		5015F39620B5E3C50024B4AA /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_PST.h"; sourceTree = "<group>"; };
+		5015F39720B5E3C50024B4AA /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
+		5015F39820B5E3C60024B4AA /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580__ST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580__ST.h"; sourceTree = "<group>"; };
+		5015F39920B5E3C60024B4AA /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581__ST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581__ST.h"; sourceTree = "<group>"; };
+		5015F39A20B5E3C60024B4AA /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
+		5015F39B20B5E3C60024B4AA /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dac.cc; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/dac.cc"; sourceTree = "<group>"; };
+		5015F39C20B5E3C60024B4AA /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PS_.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_PS_.h"; sourceTree = "<group>"; };
+		5015F39D20B5E3C60024B4AA /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
+		5015F39E20B5E3C60024B4AA /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_PST.h"; sourceTree = "<group>"; };
+		5015F39F20B5E3C60024B4AA /* wave6581_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_P_T.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_P_T.h"; sourceTree = "<group>"; };
+		5015F3A020B5E3C70024B4AA /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
+		5015F3A120B5E3C70024B4AA /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
+		5015F3A220B5E3C70024B4AA /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
+		5015F3A320B5E3C70024B4AA /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_P_T.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_P_T.h"; sourceTree = "<group>"; };
+		5015F3A420B5E3C70024B4AA /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
+		5015F3A520B5E3C70024B4AA /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dac.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/dac.h"; sourceTree = "<group>"; };
+		5015F3A620B5E3C70024B4AA /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
+		5015F3A720B5E3C80024B4AA /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PS_.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_PS_.h"; sourceTree = "<group>"; };
+		5015F3A820B5E3C80024B4AA /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
+		5015F3A920B5E3C80024B4AA /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
+		5015F3AA20B5E3C80024B4AA /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
+		5015F3AB20B5E3C80024B4AA /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
 		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
 		50171AA02083716000C07AAD /* CPU_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_types.h; sourceTree = "<group>"; };
@@ -403,8 +403,8 @@
 		504A22A81BF71FD500B29BEB /* clock_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_red.png; sourceTree = "<group>"; };
 		504A22A91BF71FD500B29BEB /* pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_red.png; sourceTree = "<group>"; };
 		504A22AA1BF71FD500B29BEB /* pin_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_black.png; sourceTree = "<group>"; };
-		504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSidVoice.cpp; sourceTree = "<group>"; };
-		504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSidVoice.h; sourceTree = "<group>"; };
+		504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastVoice.cpp; sourceTree = "<group>"; };
+		504DDB5220A0431E00FFD5B2 /* FastVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastVoice.h; sourceTree = "<group>"; };
 		504DDB5320A0431E00FFD5B2 /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1031,8 +1031,8 @@
 		5083D5D320A04CA400C1B4EE /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
-				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
-				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
+				504DDB5220A0431E00FFD5B2 /* FastVoice.h */,
+				504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */,
 				504DDB5320A0431E00FFD5B2 /* waves.h */,
 				50CA0D500A9076FD00A5A08D /* FastSID.h */,
 				50CA0D510A9076FD00A5A08D /* FastSID.cpp */,
@@ -1139,34 +1139,34 @@
 		50D141641417A34B0024FC74 /* resid */ = {
 			isa = PBXGroup;
 			children = (
-				50169EFE209E045800CB3536 /* dac.cc */,
-				50169EFF209E045800CB3536 /* dac.h */,
-				50169EE8209E045300CB3536 /* envelope.cc */,
-				50169EEC209E045400CB3536 /* envelope.h */,
-				50169F00209E045800CB3536 /* extfilt.cc */,
-				50169EF4209E045600CB3536 /* extfilt.h */,
-				50169EF2209E045500CB3536 /* filter.cc */,
-				50169EF0209E045400CB3536 /* filter.h */,
-				50169EE9209E045300CB3536 /* pot.cc */,
-				50169F01209E045900CB3536 /* pot.h */,
-				50169EFA209E045700CB3536 /* resid-config.h */,
-				50169EEA209E045300CB3536 /* sid.cc */,
-				50169EF3209E045500CB3536 /* sid.h */,
-				50169F0C209E055B00CB3536 /* siddefs.h */,
-				50169EF7209E045600CB3536 /* spline.h */,
-				50169EF9209E045700CB3536 /* version.cc */,
-				50169EED209E045400CB3536 /* voice.cc */,
-				50169EF8209E045600CB3536 /* voice.h */,
-				50169EF1209E045500CB3536 /* wave.cc */,
-				50169EF6209E045600CB3536 /* wave.h */,
-				50169F02209E045900CB3536 /* wave6581__ST.h */,
-				50169EEE209E045400CB3536 /* wave6581_P_T.h */,
-				50169EFC209E045800CB3536 /* wave6581_PS_.h */,
-				50169EFD209E045800CB3536 /* wave6581_PST.h */,
-				50169EEB209E045300CB3536 /* wave8580__ST.h */,
-				50169EF5209E045600CB3536 /* wave8580_P_T.h */,
-				50169EFB209E045700CB3536 /* wave8580_PS_.h */,
-				50169EEF209E045400CB3536 /* wave8580_PST.h */,
+				5015F39B20B5E3C60024B4AA /* dac.cc */,
+				5015F3A520B5E3C70024B4AA /* dac.h */,
+				5015F3A820B5E3C80024B4AA /* envelope.cc */,
+				5015F39220B5E3C50024B4AA /* envelope.h */,
+				5015F3AA20B5E3C80024B4AA /* extfilt.cc */,
+				5015F39320B5E3C50024B4AA /* extfilt.h */,
+				5015F3A620B5E3C70024B4AA /* filter.cc */,
+				5015F3A920B5E3C80024B4AA /* filter.h */,
+				5015F3A020B5E3C70024B4AA /* pot.cc */,
+				5015F3A420B5E3C70024B4AA /* pot.h */,
+				5015F39020B5E3C40024B4AA /* resid-config.h */,
+				5015F3AB20B5E3C80024B4AA /* sid.cc */,
+				5015F39720B5E3C50024B4AA /* sid.h */,
+				5015F39420B5E3C50024B4AA /* siddefs.h */,
+				5015F3A220B5E3C70024B4AA /* spline.h */,
+				5015F39A20B5E3C60024B4AA /* version.cc */,
+				5015F39120B5E3C50024B4AA /* voice.cc */,
+				5015F39520B5E3C50024B4AA /* voice.h */,
+				5015F39D20B5E3C60024B4AA /* wave.cc */,
+				5015F3A120B5E3C70024B4AA /* wave.h */,
+				5015F39920B5E3C60024B4AA /* wave6581__ST.h */,
+				5015F39F20B5E3C60024B4AA /* wave6581_P_T.h */,
+				5015F3A720B5E3C80024B4AA /* wave6581_PS_.h */,
+				5015F39620B5E3C50024B4AA /* wave6581_PST.h */,
+				5015F39820B5E3C60024B4AA /* wave8580__ST.h */,
+				5015F3A320B5E3C70024B4AA /* wave8580_P_T.h */,
+				5015F39C20B5E3C60024B4AA /* wave8580_PS_.h */,
+				5015F39E20B5E3C60024B4AA /* wave8580_PST.h */,
 			);
 			path = resid;
 			sourceTree = "<group>";
@@ -1406,10 +1406,12 @@
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
 				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
+				5015F3AD20B5E3C80024B4AA /* version.cc in Sources */,
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
+				5015F3B220B5E3C80024B4AA /* envelope.cc in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
@@ -1419,17 +1421,18 @@
 				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
+				5015F3B120B5E3C80024B4AA /* filter.cc in Sources */,
+				5015F3B420B5E3C80024B4AA /* sid.cc in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
+				5015F3B320B5E3C80024B4AA /* extfilt.cc in Sources */,
 				50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */,
+				5015F3AF20B5E3C80024B4AA /* wave.cc in Sources */,
 				5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */,
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
-				50169F0B209E045A00CB3536 /* extfilt.cc in Sources */,
-				50169F07209E045A00CB3536 /* wave.cc in Sources */,
-				50169F08209E045A00CB3536 /* filter.cc in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
@@ -1438,19 +1441,18 @@
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
-				50169F0A209E045A00CB3536 /* dac.cc in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
-				504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */,
+				504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
-				50169F03209E045A00CB3536 /* envelope.cc in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
+				5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */,
 				50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
@@ -1465,18 +1467,16 @@
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
+				5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
-				50169F05209E045A00CB3536 /* sid.cc in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
-				50169F09209E045A00CB3536 /* version.cc in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
-				50169F04209E045A00CB3536 /* pot.cc in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */,
@@ -1485,6 +1485,7 @@
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
+				5015F3B020B5E3C80024B4AA /* pot.cc in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
@@ -1498,7 +1499,6 @@
 				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
-				50169F06209E045A00CB3536 /* voice.cc in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

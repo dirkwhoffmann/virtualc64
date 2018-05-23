@@ -64,7 +64,7 @@
 #define NSEED 0x7ffff8
 
 
-class Voice : public VirtualComponent {
+class FastVoice : public VirtualComponent {
     
     friend class FastSID;
     
@@ -92,7 +92,7 @@ private:
     class FastSID *fastsid;
     
     //! @brief   Pointer to previous voice
-    Voice *prev;
+    FastVoice *prev;
     
     //! @brief   Pointer to SID registers controlling this voice
     uint8_t *sidreg;
@@ -164,10 +164,10 @@ private:
 public:
     
     //! @brief    Constructor
-    Voice();
+    FastVoice();
     
     //! @brief    Destructor
-    ~Voice();
+    ~FastVoice();
     
     //! @brief    Method from VirtualComponent
     void reset();
@@ -182,7 +182,7 @@ public:
     
     //! @brief    Initialize
     //! @details  Needs to be called once for each voice object
-    void init(FastSID *owner, unsigned voiceNr, Voice *prevVoice);
+    void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
 
     //! @brief    Updates the wavetable pointer
     void updateWaveTablePtr();
