@@ -1,5 +1,5 @@
 /*
- * (C) 2011 - 2017 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2011 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,15 @@ ReSID::ReSID()
 	setDescription("ReSID");
 	debug(3, "  Creating ReSID at address %p...\n", this);
 
+    sampleRate = 44100;
+    emulateFilter = true;
+
     sid = new reSID::SID();
+    sid->set_chip_model(reSID::MOS6581);
+    sid->set_sampling_parameters((double)PAL_CYCLES_PER_SECOND,
+                                 reSID::SAMPLE_FAST,
+                                 (double)sampleRate);
+    sid->enable_filter(emulateFilter);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -85,15 +93,6 @@ ReSID::ReSID()
         { NULL,                             0,                                        0 }};
     
     registerSnapshotItems(items, sizeof(items));
-    
-    // Set default values
-    sid->set_chip_model(reSID::MOS6581);
-    sampleRate = 44100;
-    sid->set_sampling_parameters((double)PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE,
-                                 reSID::SAMPLE_FAST,
-                                 (double)sampleRate);
-    
-    setAudioFilter(true);
 }
 
 ReSID::~ReSID()
@@ -106,13 +105,34 @@ ReSID::reset()
 {
     debug("ReSID::reset\n");
     VirtualComponent::reset();
-    sid->reset();
+    
+    // Lookup current configuration
+    reSID::chip_model model = (reSID::chip_model)bridge->getChipModel();
+    double clockFrequency = (double)bridge->getClockFrequency();
+    reSID::sampling_method method = (reSID::sampling_method)bridge->getSamplingMethod();
+    uint32_t sampleFrequency = (double)bridge->getSampleRate();
+    
+    // Create new reSID object
+    // Note: We don't use reSID::reset() which only performs a soft reset
+    assert(sid != NULL);
+    delete sid;
+    sid = new reSID::SID();
+    
+    // Reconfigure reSID
+    sid->set_chip_model(model);
+    sid->set_sampling_parameters(clockFrequency, method, sampleFrequency);
+    sid->enable_filter(emulateFilter);
 }
 
 void
 ReSID::setChipModel(SIDChipModel model)
 {
+    assert(model == 0 || model == 1);
+    
+    c64->suspend();
     sid->set_chip_model((reSID::chip_model)model);
+    sid->reset();
+    c64->resume();
     
     debug("Emulating SID model %s.\n",
           (model == reSID::MOS6581) ? "MOS6581" :
@@ -126,7 +146,9 @@ ReSID::setClockFrequency(uint32_t value)
     reSID::sampling_method method = sid->sampling;
     double rate = (double)sampleRate;
     
+    c64->suspend();
     sid->set_sampling_parameters(frequency, method, rate);
+    c64->resume();
     
     debug("Changing clock frequency to %d\n", value);
 }
@@ -138,7 +160,9 @@ ReSID::setSampleRate(uint32_t value)
     reSID::sampling_method method = sid->sampling;
     double rate = (double)value;
     
+    c64->suspend();
     sid->set_sampling_parameters(frequency, method, rate);
+    c64->resume();
     
     debug("Changing sample rate to %d\n", value);
 }
@@ -147,7 +171,10 @@ void
 ReSID::setAudioFilter(bool value)
 {
     emulateFilter = value;
+    
+    c64->suspend();
     sid->enable_filter(value);
+    c64->resume();
     
     debug("%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
 }
@@ -159,7 +186,9 @@ ReSID::setSamplingMethod(SamplingMethod value)
     reSID::sampling_method method = (reSID::sampling_method)value;
     double rate = (double)sampleRate;
     
+    c64->suspend();
     sid->set_sampling_parameters(frequency, method, rate);
+    c64->resume();
     
     debug("Changing ReSID sampling method to %s.\n",
           (method == reSID::SAMPLE_FAST) ? "SAMPLE_FAST" :

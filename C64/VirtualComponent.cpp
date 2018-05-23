@@ -104,9 +104,9 @@ VirtualComponent::isHalted()
 void
 VirtualComponent::suspend()
 {
-    debug(2, "Suspending...\n");
+    debug(2, "Suspending...(%d)\n", suspendCounter);
 
-    if (isHalted())
+    if (suspendCounter == 0 && isHalted())
         return;
     
     halt();
@@ -116,7 +116,7 @@ VirtualComponent::suspend()
 void
 VirtualComponent::resume()
 {
-    debug(2, "Resuming...\n");
+    debug(2, "Resuming (%d)...\n", suspendCounter);
     
     if (suspendCounter == 0)
         return;

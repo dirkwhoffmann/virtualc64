@@ -18,9 +18,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.11.1 or 1.12
+// RELEASE NOTES FOR NEXT RELEASE: 1.11.1
 //
-// Debugger has been cleaned up
+// Fixed a couple of bugs in the SID bridge which is the internal API for accessing the reSID library.
+// Replaced reSID files by those used in VICE 3.2.
+// Debugger has been cleaned up and extended by a SID panel.
+// Added D-Pad support for the Sony Dualshock 4 controller.
+//
 //
 // TODO:
 //
@@ -38,7 +42,7 @@
 // Snapshot version number of this release
 #define V_MAJOR 1
 #define V_MINOR 11
-#define V_SUBMINOR 0
+#define V_SUBMINOR 1
 
 // Disables assert checking in relase version
 // #define NDEBUG
