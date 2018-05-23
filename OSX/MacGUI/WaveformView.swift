@@ -14,6 +14,9 @@ import Foundation
     // Remembers the highest amplitude (used for auto scaling)
     var highestAmplitude: Float = 0.001
     
+    // Modulo counter to trigger image rendering
+    var delayCounter = 0
+    
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
     }
@@ -28,10 +31,20 @@ import Foundation
         highestAmplitude = 0.001
     }
     
+    func update() {
+        /*
+        delayCounter += 1
+        if delayCounter % 2 == 0 {
+            return
+        }
+        */
+        needsDisplay = true
+    }
+    
     override func draw(_ dirtyRect: NSRect) {
         
         super.draw(dirtyRect)
-    
+        
         let context = NSGraphicsContext.current?.cgContext
         
         NSColor.clear.set()

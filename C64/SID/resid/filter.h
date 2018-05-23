@@ -21,7 +21,6 @@
 #define RESID_FILTER_H
 
 #include "resid-config.h"
-#include "stdio.h"
 
 namespace reSID
 {
@@ -1537,14 +1536,14 @@ int Filter::solve_gain(opamp_t* opamp, int n, int vi, int& x, model_filter_t& mf
     // The dividend is scaled by m^2*2^27.
     int f = a*int(unsigned(b_vx)*unsigned(b_vx) >> 12) - c - int(unsigned(b_vo)*unsigned(b_vo) >> 5);
     // The divisor is scaled by m*2^11.
-    // Dirk Hoffmann: Old code causes overflow
-    // printf("b_vx = %d dvx = %d \n", b_vx, dvx);
-    // int df = (b_vo*(dvx + (1 << 11)) - a*(b_vx*dvx >> 7)) >> 15;
-    int df = (int)((b_vo*(dvx + (1 << 11)) - (long)a*(b_vx*dvx >> 7)) >> 15);
+    int df = (b_vo*(dvx + (1 << 11)) - a*(b_vx*dvx >> 7)) >> 15;
     // The resulting quotient is thus scaled by m*2^16.
 
     // Newton-Raphson step: xk1 = xk - f(xk)/f'(xk)
-    x -= f/df;
+    // If f(xk) or f'(xk) are zero then we can't improve further.
+    if (df) {
+        x -= f/df;
+    }
     if (unlikely(x == xk)) {
       // No further root improvement possible.
       return vo;
@@ -1720,7 +1719,7 @@ int Filter::solve_integrate_6581(int dt, int vi, int& vx, int& vc, model_filter_
   if (Vgd < 0) Vgd = 0;
 
   // VCR current, scaled by m*2^15*2^15 = m*2^30
-  int n_I_vcr = (vcr_n_Ids_term[Vgs] - vcr_n_Ids_term[Vgd]) << 15;
+  int n_I_vcr = int(unsigned(vcr_n_Ids_term[Vgs] - vcr_n_Ids_term[Vgd]) << 15);
 
   // Change in capacitor charge.
   vc -= (n_I_snake + n_I_vcr)*dt;

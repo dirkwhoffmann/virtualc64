@@ -231,6 +231,10 @@ unsigned short Filter::vcr_n_Ids_term[1 << 16];
 int Filter::n_snake;
 int Filter::n_param;
 
+#if defined(__amiga__) && defined(__mc68000__)
+#undef HAS_LOG1P
+#endif
+
 #ifndef HAS_LOG1P
 static double log1p(double x)
 {

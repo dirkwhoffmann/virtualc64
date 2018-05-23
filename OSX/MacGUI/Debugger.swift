@@ -530,6 +530,6 @@ extension MyController {
         bufferUnderflows.intValue = Int32(c64.sid.bufferUnderflows())
         bufferOverflows.intValue = Int32(c64.sid.bufferOverflows())
 
-        waveformView.needsDisplay = true
+        waveformView.update()
     }
 }
