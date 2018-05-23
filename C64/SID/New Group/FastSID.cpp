@@ -112,6 +112,7 @@ FastSID::dumpState()
         (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
         (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
     msg("Filter cut off: %d\n\n", info.filterCutoff);
+    msg("Filter resonance: %d\n\n", info.filterResonance);
 
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
@@ -156,6 +157,7 @@ FastSID::getInfo()
     info.volume = sidVolume();
     info.filterType = filterType();
     info.filterCutoff = filterCutoff();
+    info.filterResonance = filterResonance();
     
     return info;
 }

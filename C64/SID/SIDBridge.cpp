@@ -84,7 +84,8 @@ SIDBridge::dumpState(SIDInfo info)
         (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
         (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
     msg("Filter cut off: %d\n\n", info.filterCutoff);
-    
+    msg("Filter resonance: %d\n\n", info.filterResonance);
+
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
         uint8_t wf = vinfo->waveform;
@@ -437,12 +438,14 @@ SIDBridge::writeData(short *data, size_t count)
 void
 SIDBridge::handleBufferUnderflow()
 {
+    bufferUnderflows++;
     debug(3, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
 }
 
 void
 SIDBridge::handleBufferOverflow()
 {
+    bufferOverflows++;
     debug(3, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
     
     if (!c64->getWarp()) {

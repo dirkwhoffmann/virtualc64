@@ -101,7 +101,7 @@
 @synthesize frequency;
 @synthesize pulseWidth;
 @synthesize attackRate;
-@synthesize delayRate;
+@synthesize decayRate;
 @synthesize sustainRate;
 @synthesize releaseRate;
 @synthesize gateBit;
@@ -119,6 +119,8 @@
 @synthesize waveformView;
 @synthesize audioBufferLevel;
 @synthesize audioBufferLevelText;
+@synthesize bufferUnderflows;
+@synthesize bufferOverflows;
 
 // Toolbar
 @synthesize controlPort1;
@@ -186,6 +188,10 @@
         ciaImr, ciaIcr,
 		// VIC panel
 		VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
+        // SID panel
+        attackRate, decayRate, sustainRate, releaseRate,
+        filterResonance,
+        volume, potX, potY,
  		NULL };
 	
 	NSControl *WordFormatterControls[] = { 
@@ -195,6 +201,8 @@
 		ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
 		// VIC panel
 		VicRasterline, VicRasterInterrupt,
+        // SID panel
+        frequency, pulseWidth, filterCutoff,
 		NULL };
 
     NSControl *threeDigitFormatterControls[] = { 

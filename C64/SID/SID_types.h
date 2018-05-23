@@ -55,6 +55,7 @@ typedef struct {
     VoiceInfo voice3;
     uint8_t volume;
     uint16_t filterCutoff;
+    uint8_t filterResonance;
     uint8_t filterType;
     uint8_t potX;
     uint8_t potY;

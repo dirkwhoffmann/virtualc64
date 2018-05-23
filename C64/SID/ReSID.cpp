@@ -254,7 +254,8 @@ ReSID::getInfo()
     info.volume = state.sid_register[0x18] & 0x0F;
     info.filterType = state.sid_register[0x18] & 0x70;
     info.filterCutoff = (state.sid_register[0x16] << 3) | (state.sid_register[0x15] & 0x07);
-    
+    info.filterResonance = state.sid_register[0x17] >> 4;
+
     return info;
 }
 

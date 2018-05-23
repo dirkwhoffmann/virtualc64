@@ -348,8 +348,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->sid->readStereoSamplesInterleaved(target, n);
 }
 - (NSInteger) ringbufferSize { return wrapper->sid->ringbufferSize(); }
-- (NSInteger) readPtr { return wrapper->sid->getReadPtr(); }
-- (NSInteger) writePtr { return wrapper->sid->getWritePtr(); }
+// - (NSInteger) readPtr { return wrapper->sid->getReadPtr(); }
+// - (NSInteger) writePtr { return wrapper->sid->getWritePtr(); }
+- (NSInteger) bufferUnderflows { return wrapper->sid->bufferUnderflows; }
+- (NSInteger) bufferOverflows { return wrapper->sid->bufferOverflows; }
+- (double) fillLevel { return wrapper->sid->fillLevel(); }
 - (float) snoop:(NSInteger)offset {
     return wrapper->sid->snoop(offset);
 }

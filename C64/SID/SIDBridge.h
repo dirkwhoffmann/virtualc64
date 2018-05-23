@@ -43,7 +43,15 @@ private:
     
     //! @brief    Current clock cycle since power up
     uint64_t cycles;
+
+public:
     
+    //! @brief    Number of buffer underflows since power up
+    uint64_t bufferUnderflows;
+
+    //! @brief    Number of buffer overflows since power up
+    uint64_t bufferOverflows;
+
 private:
     
     //
@@ -170,12 +178,6 @@ public:
     // Running the device
     //
     
-    /*! @brief   Execute SID
-     *  @details Runs reSID for the specified amount of CPU cycles and writes
-     *           the generated sound samples into the internal ring buffer.
-     */
-    // virtual void execute(uint64_t cycles) = 0;
-    
     //! Notifies the SID chip that the emulator has started
     void run();
     
@@ -272,6 +274,9 @@ public:
     
     //! @brief   Returns remaining storage capacity of ringbuffer
     unsigned bufferCapacity() { return (readPtr + bufferSize - writePtr) % bufferSize; }
+    
+    //! @brief   Returns the fill level as a percentage value
+    double fillLevel() { return (double)samplesInBuffer() / (double)bufferSize; }
     
     /*! @brief   Align write pointer
      *  @details This function puts the write pointer somewhat ahead of the read pointer.

@@ -46,9 +46,12 @@ import Foundation
             let sample = controller!.c64.sid.snoop(40 * x)
             let absvalue = abs(sample)
             highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
-            var scaledsample = absvalue / normalizer * baseline
-            let from = CGPoint(x: x, y: Int(baseline + scaledsample + 1))
-            let to = CGPoint(x: x, y: Int(baseline - scaledsample))
+            var scaledSample = absvalue / normalizer * baseline
+            if (scaledSample == 0) { // just for effect
+                scaledSample = drand48() > 0.5 ? 0.0 : 1.0
+            }
+            let from = CGPoint(x: x, y: Int(baseline + scaledSample + 1))
+            let to = CGPoint(x: x, y: Int(baseline - scaledSample))
             context?.move(to: from)
             context?.addLine(to: to)
         }

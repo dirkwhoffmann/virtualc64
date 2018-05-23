@@ -232,7 +232,7 @@
     IBOutlet NSTextField *frequency;
     IBOutlet NSTextField *pulseWidth;
     IBOutlet NSTextField *attackRate;
-    IBOutlet NSTextField *delayRate;
+    IBOutlet NSTextField *decayRate;
     IBOutlet NSTextField *sustainRate;
     IBOutlet NSTextField *releaseRate;
     IBOutlet NSButton *gateBit;
@@ -250,7 +250,8 @@
     IBOutlet WaveformView *waveformView;
     IBOutlet NSLevelIndicator *audioBufferLevel;
     IBOutlet NSTextField *audioBufferLevelText;
-
+    IBOutlet NSTextField *bufferUnderflows;
+    IBOutlet NSTextField *bufferOverflows;
     
 	/*! @brief   Update loop timer
      *  @details The update task activated 60 times a second
@@ -377,7 +378,7 @@
 @property NSTextField *frequency;
 @property NSTextField *pulseWidth;
 @property NSTextField *attackRate;
-@property NSTextField *delayRate;
+@property NSTextField *decayRate;
 @property NSTextField *sustainRate;
 @property NSTextField *releaseRate;
 @property NSButton *gateBit;
@@ -395,7 +396,8 @@
 @property WaveformView *waveformView;
 @property NSLevelIndicator *audioBufferLevel;
 @property NSTextField *audioBufferLevelText;
-
+@property NSTextField *bufferUnderflows;
+@property NSTextField *bufferOverflows;
 
 @property PropertiesDialog *propertiesDialog;
 @property HardwareDialog *hardwareDialog;
