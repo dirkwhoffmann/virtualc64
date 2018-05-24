@@ -347,7 +347,7 @@ SID::State SID::read_state()
   state.sid_register[j++] = filter.fc & 0x007;
   state.sid_register[j++] = filter.fc >> 3;
   state.sid_register[j++] = (filter.res << 4) | filter.filt;
-  state.sid_register[j++] = filter.mode | filter.vol;
+  state.sid_register[j++] = filter.mode | filter.mastervolume;
 
   // These registers are superfluous, but are included for completeness.
   for (; j < 0x1d; j++) {

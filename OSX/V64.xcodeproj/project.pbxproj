@@ -81,6 +81,11 @@
 		50355F35203E19E000163F80 /* keyRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F34203E19E000163F80 /* keyRed.png */; };
 		50355F37203E21F600163F80 /* joystick2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F36203E21F600163F80 /* joystick2.png */; };
 		50355F3D203E277000163F80 /* monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F3C203E276F00163F80 /* monitor.png */; };
+		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
+		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
+		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
+		5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9420B6C2AC000D9193 /* VICPanel.swift */; };
+		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
 		5039A31415BE89940038ACBC /* drive48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31315BE89940038ACBC /* drive48.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
@@ -383,6 +388,11 @@
 		50355F34203E19E000163F80 /* keyRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyRed.png; sourceTree = "<group>"; };
 		50355F36203E21F600163F80 /* joystick2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick2.png; sourceTree = "<group>"; };
 		50355F3C203E276F00163F80 /* monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monitor.png; sourceTree = "<group>"; };
+		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
+		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
+		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
+		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
+		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
 		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
@@ -777,7 +787,7 @@
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
 				50FBE90912DC992B0093194C /* MyControllerVicPanel.h */,
 				50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */,
-				50195C2920B007A1003844FB /* Debugger.swift */,
+				5038CA9820B6C2D8000D9193 /* Debugger */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
@@ -862,6 +872,19 @@
 				5030B29F20AEBD1A00E591BE /* oygen_key.png */,
 			);
 			name = GameDevices;
+			sourceTree = "<group>";
+		};
+		5038CA9820B6C2D8000D9193 /* Debugger */ = {
+			isa = PBXGroup;
+			children = (
+				50195C2920B007A1003844FB /* Debugger.swift */,
+				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
+				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
+				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
+				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
+				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
+			);
+			name = Debugger;
 			sourceTree = "<group>";
 		};
 		503C8BFA2014AC99000494A0 /* Cartridges */ = {
@@ -1415,9 +1438,11 @@
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
+				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				50FFF52320AB495B00758683 /* Mouse.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
+				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
@@ -1454,9 +1479,11 @@
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */,
 				50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */,
+				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
+				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
@@ -1483,6 +1510,7 @@
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
+				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				5015F3B020B5E3C80024B4AA /* pot.cc in Sources */,
