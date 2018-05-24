@@ -83,6 +83,10 @@ public:
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();
     
+    //! @brief    Gathers all debug information for a specific voice
+    VoiceInfo getVoiceInfo(unsigned voice);
+    VoiceInfo getVoiceInfo(unsigned voice, reSID::SID::State *state);
+
 	//! Special peek function for the I/O memory range.
 	uint8_t peek(uint16_t addr);
 	

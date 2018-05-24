@@ -162,6 +162,27 @@ FastSID::getInfo()
     return info;
 }
 
+VoiceInfo
+FastSID::getVoiceInfo(unsigned i)
+{
+    VoiceInfo info;
+    
+    info.frequency = voice[i].frequency();
+    info.pulseWidth = voice[i].pulseWidth();
+    info.waveform = voice[i].waveform();
+    info.ringMod = voice[i].ringModBit();
+    info.hardSync = voice[i].syncBit();
+    info.gateBit = voice[i].gateBit();
+    info.testBit = voice[i].testBit();
+    info.attackRate = voice[i].attackRate();
+    info.decayRate = voice[i].decayRate();
+    info.sustainRate = voice[i].sustainRate();
+    info.releaseRate = voice[i].releaseRate();
+    info.filterOn = filterOn(i);
+    
+    return info;
+}
+
 void
 FastSID::setChipModel(SIDChipModel model)
 {

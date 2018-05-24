@@ -259,27 +259,45 @@ ReSID::getInfo()
     SIDInfo info;
     reSID::SID::State state = sid->read_state();
 
-    for (unsigned i = 0; i < 3; i++) {
-        uint8_t *sidreg = (uint8_t *)state.sid_register + (i * 7);
-        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
-        vinfo->frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
-        vinfo->pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
-        vinfo->waveform = sidreg[0x04] & 0xF0;
-        vinfo->ringMod = (sidreg[0x04] & 0x04) != 0;
-        vinfo->hardSync = (sidreg[0x04] & 0x02) != 0;
-        vinfo->gateBit = (sidreg[0x04] & 0x01) != 0;
-        vinfo->testBit = (sidreg[0x04] & 0x08) != 0;
-        vinfo->attackRate = sidreg[0x05] >> 4;
-        vinfo->decayRate = sidreg[0x05] & 0x0F;
-        vinfo->sustainRate = sidreg[0x06] >> 4;
-        vinfo->releaseRate = sidreg[0x06] & 0x0F;
-        vinfo->filterOn = GET_BIT(state.sid_register[0x17], i) != 0;
-    }
+    info.voice1 = getVoiceInfo(0);
+    info.voice2 = getVoiceInfo(1);
+    info.voice3 = getVoiceInfo(2);
     info.volume = state.sid_register[0x18] & 0x0F;
     info.filterType = state.sid_register[0x18] & 0x70;
     info.filterCutoff = (state.sid_register[0x16] << 3) | (state.sid_register[0x15] & 0x07);
     info.filterResonance = state.sid_register[0x17] >> 4;
 
+    return info;
+}
+
+VoiceInfo
+ReSID::getVoiceInfo(unsigned voice)
+{
+    reSID::SID::State state = sid->read_state();
+    return getVoiceInfo(voice, &state);
+}
+
+VoiceInfo
+ReSID::getVoiceInfo(unsigned voice, reSID::SID::State *state)
+{
+    VoiceInfo info;
+    
+    assert(state != NULL);
+    uint8_t *sidreg = (uint8_t *)state->sid_register + (voice * 7);
+    
+    info.frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
+    info.pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
+    info.waveform = sidreg[0x04] & 0xF0;
+    info.ringMod = (sidreg[0x04] & 0x04) != 0;
+    info.hardSync = (sidreg[0x04] & 0x02) != 0;
+    info.gateBit = (sidreg[0x04] & 0x01) != 0;
+    info.testBit = (sidreg[0x04] & 0x08) != 0;
+    info.attackRate = sidreg[0x05] >> 4;
+    info.decayRate = sidreg[0x05] & 0x0F;
+    info.sustainRate = sidreg[0x06] >> 4;
+    info.releaseRate = sidreg[0x06] & 0x0F;
+    info.filterOn = GET_BIT(state->sid_register[0x17], voice) != 0;
+  
     return info;
 }
 

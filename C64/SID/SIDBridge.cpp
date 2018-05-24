@@ -141,6 +141,12 @@ SIDBridge::getInfo()
     return info;
 }
 
+VoiceInfo
+SIDBridge::getVoiceInfo(unsigned voice)
+{
+    return useReSID ? resid.getVoiceInfo(voice) : fastsid.getVoiceInfo(voice);
+}
+
 void
 SIDBridge::setPAL()
 {

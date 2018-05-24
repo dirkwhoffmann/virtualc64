@@ -56,5 +56,35 @@ extension MyController {
         
         waveformView.update()
     }
+    
+    // Voice items
+    
+    func _waveFormAction(_ waveform : UInt8, forVoice: Int) {
+        
+        let info = c64.sid.getVoiceInfo(0)
+        let oldWaveform = info.waveform
+        
+        if waveform != oldWaveform {
+            let target = undoManager?.prepare(withInvocationTarget: self)
+            _ = (target as! MyController)._waveFormAction(oldWaveform, forVoice: forVoice)
+            undoManager?.setActionName("Set Waveform")
+            // TODO
+            // Use c64.pokeIO(..., waveform)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func waveformAction(_ sender: Any!) {
+        
+        /*
+        let sender = sender as! NSTextField
+        let info = c64.sid.getVoiceInfo(forVoice)
+        let undoValue = info.wavefor
+        let value = UInt16(sender.intValue)
+        if (value != c64.cpu.pc()) {
+            _pcAction(value)
+        }
+         */
+    }
 }
 

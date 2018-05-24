@@ -336,6 +336,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->sid->dumpState(); }
 - (SIDInfo) getInfo { return wrapper->sid->getInfo(); }
+- (VoiceInfo) getVoiceInfo:(NSInteger)voice { return wrapper->sid->getVoiceInfo(voice); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {

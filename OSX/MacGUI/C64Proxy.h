@@ -266,6 +266,7 @@ struct ContainerWrapper;
 
 - (void) dump;
 - (SIDInfo) getInfo;
+- (VoiceInfo) getVoiceInfo:(NSInteger)voice;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
