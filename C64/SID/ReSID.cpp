@@ -186,6 +186,25 @@ ReSID::setAudioFilter(bool value)
 void 
 ReSID::setSamplingMethod(SamplingMethod value)
 {
+    switch(value) {
+        case SID_SAMPLE_FAST:
+            warn("SID_SAMPLE_FAST not supported. Using SAMPLE_INTERPOLATE.\n");
+            value = SID_SAMPLE_INTERPOLATE;
+            break;
+        case SID_SAMPLE_INTERPOLATE:
+            debug("Using sampling method SAMPLE_INTERPOLATE.\n");
+            break;
+        case SID_SAMPLE_RESAMPLE:
+            debug("Using sampling method SAMPLE_RESAMPLE.\n");
+            break;
+        case SID_SAMPLE_RESAMPLE_FASTMEM:
+            warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
+            value = SID_SAMPLE_INTERPOLATE;
+            break;
+        default:
+            warn("Unknown sampling method: %d\n", value);
+    }
+
     samplingMethod = value;
     
     c64->suspend();
@@ -195,11 +214,6 @@ ReSID::setSamplingMethod(SamplingMethod value)
     c64->resume();
     
     assert((SamplingMethod)sid->sampling == samplingMethod);
-    debug("Setting reSID sampling method to %s.\n",
-          (samplingMethod == SID_SAMPLE_FAST) ? "SAMPLE_FAST" :
-          (samplingMethod == SID_SAMPLE_INTERPOLATE) ? "SAMPLE_INTERPOLATE" :
-          (samplingMethod == SID_SAMPLE_RESAMPLE) ? "SAMPLE_RESAMPLE" :
-          (samplingMethod == SID_SAMPLE_RESAMPLE_FASTMEM) ? "SAMPLE_RESAMPLE_FASTMEM" : "?");
 }
 
 void
@@ -259,9 +273,9 @@ ReSID::getInfo()
     SIDInfo info;
     reSID::SID::State state = sid->read_state();
 
-    info.voice1 = getVoiceInfo(0);
-    info.voice2 = getVoiceInfo(1);
-    info.voice3 = getVoiceInfo(2);
+    info.voice1 = getVoiceInfo(0, &state);
+    info.voice2 = getVoiceInfo(1, &state);
+    info.voice3 = getVoiceInfo(2, &state);
     info.volume = state.sid_register[0x18] & 0x0F;
     info.filterType = state.sid_register[0x18] & 0x70;
     info.filterCutoff = (state.sid_register[0x16] << 3) | (state.sid_register[0x15] & 0x07);
@@ -281,10 +295,10 @@ VoiceInfo
 ReSID::getVoiceInfo(unsigned voice, reSID::SID::State *state)
 {
     VoiceInfo info;
-    
     assert(state != NULL);
     uint8_t *sidreg = (uint8_t *)state->sid_register + (voice * 7);
     
+    for (unsigned j = 0; j < 7; j++) info.reg[j] = sidreg[j];
     info.frequency = HI_LO(sidreg[0x01], sidreg[0x00]);
     info.pulseWidth = ((sidreg[3] & 0x0F) << 8) | sidreg[0x02];
     info.waveform = sidreg[0x04] & 0xF0;
@@ -297,7 +311,7 @@ ReSID::getVoiceInfo(unsigned voice, reSID::SID::State *state)
     info.sustainRate = sidreg[0x06] >> 4;
     info.releaseRate = sidreg[0x06] & 0x0F;
     info.filterOn = GET_BIT(state->sid_register[0x17], voice) != 0;
-  
+    
     return info;
 }
 

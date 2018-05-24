@@ -19,6 +19,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// List of modifications applied to reSID
+// 1. Changed visibility of some objects from protected to public
+
 // Good candidate for testing sound emulation: INTERNAT.P00
 
 #ifndef _RESID_INC

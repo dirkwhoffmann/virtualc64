@@ -11,6 +11,8 @@ extension MyController {
     
     func setupDebugger() {
         
+        selectedVoice = 0
+        
         // Start with hexadecimal number format
         setHexadecimalAction(self)
         

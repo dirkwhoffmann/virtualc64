@@ -13,12 +13,17 @@ extension MyController {
         
         let info = c64.sid.getInfo()
         
+        // track("Waveform 1 = \(info.voice1.waveform)");
+        
         // Volume and potentiometers
         volume.intValue = Int32(info.volume)
         potX.intValue = Int32(info.potX)
         potY.intValue = Int32(info.potY)
         
-        // Voice
+        // Voice selector
+        voiceSelector.selectedSegment = selectedVoice
+        
+        // Voice items
         let i = voiceSelector.indexOfSelectedItem
         let vinfo = (i == 0) ? info.voice1 : (i == 1) ? info.voice2 : info.voice3
         switch(vinfo.waveform) {
@@ -57,34 +62,65 @@ extension MyController {
         waveformView.update()
     }
     
+    // Voice selector
+    @IBAction func selectVoiceAction(_ sender: Any!) {
+     
+        let sender = sender as! NSSegmentedControl
+        selectedVoice = sender.indexOfSelectedItem
+        track("selectedVoice = \(selectedVoice)")
+        refreshSID()
+    }
+    
     // Voice items
     
-    func _waveFormAction(_ waveform : UInt8, forVoice: Int) {
+    func _waveform1Action(_ value: UInt8) {
         
         let info = c64.sid.getVoiceInfo(0)
-        let oldWaveform = info.waveform
-        
-        if waveform != oldWaveform {
-            let target = undoManager?.prepare(withInvocationTarget: self)
-            _ = (target as! MyController)._waveFormAction(oldWaveform, forVoice: forVoice)
-            undoManager?.setActionName("Set Waveform")
-            // TODO
-            // Use c64.pokeIO(..., waveform)
-            refreshSID()
+        undoManager?.registerUndo(withTarget: self) {
+            me in me._waveform1Action(info.waveform)
         }
+        undoManager?.setActionName("Set Voice 1 Waveform")
+        c64.mem.pokeIO(UInt16(0xD404), value: value | (info.reg.4 & 0x0F))
+        refreshSID()
+    }
+    func _waveform2Action(_ value: UInt8) {
+        
+        let info = c64.sid.getVoiceInfo(1)
+        undoManager?.registerUndo(withTarget: self) {
+            me in me._waveform1Action(info.waveform)
+        }
+        undoManager?.setActionName("Set Voice 2 Waveform")
+        c64.mem.pokeIO(UInt16(0xD40B), value: value | (info.reg.4 & 0x0F))
+        refreshSID()
+    }
+    func _waveform3Action(_ value: UInt8) {
+        
+        let info = c64.sid.getVoiceInfo(2)
+        undoManager?.registerUndo(withTarget: self) {
+            me in me._waveform1Action(info.waveform)
+        }
+        undoManager?.setActionName("Set Voice 3 Waveform")
+        c64.mem.pokeIO(UInt16(0xD412), value: value | (info.reg.4 & 0x0F))
+        refreshSID()
+    }
+    func _waveformAction(_ value: (UInt8,Int)) {
+        
+        let info = c64.sid.getVoiceInfo(value.1)
+        undoManager?.registerUndo(withTarget: self) {
+            me in me._waveform1Action(info.waveform)
+        }
+        undoManager?.setActionName("Set Voice Waveform")
+        let addr = UInt16(0xD404 + 7*value.1)
+        let val = value.0 | (info.reg.4 & 0x0F)
+        c64.mem.pokeIO(addr, value: val)
+        refreshSID()
     }
     
     @IBAction func waveformAction(_ sender: Any!) {
         
-        /*
-        let sender = sender as! NSTextField
-        let info = c64.sid.getVoiceInfo(forVoice)
-        let undoValue = info.wavefor
-        let value = UInt16(sender.intValue)
-        if (value != c64.cpu.pc()) {
-            _pcAction(value)
-        }
-         */
+        let sender = sender as! NSPopUpButton
+        let value = UInt8(sender.selectedTag())
+        _waveformAction((value,selectedVoice))
     }
 }
 

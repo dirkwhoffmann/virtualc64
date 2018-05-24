@@ -92,6 +92,7 @@
 @synthesize ciaIntLineLow;
 
 // Debugger (SID)
+@synthesize selectedVoice;
 @synthesize volume;
 @synthesize potX;
 @synthesize potY;

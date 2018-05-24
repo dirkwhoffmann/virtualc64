@@ -118,6 +118,7 @@ struct ContainerWrapper;
 - (uint8_t) spy:(uint16_t)addr source:(MemorySource)src;
 - (void) poke:(uint16_t)addr value:(uint8_t)val;
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemorySource)source;
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)val;
 - (MemorySource) peekSource:(uint16_t)addr;
 
 @end

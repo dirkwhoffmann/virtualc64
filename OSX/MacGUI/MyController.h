@@ -223,6 +223,8 @@
 	IBOutlet NSTextField *VicRasterInterrupt;
 	
     // Debugger (SID panel)
+    NSInteger selectedVoice;
+    
     IBOutlet NSTextField *volume;
     IBOutlet NSTextField *potX;
     IBOutlet NSTextField *potY;
@@ -369,6 +371,7 @@
 @property NSButton *ciaIntLineLow;
 
 // Debugger (SID Panel)
+@property NSInteger selectedVoice; 
 @property NSTextField *volume;
 @property NSTextField *potX;
 @property NSTextField *potY;

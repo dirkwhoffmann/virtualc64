@@ -32,6 +32,7 @@ typedef enum {
  *  @details  Part of SIDInfo
  */
 typedef struct {
+    uint8_t reg[7];
     uint16_t frequency;
     uint16_t pulseWidth;
     uint8_t waveform;

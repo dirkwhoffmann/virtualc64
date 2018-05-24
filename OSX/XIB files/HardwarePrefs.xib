@@ -144,7 +144,7 @@
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="aQ5-0j-Nod">
                                 <items>
-                                    <menuItem title="Nearest neighbor" state="on" id="Wfe-Zj-Mhx">
+                                    <menuItem title="Nearest neighbor" state="on" hidden="YES" id="Wfe-Zj-Mhx">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="Interpolate" tag="1" id="4yF-uL-0KE">
@@ -271,7 +271,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_vic" id="y8o-c5-S9e"/>
                     </imageView>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fSx-gf-kG0">
-                        <rect key="frame" x="8" y="140" width="501" height="4"/>
+                        <rect key="frame" x="8" y="140" width="501" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-WG-k2k">

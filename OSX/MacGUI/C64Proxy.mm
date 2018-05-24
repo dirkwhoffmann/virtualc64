@@ -133,6 +133,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     wrapper->mem->poke(addr, val); }
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemorySource)type {
     wrapper->mem->pokeTo(addr, val, type); }
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)val {
+    wrapper->mem->pokeIO(addr, val); }
 - (MemorySource) peekSource:(uint16_t)addr {
     return wrapper->mem->peekSource(addr);
 }
@@ -336,7 +338,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->sid->dumpState(); }
 - (SIDInfo) getInfo { return wrapper->sid->getInfo(); }
-- (VoiceInfo) getVoiceInfo:(NSInteger)voice { return wrapper->sid->getVoiceInfo(voice); }
+- (VoiceInfo) getVoiceInfo:(NSInteger)voice {
+    return wrapper->sid->getVoiceInfo((unsigned)voice); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
