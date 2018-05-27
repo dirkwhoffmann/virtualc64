@@ -2624,11 +2624,14 @@
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="wEw-3d-tZe">
                                                     <rect key="frame" x="101" y="87" width="45" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="Tgn-vB-RpD">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="Tgn-vB-RpD">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="frequencyAction:" target="-2" id="lBw-UN-f0A"/>
+                                                    </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="VqX-38-cUt">
                                                     <rect key="frame" x="22" y="91" width="74" height="14"/>
@@ -2660,29 +2663,38 @@
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="UMe-Af-uhl">
                                                     <rect key="frame" x="101" y="59" width="30" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="6fe-W3-BA6">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="6fe-W3-BA6">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="attackRateAction:" target="-2" id="JMs-Vn-YHb"/>
+                                                    </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="H4H-4t-pmr">
                                                     <rect key="frame" x="141" y="59" width="30" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="qng-NR-f1r">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="qng-NR-f1r">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="decayRateAction:" target="-2" id="glQ-wV-aba"/>
+                                                    </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="H1K-GI-GVr">
                                                     <rect key="frame" x="181" y="59" width="30" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="Wde-QI-LO2">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="Wde-QI-LO2">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="sustainRateAction:" target="-2" id="zII-53-8R7"/>
+                                                    </connections>
                                                 </textField>
                                                 <button misplaced="YES" id="9lM-DR-BPP">
                                                     <rect key="frame" x="168" y="14" width="101" height="18"/>
@@ -2695,11 +2707,14 @@
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="9TK-r7-7WA">
                                                     <rect key="frame" x="205" y="87" width="45" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="JYQ-gH-tyy">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="JYQ-gH-tyy">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="pulseWidthAction:" target="-2" id="3DR-i3-2RF"/>
+                                                    </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="JQn-Cc-SSF">
                                                     <rect key="frame" x="129" y="91" width="74" height="14"/>
@@ -2713,16 +2728,16 @@
                                                 <popUpButton verticalHuggingPriority="750" misplaced="YES" id="5X0-wl-uHZ">
                                                     <rect key="frame" x="99" y="115" width="154" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <popUpButtonCell key="cell" type="push" title="Triangle" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="16" imageScaling="proportionallyDown" inset="2" selectedItem="MEU-Ql-cDd" id="Xs4-1v-ytA">
+                                                    <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Lhg-sJ-gml" id="Xs4-1v-ytA">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="menu"/>
                                                         <menu key="menu" id="dYD-Nq-zY3">
                                                             <items>
+                                                                <menuItem title="None" id="Lhg-sJ-gml"/>
                                                                 <menuItem title="Triangle" state="on" tag="16" id="MEU-Ql-cDd"/>
                                                                 <menuItem title="Saw" tag="32" id="iVq-EG-XTf"/>
                                                                 <menuItem title="Pulse" tag="64" id="HTr-Am-sDp"/>
                                                                 <menuItem title="Noise" tag="128" id="meR-2G-42h"/>
-                                                                <menuItem title="Mixed" id="Lhg-sJ-gml"/>
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
@@ -2741,11 +2756,14 @@
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="NEG-EB-tbc">
                                                     <rect key="frame" x="220" y="59" width="30" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="JsL-eJ-Xrh">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="JsL-eJ-Xrh">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="releaseRateAction:" target="-2" id="4Kc-RD-zAd"/>
+                                                    </connections>
                                                 </textField>
                                                 <button misplaced="YES" id="Yhs-rx-gWq">
                                                     <rect key="frame" x="98" y="36" width="62" height="18"/>
@@ -2834,7 +2852,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="YmQ-Mc-aS7">
-                                                    <rect key="frame" x="147" y="36" width="68" height="14"/>
+                                                    <rect key="frame" x="155" y="36" width="68" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Underflows:" id="Tye-nn-3Me">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -2843,7 +2861,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" id="MiF-C6-9dq">
-                                                    <rect key="frame" x="154" y="12" width="61" height="14"/>
+                                                    <rect key="frame" x="162" y="12" width="61" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Overflows:" id="ByS-Ge-OMK">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -2865,19 +2883,19 @@
                                                     </connections>
                                                 </customView>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="dyg-Wz-OoO">
-                                                    <rect key="frame" x="221" y="34" width="45" height="23"/>
+                                                    <rect key="frame" x="223" y="36" width="45" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="35s-ce-AwF">
-                                                        <font key="font" size="12" name="CourierNewPS-BoldMT"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="65536" id="35s-ce-AwF">
+                                                        <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="hM4-tV-xDx">
-                                                    <rect key="frame" x="221" y="7" width="45" height="23"/>
+                                                    <rect key="frame" x="223" y="12" width="45" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="cvp-Rg-rLv">
-                                                        <font key="font" size="12" name="CourierNewPS-BoldMT"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="65536" id="cvp-Rg-rLv">
+                                                        <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>

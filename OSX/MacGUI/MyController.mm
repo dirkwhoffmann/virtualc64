@@ -247,6 +247,9 @@
 		pc, sp, a, x, y, 
 		Nflag, Zflag, Cflag, Iflag, Bflag, Dflag, Vflag,
 		
+        // SID panel
+        frequency, pulseWidth, attackRate, decayRate, sustainRate, releaseRate,
+        
 		// VIC panel
 		VicSpriteX1, VicSpriteX2, VicSpriteX3, VicSpriteX4, VicSpriteX5, VicSpriteX6, VicSpriteX7, VicSpriteX8,
         VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
