@@ -44,7 +44,7 @@ typedef struct {
     uint8_t decayRate;
     uint8_t sustainRate;
     uint8_t releaseRate;
-    bool filterOn;
+    bool filterEnableBit;
 } VoiceInfo;
 
 /*! @brief    SID info
@@ -57,7 +57,9 @@ typedef struct {
     uint8_t volume;
     uint16_t filterCutoff;
     uint8_t filterResonance;
+    uint8_t filterModeBits;
     uint8_t filterType;
+    uint8_t filterEnableBits;
     uint8_t potX;
     uint8_t potY;
 } SIDInfo;

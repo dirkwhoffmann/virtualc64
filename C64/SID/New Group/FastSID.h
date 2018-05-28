@@ -211,9 +211,9 @@ private:
     //! @brief    Returns true iff the specified voice schould not be filtered
     bool filterOff(unsigned voice) { return GET_BIT(sidreg[0x17], voice) == 0; }
 
-    //! @brief    Returns true iff the EXTERNAL filter bit is set
-    bool filterExtBit() { return sidreg[0x17] & 0x08; }
-
+    //! @brief    Returns true iff the external filter bit is set
+    bool filterExtBit() { return GET_BIT(sidreg[0x17], 7) != 0; }
+    
     //! @brief   Returns the currently set filter type
     uint8_t filterType() { return sidreg[0x18] & 0x70; }
     

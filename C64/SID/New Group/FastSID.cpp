@@ -111,8 +111,9 @@ FastSID::dumpState()
         (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
         (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
         (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
-    msg("Filter cut off: %d\n\n", info.filterCutoff);
-    msg("Filter resonance: %d\n\n", info.filterResonance);
+    msg("Filter cut off: %d\n", info.filterCutoff);
+    msg("Filter resonance: %d\n", info.filterResonance);
+    msg("Filter enable bits: %X\n\n", info.filterEnableBits);
 
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
@@ -130,7 +131,7 @@ FastSID::dumpState()
         msg("              Decay rate: %d\n", vinfo->decayRate);
         msg("            Sustain rate: %d\n", vinfo->sustainRate);
         msg("            Release rate: %d\n", vinfo->releaseRate);
-        msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
+        // msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
     }
 }
 
@@ -139,26 +140,16 @@ FastSID::getInfo()
 {
     SIDInfo info;
  
-    for (unsigned i = 0; i < 3; i++) {
-        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
-        vinfo->frequency = voice[i].frequency();
-        vinfo->pulseWidth = voice[i].pulseWidth();
-        vinfo->waveform = voice[i].waveform();
-        vinfo->ringMod = voice[i].ringModBit();
-        vinfo->hardSync = voice[i].syncBit();
-        vinfo->gateBit = voice[i].gateBit();
-        vinfo->testBit = voice[i].testBit();
-        vinfo->attackRate = voice[i].attackRate();
-        vinfo->decayRate = voice[i].decayRate();
-        vinfo->sustainRate = voice[i].sustainRate();
-        vinfo->releaseRate = voice[i].releaseRate();
-        vinfo->filterOn = filterOn(i);
-    }
+    info.voice1 = getVoiceInfo(0);
+    info.voice2 = getVoiceInfo(1);
+    info.voice3 = getVoiceInfo(2);
     info.volume = sidVolume();
+    info.filterModeBits = sidreg[0x18] & 0xF0;
     info.filterType = filterType();
     info.filterCutoff = filterCutoff();
     info.filterResonance = filterResonance();
-    
+    info.filterEnableBits = sidreg[0x17] & 0x0F;
+
     return info;
 }
 
@@ -180,7 +171,6 @@ FastSID::getVoiceInfo(unsigned i)
     info.decayRate = voice[i].decayRate();
     info.sustainRate = voice[i].sustainRate();
     info.releaseRate = voice[i].releaseRate();
-    info.filterOn = filterOn(i);
     
     return info;
 }

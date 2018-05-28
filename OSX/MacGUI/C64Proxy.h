@@ -274,13 +274,12 @@ struct ContainerWrapper;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
 - (NSInteger) ringbufferSize;
-// - (NSInteger) readPtr;
-// - (NSInteger) writePtr;
 - (NSInteger) bufferUnderflows;
 - (NSInteger) bufferOverflows;
 - (double) fillLevel;
 - (float) snoop:(NSInteger)offset;
 - (float) snoop:(NSInteger)offset range:(NSInteger)range;
+
 @end
 
 // --------------------------------------------------------------------------

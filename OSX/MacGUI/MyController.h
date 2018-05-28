@@ -54,8 +54,8 @@
     IBOutlet NSPopUpButton *controlPort2;
 
     // Main screen
-	IBOutlet NSDrawer *debugPanel;
-	IBOutlet NSDrawer *cheatboxPanel;
+	IBOutlet NSDrawer *debugger;
+	// IBOutlet NSDrawer *cheatboxPanel;
     
     // Bottom bar
     IBOutlet NSButton *greenLED;
@@ -70,13 +70,13 @@
 	IBOutlet NSButton *warpIcon;
 	
 	// Debug panel (commons)
-    BOOL hex;
     
+    BOOL hex;
+    IBOutlet NSTabView *debugPanel;
 	IBOutlet NSMatrix *dezHexSelector;
 	IBOutlet NSButton *stopAndGoButton;
 	IBOutlet NSButton *stepIntoButton;
 	IBOutlet NSButton *stepOverButton;
-	IBOutlet NSButton *stepOutButton;
 	
 	// Debug panel (CPU)
 	IBOutlet CpuTableView *cpuTableView;
@@ -310,6 +310,10 @@
 @property long animationCounter;
 
 // Debugger
+@property NSTabView *debugPanel;
+@property NSButton *stopAndGoButton;
+@property NSButton *stepIntoButton;
+@property NSButton *stepOverButton;
 @property BOOL hex;
 
 // Debugger (CPU panel)
@@ -370,6 +374,29 @@
 @property NSTextField *ciaImrBinary;
 @property NSButton *ciaIntLineLow;
 
+// Debugger (VIC panel)
+@property NSTextField *VicDX;
+@property NSTextField *VicDY;
+@property NSTextField *VicSpriteX1;
+@property NSTextField *VicSpriteY1;
+@property NSTextField *VicSpriteX2;
+@property NSTextField *VicSpriteY2;
+@property NSTextField *VicSpriteX3;
+@property NSTextField *VicSpriteY3;
+@property NSTextField *VicSpriteX4;
+@property NSTextField *VicSpriteY4;
+@property NSTextField *VicSpriteX5;
+@property NSTextField *VicSpriteY5;
+@property NSTextField *VicSpriteX6;
+@property NSTextField *VicSpriteY6;
+@property NSTextField *VicSpriteX7;
+@property NSTextField *VicSpriteY7;
+@property NSTextField *VicSpriteX8;
+@property NSTextField *VicSpriteY8;
+@property NSTextField *VicRasterline;
+@property NSTextField *VicRasterInterrupt;
+
+
 // Debugger (SID Panel)
 @property NSInteger selectedVoice; 
 @property NSTextField *volume;
@@ -413,7 +440,7 @@
 @property NSPopUpButton *controlPort2;
 
 // Main screen
-@property NSDrawer *debugPanel;
+@property NSDrawer *debugger;
 
 // Bottom bar
 @property NSButton *greenLED;
@@ -441,8 +468,9 @@
 @property NSLock *timerLock;
 
 // Refresh
-- (void)refresh;
+/*
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter;
 - (void)enableUserEditing:(BOOL)enabled;
+*/
 
 @end

@@ -31,6 +31,10 @@
 @synthesize tapeDialog;
 
 // Debugger
+@synthesize debugPanel;
+@synthesize stopAndGoButton;
+@synthesize stepIntoButton;
+@synthesize stepOverButton;
 @synthesize hex;
 
 // Debugger (CPU panel)
@@ -91,6 +95,28 @@
 @synthesize ciaImrBinary;
 @synthesize ciaIntLineLow;
 
+// Debugger (VIC)
+@synthesize VicDX;
+@synthesize VicDY;
+@synthesize VicSpriteX1;
+@synthesize VicSpriteY1;
+@synthesize VicSpriteX2;
+@synthesize VicSpriteY2;
+@synthesize VicSpriteX3;
+@synthesize VicSpriteY3;
+@synthesize VicSpriteX4;
+@synthesize VicSpriteY4;
+@synthesize VicSpriteX5;
+@synthesize VicSpriteY5;
+@synthesize VicSpriteX6;
+@synthesize VicSpriteY6;
+@synthesize VicSpriteX7;
+@synthesize VicSpriteY7;
+@synthesize VicSpriteX8;
+@synthesize VicSpriteY8;
+@synthesize VicRasterline;
+@synthesize VicRasterInterrupt;
+
 // Debugger (SID)
 @synthesize selectedVoice;
 @synthesize volume;
@@ -128,7 +154,7 @@
 @synthesize controlPort2;
 
 // Main screen
-@synthesize debugPanel;
+@synthesize debugger;
 
 // Bottom bar
 @synthesize greenLED;
@@ -167,16 +193,7 @@
 //          Refresh methods: Force all GUI items to refresh their value
 // --------------------------------------------------------------------------------
 
-- (void)refresh
-{
-	[self refreshCPU];
-	[self refreshCIA];
-	[self refreshVIC];
-    [self refreshSID];
-	[cpuTableView refresh];
-	[memTableView refresh];
-}
-
+/*
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threeDigitFormatter
 {		
 	NSControl *ByteFormatterControls[] = { 
@@ -275,21 +292,19 @@
 		[stopAndGoButton setEnabled:false];
 		[stepIntoButton setEnabled:false];
 		[stepOverButton setEnabled:false];
-		[stepOutButton setEnabled:false];		
 		
 	} else if ([c64 isHalted]) {
 		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];		
 		[stopAndGoButton setEnabled:true];
 		[stepIntoButton setEnabled:true];
 		[stepOverButton setEnabled:true];
-		[stepOutButton setEnabled:true];		
 	} else {
 		[stopAndGoButton setImage:[NSImage imageNamed:@"pause32"]];
 		[stopAndGoButton setEnabled:true];
 		[stepIntoButton setEnabled:false];
-		[stepOverButton setEnabled:false];
-		[stepOutButton setEnabled:false];		
+		[stepOverButton setEnabled:false];		
 	}		
 }
+*/
 
 @end

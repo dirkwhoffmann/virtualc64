@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Bridging-Header.h"
 
 @implementation MyController(VicPanel) 
 
@@ -27,7 +28,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Display mode"];
 	
 	[[c64 vic] setDisplayMode:mode];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicVideoModeAction:(id)sender
@@ -42,7 +43,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Screen geometry"];
 	
 	[[c64 vic] setScreenGeometry:mode];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicScreenGeometryAction:(id)sender
@@ -57,7 +58,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Memory bank"];
 	
 	[[c64 vic] setMemoryBankAddr:addr];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicMemoryBankAction:(id)sender
@@ -72,7 +73,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Screen memory"];
 	
 	[[c64 vic] setScreenMemoryAddr:addr];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicScreenMemoryAction:(id)sender
@@ -87,12 +88,13 @@
 	if (![undo isUndoing]) [undo setActionName:@"Character memory"];
 	
 	[[c64 vic] setCharacterMemoryAddr:addr];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicCharacterMemoryAction:(id)sender
 {
     [self vicSetCharacterMemory:(uint16_t)[[sender selectedItem] tag]];
+    [self refreshVIC];
 }
 
 - (IBAction)vicDXAction:(id)sender
@@ -102,7 +104,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Horizontal raster scroll"];
 	
 	[[c64 vic] setHorizontalRasterScroll:[sender intValue]];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicDYAction:(id)sender
@@ -112,17 +114,19 @@
 	if (![undo isUndoing]) [undo setActionName:@"Vertical raster scroll"];
 	
 	[[c64 vic] setVerticalRasterScroll:[sender intValue]];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicDXStepperAction:(id)sender
 {
 	[self vicDXAction:sender];
+    [self refreshVIC];
 }
 
 - (IBAction)vicDYStepperAction:(id)sender
 {
 	[self vicDYAction:sender];
+    [self refreshVIC];
 }
 
 // SPRITES
@@ -133,7 +137,7 @@
     if (![undo isUndoing]) [undo setActionName:@"Sprite active"];
     
     [[c64 vic] toggleSpriteVisibilityFlag:nr];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (IBAction)vicSpriteActiveAction:(id)sender
@@ -141,6 +145,7 @@
     NSLog(@"vicSpriteActiveAction:%ld",(long)[sender tag]);
     
     [self spriteToggleActiveFlag:[sender tag]];
+    [self refreshVIC];
 }
 
 - (void)spriteSetX:(NSInteger)nr value:(int)v
@@ -150,7 +155,7 @@
     if (![undo isUndoing]) [undo setActionName:@"X coordinate"];
     
     [[c64 vic] setSpriteX:nr value:v];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (IBAction)vicSpriteXAction:(id)sender
@@ -158,6 +163,7 @@
     NSLog(@"vicSpriteXAction:%ld (%ld)",(long)[sender tag], (long)[sender intValue]);
 
     [self spriteSetX:[sender tag] value:[sender intValue]];
+    [self refreshVIC];
 }
 
 - (void)spriteSetY:(NSInteger)nr value:(int)v
@@ -167,7 +173,7 @@
     if (![undo isUndoing]) [undo setActionName:@"Y coordinate"];
     
     [[c64 vic] setSpriteY:nr value:v];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (IBAction)vicSpriteYAction:(id)sender
@@ -175,6 +181,7 @@
     NSLog(@"vicSpriteYAction:%ld (%ld)",(long)[sender tag], (long)[sender intValue]);
 
     [self spriteSetY:[sender tag] value:[sender intValue]];
+    [self refreshVIC];
 }
 
 - (void)spriteSetColor:(NSInteger)nr value:(int)v
@@ -184,7 +191,7 @@
     if (![undo isUndoing]) [undo setActionName:@"Sprite color"];
     
     [[c64 vic] setSpriteColor:nr value:v];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (IBAction)vicSpriteColorAction:(id)sender
@@ -194,7 +201,7 @@
     NSLog(@"vicSpriteColorAction:%ld",(long)[sender tag]);
 
     [self spriteSetColor:[sender tag] value:((color + 1) % 16)];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (void)spriteToggleMulticolorFlag:(NSInteger)nr
@@ -204,12 +211,13 @@
     if (![undo isUndoing]) [undo setActionName:@"Multicolor flag"];
     
     [[c64 vic] toggleSpriteMulticolorFlag:nr];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (IBAction)vicSpriteMulticolorAction:(id)sender
 {
     [self spriteToggleMulticolorFlag:[sender tag]];
+    [self refreshVIC];
 }
 
 - (void)spriteToggleStretchXFlag:(NSInteger)nr
@@ -219,12 +227,13 @@
 	if (![undo isUndoing]) [undo setActionName:@"X expansion"];
 	
 	[[c64 vic] toggleSpriteStretchXFlag:nr];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicSpriteStretchXAction:(id)sender
 {
 	[self spriteToggleStretchXFlag:[sender tag]];
+    [self refreshVIC];
 }
 
 - (void)spriteToggleStretchYFlag:(NSInteger)nr
@@ -234,12 +243,13 @@
 	if (![undo isUndoing]) [undo setActionName:@"Y expansion"];
 	
 	[[c64 vic] toggleSpriteStretchYFlag:nr];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicSpriteStretchYAction:(id)sender
 {
 	[self spriteToggleStretchYFlag:[sender tag]];
+    [self refreshVIC];
 }
 
 - (IBAction)vicSpriteSpriteCollisionAction:(id)sender
@@ -249,7 +259,7 @@
     if (![undo isUndoing]) [undo setActionName:@"S/S collision flag"];
     
     [[c64 vic] toggleSpriteSpriteCollisionFlag];
-    [self refresh];
+    [self refreshVIC];
 
 }
 
@@ -260,7 +270,7 @@
     if (![undo isUndoing]) [undo setActionName:@"S/B collision flag"];
 
     [[c64 vic] toggleSpriteBackgroundCollisionFlag];
-    [self refresh];
+    [self refreshVIC];
 }
 
 - (IBAction)vicRasterlineAction:(id)sender
@@ -270,7 +280,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Raster line"];
 	
 	[[c64 vic] setRasterline:[sender intValue]];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicEnableRasterInterruptAction:(id)sender
@@ -280,7 +290,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Raster interrupt"];
 	
 	[[c64 vic] toggleRasterInterruptFlag];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (IBAction)vicRasterInterruptAction:(id)sender
@@ -290,7 +300,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Raster interrupt line"];
 	
 	[[c64 vic] setRasterInterruptLine:[sender intValue]];
-	[self refresh];
+	[self refreshVIC];
 }
 
 - (void)refreshVIC

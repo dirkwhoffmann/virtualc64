@@ -277,10 +277,11 @@ ReSID::getInfo()
     info.voice2 = getVoiceInfo(1, &state);
     info.voice3 = getVoiceInfo(2, &state);
     info.volume = state.sid_register[0x18] & 0x0F;
+    info.filterModeBits = state.sid_register[0x18] & 0xF0;
     info.filterType = state.sid_register[0x18] & 0x70;
     info.filterCutoff = (state.sid_register[0x16] << 3) | (state.sid_register[0x15] & 0x07);
     info.filterResonance = state.sid_register[0x17] >> 4;
-
+    info.filterEnableBits = state.sid_register[0x17] & 0x0F;
     return info;
 }
 
@@ -310,7 +311,7 @@ ReSID::getVoiceInfo(unsigned voice, reSID::SID::State *state)
     info.decayRate = sidreg[0x05] & 0x0F;
     info.sustainRate = sidreg[0x06] >> 4;
     info.releaseRate = sidreg[0x06] & 0x0F;
-    info.filterOn = GET_BIT(state->sid_register[0x17], voice) != 0;
+    // info.filterOn = GET_BIT(state->sid_register[0x17], voice) != 0;
     
     return info;
 }

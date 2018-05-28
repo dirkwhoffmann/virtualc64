@@ -85,6 +85,7 @@ SIDBridge::dumpState(SIDInfo info)
         (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
     msg("Filter cut off: %d\n\n", info.filterCutoff);
     msg("Filter resonance: %d\n\n", info.filterResonance);
+    msg("Filter enable bits: %d\n\n", info.filterEnableBits);
 
     for (unsigned i = 0; i < 3; i++) {
         VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
@@ -102,7 +103,7 @@ SIDBridge::dumpState(SIDInfo info)
         msg("              Decay rate: %d\n", vinfo->decayRate);
         msg("            Sustain rate: %d\n", vinfo->sustainRate);
         msg("            Release rate: %d\n", vinfo->releaseRate);
-        msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
+        // msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
     }
 }
 

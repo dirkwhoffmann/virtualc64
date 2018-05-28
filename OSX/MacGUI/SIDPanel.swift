@@ -13,8 +13,6 @@ extension MyController {
         
         let info = c64.sid.getInfo()
         
-        // track("Waveform 1 = \(info.voice1.waveform)");
-        
         // Volume and potentiometers
         volume.intValue = Int32(info.volume)
         potX.intValue = Int32(info.potX)
@@ -26,22 +24,12 @@ extension MyController {
         // Voice items
         let i = voiceSelector.indexOfSelectedItem
         let vinfo = (i == 0) ? info.voice1 : (i == 1) ? info.voice2 : info.voice3
-        /*
-        switch(vinfo.waveform) {
-        case 0x10, 0x20, 0x40, 0x80:
-            waveform.selectItem(withTag: Int(vinfo.waveform))
-            break
-        default:
-            waveform.selectItem(withTag: 0)
-            break
-        }
-        */
+        
         if vinfo.waveform & 0x10 != 0 { waveform.selectItem(at: 1) }
         else if vinfo.waveform & 0x20 != 0 { waveform.selectItem(at: 2) }
         else if vinfo.waveform & 0x40 != 0 { waveform.selectItem(at: 3) }
         else if vinfo.waveform & 0x80 != 0 { waveform.selectItem(at: 4) }
         else { waveform.selectItem(at: 0) }
-
         waveform.item(at: 0)?.state = (vinfo.waveform == 0) ? .on : .off
         waveform.item(at: 1)?.state = (vinfo.waveform & 0x10 != 0) ? .on : .off
         waveform.item(at: 2)?.state = (vinfo.waveform & 0x20 != 0) ? .on : .off
@@ -60,12 +48,20 @@ extension MyController {
         syncBit.intValue = vinfo.hardSync ? 1 : 0
         ringBit.intValue = vinfo.ringMod ? 1 : 0
         
-        filterType.selectItem(withTag: Int(info.filterType))
+        if info.filterType & 0x10 != 0 { filterType.selectItem(at: 1) }
+        else if info.filterType & 0x20 != 0 { filterType.selectItem(at: 2) }
+        else if info.filterType & 0x40 != 0 { filterType.selectItem(at: 3) }
+        else { filterType.selectItem(at: 0) }
+        filterType.item(at: 0)?.state = (info.filterType == 0) ? .on : .off
+        filterType.item(at: 1)?.state = (info.filterType & 0x10 != 0) ? .on : .off
+        filterType.item(at: 2)?.state = (info.filterType & 0x20 != 0) ? .on : .off
+        filterType.item(at: 3)?.state = (info.filterType & 0x40 != 0) ? .on : .off
+        
         filterResonance.intValue = Int32(info.filterResonance)
         filterCutoff.intValue = Int32(info.filterCutoff)
-        filter1.intValue = info.voice1.filterOn ? 1 : 0
-        filter2.intValue = info.voice2.filterOn ? 1 : 0
-        filter3.intValue = info.voice3.filterOn ? 1 : 0
+        filter1.intValue = (info.filterEnableBits & 0x01) != 0 ? 1 : 0
+        filter2.intValue = (info.filterEnableBits & 0x02) != 0 ? 1 : 0
+        filter3.intValue = (info.filterEnableBits & 0x04) != 0 ? 1 : 0
         
         let fillLevel = Int32(c64.sid.fillLevel() * 100)
         audioBufferLevel.intValue = fillLevel
@@ -84,7 +80,10 @@ extension MyController {
         pokeSidReg(register + UInt16(7*voice), value)
     }
     
-    // Voice selector
+    //
+    // Voice section
+    //
+    
     @IBAction func selectVoiceAction(_ sender: Any!) {
      
         let sender = sender as! NSSegmentedControl
@@ -92,8 +91,6 @@ extension MyController {
         track("selectedVoice = \(selectedVoice)")
         refreshSID()
     }
-    
-    // Voice items
     
     func _waveformAction(_ value: (Int,UInt8)) {
         
@@ -255,6 +252,221 @@ extension MyController {
         
         let sender = sender as! NSTextField
         _releaseRateAction((selectedVoice, UInt8(sender.intValue)))
+    }
+    
+    func _gateBitAction(_ value: (Int,Bool)) {
+        
+        let voice = value.0
+        let info = c64.sid.getVoiceInfo(voice)
+        let oldValue = info.gateBit
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._gateBitAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Toogle Gate Bit")
+            pokeSidReg(4, (info.reg.4 & 0xFE) | (value.1 ? 0x01 : 0x00), voice: voice)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func gateBitAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _gateBitAction((selectedVoice, sender.intValue != 0))
+    }
+    
+    func _hardSyncAction(_ value: (Int,Bool)) {
+        
+        let voice = value.0
+        let info = c64.sid.getVoiceInfo(voice)
+        let oldValue = info.hardSync
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._hardSyncAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Toogle Hard Sync Bit")
+            pokeSidReg(4, (info.reg.4 & 0xFD) | (value.1 ? 0x02 : 0x00), voice: voice)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func hardSyncAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _hardSyncAction((selectedVoice, sender.intValue != 0))
+    }
+    
+    func _ringModAction(_ value: (Int,Bool)) {
+        
+        let voice = value.0
+        let info = c64.sid.getVoiceInfo(voice)
+        let oldValue = info.ringMod
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._ringModAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Toogle Ring Modulation Bit")
+            pokeSidReg(4, (info.reg.4 & 0xFB) | (value.1 ? 0x04 : 0x00), voice: voice)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func ringModAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _ringModAction((selectedVoice, sender.intValue != 0))
+    }
+    
+    func _testBitAction(_ value: (Int,Bool)) {
+        
+        let voice = value.0
+        let info = c64.sid.getVoiceInfo(voice)
+        let oldValue = info.testBit
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._testBitAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Toogle Test Bit")
+            pokeSidReg(4, (info.reg.4 & 0xF7) | (value.1 ? 0x08 : 0x00), voice: voice)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func testBitAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _testBitAction((selectedVoice, sender.intValue != 0))
+    }
+    
+    //
+    // Filter section
+    //
+    
+    func _filterAction(_ value: (Int,UInt8)) {
+        
+        let voice = value.0
+        let info = c64.sid.getInfo()
+        let oldValue = info.filterType
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._filterAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Set Filter Type")
+            let otherBits = (info.filterModeBits & 0x8F) | info.volume
+            pokeSidReg(0x18, value.1 | otherBits)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func filterAction(_ sender: Any!) {
+        
+        let sender = sender as! NSPopUpButton
+        let value = UInt8(sender.selectedTag())
+        _filterAction((selectedVoice, value))
+    }
+    
+    func _filterCutoffAction(_ value: (Int,UInt16)) {
+        
+        let voice = value.0
+        let info = c64.sid.getInfo()
+        let oldValue = info.filterCutoff
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._filterCutoffAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Set Filter Cutoff")
+            let hi = UInt8((value.1 >> 3) & 0xFF)
+            let lo = UInt8(value.1 & 0x7)
+            pokeSidReg(0x15, lo, voice: voice)
+            pokeSidReg(0x16, hi, voice: voice)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func filterCutoffAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _filterCutoffAction((selectedVoice, UInt16(sender.intValue)))
+    }
+    
+    func _filterResonanceAction(_ value: (Int,UInt8)) {
+        
+        let voice = value.0
+        let info = c64.sid.getInfo()
+        let oldValue = info.filterResonance
+        let newValue = value.1 & 0x0F
+        
+        if (newValue != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._filterResonanceAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Set Filter Resonance")
+            pokeSidReg(0x17, (newValue << 4) | info.filterEnableBits)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func filterResonanceAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _filterResonanceAction((selectedVoice, UInt8(sender.intValue)))
+    }
+    
+    func _filterEnableAction(_ value: (Int,Bool)) {
+        
+        let voice = value.0
+        let mask = UInt8(1 << value.0)
+        let info = c64.sid.getInfo()
+        let oldValue = (info.filterEnableBits & mask) != 0
+        let newValue = value.1
+        
+        if (newValue != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._filterEnableAction((voice, oldValue))
+            }
+            undoManager?.setActionName("Toggle Filter Bit")
+            let oldBits = (info.filterResonance << 4) | info.filterEnableBits
+            pokeSidReg(0x17, (oldBits & ~mask) | (newValue ? mask : 0x00))
+            refreshSID()
+        }
+    }
+    
+    @IBAction func filterEnableAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _filterEnableAction((sender.tag, sender.intValue != 0))
+    }
+    
+    //
+    // Volume and potentiometers
+    //
+    
+    func _volumeAction(_ value: UInt8) {
+        
+        let info = c64.sid.getInfo()
+        let oldValue = info.volume
+        let newValue = value & 0x0F
+        
+        if (newValue != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._volumeAction(oldValue)
+            }
+            undoManager?.setActionName("Set Volume")
+            pokeSidReg(0x18, (info.filterEnableBits & 0xF0) | newValue)
+            refreshSID()
+        }
+    }
+    
+    @IBAction func volumeAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _volumeAction(UInt8(sender.intValue))
     }
 }
 

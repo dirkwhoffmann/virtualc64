@@ -148,23 +148,23 @@ extension MyController {
     
     @objc public func debugOpenAction(_ sender: Any!) {
     
-        let state = debugPanel.state
+        let state = debugger.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
-            debugPanel.open()
+            debugger.open()
         }
     }
     
     @objc public func debugCloseAction(_ sender: Any!) {
     
-        let state = debugPanel.state
+        let state = debugger.state
         if state == NSDrawerState.open || state == NSDrawerState.opening {
-            debugPanel.close()
+            debugger.close()
         }
     }
     
     @IBAction func debugAction(_ sender: Any!) {
     
-        let state = debugPanel.state
+        let state = debugger.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
             debugOpenAction(self)
         } else {

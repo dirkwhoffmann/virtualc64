@@ -182,7 +182,7 @@ extension MyController {
  
             // Refresh debug panel if open
             if c64.isRunning() {
-                let state = debugPanel.state
+                let state = debugger.state
                 if state == NSDrawerState.open || state == NSDrawerState.opening {
                     refresh()
                 }
@@ -253,7 +253,7 @@ extension MyController {
     
         case MSG_RUN:
             
-            enableUserEditing(false)
+            disableUserEditing()
             refresh()
  
             // Disable undo because the internal state changes permanently
@@ -263,7 +263,7 @@ extension MyController {
     
         case MSG_HALT:
             
-            enableUserEditing(true)
+            enableUserEditing()
             refresh()
             break
     
