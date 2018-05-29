@@ -21,7 +21,6 @@
 #define _PIXELENGINGE_INC
 
 #include "VirtualComponent.h"
-#include "VIC_globals.h"
 #include "C64_types.h"
 
 // Forward declarations
@@ -35,17 +34,74 @@ class VIC;
 #define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
 #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
 
-//! Display mode
-enum DisplayMode {
-    STANDARD_TEXT             = 0x00,
-    MULTICOLOR_TEXT           = 0x10,
-    STANDARD_BITMAP           = 0x20,
-    MULTICOLOR_BITMAP         = 0x30,
-    EXTENDED_BACKGROUND_COLOR = 0x40,
-    INVALID_TEXT              = 0x50,
-    INVALID_STANDARD_BITMAP   = 0x60,
-    INVALID_MULTICOLOR_BITMAP = 0x70
-};
+
+// -----------------------------------------------------------------------------------------------
+//                                     VIC state pipes
+// -----------------------------------------------------------------------------------------------
+
+/*! @brief    A certain portion of VICs internal state
+ *  @details  This structure comprises all state variables that need to be delayed to get
+ *            the timing right.
+ *  @note     A general note about state pipes:
+ *            Each pipe comprises a certain portion of the VICs internal state. I.e., they
+ *            comprise those state variables that are accessed by the pixel engine and need to
+ *            be delayed by a certain amount to get the timing right. Most state variables need
+ *            to be delayed by one cycle. An exception are the color registers that usually
+ *            exhibit a value change somewhere in the middle of an pixel chunk. To implement the
+ *            delay, both VIC and PixelEngine hold a pipe variable of their own, and the contents
+ *            of the VICs variable is copied over the contents of the PixelEngines variable at
+ *            the right time. Putting the state variables in seperate structures allows the
+ *            compiler to optize the copy process.
+ */
+typedef struct {
+    
+    /*! @brief    Sprite X coordinates
+     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored
+     *            in a seperate IO register, while the uppermost bits are packed in a single
+     *            register (0xD010). The sprites X coordinate is updated whenever one the
+     *            corresponding IO register changes its value.
+     */
+    uint16_t spriteX[8];
+    
+    //! @brief    Sprite X expansion bits
+    uint8_t spriteXexpand;
+    
+    //! @brief    Internal VIC-II register D011, control register 1
+    uint8_t registerCTRL1;
+    
+    //! @brief    Value of registerCTRL1 one cycle earlier
+    uint8_t previousCTRL1;
+    
+    //! @brief    Internal VIC-II register D016, control register 2
+    uint8_t registerCTRL2;
+    
+    //! @brief    Data value grabbed in gAccess()
+    uint8_t g_data;
+    
+    //! @brief    Character value grabbed in gAccess()
+    uint8_t g_character;
+    
+    //! @brief    Color value grabbed in gAccess()
+    uint8_t g_color;
+    
+    //! @brief    Color for drawing border pixels
+    uint8_t borderColor;
+    
+    //! @brief    Main frame flipflop
+    uint8_t mainFrameFF;
+    
+    //! @brief    Vertical frame Flipflop
+    uint8_t verticalFrameFF;
+    
+} PixelEnginePipe;
+
+//! @brief    Colors for drawing canvas pixels
+typedef struct {
+    
+    uint8_t backgroundColor[4];
+    
+} CanvasColorPipe;
+
 
 //! @class   PixelEngine
 /*! @details This component is part of the virtual VICII chip and encapulates all the functionality

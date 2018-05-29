@@ -273,9 +273,6 @@ ReSID::getInfo()
     SIDInfo info;
     reSID::SID::State state = sid->read_state();
 
-    // info.voice1 = getVoiceInfo(0, &state);
-    // info.voice2 = getVoiceInfo(1, &state);
-    // info.voice3 = getVoiceInfo(2, &state);
     info.volume = state.sid_register[0x18] & 0x0F;
     info.filterModeBits = state.sid_register[0x18] & 0xF0;
     info.filterType = state.sid_register[0x18] & 0x70;

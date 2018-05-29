@@ -228,8 +228,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setSpriteBackgroundCollisionFlag:(bool)flag { wrapper->vic->setSpriteBackgroundCollisionFlag(flag); }
 - (void) toggleSpriteBackgroundCollisionFlag { wrapper->vic->toggleSpriteBackgroundCollisionFlag(); }
 
-- (uint16_t) rasterline { return wrapper->vic->getScanline(); }
-- (void) setRasterline:(uint16_t)line { wrapper->vic->setScanline(line); }
+- (uint16_t) rasterline { return wrapper->vic->getRasterline(); }
+- (void) setRasterline:(uint16_t)line { wrapper->vic->setRasterline(line); }
 - (uint16_t) rasterInterruptLine { return wrapper->vic->rasterInterruptLine(); }
 - (void) setRasterInterruptLine:(uint16_t)line { wrapper->vic->setRasterInterruptLine(line); }
 - (bool) rasterInterruptFlag { return wrapper->vic->rasterInterruptEnabled(); }

@@ -1,7 +1,7 @@
 /*!
- * @header      VIC_globals.h
+ * @header      VIC_types.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2015 - 2016 Dirk W. Hoffmann
+ * @copyright   2015 - 2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -19,52 +19,15 @@
  */
 
 
-#ifndef _VIC_CONSTANTS_INC
-#define _VIC_CONSTANTS_INC
+#ifndef _VIC_TYPES_INC
+#define _VIC_TYPES_INC
 
-// -----------------------------------------------------------------------------------------------
-//                                           General
-// -----------------------------------------------------------------------------------------------
+//
+// NTSC constants
+//
 
-#define SPR0 0x01
-#define SPR1 0x02
-#define SPR2 0x04
-#define SPR3 0x08
-#define SPR4 0x10
-#define SPR5 0x20
-#define SPR6 0x40
-#define SPR7 0x80
-
-//! @brief    Supported VIC II chip models
-enum VICChipModel {
-    MOS6567_NTSC = 0,
-    MOS6569_PAL = 1
-};
-
-//! @brief    Clock frequency of the original C64 (NTSC version) in Hz
+//! @brief    NTSC clock frequency in Hz
 static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
-
-//! @brief    Clock frequency of the original C64 (PAL version) in Hz
-static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
-
-//! @brief    Screen geometries
-enum ScreenGeometry {
-    COL_40_ROW_25 = 0x01,
-    COL_38_ROW_25 = 0x02,
-    COL_40_ROW_24 = 0x03,
-    COL_38_ROW_24 = 0x04
-};
-
-//! @brief    Start address of the VIC I/O space
-static const uint16_t VIC_START_ADDR = 0xD000;
-
-//! @brief    End address of the VIC I/O space
-static const uint16_t VIC_END_ADDR = 0xD3FF;
-
-
-// -----------------------------------------------------------------------------------------------
-//                                       NTSC constants
-// -----------------------------------------------------------------------------------------------
 
 //! @brief    Frames per second in NTSC mode
 static const double NTSC_REFRESH_RATE = 59.826;
@@ -136,9 +99,12 @@ static const uint16_t NTSC_RASTERLINES = 235; // 10 + 200 + 25
 static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 
 
-// -----------------------------------------------------------------------------------------------
-//                                       PAL constants
-// -----------------------------------------------------------------------------------------------
+//
+// PAL constants
+//
+
+//! @brief    PAL clock frequency in Hz
+static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
 
 //! @brief    Frames per second in PAL mode
 static const double PAL_REFRESH_RATE = 50.125;
@@ -210,71 +176,71 @@ static const uint16_t PAL_RASTERLINES = 284; // 35 + 200 + 49
 static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 
-// -----------------------------------------------------------------------------------------------
-//                                     VIC state pipes
-// -----------------------------------------------------------------------------------------------
+//
+// Types
+//
 
-/*! @brief    A certain portion of VICs internal state
- *  @details  This structure comprises all state variables that need to be delayed to get
- *            the timing right. 
- *  @note     A general note about state pipes: 
- *            Each pipe comprises a certain portion of the VICs internal state. I.e., they
- *            comprise those state variables that are accessed by the pixel engine and need to
- *            be delayed by a certain amount to get the timing right. Most state variables need
- *            to be delayed by one cycle. An exception are the color registers that usually
- *            exhibit a value change somewhere in the middle of an pixel chunk. To implement the
- *            delay, both VIC and PixelEngine hold a pipe variable of their own, and the contents
- *            of the VICs variable is copied over the contents of the PixelEngines variable at
- *            the right time. Putting the state variables in seperate structures allows the
- *            compiler to optize the copy process.
+//! @brief    VIC II chip model
+typedef enum {
+    MOS6567_NTSC = 0,
+    MOS6569_PAL = 1
+} VICChipModel;
+
+//! @brief    Screen geometries
+typedef enum {
+    COL_40_ROW_25 = 0x01,
+    COL_38_ROW_25 = 0x02,
+    COL_40_ROW_24 = 0x03,
+    COL_38_ROW_24 = 0x04
+} ScreenGeometry;
+
+//! Display mode
+typedef enum {
+    STANDARD_TEXT             = 0x00,
+    MULTICOLOR_TEXT           = 0x10,
+    STANDARD_BITMAP           = 0x20,
+    MULTICOLOR_BITMAP         = 0x30,
+    EXTENDED_BACKGROUND_COLOR = 0x40,
+    INVALID_TEXT              = 0x50,
+    INVALID_STANDARD_BITMAP   = 0x60,
+    INVALID_MULTICOLOR_BITMAP = 0x70
+} DisplayMode;
+
+/*! @brief    VIC info
+ *  @details  Used by VIC::getInfo() to collect debug information
+ */
+typedef struct {
+    uint16_t rasterline;
+    uint8_t cycle;
+    uint16_t xCounter;
+    bool badLine;
+    bool ba; 
+    DisplayMode displayMode;
+    uint8_t borderColor;
+    uint8_t backgroundColor0;
+    uint8_t backgroundColor1;
+    uint8_t backgroundColor2;
+    uint8_t backgroundColor3;
+    ScreenGeometry screenGeometry;
+    uint8_t dx;
+    uint8_t dy;
+    bool verticalFrameFlipflop;
+    bool horizontalFrameFlipflop;
+    uint16_t memoryBankAddr;
+    uint16_t screenMemoryAddr;
+    uint16_t characterMemoryAddr;
+    uint8_t imr;
+    uint8_t irr;
+    bool rasterIrqEnabled;
+    uint16_t irqRasterline;
+    bool irqLine;
+} VICInfo;
+
+/*! @brief    Sprite info
+ *  @details  Used by VIC::getSpriteInfo() to collect debug information
  */
 typedef struct {
     
-    /*! @brief    Sprite X coordinates
-     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored
-     *            in a seperate IO register, while the uppermost bits are packed in a single
-     *            register (0xD010). The sprites X coordinate is updated whenever one the
-     *            corresponding IO register changes its value.
-     */
-    uint16_t spriteX[8];
-
-    //! @brief    Sprite X expansion bits
-    uint8_t spriteXexpand;
-
-    //! @brief    Internal VIC-II register D011, control register 1
-    uint8_t registerCTRL1;
-
-    //! @brief    Value of registerCTRL1 one cycle earlier
-    uint8_t previousCTRL1;
-
-    //! @brief    Internal VIC-II register D016, control register 2
-    uint8_t registerCTRL2;
-
-    //! @brief    Data value grabbed in gAccess()
-    uint8_t g_data;
+} SpriteInfo;
     
-    //! @brief    Character value grabbed in gAccess()
-    uint8_t g_character;
-    
-    //! @brief    Color value grabbed in gAccess()
-    uint8_t g_color;
-    
-    //! @brief    Color for drawing border pixels
-    uint8_t borderColor;
-    
-    //! @brief    Main frame flipflop
-    uint8_t mainFrameFF;
-
-    //! @brief    Vertical frame Flipflop
-    uint8_t verticalFrameFF;
-    
-} PixelEnginePipe;
-
-//! @brief    Colors for drawing canvas pixels
-typedef struct {
-    
-    uint8_t backgroundColor[4];
-    
-} CanvasColorPipe;
-
 #endif

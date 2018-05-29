@@ -21,7 +21,6 @@
 
 #include "VirtualComponent.h"
 #include "C64_types.h"
-#include "VIC_globals.h"
 #include "PixelEngine.h"
 
 // Forward declarations
@@ -142,8 +141,8 @@ public:
 	bool badLineCondition;
 	
 	/*! @brief    Determines, if DMA lines (bad lines) can occurr within the current frame.
-     *  @details  Bad lines can only occur, if the DEN bit was set during an arbitary cycle in rasterline 30
-     *            The DEN bit is located in register 0x11 (CONTROL REGISTER 1) 
+     *  @details  Bad lines can only occur, if the DEN bit was set during an arbitary cycle
+     *            in rasterline 30. The DEN bit is located in control register 1 (0x11)
      */
     bool DENwasSetInRasterline30;
 
@@ -156,8 +155,8 @@ public:
 	 *  @details  Remember: Each CPU cycle is split into two phases:
      *            First phase (LOW):   VIC gets access to the bus
      *            Second phase (HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line 
-     *            is pulled down.
+     *            In rare cases, VIC needs access in the HIGH phase, too.
+     *            To block the CPU, the BA line is pulled down.
      *  @note     The BA line can be pulled down by multiple sources (wired AND). 
      */
     uint16_t BAlow;
@@ -470,9 +469,15 @@ public:
 	//! @brief    Restores the initial state.
 	void reset();
 		
-	//! @brief    Prints debugging information.
+	//! @brief    Prints debug information.
 	void dumpState();	
 	
+    //! @brief    Gathers debug information.
+    VICInfo getInfo();
+
+    //! @brief    Gathers debug information for a sprite.
+    SpriteInfo getSpriteInfo(unsigned i);
+
     
 	//
 	// Configuring
@@ -534,11 +539,11 @@ public:
 
 public:
 	
-	//! @brief    Returns the current scanline
-    uint16_t getScanline() { return yCounter; }
+	//! @brief    Returns the current rasterline
+    uint16_t getRasterline() { return yCounter; }
 			
 	//! @brief    Sets the rasterline
-    void setScanline(uint16_t line) { yCounter = line; }
+    void setRasterline(uint16_t line) { yCounter = line; }
 
 	//! @brief    Returns the memory bank start address
 	uint16_t getMemoryBankAddr();

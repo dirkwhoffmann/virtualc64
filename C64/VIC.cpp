@@ -23,6 +23,14 @@
 
 #include "C64.h"
 
+#define SPR0 0x01
+#define SPR1 0x02
+#define SPR2 0x04
+#define SPR3 0x08
+#define SPR4 0x10
+#define SPR5 0x20
+#define SPR6 0x40
+#define SPR7 0x80
 
 VIC::VIC()
 {
@@ -195,6 +203,46 @@ VIC::dumpState()
 		msg("\n                    ");
 	}
 	msg("\n");
+}
+
+VICInfo
+VIC::getInfo()
+{
+    VICInfo info;
+    
+    info.rasterline = yCounter;
+    info.cycle = c64->rasterlineCycle; 
+    info.badLine = badLineCondition;
+    info.ba = (BAlow == 0);
+    info.displayMode = getDisplayMode();
+    info.borderColor = p.borderColor;
+    info.backgroundColor0 = cp.backgroundColor[0];
+    info.backgroundColor1 = cp.backgroundColor[1];
+    info.backgroundColor2 = cp.backgroundColor[2];
+    info.backgroundColor3 = cp.backgroundColor[3];
+    info.screenGeometry = getScreenGeometry();
+    info.dx = getHorizontalRasterScroll();
+    info.dy = getVerticalRasterScroll();
+    info.verticalFrameFlipflop = p.verticalFrameFF;
+    info.horizontalFrameFlipflop = p.mainFrameFF;
+    info.memoryBankAddr = getMemoryBankAddr();
+    info.screenMemoryAddr = getScreenMemoryAddr();
+    info.characterMemoryAddr = getCharacterMemoryAddr();
+    info.imr = imr;
+    info.irr = irr;
+    info.rasterIrqEnabled = rasterInterruptEnabled();
+    info.irqRasterline = rasterInterruptLine();
+    info.irqLine = (imr & irr) != 0;
+    
+    return info;
+}
+
+SpriteInfo
+VIC::getSpriteInfo(unsigned i)
+{
+    SpriteInfo info;
+    
+    return info;
 }
 
 void
@@ -614,7 +662,7 @@ VIC::spy(uint16_t addr)
 void
 VIC::poke(uint16_t addr, uint8_t value)
 {
-	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
+	assert(addr < 0x40);
 	
 	switch(addr) {		
         case 0x00: // SPRITE_0_X

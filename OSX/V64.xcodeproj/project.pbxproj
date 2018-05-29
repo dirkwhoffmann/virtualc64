@@ -357,7 +357,7 @@
 		50195C2720AFF884003844FB /* stop32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop32.png; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		501B33AB20AE33510047C050 /* mouse256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256.png; sourceTree = "<group>"; };
-		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
+		501D2C7D1B85C0F700B1AD0F /* VIC_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
@@ -713,7 +713,7 @@
 				500B6CA30B905CEC002C36EC /* TOD.h */,
 				50171AA4208373E600C07AAD /* TOD_types.h */,
 				500B6CA40B905CEC002C36EC /* TOD.cpp */,
-				501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */,
+				501D2C7D1B85C0F700B1AD0F /* VIC_types.h */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
 				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,

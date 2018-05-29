@@ -18,12 +18,14 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.11.1
+// RELEASE NOTES FOR NEXT RELEASE: 2.0
 //
-// Fixed a couple of bugs in the SID bridge which is the internal API for accessing the reSID library.
+// Milestone reached: All legancy ObjectiveC code has been ported to Swift (hence version number 2.0)
+// All debug panels have been reworked and a new SID panel has been added.
+// Fixed several bugs in the SID bridge which is the internal API for accessing the reSID library.
 // Replaced reSID files by those used in VICE 3.2.
-// Debugger has been cleaned up and extended by a SID panel.
-// Added D-Pad support for the Sony Dualshock 4 controller.
+// Added support for the D-Pad on the Sony Dualshock controller.
+
 //
 //
 // TODO:
