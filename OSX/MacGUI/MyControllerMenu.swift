@@ -9,7 +9,7 @@ import Foundation
 
 extension MyController {
     
-    @objc override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
+    override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
   
         // View menu
         if item.action == #selector(MyController.toggleStatusBarAction(_:)) {
@@ -30,25 +30,7 @@ extension MyController {
         if item.action == #selector(MyController.customizeKeyMap(_:)) {
             return keyboardcontroller.mapKeysByPosition
         }
-        /*
-        if item.action == #selector(MyController.toggleShiftKey(_:)) {
-            item.state = c64.keyboard.shiftKeyIsPressed() ? .on : .off
-            return true
-        }
-        if item.action == #selector(MyController.toggleCommodoreKey(_:)) {
-            item.state = c64.keyboard.commodoreKeyIsPressed() ? .on : .off
-            return true
-        }
-        if item.action == #selector(MyController.toggleCtrlKey(_:)) {
-            item.state = c64.keyboard.ctrlKeyIsPressed() ? .on : .off
-            return true
-        }
-        if item.action == #selector(MyController.toggleRunstopKey(_:)) {
-            item.state = c64.keyboard.runstopKeyIsPressed() ? .on : .off
-            return true
-        }
-        */
-        
+ 
         // Disk menu
         if item.action == #selector(MyController.driveEjectAction(_:)) {
             return c64.iec.isDriveConnected() && c64.vc1541.hasDisk()
@@ -127,9 +109,9 @@ extension MyController {
         return true
     }
    
-    // -----------------------------------------------------------------
+    //
     // Action methods (File menu)
-    // -----------------------------------------------------------------
+    //
     
     @IBAction func saveScreenshotDialog(_ sender: Any!) {
     
@@ -162,9 +144,9 @@ extension MyController {
         }
     }
     
-    // -----------------------------------------------------------------
+    //
     // Action methods (Edit menu)
-    // -----------------------------------------------------------------
+    //
     
     @IBAction func paste(_ sender: Any!) {
         
@@ -179,9 +161,9 @@ extension MyController {
         keyboardcontroller.typeOnKeyboard(string: text, completion: nil)
     }
 
-    // -----------------------------------------------------------------
+    //
     // Action methods (View menu)
-    // -----------------------------------------------------------------
+    //
 
     @IBAction func toggleStatusBarAction(_ sender: Any!) {
         
@@ -192,7 +174,7 @@ extension MyController {
         showStatusBar(!statusBar)
     }
     
-    @objc public func showStatusBar(_ value: Bool) {
+    public func showStatusBar(_ value: Bool) {
         
         if !statusBar && value {
             
@@ -248,25 +230,11 @@ extension MyController {
         }
         
         hideMouse = !hideMouse
-        
-        /*
-        if trackingArea != nil {
-            metalScreen.removeTrackingArea(trackingArea)
-            trackingArea = nil
-        } else {
-            trackingArea = NSTrackingArea(rect: metalScreen.bounds,
-                                          options: [.mouseEnteredAndExited,
-                                                    .activeInKeyWindow],
-                                          owner: self,
-                                          userInfo: nil)
-            metalScreen.addTrackingArea(trackingArea)
-        }
-        */
     }
     
-    // -----------------------------------------------------------------
+    //
     // Action methods (Keyboard menu)
-    // -----------------------------------------------------------------
+    //
 
 
     @IBAction func mapKeysByPositionAction(_ sender: Any!) {
@@ -346,9 +314,9 @@ extension MyController {
     }
 
  
-    // -----------------------------------------------------------------
+    //
     // Action methods (Disk menu)
-    // -----------------------------------------------------------------
+    //
 
     @IBAction func driveEjectAction(_ sender: Any!) {
         
@@ -382,9 +350,9 @@ extension MyController {
         exportPanel.showSheet(withParent: self)
     }
     
-    // -----------------------------------------------------------------
+    //
     // Action methods (Datasette menu)
-    // -----------------------------------------------------------------
+    //
     
     @IBAction func ejectTapeAction(_ sender: Any!) {
         track()
@@ -405,12 +373,10 @@ extension MyController {
         c64.datasette.rewind()
     }
 
-
-
     
-    // -----------------------------------------------------------------
+    //
     // Action methods (Cartridge menu)
-    // -----------------------------------------------------------------
+    //
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         track()
@@ -429,9 +395,9 @@ extension MyController {
         c64.expansionport.pressSecondButton()
     }
     
-    // -----------------------------------------------------------------
+    //
     // Action methods (Debug menu)
-    // -----------------------------------------------------------------
+    //
 
     @IBAction func hideSpritesAction(_ sender: Any!) {
 
@@ -523,11 +489,11 @@ extension MyController {
     @IBAction func dumpIEC(_ sender: Any!) { c64.iec.dump() }
     @IBAction func dumpC64ExpansionPort(_ sender: Any!) { c64.expansionport.dump() }
     
-    // -----------------------------------------------------------------
+    //
     // Action methods (Toolbar)
-    // -----------------------------------------------------------------
+    //
     
-    @IBAction @objc func resetAction(_ sender: Any!) {
+    @IBAction func resetAction(_ sender: Any!) {
         
         let document = self.document as! MyDocument
         document.updateChangeCount(.changeDone)

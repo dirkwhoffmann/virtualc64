@@ -9,7 +9,7 @@ import Foundation
 
 extension MyController {
     
-    @objc func refreshCIA() {
+    func refreshCIA() {
         
         var info: CIAInfo
         

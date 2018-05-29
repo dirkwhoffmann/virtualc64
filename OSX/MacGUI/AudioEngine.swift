@@ -1,8 +1,5 @@
 /**
-Audio interface that connects the macOS GUI with the core emulator
- 
- - Remark:
-    Replaces old Objective-C interface AudioDevice
+Audio interface that connects the GUI with the core emulator
  
  - Author: Dirk W. Hoffmann
  - Copyright: Dirk W. Hoffmann
@@ -11,7 +8,7 @@ Audio interface that connects the macOS GUI with the core emulator
 import Foundation
 import AVFoundation
 
-@objc public class AudioEngine: NSObject {
+public class AudioEngine: NSObject {
 
     var sid: SIDProxy!
     var audiounit : AUAudioUnit!
@@ -119,8 +116,7 @@ import AVFoundation
         sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
-    /*! @brief  Start playing sound
-     */
+    //! @brief  Start playing sound
     @objc func startPlayback() -> Bool {
 
         do { try audiounit.startHardware() } catch {
@@ -131,8 +127,7 @@ import AVFoundation
         return true
     }
     
-    /*! @brief  Stop playing sound
-     */
+    //! @brief  Stop playing sound
     @objc func stopPlayback() {
         
         audiounit.stopHardware()

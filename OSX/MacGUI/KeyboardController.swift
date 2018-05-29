@@ -39,10 +39,10 @@ class KeyboardController: NSObject {
     var keyMap: [MacKey:C64Key] = KeyboardController.standardKeyMap
     
     // Delete when Objective-C code is gone
-    @objc func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
-    @objc func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
-    @objc func getMapKeysByPosition() -> Bool { return mapKeysByPosition }
-    @objc func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
+    func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
+    func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
+    func getMapKeysByPosition() -> Bool { return mapKeysByPosition }
+    func setMapKeysByPosition(_ b: Bool) { mapKeysByPosition = b }
 
     /// Remembers the currently pressed key modifiers
     var shift: Bool = false
@@ -384,7 +384,7 @@ class KeyboardController: NSObject {
         }
     }
     
-    @objc func typeOnKeyboard(string: String,
+    func typeOnKeyboard(string: String,
                               initialDelay: useconds_t = 0,
                               completion: (() -> Void)?) {
 
@@ -402,7 +402,7 @@ class KeyboardController: NSObject {
         }
     }
     
-    @objc func typeOnKeyboardAndPressPlay(string: String) {
+    func typeOnKeyboardAndPressPlay(string: String) {
         typeOnKeyboard(string: string, completion: controller.c64.datasette.pressPlay)
     }
 }

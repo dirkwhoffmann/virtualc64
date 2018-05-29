@@ -275,7 +275,7 @@ extension MyController {
         }
     }
     
-    @objc func refreshCPU() {
+    func refreshCPU() {
         
         pc.intValue = Int32(c64.cpu.pc())
         a.intValue = Int32(c64.cpu.a())

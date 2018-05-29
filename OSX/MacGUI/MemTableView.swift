@@ -27,7 +27,7 @@ struct MemoryHighlighting {
     static let ioCia = 9
 }
 
-@objc class MemTableView : NSTableView {
+class MemTableView : NSTableView {
     
     var c : MyController? = nil
     var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
@@ -41,7 +41,7 @@ struct MemoryHighlighting {
         target = self
     }
     
-    @objc func refresh() {
+    func refresh() {
         
         reloadData()
     }

@@ -33,7 +33,7 @@ class MyDocument : NSDocument {
      *           as a disk or to flash a single file into memory. If the attachment is a
      *           snapshot, it is read into the emulator without asking the user.
      */
-    @objc var attachment: ContainerProxy? = nil
+    var attachment: ContainerProxy? = nil
         
     override init() {
         

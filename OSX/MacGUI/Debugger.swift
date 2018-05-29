@@ -29,7 +29,7 @@ extension MyController {
     }
     
     // Updates all visible values in the debug panel
-    @objc func refresh() {
+    func refresh() {
         
         if let id = debugPanel.selectedTabViewItem?.identifier as? String {
             switch id {

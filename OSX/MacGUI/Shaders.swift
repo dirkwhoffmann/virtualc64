@@ -7,9 +7,9 @@
 
 import Foundation
 
-// --------------------------------------------------------------------------------------------
-//                       Base class for all compute kernels
-// --------------------------------------------------------------------------------------------
+//
+// Base class for all compute kernels
+// 
 
 struct C64_TEXTURE {
     static let width = 512
@@ -26,7 +26,7 @@ struct UPSCALED_TEXTURE {
     static let cutout_y = C64_TEXTURE.cutout_y * UPSCALED_TEXTURE.factor
 }
 
-@objc class ComputeKernel : NSObject {
+class ComputeKernel : NSObject {
     
     var kernel : MTLComputePipelineState!
     var sampler : MTLSamplerState!
@@ -53,7 +53,7 @@ struct UPSCALED_TEXTURE {
         super.init()
     }
 
-    @objc convenience init(name: String, device: MTLDevice, library: MTLLibrary)
+    convenience init(name: String, device: MTLDevice, library: MTLLibrary)
     {
         self.init()
         
@@ -93,17 +93,17 @@ struct UPSCALED_TEXTURE {
         sampler = samplerLinear
     }
     
-    @objc func getsampler() -> MTLSamplerState
+    func getsampler() -> MTLSamplerState
     {
         return sampler
     }
     
-    @objc func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder)
+    func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder)
     {
         // Each specific compute kernel puts its initialization code here
     }
     
-    @objc func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture)
+    func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture)
     {
         if let encoder = commandBuffer.makeComputeCommandEncoder() {
             encoder.setComputePipelineState(kernel)
@@ -118,13 +118,13 @@ struct UPSCALED_TEXTURE {
     }
 }
 
-// --------------------------------------------------------------------------------------------
-//                                    Upscalers
-// --------------------------------------------------------------------------------------------
+//
+// Upscalers
+//
 
-@objc class BypassUpscaler : ComputeKernel {
+class BypassUpscaler : ComputeKernel {
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary)
+    convenience init(device: MTLDevice, library: MTLLibrary)
     {
         self.init(name: "bypassupscaler", device: device, library: library)
         
@@ -133,9 +133,9 @@ struct UPSCALED_TEXTURE {
     }
 }
 
-@objc class EPXUpscaler : ComputeKernel {
+class EPXUpscaler : ComputeKernel {
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary)
+    convenience init(device: MTLDevice, library: MTLLibrary)
     {
         self.init(name: "epxupscaler", device: device, library: library)
         
@@ -144,9 +144,9 @@ struct UPSCALED_TEXTURE {
     }
 }
 
-@objc class XBRUpscaler : ComputeKernel {
+class XBRUpscaler : ComputeKernel {
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary)
+    convenience init(device: MTLDevice, library: MTLLibrary)
     {
         self.init(name: "xbrupscaler", device: device, library: library)
         
@@ -155,14 +155,13 @@ struct UPSCALED_TEXTURE {
     }
 }
 
-// --------------------------------------------------------------------------------------------
-//                                     Filters
-// --------------------------------------------------------------------------------------------
+//
+// Filters
+//
 
-@objc class BypassFilter : ComputeKernel {
+class BypassFilter : ComputeKernel {
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "bypass", device: device, library: library)
 
         // Replace default texture sampler
@@ -170,12 +169,11 @@ struct UPSCALED_TEXTURE {
     }
 }
 
-@objc class BlurFilter : ComputeKernel {
+class BlurFilter : ComputeKernel {
     
     var blurWeightTexture: MTLTexture!
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary, radius: Float)
-    {
+    convenience init(device: MTLDevice, library: MTLLibrary, radius: Float) {
         self.init(name: "blur", device: device, library: library)
     
         // Build blur weight texture
@@ -223,19 +221,17 @@ struct UPSCALED_TEXTURE {
         weights.deallocate()
     }
     
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder)
-    {
+    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
         encoder.setTexture(blurWeightTexture, index: 2)
     }
 }
 
 
-@objc class SaturationFilter : ComputeKernel {
+class SaturationFilter : ComputeKernel {
 
     var uniformBuffer : MTLBuffer!
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary, factor: Float)
-    {
+    convenience init(device: MTLDevice, library: MTLLibrary, factor: Float) {
         self.init(name: "saturation", device: device, library: library)
         
         // Setup uniform buffer
@@ -252,18 +248,16 @@ struct UPSCALED_TEXTURE {
     }
 }
 
-@objc class SepiaFilter : ComputeKernel {
+class SepiaFilter : ComputeKernel {
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "sepia", device: device, library: library)
     }
 }
 
-@objc class CrtFilter : ComputeKernel {
+class CrtFilter : ComputeKernel {
     
-    @objc convenience init(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "crt", device: device, library: library)
     }
 }

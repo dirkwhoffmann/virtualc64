@@ -9,7 +9,7 @@ import Foundation
 
 extension MyController {
     
-    @objc func refreshSID() {
+    func refreshSID() {
         
         let info = c64.sid.getInfo()
         

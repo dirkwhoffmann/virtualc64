@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc class WaveformView: NSView {
+class WaveformView: NSView {
  
     @IBOutlet weak var controller: MyController!
     

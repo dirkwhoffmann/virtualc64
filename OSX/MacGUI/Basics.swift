@@ -8,9 +8,9 @@
 import Foundation
 
 
-// -------------------------------------------------------------------
-//                          Logging / Debugging
-// -------------------------------------------------------------------
+//
+// Logging / Debugging
+// 
 
 public func track(_ message: String = "",
                   path: String = #file, function: String = #function, line: Int = #line ) {
@@ -24,21 +24,10 @@ public func track(_ message: String = "",
     }
 }
 
-// -------------------------------------------------------------------
-//                         Drag and Drop
-// -------------------------------------------------------------------
 
-/*
-struct DragType {
-    static let string = NSPasteboard.PasteboardType.string
-    static let contents = NSPasteboard.PasteboardType.fileContents
-    static let file = NSPasteboard.PasteboardType.fileURL
-}
-*/
-
-// -------------------------------------------------------------------
-//                         Image processing
-// -------------------------------------------------------------------
+//
+// Image processing
+//
 
 extension NSImage {
     
@@ -73,17 +62,15 @@ extension NSImage {
         
         lockFocus()
         let sourceOver = NSCompositingOperation.sourceOver
-        //         draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
-        //         glossy!.draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
         draw(in: rect, from: NSZeroRect, operation: sourceOver, fraction: 1.0)
         glossy!.draw(in: rect, from: NSZeroRect, operation: sourceOver, fraction: 1.0)
         unlockFocus()
     }
 }
 
-// -------------------------------------------------------------------
-//                          C64 Proxy extensions
-// -------------------------------------------------------------------
+//
+// C64 Proxy extensions
+//
 
 public extension C64Proxy {
     
@@ -106,7 +93,7 @@ public extension C64Proxy {
         
         return image
     }
-    @objc func autoSnapshotImage(_ item: Int) -> NSImage {
+    func autoSnapshotImage(_ item: Int) -> NSImage {
         
         let data = autoSnapshotImageData(item)
         let width = autoSnapshotImageWidth(item)
@@ -114,7 +101,7 @@ public extension C64Proxy {
         return image(data: data, width: width, height: height)
     }
 
-    @objc func userSnapshotImage(_ item: Int) -> NSImage {
+    func userSnapshotImage(_ item: Int) -> NSImage {
         
         let data = userSnapshotImageData(item)
         let width = userSnapshotImageWidth(item)
@@ -124,29 +111,3 @@ public extension C64Proxy {
 
 }
 
-/*
-public extension SnapshotProxy {
-    
-    @objc func image() -> NSImage {
-        
-        var data = imageData()
-        let width = imageWidth()
-        let height = imageHeight()
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: &data,
-                                        pixelsWide: width,
-                                        pixelsHigh: height,
-                                        bitsPerSample: 8,
-                                        samplesPerPixel: 4,
-                                        hasAlpha: true,
-                                        isPlanar: false,
-                                        colorSpaceName: NSColorSpaceName.calibratedRGB,
-                                        bytesPerRow: 4*width,
-                                        bitsPerPixel: 32)
-        let image = NSImage(size: (imageRep?.size)!)
-        image.addRepresentation(imageRep!)
-        image.makeGlossy()
-        
-        return image
-    }
-}
-*/

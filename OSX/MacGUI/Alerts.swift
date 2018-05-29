@@ -76,7 +76,7 @@ extension MyController {
         alert.runModal()
     }
     
-    @objc func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
+    func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
         
         let name = container.cartridgeTypeName() as String
         

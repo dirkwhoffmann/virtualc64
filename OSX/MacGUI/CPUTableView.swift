@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc class CpuTableView : NSTableView {
+class CpuTableView : NSTableView {
     
     var c : MyController? = nil
     
@@ -35,7 +35,7 @@ import Foundation
         }
     }
 
-    @objc func setHex(_ value: Bool) {
+    func setHex(_ value: Bool) {
         
         hex = value
         updateDisplayedAddresses()
@@ -68,7 +68,7 @@ import Foundation
         updateDisplayedAddresses(startAddr: c!.c64.cpu.pc())
     }
     
-    @objc func refresh() {
+    func refresh() {
     
         if c == nil { return }
         

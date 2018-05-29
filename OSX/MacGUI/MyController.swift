@@ -363,7 +363,7 @@ extension MyController {
 // --------------------------------------------------------------------------------
 //                           Timer and message processing
 // --------------------------------------------------------------------------------
-
+    
     @objc func timerFunc() {
 
         precondition(timerLock != nil)

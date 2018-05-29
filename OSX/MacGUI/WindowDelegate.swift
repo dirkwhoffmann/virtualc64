@@ -77,7 +77,7 @@ extension MyController : NSWindowDelegate {
         return options
     }
     
-    @objc public func window(_ window: NSWindow, willUseFullScreenContentSize proposedSize: NSSize) -> NSSize {
+    public func window(_ window: NSWindow, willUseFullScreenContentSize proposedSize: NSSize) -> NSSize {
 
         // track("Proposed size: \(proposedSize.width) x \(proposedSize.height)")
         var myRect = metalScreen.bounds
@@ -85,7 +85,7 @@ extension MyController : NSWindowDelegate {
         return proposedSize
     }
 
-    @objc public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+    public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
         
         // Get some basic parameters
         let windowFrame = sender.frame
@@ -108,7 +108,7 @@ extension MyController : NSWindowDelegate {
 extension MyController {
     
     /// Adjusts the windows vertical size programatically
-    @objc func adjustWindowSize() {
+    func adjustWindowSize() {
         
         track()
         if var frame = window?.frame {
