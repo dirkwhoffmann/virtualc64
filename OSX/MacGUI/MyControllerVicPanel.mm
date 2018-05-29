@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*
 #import "C64GUI.h"
 #import "VirtualC64-Bridging-Header.h"
 
@@ -391,3 +392,5 @@
 }
 
 @end
+
+*/

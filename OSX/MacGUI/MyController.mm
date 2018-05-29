@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*
 #import "C64GUI.h"
 #import "VirtualC64-Swift.h"
 
@@ -96,26 +97,10 @@
 @synthesize ciaIntLineLow;
 
 // Debugger (VIC)
-@synthesize VicDX;
-@synthesize VicDY;
-@synthesize VicSpriteX1;
-@synthesize VicSpriteY1;
-@synthesize VicSpriteX2;
-@synthesize VicSpriteY2;
-@synthesize VicSpriteX3;
-@synthesize VicSpriteY3;
-@synthesize VicSpriteX4;
-@synthesize VicSpriteY4;
-@synthesize VicSpriteX5;
-@synthesize VicSpriteY5;
-@synthesize VicSpriteX6;
-@synthesize VicSpriteY6;
-@synthesize VicSpriteX7;
-@synthesize VicSpriteY7;
-@synthesize VicSpriteX8;
-@synthesize VicSpriteY8;
-@synthesize VicRasterline;
-@synthesize VicRasterInterrupt;
+@synthesize vicDX;
+@synthesize vicDY;
+@synthesize vicRasterline;
+@synthesize vicRasterInterrupt;
 
 // Debugger (SID)
 @synthesize selectedVoice;
@@ -193,118 +178,9 @@
 //          Refresh methods: Force all GUI items to refresh their value
 // --------------------------------------------------------------------------------
 
-/*
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threeDigitFormatter
-{		
-	NSControl *ByteFormatterControls[] = { 
-		// CPU panel
-		sp, a, x, y,
-		// CIA panel
-        ciaPA, ciaPB,
-		todHours, todMinutes, todSeconds, todTenth,
-        alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
-        ciaImr, ciaIcr,
-		// VIC panel
-		VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
-        // SID panel
-        attackRate, decayRate, sustainRate, releaseRate,
-        filterResonance,
-        volume, potX, potY,
- 		NULL };
-	
-	NSControl *WordFormatterControls[] = { 
-		// CPU panel
-		pc, breakAt,
-		// CIA panel
-		ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
-		// VIC panel
-		VicRasterline, VicRasterInterrupt,
-        // SID panel
-        frequency, pulseWidth, filterCutoff,
-		NULL };
 
-    NSControl *threeDigitFormatterControls[] = { 
-		// VIC panel
-		VicSpriteX1, VicSpriteX2, VicSpriteX3, VicSpriteX4, VicSpriteX5, VicSpriteX6, VicSpriteX7, VicSpriteX8,
-		NULL };
 
-	// Bind formatters
-	for (int i = 0; ByteFormatterControls[i] != NULL; i++) {
-		[ByteFormatterControls[i] abortEditing];
-		[ByteFormatterControls[i] setFormatter:byteFormatter];
-		[ByteFormatterControls[i] setNeedsDisplay];
-	}
-	
-	for (int i = 0; WordFormatterControls[i] != NULL; i++) {
-		[WordFormatterControls[i] abortEditing];
-		[WordFormatterControls[i] setFormatter:wordFormatter];
-		[WordFormatterControls[i] setNeedsDisplay];
-	}
-
-    for (int i = 0; threeDigitFormatterControls[i] != NULL; i++) {
-		[threeDigitFormatterControls[i] abortEditing];
-		[threeDigitFormatterControls[i] setFormatter:threeDigitFormatter];
-		[threeDigitFormatterControls[i] setNeedsDisplay];
-	}
-    
-	[[[memTableView tableColumnWithIdentifier:@"addr"] dataCell] setFormatter:wordFormatter];
-	[[[memTableView tableColumnWithIdentifier:@"hex0"] dataCell] setFormatter:byteFormatter];
-	[[[memTableView tableColumnWithIdentifier:@"hex1"] dataCell] setFormatter:byteFormatter];
-	[[[memTableView tableColumnWithIdentifier:@"hex2"] dataCell] setFormatter:byteFormatter];
-	[[[memTableView tableColumnWithIdentifier:@"hex3"] dataCell] setFormatter:byteFormatter];	
-	
-	[self refresh];
-}
-
-- (void)enableUserEditing:(BOOL)enabled
-{
-	NSControl *controls[] = {
-        
-		// CPU panel
-		pc, sp, a, x, y, 
-		Nflag, Zflag, Cflag, Iflag, Bflag, Dflag, Vflag,
-		
-        // SID panel
-        frequency, pulseWidth, attackRate, decayRate, sustainRate, releaseRate,
-        
-		// VIC panel
-		VicSpriteX1, VicSpriteX2, VicSpriteX3, VicSpriteX4, VicSpriteX5, VicSpriteX6, VicSpriteX7, VicSpriteX8,
-        VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
-        
-        VicRasterline, VicRasterInterrupt, VicDX, VicDY,
-		NULL };
-	
-	// Enable / disable controls
-	for (int i = 0;; i++) {
-		if (controls[i] == NULL) break;
-		[controls[i] setEnabled:enabled];
-	}
-	
-	// Enable / disable table columns
-	[[memTableView tableColumnWithIdentifier:@"hex0"] setEditable:enabled];
-	[[memTableView tableColumnWithIdentifier:@"hex1"] setEditable:enabled];
-	[[memTableView tableColumnWithIdentifier:@"hex2"] setEditable:enabled];
-	[[memTableView tableColumnWithIdentifier:@"hex3"] setEditable:enabled];
-	
-	// Change image and state of debugger control buttons
-	if (![c64 isRunnable]) {
-		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];		
-		[stopAndGoButton setEnabled:false];
-		[stepIntoButton setEnabled:false];
-		[stepOverButton setEnabled:false];
-		
-	} else if ([c64 isHalted]) {
-		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];		
-		[stopAndGoButton setEnabled:true];
-		[stepIntoButton setEnabled:true];
-		[stepOverButton setEnabled:true];
-	} else {
-		[stopAndGoButton setImage:[NSImage imageNamed:@"pause32"]];
-		[stopAndGoButton setEnabled:true];
-		[stepIntoButton setEnabled:false];
-		[stepOverButton setEnabled:false];		
-	}		
-}
-*/
 
 @end
+*/
+

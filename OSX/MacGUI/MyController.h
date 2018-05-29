@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*
 #import <Cocoa/Cocoa.h>
 
 // Forward declarations
@@ -33,6 +34,7 @@
 @class MemTableView;
 @class WaveformView;
 @class Speedometer;
+
 
 @interface MyController : NSWindowController 
 {
@@ -141,86 +143,22 @@
     IBOutlet NSButton *ciaIntLineLow;
    
 	// Debug pabel (VIC)	
-	IBOutlet NSPopUpButton *VicVideoMode;
-	IBOutlet NSPopUpButton *VicScreenGeometry;
-	IBOutlet NSPopUpButton *VicMemoryBank;
-	IBOutlet NSPopUpButton *VicScreenMemory;
-	IBOutlet NSPopUpButton *VicCharacterMemory;
-	IBOutlet NSTextField *VicDX;
-	IBOutlet NSStepper *VicDXStepper;
-	IBOutlet NSTextField *VicDY;
-	IBOutlet NSStepper *VicDYStepper;
+	IBOutlet NSPopUpButton *vicVideoMode;
+	IBOutlet NSPopUpButton *vicScreenGeometry;
+	IBOutlet NSPopUpButton *vicMemoryBank;
+	IBOutlet NSPopUpButton *vicScreenMemory;
+	IBOutlet NSPopUpButton *vicCharacterMemory;
+	IBOutlet NSTextField *vicDX;
+	IBOutlet NSStepper *vicDXStepper;
+	IBOutlet NSTextField *vicDY;
+	IBOutlet NSStepper *vicDYStepper;
     
-    IBOutlet NSButton *VicSpriteActive1;
-    IBOutlet NSTextField *VicSpriteX1;
-    IBOutlet NSTextField *VicSpriteY1;
-    IBOutlet NSButton *VicSpriteCol1;
-    IBOutlet NSButton *VicSpriteMulticolor1;
-    IBOutlet NSButton *VicSpriteStretchX1;
-    IBOutlet NSButton *VicSpriteStretchY1;
+    IBOutlet NSButton *vicSpriteSpriteCollision;
+    IBOutlet NSButton *vicSpriteBackgroundCollision;
 
-    IBOutlet NSButton *VicSpriteActive2;
-    IBOutlet NSTextField *VicSpriteX2;
-    IBOutlet NSTextField *VicSpriteY2;
-    IBOutlet NSButton *VicSpriteCol2;
-    IBOutlet NSButton *VicSpriteMulticolor2;
-    IBOutlet NSButton *VicSpriteStretchX2;
-    IBOutlet NSButton *VicSpriteStretchY2;
-
-    IBOutlet NSButton *VicSpriteActive3;
-    IBOutlet NSTextField *VicSpriteX3;
-    IBOutlet NSTextField *VicSpriteY3;
-    IBOutlet NSButton *VicSpriteCol3;
-    IBOutlet NSButton *VicSpriteMulticolor3;
-    IBOutlet NSButton *VicSpriteStretchX3;
-    IBOutlet NSButton *VicSpriteStretchY3;
-
-    IBOutlet NSButton *VicSpriteActive4;
-    IBOutlet NSTextField *VicSpriteX4;
-    IBOutlet NSTextField *VicSpriteY4;
-    IBOutlet NSButton *VicSpriteCol4;
-    IBOutlet NSButton *VicSpriteMulticolor4;
-    IBOutlet NSButton *VicSpriteStretchX4;
-    IBOutlet NSButton *VicSpriteStretchY4;
-
-    IBOutlet NSButton *VicSpriteActive5;
-    IBOutlet NSTextField *VicSpriteX5;
-    IBOutlet NSTextField *VicSpriteY5;
-    IBOutlet NSButton *VicSpriteCol5;
-    IBOutlet NSButton *VicSpriteMulticolor5;
-    IBOutlet NSButton *VicSpriteStretchX5;
-    IBOutlet NSButton *VicSpriteStretchY5;
-
-    IBOutlet NSButton *VicSpriteActive6;
-    IBOutlet NSTextField *VicSpriteX6;
-    IBOutlet NSTextField *VicSpriteY6;
-    IBOutlet NSButton *VicSpriteCol6;
-    IBOutlet NSButton *VicSpriteMulticolor6;
-    IBOutlet NSButton *VicSpriteStretchX6;
-    IBOutlet NSButton *VicSpriteStretchY6;
-
-    IBOutlet NSButton *VicSpriteActive7;
-    IBOutlet NSTextField *VicSpriteX7;
-    IBOutlet NSTextField *VicSpriteY7;
-    IBOutlet NSButton *VicSpriteCol7;
-    IBOutlet NSButton *VicSpriteMulticolor7;
-    IBOutlet NSButton *VicSpriteStretchX7;
-    IBOutlet NSButton *VicSpriteStretchY7;
-
-    IBOutlet NSButton *VicSpriteActive8;
-    IBOutlet NSTextField *VicSpriteX8;
-    IBOutlet NSTextField *VicSpriteY8;
-    IBOutlet NSButton *VicSpriteCol8;
-    IBOutlet NSButton *VicSpriteMulticolor8;
-    IBOutlet NSButton *VicSpriteStretchX8;
-    IBOutlet NSButton *VicSpriteStretchY8;
-
-    IBOutlet NSButton *VicSpriteSpriteCollision;
-    IBOutlet NSButton *VicSpriteBackgroundCollision;
-
-	IBOutlet NSTextField *VicRasterline;
-	IBOutlet NSButton *VicEnableRasterInterrupt;
-	IBOutlet NSTextField *VicRasterInterrupt;
+	IBOutlet NSTextField *vicRasterline;
+	IBOutlet NSButton *vicEnableRasterInterrupt;
+	IBOutlet NSTextField *vicRasterInterrupt;
 	
     // Debugger (SID panel)
     NSInteger selectedVoice;
@@ -255,11 +193,7 @@
     IBOutlet NSTextField *bufferUnderflows;
     IBOutlet NSTextField *bufferOverflows;
     
-	/*! @brief   Update loop timer
-     *  @details The update task activated 60 times a second
-     *           and performs everything from drawing frames or 
-     *           checking the message queue. 
-     */
+	//! @brief   Update loop timer
 	NSTimer *timer;
 	
 	// Timer lock
@@ -271,11 +205,7 @@
 	// Speedometer to measure clock frequence and frames per second
 	Speedometer *speedometer;    
 
-    /*! @brief   Current keyboard modifier flags
-     *  @details These flags tell us if one of the special keys
-     *           are currently pressed. The flags are utilized, e.g., to
-     *           alter behaviour when a key on the TouchBar is pressed.
-     */
+    //! @brief   Current keyboard modifier flags
     NSEventModifierFlags modifierFlags;
     
     //! @brief   Current mouse coordinate
@@ -375,26 +305,10 @@
 @property NSButton *ciaIntLineLow;
 
 // Debugger (VIC panel)
-@property NSTextField *VicDX;
-@property NSTextField *VicDY;
-@property NSTextField *VicSpriteX1;
-@property NSTextField *VicSpriteY1;
-@property NSTextField *VicSpriteX2;
-@property NSTextField *VicSpriteY2;
-@property NSTextField *VicSpriteX3;
-@property NSTextField *VicSpriteY3;
-@property NSTextField *VicSpriteX4;
-@property NSTextField *VicSpriteY4;
-@property NSTextField *VicSpriteX5;
-@property NSTextField *VicSpriteY5;
-@property NSTextField *VicSpriteX6;
-@property NSTextField *VicSpriteY6;
-@property NSTextField *VicSpriteX7;
-@property NSTextField *VicSpriteY7;
-@property NSTextField *VicSpriteX8;
-@property NSTextField *VicSpriteY8;
-@property NSTextField *VicRasterline;
-@property NSTextField *VicRasterInterrupt;
+@property NSTextField *vicDX;
+@property NSTextField *vicDY;
+@property NSTextField *vicRasterline;
+@property NSTextField *vicRasterInterrupt;
 
 
 // Debugger (SID Panel)
@@ -467,10 +381,6 @@
 @property NSTimer *timer;
 @property NSLock *timerLock;
 
-// Refresh
-/*
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter;
-- (void)enableUserEditing:(BOOL)enabled;
+@end
 */
 
-@end

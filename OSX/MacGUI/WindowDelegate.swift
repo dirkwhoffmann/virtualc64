@@ -29,7 +29,7 @@ extension MyController : NSWindowDelegate {
         track()
         
         // Stop timer
-        timer.invalidate()
+        timer?.invalidate()
         timer = nil
         
         // Disconnect emulator

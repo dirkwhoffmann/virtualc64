@@ -66,7 +66,7 @@ extension MyController {
             alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
             ciaImr, ciaIcr,
             // VIC panel
-            vicSpriteY1, vicSpriteY2, vicSpriteY3, vicSpriteY4, vicSpriteY5, vicSpriteY6, vicSpriteY7, vicSpriteY8,
+            //vicSpriteY,
             // SID panel
             attackRate, decayRate, sustainRate, releaseRate,
             filterResonance,
@@ -86,7 +86,7 @@ extension MyController {
         
         let threeDigitFormatterControls:[NSControl] = [
             // VIC panel
-            vicSpriteX1, vicSpriteX2, vicSpriteX3, vicSpriteX4, vicSpriteX5, vicSpriteX6, vicSpriteX7, vicSpriteX8
+            // vicSpriteX,
         ]
     
         // Bind formatters
@@ -139,10 +139,7 @@ extension MyController {
             volume,
             
             // VIC panel
-            vicSpriteX1, vicSpriteX2, vicSpriteX3, vicSpriteX4, vicSpriteX5, vicSpriteX6, vicSpriteX7, vicSpriteX8,
-            vicSpriteY1, vicSpriteY2, vicSpriteY3, vicSpriteY4, vicSpriteY5, vicSpriteY6, vicSpriteY7, vicSpriteY8,
-            
-            vicRasterline, vicRasterInterrupt, vicDX, vicDY
+            // vicSpriteX,
         ]
   
         for control in controls {

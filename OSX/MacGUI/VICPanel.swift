@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+extension MyController {
+    
+    func refreshVIC() {
+        
+    }
+}

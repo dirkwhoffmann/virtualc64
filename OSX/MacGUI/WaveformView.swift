@@ -9,7 +9,7 @@ import Foundation
 
 @objc class WaveformView: NSView {
  
-    @IBOutlet var controller: MyController!
+    @IBOutlet weak var controller: MyController!
     
     // Remembers the highest amplitude (used for auto scaling)
     var highestAmplitude: Float = 0.001

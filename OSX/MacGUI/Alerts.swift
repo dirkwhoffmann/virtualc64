@@ -39,7 +39,7 @@ extension MyDocument {
     }
 }
 
-public extension MyController {
+extension MyController {
     
     @discardableResult
     func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {

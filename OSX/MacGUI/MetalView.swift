@@ -39,7 +39,7 @@ struct C64Filter {
 
 public class MetalView: MTKView {
     
-    @IBOutlet var controller: MyController!
+    @IBOutlet weak var controller: MyController!
     
     /// Number of drawn frames sind power up
     var frames: UInt64 = 0
