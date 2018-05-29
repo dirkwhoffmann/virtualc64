@@ -12,6 +12,7 @@ extension MyController {
     func refreshSID() {
         
         let info = c64.sid.getInfo()
+        let vinfo = c64.sid.getVoiceInfo(voiceSelector.indexOfSelectedItem)
         
         // Volume and potentiometers
         volume.intValue = Int32(info.volume)
@@ -22,8 +23,8 @@ extension MyController {
         voiceSelector.selectedSegment = selectedVoice
         
         // Voice items
-        let i = voiceSelector.indexOfSelectedItem
-        let vinfo = (i == 0) ? info.voice1 : (i == 1) ? info.voice2 : info.voice3
+        // let i = voiceSelector.indexOfSelectedItem
+        
         
         if vinfo.waveform & 0x10 != 0 { waveform.selectItem(at: 1) }
         else if vinfo.waveform & 0x20 != 0 { waveform.selectItem(at: 2) }

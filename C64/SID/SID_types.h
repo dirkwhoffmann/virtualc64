@@ -51,9 +51,9 @@ typedef struct {
  *  @details  Used by SIDBridge::getInfo() to collect debug information
  */
 typedef struct {
-    VoiceInfo voice1;
-    VoiceInfo voice2;
-    VoiceInfo voice3;
+    // VoiceInfo voice1;
+    // VoiceInfo voice2;
+    // VoiceInfo voice3;
     uint8_t volume;
     uint16_t filterCutoff;
     uint8_t filterResonance;

@@ -273,9 +273,9 @@ ReSID::getInfo()
     SIDInfo info;
     reSID::SID::State state = sid->read_state();
 
-    info.voice1 = getVoiceInfo(0, &state);
-    info.voice2 = getVoiceInfo(1, &state);
-    info.voice3 = getVoiceInfo(2, &state);
+    // info.voice1 = getVoiceInfo(0, &state);
+    // info.voice2 = getVoiceInfo(1, &state);
+    // info.voice3 = getVoiceInfo(2, &state);
     info.volume = state.sid_register[0x18] & 0x0F;
     info.filterModeBits = state.sid_register[0x18] & 0xF0;
     info.filterType = state.sid_register[0x18] & 0x70;
@@ -288,16 +288,9 @@ ReSID::getInfo()
 VoiceInfo
 ReSID::getVoiceInfo(unsigned voice)
 {
-    reSID::SID::State state = sid->read_state();
-    return getVoiceInfo(voice, &state);
-}
-
-VoiceInfo
-ReSID::getVoiceInfo(unsigned voice, reSID::SID::State *state)
-{
     VoiceInfo info;
-    assert(state != NULL);
-    uint8_t *sidreg = (uint8_t *)state->sid_register + (voice * 7);
+    reSID::SID::State state = sid->read_state();
+    uint8_t *sidreg = (uint8_t *)state.sid_register + (voice * 7);
     
     for (unsigned j = 0; j < 7; j++) info.reg[j] = sidreg[j];
     info.frequency = HI_LO(sidreg[0x01], sidreg[0x00]);

@@ -116,22 +116,21 @@ FastSID::dumpState()
     msg("Filter enable bits: %X\n\n", info.filterEnableBits);
 
     for (unsigned i = 0; i < 3; i++) {
-        VoiceInfo *vinfo = (i == 0) ? &info.voice1 : (i == 1) ? &info.voice2 : &info.voice3;
-        uint8_t wf = vinfo->waveform;
-        msg("Voice %d:       Frequency: %d\n", i, vinfo->frequency);
-        msg("             Pulse width: %d\n", vinfo->pulseWidth);
+        VoiceInfo vinfo = getVoiceInfo(i);
+        uint8_t wf = vinfo.waveform;
+        msg("Voice %d:       Frequency: %d\n", i, vinfo.frequency);
+        msg("             Pulse width: %d\n", vinfo.pulseWidth);
         msg("                Waveform: %s\n",
             (wf == FASTSID_NOISE) ? "NOISE" :
             (wf == FASTSID_PULSE) ? "PULSE" :
             (wf == FASTSID_SAW) ? "SAW" :
             (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
-        msg("         Ring modulation: %s\n", vinfo->ringMod ? "yes" : "no");
-        msg("               Hard sync: %s\n", vinfo->hardSync ? "yes" : "no");
-        msg("             Attack rate: %d\n", vinfo->attackRate);
-        msg("              Decay rate: %d\n", vinfo->decayRate);
-        msg("            Sustain rate: %d\n", vinfo->sustainRate);
-        msg("            Release rate: %d\n", vinfo->releaseRate);
-        // msg("            Apply filter: %s\n\n", vinfo->filterOn ? "yes" : "no");
+        msg("         Ring modulation: %s\n", vinfo.ringMod ? "yes" : "no");
+        msg("               Hard sync: %s\n", vinfo.hardSync ? "yes" : "no");
+        msg("             Attack rate: %d\n", vinfo.attackRate);
+        msg("              Decay rate: %d\n", vinfo.decayRate);
+        msg("            Sustain rate: %d\n", vinfo.sustainRate);
+        msg("            Release rate: %d\n", vinfo.releaseRate);
     }
 }
 
@@ -140,9 +139,6 @@ FastSID::getInfo()
 {
     SIDInfo info;
  
-    info.voice1 = getVoiceInfo(0);
-    info.voice2 = getVoiceInfo(1);
-    info.voice3 = getVoiceInfo(2);
     info.volume = sidVolume();
     info.filterModeBits = sidreg[0x18] & 0xF0;
     info.filterType = filterType();
