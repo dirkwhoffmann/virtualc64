@@ -242,6 +242,21 @@ VIC::getSpriteInfo(unsigned i)
 {
     SpriteInfo info;
     
+    info.enabled = spriteIsEnabled(i);
+    info.spriteX = getSpriteX(i);
+    info.spriteY = getSpriteY(i);
+    info.color = getSpriteColor(i);
+    info.multicolor = spriteIsMulticolor(i);
+    info.extraColor1 = getSpriteExtraColor1();
+    info.extraColor2 = getSpriteExtraColor2();
+    info.expandX = spriteWidthIsDoubled(i);
+    info.expandY = spriteHeightIsDoubled(i);
+    info.priority = spriteIsDrawnInBackground(i);
+    info.spriteCollisionIrqEnabled = spriteSpriteInterruptEnabled();
+    info.collidesWithSprite = spriteCollidesWithSprite(i);
+    info.backgroundCollisionIrqEnabled = spriteBackgroundInterruptEnabled();
+    info.collidesWithBackground = spriteCollidesWithBackground(i);
+    
     return info;
 }
 

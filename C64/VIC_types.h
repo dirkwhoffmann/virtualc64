@@ -240,6 +240,21 @@ typedef struct {
  *  @details  Used by VIC::getSpriteInfo() to collect debug information
  */
 typedef struct {
+  
+    bool enabled; 
+    uint16_t spriteX;
+    uint8_t spriteY;
+    uint8_t color;
+    bool multicolor;
+    uint8_t extraColor1;
+    uint8_t extraColor2;
+    bool expandX;
+    bool expandY;
+    bool priority;
+    bool collidesWithSprite;
+    bool spriteCollisionIrqEnabled;
+    bool collidesWithBackground;
+    bool backgroundCollisionIrqEnabled;
     
 } SpriteInfo;
     
