@@ -161,7 +161,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->vic->dumpState(); }
-
+- (VICInfo) getInfo { return wrapper->vic->getInfo(); }
+- (SpriteInfo) getSpriteInfo:(NSInteger)sprite { return wrapper->vic->getSpriteInfo((unsigned)sprite); }
 - (void *) screenBuffer { return wrapper->vic->screenBuffer(); }
 
 - (NSColor *) color:(NSInteger)nr

@@ -9,26 +9,65 @@ import Foundation
 
 class MyController : NSWindowController {
 
-    // Proxy object. Used get data from and sent data to the virtual C64
-    // Implements a bridge between C++ (simulator) and Objective-C (GUI)
-    // IBOutlet
+    /// Proxy object.
+    /// Implements a bridge between the emulator which is written in C++ and the
+    /// GUI which is written in Swift. Because Swift cannot interact with C++ directly,
+    /// the proxy is written in Objective-C.
     var c64: C64Proxy!
     
-    // Game pad manager
+    /// Game pad manager
     var gamePadManager: GamePadManager!
     
-    // Keyboard controller
+    /// Keyboard controller
     var keyboardcontroller: KeyboardController!
     
+    /// Loop timer
+    /// The timer fires 60 times a second and executes all tasks that need to be done
+    /// perdiodically (e.g., updating the speedometer and the debug panels)
+    var timer: Timer?
     
+    // Timer lock
+    var timerLock: NSLock!
+    
+    /// Used inside the timer function to fine tune timed events
+    var animationCounter = 0
+    
+    /// Speedometer to measure clock frequence and frames per second
+    var speedometer: Speedometer!
+    
+    /// Current keyboard modifier flags
+    /// These flags tell us if one of the special keysare currently pressed.
+    /// The flags are utilized, e.g., to alter behaviour when a key on the
+    /// TouchBar is pressed.
+    var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
+    
+    /// Current mouse coordinate
+    var mouseXY = NSPoint(x: 0, y: 0)
+    
+    /// Indicates if mouse is currently hidden
+    var hideMouse = false
+    
+    /// Indicates if a status bar is shown
+    var statusBar = true
+    
+    /// Selected game pad slot for joystick in port A
+    var gamepadSlot1 = 0
+    
+    /// Selected game pad slot for joystick in port B
+    var gamepadSlot2 = 0
+    
+    /// Default image for USB devices
+    var genericDeviceImage: NSImage?
+    
+    /// Indicates if the user dialog should be skipped when opening archives
+    var autoMount = false
+    
+    //
     // Outlets
-    @IBOutlet weak var metalScreen: MetalView!
-    
-    // Toolbar
-    @IBOutlet weak var controlPort1: NSPopUpButton!
-    @IBOutlet weak var controlPort2: NSPopUpButton!
+    //
     
     // Main screen
+    @IBOutlet weak var metalScreen: MetalView!
     @IBOutlet weak var debugger: NSDrawer!
     
     // Bottom bar
@@ -43,8 +82,11 @@ class MyController : NSWindowController {
     @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
     
-    // Debug panel (commons)
+    // Toolbar
+    @IBOutlet weak var controlPort1: NSPopUpButton!
+    @IBOutlet weak var controlPort2: NSPopUpButton!
     
+    // Debug panel (commons)
     var hex = true
     @IBOutlet weak var debugPanel: NSTabView!
     @IBOutlet weak var dezHexSelector: NSMatrix!
@@ -114,27 +156,49 @@ class MyController : NSWindowController {
     @IBOutlet weak var ciaImrBinary: NSTextField!
     @IBOutlet weak var ciaIntLineLow: NSButton!
     
-    // Debug pabel (VIC)
-    @IBOutlet weak var vicVideoMode: NSPopUpButton!
-    @IBOutlet weak var vicScreenGeometry: NSPopUpButton!
-    @IBOutlet weak var vicMemoryBank: NSPopUpButton!
-    @IBOutlet weak var vicScreenMemory: NSPopUpButton!
-    @IBOutlet weak var vicCharacterMemory: NSPopUpButton!
-    @IBOutlet weak var vicDX: NSTextField!
-    @IBOutlet weak var vicDXStepper: NSStepper!
-    @IBOutlet weak var vicDY: NSTextField!
-    @IBOutlet weak var vicDYStepper: NSStepper!
-    
-    @IBOutlet weak var vicSpriteSpriteCollision: NSButton!
-    @IBOutlet weak var vicSpriteBackgroundCollision: NSButton!
-    
+    // Debug panel (VIC)
     @IBOutlet weak var vicRasterline: NSTextField!
-    @IBOutlet weak var vicEnableRasterInterrupt: NSButton!
-    @IBOutlet weak var vicRasterInterrupt: NSTextField!
+    @IBOutlet weak var vicCycle: NSTextField!
+    @IBOutlet weak var vicXCounter: NSTextField!
+    @IBOutlet weak var vicBadLine: NSButton!
+    @IBOutlet weak var vicDisplayMode: NSPopUpButton!
+    @IBOutlet weak var vicBorderColor: NSButton!
+    @IBOutlet weak var vicBackgroundColor0: NSButton!
+    @IBOutlet weak var vicBackgroundColor1: NSButton!
+    @IBOutlet weak var vicBackgroundColor2: NSButton!
+    @IBOutlet weak var vicBackgroundColor3: NSButton!
+    @IBOutlet weak var vicScreenGeometry: NSPopUpButton!
+    @IBOutlet weak var vicDx: NSTextField!
+    @IBOutlet weak var vicDXStepper: NSStepper!
+    @IBOutlet weak var vicDy: NSTextField!
+    @IBOutlet weak var vicDYStepper: NSStepper!
+    @IBOutlet weak var vicVerticalFrameFlipflop: NSButton!
+    @IBOutlet weak var vicHorizontalFrameFlipflop: NSButton!
+    @IBOutlet weak var vicMemoryBankAddr: NSPopUpButton!
+    @IBOutlet weak var vicScreenMemoryAddr: NSPopUpButton!
+    @IBOutlet weak var vicCharacterMemoryAddr: NSPopUpButton!
+    @IBOutlet weak var vicRasterIrqEnabled: NSButton!
+    @IBOutlet weak var vicIrqRasterline: NSTextField!
+    @IBOutlet weak var vicIrqLine: NSButton!
+    
+    @IBOutlet weak var spriteSelector: NSSegmentedControl!
+    @IBOutlet weak var spriteEnabled: NSButton!
+    @IBOutlet weak var spriteX: NSTextField!
+    @IBOutlet weak var spriteY: NSTextField!
+    @IBOutlet weak var spriteColor: NSButton!
+    @IBOutlet weak var spriteIsMulticolor: NSButton!
+    @IBOutlet weak var spriteExtraColor1: NSButton!
+    @IBOutlet weak var spriteExtraColor2: NSButton!
+    @IBOutlet weak var spriteExpandX: NSButton!
+    @IBOutlet weak var spriteExpandY: NSButton!
+    @IBOutlet weak var spritePriority: NSButton!
+    @IBOutlet weak var spriteCollidesWithSprite: NSButton!
+    @IBOutlet weak var spriteSpriteIrqEnabled: NSButton!
+    @IBOutlet weak var spriteCollidesWithBackground: NSButton!
+    @IBOutlet weak var spriteBackgroundIrqEnabled: NSButton!
     
     // Debugger (SID panel)
     var selectedVoice = 0
-    
     @IBOutlet weak var volume: NSTextField!
     @IBOutlet weak var potX: NSTextField!
     @IBOutlet weak var potY: NSTextField!
@@ -164,50 +228,6 @@ class MyController : NSWindowController {
     @IBOutlet weak var audioBufferLevelText: NSTextField!
     @IBOutlet weak var bufferUnderflows: NSTextField!
     @IBOutlet weak var bufferOverflows: NSTextField!
-    
-    /*! @brief   Update loop timer
-     *  @details The update task activated 60 times a second
-     *           and performs everything from drawing frames or
-     *           checking the message queue.
-     */
-    var timer: Timer?
-    
-    // Timer lock
-    var timerLock: NSLock!
-    
-    // Used inside timer function to fine tune timed events
-    var animationCounter = 0
-    
-    // Speedometer to measure clock frequence and frames per second
-    var speedometer: Speedometer!
-    
-    /*! @brief   Current keyboard modifier flags
-     *  @details These flags tell us if one of the special keys
-     *           are currently pressed. The flags are utilized, e.g., to
-     *           alter behaviour when a key on the TouchBar is pressed.
-     */
-    var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
-    
-    //! @brief   Current mouse coordinate
-    var mouseXY = NSPoint(x: 0, y: 0)
-    
-    //! @brief   Indicates if mouse is currently hidden
-    var hideMouse = false
-    
-    //! @brief   Indicates if a status bar is shown
-    var statusBar = true
-    
-    //! @brief   Selected game pad slot for joystick in port A
-    var gamepadSlot1 = 0
-    
-    //! @brief   Selected game pad slot for joystick in port B
-    var gamepadSlot2 = 0
-    
-    //! @brief   Default image for USB devices
-    var genericDeviceImage: NSImage?
-    
-    //! @brief   Indicates if user dialog should be skipped when opening archives
-    var autoMount = false
 }
 
 extension MyController {
@@ -351,7 +371,7 @@ extension MyController {
         
         // Create timer and speedometer
         timerLock = NSLock()
-        timer = Timer.scheduledTimer(timeInterval: 1.0/12.0, // 12 times a second
+        timer = Timer.scheduledTimer(timeInterval: 1.0/12, // 12 times a second
                                      target: self,
                                      selector: #selector(timerFunc),
                                      userInfo: nil,

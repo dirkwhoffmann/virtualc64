@@ -20,18 +20,18 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.0
 //
-// Milestone reached: All legancy ObjectiveC code has been ported to Swift (hence version number 2.0)
+// Milestone reached: All remaining Objective-C code has been ported to Swift (hence version number 2.0)
 // All debug panels have been reworked and a new SID panel has been added.
 // Fixed several bugs in the SID bridge which is the internal API for accessing the reSID library.
 // Replaced reSID files by those used in VICE 3.2.
-// Added support for the D-Pad on the Sony Dualshock controller.
+// The D-Pad on the Sony Dualshock controller is working now.
 
 //
 //
 // TODO:
 //
-// Add VIC::getInfo
 // Add CPU::getInfo
+// Cleanup proxy API
 //
 // CLEANUP:
 // Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
@@ -46,7 +46,7 @@
 #define V_MINOR 11
 #define V_SUBMINOR 1
 
-// Disables assert checking in relase version
+// Disables assertion checking in relase version
 // #define NDEBUG
 
 // Data types and constants

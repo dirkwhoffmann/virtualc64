@@ -132,6 +132,8 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+- (VICInfo) getInfo;
+- (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
 
 - (void *) screenBuffer;
 

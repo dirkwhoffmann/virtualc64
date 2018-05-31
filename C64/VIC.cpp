@@ -210,8 +210,9 @@ VIC::getInfo()
 {
     VICInfo info;
     
-    info.rasterline = yCounter;
-    info.cycle = c64->rasterlineCycle; 
+    info.rasterline = c64->rasterline;
+    info.cycle = c64->rasterlineCycle;
+    info.xCounter = xCounter;
     info.badLine = badLineCondition;
     info.ba = (BAlow == 0);
     info.displayMode = getDisplayMode();
@@ -243,8 +244,8 @@ VIC::getSpriteInfo(unsigned i)
     SpriteInfo info;
     
     info.enabled = spriteIsEnabled(i);
-    info.spriteX = getSpriteX(i);
-    info.spriteY = getSpriteY(i);
+    info.x = getSpriteX(i);
+    info.y = getSpriteY(i);
     info.color = getSpriteColor(i);
     info.multicolor = spriteIsMulticolor(i);
     info.extraColor1 = getSpriteExtraColor1();

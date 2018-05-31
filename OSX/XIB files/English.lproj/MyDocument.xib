@@ -1,33 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MyController">
             <connections>
-                <outlet property="Bflag" destination="187" id="l7C-Tr-XZu"/>
-                <outlet property="Cflag" destination="191" id="Lvl-cY-Asu"/>
-                <outlet property="Dflag" destination="188" id="zBr-RK-6rS"/>
-                <outlet property="Iflag" destination="189" id="Eiw-pa-d8h"/>
-                <outlet property="Nflag" destination="45" id="IQU-DD-W5Q"/>
-                <outlet property="Vflag" destination="185" id="vmz-ex-DKs"/>
-                <outlet property="VicCharacterMemory" destination="867" id="893"/>
-                <outlet property="VicDX" destination="794" id="887"/>
-                <outlet property="VicDXStepper" destination="792" id="889"/>
-                <outlet property="VicDY" destination="791" id="930"/>
-                <outlet property="VicDYStepper" destination="788" id="890"/>
-                <outlet property="VicEnableRasterInterrupt" destination="838" id="906"/>
-                <outlet property="VicMemoryBank" destination="841" id="891"/>
-                <outlet property="VicRasterInterrupt" destination="839" id="907"/>
-                <outlet property="VicRasterline" destination="836" id="905"/>
-                <outlet property="VicScreenGeometry" destination="795" id="886"/>
-                <outlet property="VicScreenMemory" destination="849" id="892"/>
-                <outlet property="VicVideoMode" destination="774" id="885"/>
-                <outlet property="Zflag" destination="190" id="VQj-fV-DvO"/>
                 <outlet property="a" destination="51" id="165"/>
                 <outlet property="alarmHours" destination="mTT-Hf-3TV" id="ZFy-uw-EI8"/>
                 <outlet property="alarmMinutes" destination="A7W-7R-nEo" id="XkU-2I-bZo"/>
@@ -36,10 +17,12 @@
                 <outlet property="attackRate" destination="UMe-Af-uhl" id="1dV-DE-5KQ"/>
                 <outlet property="audioBufferLevel" destination="veL-R1-Eqa" id="AqM-wk-0ff"/>
                 <outlet property="audioBufferLevelText" destination="i32-WZ-a0b" id="E3B-Jk-DFA"/>
+                <outlet property="bflag" destination="187" id="svG-SV-qvB"/>
                 <outlet property="breakAt" destination="D6T-6b-vx3" id="TCZ-Ol-2fN"/>
                 <outlet property="bufferOverflows" destination="hM4-tV-xDx" id="GoS-wd-pBN"/>
                 <outlet property="bufferUnderflows" destination="dyg-Wz-OoO" id="s4Q-Yk-TUx"/>
                 <outlet property="cartridgeIcon" destination="2003" id="2010"/>
+                <outlet property="cflag" destination="191" id="sTB-gS-cZU"/>
                 <outlet property="ciaDDRA" destination="98p-Rg-m2I" id="dmp-09-XwV"/>
                 <outlet property="ciaDDRB" destination="GqH-U7-BOD" id="dSd-SA-sUP"/>
                 <outlet property="ciaIcr" destination="FO4-WJ-J2b" id="ICt-Et-V36"/>
@@ -75,6 +58,7 @@
                 <outlet property="debugger" destination="35" id="Sfw-lz-Vnh"/>
                 <outlet property="decayRate" destination="H4H-4t-pmr" id="GJp-Nq-b9R"/>
                 <outlet property="dezHexSelector" destination="367" id="759"/>
+                <outlet property="dflag" destination="188" id="UAV-Er-hPK"/>
                 <outlet property="driveIcon" destination="1045" id="Vlm-gT-AYk"/>
                 <outlet property="filter1" destination="0Xk-c5-4dD" id="3iB-GJ-Dhl"/>
                 <outlet property="filter2" destination="tlW-U7-68D" id="OzC-gB-NkA"/>
@@ -85,8 +69,10 @@
                 <outlet property="frequency" destination="wEw-3d-tZe" id="z6X-2V-r52"/>
                 <outlet property="gateBit" destination="nSu-jQ-U43" id="FdF-zb-5ze"/>
                 <outlet property="greenLED" destination="1208" id="1214"/>
+                <outlet property="iflag" destination="189" id="mWe-Ir-7Om"/>
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="metalScreen" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
+                <outlet property="nflag" destination="45" id="r0Q-mN-Hht"/>
                 <outlet property="pc" destination="47" id="163"/>
                 <outlet property="potX" destination="3YT-QQ-S7K" id="1yu-aO-gLC"/>
                 <outlet property="potY" destination="gEF-Sx-fBJ" id="nBd-zm-heN"/>
@@ -96,6 +82,21 @@
                 <outlet property="releaseRate" destination="NEG-EB-tbc" id="wxu-tJ-Edy"/>
                 <outlet property="ringBit" destination="9lM-DR-BPP" id="sb1-4n-3vQ"/>
                 <outlet property="sp" destination="158" id="164"/>
+                <outlet property="spriteBackgroundIrqEnabled" destination="8eZ-Yr-qql" id="yYJ-Hn-IuX"/>
+                <outlet property="spriteCollidesWithBackground" destination="1WO-Gc-kIf" id="Cbb-cn-ap0"/>
+                <outlet property="spriteCollidesWithSprite" destination="mfi-uR-o48" id="4cl-i8-N4K"/>
+                <outlet property="spriteColor" destination="x3U-JL-XlU" id="BEF-sa-fDE"/>
+                <outlet property="spriteEnabled" destination="L5c-BA-2g3" id="IEz-iP-wom"/>
+                <outlet property="spriteExpandX" destination="V01-jE-8GJ" id="lZU-IN-ZKZ"/>
+                <outlet property="spriteExpandY" destination="Mxx-rC-mge" id="kP5-I6-B5M"/>
+                <outlet property="spriteExtraColor1" destination="17d-bN-x1R" id="CGQ-PN-ImI"/>
+                <outlet property="spriteExtraColor2" destination="78g-u7-wsY" id="raD-sP-GJB"/>
+                <outlet property="spriteIsMulticolor" destination="0Zf-m5-M2y" id="VIk-3b-zDR"/>
+                <outlet property="spritePriority" destination="E4m-V6-l9M" id="qkL-ti-N79"/>
+                <outlet property="spriteSelector" destination="i6s-OW-PTp" id="U1a-us-BtR"/>
+                <outlet property="spriteSpriteIrqEnabled" destination="838" id="92v-KB-UQM"/>
+                <outlet property="spriteX" destination="a9Z-Uq-cmU" id="3q1-FM-Tcm"/>
+                <outlet property="spriteY" destination="Ygz-fc-qXq" id="e6s-Ek-6br"/>
                 <outlet property="stepIntoButton" destination="2098" id="2107"/>
                 <outlet property="stepOverButton" destination="2096" id="2108"/>
                 <outlet property="stopAndGoButton" destination="2100" id="2102"/>
@@ -109,6 +110,28 @@
                 <outlet property="todMinutes" destination="xbl-Mi-9qr" id="HTW-44-Qt8"/>
                 <outlet property="todSeconds" destination="2o5-da-2WE" id="e7r-QJ-PUI"/>
                 <outlet property="todTenth" destination="OVq-ab-PNk" id="Ys0-nH-v8p"/>
+                <outlet property="vflag" destination="185" id="92m-07-Bcm"/>
+                <outlet property="vicBackgroundColor0" destination="CMd-0L-Ugs" id="bBi-fW-LFf"/>
+                <outlet property="vicBackgroundColor1" destination="jo1-dM-Agf" id="TPp-Tu-KIN"/>
+                <outlet property="vicBackgroundColor2" destination="wFz-Pj-Lyu" id="ydF-cr-sk1"/>
+                <outlet property="vicBackgroundColor3" destination="d27-JG-0q1" id="xGp-dG-ZBY"/>
+                <outlet property="vicBadLine" destination="uhy-q3-Web" id="tbw-w2-kZ3"/>
+                <outlet property="vicBorderColor" destination="8ZT-qI-6VK" id="HgK-Sc-yn8"/>
+                <outlet property="vicCharacterMemoryAddr" destination="867" id="gN3-t5-R6Q"/>
+                <outlet property="vicCycle" destination="XGI-HQ-XId" id="MCI-IH-1tO"/>
+                <outlet property="vicDisplayMode" destination="774" id="vjy-2k-FCS"/>
+                <outlet property="vicDx" destination="794" id="Wb7-DB-o4I"/>
+                <outlet property="vicDy" destination="791" id="Uwx-xb-yGk"/>
+                <outlet property="vicHorizontalFrameFlipflop" destination="o4z-AU-3nR" id="agS-89-2bK"/>
+                <outlet property="vicIrqLine" destination="OFi-LY-OEQ" id="w93-qK-aoh"/>
+                <outlet property="vicIrqRasterline" destination="839" id="sJA-a3-v49"/>
+                <outlet property="vicMemoryBankAddr" destination="841" id="sNK-sC-Xyc"/>
+                <outlet property="vicRasterIrqEnabled" destination="TnC-Fe-sGg" id="BOk-ay-6Qo"/>
+                <outlet property="vicRasterline" destination="836" id="FdX-1C-Xdh"/>
+                <outlet property="vicScreenGeometry" destination="795" id="T8v-Wj-eeg"/>
+                <outlet property="vicScreenMemoryAddr" destination="849" id="kDo-2j-zML"/>
+                <outlet property="vicVerticalFrameFlipflop" destination="YNx-ev-umd" id="lyv-gG-bcz"/>
+                <outlet property="vicXCounter" destination="Cok-vl-pGe" id="ELe-Tl-kzD"/>
                 <outlet property="voiceSelector" destination="F2E-nZ-7MW" id="f6t-LN-CQx"/>
                 <outlet property="volume" destination="GFM-eU-sL8" id="ck7-jQ-0NM"/>
                 <outlet property="warpIcon" destination="1052" id="uvG-el-lRi"/>
@@ -117,6 +140,7 @@
                 <outlet property="window" destination="5" id="2164"/>
                 <outlet property="x" destination="63" id="182"/>
                 <outlet property="y" destination="54" id="167"/>
+                <outlet property="zflag" destination="190" id="nkq-z7-pIZ"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -1531,9 +1555,6 @@
                                         <rect key="frame" x="240" y="370" width="19" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <stepperCell key="cell" continuous="YES" alignment="left" maxValue="7" id="1781"/>
-                                        <connections>
-                                            <action selector="vicDYStepperAction:" target="-2" id="912"/>
-                                        </connections>
                                     </stepper>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="789">
                                         <rect key="frame" x="97" y="377" width="23" height="14"/>
@@ -1552,17 +1573,11 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <action selector="vicDYAction:" target="-2" id="1003"/>
-                                        </connections>
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" id="792">
                                         <rect key="frame" x="154" y="371" width="19" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <stepperCell key="cell" continuous="YES" alignment="left" maxValue="7" id="1784"/>
-                                        <connections>
-                                            <action selector="vicDXStepperAction:" target="-2" id="911"/>
-                                        </connections>
                                     </stepper>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="794">
                                         <rect key="frame" x="121" y="374" width="34" height="22"/>
@@ -1572,9 +1587,6 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <action selector="vicDXAction:" target="-2" id="1002"/>
-                                        </connections>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" misplaced="YES" id="795">
                                         <rect key="frame" x="95" y="401" width="177" height="22"/>
@@ -1591,9 +1603,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="vicScreenGeometryAction:" target="-2" id="910"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="840">
                                         <rect key="frame" x="4" y="326" width="89" height="14"/>
@@ -1655,9 +1664,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="vicMemoryBankAction:" target="-2" id="913"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="847">
                                         <rect key="frame" x="-3" y="301" width="96" height="14"/>
@@ -1713,9 +1719,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="vicScreenMemoryAction:" target="-2" id="914"/>
-                                        </connections>
                                     </popUpButton>
                                     <popUpButton verticalHuggingPriority="750" misplaced="YES" id="867">
                                         <rect key="frame" x="95" y="271" width="178" height="22"/>
@@ -1736,14 +1739,11 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="vicCharacterMemoryAction:" target="-2" id="915"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="836">
                                         <rect key="frame" x="98" y="519" width="37" height="22"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="1801">
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="1801">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1751,8 +1751,8 @@
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="XGI-HQ-XId">
                                         <rect key="frame" x="98" y="493" width="37" height="22"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="64" drawsBackground="YES" id="6BC-2c-T7N">
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="64" drawsBackground="YES" id="6BC-2c-T7N">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1760,7 +1760,7 @@
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="837">
                                         <rect key="frame" x="28" y="522" width="65" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Rasterline:" id="1802">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1769,7 +1769,7 @@
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="b2F-Ib-fzA">
                                         <rect key="frame" x="-6" y="497" width="99" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Cycle:" id="jqI-V5-DfB">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1778,25 +1778,19 @@
                                     </textField>
                                     <button misplaced="YES" id="o4z-AU-3nR">
                                         <rect key="frame" x="182" y="349" width="76" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Horizontal" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="BYn-Wk-yyQ">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="kc4-r1-MCW"/>
-                                        </connections>
                                     </button>
                                     <button misplaced="YES" id="YNx-ev-umd">
                                         <rect key="frame" x="99" y="349" width="62" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Vertical" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="Uvf-ES-dm7">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="ixp-Ip-SxF"/>
-                                        </connections>
                                     </button>
                                     <popUpButton verticalHuggingPriority="750" misplaced="YES" id="774">
                                         <rect key="frame" x="96" y="455" width="177" height="22"/>
@@ -1817,14 +1811,11 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="vicVideoModeAction:" target="-2" id="909"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="Cok-vl-pGe">
                                         <rect key="frame" x="233" y="493" width="37" height="22"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="YUy-ZE-DeJ">
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="YUy-ZE-DeJ">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1832,7 +1823,7 @@
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="Hon-iU-gD3">
                                         <rect key="frame" x="129" y="497" width="99" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="X Counter: " id="Hue-yC-ter">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1858,7 +1849,7 @@
                                     </segmentedControl>
                                     <box misplaced="YES" id="Qpm-5I-MPn">
                                         <rect key="frame" x="7" y="50" width="266" height="190"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                         <view key="contentView" id="6om-AI-89w">
                                             <rect key="frame" x="2" y="2" width="262" height="173"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1870,9 +1861,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteActiveAction:" target="-2" id="JJO-YL-1b0"/>
-                                                    </connections>
                                                 </button>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="Ygz-fc-qXq">
                                                     <rect key="frame" x="105" y="88" width="34" height="22"/>
@@ -1882,9 +1870,6 @@
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteYAction:" target="-2" id="dB0-i4-p4k"/>
-                                                    </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="RxW-WA-TJe">
                                                     <rect key="frame" x="85" y="120" width="19" height="14"/>
@@ -1912,9 +1897,6 @@
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteXAction:" target="-2" id="wll-0N-cDh"/>
-                                                    </connections>
                                                 </textField>
                                                 <button verticalHuggingPriority="750" misplaced="YES" id="x3U-JL-XlU">
                                                     <rect key="frame" x="105" y="142" width="34" height="22"/>
@@ -1923,9 +1905,6 @@
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteColorAction:" target="-2" id="f4y-cq-6cT"/>
-                                                    </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" misplaced="YES" id="17d-bN-x1R">
                                                     <rect key="frame" x="185" y="143" width="34" height="22"/>
@@ -1934,9 +1913,6 @@
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteColorAction:" target="-2" id="BW5-ye-iaS"/>
-                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="V01-jE-8GJ">
                                                     <rect key="frame" x="144" y="119" width="87" height="18"/>
@@ -1945,9 +1921,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteActiveAction:" target="-2" id="YR2-OQ-8b1"/>
-                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="Mxx-rC-mge">
                                                     <rect key="frame" x="142" y="91" width="86" height="18"/>
@@ -1956,9 +1929,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteActiveAction:" target="-2" id="dpR-ii-a0o"/>
-                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="0Zf-m5-M2y">
                                                     <rect key="frame" x="142" y="145" width="40" height="18"/>
@@ -1967,9 +1937,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteActiveAction:" target="-2" id="e4F-Js-86n"/>
-                                                    </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" misplaced="YES" id="78g-u7-wsY">
                                                     <rect key="frame" x="221" y="143" width="34" height="22"/>
@@ -1978,9 +1945,6 @@
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteColorAction:" target="-2" id="0L1-TW-a2t"/>
-                                                    </connections>
                                                 </button>
                                                 <popUpButton verticalHuggingPriority="750" misplaced="YES" id="E4m-V6-l9M">
                                                     <rect key="frame" x="102" y="59" width="147" height="22"/>
@@ -1995,9 +1959,6 @@
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
-                                                    <connections>
-                                                        <action selector="vicMemoryBankAction:" target="-2" id="L9h-p0-JUY"/>
-                                                    </connections>
                                                 </popUpButton>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="gds-4T-CrQ">
                                                     <rect key="frame" x="35" y="63" width="66" height="15"/>
@@ -2015,9 +1976,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteBackgroundCollisionAction:" target="-2" id="jhY-Mj-hbH"/>
-                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="8eZ-Yr-qql">
                                                     <rect key="frame" x="11" y="14" width="88" height="18"/>
@@ -2026,9 +1984,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicEnableRasterInterruptAction:" target="-2" id="kfG-0C-iLl"/>
-                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="838">
                                                     <rect key="frame" x="11" y="36" width="88" height="18"/>
@@ -2037,9 +1992,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicEnableRasterInterruptAction:" target="-2" id="927"/>
-                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="mfi-uR-o48">
                                                     <rect key="frame" x="102" y="36" width="98" height="18"/>
@@ -2048,9 +2000,6 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteBackgroundCollisionAction:" target="-2" id="2vH-jQ-Bms"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </view>
@@ -2062,9 +2011,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="OMu-Bc-Kqf"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" misplaced="YES" id="jo1-dM-Agf">
                                         <rect key="frame" x="169" y="429" width="32" height="22"/>
@@ -2073,9 +2019,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="Kpg-gj-HWN"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" misplaced="YES" id="wFz-Pj-Lyu">
                                         <rect key="frame" x="204" y="429" width="32" height="22"/>
@@ -2084,9 +2027,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="zj5-lq-Hov"/>
-                                        </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="839">
                                         <rect key="frame" x="149" y="14" width="36" height="22"/>
@@ -2096,20 +2036,14 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <action selector="vicRasterInterruptAction:" target="-2" id="928"/>
-                                        </connections>
                                     </textField>
                                     <button verticalHuggingPriority="750" misplaced="YES" id="d27-JG-0q1">
-                                        <rect key="frame" x="238" y="428" width="32" height="22"/>
+                                        <rect key="frame" x="238" y="429" width="32" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CUQ-LY-G98">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="1qS-lX-4y3"/>
-                                        </connections>
                                     </button>
                                     <button misplaced="YES" id="TnC-Fe-sGg">
                                         <rect key="frame" x="7" y="16" width="137" height="18"/>
@@ -2118,9 +2052,6 @@
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="pMN-Ii-Yyu"/>
-                                        </connections>
                                     </button>
                                     <button misplaced="YES" id="OFi-LY-OEQ">
                                         <rect key="frame" x="209" y="16" width="63" height="18"/>
@@ -2129,14 +2060,11 @@
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="JCB-cv-GnE"/>
-                                        </connections>
                                     </button>
                                     <button misplaced="YES" id="uhy-q3-Web">
                                         <rect key="frame" x="205" y="521" width="64" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Bad line" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="uMZ-i8-n3d">
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="check" title="Bad line" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" state="on" inset="2" id="uMZ-i8-n3d">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
@@ -2151,9 +2079,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="rAX-zX-4HX"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </view>

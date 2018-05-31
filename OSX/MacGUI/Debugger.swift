@@ -66,7 +66,7 @@ extension MyController {
             alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
             ciaImr, ciaIcr,
             // VIC panel
-            //vicSpriteY,
+            vicCycle, vicDx, vicDy, spriteY,
             // SID panel
             attackRate, decayRate, sustainRate, releaseRate,
             filterResonance,
@@ -78,15 +78,13 @@ extension MyController {
             pc, breakAt,
             // CIA panel
             ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
-            // VIC panel
-            vicRasterline, vicRasterInterrupt,
             // SID panel
             frequency, pulseWidth, filterCutoff
         ]
         
         let threeDigitFormatterControls:[NSControl] = [
             // VIC panel
-            // vicSpriteX,
+            vicRasterline, vicIrqRasterline, spriteX, vicXCounter
         ]
     
         // Bind formatters
@@ -139,7 +137,8 @@ extension MyController {
             volume,
             
             // VIC panel
-            // vicSpriteX,
+            vicDx, vicDy, vicIrqRasterline,
+            spriteX, spriteY
         ]
   
         for control in controls {
