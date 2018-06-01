@@ -779,7 +779,7 @@ private:
 	 *  @details  The value is written to the z buffer to resolve overlapping pixels.
      */
     uint8_t spriteDepth(uint8_t nr) {
-        return spriteIsDrawnInBackground(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
+        return spritePriority(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
 	
 public: 
 	
@@ -845,13 +845,13 @@ public:
     bool spriteSpriteInterruptOccurred() { return GET_BIT(irr, 2); }
 
 	//! @brief    Returns true, iff sprites are drawn behind the scenary.
-    bool spriteIsDrawnInBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
+    bool spritePriority(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
 
 	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void setSpriteInBackground(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
+    void setSpritePriority(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
 
 	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void spriteToggleBackgroundPriorityFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
+    void toggleSpritePriority(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
 	
 	//! @brief    Returns true, iff sprite is a multicolor sprite.
     bool spriteIsMulticolor(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1C], nr); }

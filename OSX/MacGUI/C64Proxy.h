@@ -148,29 +148,30 @@ struct ContainerWrapper;
 - (uint16_t) characterMemoryAddr;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
-- (int) displayMode;
-- (void) setDisplayMode:(long)mode;
-- (int) screenGeometry;
-- (void) setScreenGeometry:(long)mode;
-- (int) horizontalRasterScroll;
-- (void) setHorizontalRasterScroll:(int)offset;
-- (int) verticalRasterScroll;
-- (void) setVerticalRasterScroll:(int)offset;
+// - (DisplayMode) displayMode;
+- (void) setDisplayMode:(DisplayMode)mode;
+// - (int) screenGeometry;
+- (void) setScreenGeometry:(ScreenGeometry)mode;
+// - (int) horizontalRasterScroll;
+- (void) setHorizontalRasterScroll:(NSInteger)offset;
+// - (int) verticalRasterScroll;
+- (void) setVerticalRasterScroll:(NSInteger)offset;
 
-- (bool) spriteVisibilityFlag:(NSInteger)nr;
-- (void) setSpriteVisibilityFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteVisibilityFlag:(NSInteger)nr;
+// - (bool) spriteVisibilityFlag:(NSInteger)nr;
+- (void) setSpriteEnabled:(NSInteger)nr value:(bool)flag;
+// - (void) toggleSpriteVisibilityFlag:(NSInteger)nr;
 
-- (int) spriteX:(NSInteger)nr;
+// - (int) spriteX:(NSInteger)nr;
 - (void) setSpriteX:(NSInteger)nr value:(int)x;
-- (int) spriteY:(NSInteger)nr;
+// - (int) spriteY:(NSInteger)nr;
 - (void) setSpriteY:(NSInteger)nr value:(int)y;
 
 - (int) spriteColor:(NSInteger)nr;
 - (void) setSpriteColor:(NSInteger)nr value:(int)c;
-- (bool) spriteMulticolorFlag:(NSInteger)nr;
+- (void) setSpritePriority:(NSInteger)nr value:(bool)flag;
+// - (bool) spriteMulticolorFlag:(NSInteger)nr;
 - (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteMulticolorFlag:(NSInteger)nr;
+// - (void) toggleSpriteMulticolorFlag:(NSInteger)nr;
 
 - (bool) spriteStretchXFlag:(NSInteger)nr;
 - (void) setSpriteStretchXFlag:(NSInteger)nr value:(bool)flag;

@@ -172,8 +172,6 @@ class MyController : NSWindowController {
     @IBOutlet weak var vicDXStepper: NSStepper!
     @IBOutlet weak var vicDy: NSTextField!
     @IBOutlet weak var vicDYStepper: NSStepper!
-    @IBOutlet weak var vicVerticalFrameFlipflop: NSButton!
-    @IBOutlet weak var vicHorizontalFrameFlipflop: NSButton!
     @IBOutlet weak var vicMemoryBankAddr: NSPopUpButton!
     @IBOutlet weak var vicScreenMemoryAddr: NSPopUpButton!
     @IBOutlet weak var vicCharacterMemoryAddr: NSPopUpButton!
@@ -185,8 +183,8 @@ class MyController : NSWindowController {
     @IBOutlet weak var spriteEnabled: NSButton!
     @IBOutlet weak var spriteX: NSTextField!
     @IBOutlet weak var spriteY: NSTextField!
+    @IBOutlet weak var spriteIsMulticolor: NSPopUpButton!
     @IBOutlet weak var spriteColor: NSButton!
-    @IBOutlet weak var spriteIsMulticolor: NSButton!
     @IBOutlet weak var spriteExtraColor1: NSButton!
     @IBOutlet weak var spriteExtraColor2: NSButton!
     @IBOutlet weak var spriteExpandX: NSButton!

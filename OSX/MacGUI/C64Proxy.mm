@@ -189,29 +189,31 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (uint16_t) characterMemoryAddr { return wrapper->vic->getCharacterMemoryAddr(); }
 - (void) setCharacterMemoryAddr:(uint16_t)addr { wrapper->vic->setCharacterMemoryAddr(addr); }
 
-- (int) displayMode { return wrapper->vic->getDisplayMode(); }
-- (void) setDisplayMode:(long)mode { wrapper->vic->setDisplayMode((DisplayMode)mode); }
-- (int) screenGeometry { return (int)wrapper->vic->getScreenGeometry(); }
-- (void) setScreenGeometry:(long)mode { wrapper->vic->setScreenGeometry((ScreenGeometry)mode); }
-- (int) horizontalRasterScroll { return wrapper->vic->getHorizontalRasterScroll(); }
-- (void) setHorizontalRasterScroll:(int)offset { wrapper->vic->setHorizontalRasterScroll(offset & 0x07); }
-- (int) verticalRasterScroll { return wrapper->vic->getVerticalRasterScroll(); }
-- (void) setVerticalRasterScroll:(int)offset { wrapper->vic->setVerticalRasterScroll(offset & 0x07); }
+// - (int) displayMode { return wrapper->vic->getDisplayMode(); }
+- (void) setDisplayMode:(DisplayMode)mode { wrapper->vic->setDisplayMode(mode); }
+// - (int) screenGeometry { return (int)wrapper->vic->getScreenGeometry(); }
+- (void) setScreenGeometry:(ScreenGeometry)mode { wrapper->vic->setScreenGeometry(mode); }
+// - (int) horizontalRasterScroll { return wrapper->vic->getHorizontalRasterScroll(); }
+- (void) setHorizontalRasterScroll:(NSInteger)offset { wrapper->vic->setHorizontalRasterScroll(offset & 0x07); }
+// - (int) verticalRasterScroll { return wrapper->vic->getVerticalRasterScroll(); }
+- (void) setVerticalRasterScroll:(NSInteger)offset { wrapper->vic->setVerticalRasterScroll(offset & 0x07); }
 
-- (bool) spriteVisibilityFlag:(NSInteger)nr { return wrapper->vic->spriteIsEnabled(nr); }
-- (void) setSpriteVisibilityFlag:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
-- (void) toggleSpriteVisibilityFlag:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
+// - (bool) spriteEnabled:(NSInteger)nr { return wrapper->vic->spriteIsEnabled(nr); }
+- (void) setSpriteEnabled:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
+// - (void) toggleSpriteVisibilityFlag:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
 
-- (int) spriteX:(NSInteger)nr { return wrapper->vic->getSpriteX(nr); }
+// - (int) spriteX:(NSInteger)nr { return wrapper->vic->getSpriteX(nr); }
 - (void) setSpriteX:(NSInteger)nr value:(int)x { wrapper->vic->setSpriteX(nr, x); }
-- (int) spriteY:(NSInteger)nr { return wrapper->vic->getSpriteY(nr); }
+// - (int) spriteY:(NSInteger)nr { return wrapper->vic->getSpriteY(nr); }
 - (void) setSpriteY:(NSInteger)nr value:(int)y { wrapper->vic->setSpriteY(nr, y); }
 
 - (int) spriteColor:(NSInteger)nr { return wrapper->vic->getSpriteColor(nr); }
 - (void) setSpriteColor:(NSInteger)nr value:(int)c { wrapper->vic->setSpriteColor(nr, c); }
-- (bool) spriteMulticolorFlag:(NSInteger)nr { return wrapper->vic->spriteIsMulticolor((unsigned)nr); }
+- (void) setSpritePriority:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpritePriority((unsigned)nr, flag); }
+
+// - (bool) spriteMulticolorFlag:(NSInteger)nr { return wrapper->vic->spriteIsMulticolor((unsigned)nr); }
 - (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
-- (void) toggleSpriteMulticolorFlag:(NSInteger)nr { wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
+//- (void) toggleSpriteMulticolorFlag:(NSInteger)nr { wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
 
 - (bool) spriteStretchXFlag:(NSInteger)nr { return wrapper->vic->spriteWidthIsDoubled((unsigned)nr); }
 - (void) setSpriteStretchXFlag:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }

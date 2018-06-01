@@ -252,7 +252,7 @@ VIC::getSpriteInfo(unsigned i)
     info.extraColor2 = getSpriteExtraColor2();
     info.expandX = spriteWidthIsDoubled(i);
     info.expandY = spriteHeightIsDoubled(i);
-    info.priority = spriteIsDrawnInBackground(i);
+    info.priority = spritePriority(i);
     info.spriteCollisionIrqEnabled = spriteSpriteInterruptEnabled();
     info.collidesWithSprite = spriteCollidesWithSprite(i);
     info.backgroundCollisionIrqEnabled = spriteBackgroundInterruptEnabled();
