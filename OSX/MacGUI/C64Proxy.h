@@ -57,28 +57,25 @@ struct ContainerWrapper;
 	struct CpuWrapper *wrapper;
 }
 
-- (void) dump;
 - (CPUInfo) getInfo;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
+- (void) dump;
 
-- (uint16_t) PC;
+- (BOOL) tracingEnabled;
+- (void) setTraceMode:(BOOL)b;
+
+- (uint16_t) pc;
 - (void) setPC:(uint16_t)pc;
-- (uint16_t) readPC;
-- (uint16_t) addressOfNextInstruction;
-- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
-
 - (void) setSP:(uint8_t)sp;
 - (void) setA:(uint8_t)a;
 - (void) setX:(uint8_t)x;
 - (void) setY:(uint8_t)y;
-- (void) setNflag:(bool)b;
-- (void) setZflag:(bool)b;
-- (void) setCflag:(bool)b;
-- (void) setIflag:(bool)b;
-- (void) setBflag:(bool)b;
-- (void) setDflag:(bool)b;
-- (void) setVflag:(bool)b;
+- (void) setNflag:(BOOL)b;
+- (void) setZflag:(BOOL)b;
+- (void) setCflag:(BOOL)b;
+- (void) setIflag:(BOOL)b;
+- (void) setBflag:(BOOL)b;
+- (void) setDflag:(BOOL)b;
+- (void) setVflag:(BOOL)b;
 
 - (BOOL) hardBreakpoint:(uint16_t)addr;
 - (void) setHardBreakpoint:(uint16_t)addr;
@@ -88,6 +85,8 @@ struct ContainerWrapper;
 - (void) setSoftBreakpoint:(uint16_t)addr;
 - (void) deleteSoftBreakpoint:(uint16_t)addr;
 - (void) toggleSoftBreakpoint:(uint16_t)addr;
+
+- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
 
 @end
 
@@ -125,9 +124,9 @@ struct ContainerWrapper;
 - (NSInteger) colorScheme;
 - (void) setColorScheme:(NSInteger)scheme;
 
-- (void) dump;
 - (VICInfo) getInfo;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
+- (void) dump;
 
 - (void) setMemoryBankAddr:(uint16_t)addr;
 - (void) setScreenMemoryAddr:(uint16_t)addr;
@@ -138,42 +137,39 @@ struct ContainerWrapper;
 - (void) setHorizontalRasterScroll:(NSInteger)offset;
 - (void) setVerticalRasterScroll:(NSInteger)offset;
 
-- (void) setSpriteEnabled:(NSInteger)nr value:(bool)flag;
+- (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteEnabled:(NSInteger)nr;
 - (void) setSpriteX:(NSInteger)nr value:(int)x;
 - (void) setSpriteY:(NSInteger)nr value:(int)y;
+- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpriteStretchX:(NSInteger)nr;
+- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpriteStretchY:(NSInteger)nr;
 - (void) setSpriteColor:(NSInteger)nr value:(int)c;
-- (void) setSpritePriority:(NSInteger)nr value:(bool)flag;
+- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpritePriority:(NSInteger)nr;
-- (void) setSpriteMulticolor:(NSInteger)nr value:(bool)flag;
+- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteMulticolor:(NSInteger)nr;
 
-- (void) setSpriteStretchX:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteStretchX:(NSInteger)nr;
-- (void) setSpriteStretchY:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteStretchY:(NSInteger)nr;
-
-// - (bool) spriteSpriteCollisionFlag;
-// - (bool) spriteBackgroundCollisionFlag;
-- (void) setIrqOnSpriteSpriteCollision:(bool)value;
+- (void) setIrqOnSpriteSpriteCollision:(BOOL)value;
 - (void) toggleIrqOnSpriteSpriteCollision;
-- (void) setIrqOnSpriteBackgroundCollision:(bool)value;
+- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value;
 - (void) toggleIrqOnSpriteBackgroundCollision;
 
 - (uint16_t) rasterline;
 - (void) setRasterline:(uint16_t)line;
 - (uint16_t) rasterInterruptLine;
 - (void) setRasterInterruptLine:(uint16_t)line;
-- (bool) rasterInterruptFlag;
-- (void) setRasterInterruptFlag:(bool)b;
+- (BOOL) rasterInterruptFlag;
+- (void) setRasterInterruptFlag:(BOOL)b;
 - (void) toggleRasterInterruptFlag;
 
-- (bool) hideSprites;
-- (void) setHideSprites:(bool)b;
-- (bool) showIrqLines;
-- (void) setShowIrqLines:(bool)b;
-- (bool) showDmaLines;
-- (void) setShowDmaLines:(bool)b;
+- (BOOL) hideSprites;
+- (void) setHideSprites:(BOOL)b;
+- (BOOL) showIrqLines;
+- (void) setShowIrqLines:(BOOL)b;
+- (BOOL) showDmaLines;
+- (void) setShowDmaLines:(BOOL)b;
 
 @end
 
@@ -501,6 +497,7 @@ struct ContainerWrapper;
 - (void) ping;
 - (void) halt;
 - (void) step;
+- (void) stepOver;
 - (bool) isRunnable;
 - (void) run;
 - (void) suspend;

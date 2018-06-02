@@ -382,7 +382,6 @@ C64::isHalted()
 void
 C64::step()
 {
-    // Clear error states
     cpu.clearErrorState();
     floppy.cpu.clearErrorState();
     
@@ -394,6 +393,24 @@ C64::step()
     // We are now at cycle 0 of the next command
     // Execute one more cycle (and stop in cycle 1)
     executeOneCycle();
+}
+
+void
+C64::stepOver()
+{
+    cpu.clearErrorState();
+    floppy.cpu.clearErrorState();
+    
+    // If the next instruction is a JSR instruction, ...
+    if (mem.spy(cpu.getPC_at_cycle_0()) == 0x20) {
+        // set a soft breakpoint at the next memory location.
+        cpu.setSoftBreakpoint(cpu.getAddressOfNextInstruction());
+        run();
+        return;
+    }
+
+    // Otherwise, stepOver behaves like step
+    step();
 }
 
 // From Wolfgang Lorenz: Clock.txt

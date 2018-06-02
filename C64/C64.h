@@ -30,10 +30,10 @@
 //
 // TODO:
 //
-// Add CPU::getInfo
 // Make CIA panel editable
 // Add setter API for SID stuff
 // Use correct formatters for SID and VIC values
+// Debug menu: Remove option to disable sprite collision detection
 //
 //
 // CLEANUP:
@@ -509,10 +509,15 @@ public:
     //! @brief    Returns true iff the virtual C64 is in the "halted" state
     bool isHalted();
     
-    /*! @brief    Executes one CPU instruction
+    /*! @brief    Executes a single instruction
      *  @details  This method implements the "step" action of the debugger
      */
     void step(); 
+
+    /*! @brief    Executes until the instruction is reached
+     *  @details  This method implements the "step over" action of the debugger
+     */
+    void stepOver();
     
     //! @brief    Executes until the end of the rasterline
     bool executeOneLine();

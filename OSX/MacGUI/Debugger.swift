@@ -206,19 +206,8 @@ extension MyController {
     @IBAction func stepOverAction(_ sender: Any!) {
 
         document?.updateChangeCount(.changeDone)
-        
-        // If the next instruction is a JSR instruction, ...
-        if (c64.cpu.readPC() == 0x20) {
-
-            // we set soft breakpoint at the next command
-            c64.cpu.setSoftBreakpoint(c64.cpu.addressOfNextInstruction())
-            c64.run()
-
-        } else {
-            
-            // Same as step
-            stepIntoAction(self)
-        }
+        c64.stepOver()
+        refresh()
     }
     
     @IBAction func stopAndGoAction(_ sender: Any!) {

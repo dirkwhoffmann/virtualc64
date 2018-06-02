@@ -58,32 +58,26 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
-- (void) dump { wrapper->cpu->dumpState(); }
 - (CPUInfo) getInfo { return wrapper->cpu->getInfo(); }
-- (bool) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
-- (void) setTraceMode:(bool)b {
+- (void) dump { wrapper->cpu->dumpState(); }
+
+- (BOOL) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
+- (void) setTraceMode:(BOOL)b {
     if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
 
-- (uint16_t) PC { return wrapper->cpu->getPC_at_cycle_0(); }
-- (uint16_t) readPC { return wrapper->cpu->mem->spy([self PC]); }
-- (uint16_t) addressOfNextInstruction {
-    return wrapper->cpu->getAddressOfNextInstruction(); }
-- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
-    return wrapper->cpu->disassemble(addr, h);
-}
-
+- (uint16_t) pc { return wrapper->cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
 - (void) setSP:(uint8_t)sp { wrapper->cpu->setSP(sp); }
 - (void) setA:(uint8_t)a { wrapper->cpu->setA(a); }
 - (void) setX:(uint8_t)x { wrapper->cpu->setX(x); }
 - (void) setY:(uint8_t)y { wrapper->cpu->setY(y); }
-- (void) setNflag:(bool)b { wrapper->cpu->setN(b); }
-- (void) setZflag:(bool)b { wrapper->cpu->setZ(b); }
-- (void) setCflag:(bool)b { wrapper->cpu->setC(b); }
-- (void) setIflag:(bool)b { wrapper->cpu->setI(b); }
-- (void) setBflag:(bool)b { wrapper->cpu->setB(b); }
-- (void) setDflag:(bool)b { wrapper->cpu->setD(b); }
-- (void) setVflag:(bool)b { wrapper->cpu->setV(b); }
+- (void) setNflag:(BOOL)b { wrapper->cpu->setN(b); }
+- (void) setZflag:(BOOL)b { wrapper->cpu->setZ(b); }
+- (void) setCflag:(BOOL)b { wrapper->cpu->setC(b); }
+- (void) setIflag:(BOOL)b { wrapper->cpu->setI(b); }
+- (void) setBflag:(BOOL)b { wrapper->cpu->setB(b); }
+- (void) setDflag:(BOOL)b { wrapper->cpu->setD(b); }
+- (void) setVflag:(BOOL)b { wrapper->cpu->setV(b); }
 
 - (BOOL) hardBreakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
 - (void) setHardBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }
@@ -93,6 +87,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setSoftBreakpoint:(uint16_t)addr { wrapper->cpu->setSoftBreakpoint(addr); }
 - (void) deleteSoftBreakpoint:(uint16_t)addr { wrapper->cpu->deleteSoftBreakpoint(addr); }
 - (void) toggleSoftBreakpoint:(uint16_t)addr { wrapper->cpu->toggleSoftBreakpoint(addr); }
+
+- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
+    return wrapper->cpu->disassemble(addr, h);
+}
 
 @end
 
@@ -149,8 +147,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
-- (void) dump { wrapper->vic->dumpState(); }
 - (VICInfo) getInfo { return wrapper->vic->getInfo(); }
+- (void) dump { wrapper->vic->dumpState(); }
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite { return wrapper->vic->getSpriteInfo((unsigned)sprite); }
 - (void *) screenBuffer { return wrapper->vic->screenBuffer(); }
 
@@ -171,74 +169,48 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger) colorScheme { return wrapper->vic->getColorScheme(); }
 - (void) setColorScheme:(NSInteger)scheme { wrapper->vic->setColorScheme((ColorScheme)scheme); }
 
-// - (uint16_t) memoryBankAddr { return wrapper->vic->getMemoryBankAddr(); }
 - (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }
-// - (uint16_t) screenMemoryAddr { return wrapper->vic->getScreenMemoryAddr(); }
 - (void) setScreenMemoryAddr:(uint16_t)addr { wrapper->vic->setScreenMemoryAddr(addr); }
-// - (uint16_t) characterMemoryAddr { return wrapper->vic->getCharacterMemoryAddr(); }
 - (void) setCharacterMemoryAddr:(uint16_t)addr { wrapper->vic->setCharacterMemoryAddr(addr); }
 
-// - (int) displayMode { return wrapper->vic->getDisplayMode(); }
 - (void) setDisplayMode:(DisplayMode)mode { wrapper->vic->setDisplayMode(mode); }
-// - (int) screenGeometry { return (int)wrapper->vic->getScreenGeometry(); }
 - (void) setScreenGeometry:(ScreenGeometry)mode { wrapper->vic->setScreenGeometry(mode); }
-// - (int) horizontalRasterScroll { return wrapper->vic->getHorizontalRasterScroll(); }
 - (void) setHorizontalRasterScroll:(NSInteger)offset { wrapper->vic->setHorizontalRasterScroll(offset & 0x07); }
-// - (int) verticalRasterScroll { return wrapper->vic->getVerticalRasterScroll(); }
 - (void) setVerticalRasterScroll:(NSInteger)offset { wrapper->vic->setVerticalRasterScroll(offset & 0x07); }
 
-// - (bool) spriteEnabled:(NSInteger)nr { return wrapper->vic->spriteIsEnabled(nr); }
-- (void) setSpriteEnabled:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
+- (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
 - (void) toggleSpriteEnabled:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
-
-// - (int) spriteX:(NSInteger)nr { return wrapper->vic->getSpriteX(nr); }
 - (void) setSpriteX:(NSInteger)nr value:(int)x { wrapper->vic->setSpriteX(nr, x); }
-// - (int) spriteY:(NSInteger)nr { return wrapper->vic->getSpriteY(nr); }
 - (void) setSpriteY:(NSInteger)nr value:(int)y { wrapper->vic->setSpriteY(nr, y); }
-
-// - (int) spriteColor:(NSInteger)nr { return wrapper->vic->getSpriteColor(nr); }
+- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
+- (void) toggleSpriteStretchX:(NSInteger)nr { wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
+- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag { return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
+- (void) toggleSpriteStretchY:(NSInteger)nr { wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
 - (void) setSpriteColor:(NSInteger)nr value:(int)c { wrapper->vic->setSpriteColor(nr, c); }
-
-- (void) setSpritePriority:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpritePriority((unsigned)nr, flag); }
+- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpritePriority((unsigned)nr, flag); }
 - (void) toggleSpritePriority:(NSInteger)nr { wrapper->vic->toggleSpritePriority((unsigned)nr); }
-
-// - (bool) spriteMulticolorFlag:(NSInteger)nr { return wrapper->vic->spriteIsMulticolor((unsigned)nr); }
-- (void) setSpriteMulticolor:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
+- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
 - (void) toggleSpriteMulticolor:(NSInteger)nr { wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
 
-// - (bool) spriteStretchXFlag:(NSInteger)nr { return wrapper->vic->spriteWidthIsDoubled((unsigned)nr); }
-- (void) setSpriteStretchX:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
-- (void) toggleSpriteStretchX:(NSInteger)nr { wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
-
-// - (bool) spriteStretchYFlag:(NSInteger)nr { return wrapper->vic->spriteHeightIsDoubled((unsigned)nr); }
-- (void) setSpriteStretchY:(NSInteger)nr value:(bool)flag { return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
-- (void) toggleSpriteStretchY:(NSInteger)nr { wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
-
-- (void) setIrqOnSpriteSpriteCollision:(bool)value { wrapper->vic->setIrqOnSpriteSpriteCollision(value); }
+- (void) setIrqOnSpriteSpriteCollision:(BOOL)value { wrapper->vic->setIrqOnSpriteSpriteCollision(value); }
 - (void) toggleIrqOnSpriteSpriteCollision { wrapper->vic-> toggleIrqOnSpriteSpriteCollision(); }
-
-- (void) setIrqOnSpriteBackgroundCollision:(bool)value { wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
+- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value { wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
 - (void) toggleIrqOnSpriteBackgroundCollision { wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
-
-// - (bool) spriteSpriteCollisionFlag { return wrapper->vic->getSpriteSpriteCollisionFlag(); }
-// - (bool) spriteBackgroundCollisionFlag { return wrapper->vic->getSpriteBackgroundCollisionFlag(); }
-// - (void) setSpriteBackgroundCollisionFlag:(bool)flag { wrapper->vic->setSpriteBackgroundCollisionFlag(flag); }
-// - (void) toggleSpriteBackgroundCollisionFlag { wrapper->vic->toggleSpriteBackgroundCollisionFlag(); }
 
 - (uint16_t) rasterline { return wrapper->vic->getRasterline(); }
 - (void) setRasterline:(uint16_t)line { wrapper->vic->setRasterline(line); }
 - (uint16_t) rasterInterruptLine { return wrapper->vic->rasterInterruptLine(); }
 - (void) setRasterInterruptLine:(uint16_t)line { wrapper->vic->setRasterInterruptLine(line); }
-- (bool) rasterInterruptFlag { return wrapper->vic->rasterInterruptEnabled(); }
-- (void) setRasterInterruptFlag:(bool)b { wrapper->vic->setRasterInterruptEnable(b); }
+- (BOOL) rasterInterruptFlag { return wrapper->vic->rasterInterruptEnabled(); }
+- (void) setRasterInterruptFlag:(BOOL)b { wrapper->vic->setRasterInterruptEnable(b); }
 - (void) toggleRasterInterruptFlag { wrapper->vic->toggleRasterInterruptFlag(); }
 
-- (bool) hideSprites { return wrapper->vic->hideSprites(); }
-- (void) setHideSprites:(bool)b { wrapper->vic->setHideSprites(b); }
-- (bool) showIrqLines { return wrapper->vic->showIrqLines(); }
-- (void) setShowIrqLines:(bool)b { wrapper->vic->setShowIrqLines(b); }
-- (bool) showDmaLines { return wrapper->vic->showDmaLines(); }
-- (void) setShowDmaLines:(bool)b { wrapper->vic->setShowDmaLines(b); }
+- (BOOL) hideSprites { return wrapper->vic->hideSprites(); }
+- (void) setHideSprites:(BOOL)b { wrapper->vic->setHideSprites(b); }
+- (BOOL) showIrqLines { return wrapper->vic->showIrqLines(); }
+- (void) setShowIrqLines:(BOOL)b { wrapper->vic->setShowIrqLines(b); }
+- (BOOL) showDmaLines { return wrapper->vic->showDmaLines(); }
+- (void) setShowDmaLines:(BOOL)b { wrapper->vic->setShowDmaLines(b); }
 
 @end
 
@@ -692,10 +664,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) powerUp { wrapper->c64->powerUp(); }
-// - (void) reset { wrapper->c64->reset(); }
 - (void) ping { wrapper->c64->ping(); }
 - (void) halt { wrapper->c64->halt(); }
 - (void) step { wrapper->c64->step(); }
+- (void) stepOver { wrapper->c64->stepOver(); }
 - (void) run { wrapper->c64->run(); }
 - (void) suspend { wrapper->c64->suspend(); }
 - (void) resume { wrapper->c64->resume(); }
