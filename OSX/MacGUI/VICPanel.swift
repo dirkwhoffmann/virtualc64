@@ -12,7 +12,7 @@ extension MyController {
     func refreshVIC() {
         
         var info = c64.vic.getInfo()
-        let sinfo = c64.vic.getSpriteInfo(spriteSelector.indexOfSelectedItem)
+        let sinfo = c64.vic.getSpriteInfo(sprite)
         
         // Note: It is likely that getInfo() captured the VIC state when the emualtion
         // thread is waiting. As a result, the displayed values for cycle and rasterline
@@ -58,36 +58,39 @@ extension MyController {
         spriteX.intValue = Int32(sinfo.x)
         spriteY.intValue = Int32(sinfo.y)
         spriteColorCell.backgroundColor = c64.vic.color(Int(sinfo.color))
-        spriteIsMulticolor.state = sinfo.multicolor ? .on : .off
+        spriteIsMulticolor.selectItem(withTag: sinfo.multicolor ? 1 : 0)
         spriteExtraColorCell1.backgroundColor = c64.vic.color(Int(sinfo.extraColor1))
         spriteExtraColorCell2.backgroundColor = c64.vic.color(Int(sinfo.extraColor2))
         spriteExpandX.state = sinfo.expandX ? .on : .off
         spriteExpandY.state = sinfo.expandY ? .on : .off
         spritePriority.state = sinfo.priority ? .on : .off
         spriteCollidesWithSprite.state = sinfo.collidesWithSprite ? .on : .off
-        spriteSpriteIrqEnabled.state = sinfo.spriteCollisionIrqEnabled ? .on : .off
+        spriteSpriteIrqEnabled.state = info.spriteCollisionIrqEnabled ? .on : .off
         spriteCollidesWithBackground.state = sinfo.collidesWithBackground ? .on : .off
-        spriteBackgroundIrqEnabled.state  = sinfo.backgroundCollisionIrqEnabled ? .on : .off
+        spriteBackgroundIrqEnabled.state  = info.backgroundCollisionIrqEnabled ? .on : .off
+        
+        // Unhide some color cells in multicolor modes
+        var hidden = (info.displayMode.rawValue & 0x10) == 0
+        vicBackgroundColor1.isHidden = hidden
+        vicBackgroundColor2.isHidden = hidden
+        vicBackgroundColor3.isHidden = hidden
+        
+        hidden = !sinfo.multicolor
+        spriteExtraColor1.isHidden = hidden
+        spriteExtraColor2.isHidden = hidden
     }
     
-    func spriteNr() -> Int {
-        return spriteSelector.indexOfSelectedItem
+    private var sprite: Int {
+        get { return spriteSelector.indexOfSelectedItem }
     }
-    
+        
     
     //
     // Action methods
     //
     
-    func pokeVicReg(_ register:(UInt16), _ value:(UInt8)) {
-        c64.mem.pokeIO(0xD000 + register, value: value)
-    }
-    
     @IBAction func selectSpriteAction(_ sender: Any!) {
         
-        let sender = sender as! NSSegmentedControl
-        let selectedSprite = sender.indexOfSelectedItem
-        track("selectedSprite = \(selectedSprite)")
         refreshVIC()
     }
     
@@ -225,6 +228,12 @@ extension MyController {
         let sender = sender as! NSTextField
         _dxAction(Int(sender.intValue))
     }
+    
+    @IBAction func dxStepperAction(_ sender: Any!) {
+        
+        let sender = sender as! NSStepper
+        _dxAction(Int(sender.intValue))
+    }
 
     func _dyAction(_ value: Int) {
         
@@ -244,6 +253,12 @@ extension MyController {
     @IBAction func dyAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
+        _dyAction(Int(sender.intValue))
+    }
+    
+    @IBAction func dyStepperAction(_ sender: Any!) {
+        
+        let sender = sender as! NSStepper
         _dyAction(Int(sender.intValue))
     }
     
@@ -274,7 +289,7 @@ extension MyController {
     @IBAction func spriteEnableAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        _spriteEnableAction((spriteSelector.indexOfSelectedItem, sender.intValue != 0))
+        _spriteEnableAction((sprite, sender.intValue != 0))
     }
  
     func _spriteXAction(_ value: (Int,UInt16)) {
@@ -297,7 +312,7 @@ extension MyController {
     @IBAction func spriteXAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        _spriteXAction((spriteSelector.indexOfSelectedItem, UInt16(sender.intValue)))
+        _spriteXAction((sprite, UInt16(sender.intValue)))
     }
     
     func _spriteYAction(_ value: (Int,UInt16)) {
@@ -320,7 +335,7 @@ extension MyController {
     @IBAction func spriteYAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        _spriteYAction((spriteSelector.indexOfSelectedItem, UInt16(sender.intValue)))
+        _spriteYAction((sprite, UInt16(sender.intValue)))
     }
     
     func _spriteExpandXAction(_ value: (Int,Bool)) {
@@ -335,7 +350,7 @@ extension MyController {
                 me in me._spriteExpandXAction((sprite, oldValue))
             }
             undoManager?.setActionName(newValue ? "Expand Sprite" : "Shrink Sprite")
-            c64.vic.setSpriteStretchXFlag(sprite, value: newValue)
+            c64.vic.setSpriteStretchX(sprite, value: newValue)
             refreshVIC()
         }
     }
@@ -343,7 +358,7 @@ extension MyController {
     @IBAction func spriteExpandXAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        _spriteExpandXAction((spriteSelector.indexOfSelectedItem, sender.intValue != 0))
+        _spriteExpandXAction((sprite, sender.intValue != 0))
     }
     
     func _spriteExpandYAction(_ value: (Int,Bool)) {
@@ -358,7 +373,7 @@ extension MyController {
                 me in me._spriteExpandYAction((sprite, oldValue))
             }
             undoManager?.setActionName(newValue ? "Expand Sprite" : "Shrink Sprite")
-            c64.vic.setSpriteStretchYFlag(sprite, value: newValue)
+            c64.vic.setSpriteStretchY(sprite, value: newValue)
             refreshVIC()
         }
     }
@@ -366,11 +381,12 @@ extension MyController {
     @IBAction func spriteExpandYAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        _spriteExpandYAction((spriteSelector.indexOfSelectedItem, sender.intValue != 0))
+        _spriteExpandYAction((sprite, sender.intValue != 0))
     }
     
     func _spriteMulticolorAction(_ value: (Int,Bool)) {
         
+        // track("\(value.0) \(value.1)")
         let info = c64.vic.getSpriteInfo(value.0)
         let oldValue = info.multicolor
         let actionName = oldValue ? "Set Multicolor Bit" : "Clear Multicolor Bit"
@@ -380,7 +396,7 @@ extension MyController {
                 me in me._spriteMulticolorAction((value.0,oldValue))
             }
             undoManager?.setActionName(actionName)
-            c64.vic.setSpriteMulticolorFlag(value.0, value: value.1)
+            c64.vic.setSpriteMulticolor(value.0, value: value.1)
             refreshVIC()
         }
     }
@@ -389,7 +405,7 @@ extension MyController {
         
         let sender = sender as! NSPopUpButton
         let value = sender.selectedTag() != 0
-        _spriteMulticolorAction((spriteNr(), value))
+        _spriteMulticolorAction((sprite, value))
     }
  
     func _spritePriorityAction(_ value: (Int,Bool)) {
@@ -412,71 +428,132 @@ extension MyController {
         
         let sender = sender as! NSPopUpButton
         let value = sender.selectedTag() != 0
-        _spritePriorityAction((spriteNr(), value))
+        _spritePriorityAction((sprite, value))
     }
     
-    
-    
-    
-    
-    
-    func _colorAction(_ value: (Int,Int,UInt8)) {
+    func _spriteSpriteCollisionIrqAction(_ value: Bool) {
         
-        track("\(value)")
-
-        let colorField = value.0
-        let spriteNr = value.1
-        let newColor = value.2
+        let info = c64.vic.getInfo()
+        let oldValue = info.spriteCollisionIrqEnabled
+        let actionName = oldValue ? "Enable IRQ" : "Disable IRQ"
+        
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._spriteSpriteCollisionIrqAction(oldValue)
+            }
+            undoManager?.setActionName(actionName)
+            c64.vic.setIrqOnSpriteSpriteCollision(value)
+            refreshVIC()
+        }
+    }
+    
+    @IBAction func spriteSpriteCollisionIrqAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _spriteSpriteCollisionIrqAction(sender.intValue != 0)
+    }
+    
+    func _spriteBackgroundCollisionIrqAction(_ value: Bool) {
+        
+        let info = c64.vic.getInfo()
+        let oldValue = info.backgroundCollisionIrqEnabled
+        let actionName = oldValue ? "Enable IRQ" : "Disable IRQ"
+        
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._spriteBackgroundCollisionIrqAction(oldValue)
+            }
+            undoManager?.setActionName(actionName)
+            c64.vic.setIrqOnSpriteBackgroundCollision(value)
+            refreshVIC()
+        }
+    }
+    
+    @IBAction func spriteBackgroundCollisionIrqAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _spriteBackgroundCollisionIrqAction(sender.intValue != 0)
+    }
+    
+    func _rasterIrqEnabledAction(_ value: Bool) {
+        
+        let info = c64.vic.getInfo()
+        let oldValue = info.rasterIrqEnabled
+        let actionName = oldValue ? "Enable IRQ" : "Disable IRQ"
+        
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._rasterIrqEnabledAction(oldValue)
+            }
+            undoManager?.setActionName(actionName)
+            c64.vic.setRasterInterruptFlag(value)
+            refreshVIC()
+        }
+    }
+    
+    @IBAction func rasterIrqEnabledAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        _rasterIrqEnabledAction(sender.intValue != 0)
+    }
+    
+    func _irqRasterlineAction(_ value: UInt16) {
+        
+        let info = c64.vic.getInfo()
+        let oldValue = info.irqRasterline
+        
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._irqRasterlineAction(value)
+            }
+            undoManager?.setActionName("Set IRQ Rasterline")
+            c64.vic.setRasterInterruptLine(value)
+            refreshVIC()
+        }
+    }
+    
+    @IBAction func irqRasterlineAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _irqRasterlineAction(UInt16(sender.intValue))
+    }
+    
+    private func color(colorTag: Int, spriteNr: Int) -> UInt8 {
+        
         let info = c64.vic.getInfo()
         let sinfo = c64.vic.getSpriteInfo(spriteNr)
         
-        var oldColor: UInt8
-        switch (colorField) {
-        case 0: // Border color
-            oldColor = info.borderColor
-            break
-        case 1: // Background color 0
-            oldColor = info.backgroundColor0
-            break
-        case 2: // Background color 1
-            oldColor = info.backgroundColor1
-            break
-        case 3: // Background color 2
-            oldColor = info.backgroundColor2
-            break
-        case 4: // Background color 3
-            oldColor = info.backgroundColor3
-            break
-        case 5: // Sprite extra color 1
-            oldColor = sinfo.extraColor1
-            break
-        case 6: // Sprite extra color 2
-            oldColor = sinfo.extraColor2
-            break
-        case 7: // Sprite color
-            oldColor = sinfo.color
-            break
-        default:
-            assert(false)
-            oldColor = 0
-            break
+        switch (colorTag) {
+        case 0: return info.borderColor
+        case 1: return info.backgroundColor0
+        case 2: return info.backgroundColor1
+        case 3: return info.backgroundColor2
+        case 4: return info.backgroundColor3
+        case 5: return sinfo.extraColor1
+        case 6: return sinfo.extraColor2
+        case 7: return sinfo.color
+        default: assert(false); return 0
         }
+    }
+    
+    func _colorAction(_ value: (Int,Int,UInt8)) {
         
-        if (oldColor == newColor) {
+        let oldColor = color(colorTag: value.0, spriteNr: value.1)
+        if (oldColor == value.2) {
             return
         }
         
         undoManager?.registerUndo(withTarget: self) {
-            me in me._colorAction((colorField, spriteNr, newColor))
+            me in me._colorAction((value.0, value.1, oldColor))
         }
         undoManager?.setActionName("Set Color")
         
-        switch (colorField) {
+        switch (value.0) {
         case 0,1,2,3,4,5,6:
-            pokeVicReg(0x20 + UInt16(colorField), newColor)
+            c64.mem.pokeIO(0xD020 + UInt16(value.0), value: value.2)
             break
         case 7:
-            pokeVicReg(0x27 + UInt16(spriteNr), newColor)
+            c64.mem.pokeIO(0xD027 + UInt16(sprite), value: value.2)
             break
         default:
             assert(false)
@@ -491,44 +568,8 @@ extension MyController {
         track()
         
         let sender = sender as! NSButton
-        let colorField = sender.tag
-        let spriteNr = spriteSelector.indexOfSelectedItem
-        let info = c64.vic.getInfo()
-        let sinfo = c64.vic.getSpriteInfo(spriteNr)
-
-        var newColor: UInt8
-        switch (colorField) {
-        case 0: // Border color
-            newColor = (info.borderColor + 1) % 16
-            break
-        case 1: // Background color 0
-            newColor = (info.backgroundColor0 + 1) % 16
-            break
-        case 2: // Background color 1
-            newColor = (info.backgroundColor1 + 1) % 16
-            break
-        case 3: // Background color 2
-            newColor = (info.backgroundColor2 + 1) % 16
-            break
-        case 4: // Background color 3
-            newColor = (info.backgroundColor3 + 1) % 16
-            break
-        case 5: // Sprite extra color 1
-            newColor = (sinfo.extraColor1 + 1) % 16
-            break
-        case 6: // Sprite extra color 2
-            newColor = (sinfo.extraColor2 + 1) % 16
-            break
-        case 7: // Sprite color
-            newColor = (sinfo.color + 1) % 16
-            break
-        default:
-            assert(false)
-            newColor = 0
-            break
-        }
-    
-        _colorAction((colorField, spriteNr, newColor))
+        let oldColor = color(colorTag: sender.tag, spriteNr: sprite)
+        _colorAction((sender.tag, sprite, (oldColor + 1) % 16))
     }
     
 }

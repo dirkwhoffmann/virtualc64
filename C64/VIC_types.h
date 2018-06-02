@@ -231,6 +231,8 @@ typedef struct {
     uint16_t characterMemoryAddr;
     uint8_t imr;
     uint8_t irr;
+    bool spriteCollisionIrqEnabled;
+    bool backgroundCollisionIrqEnabled;
     bool rasterIrqEnabled;
     uint16_t irqRasterline;
     bool irqLine;
@@ -252,10 +254,7 @@ typedef struct {
     bool expandY;
     bool priority;
     bool collidesWithSprite;
-    bool spriteCollisionIrqEnabled;
     bool collidesWithBackground;
-    bool backgroundCollisionIrqEnabled;
-    
 } SpriteInfo;
     
 #endif

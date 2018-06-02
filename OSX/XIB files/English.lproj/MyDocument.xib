@@ -1556,7 +1556,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <stepperCell key="cell" continuous="YES" alignment="left" maxValue="7" id="1781"/>
                                         <connections>
-                                            <action selector="dyAction:" target="-2" id="lN2-Iz-4Nr"/>
+                                            <action selector="dyStepperAction:" target="-2" id="hax-7S-Sx5"/>
                                         </connections>
                                     </stepper>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="789">
@@ -1585,7 +1585,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <stepperCell key="cell" continuous="YES" alignment="left" maxValue="7" id="1784"/>
                                         <connections>
-                                            <action selector="dxAction:" target="-2" id="Rn2-fD-L4u"/>
+                                            <action selector="dxStepperAction:" target="-2" id="dC1-oL-7fM"/>
                                         </connections>
                                     </stepper>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="794">
@@ -1755,28 +1755,10 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" id="XGI-HQ-XId">
-                                        <rect key="frame" x="233" y="519" width="37" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="64" drawsBackground="YES" id="6BC-2c-T7N">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" id="837">
                                         <rect key="frame" x="28" y="522" width="65" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Rasterline:" id="1802">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" id="b2F-Ib-fzA">
-                                        <rect key="frame" x="129" y="523" width="99" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Cycle:" id="jqI-V5-DfB">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1918,6 +1900,9 @@
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
+                                                    <connections>
+                                                        <action selector="spritePriorityAction:" target="-2" id="tB2-z2-2fH"/>
+                                                    </connections>
                                                 </popUpButton>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="gds-4T-CrQ">
                                                     <rect key="frame" x="8" y="54" width="93" height="17"/>
@@ -1941,6 +1926,9 @@
                                                             </items>
                                                         </menu>
                                                     </popUpButtonCell>
+                                                    <connections>
+                                                        <action selector="spriteMulticolorAction:" target="-2" id="p2D-zn-BiW"/>
+                                                    </connections>
                                                 </popUpButton>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="0QY-K9-NPd">
                                                     <rect key="frame" x="8" y="107" width="93" height="17"/>
@@ -1954,7 +1942,7 @@
                                                 <button misplaced="YES" id="1WO-Gc-kIf">
                                                     <rect key="frame" x="102" y="7" width="131" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="background collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="6Na-6k-nKl">
+                                                    <buttonCell key="cell" type="check" title="background collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" inset="2" id="6Na-6k-nKl">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
@@ -1966,6 +1954,9 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <action selector="spriteBackgroundCollisionIrqAction:" target="-2" id="fwU-mL-JfT"/>
+                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="838">
                                                     <rect key="frame" x="11" y="29" width="88" height="18"/>
@@ -1974,11 +1965,14 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <action selector="spriteSpriteCollisionIrqAction:" target="-2" id="6d4-xK-aJv"/>
+                                                    </connections>
                                                 </button>
                                                 <button misplaced="YES" id="mfi-uR-o48">
                                                     <rect key="frame" x="102" y="29" width="98" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="sprite collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="poX-Kb-DMA">
+                                                    <buttonCell key="cell" type="check" title="sprite collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" inset="2" id="poX-Kb-DMA">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
@@ -2039,13 +2033,13 @@
                                     <button misplaced="YES" id="OFi-LY-OEQ">
                                         <rect key="frame" x="209" y="16" width="63" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <buttonCell key="cell" type="check" title="IRQ line" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" state="on" inset="2" id="FE9-fs-hn8">
+                                        <buttonCell key="cell" type="check" title="IRQ line" bezelStyle="regularSquare" imagePosition="left" alignment="right" controlSize="small" enabled="NO" state="on" inset="2" id="FE9-fs-hn8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                     </button>
                                     <button misplaced="YES" id="uhy-q3-Web">
-                                        <rect key="frame" x="95" y="494" width="64" height="18"/>
+                                        <rect key="frame" x="165" y="521" width="64" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Bad line" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" enabled="NO" state="on" inset="2" id="uMZ-i8-n3d">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2139,6 +2133,24 @@
                                             <action selector="selectSpriteAction:" target="-2" id="gny-gj-yvp"/>
                                         </connections>
                                     </segmentedControl>
+                                    <textField verticalHuggingPriority="750" misplaced="YES" id="XGI-HQ-XId">
+                                        <rect key="frame" x="98" y="493" width="37" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="64" drawsBackground="YES" id="6BC-2c-T7N">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" misplaced="YES" id="b2F-Ib-fzA">
+                                        <rect key="frame" x="-6" y="497" width="99" height="14"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Cycle:" id="jqI-V5-DfB">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                             </view>
                         </tabViewItem>

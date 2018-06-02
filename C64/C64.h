@@ -31,7 +31,10 @@
 // TODO:
 //
 // Add CPU::getInfo
-// Cleanup proxy API
+// Make CIA panel editable
+// Add setter API for SID stuff
+// Use correct formatters for SID and VIC values
+//
 //
 // CLEANUP:
 // Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to

@@ -182,11 +182,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger) colorScheme { return wrapper->vic->getColorScheme(); }
 - (void) setColorScheme:(NSInteger)scheme { wrapper->vic->setColorScheme((ColorScheme)scheme); }
 
-- (uint16_t) memoryBankAddr { return wrapper->vic->getMemoryBankAddr(); }
+// - (uint16_t) memoryBankAddr { return wrapper->vic->getMemoryBankAddr(); }
 - (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }
-- (uint16_t) screenMemoryAddr { return wrapper->vic->getScreenMemoryAddr(); }
+// - (uint16_t) screenMemoryAddr { return wrapper->vic->getScreenMemoryAddr(); }
 - (void) setScreenMemoryAddr:(uint16_t)addr { wrapper->vic->setScreenMemoryAddr(addr); }
-- (uint16_t) characterMemoryAddr { return wrapper->vic->getCharacterMemoryAddr(); }
+// - (uint16_t) characterMemoryAddr { return wrapper->vic->getCharacterMemoryAddr(); }
 - (void) setCharacterMemoryAddr:(uint16_t)addr { wrapper->vic->setCharacterMemoryAddr(addr); }
 
 // - (int) displayMode { return wrapper->vic->getDisplayMode(); }
@@ -200,36 +200,41 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 // - (bool) spriteEnabled:(NSInteger)nr { return wrapper->vic->spriteIsEnabled(nr); }
 - (void) setSpriteEnabled:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
-// - (void) toggleSpriteVisibilityFlag:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
+- (void) toggleSpriteEnabled:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
 
 // - (int) spriteX:(NSInteger)nr { return wrapper->vic->getSpriteX(nr); }
 - (void) setSpriteX:(NSInteger)nr value:(int)x { wrapper->vic->setSpriteX(nr, x); }
 // - (int) spriteY:(NSInteger)nr { return wrapper->vic->getSpriteY(nr); }
 - (void) setSpriteY:(NSInteger)nr value:(int)y { wrapper->vic->setSpriteY(nr, y); }
 
-- (int) spriteColor:(NSInteger)nr { return wrapper->vic->getSpriteColor(nr); }
+// - (int) spriteColor:(NSInteger)nr { return wrapper->vic->getSpriteColor(nr); }
 - (void) setSpriteColor:(NSInteger)nr value:(int)c { wrapper->vic->setSpriteColor(nr, c); }
+
 - (void) setSpritePriority:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpritePriority((unsigned)nr, flag); }
+- (void) toggleSpritePriority:(NSInteger)nr { wrapper->vic->toggleSpritePriority((unsigned)nr); }
 
 // - (bool) spriteMulticolorFlag:(NSInteger)nr { return wrapper->vic->spriteIsMulticolor((unsigned)nr); }
-- (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
-//- (void) toggleSpriteMulticolorFlag:(NSInteger)nr { wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
+- (void) setSpriteMulticolor:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
+- (void) toggleSpriteMulticolor:(NSInteger)nr { wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
 
-- (bool) spriteStretchXFlag:(NSInteger)nr { return wrapper->vic->spriteWidthIsDoubled((unsigned)nr); }
-- (void) setSpriteStretchXFlag:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
-- (void) toggleSpriteStretchXFlag:(NSInteger)nr { wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
+// - (bool) spriteStretchXFlag:(NSInteger)nr { return wrapper->vic->spriteWidthIsDoubled((unsigned)nr); }
+- (void) setSpriteStretchX:(NSInteger)nr value:(bool)flag { wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
+- (void) toggleSpriteStretchX:(NSInteger)nr { wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
 
-- (bool) spriteStretchYFlag:(NSInteger)nr { return wrapper->vic->spriteHeightIsDoubled((unsigned)nr); }
-- (void) setSpriteStretchYFlag:(NSInteger)nr value:(bool)flag { return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
-- (void) toggleSpriteStretchYFlag:(NSInteger)nr { wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
+// - (bool) spriteStretchYFlag:(NSInteger)nr { return wrapper->vic->spriteHeightIsDoubled((unsigned)nr); }
+- (void) setSpriteStretchY:(NSInteger)nr value:(bool)flag { return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
+- (void) toggleSpriteStretchY:(NSInteger)nr { wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
 
-- (bool) spriteSpriteCollisionFlag { return wrapper->vic->getSpriteSpriteCollisionFlag(); }
-- (void) setSpriteSpriteCollisionFlag:(bool)flag { wrapper->vic->setSpriteSpriteCollisionFlag(flag); }
-- (void) toggleSpriteSpriteCollisionFlag { wrapper->vic->toggleSpriteSpriteCollisionFlag(); }
+- (void) setIrqOnSpriteSpriteCollision:(bool)value { wrapper->vic->setIrqOnSpriteSpriteCollision(value); }
+- (void) toggleIrqOnSpriteSpriteCollision { wrapper->vic-> toggleIrqOnSpriteSpriteCollision(); }
 
-- (bool) spriteBackgroundCollisionFlag { return wrapper->vic->getSpriteBackgroundCollisionFlag(); }
-- (void) setSpriteBackgroundCollisionFlag:(bool)flag { wrapper->vic->setSpriteBackgroundCollisionFlag(flag); }
-- (void) toggleSpriteBackgroundCollisionFlag { wrapper->vic->toggleSpriteBackgroundCollisionFlag(); }
+- (void) setIrqOnSpriteBackgroundCollision:(bool)value { wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
+- (void) toggleIrqOnSpriteBackgroundCollision { wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
+
+// - (bool) spriteSpriteCollisionFlag { return wrapper->vic->getSpriteSpriteCollisionFlag(); }
+// - (bool) spriteBackgroundCollisionFlag { return wrapper->vic->getSpriteBackgroundCollisionFlag(); }
+// - (void) setSpriteBackgroundCollisionFlag:(bool)flag { wrapper->vic->setSpriteBackgroundCollisionFlag(flag); }
+// - (void) toggleSpriteBackgroundCollisionFlag { wrapper->vic->toggleSpriteBackgroundCollisionFlag(); }
 
 - (uint16_t) rasterline { return wrapper->vic->getRasterline(); }
 - (void) setRasterline:(uint16_t)line { wrapper->vic->setRasterline(line); }

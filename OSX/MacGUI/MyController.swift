@@ -231,8 +231,13 @@ class MyController : NSWindowController {
 extension MyController {
 
     // Get the undo manager from the first responder (metalScreen)
-    override open var undoManager: UndoManager? { get { return metalScreen.undoManager } }
-
+    
+    override open var undoManager: UndoManager? { get {
+        //let result = document?.undoManager!
+        let result = metalScreen.undoManager
+        track("Undo manager = \(metalScreen.undoManager)")
+        return result } }
+    
     //
     // Initialization
     //

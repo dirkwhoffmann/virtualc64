@@ -131,62 +131,45 @@ struct ContainerWrapper;
 	struct VicWrapper *wrapper;
 }
 
-- (void) dump;
-- (VICInfo) getInfo;
-- (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
-
 - (void *) screenBuffer;
-
 - (NSColor *) color:(NSInteger)nr;
 - (NSInteger) colorScheme;
 - (void) setColorScheme:(NSInteger)scheme;
 
-- (uint16_t) memoryBankAddr;
+- (void) dump;
+- (VICInfo) getInfo;
+- (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
+
 - (void) setMemoryBankAddr:(uint16_t)addr;
-- (uint16_t) screenMemoryAddr;
 - (void) setScreenMemoryAddr:(uint16_t)addr;
-- (uint16_t) characterMemoryAddr;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
-// - (DisplayMode) displayMode;
 - (void) setDisplayMode:(DisplayMode)mode;
-// - (int) screenGeometry;
 - (void) setScreenGeometry:(ScreenGeometry)mode;
-// - (int) horizontalRasterScroll;
 - (void) setHorizontalRasterScroll:(NSInteger)offset;
-// - (int) verticalRasterScroll;
 - (void) setVerticalRasterScroll:(NSInteger)offset;
 
-// - (bool) spriteVisibilityFlag:(NSInteger)nr;
 - (void) setSpriteEnabled:(NSInteger)nr value:(bool)flag;
-// - (void) toggleSpriteVisibilityFlag:(NSInteger)nr;
-
-// - (int) spriteX:(NSInteger)nr;
+- (void) toggleSpriteEnabled:(NSInteger)nr;
 - (void) setSpriteX:(NSInteger)nr value:(int)x;
-// - (int) spriteY:(NSInteger)nr;
 - (void) setSpriteY:(NSInteger)nr value:(int)y;
-
-- (int) spriteColor:(NSInteger)nr;
 - (void) setSpriteColor:(NSInteger)nr value:(int)c;
 - (void) setSpritePriority:(NSInteger)nr value:(bool)flag;
-// - (bool) spriteMulticolorFlag:(NSInteger)nr;
-- (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag;
-// - (void) toggleSpriteMulticolorFlag:(NSInteger)nr;
+- (void) toggleSpritePriority:(NSInteger)nr;
+- (void) setSpriteMulticolor:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteMulticolor:(NSInteger)nr;
 
-- (bool) spriteStretchXFlag:(NSInteger)nr;
-- (void) setSpriteStretchXFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteStretchXFlag:(NSInteger)nr;
-- (bool) spriteStretchYFlag:(NSInteger)nr;
-- (void) setSpriteStretchYFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteStretchYFlag:(NSInteger)nr;
+- (void) setSpriteStretchX:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteStretchX:(NSInteger)nr;
+- (void) setSpriteStretchY:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteStretchY:(NSInteger)nr;
 
-- (bool) spriteSpriteCollisionFlag;
-- (void) setSpriteSpriteCollisionFlag:(bool)flag;
-- (void) toggleSpriteSpriteCollisionFlag;
-
-- (bool) spriteBackgroundCollisionFlag;
-- (void) setSpriteBackgroundCollisionFlag:(bool)flag;
-- (void) toggleSpriteBackgroundCollisionFlag;
+// - (bool) spriteSpriteCollisionFlag;
+// - (bool) spriteBackgroundCollisionFlag;
+- (void) setIrqOnSpriteSpriteCollision:(bool)value;
+- (void) toggleIrqOnSpriteSpriteCollision;
+- (void) setIrqOnSpriteBackgroundCollision:(bool)value;
+- (void) toggleIrqOnSpriteBackgroundCollision;
 
 - (uint16_t) rasterline;
 - (void) setRasterline:(uint16_t)line;

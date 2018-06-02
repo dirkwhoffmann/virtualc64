@@ -820,7 +820,7 @@ public:
     }
     
 	//! @brief    Returns true, if sprite is enabled (drawn on the screen).
-    bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
+    bool spriteEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
 
 	//! @brief    Enables or disables a sprite.
     void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
@@ -828,14 +828,31 @@ public:
 	//! @brief    Enables or disables a sprite.
     void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
 	
+    //! @brief    Returns true, iff the specified sprite collides with the background
+    // bool spriteBackgroundCollision(uint8_t nr) { return GET_BIT(iomem[0x1F], nr) != 0; }
+    
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
-    bool spriteBackgroundInterruptEnabled() { return GET_BIT(imr, 1); }
+    bool irqOnSpriteBackgroundCollision() { return GET_BIT(imr, 1); }
 
+    //! @brief    Enables or disables IRQs on sprite/background collision
+    void setIrqOnSpriteBackgroundCollision(bool b) { WRITE_BIT(imr, 1, b); }
+
+    //! @brief    Enables or disables IRQs on sprite/background collision
+    void toggleIrqOnSpriteBackgroundCollision() { TOGGLE_BIT(imr, 1); }
+
+    //! @brief    Returns true, iff the specified sprite collides with at least one other sprite
+    // bool spriteSpriteCollision(uint8_t nr) { return GET_BIT(iomem[0x1E], nr) != 0; }
+    
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
-    bool spriteSpriteInterruptEnabled() { return GET_BIT(imr, 2); }
+    bool irqOnSpriteSpriteCollision() { return GET_BIT(imr, 2); }
 
+    //! @brief    Enables or disables IRQs on sprite/sprite collision
+    void setIrqOnSpriteSpriteCollision(bool b) { WRITE_BIT(imr, 2, b); }
+    
+    //! @brief    Enables or disables IRQs on sprite/sprite collision
+    void toggleIrqOnSpriteSpriteCollision() { TOGGLE_BIT(imr, 2); }
+    
 	//! @brief    Returns true, iff a rasterline interrupt has occurred.
-    // inline bool rasterInterruptOccurred() { return GET_BIT(iomem[0x19], 0); }
     bool rasterInterruptOccurred() { return GET_BIT(irr, 0); }
 
 	//! @brief    Returns true, iff a sprite/background interrupt has occurred.

@@ -231,6 +231,8 @@ VIC::getInfo()
     info.characterMemoryAddr = getCharacterMemoryAddr();
     info.imr = imr;
     info.irr = irr;
+    info.spriteCollisionIrqEnabled = irqOnSpriteSpriteCollision();
+    info.backgroundCollisionIrqEnabled = irqOnSpriteBackgroundCollision();
     info.rasterIrqEnabled = rasterInterruptEnabled();
     info.irqRasterline = rasterInterruptLine();
     info.irqLine = (imr & irr) != 0;
@@ -243,7 +245,7 @@ VIC::getSpriteInfo(unsigned i)
 {
     SpriteInfo info;
     
-    info.enabled = spriteIsEnabled(i);
+    info.enabled = spriteEnabled(i);
     info.x = getSpriteX(i);
     info.y = getSpriteY(i);
     info.color = getSpriteColor(i);
@@ -253,9 +255,7 @@ VIC::getSpriteInfo(unsigned i)
     info.expandX = spriteWidthIsDoubled(i);
     info.expandY = spriteHeightIsDoubled(i);
     info.priority = spritePriority(i);
-    info.spriteCollisionIrqEnabled = spriteSpriteInterruptEnabled();
     info.collidesWithSprite = spriteCollidesWithSprite(i);
-    info.backgroundCollisionIrqEnabled = spriteBackgroundInterruptEnabled();
     info.collidesWithBackground = spriteCollidesWithBackground(i);
     
     return info;
