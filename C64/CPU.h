@@ -231,6 +231,9 @@ public:
 	//! @brief    Prints debugging information.
 	void dumpState();	
 
+    //! @brief    Gathers debug information.
+    CPUInfo getInfo();
+    
     //! @brief    Returns true iff this object is the C64 CPU (for debugging, only).
     bool isC64CPU() { return strcmp(getDescription(), "CPU") == 0; /* VC1541 CPU is calles "1541CPU" */ }
 

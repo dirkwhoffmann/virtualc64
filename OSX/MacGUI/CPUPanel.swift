@@ -9,125 +9,128 @@ import Foundation
 
 extension MyController {
     
+    private var cpuInfo: CPUInfo {
+        get { return c64.cpu.getInfo() }
+    }
+    
+    
     // Registers
     
     func _pcAction(_ value: UInt16) {
         
-        let undoValue = c64.cpu.pc()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._pcAction(undoValue)
-        }
-        undoManager?.setActionName("Set Program Counter")
+        let oldValue = cpuInfo.pc
         
-        c64.cpu.setPC(value)
-        refresh()
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._pcAction(oldValue)
+            }
+            undoManager?.setActionName("Set Program Counter")
+            
+            c64.cpu.setPC(value)
+            refreshCPU()
+        }
     }
     
     @IBAction func pcAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        let value = UInt16(sender.intValue)
-        if (value != c64.cpu.pc()) {
-            _pcAction(value)
-        }
+        _pcAction(UInt16(sender.intValue))
     }
     
     func _aAction(_ value: UInt8) {
         
-        let undoValue = c64.cpu.a()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._aAction(undoValue)
+        let oldValue = cpuInfo.a
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._aAction(oldValue)
+            }
+            undoManager?.setActionName("Set Accumulator")
+            
+            c64.cpu.setA(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Set Accumulator")
-        
-        c64.cpu.setA(value)
-        refresh()
     }
     
     @IBAction func aAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.a()) {
-            _aAction(value)
-        }
+        _aAction(UInt8(sender.intValue))
     }
     
     func _xAction(_ value: UInt8) {
         
-        let undoValue = c64.cpu.x()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._xAction(undoValue)
-        }
-        undoManager?.setActionName("Set X Register")
+        let oldValue = cpuInfo.x
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._xAction(oldValue)
+            }
+            undoManager?.setActionName("Set X Register")
         
-        c64.cpu.setX(value)
-        refresh()
+            c64.cpu.setX(value)
+            refreshCPU()
+        }
     }
     
     @IBAction func xAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.x()) {
-            _xAction(value)
-        }
+        _xAction(UInt8(sender.intValue))
     }
     
     func _yAction(_ value: UInt8) {
         
-        let undoValue = c64.cpu.y()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._yAction(undoValue)
+        let oldValue = cpuInfo.y
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._yAction(oldValue)
+            }
+            undoManager?.setActionName("Set Y Register")
+            
+            c64.cpu.setY(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Set Y Register")
-        
-        c64.cpu.setY(value)
-        refresh()
     }
     
     @IBAction func yAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.y()) {
-            _yAction(value)
-        }
+        _yAction(UInt8(sender.intValue))
     }
     
     func _spAction(_ value: UInt8) {
         
-        let undoValue = c64.cpu.sp()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._spAction(undoValue)
+        let oldValue = cpuInfo.sp
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._spAction(oldValue)
+            }
+            undoManager?.setActionName("Set Stack Pointer")
+            
+            c64.cpu.setSP(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Set Stack Pointer")
-        
-        c64.cpu.setSP(value)
-        refresh()
     }
     
     @IBAction func spAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.sp()) {
-            _spAction(value)
-        }
+        _spAction(UInt8(sender.intValue))
     }
     
     // Processor flags
     
     func _nAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.nflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._nAction(undoValue)
+        let oldValue = cpuInfo.nFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._nAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Negative Flag")
+            
+            c64.cpu.setNflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Negative Flag")
-        
-        c64.cpu.setNflag(value)
-        refresh()
     }
     
     @IBAction func NAction(_ sender: Any!) {
@@ -138,14 +141,16 @@ extension MyController {
     
     func _zAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.zflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._zAction(undoValue)
+        let oldValue = cpuInfo.zFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._zAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Zero Flag")
+            
+            c64.cpu.setZflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Zero Flag")
-        
-        c64.cpu.setZflag(value)
-        refresh()
     }
     
     @IBAction func ZAction(_ sender: Any!) {
@@ -156,14 +161,16 @@ extension MyController {
     
     func _cAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.cflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._cAction(undoValue)
+        let oldValue = cpuInfo.cFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._cAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Carry Flag")
+            
+            c64.cpu.setCflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Carry Flag")
-        
-        c64.cpu.setCflag(value)
-        refresh()
     }
     
     @IBAction func CAction(_ sender: Any!) {
@@ -174,14 +181,16 @@ extension MyController {
     
     func _iAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.iflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._iAction(undoValue)
+        let oldValue = cpuInfo.iFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._iAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Interrupt Flag")
+            
+            c64.cpu.setIflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Interrupt Flag")
-        
-        c64.cpu.setIflag(value)
-        refresh()
     }
     
     @IBAction func IAction(_ sender: Any!) {
@@ -192,14 +201,16 @@ extension MyController {
     
     func _bAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.bflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._bAction(undoValue)
+        let oldValue = cpuInfo.bFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._bAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Break Flag")
+            
+            c64.cpu.setBflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Break Flag")
-        
-        c64.cpu.setBflag(value)
-        refresh()
     }
     
     @IBAction func BAction(_ sender: Any!) {
@@ -210,14 +221,16 @@ extension MyController {
     
     func _dAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.dflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._dAction(undoValue)
+        let oldValue = cpuInfo.dFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._dAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Decimal Flag")
+            
+            c64.cpu.setDflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Decimal Flag")
-        
-        c64.cpu.setDflag(value)
-        refresh()
     }
     
     @IBAction func DAction(_ sender: Any!) {
@@ -228,14 +241,16 @@ extension MyController {
     
     func _vAction(_ value: Bool) {
         
-        let undoValue = c64.cpu.vflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._vAction(undoValue)
+        let oldValue = cpuInfo.vFlag
+        if (value != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._vAction(oldValue)
+            }
+            undoManager?.setActionName("Toggle Overflow Flag")
+            
+            c64.cpu.setVflag(value)
+            refreshCPU()
         }
-        undoManager?.setActionName("Toggle Overflow Flag")
-        
-        c64.cpu.setVflag(value)
-        refresh()
     }
     
     @IBAction func VAction(_ sender: Any!) {
@@ -277,17 +292,19 @@ extension MyController {
     
     func refreshCPU() {
         
-        pc.intValue = Int32(c64.cpu.pc())
-        a.intValue = Int32(c64.cpu.a())
-        x.intValue = Int32(c64.cpu.x())
-        y.intValue = Int32(c64.cpu.y())
-        sp.intValue = Int32(c64.cpu.sp())
-        nflag.intValue = c64.cpu.nflag() ? 1 : 0
-        vflag.intValue = c64.cpu.vflag() ? 1 : 0
-        bflag.intValue = c64.cpu.bflag() ? 1 : 0
-        dflag.intValue = c64.cpu.dflag() ? 1 : 0
-        iflag.intValue = c64.cpu.iflag() ? 1 : 0
-        zflag.intValue = c64.cpu.zflag() ? 1 : 0
-        cflag.intValue = c64.cpu.cflag() ? 1 : 0
+        let info = c64.cpu.getInfo()
+        
+        pc.intValue = Int32(info.pc)
+        a.intValue = Int32(info.a)
+        x.intValue = Int32(info.x)
+        y.intValue = Int32(info.y)
+        sp.intValue = Int32(info.sp)
+        nflag.intValue = info.nFlag ? 1 : 0
+        vflag.intValue = info.vFlag ? 1 : 0
+        bflag.intValue = info.bFlag ? 1 : 0
+        dflag.intValue = info.dFlag ? 1 : 0
+        iflag.intValue = info.iFlag ? 1 : 0
+        zflag.intValue = info.zFlag ? 1 : 0
+        cflag.intValue = info.cFlag ? 1 : 0
     }
 }

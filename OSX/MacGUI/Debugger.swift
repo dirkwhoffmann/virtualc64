@@ -183,6 +183,13 @@ extension MyController {
     }
 }
 
+extension MyController : NSTabViewDelegate {
+
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        refresh()
+    }
+}
+
 //
 // Panel independent controls
 //
@@ -203,7 +210,7 @@ extension MyController {
         // If the next instruction is a JSR instruction, ...
         if (c64.cpu.readPC() == 0x20) {
 
-            // we set soft breakpoint at next command
+            // we set soft breakpoint at the next command
             c64.cpu.setSoftBreakpoint(c64.cpu.addressOfNextInstruction())
             c64.run()
 

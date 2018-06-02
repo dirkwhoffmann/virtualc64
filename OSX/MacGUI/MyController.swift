@@ -235,7 +235,6 @@ extension MyController {
     override open var undoManager: UndoManager? { get {
         //let result = document?.undoManager!
         let result = metalScreen.undoManager
-        track("Undo manager = \(metalScreen.undoManager)")
         return result } }
     
     //

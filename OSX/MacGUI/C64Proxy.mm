@@ -59,42 +59,31 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->cpu->dumpState(); }
+- (CPUInfo) getInfo { return wrapper->cpu->getInfo(); }
 - (bool) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
 - (void) setTraceMode:(bool)b {
     if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
 
 - (uint16_t) PC { return wrapper->cpu->getPC_at_cycle_0(); }
-- (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
-- (uint8_t) SP { return wrapper->cpu->getSP(); }
-- (void) setSP:(uint8_t)sp { wrapper->cpu->setSP(sp); }
-- (uint8_t) A { return wrapper->cpu->getA(); }
-- (void) setA:(uint8_t)a { wrapper->cpu->setA(a); }
-- (uint8_t) X { return wrapper->cpu->getX(); }
-- (void) setX:(uint8_t)x { wrapper->cpu->setX(x); }
-- (uint8_t) Y { return wrapper->cpu->getY(); }
-- (void) setY:(uint8_t)y { wrapper->cpu->setY(y); }
-- (bool) Nflag { return wrapper->cpu->getN(); }
-- (void) setNflag:(bool)b { wrapper->cpu->setN(b); }
-- (bool) Zflag { return wrapper->cpu->getZ(); }
-- (void) setZflag:(bool)b { wrapper->cpu->setZ(b); }
-- (bool) Cflag { return wrapper->cpu->getC(); }
-- (void) setCflag:(bool)b { wrapper->cpu->setC(b); }
-- (bool) Iflag { return wrapper->cpu->getI(); }
-- (void) setIflag:(bool)b { wrapper->cpu->setI(b); }
-- (bool) Bflag { return wrapper->cpu->getB(); }
-- (void) setBflag:(bool)b { wrapper->cpu->setB(b); }
-- (bool) Dflag { return wrapper->cpu->getD(); }
-- (void) setDflag:(bool)b { wrapper->cpu->setD(b); }
-- (bool) Vflag { return wrapper->cpu->getV(); }
-- (void) setVflag:(bool)b { wrapper->cpu->setV(b); }
-
-- (uint16_t) readPC {
-    return wrapper->cpu->mem->spy(wrapper->cpu->getPC_at_cycle_0()); }
+- (uint16_t) readPC { return wrapper->cpu->mem->spy([self PC]); }
 - (uint16_t) addressOfNextInstruction {
-     return wrapper->cpu->getAddressOfNextInstruction(); }
+    return wrapper->cpu->getAddressOfNextInstruction(); }
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
     return wrapper->cpu->disassemble(addr, h);
 }
+
+- (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
+- (void) setSP:(uint8_t)sp { wrapper->cpu->setSP(sp); }
+- (void) setA:(uint8_t)a { wrapper->cpu->setA(a); }
+- (void) setX:(uint8_t)x { wrapper->cpu->setX(x); }
+- (void) setY:(uint8_t)y { wrapper->cpu->setY(y); }
+- (void) setNflag:(bool)b { wrapper->cpu->setN(b); }
+- (void) setZflag:(bool)b { wrapper->cpu->setZ(b); }
+- (void) setCflag:(bool)b { wrapper->cpu->setC(b); }
+- (void) setIflag:(bool)b { wrapper->cpu->setI(b); }
+- (void) setBflag:(bool)b { wrapper->cpu->setB(b); }
+- (void) setDflag:(bool)b { wrapper->cpu->setD(b); }
+- (void) setVflag:(bool)b { wrapper->cpu->setV(b); }
 
 - (BOOL) hardBreakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
 - (void) setHardBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }

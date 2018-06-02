@@ -121,6 +121,28 @@ CPU::dumpState()
     c64->processorPort.dumpState();
 }
 
+CPUInfo
+CPU::getInfo()
+{
+    CPUInfo info;
+    
+    info.cycle = c64->cycle;
+    info.pc = PC_at_cycle_0;
+    info.a = A;
+    info.x = X;
+    info.y = Y;
+    info.sp = SP;
+    info.nFlag = N;
+    info.vFlag = V;
+    info.bFlag = B;
+    info.dFlag = D;
+    info.iFlag = I;
+    info.zFlag = Z;
+    info.cFlag = C;
+  
+    return info;
+}
+
 void
 CPU::pullDownNmiLine(InterruptSource bit)
 {

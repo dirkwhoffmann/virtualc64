@@ -58,39 +58,28 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+- (CPUInfo) getInfo;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
+
 - (uint16_t) PC;
 - (void) setPC:(uint16_t)pc;
-- (uint8_t) SP;
-- (void) setSP:(uint8_t)sp;
-- (uint8_t) A;
-- (void) setA:(uint8_t)a;
-- (uint8_t) X;
-- (void) setX:(uint8_t)x;
-- (uint8_t) Y;
-- (void) setY:(uint8_t)y;
-- (bool) Nflag;
-- (void) setNflag:(bool)b;
-- (bool) Zflag;
-- (void) setZflag:(bool)b;
-- (bool) Cflag;
-- (void) setCflag:(bool)b;
-- (bool) Iflag;
-- (void) setIflag:(bool)b;
-- (bool) Bflag;
-- (void) setBflag:(bool)b;
-- (bool) Dflag;
-- (void) setDflag:(bool)b;
-- (bool) Vflag;
-- (void) setVflag:(bool)b;
-
 - (uint16_t) readPC;
 - (uint16_t) addressOfNextInstruction;
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
-// - (int) topOfCallStack;
-// - (int) breakpoint:(uint16_t)addr;
-// - (void) setBreakpoint:(uint16_t)addr tag:(uint8_t)t;
+
+- (void) setSP:(uint8_t)sp;
+- (void) setA:(uint8_t)a;
+- (void) setX:(uint8_t)x;
+- (void) setY:(uint8_t)y;
+- (void) setNflag:(bool)b;
+- (void) setZflag:(bool)b;
+- (void) setCflag:(bool)b;
+- (void) setIflag:(bool)b;
+- (void) setBflag:(bool)b;
+- (void) setDflag:(bool)b;
+- (void) setVflag:(bool)b;
+
 - (BOOL) hardBreakpoint:(uint16_t)addr;
 - (void) setHardBreakpoint:(uint16_t)addr;
 - (void) deleteHardBreakpoint:(uint16_t)addr;
