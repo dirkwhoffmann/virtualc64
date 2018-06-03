@@ -206,9 +206,9 @@ C64Memory::loadKernalRom(const char *filename)
 }
 
 
-// --------------------------------------------------------------------------------
-//                              Memory access methods
-// --------------------------------------------------------------------------------
+//
+// Memory access
+//
 
 void 
 C64Memory::updatePeekPokeLookupTables()
@@ -433,17 +433,41 @@ uint8_t C64Memory::snoopIO(uint16_t addr)
     }
 }
 
-/*
-uint8_t C64Memory::spy(uint16_t addr)
+void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
 {
-    return spy(addr, peekSrc[addr >> 12]);
+    switch(target) {
+            
+        case M_RAM:
+            ram[addr] = value;
+            return;
+            
+        case M_IO:
+            pokeIO(addr, value);
+            return;
+            
+        case M_PP:
+            
+            if (addr == 0x0000) {
+                c64->processorPort.writeDirection(value);
+                return;
+            }
+            if (addr == 0x0001) {
+                c64->processorPort.write(value);
+                return;
+            }
+            
+            ram[addr] = value;
+            return;
+            
+        case M_ROM:
+            rom[addr] = value;
+            return;
+            
+        default:
+            assert(0);
+            return;
+    }
 }
-*/
-
-
-// --------------------------------------------------------------------------------
-//                                    Poke
-// --------------------------------------------------------------------------------
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 {
@@ -505,6 +529,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
     assert(false);
 }
 
+/*
 void C64Memory::poke(uint16_t addr, uint8_t value)
 {	
 	MemoryType target = pokeTarget[addr >> 12];
@@ -567,4 +592,4 @@ C64Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType target)
             return;
     }
 }
-
+*/

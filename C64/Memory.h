@@ -72,12 +72,21 @@ public:
      */
     virtual uint8_t snoop(uint16_t addr) = 0;
     
-    
-    
-    
+
     //
     //! @functiongroup Writing into memory
     //
+    
+    /*! @brief    Pokes a byte into memory.
+     *  @details  The value is written into the specified memory.
+     */
+    virtual void poke(uint16_t addr, uint8_t value, MemoryType target) = 0;
+    
+    /*! @brief    Pokes a byte into memory.
+     *  @details  This function emulates a native write access including side effects.
+     */
+    virtual void poke(uint16_t addr, uint8_t value) = 0;
+    
     
 private:
 
@@ -89,11 +98,7 @@ private:
 	
 public:
 	
-    /*! @brief    Pokes a byte into memory.
-     *  @details  This function is called by the CPU to write into memory.
-     *            The poke target table determines where the value is written to.
-     */
-	virtual void poke(uint16_t addr, uint8_t value) = 0;
+ 
 
 	//! Load a ROM image into memory.
 	/*! All bytes of the specified file are read into the ROM memory, starting at the specified location.

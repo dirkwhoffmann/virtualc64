@@ -85,18 +85,6 @@ VC1541Memory::dumpState()
 }
 
 uint8_t
-VC1541Memory::readIO(uint16_t addr)
-{
-    if ((addr & 0xFC00) == 0x1800) {
-        return floppy->via1.read(addr & 0x000F);
-    } else if ((addr & 0xFC00) == 0x1c00) {
-        return floppy->via2.read(addr & 0x000F);
-    } else {
-        return (addr >> 8);
-    }
-}
-
-uint8_t
 VC1541Memory::peek(uint16_t addr, MemoryType source)
 {
     // In contrast to the C64 where certain memorys overlap each other,
@@ -163,10 +151,22 @@ VC1541Memory::snoop(uint16_t addr)
     } else if (addr < 0x1000) {
         result = mem[addr & 0x07ff];
     } else {
-        result = readIO(addr);
+        result = snoopIO(addr);
     }
     
     return result;
+}
+
+uint8_t
+VC1541Memory::snoopIO(uint16_t addr)
+{
+    if ((addr & 0xFC00) == 0x1800) {
+        return floppy->via1.snoop(addr & 0x000F);
+    } else if ((addr & 0xFC00) == 0x1c00) {
+        return floppy->via2.snoop(addr & 0x000F);
+    } else {
+        return (addr >> 8);
+    }
 }
 
 void 
@@ -179,6 +179,17 @@ void
 VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
 {
 	mem[addr] = value;
+}
+
+void
+VC1541Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
+{
+    if (target == M_ROM) {
+        assert(addr >= 0x8000);
+        mem[addr] = value;
+    } else {
+        poke(addr, value);
+    }
 }
 
 void 

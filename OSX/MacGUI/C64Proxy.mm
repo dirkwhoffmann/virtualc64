@@ -119,7 +119,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
     wrapper->mem->c64->suspend();
-    wrapper->mem->pokeTo(addr, value, target);
+    wrapper->mem->poke(addr, value, target);
     wrapper->mem->c64->resume(); }
 - (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
     wrapper->mem->c64->suspend();
