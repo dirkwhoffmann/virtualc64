@@ -57,7 +57,7 @@ class MemTableView : NSTableView {
     }
     
     // Returns the memory source for the specified address
-    func source(_ addr: UInt16) -> MemorySource {
+    func source(_ addr: UInt16) -> MemoryType {
         
         switch memView {
         case MemoryView.ramView:
@@ -218,7 +218,7 @@ extension MemTableView : NSTableViewDelegate {
         }
         if let value = object as? UInt8 {
             track("Poking \(value) to \(addr) (src = \(src))")
-            c?.c64.mem.poke(to: addr, value: value, memtype: src)
+            c?.c64.mem.poke(to: addr, value: value, target: src)
         }
     }
 }

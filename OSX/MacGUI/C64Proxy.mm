@@ -79,14 +79,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setDflag:(BOOL)b { wrapper->cpu->setD(b); }
 - (void) setVflag:(BOOL)b { wrapper->cpu->setV(b); }
 
-- (BOOL) hardBreakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
-- (void) setHardBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }
-- (void) deleteHardBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
-- (void) toggleHardBreakpoint:(uint16_t)addr { wrapper->cpu->toggleHardBreakpoint(addr); }
-- (BOOL) softBreakpoint:(uint16_t)addr { return wrapper->cpu->softBreakpoint(addr); }
-- (void) setSoftBreakpoint:(uint16_t)addr { wrapper->cpu->setSoftBreakpoint(addr); }
-- (void) deleteSoftBreakpoint:(uint16_t)addr { wrapper->cpu->deleteSoftBreakpoint(addr); }
-- (void) toggleSoftBreakpoint:(uint16_t)addr { wrapper->cpu->toggleSoftBreakpoint(addr); }
+- (BOOL) breakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
+- (void) setBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }
+- (void) deleteBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
+- (void) toggleBreakpoint:(uint16_t)addr { wrapper->cpu->toggleHardBreakpoint(addr); }
 
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
     return wrapper->cpu->disassemble(addr, h);
@@ -112,22 +108,27 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->mem->dumpState(); }
 
+- (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
+- (uint8_t) spy:(uint16_t)addr source:(MemoryType)source {
+    return wrapper->mem->spy(addr, source); }
+- (uint8_t) spyIO:(uint16_t)addr {
+    return wrapper->mem->spyIO(addr); }
 - (uint8_t) spy:(uint16_t)addr {
     return wrapper->mem->spy(addr); }
-- (uint8_t) spy:(uint16_t)addr source:(MemorySource)src {
-    return wrapper->mem->spy(addr, src); }
-- (void) poke:(uint16_t)addr value:(uint8_t)val {
-    wrapper->mem->poke(addr, val); }
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemorySource)type {
-    wrapper->mem->pokeTo(addr, val, type); }
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)val {
+
+- (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
     wrapper->mem->c64->suspend();
-    wrapper->mem->pokeIO(addr, val);
-    wrapper->mem->c64->resume();
-}
-- (MemorySource) peekSource:(uint16_t)addr {
-    return wrapper->mem->peekSource(addr);
-}
+    wrapper->mem->pokeTo(addr, value, target);
+    wrapper->mem->c64->resume(); }
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
+    wrapper->mem->c64->suspend();
+    wrapper->mem->pokeIO(addr, value);
+    wrapper->mem->c64->resume(); }
+- (void) poke:(uint16_t)addr value:(uint8_t)value {
+    wrapper->mem->c64->suspend();
+    wrapper->mem->poke(addr, value);
+    wrapper->mem->c64->resume(); }
 
 @end
 

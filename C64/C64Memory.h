@@ -43,7 +43,7 @@ class C64Memory : public Memory {
     //   BankMap[x][4] = mapping for range $D000 - $DFFF
     //   BankMap[x][5] = mapping for range $E000 - $FFFF
 
-    const MemorySource BankMap[32][6] = {
+    const MemoryType BankMap[32][6] = {
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM},
         {M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNAL},
@@ -184,28 +184,29 @@ public:
 private:
     
     //! @brief    Lookup table for peek()
-    MemorySource peekSrc[16];
+    MemoryType peekSrc[16];
     
     //! @brief    Lookup table for poke()
-    MemorySource pokeTarget[16];
+    MemoryType pokeTarget[16];
     
 public:
     
     /*! @brief    Updates the peek and poke lookup tables.
-     *  @details  The lookup values depend on three processor port bits and the cartridge exrom and game lines 
+     *  @details  The lookup values depend on three processor port bits
+     *            and the cartridge exrom and game lines.
      */
     void updatePeekPokeLookupTables();
 
     //! @brief    Returns the current peek source of the specified memory address
-    MemorySource peekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
+    MemoryType getPeekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
     
     uint8_t peek(uint16_t addr);
     uint8_t peekIO(uint16_t addr);
-    
-    uint8_t spy(uint16_t addr);
+
+    uint8_t spy(uint16_t addr, MemoryType src);
     uint8_t spyIO(uint16_t addr);
-    uint8_t spy(uint16_t addr, MemorySource src);
-    
+    uint8_t spy(uint16_t addr);
+
     
     //! @brief    Write a byte into RAM.
     void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }
@@ -213,18 +214,19 @@ public:
     //! @brief    Write a byte into ROM.
     void pokeRom(uint16_t addr, uint8_t value) { rom[addr] = value; }
 
+    //! @brief    Returns the current poke target of the specified memory address
+    MemoryType getPokeTarget(uint16_t addr) { return pokeTarget[addr >> 12]; }
+
+    //! @brief    Writes a byte into memory.
+    void pokeTo(uint16_t addr, uint8_t value, MemoryType target);
+
+    //! @brief    Writes a byte into memory.
+    //! @details  The memory target is read from the poke lookup table.
+    void poke(uint16_t addr, uint8_t value);
+    
     //! @brief    Write a byte into I/O space.
     void pokeIO(uint16_t addr, uint8_t value);
 
-    /*! @brief    Writes a byte into memory.
-     *  @details  The memory target (RAM, ROM, or I/O space) is read from the poke lookup table. 
-     */
-    void poke(uint16_t addr, uint8_t value);
-    
-    //! @brief    Writes a byte into memory.
-    /*! @details  This method is only used by the debugger only.
-     */
-    void pokeTo(uint16_t addr, uint8_t value, MemorySource target);
 };
 
 #endif

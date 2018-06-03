@@ -53,7 +53,7 @@ private:
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
 	
-	//! @brief    Convenience wrapper for peek
+	//! @brief    Convenience wrapper
     uint8_t peek(uint8_t lo, uint8_t hi) { return peek(LO_HI(lo, hi)); }
 
 public:

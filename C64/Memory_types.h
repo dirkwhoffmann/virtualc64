@@ -23,6 +23,6 @@ typedef enum {
     M_CRTHI,
     M_PP,
     M_NONE
-} MemorySource;
+} MemoryType;
 
 #endif

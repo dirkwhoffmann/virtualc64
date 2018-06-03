@@ -221,7 +221,7 @@ C64Memory::updatePeekPokeLookupTables()
     c64->setUltimax(exrom && !game);
 
     // Set peek sources
-    MemorySource source;
+    MemoryType source;
     source = BankMap[index][0]; // 0x1000 - 0x7FFF (RAM or open)
     assert(source == M_RAM || source == M_NONE);
     peekSrc[0x1] = source;
@@ -255,7 +255,7 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0xF] = source;
 
     // Set poke targets
-    MemorySource target;
+    MemoryType target;
     target = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O or RAM)
     pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
 }
@@ -361,7 +361,7 @@ uint8_t C64Memory::spyIO(uint16_t addr)
 
 uint8_t C64Memory::peek(uint16_t addr)
 {
-    MemorySource src = peekSrc[addr >> 12];
+    MemoryType src = peekSrc[addr >> 12];
     
     switch(src) {
             
@@ -404,7 +404,7 @@ uint8_t C64Memory::spy(uint16_t addr)
     return spy(addr, peekSrc[addr >> 12]);
 }
 
-uint8_t C64Memory::spy(uint16_t addr, MemorySource src)
+uint8_t C64Memory::spy(uint16_t addr, MemoryType src)
 {
     switch(src) {
             
@@ -507,7 +507,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 
 void C64Memory::poke(uint16_t addr, uint8_t value)
 {	
-	MemorySource target = pokeTarget[addr >> 12];
+	MemoryType target = pokeTarget[addr >> 12];
 	    
 	switch(target) {
 			
@@ -540,7 +540,7 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 }
 
 void
-C64Memory::pokeTo(uint16_t addr, uint8_t value, MemorySource target)
+C64Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType target)
 {
     switch(target) {
             

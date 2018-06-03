@@ -1002,9 +1002,8 @@ C64::flushArchive(Archive *a, int item)
     while (1) {
         data = a->getByte();
         if (data < 0) break;
-        mem.pokeRam(addr, (uint8_t)data);
+        mem.ram[addr] = (uint8_t)data;
         if (addr == 0xFFFF) break;
-        
         addr++;
     }
     return true;

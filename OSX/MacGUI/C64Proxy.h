@@ -1,5 +1,5 @@
 /*
- * Author: Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann. 2018, All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #import "C64_types.h"
 #import "basic.h"
 
-// Forward declarations
+// Forward declarations of proxy classes
 @class MyController;
 @class C64Proxy;
 @class SnapshotProxy;
@@ -30,7 +30,7 @@
 @class CRTProxy;
 
 // Forward declarations of wrappers for C++ classes.
-// We wrap classes into normal C structs to avoid any reference to C++ here.
+// We wrap classes into normal C structs to avoid any reference to C++.
 
 struct C64Wrapper;
 struct CpuWrapper;
@@ -48,9 +48,9 @@ struct Vc1541Wrapper;
 struct DatasetteWrapper;
 struct ContainerWrapper;
 
-// --------------------------------------------------------------------------
-//                                    CPU
-// --------------------------------------------------------------------------
+//
+// CPU
+//
 
 @interface CPUProxy : NSObject {
         
@@ -77,22 +77,18 @@ struct ContainerWrapper;
 - (void) setDflag:(BOOL)b;
 - (void) setVflag:(BOOL)b;
 
-- (BOOL) hardBreakpoint:(uint16_t)addr;
-- (void) setHardBreakpoint:(uint16_t)addr;
-- (void) deleteHardBreakpoint:(uint16_t)addr;
-- (void) toggleHardBreakpoint:(uint16_t)addr;
-- (BOOL) softBreakpoint:(uint16_t)addr;
-- (void) setSoftBreakpoint:(uint16_t)addr;
-- (void) deleteSoftBreakpoint:(uint16_t)addr;
-- (void) toggleSoftBreakpoint:(uint16_t)addr;
+- (BOOL) breakpoint:(uint16_t)addr;
+- (void) setBreakpoint:(uint16_t)addr;
+- (void) deleteBreakpoint:(uint16_t)addr;
+- (void) toggleBreakpoint:(uint16_t)addr;
 
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                  Memory
-// --------------------------------------------------------------------------
+//
+// Memory
+//
 
 @interface MemoryProxy : NSObject {
     
@@ -102,11 +98,13 @@ struct ContainerWrapper;
 - (void) dump;
 
 - (uint8_t) spy:(uint16_t)addr;
-- (uint8_t) spy:(uint16_t)addr source:(MemorySource)src;
-- (void) poke:(uint16_t)addr value:(uint8_t)val;
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemorySource)source;
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)val;
-- (MemorySource) peekSource:(uint16_t)addr;
+- (uint8_t) spy:(uint16_t)addr source:(MemoryType)source;
+
+- (MemoryType) pokeTarget:(uint16_t)addr;
+- (void) poke:(uint16_t)addr value:(uint8_t)value;
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target;
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)value;
+- (MemoryType) peekSource:(uint16_t)addr;
 
 @end
 

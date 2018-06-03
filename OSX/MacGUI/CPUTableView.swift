@@ -30,7 +30,7 @@ class CpuTableView : NSTableView {
         
         if let instr = instructionAtRow[row] {
             track("Toggling breakpoint at \(instr.addr)")
-            c?.c64.cpu.toggleHardBreakpoint(instr.addr)
+            c?.c64.cpu.toggleBreakpoint(instr.addr)
             reloadData()
         }
     }
@@ -103,7 +103,7 @@ extension CpuTableView : NSTableViewDataSource {
             switch(tableColumn?.identifier.rawValue) {
 
             case "break":
-                if (c?.c64.cpu.hardBreakpoint(instr.addr))! {
+                if (c?.c64.cpu.breakpoint(instr.addr))! {
                     return "⛔"
                 } else {
                     return " "
@@ -134,7 +134,7 @@ extension CpuTableView : NSTableViewDelegate {
         
         if  let instr = instructionAtRow[row] {
             
-            if (c?.c64.cpu.hardBreakpoint(instr.addr))! {
+            if (c?.c64.cpu.breakpoint(instr.addr))! {
                 cell.textColor = NSColor.red
             } else {
                 cell.textColor = NSColor.black

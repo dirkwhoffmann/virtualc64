@@ -266,7 +266,7 @@ extension MyController {
         }
         undoManager?.setActionName("Set Breakpoint")
         
-        c64.cpu.setHardBreakpoint(value)
+        c64.cpu.setBreakpoint(value)
         cpuTableView.reloadData()
     }
     
@@ -277,7 +277,7 @@ extension MyController {
         }
         undoManager?.setActionName("Set Breakpoint")
         
-        c64.cpu.deleteHardBreakpoint(value)
+        c64.cpu.deleteBreakpoint(value)
         cpuTableView.reloadData()
     }
     
@@ -285,7 +285,7 @@ extension MyController {
         
         let sender = sender as! NSTextField
         let value = UInt16(sender.intValue)
-        if !c64.cpu.hardBreakpoint(value) {
+        if !c64.cpu.breakpoint(value) {
             _setBreakpointAction(value)
         }
     }
