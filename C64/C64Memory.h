@@ -1,7 +1,7 @@
 /*!
  * @header      C64Memory.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2008 - 2016 Dirk W. Hoffmann
+ * @copyright   2008 - 2018 Dirk W. Hoffmann
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,11 @@
 
 #include "Memory.h"
 
-// Forward declarations
-class VIC;
-class SIDBridge;
-
-/*! @brief    This class represents the RAM and ROM of a virtual C64
- *  @details  Note that the RAM, ROM, and the I/O space are superposed and therefore share the same locations 
- *            in memory. The contents of memory location 0x0001 determines which memory is currently visible. 
+/*! @brief    This class represents RAM and ROM of the virtual C64
+ *  @details  Due to the limited address space, RAM, ROM, and I/O memory are superposed,
+ *            wich means that they share the same memory locations. The currently visible
+ *            memory is determined by the contents of the processor port (memory location 1)
+ *            and the current values of the Exrom and Game line.
  */
 class C64Memory : public Memory {
 
@@ -83,39 +81,36 @@ class C64Memory : public Memory {
 
 public:		
 			
-	//! @brief    The C64s Random Access Memory
+	//! @brief    Random Access Memory
 	uint8_t ram[65536];
 
-    /*! @brief    The C64s color RAM
-     *  @details  The color RAM is located in the I/O space, starting at $D800 and ending at $DBFF
-     *            Only the lower four bits are accessible, the upper four bits are open and can show any value.
+    /*! @brief    Color RAM
+     *  @details  The color RAM is located in the I/O space, starting at $D800 and
+     *            ending at $DBFF. Only the lower four bits are accessible, the upper
+     *            four bits are open and can show any value.
      */
     uint8_t colorRam[1024];
 
-    //! @brief    The C64s Read Only Memory
-	/*! @details  Only specific memory cells are valid ROM locations. In total, the C64 has three ROMs that
-     *            are located at different addresses in the ROM space. Note, that the ROMs do not span over
-     *            the whole 64k range. Therefore, only some addresses are valid ROM addresses.
+    //! @brief    Read Only Memory
+	/*! @details  Only specific memory cells are valid ROM locations. In total, the C64
+     *            has three ROMs that are located at different addresses.
+     *            Note, that the ROMs do not span over the whole 64KB range. Therefore,
+     *            only some addresses are valid ROM addresses.
      */
     uint8_t rom[65536];
     
-public:
-    
     /*! @brief    Checks the integrity of a Basic ROM image.
      *  @details  Returns true, iff the specified file contains a valid Basic ROM image.
-     *            File integrity is checked via the checkFileHeader function.
      */
     static bool isBasicRom(const char *filename);
     
     /*! @brief    Checks the integrity of a Kernal ROM image file.
      *  @details  Returns true, iff the specified file contains a valid Kernal ROM image.
-     *            File integrity is checked via the checkFileHeader function.
      */
     static bool isKernalRom(const char *filename);
     
     /*! @brief    Checks the integrity of a Character ROM image file.
      *  @details  Returns true, iff the specified file contains a valid Character ROM image.
-     *            File integrity is checked via the checkFileHeader function.
      */
     static bool isCharRom(const char *filename);
     
@@ -127,20 +122,17 @@ public:
 private:
 	
 	/*! @brief    File name of the Character ROM image.
-	 *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
-     *            any time. 
+	 *  @details  The file name is set in loadRom().
      */
 	char *charRomFile;
 
     /*! @brief    File name of the Kernal ROM image.
-     *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
-     *            any time.
+     *  @details  The file name is set in loadRom().
      */
 	char *kernalRomFile;
 
     /*! @brief    File name of the Basic ROM image.
-     *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
-     *            any time.
+     *  @details  The file name is set in loadRom().
      */
 	char *basicRomFile;
 
@@ -153,22 +145,22 @@ public:
 	//! @brief    Destructor
 	~C64Memory();
 	
-	//! @brief    Restores initial state
+	//! @brief    Method from VirtualComponent
 	void reset();
     
     //! @brief    Restors initial state, but keeps RAM alive
     void resetWithoutRAM();
 
-	//! @brief    Prints debug information
+	//! @brief    Method from VirtualComponent
 	void dumpState();
 		
-	//! @brief    Loads a basic ROM image into memory
+	//! @brief    Flashes a Basic ROM image into memory
 	bool loadBasicRom(const char *filename);
     
-	//! @brief    Loads a character ROM image into memory
+	//! @brief    Flashes a Character ROM image into memory
 	bool loadCharRom(const char *filename);
     
-	//! @brief    Loads a kernal ROM image into memory
+	//! @brief    Flashes a Kernal ROM image into memory
 	bool loadKernalRom(const char *filename);
 
 	//! @brief    Returns true, iff the Basic ROM is alrady loaded
@@ -180,7 +172,7 @@ public:
 	//! @brief    Returns true, iff the Character ROM is alrady loaded
 	bool charRomIsLoaded() { return charRomFile != NULL; }
 
-
+    
 private:
     
     //! @brief    Lookup table for peek()
@@ -188,6 +180,7 @@ private:
     
     //! @brief    Lookup table for poke()
     MemoryType pokeTarget[16];
+    
     
 public:
     
@@ -208,7 +201,7 @@ public:
     uint8_t peek(uint16_t addr) { return peek(addr, peekSrc[addr >> 12]); }
     uint8_t peekIO(uint16_t addr);
     
-    // Snooping in memory (no side effects)
+    // Reading from memory without side effects
     uint8_t snoop(uint16_t addr, MemoryType source);
     uint8_t snoop(uint16_t addr) { return snoop(addr, peekSrc[addr >> 12]); }
     uint8_t snoopIO(uint16_t addr);
@@ -217,21 +210,6 @@ public:
     void poke(uint16_t addr, uint8_t value, MemoryType target);
     void poke(uint16_t addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
     void pokeIO(uint16_t addr, uint8_t value);
-  
-
-
-    
-    //! @brief    Write a byte into RAM.
-    void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }
-
-    //! @brief    Write a byte into ROM.
-    void pokeRom(uint16_t addr, uint8_t value) { rom[addr] = value; }
-
-
-
-    //! @brief    Writes a byte into memory.
-
-
 };
 
 #endif

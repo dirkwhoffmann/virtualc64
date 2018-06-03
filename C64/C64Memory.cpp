@@ -1,7 +1,8 @@
-/*
- * (C) 2008 - 2015 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2018 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -18,10 +19,6 @@
 
 #include "C64.h"
 
-// --------------------------------------------------------------------------------
-//                          Construction and Destruction
-// --------------------------------------------------------------------------------
-
 C64Memory::C64Memory()
 {	
 	setDescription("C64 memory");
@@ -34,7 +31,7 @@ C64Memory::C64Memory()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        
+
         { ram,          sizeof(ram),        KEEP_ON_RESET },
         { colorRam,     sizeof(colorRam),   KEEP_ON_RESET },
         { &rom[0xA000], 0x2000,             KEEP_ON_RESET  }, /* Basic ROM */
@@ -79,20 +76,17 @@ C64Memory::reset()
     }
     
     // Initialize peek source lookup table
-    for (unsigned i = 0x1; i <= 0xF; i++)
+    for (unsigned i = 0x1; i <= 0xF; i++) {
         peekSrc[i] = M_RAM;
+    }
     peekSrc[0x0] = M_PP;
     
     // Initialize poke source lookup table
-    for (unsigned i = 0x1; i <= 0xF; i++)
+    for (unsigned i = 0x1; i <= 0xF; i++) {
         pokeTarget[i] = M_RAM;
+    }
     pokeTarget[0x0] = M_PP;
 }
-
-
-// --------------------------------------------------------------------------------
-//                                      Input / Output
-// --------------------------------------------------------------------------------
 
 void 
 C64Memory::dumpState()
@@ -109,14 +103,13 @@ C64Memory::dumpState()
         if (c64->cpu.softBreakpoint(addr))
             msg("Soft breakpoint at %04X\n", addr);
 	}
-    
 	msg("\n");
 }
 
 
-// --------------------------------------------------------------------------------
-//                                      Rom Handling
-// --------------------------------------------------------------------------------
+//
+// Handling ROM images
+//
 
 bool C64Memory::isBasicRom(const char *filename)
 {
@@ -207,7 +200,7 @@ C64Memory::loadKernalRom(const char *filename)
 
 
 //
-// Memory access
+// Accessing the memory
 //
 
 void 
@@ -528,68 +521,3 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
     
     assert(false);
 }
-
-/*
-void C64Memory::poke(uint16_t addr, uint8_t value)
-{	
-	MemoryType target = pokeTarget[addr >> 12];
-	    
-	switch(target) {
-			
-		case M_RAM:
-			ram[addr] = value;
-			return;
-			
-		case M_IO:
-			pokeIO(addr, value);
-			return;
-			
-		case M_PP:
-			
-            if (addr == 0x0000) {
-                c64->processorPort.writeDirection(value);
-                return;
-            }
-            if (addr == 0x0001) {
-                c64->processorPort.write(value);
-                return;
-            }
-    
-            ram[addr] = value;
-            return;
-
-		default:
-			assert(0);
-			return;
-	}
-}
-
-void
-C64Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType target)
-{
-    switch(target) {
-            
-        case M_RAM:
-            ram[addr] = value;
-            return;
-            
-        case M_IO:
-            pokeIO(addr, value);
-            return;
-            
-        case M_PP:
-            
-            if (addr == 0x0000) {
-                c64->processorPort.writeDirection(value);
-            } else if (addr == 0x0001) {
-                c64->processorPort.write(value);
-            } else {
-                ram[addr] = value;
-            }
-            return;
-            
-        default: // ignore
-            return;
-    }
-}
-*/

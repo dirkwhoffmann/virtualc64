@@ -87,26 +87,12 @@ public:
      */
     virtual void poke(uint16_t addr, uint8_t value) = 0;
     
-    
-private:
-
-	//! @brief    Writes a byte into RAM
-    virtual void pokeRam(uint16_t addr, uint8_t value) = 0;
-	
-    //! @brief    Writes a byte into ROM
-	virtual void pokeRom(uint16_t addr, uint8_t value) = 0;
-	
-public:
-	
- 
-
-	//! Load a ROM image into memory.
-	/*! All bytes of the specified file are read into the ROM memory, starting at the specified location.
-	   The function is unsafe, i.e., it does not check if the file is a valid ROM file or if the address 
-	   is adequate. Hence, call checkRomFile prior to this function. 
-	   \param filename Name of the file being loaded
-	   \param start Start address in ROM memory 
-	*/
+	//! Flashes a ROM image into memory.
+	/*! All bytes of the specified file are read into the ROM memory, starting at the
+     *  specified location. The function is unsafe, i.e., it does not check if the file
+     *  is a valid ROM file or if the address is adequate. Hence, call checkRomFile
+     *  prior to this function.
+     */
 	void flashRom(const char *filename, uint16_t start);
 };
 

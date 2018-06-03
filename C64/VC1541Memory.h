@@ -96,14 +96,14 @@ public:
     
     
     
-    uint8_t readRam(uint16_t addr) { return mem[addr]; }
-    uint8_t readRom(uint16_t addr) { return mem[addr]; }
+    // uint8_t readRam(uint16_t addr) { return mem[addr]; }
+    // uint8_t readRom(uint16_t addr) { return mem[addr]; }
 	// uint8_t peekIO(uint16_t addr);
     // uint8_t readIO(uint16_t addr);
 
 
-	void pokeRam(uint16_t addr, uint8_t value);
-	void pokeRom(uint16_t addr, uint8_t value);             
+	// void pokeRam(uint16_t addr, uint8_t value);
+	// void pokeRom(uint16_t addr, uint8_t value);
 	// void pokeIO(uint16_t addr, uint8_t value);
 	// void poke(uint16_t addr, uint8_t value);
 };
