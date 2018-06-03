@@ -17,7 +17,7 @@ extension MyController {
         setHexadecimalAction(self)
         
         // Create and assign binary number formatter
-        let bF = MyFormatter.init(inFormat: "[0-1]{0,7}", outFormat: "", radix: 2)
+        let bF = MyFormatter.init(radix: 2, min: 0, max: 255)
         ciaPAbinary.formatter = bF
         ciaPRA.formatter = bF
         ciaDDRA.formatter = bF
@@ -35,7 +35,6 @@ extension MyController {
             switch id {
             case "CPU":
                 refreshCPU()
-                cpuTableView.refresh()
                 break
             case "MEM":
                 memTableView.refresh()
@@ -55,61 +54,58 @@ extension MyController {
         }
     }
     
-    func refresh(byteFormatter: Formatter, wordFormatter: Formatter, threeDigitFormatter: Formatter) {
+    func refreshFormatters(hex: Bool) {
 
-        let byteFormatterControls:[NSControl] = [
-            // CPU panel
-            sp, a, x, y,
-            // CIA panel
-            ciaPA, ciaPB,
-            todHours, todMinutes, todSeconds, todTenth,
-            alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
-            ciaImr, ciaIcr,
-            // VIC panel
-            vicCycle, vicDx, vicDy, spriteY,
-            // SID panel
-            attackRate, decayRate, sustainRate, releaseRate,
-            filterResonance,
-            volume, potX, potY
-        ]
-       
-        let wordFormatterControls:[NSControl] = [
-            // CPU panel
-            pc, breakAt,
-            // CIA panel
-            ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
-            // SID panel
-            frequency, pulseWidth, filterCutoff
-        ]
+        func assignFormatter(_ formatter: Formatter, _ controls: [NSControl]) {
+            for control in controls {
+                control.abortEditing()
+                control.formatter = formatter
+                control.needsDisplay = true
+            }
+        }
         
-        let threeDigitFormatterControls:[NSControl] = [
-            // VIC panel
-            vicRasterline, vicIrqRasterline, spriteX, vicXCounter
-        ]
+        // Create formatters
+        let fmt3 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0x7)
+        let fmt4 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xF)
+        let fmt8 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFF)
+        let fmt9 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0x1FF)
+        let fmt12 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFFF)
+        let fmt16 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFFFF)
+
+        // Assign formatters
+        assignFormatter(fmt3,
+                        [vicDx, vicDy])
+        
+        assignFormatter(fmt4,
+                        [attackRate, decayRate, sustainRate, releaseRate,
+                         filterResonance, volume])
+        
+        assignFormatter(fmt8,
+                        [sp, a, x, y,
+                         ciaPA, ciaPB,
+                         todHours, todMinutes, todSeconds, todTenth,
+                         alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
+                         ciaImr, ciaIcr,
+                         vicCycle, spriteY,
+                         potX, potY])
     
-        // Bind formatters
-        for control in byteFormatterControls {
-            control.abortEditing()
-            control.formatter = byteFormatter
-            control.needsDisplay = true
-        }
-        for control in wordFormatterControls {
-            control.abortEditing()
-            control.formatter = wordFormatter
-            control.needsDisplay = true
-        }
-        for control in threeDigitFormatterControls {
-            control.abortEditing()
-            control.formatter = threeDigitFormatter
-            control.needsDisplay = true
-        }
- 
+        assignFormatter(fmt9,
+                        [vicRasterline, vicIrqRasterline, spriteX, vicXCounter])
+
+        assignFormatter(fmt12,
+                        [pulseWidth, filterCutoff])
+
+        assignFormatter(fmt16,
+                        [pc, breakAt,
+                         ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
+                         frequency])
+        
         let columnFormatters = [
-            "addr" : wordFormatter,
-            "hex0" : byteFormatter,
-            "hex1" : byteFormatter,
-            "hex2" : byteFormatter,
-            "hex3" : byteFormatter
+            "addr" : fmt16,
+            "hex0" : fmt8,
+            "hex1" : fmt8,
+            "hex2" : fmt8,
+            "hex3" : fmt8
         ]
 
         for (column,formatter) in columnFormatters {
@@ -244,22 +240,14 @@ extension MyController {
   
         hex = false
         cpuTableView.setHex(false)
-
-        let bF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", radix: 10)
-        let sF = MyFormatter.init(inFormat: "[0-9]{0,3}", outFormat: "%03d", radix: 10)
-        let wF = MyFormatter.init(inFormat: "[0-9]{0,5}", outFormat: "%05d", radix: 10)
-        refresh(byteFormatter: bF, wordFormatter: wF, threeDigitFormatter: sF)
+        refreshFormatters(hex: false)
     }
     
     @IBAction func setHexadecimalAction(_ sender: Any!) {
         
         hex = true
         cpuTableView.setHex(true)
-
-        let bF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,2}", outFormat: "%02X", radix: 16)
-        let sF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,3}", outFormat: "%03X", radix: 16)
-        let wF = MyFormatter.init(inFormat: "[0-9,a-f,A-F]{0,4}", outFormat: "%04X", radix: 16)
-        refresh(byteFormatter: bF, wordFormatter: wF, threeDigitFormatter: sF)
+        refreshFormatters(hex: true)
     }
 }
 

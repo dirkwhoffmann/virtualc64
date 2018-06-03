@@ -212,7 +212,7 @@ extension MemTableView : NSTableViewDelegate {
         }
         
         let target = source(addr)
-        if (target == M_ROM || target == M_CRTLO || target == M_CRTHI) {
+        if (target == M_CRTLO || target == M_CRTHI) {
             NSSound.beep()
             return
         }

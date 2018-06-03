@@ -306,5 +306,7 @@ extension MyController {
         iflag.intValue = info.iFlag ? 1 : 0
         zflag.intValue = info.zFlag ? 1 : 0
         cflag.intValue = info.cFlag ? 1 : 0
+        
+        cpuTableView.refresh()
     }
 }

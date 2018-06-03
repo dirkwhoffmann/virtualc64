@@ -824,7 +824,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="vEY-WC-bMl">
                                             <rect key="frame" x="1" y="0.0" width="270" height="484"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1841" id="67" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="270" height="467"/>
@@ -2021,6 +2021,9 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <action selector="irqRasterlineAction:" target="-2" id="osk-hw-dhz"/>
+                                        </connections>
                                     </textField>
                                     <button misplaced="YES" id="TnC-Fe-sGg">
                                         <rect key="frame" x="7" y="16" width="137" height="18"/>
@@ -2029,6 +2032,9 @@
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="rasterIrqEnabledAction:" target="-2" id="eKA-vv-4ng"/>
+                                        </connections>
                                     </button>
                                     <button misplaced="YES" id="OFi-LY-OEQ">
                                         <rect key="frame" x="209" y="16" width="63" height="18"/>
@@ -2045,9 +2051,6 @@
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="YTn-qH-xao"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" misplaced="YES" id="gGU-t4-dcw">
                                         <rect key="frame" x="99" y="432" width="30" height="18"/>
@@ -2367,9 +2370,6 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <action selector="potXAction:" target="-2" id="2oL-du-wn0"/>
-                                        </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="gEF-Sx-fBJ">
                                         <rect key="frame" x="235" y="17" width="30" height="23"/>
@@ -2379,9 +2379,6 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <action selector="potYAction:" target="-2" id="CBQ-ef-MfY"/>
-                                        </connections>
                                     </textField>
                                     <segmentedControl verticalHuggingPriority="750" misplaced="YES" id="F2E-nZ-7MW">
                                         <rect key="frame" x="47" y="525" width="181" height="21"/>
