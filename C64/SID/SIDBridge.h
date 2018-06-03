@@ -226,8 +226,7 @@ public:
     float readData();
     
     //! @brief  Reads a single audio sample without moving the read pointer
-    float snoop(size_t offset);
-    float snoop(size_t offset, unsigned range);
+    float snoopData(size_t offset);
     
     /*! @brief   Reads a certain amount of samples from ringbuffer
      *  @details Samples are stored in a single mono stream
@@ -310,7 +309,7 @@ public:
 	uint8_t peek(uint16_t addr);
 	
     //! @brief    Same as peek, but without side effects.
-    uint8_t spy(uint16_t addr);
+    uint8_t snoop(uint16_t addr);
     
 	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);

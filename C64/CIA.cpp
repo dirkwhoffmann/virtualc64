@@ -214,7 +214,7 @@ CIA::peek(uint16_t addr)
 }
 
 uint8_t
-CIA::spy(uint16_t addr)
+CIA::snoop(uint16_t addr)
 {
     bool running;
 
@@ -662,14 +662,14 @@ CIA::getInfo()
     info.portB.reg = PRB;
     info.portB.dir = DDRB;
 
-    info.timerA.count = LO_HI(spy(0x04), spy(0x05));
+    info.timerA.count = LO_HI(snoop(0x04), snoop(0x05));
     info.timerA.latch = latchA;
     info.timerA.running = (delay & CountA3);
     info.timerA.toggle = CRA & 0x04;
     info.timerA.pbout = CRA & 0x02;
     info.timerA.oneShot = CRA & 0x08;
     
-    info.timerB.count = LO_HI(spy(0x06), spy(0x07));
+    info.timerB.count = LO_HI(snoop(0x06), snoop(0x07));
     info.timerB.latch = latchB;
     info.timerB.running = (delay & CountB3);
     info.timerB.toggle = CRB & 0x04;

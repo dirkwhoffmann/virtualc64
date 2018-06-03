@@ -49,26 +49,24 @@ private:
     /*! @brief    Peeks a byte from memory.
      *  @details  This function emulates a native read access including side effects.
      *            The value is read from the specified peek source.
-     *  @seealso  spy()
+     *  @seealso  snoop()
      */
     virtual uint8_t peek(uint16_t addr, MemoryType source) = 0;
     
     /*! @brief    Peeks a byte from memory.
      *  @details  This function emulates a native read access including side effects.
      *            The value is read is from the currently visible memory.
-     *  @seealso  spy()
+     *  @seealso  snoop()
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
 
 public:
     
     /*! @brief    Peeks a byte from memory without causing side effects.
-     *  @seealso  spy()
      */
     virtual uint8_t snoop(uint16_t addr, MemoryType source) = 0;
     
     /*! @brief    Peeks a byte from memory without causing side effects.
-     *  @seealso  spy()
      */
     virtual uint8_t snoop(uint16_t addr) = 0;
     

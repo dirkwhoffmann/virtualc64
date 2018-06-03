@@ -184,7 +184,7 @@ SIDBridge::peek(uint16_t addr)
 }
 
 uint8_t
-SIDBridge::spy(uint16_t addr)
+SIDBridge::snoop(uint16_t addr)
 {
     assert(addr <= 0x1F);
     return peek(addr);
@@ -372,19 +372,9 @@ SIDBridge::readData()
 }
 
 float
-SIDBridge::snoop(size_t offset)
+SIDBridge::snoopData(size_t offset)
 {
     return ringBuffer[(readPtr + offset) % bufferSize];
-}
-
-float
-SIDBridge::snoop(size_t offset, unsigned range)
-{
-    float result = 0.0;
-    for (unsigned i = 0; i < range; i++) {
-        result += snoop(i);
-    }
-    return result / range;
 }
 
 void

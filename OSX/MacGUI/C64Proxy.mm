@@ -109,25 +109,24 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->mem->dumpState(); }
 
 - (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
-- (uint8_t) spy:(uint16_t)addr source:(MemoryType)source {
-    return wrapper->mem->snoop(addr, source); }
-- (uint8_t) spyIO:(uint16_t)addr {
-    return wrapper->mem->snoopIO(addr); }
-- (uint8_t) spy:(uint16_t)addr {
-    return wrapper->mem->snoop(addr); }
-
 - (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
+
+- (uint8_t) snoop:(uint16_t)addr source:(MemoryType)source {
+    return wrapper->mem->snoop(addr, source); }
+- (uint8_t) snoop:(uint16_t)addr { return wrapper->mem->snoop(addr); }
+- (uint8_t) snoopIO:(uint16_t)addr { return wrapper->mem->snoopIO(addr); }
+
+- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
     wrapper->mem->c64->suspend();
     wrapper->mem->poke(addr, value, target);
-    wrapper->mem->c64->resume(); }
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
-    wrapper->mem->c64->suspend();
-    wrapper->mem->pokeIO(addr, value);
     wrapper->mem->c64->resume(); }
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
     wrapper->mem->c64->suspend();
     wrapper->mem->poke(addr, value);
+    wrapper->mem->c64->resume(); }
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
+    wrapper->mem->c64->suspend();
+    wrapper->mem->pokeIO(addr, value);
     wrapper->mem->c64->resume(); }
 
 @end
@@ -330,11 +329,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger) bufferUnderflows { return wrapper->sid->bufferUnderflows; }
 - (NSInteger) bufferOverflows { return wrapper->sid->bufferOverflows; }
 - (double) fillLevel { return wrapper->sid->fillLevel(); }
-- (float) snoop:(NSInteger)offset {
-    return wrapper->sid->snoop(offset);
-}
-- (float) snoop:(NSInteger)offset range:(NSInteger)range {
-    return wrapper->sid->snoop(offset, (unsigned)range);
+- (float) snoopData:(NSInteger)offset {
+    return wrapper->sid->snoopData(offset);
 }
 
 @end

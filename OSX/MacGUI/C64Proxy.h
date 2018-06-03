@@ -97,14 +97,16 @@ struct ContainerWrapper;
 
 - (void) dump;
 
-- (uint8_t) spy:(uint16_t)addr;
-- (uint8_t) spy:(uint16_t)addr source:(MemoryType)source;
-
-- (MemoryType) pokeTarget:(uint16_t)addr;
-- (void) poke:(uint16_t)addr value:(uint8_t)value;
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target;
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)value;
 - (MemoryType) peekSource:(uint16_t)addr;
+- (MemoryType) pokeTarget:(uint16_t)addr;
+
+- (uint8_t) snoop:(uint16_t)addr source:(MemoryType)source;
+- (uint8_t) snoop:(uint16_t)addr;
+- (uint8_t) snoopIO:(uint16_t)addr;
+
+- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target;
+- (void) poke:(uint16_t)addr value:(uint8_t)value;
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)value;
 
 @end
 
@@ -245,8 +247,7 @@ struct ContainerWrapper;
 - (NSInteger) bufferUnderflows;
 - (NSInteger) bufferOverflows;
 - (double) fillLevel;
-- (float) snoop:(NSInteger)offset;
-- (float) snoop:(NSInteger)offset range:(NSInteger)range;
+- (float) snoopData:(NSInteger)offset;
 
 @end
 
