@@ -78,12 +78,18 @@ public:
 	bool romIsLoaded() { return romFile != NULL; }
 				
 	// Virtual fuctions from Memory class
+    uint8_t peek(uint16_t addr, MemoryType source);
+    uint8_t peek(uint16_t addr);
+    uint8_t snoop(uint16_t addr, MemoryType source);
+    uint8_t snoop(uint16_t addr);
+
+    
     uint8_t readRam(uint16_t addr) { return mem[addr]; }
     uint8_t readRom(uint16_t addr) { return mem[addr]; }
 	uint8_t peekIO(uint16_t addr);
     uint8_t readIO(uint16_t addr);
-	uint8_t peek(uint16_t addr);
-    uint8_t spy(uint16_t addr);
+	// uint8_t peek(uint16_t addr);
+    // uint8_t spy(uint16_t addr);
 
 	void pokeRam(uint16_t addr, uint8_t value);
 	void pokeRom(uint16_t addr, uint8_t value);             

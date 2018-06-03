@@ -2556,7 +2556,7 @@ CPU::executeOneCycle()
         case JMP_abs_ind_4:
             
             setPCL(data);
-            setPCH(mem->peek(addr_lo+1, addr_hi));
+            setPCH(mem->peek(LO_HI(addr_lo + 1, addr_hi)));
             POLL_INT
             DONE
 

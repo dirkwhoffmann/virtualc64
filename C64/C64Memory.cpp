@@ -260,6 +260,43 @@ C64Memory::updatePeekPokeLookupTables()
     pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
 }
 
+uint8_t C64Memory::peek(uint16_t addr, MemoryType source)
+{
+    switch(source) {
+            
+        case M_RAM:
+            return ram[addr];
+            
+        case M_ROM:
+            return rom[addr];
+            
+        case M_IO:
+            return peekIO(addr);
+            
+        case M_CRTLO:
+        case M_CRTHI:
+            
+            return c64->expansionport.peek(addr);
+            
+        case M_PP:
+            
+            if (addr == 0x0000)
+                return c64->processorPort.readDirection();
+            
+            if (addr == 0x0001)
+                return c64->processorPort.read();
+            
+            return ram[addr];
+            
+        case M_NONE:
+            // what happens if RAM is unmapped?
+            return ram[addr];
+            
+        default:
+            assert(0);
+            return 0;
+    }
+}
 
 uint8_t C64Memory::peekIO(uint16_t addr)
 {
@@ -315,7 +352,44 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
-uint8_t C64Memory::spyIO(uint16_t addr)
+uint8_t C64Memory::snoop(uint16_t addr, MemoryType source)
+{
+    switch(source) {
+            
+        case M_RAM:
+            return ram[addr];
+            
+        case M_ROM:
+            return rom[addr];
+            
+        case M_IO:
+            return snoopIO(addr);
+            
+        case M_CRTLO:
+        case M_CRTHI:
+            
+            return c64->expansionport.read(addr);
+            
+        case M_PP:
+            
+            if (addr == 0x0000)
+                return c64->processorPort.readDirection();
+            
+            if (addr == 0x0001)
+                return c64->processorPort.read();
+            
+            return ram[addr];
+            
+        case M_NONE:
+            return ram[addr];
+            
+        default:
+            assert(0);
+            return 0;
+    }
+}
+
+uint8_t C64Memory::snoopIO(uint16_t addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -359,87 +433,13 @@ uint8_t C64Memory::spyIO(uint16_t addr)
     }
 }
 
-uint8_t C64Memory::peek(uint16_t addr)
-{
-    MemoryType src = peekSrc[addr >> 12];
-    
-    switch(src) {
-            
-        case M_RAM:
-            return ram[addr];
-            
-        case M_ROM:
-            return rom[addr];
-            
-        case M_IO:
-            return peekIO(addr);
-            
-        case M_CRTLO:
-        case M_CRTHI:
-
-            return c64->expansionport.peek(addr);
-            
-        case M_PP:
-    
-            if (addr == 0x0000)
-                return c64->processorPort.readDirection();
-            
-            if (addr == 0x0001)
-                return c64->processorPort.read();
-            
-            return ram[addr];
-
-        case M_NONE:
-            // what happens if RAM is unmapped?
-            return ram[addr];
-
-        default:
-            assert(0);
-            return 0;
-    }
-}
-
+/*
 uint8_t C64Memory::spy(uint16_t addr)
 {
     return spy(addr, peekSrc[addr >> 12]);
 }
+*/
 
-uint8_t C64Memory::spy(uint16_t addr, MemoryType src)
-{
-    switch(src) {
-            
-        case M_RAM:
-            return ram[addr];
-            
-        case M_ROM:
-            return rom[addr];
-            
-        case M_IO:
-            return spyIO(addr);
-            
-        case M_CRTLO:
-        case M_CRTHI:
-            
-            return c64->expansionport.read(addr);
-            
-        case M_PP:
-            
-            if (addr == 0x0000)
-                return c64->processorPort.readDirection();
-            
-            if (addr == 0x0001)
-                return c64->processorPort.read();
-            
-            return ram[addr];
-            
-        case M_NONE:
-            return ram[addr];
-            
-        default:
-            assert(0);
-            return 0;
-    }
-}
 
 // --------------------------------------------------------------------------------
 //                                    Poke

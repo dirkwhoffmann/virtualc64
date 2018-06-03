@@ -96,6 +96,21 @@ VC1541Memory::readIO(uint16_t addr)
     }
 }
 
+uint8_t
+VC1541Memory::peek(uint16_t addr, MemoryType source)
+{
+    // In contrast to the C64 where certain memorys overlap each other,
+    // the type of each memory location in the VC1541 is unique.
+    // Hence, we simply do some consistency checking here.
+    
+    if (addr >= 0x8000) { assert(source == M_ROM); }
+    else if ((addr & 0x1FFF) < 0x0800) { assert(source == M_RAM); }
+    else if ((addr & 0x1FFF) < 0x1800) { assert(source == M_NONE); }
+    else { assert(source == M_IO); }
+    
+    return peek(addr);
+}
+
 uint8_t 
 VC1541Memory::peek(uint16_t addr)
 {
@@ -121,9 +136,24 @@ VC1541Memory::peek(uint16_t addr)
         floppy->via2.peek(addr & 0xF);
     }
 }
-     
+
 uint8_t
-VC1541Memory::spy(uint16_t addr)
+VC1541Memory::snoop(uint16_t addr, MemoryType source)
+{
+    // In contrast to the C64 where certain memorys overlap each other,
+    // the type of each memory location in the VC1541 is unique.
+    // Hence, we simply do some consistency checking here.
+    
+    if (addr >= 0x8000) { assert(source == M_ROM); }
+    else if ((addr & 0x1FFF) < 0x0800) { assert(source == M_RAM); }
+    else if ((addr & 0x1FFF) < 0x1800) { assert(source == M_NONE); }
+    else { assert(source == M_IO); }
+    
+    return snoop(addr);
+}
+
+uint8_t
+VC1541Memory::snoop(uint16_t addr)
 {
     uint8_t result;
     

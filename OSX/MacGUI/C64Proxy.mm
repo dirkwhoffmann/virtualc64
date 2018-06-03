@@ -110,11 +110,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
 - (uint8_t) spy:(uint16_t)addr source:(MemoryType)source {
-    return wrapper->mem->spy(addr, source); }
+    return wrapper->mem->snoop(addr, source); }
 - (uint8_t) spyIO:(uint16_t)addr {
-    return wrapper->mem->spyIO(addr); }
+    return wrapper->mem->snoopIO(addr); }
 - (uint8_t) spy:(uint16_t)addr {
-    return wrapper->mem->spy(addr); }
+    return wrapper->mem->snoop(addr); }
 
 - (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {

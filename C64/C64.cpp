@@ -402,7 +402,7 @@ C64::stepOver()
     floppy.cpu.clearErrorState();
     
     // If the next instruction is a JSR instruction, ...
-    if (mem.spy(cpu.getPC_at_cycle_0()) == 0x20) {
+    if (mem.snoop(cpu.getPC_at_cycle_0()) == 0x20) {
         // set a soft breakpoint at the next memory location.
         cpu.setSoftBreakpoint(cpu.getAddressOfNextInstruction());
         run();

@@ -200,13 +200,25 @@ public:
     //! @brief    Returns the current peek source of the specified memory address
     MemoryType getPeekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
     
-    uint8_t peek(uint16_t addr);
+    //! @brief    Virtual fuctions from Memory class
+    uint8_t peek(uint16_t addr, MemoryType source);
+    uint8_t peek(uint16_t addr) { return peek(addr, peekSrc[addr >> 12]); }
+    uint8_t snoop(uint16_t addr, MemoryType source);
+    uint8_t snoop(uint16_t addr) { return snoop(addr, peekSrc[addr >> 12]); }
+
+    //! @brief    Peek function for the I/O space (called inside peek)
     uint8_t peekIO(uint16_t addr);
 
+    //! @brief    Snoop function for the I/O space (called inside snoop)
+    uint8_t snoopIO(uint16_t addr);
+
+
+    
+    /*
     uint8_t spy(uint16_t addr, MemoryType src);
     uint8_t spyIO(uint16_t addr);
     uint8_t spy(uint16_t addr);
-
+*/
     
     //! @brief    Write a byte into RAM.
     void pokeRam(uint16_t addr, uint8_t value) { ram[addr] = value; }
