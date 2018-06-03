@@ -316,9 +316,9 @@ void EnvelopeGenerator::clock(cycle_count delta_t)
  *
  *  0 - Gate on
  *  1 - Counting direction changes
- *      During this cycle the decay state is "accidentally" activated
+ *      During this cycle the decay rate is "accidentally" activated
  *  2 - Counter is being inverted
- *      Now the attack state is correctly activated
+ *      Now the attack rate is correctly activated
  *      Counter is enabled
  *  3 - Counter will be counting upward from now on
  *
@@ -349,30 +349,39 @@ void EnvelopeGenerator::clock(cycle_count delta_t)
 RESID_INLINE
 void EnvelopeGenerator::state_change()
 {
-  if (((next_state == ATTACK) && (state_pipeline == 2))
-      || ((next_state == DECAY_SUSTAIN) && (state_pipeline == 1))) {
-    // The decay state is "accidentally" activated also during first cycle of attack phase
-    state = DECAY_SUSTAIN;
-    rate_period = rate_counter_period[decay];
-  }
-  else if ((next_state == ATTACK) && (state_pipeline == 1)) {
-    // The attack register is correctly activated during second cycle of attack phase
-    state = ATTACK;
-    rate_period = rate_counter_period[attack];
-    hold_zero = false;
-  }
-  else if (next_state == RELEASE) {
-    if (((state == ATTACK) && (state_pipeline == 1))
-        || ((state == DECAY_SUSTAIN) && (state_pipeline == 2))) {
-      state = RELEASE;
-      rate_period = rate_counter_period[release];
-    }
-  }
-  else if ((next_state == FREEZED) && (state_pipeline == 1)) {
-    hold_zero = true;
-  }
-
   state_pipeline--;
+
+  switch (next_state) {
+    case ATTACK:
+      if (state_pipeline == 1) {
+        state = ATTACK;
+        // The decay register is "accidentally" activated during first cycle of attack phase
+        rate_period = rate_counter_period[decay];
+      } else if (state_pipeline == 0) {
+        // The attack register is correctly activated during second cycle of attack phase
+        rate_period = rate_counter_period[attack];
+        hold_zero = false;
+      }
+      break;
+    case DECAY_SUSTAIN:
+      if (state_pipeline == 0) {
+        state = DECAY_SUSTAIN;
+        rate_period = rate_counter_period[decay];
+      }
+      break;
+    case RELEASE:
+      if (((state == ATTACK) && (state_pipeline == 0))
+          || ((state == DECAY_SUSTAIN) && (state_pipeline == 1))) {
+        state = RELEASE;
+        rate_period = rate_counter_period[release];
+      }
+      break;
+    case FREEZED:
+      if (state_pipeline == 0) {
+        state = FREEZED;
+        hold_zero = true;
+     }
+  }
 }
 
 

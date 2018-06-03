@@ -21,7 +21,6 @@
 
 #include "VirtualComponent.h"
 #include "C64_types.h"
-#include "VIC_globals.h"
 #include "PixelEngine.h"
 
 // Forward declarations
@@ -142,8 +141,8 @@ public:
 	bool badLineCondition;
 	
 	/*! @brief    Determines, if DMA lines (bad lines) can occurr within the current frame.
-     *  @details  Bad lines can only occur, if the DEN bit was set during an arbitary cycle in rasterline 30
-     *            The DEN bit is located in register 0x11 (CONTROL REGISTER 1) 
+     *  @details  Bad lines can only occur, if the DEN bit was set during an arbitary cycle
+     *            in rasterline 30. The DEN bit is located in control register 1 (0x11)
      */
     bool DENwasSetInRasterline30;
 
@@ -156,8 +155,8 @@ public:
 	 *  @details  Remember: Each CPU cycle is split into two phases:
      *            First phase (LOW):   VIC gets access to the bus
      *            Second phase (HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line 
-     *            is pulled down.
+     *            In rare cases, VIC needs access in the HIGH phase, too.
+     *            To block the CPU, the BA line is pulled down.
      *  @note     The BA line can be pulled down by multiple sources (wired AND). 
      */
     uint16_t BAlow;
@@ -470,9 +469,15 @@ public:
 	//! @brief    Restores the initial state.
 	void reset();
 		
-	//! @brief    Prints debugging information.
+	//! @brief    Prints debug information.
 	void dumpState();	
 	
+    //! @brief    Gathers debug information.
+    VICInfo getInfo();
+
+    //! @brief    Gathers debug information for a sprite.
+    SpriteInfo getSpriteInfo(unsigned i);
+
     
 	//
 	// Configuring
@@ -534,11 +539,11 @@ public:
 
 public:
 	
-	//! @brief    Returns the current scanline
-    uint16_t getScanline() { return yCounter; }
+	//! @brief    Returns the current rasterline
+    uint16_t getRasterline() { return yCounter; }
 			
 	//! @brief    Sets the rasterline
-    void setScanline(uint16_t line) { yCounter = line; }
+    void setRasterline(uint16_t line) { yCounter = line; }
 
 	//! @brief    Returns the memory bank start address
 	uint16_t getMemoryBankAddr();
@@ -572,7 +577,7 @@ private:
 	uint8_t peek(uint16_t addr);
     
     //! @brief    Same as peek, but without side affects.
-    uint8_t spy(uint16_t addr);
+    uint8_t snoop(uint16_t addr);
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
@@ -774,7 +779,7 @@ private:
 	 *  @details  The value is written to the z buffer to resolve overlapping pixels.
      */
     uint8_t spriteDepth(uint8_t nr) {
-        return spriteIsDrawnInBackground(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
+        return spritePriority(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
 	
 public: 
 	
@@ -815,7 +820,7 @@ public:
     }
     
 	//! @brief    Returns true, if sprite is enabled (drawn on the screen).
-    bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
+    bool spriteEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
 
 	//! @brief    Enables or disables a sprite.
     void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
@@ -823,14 +828,31 @@ public:
 	//! @brief    Enables or disables a sprite.
     void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
 	
+    //! @brief    Returns true, iff the specified sprite collides with the background
+    // bool spriteBackgroundCollision(uint8_t nr) { return GET_BIT(iomem[0x1F], nr) != 0; }
+    
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
-    bool spriteBackgroundInterruptEnabled() { return GET_BIT(imr, 1); }
+    bool irqOnSpriteBackgroundCollision() { return GET_BIT(imr, 1); }
 
+    //! @brief    Enables or disables IRQs on sprite/background collision
+    void setIrqOnSpriteBackgroundCollision(bool b) { WRITE_BIT(imr, 1, b); }
+
+    //! @brief    Enables or disables IRQs on sprite/background collision
+    void toggleIrqOnSpriteBackgroundCollision() { TOGGLE_BIT(imr, 1); }
+
+    //! @brief    Returns true, iff the specified sprite collides with at least one other sprite
+    // bool spriteSpriteCollision(uint8_t nr) { return GET_BIT(iomem[0x1E], nr) != 0; }
+    
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
-    bool spriteSpriteInterruptEnabled() { return GET_BIT(imr, 2); }
+    bool irqOnSpriteSpriteCollision() { return GET_BIT(imr, 2); }
 
+    //! @brief    Enables or disables IRQs on sprite/sprite collision
+    void setIrqOnSpriteSpriteCollision(bool b) { WRITE_BIT(imr, 2, b); }
+    
+    //! @brief    Enables or disables IRQs on sprite/sprite collision
+    void toggleIrqOnSpriteSpriteCollision() { TOGGLE_BIT(imr, 2); }
+    
 	//! @brief    Returns true, iff a rasterline interrupt has occurred.
-    // inline bool rasterInterruptOccurred() { return GET_BIT(iomem[0x19], 0); }
     bool rasterInterruptOccurred() { return GET_BIT(irr, 0); }
 
 	//! @brief    Returns true, iff a sprite/background interrupt has occurred.
@@ -840,13 +862,13 @@ public:
     bool spriteSpriteInterruptOccurred() { return GET_BIT(irr, 2); }
 
 	//! @brief    Returns true, iff sprites are drawn behind the scenary.
-    bool spriteIsDrawnInBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
+    bool spritePriority(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
 
 	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void setSpriteInBackground(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
+    void setSpritePriority(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
 
 	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void spriteToggleBackgroundPriorityFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
+    void toggleSpritePriority(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
 	
 	//! @brief    Returns true, iff sprite is a multicolor sprite.
     bool spriteIsMulticolor(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1C], nr); }

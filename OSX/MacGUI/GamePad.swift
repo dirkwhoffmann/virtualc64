@@ -61,7 +61,7 @@ class GamePad
     //! @brief    Rescued information from the last invocation of the action function
     /*! @details  Used to determine if a joystick event needs to be triggered.
      */
-    var oldUsage: [Int : Int] = [:]
+    var oldEvents: [Int : [JoystickEvent]] = [:]
     
     //! @brief    Cotroller dependent usage IDs for left and right gamepad joysticks
     var lThumbXUsageID = kHIDUsage_GD_X;
@@ -155,27 +155,27 @@ extension GamePad {
         
         if let direction = keyMap?[macKey] {
 
-            var event: JoystickEvent
+            var events: [JoystickEvent]
             
             switch (JoystickDirection(direction)) {
             case JOYSTICK_UP:
-                event = PULL_UP
+                events = [PULL_UP]
                 break
             case  JOYSTICK_DOWN:
-                event = PULL_DOWN
+                events = [PULL_DOWN]
                 break
             case JOYSTICK_LEFT:
-                event = PULL_LEFT
+                events = [PULL_LEFT]
                 break
             case JOYSTICK_RIGHT:
-                event = PULL_RIGHT
+                events = [PULL_RIGHT]
                 break
             default:
                 assert(JoystickDirection(direction) == JOYSTICK_FIRE)
-                event = PRESS_FIRE
+                events = [PRESS_FIRE]
             }
             
-            return manager.joystickEvent(self, event: event)
+            return manager.joystickEvent(self, events: events)
         }
         
         return false
@@ -190,21 +190,21 @@ extension GamePad {
     {
         if let direction = keyMap?[macKey] {
             
-            var event: JoystickEvent
+            var events: [JoystickEvent]
             
             switch (JoystickDirection(direction)) {
             case JOYSTICK_UP, JOYSTICK_DOWN:
-                event = RELEASE_Y
+                events = [RELEASE_Y]
                 break
             case JOYSTICK_LEFT, JOYSTICK_RIGHT:
-                event = RELEASE_X
+                events = [RELEASE_X]
                 break
             default:
                 assert(JoystickDirection(direction) == JOYSTICK_FIRE)
-                event = RELEASE_FIRE
+                events = [RELEASE_FIRE]
             }
             
-            return manager.joystickEvent(self, event: event)
+            return manager.joystickEvent(self, events: events)
         }
     
         return false
@@ -234,7 +234,6 @@ extension GamePad {
         
         var v = (Double) (val - min!) / (Double) (max! - min!);
         v = v * 2.0 - 1.0;
-        
         if v < -0.45 { return -2 };
         if v < -0.1 { return nil };  // dead zone
         if v <= 0.1 { return 0 };
@@ -253,72 +252,67 @@ extension GamePad {
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
         
-        // Check button
+        // Buttons
         if usagePage == kHIDPage_Button {
             // track("BUTTON")
-            manager.joystickEvent(self, event: (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE)
+            manager.joystickEvent(self, events: (intValue != 0) ? [PRESS_FIRE] : [RELEASE_FIRE])
             return
         }
         
-        // Check movement
+        // Stick
         if (usagePage == kHIDPage_GenericDesktop) {
             
-            guard let v = mapAnalogAxis(value: value, element: element) else {
-                return;
-            }
-            if oldUsage[usage] == v {
-                return;
-            }
-            oldUsage[usage] = v
-            
-            /*
-            switch(usage) {
-            case kHIDUsage_GD_X:
-                track("  kHIDUsage_GD_X \(intValue) \(v)")
-                break
-            case kHIDUsage_GD_Y:
-                track("kHIDUsage_GD_Y \(intValue) \(v)")
-                break
-            case kHIDUsage_GD_Z:
-                track("kHIDUsage_GD_Z \(intValue) \(v)")
-                break
-            case kHIDUsage_GD_Rx:
-                track("kHIDUsage_GD_Rx \(intValue) \(v)")
-                break
-            case kHIDUsage_GD_Ry:
-                track("kHIDUsage_GD_Ry \(intValue) \(v)")
-                break
-            case kHIDUsage_GD_Rz:
-                track("kHIDUsage_GD_Rz \(intValue) \(v)")
-                break
-            case kHIDUsage_GD_Hatswitch:
-                track("kHIDUsage_GD_Hatswitch \(intValue) \(v)")
-                break
-            default:
-                break
-            }
-            */
+            var events: [JoystickEvent]?
             
             switch(usage) {
                 
             case lThumbXUsageID, rThumbXUsageID:
                 
-                let event = (v == 2 ? PULL_RIGHT : v == -2 ? PULL_LEFT : RELEASE_X)
-                manager.joystickEvent(self, event: event)
+                // track("lThumbXUsageID, rThumbXUsageID: \(usage) \(intValue)")
+                if let v = mapAnalogAxis(value: value, element: element) {
+                    events = (v == 2) ? [PULL_RIGHT] : (v == -2) ? [PULL_LEFT] : [RELEASE_X]
+                }
                 break
-                
+   
             case lThumbYUsageID, rThumbYUsageID:
                 
-                let event = (v == 2 ? PULL_DOWN : v == -2 ? PULL_UP : RELEASE_Y)
-                manager.joystickEvent(self, event: event)
+                // track("lThumbYUsageID, rThumbYUsageID: \(intValue)")
+                if let v = mapAnalogAxis(value: value, element: element) {
+                    events = (v == 2) ? [PULL_DOWN] : (v == -2) ? [PULL_UP] : [RELEASE_Y]
+                }
                 break
                 
+            case kHIDUsage_GD_Hatswitch:
+                
+                // track("kHIDUsage_GD_Hatswitch \(intValue)")
+                switch intValue {
+                case 0: events = [PULL_UP, RELEASE_X]; break
+                case 1: events = [PULL_UP, PULL_RIGHT]; break
+                case 2: events = [PULL_RIGHT, RELEASE_Y]; break
+                case 3: events = [PULL_RIGHT, PULL_DOWN]; break
+                case 4: events = [PULL_DOWN, RELEASE_X]; break
+                case 5: events = [PULL_DOWN, PULL_LEFT]; break
+                case 6: events = [PULL_LEFT, RELEASE_Y]; break
+                case 7: events = [PULL_LEFT, PULL_UP]; break
+                case 8: events = [RELEASE_XY]; break
+                default: break
+                }
+                
             default:
-                // track("Ignored HID usage: \(usage)")
+                // track("Unknown HID usage: \(usage)")")
                 break
             }
+            
+            // Only proceed if the event is different than the previous one
+            if events == nil || oldEvents[usage] == events {
+                return
+            } else {
+                oldEvents[usage] = events!
+            }
+            
+            // Trigger event
+            manager.joystickEvent(self, events: events!)
         }
     }
-    
 }
 

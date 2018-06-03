@@ -193,8 +193,6 @@
 	<string>Documentation</string>
 	<key>CFBundleHelpBookName</key>
 	<string>VirtualC64 Help</string>
-	<key>CFBundleIconFile</key>
-	<string>VirtualC64Icon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -204,9 +202,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.11</string>
+	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.11</string>
+	<string>2.0</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSAppTransportSecurity</key>

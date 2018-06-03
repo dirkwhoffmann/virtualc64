@@ -1,5 +1,5 @@
 //
-//  CPUTableView.swift
+//  CpuTableView.swift
 //  VirtualC64
 //
 //  Created by Dirk Hoffmann on 16.04.18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc class CPUTableView : NSTableView {
+class CpuTableView : NSTableView {
     
     var c : MyController? = nil
     
@@ -30,12 +30,12 @@ import Foundation
         
         if let instr = instructionAtRow[row] {
             track("Toggling breakpoint at \(instr.addr)")
-            c?.c64.cpu.toggleHardBreakpoint(instr.addr)
+            c?.c64.cpu.toggleBreakpoint(instr.addr)
             reloadData()
         }
     }
 
-    @objc func setHex(_ value: Bool) {
+    func setHex(_ value: Bool) {
         
         hex = value
         updateDisplayedAddresses()
@@ -68,7 +68,7 @@ import Foundation
         updateDisplayedAddresses(startAddr: c!.c64.cpu.pc())
     }
     
-    @objc func refresh() {
+    func refresh() {
     
         if c == nil { return }
         
@@ -90,7 +90,7 @@ import Foundation
     }
 }
 
-extension CPUTableView : NSTableViewDataSource {
+extension CpuTableView : NSTableViewDataSource {
    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return 256;
@@ -103,7 +103,7 @@ extension CPUTableView : NSTableViewDataSource {
             switch(tableColumn?.identifier.rawValue) {
 
             case "break":
-                if (c?.c64.cpu.hardBreakpoint(instr.addr))! {
+                if (c?.c64.cpu.breakpoint(instr.addr))! {
                     return "⛔"
                 } else {
                     return " "
@@ -126,7 +126,7 @@ extension CPUTableView : NSTableViewDataSource {
     }
 }
 
-extension CPUTableView : NSTableViewDelegate {
+extension CpuTableView : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         
@@ -134,7 +134,7 @@ extension CPUTableView : NSTableViewDelegate {
         
         if  let instr = instructionAtRow[row] {
             
-            if (c?.c64.cpu.hardBreakpoint(instr.addr))! {
+            if (c?.c64.cpu.breakpoint(instr.addr))! {
                 cell.textColor = NSColor.red
             } else {
                 cell.textColor = NSColor.black

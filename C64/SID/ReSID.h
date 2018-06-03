@@ -19,6 +19,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// List of modifications applied to reSID
+// 1. Changed visibility of some objects from protected to public
+
 // Good candidate for testing sound emulation: INTERNAT.P00
 
 #ifndef _RESID_INC
@@ -29,16 +32,33 @@
 
 class ReSID : public VirtualComponent {
 
-private:
+public:
     
     // ReSID object
     reSID::SID *sid;
     
+public:
+    
+    void clock() { sid->clock(); }
+    
+private:
+    
     //! ReSID state
     reSID::SID::State st;
     
-    //! @brief   Sample rate (44.1 kHz per default)
+    //! @brief   The emulated chip model
+    SIDChipModel chipModel;
+    
+    //! @brief   Clock frequency
+    /*! @details Either PAL_CYCLES_PER_SECOND or NTSC_CYCLES_PER_SECOND
+     */
+    uint32_t clockFrequency;
+    
+    //! @brief   Sample rate (usually set to 44.1 kHz)
     uint32_t sampleRate;
+    
+    //! @brief   Sampling method
+    SamplingMethod samplingMethod;
     
     //! @brief   Switches filter emulation on or off.
     bool emulateFilter;
@@ -62,10 +82,13 @@ public:
 
     //! Save state
     void saveToBuffer(uint8_t **buffer);
-
-	//! Dump internal state to console
-	void dumpState();
 	
+    //! @brief    Gathers all values that are displayed in the debugger
+    SIDInfo getInfo();
+    
+    //! @brief    Gathers all debug information for a specific voice
+    VoiceInfo getVoiceInfo(unsigned voice);
+
 	//! Special peek function for the I/O memory range.
 	uint8_t peek(uint16_t addr);
 	
@@ -82,13 +105,19 @@ public:
     // Configuring
     
     //! Returns the chip model
-    SIDChipModel getChipModel() { return (SIDChipModel)sid->sid_model; }
+    SIDChipModel getChipModel() {
+        assert((SIDChipModel)sid->sid_model == chipModel);
+        return chipModel;
+    }
     
     //! Sets the chip model
     void setChipModel(SIDChipModel value);
     
     //! Returns the clock frequency
-    uint32_t getClockFrequency() { return (uint32_t)sid->clock_frequency; }
+    uint32_t getClockFrequency() {
+        assert((uint32_t)sid->clock_frequency == clockFrequency);
+        return (uint32_t)sid->clock_frequency;
+    }
     
     //! Sets the clock frequency
     void setClockFrequency(uint32_t frequency);
@@ -106,13 +135,13 @@ public:
 	void setAudioFilter(bool enable);
 
     //! Get sampling method
-    SamplingMethod getSamplingMethod() { return (SamplingMethod)sid->sampling; }
+    SamplingMethod getSamplingMethod() {
+        assert((SamplingMethod)sid->sampling == samplingMethod);
+        return samplingMethod;
+    }
     
     //! Set sampling method
     void setSamplingMethod(SamplingMethod value);
-    
- 
-
 };
 
 #endif

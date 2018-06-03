@@ -7,11 +7,236 @@
 
 import Foundation
 
+class MyController : NSWindowController {
+
+    /// Proxy object.
+    /// Implements a bridge between the emulator which is written in C++ and the
+    /// GUI which is written in Swift. Because Swift cannot interact with C++ directly,
+    /// the proxy is written in Objective-C.
+    var c64: C64Proxy!
+    
+    /// Game pad manager
+    var gamePadManager: GamePadManager!
+    
+    /// Keyboard controller
+    var keyboardcontroller: KeyboardController!
+    
+    /// Loop timer
+    /// The timer fires 60 times a second and executes all tasks that need to be done
+    /// perdiodically (e.g., updating the speedometer and the debug panels)
+    var timer: Timer?
+    
+    // Timer lock
+    var timerLock: NSLock!
+    
+    /// Used inside the timer function to fine tune timed events
+    var animationCounter = 0
+    
+    /// Speedometer to measure clock frequence and frames per second
+    var speedometer: Speedometer!
+    
+    /// Current keyboard modifier flags
+    /// These flags tell us if one of the special keysare currently pressed.
+    /// The flags are utilized, e.g., to alter behaviour when a key on the
+    /// TouchBar is pressed.
+    var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
+    
+    /// Current mouse coordinate
+    var mouseXY = NSPoint(x: 0, y: 0)
+    
+    /// Indicates if mouse is currently hidden
+    var hideMouse = false
+    
+    /// Indicates if a status bar is shown
+    var statusBar = true
+    
+    /// Selected game pad slot for joystick in port A
+    var gamepadSlot1 = 0
+    
+    /// Selected game pad slot for joystick in port B
+    var gamepadSlot2 = 0
+    
+    /// Default image for USB devices
+    var genericDeviceImage: NSImage?
+    
+    /// Indicates if the user dialog should be skipped when opening archives
+    var autoMount = false
+    
+    //
+    // Outlets
+    //
+    
+    // Main screen
+    @IBOutlet weak var metalScreen: MetalView!
+    @IBOutlet weak var debugger: NSDrawer!
+    
+    // Bottom bar
+    @IBOutlet weak var greenLED: NSButton!
+    @IBOutlet weak var redLED: NSButton!
+    @IBOutlet weak var progress: NSProgressIndicator!
+    @IBOutlet weak var driveIcon: NSButton!
+    @IBOutlet weak var cartridgeIcon: NSButton!
+    @IBOutlet weak var tapeIcon: NSButton!
+    @IBOutlet weak var tapeProgress: NSProgressIndicator!
+    @IBOutlet weak var clockSpeed: NSTextField!
+    @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
+    @IBOutlet weak var warpIcon: NSButton!
+    
+    // Toolbar
+    @IBOutlet weak var controlPort1: NSPopUpButton!
+    @IBOutlet weak var controlPort2: NSPopUpButton!
+    
+    // Debug panel (commons)
+    var hex = true
+    @IBOutlet weak var debugPanel: NSTabView!
+    @IBOutlet weak var dezHexSelector: NSMatrix!
+    @IBOutlet weak var stopAndGoButton: NSButton!
+    @IBOutlet weak var stepIntoButton: NSButton!
+    @IBOutlet weak var stepOverButton: NSButton!
+    
+    // Debug panel (CPU)
+    @IBOutlet weak var cpuTableView: CpuTableView!
+    @IBOutlet weak var pc: NSTextField!
+    @IBOutlet weak var sp: NSTextField!
+    @IBOutlet weak var a: NSTextField!
+    @IBOutlet weak var x: NSTextField!
+    @IBOutlet weak var y: NSTextField!
+    @IBOutlet weak var nflag: NSButton!
+    @IBOutlet weak var zflag: NSButton!
+    @IBOutlet weak var cflag: NSButton!
+    @IBOutlet weak var iflag: NSButton!
+    @IBOutlet weak var bflag: NSButton!
+    @IBOutlet weak var dflag: NSButton!
+    @IBOutlet weak var vflag: NSButton!
+    @IBOutlet weak var breakAt: NSTextField!
+    
+    // Debug panel (Memory)
+    @IBOutlet weak var memTableView: MemTableView!
+    
+    // Debug panel (CIA)
+    @IBOutlet weak var ciaSelector: NSSegmentedControl!
+    
+    @IBOutlet weak var ciaPA: NSTextField!
+    @IBOutlet weak var ciaPAbinary: NSTextField!
+    @IBOutlet weak var ciaPRA: NSTextField!
+    @IBOutlet weak var ciaDDRA: NSTextField!
+    
+    @IBOutlet weak var ciaPB: NSTextField!
+    @IBOutlet weak var ciaPBbinary: NSTextField!
+    @IBOutlet weak var ciaPRB: NSTextField!
+    @IBOutlet weak var ciaDDRB: NSTextField!
+    
+    @IBOutlet weak var ciaTimerA: NSTextField!
+    @IBOutlet weak var ciaLatchA: NSTextField!
+    @IBOutlet weak var ciaRunningA: NSButton!
+    @IBOutlet weak var ciaToggleA: NSButton!
+    @IBOutlet weak var ciaPBoutA: NSButton!
+    @IBOutlet weak var ciaOneShotA: NSButton!
+    
+    @IBOutlet weak var ciaTimerB: NSTextField!
+    @IBOutlet weak var ciaLatchB: NSTextField!
+    @IBOutlet weak var ciaRunningB: NSButton!
+    @IBOutlet weak var ciaToggleB: NSButton!
+    @IBOutlet weak var ciaPBoutB: NSButton!
+    @IBOutlet weak var ciaOneShotB: NSButton!
+    
+    @IBOutlet weak var todHours: NSTextField!
+    @IBOutlet weak var todMinutes: NSTextField!
+    @IBOutlet weak var todSeconds: NSTextField!
+    @IBOutlet weak var todTenth: NSTextField!
+    @IBOutlet weak var todIntEnable: NSButton!
+    @IBOutlet weak var alarmHours: NSTextField!
+    @IBOutlet weak var alarmMinutes: NSTextField!
+    @IBOutlet weak var alarmSeconds: NSTextField!
+    @IBOutlet weak var alarmTenth: NSTextField!
+    
+    @IBOutlet weak var ciaIcr: NSTextField!
+    @IBOutlet weak var ciaIcrBinary: NSTextField!
+    @IBOutlet weak var ciaImr: NSTextField!
+    @IBOutlet weak var ciaImrBinary: NSTextField!
+    @IBOutlet weak var ciaIntLineLow: NSButton!
+    
+    // Debug panel (VIC)
+    @IBOutlet weak var vicRasterline: NSTextField!
+    @IBOutlet weak var vicCycle: NSTextField!
+    @IBOutlet weak var vicXCounter: NSTextField!
+    @IBOutlet weak var vicBadLine: NSButton!
+    @IBOutlet weak var vicDisplayMode: NSPopUpButton!
+    @IBOutlet weak var vicBorderColor: NSButton!
+    @IBOutlet weak var vicBackgroundColor0: NSButton!
+    @IBOutlet weak var vicBackgroundColor1: NSButton!
+    @IBOutlet weak var vicBackgroundColor2: NSButton!
+    @IBOutlet weak var vicBackgroundColor3: NSButton!
+    @IBOutlet weak var vicScreenGeometry: NSPopUpButton!
+    @IBOutlet weak var vicDx: NSTextField!
+    @IBOutlet weak var vicDXStepper: NSStepper!
+    @IBOutlet weak var vicDy: NSTextField!
+    @IBOutlet weak var vicDYStepper: NSStepper!
+    @IBOutlet weak var vicMemoryBankAddr: NSPopUpButton!
+    @IBOutlet weak var vicScreenMemoryAddr: NSPopUpButton!
+    @IBOutlet weak var vicCharacterMemoryAddr: NSPopUpButton!
+    @IBOutlet weak var vicRasterIrqEnabled: NSButton!
+    @IBOutlet weak var vicIrqRasterline: NSTextField!
+    @IBOutlet weak var vicIrqLine: NSButton!
+    
+    @IBOutlet weak var spriteSelector: NSSegmentedControl!
+    @IBOutlet weak var spriteEnabled: NSButton!
+    @IBOutlet weak var spriteX: NSTextField!
+    @IBOutlet weak var spriteY: NSTextField!
+    @IBOutlet weak var spriteIsMulticolor: NSPopUpButton!
+    @IBOutlet weak var spriteColor: NSButton!
+    @IBOutlet weak var spriteExtraColor1: NSButton!
+    @IBOutlet weak var spriteExtraColor2: NSButton!
+    @IBOutlet weak var spriteExpandX: NSButton!
+    @IBOutlet weak var spriteExpandY: NSButton!
+    @IBOutlet weak var spritePriority: NSButton!
+    @IBOutlet weak var spriteCollidesWithSprite: NSButton!
+    @IBOutlet weak var spriteSpriteIrqEnabled: NSButton!
+    @IBOutlet weak var spriteCollidesWithBackground: NSButton!
+    @IBOutlet weak var spriteBackgroundIrqEnabled: NSButton!
+    
+    // Debugger (SID panel)
+    var selectedVoice = 0
+    @IBOutlet weak var volume: NSTextField!
+    @IBOutlet weak var potX: NSTextField!
+    @IBOutlet weak var potY: NSTextField!
+    
+    @IBOutlet weak var voiceSelector: NSSegmentedControl!
+    @IBOutlet weak var waveform: NSPopUpButton!
+    @IBOutlet weak var frequency: NSTextField!
+    @IBOutlet weak var pulseWidth: NSTextField!
+    @IBOutlet weak var attackRate: NSTextField!
+    @IBOutlet weak var decayRate: NSTextField!
+    @IBOutlet weak var sustainRate: NSTextField!
+    @IBOutlet weak var releaseRate: NSTextField!
+    @IBOutlet weak var gateBit: NSButton!
+    @IBOutlet weak var testBit: NSButton!
+    @IBOutlet weak var syncBit: NSButton!
+    @IBOutlet weak var ringBit: NSButton!
+    
+    @IBOutlet weak var filterType: NSPopUpButton!
+    @IBOutlet weak var filterCutoff: NSTextField!
+    @IBOutlet weak var filterResonance: NSTextField!
+    @IBOutlet weak var filter1: NSButton!
+    @IBOutlet weak var filter2: NSButton!
+    @IBOutlet weak var filter3: NSButton!
+    
+    @IBOutlet weak var waveformView: WaveformView!
+    @IBOutlet weak var audioBufferLevel: NSLevelIndicator!
+    @IBOutlet weak var audioBufferLevelText: NSTextField!
+    @IBOutlet weak var bufferUnderflows: NSTextField!
+    @IBOutlet weak var bufferOverflows: NSTextField!
+}
+
 extension MyController {
 
     // Get the undo manager from the first responder (metalScreen)
-    override open var undoManager: UndoManager? { get { return metalScreen.undoManager } }
-
+    
+    override open var undoManager: UndoManager? { get {
+        //let result = document?.undoManager!
+        let result = metalScreen.undoManager
+        return result } }
+    
     //
     // Initialization
     //
@@ -48,12 +273,10 @@ extension MyController {
         gamepadSlot1 = -1 // No gampad assigned
         gamepadSlot2 = -1
 
-        // Configure toolbar and window
+        // Setup toolbar, window, and debugger
         configureToolbar()
         configureWindow()
-        
-        // TODO: GET RID OF THIS: Move to it's own window controller
-        setHexadecimalAction(self)
+        setupDebugger()
         
         // Get metal running
         metalScreen.setupMetal()
@@ -150,7 +373,7 @@ extension MyController {
         
         // Create timer and speedometer
         timerLock = NSLock()
-        timer = Timer.scheduledTimer(timeInterval: 1.0/12.0, // 12 times a second
+        timer = Timer.scheduledTimer(timeInterval: 1.0/12, // 12 times a second
                                      target: self,
                                      selector: #selector(timerFunc),
                                      userInfo: nil,
@@ -162,7 +385,7 @@ extension MyController {
 // --------------------------------------------------------------------------------
 //                           Timer and message processing
 // --------------------------------------------------------------------------------
-
+    
     @objc func timerFunc() {
 
         precondition(timerLock != nil)
@@ -184,7 +407,7 @@ extension MyController {
  
             // Refresh debug panel if open
             if c64.isRunning() {
-                let state = debugPanel.state
+                let state = debugger.state
                 if state == NSDrawerState.open || state == NSDrawerState.opening {
                     refresh()
                 }
@@ -255,17 +478,16 @@ extension MyController {
     
         case MSG_RUN:
             
-            enableUserEditing(false)
+            disableUserEditing()
             refresh()
  
-            // Disable undo because the internal state changes permanently
             document?.updateChangeCount(.changeDone)
-            undoManager?.removeAllActions()
+            // undoManager?.removeAllActions()
             break
     
         case MSG_HALT:
             
-            enableUserEditing(true)
+            enableUserEditing()
             refresh()
             break
     
@@ -455,15 +677,15 @@ extension MyController {
     /// GamePadManager delegation method
     /// - Returns: true, iff a joystick event has been triggered on port A or port B
     @discardableResult
-    func joystickEvent(slot: Int, event: JoystickEvent) -> Bool {
-                
+    func joystickEvent(slot: Int, events: [JoystickEvent]) -> Bool {
+        
         if (slot == gamepadSlot1) {
-            c64.port1.trigger(event)
+            for event in events { c64.port1.trigger(event) }
             return true
         }
 
         if (slot == gamepadSlot2) {
-            c64.port2.trigger(event)
+            for event in events { c64.port2.trigger(event) }
             return true
         }
         

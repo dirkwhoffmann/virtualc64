@@ -1,8 +1,5 @@
 /**
-Audio interface that connects the macOS GUI with the core emulator
- 
- - Remark:
-    Replaces old Objective-C interface AudioDevice
+Audio interface that connects the GUI with the core emulator
  
  - Author: Dirk W. Hoffmann
  - Copyright: Dirk W. Hoffmann
@@ -11,7 +8,7 @@ Audio interface that connects the macOS GUI with the core emulator
 import Foundation
 import AVFoundation
 
-@objc public class AudioEngine: NSObject {
+public class AudioEngine: NSObject {
 
     var sid: SIDProxy!
     var audiounit : AUAudioUnit!
@@ -23,7 +20,7 @@ import AVFoundation
     
     @objc convenience init?(withSID proxy: SIDProxy)
     {
-        NSLog("AudioEngine::\(#function)")
+        track()
     
         self.init()
         sid = proxy
@@ -38,8 +35,8 @@ import AVFoundation
 
         // Create AudioUnit
         do { try audiounit = AUAudioUnit(componentDescription: compDesc) } catch {
-            NSLog("Failed to create AudioUnit")
-            return nil
+            track("Failed to create AUAudioUnit")
+            return
         }
         
         // Query AudioUnit
@@ -59,8 +56,8 @@ import AVFoundation
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
                                          channels: (stereo ? 2 : 1))
         do { try audiounit.inputBusses[0].setFormat(renderFormat!) } catch {
-            NSLog("Failed to set render format on input bus")
-            return nil
+            track("Failed to set render format on input bus")
+            return
         }
         
         // Tell SID to use the correct sample rate
@@ -76,7 +73,7 @@ import AVFoundation
                 inputDataList ) -> AUAudioUnitStatus in
                 
                 self.renderStereo(inputDataList: inputDataList, frameCount: frameCount)
-                return(0)
+                return 0
             }
         } else {
             audiounit.outputProvider = { ( // AURenderPullInputBlock
@@ -87,17 +84,15 @@ import AVFoundation
                 inputDataList ) -> AUAudioUnitStatus in
                 
                 self.renderMono(inputDataList: inputDataList, frameCount: frameCount)
-                return(0)
+                return 0
             }
         }
 
         // Allocate render resources
         do { try audiounit.allocateRenderResources() } catch {
-            NSLog("Failed to allocate RenderResources")
+            track("Failed to allocate RenderResources")
             return nil
         }
-        
-        NSLog("AudioEngine::\(#function) (SUCCESS)")
      }
     
     private func renderMono(inputDataList : UnsafeMutablePointer<AudioBufferList>,
@@ -121,11 +116,9 @@ import AVFoundation
         sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
-    /*! @brief  Start playing sound
-     */
+    //! @brief  Start playing sound
     @objc func startPlayback() -> Bool {
 
-        // NSLog("\(#function)")
         do { try audiounit.startHardware() } catch {
             NSLog("Failed to start audio hardware")
             return false
@@ -134,11 +127,9 @@ import AVFoundation
         return true
     }
     
-    /*! @brief  Stop playing sound
-     */
+    //! @brief  Stop playing sound
     @objc func stopPlayback() {
         
-        // NSLog("\(#function)")
         audiounit.stopHardware()
     }
 }

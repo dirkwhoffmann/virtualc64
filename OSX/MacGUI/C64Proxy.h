@@ -1,5 +1,5 @@
 /*
- * Author: Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann. 2018, All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "C64_types.h"
-#import "VIC_globals.h"
 #import "basic.h"
 
-// Forward declarations
+// Forward declarations of proxy classes
 @class MyController;
 @class C64Proxy;
 @class SnapshotProxy;
@@ -31,7 +30,7 @@
 @class CRTProxy;
 
 // Forward declarations of wrappers for C++ classes.
-// We wrap classes into normal C structs to avoid any reference to C++ here.
+// We wrap classes into normal C structs to avoid any reference to C++.
 
 struct C64Wrapper;
 struct CpuWrapper;
@@ -49,63 +48,47 @@ struct Vc1541Wrapper;
 struct DatasetteWrapper;
 struct ContainerWrapper;
 
-// --------------------------------------------------------------------------
-//                                    CPU
-// --------------------------------------------------------------------------
+//
+// CPU
+//
 
 @interface CPUProxy : NSObject {
         
 	struct CpuWrapper *wrapper;
 }
 
+- (CPUInfo) getInfo;
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
-- (uint16_t) PC;
-- (void) setPC:(uint16_t)pc;
-- (uint8_t) SP;
-- (void) setSP:(uint8_t)sp;
-- (uint8_t) A;
-- (void) setA:(uint8_t)a;
-- (uint8_t) X;
-- (void) setX:(uint8_t)x;
-- (uint8_t) Y;
-- (void) setY:(uint8_t)y;
-- (bool) Nflag;
-- (void) setNflag:(bool)b;
-- (bool) Zflag;
-- (void) setZflag:(bool)b;
-- (bool) Cflag;
-- (void) setCflag:(bool)b;
-- (bool) Iflag;
-- (void) setIflag:(bool)b;
-- (bool) Bflag;
-- (void) setBflag:(bool)b;
-- (bool) Dflag;
-- (void) setDflag:(bool)b;
-- (bool) Vflag;
-- (void) setVflag:(bool)b;
 
-- (uint16_t) readPC;
-- (uint16_t) addressOfNextInstruction;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+
+- (uint16_t) pc;
+- (void) setPC:(uint16_t)pc;
+- (void) setSP:(uint8_t)sp;
+- (void) setA:(uint8_t)a;
+- (void) setX:(uint8_t)x;
+- (void) setY:(uint8_t)y;
+- (void) setNflag:(BOOL)b;
+- (void) setZflag:(BOOL)b;
+- (void) setCflag:(BOOL)b;
+- (void) setIflag:(BOOL)b;
+- (void) setBflag:(BOOL)b;
+- (void) setDflag:(BOOL)b;
+- (void) setVflag:(BOOL)b;
+
+- (BOOL) breakpoint:(uint16_t)addr;
+- (void) setBreakpoint:(uint16_t)addr;
+- (void) deleteBreakpoint:(uint16_t)addr;
+- (void) toggleBreakpoint:(uint16_t)addr;
+
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
-// - (int) topOfCallStack;
-// - (int) breakpoint:(uint16_t)addr;
-// - (void) setBreakpoint:(uint16_t)addr tag:(uint8_t)t;
-- (BOOL) hardBreakpoint:(uint16_t)addr;
-- (void) setHardBreakpoint:(uint16_t)addr;
-- (void) deleteHardBreakpoint:(uint16_t)addr;
-- (void) toggleHardBreakpoint:(uint16_t)addr;
-- (BOOL) softBreakpoint:(uint16_t)addr;
-- (void) setSoftBreakpoint:(uint16_t)addr;
-- (void) deleteSoftBreakpoint:(uint16_t)addr;
-- (void) toggleSoftBreakpoint:(uint16_t)addr;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                  Memory
-// --------------------------------------------------------------------------
+//
+// Memory
+//
 
 @interface MemoryProxy : NSObject {
     
@@ -114,11 +97,16 @@ struct ContainerWrapper;
 
 - (void) dump;
 
-- (uint8_t) spy:(uint16_t)addr;
-- (uint8_t) spy:(uint16_t)addr source:(MemorySource)src;
-- (void) poke:(uint16_t)addr value:(uint8_t)val;
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemorySource)source;
-- (MemorySource) peekSource:(uint16_t)addr;
+- (MemoryType) peekSource:(uint16_t)addr;
+- (MemoryType) pokeTarget:(uint16_t)addr;
+
+- (uint8_t) snoop:(uint16_t)addr source:(MemoryType)source;
+- (uint8_t) snoop:(uint16_t)addr;
+- (uint8_t) snoopIO:(uint16_t)addr;
+
+- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target;
+- (void) poke:(uint16_t)addr value:(uint8_t)value;
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)value;
 
 @end
 
@@ -131,74 +119,57 @@ struct ContainerWrapper;
 	struct VicWrapper *wrapper;
 }
 
-- (void) dump;
-
 - (void *) screenBuffer;
-
 - (NSColor *) color:(NSInteger)nr;
 - (NSInteger) colorScheme;
 - (void) setColorScheme:(NSInteger)scheme;
 
-- (uint16_t) memoryBankAddr;
+- (VICInfo) getInfo;
+- (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
+- (void) dump;
+
 - (void) setMemoryBankAddr:(uint16_t)addr;
-- (uint16_t) screenMemoryAddr;
 - (void) setScreenMemoryAddr:(uint16_t)addr;
-- (uint16_t) characterMemoryAddr;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
-- (int) displayMode;
-- (void) setDisplayMode:(long)mode;
-- (int) screenGeometry;
-- (void) setScreenGeometry:(long)mode;
-- (int) horizontalRasterScroll;
-- (void) setHorizontalRasterScroll:(int)offset;
-- (int) verticalRasterScroll;
-- (void) setVerticalRasterScroll:(int)offset;
+- (void) setDisplayMode:(DisplayMode)mode;
+- (void) setScreenGeometry:(ScreenGeometry)mode;
+- (void) setHorizontalRasterScroll:(NSInteger)offset;
+- (void) setVerticalRasterScroll:(NSInteger)offset;
 
-- (bool) spriteVisibilityFlag:(NSInteger)nr;
-- (void) setSpriteVisibilityFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteVisibilityFlag:(NSInteger)nr;
-
-- (int) spriteX:(NSInteger)nr;
+- (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpriteEnabled:(NSInteger)nr;
 - (void) setSpriteX:(NSInteger)nr value:(int)x;
-- (int) spriteY:(NSInteger)nr;
 - (void) setSpriteY:(NSInteger)nr value:(int)y;
-
-- (int) spriteColor:(NSInteger)nr;
+- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpriteStretchX:(NSInteger)nr;
+- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpriteStretchY:(NSInteger)nr;
 - (void) setSpriteColor:(NSInteger)nr value:(int)c;
-- (bool) spriteMulticolorFlag:(NSInteger)nr;
-- (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteMulticolorFlag:(NSInteger)nr;
+- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpritePriority:(NSInteger)nr;
+- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag;
+- (void) toggleSpriteMulticolor:(NSInteger)nr;
 
-- (bool) spriteStretchXFlag:(NSInteger)nr;
-- (void) setSpriteStretchXFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteStretchXFlag:(NSInteger)nr;
-- (bool) spriteStretchYFlag:(NSInteger)nr;
-- (void) setSpriteStretchYFlag:(NSInteger)nr value:(bool)flag;
-- (void) toggleSpriteStretchYFlag:(NSInteger)nr;
-
-- (bool) spriteSpriteCollisionFlag;
-- (void) setSpriteSpriteCollisionFlag:(bool)flag;
-- (void) toggleSpriteSpriteCollisionFlag;
-
-- (bool) spriteBackgroundCollisionFlag;
-- (void) setSpriteBackgroundCollisionFlag:(bool)flag;
-- (void) toggleSpriteBackgroundCollisionFlag;
+- (void) setIrqOnSpriteSpriteCollision:(BOOL)value;
+- (void) toggleIrqOnSpriteSpriteCollision;
+- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value;
+- (void) toggleIrqOnSpriteBackgroundCollision;
 
 - (uint16_t) rasterline;
 - (void) setRasterline:(uint16_t)line;
 - (uint16_t) rasterInterruptLine;
 - (void) setRasterInterruptLine:(uint16_t)line;
-- (bool) rasterInterruptFlag;
-- (void) setRasterInterruptFlag:(bool)b;
+- (BOOL) rasterInterruptFlag;
+- (void) setRasterInterruptFlag:(BOOL)b;
 - (void) toggleRasterInterruptFlag;
 
-- (bool) hideSprites;
-- (void) setHideSprites:(bool)b;
-- (bool) showIrqLines;
-- (void) setShowIrqLines:(bool)b;
-- (bool) showDmaLines;
-- (void) setShowDmaLines:(bool)b;
+- (BOOL) hideSprites;
+- (void) setHideSprites:(BOOL)b;
+- (BOOL) showIrqLines;
+- (void) setShowIrqLines:(BOOL)b;
+- (BOOL) showDmaLines;
+- (void) setShowDmaLines:(BOOL)b;
 
 @end
 
@@ -211,9 +182,14 @@ struct ContainerWrapper;
 	struct CiaWrapper *wrapper;
 }
 
-- (void) dump;
-- (void) setTraceMode:(bool)b;
 - (CIAInfo) getInfo;
+- (void) dump;
+
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+
+- (uint8_t) snoop:(uint16_t)addr;
+- (void) poke:(uint16_t)addr value:(uint8_t)value;
 
 @end 
 
@@ -265,11 +241,18 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+- (SIDInfo) getInfo;
+- (VoiceInfo) getVoiceInfo:(NSInteger)voice;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
+- (NSInteger) ringbufferSize;
+- (NSInteger) bufferUnderflows;
+- (NSInteger) bufferOverflows;
+- (double) fillLevel;
+- (float) snoopData:(NSInteger)offset;
 
 @end
 
@@ -283,9 +266,9 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
-- (bool) isDriveConnected;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+- (BOOL) isDriveConnected;
 - (void) connectDrive;
 - (void) disconnectDrive;
 - (BOOL) atnLine;
@@ -304,7 +287,7 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) cartridgeAttached; 
+- (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
 - (void) pressFirstButton;
 - (void) pressSecondButton;
@@ -321,8 +304,8 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
 
 @end
 
@@ -368,18 +351,18 @@ struct ContainerWrapper;
 - (VIAProxy *) via:(int)num;
 
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
-- (bool) hasRedLED;
-- (bool) hasDisk;
-- (bool) hasModifiedDisk;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+- (BOOL) hasRedLED;
+- (BOOL) hasDisk;
+- (BOOL) hasModifiedDisk;
 - (void) ejectDisk;
-- (bool) writeProtection;
-- (void) setWriteProtection:(bool)b;
-- (bool) DiskModified;
-- (void) setDiskModified:(bool)b;
-- (bool) soundMessagesEnabled;
-- (void) setSendSoundMessages:(bool)b;
+- (BOOL) writeProtection;
+- (void) setWriteProtection:(BOOL)b;
+- (BOOL) DiskModified;
+- (void) setDiskModified:(BOOL)b;
+- (BOOL) soundMessagesEnabled;
+- (void) setSendSoundMessages:(BOOL)b;
 
 - (NSInteger) halftrack;
 - (void) setHalftrack:(NSInteger)value;
@@ -399,7 +382,7 @@ struct ContainerWrapper;
 - (const char *)dataRel:(NSInteger)start;
 - (const char *)dataRel:(NSInteger)start length:(NSInteger)n;
 
-- (bool) exportToD64:(NSString *)path;
+- (BOOL) exportToD64:(NSString *)path;
 - (void) playSound:(NSString *)name volume:(float)v;
 
 @end
@@ -415,7 +398,7 @@ struct ContainerWrapper;
 
 - (void) dump;
 
-- (bool) hasTape;
+- (BOOL) hasTape;
 - (void) pressPlay;
 - (void) pressStop;
 - (void) rewind;
@@ -487,10 +470,10 @@ struct ContainerWrapper;
 - (void) kill;
 
 // Hardware configuration
-- (bool) reSID;
-- (void) setReSID:(bool)b;
-- (bool) audioFilter;
-- (void) setAudioFilter:(bool)b;
+- (BOOL) reSID;
+- (void) setReSID:(BOOL)b;
+- (BOOL) audioFilter;
+- (void) setAudioFilter:(BOOL)b;
 - (NSInteger) samplingMethod;
 - (void) setSamplingMethod:(NSInteger)value;
 - (NSInteger) chipModel;
@@ -505,7 +488,7 @@ struct ContainerWrapper;
 - (void)_saveToSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
-- (CIAProxy *) cia:(int)num;
+- (CIAProxy *) cia:(NSInteger)num;
 
 - (void) dump;
 - (BOOL) developmentMode;
@@ -518,41 +501,42 @@ struct ContainerWrapper;
 - (void) ping;
 - (void) halt;
 - (void) step;
-- (bool) isRunnable;
+- (void) stepOver;
+- (BOOL) isRunnable;
 - (void) run;
 - (void) suspend;
 - (void) resume; 
-- (bool) isHalted;
-- (bool) isRunning;
-- (bool) isPAL;
-- (bool) isNTSC;
+- (BOOL) isHalted;
+- (BOOL) isRunning;
+- (BOOL) isPAL;
+- (BOOL) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
 - (void) setNTSC:(BOOL)b;
 
-- (bool) isBasicRom:(NSURL *)url;
-- (bool) loadBasicRom:(NSURL *)url;
-- (bool) isBasicRomLoaded;
-- (bool) isCharRom:(NSURL *)url;
-- (bool) loadCharRom:(NSURL *)url;
-- (bool) isCharRomLoaded;
-- (bool) isKernalRom:(NSURL *)url;
-- (bool) loadKernalRom:(NSURL *)url;
-- (bool) isKernalRomLoaded;
-- (bool) isVC1541Rom:(NSURL *)url;
-- (bool) loadVC1541Rom:(NSURL *)url;
-- (bool) isVC1541RomLoaded;
-- (bool) isRom:(NSURL *)url;
-- (bool) loadRom:(NSURL *)url;
+- (BOOL) isBasicRom:(NSURL *)url;
+- (BOOL) loadBasicRom:(NSURL *)url;
+- (BOOL) isBasicRomLoaded;
+- (BOOL) isCharRom:(NSURL *)url;
+- (BOOL) loadCharRom:(NSURL *)url;
+- (BOOL) isCharRomLoaded;
+- (BOOL) isKernalRom:(NSURL *)url;
+- (BOOL) loadKernalRom:(NSURL *)url;
+- (BOOL) isKernalRomLoaded;
+- (BOOL) isVC1541Rom:(NSURL *)url;
+- (BOOL) loadVC1541Rom:(NSURL *)url;
+- (BOOL) isVC1541RomLoaded;
+- (BOOL) isRom:(NSURL *)url;
+- (BOOL) loadRom:(NSURL *)url;
 
-- (bool) attachCartridgeAndReset:(CRTProxy *)c;
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;
-- (bool) isCartridgeAttached;
+- (BOOL) isCartridgeAttached;
 
-- (bool) insertDisk:(ArchiveProxy *)a;
-- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
+- (BOOL) insertDisk:(ArchiveProxy *)a;
+- (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
-- (bool) insertTape:(TAPProxy *)a;
+- (BOOL) insertTape:(TAPProxy *)a;
 
 - (NSInteger) mouseModel;
 - (void) setMouseModel:(NSInteger)model;
@@ -562,17 +546,17 @@ struct ContainerWrapper;
 - (void) setMouseLeftButton:(BOOL)pressed;
 - (void) setMouseRightButton:(BOOL)pressed;
 
-- (bool) warp;
-- (void) setWarp:(bool)b;
-- (bool) alwaysWarp;
-- (void) setAlwaysWarp:(bool)b;
-- (bool) warpLoad;
-- (void) setWarpLoad:(bool)b;
+- (BOOL) warp;
+- (void) setWarp:(BOOL)b;
+- (BOOL) alwaysWarp;
+- (void) setAlwaysWarp:(BOOL)b;
+- (BOOL) warpLoad;
+- (void) setWarpLoad:(BOOL)b;
 - (UInt64) cycles;
 - (UInt64) frames;
 
 // Snapshot storage
-- (void) setAutoSaveSnapshots:(bool)b;
+- (void) setAutoSaveSnapshots:(BOOL)b;
 
 - (NSInteger) numAutoSnapshots;
 - (NSData *) autoSnapshotData:(NSInteger)nr;
@@ -580,8 +564,8 @@ struct ContainerWrapper;
 - (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
 - (time_t) autoSnapshotTimestamp:(NSInteger)nr;
-- (bool) restoreAutoSnapshot:(NSInteger)nr;
-- (bool) restoreLatestAutoSnapshot;
+- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
+- (BOOL) restoreLatestAutoSnapshot;
 
 - (NSInteger) numUserSnapshots;
 - (NSData *) userSnapshotData:(NSInteger)nr;
@@ -589,9 +573,9 @@ struct ContainerWrapper;
 - (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
 - (time_t) userSnapshotTimestamp:(NSInteger)nr;
-- (bool) takeUserSnapshot;
-- (bool) restoreUserSnapshot:(NSInteger)nr;
-- (bool) restoreLatestUserSnapshot;
+- (BOOL) takeUserSnapshot;
+- (BOOL) restoreUserSnapshot:(NSInteger)nr;
+- (BOOL) restoreLatestUserSnapshot;
 - (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Audio hardware

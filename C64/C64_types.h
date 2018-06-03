@@ -6,6 +6,7 @@
 #include "CPU_types.h"
 #include "TOD_types.h"
 #include "CIA_types.h"
+#include "VIC_types.h"
 #include "SID_types.h"
 #include "Memory_types.h"
 #include "Cartridge_types.h"

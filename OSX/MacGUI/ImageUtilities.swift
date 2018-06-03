@@ -84,7 +84,7 @@ public extension NSImage {
         unlockFocus()
     }
 
-    @objc func expand(toSize size: NSSize) -> NSImage? {
+    func expand(toSize size: NSSize) -> NSImage? {
  
         let newImage = NSImage.init(size: size)
     
@@ -107,7 +107,7 @@ public extension NSImage {
         return newImage;
     }
     
-    @objc func toTexture(device: MTLDevice) -> MTLTexture? {
+    func toTexture(device: MTLDevice) -> MTLTexture? {
  
         // let imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
         let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
@@ -166,7 +166,7 @@ public extension MetalView
     // --------------------------------------------------------------------------------
 
     
-    @objc func screenshot() -> NSImage?
+    func screenshot() -> NSImage?
     {
         track()
         
@@ -176,7 +176,7 @@ public extension MetalView
                                          Float(textureRect.maxY))
     }
     
-    @objc func createBackgroundTexture() -> MTLTexture? {
+    func createBackgroundTexture() -> MTLTexture? {
 
         // 1. step: Grab the current wallpaper as an NSImage
         let windows =

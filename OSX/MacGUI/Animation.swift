@@ -8,33 +8,7 @@
 import Foundation
 
 public extension MetalView {
-    /*
-    @objc public func initAnimation() {
-        
-        currentEyeX   = 0.0
-        targetEyeX    = 0.0
-        deltaEyeX     = 0.0
-        currentEyeY   = 0.0
-        targetEyeY    = 0.0
-        deltaEyeY     = 0.0
-        currentEyeZ   = 0.0
-        targetEyeZ    = 0.0
-        deltaEyeZ     = 0.0
-        currentXAngle = 0.0
-        targetXAngle  = 0.0
-        deltaXAngle   = 0.0
-        currentYAngle = 0.0
-        targetYAngle  = 0.0
-        deltaYAngle   = 0.0
-        currentZAngle = 0.0
-        targetZAngle  = 0.0
-        deltaZAngle   = 0.0
-        currentAlpha  = 0.0
-        targetAlpha   = 0.0
-        deltaAlpha    = 0.0
-    }
-    */
-    
+ 
     //! Returns true iff an animation is in progress
     public func animates() -> Bool {
 
@@ -237,22 +211,8 @@ public extension MetalView {
     // --------------------------------------------------------------------------------
     //                                Matrix utilities
     // --------------------------------------------------------------------------------
-
-    /*
-    @objc public func matrix_identity() -> matrix_float4x4 {
-        
-        let X = float4(1.0, 0.0, 0.0, 0.0)
-        let Y = float4(0.0, 1.0, 0.0, 0.0)
-        let Z = float4(0.0, 0.0, 1.0, 0.0)
-        let W = float4(0.0, 0.0, 0.0, 1.0)
     
-        let identity =  matrix_float4x4(X,Y,Z,W)
-    
-        return identity
-    }
-    */
-    
-    @objc public func matrix_from_perspective(fovY: Float,
+    public func matrix_from_perspective(fovY: Float,
                                               aspect: Float,
                                               nearZ: Float,
                                               farZ: Float) -> matrix_float4x4 {
@@ -276,7 +236,7 @@ public extension MetalView {
         return m
     }
     
-    @objc public func matrix_from_translation(x: Float,
+    public func matrix_from_translation(x: Float,
                                               y: Float,
                                               z: Float) -> matrix_float4x4 {
     
@@ -286,7 +246,7 @@ public extension MetalView {
         return m
     }
     
-    @objc public func matrix_from_rotation(radians: Float,
+    public func matrix_from_rotation(radians: Float,
                                            x: Float,
                                            y: Float,
                                            z: Float) -> matrix_float4x4 {

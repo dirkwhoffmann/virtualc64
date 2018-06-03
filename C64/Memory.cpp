@@ -1,7 +1,8 @@
-/*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2018 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -27,11 +28,6 @@ Memory::~Memory()
 {
 }
 
-
-// --------------------------------------------------------------------------------
-//                                     Poke
-// --------------------------------------------------------------------------------
-
 void Memory::flashRom(const char *filename, uint16_t start)
 {
 	FILE *file;
@@ -45,11 +41,11 @@ void Memory::flashRom(const char *filename, uint16_t start)
 		return;
 	c = fgetc(file);
 	while(c != EOF) {
-		pokeRom(addr, (uint8_t)c);
+        poke(addr, (uint8_t)c, M_ROM);
 		c = fgetc(file);
 		addr++;
 	}
 	fclose(file);
 	
-	debug(2, "ROM image installed at [%X;%X]\n", (uint16_t)start, (uint16_t)(addr-1));
+	debug(2, "ROM image flashed from %X to %X.\n", (uint16_t)start, (uint16_t)(addr-1));
 }

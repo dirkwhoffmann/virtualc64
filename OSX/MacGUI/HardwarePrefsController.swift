@@ -89,7 +89,8 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func SIDEngineAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
-        c64.setReSID(sender.selectedTag() == 1);
+        c64.setReSID(sender.selectedTag() == 1)
+        // parent.waveformView.initAutoScaler()
         update()
     }
     
@@ -137,13 +138,15 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
+        c64.suspend()
+ 
         // VIC
         c64.setNTSC(false)
         
         // SID
         c64.setReSID(true)
         c64.setChipModel(1)
-        c64.setAudioFilter(false)
+        c64.setAudioFilter(true)
         c64.setSamplingMethod(0)
 
         // VC1541
@@ -153,6 +156,7 @@ class HardwarePrefsController : UserDialogController {
         // Mouse
         c64.setMouseModel(0)
 
+        c64.resume()
         update()
     }
     

@@ -214,7 +214,7 @@ CIA::peek(uint16_t addr)
 }
 
 uint8_t
-CIA::spy(uint16_t addr)
+CIA::snoop(uint16_t addr)
 {
     bool running;
 
@@ -636,17 +636,15 @@ CIA::dumpState()
     msg("            Data port A : %02X\n", info.portA.reg);
     msg("  Data port direction A : %02X\n", info.portA.dir);
 	msg("     Control register A : %02X\n", CRA);
-	msg("     Timer A interrupts : %s\n",   info.timerA.interruptMask ? "enabled" : "disabled");
 	msg("\n");
 	msg("              Counter B : %04X\n", info.timerB.count);
 	msg("                Latch B : %04X\n", info.timerB.latch);
 	msg("            Data port B : %02X\n", info.portB.reg);
 	msg("  Data port direction B : %02X\n", info.portB.dir);
 	msg("     Control register B : %02X\n", CRB);
-	msg("     Timer B interrupts : %s\n",   info.timerB.interruptMask ? "enabled" : "disabled");
 	msg("\n");
-	msg("  Interrupt control reg : %02X\n", ICR);
-	msg("     Interrupt mask reg : %02X\n", IMR);
+	msg("  Interrupt control reg : %02X\n", info.icr);
+	msg("     Interrupt mask reg : %02X\n", info.imr);
 	msg("\n");	
 	tod.dumpState();
 }
@@ -656,28 +654,35 @@ CIA::getInfo()
 {
     CIAInfo info;
     
+    info.portA.port = PA;
     info.portA.reg = PRA;
     info.portA.dir = DDRA;
-
+    
+    info.portB.port = PB;
     info.portB.reg = PRB;
     info.portB.dir = DDRB;
 
-    info.timerA.running = (delay & CountA3);
-    info.timerA.oneShot = CRA & 0x08;
-    info.timerA.interruptMask = IMR & 0x01;
-    info.timerA.interruptData = ICR & 0x01;
-    info.timerA.count = LO_HI(spy(0x04), spy(0x05));
+    info.timerA.count = LO_HI(snoop(0x04), snoop(0x05));
     info.timerA.latch = latchA;
+    info.timerA.running = (delay & CountA3);
+    info.timerA.toggle = CRA & 0x04;
+    info.timerA.pbout = CRA & 0x02;
+    info.timerA.oneShot = CRA & 0x08;
     
-    info.timerB.running = (delay & CountB3);
-    info.timerB.oneShot = CRB & 0x08;
-    info.timerB.interruptMask = IMR & 0x02;
-    info.timerB.interruptData = ICR & 0x02;
+    info.timerB.count = LO_HI(snoop(0x06), snoop(0x07));
     info.timerB.latch = latchB;
-    info.timerB.count = LO_HI(spy(0x06), spy(0x07));
+    info.timerB.running = (delay & CountB3);
+    info.timerB.toggle = CRB & 0x04;
+    info.timerB.pbout = CRB & 0x02;
+    info.timerB.oneShot = CRB & 0x08;
 
+    info.icr = ICR;
+    info.imr = IMR;
+    info.intLine = INT;
+    
     info.tod = tod.getInfo();
-    info.todInterruptMask = ICR & 0x04;
+    info.todIntEnable = ICR & 0x04;
+    
     return info;
 }
 

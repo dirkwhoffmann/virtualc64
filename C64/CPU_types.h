@@ -61,6 +61,25 @@ typedef enum {
     SOFT_BREAKPOINT = 0x02
 } Breakpoint;
 
+/*! @brief    CPU info
+ *  @details  Used by getInfo() to collect debug information
+ */
+typedef struct {
+    uint64_t cycle;
+    uint16_t pc;
+    uint8_t a;
+    uint8_t x;
+    uint8_t y;
+    uint8_t sp;
+    bool nFlag;
+    bool vFlag;
+    bool bFlag;
+    bool dFlag;
+    bool iFlag;
+    bool zFlag;
+    bool cFlag;
+} CPUInfo;
+    
 //! @brief    Disassembled instruction
 typedef struct {
     uint16_t addr; 

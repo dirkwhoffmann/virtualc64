@@ -21,7 +21,6 @@
 #define _SNAPSHOT_INC
 
 #include "Container.h"
-#include "VIC_globals.h"
 
 // Forward declarations
 class C64;

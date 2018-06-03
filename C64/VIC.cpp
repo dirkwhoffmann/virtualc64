@@ -23,6 +23,14 @@
 
 #include "C64.h"
 
+#define SPR0 0x01
+#define SPR1 0x02
+#define SPR2 0x04
+#define SPR3 0x08
+#define SPR4 0x10
+#define SPR5 0x20
+#define SPR6 0x40
+#define SPR7 0x80
 
 VIC::VIC()
 {
@@ -197,9 +205,67 @@ VIC::dumpState()
 	msg("\n");
 }
 
+VICInfo
+VIC::getInfo()
+{
+    VICInfo info;
+    
+    info.rasterline = c64->rasterline;
+    info.cycle = c64->rasterlineCycle;
+    info.xCounter = xCounter;
+    info.badLine = badLineCondition;
+    info.ba = (BAlow == 0);
+    info.displayMode = getDisplayMode();
+    info.borderColor = p.borderColor;
+    info.backgroundColor0 = cp.backgroundColor[0];
+    info.backgroundColor1 = cp.backgroundColor[1];
+    info.backgroundColor2 = cp.backgroundColor[2];
+    info.backgroundColor3 = cp.backgroundColor[3];
+    info.screenGeometry = getScreenGeometry();
+    info.dx = getHorizontalRasterScroll();
+    info.dy = getVerticalRasterScroll();
+    info.verticalFrameFlipflop = p.verticalFrameFF;
+    info.horizontalFrameFlipflop = p.mainFrameFF;
+    info.memoryBankAddr = getMemoryBankAddr();
+    info.screenMemoryAddr = getScreenMemoryAddr();
+    info.characterMemoryAddr = getCharacterMemoryAddr();
+    info.imr = imr;
+    info.irr = irr;
+    info.spriteCollisionIrqEnabled = irqOnSpriteSpriteCollision();
+    info.backgroundCollisionIrqEnabled = irqOnSpriteBackgroundCollision();
+    info.rasterIrqEnabled = rasterInterruptEnabled();
+    info.irqRasterline = rasterInterruptLine();
+    info.irqLine = (imr & irr) != 0;
+    
+    return info;
+}
+
+SpriteInfo
+VIC::getSpriteInfo(unsigned i)
+{
+    SpriteInfo info;
+    
+    info.enabled = spriteEnabled(i);
+    info.x = getSpriteX(i);
+    info.y = getSpriteY(i);
+    info.color = getSpriteColor(i);
+    info.multicolor = spriteIsMulticolor(i);
+    info.extraColor1 = getSpriteExtraColor1();
+    info.extraColor2 = getSpriteExtraColor2();
+    info.expandX = spriteWidthIsDoubled(i);
+    info.expandY = spriteHeightIsDoubled(i);
+    info.priority = spritePriority(i);
+    info.collidesWithSprite = spriteCollidesWithSprite(i);
+    info.collidesWithBackground = spriteCollidesWithBackground(i);
+    
+    return info;
+}
+
 void
 VIC::setChipModel(VICChipModel model)
 {
+    debug(2, "VIC::setChipModel\n");
+
     chipModel = model;
     pixelEngine.resetScreenBuffers();
     c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
@@ -592,7 +658,7 @@ VIC::peek(uint16_t addr)
 }
 
 uint8_t
-VIC::spy(uint16_t addr)
+VIC::snoop(uint16_t addr)
 {
     assert(addr <= 0x003F);
     
@@ -612,7 +678,7 @@ VIC::spy(uint16_t addr)
 void
 VIC::poke(uint16_t addr, uint8_t value)
 {
-	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
+	assert(addr < 0x40);
 	
 	switch(addr) {		
         case 0x00: // SPRITE_0_X

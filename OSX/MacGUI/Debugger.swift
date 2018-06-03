@@ -7,311 +7,257 @@
 
 import Foundation
 
-//
-// CPU debug panel
-//
-
 extension MyController {
- 
-    // Registers
+
+    func setupDebugger() {
+        
+        selectedVoice = 0
+        
+        // Start with hexadecimal number format
+        setHexadecimalAction(self)
+        
+        // Create and assign binary number formatter
+        let bF = MyFormatter.init(radix: 2, min: 0, max: 255)
+        ciaPAbinary.formatter = bF
+        ciaPRA.formatter = bF
+        ciaDDRA.formatter = bF
+        ciaPBbinary.formatter = bF
+        ciaPRB.formatter = bF
+        ciaDDRB.formatter = bF
+        ciaIcrBinary.formatter = bF
+        ciaImrBinary.formatter = bF
+    }
     
-    func _pcAction(_ value: UInt16) {
+    // Updates all visible values in the debug panel
+    func refresh() {
         
-        let undoValue = c64.cpu.pc()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._pcAction(undoValue)
+        if let id = debugPanel.selectedTabViewItem?.identifier as? String {
+            switch id {
+            case "CPU":
+                refreshCPU()
+                break
+            case "MEM":
+                memTableView.refresh()
+                break
+            case "CIA":
+                refreshCIA()
+                break
+            case "VIC":
+                refreshVIC()
+                break
+            case "SID":
+                refreshSID()
+                break
+            default:
+                break
+            }
         }
-        undoManager?.setActionName("Set Program Counter")
+    }
+    
+    func refreshFormatters(hex: Bool) {
+
+        func assignFormatter(_ formatter: Formatter, _ controls: [NSControl]) {
+            for control in controls {
+                control.abortEditing()
+                control.formatter = formatter
+                control.needsDisplay = true
+            }
+        }
         
-        c64.cpu.setPC(value)
+        // Create formatters
+        let fmt3 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0x7)
+        let fmt4 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xF)
+        let fmt8 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFF)
+        let fmt9 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0x1FF)
+        let fmt12 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFFF)
+        let fmt16 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFFFF)
+
+        // Assign formatters
+        assignFormatter(fmt3,
+                        [vicDx, vicDy])
+        
+        assignFormatter(fmt4,
+                        [attackRate, decayRate, sustainRate, releaseRate,
+                         filterResonance, volume])
+        
+        assignFormatter(fmt8,
+                        [sp, a, x, y,
+                         ciaPA, ciaPB,
+                         todHours, todMinutes, todSeconds, todTenth,
+                         alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
+                         ciaImr, ciaIcr,
+                         vicCycle, spriteY,
+                         potX, potY])
+    
+        assignFormatter(fmt9,
+                        [vicRasterline, vicIrqRasterline, spriteX, vicXCounter])
+
+        assignFormatter(fmt12,
+                        [pulseWidth, filterCutoff])
+
+        assignFormatter(fmt16,
+                        [pc, breakAt,
+                         ciaTimerA, ciaLatchA, ciaTimerB, ciaLatchB,
+                         frequency])
+        
+        let columnFormatters = [
+            "addr" : fmt16,
+            "hex0" : fmt8,
+            "hex1" : fmt8,
+            "hex2" : fmt8,
+            "hex3" : fmt8
+        ]
+
+        for (column,formatter) in columnFormatters {
+            let columnId = NSUserInterfaceItemIdentifier(rawValue: column)
+            if let tableColumn = memTableView.tableColumn(withIdentifier: columnId) {
+                if let cell = tableColumn.dataCell as? NSCell {
+                    cell.formatter = formatter
+                }
+            }
+        }
+        
         refresh()
     }
     
-    @IBAction func pcAction(_ sender: Any!) {
+    func setUserEditing(_ enabled: Bool) {
         
-        let sender = sender as! NSTextField
-        let value = UInt16(sender.intValue)
-        if (value != c64.cpu.pc()) {
-            _pcAction(value)
+        let controls:[NSControl] = [
+            // CPU panel
+            pc, sp, a, x, y,
+            nflag, zflag, cflag, iflag, bflag, dflag, vflag,
+            
+            // CIA panel
+            ciaPRA, ciaPRB, ciaDDRA, ciaDDRB, ciaLatchA, ciaLatchB,
+            
+            // SID panel
+            frequency, pulseWidth, attackRate, decayRate, sustainRate, releaseRate,
+            filterCutoff, filterResonance,
+            volume,
+            
+            // VIC panel
+            vicDx, vicDy, vicIrqRasterline,
+            spriteX, spriteY
+        ]
+  
+        for control in controls {
+            control.isEnabled = enabled
+        }
+    
+        // Enable / disable table columns
+        let columns = ["hex0", "hex1", "hex2", "hex3"]
+        
+        for column in columns {
+            let columnId = NSUserInterfaceItemIdentifier(rawValue: column)
+            if let tableColumn = memTableView.tableColumn(withIdentifier: columnId) {
+                tableColumn.isEditable = enabled
+            }
+        }
+        
+    // Change image and state of debugger control buttons
+        if !c64.isRunnable() {
+            stopAndGoButton.image = NSImage.init(named: NSImage.Name(rawValue: "play32"))
+            stopAndGoButton.isEnabled = false
+            stepIntoButton.isEnabled = false
+            stepOverButton.isEnabled = false
+        } else if c64.isHalted() {
+            stopAndGoButton.image = NSImage.init(named: NSImage.Name(rawValue: "play32"))
+            stopAndGoButton.isEnabled = true
+            stepIntoButton.isEnabled = true
+            stepOverButton.isEnabled = true
+        } else {
+            stopAndGoButton.image = NSImage.init(named: NSImage.Name(rawValue: "pause32"))
+            stopAndGoButton.isEnabled = true
+            stepIntoButton.isEnabled = false
+            stepOverButton.isEnabled = false
         }
     }
     
-    func _aAction(_ value: UInt8) {
-        
-        let undoValue = c64.cpu.a()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._aAction(undoValue)
-        }
-        undoManager?.setActionName("Set Accumulator")
-        
-        c64.cpu.setA(value)
-        refresh()
-    }
-    
-    @IBAction func aAction(_ sender: Any!) {
-        
-        let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.a()) {
-            _aAction(value)
-        }
-    }
-    
-    func _xAction(_ value: UInt8) {
-        
-        let undoValue = c64.cpu.x()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._xAction(undoValue)
-        }
-        undoManager?.setActionName("Set X Register")
-        
-        c64.cpu.setX(value)
-        refresh()
-    }
-    
-    @IBAction func xAction(_ sender: Any!) {
-        
-        let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.x()) {
-            _xAction(value)
-        }
+    func enableUserEditing() {
+        setUserEditing(true)
     }
 
-    func _yAction(_ value: UInt8) {
-        
-        let undoValue = c64.cpu.y()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._yAction(undoValue)
-        }
-        undoManager?.setActionName("Set Y Register")
-        
-        c64.cpu.setY(value)
-        refresh()
+    func disableUserEditing() {
+        setUserEditing(false)
     }
-    
-    @IBAction func yAction(_ sender: Any!) {
-        
-        let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.y()) {
-            _yAction(value)
-        }
-    }
-    
-    func _spAction(_ value: UInt8) {
-        
-        let undoValue = c64.cpu.sp()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._spAction(undoValue)
-        }
-        undoManager?.setActionName("Set Stack Pointer")
-        
-        c64.cpu.setSP(value)
-        refresh()
-    }
-    
-    @IBAction func spAction(_ sender: Any!) {
-        
-        let sender = sender as! NSTextField
-        let value = UInt8(sender.intValue)
-        if (value != c64.cpu.sp()) {
-            _spAction(value)
-        }
-    }
-    
-    // Processor flags
-    
-    func _nAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.nflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._nAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Negative Flag")
-        
-        c64.cpu.setNflag(value)
-        refresh()
-    }
-    
-    @IBAction func NAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _nAction(sender.intValue != 0)
-    }
+}
 
-    func _zAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.zflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._zAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Zero Flag")
-        
-        c64.cpu.setZflag(value)
-        refresh()
-    }
-    
-    @IBAction func ZAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _zAction(sender.intValue != 0)
-    }
+extension MyController : NSTabViewDelegate {
 
-    func _cAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.cflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._cAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Carry Flag")
-        
-        c64.cpu.setCflag(value)
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         refresh()
-    }
-    
-    @IBAction func CAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _cAction(sender.intValue != 0)
-    }
-    
-    func _iAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.iflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._iAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Interrupt Flag")
-        
-        c64.cpu.setIflag(value)
-        refresh()
-    }
-    
-    @IBAction func IAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _iAction(sender.intValue != 0)
-    }
-    
-    func _bAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.bflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._bAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Break Flag")
-        
-        c64.cpu.setBflag(value)
-        refresh()
-    }
-    
-    @IBAction func BAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _bAction(sender.intValue != 0)
-    }
-    
-    func _dAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.dflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._dAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Decimal Flag")
-        
-        c64.cpu.setDflag(value)
-        refresh()
-    }
-    
-    @IBAction func DAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _dAction(sender.intValue != 0)
-    }
-    
-    func _vAction(_ value: Bool) {
-        
-        let undoValue = c64.cpu.vflag()
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._vAction(undoValue)
-        }
-        undoManager?.setActionName("Toggle Overflow Flag")
-        
-        c64.cpu.setVflag(value)
-        refresh()
-    }
-    
-    @IBAction func VAction(_ sender: Any!) {
-        
-        let sender = sender as! NSButton
-        _vAction(sender.intValue != 0)
-    }
-    
-    func _setBreakpointAction(_ value: UInt16) {
-        
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._deleteBreakpointAction(value)
-        }
-        undoManager?.setActionName("Set Breakpoint")
-        
-        c64.cpu.setHardBreakpoint(value)
-        cpuTableView.reloadData()
-    }
- 
-    func _deleteBreakpointAction(_ value: UInt16) {
-        
-        undoManager?.registerUndo(withTarget: self) {
-            me in me._setBreakpointAction(value)
-        }
-        undoManager?.setActionName("Set Breakpoint")
-        
-        c64.cpu.deleteHardBreakpoint(value)
-        cpuTableView.reloadData()
-    }
-    
-    @IBAction func breakpointAction(_ sender: Any!) {
-        
-        let sender = sender as! NSTextField
-        let value = UInt16(sender.intValue)
-        if !c64.cpu.hardBreakpoint(value) {
-            _setBreakpointAction(value)
-        }
-    }
-    
-    @objc func refreshCPU() {
-
-        pc.intValue = Int32(c64.cpu.pc())
-        a.intValue = Int32(c64.cpu.a())
-        x.intValue = Int32(c64.cpu.x())
-        y.intValue = Int32(c64.cpu.y())
-        sp.intValue = Int32(c64.cpu.sp())
-        nflag.intValue = c64.cpu.nflag() ? 1 : 0
-        vflag.intValue = c64.cpu.vflag() ? 1 : 0
-        bflag.intValue = c64.cpu.bflag() ? 1 : 0
-        dflag.intValue = c64.cpu.dflag() ? 1 : 0
-        iflag.intValue = c64.cpu.iflag() ? 1 : 0
-        zflag.intValue = c64.cpu.zflag() ? 1 : 0
-        cflag.intValue = c64.cpu.cflag() ? 1 : 0
     }
 }
 
 //
-// Memory debug panel
+// Panel independent controls
 //
 
 extension MyController {
-
-    @IBAction func setMemSource(_ sender: Any!) {
+    
+    @IBAction func stepIntoAction(_ sender: Any!) {
         
-        let sender = sender as! NSPopUpButton
-        memTableView.setMemView(sender.selectedTag())
+        document?.updateChangeCount(.changeDone)
+        c64.step()
+        refresh()
+    }
+  
+    @IBAction func stepOverAction(_ sender: Any!) {
+
+        document?.updateChangeCount(.changeDone)
+        c64.stepOver()
+        refresh()
     }
     
-    @IBAction func setHighlighting(_ sender: Any!) {
+    @IBAction func stopAndGoAction(_ sender: Any!) {
+    
+        document?.updateChangeCount(.changeDone)
+        if c64.isHalted() {
+            c64.run()
+        } else {
+            c64.halt()
+            debugger.open()
+        }
+        refresh()
+    }
+    
+    @IBAction func pauseAction(_ sender: Any!) {
         
-        let sender = sender as! NSPopUpButton
-        memTableView.setHighlighting(sender.selectedTag())
+        if c64.isRunning() {
+            c64.halt()
+            debugger.open()
+        }
+        refresh()
+    }
+    
+    @IBAction func continueAction(_ sender: Any!) {
+        
+        document?.updateChangeCount(.changeDone)
+        if c64.isHalted() {
+            c64.run()
+        }
+        refresh()
+    }
+    
+    @IBAction func setDecimalAction(_ sender: Any!) {
+  
+        hex = false
+        cpuTableView.setHex(false)
+        refreshFormatters(hex: false)
+    }
+    
+    @IBAction func setHexadecimalAction(_ sender: Any!) {
+        
+        hex = true
+        cpuTableView.setHex(true)
+        refreshFormatters(hex: true)
     }
 }
+
+
+
+
+
+
+
 

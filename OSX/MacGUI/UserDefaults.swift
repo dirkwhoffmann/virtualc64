@@ -59,7 +59,7 @@ extension MyController {
 
 
     /// Registers the default values of all user definable properties
-    @objc static func registerUserDefaults() {
+    static func registerUserDefaults() {
         
         track()
         registerEmulatorUserDefaults()
@@ -130,7 +130,7 @@ extension MyController {
     // --------------------------------------------------------------------------------
 
     /// Loads all user defaults from database
-    @objc func loadUserDefaults() {
+    func loadUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -142,7 +142,7 @@ extension MyController {
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
-    @objc func loadEmulatorUserDefaults() {
+    func loadEmulatorUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -169,7 +169,7 @@ extension MyController {
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
-    @objc func loadHardwareUserDefaults() {
+    func loadHardwareUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -198,7 +198,7 @@ extension MyController {
     // --------------------------------------------------------------------------------
 
     /// Saves all user defaults from database
-    @objc func saveUserDefaults() {
+    func saveUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -210,7 +210,7 @@ extension MyController {
     }
     
     /// Saves the user defaults for all properties that are set in the hardware dialog
-    @objc func saveEmulatorUserDefaults() {
+    func saveEmulatorUserDefaults() {
      
         track()
         let defaults = UserDefaults.standard
@@ -233,7 +233,7 @@ extension MyController {
     }
     
     /// Saves the user defaults for all properties that are set in the hardware dialog
-    @objc func saveHardwareUserDefaults() {
+    func saveHardwareUserDefaults() {
         
         track()
         let defaults = UserDefaults.standard
@@ -246,7 +246,7 @@ extension MyController {
         defaults.set(c64.vc1541.soundMessagesEnabled(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
-    
+    // ◉◎▪▫▮▯01
     func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard

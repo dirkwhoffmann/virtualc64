@@ -27,7 +27,7 @@ struct MemoryHighlighting {
     static let ioCia = 9
 }
 
-@objc class MemTableView : NSTableView {
+class MemTableView : NSTableView {
     
     var c : MyController? = nil
     var cbmfont = NSFont.init(name: "C64ProMono", size: 9)
@@ -41,7 +41,7 @@ struct MemoryHighlighting {
         target = self
     }
     
-    @objc func refresh() {
+    func refresh() {
         
         reloadData()
     }
@@ -57,7 +57,7 @@ struct MemoryHighlighting {
     }
     
     // Returns the memory source for the specified address
-    func source(_ addr: UInt16) -> MemorySource {
+    func source(_ addr: UInt16) -> MemoryType {
         
         switch memView {
         case MemoryView.ramView:
@@ -144,7 +144,7 @@ extension MemTableView : NSTableViewDataSource {
             var str = ""
             let src = source(addr)
             for i in 0...3 {
-                var byte = Int(c!.c64.mem.spy(addr + UInt16(i), source: src))
+                var byte = Int(c!.c64.mem.snoop(addr + UInt16(i), source: src))
                 if (byte < 32 || byte > 90) { byte = 46 }
                 let scalar = UnicodeScalar(byte + 0xE000)
                 str.unicodeScalars.append(scalar!)
@@ -168,7 +168,7 @@ extension MemTableView : NSTableViewDataSource {
                 break
             }
             let src = source(addr)
-            return c?.c64.mem.spy(addr, source: src) ?? ""
+            return c?.c64.mem.snoop(addr, source: src) ?? ""
             
         default:
             break
@@ -211,14 +211,14 @@ extension MemTableView : NSTableViewDelegate {
         default: return
         }
         
-        let src = source(addr)
-        if (src == M_ROM || src == M_CRTLO || src == M_CRTHI) {
+        let target = source(addr)
+        if (target == M_CRTLO || target == M_CRTHI) {
             NSSound.beep()
             return
         }
         if let value = object as? UInt8 {
-            track("Poking \(value) to \(addr) (src = \(src))")
-            c?.c64.mem.poke(to: addr, value: value, memtype: src)
+            track("Poking \(value) to \(addr) (target = \(target))")
+            c?.c64.mem.poke(addr, value: value, target: target)
         }
     }
 }

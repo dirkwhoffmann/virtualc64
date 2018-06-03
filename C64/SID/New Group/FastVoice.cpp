@@ -31,16 +31,16 @@
 #include "FastSID.h"
 #include "waves.h"
 
-uint16_t Voice::wavetable10[2][4096];
-uint16_t Voice::wavetable20[2][4096];
-uint16_t Voice::wavetable30[2][4096];
-uint16_t Voice::wavetable40[2][8192];
-uint16_t Voice::wavetable50[2][8192];
-uint16_t Voice::wavetable60[2][8192];
-uint16_t Voice::wavetable70[2][8192];
-uint8_t Voice::noiseMSB[256];
-uint8_t Voice::noiseMID[256];
-uint8_t Voice::noiseLSB[256];
+uint16_t FastVoice::wavetable10[2][4096];
+uint16_t FastVoice::wavetable20[2][4096];
+uint16_t FastVoice::wavetable30[2][4096];
+uint16_t FastVoice::wavetable40[2][8192];
+uint16_t FastVoice::wavetable50[2][8192];
+uint16_t FastVoice::wavetable60[2][8192];
+uint16_t FastVoice::wavetable70[2][8192];
+uint8_t FastVoice::noiseMSB[256];
+uint8_t FastVoice::noiseMID[256];
+uint8_t FastVoice::noiseLSB[256];
 
 
 // Table for pseudo-exponential ADSR calculations
@@ -49,7 +49,7 @@ static uint32_t exptable[6] =
     0x30000000, 0x1c000000, 0x0e000000, 0x08000000, 0x04000000, 0x00000000
 };
 
-Voice::Voice()
+FastVoice::FastVoice()
 {
     setDescription("Voice");
     debug(3, "  Creating Voice at address %p...\n", this);
@@ -76,13 +76,13 @@ Voice::Voice()
     registerSnapshotItems(items, sizeof(items));
 }
 
-Voice::~Voice()
+FastVoice::~FastVoice()
 {
-    debug(3, "  Releasing Voice %d...\n", nr);
+    debug(3, "  Releasing FastVoice %d...\n", nr);
 }
 
 void
-Voice::reset()
+FastVoice::reset()
 {
     VirtualComponent::reset();
     updateWaveTablePtr(); 
@@ -90,14 +90,14 @@ Voice::reset()
 }
 
 void
-Voice::loadFromBuffer(uint8_t **buffer)
+FastVoice::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
     updateWaveTablePtr();
 }
 
 void
-Voice::initWaveTables()
+FastVoice::initWaveTables()
 {
     // Most tables are the same for SID6581 and SID8580, so let's initialize both.
     for (unsigned m = 0; m < 2; m++) {
@@ -132,7 +132,7 @@ Voice::initWaveTables()
 }
 
 void
-Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
+FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
 {
     assert(prevVoice != NULL);
     
@@ -143,7 +143,7 @@ Voice::init(FastSID *owner, unsigned voiceNr, Voice *prevVoice)
 }
 
 void
-Voice::updateWaveTablePtr()
+FastVoice::updateWaveTablePtr()
 {
     SIDChipModel chipModel = fastsid->getChipModel(); 
     assert(chipModel == MOS_6581 || chipModel == MOS_8580);
@@ -189,7 +189,7 @@ Voice::updateWaveTablePtr()
 }
 
 void
-Voice::updateInternals(bool gateBitFlipped)
+FastVoice::updateInternals(bool gateBitFlipped)
 {
     updateWaveTablePtr();
     
@@ -286,7 +286,7 @@ Voice::updateInternals(bool gateBitFlipped)
 }
 
 void
-Voice::setFilterType(uint8_t type)
+FastVoice::setFilterType(uint8_t type)
 {
     if (filterType == type)
         return;
@@ -297,7 +297,7 @@ Voice::setFilterType(uint8_t type)
 }
 
 void
-Voice::set_adsr(uint8_t phase)
+FastVoice::set_adsr(uint8_t phase)
 {
     int i;
     
@@ -351,7 +351,7 @@ Voice::set_adsr(uint8_t phase)
 }
 
 void
-Voice::trigger_adsr()
+FastVoice::trigger_adsr()
 {
     switch (adsrm) {
             
@@ -371,7 +371,7 @@ Voice::trigger_adsr()
 }
 
 uint32_t
-Voice::doosc()
+FastVoice::doosc()
 {
     if (waveform() == FASTSID_NOISE) {
         return ((uint32_t)NVALUE(NSHIFT(lsfr, waveTableCounter >> 28))) << 7;
@@ -391,7 +391,7 @@ Voice::doosc()
 }
 
 void
-Voice::applyFilter()
+FastVoice::applyFilter()
 {
     float sample, sample2;
     

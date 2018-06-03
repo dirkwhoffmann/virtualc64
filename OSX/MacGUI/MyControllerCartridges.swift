@@ -9,7 +9,7 @@ import Foundation
 
 extension MyController {
 
-    @discardableResult @objc func mountCartridge() -> Bool {
+    @discardableResult func mountCartridge() -> Bool {
     
         // Does this document have an attachment?
         let document = self.document as! MyDocument

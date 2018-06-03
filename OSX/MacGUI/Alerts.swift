@@ -39,7 +39,7 @@ extension MyDocument {
     }
 }
 
-public extension MyController {
+extension MyController {
     
     @discardableResult
     func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {
@@ -76,7 +76,7 @@ public extension MyController {
         alert.runModal()
     }
     
-    @objc func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
+    func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
         
         let name = container.cartridgeTypeName() as String
         

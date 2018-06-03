@@ -1,5 +1,5 @@
 /*
- * (C) 2011 Dirk W. Hoffmann. All rights reserved.
+ * (C) Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,15 +23,3 @@
 #import <simd/simd.h>
 
 #import "C64Proxy.h"
-
-#import "Formatter.h"
-
-#import "MyController.h"
-#import "MyControllerDebugPanel.h"
-#import "MyControllerCiaPanel.h"
-#import "MyControllerVicPanel.h"
-
-
-
-
-

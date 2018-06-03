@@ -18,7 +18,6 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 #ifndef _CIA_H
 #define _CIA_H
 
@@ -94,10 +93,10 @@ class CIA : public VirtualComponent {
 public:
     
 	//! @brief    Start address of the CIA I/O space (CIA 1 and CIA 2)
-	static const uint16_t CIA_START_ADDR = 0xDC00;
+	// static const uint16_t CIA_START_ADDR = 0xDC00;
 
     //! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
-	static const uint16_t CIA_END_ADDR = 0xDDFF;
+	// static const uint16_t CIA_END_ADDR = 0xDDFF;
         
 	//! @brief    Timer A counter
 	uint16_t counterA;
@@ -329,19 +328,23 @@ private:
     
 private:
 
-    //! @brief    Peek function for the CIA's I/O memory
+    //! @brief    Peeks a value from a CIA register.
     uint8_t peek(uint16_t addr);
+
+public:
     
-    //! @brief    Same as peek, but without side affects.
-    uint8_t spy(uint16_t addr);
+    //! @brief    Peeks a value from a CIA register without causing side effects.
+    uint8_t snoop(uint16_t addr);
     
-    //! @brief    Poke function for the CIA's I/O memory
+    //! @brief    Pokes a value into a CIA register.
     void poke(uint16_t addr, uint8_t value);
     
     
     //
     //! @functiongroup Running the device
     //
+    
+private:
     
 	//! @brief    Executes the CIA for one cycle
 	void executeOneCycle();

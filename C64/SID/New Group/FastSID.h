@@ -30,7 +30,7 @@
 #define _FASTSID_INC
 
 #include "VirtualComponent.h"
-#include "FastSidVoice.h"
+#include "FastVoice.h"
 
 
 //! The virtual sound interface device (SID)
@@ -53,7 +53,7 @@ public:
 private:
     
     //! @brief   The three SID voices
-    Voice voice[3];
+    FastVoice voice[3];
         
     //! @brief   Chip model.
     SIDChipModel chipModel;
@@ -124,8 +124,11 @@ public:
     //! Dump internal state to console
     void dumpState();
     
-    //! @brief    Gathers the debug information which is printed out by dumpState().
+    //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();
+    
+    //! @brief    Gathers all debug information for a specific voice
+    VoiceInfo getVoiceInfo(unsigned voice);
     
     //! Special peek function for the I/O memory range.
     uint8_t peek(uint16_t addr);
@@ -208,9 +211,9 @@ private:
     //! @brief    Returns true iff the specified voice schould not be filtered
     bool filterOff(unsigned voice) { return GET_BIT(sidreg[0x17], voice) == 0; }
 
-    //! @brief    Returns true iff the EXTERNAL filter bit is set
-    bool filterExtBit() { return sidreg[0x17] & 0x08; }
-
+    //! @brief    Returns true iff the external filter bit is set
+    bool filterExtBit() { return GET_BIT(sidreg[0x17], 7) != 0; }
+    
     //! @brief   Returns the currently set filter type
     uint8_t filterType() { return sidreg[0x18] & 0x70; }
     

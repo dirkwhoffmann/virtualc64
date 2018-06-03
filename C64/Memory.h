@@ -46,49 +46,51 @@ public:
 
 private:
     
-	/*! @brief    Peeks a byte from memory.
-	 *  @details  This function is called by the CPU to read values from memory.
-     *            The peek source table determines where the value comes from.
-     *  @seealso  spy()
+    /*! @brief    Peeks a byte from memory.
+     *  @details  This function emulates a native read access including side effects.
+     *            The value is read from the specified peek source.
+     *  @seealso  snoop()
+     */
+    virtual uint8_t peek(uint16_t addr, MemoryType source) = 0;
+    
+    /*! @brief    Peeks a byte from memory.
+     *  @details  This function emulates a native read access including side effects.
+     *            The value is read is from the currently visible memory.
+     *  @seealso  snoop()
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
-	
-	//! @brief    Convenience wrapper for peek
-    uint8_t peek(uint8_t lo, uint8_t hi) { return peek(LO_HI(lo, hi)); }
 
 public:
     
-    //! @brief    Same as peek, but without side effects
-    virtual uint8_t spy(uint16_t addr) = 0;
+    /*! @brief    Peeks a byte from memory without causing side effects.
+     */
+    virtual uint8_t snoop(uint16_t addr, MemoryType source) = 0;
     
+    /*! @brief    Peeks a byte from memory without causing side effects.
+     */
+    virtual uint8_t snoop(uint16_t addr) = 0;
     
+
     //
     //! @functiongroup Writing into memory
     //
     
-private:
-
-	//! @brief    Writes a byte into RAM
-    virtual void pokeRam(uint16_t addr, uint8_t value) = 0;
-	
-    //! @brief    Writes a byte into ROM
-	virtual void pokeRom(uint16_t addr, uint8_t value) = 0;
-	
-public:
-	
     /*! @brief    Pokes a byte into memory.
-     *  @details  This function is called by the CPU to write into memory.
-     *            The poke target table determines where the value is written to.
+     *  @details  The value is written into the specified memory.
      */
-	virtual void poke(uint16_t addr, uint8_t value) = 0;
-
-	//! Load a ROM image into memory.
-	/*! All bytes of the specified file are read into the ROM memory, starting at the specified location.
-	   The function is unsafe, i.e., it does not check if the file is a valid ROM file or if the address 
-	   is adequate. Hence, call checkRomFile prior to this function. 
-	   \param filename Name of the file being loaded
-	   \param start Start address in ROM memory 
-	*/
+    virtual void poke(uint16_t addr, uint8_t value, MemoryType target) = 0;
+    
+    /*! @brief    Pokes a byte into memory.
+     *  @details  This function emulates a native write access including side effects.
+     */
+    virtual void poke(uint16_t addr, uint8_t value) = 0;
+    
+	//! Flashes a ROM image into memory.
+	/*! All bytes of the specified file are read into the ROM memory, starting at the
+     *  specified location. The function is unsafe, i.e., it does not check if the file
+     *  is a valid ROM file or if the address is adequate. Hence, call checkRomFile
+     *  prior to this function.
+     */
 	void flashRom(const char *filename, uint16_t start);
 };
 

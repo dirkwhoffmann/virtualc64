@@ -74,14 +74,77 @@ SIDBridge::setReSID(bool enable)
     useReSID = enable;
 }
 
+void
+SIDBridge::dumpState(SIDInfo info)
+{
+    uint8_t ft = info.filterType;
+    msg("        Volume: %d\n", info.volume);
+    msg("   Filter type: %s\n",
+        (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
+        (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
+        (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
+    msg("Filter cut off: %d\n\n", info.filterCutoff);
+    msg("Filter resonance: %d\n\n", info.filterResonance);
+    msg("Filter enable bits: %d\n\n", info.filterEnableBits);
+
+    for (unsigned i = 0; i < 3; i++) {
+        VoiceInfo vinfo = getVoiceInfo(i);
+        uint8_t wf = vinfo.waveform;
+        msg("Voice %d:       Frequency: %d\n", i, vinfo.frequency);
+        msg("             Pulse width: %d\n", vinfo.pulseWidth);
+        msg("                Waveform: %s\n",
+            (wf == FASTSID_NOISE) ? "NOISE" :
+            (wf == FASTSID_PULSE) ? "PULSE" :
+            (wf == FASTSID_SAW) ? "SAW" :
+            (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
+        msg("         Ring modulation: %s\n", vinfo.ringMod ? "yes" : "no");
+        msg("               Hard sync: %s\n", vinfo.hardSync ? "yes" : "no");
+        msg("             Attack rate: %d\n", vinfo.attackRate);
+        msg("              Decay rate: %d\n", vinfo.decayRate);
+        msg("            Sustain rate: %d\n", vinfo.sustainRate);
+        msg("            Release rate: %d\n", vinfo.releaseRate);
+    }
+}
+
 void 
 SIDBridge::dumpState()
 {
-    if (useReSID) {
-        resid.dumpState();
-    } else {
-        fastsid.dumpState();
-    }
+    msg("ReSID:\n");
+    msg("------\n");
+    dumpState(resid.getInfo());
+
+    msg("FastSID:\n");
+    msg("--------\n");
+    msg("    Chip model: %s\n",
+        (fastsid.getChipModel() == MOS_6581) ? "6581" :
+        (fastsid.getChipModel() == MOS_8580) ? "8580" : "???");
+    msg(" Sampling rate: %d\n", fastsid.getSampleRate());
+    msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
+    msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
+    msg("\n");
+    dumpState(fastsid.getInfo());
+    
+    resid.sid->voice[0].wave.reset(); // reset_shift_register();
+    resid.sid->voice[1].wave.reset(); // reset_shift_register();
+    resid.sid->voice[2].wave.reset(); // reset_shift_register();
+    resid.sid->voice[0].envelope.reset();
+    resid.sid->voice[1].envelope.reset();
+    resid.sid->voice[2].envelope.reset();
+}
+
+SIDInfo
+SIDBridge::getInfo()
+{
+    SIDInfo info = useReSID ? resid.getInfo() : fastsid.getInfo();
+    info.potX = c64->potXBits();
+    info.potY = c64->potYBits();
+    return info;
+}
+
+VoiceInfo
+SIDBridge::getVoiceInfo(unsigned voice)
+{
+    return useReSID ? resid.getVoiceInfo(voice) : fastsid.getVoiceInfo(voice);
 }
 
 void
@@ -121,7 +184,7 @@ SIDBridge::peek(uint16_t addr)
 }
 
 uint8_t
-SIDBridge::spy(uint16_t addr)
+SIDBridge::snoop(uint16_t addr)
 {
     assert(addr <= 0x1F);
     return peek(addr);
@@ -136,6 +199,9 @@ SIDBridge::poke(uint16_t addr, uint8_t value)
     // Keep both SID implementations up to date
     resid.poke(addr, value);
     fastsid.poke(addr, value);
+    
+    // Run ReSID for at least one cycle to make pipelined writes work
+    if (!useReSID) resid.clock();
 }
 
 void
@@ -296,12 +362,19 @@ SIDBridge::readData()
             volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
-    value = (volume <= 0) ? 0.0f : value * (float)volume / 100000.0f;
+    float divider = 75000.0f; // useReSID ? 100000.0f : 150000.0f;
+    value = (volume <= 0) ? 0.0f : value * (float)volume / divider;
     
     // Advance read pointer
     advanceReadPtr();
     
     return value;
+}
+
+float
+SIDBridge::snoopData(size_t offset)
+{
+    return ringBuffer[(readPtr + offset) % bufferSize];
 }
 
 void
@@ -368,12 +441,14 @@ SIDBridge::writeData(short *data, size_t count)
 void
 SIDBridge::handleBufferUnderflow()
 {
+    bufferUnderflows++;
     debug(3, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
 }
 
 void
 SIDBridge::handleBufferOverflow()
 {
+    bufferOverflows++;
     debug(3, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
     
     if (!c64->getWarp()) {

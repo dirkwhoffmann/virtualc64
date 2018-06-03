@@ -1,7 +1,8 @@
-/*
- * (C) 2008 - 2015 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2018 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -18,10 +19,6 @@
 
 #include "C64.h"
 
-// --------------------------------------------------------------------------------
-//                          Construction and Destruction
-// --------------------------------------------------------------------------------
-
 C64Memory::C64Memory()
 {	
 	setDescription("C64 memory");
@@ -34,7 +31,7 @@ C64Memory::C64Memory()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        
+
         { ram,          sizeof(ram),        KEEP_ON_RESET },
         { colorRam,     sizeof(colorRam),   KEEP_ON_RESET },
         { &rom[0xA000], 0x2000,             KEEP_ON_RESET  }, /* Basic ROM */
@@ -79,20 +76,17 @@ C64Memory::reset()
     }
     
     // Initialize peek source lookup table
-    for (unsigned i = 0x1; i <= 0xF; i++)
+    for (unsigned i = 0x1; i <= 0xF; i++) {
         peekSrc[i] = M_RAM;
+    }
     peekSrc[0x0] = M_PP;
     
     // Initialize poke source lookup table
-    for (unsigned i = 0x1; i <= 0xF; i++)
+    for (unsigned i = 0x1; i <= 0xF; i++) {
         pokeTarget[i] = M_RAM;
+    }
     pokeTarget[0x0] = M_PP;
 }
-
-
-// --------------------------------------------------------------------------------
-//                                      Input / Output
-// --------------------------------------------------------------------------------
 
 void 
 C64Memory::dumpState()
@@ -109,14 +103,13 @@ C64Memory::dumpState()
         if (c64->cpu.softBreakpoint(addr))
             msg("Soft breakpoint at %04X\n", addr);
 	}
-    
 	msg("\n");
 }
 
 
-// --------------------------------------------------------------------------------
-//                                      Rom Handling
-// --------------------------------------------------------------------------------
+//
+// Handling ROM images
+//
 
 bool C64Memory::isBasicRom(const char *filename)
 {
@@ -206,9 +199,9 @@ C64Memory::loadKernalRom(const char *filename)
 }
 
 
-// --------------------------------------------------------------------------------
-//                              Memory access methods
-// --------------------------------------------------------------------------------
+//
+// Accessing the memory
+//
 
 void 
 C64Memory::updatePeekPokeLookupTables()
@@ -221,7 +214,7 @@ C64Memory::updatePeekPokeLookupTables()
     c64->setUltimax(exrom && !game);
 
     // Set peek sources
-    MemorySource source;
+    MemoryType source;
     source = BankMap[index][0]; // 0x1000 - 0x7FFF (RAM or open)
     assert(source == M_RAM || source == M_NONE);
     peekSrc[0x1] = source;
@@ -255,11 +248,48 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0xF] = source;
 
     // Set poke targets
-    MemorySource target;
+    MemoryType target;
     target = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O or RAM)
     pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
 }
 
+uint8_t C64Memory::peek(uint16_t addr, MemoryType source)
+{
+    switch(source) {
+            
+        case M_RAM:
+            return ram[addr];
+            
+        case M_ROM:
+            return rom[addr];
+            
+        case M_IO:
+            return peekIO(addr);
+            
+        case M_CRTLO:
+        case M_CRTHI:
+            
+            return c64->expansionport.peek(addr);
+            
+        case M_PP:
+            
+            if (addr == 0x0000)
+                return c64->processorPort.readDirection();
+            
+            if (addr == 0x0001)
+                return c64->processorPort.read();
+            
+            return ram[addr];
+            
+        case M_NONE:
+            // what happens if RAM is unmapped?
+            return ram[addr];
+            
+        default:
+            assert(0);
+            return 0;
+    }
+}
 
 uint8_t C64Memory::peekIO(uint16_t addr)
 {
@@ -315,55 +345,9 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
-uint8_t C64Memory::spyIO(uint16_t addr)
+uint8_t C64Memory::snoop(uint16_t addr, MemoryType source)
 {
-    assert(addr >= 0xD000 && addr <= 0xDFFF);
-    
-    switch ((addr >> 8) & 0xF) {
-            
-        case 0x0: // VIC
-        case 0x1: // VIC
-        case 0x2: // VIC
-        case 0x3: // VIC
-            
-            return c64->vic.spy(addr & 0x003F);
-            
-        case 0x4: // SID
-        case 0x5: // SID
-        case 0x6: // SID
-        case 0x7: // SID
-            
-            return c64->sid.spy(addr & 0x001F);
-            
-        case 0xC: // CIA 1
-            
-            // Only the lower 4 bits are used for adressing the CIA I/O space.
-            // As a result, CIA's I/O memory repeats every 16 bytes.
-            return c64->cia1.spy(addr & 0x000F);
-            
-        case 0xD: // CIA 2
-            
-            return c64->cia2.spy(addr & 0x000F);
-            
-        case 0xE: // I/O space 1
-            
-            return c64->expansionport.readIO1(addr);
-            
-        case 0xF: // I/O space 2
-            
-            return c64->expansionport.readIO2(addr);
-
-        default:
-            
-            return peek(addr);
-    }
-}
-
-uint8_t C64Memory::peek(uint16_t addr)
-{
-    MemorySource src = peekSrc[addr >> 12];
-    
-    switch(src) {
+    switch(source) {
             
         case M_RAM:
             return ram[addr];
@@ -372,50 +356,7 @@ uint8_t C64Memory::peek(uint16_t addr)
             return rom[addr];
             
         case M_IO:
-            return peekIO(addr);
-            
-        case M_CRTLO:
-        case M_CRTHI:
-
-            return c64->expansionport.peek(addr);
-            
-        case M_PP:
-    
-            if (addr == 0x0000)
-                return c64->processorPort.readDirection();
-            
-            if (addr == 0x0001)
-                return c64->processorPort.read();
-            
-            return ram[addr];
-
-        case M_NONE:
-            // what happens if RAM is unmapped?
-            return ram[addr];
-
-        default:
-            assert(0);
-            return 0;
-    }
-}
-
-uint8_t C64Memory::spy(uint16_t addr)
-{
-    return spy(addr, peekSrc[addr >> 12]);
-}
-
-uint8_t C64Memory::spy(uint16_t addr, MemorySource src)
-{
-    switch(src) {
-            
-        case M_RAM:
-            return ram[addr];
-            
-        case M_ROM:
-            return rom[addr];
-            
-        case M_IO:
-            return spyIO(addr);
+            return snoopIO(addr);
             
         case M_CRTLO:
         case M_CRTHI:
@@ -441,9 +382,85 @@ uint8_t C64Memory::spy(uint16_t addr, MemorySource src)
     }
 }
 
-// --------------------------------------------------------------------------------
-//                                    Poke
-// --------------------------------------------------------------------------------
+uint8_t C64Memory::snoopIO(uint16_t addr)
+{
+    assert(addr >= 0xD000 && addr <= 0xDFFF);
+    
+    switch ((addr >> 8) & 0xF) {
+            
+        case 0x0: // VIC
+        case 0x1: // VIC
+        case 0x2: // VIC
+        case 0x3: // VIC
+            
+            return c64->vic.snoop(addr & 0x003F);
+            
+        case 0x4: // SID
+        case 0x5: // SID
+        case 0x6: // SID
+        case 0x7: // SID
+            
+            return c64->sid.snoop(addr & 0x001F);
+            
+        case 0xC: // CIA 1
+            
+            // Only the lower 4 bits are used for adressing the CIA I/O space.
+            // As a result, CIA's I/O memory repeats every 16 bytes.
+            return c64->cia1.snoop(addr & 0x000F);
+            
+        case 0xD: // CIA 2
+            
+            return c64->cia2.snoop(addr & 0x000F);
+            
+        case 0xE: // I/O space 1
+            
+            return c64->expansionport.readIO1(addr);
+            
+        case 0xF: // I/O space 2
+            
+            return c64->expansionport.readIO2(addr);
+
+        default:
+            
+            return peek(addr);
+    }
+}
+
+void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
+{
+    switch(target) {
+            
+        case M_RAM:
+            ram[addr] = value;
+            return;
+            
+        case M_IO:
+            pokeIO(addr, value);
+            return;
+            
+        case M_PP:
+            
+            if (addr == 0x0000) {
+                c64->processorPort.writeDirection(value);
+                return;
+            }
+            if (addr == 0x0001) {
+                c64->processorPort.write(value);
+                return;
+            }
+            
+            ram[addr] = value;
+            return;
+            
+        case M_ROM:
+            rom[addr] = value;
+            return;
+            
+        default:
+            assert(0);
+            return;
+    }
+}
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 {
@@ -504,67 +521,3 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
     
     assert(false);
 }
-
-void C64Memory::poke(uint16_t addr, uint8_t value)
-{	
-	MemorySource target = pokeTarget[addr >> 12];
-	    
-	switch(target) {
-			
-		case M_RAM:
-			ram[addr] = value;
-			return;
-			
-		case M_IO:
-			pokeIO(addr, value);
-			return;
-			
-		case M_PP:
-			
-            if (addr == 0x0000) {
-                c64->processorPort.writeDirection(value);
-                return;
-            }
-            if (addr == 0x0001) {
-                c64->processorPort.write(value);
-                return;
-            }
-    
-            ram[addr] = value;
-            return;
-
-		default:
-			assert(0);
-			return;
-	}
-}
-
-void
-C64Memory::pokeTo(uint16_t addr, uint8_t value, MemorySource target)
-{
-    switch(target) {
-            
-        case M_RAM:
-            ram[addr] = value;
-            return;
-            
-        case M_IO:
-            pokeIO(addr, value);
-            return;
-            
-        case M_PP:
-            
-            if (addr == 0x0000) {
-                c64->processorPort.writeDirection(value);
-            } else if (addr == 0x0001) {
-                c64->processorPort.write(value);
-            } else {
-                ram[addr] = value;
-            }
-            return;
-            
-        default: // ignore
-            return;
-    }
-}
-

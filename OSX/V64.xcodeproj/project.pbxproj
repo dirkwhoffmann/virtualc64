@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		023024000DC902A700F8818A /* AudioDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 023023FF0DC902A700F8818A /* AudioDevice.mm */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		38AF838C0C7BA24A00F6DBCE /* joystick32_speedlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */; };
-		5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
@@ -27,15 +25,16 @@
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
-		50169F03209E045A00CB3536 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EE8209E045300CB3536 /* envelope.cc */; };
-		50169F04209E045A00CB3536 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EE9209E045300CB3536 /* pot.cc */; };
-		50169F05209E045A00CB3536 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EEA209E045300CB3536 /* sid.cc */; };
-		50169F06209E045A00CB3536 /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EED209E045400CB3536 /* voice.cc */; };
-		50169F07209E045A00CB3536 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF1209E045500CB3536 /* wave.cc */; };
-		50169F08209E045A00CB3536 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF2209E045500CB3536 /* filter.cc */; };
-		50169F09209E045A00CB3536 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EF9209E045700CB3536 /* version.cc */; };
-		50169F0A209E045A00CB3536 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169EFE209E045800CB3536 /* dac.cc */; };
-		50169F0B209E045A00CB3536 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50169F00209E045800CB3536 /* extfilt.cc */; };
+		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
+		5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39120B5E3C50024B4AA /* voice.cc */; };
+		5015F3AD20B5E3C80024B4AA /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39A20B5E3C60024B4AA /* version.cc */; };
+		5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39B20B5E3C60024B4AA /* dac.cc */; };
+		5015F3AF20B5E3C80024B4AA /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39D20B5E3C60024B4AA /* wave.cc */; };
+		5015F3B020B5E3C80024B4AA /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A020B5E3C70024B4AA /* pot.cc */; };
+		5015F3B120B5E3C80024B4AA /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A620B5E3C70024B4AA /* filter.cc */; };
+		5015F3B220B5E3C80024B4AA /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A820B5E3C80024B4AA /* envelope.cc */; };
+		5015F3B320B5E3C80024B4AA /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3AA20B5E3C80024B4AA /* extfilt.cc */; };
+		5015F3B420B5E3C80024B4AA /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3AB20B5E3C80024B4AA /* sid.cc */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -44,7 +43,6 @@
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
-		50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
@@ -83,10 +81,16 @@
 		50355F35203E19E000163F80 /* keyRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F34203E19E000163F80 /* keyRed.png */; };
 		50355F37203E21F600163F80 /* joystick2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F36203E21F600163F80 /* joystick2.png */; };
 		50355F3D203E277000163F80 /* monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = 50355F3C203E276F00163F80 /* monitor.png */; };
+		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
+		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
+		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
+		5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9420B6C2AC000D9193 /* VICPanel.swift */; };
+		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
 		5039A31415BE89940038ACBC /* drive48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31315BE89940038ACBC /* drive48.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
+		503E199020C42C6D007E91F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Media.xcassets */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
 		50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* CRTContainer.cpp */; };
 		504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504606321BE4B99100463FD7 /* G64Archive.cpp */; };
@@ -101,7 +105,7 @@
 		504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A81BF71FD500B29BEB /* clock_red.png */; };
 		504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A91BF71FD500B29BEB /* pin_red.png */; };
 		504A22B01BF71FD500B29BEB /* pin_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22AA1BF71FD500B29BEB /* pin_black.png */; };
-		504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */; };
+		504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
 		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
@@ -123,11 +127,11 @@
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
-		5068AFC420852A550025776C /* CpuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5068AFC320852A550025776C /* CpuTableView.swift */; };
 		506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDBridge.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
+		506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* Formatter.swift */; };
 		506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54C720321C830026D8B4 /* RomDialogController.swift */; };
 		506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506D54C920321EDF0026D8B4 /* RomDialog.xib */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
@@ -140,7 +144,6 @@
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087D8512081FF8A0026BAD5 /* joystick32_sony.png */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
-		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5094197D0E426C13008D6F71 /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* cartridge.png */; };
@@ -161,7 +164,6 @@
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
-		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -200,6 +202,7 @@
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
 		50DB328B1B948489000FB839 /* kext.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB328A1B948489000FB839 /* kext.png */; };
 		50DBB44B2025CE5700489271 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Basics.swift */; };
+		50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC89C720B2EB53005E0557 /* CpuTableView.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
@@ -233,7 +236,6 @@
 		50FB74A02033193300E05051 /* serial.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749F2033193300E05051 /* serial.png */; };
 		50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB74A1203322C900E05051 /* DiskInspectorController.swift */; };
 		50FB74A4203323E700E05051 /* diskette_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB74A3203323E700E05051 /* diskette_light.png */; };
-		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
 		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
 		50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B372039B3C5006CE7C7 /* C64Key.swift */; };
@@ -259,8 +261,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		023023FE0DC902A700F8818A /* AudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDevice.h; sourceTree = "<group>"; };
-		023023FF0DC902A700F8818A /* AudioDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioDevice.mm; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -272,8 +272,6 @@
 		389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
 		389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPort.h; sourceTree = "<group>"; };
 		38AF83890C7BA24A00F6DBCE /* joystick32_speedlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_speedlink.png; sourceTree = "<group>"; };
-		5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCiaPanel.h; sourceTree = "<group>"; };
-		5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCiaPanel.mm; sourceTree = "<group>"; };
 		5000C80D0D13CE680011A2E9 /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		5000C80E0D13CE680011A2E9 /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
 		5000C8220D13CEE10011A2E9 /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
@@ -295,34 +293,35 @@
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
-		50169EE8209E045300CB3536 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
-		50169EE9209E045300CB3536 /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
-		50169EEA209E045300CB3536 /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
-		50169EEB209E045300CB3536 /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580__ST.h; sourceTree = "<group>"; };
-		50169EEC209E045400CB3536 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
-		50169EED209E045400CB3536 /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
-		50169EEE209E045400CB3536 /* wave6581_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_P_T.h; sourceTree = "<group>"; };
-		50169EEF209E045400CB3536 /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_PST.h; sourceTree = "<group>"; };
-		50169EF0209E045400CB3536 /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
-		50169EF1209E045500CB3536 /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
-		50169EF2209E045500CB3536 /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
-		50169EF3209E045500CB3536 /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
-		50169EF4209E045600CB3536 /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
-		50169EF5209E045600CB3536 /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_P_T.h; sourceTree = "<group>"; };
-		50169EF6209E045600CB3536 /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
-		50169EF7209E045600CB3536 /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
-		50169EF8209E045600CB3536 /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
-		50169EF9209E045700CB3536 /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
-		50169EFA209E045700CB3536 /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "resid-config.h"; sourceTree = "<group>"; };
-		50169EFB209E045700CB3536 /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave8580_PS_.h; sourceTree = "<group>"; };
-		50169EFC209E045800CB3536 /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PS_.h; sourceTree = "<group>"; };
-		50169EFD209E045800CB3536 /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PST.h; sourceTree = "<group>"; };
-		50169EFE209E045800CB3536 /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dac.cc; sourceTree = "<group>"; };
-		50169EFF209E045800CB3536 /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
-		50169F00209E045800CB3536 /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
-		50169F01209E045900CB3536 /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
-		50169F02209E045900CB3536 /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581__ST.h; sourceTree = "<group>"; };
-		50169F0C209E055B00CB3536 /* siddefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
+		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		5015F39020B5E3C40024B4AA /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "resid-config.h"; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/resid-config.h"; sourceTree = "<group>"; };
+		5015F39120B5E3C50024B4AA /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
+		5015F39220B5E3C50024B4AA /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
+		5015F39320B5E3C50024B4AA /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
+		5015F39420B5E3C50024B4AA /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
+		5015F39520B5E3C50024B4AA /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
+		5015F39620B5E3C50024B4AA /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_PST.h"; sourceTree = "<group>"; };
+		5015F39720B5E3C50024B4AA /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
+		5015F39820B5E3C60024B4AA /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580__ST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580__ST.h"; sourceTree = "<group>"; };
+		5015F39920B5E3C60024B4AA /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581__ST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581__ST.h"; sourceTree = "<group>"; };
+		5015F39A20B5E3C60024B4AA /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
+		5015F39B20B5E3C60024B4AA /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dac.cc; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/dac.cc"; sourceTree = "<group>"; };
+		5015F39C20B5E3C60024B4AA /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PS_.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_PS_.h"; sourceTree = "<group>"; };
+		5015F39D20B5E3C60024B4AA /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
+		5015F39E20B5E3C60024B4AA /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_PST.h"; sourceTree = "<group>"; };
+		5015F39F20B5E3C60024B4AA /* wave6581_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_P_T.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_P_T.h"; sourceTree = "<group>"; };
+		5015F3A020B5E3C70024B4AA /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
+		5015F3A120B5E3C70024B4AA /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
+		5015F3A220B5E3C70024B4AA /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
+		5015F3A320B5E3C70024B4AA /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_P_T.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_P_T.h"; sourceTree = "<group>"; };
+		5015F3A420B5E3C70024B4AA /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
+		5015F3A520B5E3C70024B4AA /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dac.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/dac.h"; sourceTree = "<group>"; };
+		5015F3A620B5E3C70024B4AA /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
+		5015F3A720B5E3C80024B4AA /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PS_.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_PS_.h"; sourceTree = "<group>"; };
+		5015F3A820B5E3C80024B4AA /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
+		5015F3A920B5E3C80024B4AA /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
+		5015F3AA20B5E3C80024B4AA /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
+		5015F3AB20B5E3C80024B4AA /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
 		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
 		50171AA02083716000C07AAD /* CPU_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_types.h; sourceTree = "<group>"; };
@@ -346,8 +345,6 @@
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VIC.h; sourceTree = "<group>"; };
-		50176C720A6F7357009E80BD /* Formatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Formatter.h; sourceTree = "<group>"; };
-		50176C730A6F7357009E80BD /* Formatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Formatter.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportScreenshotController.swift; sourceTree = "<group>"; };
@@ -359,7 +356,7 @@
 		50195C2720AFF884003844FB /* stop32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop32.png; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		501B33AB20AE33510047C050 /* mouse256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse256.png; sourceTree = "<group>"; };
-		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
+		501D2C7D1B85C0F700B1AD0F /* VIC_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
@@ -390,10 +387,16 @@
 		50355F34203E19E000163F80 /* keyRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyRed.png; sourceTree = "<group>"; };
 		50355F36203E21F600163F80 /* joystick2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick2.png; sourceTree = "<group>"; };
 		50355F3C203E276F00163F80 /* monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monitor.png; sourceTree = "<group>"; };
+		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
+		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
+		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
+		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
+		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
 		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
+		503E198F20C42C6D007E91F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTContainer.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* CRTContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTContainer.h; sourceTree = "<group>"; };
@@ -410,8 +413,8 @@
 		504A22A81BF71FD500B29BEB /* clock_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_red.png; sourceTree = "<group>"; };
 		504A22A91BF71FD500B29BEB /* pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_red.png; sourceTree = "<group>"; };
 		504A22AA1BF71FD500B29BEB /* pin_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_black.png; sourceTree = "<group>"; };
-		504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSidVoice.cpp; sourceTree = "<group>"; };
-		504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSidVoice.h; sourceTree = "<group>"; };
+		504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastVoice.cpp; sourceTree = "<group>"; };
+		504DDB5220A0431E00FFD5B2 /* FastVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastVoice.h; sourceTree = "<group>"; };
 		504DDB5320A0431E00FFD5B2 /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -441,13 +444,13 @@
 		506004651B78E9C500EBDD93 /* PixelEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelEngine.h; sourceTree = "<group>"; };
 		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
-		5068AFC320852A550025776C /* CpuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTableView.swift; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
 		506D39D3141780FF00268AF6 /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
+		506D4D0C20B331A00093C5C6 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		506D54C720321C830026D8B4 /* RomDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDialogController.swift; sourceTree = "<group>"; };
 		506D54C920321EDF0026D8B4 /* RomDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RomDialog.xib; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
@@ -461,8 +464,6 @@
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5087D8512081FF8A0026BAD5 /* joystick32_sony.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick32_sony.png; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
-		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
-		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
 		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
@@ -490,8 +491,6 @@
 		50B5861B201C673900742DB3 /* CustomCartridges.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCartridges.cpp; sourceTree = "<group>"; };
 		50B5861C201C673900742DB3 /* CustomCartridges.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCartridges.h; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
-		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -536,6 +535,7 @@
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
 		50DB328A1B948489000FB839 /* kext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kext.png; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
+		50DC89C720B2EB53005E0557 /* CpuTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CpuTableView.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
@@ -573,8 +573,6 @@
 		50FB749F2033193300E05051 /* serial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serial.png; sourceTree = "<group>"; };
 		50FB74A1203322C900E05051 /* DiskInspectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspectorController.swift; sourceTree = "<group>"; };
 		50FB74A3203323E700E05051 /* diskette_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette_light.png; sourceTree = "<group>"; };
-		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
-		50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerVicPanel.mm; sourceTree = "<group>"; };
 		50FD96A41BF65861009134A4 /* 1541.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1541.png; sourceTree = "<group>"; };
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
@@ -640,6 +638,7 @@
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				503E198F20C42C6D007E91F1 /* Media.xcassets */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
@@ -711,14 +710,14 @@
 				500B6CA30B905CEC002C36EC /* TOD.h */,
 				50171AA4208373E600C07AAD /* TOD_types.h */,
 				500B6CA40B905CEC002C36EC /* TOD.cpp */,
-				501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */,
+				501D2C7D1B85C0F700B1AD0F /* VIC_types.h */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
 				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
-				50176C560A6F72F3009E80BD /* CPU.h */,
 				50171AA02083716000C07AAD /* CPU_types.h */,
+				50176C560A6F72F3009E80BD /* CPU.h */,
 				50176C550A6F72F3009E80BD /* CPU.cpp */,
 				50176C580A6F72F3009E80BD /* Instructions.h */,
 				50176C570A6F72F3009E80BD /* Instructions.cpp */,
@@ -764,10 +763,10 @@
 			isa = PBXGroup;
 			children = (
 				50C8924D1BEF35FB00231B96 /* MetalView */,
-				50176C720A6F7357009E80BD /* Formatter.h */,
-				50176C730A6F7357009E80BD /* Formatter.mm */,
-				5068AFC320852A550025776C /* CpuTableView.swift */,
+				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
+				50DC89C720B2EB53005E0557 /* CpuTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
+				5015F36520B546A30024B4AA /* WaveformView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -776,20 +775,12 @@
 			isa = PBXGroup;
 			children = (
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
-				50B6894612DCA7B100CBB5B7 /* MyController.h */,
-				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
-				5088A6D412E0676200378033 /* MyControllerDebugPanel.h */,
-				5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */,
-				50FBE90912DC992B0093194C /* MyControllerVicPanel.h */,
-				50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */,
-				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
-				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
-				50195C2920B007A1003844FB /* Debugger.swift */,
+				5038CA9820B6C2D8000D9193 /* Debugger */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				50FE5B342039B392006CE7C7 /* Keyboard Controller */,
@@ -805,8 +796,6 @@
 				5081AB621EF29E6400D6F616 /* AudioEngine.swift */,
 				50FF818E1F88D9100004548A /* GamePad.swift */,
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
-				023023FE0DC902A700F8818A /* AudioDevice.h */,
-				023023FF0DC902A700F8818A /* AudioDevice.mm */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 			);
 			name = Misc;
@@ -876,6 +865,19 @@
 				5030B29F20AEBD1A00E591BE /* oygen_key.png */,
 			);
 			name = GameDevices;
+			sourceTree = "<group>";
+		};
+		5038CA9820B6C2D8000D9193 /* Debugger */ = {
+			isa = PBXGroup;
+			children = (
+				50195C2920B007A1003844FB /* Debugger.swift */,
+				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
+				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
+				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
+				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
+				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
+			);
+			name = Debugger;
 			sourceTree = "<group>";
 		};
 		503C8BFA2014AC99000494A0 /* Cartridges */ = {
@@ -1045,8 +1047,8 @@
 		5083D5D320A04CA400C1B4EE /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
-				504DDB5220A0431E00FFD5B2 /* FastSidVoice.h */,
-				504DDB5020A0431E00FFD5B2 /* FastSidVoice.cpp */,
+				504DDB5220A0431E00FFD5B2 /* FastVoice.h */,
+				504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */,
 				504DDB5320A0431E00FFD5B2 /* waves.h */,
 				50CA0D500A9076FD00A5A08D /* FastSID.h */,
 				50CA0D510A9076FD00A5A08D /* FastSID.cpp */,
@@ -1153,34 +1155,34 @@
 		50D141641417A34B0024FC74 /* resid */ = {
 			isa = PBXGroup;
 			children = (
-				50169EFE209E045800CB3536 /* dac.cc */,
-				50169EFF209E045800CB3536 /* dac.h */,
-				50169EE8209E045300CB3536 /* envelope.cc */,
-				50169EEC209E045400CB3536 /* envelope.h */,
-				50169F00209E045800CB3536 /* extfilt.cc */,
-				50169EF4209E045600CB3536 /* extfilt.h */,
-				50169EF2209E045500CB3536 /* filter.cc */,
-				50169EF0209E045400CB3536 /* filter.h */,
-				50169EE9209E045300CB3536 /* pot.cc */,
-				50169F01209E045900CB3536 /* pot.h */,
-				50169EFA209E045700CB3536 /* resid-config.h */,
-				50169EEA209E045300CB3536 /* sid.cc */,
-				50169EF3209E045500CB3536 /* sid.h */,
-				50169F0C209E055B00CB3536 /* siddefs.h */,
-				50169EF7209E045600CB3536 /* spline.h */,
-				50169EF9209E045700CB3536 /* version.cc */,
-				50169EED209E045400CB3536 /* voice.cc */,
-				50169EF8209E045600CB3536 /* voice.h */,
-				50169EF1209E045500CB3536 /* wave.cc */,
-				50169EF6209E045600CB3536 /* wave.h */,
-				50169F02209E045900CB3536 /* wave6581__ST.h */,
-				50169EEE209E045400CB3536 /* wave6581_P_T.h */,
-				50169EFC209E045800CB3536 /* wave6581_PS_.h */,
-				50169EFD209E045800CB3536 /* wave6581_PST.h */,
-				50169EEB209E045300CB3536 /* wave8580__ST.h */,
-				50169EF5209E045600CB3536 /* wave8580_P_T.h */,
-				50169EFB209E045700CB3536 /* wave8580_PS_.h */,
-				50169EEF209E045400CB3536 /* wave8580_PST.h */,
+				5015F39B20B5E3C60024B4AA /* dac.cc */,
+				5015F3A520B5E3C70024B4AA /* dac.h */,
+				5015F3A820B5E3C80024B4AA /* envelope.cc */,
+				5015F39220B5E3C50024B4AA /* envelope.h */,
+				5015F3AA20B5E3C80024B4AA /* extfilt.cc */,
+				5015F39320B5E3C50024B4AA /* extfilt.h */,
+				5015F3A620B5E3C70024B4AA /* filter.cc */,
+				5015F3A920B5E3C80024B4AA /* filter.h */,
+				5015F3A020B5E3C70024B4AA /* pot.cc */,
+				5015F3A420B5E3C70024B4AA /* pot.h */,
+				5015F39020B5E3C40024B4AA /* resid-config.h */,
+				5015F3AB20B5E3C80024B4AA /* sid.cc */,
+				5015F39720B5E3C50024B4AA /* sid.h */,
+				5015F39420B5E3C50024B4AA /* siddefs.h */,
+				5015F3A220B5E3C70024B4AA /* spline.h */,
+				5015F39A20B5E3C60024B4AA /* version.cc */,
+				5015F39120B5E3C50024B4AA /* voice.cc */,
+				5015F39520B5E3C50024B4AA /* voice.h */,
+				5015F39D20B5E3C60024B4AA /* wave.cc */,
+				5015F3A120B5E3C70024B4AA /* wave.h */,
+				5015F39920B5E3C60024B4AA /* wave6581__ST.h */,
+				5015F39F20B5E3C60024B4AA /* wave6581_P_T.h */,
+				5015F3A720B5E3C80024B4AA /* wave6581_PS_.h */,
+				5015F39620B5E3C50024B4AA /* wave6581_PST.h */,
+				5015F39820B5E3C60024B4AA /* wave8580__ST.h */,
+				5015F3A320B5E3C70024B4AA /* wave8580_P_T.h */,
+				5015F39C20B5E3C60024B4AA /* wave8580_PS_.h */,
+				5015F39E20B5E3C60024B4AA /* wave8580_PST.h */,
 			);
 			path = resid;
 			sourceTree = "<group>";
@@ -1291,6 +1293,7 @@
 				50195C2820AFF884003844FB /* stop32.png in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */,
+				503E199020C42C6D007E91F1 /* Media.xcassets in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				5080F3591EE74784001313D4 /* commodore.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
@@ -1418,32 +1421,37 @@
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
 				50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */,
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
+				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
+				5015F3AD20B5E3C80024B4AA /* version.cc in Sources */,
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
-				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
+				5015F3B220B5E3C80024B4AA /* envelope.cc in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
+				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				50FFF52320AB495B00758683 /* Mouse.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
+				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
+				5015F3B120B5E3C80024B4AA /* filter.cc in Sources */,
+				5015F3B420B5E3C80024B4AA /* sid.cc in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
+				5015F3B320B5E3C80024B4AA /* extfilt.cc in Sources */,
 				50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */,
+				5015F3AF20B5E3C80024B4AA /* wave.cc in Sources */,
 				5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */,
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
-				50169F0B209E045A00CB3536 /* extfilt.cc in Sources */,
-				50169F07209E045A00CB3536 /* wave.cc in Sources */,
-				50169F08209E045A00CB3536 /* filter.cc in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
@@ -1452,55 +1460,52 @@
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
-				50169F0A209E045A00CB3536 /* dac.cc in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
-				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
-				504DDB5520A0431F00FFD5B2 /* FastSidVoice.cpp in Sources */,
+				504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
-				50169F03209E045A00CB3536 /* envelope.cc in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
+				5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */,
 				50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */,
+				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
+				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
-				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
 				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
-				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
-				5068AFC420852A550025776C /* CpuTableView.swift in Sources */,
-				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
+				5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
-				50169F05209E045A00CB3536 /* sid.cc in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
-				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
-				50169F09209E045A00CB3536 /* version.cc in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
-				50169F04209E045A00CB3536 /* pot.cc in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
+				506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
+				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
+				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
+				5015F3B020B5E3C80024B4AA /* pot.cc in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
@@ -1514,7 +1519,6 @@
 				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
-				50169F06209E045A00CB3536 /* voice.cc in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1561,6 +1565,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1611,6 +1616,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1660,6 +1666,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

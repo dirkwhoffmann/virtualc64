@@ -87,7 +87,7 @@ extension MyController {
         popup.selectItem(withTag: selectedSlot)
     }
     
-    @objc func validateJoystickToolbarItems() {
+    func validateJoystickToolbarItems() {
     
         validateJoystickToolbarItem(controlPort1, selectedSlot: gamepadSlot1, port: c64.port1)
         validateJoystickToolbarItem(controlPort2, selectedSlot: gamepadSlot2, port: c64.port2)
@@ -146,25 +146,25 @@ extension MyController {
         dialogController.showSheet(withParent: self)
     }
     
-    @objc public func debugOpenAction(_ sender: Any!) {
+    public func debugOpenAction(_ sender: Any!) {
     
-        let state = debugPanel.state
+        let state = debugger.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
-            debugPanel.open()
+            debugger.open()
         }
     }
     
-    @objc public func debugCloseAction(_ sender: Any!) {
+    public func debugCloseAction(_ sender: Any!) {
     
-        let state = debugPanel.state
+        let state = debugger.state
         if state == NSDrawerState.open || state == NSDrawerState.opening {
-            debugPanel.close()
+            debugger.close()
         }
     }
     
     @IBAction func debugAction(_ sender: Any!) {
     
-        let state = debugPanel.state
+        let state = debugger.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
             debugOpenAction(self)
         } else {

@@ -18,16 +18,23 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.11.1 or 1.12
+// RELEASE NOTES FOR NEXT RELEASE: 2.0
 //
-// Debugger has been cleaned up
+// Milestone reached: All remaining Objective-C code has been ported to Swift (hence version number 2.0)
+// All debug panels have been reworked and a new SID panel has been added.
+// Fixed several bugs in the SID bridge which is the internal API for accessing the reSID library.
+// Replaced reSID files by those used in VICE 3.2.
+// The D-Pad on the Sony Dualshock controller is working now.
+
+//
 //
 // TODO:
-// Add first column "chip" RAM, ROM, CRT, IO
-// Use CBM font
 //
-// Add VIC::getInfo
-// Add CPU::getInfo
+// Make CIA panel editable
+// Add setter API for SID stuff
+// Use correct formatters for SID and VIC values
+// Debug menu: Remove option to disable sprite collision detection
+//
 //
 // CLEANUP:
 // Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
@@ -40,9 +47,9 @@
 // Snapshot version number of this release
 #define V_MAJOR 1
 #define V_MINOR 11
-#define V_SUBMINOR 0
+#define V_SUBMINOR 1
 
-// Disables assert checking in relase version
+// Disables assertion checking in relase version
 // #define NDEBUG
 
 // Data types and constants
@@ -502,10 +509,15 @@ public:
     //! @brief    Returns true iff the virtual C64 is in the "halted" state
     bool isHalted();
     
-    /*! @brief    Executes one CPU instruction
+    /*! @brief    Executes a single instruction
      *  @details  This method implements the "step" action of the debugger
      */
     void step(); 
+
+    /*! @brief    Executes until the instruction is reached
+     *  @details  This method implements the "step over" action of the debugger
+     */
+    void stepOver();
     
     //! @brief    Executes until the end of the rasterline
     bool executeOneLine();

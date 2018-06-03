@@ -39,7 +39,7 @@ struct C64Filter {
 
 public class MetalView: MTKView {
     
-    @IBOutlet var controller: MyController!
+    @IBOutlet weak var controller: MyController!
     
     /// Number of drawn frames sind power up
     var frames: UInt64 = 0
@@ -133,22 +133,22 @@ public class MetalView: MTKView {
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
     // Currently selected texture upscaler
-    @objc var videoUpscaler = C64Upscaler.none
+    var videoUpscaler = C64Upscaler.none
     
     // Currently selected texture filter
-    @objc var videoFilter = C64Filter.smooth
+    var videoFilter = C64Filter.smooth
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
-    @objc var enableMetal = false
+    var enableMetal = false
     
     //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
-    @objc var fullscreen = false
+    var fullscreen = false
     
     //! If true, the 3D renderer is also used in fullscreen mode
-    @objc var fullscreenKeepAspectRatio = true
+    var fullscreenKeepAspectRatio = true
     
     //! If false, the C64 screen is not drawn (background texture will be visible)
-    @objc var drawC64texture = false
+    var drawC64texture = false
     
     required public init(coder: NSCoder) {
     
@@ -189,12 +189,12 @@ public class MetalView: MTKView {
     }
     
     //! Shrinks view vertically by the height of the status bar
-    @objc public func shrink() { adjustHeight(-24.0) }
+    public func shrink() { adjustHeight(-24.0) }
     
     //! Expand view vertically by the height of the status bar
-    @objc public func expand() { adjustHeight(24.0) }
+    public func expand() { adjustHeight(24.0) }
 
-    @objc public func updateScreenGeometry() {
+    public func updateScreenGeometry() {
     
         var rect: CGRect
         
@@ -466,7 +466,7 @@ public class MetalView: MTKView {
         }
     }
    
-    @objc public func cleanup() {
+    public func cleanup() {
     
         track()
     }

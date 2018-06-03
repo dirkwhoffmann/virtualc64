@@ -1,7 +1,8 @@
-/*
- * (C) 2008 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2018 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -46,6 +47,10 @@ VC1541Memory::reset()
     VirtualComponent::reset();
 }
 
+//
+// Handling ROM images
+//
+
 bool 
 VC1541Memory::is1541Rom(const char *filename)
 {
@@ -85,15 +90,18 @@ VC1541Memory::dumpState()
 }
 
 uint8_t
-VC1541Memory::readIO(uint16_t addr)
+VC1541Memory::peek(uint16_t addr, MemoryType source)
 {
-    if ((addr & 0xFC00) == 0x1800) {
-        return floppy->via1.read(addr & 0x000F);
-    } else if ((addr & 0xFC00) == 0x1c00) {
-        return floppy->via2.read(addr & 0x000F);
-    } else {
-        return (addr >> 8);
-    }
+    // In contrast to the C64 where certain memorys overlap each other,
+    // the type of each memory location in the VC1541 is unique.
+    // Hence, we simply do some consistency checking here.
+    
+    if (addr >= 0x8000) { assert(source == M_ROM); }
+    else if ((addr & 0x1FFF) < 0x0800) { assert(source == M_RAM); }
+    else if ((addr & 0x1FFF) < 0x1800) { assert(source == M_NONE); }
+    else { assert(source == M_IO); }
+    
+    return peek(addr);
 }
 
 uint8_t 
@@ -121,9 +129,24 @@ VC1541Memory::peek(uint16_t addr)
         floppy->via2.peek(addr & 0xF);
     }
 }
-     
+
 uint8_t
-VC1541Memory::spy(uint16_t addr)
+VC1541Memory::snoop(uint16_t addr, MemoryType source)
+{
+    // In contrast to the C64 where certain memorys overlap each other,
+    // the type of each memory location in the VC1541 is unique.
+    // Hence, we simply do some consistency checking here.
+    
+    if (addr >= 0x8000) { assert(source == M_ROM); }
+    else if ((addr & 0x1FFF) < 0x0800) { assert(source == M_RAM); }
+    else if ((addr & 0x1FFF) < 0x1800) { assert(source == M_NONE); }
+    else { assert(source == M_IO); }
+    
+    return snoop(addr);
+}
+
+uint8_t
+VC1541Memory::snoop(uint16_t addr)
 {
     uint8_t result;
     
@@ -133,22 +156,33 @@ VC1541Memory::spy(uint16_t addr)
     } else if (addr < 0x1000) {
         result = mem[addr & 0x07ff];
     } else {
-        result = readIO(addr);
+        result = snoopIO(addr);
     }
     
     return result;
 }
 
-void 
-VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
+uint8_t
+VC1541Memory::snoopIO(uint16_t addr)
 {
-	mem[addr] = value;
+    if ((addr & 0xFC00) == 0x1800) {
+        return floppy->via1.snoop(addr & 0x000F);
+    } else if ((addr & 0xFC00) == 0x1c00) {
+        return floppy->via2.snoop(addr & 0x000F);
+    } else {
+        return (addr >> 8);
+    }
 }
 
-void 
-VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
+void
+VC1541Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
 {
-	mem[addr] = value;
+    if (target == M_ROM) {
+        assert(addr >= 0x8000);
+        mem[addr] = value;
+    } else {
+        poke(addr, value);
+    }
 }
 
 void 

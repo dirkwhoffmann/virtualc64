@@ -43,7 +43,15 @@ private:
     
     //! @brief    Current clock cycle since power up
     uint64_t cycles;
+
+public:
     
+    //! @brief    Number of buffer underflows since power up
+    uint64_t bufferUnderflows;
+
+    //! @brief    Number of buffer overflows since power up
+    uint64_t bufferOverflows;
+
 private:
     
     //
@@ -113,8 +121,15 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     
 	//! @brief    Prints debug information
-	void dumpState();
-	
+    void dumpState(SIDInfo info);
+    void dumpState();
+
+    //! @brief    Gathers all values that are displayed in the debugger
+    SIDInfo getInfo();
+
+    //! @brief    Gathers all debug information for a specific voice
+    VoiceInfo getVoiceInfo(unsigned voice);
+    
     
     //
 	// Configuring the device
@@ -166,12 +181,6 @@ public:
     // Running the device
     //
     
-    /*! @brief   Execute SID
-     *  @details Runs reSID for the specified amount of CPU cycles and writes
-     *           the generated sound samples into the internal ring buffer.
-     */
-    // virtual void execute(uint64_t cycles) = 0;
-    
     //! Notifies the SID chip that the emulator has started
     void run();
     
@@ -201,11 +210,23 @@ public:
     // Ringbuffer handling
     //
     
+    //! @brief  Returns the size of the ringbuffer
+    size_t ringbufferSize() { return bufferSize; }
+    
+    //! @brief  Returns the position of the read pointer
+    uint32_t getReadPtr() { return readPtr; }
+
+    //! @brief  Returns the position of the write pointer
+    uint32_t getWritePtr() { return writePtr; }
+
     //! @brief  Clears the ringbuffer and resets the read and write pointer
     void clearRingbuffer();
     
     //! @brief  Reads a single audio sample from the ringbuffer
     float readData();
+    
+    //! @brief  Reads a single audio sample without moving the read pointer
+    float snoopData(size_t offset);
     
     /*! @brief   Reads a certain amount of samples from ringbuffer
      *  @details Samples are stored in a single mono stream
@@ -256,6 +277,9 @@ public:
     //! @brief   Returns remaining storage capacity of ringbuffer
     unsigned bufferCapacity() { return (readPtr + bufferSize - writePtr) % bufferSize; }
     
+    //! @brief   Returns the fill level as a percentage value
+    double fillLevel() { return (double)samplesInBuffer() / (double)bufferSize; }
+    
     /*! @brief   Align write pointer
      *  @details This function puts the write pointer somewhat ahead of the read pointer.
      *           With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
@@ -285,7 +309,7 @@ public:
 	uint8_t peek(uint16_t addr);
 	
     //! @brief    Same as peek, but without side effects.
-    uint8_t spy(uint16_t addr);
+    uint8_t snoop(uint16_t addr);
     
 	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);

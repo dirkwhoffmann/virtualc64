@@ -535,6 +535,7 @@ public:
   void clock(int voice1, int voice2, int voice3);
   void clock(cycle_count delta_t, int voice1, int voice2, int voice3);
   void reset();
+  void _reset();
 
   // Write registers.
   void writeFC_LO(reg8);
@@ -569,7 +570,7 @@ protected:
   reg4 mode;
 
   // Output master volume.
-  reg4 vol;
+  reg4 mastervolume;
 
   // Used to mask out EXT IN if not connected, and for test purposes
   // (voice muting).
@@ -1452,7 +1453,7 @@ for my $mix (0..2**@i-1) {
   }
 
   // Sum the inputs in the mixer and run the mixer output through the gain.
-  return (short)(f.gain[vol][f.mixer[offset + Vi]] - (1 << 15));
+  return (short)(f.gain[mastervolume][f.mixer[offset + Vi]] - (1 << 15));
 }
 
 
@@ -1540,7 +1541,10 @@ int Filter::solve_gain(opamp_t* opamp, int n, int vi, int& x, model_filter_t& mf
     // The resulting quotient is thus scaled by m*2^16.
 
     // Newton-Raphson step: xk1 = xk - f(xk)/f'(xk)
-    x -= f/df;
+    // If f(xk) or f'(xk) are zero then we can't improve further.
+    if (df) {
+        x -= f/df;
+    }
     if (unlikely(x == xk)) {
       // No further root improvement possible.
       return vo;
@@ -1716,7 +1720,7 @@ int Filter::solve_integrate_6581(int dt, int vi, int& vx, int& vc, model_filter_
   if (Vgd < 0) Vgd = 0;
 
   // VCR current, scaled by m*2^15*2^15 = m*2^30
-  int n_I_vcr = (vcr_n_Ids_term[Vgs] - vcr_n_Ids_term[Vgd]) << 15;
+  int n_I_vcr = int(unsigned(vcr_n_Ids_term[Vgs] - vcr_n_Ids_term[Vgd]) << 15);
 
   // Change in capacitor charge.
   vc -= (n_I_snake + n_I_vcr)*dt;

@@ -19,7 +19,7 @@ public extension MetalView {
         }
     }
   
-    @objc public func setupMetal() {
+    public func setupMetal() {
 
         track()
         
