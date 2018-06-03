@@ -193,8 +193,6 @@
 	<string>Documentation</string>
 	<key>CFBundleHelpBookName</key>
 	<string>VirtualC64 Help</string>
-	<key>CFBundleIconFile</key>
-	<string>VirtualC64Icon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
