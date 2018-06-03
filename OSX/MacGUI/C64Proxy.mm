@@ -61,8 +61,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (CPUInfo) getInfo { return wrapper->cpu->getInfo(); }
 - (void) dump { wrapper->cpu->dumpState(); }
 
-- (BOOL) tracingEnabled { return wrapper->cpu->tracingEnabled(); }
-- (void) setTraceMode:(BOOL)b {
+- (BOOL) tracing { return wrapper->cpu->tracingEnabled(); }
+- (void) setTracing:(BOOL)b {
     if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
 
 - (uint16_t) pc { return wrapper->cpu->getPC_at_cycle_0(); }
@@ -229,10 +229,18 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
-- (void) dump { wrapper->cia->dumpState(); }
-- (void) setTraceMode:(bool)b {
-    if (b) wrapper->cia->startTracing(b); else wrapper->cia->stopTracing(); }
 - (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
+- (void) dump { wrapper->cia->dumpState(); }
+
+- (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing(b) : wrapper->cia->stopTracing(); }
+
+- (uint8_t) snoop:(uint16_t)addr { return wrapper->cia->snoop(addr); }
+- (void) poke:(uint16_t)addr value:(uint8_t)value {
+    wrapper->cia->c64->suspend();
+    wrapper->cia->poke(addr, value);
+    wrapper->cia->c64->resume();
+}
 
 @end 
 
@@ -351,12 +359,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->iec->dumpState(); }
-- (bool) tracingEnabled { return wrapper->iec->tracingEnabled(); }
-- (void) setTraceMode:(bool)b {
-    if (b) wrapper->iec->startTracing(); else wrapper->iec->stopTracing(); }
+- (BOOL) tracing { return wrapper->iec->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing(); }
 - (void) connectDrive { wrapper->iec->connectDrive(); }
 - (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
-- (bool) isDriveConnected { return wrapper->iec->driveIsConnected(); }
+- (BOOL) isDriveConnected { return wrapper->iec->driveIsConnected(); }
 - (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
 - (BOOL) clockLine { return wrapper->iec->getClockLine(); }
 - (BOOL) dataLine { return wrapper->iec->getDataLine(); }
@@ -380,7 +387,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
-- (bool) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
+- (BOOL) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
 - (void) pressFirstButton { wrapper->expansionPort->pressFirstButton(); }
 - (void) pressSecondButton { wrapper->expansionPort->pressSecondButton(); }
 
@@ -402,9 +409,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->via->dumpState(); }
-- (bool) tracingEnabled { return wrapper->via->tracingEnabled(); }
-- (void) setTraceMode:(bool)b {
-    if (b) wrapper->via->startTracing(); else wrapper->via->stopTracing(); }
+- (BOOL) tracing { return wrapper->via->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->via->startTracing() : wrapper->via->stopTracing(); }
 
 @end
 
@@ -466,19 +472,18 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->vc1541->dumpState(); }
-- (bool) tracingEnabled { return wrapper->vc1541->tracingEnabled(); }
-- (void) setTraceMode:(bool)b {
-    if (b) wrapper->vc1541->startTracing(); else wrapper->vc1541->stopTracing(); }
-- (bool) hasRedLED { return wrapper->vc1541->getRedLED(); }
-- (bool) hasDisk { return wrapper->vc1541->hasDisk(); }
-- (bool) hasModifiedDisk { return wrapper->vc1541->hasModifiedDisk(); }
+- (BOOL) tracing { return wrapper->vc1541->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->vc1541->startTracing() : wrapper->vc1541->stopTracing(); }
+- (BOOL) hasRedLED { return wrapper->vc1541->getRedLED(); }
+- (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }
+- (BOOL) hasModifiedDisk { return wrapper->vc1541->hasModifiedDisk(); }
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
-- (bool) writeProtection { return wrapper->vc1541->disk.isWriteProtected(); }
-- (void) setWriteProtection:(bool)b { wrapper->vc1541->disk.setWriteProtection(b); }
-- (bool) DiskModified { return wrapper->vc1541->disk.isModified(); }
-- (void) setDiskModified:(bool)b { wrapper->vc1541->disk.setModified(b); }
-- (bool) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
-- (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
+- (BOOL) writeProtection { return wrapper->vc1541->disk.isWriteProtected(); }
+- (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }
+- (BOOL) DiskModified { return wrapper->vc1541->disk.isModified(); }
+- (void) setDiskModified:(BOOL)b { wrapper->vc1541->disk.setModified(b); }
+- (BOOL) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
+- (void) setSendSoundMessages:(BOOL)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (NSInteger) halftrack { return wrapper->vc1541->getHalftrack(); }
 - (void) setHalftrack:(NSInteger) value { wrapper->vc1541->setHalftrack((Halftrack)value); }
 - (NSInteger) numberOfBits { return wrapper->vc1541->numberOfBits(); }
@@ -501,7 +506,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (const char *)dataRel:(NSInteger)start length:(NSInteger)n {
     return wrapper->vc1541->dataRel((int)start, (unsigned)n); }
 
-- (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
+- (BOOL) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 - (void) playSound:(NSString *)name volume:(float)v
 {
     NSSound *s = [NSSound soundNamed:name];
@@ -527,7 +532,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->datasette->dumpState(); }
-- (bool) hasTape { return wrapper->datasette->hasTape(); }
+- (BOOL) hasTape { return wrapper->datasette->hasTape(); }
 - (void) pressPlay { wrapper->datasette->pressPlay(); }
 - (void) pressStop { wrapper->datasette->pressStop(); }
 - (void) rewind { wrapper->datasette->rewind(); }
@@ -615,10 +620,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 	wrapper->c64 = NULL;
 }
 
-- (bool) audioFilter { return wrapper->c64->getAudioFilter(); }
-- (void) setAudioFilter:(bool)b { wrapper->c64->setAudioFilter(b); }
-- (bool) reSID { return wrapper->c64->getReSID(); }
-- (void) setReSID:(bool)b { wrapper->c64->setReSID(b); }
+- (BOOL) audioFilter { return wrapper->c64->getAudioFilter(); }
+- (void) setAudioFilter:(BOOL)b { wrapper->c64->setAudioFilter(b); }
+- (BOOL) reSID { return wrapper->c64->getReSID(); }
+- (void) setReSID:(BOOL)b { wrapper->c64->setReSID(b); }
 - (NSInteger) samplingMethod { return (NSInteger)(wrapper->c64->getSamplingMethod()); }
 - (void) setSamplingMethod:(NSInteger)value { wrapper->c64->setSamplingMethod((SamplingMethod)value); }
 - (NSInteger) chipModel { return (int)(wrapper->c64->getChipModel()); }
@@ -650,7 +655,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     [self _saveToSnapshotWrapper:[snapshot wrapper]];
 }
 
-- (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
+- (CIAProxy *) cia:(NSInteger)num {
+    assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
 
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
@@ -668,71 +674,71 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) run { wrapper->c64->run(); }
 - (void) suspend { wrapper->c64->suspend(); }
 - (void) resume { wrapper->c64->resume(); }
-- (bool) isHalted { return wrapper->c64->isHalted(); }
-- (bool) isRunnable { return wrapper->c64->isRunnable(); }
-- (bool) isRunning { return wrapper->c64->isRunning(); }
-- (bool) isPAL { return wrapper->c64->isPAL(); }
-- (bool) isNTSC { return wrapper->c64->isNTSC(); }
+- (BOOL) isHalted { return wrapper->c64->isHalted(); }
+- (BOOL) isRunnable { return wrapper->c64->isRunnable(); }
+- (BOOL) isRunning { return wrapper->c64->isRunning(); }
+- (BOOL) isPAL { return wrapper->c64->isPAL(); }
+- (BOOL) isNTSC { return wrapper->c64->isNTSC(); }
 - (void) setPAL { wrapper->c64->setPAL(); }
 - (void) setNTSC { wrapper->c64->setNTSC(); }
 - (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
 
-- (bool) isBasicRom:(NSURL *)url {
+- (BOOL) isBasicRom:(NSURL *)url {
     return wrapper->c64->mem.isBasicRom([[url path] UTF8String]);
 }
-- (bool) loadBasicRom:(NSURL *)url {
+- (BOOL) loadBasicRom:(NSURL *)url {
     return [self isBasicRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
-- (bool) isBasicRomLoaded {
+- (BOOL) isBasicRomLoaded {
     return wrapper->c64->mem.basicRomIsLoaded();
 }
-- (bool) isCharRom:(NSURL *)url {
+- (BOOL) isCharRom:(NSURL *)url {
     return wrapper->c64->mem.isCharRom([[url path] UTF8String]);
 }
-- (bool) loadCharRom:(NSURL *)url {
+- (BOOL) loadCharRom:(NSURL *)url {
     return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
-- (bool) isCharRomLoaded {
+- (BOOL) isCharRomLoaded {
     return wrapper->c64->mem.charRomIsLoaded();
 }
-- (bool) isKernalRom:(NSURL *)url {
+- (BOOL) isKernalRom:(NSURL *)url {
     return wrapper->c64->mem.isKernalRom([[url path] UTF8String]);
 }
-- (bool) loadKernalRom:(NSURL *)url {
+- (BOOL) loadKernalRom:(NSURL *)url {
     return [self isKernalRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
-- (bool) isKernalRomLoaded {
+- (BOOL) isKernalRomLoaded {
     return wrapper->c64->mem.kernalRomIsLoaded();
 }
-- (bool) isVC1541Rom:(NSURL *)url {
+- (BOOL) isVC1541Rom:(NSURL *)url {
     return wrapper->c64->floppy.mem.is1541Rom([[url path] UTF8String]);
 }
-- (bool) loadVC1541Rom:(NSURL *)url {
+- (BOOL) loadVC1541Rom:(NSURL *)url {
     return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
 }
-- (bool) isVC1541RomLoaded {
+- (BOOL) isVC1541RomLoaded {
     return wrapper->c64->floppy.mem.romIsLoaded();
 }
-- (bool) isRom:(NSURL *)url {
+- (BOOL) isRom:(NSURL *)url {
     return [self isBasicRom:url] || [self isCharRom:url] || [self isKernalRom:url] || [self isVC1541Rom:url];
 }
-- (bool) loadRom:(NSURL *)url {
+- (BOOL) loadRom:(NSURL *)url {
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url];
 }
 
-- (bool) attachCartridgeAndReset:(CRTProxy *)c {
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTContainer *)([c wrapper]->container)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
-- (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
-- (bool) insertDisk:(ArchiveProxy *)a {
+- (BOOL) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
+- (BOOL) insertDisk:(ArchiveProxy *)a {
     Archive *archive = (Archive *)([a wrapper]->container);
     return wrapper->c64->insertDisk(archive);
 }
-- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
+- (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
     Archive *archive = (Archive *)([a wrapper]->container);
     return wrapper->c64->flushArchive(archive, (int)nr);
 }
-- (bool) insertTape:(TAPProxy *)c {
+- (BOOL) insertTape:(TAPProxy *)c {
     TAPContainer *container = (TAPContainer *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
 }
@@ -747,18 +753,18 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse->leftButton = pressed; }
 - (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
 
-- (bool) warp { return wrapper->c64->getWarp(); }
-- (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }
-- (bool) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
-- (void) setAlwaysWarp:(bool)b { wrapper->c64->setAlwaysWarp(b); }
-- (bool) warpLoad { return wrapper->c64->getWarpLoad(); }
-- (void) setWarpLoad:(bool)b { wrapper->c64->setWarpLoad(b); }
+- (BOOL) warp { return wrapper->c64->getWarp(); }
+- (void) setWarp:(BOOL)b { wrapper->c64->setWarp(b); }
+- (BOOL) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
+- (void) setAlwaysWarp:(BOOL)b { wrapper->c64->setAlwaysWarp(b); }
+- (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
+- (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
 
 - (UInt64) cycles { return wrapper->c64->getCycles(); }
 - (UInt64) frames { return wrapper->c64->getFrame(); }
 
 // Snapshot storage
-- (void) setAutoSaveSnapshots:(bool)b { wrapper->c64->autoSaveSnapshots = b; }
+- (void) setAutoSaveSnapshots:(BOOL)b { wrapper->c64->autoSaveSnapshots = b; }
 - (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
 - (NSData *)autoSnapshotData:(NSInteger)nr {
     Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
@@ -773,8 +779,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 - (time_t)autoSnapshotTimestamp:(NSInteger)nr {
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (bool)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
-- (bool)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
+- (BOOL)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
+- (BOOL)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
 
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
 - (NSData *)userSnapshotData:(NSInteger)nr {
@@ -790,9 +796,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 - (time_t)userSnapshotTimestamp:(NSInteger)nr {
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (bool)takeUserSnapshot { return wrapper->c64->takeUserSnapshot(); }
-- (bool)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
-- (bool)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
+- (BOOL)takeUserSnapshot { return wrapper->c64->takeUserSnapshot(); }
+- (BOOL)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
+- (BOOL)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
 - (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
 
 // Audio hardware

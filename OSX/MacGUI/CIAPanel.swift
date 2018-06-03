@@ -20,7 +20,7 @@ extension MyController {
             info = c64.cia2.getInfo()
             ciaIntLineLow.title = "NMI line active"
         }
-        
+
         ciaPA.intValue = Int32(info.portA.port)
         ciaPAbinary.intValue = Int32(info.portA.port)
         ciaPRA.intValue = Int32(info.portA.reg)
@@ -60,6 +60,151 @@ extension MyController {
         ciaImr.intValue = Int32(info.imr)
         ciaImrBinary.intValue = Int32(info.imr)
         ciaIntLineLow.state = info.intLine ? .off : .on
+    }
+    
+    private var selectedCia: Int {
+        get { return ciaSelector.indexOfSelectedItem == 0 ? 1 : 2 }
+    }
+    
+    @IBAction func selectCIAAction(_ sender: Any!) {
+        
+        let sender = sender as! NSSegmentedControl
+        selectedVoice = sender.indexOfSelectedItem
+        refreshCIA()
+    }
+    
+    func _praAction(_ value: (Int,UInt8)) {
+        
+        let cia = c64.cia(value.0)
+        let info = cia!.getInfo()
+        let oldValue = info.portA.reg
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._praAction((value.0, oldValue))
+            }
+            undoManager?.setActionName("Set Port Register A")
+            cia?.poke(0x0, value: value.1)
+            refreshCIA()
+        }
+    }
+    
+    @IBAction func praAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _praAction((selectedCia, UInt8(sender.intValue)))
+    }
+
+    func _prbAction(_ value: (Int,UInt8)) {
+        
+        let cia = c64.cia(value.0)
+        let info = cia!.getInfo()
+        let oldValue = info.portB.reg
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._prbAction((value.0, oldValue))
+            }
+            undoManager?.setActionName("Set Port Register B")
+            cia?.poke(0x1, value: value.1)
+            refreshCIA()
+        }
+    }
+    
+    @IBAction func prbAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _prbAction((selectedCia, UInt8(sender.intValue)))
+    }
+ 
+    func _ddraAction(_ value: (Int,UInt8)) {
+        
+        let cia = c64.cia(value.0)
+        let info = cia!.getInfo()
+        let oldValue = info.portA.dir
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._ddraAction((value.0, oldValue))
+            }
+            undoManager?.setActionName("Set Port Direction A")
+            cia?.poke(0x2, value: value.1)
+            refreshCIA()
+        }
+    }
+    
+    @IBAction func ddraAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _ddraAction((selectedCia, UInt8(sender.intValue)))
+    }
+    
+    func _ddrbAction(_ value: (Int,UInt8)) {
+        
+        let cia = c64.cia(value.0)
+        let info = cia!.getInfo()
+        let oldValue = info.portB.dir
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._ddrbAction((value.0, oldValue))
+            }
+            undoManager?.setActionName("Set Port Direction B")
+            cia?.poke(0x3, value: value.1)
+            refreshCIA()
+        }
+    }
+    
+    @IBAction func ddrbAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _ddrbAction((selectedCia, UInt8(sender.intValue)))
+    }
+    
+    func _timerLatchAAction(_ value: (Int,UInt16)) {
+        
+        let cia = c64.cia(value.0)
+        let info = cia!.getInfo()
+        let oldValue = info.timerA.latch
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._timerLatchAAction((value.0, oldValue))
+            }
+            undoManager?.setActionName("Set Timer Latch A")
+            cia!.poke(0x4, value: UInt8(value.1 & 0xFF))
+            cia!.poke(0x5, value: UInt8(value.1 >> 8))
+            refreshCIA()
+        }
+    }
+    
+    @IBAction func timerLatchAAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _timerLatchAAction((selectedCia, UInt16(sender.intValue)))
+    }
+    
+    func _timerLatchBAction(_ value: (Int,UInt16)) {
+        
+        let cia = c64.cia(value.0)
+        let info = cia!.getInfo()
+        let oldValue = info.timerB.latch
+        
+        if (value.1 != oldValue) {
+            undoManager?.registerUndo(withTarget: self) {
+                me in me._timerLatchBAction((value.0, oldValue))
+            }
+            undoManager?.setActionName("Set Timer Latch B")
+            cia!.poke(0x6, value: UInt8(value.1 & 0xFF))
+            cia!.poke(0x7, value: UInt8(value.1 >> 8))
+            refreshCIA()
+        }
+    }
+    
+    @IBAction func timerLatchBAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        _timerLatchBAction((selectedCia, UInt16(sender.intValue)))
     }
 }
 

@@ -657,8 +657,8 @@ CIA::getInfo()
     info.portA.port = PA;
     info.portA.reg = PRA;
     info.portA.dir = DDRA;
-
-    info.portA.port = PB;
+    
+    info.portB.port = PB;
     info.portB.reg = PRB;
     info.portB.dir = DDRB;
 
@@ -682,6 +682,7 @@ CIA::getInfo()
     
     info.tod = tod.getInfo();
     info.todIntEnable = ICR & 0x04;
+    
     return info;
 }
 

@@ -90,16 +90,16 @@ extension MyController {
             return c64.developmentMode();
         }
         if item.action == #selector(MyController.traceC64CpuAction(_:)) {
-            item.state = c64.cpu.tracingEnabled() ? .on : .off
+            item.state = c64.cpu.tracing() ? .on : .off
         }
         if item.action == #selector(MyController.traceIecAction(_:)) {
-            item.state = c64.iec.tracingEnabled() ? .on : .off
+            item.state = c64.iec.tracing() ? .on : .off
         }
         if item.action == #selector(MyController.traceVC1541CpuAction(_:)) {
-            item.state = c64.vc1541.cpu.tracingEnabled() ? .on : .off
+            item.state = c64.vc1541.cpu.tracing() ? .on : .off
         }
         if item.action == #selector(MyController.traceViaAction(_:)) {
-            item.state = c64.vc1541.via1.tracingEnabled() ? .on : .off
+            item.state = c64.vc1541.via1.tracing() ? .on : .off
         }
         
         if item.action == #selector(MyController.dumpStateAction(_:)) {
@@ -440,7 +440,7 @@ extension MyController {
             targetSelf in targetSelf.traceC64CpuAction(sender)
         }
         
-        c64.cpu.setTraceMode(!c64.cpu.tracingEnabled())
+        c64.cpu.setTracing(!c64.cpu.tracing())
     }
   
     @IBAction func traceIecAction(_ sender: Any!) {
@@ -449,7 +449,7 @@ extension MyController {
             targetSelf in targetSelf.traceIecAction(sender)
         }
         
-        c64.iec.setTraceMode(!c64.iec.tracingEnabled())
+        c64.iec.setTracing(!c64.iec.tracing())
     }
  
     @IBAction func traceVC1541CpuAction(_ sender: Any!) {
@@ -458,7 +458,7 @@ extension MyController {
             targetSelf in targetSelf.traceVC1541CpuAction(sender)
         }
         
-        c64.vc1541.cpu.setTraceMode(!c64.vc1541.cpu.tracingEnabled())
+        c64.vc1541.cpu.setTracing(!c64.vc1541.cpu.tracing())
     }
   
     @IBAction func traceViaAction(_ sender: Any!) {
@@ -467,8 +467,8 @@ extension MyController {
             targetSelf in targetSelf.traceViaAction(sender)
         }
         
-        c64.vc1541.via1.setTraceMode(!c64.vc1541.via1.tracingEnabled())
-        c64.vc1541.via2.setTraceMode(!c64.vc1541.via2.tracingEnabled())
+        c64.vc1541.via1.setTracing(!c64.vc1541.via1.tracing())
+        c64.vc1541.via2.setTracing(!c64.vc1541.via2.tracing())
     }
     
     @IBAction func dumpC64(_ sender: Any!) { c64.dump() }

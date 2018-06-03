@@ -127,6 +127,9 @@ extension MyController {
             pc, sp, a, x, y,
             nflag, zflag, cflag, iflag, bflag, dflag, vflag,
             
+            // CIA panel
+            ciaPRA, ciaPRB, ciaDDRA, ciaDDRB, ciaLatchA, ciaLatchB,
+            
             // SID panel
             frequency, pulseWidth, attackRate, decayRate, sustainRate, releaseRate,
             filterCutoff, filterResonance,

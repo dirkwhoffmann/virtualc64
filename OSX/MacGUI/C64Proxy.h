@@ -60,8 +60,8 @@ struct ContainerWrapper;
 - (CPUInfo) getInfo;
 - (void) dump;
 
-- (BOOL) tracingEnabled;
-- (void) setTraceMode:(BOOL)b;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
 
 - (uint16_t) pc;
 - (void) setPC:(uint16_t)pc;
@@ -182,9 +182,14 @@ struct ContainerWrapper;
 	struct CiaWrapper *wrapper;
 }
 
-- (void) dump;
-- (void) setTraceMode:(bool)b;
 - (CIAInfo) getInfo;
+- (void) dump;
+
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+
+- (uint8_t) snoop:(uint16_t)addr;
+- (void) poke:(uint16_t)addr value:(uint8_t)value;
 
 @end 
 
@@ -261,9 +266,9 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
-- (bool) isDriveConnected;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+- (BOOL) isDriveConnected;
 - (void) connectDrive;
 - (void) disconnectDrive;
 - (BOOL) atnLine;
@@ -282,7 +287,7 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) cartridgeAttached; 
+- (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
 - (void) pressFirstButton;
 - (void) pressSecondButton;
@@ -299,8 +304,8 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
 
 @end
 
@@ -346,18 +351,18 @@ struct ContainerWrapper;
 - (VIAProxy *) via:(int)num;
 
 - (void) dump;
-- (bool) tracingEnabled;
-- (void) setTraceMode:(bool)b;
-- (bool) hasRedLED;
-- (bool) hasDisk;
-- (bool) hasModifiedDisk;
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+- (BOOL) hasRedLED;
+- (BOOL) hasDisk;
+- (BOOL) hasModifiedDisk;
 - (void) ejectDisk;
-- (bool) writeProtection;
-- (void) setWriteProtection:(bool)b;
-- (bool) DiskModified;
-- (void) setDiskModified:(bool)b;
-- (bool) soundMessagesEnabled;
-- (void) setSendSoundMessages:(bool)b;
+- (BOOL) writeProtection;
+- (void) setWriteProtection:(BOOL)b;
+- (BOOL) DiskModified;
+- (void) setDiskModified:(BOOL)b;
+- (BOOL) soundMessagesEnabled;
+- (void) setSendSoundMessages:(BOOL)b;
 
 - (NSInteger) halftrack;
 - (void) setHalftrack:(NSInteger)value;
@@ -377,7 +382,7 @@ struct ContainerWrapper;
 - (const char *)dataRel:(NSInteger)start;
 - (const char *)dataRel:(NSInteger)start length:(NSInteger)n;
 
-- (bool) exportToD64:(NSString *)path;
+- (BOOL) exportToD64:(NSString *)path;
 - (void) playSound:(NSString *)name volume:(float)v;
 
 @end
@@ -393,7 +398,7 @@ struct ContainerWrapper;
 
 - (void) dump;
 
-- (bool) hasTape;
+- (BOOL) hasTape;
 - (void) pressPlay;
 - (void) pressStop;
 - (void) rewind;
@@ -465,10 +470,10 @@ struct ContainerWrapper;
 - (void) kill;
 
 // Hardware configuration
-- (bool) reSID;
-- (void) setReSID:(bool)b;
-- (bool) audioFilter;
-- (void) setAudioFilter:(bool)b;
+- (BOOL) reSID;
+- (void) setReSID:(BOOL)b;
+- (BOOL) audioFilter;
+- (void) setAudioFilter:(BOOL)b;
 - (NSInteger) samplingMethod;
 - (void) setSamplingMethod:(NSInteger)value;
 - (NSInteger) chipModel;
@@ -483,7 +488,7 @@ struct ContainerWrapper;
 - (void)_saveToSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
-- (CIAProxy *) cia:(int)num;
+- (CIAProxy *) cia:(NSInteger)num;
 
 - (void) dump;
 - (BOOL) developmentMode;
@@ -497,41 +502,41 @@ struct ContainerWrapper;
 - (void) halt;
 - (void) step;
 - (void) stepOver;
-- (bool) isRunnable;
+- (BOOL) isRunnable;
 - (void) run;
 - (void) suspend;
 - (void) resume; 
-- (bool) isHalted;
-- (bool) isRunning;
-- (bool) isPAL;
-- (bool) isNTSC;
+- (BOOL) isHalted;
+- (BOOL) isRunning;
+- (BOOL) isPAL;
+- (BOOL) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
 - (void) setNTSC:(BOOL)b;
 
-- (bool) isBasicRom:(NSURL *)url;
-- (bool) loadBasicRom:(NSURL *)url;
-- (bool) isBasicRomLoaded;
-- (bool) isCharRom:(NSURL *)url;
-- (bool) loadCharRom:(NSURL *)url;
-- (bool) isCharRomLoaded;
-- (bool) isKernalRom:(NSURL *)url;
-- (bool) loadKernalRom:(NSURL *)url;
-- (bool) isKernalRomLoaded;
-- (bool) isVC1541Rom:(NSURL *)url;
-- (bool) loadVC1541Rom:(NSURL *)url;
-- (bool) isVC1541RomLoaded;
-- (bool) isRom:(NSURL *)url;
-- (bool) loadRom:(NSURL *)url;
+- (BOOL) isBasicRom:(NSURL *)url;
+- (BOOL) loadBasicRom:(NSURL *)url;
+- (BOOL) isBasicRomLoaded;
+- (BOOL) isCharRom:(NSURL *)url;
+- (BOOL) loadCharRom:(NSURL *)url;
+- (BOOL) isCharRomLoaded;
+- (BOOL) isKernalRom:(NSURL *)url;
+- (BOOL) loadKernalRom:(NSURL *)url;
+- (BOOL) isKernalRomLoaded;
+- (BOOL) isVC1541Rom:(NSURL *)url;
+- (BOOL) loadVC1541Rom:(NSURL *)url;
+- (BOOL) isVC1541RomLoaded;
+- (BOOL) isRom:(NSURL *)url;
+- (BOOL) loadRom:(NSURL *)url;
 
-- (bool) attachCartridgeAndReset:(CRTProxy *)c;
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;
-- (bool) isCartridgeAttached;
+- (BOOL) isCartridgeAttached;
 
-- (bool) insertDisk:(ArchiveProxy *)a;
-- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
+- (BOOL) insertDisk:(ArchiveProxy *)a;
+- (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
-- (bool) insertTape:(TAPProxy *)a;
+- (BOOL) insertTape:(TAPProxy *)a;
 
 - (NSInteger) mouseModel;
 - (void) setMouseModel:(NSInteger)model;
@@ -541,17 +546,17 @@ struct ContainerWrapper;
 - (void) setMouseLeftButton:(BOOL)pressed;
 - (void) setMouseRightButton:(BOOL)pressed;
 
-- (bool) warp;
-- (void) setWarp:(bool)b;
-- (bool) alwaysWarp;
-- (void) setAlwaysWarp:(bool)b;
-- (bool) warpLoad;
-- (void) setWarpLoad:(bool)b;
+- (BOOL) warp;
+- (void) setWarp:(BOOL)b;
+- (BOOL) alwaysWarp;
+- (void) setAlwaysWarp:(BOOL)b;
+- (BOOL) warpLoad;
+- (void) setWarpLoad:(BOOL)b;
 - (UInt64) cycles;
 - (UInt64) frames;
 
 // Snapshot storage
-- (void) setAutoSaveSnapshots:(bool)b;
+- (void) setAutoSaveSnapshots:(BOOL)b;
 
 - (NSInteger) numAutoSnapshots;
 - (NSData *) autoSnapshotData:(NSInteger)nr;
@@ -559,8 +564,8 @@ struct ContainerWrapper;
 - (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
 - (time_t) autoSnapshotTimestamp:(NSInteger)nr;
-- (bool) restoreAutoSnapshot:(NSInteger)nr;
-- (bool) restoreLatestAutoSnapshot;
+- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
+- (BOOL) restoreLatestAutoSnapshot;
 
 - (NSInteger) numUserSnapshots;
 - (NSData *) userSnapshotData:(NSInteger)nr;
@@ -568,9 +573,9 @@ struct ContainerWrapper;
 - (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
 - (time_t) userSnapshotTimestamp:(NSInteger)nr;
-- (bool) takeUserSnapshot;
-- (bool) restoreUserSnapshot:(NSInteger)nr;
-- (bool) restoreLatestUserSnapshot;
+- (BOOL) takeUserSnapshot;
+- (BOOL) restoreUserSnapshot:(NSInteger)nr;
+- (BOOL) restoreLatestUserSnapshot;
 - (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Audio hardware

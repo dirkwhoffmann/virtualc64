@@ -31,16 +31,16 @@ typedef struct {
         uint8_t dir;
     } portB;
     struct {
-        uint32_t count;
-        uint32_t latch;
+        uint16_t count;
+        uint16_t latch;
         bool running;
         bool toggle;
         bool pbout;
         bool oneShot;
     } timerA;
     struct {
-        uint32_t count;
-        uint32_t latch;
+        uint16_t count;
+        uint16_t latch;
         bool running;
         bool toggle;
         bool pbout;
