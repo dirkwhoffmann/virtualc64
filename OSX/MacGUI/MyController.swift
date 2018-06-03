@@ -481,9 +481,8 @@ extension MyController {
             disableUserEditing()
             refresh()
  
-            // Disable undo because the internal state changes permanently
             document?.updateChangeCount(.changeDone)
-            undoManager?.removeAllActions()
+            // undoManager?.removeAllActions()
             break
     
         case MSG_HALT:

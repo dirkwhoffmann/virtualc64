@@ -163,7 +163,6 @@
 		50B1644E202DDAA600447D3E /* ExportDiskDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B1644D202DDAA600447D3E /* ExportDiskDialog.xib */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* CustomCartridges.cpp */; };
-		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF77D120309A2A006E000F /* WindowDelegate.swift */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -236,7 +235,6 @@
 		50FB74A02033193300E05051 /* serial.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB749F2033193300E05051 /* serial.png */; };
 		50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB74A1203322C900E05051 /* DiskInspectorController.swift */; };
 		50FB74A4203323E700E05051 /* diskette_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FB74A3203323E700E05051 /* diskette_light.png */; };
-		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
 		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
 		50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B372039B3C5006CE7C7 /* C64Key.swift */; };
@@ -491,8 +489,6 @@
 		50B5861B201C673900742DB3 /* CustomCartridges.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CustomCartridges.cpp; sourceTree = "<group>"; };
 		50B5861C201C673900742DB3 /* CustomCartridges.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCartridges.h; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
-		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -575,8 +571,6 @@
 		50FB749F2033193300E05051 /* serial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = serial.png; sourceTree = "<group>"; };
 		50FB74A1203322C900E05051 /* DiskInspectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspectorController.swift; sourceTree = "<group>"; };
 		50FB74A3203323E700E05051 /* diskette_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette_light.png; sourceTree = "<group>"; };
-		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
-		50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerVicPanel.mm; sourceTree = "<group>"; };
 		50FD96A41BF65861009134A4 /* 1541.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1541.png; sourceTree = "<group>"; };
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
@@ -778,15 +772,11 @@
 			isa = PBXGroup;
 			children = (
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
-				50B6894612DCA7B100CBB5B7 /* MyController.h */,
-				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
-				50FBE90912DC992B0093194C /* MyControllerVicPanel.h */,
-				50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */,
 				5038CA9820B6C2D8000D9193 /* Debugger */,
 				5018AF65202EDD2000B4C886 /* UserDefaults.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
@@ -1486,12 +1476,10 @@
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
-				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
 				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
-				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
 				5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */,
