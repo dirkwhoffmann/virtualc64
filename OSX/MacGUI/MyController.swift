@@ -551,7 +551,7 @@ extension MyController {
             // Not sure about the copyright of the following sound:
             // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            c64.vc1541.playSound("drive_click", volume: 1.0)
+            playSound(name: "drive_click", volume: 1.0)
             break
         
         case MSG_VC1541_DETACHED_SOUND:
@@ -559,19 +559,19 @@ extension MyController {
             // Not sure about the copyright of the following sound:
             // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            c64.vc1541.playSound("drive_click", volume: 1.0)
+            playSound(name: "drive_click", volume: 1.0)
             break
     
         case MSG_VC1541_DISK_SOUND:
             
             // [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
-            c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
+            playSound(name: "drive_snatch_uae", volume: 0.1)
             break
             
         case MSG_VC1541_NO_DISK_SOUND:
             
             // [[c64 vc1541] playSound:@"1541_door_open_1" volume:0.2];
-            c64.vc1541.playSound("drive_snatch_uae", volume: 0.1)
+            playSound(name: "drive_snatch_uae", volume: 0.1)
             break
             
         case MSG_VC1541_HEAD_UP_SOUND:
@@ -579,7 +579,7 @@ extension MyController {
             // Not sure about the copyright of the following sound:
             // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            c64.vc1541.playSound("drive_click", volume: 1.0)
+            playSound(name: "drive_click", volume: 1.0)
             break
             
         case MSG_VC1541_HEAD_DOWN_SOUND:
@@ -587,7 +587,7 @@ extension MyController {
             // Not sure about the copyright of the following sound:
             // [[c64 vc1541] playSound:@"1541_track_change_2" volume:1.0];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
-            c64.vc1541.playSound("drive_click", volume: 1.0)
+            playSound(name: "drive_click", volume: 1.0)
             break
             
         case MSG_VC1541_DISK:
@@ -779,5 +779,13 @@ extension MyController {
         c64.detachCartridgeAndReset()
     }
     
-    
+    func playSound(name: String, volume: Float) {
+        
+        if let s = NSSound.init(named: NSSound.Name(rawValue: name)) {
+            s.volume = volume
+            s.play()
+        } else {
+            track("ERROR: Cannot create NSSound object.")
+        }
+    }
 }

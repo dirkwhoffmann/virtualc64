@@ -396,7 +396,7 @@ struct ContainerWrapper;
 - (const char *)dataRel:(NSInteger)start length:(NSInteger)n;
 
 - (BOOL) exportToD64:(NSString *)path;
-- (void) playSound:(NSString *)name volume:(float)v;
+// - (void) playSound:(NSString *)name volume:(float)v;
 
 @end
 

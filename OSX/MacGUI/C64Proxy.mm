@@ -503,12 +503,15 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->vc1541->dataRel((int)start, (unsigned)n); }
 
 - (BOOL) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
+
+/*
 - (void) playSound:(NSString *)name volume:(float)v
 {
     NSSound *s = [NSSound soundNamed:name];
     [s setVolume:v];
     [s play];
 }
+*/
 
 @end
 
