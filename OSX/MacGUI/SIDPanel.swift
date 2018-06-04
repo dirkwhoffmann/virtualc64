@@ -53,7 +53,6 @@ extension MyController {
         filterType.item(at: 2)?.state = (info.filterType & 0x20 != 0) ? .on : .off
         filterType.item(at: 3)?.state = (info.filterType & 0x40 != 0) ? .on : .off
         
-        track("reso = \(info.filterResonance)")
         filterResonance.intValue = Int32(info.filterResonance)
         filterCutoff.intValue = Int32(info.filterCutoff)
         filter1.intValue = (info.filterEnableBits & 0x01) != 0 ? 1 : 0
