@@ -108,7 +108,7 @@ class EmulatorPrefsController : UserDialogController {
         // Video
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         filter.selectItem(withTag: parent.metalScreen.videoFilter)
-        colorScheme.selectItem(withTag: c64.vic.colorScheme())
+        colorScheme.selectItem(withTag: Int(c64.vic.colorScheme().rawValue))
         eyeXSlider.floatValue = parent.metalScreen.eyeX()
         eyeYSlider.floatValue = parent.metalScreen.eyeY()
         eyeZSlider.floatValue = parent.metalScreen.eyeZ()
@@ -231,7 +231,7 @@ class EmulatorPrefsController : UserDialogController {
         
         track()
         let sender = sender as! NSPopUpButton
-        c64.vic.setColorScheme(sender.selectedTag())
+        c64.vic.setColorScheme(ColorScheme(rawValue: UInt32(sender.selectedTag())))
         update()
     }
 
@@ -323,7 +323,7 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.setEyeZ(0.0)
         parent.metalScreen.videoUpscaler = 1
         parent.metalScreen.videoFilter = 2
-        c64.vic.setColorScheme(Int(VICE.rawValue))
+        c64.vic.setColorScheme(VICE)
         parent.metalScreen.fullscreenKeepAspectRatio = false
         
         // Joystick emulation

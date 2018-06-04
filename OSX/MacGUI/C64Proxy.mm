@@ -131,10 +131,39 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @end
 
+//
+// CIA
+//
 
-// --------------------------------------------------------------------------
-//                                    VIC
-// --------------------------------------------------------------------------
+@implementation CIAProxy
+
+- (instancetype) initWithCIA:(CIA *)cia
+{
+    if (self = [super init]) {
+        wrapper = new CiaWrapper();
+        wrapper->cia = cia;
+    }
+    return self;
+}
+
+- (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
+- (void) dump { wrapper->cia->dumpState(); }
+
+- (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing(b) : wrapper->cia->stopTracing(); }
+
+- (uint8_t) snoop:(uint16_t)addr { return wrapper->cia->snoop(addr); }
+- (void) poke:(uint16_t)addr value:(uint8_t)value {
+    wrapper->cia->c64->suspend();
+    wrapper->cia->poke(addr, value);
+    wrapper->cia->c64->resume();
+}
+
+@end
+
+//
+// VIC
+//
 
 @implementation VICProxy
 
@@ -150,8 +179,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (VICInfo) getInfo { return wrapper->vic->getInfo(); }
 - (void) dump { wrapper->vic->dumpState(); }
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite { return wrapper->vic->getSpriteInfo((unsigned)sprite); }
-- (void *) screenBuffer { return wrapper->vic->screenBuffer(); }
 
+- (void *) screenBuffer { return wrapper->vic->screenBuffer(); }
 - (NSColor *) color:(NSInteger)nr
 {
     assert (0 <= nr && nr < 16);
@@ -166,8 +195,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
                                       blue:(float)b/255.0
                                      alpha:1.0];
 }
-- (NSInteger) colorScheme { return wrapper->vic->getColorScheme(); }
-- (void) setColorScheme:(NSInteger)scheme { wrapper->vic->setColorScheme((ColorScheme)scheme); }
+- (ColorScheme) colorScheme { return wrapper->vic->getColorScheme(); }
+- (void) setColorScheme:(ColorScheme)scheme { wrapper->vic->setColorScheme(scheme); }
 
 - (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }
 - (void) setScreenMemoryAddr:(uint16_t)addr { wrapper->vic->setScreenMemoryAddr(addr); }
@@ -214,35 +243,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @end
 
-// --------------------------------------------------------------------------
-//                                     CIA
-// --------------------------------------------------------------------------
 
-@implementation CIAProxy
-
-- (instancetype) initWithCIA:(CIA *)cia
-{
-    if (self = [super init]) {
-        wrapper = new CiaWrapper();
-        wrapper->cia = cia;
-    }
-    return self;
-}
-
-- (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
-- (void) dump { wrapper->cia->dumpState(); }
-
-- (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
-- (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing(b) : wrapper->cia->stopTracing(); }
-
-- (uint8_t) snoop:(uint16_t)addr { return wrapper->cia->snoop(addr); }
-- (void) poke:(uint16_t)addr value:(uint8_t)value {
-    wrapper->cia->c64->suspend();
-    wrapper->cia->poke(addr, value);
-    wrapper->cia->c64->resume();
-}
-
-@end 
 
 // --------------------------------------------------------------------------
 //                                    Keyboard

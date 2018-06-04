@@ -110,9 +110,30 @@ struct ContainerWrapper;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                    VIC
-// --------------------------------------------------------------------------
+//
+// CIA
+//
+
+@interface CIAProxy : NSObject {
+    
+    struct CiaWrapper *wrapper;
+}
+
+- (CIAInfo) getInfo;
+- (void) dump;
+
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+
+- (uint8_t) snoop:(uint16_t)addr;
+- (void) poke:(uint16_t)addr value:(uint8_t)value;
+
+@end
+
+
+//
+// VIC
+//
 
 @interface VICProxy : NSObject {
     
@@ -121,8 +142,8 @@ struct ContainerWrapper;
 
 - (void *) screenBuffer;
 - (NSColor *) color:(NSInteger)nr;
-- (NSInteger) colorScheme;
-- (void) setColorScheme:(NSInteger)scheme;
+- (ColorScheme) colorScheme;
+- (void) setColorScheme:(ColorScheme)scheme;
 
 - (VICInfo) getInfo;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
@@ -173,25 +194,6 @@ struct ContainerWrapper;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                     CIA
-// --------------------------------------------------------------------------
-
-@interface CIAProxy : NSObject {
-    
-	struct CiaWrapper *wrapper;
-}
-
-- (CIAInfo) getInfo;
-- (void) dump;
-
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
-
-- (uint8_t) snoop:(uint16_t)addr;
-- (void) poke:(uint16_t)addr value:(uint8_t)value;
-
-@end 
 
 // --------------------------------------------------------------------------
 //                                  Keyboard

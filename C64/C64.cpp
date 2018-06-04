@@ -34,7 +34,7 @@ threadCleanup(void* thisC64)
     c64->threadCleanup();
 
     c64->sid.halt();
-    c64->debug(1, "Execution thread terminated\n");
+    c64->debug(2, "Execution thread terminated\n");
     c64->putMessage(MSG_HALT);
 }
 
@@ -44,7 +44,7 @@ void
     assert(thisC64 != NULL);
     
     C64 *c64 = (C64 *)thisC64;
-    c64->debug(1, "Execution thread started\n");
+    c64->debug(2, "Execution thread started\n");
     c64->putMessage(MSG_RUN);
     
     // Configure thread properties...
@@ -344,7 +344,7 @@ void
 C64::threadCleanup()
 {
     p = NULL;
-    debug(1, "Execution thread cleanup\n");
+    debug(2, "Execution thread cleanup\n");
 }
 
 bool
