@@ -11,8 +11,6 @@ extension MyController {
 
     func setupDebugger() {
         
-        selectedVoice = 0
-        
         // Start with hexadecimal number format
         setHexadecimalAction(self)
         
@@ -69,6 +67,7 @@ extension MyController {
         let fmt4 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xF)
         let fmt8 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFF)
         let fmt9 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0x1FF)
+        let fmt11 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0x7FF)
         let fmt12 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFFF)
         let fmt16 = MyFormatter.init(radix: (hex ? 16 : 10), min: 0, max: 0xFFFF)
 
@@ -92,8 +91,11 @@ extension MyController {
         assignFormatter(fmt9,
                         [vicRasterline, vicIrqRasterline, spriteX, vicXCounter])
 
+        assignFormatter(fmt11,
+                        [filterCutoff])
+
         assignFormatter(fmt12,
-                        [pulseWidth, filterCutoff])
+                        [pulseWidth])
 
         assignFormatter(fmt16,
                         [pc, breakAt,

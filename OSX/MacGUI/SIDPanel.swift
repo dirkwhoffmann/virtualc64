@@ -12,19 +12,12 @@ extension MyController {
     func refreshSID() {
         
         let info = c64.sid.getInfo()
-        let vinfo = c64.sid.getVoiceInfo(voiceSelector.indexOfSelectedItem)
+        let vinfo = c64.sid.getVoiceInfo(selectedVoice)
         
         // Volume and potentiometers
         volume.intValue = Int32(info.volume)
         potX.intValue = Int32(info.potX)
         potY.intValue = Int32(info.potY)
-        
-        // Voice selector
-        voiceSelector.selectedSegment = selectedVoice
-        
-        // Voice items
-        // let i = voiceSelector.indexOfSelectedItem
-        
         
         if vinfo.waveform & 0x10 != 0 { waveform.selectItem(at: 1) }
         else if vinfo.waveform & 0x20 != 0 { waveform.selectItem(at: 2) }
@@ -36,7 +29,9 @@ extension MyController {
         waveform.item(at: 2)?.state = (vinfo.waveform & 0x20 != 0) ? .on : .off
         waveform.item(at: 3)?.state = (vinfo.waveform & 0x40 != 0) ? .on : .off
         waveform.item(at: 4)?.state = (vinfo.waveform & 0x80 != 0) ? .on : .off
-
+        pulseWidth.isHidden = (vinfo.waveform & 0x40 == 0)
+        pulseWidthText.isHidden = (vinfo.waveform & 0x40 == 0)
+        
         frequency.intValue = Int32(vinfo.frequency)
         pulseWidth.intValue = Int32(vinfo.pulseWidth)
         pulseWidth.intValue = Int32(vinfo.pulseWidth)
@@ -58,6 +53,7 @@ extension MyController {
         filterType.item(at: 2)?.state = (info.filterType & 0x20 != 0) ? .on : .off
         filterType.item(at: 3)?.state = (info.filterType & 0x40 != 0) ? .on : .off
         
+        track("reso = \(info.filterResonance)")
         filterResonance.intValue = Int32(info.filterResonance)
         filterCutoff.intValue = Int32(info.filterCutoff)
         filter1.intValue = (info.filterEnableBits & 0x01) != 0 ? 1 : 0
@@ -71,6 +67,10 @@ extension MyController {
         bufferOverflows.intValue = Int32(c64.sid.bufferOverflows())
         
         waveformView.update()
+    }
+    
+    private var selectedVoice: Int {
+        get { return voiceSelector.indexOfSelectedItem }
     }
     
     func pokeSidReg(_ register:(UInt16), _ value:(UInt8)) {
@@ -87,9 +87,6 @@ extension MyController {
     
     @IBAction func selectVoiceAction(_ sender: Any!) {
      
-        let sender = sender as! NSSegmentedControl
-        selectedVoice = sender.indexOfSelectedItem
-        track("selectedVoice = \(selectedVoice)")
         refreshSID()
     }
     
@@ -408,6 +405,7 @@ extension MyController {
                 me in me._filterResonanceAction((voice, oldValue))
             }
             undoManager?.setActionName("Set Filter Resonance")
+            // track("\(newValue << 4) \((newValue << 4) | info.filterEnableBits)")
             pokeSidReg(0x17, (newValue << 4) | info.filterEnableBits)
             refreshSID()
         }

@@ -68,8 +68,6 @@ extension MyController {
     
     @IBAction func selectCIAAction(_ sender: Any!) {
         
-        let sender = sender as! NSSegmentedControl
-        selectedVoice = sender.indexOfSelectedItem
         refreshCIA()
     }
     

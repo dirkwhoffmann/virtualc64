@@ -196,7 +196,6 @@ class MyController : NSWindowController {
     @IBOutlet weak var spriteBackgroundIrqEnabled: NSButton!
     
     // Debugger (SID panel)
-    var selectedVoice = 0
     @IBOutlet weak var volume: NSTextField!
     @IBOutlet weak var potX: NSTextField!
     @IBOutlet weak var potY: NSTextField!
@@ -205,6 +204,7 @@ class MyController : NSWindowController {
     @IBOutlet weak var waveform: NSPopUpButton!
     @IBOutlet weak var frequency: NSTextField!
     @IBOutlet weak var pulseWidth: NSTextField!
+    @IBOutlet weak var pulseWidthText: NSTextField!
     @IBOutlet weak var attackRate: NSTextField!
     @IBOutlet weak var decayRate: NSTextField!
     @IBOutlet weak var sustainRate: NSTextField!
@@ -479,10 +479,8 @@ extension MyController {
         case MSG_RUN:
             
             disableUserEditing()
-            refresh()
- 
             document?.updateChangeCount(.changeDone)
-            // undoManager?.removeAllActions()
+            refresh()
             break
     
         case MSG_HALT:

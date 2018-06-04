@@ -272,13 +272,14 @@ ReSID::getInfo()
 {
     SIDInfo info;
     reSID::SID::State state = sid->read_state();
-
-    info.volume = state.sid_register[0x18] & 0x0F;
-    info.filterModeBits = state.sid_register[0x18] & 0xF0;
-    info.filterType = state.sid_register[0x18] & 0x70;
-    info.filterCutoff = (state.sid_register[0x16] << 3) | (state.sid_register[0x15] & 0x07);
-    info.filterResonance = state.sid_register[0x17] >> 4;
-    info.filterEnableBits = state.sid_register[0x17] & 0x0F;
+    uint8_t *reg = (uint8_t *)state.sid_register;
+    
+    info.volume = reg[0x18] & 0x0F;
+    info.filterModeBits = reg[0x18] & 0xF0;
+    info.filterType = reg[0x18] & 0x70;
+    info.filterCutoff = (reg[0x16] << 3) | (reg[0x15] & 0x07);
+    info.filterResonance = reg[0x17] >> 4;
+    info.filterEnableBits = reg[0x17] & 0x0F;
     return info;
 }
 

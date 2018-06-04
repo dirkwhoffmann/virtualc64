@@ -78,6 +78,7 @@
                 <outlet property="potY" destination="gEF-Sx-fBJ" id="nBd-zm-heN"/>
                 <outlet property="progress" destination="2203" id="tHU-2P-FXF"/>
                 <outlet property="pulseWidth" destination="9TK-r7-7WA" id="nXS-il-RQ5"/>
+                <outlet property="pulseWidthText" destination="JQn-Cc-SSF" id="BpL-T8-5Nv"/>
                 <outlet property="redLED" destination="1210" id="1215"/>
                 <outlet property="releaseRate" destination="NEG-EB-tbc" id="wxu-tJ-Edy"/>
                 <outlet property="ringBit" destination="9lM-DR-BPP" id="sb1-4n-3vQ"/>
@@ -2193,7 +2194,7 @@
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="wEw-3d-tZe">
                                                     <rect key="frame" x="101" y="87" width="45" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="Tgn-vB-RpD">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65535" drawsBackground="YES" id="Tgn-vB-RpD">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2223,14 +2224,32 @@
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="pJW-JS-eea">
                                                     <rect key="frame" x="19" y="63" width="77" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="ADSR rates:" id="KVg-gN-Bxq">
+                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Envelope A:" id="KVg-gN-Bxq">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" misplaced="YES" id="eyP-fH-kzx">
+                                                    <rect key="frame" x="120" y="63" width="21" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="D:" id="TRS-DU-ZRW">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" misplaced="YES" id="D3M-ZQ-wq6">
+                                                    <rect key="frame" x="161" y="63" width="21" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="S:" id="IDc-US-q0K">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="UMe-Af-uhl">
-                                                    <rect key="frame" x="101" y="59" width="30" height="23"/>
+                                                    <rect key="frame" x="101" y="59" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="6fe-W3-BA6">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
@@ -2242,7 +2261,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="H4H-4t-pmr">
-                                                    <rect key="frame" x="141" y="59" width="30" height="23"/>
+                                                    <rect key="frame" x="142" y="59" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="qng-NR-f1r">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
@@ -2254,7 +2273,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="H1K-GI-GVr">
-                                                    <rect key="frame" x="181" y="59" width="30" height="23"/>
+                                                    <rect key="frame" x="184" y="59" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="Wde-QI-LO2">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
@@ -2277,9 +2296,9 @@
                                                     </connections>
                                                 </button>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="9TK-r7-7WA">
-                                                    <rect key="frame" x="205" y="87" width="45" height="23"/>
+                                                    <rect key="frame" x="213" y="87" width="37" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="65536" drawsBackground="YES" id="JYQ-gH-tyy">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="4096" drawsBackground="YES" id="JYQ-gH-tyy">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2289,7 +2308,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" id="JQn-Cc-SSF">
-                                                    <rect key="frame" x="152" y="91" width="51" height="14"/>
+                                                    <rect key="frame" x="159" y="91" width="51" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Width:" id="khz-rX-uV5">
                                                         <font key="font" metaFont="smallSystem"/>
@@ -2329,7 +2348,7 @@
                                                     </connections>
                                                 </button>
                                                 <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" id="NEG-EB-tbc">
-                                                    <rect key="frame" x="220" y="59" width="30" height="23"/>
+                                                    <rect key="frame" x="227" y="59" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="15" drawsBackground="YES" id="JsL-eJ-Xrh">
                                                         <font key="font" size="12" name="CourierNewPS-BoldMT"/>
@@ -2362,6 +2381,15 @@
                                                         <action selector="gateBitAction:" target="-2" id="gi0-yu-mG1"/>
                                                     </connections>
                                                 </button>
+                                                <textField verticalHuggingPriority="750" misplaced="YES" id="1UJ-5E-DEH">
+                                                    <rect key="frame" x="205" y="63" width="21" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="R:" id="e9i-s7-k1D">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
                                             </subviews>
                                         </view>
                                     </box>
