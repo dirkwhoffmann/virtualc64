@@ -191,10 +191,6 @@
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D19B8620ACA0C40004C47B /* Mouse1350.cpp */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
-		50D6954812E3759500D9C738 /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954312E3759500D9C738 /* IconCRT.icns */; };
-		50D6954912E3759500D9C738 /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954412E3759500D9C738 /* IconD64.icns */; };
-		50D6954B12E3759500D9C738 /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954612E3759500D9C738 /* IconT64.icns */; };
-		50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6956B12E380E500D9C738 /* IconPRG.icns */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DA14A30A6418470022B4A7 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA14A20A6418470022B4A7 /* bottom.png */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
@@ -202,7 +198,6 @@
 		50DBB44B2025CE5700489271 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Basics.swift */; };
 		50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC89C720B2EB53005E0557 /* CpuTableView.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
-		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
 		50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA90C3CEAB700CB6B43 /* warpOff.png */; };
 		50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */; };
@@ -521,10 +516,6 @@
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
 		50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64Archive.cpp; sourceTree = "<group>"; };
-		50D6954312E3759500D9C738 /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
-		50D6954412E3759500D9C738 /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
-		50D6954612E3759500D9C738 /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
-		50D6956B12E380E500D9C738 /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DA14A20A6418470022B4A7 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
@@ -533,7 +524,6 @@
 		50DBB44A2025CE5700489271 /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
 		50DC89C720B2EB53005E0557 /* CpuTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CpuTableView.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
-		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
 		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOff.png; sourceTree = "<group>"; };
 		50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOn.png; sourceTree = "<group>"; };
@@ -942,7 +932,6 @@
 			children = (
 				5080F3511EE7469C001313D4 /* TouchBar */,
 				50CCB1B81B84999E008D8C30 /* Toolbar */,
-				50D6955012E375A800D9C738 /* Icons */,
 				5030B2A720AEBD2200E591BE /* GameDevices */,
 				50195C2620AFF874003844FB /* Debugger */,
 				50FD96A41BF65861009134A4 /* 1541.png */,
@@ -1183,18 +1172,6 @@
 			path = resid;
 			sourceTree = "<group>";
 		};
-		50D6955012E375A800D9C738 /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				50D6954312E3759500D9C738 /* IconCRT.icns */,
-				50D6954412E3759500D9C738 /* IconD64.icns */,
-				50D6954612E3759500D9C738 /* IconT64.icns */,
-				50D6956B12E380E500D9C738 /* IconPRG.icns */,
-				50E033BA12E3868100ABF9E3 /* IconP00.icns */,
-			);
-			name = Icons;
-			sourceTree = "<group>";
-		};
 		50FE5B342039B392006CE7C7 /* Keyboard Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1375,18 +1352,13 @@
 				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
 				500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */,
 				50F23D0812DF932800B1F275 /* glossy.png in Resources */,
-				50D6954812E3759500D9C738 /* IconCRT.icns in Resources */,
 				505529BC2033014B006004B3 /* rom_medium.png in Resources */,
-				50D6954912E3759500D9C738 /* IconD64.icns in Resources */,
 				50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */,
-				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
 				5087D8522081FF8A0026BAD5 /* joystick32_sony.png in Resources */,
-				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
 				50F9955B203AC13D004C4856 /* key.png in Resources */,
 				50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */,
 				5087FD591BDA16C400570F0D /* metal.png in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
-				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				50C9CB241B826CD50054EE86 /* expansion.png in Resources */,
 				5034F2E2208239080068AA4B /* tb_freeze.png in Resources */,
