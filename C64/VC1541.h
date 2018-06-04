@@ -339,7 +339,7 @@ public:
     }
 
     //! @brief    Returns the number of bits in the current halftrack
-    unsigned numberOfBits() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
+    uint16_t numberOfBits() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
 
     //! @brief    Bit position of the read/write head inside the current track
     uint16_t getBitOffset() { return bitoffset; }

@@ -72,7 +72,7 @@ class DiskInspectorController : UserDialogController
 
         // Update icon and drive protection
         icon.image = drive.hasDisk() ? diskImage : noDiskImage
-        protect.integerValue = drive.writeProtection() ? 1 : 0
+        protect.integerValue = drive.writeProtected() ? 1 : 0
         
         // Update serial port
         refreshSerial()
@@ -87,8 +87,8 @@ class DiskInspectorController : UserDialogController
             refreshHead()
         }
         
-        currentHalftrack = halftrack
-        currentOffset = offset
+        currentHalftrack = Int(halftrack)
+        currentOffset = Int(offset)
     }
     
     func refreshSerial() {
@@ -105,7 +105,7 @@ class DiskInspectorController : UserDialogController
         let track = (halftrack + 1) / 2
         let count = drive.numberOfBits()
         
-        headTrack.integerValue = halftrack
+        headTrack.integerValue = Int(halftrack)
         headTrackInfo.stringValue = "Track \(track)" + ((halftrack % 2 == 0) ? ".5" : "")
         gcrHeader.stringValue = "GCR data: \(count) Bits (\(count / 8) Bytes)"
         
@@ -120,14 +120,14 @@ class DiskInspectorController : UserDialogController
     func refreshHead()
     {
         let drive = c64.vc1541!
-        let offset = drive.bitOffset()
-        let length = c64.vc1541.numberOfBits()
+        let offset = Int(drive.bitOffset())
+        let length = Int(c64.vc1541.numberOfBits())
 
         headOffset.integerValue = offset
         headWheel.integerValue = (length == 0) ? 0 : (1000 * offset / length)
         
         if drive.hasDisk() {
-            headValue.integerValue = drive.readBitFromHead()
+            headValue.integerValue = Int(drive.readBitFromHead())
             headLeft.stringValue = String(cString: drive.dataRel(-10, length: 10))
             headRight.stringValue = String(cString: drive.dataRel(1, length: 10))
         } else {
@@ -152,7 +152,7 @@ class DiskInspectorController : UserDialogController
         if c64.vc1541.numberOfBits() > 0 {
             removeHeadMarker()
             let storage = (gcrData.documentView as! NSTextView).textStorage
-            headPosition = NSRange.init(location: c64.vc1541.bitOffset(), length: 1)
+            headPosition = NSRange.init(location: Int(c64.vc1541.bitOffset()), length: 1)
             storage?.addAttribute(.foregroundColor, value: NSColor.white, range: headPosition)
             storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
         }
@@ -165,7 +165,7 @@ class DiskInspectorController : UserDialogController
     @IBAction func halftrackAction(_ sender: Any!)
     {
         let value = (sender as! NSTextField).integerValue
-        c64.vc1541.setHalftrack(value)
+        c64.vc1541.setHalftrack(Halftrack(value))
         refresh()
     }
 
@@ -183,7 +183,7 @@ class DiskInspectorController : UserDialogController
     @IBAction func headAction(_ sender: Any!)
     {
         let value = (sender as! NSTextField).integerValue
-        c64.vc1541.setBitOffset(value)
+        c64.vc1541.setBitOffset(UInt16(value))
         refresh()
     }
 
@@ -201,9 +201,9 @@ class DiskInspectorController : UserDialogController
     @IBAction func headWheelAction(_ sender: Any!)
     {
         let value = (sender as! NSSlider).integerValue
-        let trackSize = c64.vc1541.numberOfBits()
+        let trackSize = Int(c64.vc1541.numberOfBits())
         let newPosition = (trackSize * value) / 1000
-        c64.vc1541.setBitOffset(newPosition)
+        c64.vc1541.setBitOffset(UInt16(newPosition))
         refresh()
         scrollToHead()
     }
@@ -211,14 +211,14 @@ class DiskInspectorController : UserDialogController
     @IBAction func headValueAction(_ sender: Any!)
     {
         let value = (sender as! NSTextField).integerValue
-        c64.vc1541.writeBit(toHead: value)
+        c64.vc1541.writeBit(toHead: UInt8(value))
         refreshTrack() // Because data on track might have changed
         refresh()
     }
     
     func scrollToHead()
     {
-        let range = NSRange.init(location: c64.vc1541.bitOffset(), length: 1)
+        let range = NSRange.init(location: Int(c64.vc1541.bitOffset()), length: 1)
         let view = gcrData.documentView as! NSTextView
         view.scrollRangeToVisible(range)
     }

@@ -358,6 +358,7 @@
 		50271DE91A7E1CFE00C04290 /* LEDnewRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewRed.png; sourceTree = "<group>"; };
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
+		5027F9DA20C5449E0041AD37 /* Disk_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk_types.h; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
 		502F57F11B93441400D1077E /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
 		502F57F31B93441A00D1077E /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
@@ -889,6 +890,7 @@
 				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
 				500FC6770D17D2190044131D /* VIA6522.h */,
 				500FC6780D17D2190044131D /* VIA6522.cpp */,
+				5027F9DA20C5449E0041AD37 /* Disk_types.h */,
 				50775E101B8EE95B002EB58D /* Disk525.h */,
 				50775E0E1B8EE8A9002EB58D /* Disk525.cpp */,
 				50F681E91BEA3BE4008568E3 /* Datasette.h */,

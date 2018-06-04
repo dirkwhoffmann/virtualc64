@@ -209,16 +209,41 @@ struct ContainerWrapper;
 - (void) setSampleRate:(uint32_t)rate;
 
 - (NSInteger) ringbufferSize;
+- (float) ringbufferData:(NSInteger)offset;
+- (double) fillLevel;
 - (NSInteger) bufferUnderflows;
 - (NSInteger) bufferOverflows;
-- (double) fillLevel;
-- (float) ringbufferData:(NSInteger)offset;
 
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
 
 @end
+
+
+//
+// IEC bus
+//
+
+@interface IECProxy : NSObject {
+    
+    struct IecWrapper *wrapper;
+}
+
+- (void) dump;
+
+- (BOOL) tracing;
+- (void) setTracing:(BOOL)b;
+
+- (BOOL) driveConnected;
+- (void) connectDrive;
+- (void) disconnectDrive;
+- (BOOL) atnLine;
+- (BOOL) clockLine;
+- (BOOL) dataLine;
+
+@end
+
 
 //
 // Keyboard
@@ -245,7 +270,7 @@ struct ContainerWrapper;
 @end 
 
 //
-// Joystick
+// Control port
 //
 
 @interface ControlPortProxy : NSObject {
@@ -259,31 +284,9 @@ struct ContainerWrapper;
 @end
 
 
-
-// --------------------------------------------------------------------------
-//                                   IEC bus
-// -------------------------------------------------------------------------
-
-@interface IECProxy : NSObject {
-
-    struct IecWrapper *wrapper;
-}
-
-- (void) dump;
-- (BOOL) tracing;
-- (void) setTracing:(BOOL)b;
-- (BOOL) isDriveConnected;
-- (void) connectDrive;
-- (void) disconnectDrive;
-- (BOOL) atnLine;
-- (BOOL) clockLine;
-- (BOOL) dataLine;
-
-@end
-
-// --------------------------------------------------------------------------
-//                                 Expansion port
-// -------------------------------------------------------------------------
+//
+// Expansion port
+//
 
 @interface ExpansionPortProxy : NSObject {
     
@@ -291,20 +294,42 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
+
 - (void) pressFirstButton;
 - (void) pressSecondButton;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                      VIA
-// -------------------------------------------------------------------------
+
+//
+// 5,25" diskette
+//
+
+@interface Disk525Proxy : NSObject {
+    
+    struct Disk525Wrapper *wrapper;
+}
+
+- (void) dump;
+- (BOOL)writeProtected;
+- (void)setWriteProtection:(BOOL)b;
+- (BOOL)modified;
+- (void)setModified:(BOOL)b;
+- (NSInteger)numberOfTracks;
+
+@end
+
+
+//
+// VIA
+//
 
 @interface VIAProxy : NSObject {
     
-	struct Via6522Wrapper *wrapper;
+    struct Via6522Wrapper *wrapper;
 }
 
 - (void) dump;
@@ -313,33 +338,16 @@ struct ContainerWrapper;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                5,25" diskette
-// -------------------------------------------------------------------------
 
-@interface Disk525Proxy : NSObject {
-    
-    struct Disk525Wrapper *wrapper;
-}
-
-- (void) dump;
-- (BOOL)isWriteProtected;
-- (void)setWriteProtection:(BOOL)b;
-- (BOOL)isModified;
-- (void)setModified:(BOOL)b;
-- (NSInteger)numTracks;
-
-@end
-
-// --------------------------------------------------------------------------
-//                                    VC1541
-// -------------------------------------------------------------------------
+//
+// VC1541
+//
 
 @interface VC1541Proxy : NSObject {
     
 	struct Vc1541Wrapper *wrapper;
     
-    // sub proxys
+    // Sub proxys
 	CPUProxy *cpu;
 	VIAProxy *via1;
 	VIAProxy *via2;
@@ -352,29 +360,30 @@ struct ContainerWrapper;
 @property (readonly) VIAProxy *via2;
 @property (readonly) Disk525Proxy *disk;
 
-- (VIAProxy *) via:(int)num;
+- (VIAProxy *) via:(NSInteger)num;
 
 - (void) dump;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
-- (BOOL) hasRedLED;
+
+- (BOOL) redLED;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
 - (void) ejectDisk;
-- (BOOL) writeProtection;
+- (BOOL) writeProtected;
 - (void) setWriteProtection:(BOOL)b;
-- (BOOL) DiskModified;
+- (BOOL) diskModified;
 - (void) setDiskModified:(BOOL)b;
-- (BOOL) soundMessagesEnabled;
+- (BOOL) sendSoundMessages;
 - (void) setSendSoundMessages:(BOOL)b;
 
-- (NSInteger) halftrack;
-- (void) setHalftrack:(NSInteger)value;
-- (NSInteger) numberOfBits;
-- (NSInteger) bitOffset;
-- (void) setBitOffset:(NSInteger)value;
-- (NSInteger) readBitFromHead;
-- (void) writeBitToHead:(NSInteger)value;
+- (Halftrack) halftrack;
+- (void) setHalftrack:(Halftrack)value;
+- (uint16_t) numberOfBits;
+- (uint16_t) bitOffset;
+- (void) setBitOffset:(uint16_t)value;
+- (uint8_t) readBitFromHead;
+- (void) writeBitToHead:(uint8_t)value;
 
 - (void) moveHeadUp;
 - (void) moveHeadDown;
@@ -390,6 +399,7 @@ struct ContainerWrapper;
 - (void) playSound:(NSString *)name volume:(float)v;
 
 @end
+
 
 // --------------------------------------------------------------------------
 //                                  Datasette

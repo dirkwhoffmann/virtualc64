@@ -263,23 +263,45 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
-    wrapper->sid->readMonoSamples(target, n);
-}
+    wrapper->sid->readMonoSamples(target, n); }
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n {
-    wrapper->sid->readStereoSamples(target1, target2, n);
-}
+    wrapper->sid->readStereoSamples(target1, target2, n); }
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
-    wrapper->sid->readStereoSamplesInterleaved(target, n);
-}
+    wrapper->sid->readStereoSamplesInterleaved(target, n); }
 - (NSInteger) ringbufferSize { return wrapper->sid->ringbufferSize(); }
-// - (NSInteger) readPtr { return wrapper->sid->getReadPtr(); }
-// - (NSInteger) writePtr { return wrapper->sid->getWritePtr(); }
+- (float) ringbufferData:(NSInteger)offset {
+    return wrapper->sid->ringbufferData(offset); }
+- (double) fillLevel { return wrapper->sid->fillLevel(); }
 - (NSInteger) bufferUnderflows { return wrapper->sid->bufferUnderflows; }
 - (NSInteger) bufferOverflows { return wrapper->sid->bufferOverflows; }
-- (double) fillLevel { return wrapper->sid->fillLevel(); }
-- (float) ringbufferData:(NSInteger)offset {
-    return wrapper->sid->ringbufferData(offset);
+
+@end
+
+
+//
+// IEC bus
+//
+
+@implementation IECProxy
+
+- (instancetype) initWithIEC:(IEC *)iec
+{
+    if (self = [super init]) {
+        wrapper = new IecWrapper();
+        wrapper->iec = iec;
+    }
+    return self;
 }
+
+- (void) dump { wrapper->iec->dumpState(); }
+- (BOOL) tracing { return wrapper->iec->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing(); }
+- (void) connectDrive { wrapper->iec->connectDrive(); }
+- (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
+- (BOOL) driveConnected { return wrapper->iec->driveIsConnected(); }
+- (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
+- (BOOL) clockLine { return wrapper->iec->getClockLine(); }
+- (BOOL) dataLine { return wrapper->iec->getDataLine(); }
 
 @end
 
@@ -340,37 +362,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @end
 
 
-
-// --------------------------------------------------------------------------
-//                                   IEC bus
-// -------------------------------------------------------------------------
-
-@implementation IECProxy
-
-- (instancetype) initWithIEC:(IEC *)iec
-{
-    if (self = [super init]) {
-        wrapper = new IecWrapper();
-        wrapper->iec = iec;
-    }
-    return self;
-}
-
-- (void) dump { wrapper->iec->dumpState(); }
-- (BOOL) tracing { return wrapper->iec->tracingEnabled(); }
-- (void) setTracing:(BOOL)b { b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing(); }
-- (void) connectDrive { wrapper->iec->connectDrive(); }
-- (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
-- (BOOL) isDriveConnected { return wrapper->iec->driveIsConnected(); }
-- (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
-- (BOOL) clockLine { return wrapper->iec->getClockLine(); }
-- (BOOL) dataLine { return wrapper->iec->getDataLine(); }
-
-@end
-
-// --------------------------------------------------------------------------
-//                                 Expansion port
-// -------------------------------------------------------------------------
+//
+// Expansion port
+//
 
 @implementation ExpansionPortProxy
 
@@ -391,9 +385,35 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @end
 
-// --------------------------------------------------------------------------
-//                                     VIA
-// -------------------------------------------------------------------------
+
+//
+// 5,25" diskette
+//
+
+@implementation Disk525Proxy
+
+- (instancetype) initWithDisk525:(Disk525 *)disk
+{
+    if (self = [super init]) {
+        wrapper = new Disk525Wrapper();
+        wrapper->disk = disk;
+    }
+    return self;
+}
+
+- (void) dump { wrapper->disk->dumpState(); }
+- (BOOL)writeProtected { return wrapper->disk->isWriteProtected(); }
+- (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
+- (BOOL)modified { return wrapper->disk->isModified(); }
+- (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
+- (NSInteger)numberOfTracks { return (NSInteger)wrapper->disk->numTracks; }
+
+@end
+
+
+//
+// VIA
+//
 
 @implementation VIAProxy
 
@@ -412,33 +432,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @end
 
-// -------------------------------------------------------------------------
-//                                5,25" diskette
-// -------------------------------------------------------------------------
 
-@implementation Disk525Proxy
-
-- (instancetype) initWithDisk525:(Disk525 *)disk
-{
-    if (self = [super init]) {
-        wrapper = new Disk525Wrapper();
-        wrapper->disk = disk;
-    }
-    return self;
-}
-
-- (void) dump { wrapper->disk->dumpState(); }
-- (BOOL)isWriteProtected { return wrapper->disk->isWriteProtected(); }
-- (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
-- (BOOL)isModified { return wrapper->disk->isModified(); }
-- (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
-- (NSInteger)numTracks { return (NSInteger)wrapper->disk->numTracks; }
-
-@end
-
-// -------------------------------------------------------------------------
-//                                    VC1541
-// -------------------------------------------------------------------------
+//
+// VC1541
+//
 
 @implementation VC1541Proxy
 
@@ -457,7 +454,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
-- (VIAProxy *) via:(int)num {
+- (VIAProxy *) via:(NSInteger)num {
 	switch (num) {
 		case 1:
 			return [self via1];
@@ -472,23 +469,24 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->vc1541->dumpState(); }
 - (BOOL) tracing { return wrapper->vc1541->tracingEnabled(); }
 - (void) setTracing:(BOOL)b { b ? wrapper->vc1541->startTracing() : wrapper->vc1541->stopTracing(); }
-- (BOOL) hasRedLED { return wrapper->vc1541->getRedLED(); }
+
+- (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
 - (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }
 - (BOOL) hasModifiedDisk { return wrapper->vc1541->hasModifiedDisk(); }
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
-- (BOOL) writeProtection { return wrapper->vc1541->disk.isWriteProtected(); }
+- (BOOL) writeProtected { return wrapper->vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }
-- (BOOL) DiskModified { return wrapper->vc1541->disk.isModified(); }
+- (BOOL) diskModified { return wrapper->vc1541->disk.isModified(); }
 - (void) setDiskModified:(BOOL)b { wrapper->vc1541->disk.setModified(b); }
-- (BOOL) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
+- (BOOL) sendSoundMessages { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(BOOL)b { wrapper->vc1541->setSendSoundMessages(b); }
-- (NSInteger) halftrack { return wrapper->vc1541->getHalftrack(); }
-- (void) setHalftrack:(NSInteger) value { wrapper->vc1541->setHalftrack((Halftrack)value); }
-- (NSInteger) numberOfBits { return wrapper->vc1541->numberOfBits(); }
-- (NSInteger) bitOffset { return wrapper->vc1541->getBitOffset(); }
-- (void) setBitOffset:(NSInteger)value { wrapper->vc1541->setBitOffset((uint16_t)value); }
-- (NSInteger) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
-- (void) writeBitToHead:(NSInteger)value { wrapper->vc1541->writeBitToHead(value); }
+- (Halftrack) halftrack { return wrapper->vc1541->getHalftrack(); }
+- (void) setHalftrack:(Halftrack) value { wrapper->vc1541->setHalftrack(value); }
+- (uint16_t) numberOfBits { return wrapper->vc1541->numberOfBits(); }
+- (uint16_t) bitOffset { return wrapper->vc1541->getBitOffset(); }
+- (void) setBitOffset:(uint16_t)value { wrapper->vc1541->setBitOffset(value); }
+- (uint8_t) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
+- (void) writeBitToHead:(uint8_t)value { wrapper->vc1541->writeBitToHead(value); }
 
 - (void) moveHeadUp { wrapper->vc1541->moveHeadUp(); }
 - (void) moveHeadDown { wrapper->vc1541->moveHeadDown(); }

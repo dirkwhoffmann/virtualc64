@@ -244,7 +244,7 @@ extension MyController {
         defaults.set(c64.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.samplingMethod(), forKey: VC64Keys.samplingMethod)
         defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
-        defaults.set(c64.vc1541.soundMessagesEnabled(), forKey: VC64Keys.driveNoise)
+        defaults.set(c64.vc1541.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
     // ◉◎▪▫▮▯01

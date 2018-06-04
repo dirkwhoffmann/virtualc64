@@ -57,7 +57,7 @@ class HardwarePrefsController : UserDialogController {
         
         // VC1541
         warpLoad.state = c64.warpLoad() ? .on : .off
-        driveNoise.state = c64.vc1541.soundMessagesEnabled() ? .on : .off
+        driveNoise.state = c64.vc1541.sendSoundMessages() ? .on : .off
         
         // Mouse
         let model = c64.mouseModel()
