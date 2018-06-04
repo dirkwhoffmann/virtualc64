@@ -416,7 +416,7 @@ public:
     bool isPAL() { return vic.isPAL(); }
 
     /*! @brief    Puts the emulator in PAL mode
-     *  @details  This method plugs in a PAL VIC chip and reconfigures SID with the proper timing information 
+     *  @details  Configures VIC to emulate a PAL model and reconfigures SID
      */
     void setPAL();
     
@@ -424,34 +424,11 @@ public:
     bool isNTSC() { return !vic.isPAL(); }
 
     /*! @brief    Puts the emulator in PAL mode
-     *  @details  This method plugs in a PAL VIC chip and reconfigures SID with the proper timing information
+     *  @details  Configures VIC to emulate a PAL model and reconfigures SID
      */
     void setNTSC();
 
-    //! @brief    Returns true iff audio filters are enabled.
-    bool getAudioFilter() { return sid.getAudioFilter(); }
-
-    //! @brief    Enables or disables SID audio filters.
-    void setAudioFilter(bool value) { sid.setAudioFilter(value); }
-      
-    //! @brief    Returns true if reSID library is used
-    bool getReSID() { return sid.getReSID(); }
-
-    //! @brief    Turns reSID library on or off
-    void setReSID(bool value) { sid.setReSID(value); }
-
-    //! @brief    Returns the sampling method
-    SamplingMethod getSamplingMethod() { return sid.getSamplingMethod(); }
     
-    //! @brief    Sets the sampling method
-    void setSamplingMethod(SamplingMethod value) { sid.setSamplingMethod(value); }
-    
-    //! @brief    Returns the SID chip model
-    SIDChipModel getChipModel() { return sid.getChipModel(); }
-    
-    //! @brief    Sets the SID chip model
-    void setChipModel(SIDChipModel value) { sid.setChipModel(value); }
-
     //
     //! @functiongroup Handling mice
     //

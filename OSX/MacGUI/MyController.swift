@@ -613,13 +613,9 @@ extension MyController {
             break
     
         case MSG_VC1541_DATA_ON:
-
-            c64.iecBusIsBusy = true
             break
     
         case MSG_VC1541_DATA_OFF:
-            
-            c64.iecBusIsBusy = false
             break
             
         case MSG_VC1541_MOTOR_ON,

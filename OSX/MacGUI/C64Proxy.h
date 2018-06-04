@@ -205,8 +205,16 @@ struct ContainerWrapper;
 - (VoiceInfo) getVoiceInfo:(NSInteger)voice;
 - (void) dump;
 
+- (BOOL) reSID;
+- (void) setReSID:(BOOL)b;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
+- (BOOL) audioFilter;
+- (void) setAudioFilter:(BOOL)b;
+- (NSInteger) samplingMethod;
+- (void) setSamplingMethod:(NSInteger)value;
+- (NSInteger) chipModel;
+- (void) setChipModel:(NSInteger)value;
 
 - (NSInteger) ringbufferSize;
 - (float) ringbufferData:(NSInteger)offset;
@@ -217,6 +225,10 @@ struct ContainerWrapper;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
+
+- (void) rampUp;
+- (void) rampUpFromZero;
+- (void) rampDown;
 
 @end
 
@@ -396,14 +408,13 @@ struct ContainerWrapper;
 - (const char *)dataRel:(NSInteger)start length:(NSInteger)n;
 
 - (BOOL) exportToD64:(NSString *)path;
-// - (void) playSound:(NSString *)name volume:(float)v;
 
 @end
 
 
-// --------------------------------------------------------------------------
-//                                  Datasette
-// --------------------------------------------------------------------------
+//
+// Datasette
+//
 
 @interface DatasetteProxy : NSObject {
     
@@ -413,10 +424,12 @@ struct ContainerWrapper;
 - (void) dump;
 
 - (BOOL) hasTape;
+
 - (void) pressPlay;
 - (void) pressStop;
 - (void) rewind;
 - (void) ejectTape;
+
 - (NSInteger) getType; 
 - (long) durationInCycles;
 - (int) durationInSeconds;
@@ -430,15 +443,15 @@ struct ContainerWrapper;
 @end
 
 
-// -------------------------------------------------------------------------
-//                                    C64
-// -------------------------------------------------------------------------
+//
+// C64
+//
 
 @interface C64Proxy : NSObject {
     
 	struct C64Wrapper *wrapper;
     
-	// Sub component proxys
+	// Sub proxys
 	CPUProxy *cpu;
 	MemoryProxy *mem;
 	VICProxy *vic;
@@ -452,15 +465,6 @@ struct ContainerWrapper;
     ExpansionPortProxy *expansionport;
 	VC1541Proxy *vc1541;
     DatasetteProxy *datasette;
-
-	//! Indicates that data is transmitted on the IEC bus
-	BOOL iecBusIsBusy;
-
-    //! Indicates that data is transmitted on the datasette data line
-    BOOL tapeBusIsBusy;
-
-    //! Currently used color scheme
-    long colorScheme;
 }
 
 @property (readonly) CPUProxy *cpu;
@@ -477,24 +481,8 @@ struct ContainerWrapper;
 @property (readonly) VC1541Proxy *vc1541;
 @property (readonly) DatasetteProxy *datasette;
 
-@property BOOL iecBusIsBusy;
-@property BOOL tapeBusIsBusy;
-
 - (struct C64Wrapper *)wrapper;
 - (void) kill;
-
-// Hardware configuration
-- (BOOL) reSID;
-- (void) setReSID:(BOOL)b;
-- (BOOL) audioFilter;
-- (void) setAudioFilter:(BOOL)b;
-- (NSInteger) samplingMethod;
-- (void) setSamplingMethod:(NSInteger)value;
-- (NSInteger) chipModel;
-- (void) setChipModel:(NSInteger)value;
-- (void) rampUp;
-- (void) rampUpFromZero;
-- (void) rampDown;
 
 // Loadind and saving
 - (void)_loadFromSnapshotWrapper:(struct ContainerWrapper *) snapshot;

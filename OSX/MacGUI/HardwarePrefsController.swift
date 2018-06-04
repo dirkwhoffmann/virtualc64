@@ -49,11 +49,11 @@ class HardwarePrefsController : UserDialogController {
         }
         
         // Audio
-        SIDChipModel.selectItem(withTag: c64.chipModel())
-        SIDFilter.state = c64.audioFilter() ? .on : .off
-        SIDEngine.selectItem(withTag: (c64.reSID() ? 1 : 0))
-        SIDSamplingMethod.isEnabled = c64.reSID()
-        SIDSamplingMethod.selectItem(withTag: c64.samplingMethod())
+        SIDChipModel.selectItem(withTag: c64.sid.chipModel())
+        SIDFilter.state = c64.sid.audioFilter() ? .on : .off
+        SIDEngine.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
+        SIDSamplingMethod.isEnabled = c64.sid.reSID()
+        SIDSamplingMethod.selectItem(withTag: c64.sid.samplingMethod())
         
         // VC1541
         warpLoad.state = c64.warpLoad() ? .on : .off
@@ -82,29 +82,28 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func SIDFilterAction(_ sender: Any!) {
     
         let sender = sender as! NSButton
-        c64.setAudioFilter(sender.state == .on)
+        c64.sid.setAudioFilter(sender.state == .on)
         update()
     }
     
     @IBAction func SIDEngineAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
-        c64.setReSID(sender.selectedTag() == 1)
-        // parent.waveformView.initAutoScaler()
+        c64.sid.setReSID(sender.selectedTag() == 1)
         update()
     }
     
     @IBAction func SIDSamplingMethodAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
-        c64.setSamplingMethod(sender.selectedTag())
+        c64.sid.setSamplingMethod(sender.selectedTag())
         update()
     }
     
     @IBAction func SIDChipModelAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
-        c64.setChipModel(sender.selectedTag())
+        c64.sid.setChipModel(sender.selectedTag())
         update()
     }
     
@@ -144,10 +143,10 @@ class HardwarePrefsController : UserDialogController {
         c64.setNTSC(false)
         
         // SID
-        c64.setReSID(true)
-        c64.setChipModel(1)
-        c64.setAudioFilter(true)
-        c64.setSamplingMethod(0)
+        c64.sid.setReSID(true)
+        c64.sid.setChipModel(1)
+        c64.sid.setAudioFilter(true)
+        c64.sid.setSamplingMethod(0)
 
         // VC1541
         c64.setWarpLoad(true)

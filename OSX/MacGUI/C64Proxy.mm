@@ -260,20 +260,35 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (SIDInfo) getInfo { return wrapper->sid->getInfo(); }
 - (VoiceInfo) getVoiceInfo:(NSInteger)voice {
     return wrapper->sid->getVoiceInfo((unsigned)voice); }
+
+- (BOOL) reSID { return wrapper->sid->getReSID(); }
+- (void) setReSID:(BOOL)b { wrapper->sid->setReSID(b); }
+- (BOOL) audioFilter { return wrapper->sid->getAudioFilter(); }
+- (void) setAudioFilter:(BOOL)b { wrapper->sid->setAudioFilter(b); }
+- (NSInteger) samplingMethod { return (NSInteger)(wrapper->sid->getSamplingMethod()); }
+- (void) setSamplingMethod:(NSInteger)value { wrapper->sid->setSamplingMethod((SamplingMethod)value); }
+- (NSInteger) chipModel { return (int)(wrapper->sid->getChipModel()); }
+- (void) setChipModel:(NSInteger)value {wrapper->sid->setChipModel((SIDChipModel)value); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
-- (void) readMonoSamples:(float *)target size:(NSInteger)n {
-    wrapper->sid->readMonoSamples(target, n); }
-- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n {
-    wrapper->sid->readStereoSamples(target1, target2, n); }
-- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
-    wrapper->sid->readStereoSamplesInterleaved(target, n); }
+
 - (NSInteger) ringbufferSize { return wrapper->sid->ringbufferSize(); }
 - (float) ringbufferData:(NSInteger)offset {
     return wrapper->sid->ringbufferData(offset); }
 - (double) fillLevel { return wrapper->sid->fillLevel(); }
 - (NSInteger) bufferUnderflows { return wrapper->sid->bufferUnderflows; }
 - (NSInteger) bufferOverflows { return wrapper->sid->bufferOverflows; }
+
+- (void) readMonoSamples:(float *)target size:(NSInteger)n {
+    wrapper->sid->readMonoSamples(target, n); }
+- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n {
+    wrapper->sid->readStereoSamples(target1, target2, n); }
+- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
+    wrapper->sid->readStereoSamplesInterleaved(target, n); }
+
+- (void) rampUp { wrapper->sid->rampUp(); }
+- (void) rampUpFromZero { wrapper->sid->rampUpFromZero(); }
+- (void) rampDown { wrapper->sid->rampDown(); }
 
 @end
 
@@ -504,20 +519,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (BOOL) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 
-/*
-- (void) playSound:(NSString *)name volume:(float)v
-{
-    NSSound *s = [NSSound soundNamed:name];
-    [s setVolume:v];
-    [s play];
-}
-*/
-
 @end
 
-// --------------------------------------------------------------------------
-//                                    Datasette
-// -------------------------------------------------------------------------
+
+//
+// Datasette
+//
 
 @implementation DatasetteProxy
 
@@ -557,7 +564,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
 @synthesize port1, port2;
-@synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (instancetype) init
 {
@@ -619,17 +625,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 	wrapper->c64 = NULL;
 }
 
-- (BOOL) audioFilter { return wrapper->c64->getAudioFilter(); }
-- (void) setAudioFilter:(BOOL)b { wrapper->c64->setAudioFilter(b); }
-- (BOOL) reSID { return wrapper->c64->getReSID(); }
-- (void) setReSID:(BOOL)b { wrapper->c64->setReSID(b); }
-- (NSInteger) samplingMethod { return (NSInteger)(wrapper->c64->getSamplingMethod()); }
-- (void) setSamplingMethod:(NSInteger)value { wrapper->c64->setSamplingMethod((SamplingMethod)value); }
-- (NSInteger) chipModel { return (int)(wrapper->c64->getChipModel()); }
-- (void) setChipModel:(NSInteger)value {wrapper->c64->setChipModel((SIDChipModel)value); }
-- (void) rampUp { wrapper->c64->sid.rampUp(); }
-- (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
-- (void) rampDown { wrapper->c64->sid.rampDown(); }
+
 
 // DEPRECATED
 - (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper
@@ -802,12 +798,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 // Audio hardware
 - (BOOL) enableAudio {
-    [self rampUpFromZero];
+    [sid rampUpFromZero];
     return [audioEngine startPlayback];
 }
 
 - (void) disableAudio {
-    [self rampDown];
+    [sid rampDown];
     [audioEngine stopPlayback];
 }
 
