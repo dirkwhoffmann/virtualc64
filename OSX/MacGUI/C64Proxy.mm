@@ -204,8 +204,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) setDisplayMode:(DisplayMode)mode { wrapper->vic->setDisplayMode(mode); }
 - (void) setScreenGeometry:(ScreenGeometry)mode { wrapper->vic->setScreenGeometry(mode); }
-- (void) setHorizontalRasterScroll:(NSInteger)offset { wrapper->vic->setHorizontalRasterScroll(offset & 0x07); }
-- (void) setVerticalRasterScroll:(NSInteger)offset { wrapper->vic->setVerticalRasterScroll(offset & 0x07); }
+- (void) setHorizontalRasterScroll:(uint8_t)offset { wrapper->vic->setHorizontalRasterScroll(offset & 0x07); }
+- (void) setVerticalRasterScroll:(uint8_t)offset { wrapper->vic->setVerticalRasterScroll(offset & 0x07); }
 
 - (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
 - (void) toggleSpriteEnabled:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
@@ -226,12 +226,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setIrqOnSpriteBackgroundCollision:(BOOL)value { wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
 - (void) toggleIrqOnSpriteBackgroundCollision { wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
 
-- (uint16_t) rasterline { return wrapper->vic->getRasterline(); }
 - (void) setRasterline:(uint16_t)line { wrapper->vic->setRasterline(line); }
-- (uint16_t) rasterInterruptLine { return wrapper->vic->rasterInterruptLine(); }
 - (void) setRasterInterruptLine:(uint16_t)line { wrapper->vic->setRasterInterruptLine(line); }
-- (BOOL) rasterInterruptFlag { return wrapper->vic->rasterInterruptEnabled(); }
-- (void) setRasterInterruptFlag:(BOOL)b { wrapper->vic->setRasterInterruptEnable(b); }
+- (void) setRasterInterruptEnabled:(BOOL)b { wrapper->vic->setRasterInterruptEnable(b); }
 - (void) toggleRasterInterruptFlag { wrapper->vic->toggleRasterInterruptFlag(); }
 
 - (BOOL) hideSprites { return wrapper->vic->hideSprites(); }
@@ -244,67 +241,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @end
 
 
-
-// --------------------------------------------------------------------------
-//                                    Keyboard
-// --------------------------------------------------------------------------
-
-@implementation KeyboardProxy
-
-- (instancetype) initWithKeyboard:(Keyboard *)keyboard
-{
-    if (self = [super init]) {
-        wrapper = new KeyboardWrapper();
-        wrapper->keyboard = keyboard;
-    }
-    return self;
-}
-
-- (void) dump { wrapper->keyboard->dumpState(); }
-
-- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col {
-    wrapper->keyboard->pressKey(row, col); }
-- (void) pressRestoreKey {
-    wrapper->keyboard->pressRestoreKey(); }
-
-- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col {
-    wrapper->keyboard->releaseKey(row, col); }
-- (void) releaseRestoreKey {
-    wrapper->keyboard->releaseRestoreKey(); }
-- (void) releaseAll { wrapper->keyboard->releaseAll(); }
-
-- (BOOL) shiftLockIsPressed { return wrapper->keyboard->shiftLockIsPressed(); }
-- (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
-- (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
-
-@end
-
-
-// --------------------------------------------------------------------------
-//                                 Joystick
-// -------------------------------------------------------------------------
-
-@implementation ControlPortProxy
-
-- (instancetype) initWithJoystick:(ControlPort *)port
-{
-    if (self = [super init]) {
-        wrapper = new ControlPortWrapper();
-        wrapper->port = port;
-    }
-    return self;
-}
-
-- (void) trigger:(JoystickEvent)event { wrapper->port->trigger(event); }
-- (void) dump { wrapper->port->dumpState(); }
-// - (NSInteger) potX { return wrapper->sid->getPotX(); }
-// - (NSInteger) potY { return wrapper->sid->getPotY(); }
-
-@end
-
-// --------------------------------------------------------------------------
-//                                    SID
-// --------------------------------------------------------------------------
+//
+// SID
+//
 
 @implementation SIDProxy
 
@@ -338,11 +277,69 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger) bufferUnderflows { return wrapper->sid->bufferUnderflows; }
 - (NSInteger) bufferOverflows { return wrapper->sid->bufferOverflows; }
 - (double) fillLevel { return wrapper->sid->fillLevel(); }
-- (float) snoopData:(NSInteger)offset {
-    return wrapper->sid->snoopData(offset);
+- (float) ringbufferData:(NSInteger)offset {
+    return wrapper->sid->ringbufferData(offset);
 }
 
 @end
+
+
+//
+// Keyboard
+//
+
+@implementation KeyboardProxy
+
+- (instancetype) initWithKeyboard:(Keyboard *)keyboard
+{
+    if (self = [super init]) {
+        wrapper = new KeyboardWrapper();
+        wrapper->keyboard = keyboard;
+    }
+    return self;
+}
+
+- (void) dump { wrapper->keyboard->dumpState(); }
+
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col {
+    wrapper->keyboard->pressKey(row, col); }
+- (void) pressRestoreKey {
+    wrapper->keyboard->pressRestoreKey(); }
+
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col {
+    wrapper->keyboard->releaseKey(row, col); }
+- (void) releaseRestoreKey {
+    wrapper->keyboard->releaseRestoreKey(); }
+- (void) releaseAll { wrapper->keyboard->releaseAll(); }
+
+- (BOOL) shiftLockIsPressed { return wrapper->keyboard->shiftLockIsPressed(); }
+- (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
+- (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
+
+@end
+
+
+//
+// Control port
+//
+
+@implementation ControlPortProxy
+
+- (instancetype) initWithJoystick:(ControlPort *)port
+{
+    if (self = [super init]) {
+        wrapper = new ControlPortWrapper();
+        wrapper->port = port;
+    }
+    return self;
+}
+
+- (void) dump { wrapper->port->dumpState(); }
+- (void) trigger:(JoystickEvent)event { wrapper->port->trigger(event); }
+
+@end
+
+
 
 // --------------------------------------------------------------------------
 //                                   IEC bus

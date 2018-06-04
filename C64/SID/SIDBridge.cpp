@@ -372,7 +372,7 @@ SIDBridge::readData()
 }
 
 float
-SIDBridge::snoopData(size_t offset)
+SIDBridge::ringbufferData(size_t offset)
 {
     return ringBuffer[(readPtr + offset) % bufferSize];
 }

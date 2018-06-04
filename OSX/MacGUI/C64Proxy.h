@@ -155,8 +155,8 @@ struct ContainerWrapper;
 
 - (void) setDisplayMode:(DisplayMode)mode;
 - (void) setScreenGeometry:(ScreenGeometry)mode;
-- (void) setHorizontalRasterScroll:(NSInteger)offset;
-- (void) setVerticalRasterScroll:(NSInteger)offset;
+- (void) setHorizontalRasterScroll:(uint8_t)offset;
+- (void) setVerticalRasterScroll:(uint8_t)offset;
 
 - (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteEnabled:(NSInteger)nr;
@@ -177,12 +177,9 @@ struct ContainerWrapper;
 - (void) setIrqOnSpriteBackgroundCollision:(BOOL)value;
 - (void) toggleIrqOnSpriteBackgroundCollision;
 
-- (uint16_t) rasterline;
 - (void) setRasterline:(uint16_t)line;
-- (uint16_t) rasterInterruptLine;
 - (void) setRasterInterruptLine:(uint16_t)line;
-- (BOOL) rasterInterruptFlag;
-- (void) setRasterInterruptFlag:(BOOL)b;
+- (void) setRasterInterruptEnabled:(BOOL)b;
 - (void) toggleRasterInterruptFlag;
 
 - (BOOL) hideSprites;
@@ -195,9 +192,37 @@ struct ContainerWrapper;
 @end
 
 
-// --------------------------------------------------------------------------
-//                                  Keyboard
-// --------------------------------------------------------------------------
+//
+// SID
+//
+
+@interface SIDProxy : NSObject {
+    
+    struct SidBridgeWrapper *wrapper;
+}
+
+- (SIDInfo) getInfo;
+- (VoiceInfo) getVoiceInfo:(NSInteger)voice;
+- (void) dump;
+
+- (uint32_t) sampleRate;
+- (void) setSampleRate:(uint32_t)rate;
+
+- (NSInteger) ringbufferSize;
+- (NSInteger) bufferUnderflows;
+- (NSInteger) bufferOverflows;
+- (double) fillLevel;
+- (float) ringbufferData:(NSInteger)offset;
+
+- (void) readMonoSamples:(float *)target size:(NSInteger)n;
+- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
+- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
+
+@end
+
+//
+// Keyboard
+//
 
 @interface KeyboardProxy : NSObject {
     
@@ -219,44 +244,21 @@ struct ContainerWrapper;
 
 @end 
 
-// --------------------------------------------------------------------------
-//                                 Joystick
-// -------------------------------------------------------------------------
+//
+// Joystick
+//
 
 @interface ControlPortProxy : NSObject {
     
     struct ControlPortWrapper *wrapper;
 }
 
+- (void) dump;
 - (void) trigger:(JoystickEvent)event;
-- (void) dump;
 
 @end
 
-// --------------------------------------------------------------------------
-//                                    SID
-// --------------------------------------------------------------------------
 
-@interface SIDProxy : NSObject {
-    
-	struct SidBridgeWrapper *wrapper;
-}
-
-- (void) dump;
-- (SIDInfo) getInfo;
-- (VoiceInfo) getVoiceInfo:(NSInteger)voice;
-- (uint32_t) sampleRate;
-- (void) setSampleRate:(uint32_t)rate;
-- (void) readMonoSamples:(float *)target size:(NSInteger)n;
-- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
-- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
-- (NSInteger) ringbufferSize;
-- (NSInteger) bufferUnderflows;
-- (NSInteger) bufferOverflows;
-- (double) fillLevel;
-- (float) snoopData:(NSInteger)offset;
-
-@end
 
 // --------------------------------------------------------------------------
 //                                   IEC bus

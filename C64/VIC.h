@@ -827,10 +827,7 @@ public:
 
 	//! @brief    Enables or disables a sprite.
     void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
-	
-    //! @brief    Returns true, iff the specified sprite collides with the background
-    // bool spriteBackgroundCollision(uint8_t nr) { return GET_BIT(iomem[0x1F], nr) != 0; }
-    
+	    
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
     bool irqOnSpriteBackgroundCollision() { return GET_BIT(imr, 1); }
 
@@ -839,9 +836,6 @@ public:
 
     //! @brief    Enables or disables IRQs on sprite/background collision
     void toggleIrqOnSpriteBackgroundCollision() { TOGGLE_BIT(imr, 1); }
-
-    //! @brief    Returns true, iff the specified sprite collides with at least one other sprite
-    // bool spriteSpriteCollision(uint8_t nr) { return GET_BIT(iomem[0x1E], nr) != 0; }
     
 	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
     bool irqOnSpriteSpriteCollision() { return GET_BIT(imr, 2); }

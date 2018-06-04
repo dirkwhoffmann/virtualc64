@@ -226,7 +226,7 @@ public:
     float readData();
     
     //! @brief  Reads a single audio sample without moving the read pointer
-    float snoopData(size_t offset);
+    float ringbufferData(size_t offset);
     
     /*! @brief   Reads a certain amount of samples from ringbuffer
      *  @details Samples are stored in a single mono stream

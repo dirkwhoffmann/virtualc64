@@ -56,7 +56,7 @@ class WaveformView: NSView {
         highestAmplitude = 0.001
         
         for x in 0...w {
-            let sample = controller!.c64.sid.snoopData(40 * x)
+            let sample = controller!.c64.sid.ringbufferData(40 * x)
             let absvalue = abs(sample)
             highestAmplitude = (absvalue > highestAmplitude) ? absvalue : highestAmplitude
             var scaledSample = absvalue / normalizer * baseline

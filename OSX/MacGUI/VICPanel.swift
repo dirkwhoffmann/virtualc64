@@ -208,10 +208,10 @@ extension MyController {
         _characterMemoryAction(value)
     }
     
-    func _dxAction(_ value: Int) {
+    func _dxAction(_ value: UInt8) {
         
         let info = c64.vic.getInfo()
-        let oldValue = Int(info.dx)
+        let oldValue = info.dx
         
         if (value != oldValue) {
             undoManager?.registerUndo(withTarget: self) {
@@ -226,19 +226,19 @@ extension MyController {
     @IBAction func dxAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        _dxAction(Int(sender.intValue))
+        _dxAction(UInt8(sender.intValue))
     }
     
     @IBAction func dxStepperAction(_ sender: Any!) {
         
         let sender = sender as! NSStepper
-        _dxAction(Int(sender.intValue))
+        _dxAction(UInt8(sender.intValue & 0x07))
     }
 
-    func _dyAction(_ value: Int) {
+    func _dyAction(_ value: UInt8) {
         
         let info = c64.vic.getInfo()
-        let oldValue = Int(info.dy)
+        let oldValue = info.dy
         
         if (value != oldValue) {
             undoManager?.registerUndo(withTarget: self) {
@@ -253,13 +253,13 @@ extension MyController {
     @IBAction func dyAction(_ sender: Any!) {
         
         let sender = sender as! NSTextField
-        _dyAction(Int(sender.intValue))
+        _dyAction(UInt8(sender.intValue))
     }
     
     @IBAction func dyStepperAction(_ sender: Any!) {
         
         let sender = sender as! NSStepper
-        _dyAction(Int(sender.intValue))
+        _dyAction(UInt8(sender.intValue & 0x07))
     }
     
     // Sprites
@@ -486,7 +486,7 @@ extension MyController {
                 me in me._rasterIrqEnabledAction(oldValue)
             }
             undoManager?.setActionName(actionName)
-            c64.vic.setRasterInterruptFlag(value)
+            c64.vic.setRasterInterruptEnabled(value)
             refreshVIC()
         }
     }
