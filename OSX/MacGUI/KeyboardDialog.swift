@@ -13,8 +13,6 @@ class KeyViewItem: NSCollectionViewItem {
         
         super.viewDidLoad()
         view.wantsLayer = true
-        // let img = NSImage(named: NSImage.Name(rawValue: "key.png"))
-        // imageView?.image = img
     }
 }
 

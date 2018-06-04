@@ -13,7 +13,7 @@ public extension MetalView {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "metal.png"))
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "metal"))
         alert.messageText = "No suitable GPU hardware found"
         alert.informativeText = "VirtualC64 can only run on machines supporting the Metal graphics technology (2012 models and above)."
         alert.addButton(withTitle: "Exit")
@@ -82,7 +82,7 @@ extension MyController {
         
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "cartridge.png"))
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "cartridge"))
         alert.messageText = "Unsupported cartridge type: \(name)"
         alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
         alert.addButton(withTitle: "OK")

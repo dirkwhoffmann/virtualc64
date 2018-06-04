@@ -316,13 +316,13 @@ extension MyController {
         // Get and resize images
         let cutout = NSMakeRect(2, 0, 28, 28)
         
-        var none = NSImage(named: NSImage.Name(rawValue: "oxygen_none.png"))
+        var none = NSImage(named: NSImage.Name("oxygen_none"))
         none = none?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var keyset = NSImage(named: NSImage.Name(rawValue: "oxygen_keys.png"))
+        var keyset = NSImage(named: NSImage.Name(rawValue: "oxygen_keys"))
         keyset = keyset?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var mouse = NSImage(named: NSImage.Name(rawValue: "oxygen_mouse.png"))
+        var mouse = NSImage(named: NSImage.Name(rawValue: "oxygen_mouse"))
         mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad.png"))
+        var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad"))
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
         genericDeviceImage = gamepad
         

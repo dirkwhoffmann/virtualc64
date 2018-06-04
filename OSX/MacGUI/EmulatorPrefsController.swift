@@ -170,10 +170,10 @@ class EmulatorPrefsController : UserDialogController {
         let recordKey = (nr == 0) ? recordKey1 : recordKey2
         if (recordKey == direction) {
             button.title = ""
-            button.image = NSImage(named: NSImage.Name(rawValue: "keyRed.png"))
+            button.image = NSImage(named: NSImage.Name(rawValue: "keyRed"))
             button.imageScaling = .scaleAxesIndependently
         } else {
-            button.image = NSImage(named: NSImage.Name(rawValue: "key.png"))
+            button.image = NSImage(named: NSImage.Name(rawValue: "key"))
             button.imageScaling = .scaleAxesIndependently
         }
         button.title = macKeyCode

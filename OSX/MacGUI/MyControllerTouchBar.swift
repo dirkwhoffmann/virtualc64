@@ -59,7 +59,7 @@ extension MyController : NSTouchBarDelegate
             .runstop,
             .home,
             .del,
-            .restore,
+            // .restore,
             .rewind,
             .snap,
             .revert
@@ -88,7 +88,7 @@ extension MyController : NSTouchBarDelegate
         case NSTouchBarItem.Identifier.commodore:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Commodore key"
-            item.view = NSButton(image: NSImage(named: NSImage.Name(rawValue: "commodore"))!,
+            item.view = NSButton(image: NSImage(named: NSImage.Name("commodore"))!,
                                  target: self,
                                  action: #selector(commodoreKeyAction))
             return item
@@ -96,7 +96,7 @@ extension MyController : NSTouchBarDelegate
         case NSTouchBarItem.Identifier.runstop:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Runstop key"
-            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "runstop"))!,
+            item.view = NSButton(image:  NSImage(named: NSImage.Name("runstop"))!,
                                  target: self,
                                  action: #selector(runstopAction))
             
@@ -105,48 +105,34 @@ extension MyController : NSTouchBarDelegate
         case NSTouchBarItem.Identifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Home and Clear key"
-            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "home"))!,
+            item.view = NSButton(image:  NSImage(named: NSImage.Name("home"))!,
                                  target: self,
                                  action: #selector(TouchBarHomeKeyAction))
             return item
 
         case NSTouchBarItem.Identifier.del:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name("del"))!
+            // let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Delete and Insert key"
-            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "del"))!,
+            item.view = NSButton(image:  icon,
                                  target: self,
                                  action: #selector(TouchBarDelKeyAction))
             return item
 
         case NSTouchBarItem.Identifier.restore:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            let icon = NSImage(named: NSImage.Name("restore"))!
+            // let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Restore key"
-            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "restore"))!,
+            item.view = NSButton(image:  icon,
                                  target: self,
                                  action: #selector(restoreAction))
             return item
-
-/*
-        case NSTouchBarItemIdentifier.larrow:
-            let item = NSCustomTouchBarItem(identifier: identifier)
-            item.customizationLabel = "Left arrow key"
-            item.view = NSButton(title: "←",
-                                 target: self,
-                                 action: #selector(homeKeyAction))
-            return item
-
-        case NSTouchBarItemIdentifier.uarrow:
-            let item = NSCustomTouchBarItem(identifier: identifier)
-            item.customizationLabel = "Up arrow key"
-            item.view = NSButton(title: "↑",
-                                 target: self,
-                                 action: #selector(homeKeyAction))
-            return item
-*/
          
         case NSTouchBarItem.Identifier.rewind:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name(rawValue: "tb_rewind.png"))!
+            let icon = NSImage(named: NSImage.Name("tb_rewind"))!
             let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Rewind"
             item.view = NSButton(image: resizedIcon,
@@ -156,7 +142,7 @@ extension MyController : NSTouchBarDelegate
             
         case NSTouchBarItem.Identifier.snap:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name(rawValue: "tb_freeze.png"))!
+            let icon = NSImage(named: NSImage.Name("tb_freeze"))!
             let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Snap"
             item.view = NSButton(image: resizedIcon,
@@ -166,7 +152,7 @@ extension MyController : NSTouchBarDelegate
         
         case NSTouchBarItem.Identifier.revert:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: NSImage.Name(rawValue: "tb_revert.png"))!
+            let icon = NSImage(named: NSImage.Name("tb_revert"))!
             let resizedIcon = icon.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Revert"
             item.view = NSButton(image: resizedIcon,

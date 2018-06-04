@@ -51,7 +51,7 @@ struct C64Key : Codable {
     /// Image representation of this key
     func image(auxiliaryText: NSString = "") -> NSImage {
         
-        let background = NSImage(named: NSImage.Name(rawValue: "key.png"))!
+        let background = NSImage(named: NSImage.Name(rawValue: "key"))!
         let width = 48.0
         let height = 48.0
         let imageRect = CGRect(x: 0, y: 0, width: width, height: height)

@@ -38,12 +38,12 @@ class HardwarePrefsController : UserDialogController {
         // System
         if c64.isPAL() {
             machineType.selectItem(withTag: 0)
-            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_eu.png"))
+            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_eu"))
             systemText.stringValue = "PAL"
             systemText2.stringValue = "0.985 MHz"
         } else {
             machineType.selectItem(withTag: 1)
-            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa.png"))
+            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa"))
             systemText.stringValue = "NTSC"
             systemText2.stringValue = "1.023 MHz"
         }
