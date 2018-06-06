@@ -49,9 +49,9 @@ VC64Object::tracingEnabled()
 }
 
 
-// ---------------------------------------------------------------------------------------------
-//                                      Printing messages
-// ---------------------------------------------------------------------------------------------
+//
+// Printing messages
+// 
 
 #define VC64OBJ_PARSE \
     char buf[256]; \
@@ -121,22 +121,3 @@ VC64Object::panic(const char *fmt, ...)
 
     assert(0);
 }
-
-/*
-void
-VC64Object::trace(const char *fmt, ...)
-{
-    if (traceCounter == 0)
-        return;
-
-    if (traceCounter > 0)
-        traceCounter--;
-    
-    VC64OBJ_PARSE;
-    if (description)
-        fprintf(stderr, "%s: %s", description, buf);
-    else
-        fprintf(stderr, "%s", buf);
-}
-*/
-

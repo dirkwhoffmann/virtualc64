@@ -47,27 +47,25 @@ class VirtualComponent : public VC64Object {
 public: 
 
     /*! @brief    Reference to the virtual C64 top-level object.
-     *  @details  This reference is setup in the reset method and provides easy access to all
-     *            other components of the same virtual C64. */
+     *  @details  This reference is setup in the reset method and provides easy
+     *            access to all other components of the same virtual C64.
+     */
     C64 *c64;
     
 private:
     
 	/*! @brief    Indicates whether the component is currently active.
-     *  @details  All virtual components can be in two states. They can either be 'running' or 'halted'.
-     *            During normal operation, all components are running. If an error occurrs, or if the
-     *            user requests the virtual machine to halt in the debugger, the components will enter
-     *            the 'halted' state.
+     *  @details  All virtual components can be in two states. They can either be
+     *            'running' or 'halted'. During normal operation, all components
+     *            are running. If an error occurrs, or if the user requests the
+     *            virtual machine to halt in the debugger, the components will
+     *            enter the 'halted' state.
      */
 	bool running;
 		
-	/*! @brief    The original state before the first call of suspend(). 
-     *  @see      suspend
-     */
-	// bool suspendedState;
-
 	/*! @brief    Number of times the component is suspended.
-     *  @details  The value is equal to the number of suspend calls minus the number of resume calls
+     *  @details  The value is equal to the number of suspend calls minus the
+     *            number of resume calls.
      */
 	int suspendCounter;
 				
@@ -96,19 +94,21 @@ public:
 	virtual void reset();
 	
     //! @brief    Trigger the component to send messages about its current state.
-    /*! @details  The GUI invokes this function to update its visual elements, e.g., after loading
-     *            a snapshot file. Only a few components overwrite this function. All others stay 
-     *            silent on default.
+    /*! @details  The GUI invokes this function to update its visual elements, e.g.,
+     *            after loading a snapshot file. Only a few components overwrite this
+     *            function. All others stay silent on default.
      */
     virtual void ping();
 
+    
     //
     //! @functiongroup Debugging the component
     //
 
 	//! @brief    Print info about the internal state.
-	/*! @details  This functions is intended for debugging purposes only. Any derived component should
-	 *            override this method and print out some useful debugging information.
+	/*! @details  This functions is intended for debugging purposes only. Any derived
+     *            component should override this method and print out some useful
+     *            debugging information.
 	 */ 
 	virtual void dumpState();
 	
@@ -119,9 +119,9 @@ public:
 
 	//! @brief    Start component.
 	/*! @details  The function is called when the virtual computer is requested to run.
-     *            Some components such as the CPU require asynchronously running threads and will start 
-     *            them here. Most of the other components are of a static nature and won't implement 
-     *            additional functionality.
+     *            Some components such as the CPU require asynchronously running
+     *            threads and will start them here. Most of the other components are
+     *            of a static nature and won't implement additional functionality.
      */
 	virtual void run();
 
@@ -130,9 +130,10 @@ public:
 	virtual bool isRunning();
 	
 	/*! @brief    Stops component.
-     *  @details  The function is called when the virtual computer is requested to freeze. For example, the 
-     *            CPU will ask its asynchronously running thread to halt. Most of the other components are 
-     *            of a static nature and won't implement additional functionality.
+     *  @details  The function is called when the virtual computer is requested
+     *            to freeze. For example, the CPU will ask its asynchronously
+     *            running thread to halt. Most of the other components are of a
+     *            static nature and won't implement additional functionality.
      */
 	virtual void halt();
 
@@ -141,11 +142,13 @@ public:
 	virtual bool isHalted();
 
 	/*! @brief    Suspends component.
-     *  @details  The suspend mechanism is a nested run/halt mechanism. First of all, it works like halt,
-     *            i.e., the component freezes. In contrast to halt, the suspend function remembers whether
-     *            the component was already halted or running. When the resume function is invoked, the original
-     *            running state is reestablished. In other words: If your component is currently running and you
-     *            suspend it 10 times, you'll have to resume it 10 times to make it run again.
+     *  @details  The suspend mechanism is a nested run/halt mechanism. First of all,
+     *            it works like halt, i.e., the component freezes. In contrast to halt,
+     *            the suspend function remembers whether the component was already
+     *            halted or running. When the resume function is invoked, the original
+     *            running state is reestablished. In other words: If your component
+     *            is currently running and you suspend it 10 times, you'll have to
+     *            resume it 10 times to make it run again.
      *  @see      resume
      */
 	void suspend();
@@ -164,9 +167,11 @@ public:
 protected:
     
     /*! @brief   Type and behavior of a snapshot item
-     *  @details The reset flags indicate whether the snapshot item should be set to 0 automatically during 
-     *           a reset. The format flags are important when big chunks of data are specified. They are needed
-     *           loadBuffer and saveBuffer to correctly converting little endian format to big endian format.
+     *  @details The reset flags indicate whether the snapshot item should be
+     *           set to 0 automatically during a reset. The format flags are
+     *           important when big chunks of data are specified. They are needed
+     *           loadBuffer and saveBuffer to correctly converting little endian
+     *           format to big endian format.
      */
     enum {
         KEEP_ON_RESET      = 0x00, //! Don't touch item in VirtualComponent::reset()
@@ -197,9 +202,10 @@ protected:
     unsigned snapshotSize;
     
     /*! @brief    Registers all snapshot items for this component
-     *  @abstract Snaphshot items are usually registered in the constructor of a virtual component.
-     *  @param    items Pointer to the first element of a SnapshotItem* array. The end of the array
-     *            is marked by a NULL pointer in the data field.
+     *  @abstract Snaphshot items are usually registered in the constructor of
+     *            a virtual component.
+     *  @param    items Pointer to the first element of a SnapshotItem* array.
+     *            The end of the array is marked by a NULL pointer in the data field.
      *  @param    legth Size of the SnapshotItem array in bytes.
      */
     void registerSnapshotItems(SnapshotItem *items, unsigned length);
@@ -210,9 +216,10 @@ protected:
     VirtualComponent **subComponents;
 
     /*! @brief    Registers all sub components for this component
-     *  @abstract Sub components are usually registered in the constructor of a virtual component.
-     *  @param    items Pointer to the first element of a VirtualComponet* array. The end of the array
-     *            is marked by a NULL pointer in the data field.
+     *  @abstract Sub components are usually registered in the constructor of
+     *            a virtual component.
+     *  @param    items Pointer to the first element of a VirtualComponet* array.
+     *            The end of the array is marked by a NULL pointer in the data field.
      *  @param    legth Size of the subComponent array in bytes.
      */
     void registerSubComponents(VirtualComponent **subComponents, unsigned length);

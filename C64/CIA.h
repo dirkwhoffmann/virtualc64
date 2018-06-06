@@ -232,9 +232,10 @@ public:
      */
     uint8_t tiredness;
     
-    // ------------------------------------------------------------------------------------------
-    //                                             Methods
-    // ------------------------------------------------------------------------------------------
+    
+    //
+    // Methods
+    //
 
 public:	
 	
@@ -389,9 +390,10 @@ private:
 
 
 /*! @class    The first virtual complex interface adapter (CIA 1)
- *  @details  The CIA 1 chips differs from the CIA 2 chip in several smaller aspects. For example, 
- *            the CIA 1 interrupts the CPU via the IRQ line (maskable interrupts). Furthermore, 
- *            the keyboard is connected to the the C64 via the CIA 1 chip.
+ *  @details  The CIA 1 chips differs from the CIA 2 chip in several smaller
+ *            aspects. For example, the CIA 1 interrupts the CPU via the
+ *            IRQ line (maskable interrupts). Furthermore, the keyboard is
+ *            connected to the the C64 via the CIA 1 chip.
  */
 class CIA1 : public CIA {
 	
@@ -422,10 +424,10 @@ private:
 };
 	
 /*! @brief    The second virtual complex interface adapter (CIA 2)
- *  @details  The CIA 2 chips differs from the CIA 1 chip in several smaller aspects. For example,
- *            the CIA 2 interrupts the CPU via the NMI line (non maskable interrupts). Furthermore, 
- *            the CIA 2 controlls the memory bank seen by the video controller. Therefore, CIA 2 
- *            needs to know about the VIC chip, in contrast to CIA 1.
+ *  @details  The CIA 2 chips differs from the CIA 1 chip in several smaller
+ *            aspects. For example, the CIA 2 interrupts the CPU via the
+ *            NMI line (non maskable interrupts). Furthermore, the CIA 2
+ *            controlls the memory bank seen by the video controller. 
  */
 class CIA2 : public CIA {
 

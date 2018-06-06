@@ -25,7 +25,7 @@
 // The debugger has been reworked and a new SID panel has been added.
 // Fixed several bugs in the SID bridge which is the internal API for accessing the reSID library.
 // Replaced reSID files by those used in VICE 3.2.
-// The D-Pad on the Sony Dualshock controller is working now.
+// Added support for the D-Pad on Sony's Dualshock controller.
 
 //
 //
