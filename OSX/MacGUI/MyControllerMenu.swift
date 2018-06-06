@@ -89,9 +89,6 @@ extension MyController {
         if item.action == #selector(MyController.traceAction(_:)) {
             return c64.developmentMode();
         }
-        if item.action == #selector(MyController.traceC64CpuAction(_:)) {
-            item.state = c64.cpu.tracing() ? .on : .off
-        }
         if item.action == #selector(MyController.traceIecAction(_:)) {
             item.state = c64.iec.tracing() ? .on : .off
         }
@@ -432,15 +429,6 @@ extension MyController {
     
     @IBAction func dumpStateAction(_ sender: Any!) {
         // Dummy target to make menu item validatable
-    }
-
-    @IBAction func traceC64CpuAction(_ sender: Any!) {
-        
-        undoManager?.registerUndo(withTarget: self) {
-            targetSelf in targetSelf.traceC64CpuAction(sender)
-        }
-        
-        c64.cpu.setTracing(!c64.cpu.tracing())
     }
   
     @IBAction func traceIecAction(_ sender: Any!) {

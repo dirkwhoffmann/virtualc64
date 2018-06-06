@@ -308,5 +308,6 @@ extension MyController {
         cflag.intValue = info.cFlag ? 1 : 0
         
         cpuTableView.refresh()
+        cpuTraceView.refresh()
     }
 }

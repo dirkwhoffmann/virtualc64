@@ -84,11 +84,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) deleteBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
 - (void) toggleBreakpoint:(uint16_t)addr { wrapper->cpu->toggleHardBreakpoint(addr); }
 
-- (NSUInteger) recordedInstructions { return
+- (NSInteger) recordedInstructions { return
     wrapper->cpu->recordedInstructions(); }
 - (RecordedInstruction) readRecordedInstruction {
     return wrapper->cpu->readRecordedInstruction(); }
-- (RecordedInstruction) readRecordedInstruction:(NSUInteger)previous {
+- (RecordedInstruction) readRecordedInstruction:(NSInteger)previous {
     return wrapper->cpu->readRecordedInstruction((unsigned)previous); }
 
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {

@@ -107,7 +107,7 @@ CPU::dumpState()
     msg("%s: %s %s %s   %s %s %s %s %s %s\n",
         instr.pc,
         instr.byte1, instr.byte2, instr.byte3,
-        instr.A, instr.X, instr.Y, instr.SP,
+        instr.a, instr.x, instr.y, instr.sp,
         instr.flags,
         instr.command);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
@@ -260,6 +260,12 @@ CPU::setErrorState(ErrorState state)
     }
 }
 
+unsigned
+CPU::recordedInstructions()
+{
+    return writePtr >= readPtr ? writePtr - readPtr : traceBufferSize + writePtr - readPtr;
+}
+
 void
 CPU::recordInstruction()
 {
@@ -267,6 +273,7 @@ CPU::recordInstruction()
     uint8_t opcode = mem->snoop(PC_at_cycle_0);
     unsigned length = getLengthOfInstruction(opcode);
     
+    i.cycle = c64->cycle; 
     i.pc = PC_at_cycle_0;
     i.byte1 = opcode;
     i.byte2 = length > 1 ? mem->snoop(i.pc + 1) : 0;
@@ -284,6 +291,7 @@ CPU::recordInstruction()
     if (writePtr == readPtr) {
         readPtr = (readPtr + 1) % traceBufferSize;
     }
+    // debug("readPtr = %d writePtr = %d size = %d\n", readPtr, writePtr, recordedInstructions());
 }
 
 RecordedInstruction
@@ -301,8 +309,9 @@ CPU::readRecordedInstruction()
 RecordedInstruction
 CPU::readRecordedInstruction(unsigned previous)
 {
-    assert(previous < recordedInstructions());    
-    return traceBuffer[(writePtr + traceBufferSize - 1) % traceBufferSize];
+    // debug("previous = %d recInstr = %d\n",previous, recordedInstructions());
+    // assert(previous < recordedInstructions());
+    return traceBuffer[(writePtr + traceBufferSize - previous - 1) % traceBufferSize];
 }
 
 
@@ -409,10 +418,10 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
     
     // Convert register contents to strings
     hex ? sprint16x(result.pc, instr.pc) : sprint16d(result.pc, instr.pc);
-    hex ? sprint8x(result.A, instr.a) : sprint8d(result.A, instr.a);
-    hex ? sprint8x(result.X, instr.x) : sprint8d(result.X, instr.x);
-    hex ? sprint8x(result.Y, instr.y) : sprint8d(result.Y, instr.y);
-    hex ? sprint8x(result.SP, instr.sp) : sprint8d(result.SP, instr.sp);
+    hex ? sprint8x(result.a, instr.a) : sprint8d(result.a, instr.a);
+    hex ? sprint8x(result.x, instr.x) : sprint8d(result.x, instr.x);
+    hex ? sprint8x(result.y, instr.y) : sprint8d(result.y, instr.y);
+    hex ? sprint8x(result.sp, instr.sp) : sprint8d(result.sp, instr.sp);
     
     // Convert memory contents to strings
     if (length >= 1) {

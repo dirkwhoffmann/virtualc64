@@ -496,6 +496,7 @@ CPU::executeOneCycle()
                 
                 recordInstruction();
                 
+                /*
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
 
@@ -505,6 +506,7 @@ CPU::executeOneCycle()
                         instr.A, instr.X, instr.Y, instr.SP,
                         instr.flags,
                         instr.command);
+                 */
             }
             
             // Check breakpoint tag
@@ -521,9 +523,9 @@ CPU::executeOneCycle()
             }
             return true;
             
-        // -------------------------------------------------------------------------------
+        //
         // Illegal instructions
-        // -------------------------------------------------------------------------------
+        //
             
         case JAM:
             
@@ -534,9 +536,9 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+        //
         // IRQ handling
-        // -------------------------------------------------------------------------------
+        //
 
         case irq:
             
@@ -586,9 +588,9 @@ CPU::executeOneCycle()
             setPCH(mem->peek(0xFFFF));
             DONE
             
-        // -------------------------------------------------------------------------------
+        //
         // NMI handling
-        // -------------------------------------------------------------------------------
+        // 
             
         case nmi:
             

@@ -95,6 +95,7 @@
 		506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54C720321C830026D8B4 /* RomDialogController.swift */; };
 		506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506D54C920321EDF0026D8B4 /* RomDialog.xib */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
+		50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50720F4120C853910010EBF2 /* CpuTraceView.swift */; };
 		50763277202989D300575110 /* UserDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* UserDialogController.swift */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
@@ -324,6 +325,7 @@
 		506D54C720321C830026D8B4 /* RomDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDialogController.swift; sourceTree = "<group>"; };
 		506D54C920321EDF0026D8B4 /* RomDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RomDialog.xib; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
+		50720F4120C853910010EBF2 /* CpuTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTraceView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* UserDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDialogController.swift; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 				50C8924D1BEF35FB00231B96 /* MetalView */,
 				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
 				50DC89C720B2EB53005E0557 /* CpuTableView.swift */,
+				50720F4120C853910010EBF2 /* CpuTraceView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				5015F36520B546A30024B4AA /* WaveformView.swift */,
 			);
@@ -1069,6 +1072,7 @@
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
+				50720F4220C853910010EBF2 /* CpuTraceView.swift in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
 				50F99559203AB3B9004C4856 /* KeyboardDialog.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,

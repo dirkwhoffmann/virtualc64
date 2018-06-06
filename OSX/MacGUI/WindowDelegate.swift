@@ -34,12 +34,16 @@ extension MyController : NSWindowDelegate {
         
         // Disconnect emulator
         c64.setListener(nil, function: nil)
-        memTableView.dataSource = nil
-        memTableView.delegate = nil
         cpuTableView.dataSource = nil
         cpuTableView.delegate = nil
         cpuTableView.c = nil
-        
+        cpuTraceView.dataSource = nil
+        cpuTraceView.delegate = nil
+        cpuTraceView.c = nil
+        memTableView.dataSource = nil
+        memTableView.delegate = nil
+        memTableView.c = nil
+
         // Stop metal view
         metalScreen.cleanup()
     }

@@ -82,9 +82,9 @@ struct ContainerWrapper;
 - (void) deleteBreakpoint:(uint16_t)addr;
 - (void) toggleBreakpoint:(uint16_t)addr;
 
-- (NSUInteger) recordedInstructions;
+- (NSInteger) recordedInstructions;
 - (RecordedInstruction) readRecordedInstruction;
-- (RecordedInstruction) readRecordedInstruction:(NSUInteger)previous;
+- (RecordedInstruction) readRecordedInstruction:(NSInteger)previous;
 
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
 - (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr hex:(BOOL)h;

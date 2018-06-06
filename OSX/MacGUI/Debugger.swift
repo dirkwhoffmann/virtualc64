@@ -245,6 +245,7 @@ extension MyController {
   
         hex = false
         cpuTableView.setHex(false)
+        cpuTraceView.setHex(false)
         refreshFormatters(hex: false)
     }
     
@@ -252,6 +253,7 @@ extension MyController {
         
         hex = true
         cpuTableView.setHex(true)
+        cpuTraceView.setHex(true)
         refreshFormatters(hex: true)
     }
 }

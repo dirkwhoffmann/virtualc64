@@ -96,6 +96,7 @@ class MyController : NSWindowController {
     
     // Debug panel (CPU)
     @IBOutlet weak var cpuTableView: CpuTableView!
+    @IBOutlet weak var cpuTraceView: CpuTraceView!
     @IBOutlet weak var pc: NSTextField!
     @IBOutlet weak var sp: NSTextField!
     @IBOutlet weak var a: NSTextField!
@@ -245,6 +246,7 @@ extension MyController {
 
         track()
         cpuTableView.c = self
+        cpuTraceView.c = self
         memTableView.c = self
     }
     

@@ -82,6 +82,7 @@ typedef struct {
 
 //! @brief    Recorded instruction
 typedef struct {
+    uint64_t cycle;
     uint16_t pc;
     uint8_t byte1;
     uint8_t byte2;
@@ -95,16 +96,17 @@ typedef struct {
 
 //! @brief    Disassembled instruction
 typedef struct {
+    uint64_t cycle;
     uint16_t addr; 
     uint8_t size;
     char byte1[4];
     char byte2[4];
     char byte3[4];
     char pc[6];
-    char A[4];
-    char X[4];
-    char Y[4];
-    char SP[4];
+    char a[4];
+    char x[4];
+    char y[4];
+    char sp[4];
     char flags[9];
     char command[16];
 } DisassembledInstruction;

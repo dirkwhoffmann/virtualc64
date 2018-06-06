@@ -509,7 +509,7 @@ public:
     void clearTraceBuffer() { readPtr = writePtr = 0; }
     
     //! @brief   Returns the number of recorded instructions.
-    unsigned recordedInstructions() { return writePtr - readPtr; }
+    unsigned recordedInstructions(); 
     
     //! @brief   Records an instruction.
     void recordInstruction();
