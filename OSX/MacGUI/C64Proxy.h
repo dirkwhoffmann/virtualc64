@@ -82,7 +82,12 @@ struct ContainerWrapper;
 - (void) deleteBreakpoint:(uint16_t)addr;
 - (void) toggleBreakpoint:(uint16_t)addr;
 
+- (NSUInteger) recordedInstructions;
+- (RecordedInstruction) readRecordedInstruction;
+- (RecordedInstruction) readRecordedInstruction:(NSUInteger)previous;
+
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
+- (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr hex:(BOOL)h;
 
 @end
 
@@ -484,38 +489,16 @@ struct ContainerWrapper;
 - (struct C64Wrapper *)wrapper;
 - (void) kill;
 
-// Loadind and saving
+- (void) dump;
+- (BOOL) developmentMode;
+
+// Loading and saving
 - (void)_loadFromSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
 - (void)_saveToSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
-- (CIAProxy *) cia:(NSInteger)num;
-
-- (void) dump;
-- (BOOL) developmentMode;
-
-- (VC64Message)message;
-- (void) putMessage:(VC64Message)msg;
-- (void) setListener:(const void *)sender function:(void(*)(const void *, int))func;
-
-- (void) powerUp;
-- (void) ping;
-- (void) halt;
-- (void) step;
-- (void) stepOver;
-- (BOOL) isRunnable;
-- (void) run;
-- (void) suspend;
-- (void) resume; 
-- (BOOL) isHalted;
-- (BOOL) isRunning;
-- (BOOL) isPAL;
-- (BOOL) isNTSC;
-- (void) setPAL;
-- (void) setNTSC;
-- (void) setNTSC:(BOOL)b;
-
+// Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url;
 - (BOOL) loadBasicRom:(NSURL *)url;
 - (BOOL) isBasicRomLoaded;
@@ -530,6 +513,33 @@ struct ContainerWrapper;
 - (BOOL) isVC1541RomLoaded;
 - (BOOL) isRom:(NSURL *)url;
 - (BOOL) loadRom:(NSURL *)url;
+
+// Using the message queue
+- (VC64Message)message;
+- (void) putMessage:(VC64Message)msg;
+- (void) setListener:(const void *)sender function:(void(*)(const void *, int))func;
+
+// Running the emulator
+- (void) powerUp;
+- (void) ping;
+
+- (BOOL) isRunnable;
+- (BOOL) isRunning;
+- (BOOL) isHalted;
+- (void) run;
+- (void) halt;
+- (void) suspend;
+- (void) resume;
+
+- (void) step;
+- (void) stepOver;
+
+- (BOOL) isPAL;
+- (void) setPAL;
+- (void) setPAL:(BOOL)b;
+- (BOOL) isNTSC;
+- (void) setNTSC;
+- (void) setNTSC:(BOOL)b;
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;
@@ -554,6 +564,7 @@ struct ContainerWrapper;
 - (void) setAlwaysWarp:(BOOL)b;
 - (BOOL) warpLoad;
 - (void) setWarpLoad:(BOOL)b;
+
 - (UInt64) cycles;
 - (UInt64) frames;
 

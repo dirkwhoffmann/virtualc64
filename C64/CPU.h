@@ -419,32 +419,23 @@ public:
 	/*! @brief    Returns the length in bytes of the instruction with the specified opcode.
 	 *  @result   Integer value between 1 and 3.
      */
-	int getLengthOfInstruction(uint8_t opcode);
+	unsigned getLengthOfInstruction(uint8_t opcode);
     
 	/*! @brief    Returns the length in bytes of the instruction with the specified address.
      *  @result   Integer value between 1 and 3.
      */
-    int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->snoop(addr)); }
+    unsigned getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->snoop(addr)); }
     
 	/*! @brief    Returns the length in bytes of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
-    int getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
+    unsigned getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
     
 	/*! @brief    Returns the address of the instruction following the current instruction.
      *  @result   Integer value between 1 and 3.
      */
     uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
     
-    /*! @brief    Disassembles an instruction in memory
-     *  @details  If offset is zero, the instruction at addr is disassembled. If it is
-     *            greater than zero, addr is advanced by offset instructions first.
-     */
-    DisassembledInstruction disassemble(uint16_t addr, bool hex);
-                                        
-	//! @brief    Disassembles the current instruction.
-    DisassembledInstruction disassemble(bool hex) { return disassemble(PC_at_cycle_0, hex); }
-				
 	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
     bool atBeginningOfNewCommand() { return next == fetch; }
 	
@@ -496,6 +487,54 @@ public:
     
 	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
+    
+    
+    //
+    //! @functiongroup Tracing the program execution
+    //
+
+    //! @brief  Trace buffer size
+    static const unsigned traceBufferSize = 1024;
+    
+    //! @brief  Ring buffer for storing the CPU state
+    RecordedInstruction traceBuffer[traceBufferSize];
+    
+    //! @brief  Trace buffer read pointer
+    unsigned readPtr;
+
+    //! @brief  Trace buffer write pointer
+    unsigned writePtr;
+    
+    //! @brief  Clears the trace buffer.
+    void clearTraceBuffer() { readPtr = writePtr = 0; }
+    
+    //! @brief   Returns the number of recorded instructions.
+    unsigned recordedInstructions() { return writePtr - readPtr; }
+    
+    //! @brief   Records an instruction.
+    void recordInstruction();
+    
+    //! @brief   Reads and removes a recorded instruction from the trace buffer.
+    //! @note    The trace buffer must not be empty.
+    RecordedInstruction readRecordedInstruction();
+
+    //! @brief   Reads a recorded instruction from the trace buffer.
+    //! @note    'previous' must be smaller than the number of recorded instructions.
+    RecordedInstruction readRecordedInstruction(unsigned previous);
+
+    
+    //
+    //! @functiongroup Disassembling instructions
+    //
+    
+    //! @brief    Disassembles a previously recorded instruction
+    DisassembledInstruction disassemble(RecordedInstruction instr, bool hex);
+
+    //! @brief    Disassembles an instruction at the specified memory location
+    DisassembledInstruction disassemble(uint16_t addr, bool hex);
+    
+    //! @brief    Disassembles the current instruction.
+    DisassembledInstruction disassemble(bool hex) { return disassemble(PC_at_cycle_0, hex); }
 };
 
 #endif

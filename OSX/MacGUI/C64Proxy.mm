@@ -84,9 +84,17 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) deleteBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
 - (void) toggleBreakpoint:(uint16_t)addr { wrapper->cpu->toggleHardBreakpoint(addr); }
 
+- (NSUInteger) recordedInstructions { return
+    wrapper->cpu->recordedInstructions(); }
+- (RecordedInstruction) readRecordedInstruction {
+    return wrapper->cpu->readRecordedInstruction(); }
+- (RecordedInstruction) readRecordedInstruction:(NSUInteger)previous {
+    return wrapper->cpu->readRecordedInstruction((unsigned)previous); }
+
 - (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
-    return wrapper->cpu->disassemble(addr, h);
-}
+    return wrapper->cpu->disassemble(addr, h); }
+- (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr hex:(BOOL)h; {
+    return wrapper->cpu->disassemble(instr, h); }
 
 @end
 
@@ -150,7 +158,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->cia->dumpState(); }
 
 - (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
-- (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing(b) : wrapper->cia->stopTracing(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing(); }
 
 - (uint8_t) snoop:(uint16_t)addr { return wrapper->cia->snoop(addr); }
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
@@ -626,35 +634,50 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 
-
-// DEPRECATED
-- (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper
-{
-    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
-    wrapper->c64->loadFromSnapshotSafe(snapshot);
-}
-
-- (void) loadFromSnapshot:(SnapshotProxy *)snapshot
-{
-    [self _loadFromSnapshotWrapper:[snapshot wrapper]];
-}
-
-- (void) _saveToSnapshotWrapper:(ContainerWrapper *)containerWrapper
-{
-    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
-    wrapper->c64->saveToSnapshotSafe(snapshot);
-}
-
-- (void) saveToSnapshot:(SnapshotProxy *)snapshot
-{
-    [self _saveToSnapshotWrapper:[snapshot wrapper]];
-}
-
-- (CIAProxy *) cia:(NSInteger)num {
-    assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
-
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
+
+// DEPRECATED
+- (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper {
+    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
+    wrapper->c64->loadFromSnapshotSafe(snapshot); }
+- (void) loadFromSnapshot:(SnapshotProxy *)snapshot {
+    [self _loadFromSnapshotWrapper:[snapshot wrapper]]; }
+- (void) _saveToSnapshotWrapper:(ContainerWrapper *)containerWrapper {
+    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
+    wrapper->c64->saveToSnapshotSafe(snapshot); }
+- (void) saveToSnapshot:(SnapshotProxy *)snapshot {
+    [self _saveToSnapshotWrapper:[snapshot wrapper]]; }
+
+- (BOOL) isBasicRom:(NSURL *)url {
+    return wrapper->c64->mem.isBasicRom([[url path] UTF8String]); }
+- (BOOL) loadBasicRom:(NSURL *)url {
+    return [self isBasicRom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
+- (BOOL) isBasicRomLoaded {
+    return wrapper->c64->mem.basicRomIsLoaded(); }
+- (BOOL) isCharRom:(NSURL *)url {
+    return wrapper->c64->mem.isCharRom([[url path] UTF8String]); }
+- (BOOL) loadCharRom:(NSURL *)url {
+    return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
+- (BOOL) isCharRomLoaded {
+    return wrapper->c64->mem.charRomIsLoaded(); }
+- (BOOL) isKernalRom:(NSURL *)url {
+    return wrapper->c64->mem.isKernalRom([[url path] UTF8String]); }
+- (BOOL) loadKernalRom:(NSURL *)url {
+    return [self isKernalRom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
+- (BOOL) isKernalRomLoaded {
+    return wrapper->c64->mem.kernalRomIsLoaded(); }
+- (BOOL) isVC1541Rom:(NSURL *)url {
+    return wrapper->c64->floppy.mem.is1541Rom([[url path] UTF8String]); }
+- (BOOL) loadVC1541Rom:(NSURL *)url {
+    return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
+- (BOOL) isVC1541RomLoaded {
+    return wrapper->c64->floppy.mem.romIsLoaded(); }
+- (BOOL) isRom:(NSURL *)url {
+    return [self isBasicRom:url] || [self isCharRom:url] || [self isKernalRom:url] || [self isVC1541Rom:url]; }
+- (BOOL) loadRom:(NSURL *)url {
+    return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
+
 - (VC64Message)message { return wrapper->c64->getMessage(); }
 - (void) putMessage:(VC64Message)msg { wrapper->c64->putMessage(msg); }
 - (void) setListener:(const void *)sender function:(void(*)(const void *, int))func {
@@ -663,63 +686,25 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) powerUp { wrapper->c64->powerUp(); }
 - (void) ping { wrapper->c64->ping(); }
-- (void) halt { wrapper->c64->halt(); }
-- (void) step { wrapper->c64->step(); }
-- (void) stepOver { wrapper->c64->stepOver(); }
-- (void) run { wrapper->c64->run(); }
-- (void) suspend { wrapper->c64->suspend(); }
-- (void) resume { wrapper->c64->resume(); }
-- (BOOL) isHalted { return wrapper->c64->isHalted(); }
+
 - (BOOL) isRunnable { return wrapper->c64->isRunnable(); }
 - (BOOL) isRunning { return wrapper->c64->isRunning(); }
+- (BOOL) isHalted { return wrapper->c64->isHalted(); }
+- (void) suspend { wrapper->c64->suspend(); }
+- (void) resume { wrapper->c64->resume(); }
+- (void) run { wrapper->c64->run(); }
+- (void) halt { wrapper->c64->halt(); }
+
+- (void) step { wrapper->c64->step(); }
+- (void) stepOver { wrapper->c64->stepOver(); }
+
 - (BOOL) isPAL { return wrapper->c64->isPAL(); }
-- (BOOL) isNTSC { return wrapper->c64->isNTSC(); }
 - (void) setPAL { wrapper->c64->setPAL(); }
+- (void) setPAL:(BOOL)b { if (b) [self setPAL]; else [self setNTSC]; }
+- (BOOL) isNTSC { return wrapper->c64->isNTSC(); }
 - (void) setNTSC { wrapper->c64->setNTSC(); }
 - (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
 
-- (BOOL) isBasicRom:(NSURL *)url {
-    return wrapper->c64->mem.isBasicRom([[url path] UTF8String]);
-}
-- (BOOL) loadBasicRom:(NSURL *)url {
-    return [self isBasicRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isBasicRomLoaded {
-    return wrapper->c64->mem.basicRomIsLoaded();
-}
-- (BOOL) isCharRom:(NSURL *)url {
-    return wrapper->c64->mem.isCharRom([[url path] UTF8String]);
-}
-- (BOOL) loadCharRom:(NSURL *)url {
-    return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isCharRomLoaded {
-    return wrapper->c64->mem.charRomIsLoaded();
-}
-- (BOOL) isKernalRom:(NSURL *)url {
-    return wrapper->c64->mem.isKernalRom([[url path] UTF8String]);
-}
-- (BOOL) loadKernalRom:(NSURL *)url {
-    return [self isKernalRom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isKernalRomLoaded {
-    return wrapper->c64->mem.kernalRomIsLoaded();
-}
-- (BOOL) isVC1541Rom:(NSURL *)url {
-    return wrapper->c64->floppy.mem.is1541Rom([[url path] UTF8String]);
-}
-- (BOOL) loadVC1541Rom:(NSURL *)url {
-    return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]);
-}
-- (BOOL) isVC1541RomLoaded {
-    return wrapper->c64->floppy.mem.romIsLoaded();
-}
-- (BOOL) isRom:(NSURL *)url {
-    return [self isBasicRom:url] || [self isCharRom:url] || [self isKernalRom:url] || [self isVC1541Rom:url];
-}
-- (BOOL) loadRom:(NSURL *)url {
-    return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url];
-}
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTContainer *)([c wrapper]->container)); }

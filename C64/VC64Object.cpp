@@ -22,7 +22,6 @@ VC64Object::VC64Object()
 {
     debugLevel = defaultDebugLevel; 
     traceCounter = 0;
-    silentTracing = false; 
     description = NULL;
 }
 
@@ -31,44 +30,22 @@ VC64Object::~VC64Object()
 }
 
 unsigned VC64Object::defaultDebugLevel = 1;
-char VC64Object::traceBuffer[512][256];
-unsigned VC64Object::tracePtr = 0;
 
-// ---------------------------------------------------------------------------------------------
-//                                       Tracing
-// ---------------------------------------------------------------------------------------------
 
-void
-VC64Object::startTracing(int count) {
-    silentTracing = false;
-    traceCounter = count;
-    for (int i = 0; i < 256; i++)
-        strcpy(traceBuffer[i], "--\n");
-}
+//
+// Tracing
+//
 
-void
-VC64Object::startSilentTracing(int count) {
-    silentTracing = true;
-    traceCounter = count;
-    for (int i = 0; i < 256; i++)
-        strcpy(traceBuffer[i], "--\n");
-}
-
-void
-VC64Object::stopTracing() {
-    traceCounter = 0;
-}
-
-void
-VC64Object::backtrace(int count) {
+bool
+VC64Object::tracingEnabled()
+{
+    if (traceCounter == 0)
+        return false;
     
-    assert(count < 256);
+    if (traceCounter > 0)
+        traceCounter--;
     
-    debug("Backtrace:\n");
-    unsigned base = 256 + tracePtr - count;
-    for (unsigned i = 0; i < count; i++) {
-        fprintf(stderr, "%d: %s", (base + i) % 256, traceBuffer[(base + i) % 256]);
-    }
+    return true;
 }
 
 
@@ -145,6 +122,7 @@ VC64Object::panic(const char *fmt, ...)
     assert(0);
 }
 
+/*
 void
 VC64Object::trace(const char *fmt, ...)
 {
@@ -156,13 +134,9 @@ VC64Object::trace(const char *fmt, ...)
     
     VC64OBJ_PARSE;
     if (description)
-        sprintf(traceBuffer[tracePtr], "%s: %s", description, buf);
+        fprintf(stderr, "%s: %s", description, buf);
     else
-        sprintf(traceBuffer[tracePtr], "%s", buf);
-
-    if (!silentTracing) {
-        fprintf(stderr, "%s", traceBuffer[tracePtr]);
-    }
-
-    tracePtr = (tracePtr < 255) ? tracePtr + 1 : 0;
+        fprintf(stderr, "%s", buf);
 }
+*/
+

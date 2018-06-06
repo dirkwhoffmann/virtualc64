@@ -89,9 +89,12 @@ void
 CPU::reset()
 {
     VirtualComponent::reset();
+
     B = 1;
 	rdyLine = true;
 	next = fetch;
+
+    clearTraceBuffer();
 }
 
 void 
@@ -205,7 +208,7 @@ CPU::getAddressingMode(uint8_t opcode)
 	return addressingMode[opcode];
 }
 
-int 
+unsigned
 CPU::getLengthOfInstruction(uint8_t opcode)
 {
 	switch(addressingMode[opcode]) {
@@ -230,146 +233,6 @@ CPU::getLengthOfInstruction(uint8_t opcode)
 	return 1;
 }
 
-DisassembledInstruction
-CPU::disassemble(uint16_t addr, bool hex)
-{
-    DisassembledInstruction instr;
-        
-    // Get opcode
-    uint8_t opcode = mem->snoop(addr);
-    instr.addr = addr; 
-    instr.size = getLengthOfInstruction(opcode);
-    
-    // Convert command
-    char operand[6];
-    switch (addressingMode[opcode]) {
-            
-        case ADDR_IMMEDIATE:
-        case ADDR_ZERO_PAGE:
-        case ADDR_ZERO_PAGE_X:
-        case ADDR_ZERO_PAGE_Y:
-        case ADDR_INDIRECT_X:
-        case ADDR_INDIRECT_Y: {
-            uint8_t value = mem->snoop(addr+1);
-            hex ? sprint8x(operand, value) : sprint8d(operand, value);
-            break;
-        }
-        case ADDR_DIRECT:
-        case ADDR_INDIRECT:
-        case ADDR_ABSOLUTE:
-        case ADDR_ABSOLUTE_X:
-        case ADDR_ABSOLUTE_Y: {
-            uint16_t value = LO_HI(mem->snoop(addr+1),mem->snoop(addr+2));
-            hex ? sprint16x(operand, value) : sprint16d(operand, value);
-            break;
-        }
-        case ADDR_RELATIVE: {
-            uint16_t value = addr + 2 + (int8_t)mem->snoop(addr+1);
-            hex ? sprint16x(operand, value) : sprint16d(operand, value);
-            break;
-        }
-        default:
-            break;
-    }
-    
-    switch (addressingMode[opcode]) {
-        case ADDR_IMPLIED:
-        case ADDR_ACCUMULATOR:
-            strcpy(instr.command, "xxx");
-            break;
-        case ADDR_IMMEDIATE:
-            strcpy(instr.command, hex ? "xxx #hh" : "xxx #ddd");
-            memcpy(&instr.command[5], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ZERO_PAGE:
-            strcpy(instr.command, hex ? "xxx hh" : "xxx ddd");
-            memcpy(&instr.command[4], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ZERO_PAGE_X:
-            strcpy(instr.command, hex ? "xxx hh,X" : "xxx ddd,X");
-            memcpy(&instr.command[4], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ZERO_PAGE_Y:
-            strcpy(instr.command, hex ? "xxx hh,Y" : "xxx ddd,Y");
-            memcpy(&instr.command[4], operand, hex ? 2 : 3);
-            break;
-        case ADDR_ABSOLUTE:
-        case ADDR_DIRECT:
-            strcpy(instr.command, hex ? "xxx hhhh" : "xxx ddddd");
-            memcpy(&instr.command[4], operand, hex ? 4 : 5);
-            break;
-        case ADDR_ABSOLUTE_X:
-            strcpy(instr.command, hex ? "xxx hhhh,X" : "xxx ddddd,X");
-            memcpy(&instr.command[4], operand, hex ? 4 : 5);
-            break;
-        case ADDR_ABSOLUTE_Y:
-            strcpy(instr.command, hex ? "xxx hhhh,Y" : "xxx ddddd,Y");
-            memcpy(&instr.command[4], operand, hex ? 4 : 5);
-            break;
-        case ADDR_INDIRECT:
-            strcpy(instr.command, hex ? "xxx (hhhh)" : "xxx (ddddd)");
-            memcpy(&instr.command[5], operand, hex ? 4 : 5);
-            break;
-        case ADDR_INDIRECT_X:
-            strcpy(instr.command, hex ? "xxx (hh,X)" : "xxx (ddd,X)");
-            memcpy(&instr.command[5], operand, hex ? 2 : 3);
-            break;
-        case ADDR_INDIRECT_Y:
-            strcpy(instr.command, hex ? "xxx (hh),Y" : "xxx (ddd),Y");
-            memcpy(&instr.command[5], operand, hex ? 2 : 3);
-            break;
-        case ADDR_RELATIVE:
-            strcpy(instr.command, hex ? "xxx hhhh" : "xxx ddddd");
-            memcpy(&instr.command[4], operand, hex ? 4 : 5);
-            break;
-        default:
-            strcpy(instr.command, "???");
-    }
-    
-    // Copy mnemonic
-    const char *mnc = getMnemonic(opcode);
-    strncpy(instr.command, mnc, 3);
-    
-    // Convert register contents to strings
-    hex ? sprint16x(instr.pc, addr) : sprint16d(instr.pc, addr);
-    hex ? sprint8x(instr.A, A) : sprint8d(instr.A, A);
-    hex ? sprint8x(instr.X, X) : sprint8d(instr.X, X);
-    hex ? sprint8x(instr.Y, Y) : sprint8d(instr.Y, Y);
-    hex ? sprint8x(instr.SP, SP) : sprint8d(instr.SP, SP);
-
-    // Convert memory contents to strings
-    if (instr.size >= 1) {
-        uint8_t byte = mem->snoop(addr);
-        hex ? sprint8x(instr.byte1, byte) : sprint8d(instr.byte1, byte);
-    } else {
-        hex ? strcpy(instr.byte1, "  ") : strcpy(instr.byte1, "   ");
-    }
-    if (instr.size >= 2) {
-        uint8_t byte = mem->snoop(addr + 1);
-        hex ? sprint8x(instr.byte2, byte) : sprint8d(instr.byte2, byte);
-    } else {
-        hex ? strcpy(instr.byte2, "  ") : strcpy(instr.byte2, "   ");
-    }
-    if (instr.size >= 3) {
-        uint8_t byte = mem->snoop(addr + 2);
-        hex ? sprint8x(instr.byte3, byte) : sprint8d(instr.byte3, byte);
-    } else {
-        hex ? strcpy(instr.byte3, "  ") : strcpy(instr.byte3, "   ");
-    }
-    
-    // Convert flags to a string
-    instr.flags[0] = N ? 'N' : 'n';
-    instr.flags[1] = V ? 'V' : 'v';
-    instr.flags[2] = '-';
-    instr.flags[3] = B ? 'B' : 'b';
-    instr.flags[4] = D ? 'D' : 'd';
-    instr.flags[5] = I ? 'I' : 'i';
-    instr.flags[6] = Z ? 'Z' : 'z';
-    instr.flags[7] = C ? 'C' : 'c';
-    instr.flags[8] = 0;
-    
-    return instr;
-}
 
 void 
 CPU::setErrorState(ErrorState state)
@@ -395,6 +258,209 @@ CPU::setErrorState(ErrorState state)
         default:
             assert(false);
     }
+}
+
+void
+CPU::recordInstruction()
+{
+    RecordedInstruction i;
+    uint8_t opcode = mem->snoop(PC_at_cycle_0);
+    unsigned length = getLengthOfInstruction(opcode);
+    
+    i.pc = PC_at_cycle_0;
+    i.byte1 = opcode;
+    i.byte2 = length > 1 ? mem->snoop(i.pc + 1) : 0;
+    i.byte3 = length > 2 ? mem->snoop(i.pc + 2) : 0;
+    i.a = A;
+    i.x = X;
+    i.y = Y;
+    i.sp = SP;
+    i.flags = getP();
+    
+    assert(writePtr < traceBufferSize);
+
+    traceBuffer[writePtr] = i;
+    writePtr = (writePtr + 1) % traceBufferSize;
+    if (writePtr == readPtr) {
+        readPtr = (readPtr + 1) % traceBufferSize;
+    }
+}
+
+RecordedInstruction
+CPU::readRecordedInstruction()
+{
+    assert(recordedInstructions() != 0);
+    assert(readPtr < traceBufferSize);
+    
+    RecordedInstruction result = traceBuffer[readPtr];
+    readPtr = (readPtr + 1) % traceBufferSize;
+    
+    return result;
+}
+
+RecordedInstruction
+CPU::readRecordedInstruction(unsigned previous)
+{
+    assert(previous < recordedInstructions());    
+    return traceBuffer[(writePtr + traceBufferSize - 1) % traceBufferSize];
+}
+
+
+DisassembledInstruction
+CPU::disassemble(RecordedInstruction instr, bool hex)
+{
+    DisassembledInstruction result;
+    
+    uint8_t opcode = instr.byte1;
+    uint8_t length = getLengthOfInstruction(opcode);
+    
+    result.addr = instr.pc;
+    result.size = length;
+    
+    // Convert command
+    char operand[6];
+    switch (addressingMode[opcode]) {
+            
+        case ADDR_IMMEDIATE:
+        case ADDR_ZERO_PAGE:
+        case ADDR_ZERO_PAGE_X:
+        case ADDR_ZERO_PAGE_Y:
+        case ADDR_INDIRECT_X:
+        case ADDR_INDIRECT_Y: {
+            uint8_t value = mem->snoop(instr.pc + 1);
+            hex ? sprint8x(operand, value) : sprint8d(operand, value);
+            break;
+        }
+        case ADDR_DIRECT:
+        case ADDR_INDIRECT:
+        case ADDR_ABSOLUTE:
+        case ADDR_ABSOLUTE_X:
+        case ADDR_ABSOLUTE_Y: {
+            uint16_t value = LO_HI(mem->snoop(instr.pc + 1),mem->snoop(instr.pc + 2));
+            hex ? sprint16x(operand, value) : sprint16d(operand, value);
+            break;
+        }
+        case ADDR_RELATIVE: {
+            uint16_t value = instr.pc + 2 + (int8_t)mem->snoop(instr.pc + 1);
+            hex ? sprint16x(operand, value) : sprint16d(operand, value);
+            break;
+        }
+        default:
+            break;
+    }
+    
+    switch (addressingMode[opcode]) {
+        case ADDR_IMPLIED:
+        case ADDR_ACCUMULATOR:
+            strcpy(result.command, "xxx");
+            break;
+        case ADDR_IMMEDIATE:
+            strcpy(result.command, hex ? "xxx #hh" : "xxx #ddd");
+            memcpy(&result.command[5], operand, hex ? 2 : 3);
+            break;
+        case ADDR_ZERO_PAGE:
+            strcpy(result.command, hex ? "xxx hh" : "xxx ddd");
+            memcpy(&result.command[4], operand, hex ? 2 : 3);
+            break;
+        case ADDR_ZERO_PAGE_X:
+            strcpy(result.command, hex ? "xxx hh,X" : "xxx ddd,X");
+            memcpy(&result.command[4], operand, hex ? 2 : 3);
+            break;
+        case ADDR_ZERO_PAGE_Y:
+            strcpy(result.command, hex ? "xxx hh,Y" : "xxx ddd,Y");
+            memcpy(&result.command[4], operand, hex ? 2 : 3);
+            break;
+        case ADDR_ABSOLUTE:
+        case ADDR_DIRECT:
+            strcpy(result.command, hex ? "xxx hhhh" : "xxx ddddd");
+            memcpy(&result.command[4], operand, hex ? 4 : 5);
+            break;
+        case ADDR_ABSOLUTE_X:
+            strcpy(result.command, hex ? "xxx hhhh,X" : "xxx ddddd,X");
+            memcpy(&result.command[4], operand, hex ? 4 : 5);
+            break;
+        case ADDR_ABSOLUTE_Y:
+            strcpy(result.command, hex ? "xxx hhhh,Y" : "xxx ddddd,Y");
+            memcpy(&result.command[4], operand, hex ? 4 : 5);
+            break;
+        case ADDR_INDIRECT:
+            strcpy(result.command, hex ? "xxx (hhhh)" : "xxx (ddddd)");
+            memcpy(&result.command[5], operand, hex ? 4 : 5);
+            break;
+        case ADDR_INDIRECT_X:
+            strcpy(result.command, hex ? "xxx (hh,X)" : "xxx (ddd,X)");
+            memcpy(&result.command[5], operand, hex ? 2 : 3);
+            break;
+        case ADDR_INDIRECT_Y:
+            strcpy(result.command, hex ? "xxx (hh),Y" : "xxx (ddd),Y");
+            memcpy(&result.command[5], operand, hex ? 2 : 3);
+            break;
+        case ADDR_RELATIVE:
+            strcpy(result.command, hex ? "xxx hhhh" : "xxx ddddd");
+            memcpy(&result.command[4], operand, hex ? 4 : 5);
+            break;
+        default:
+            strcpy(result.command, "???");
+    }
+    
+    // Copy mnemonic
+    const char *mnc = getMnemonic(opcode);
+    strncpy(result.command, mnc, 3);
+    
+    // Convert register contents to strings
+    hex ? sprint16x(result.pc, instr.pc) : sprint16d(result.pc, instr.pc);
+    hex ? sprint8x(result.A, instr.a) : sprint8d(result.A, instr.a);
+    hex ? sprint8x(result.X, instr.x) : sprint8d(result.X, instr.x);
+    hex ? sprint8x(result.Y, instr.y) : sprint8d(result.Y, instr.y);
+    hex ? sprint8x(result.SP, instr.sp) : sprint8d(result.SP, instr.sp);
+    
+    // Convert memory contents to strings
+    if (length >= 1) {
+        hex ? sprint8x(result.byte1, instr.byte1) : sprint8d(result.byte1, instr.byte1);
+    } else {
+        hex ? strcpy(result.byte1, "  ") : strcpy(result.byte1, "   ");
+    }
+    if (length >= 2) {
+        hex ? sprint8x(result.byte2, instr.byte2) : sprint8d(result.byte2, instr.byte2);
+    } else {
+        hex ? strcpy(result.byte2, "  ") : strcpy(result.byte2, "   ");
+    }
+    if (length >= 3) {
+        hex ? sprint8x(result.byte3, instr.byte3) : sprint8d(result.byte3, instr.byte3);
+    } else {
+        hex ? strcpy(result.byte3, "  ") : strcpy(result.byte3, "   ");
+    }
+    
+    // Convert flags to a string
+    result.flags[0] = (instr.flags & N_FLAG) ? 'N' : 'n';
+    result.flags[1] = (instr.flags & V_FLAG) ? 'V' : 'v';
+    result.flags[2] = '-';
+    result.flags[3] = (instr.flags & B_FLAG) ? 'B' : 'b';
+    result.flags[4] = (instr.flags & D_FLAG) ? 'D' : 'd';
+    result.flags[5] = (instr.flags & I_FLAG) ? 'I' : 'i';
+    result.flags[6] = (instr.flags & Z_FLAG) ? 'Z' : 'z';
+    result.flags[7] = (instr.flags & C_FLAG) ? 'C' : 'c';
+    result.flags[8] = 0;
+    
+    return result;
+}
+
+DisassembledInstruction
+CPU::disassemble(uint16_t addr, bool hex)
+{
+    RecordedInstruction instr;
+
+    instr.pc = addr;
+    instr.byte1 = mem->snoop(addr);
+    instr.byte2 = mem->snoop(addr + 1);
+    instr.byte3 = mem->snoop(addr + 2);
+    instr.a = A;
+    instr.x = X;
+    instr.y = Y;
+    instr.sp = SP;
+    instr.flags = getP();
+    
+    return disassemble(instr, hex);
 }
 
 

@@ -472,7 +472,7 @@ CPU::executeOneCycle()
             // Check interrupt lines
             if (doNmi) {
                 
-                if (tracingEnabled()) trace("NMI (source = %02X)\n", nmiLine);
+                // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 clear8_delayed(edgeDetector);
                 next = nmi_2;
                 doNmi = false;
@@ -481,7 +481,7 @@ CPU::executeOneCycle()
                 
             } else if (doIrq) {
                 
-                if (tracingEnabled()) trace("IRQ (source = %02X)\n", irqLine);
+                // if (tracingEnabled()) debug("IRQ (source = %02X)\n", irqLine);
                 next = irq_2;
                 doIrq = false;
                 return true;
@@ -493,8 +493,13 @@ CPU::executeOneCycle()
             
             // Disassemble command if requested
             if (tracingEnabled()) {
-                DisassembledInstruction instr = disassemble(true /* hex output */);
-                trace("%s: %s %s %s   %s %s %s %s %s %s\n",
+                
+                recordInstruction();
+                
+                RecordedInstruction recorded = readRecordedInstruction(0);
+                DisassembledInstruction instr = disassemble(recorded, true);
+
+                msg("%s: %s %s %s   %s %s %s %s %s %s\n",
                         instr.pc,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.A, instr.X, instr.Y, instr.SP,

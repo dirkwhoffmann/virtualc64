@@ -13,7 +13,7 @@ extension MyController {
         
         var info: CIAInfo
         
-        if ciaSelector.indexOfSelectedItem == 0 {
+        if selectedCia == 0 {
             info = c64.cia1.getInfo()
             ciaIntLineLow.title = "IRQ line active"
         } else {
@@ -63,7 +63,7 @@ extension MyController {
     }
     
     private var selectedCia: Int {
-        get { return ciaSelector.indexOfSelectedItem == 0 ? 1 : 2 }
+        get { return ciaSelector.indexOfSelectedItem }
     }
     
     @IBAction func selectCIAAction(_ sender: Any!) {
@@ -73,7 +73,7 @@ extension MyController {
     
     func _praAction(_ value: (Int,UInt8)) {
         
-        let cia = c64.cia(value.0)
+        let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portA.reg
         
@@ -95,7 +95,7 @@ extension MyController {
 
     func _prbAction(_ value: (Int,UInt8)) {
         
-        let cia = c64.cia(value.0)
+        let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portB.reg
         
@@ -117,7 +117,7 @@ extension MyController {
  
     func _ddraAction(_ value: (Int,UInt8)) {
         
-        let cia = c64.cia(value.0)
+        let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portA.dir
         
@@ -139,7 +139,7 @@ extension MyController {
     
     func _ddrbAction(_ value: (Int,UInt8)) {
         
-        let cia = c64.cia(value.0)
+        let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.portB.dir
         
@@ -161,7 +161,7 @@ extension MyController {
     
     func _timerLatchAAction(_ value: (Int,UInt16)) {
         
-        let cia = c64.cia(value.0)
+        let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.timerA.latch
         
@@ -184,7 +184,7 @@ extension MyController {
     
     func _timerLatchBAction(_ value: (Int,UInt16)) {
         
-        let cia = c64.cia(value.0)
+        let cia = (value.0 == 0) ? c64.cia1 : c64.cia2
         let info = cia!.getInfo()
         let oldValue = info.timerB.latch
         

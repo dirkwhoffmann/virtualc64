@@ -79,7 +79,20 @@ typedef struct {
     bool zFlag;
     bool cFlag;
 } CPUInfo;
-    
+
+//! @brief    Recorded instruction
+typedef struct {
+    uint16_t pc;
+    uint8_t byte1;
+    uint8_t byte2;
+    uint8_t byte3;
+    uint8_t a;
+    uint8_t x;
+    uint8_t y;
+    uint8_t sp;
+    uint8_t flags;
+} RecordedInstruction;
+
 //! @brief    Disassembled instruction
 typedef struct {
     uint16_t addr; 

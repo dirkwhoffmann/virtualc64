@@ -31,14 +31,6 @@
 class VC64Object {
 
 private:
-
-    /*! @brief    Tracing ringbuffer
-     *  @details  All trace messages are written to a ringbuffer.
-     *  @seealso  backtrace()
-     *  @note     traceBuffer is a class member, i.e., it is shared among all objects
-     */
-    static char traceBuffer[512][256];
-    static unsigned tracePtr;
     
     /*! @brief    Default debug level
      *  @details  On object creation, this value is used as debug level.
@@ -50,15 +42,11 @@ private:
      */
     unsigned debugLevel;
 
-    /*! @brief    Indicates whether the component should print trace messages.
-     *  @details  If set to 0, no trace messages are printed when calling trace().
-     *            Otherwise, trace() prints a message into the ringbuffer and to stderr
-     *            Set to a negative value to trace forever.
+    /*! @brief    Stores how many trace messages are left to be printed
+     *  @details  If positive, this value is decremented in every call to tracingEnabled()
+     *  @details  A negative value indicates that tracing should continue forever
      */
      int traceCounter;
-
-    //! @brief    If set, printing trace messages to stderr is omitted.
-    bool silentTracing;
 
     /*! @brief    Textual description of this object
      *  @details  Most debug output methods preceed their output with this string.
@@ -100,17 +88,18 @@ public:
     //! @functiongroup Debugging the component
     //
     
-    /*! @brief    Returns true iff trace mode is enabled.
-     */
-    bool tracingEnabled() { return traceCounter != 0; }
+    //! @brief    Returns true iff trace mode is enabled.
+    bool tracingEnabled();
     
-    /*! @brief    Enables or disables trace mode.
-     */
-    void startTracing(int count = -1);
-    void stopTracing();
-    void startSilentTracing(int count = -1);
-    void stopSilentTracing();
-    void backtrace(int count);
+    //! @brief    Sets the trace counter.
+    void setTraceCounter(int count) { traceCounter = count; }
+    
+    //! @brief    Starts tracing.
+    void startTracing() { setTraceCounter(-1); }
+
+    //! @brief    Stops tracing.
+    void stopTracing() { setTraceCounter(0); }
+    
     
     //
     //! @functiongroup Printing messages to console
@@ -148,7 +137,7 @@ public:
     
     /*! @brief    Prints a trace message
      */
-    void trace(const char *fmt, ...);
+    // void trace(const char *fmt, ...);
 };
 
 #endif
