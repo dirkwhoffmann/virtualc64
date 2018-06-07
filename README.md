@@ -1,5 +1,6 @@
 ![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png)
 
+
 ## About
 
 VirtualC64 emulates a Commodore 64 on the Mac. Originally, the emulator was intended as a demonstration of a virtual CPU environment that can be used in a one-year or two-year course on computer technology. Over the years, the emulator has grown and its emulation accuracy has increased continuously. Although the emulator has not yet reached the impressive compatibility of VICE or Hoxs64, VirtualC64 has evolved into a full-blown C64 emulator over the years.  
