@@ -23,15 +23,6 @@
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
-		5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39120B5E3C50024B4AA /* voice.cc */; };
-		5015F3AD20B5E3C80024B4AA /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39A20B5E3C60024B4AA /* version.cc */; };
-		5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39B20B5E3C60024B4AA /* dac.cc */; };
-		5015F3AF20B5E3C80024B4AA /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F39D20B5E3C60024B4AA /* wave.cc */; };
-		5015F3B020B5E3C80024B4AA /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A020B5E3C70024B4AA /* pot.cc */; };
-		5015F3B120B5E3C80024B4AA /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A620B5E3C70024B4AA /* filter.cc */; };
-		5015F3B220B5E3C80024B4AA /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3A820B5E3C80024B4AA /* envelope.cc */; };
-		5015F3B320B5E3C80024B4AA /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3AA20B5E3C80024B4AA /* extfilt.cc */; };
-		5015F3B420B5E3C80024B4AA /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5015F3AB20B5E3C80024B4AA /* sid.cc */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -47,6 +38,15 @@
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
+		501DE30A20C9C41B00707130 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F220C9C41800707130 /* pot.cc */; };
+		501DE30B20C9C41B00707130 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F520C9C41800707130 /* dac.cc */; };
+		501DE30C20C9C41B00707130 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F720C9C41800707130 /* sid.cc */; };
+		501DE30D20C9C41B00707130 /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2FB20C9C41900707130 /* voice.cc */; };
+		501DE30E20C9C41B00707130 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2FE20C9C41900707130 /* extfilt.cc */; };
+		501DE30F20C9C41B00707130 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30020C9C41900707130 /* version.cc */; };
+		501DE31020C9C41B00707130 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30320C9C41A00707130 /* wave.cc */; };
+		501DE31120C9C41B00707130 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30420C9C41A00707130 /* envelope.cc */; };
+		501DE31220C9C41B00707130 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30620C9C41A00707130 /* filter.cc */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
@@ -201,34 +201,6 @@
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
-		5015F39020B5E3C40024B4AA /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "resid-config.h"; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/resid-config.h"; sourceTree = "<group>"; };
-		5015F39120B5E3C50024B4AA /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
-		5015F39220B5E3C50024B4AA /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
-		5015F39320B5E3C50024B4AA /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
-		5015F39420B5E3C50024B4AA /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
-		5015F39520B5E3C50024B4AA /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
-		5015F39620B5E3C50024B4AA /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_PST.h"; sourceTree = "<group>"; };
-		5015F39720B5E3C50024B4AA /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
-		5015F39820B5E3C60024B4AA /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580__ST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580__ST.h"; sourceTree = "<group>"; };
-		5015F39920B5E3C60024B4AA /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581__ST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581__ST.h"; sourceTree = "<group>"; };
-		5015F39A20B5E3C60024B4AA /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
-		5015F39B20B5E3C60024B4AA /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dac.cc; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/dac.cc"; sourceTree = "<group>"; };
-		5015F39C20B5E3C60024B4AA /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PS_.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_PS_.h"; sourceTree = "<group>"; };
-		5015F39D20B5E3C60024B4AA /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
-		5015F39E20B5E3C60024B4AA /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PST.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_PST.h"; sourceTree = "<group>"; };
-		5015F39F20B5E3C60024B4AA /* wave6581_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_P_T.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_P_T.h"; sourceTree = "<group>"; };
-		5015F3A020B5E3C70024B4AA /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
-		5015F3A120B5E3C70024B4AA /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
-		5015F3A220B5E3C70024B4AA /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
-		5015F3A320B5E3C70024B4AA /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_P_T.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave8580_P_T.h"; sourceTree = "<group>"; };
-		5015F3A420B5E3C70024B4AA /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
-		5015F3A520B5E3C70024B4AA /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dac.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/dac.h"; sourceTree = "<group>"; };
-		5015F3A620B5E3C70024B4AA /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
-		5015F3A720B5E3C80024B4AA /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PS_.h; path = "../../../../Desktop/virtualc64-debugger/C64/SID/resid/wave6581_PS_.h"; sourceTree = "<group>"; };
-		5015F3A820B5E3C80024B4AA /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
-		5015F3A920B5E3C80024B4AA /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
-		5015F3AA20B5E3C80024B4AA /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
-		5015F3AB20B5E3C80024B4AA /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
 		50171A9E2083708800C07AAD /* CIA_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIA_types.h; sourceTree = "<group>"; };
 		50171A9F2083710E00C07AAD /* SID_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID_types.h; sourceTree = "<group>"; };
 		50171AA02083716000C07AAD /* CPU_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_types.h; sourceTree = "<group>"; };
@@ -262,6 +234,34 @@
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
+		501DE2EE20C9C41700707130 /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
+		501DE2EF20C9C41800707130 /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
+		501DE2F020C9C41800707130 /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spline.h; sourceTree = "<group>"; };
+		501DE2F120C9C41800707130 /* wave6581_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_P_T.h; path = ../../../../tmp/resid3.2/wave6581_P_T.h; sourceTree = "<group>"; };
+		501DE2F220C9C41800707130 /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
+		501DE2F320C9C41800707130 /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "resid-config.h"; path = "../../../../tmp/resid3.2/resid-config.h"; sourceTree = "<group>"; };
+		501DE2F420C9C41800707130 /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PST.h; path = ../../../../tmp/resid3.2/wave6581_PST.h; sourceTree = "<group>"; };
+		501DE2F520C9C41800707130 /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dac.cc; path = ../../../../tmp/resid3.2/dac.cc; sourceTree = "<group>"; };
+		501DE2F620C9C41800707130 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
+		501DE2F720C9C41800707130 /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
+		501DE2F820C9C41900707130 /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PST.h; path = ../../../../tmp/resid3.2/wave8580_PST.h; sourceTree = "<group>"; };
+		501DE2F920C9C41900707130 /* wave6581__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581__ST.h; path = ../../../../tmp/resid3.2/wave6581__ST.h; sourceTree = "<group>"; };
+		501DE2FA20C9C41900707130 /* pot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pot.h; sourceTree = "<group>"; };
+		501DE2FB20C9C41900707130 /* voice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice.cc; sourceTree = "<group>"; };
+		501DE2FC20C9C41900707130 /* wave8580_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PS_.h; path = ../../../../tmp/resid3.2/wave8580_PS_.h; sourceTree = "<group>"; };
+		501DE2FD20C9C41900707130 /* wave8580__ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580__ST.h; path = ../../../../tmp/resid3.2/wave8580__ST.h; sourceTree = "<group>"; };
+		501DE2FE20C9C41900707130 /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
+		501DE2FF20C9C41900707130 /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dac.h; path = ../../../../tmp/resid3.2/dac.h; sourceTree = "<group>"; };
+		501DE30020C9C41900707130 /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
+		501DE30120C9C41A00707130 /* voice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice.h; sourceTree = "<group>"; };
+		501DE30220C9C41A00707130 /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
+		501DE30320C9C41A00707130 /* wave.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wave.cc; sourceTree = "<group>"; };
+		501DE30420C9C41A00707130 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
+		501DE30520C9C41A00707130 /* wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave.h; sourceTree = "<group>"; };
+		501DE30620C9C41A00707130 /* filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cc; sourceTree = "<group>"; };
+		501DE30720C9C41A00707130 /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_P_T.h; path = ../../../../tmp/resid3.2/wave8580_P_T.h; sourceTree = "<group>"; };
+		501DE30820C9C41B00707130 /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PS_.h; path = ../../../../tmp/resid3.2/wave6581_PS_.h; sourceTree = "<group>"; };
+		501DE30920C9C41B00707130 /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
@@ -852,34 +852,34 @@
 		50D141641417A34B0024FC74 /* resid */ = {
 			isa = PBXGroup;
 			children = (
-				5015F39B20B5E3C60024B4AA /* dac.cc */,
-				5015F3A520B5E3C70024B4AA /* dac.h */,
-				5015F3A820B5E3C80024B4AA /* envelope.cc */,
-				5015F39220B5E3C50024B4AA /* envelope.h */,
-				5015F3AA20B5E3C80024B4AA /* extfilt.cc */,
-				5015F39320B5E3C50024B4AA /* extfilt.h */,
-				5015F3A620B5E3C70024B4AA /* filter.cc */,
-				5015F3A920B5E3C80024B4AA /* filter.h */,
-				5015F3A020B5E3C70024B4AA /* pot.cc */,
-				5015F3A420B5E3C70024B4AA /* pot.h */,
-				5015F39020B5E3C40024B4AA /* resid-config.h */,
-				5015F3AB20B5E3C80024B4AA /* sid.cc */,
-				5015F39720B5E3C50024B4AA /* sid.h */,
-				5015F39420B5E3C50024B4AA /* siddefs.h */,
-				5015F3A220B5E3C70024B4AA /* spline.h */,
-				5015F39A20B5E3C60024B4AA /* version.cc */,
-				5015F39120B5E3C50024B4AA /* voice.cc */,
-				5015F39520B5E3C50024B4AA /* voice.h */,
-				5015F39D20B5E3C60024B4AA /* wave.cc */,
-				5015F3A120B5E3C70024B4AA /* wave.h */,
-				5015F39920B5E3C60024B4AA /* wave6581__ST.h */,
-				5015F39F20B5E3C60024B4AA /* wave6581_P_T.h */,
-				5015F3A720B5E3C80024B4AA /* wave6581_PS_.h */,
-				5015F39620B5E3C50024B4AA /* wave6581_PST.h */,
-				5015F39820B5E3C60024B4AA /* wave8580__ST.h */,
-				5015F3A320B5E3C70024B4AA /* wave8580_P_T.h */,
-				5015F39C20B5E3C60024B4AA /* wave8580_PS_.h */,
-				5015F39E20B5E3C60024B4AA /* wave8580_PST.h */,
+				501DE2F520C9C41800707130 /* dac.cc */,
+				501DE2FF20C9C41900707130 /* dac.h */,
+				501DE30420C9C41A00707130 /* envelope.cc */,
+				501DE2F620C9C41800707130 /* envelope.h */,
+				501DE2FE20C9C41900707130 /* extfilt.cc */,
+				501DE30920C9C41B00707130 /* extfilt.h */,
+				501DE30620C9C41A00707130 /* filter.cc */,
+				501DE30220C9C41A00707130 /* filter.h */,
+				501DE2F220C9C41800707130 /* pot.cc */,
+				501DE2FA20C9C41900707130 /* pot.h */,
+				501DE2F320C9C41800707130 /* resid-config.h */,
+				501DE2F720C9C41800707130 /* sid.cc */,
+				501DE2EF20C9C41800707130 /* sid.h */,
+				501DE2EE20C9C41700707130 /* siddefs.h */,
+				501DE2F020C9C41800707130 /* spline.h */,
+				501DE30020C9C41900707130 /* version.cc */,
+				501DE2FB20C9C41900707130 /* voice.cc */,
+				501DE30120C9C41A00707130 /* voice.h */,
+				501DE30320C9C41A00707130 /* wave.cc */,
+				501DE30520C9C41A00707130 /* wave.h */,
+				501DE2F920C9C41900707130 /* wave6581__ST.h */,
+				501DE2F120C9C41800707130 /* wave6581_P_T.h */,
+				501DE30820C9C41B00707130 /* wave6581_PS_.h */,
+				501DE2F420C9C41800707130 /* wave6581_PST.h */,
+				501DE2FD20C9C41900707130 /* wave8580__ST.h */,
+				501DE30720C9C41A00707130 /* wave8580_P_T.h */,
+				501DE2FC20C9C41900707130 /* wave8580_PS_.h */,
+				501DE2F820C9C41900707130 /* wave8580_PST.h */,
 			);
 			path = resid;
 			sourceTree = "<group>";
@@ -1015,12 +1015,11 @@
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
 				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
-				5015F3AD20B5E3C80024B4AA /* version.cc in Sources */,
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
+				501DE30F20C9C41B00707130 /* version.cc in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
-				5015F3B220B5E3C80024B4AA /* envelope.cc in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
@@ -1031,17 +1030,14 @@
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
+				501DE30D20C9C41B00707130 /* voice.cc in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
-				5015F3B120B5E3C80024B4AA /* filter.cc in Sources */,
-				5015F3B420B5E3C80024B4AA /* sid.cc in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
-				5015F3B320B5E3C80024B4AA /* extfilt.cc in Sources */,
 				50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */,
-				5015F3AF20B5E3C80024B4AA /* wave.cc in Sources */,
 				5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */,
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
@@ -1054,8 +1050,10 @@
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
+				501DE31120C9C41B00707130 /* envelope.cc in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
+				501DE30E20C9C41B00707130 /* extfilt.cc in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
 				504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
@@ -1063,10 +1061,10 @@
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
-				5015F3AC20B5E3C80024B4AA /* voice.cc in Sources */,
 				50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
+				501DE31020C9C41B00707130 /* wave.cc in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
@@ -1079,10 +1077,10 @@
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
-				5015F3AE20B5E3C80024B4AA /* dac.cc in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
+				501DE31220C9C41B00707130 /* filter.cc in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
@@ -1094,11 +1092,12 @@
 				506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* Formatter.swift in Sources */,
+				501DE30B20C9C41B00707130 /* dac.cc in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
-				5015F3B020B5E3C80024B4AA /* pot.cc in Sources */,
+				501DE30A20C9C41B00707130 /* pot.cc in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
@@ -1106,6 +1105,7 @@
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				501DE30C20C9C41B00707130 /* sid.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,

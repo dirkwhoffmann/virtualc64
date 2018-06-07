@@ -535,7 +535,6 @@ public:
   void clock(int voice1, int voice2, int voice3);
   void clock(cycle_count delta_t, int voice1, int voice2, int voice3);
   void reset();
-  void _reset();
 
   // Write registers.
   void writeFC_LO(reg8);
@@ -570,7 +569,7 @@ protected:
   reg4 mode;
 
   // Output master volume.
-  reg4 mastervolume;
+  reg4 vol;
 
   // Used to mask out EXT IN if not connected, and for test purposes
   // (voice muting).
@@ -1453,7 +1452,7 @@ for my $mix (0..2**@i-1) {
   }
 
   // Sum the inputs in the mixer and run the mixer output through the gain.
-  return (short)(f.gain[mastervolume][f.mixer[offset + Vi]] - (1 << 15));
+  return (short)(f.gain[vol][f.mixer[offset + Vi]] - (1 << 15));
 }
 
 

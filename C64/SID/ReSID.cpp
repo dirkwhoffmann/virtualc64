@@ -129,7 +129,7 @@ ReSID::setChipModel(SIDChipModel model)
     
     c64->suspend();
     sid->set_chip_model((reSID::chip_model)chipModel);
-    sid->filter._reset();
+    // sid->filter._reset();
     c64->resume();
     
     // MOS8580 emulation seems to be problematic when combined with filters.
@@ -177,7 +177,7 @@ ReSID::setAudioFilter(bool value)
     
     c64->suspend();
     sid->enable_filter(value);
-    sid->filter._reset();
+    // sid->filter._reset();
     c64->resume();
     
     debug("%s audio filter emulation.\n", value ? "Enabling" : "Disabling");

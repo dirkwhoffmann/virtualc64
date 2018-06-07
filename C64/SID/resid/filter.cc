@@ -610,7 +610,7 @@ void Filter::reset()
   res = 0;
   filt = 0;
   mode = 0;
-  mastervolume = 0;
+  vol = 0;
 
   Vhp = 0;
   Vbp = Vbp_x = Vbp_vc = 0;
@@ -621,26 +621,7 @@ void Filter::reset()
   set_sum_mix();
 }
 
-void Filter::_reset()
-{
-    set_voice_mask(0x07);
-    input(0);
-    
-    fc = 0;
-    res = 0;
-    filt = 0;
-    mode = 0;
-    // mastervolume = 0;
-        
-    Vhp = 0;
-    Vbp = Vbp_x = Vbp_vc = 0;
-    Vlp = Vlp_x = Vlp_vc = 0;
-        
-    set_w0();
-    set_Q();
-    set_sum_mix();
-}
-    
+
 // ----------------------------------------------------------------------------
 // Register functions.
 // ----------------------------------------------------------------------------
@@ -670,7 +651,7 @@ void Filter::writeMODE_VOL(reg8 mode_vol)
   mode = mode_vol & 0xf0;
   set_sum_mix();
 
-  mastervolume = mode_vol & 0x0f;
+  vol = mode_vol & 0x0f;
 }
 
 // Set filter cutoff frequency.
