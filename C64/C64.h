@@ -31,10 +31,7 @@
 //
 // TODO:
 //
-// Make CIA panel editable
 // Add setter API for SID stuff
-// Use correct formatters for SID and VIC values
-// Debug menu: Remove option to disable sprite collision detection
 //
 //
 // CLEANUP:
@@ -87,7 +84,6 @@
 #include "CIA.h"
 #include "CPU.h"
 
-
 // Cartridges
 #include "CustomCartridges.h"
 
@@ -97,107 +93,6 @@
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
-
-/*
-Overall architecture:
----------------------
-
-VirtualC64 consists of three major components:
-
-1. The graphical user interface (written in Swift and ObjC)
-2. The communication proxy (written in ObjC)
-3. The core emulator (written in C++)
-
-The GUI talks to VirtualC64 by calling proxy methods. VirtualC64 talks back via
-a message queue that is queried periodically by the GUI.
-
-------------------------------------------------------------------
-| getMessage()                                      putMessage() |
-v                                                                |
-----------------------          ----------------------          ----------------------
-|                    |  func()  |                    |  func()  |                    |
-|        GUI         |--------->|      C64Proxy      |--------->|        C64         |
-|  (Swift and ObjC)  |          | Swift / C++ bridge |          |    (C++ world)     |
-----------------------          ----------------------          ----------------------
-
-
-Initialization procedure:
--------------------------
-
-To get VirtualC64 up and running, you need to perform the following steps:
-
-1. Create a C64 object
-c64 = new C64()
-
-2. Configure
-c64->set...() etc.
-
-3. Load Roms
-c64->loadRom(...)
-
-4. Power up
-c64->powerUp()
-
-loadRom() is an important function as it does mutliple things. In the first place, it will
- initialize one of the four ROMs in the virtual computer. If all ROMs are read in, it does
- two addition things. Firstly, it calls reset() to initialize all components. Note that it
- does not make sense to reset the computer earlier as some information such as the start
- address of the program counter is stored in ROM. Secondly, it sends MSG_READY_TO_RUN to the
- GUI. The GUI reacts with a call to powerUp(). This function brings the emulator
- to life by creating and launching the execution thread.
- 
-
-Message queue:
---------------
-
-To receive messages from VirtualC64, the GUI starts a timer that periodically invokes method MyController::timerFunc.
-Inside this method, the message queue is queries as follows:
-
-while ((message = [c64 message]) != NULL) {
-    switch (message->id) {
-            
-        case MSG_READY_TO_RUN:
-            [c64 run];
-            
-            ...
-    }
-}
-
-
-The execution thread:
----------------------
-
-The execution thread is organized as an infinite loop. In each iteration, control is
-passed to the VIC, CIAs, CPU, VIAs, and the disk drive. The VIC chip draws the screen
-contents into a simple byte array, the so called screen buffer. The asynchronously
-running GUI copies the screen buffer contents onto a GPU texture which is then rendered
-by the GPU.
-
-The following methods control the execution thread:
-
-
-run: Runs the emulation thread
- 
-The GUI invokes this method, e.g., when the user lauches the
-emulator the first time or hits the continue button.
-
-halt: Pauses the emulation thread
- 
-The GUI invokes this method, e.g., when the user hits the pause button.
-VirtualC64 itself calls this method when, e.g., a breakpoint is reached.
-
-suspend / result: Temporarily pauses the emulation thread
- 
-If multiple operations need to be executed atomically (such as
-taking an emulator snapshot), the operations are embedded inside a
-suspend() / resume() block. Both methods use halt() and run() internally.
-
-reset:
- 
-This method restarts the emulation on a freshly initialized computer.
-It has the same effect as switching a real C64 off and on again. Note that a
- few items are retained during a reset, e.g., an attached cartridge.
- */
 
 
 //! @class    A complete virtual C64
@@ -731,10 +626,7 @@ public:
     VC64Message getMessage() { return queue.getMessage(); }
     
     //! @brief    Feeds a notification message into message queue
-    void putMessage(VC64Message msg) {
-        
-       queue.putMessage(msg);
-    }
+    void putMessage(VC64Message msg) { queue.putMessage(msg); }
 };
 
 #endif

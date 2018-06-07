@@ -12,8 +12,7 @@ extension MyController {
     private var cpuInfo: CPUInfo {
         get { return c64.cpu.getInfo() }
     }
-    
-    
+        
     // Registers
     
     func _pcAction(_ value: UInt16) {

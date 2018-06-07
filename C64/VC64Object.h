@@ -87,15 +87,12 @@ public:
     
     //! @brief    Returns true iff trace mode is enabled.
     bool tracingEnabled();
-    
-    //! @brief    Sets the trace counter.
-    void setTraceCounter(int count) { traceCounter = count; }
-    
+        
     //! @brief    Starts tracing.
-    void startTracing() { setTraceCounter(-1); }
+    void startTracing(int counter = -1) { traceCounter = counter; }
 
     //! @brief    Stops tracing.
-    void stopTracing() { setTraceCounter(0); }
+    void stopTracing() { traceCounter = 0; }
     
     
     //
