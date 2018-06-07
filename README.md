@@ -1,5 +1,4 @@
-![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png)
-
+![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png#1)
 
 ## About
 
