@@ -8,6 +8,20 @@
 #ifndef DISK_TYPES_H
 #define DISK_TYPES_H
 
+/*! @brief    Maximum number of files that can be stored on a single disk
+ *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
+ *            Sector 0 is reserved for the BAM. Each of the remaining sectors can
+ *            hold up to 8 directory entries, summing um to a total of 144 items.
+ */
+static const unsigned MAX_FILES_ON_DISK = 144;
+
+/*! @brief    Maximum number of bits stored on a single track
+ *  @details  Each track can store a maximum of 7928 bytes. The exact number depends on
+ *            the track number (inner tracks contain fewer bytes) and the actual write
+ *            speed of a drive.
+ */
+static const unsigned maxBitsOnTrack = 7928 * 8;
+
 /*
  *
  *                       -----------------------------------------------------------------
@@ -42,11 +56,20 @@ inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
  */
 inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 
-/*! @brief    Maximum number of files that can be stored on a single disk
- *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
- *            Sector 0 is reserved for the BAM. Each of the remaining sectors can
- *            hold up to 8 directory entries, summing um to a total of 144 items.
- */
-static const unsigned MAX_FILES_ON_DISK = 144;
+//! @brief    Layout information of a single sector
+typedef struct {
+    int headerBegin;
+    int headerEnd;
+    int dataBegin;
+    int dataEnd;
+} SectorInfo;
+
+//! @brief    Information about a single track as gathered by analyzeTrack()
+typedef struct {
+    uint16_t length; 
+    uint8_t data[2 * maxBitsOnTrack]; // Two copies in a row to allow fast wrap arounds
+    SectorInfo sectorInfo[22];
+} TrackInfo;
+
 
 #endif

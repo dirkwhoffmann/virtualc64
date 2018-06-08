@@ -42,6 +42,20 @@
 #include <math.h>
 #include <ctype.h> 
 
+
+//! @brief    Four bit binary value
+typedef uint8_t uint4_t;
+
+//! @brief    Integrity check
+inline bool is_uint4_t(uint4_t value) { return value < 16; }
+
+//! @brief    Five bit binary value
+typedef uint8_t uint5_t;
+
+//! @brief    Integrity check
+inline bool is_uint5_t(uint5_t value) { return value < 32; }
+
+
 //
 //! @functiongroup Handling low level data objects
 //

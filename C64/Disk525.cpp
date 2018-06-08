@@ -62,7 +62,7 @@ Disk525::dumpState()
         assert(isTrackNumber(track));
         noOfOneBits = alignedSyncs = unalignedSyncs = 0;
         for (unsigned offset = 0; offset < length.track[track][0]; offset++) {
-            if ((bit = readBit(data.track[track], offset))) {
+            if ((bit = readBitFromTrack(track, offset))) {
                 noOfOneBits++;
             } else {
                 if (noOfOneBits >= 10) { // SYNC FOUND
@@ -89,7 +89,7 @@ Disk525::debugSyncMarks(uint8_t *data, unsigned lengthInBits) {
     unsigned r, noOfOneBits, alignedSyncs = 0, unalignedSyncs = 0;
 
     for (r = noOfOneBits = 0; r < lengthInBits; r++) {
-        if (readBit(data, r)) {
+        if (data[r]) {
             noOfOneBits++;
         } else {
             if (noOfOneBits >= 10) { // SYNC FOUND
@@ -124,6 +124,38 @@ Disk525::dumpHalftrack(Halftrack ht, unsigned min, unsigned max, unsigned highli
         msg(i == highlight ? "(%02X) " : "%02X ", data.halftrack[ht][i]);
     }
     msg("\n");
+}
+
+void
+Disk525::encodeGcr(uint8_t value, uint8_t *gcrBits)
+{
+    assert(gcrBits != NULL);
+
+    uint8_t nibble1 = bin2gcr(value >> 4);
+    uint8_t nibble2 = bin2gcr(value & 0xF);
+    
+    gcrBits[0] = (nibble1 & 0x10) ? 1 : 0;
+    gcrBits[1] = (nibble1 & 0x08) ? 1 : 0;
+    gcrBits[2] = (nibble1 & 0x04) ? 1 : 0;
+    gcrBits[3] = (nibble1 & 0x02) ? 1 : 0;
+    gcrBits[4] = (nibble1 & 0x01) ? 1 : 0;
+
+    gcrBits[5] = (nibble2 & 0x10) ? 1 : 0;
+    gcrBits[6] = (nibble2 & 0x08) ? 1 : 0;
+    gcrBits[7] = (nibble2 & 0x04) ? 1 : 0;
+    gcrBits[8] = (nibble2 & 0x02) ? 1 : 0;
+    gcrBits[9] = (nibble2 & 0x01) ? 1 : 0;
+}
+
+uint8_t
+Disk525::decodeGcr(uint8_t *gcr)
+{
+    uint5_t gcr1 = (gcr[0] << 4) | (gcr[1] << 3) | (gcr[2] << 2) | (gcr[3] << 1) | gcr[4];
+    uint5_t gcr2 = (gcr[5] << 4) | (gcr[6] << 3) | (gcr[7] << 2) | (gcr[8] << 1) | gcr[9];
+
+    assert(is_uint5_t(gcr1));
+    assert(is_uint5_t(gcr2));
+    return HI_LO(invgcr[gcr1], invgcr[gcr2]);
 }
 
 void
@@ -303,7 +335,7 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
     // Scan the interleave pattern and encode each sector
     for (unsigned i = 0; sectorList[i] != -1; i++) {
         
-        encodedBits = encodeSector(a, t, sectorList[i], data.track[t], totalEncodedBits, (i % 2) ? tailGapOdd : tailGapEven);
+        encodedBits = encodeSector(a, t, sectorList[i], totalEncodedBits, (i % 2) ? tailGapOdd : tailGapEven);
         // assert(encodedBits % 8 == 0);
         totalEncodedBits += encodedBits;
     }
@@ -315,14 +347,14 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
 }
 
 unsigned
-Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, unsigned bitoffset, int gap)
+Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, unsigned bitoffset, int gap)
 {
     uint8_t *source;
+    // uint8_t *dest = data.track[t];
     unsigned bitptr = bitoffset;
     
-    assert(isTrackNumber(t));
     assert(a != NULL);
-    assert(dest != NULL);
+    assert(isTrackNumber(t));
     
     // Get source address from archive
     if ((source = a->findSector(t, sector)) == 0) {
@@ -338,43 +370,44 @@ Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, uns
     uint8_t checksum = id1 ^ id2 ^ t ^ sector; // Header checksum byte
     
     // 0xFF 0xFF 0xFF 0xFF 0xFF
-    writeSyncBits(dest, bitptr, 5 * 8);
+    // writeSyncBits(dest, bitptr, 5 * 8);
+    writeSyncBitsToTrack(t, bitptr, 5 * 8);
     bitptr += 5 * 8;
     
     // Header ID, Checksum, Sector number, Track number
-    encodeGcr(0x08, checksum, sector, t, dest, bitptr);
+    encodeGcr(0x08, checksum, sector, t, t, bitptr);
     bitptr += 5 * 8;
     
     // Disk ID 2, Disk ID 1, 0x0F, 0x0F
-    encodeGcr(id2, id1, 0x0F, 0x0F, dest, bitptr);
+    encodeGcr(id2, id1, 0x0F, 0x0F, t, bitptr);
     bitptr += 5 * 8;
     
     // 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55
-    writeGap(dest, bitptr, 9);
+    writeGapToTrack(t, bitptr, 9);
     bitptr += 9 * 8;
     
     // 0xFF 0xFF 0xFF 0xFF 0xFF
-    writeSyncBits(dest, bitptr, 5 * 8);
+    writeSyncBitsToTrack(t, bitptr, 5 * 8);
     bitptr += 5 * 8;
     
     // Data ID, First three data bytes
-    encodeGcr(0x07, source[0], source[1], source[2], dest, bitptr);
+    encodeGcr(0x07, source[0], source[1], source[2], t, bitptr);
     bitptr += 5 * 8;
     
     // Rest of the data bytes
     for (unsigned i = 3; i < 255; i += 4, bitptr += 5 * 8)
-        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], dest, bitptr);
+        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], t, bitptr);
   
     // Last data byte, Checksum, 0x00, 0x00
     checksum = source[0];
     for (unsigned i = 1; i < 256; i++) {
         checksum ^= source[i];
     }
-    encodeGcr(source[255], checksum, 0, 0, dest, bitptr);
+    encodeGcr(source[255], checksum, 0, 0, t, bitptr);
     bitptr += 5 * 8;
     
     // 0x55 0x55 ... 0x55 (Tail gap)
-    writeGap(dest, bitptr, gap);
+    writeGapToTrack(t, bitptr, gap);
     bitptr += gap * 8;
     
     // Return number of encoded bytes
@@ -382,8 +415,10 @@ Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, uns
 }
 
 void
-Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest, unsigned offset)
+Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset)
 {
+    assert(isTrackNumber(t));
+    
     uint64_t shift_reg = 0;
     
     // Shift in
@@ -397,17 +432,156 @@ Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest
     shift_reg = (shift_reg << 5) | gcr[b4 & 0x0F];
     
     // Shift out
-    writeByte(dest, offset + 4 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByte(dest, offset + 3 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByte(dest, offset + 2 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByte(dest, offset + 1 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByte(dest, offset, shift_reg & 0xFF);
+    writeByteToTrack(t, offset + 4 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset + 3 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset + 2 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset + 1 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset, shift_reg & 0xFF);
+}
+
+void
+Disk525::analyzeTrack(Track t)
+{
+    assert(isTrackNumber(t));
+    
+    memset(&trackInfo, sizeof(trackInfo), 0);
+    trackInfo.length = length.track[t][0];
+    for (unsigned i = 0; i < trackInfo.length; i++) {
+        trackInfo.data[i] = trackInfo.data[i + trackInfo.length] = readBitFromTrack(t, i);
+        assert(trackInfo.data[i] <= 1);
+    }
+
+    _analyzeTrack();
+}
+
+void
+Disk525::analyzeHalftrack(Halftrack ht)
+{
+    assert(isHalftrackNumber(ht));
+
+    memset(&trackInfo, sizeof(trackInfo), 0);
+    trackInfo.length = length.halftrack[ht];
+    for (unsigned i = 0; i < trackInfo.length; i++) {
+        trackInfo.data[i] = trackInfo.data[i + trackInfo.length] = readBitFromHalftrack(ht, i);
+        assert(trackInfo.data[i] <= 1);
+    }
+    
+    _analyzeTrack();
+}
+
+void
+Disk525::_analyzeTrack()
+{
+    uint8_t *buffer = trackInfo.data;
+    uint16_t length = trackInfo.length;
+
+    // Header block and data block sizes in bits.
+    const unsigned headerBlockSize = 10 * 8;
+    const unsigned dataBlockSize = 325 * 8;
+    
+    // Indicates where the sector headers blocks and the sectors data blocks start.
+    uint8_t sync[sizeof(trackInfo.data)];
+    memset(sync, 0, sizeof(sync));
+    
+    // Scan for SYNC sequences and decode the byte that follows.
+    unsigned noOfOnes = 0;
+    for (unsigned i = 0; i < 2 * length - 10; i++) {
+        if (buffer[i] == 0 && noOfOnes >= 10) {
+            // <--- SYNC ---><-- sync[i] -->
+            // 11111 .... 1110
+            //               ^ <- We are at offset i which is here
+            sync[i] = decodeGcr(buffer + i);
+            
+            if (sync[i] == 0x08) {
+                debug("Sector header block found at offset %d\n", i);
+            } else if (sync[i] == 0x07) {
+                debug("Sector data block found at offset %d\n", i);
+            } else {
+                warn("Unknown sector ID (%d) found at index %d", sync[i], i);
+            }
+        }
+        noOfOnes = buffer[i] ? (noOfOnes + 1) : 0;
+    }
+    
+    // Lookup first sector header block
+    unsigned startOffset;
+    for (startOffset = 0; startOffset < length; startOffset++) {
+        if (sync[startOffset] == 0x08) {
+            debug("Start offset = %d\n", startOffset);
+            break;
+        }
+    }
+    if (startOffset == length) {
+        debug("Track contains no sector header block.");
+        return;
+    }
+    
+    // Compute offsets for all sectors
+    uint8_t sector;
+    for (unsigned i = startOffset; i < startOffset + length; i++) {
+        if (sync[i] == 0x08) {
+            sector = decodeGcr(buffer + i + 10);
+            if (sector < 22) {
+                trackInfo.sectorInfo[sector].headerBegin = i;
+                trackInfo.sectorInfo[sector].headerEnd = (i + headerBlockSize) % length;
+            } else {
+                debug("Invalid sector number (%d) in sector header block.\n", sector);
+            }
+        }
+        if (sync[i] == 0x07) {
+            if (sector < 22) {
+                trackInfo.sectorInfo[sector].dataBegin = i;
+                trackInfo.sectorInfo[sector].dataEnd = (i + dataBlockSize) % length;
+            } else {
+                debug("Invalid sector number (%d) in sector data block.\n", sector);
+            }
+        }
+    }
 }
 
 unsigned
 Disk525::decodeDisk(uint8_t *dest, int *error)
 {
-    uint8_t tmpbuf1[2 * 7928], tmpbuf2[2 * 7928];
+    unsigned numBytes = 0;
+     if (error) *error = 0;
+    
+    // For each full track ...
+    
+    for (Track t = 1; t <= numTracks; t++) {
+        debug(3, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
+        numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), error);
+    }
+    
+    return numBytes;
+}
+
+unsigned
+Disk525::decodeTrack(Track t, uint8_t *dest, int *error)
+{
+    unsigned numBytes = 0;
+    
+    // Find sectors
+    analyzeTrack(t);
+    
+    // For each sector ...
+    for (unsigned s = 0; s < 21; s++) {
+
+        debug(3, "   Decoding sector %d\n", s);
+        SectorInfo info = sectorLayout(s);
+        if (info.dataBegin != info.dataEnd) {
+            // TODO: decodeSector(analyzedTrack.data, info.dataBegin, dest + numBytes);
+            numBytes += 256;
+        }
+    }
+    
+    return numBytes;
+}
+
+
+unsigned
+Disk525::oldDecodeDisk(uint8_t *dest, int *error)
+{
+    uint8_t tmpbuf1[2 * 7928 * 8], tmpbuf2[2 * 7928 * 8];
     unsigned tmpbuf1length, tmpbuf2length;
     unsigned r, w, copies, noOfOneBits, bitsOnTrack = 0, numBytes = 0;
     int startOfFirstSyncMark = -1;
@@ -430,7 +604,7 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         for (r = noOfOneBits = 0; r < bitsOnTrack; r++) {
             
             // Count '1' bits
-            if (readBit(data.track[t], r)) { noOfOneBits++; } else { noOfOneBits = 0; }
+            if (readBitFromTrack(t, r)) { noOfOneBits++; } else { noOfOneBits = 0; }
             
             // Check if we have found the beginning of a SYNC mark (ten 1s in a row)
             if (noOfOneBits == 10) { startOfFirstSyncMark = r - 9; break; }
@@ -447,13 +621,15 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         // Track data is repeates twice, so we can read safely beyond the array bounds later
         debug(3, "    Setting up temporary buffer (alignment offset = %d)\n", startOfFirstSyncMark);
         for (copies = w = 0; copies < 2; copies++) {
-            for (r = startOfFirstSyncMark; r < bitsOnTrack; r++) {
-                assert((w / 8) < sizeof(tmpbuf1) - 1);
-                writeBit(tmpbuf1, w++, readBit(data.track[t], r));
+            for (r = startOfFirstSyncMark; r < bitsOnTrack; r++, w++) {
+                assert(w < sizeof(tmpbuf1));
+                //writeBit(tmpbuf1, w++, readBitFromTrack(t, r));
+                tmpbuf1[w] = readBitFromTrack(t, r);
             }
-            for (r = 0; r < startOfFirstSyncMark; r++) {
-                assert((w / 8) < sizeof(tmpbuf1) - 1);
-                writeBit(tmpbuf1, w++, readBit(data.track[t], r));
+            for (r = 0; r < startOfFirstSyncMark; r++, w++) {
+                assert(w < sizeof(tmpbuf1));
+                // writeBit(tmpbuf1, w++, readBitFromTrack(t, r));
+                tmpbuf1[w] = readBitFromTrack(t, r);
             }
         }
         assert(w % 8 == 0);
@@ -469,16 +645,29 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         for (r = w = noOfOneBits = 0; r < tmpbuf1length; r++) {
             
             // Count '1' bits
-            if ((bit = readBit(tmpbuf1, r))) noOfOneBits++; else noOfOneBits = 0;
+            // if ((bit = readBit(tmpbuf1, r))) noOfOneBits++; else noOfOneBits = 0;
+            if ((bit = tmpbuf1[r])) noOfOneBits++; else noOfOneBits = 0;
             
             // Copy bits if we are not inside a SYNC mark
-            if (noOfOneBits < 10) { writeBit(tmpbuf2, w++, bit); }
-            
+            // if (noOfOneBits < 10) { writeBit(tmpbuf2, w++, bit); }
+            if (noOfOneBits < 10) {
+                if (bit) {
+                    tmpbuf2[w / 8] |= (0x80 >> (w % 8));
+                } else {
+                    tmpbuf2[w / 8] &= ~(0x80 >> (w % 8));
+                }
+                w++;
+            }
+
             // Check if we have found the beginning of a SYNC mark (ten 1s in a row)
             if (noOfOneBits == 10) {
                 
                 // Write more 1s and make sure that data is byte aligned
-                for (unsigned i = 0; i < 8 || (w % 8) != 0; i++) writeBit(tmpbuf2, w++, 1);
+                // for (unsigned i = 0; i < 8 || (w % 8) != 0; i++) writeBit(tmpbuf2, w++, 1);
+                for (unsigned i = 0; i < 8 || (w % 8) != 0; i++) { //} tmpbuf2[w++] = 1;
+                    tmpbuf2[w / 8] |= (0x80 >> (w % 8));
+                    w++;
+                }
             }
         }
         tmpbuf2length = w;
@@ -489,16 +678,16 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         
         // Step 4: Decode track data
         if (dest)
-            numBytes += decodeTrack(tmpbuf2, dest + numBytes, error);
+            numBytes += oldDecodeTrack(tmpbuf2, dest + numBytes, error);
         else
-            numBytes += decodeTrack(tmpbuf2, NULL, error);
+            numBytes += oldDecodeTrack(tmpbuf2, NULL, error);
         
     }
     return numBytes;
 }
 
 unsigned
-Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
+Disk525::oldDecodeTrack(uint8_t *source, uint8_t *dest, int *error)
 {
     
     unsigned numBytes = 0;
@@ -514,7 +703,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
             continue;
         
         uint8_t data[4];
-        decodeGcr(source[i], source[i+1], source[i+2], source[i+3], source[i+4], data);
+        oldDecodeGcr(source[i], source[i+1], source[i+2], source[i+3], source[i+4], data);
         
         // We found: |  0xFF  |  0xFF  | !0xFF   |
         //                             | data[0] | data[1] | data[2] | data[3] |
@@ -557,7 +746,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
     for (unsigned i = 0; i < 21 && sectorStart[i] != -1; i++, numBytes += 256) {
         debug(3, "   Decoding sector %d\n", i);
         if (dest) {
-            decodeSector(source + sectorStart[i], dest);
+            oldDecodeSector(source + sectorStart[i], dest);
             dest += 256;
         }
     }
@@ -566,7 +755,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
 }
 
 void
-Disk525::decodeSector(uint8_t *source, uint8_t *dest)
+Disk525::oldDecodeSector(uint8_t *source, uint8_t *dest)
 {
     uint8_t databytes[4];
     uint8_t *ptr = dest;
@@ -574,7 +763,7 @@ Disk525::decodeSector(uint8_t *source, uint8_t *dest)
     if (dest == NULL) return;
     
     // Decode the first three data bytes
-    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
+    oldDecodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
     assert(databytes[0] == 0x07);
     
     *(ptr++) = databytes[1];
@@ -584,19 +773,21 @@ Disk525::decodeSector(uint8_t *source, uint8_t *dest)
     
     // Keep on going
     for (unsigned i = 3; i < 255; i += 4, source += 5, ptr += 4) {
-        decodeGcr(source[0], source[1], source[2], source[3], source[4], ptr);
+        oldDecodeGcr(source[0], source[1], source[2], source[3], source[4], ptr);
     }
     
     // Decode the last byte
-    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
+    oldDecodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
     *(ptr++) = databytes[0];
     
     debug(3, "%d bytes written.\n", ptr-dest);
     assert(ptr - dest == 256);
 }
 
+
+    
 void
-Disk525::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest)
+Disk525::oldDecodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest)
 {
     uint64_t shift_reg;
     
