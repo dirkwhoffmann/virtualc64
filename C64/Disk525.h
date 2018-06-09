@@ -39,7 +39,7 @@ public:
     Disk525();
     ~Disk525();
     
-    //! @brief    Dump debug information
+    //! @brief    Method from VirtualComponent
     void dumpState();
     
     
@@ -59,10 +59,7 @@ private:
     /*! @brief    Inverse GCR encoding table
      *  @details  Maps 5 GCR bits to 4 data bits.
      */
-    uint8_t invgcr[32];
-
-    // NEW:
-    const uint4_t newinvgcr[32] = {
+    const uint4_t invgcr[32] = {
         
         0,  0,  0,  0, /* 0x00 - 0x03 */
         0,  0,  0,  0, /* 0x04 - 0x07 */
@@ -74,9 +71,9 @@ private:
         0, 13, 14,  0  /* 0x1C - 0x1F */
     };
 
-    /*! @brief    Indicates which bit sequences are valid GCR codeword
+    /*! @brief    Indicates which bit sequences are valid GCR bit patterns
      */
-    const bool validGcr[32] = {
+    const bool validGcrPattern[32] = {
         
         0,  0,  0,  0, /* 0x00 - 0x03 */
         0,  0,  0,  0, /* 0x04 - 0x07 */
@@ -90,8 +87,8 @@ private:
 
     /*! @brief    Maps a byte to an expanded 64 bit representation
      *  @details  Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
-     *            This method is used to quickly inflate compressed track data to
-     *            a byte stream.
+     *            This method is used to quickly inflate a bit stream into a
+     *            byte stream.
      */
     uint64_t bitExpansion[256];
     
@@ -102,9 +99,7 @@ private:
 private:
     
     /*! @brief    Disk data
-     *  @details  Each tracks can store a maximum of 7928 bytes. The number varies depends on the track number
-     *            (inner tracks contain fewer bytes) and the actual write speed of a drive.
-     *            The first valid track and halftrack number is 1. Hence, the entries [0][x] are unused.
+     *  @details  The first valid track and halftrack number is 1.
      *            data.halftack[i] points to the first byte of halftrack i,
      *            data.track[i] points to the first byte of track i
      */
@@ -119,16 +114,16 @@ private:
 public:
     
     /*! @brief    Length of each halftrack in bits
-     *  @details  length.halftack[i] is length of halftrack i,
-     *            length.track[i][0] is length of track i,
-     *            length.track[i][1] is length of halftrack above track i
+     *  @details  length.halftack[i] is the length of halftrack i,
+     *            length.track[i][0] is the length of track i,
+     *            length.track[i][1] is the length of halftrack above track i
      */
     union {
         struct {
-            uint16_t _pad;
-            uint16_t halftrack[85];
+            size_t _pad;
+            size_t halftrack[85];
         };
-        uint16_t track[43][2];
+        size_t track[43][2];
     } length;
 
     //! @brief    Track layout as determined by analyzeTrack
@@ -217,7 +212,7 @@ public:
      *  @param   offset  Bit position (starting with 0)
      *  @result	 0 or 1
      */
-    uint8_t readBitFromHalftrack(Halftrack ht, unsigned offset) {
+    uint8_t readBitFromHalftrack(Halftrack ht, size_t offset) {
         assert(isHalftrackNumber(ht));
         // return readBit(data.halftrack[ht], offset % length.halftrack[ht]);
         offset = offset % length.halftrack[ht];
@@ -229,7 +224,7 @@ public:
      *  @param   offset  Bit position (starting with 0)
      *  @result     0 or 1
      */
-    uint8_t readBitFromTrack(Track t, unsigned offset) {
+    uint8_t readBitFromTrack(Track t, size_t offset) {
         assert(isTrackNumber(t));
         offset = offset % length.track[t][0];
         return (data.track[t][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
@@ -257,7 +252,7 @@ public:
      *  @param   offset  Position of first bit to read (first bit has offset 0)
      *  @result	 returns 0 or 1
      */
-    uint8_t readByteFromHalftrack(Halftrack ht, unsigned offset) {
+    uint8_t readByteFromHalftrack(Halftrack ht, size_t offset) {
         uint8_t result = 0;
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             if (readBitFromHalftrack(ht, offset + i)) result |= mask;
@@ -294,7 +289,7 @@ public:
      *  @param  offset Bit position (0 ... length.halftrack[ht] - 1)
      *  @param  bit    Bit value (true = 1, false = 0)
      */
-    void writeBitToHalftrack(Halftrack ht, unsigned offset, bool bit) {
+    void writeBitToHalftrack(Halftrack ht, size_t offset, bool bit) {
         assert(isHalftrackNumber(ht));
         offset = offset % length.halftrack[ht];
         if (bit) {
@@ -309,7 +304,7 @@ public:
      *  @param  offset Bit position (0 ... length.track[t] - 1)
      *  @param  bit    Bit value (true = 1, false = 0)
      */
-    void writeBitToTrack(Track t, unsigned offset, bool bit) {
+    void writeBitToTrack(Track t, size_t offset, bool bit) {
         assert(isTrackNumber(t));
         offset = offset % length.track[t][0];
         if (bit) {
@@ -336,7 +331,7 @@ public:
      *  @param  offset Position of first bit to write
      *  @param  byte   Byte to write
      */
-    void writeByteToHalftrack(Halftrack ht, unsigned offset, uint8_t byte) {
+    void writeByteToHalftrack(Halftrack ht, size_t offset, uint8_t byte) {
         assert(isHalftrackNumber(ht));
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             writeBitToHalftrack(ht, offset + i, byte & mask);
@@ -347,7 +342,7 @@ public:
      *  @param  offset Position of first bit to write
      *  @param  byte   Byte to write
      */
-    void writeByteToTrack(Track t, unsigned offset, uint8_t byte) {
+    void writeByteToTrack(Track t, size_t offset, uint8_t byte) {
         assert(isTrackNumber(t));
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             writeBitToTrack(t, offset + i, byte & mask);
@@ -360,7 +355,7 @@ public:
      */
     // void writeSyncBits(uint8_t *dest, unsigned offset, unsigned length) {
     //     for (unsigned i = 0; i < length; i++) writeBit(dest, offset + i, 1); }
-    void writeSyncBitsToTrack(Track t, unsigned offset, unsigned length) {
+    void writeSyncBitsToTrack(Track t, size_t offset, size_t length) {
         assert(isTrackNumber(t));
         for (unsigned i = 0; i < length; i++) writeBitToTrack(t, offset + i, 1);
     }
@@ -369,7 +364,7 @@ public:
      */
     //void writeGap(uint8_t *dest, unsigned offset, unsigned length) {
     //     for (unsigned i = 0; i < length; i++) writeByte(dest, offset + i * 8, 0x55); }
-    void writeGapToTrack(Track t, unsigned offset, unsigned length) {
+    void writeGapToTrack(Track t, size_t offset, size_t length) {
         assert(isTrackNumber(t));
         for (unsigned i = 0; i < length; i++) writeByteToTrack(t, offset + i * 8, 0x55);
     }
@@ -394,12 +389,12 @@ public:
     /*! @brief   Returns a textual represention of halftrack data
      *  @details The starting position of the first bit is specified as an absolute position.
      */
-    const char *dataAbs(Halftrack ht, int start, unsigned n);
+    const char *dataAbs(Halftrack ht, size_t start, size_t n);
 
     /*! @brief   Returns a textual represention of halftrack data
      *  @details The starting position of the first bit is specified as an absolute position.
      */
-    const char *dataAbs(Halftrack ht, int start) {
+    const char *dataAbs(Halftrack ht, size_t start) {
         assert(isHalftrackNumber(ht));
         return dataAbs(ht, start, length.halftrack[ht]);
     }
@@ -499,36 +494,7 @@ private:
 
     //! @brief   Decodes a single sector
     unsigned decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
-    
-    
-public:
-    
-    
-    /*! @brief   Converts a virtual floppy disk to a byte stream compatible with the D64 format
-     *  @details Returns the number of bytes written. If dest is NULL, a test run is performed 
-     *           (used to determine how many bytes will be written). If something went wrong, an 
-     *           error code is written to 'error' (0 = no error = success)
-     *  @deprecated
-     */
-    unsigned oldDecodeDisk(uint8_t *dest, int *error = NULL);
-    
-private:
-    
-    /*! @brief   Decodes all sectors of a single GCR encoded track
-     *  @deprecated
-     */
-    unsigned oldDecodeTrack(uint8_t *source, uint8_t *dest, int *error = NULL);
-    
-    /*! @brief   Decodes a single GCR encoded sector and writes out its 256 data bytes
-     *  @deprecated
-     */
-    void oldDecodeSector(uint8_t *source, uint8_t *dest);
-    
-    /*! @brief   Translates five GCR bytes into four data bytes
-     *  @deprecated
-     */
-    void oldDecodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest);
-    
+
 };
     
 #endif
