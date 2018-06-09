@@ -109,6 +109,16 @@ class GamePad
             rThumbYUsageID = kHIDUsage_GD_Rz;
             image = NSImage(named: NSImage.Name(rawValue: "joystick32_sony"))
         
+        } else if (vendorID == 0x483 && productID == 0x9005) {
+            
+            name = "RetroFun! Joystick Adapter"
+            image = NSImage(named: NSImage.Name(rawValue: "retro_adapter32"))
+
+        } else if (vendorID == 0x004 && productID == 0x0001) {
+            
+            name = "aJoy Retro Adapter"
+            image = NSImage(named: NSImage.Name(rawValue: "retro_adapter32"))
+            
         } else {
         
             // name = "Generic Gamepad"
