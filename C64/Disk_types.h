@@ -8,6 +8,8 @@
 #ifndef DISK_TYPES_H
 #define DISK_TYPES_H
 
+#include <ctype.h>
+
 /*! @brief    Maximum number of files that can be stored on a single disk
  *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
  *            Sector 0 is reserved for the BAM. Each of the remaining sectors can
@@ -15,12 +17,25 @@
  */
 static const unsigned MAX_FILES_ON_DISK = 144;
 
-/*! @brief    Maximum number of bits stored on a single track
+/*! @brief    Maximum number of bits stored on a single track.
  *  @details  Each track can store a maximum of 7928 bytes. The exact number depends on
  *            the track number (inner tracks contain fewer bytes) and the actual write
  *            speed of a drive.
  */
-static const unsigned maxBitsOnTrack = 7928 * 8;
+static const unsigned maxBytesOnTrack = 7928;
+
+/*! @brief    Maximum number of bits stored on a single track.
+ */
+static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
+
+/*! @brief    Size of a sector header block in bits.
+ */
+const unsigned headerBlockSize = 10 * 8;
+
+//! @brief    Size of a sector data block in bits.
+/*! @details  Each data block consists of 325 GCR bytes (coding 260 real bytes)
+ */
+const unsigned dataBlockSize = 325 * 8;
 
 /*
  *
@@ -58,16 +73,22 @@ inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 
 //! @brief    Layout information of a single sector
 typedef struct {
-    int headerBegin;
-    int headerEnd;
-    int dataBegin;
-    int dataEnd;
+    size_t headerBegin;
+    size_t headerEnd;
+    size_t dataBegin;
+    size_t dataEnd;
 } SectorInfo;
 
 //! @brief    Information about a single track as gathered by analyzeTrack()
+/*! @note     To provide a fast access, the the track data is stored as a byte stream.
+ *            Each byte represents a single bit and is either 0 or 1. The stored sequence
+ *            is repeated twice to ease the handling of wrap arounds.
+ */
 typedef struct {
-    uint16_t length; 
-    uint8_t data[2 * maxBitsOnTrack]; // Two copies in a row to allow fast wrap arounds
+    union {
+        uint8_t bit[2 * maxBitsOnTrack];
+        uint64_t byte[2 * maxBytesOnTrack];
+    };
     SectorInfo sectorInfo[22];
 } TrackInfo;
 

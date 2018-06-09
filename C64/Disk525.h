@@ -46,20 +46,54 @@ public:
 private:
     
     /*! @brief    GCR encoding table
-        @details  Maps 4 data bits to 5 GCR bits
+     * @details  Maps 4 data bits to 5 GCR bits
      */
-    const uint16_t gcr[16] = {
-        0x0a, 0x0b, 0x12, 0x13,
-        0x0e, 0x0f, 0x16, 0x17,
-        0x09, 0x19, 0x1a, 0x1b,
-        0x0d, 0x1d, 0x1e, 0x15
+    const uint5_t gcr[16] = {
+        
+        0x0a, 0x0b, 0x12, 0x13, /*  0 -  3 */
+        0x0e, 0x0f, 0x16, 0x17, /*  4 -  7 */
+        0x09, 0x19, 0x1a, 0x1b, /*  8 - 11 */
+        0x0d, 0x1d, 0x1e, 0x15  /* 12 - 15 */
     };
     
     /*! @brief    Inverse GCR encoding table
-        @details  Maps 5 data bits to 4 GCR bits. Initialized in constructor
+     *  @details  Maps 5 GCR bits to 4 data bits.
      */
     uint8_t invgcr[32];
 
+    // NEW:
+    const uint4_t newinvgcr[32] = {
+        
+        0,  0,  0,  0, /* 0x00 - 0x03 */
+        0,  0,  0,  0, /* 0x04 - 0x07 */
+        0,  8,  0,  1, /* 0x08 - 0x0B */
+        0, 12,  4,  5, /* 0x0C - 0x0F */
+        0,  0,  2,  3, /* 0x10 - 0x13 */
+        0, 15,  6,  7, /* 0x14 - 0x17 */
+        0,  9, 10, 11, /* 0x18 - 0x1B */
+        0, 13, 14,  0  /* 0x1C - 0x1F */
+    };
+
+    /*! @brief    Indicates which bit sequences are valid GCR codeword
+     */
+    const bool validGcr[32] = {
+        
+        0,  0,  0,  0, /* 0x00 - 0x03 */
+        0,  0,  0,  0, /* 0x04 - 0x07 */
+        0,  1,  1,  1, /* 0x08 - 0x0B */
+        0,  1,  1,  1, /* 0x0C - 0x0F */
+        0,  0,  1,  1, /* 0x10 - 0x13 */
+        0,  1,  1,  1, /* 0x14 - 0x17 */
+        0,  1,  1,  1, /* 0x18 - 0x1B */
+        0,  1,  1,  0  /* 0x1C - 0x1F */
+    };
+
+    /*! @brief    Maps a byte to an expanded 64 bit representation
+     *  @details  Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
+     *            This method is used to quickly inflate compressed track data to
+     *            a byte stream.
+     */
+    uint64_t bitExpansion[256];
     
     //
     // Disk data
@@ -76,10 +110,10 @@ private:
      */
     union {
         struct {
-            uint8_t _pad[7928];
-            uint8_t halftrack[85][7928];
+            uint8_t _pad[maxBytesOnTrack];
+            uint8_t halftrack[85][maxBytesOnTrack];
         };
-        uint8_t track[43][2 * 7928];
+        uint8_t track[43][2 * maxBytesOnTrack];
     } data;
     
 public:
@@ -103,7 +137,7 @@ public:
     /*! @brief    Textual representation of track data
      *! @details  Used for pretty printing, only
      */
-    char text[(7928 * 8) + 1];
+    char text[(maxBytesOnTrack * 8) + 1];
         
     /*! @brief       Total number of tracks on this disk
      *  @deprecated  Add method bool emptyTrack(Track nr) as a replacement
@@ -441,7 +475,7 @@ public:
 
 private:
     
-    void _analyzeTrack();
+    void _analyzeTrack(uint8_t *data, uint16_t length);
     
 public:
     
@@ -458,7 +492,13 @@ public:
      */
     unsigned decodeDisk(uint8_t *dest, int *error = NULL);
     
-    unsigned decodeTrack(Track t, uint8_t *dest, int *error);
+private:
+    
+    //! @brief   Decodes all sectors of a track
+    unsigned decodeTrack(Track t, uint8_t *dest, int *error = NULL);
+
+    //! @brief   Decodes a single sector
+    unsigned decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
     
     
 public:

@@ -381,15 +381,15 @@ VC1541::convertToD64()
     
     // Perform test run
     int error;
-    if (disk.oldDecodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
+    if (disk.decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
         archive->warn("Cannot create archive (error code: %d)\n", error);
         delete archive;
         return NULL;
     }
     
-    // Decode diskette
+    // Decode disk
     archive->setNumberOfTracks(42);
-    disk.oldDecodeDisk(archive->getData());
+    disk.decodeDisk(archive->getData());
     
     archive->debug(2, "Archive has %d files\n", archive->getNumberOfItems());
     archive->debug(2, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
