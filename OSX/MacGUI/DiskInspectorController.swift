@@ -22,23 +22,12 @@ class DiskInspectorController : UserDialogController
     // Currently highlighted bit in gcr view
     var headPosition = NSRange.init(location: 0, length: 0)
     
-    // Timer for automatically refreshing the gcr view
-    var timer: Timer!
-    
     // Outlets
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var headTrack: NSTextField!
     @IBOutlet weak var headTrackInfo: NSTextField!
     @IBOutlet weak var headOffset: NSTextField!
     @IBOutlet weak var headValue: NSTextField!
-    @IBOutlet weak var headLeft: NSTextField!
-    @IBOutlet weak var headRight: NSTextField!
-    @IBOutlet weak var headWheel: NSSlider!
-
-    @IBOutlet weak var serialData: NSTextField!
-    @IBOutlet weak var serialClock: NSTextField!
-    @IBOutlet weak var serialAtn: NSTextField!
-    
     @IBOutlet weak var gcrHeader: NSTextField!
     @IBOutlet weak var gcrData: NSScrollView!
 
@@ -48,18 +37,7 @@ class DiskInspectorController : UserDialogController
     override public func awakeFromNib()
     {
         track()
-        
-        headLeft.font = monoLarge
-        headRight.font = monoLarge
         headValue.font = monoLarge
-        
-        // Start refresh timer
-        if #available(OSX 10.12, *) {
-            timer = Timer.scheduledTimer(withTimeInterval: 0.06, repeats: true, block: { (t) in
-                self.refresh()
-            })
-        }
-        
         refresh()
     }
     
@@ -74,9 +52,6 @@ class DiskInspectorController : UserDialogController
         icon.image = drive.hasDisk() ? diskImage : noDiskImage
         protect.integerValue = drive.writeProtected() ? 1 : 0
         
-        // Update serial port
-        refreshSerial()
-    
         // Update track info if necessary
         if (halftrack != currentHalftrack) {
             refreshTrack()
@@ -89,13 +64,6 @@ class DiskInspectorController : UserDialogController
         
         currentHalftrack = Int(halftrack)
         currentOffset = Int(offset)
-    }
-    
-    func refreshSerial() {
-        let iec = c64.iec!
-        serialData.stringValue = iec.dataLine() ? "1" : "0"
-        serialClock.stringValue = iec.clockLine() ? "1" : "0"
-        serialAtn.stringValue = iec.atnLine() ? "1" : "0"
     }
     
     func refreshTrack() {
@@ -121,19 +89,13 @@ class DiskInspectorController : UserDialogController
     {
         let drive = c64.vc1541!
         let offset = Int(drive.bitOffset())
-        let length = Int(c64.vc1541.numberOfBits())
 
         headOffset.integerValue = offset
-        headWheel.integerValue = (length == 0) ? 0 : (1000 * offset / length)
         
         if drive.hasDisk() {
             headValue.integerValue = Int(drive.readBitFromHead())
-            headLeft.stringValue = String(cString: drive.dataRel(-10, length: 10))
-            headRight.stringValue = String(cString: drive.dataRel(1, length: 10))
         } else {
             headValue.stringValue = ""
-            headLeft.stringValue = ""
-            headRight.stringValue = ""
         }
     }
     
@@ -241,12 +203,5 @@ class DiskInspectorController : UserDialogController
         let value = (sender as! NSButton).integerValue
         c64.vc1541.setWriteProtection(value != 0)
         refresh()
-    }
-    
-    override func cancelAction(_ sender: Any!) {
-        
-        track("Canceling timer")
-        timer.invalidate()
-        super.cancelAction(self)
     }
 }
