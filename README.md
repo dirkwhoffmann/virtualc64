@@ -1,6 +1,8 @@
+![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png#1)
+
 ## About
 
-VirtualC64 emulates a Commodore 64 on the Mac. Originally, the emulator was intended as a demonstration of a virtual CPU environment that can be used in a one-year or two-year course on computer technology. Over the years, the emulator has grown steadily and its emulation accuracy has increased continuously. Although the emulator has not yet reached the impressive compatibility of VICE, VirtualC64 has evolved into a full-blown C64 emulator over the years.  
+VirtualC64 emulates a Commodore 64 on the Mac. Originally, the emulator was intended as a demonstration of a virtual CPU environment that can be used in a one-year or two-year course on computer technology. Over the years, the emulator has grown and its emulation accuracy has increased continuously. Although the emulator has not yet reached the impressive compatibility of VICE or Hoxs64, VirtualC64 has evolved into a full-blown C64 emulator over the years.  
  
 VirtualC64 has three goals. In addition to achieving a high level of compatibility, I want to create a user interface that is as easy to use as possible. Thirdly, I am trying to create a well-documented and understandable code base. If you can identify with these goals, I would be happy to actively participate in this project. Please note that I don't want to port the emulator to another operating system at the moment. 
 
@@ -14,27 +16,27 @@ www.dirkwhoffmann.de/virtualC64
 ### Top-level directory structure
 
 C64 : Contains the core emulator, written in C++. The code is meant to be architecture independent. 
-OSX : Contains everything related to the OS X version. The GUI code is located in sub directory MacGUI
+OSX : Contains everything related to the graphical user interface for macOS
 
 ### Overall architecture
 
 VirtualC64 consists of three major components:
 
-1. The graphical user interface (written in Swift and ObjC)
-2. The proxy (written in ObjC)
+1. The graphical user interface (written in Swift)
+2. The proxy (written in Objective-C)
 3. The core emulator (written in C++)
 
 The GUI talks to VirtualC64 by calling proxy methods. VirtualC64 talks back via
 a message queue that triggers a callback function whenever a message is written into the queue. 
 
-------------------------------------------------------------------
-| callback()                                        putMessage() |
-v                                                                |
-----------------------          ----------------------          ----------------------
-|                    |  func()  |                    |  func()  |                    |
-|        GUI         |--------->|      C64Proxy      |--------->|        C64         |
-|  (Swift and ObjC)  |          | Swift / C++ bridge |          |    (C++ world)     |
-----------------------          ----------------------          ----------------------
+    ------------------------------------------------------------------
+    | callback()                                        putMessage() |
+    v                                                                |
+    ----------------------          ----------------------          ----------------------
+    |                    |  func()  |      C64Proxy      |  func()  |                    |
+    |        GUI         |--------->| Swift / C++ bridge |--------->|        C64         |
+    |      (Swift)       |          |   (Objective-C)    |          |       (C++)        |
+    ----------------------          ----------------------          ----------------------
 
 
 ### Initialization procedure
@@ -66,15 +68,15 @@ To communicate with the GUI, the emulator writes messages into a message queue. 
 
 If you use the core emulator in a different environment and do not want register a callback, you can periodically query the queue with code similar to the following Objective-C example code: 
 
-while ((message = [c64 message]) != NULL) {
-    switch (message->id) {
+    while ((message = [c64 message]) != NULL) {
+        switch (message->id) {
             
-        case MSG_READY_TO_RUN:
-            [c64 run];
-            
-            ...
+            case MSG_READY_TO_RUN:
+                [c64 run];
+                
+                ...
+        }
     }
-}
 
 You can register the listener any time, even to a running emulator. At the time the listener is registered, all pending messages are automatically sent to the registered callback. 
 
