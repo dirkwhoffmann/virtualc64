@@ -430,9 +430,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (BOOL)modified { return wrapper->disk->isModified(); }
 - (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
 - (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
-- (void)analyzeTrack:(NSInteger)t { wrapper->disk->analyzeTrack((Track)t); }
-- (void)analyzeHalftrack:(NSInteger)ht { wrapper->disk->analyzeHalftrack((Halftrack)ht); }
-- (SectorInfo)sectorInfo:(NSInteger)s { return wrapper->disk->sectorLayout((unsigned)s); }
+- (void)analyzeTrack:(Track)t { wrapper->disk->analyzeTrack(t); }
+- (void)analyzeHalftrack:(Halftrack)ht { wrapper->disk->analyzeHalftrack(ht); }
+- (SectorInfo)sectorInfo:(Sector)s { return wrapper->disk->sectorLayout(s); }
 - (const char *)trackDataAsString { return wrapper->disk->trackDataAsString(); }
 - (const char *)diskNameAsString { return wrapper->disk->diskNameAsString(); }
 - (const char *)sectorHeaderAsString:(Sector)nr {
@@ -523,6 +523,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void) moveHeadUp { wrapper->vc1541->moveHeadUp(); }
 - (void) moveHeadDown { wrapper->vc1541->moveHeadDown(); }
+- (BOOL) isRotating { return wrapper->vc1541->isRotating(); }
 - (void) rotateDisk { wrapper->vc1541->rotateDisk(); }
 - (void) rotateBack { wrapper->vc1541->rotateBack(); }
 

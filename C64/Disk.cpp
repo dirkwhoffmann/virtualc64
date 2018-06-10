@@ -160,25 +160,6 @@ Disk::nonemptyHalftracks()
 }
 
 
-/*
-const char *
-Disk::dataAbs(Halftrack ht, size_t start, size_t n)
-{
-    assert(isHalftrackNumber(ht));
-    assert(n < sizeof(text));
-    
-    // We also accept negative values for 'start'
-    start = (start + length.halftrack[ht]) % length.halftrack[ht];
-    
-    size_t i;
-    for (i = 0; i < n; i++) {
-        text[i] = readBitFromHalftrack(ht, start + i) ? '1' : '0';
-    }
-    text[i] = 0;
-    return text;
-}
-*/
-
 // ---------------------------------------------------------------------------------------------
 //                               Data encoding and decoding
 // ---------------------------------------------------------------------------------------------
@@ -467,11 +448,11 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
             sync[i] = decodeGcr(trackInfo.bit + i);
             
             if (sync[i] == 0x08) {
-                debug(1, "Sector header block found at offset %d\n", i);
+                debug(2, "Sector header block found at offset %d\n", i);
             } else if (sync[i] == 0x07) {
-                debug(1, "Sector data block found at offset %d\n", i);
+                debug(2, "Sector data block found at offset %d\n", i);
             } else {
-                warn("Unknown sector ID (%d) found at index %d", sync[i], i);
+                warn("Unknown sector ID (%d) found at index %d\n", sync[i], i);
             }
         }
         noOfOnes = trackInfo.bit[i] ? (noOfOnes + 1) : 0;
@@ -485,7 +466,7 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
         }
     }
     if (startOffset == length) {
-        debug(2, "Track contains no sector header block.");
+        debug(2, "Track contains no sector header block.\n");
         return;
     }
     

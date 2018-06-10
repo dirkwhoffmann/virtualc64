@@ -14,10 +14,29 @@ class DiskInspectorController : UserDialogController
     let monoFont = NSFont.monospacedDigitSystemFont(ofSize: 11.0, weight: .medium)
     let monoLarge = NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: .medium)
 
-    // Remembers the currently displayed track and offset.
-    // These values are used to determine the items that need to be refreshed
-    var currentHalftrack = Int.max
-    var currentOffset = Int.max
+    // Remembers the currently displayed halftrack number
+    var halftrack = UInt32.max
+
+    // Remebers the currently displayed head position
+    var offset = Int.max
+    
+    // Remembers if disk insertion status
+    var hasDisk = false
+    
+    // Remembers the drive motor status
+    var spinning = false
+    
+    // Indicates if the disk metadata stuff needs an update
+    var diskInfoIsDirty = true
+    
+    // Indicates if the two data views need an update
+    var trackDataIsDirty = true
+
+    // Indicates if the highlighted area needs an update
+    var highlightedAreaDirty = true
+
+    // Indicates if the head position stuff needs an update
+    var headPositionIsDirty = true
     
     // Highlighted head position in GCR view
     var headPosition = NSRange.init(location: 0, length: 0)
@@ -27,7 +46,8 @@ class DiskInspectorController : UserDialogController
 
     // Maps table row numbers to sector numbers
     var sectorForRow: [Int:Int] = [:]
-    
+
+
     // Outlets
     @IBOutlet weak var trackField: NSTextField!
     @IBOutlet weak var halftrackField: NSTextField!
@@ -44,93 +64,116 @@ class DiskInspectorController : UserDialogController
     
     override public func awakeFromNib()
     {
-        track()
-        refreshDiskInfo()
         refresh()
         
         // Select first row
-        logicalView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
-        singleClickAction(logicalView)
+        // logicalView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
+        // singleClickAction(logicalView)
     }
 
-    /// Updates the disk icon and it's textual representation
-    func refreshDiskInfo() {
-        
-        let drive = c64.vc1541!
-        
-        if drive.hasDisk() {
-            
-            headField.isEnabled = true
-            valueField.isEnabled = true
-            icon.image = diskImage
-            let tracks = drive.disk.nonemptyHalftracks()
-            let name = String(cString: drive.disk.diskNameAsString())
-            iconText.stringValue = name
-            iconSubText.stringValue = "\(tracks) tracks"
-            
-        } else {
-            
-            headField.isEnabled = false
-            headField.stringValue = ""
-            valueField.isEnabled = false
-            valueField.stringValue = ""
-            physicalViewHeader.stringValue = ""
-            logicalViewHeader.stringValue = ""
-            icon.image = noDiskImage
-            iconText.stringValue = ""
-            iconSubText.stringValue = ""
-            valueField.stringValue = ""
-        }
-    }
-
-    /// Updates all GUI elements
+    /// Updates dirty GUI elements
     func refresh() {
         
         let drive = c64.vc1541!
         
-        let halftrack = Int(drive.halftrack())
-        let track = Double(halftrack + 1) / 2.0
-        halftrackField.integerValue = halftrack
-        trackField.doubleValue = track
-        
+        // Enable or disable user edition
         if drive.hasDisk() {
-
-            headField.integerValue = Int(drive.bitOffset())
-            valueField.integerValue = Int(drive.readBitFromHead())
-            
-            // Update track info if necessary
-            if halftrack != currentHalftrack {
-                
-                currentHalftrack = Int(halftrack)
-                c64.vc1541.disk.analyzeHalftrack(currentHalftrack)
-                sectorForRow = [:]
-                var row = 0
-                for i in 0 ... Int(maxNumberOfSectors - 1) {
-                    let info = c64.vc1541.disk.sectorInfo(i)
-                    if (info.headerBegin != info.headerEnd) {
-                        sectorForRow[row] = i
-                        row += 1
-                    }
-                }
-                refreshDataViews()
+            headField.isEnabled = !drive.isRotating()
+            valueField.isEnabled = !drive.isRotating()
+        } else {
+            headField.isEnabled = false
+            valueField.isEnabled = false
+        }
+        
+        // Determine the GUI elements that need an update
+        if drive.hasDisk() != hasDisk {
+            diskInfoIsDirty = true
+            trackDataIsDirty = true
+            headPositionIsDirty = true
+            highlightedAreaDirty = true
+            hasDisk = drive.hasDisk()
+        }
+        if drive.halftrack() != halftrack {
+            trackDataIsDirty = true
+            headPositionIsDirty = true
+            highlightedAreaDirty = true
+            halftrack = drive.halftrack()
+        }
+        if drive.bitOffset() != offset {
+            headPositionIsDirty = true
+            offset = Int(drive.bitOffset())
+        }
+        
+        // Update GUI elements
+        if diskInfoIsDirty {
+            if hasDisk {
+                icon.image = diskImage
+                iconText.stringValue = String(cString: drive.disk.diskNameAsString())
+                iconSubText.stringValue = "\(drive.disk.nonemptyHalftracks()) tracks"
+            } else {
+                icon.image = noDiskImage
+                iconText.stringValue = ""
+                iconSubText.stringValue = ""
             }
-            
+            diskInfoIsDirty = false
+        }
+        
+        if trackDataIsDirty {
+            halftrackField.integerValue = Int(halftrack)
+            trackField.doubleValue = Double(halftrack + 1) / 2.0
+            c64.vc1541.disk.analyzeHalftrack(halftrack)
+            sectorForRow = [:]
+            var row = 0
+            for i in 0 ... Int(maxNumberOfSectors - 1) {
+                let info = c64.vc1541.disk.sectorInfo(Sector(i))
+                if (info.headerBegin != info.headerEnd) {
+                    sectorForRow[row] = i
+                    row += 1
+                }
+            }
+            refreshPhysicalView()
+            refreshLogicalView()
+            trackDataIsDirty = false
+        }
+        
+        if highlightedAreaDirty {
+            singleClickAction(logicalView)
+            highlightedAreaDirty = false
+        }
+
+        if headPositionIsDirty {
+            if hasDisk {
+                headField.integerValue = Int(drive.bitOffset())
+                valueField.integerValue = Int(drive.readBitFromHead())
+            } else {
+                headField.stringValue = ""
+                valueField.stringValue = ""
+            }
+            headPositionIsDirty = false
         }
     }
     
-    func refreshDataViews() {
+    func refreshPhysicalView() {
 
         let drive = c64.vc1541!
-
-        // Physical view
-        physicalViewHeader.stringValue = "\(drive.sizeOfCurrentHalftrack()) Bits"
-        let gcr = String(cString: drive.disk.trackDataAsString())
+        var gcr : String
+        
+        if hasDisk {
+            physicalViewHeader.stringValue = "\(drive.sizeOfCurrentHalftrack()) Bits"
+            gcr = String(cString: drive.disk.trackDataAsString())
+        } else {
+            physicalViewHeader.stringValue = ""
+            gcr = ""
+        }
+        
         let textStorage = NSTextStorage.init(string: gcr)
         textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .medium)
         let documentView = physicalView.documentView as? NSTextView
         documentView?.layoutManager?.replaceTextStorage(textStorage)
+    }
 
-        // Logical view
+    func refreshLogicalView() {
+        
         logicalViewHeader.stringValue = "\(sectorForRow.count) sectors"
         logicalView.reloadData()
     }
@@ -247,7 +290,7 @@ class DiskInspectorController : UserDialogController
     {
         let value = (sender as! NSTextField).integerValue
         c64.vc1541.writeBit(toHead: UInt8(value))
-        refreshDataViews()
+        trackDataIsDirty = true
         refresh()
     }
  
@@ -267,8 +310,6 @@ class DiskInspectorController : UserDialogController
 
     @IBAction func markHeadAction(_ sender: Any!)
     {
-        track()
-        
         if (sender as! NSButton).integerValue == 1 {
             setHeadMarker()
         } else {
@@ -281,7 +322,7 @@ class DiskInspectorController : UserDialogController
         let sender = sender as! NSTableView
         let sector = sender.selectedRow / 2
         let headerRow = (sender.selectedRow % 2) == 0
-        let info = c64.vc1541.disk.sectorInfo(sector)
+        let info = c64.vc1541.disk.sectorInfo(Sector(sector))
         let begin = headerRow ? info.headerBegin : info.dataBegin
         let end = headerRow ? info.headerEnd : info.dataEnd
         setSectorMarker(begin: begin, end: end)

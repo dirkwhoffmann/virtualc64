@@ -335,9 +335,9 @@ struct ContainerWrapper;
 - (BOOL)modified;
 - (void)setModified:(BOOL)b;
 - (NSInteger)nonemptyHalftracks;
-- (void)analyzeTrack:(NSInteger)t;
-- (void)analyzeHalftrack:(NSInteger)ht;
-- (SectorInfo)sectorInfo:(NSInteger)s;
+- (void)analyzeTrack:(Track)t;
+- (void)analyzeHalftrack:(Halftrack)ht;
+- (SectorInfo)sectorInfo:(Sector)s;
 - (const char *)diskNameAsString;
 - (const char *)trackDataAsString;
 - (const char *)sectorHeaderAsString:(Sector)nr;
@@ -410,6 +410,7 @@ struct ContainerWrapper;
 
 - (void) moveHeadUp;
 - (void) moveHeadDown;
+- (BOOL) isRotating;
 - (void) rotateDisk;
 - (void) rotateBack;
 
