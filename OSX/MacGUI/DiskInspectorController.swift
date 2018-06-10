@@ -24,7 +24,9 @@ class DiskInspectorController : UserDialogController
 
     // Highlighted sector data in GCR view
     var sectorRange = NSRange.init(location: 0, length: 0)
-    
+
+    // Maps table row numbers to sector numbers
+    var sectorForRow: [Int:Int] = [:]
     
     // Outlets
     @IBOutlet weak var trackField: NSTextField!
@@ -45,6 +47,10 @@ class DiskInspectorController : UserDialogController
         track()
         refreshDiskInfo()
         refresh()
+        
+        // Select first row
+        logicalView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
+        singleClickAction(logicalView)
     }
 
     /// Updates the disk icon and it's textual representation
@@ -57,12 +63,10 @@ class DiskInspectorController : UserDialogController
             headField.isEnabled = true
             valueField.isEnabled = true
             icon.image = diskImage
-            DispatchQueue.main.async {
-                let tracks = drive.disk.nonemptyHalftracks()
-                let d64Disk = D64Proxy.make(withVC1541: drive)
-                self.iconText.stringValue = d64Disk?.name() ?? ""
-                self.iconSubText.stringValue = "\(tracks) tracks"
-            }
+            let tracks = drive.disk.nonemptyHalftracks()
+            let name = String(cString: drive.disk.diskNameAsString())
+            iconText.stringValue = name
+            iconSubText.stringValue = "\(tracks) tracks"
             
         } else {
             
@@ -99,6 +103,15 @@ class DiskInspectorController : UserDialogController
                 
                 currentHalftrack = Int(halftrack)
                 c64.vc1541.disk.analyzeHalftrack(currentHalftrack)
+                sectorForRow = [:]
+                var row = 0
+                for i in 0 ... Int(maxNumberOfSectors - 1) {
+                    let info = c64.vc1541.disk.sectorInfo(i)
+                    if (info.headerBegin != info.headerEnd) {
+                        sectorForRow[row] = i
+                        row += 1
+                    }
+                }
                 refreshDataViews()
             }
             
@@ -118,6 +131,7 @@ class DiskInspectorController : UserDialogController
         documentView?.layoutManager?.replaceTextStorage(textStorage)
 
         // Logical view
+        logicalViewHeader.stringValue = "\(sectorForRow.count) sectors"
         logicalView.reloadData()
     }
     
@@ -267,36 +281,22 @@ class DiskInspectorController : UserDialogController
         let sender = sender as! NSTableView
         let sector = sender.selectedRow / 2
         let headerRow = (sender.selectedRow % 2) == 0
-        
-        track("Highlighting sector \(sector)")
-        
         let info = c64.vc1541.disk.sectorInfo(sector)
         let begin = headerRow ? info.headerBegin : info.dataBegin
         let end = headerRow ? info.headerEnd : info.dataEnd
-        
         setSectorMarker(begin: begin, end: end)
-        
-        track("Begin = \(begin) End = \(end)")
-        
-        if headerRow {
-            track("Highlighting header from \(info.headerBegin) to \(info.headerEnd)\n")
-        } else {
-            track("Highlighting data from \(info.dataBegin) to \(info.dataEnd)\n")
-        }
-        
-        c64.vc1541.disk.dump()
     }
 }
 
 extension DiskInspectorController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return 2 * Int(maxNumberOfSectors)
+        return 2 * sectorForRow.count
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
-        let sectorNr = Sector(row / 2)
+        guard let sectorNr = sectorForRow[row / 2] else { return nil }
         let headerRow = (row % 2) == 0
 
         switch(tableColumn?.identifier.rawValue) {
@@ -309,11 +309,11 @@ extension DiskInspectorController : NSTableViewDataSource {
             
         case "data":
             if headerRow {
-                let cStr = c64.vc1541.disk.sectorHeader(asString: sectorNr)!
+                let cStr = c64.vc1541.disk.sectorHeader(asString: Sector(sectorNr))!
                 return String.init(cString: cStr)
 
             } else {
-                let cStr = c64.vc1541.disk.sectorData(asString: sectorNr)!
+                let cStr = c64.vc1541.disk.sectorData(asString: Sector(sectorNr))!
                 return String.init(cString: cStr)
             }
             

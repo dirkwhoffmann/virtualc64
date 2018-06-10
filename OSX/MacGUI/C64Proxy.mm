@@ -434,6 +434,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void)analyzeHalftrack:(NSInteger)ht { wrapper->disk->analyzeHalftrack((Halftrack)ht); }
 - (SectorInfo)sectorInfo:(NSInteger)s { return wrapper->disk->sectorLayout((unsigned)s); }
 - (const char *)trackDataAsString { return wrapper->disk->trackDataAsString(); }
+- (const char *)diskNameAsString { return wrapper->disk->diskNameAsString(); }
 - (const char *)sectorHeaderAsString:(Sector)nr {
     return wrapper->disk->sectorHeaderAsString(nr); }
 - (const char *)sectorDataAsString:(Sector)nr {

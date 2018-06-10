@@ -480,6 +480,9 @@ public:
         return trackInfo.sectorInfo[nr];
     }
     
+    //! @brief    Returns a textual representation of the disk name
+    const char *diskNameAsString();
+    
     //! @brief    Returns a textual representation of the data stored in trackInfo
     const char *trackDataAsString();
 

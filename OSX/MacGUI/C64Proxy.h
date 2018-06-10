@@ -338,6 +338,7 @@ struct ContainerWrapper;
 - (void)analyzeTrack:(NSInteger)t;
 - (void)analyzeHalftrack:(NSInteger)ht;
 - (SectorInfo)sectorInfo:(NSInteger)s;
+- (const char *)diskNameAsString;
 - (const char *)trackDataAsString;
 - (const char *)sectorHeaderAsString:(Sector)nr;
 - (const char *)sectorDataAsString:(Sector)nr;

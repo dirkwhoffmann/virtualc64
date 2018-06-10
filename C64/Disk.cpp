@@ -64,64 +64,9 @@ Disk::~Disk()
 void
 Disk::dumpState()
 {
-    unsigned noOfOneBits, alignedSyncs, unalignedSyncs;
-    uint8_t bit;
-    
     msg("Floppy disk\n");
     msg("-----------\n\n");
-
-    /*
-    for (unsigned track = 1; track <= 42; track++) {
-        assert(isTrackNumber(track));
-        noOfOneBits = alignedSyncs = unalignedSyncs = 0;
-        for (unsigned offset = 0; offset < length.track[track][0]; offset++) {
-            if ((bit = readBitFromTrack(track, offset))) {
-                noOfOneBits++;
-            } else {
-                if (noOfOneBits >= 10) { // SYNC FOUND
-                    if (offset % 8 == 0) {
-                        alignedSyncs++;
-                    } else {
-                        unalignedSyncs++;
-                    }
-                }
-                noOfOneBits = 0;
-            }
-        }
-        
-        // Note: If a sync marks wraps the array bound, it is not detected
-        msg("Track %2d: Length: %d bits %d SYNC sequences found (%d are byte aligned)\n",
-            track, length.track[track][0], alignedSyncs + unalignedSyncs, alignedSyncs);
-    }
-    msg("\n");
-    */
-    for (unsigned i = 0; i < maxNumberOfSectors; i++) {
-        debug("Sector %d: header: %d - %d, data: %d - %d",
-              i,
-              trackInfo.sectorInfo[i].headerBegin,
-              trackInfo.sectorInfo[i].headerEnd,
-              trackInfo.sectorInfo[i].dataBegin,
-              trackInfo.sectorInfo[i].dataEnd);
-    }
 }
-
-/*
-void
-Disk::dumpHalftrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
-{
-    assert(isHalftrackNumber(ht));
-    
-    uint16_t bytesOnTrack = length.halftrack[ht] / 8;
-    
-    if (max > bytesOnTrack) max = bytesOnTrack;
-    
-    msg("Dumping track %d (length = %d)\n", ht, bytesOnTrack);
-    for (unsigned i = min; i < max; i++) {
-        msg(i == highlight ? "(%02X) " : "%02X ", data.halftrack[ht][i]);
-    }
-    msg("\n");
-}
-*/
 
 void
 Disk::encodeGcr(uint8_t value, uint8_t *gcrBits)
@@ -571,6 +516,25 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
         }
     }
 }
+
+const char *
+Disk::diskNameAsString()
+{
+    analyzeTrack(18);
+    
+    unsigned i;
+    size_t offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
+    
+    for (i = 0; i < 255; i++, offset += 10) {
+        uint8_t value = decodeGcr(trackInfo.bit + offset);
+        if (value == 0xA0)
+            break;
+        text[i] = value;
+    }
+    text[i] = 0;
+    return text;
+}
+
 
 const char *
 Disk::trackDataAsString()
