@@ -403,8 +403,8 @@ struct ContainerWrapper;
 - (void) setTrack:(Track)t;
 - (void) setHalftrack:(Halftrack)ht;
 - (uint16_t) sizeOfCurrentHalftrack;
-- (uint16_t) bitOffset;
-- (void) setBitOffset:(uint16_t)value;
+- (uint16_t) offset;
+- (void) setOffset:(uint16_t)value;
 - (uint8_t) readBitFromHead;
 - (void) writeBitToHead:(uint8_t)value;
 

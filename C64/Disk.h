@@ -132,13 +132,8 @@ public:
     
     //! @brief    Textual representation of track data
     char text[maxBitsOnTrack + 1];
-        
-    /*! @brief       Total number of tracks on this disk
-     *  @deprecated  Add method bool emptyTrack(Track nr) as a replacement
-     */
-    // uint8_t numTracks;
-
-    /*! @brief    Returns true if track/offset indicates a valid disk position on disk
+    
+    /*! @brief    Returns true if halftrack/offset indicates a valid position on disk.
      */
     bool isValidDiskPositon(Halftrack ht, uint16_t bitoffset) {
         return isHalftrackNumber(ht) && bitoffset < length.halftrack[ht]; }
@@ -150,7 +145,8 @@ private:
     bool writeProtected;
 
     /*! @brief   Indicates whether data has been written
-     *  @details According to this flag, the GUI shows a data loss warning dialog before a disk gets ejected.
+     *  @details Depending to this flag, the GUI shows a data loss warning dialog
+     *           before a disk gets ejected.
      */
     bool modified;
 
@@ -183,7 +179,7 @@ public:
     //! @brief   Converts a 4 bit binary value to a 5 bit GCR codeword
     uint5_t bin2gcr(uint4_t value) { assert(is_uint4_t(value)); return gcr[value]; }
 
-    //! @brief   Converts a 5 bit GC codeword to a 4 bit binary value
+    //! @brief   Converts a 5 bit GCR codeword to a 4 bit binary value
     uint4_t gcr2bin(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value]; }
 
     //! @brief   Encodes a byte as a GCR bitstream
@@ -199,22 +195,14 @@ public:
     //
     
     /*! @brief   Reads a single bit from disk
-     *  @param   data    Pointer to the first data byte of a track
-     *  @param   offset  Number of bit to read (first bit has offset 0)
-     *  @result  0 or 1
-     */
-    //uint8_t readBit(uint8_t *data, unsigned offset) {
-    //     return (data[offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0; }
-
-    /*! @brief   Reads a single bit from disk
      *  @param   ht      Halftrack to read from
      *  @param   offset  Bit position (starting with 0)
      *  @result	 0 or 1
      */
     uint8_t readBitFromHalftrack(Halftrack ht, size_t offset) {
         assert(isHalftrackNumber(ht));
-        // return readBit(data.halftrack[ht], offset % length.halftrack[ht]);
-        offset = offset % length.halftrack[ht];
+        assert(offset < length.halftrack[ht]);
+        // offset = offset % length.halftrack[ht];
         return (data.halftrack[ht][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
     }
 
@@ -225,27 +213,11 @@ public:
      */
     uint8_t readBitFromTrack(Track t, size_t offset) {
         assert(isTrackNumber(t));
-        offset = offset % length.track[t][0];
+        assert(offset < length.track[t][0]);
+        // offset = offset % length.track[t][0];
         return (data.track[t][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
     }
 
-    
-    
-    /*! @brief   Reads a single byte from disk
-     *  @param   data    Pointer to the first data byte of a track
-     *  @param   offset  Position of first bit to read (first bit has offset 0)
-     *  @result	 0 .. 255
-     */
-    /*
-    uint8_t readByte(uint8_t *data, unsigned offset) {
-        uint8_t result = 0;
-        
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            if (readBit(data, offset + i)) result |= mask;
-        return result;
-    }
-     */
-    
     /*! @brief   Reads a single byte from disk
      *  @param   ht      Number of halftrack to read from
      *  @param   offset  Position of first bit to read (first bit has offset 0)
@@ -294,17 +266,6 @@ public:
         }
     }
     
-    /*! @brief  Writes a single byte to disk
-     *  @param  data   Pointer to the first data byte of a track
-     *  @param  offset Number of fist bit to write
-     *  @param  byte   Byte to write
-     */
-    /*
-    void writeByte(uint8_t *data, unsigned offset, uint8_t byte) {
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            writeBit(data, offset + i, byte & mask);
-    }
-    */
     
     /*! @brief  Writes a single byte to disk
      *  @param  ht     Halftrack number
@@ -312,7 +273,6 @@ public:
      *  @param  byte   Byte to write
      */
     void writeByteToHalftrack(Halftrack ht, size_t offset, uint8_t byte) {
-        assert(isHalftrackNumber(ht));
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             writeBitToHalftrack(ht, offset + i, byte & mask);
     }
@@ -323,7 +283,6 @@ public:
      *  @param  byte   Byte to write
      */
     void writeByteToTrack(Track t, size_t offset, uint8_t byte) {
-        assert(isTrackNumber(t));
         for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
             writeBitToTrack(t, offset + i, byte & mask);
     }
@@ -333,20 +292,16 @@ public:
      *  @param   offset Beginning of SYNC sequence relative to track start in bits
      *  @param   length Number of SYNC bits to write
      */
-    // void writeSyncBits(uint8_t *dest, unsigned offset, unsigned length) {
-    //     for (unsigned i = 0; i < length; i++) writeBit(dest, offset + i, 1); }
     void writeSyncBitsToTrack(Track t, size_t offset, size_t length) {
-        assert(isTrackNumber(t));
-        for (unsigned i = 0; i < length; i++) writeBitToTrack(t, offset + i, 1);
+        for (unsigned i = 0; i < length; i++)
+            writeBitToTrack(t, offset + i, 1);
     }
     
     /*! @brief   Write interblock gap
      */
-    //void writeGap(uint8_t *dest, unsigned offset, unsigned length) {
-    //     for (unsigned i = 0; i < length; i++) writeByte(dest, offset + i * 8, 0x55); }
     void writeGapToTrack(Track t, size_t offset, size_t length) {
-        assert(isTrackNumber(t));
-        for (unsigned i = 0; i < length; i++) writeByteToTrack(t, offset + i * 8, 0x55);
+        for (unsigned i = 0; i < length; i++)
+            writeByteToTrack(t, offset + i * 8, 0x55);
     }
     
     

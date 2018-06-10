@@ -132,7 +132,7 @@ C64::C64()
     floppy.cpu.mem = &c64->floppy.mem;
     floppy.mem.iec = &c64->iec;
     floppy.mem.floppy = &c64->floppy;
-    floppy.iec = &c64->iec;
+    // floppy.iec = &c64->iec;
     
     // Set initial hardware configuration
     mouse = &mouse1350;

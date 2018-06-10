@@ -516,8 +516,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setTrack:(Track)t { wrapper->vc1541->setTrack(t); }
 - (void) setHalftrack:(Halftrack)ht { wrapper->vc1541->setHalftrack(ht); }
 - (uint16_t) sizeOfCurrentHalftrack { return wrapper->vc1541->sizeOfCurrentHalftrack(); }
-- (uint16_t) bitOffset { return wrapper->vc1541->getBitOffset(); }
-- (void) setBitOffset:(uint16_t)value { wrapper->vc1541->setBitOffset(value); }
+- (uint16_t) offset { return wrapper->vc1541->getOffset(); }
+- (void) setOffset:(uint16_t)value { wrapper->vc1541->setOffset(value); }
 - (uint8_t) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
 - (void) writeBitToHead:(uint8_t)value { wrapper->vc1541->writeBitToHead(value); }
 

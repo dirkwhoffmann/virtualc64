@@ -821,9 +821,9 @@ VIA1::portBexternal()
     // |  in   |               |  ack  |  out  |  in   |  out  |  in   |
     
     uint8_t external =
-    (c64->floppy.iec->getAtnLine() ? 0x00 : 0x80) |
-    (c64->floppy.iec->getClockLine() ? 0x00 : 0x04) |
-    (c64->floppy.iec->getDataLine() ? 0x00 : 0x01);
+    (c64->iec.getAtnLine() ? 0x00 : 0x80) |
+    (c64->iec.getClockLine() ? 0x00 : 0x04) |
+    (c64->iec.getDataLine() ? 0x00 : 0x01);
     
     external |= 0x1A; // All "out" pins are read as 1
     external &= 0x9F; // Device address 8
@@ -835,7 +835,7 @@ void
 VIA1::updatePB()
 {
     VIA6522::updatePB();
-    c64->floppy.iec->updateDevicePins(orb, ddrb);
+    c64->iec.updateDevicePins(orb, ddrb);
 }
 
 //

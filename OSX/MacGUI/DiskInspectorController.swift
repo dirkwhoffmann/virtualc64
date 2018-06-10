@@ -7,8 +7,8 @@
 
 import Foundation
 
-class DiskInspectorController : UserDialogController
-{
+class DiskInspectorController : UserDialogController {
+    
     let diskImage = NSImage.init(named: NSImage.Name.init(rawValue: "diskette"))
     let noDiskImage = NSImage.init(named: NSImage.Name.init(rawValue: "diskette_light"))
     let monoFont = NSFont.monospacedDigitSystemFont(ofSize: 11.0, weight: .medium)
@@ -61,8 +61,8 @@ class DiskInspectorController : UserDialogController
     @IBOutlet weak var iconText: NSTextField!
     @IBOutlet weak var iconSubText: NSTextField!
     
-    override public func awakeFromNib()
-    {
+    override public func awakeFromNib() {
+        
         refresh()
         
         // Start refresh timer
@@ -99,9 +99,9 @@ class DiskInspectorController : UserDialogController
             headPositionIsDirty = true
             halftrack = drive.halftrack()
         }
-        if drive.bitOffset() != offset {
+        if drive.offset() != offset {
             headPositionIsDirty = true
-            offset = Int(drive.bitOffset())
+            offset = Int(drive.offset())
         }
         
         // Update GUI elements
@@ -139,7 +139,7 @@ class DiskInspectorController : UserDialogController
         
         if headPositionIsDirty {
             if hasDisk {
-                headField.integerValue = Int(drive.bitOffset())
+                headField.integerValue = Int(drive.offset())
                 valueField.integerValue = Int(drive.readBitFromHead())
             } else {
                 headField.stringValue = ""
@@ -150,7 +150,7 @@ class DiskInspectorController : UserDialogController
     }
     
     func refreshPhysicalView() {
-
+        
         let drive = c64.vc1541!
         var gcr : String
         
@@ -174,56 +174,48 @@ class DiskInspectorController : UserDialogController
         logicalView.reloadData()
     }
     
-    func removeHeadMarker()
-    {
-        if c64.vc1541.sizeOfCurrentHalftrack() > 0 {
-            let storage = (physicalView.documentView as! NSTextView).textStorage
-            // storage?.removeAttribute(.foregroundColor, range: headPosition)
-            storage?.removeAttribute(.backgroundColor, range: headPosition)
-            headPosition = NSRange.init(location: 0, length: 0)
-        }
+    func removeHeadMarker() {
+        
+        let storage = (physicalView.documentView as! NSTextView).textStorage
+        storage?.removeAttribute(.backgroundColor, range: headPosition)
+        headPosition = NSRange.init(location: 0, length: 0)
     }
     
-    func setHeadMarker()
-    {
-        if c64.vc1541.sizeOfCurrentHalftrack() > 0 {
-            removeHeadMarker()
-            let storage = (physicalView.documentView as! NSTextView).textStorage
-            headPosition = NSRange.init(location: Int(c64.vc1541.bitOffset()), length: 1)
-            storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
-        }
+    func setHeadMarker() {
+        
+        removeHeadMarker()
+        let storage = (physicalView.documentView as! NSTextView).textStorage
+        headPosition = NSRange.init(location: Int(c64.vc1541.offset()), length: 1)
+        storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
     }
     
-    func scrollToHead()
-    {
+    func scrollToHead() {
+        
         let range = NSRange.init(location: offset, length: 1)
         let view = physicalView.documentView as! NSTextView
         view.scrollRangeToVisible(range)
     }
     
-    func removeSectorMarker()
-    {
-        if c64.vc1541.sizeOfCurrentHalftrack() > 0 {
-            let storage = (physicalView.documentView as! NSTextView).textStorage
-            storage?.removeAttribute(.foregroundColor, range: sectorRange)
-            sectorRange = NSRange.init(location: 0, length: 0)
-        }
+    func removeSectorMarker() {
+        
+        let storage = (physicalView.documentView as! NSTextView).textStorage
+        storage?.removeAttribute(.foregroundColor, range: sectorRange)
+        sectorRange = NSRange.init(location: 0, length: 0)
     }
     
-    func setSectorMarker(begin: Int, end: Int)
-    {
-        if c64.vc1541.sizeOfCurrentHalftrack() > 0 {
-            removeSectorMarker()
-            if end > begin {
-                let color = NSColor.alternateSelectedControlColor
-                let storage = (physicalView.documentView as! NSTextView).textStorage
-                sectorRange = NSRange.init(location: begin, length: end - begin)
-                storage?.addAttribute(.foregroundColor, value: color, range: sectorRange)
-            }
+    func setSectorMarker(begin: Int, end: Int) {
+        
+        removeSectorMarker()
+        if end > begin {
+            let color = NSColor.alternateSelectedControlColor
+            let storage = (physicalView.documentView as! NSTextView).textStorage
+            sectorRange = NSRange.init(location: begin, length: end - begin)
+            storage?.addAttribute(.foregroundColor, value: color, range: sectorRange)
         }
     }
     
     func scrollToSectorMarker() {
+        
         let view = physicalView.documentView as! NSTextView
         view.scrollRangeToVisible(sectorRange)
     }
@@ -233,8 +225,8 @@ class DiskInspectorController : UserDialogController
     // Action methods
     //
 
-    @IBAction func trackAction(_ sender: Any!)
-    {
+    @IBAction func trackAction(_ sender: Any!) {
+        
         var t = (sender as! NSTextField).integerValue
         if t > maxNumberOfTracks { t = Int(maxNumberOfTracks) }
         if t < 1 { t = 1};
@@ -243,16 +235,16 @@ class DiskInspectorController : UserDialogController
         scrollToSectorMarker()
     }
 
-    @IBAction func trackStepperAction(_ sender: Any!)
-    {
+    @IBAction func trackStepperAction(_ sender: Any!) {
+        
         let value = (sender as! NSStepper).integerValue
         let t = Int((c64.vc1541.halftrack() + 1) / 2)
         trackField.integerValue = t + (value == 1 ? 1 : -1)
         trackAction(trackField)
     }
     
-    @IBAction func halftrackAction(_ sender: Any!)
-    {
+    @IBAction func halftrackAction(_ sender: Any!) {
+        
         var ht = (sender as! NSTextField).integerValue
         if ht > maxNumberOfHalftracks { ht = Int(maxNumberOfHalftracks) }
         if ht < 1 { ht = 1};
@@ -261,28 +253,28 @@ class DiskInspectorController : UserDialogController
         scrollToSectorMarker()
     }
     
-    @IBAction func halftrackStepperAction(_ sender: Any!)
-    {
+    @IBAction func halftrackStepperAction(_ sender: Any!) {
+        
         let value = (sender as! NSStepper).integerValue
         let t = Int(c64.vc1541.halftrack())
         halftrackField.integerValue = t + (value == 1 ? 1 : -1)
         halftrackAction(halftrackField)
     }
     
-    @IBAction func headAction(_ sender: Any!)
-    {
+    @IBAction func headAction(_ sender: Any!) {
+        
         var value = (sender as! NSTextField).integerValue
         let maxValue = Int(c64.vc1541.sizeOfCurrentHalftrack())
         if value >= maxValue { value = maxValue - 1 }
         if value < 0 { value = 0 }
         
-        c64.vc1541.setBitOffset(UInt16(value))
+        c64.vc1541.setOffset(UInt16(value))
         refresh()
         scrollToHead()
     }
     
-    @IBAction func headStepperAction(_ sender: Any!)
-    {
+    @IBAction func headStepperAction(_ sender: Any!) {
+        
         let value = (sender as! NSStepper).integerValue
         if value == 1 {
             c64.vc1541.rotateDisk()
@@ -293,8 +285,8 @@ class DiskInspectorController : UserDialogController
         scrollToHead()
     }
 
-    @IBAction func valueAction(_ sender: Any!)
-    {
+    @IBAction func valueAction(_ sender: Any!) {
+        
         let value = (sender as! NSTextField).integerValue
         c64.vc1541.writeBit(toHead: UInt8(value))
         trackDataIsDirty = true
@@ -302,15 +294,15 @@ class DiskInspectorController : UserDialogController
         scrollToHead()
     }
  
-    @IBAction func valueStepperAction(_ sender: Any!)
-    {
+    @IBAction func valueStepperAction(_ sender: Any!) {
+        
         let value = c64.vc1541.readBitFromHead()
         valueField.integerValue = (value == 0) ? 1 : 0
         valueAction(valueField)
     }
     
-    @IBAction func markHeadAction(_ sender: Any!)
-    {
+    @IBAction func markHeadAction(_ sender: Any!) {
+        
         if (sender as! NSButton).integerValue == 1 {
             setHeadMarker()
         } else {
@@ -342,6 +334,7 @@ class DiskInspectorController : UserDialogController
 extension DiskInspectorController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
+        
         return 2 * sectorForRow.count
     }
     

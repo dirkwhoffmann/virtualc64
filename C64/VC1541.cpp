@@ -42,7 +42,7 @@ VC1541::VC1541()
         // Internal state
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
-        { &rotating,                sizeof(rotating),               CLEAR_ON_RESET },
+        { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
         { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
         { &diskPartiallyInserted,   sizeof(diskPartiallyInserted),  CLEAR_ON_RESET },
         { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
@@ -96,7 +96,7 @@ VC1541::ping()
 {
     debug(3, "Pinging VC1541...\n");
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF);
-    c64->putMessage(rotating ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
+    c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
     c64->putMessage(diskInserted ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
 
     // TODO: Replace manual pinging of sub components by a call to super::ping()
@@ -136,7 +136,7 @@ VC1541::executeOneCycle() {
     uint8_t result = cpu.executeOneCycle();
     
     // Only proceed if drive is active
-    if (!rotating)
+    if (!spinning)
         return result;
     
     // Wait until next bit is ready
@@ -229,7 +229,7 @@ VC1541::byteReady()
 void
 VC1541::setZone(uint2_t value)
 {
-    assert(uint2_t(value));
+    assert(is_uint2_t(value));
     
     if (value != zone) {
         debug(3, "Switching from disk zone %d to disk zone %d\n", zone, value);
@@ -252,11 +252,11 @@ VC1541::setRedLED(bool b)
 void
 VC1541::setRotating(bool b)
 {
-    if (!rotating && b) {
-        rotating = true;
+    if (!spinning && b) {
+        spinning = true;
         c64->putMessage(MSG_VC1541_MOTOR_ON);
-    } else if (rotating && !b) {
-        rotating = false;
+    } else if (spinning && !b) {
+        spinning = false;
         c64->putMessage(MSG_VC1541_MOTOR_OFF);
     }
 }
@@ -269,9 +269,6 @@ VC1541::moveHeadUp()
         float position = (float)offset / (float)disk.length.halftrack[halftrack];
         halftrack++;
         offset = position * disk.length.halftrack[halftrack];
-         
-        // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
-        alignHead();
         
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
@@ -291,9 +288,6 @@ VC1541::moveHeadDown()
         float position = (float)offset / (float)disk.length.halftrack[halftrack];
         halftrack--;
         offset = position * disk.length.halftrack[halftrack];
-
-        // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
-        alignHead();
         
         debug(3, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
