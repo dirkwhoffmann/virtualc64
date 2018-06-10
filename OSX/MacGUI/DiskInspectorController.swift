@@ -32,9 +32,6 @@ class DiskInspectorController : UserDialogController
     // Indicates if the two data views need an update
     var trackDataIsDirty = true
 
-    // Indicates if the highlighted area needs an update
-    var highlightedAreaDirty = true
-
     // Indicates if the head position stuff needs an update
     var headPositionIsDirty = true
     
@@ -47,7 +44,9 @@ class DiskInspectorController : UserDialogController
     // Maps table row numbers to sector numbers
     var sectorForRow: [Int:Int] = [:]
 
-
+    // Refresh timer
+    var timer: Timer!
+    
     // Outlets
     @IBOutlet weak var trackField: NSTextField!
     @IBOutlet weak var halftrackField: NSTextField!
@@ -66,9 +65,12 @@ class DiskInspectorController : UserDialogController
     {
         refresh()
         
-        // Select first row
-        // logicalView.selectRowIndexes(.init(integer: 0), byExtendingSelection: false)
-        // singleClickAction(logicalView)
+        // Start refresh timer
+        if #available(OSX 10.12, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.10,
+                                         repeats: true,
+                                         block: { (t) in self.refresh() })
+        }
     }
 
     /// Updates dirty GUI elements
@@ -90,13 +92,11 @@ class DiskInspectorController : UserDialogController
             diskInfoIsDirty = true
             trackDataIsDirty = true
             headPositionIsDirty = true
-            highlightedAreaDirty = true
             hasDisk = drive.hasDisk()
         }
         if drive.halftrack() != halftrack {
             trackDataIsDirty = true
             headPositionIsDirty = true
-            highlightedAreaDirty = true
             halftrack = drive.halftrack()
         }
         if drive.bitOffset() != offset {
@@ -133,14 +133,11 @@ class DiskInspectorController : UserDialogController
             }
             refreshPhysicalView()
             refreshLogicalView()
+            // logicalView.selectRowIndexes([0], byExtendingSelection: false)
+            singleClickAction(logicalView)
             trackDataIsDirty = false
         }
         
-        if highlightedAreaDirty {
-            singleClickAction(logicalView)
-            highlightedAreaDirty = false
-        }
-
         if headPositionIsDirty {
             if hasDisk {
                 headField.integerValue = Int(drive.bitOffset())
@@ -194,11 +191,15 @@ class DiskInspectorController : UserDialogController
             removeHeadMarker()
             let storage = (physicalView.documentView as! NSTextView).textStorage
             headPosition = NSRange.init(location: Int(c64.vc1541.bitOffset()), length: 1)
-            // storage?.addAttribute(.foregroundColor, value: NSColor.white, range: headPosition)
             storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
-            let view = physicalView.documentView as! NSTextView
-            view.scrollRangeToVisible(headPosition)
         }
+    }
+    
+    func scrollToHead()
+    {
+        let range = NSRange.init(location: offset, length: 1)
+        let view = physicalView.documentView as! NSTextView
+        view.scrollRangeToVisible(range)
     }
     
     func removeSectorMarker()
@@ -219,10 +220,13 @@ class DiskInspectorController : UserDialogController
                 let storage = (physicalView.documentView as! NSTextView).textStorage
                 sectorRange = NSRange.init(location: begin, length: end - begin)
                 storage?.addAttribute(.foregroundColor, value: color, range: sectorRange)
-                let view = physicalView.documentView as! NSTextView
-                view.scrollRangeToVisible(sectorRange)
             }
         }
+    }
+    
+    func scrollToSectorMarker() {
+        let view = physicalView.documentView as! NSTextView
+        view.scrollRangeToVisible(sectorRange)
     }
     
     
@@ -237,6 +241,7 @@ class DiskInspectorController : UserDialogController
         if t < 1 { t = 1};
         c64.vc1541.setTrack(Track(t))
         refresh()
+        scrollToSectorMarker()
     }
 
     @IBAction func trackStepperAction(_ sender: Any!)
@@ -254,6 +259,7 @@ class DiskInspectorController : UserDialogController
         if ht < 1 { ht = 1};
         c64.vc1541.setHalftrack(Halftrack(ht))
         refresh()
+        scrollToSectorMarker()
     }
     
     @IBAction func halftrackStepperAction(_ sender: Any!)
@@ -273,6 +279,7 @@ class DiskInspectorController : UserDialogController
         
         c64.vc1541.setBitOffset(UInt16(value))
         refresh()
+        scrollToHead()
     }
     
     @IBAction func headStepperAction(_ sender: Any!)
@@ -284,6 +291,7 @@ class DiskInspectorController : UserDialogController
             c64.vc1541.rotateBack()
         }
         refresh()
+        scrollToHead()
     }
 
     @IBAction func valueAction(_ sender: Any!)
@@ -292,6 +300,7 @@ class DiskInspectorController : UserDialogController
         c64.vc1541.writeBit(toHead: UInt8(value))
         trackDataIsDirty = true
         refresh()
+        scrollToHead()
     }
  
     @IBAction func valueStepperAction(_ sender: Any!)
@@ -301,13 +310,6 @@ class DiskInspectorController : UserDialogController
         valueAction(valueField)
     }
     
-    func scrollToHead()
-    {
-        let range = NSRange.init(location: Int(c64.vc1541.bitOffset()), length: 1)
-        let view = physicalView.documentView as! NSTextView
-        view.scrollRangeToVisible(range)
-    }
-
     @IBAction func markHeadAction(_ sender: Any!)
     {
         if (sender as! NSButton).integerValue == 1 {
@@ -315,6 +317,7 @@ class DiskInspectorController : UserDialogController
         } else {
             removeHeadMarker()
         }
+        scrollToHead()
     }
     
     @IBAction func singleClickAction(_ sender: Any!) {
@@ -326,6 +329,14 @@ class DiskInspectorController : UserDialogController
         let begin = headerRow ? info.headerBegin : info.dataBegin
         let end = headerRow ? info.headerEnd : info.dataEnd
         setSectorMarker(begin: begin, end: end)
+        scrollToSectorMarker()
+    }
+    
+    override func cancelAction(_ sender: Any!) {
+        
+        track("Canceling timer")
+        timer.invalidate()
+        super.cancelAction(self)
     }
 }
 
@@ -364,20 +375,4 @@ extension DiskInspectorController : NSTableViewDataSource {
     }
 }
 
-/*
-extension DiskInspectorController : NSTableViewDelegate {
-    
-    func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
-        
-        let cell = cell as! NSTextFieldCell
-        let headerRow = (row % 5 == 0)
-        
-        if (headerRow) {
-            cell.backgroundColor = NSColor.gridColor
-        } else {
-            cell.backgroundColor = NSColor.white
-        }
-    }
-}
-*/
 
