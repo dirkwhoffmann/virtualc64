@@ -1,7 +1,7 @@
 /*!
- * @header      Disk525.h
+ * @header      Disk.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2015 - 2016 Dirk W. Hoffmann
+ * @copyright   2015 - 2018 Dirk W. Hoffmann
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _DISK525_INC
-#define _DISK525_INC
+#ifndef _DISK_INC
+#define _DISK_INC
 
 #include "VirtualComponent.h"
 #include "Disk_types.h"
@@ -32,12 +32,12 @@ class NIBArchive;
 
 
 //! @brief    A virtual 5,25" floppy disk
-class Disk525 : public VirtualComponent {
+class Disk : public VirtualComponent {
     
 public:
     
-    Disk525();
-    ~Disk525();
+    Disk();
+    ~Disk();
     
     //! @brief    Method from VirtualComponent
     void dumpState();
@@ -46,7 +46,7 @@ public:
 private:
     
     /*! @brief    GCR encoding table
-     * @details  Maps 4 data bits to 5 GCR bits
+     * @details   Maps 4 data bits to 5 GCR bits.
      */
     const uint5_t gcr[16] = {
         
@@ -92,6 +92,7 @@ private:
      */
     uint64_t bitExpansion[256];
     
+    
     //
     // Disk data
     //
@@ -129,15 +130,13 @@ public:
     //! @brief    Track layout as determined by analyzeTrack
     TrackInfo trackInfo;
     
-    /*! @brief    Textual representation of track data
-     *! @details  Used for pretty printing, only
-     */
-    char text[(maxBytesOnTrack * 8) + 1];
+    //! @brief    Textual representation of track data
+    char text[maxBitsOnTrack + 1];
         
     /*! @brief       Total number of tracks on this disk
      *  @deprecated  Add method bool emptyTrack(Track nr) as a replacement
      */
-    uint8_t numTracks;
+    // uint8_t numTracks;
 
     /*! @brief    Returns true if track/offset indicates a valid disk position on disk
      */
@@ -264,26 +263,7 @@ public:
     //! @functiongroup Writing data to disk
     //
     
-    /*! @brief  Sets a single bit on disk to 1
-     *  @param  data   Pointer to the first data byte of a track
-     *  @param  offset Number of bit to set to 1 (first bit has offset 0)
-     */
-    // void setBit(uint8_t *data, unsigned offset) { data[offset / 8] |= (0x80 >> (offset % 8)); }
-    
-    /*! @brief  Sets a single bit on disk to 0
-     *  @param  data   Pointer to the first data byte of a track
-     *  @param  offset Number of bit to clear (first bit has offset 0)
-     */
-    // void clearBit(uint8_t *data, unsigned offset) { data[offset / 8] &= ~(0x80 >> (offset % 8)); }
-    
-    /*! @brief  Writes a single bit to disk
-     *  @param  data   Pointer to the first data byte of a track
-     *  @param  offset Number of bit to write (first bit has offset 0)
-     *  @param  bit    0 for a '0' bit, every other value for a '1' bit
-     */
-    // void writeBit(uint8_t *data, unsigned offset, uint8_t bit) {
-    //     if (bit) setBit(data, offset); else clearBit(data, offset); }
-    
+ 
     /*! @brief  Writes a single bit to disk
      *  @param  ht     Halftrack to write to
      *  @param  offset Bit position (0 ... length.halftrack[ht] - 1)
@@ -371,42 +351,62 @@ public:
     
     
     //
-    //! @functiongroup Erasing disk data
+    //! @functiongroup Erasing data
     //
     
-    /*! @brief Zeros out whole disk
+    /*! @brief    Clears the whole disk
      */
     void clearDisk();
 
-    /*! @brief Zeros out a single halftrack
+    /*! @brief    Clears a single track
+     */
+    void clearTrack(Track t);
+
+
+    /*! @brief    Clears a single halftrack
      */
     void clearHalftrack(Halftrack ht);
 
+
+    /*! @brief    Returns true if a  if a track is cleared out.
+     *  @warning  Don't call this method frequently, because it scans the whole track.
+     */
+    bool trackIsEmpty(Track t);
+
+    /*! @brief    Checks if a halftrack is cleared out.
+     *  @warning  Don't call this method frequently, because it scans the whole track.
+     */
+    bool halftrackIsEmpty(Halftrack ht);
+
+    /*! @brief    Returns the number of halftracks containing data
+     *  @warning  Don't call this method frequently, because it scans the whole disk.
+     */
+    unsigned nonemptyHalftracks();
+
+    
     //
     //! @functiongroup Debugging disk data
     //
     
     /*! @brief   Returns a textual represention of halftrack data
      *  @details The starting position of the first bit is specified as an absolute position.
+     *  @todo    Clean this up, it's ugly 
      */
-    const char *dataAbs(Halftrack ht, size_t start, size_t n);
+    // const char *dataAbs(Halftrack ht, size_t start, size_t n);
 
     /*! @brief   Returns a textual represention of halftrack data
      *  @details The starting position of the first bit is specified as an absolute position.
      */
+    /*
     const char *dataAbs(Halftrack ht, size_t start) {
         assert(isHalftrackNumber(ht));
         return dataAbs(ht, start, length.halftrack[ht]);
     }
-
+ */
+    
     /*! @brief Prints some track data 
      */
-    void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
-
-    /*! @brief Prints some debug information about all SYNC marks on disk
-     */
-    void debugSyncMarks(uint8_t *data, unsigned lengthInBits);
-
+    // void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
     
     //
     //! @functiongroup Encoding disk data
@@ -467,18 +467,34 @@ public:
      */
     void analyzeHalftrack(Halftrack ht);
     void analyzeTrack(Track t);
-
+    
 private:
     
     void _analyzeTrack(uint8_t *data, uint16_t length);
     
 public:
     
-    //! @brief    Returns a sector layout from variable trackLayout
+    //! @brief    Returns a sector layout from variable trackInfo
     SectorInfo sectorLayout(unsigned nr) {
         assert(nr < 22);
         return trackInfo.sectorInfo[nr];
     }
+    
+    //! @brief    Returns a textual representation of the data stored in trackInfo
+    const char *trackDataAsString();
+
+    //! @brief    Returns a textual representation of the data stored in trackInfo
+    const char *sectorHeaderAsString(Sector nr);
+
+    //! @brief    Returns a textual representation of the data stored in trackInfo
+    const char *sectorDataAsString(Sector nr);
+
+private:
+    
+    //! @brief    Returns a textual representation
+    const char *sectorBytesAsString(uint8_t *buffer, size_t length);
+    
+public:
     
     /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
      *  @details Returns the number of bytes written. If dest is NULL, a test run is

@@ -31,7 +31,7 @@ struct SidBridgeWrapper { SIDBridge *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct Via6522Wrapper { VIA6522 *via; };
-struct Disk525Wrapper { Disk525 *disk; };
+struct DiskWrapper { Disk *disk; };
 struct Vc1541Wrapper { VC1541 *vc1541; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct ContainerWrapper { Container *container; };
@@ -413,12 +413,12 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 // 5,25" diskette
 //
 
-@implementation Disk525Proxy
+@implementation DiskProxy
 
-- (instancetype) initWithDisk525:(Disk525 *)disk
+- (instancetype) initWithDisk525:(Disk *)disk
 {
     if (self = [super init]) {
-        wrapper = new Disk525Wrapper();
+        wrapper = new DiskWrapper();
         wrapper->disk = disk;
     }
     return self;
@@ -429,7 +429,15 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
 - (BOOL)modified { return wrapper->disk->isModified(); }
 - (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
-- (NSInteger)numberOfTracks { return (NSInteger)wrapper->disk->numTracks; }
+- (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
+- (void)analyzeTrack:(NSInteger)t { wrapper->disk->analyzeTrack((Track)t); }
+- (void)analyzeHalftrack:(NSInteger)ht { wrapper->disk->analyzeHalftrack((Halftrack)ht); }
+- (SectorInfo)sectorInfo:(NSInteger)s { return wrapper->disk->sectorLayout((unsigned)s); }
+- (const char *)trackDataAsString { return wrapper->disk->trackDataAsString(); }
+- (const char *)sectorHeaderAsString:(Sector)nr {
+    return wrapper->disk->sectorHeaderAsString(nr); }
+- (const char *)sectorDataAsString:(Sector)nr {
+    return wrapper->disk->sectorDataAsString(nr); }
 
 @end
 
@@ -472,7 +480,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
         cpu = [[CPUProxy alloc] initWithCPU:&vc1541->cpu];
         via1 = [[VIAProxy alloc] initWithVIA:&vc1541->via1];
         via2 = [[VIAProxy alloc] initWithVIA:&vc1541->via2];
-        disk = [[Disk525Proxy alloc] initWithDisk525:&vc1541->disk];
+        disk = [[DiskProxy alloc] initWithDisk525:&vc1541->disk];
     }
     return self;
 }
@@ -504,8 +512,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (BOOL) sendSoundMessages { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(BOOL)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (Halftrack) halftrack { return wrapper->vc1541->getHalftrack(); }
-- (void) setHalftrack:(Halftrack) value { wrapper->vc1541->setHalftrack(value); }
-- (uint16_t) numberOfBits { return wrapper->vc1541->numberOfBits(); }
+- (void) setTrack:(Track)t { wrapper->vc1541->setTrack(t); }
+- (void) setHalftrack:(Halftrack)ht { wrapper->vc1541->setHalftrack(ht); }
+- (uint16_t) sizeOfCurrentHalftrack { return wrapper->vc1541->sizeOfCurrentHalftrack(); }
 - (uint16_t) bitOffset { return wrapper->vc1541->getBitOffset(); }
 - (void) setBitOffset:(uint16_t)value { wrapper->vc1541->setBitOffset(value); }
 - (uint8_t) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
@@ -515,15 +524,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) moveHeadDown { wrapper->vc1541->moveHeadDown(); }
 - (void) rotateDisk { wrapper->vc1541->rotateDisk(); }
 - (void) rotateBack { wrapper->vc1541->rotateBack(); }
-
-- (const char *)dataAbs:(NSInteger)start {
-    return wrapper->vc1541->dataAbs((int)start); }
-- (const char *)dataAbs:(NSInteger)start length:(NSInteger)n {
-    return wrapper->vc1541->dataAbs((int)start, (unsigned)n); }
-- (const char *)dataRel:(NSInteger)start {
-    return wrapper->vc1541->dataRel((int)start); }
-- (const char *)dataRel:(NSInteger)start length:(NSInteger)n {
-    return wrapper->vc1541->dataRel((int)start, (unsigned)n); }
 
 - (BOOL) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 
@@ -826,6 +826,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (ContainerWrapper *)wrapper { return wrapper; }
 - (ContainerType)type { return wrapper->container->type(); }
+- (NSString *)name { return [NSString stringWithUTF8String:wrapper->container->getName()]; }
 - (NSInteger) sizeOnDisk { return wrapper->container->sizeOnDisk(); }
 
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length

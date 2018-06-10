@@ -10,23 +10,46 @@
 
 #include <ctype.h>
 
-/*! @brief    Maximum number of files that can be stored on a single disk
- *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
- *            Sector 0 is reserved for the BAM. Each of the remaining sectors can
- *            hold up to 8 directory entries, summing um to a total of 144 items.
+/* Overview:
+ *
+ *                       -----------------------------------------------------------------
+ * Track layout:         |  1  | 1.5 |  2  | 2.5 | ... |  35  | 35.5 | ... |  42  | 42.5 |
+ *                       -----------------------------------------------------------------
+ * Halftrack addressing: |  1  |  2  |  3  |  4  |     |  69  |  70  |     |  83  |  84  |
+ * Track addressing:     |  1  |     |  2  |     |     |  35  |      |     |  42  |      |
+ *                       -----------------------------------------------------------------
  */
-static const unsigned MAX_FILES_ON_DISK = 144;
+
+
+//
+// Constants
+//
+
+/*! @brief    Maximum number of tracks on a single disk.
+ *  @note     Tracks are indexed from 1 to 42. There is no track 0!
+ */
+const unsigned maxNumberOfTracks = 42;
+
+/*! @brief    Maximum number of halftracks on a single disk.
+ *  @note     Tracks are indexed from 1 to 84. There is no halftrack 0!
+ */
+const unsigned maxNumberOfHalftracks = 84;
+
+/*! @brief    Maximum number of sectors in a single track
+ *  @details  Sectors are numbered from 0 to 20.
+ */
+const unsigned maxNumberOfSectors = 21;
 
 /*! @brief    Maximum number of bits stored on a single track.
  *  @details  Each track can store a maximum of 7928 bytes. The exact number depends on
  *            the track number (inner tracks contain fewer bytes) and the actual write
  *            speed of a drive.
  */
-static const unsigned maxBytesOnTrack = 7928;
+const unsigned maxBytesOnTrack = 7928;
 
 /*! @brief    Maximum number of bits stored on a single track.
  */
-static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
+const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
 
 /*! @brief    Size of a sector header block in bits.
  */
@@ -37,15 +60,26 @@ const unsigned headerBlockSize = 10 * 8;
  */
 const unsigned dataBlockSize = 325 * 8;
 
-/*
- *
- *                       -----------------------------------------------------------------
- * Track layout:         |  1  | 1.5 |  2  | 2.5 | ... |  35  | 35.5 | ... |  42  | 42.5 |
- *                       -----------------------------------------------------------------
- * Halftrack addressing: |  1  |  2  |  3  |  4  |     |  69  |  70  |     |  83  |  84  |
- * Track addressing:     |  1  |     |  2  |     |     |  35  |      |     |  42  |      |
- *                       -----------------------------------------------------------------
+/*! @brief    Maximum number of files that can be stored on a single disk
+ *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
+ *            Sector 0 is reserved for the BAM. Each of the remaining sectors can
+ *            hold up to 8 directory entries, summing um to a total of 144 items.
  */
+// static const unsigned maxNumberOfFiles = 144;
+
+
+//
+// Types
+//
+
+/*! @brief    Data type for addressing full tracks on disk
+ *  @see      Halftrack
+ */
+typedef unsigned Track;
+
+/*! @brief    Checks if a given number is a valid track number
+ */
+inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfTracks; }
 
 /*! @brief    Data type for addressing half and full tracks on disk
  *  @details  The VC1541 drive head can move between position 1 and 85.
@@ -58,18 +92,18 @@ const unsigned dataBlockSize = 325 * 8;
  */
 typedef unsigned Halftrack;
 
-/*! @brief    Data type for addressing full tracks on disk
- *  @see      Halftrack
- */
-typedef unsigned Track;
-
 /*! @brief    Checks if a given number is a valid halftrack number
  */
-inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
+inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfHalftracks; }
 
-/*! @brief    Checks if a given number is a valid track number
+/*! @brief    Data type for addressing sectors inside a track
  */
-inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
+typedef unsigned Sector;
+
+/*! @brief    Checks if a given number is a valid sector number
+ */
+inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
+
 
 //! @brief    Layout information of a single sector
 typedef struct {
@@ -85,6 +119,7 @@ typedef struct {
  *            is repeated twice to ease the handling of wrap arounds.
  */
 typedef struct {
+    size_t length; 
     union {
         uint8_t bit[2 * maxBitsOnTrack];
         uint64_t byte[2 * maxBytesOnTrack];

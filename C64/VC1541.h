@@ -23,7 +23,7 @@
 #define _VC1541_INC
 
 #include "VIA6522.h"
-#include "Disk525.h"
+#include "Disk.h"
 #include "D64Archive.h"
 
 // Forward declarations
@@ -54,7 +54,7 @@ public:
     VIA2 via2;
 
     //! @brief    Disk in this drive (single sided 5,25" floppy disk)
-    Disk525 disk;
+    Disk disk;
     
     //! @brief    Constructor
     VC1541();
@@ -209,39 +209,28 @@ private:
     //
 
 public:
-    
+
     /*! @brief   Returns a textual represention of a part of the current halftrack
      *  @details The starting position of the first bit is specified as an absolute position.
+     *  @deprecated
      */
+    /*
     const char *dataAbs(int start, unsigned n) {
         if (!hasDisk()) return "";
         return disk.dataAbs(halftrack, start, n);
     }
+    */
     
     /*! @brief   Returns a textual represention of the current halftrack
      *  @details The starting position of the first bit is specified as an absolute position.
+     *  @deprecated
      */
+    /*
     const char *dataAbs(int start) {
         if (!hasDisk()) return "";
         return disk.dataAbs(halftrack, start);
     }
-    
-    /*! @brief   Returns a textual represention of a part of the current halftrack
-     *  @details The starting position of the first bit is specified relative to the drive head.
-     */
-    const char *dataRel(int start, unsigned n) {
-        if (!hasDisk()) return "";
-        return disk.dataAbs(halftrack, bitoffset + start, n);
-    }
-    
-    /*! @brief   Returns a textual represention of the current halftrack
-     *  @details The starting position of the first bit is specified relative to the drive head.
-     */
-    const char *dataRel(int start) {
-        if (!hasDisk()) return "";
-        return disk.dataAbs(halftrack, bitoffset + start);
-    }
-
+    */
     
     // ----------------------------------------------------------------------------------------
     //                                   Drive properties
@@ -333,13 +322,14 @@ public:
     //! @brief    Returns the current halftrack position of the drive head
     Halftrack getHalftrack() { return halftrack; }
 
-    //! @brief    Sets the current halftrack position of the drive head
-    void setHalftrack(Halftrack ht) {
-        if (isHalftrackNumber(ht)) halftrack = ht;
-    }
+    //! @brief    Moves the drive head to the specified track
+    void setTrack(Track t) { assert(isTrackNumber(t)); halftrack = 2 * t - 1; }
 
+    //! @brief    Moves the drive head to the specified track
+    void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
+    
     //! @brief    Returns the number of bits in the current halftrack
-    uint16_t numberOfBits() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
+    uint16_t sizeOfCurrentHalftrack() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
 
     //! @brief    Bit position of the read/write head inside the current track
     uint16_t getBitOffset() { return bitoffset; }

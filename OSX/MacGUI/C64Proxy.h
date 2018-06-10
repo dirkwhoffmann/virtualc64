@@ -24,7 +24,6 @@
 @class MyController;
 @class C64Proxy;
 @class SnapshotProxy;
-@class D64ArchiveProxy; 
 @class ArchiveProxy;
 @class TAPProxy;
 @class CRTProxy;
@@ -43,7 +42,7 @@ struct SidBridgeWrapper;
 struct IecWrapper;
 struct ExpansionPortWrapper;
 struct Via6522Wrapper;
-struct Disk525Wrapper;
+struct DiskWrapper;
 struct Vc1541Wrapper;
 struct DatasetteWrapper;
 struct ContainerWrapper;
@@ -322,12 +321,12 @@ struct ContainerWrapper;
 
 
 //
-// 5,25" diskette
+// Diskette
 //
 
-@interface Disk525Proxy : NSObject {
+@interface DiskProxy : NSObject {
     
-    struct Disk525Wrapper *wrapper;
+    struct DiskWrapper *wrapper;
 }
 
 - (void) dump;
@@ -335,8 +334,13 @@ struct ContainerWrapper;
 - (void)setWriteProtection:(BOOL)b;
 - (BOOL)modified;
 - (void)setModified:(BOOL)b;
-- (NSInteger)numberOfTracks;
-
+- (NSInteger)nonemptyHalftracks;
+- (void)analyzeTrack:(NSInteger)t;
+- (void)analyzeHalftrack:(NSInteger)ht;
+- (SectorInfo)sectorInfo:(NSInteger)s;
+- (const char *)trackDataAsString;
+- (const char *)sectorHeaderAsString:(Sector)nr;
+- (const char *)sectorDataAsString:(Sector)nr;
 @end
 
 
@@ -368,14 +372,14 @@ struct ContainerWrapper;
 	CPUProxy *cpu;
 	VIAProxy *via1;
 	VIAProxy *via2;
-    Disk525Proxy *disk;
+    DiskProxy *disk;
 }
 
 @property (readonly) struct Vc1541Wrapper *wrapper;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
-@property (readonly) Disk525Proxy *disk;
+@property (readonly) DiskProxy *disk;
 
 - (VIAProxy *) via:(NSInteger)num;
 
@@ -395,8 +399,9 @@ struct ContainerWrapper;
 - (void) setSendSoundMessages:(BOOL)b;
 
 - (Halftrack) halftrack;
-- (void) setHalftrack:(Halftrack)value;
-- (uint16_t) numberOfBits;
+- (void) setTrack:(Track)t;
+- (void) setHalftrack:(Halftrack)ht;
+- (uint16_t) sizeOfCurrentHalftrack;
 - (uint16_t) bitOffset;
 - (void) setBitOffset:(uint16_t)value;
 - (uint8_t) readBitFromHead;
@@ -406,11 +411,6 @@ struct ContainerWrapper;
 - (void) moveHeadDown;
 - (void) rotateDisk;
 - (void) rotateBack;
-
-- (const char *)dataAbs:(NSInteger)start;
-- (const char *)dataAbs:(NSInteger)start length:(NSInteger)n;
-- (const char *)dataRel:(NSInteger)start;
-- (const char *)dataRel:(NSInteger)start length:(NSInteger)n;
 
 - (BOOL) exportToD64:(NSString *)path;
 
@@ -614,6 +614,7 @@ struct ContainerWrapper;
 - (struct ContainerWrapper *)wrapper;
 
 - (ContainerType)type; 
+- (NSString *)name;
 - (NSInteger)sizeOnDisk;
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
