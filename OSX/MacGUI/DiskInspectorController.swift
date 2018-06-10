@@ -133,7 +133,6 @@ class DiskInspectorController : UserDialogController
             }
             refreshPhysicalView()
             refreshLogicalView()
-            // logicalView.selectRowIndexes([0], byExtendingSelection: false)
             singleClickAction(logicalView)
             trackDataIsDirty = false
         }
