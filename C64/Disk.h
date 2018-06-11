@@ -31,7 +31,7 @@ class G64Archive;
 class NIBArchive;
 
 
-//! @brief    A virtual 5,25" floppy disk
+//! @brief    A virtual floppy disk
 class Disk : public VirtualComponent {
     
 public:
@@ -39,14 +39,17 @@ public:
     Disk();
     ~Disk();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief   Method from VirtualComponent
     void dumpState();
     
+    //
+    // Constants and lookup tables
+    //
     
 private:
     
-    /*! @brief    GCR encoding table
-     * @details   Maps 4 data bits to 5 GCR bits.
+    /*! @brief   GCR encoding table
+     * @details  Maps 4 data bits to 5 GCR bits.
      */
     const uint5_t gcr[16] = {
         
@@ -94,6 +97,21 @@ private:
     
     
     //
+    // Disk properties
+    //
+    
+    /*! @brief   Write protection mark
+     */
+    bool writeProtected;
+    
+    /*! @brief   Indicates whether data has been written
+     *  @details Depending on this flag, the GUI shows a warning dialog
+     *           before a disk gets ejected.
+     */
+    bool modified;
+    
+    
+    //
     // Disk data
     //
 
@@ -112,8 +130,6 @@ private:
         uint8_t track[43][2 * maxBytesOnTrack];
     } data;
     
-public:
-    
     /*! @brief    Length of each halftrack in bits
      *  @details  length.halftack[i] is the length of halftrack i,
      *            length.track[i][0] is the length of track i,
@@ -121,36 +137,25 @@ public:
      */
     union {
         struct {
-            size_t _pad;
-            size_t halftrack[85];
+            uint16_t _pad;
+            uint16_t halftrack[85];
         };
-        size_t track[43][2];
+        uint16_t track[43][2];
     } length;
 
+    
+    //
+    // Debug information
+    //
+    
     //! @brief    Track layout as determined by analyzeTrack
     TrackInfo trackInfo;
     
     //! @brief    Textual representation of track data
     char text[maxBitsOnTrack + 1];
     
-    /*! @brief    Returns true if halftrack/offset indicates a valid position on disk.
-     */
-    bool isValidDiskPositon(Halftrack ht, uint16_t bitoffset) {
-        return isHalftrackNumber(ht) && bitoffset < length.halftrack[ht]; }
- 
-private:
 
-    /*! @brief   Write protection mark
-     */
-    bool writeProtected;
 
-    /*! @brief   Indicates whether data has been written
-     *  @details Depending to this flag, the GUI shows a data loss warning dialog
-     *           before a disk gets ejected.
-     */
-    bool modified;
-
-    
 public:
     
     /*! @brief Returns write protection flag 
@@ -183,7 +188,7 @@ public:
     uint4_t gcr2bin(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value]; }
 
     //! @brief   Encodes a byte as a GCR bitstream
-    //! @details The created bitstream consists of 10 bytes (either 0 or 1)
+    //! @details The created bitstream consists of 10 bytes (either 0x00 or 0x01)
     void encodeGcr(uint8_t value, uint8_t *gcrBits);
     
     //! @brief   Decodes a previously encoded GCR bitstream
@@ -191,138 +196,98 @@ public:
 
     
     //
-    //! @functiongroup Reading data from disk
+    //! @functiongroup Accessing disk data
     //
     
-    /*! @brief   Reads a single bit from disk
-     *  @param   ht      Halftrack to read from
-     *  @param   offset  Bit position (starting with 0)
-     *  @result	 0 or 1
-     */
-    uint8_t readBitFromHalftrack(Halftrack ht, size_t offset) {
-        assert(isHalftrackNumber(ht));
-        assert(offset < length.halftrack[ht]);
-        // offset = offset % length.halftrack[ht];
-        return (data.halftrack[ht][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
-    }
-
-    /*! @brief   Reads a single bit from disk
-     *  @param   t      Track to read from
-     *  @param   offset  Bit position (starting with 0)
-     *  @result     0 or 1
-     */
-    uint8_t readBitFromTrack(Track t, size_t offset) {
-        assert(isTrackNumber(t));
-        assert(offset < length.track[t][0]);
-        // offset = offset % length.track[t][0];
-        return (data.track[t][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
-    }
-
-    /*! @brief   Reads a single byte from disk
-     *  @param   ht      Number of halftrack to read from
-     *  @param   offset  Position of first bit to read (first bit has offset 0)
-     *  @result	 returns 0 or 1
-     */
-    uint8_t readByteFromHalftrack(Halftrack ht, size_t offset) {
-        uint8_t result = 0;
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            if (readBitFromHalftrack(ht, offset + i)) result |= mask;
-        return result;
-    }
-
+    //! @brief    Returns true if the provided drive head position is valid.
+    bool isValidHeadPositon(Halftrack ht, HeadPosition pos) {
+        return isHalftrackNumber(ht) && pos < length.halftrack[ht]; }
     
-    //
-    //! @functiongroup Writing data to disk
-    //
+    //! @brief    Fixes a wrapped over head position.
+    HeadPosition fitToBounds(Halftrack ht, HeadPosition pos) {
+        uint16_t len = length.halftrack[ht];
+        return pos < 0 ? pos + len : pos >= len ? pos - len : pos; }
     
+    /*! @brief   Reads a single bit from disk.
+     *  @note    The head position is expected to be inside the halftrack bounds.
+     *  @result  0x00 or 0x01
+     */
+    uint8_t _readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+        assert(isValidHeadPositon(ht, pos));
+        return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
+    }
+    
+    /*! @brief   Reads a single bit from disk.
+     *  @result	 0x00 or 0x01
+     */
+    uint8_t readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+        return _readBitFromHalftrack(ht, fitToBounds(ht, pos));
+    }
  
-    /*! @brief  Writes a single bit to disk
-     *  @param  ht     Halftrack to write to
-     *  @param  offset Bit position (0 ... length.halftrack[ht] - 1)
-     *  @param  bit    Bit value (true = 1, false = 0)
+    /*! @brief  Writes a single bit to disk.
+     *  @note   The head position is expected to be inside the halftrack bounds.
      */
-    void writeBitToHalftrack(Halftrack ht, size_t offset, bool bit) {
-        assert(isHalftrackNumber(ht));
-        offset = offset % length.halftrack[ht];
+    void _writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
+        assert(isValidHeadPositon(ht, pos));
         if (bit) {
-            data.halftrack[ht][offset / 8] |= (0x80 >> (offset % 8));
+            data.halftrack[ht][pos / 8] |= (0x0080 >> (pos % 8));
         } else {
-            data.halftrack[ht][offset / 8] &= ~(0x80 >> (offset % 8));
-        }
-    }
-
-    /*! @brief  Writes a single bit to disk
-     *  @param  t      Track number
-     *  @param  offset Bit position (0 ... length.track[t] - 1)
-     *  @param  bit    Bit value (true = 1, false = 0)
-     */
-    void writeBitToTrack(Track t, size_t offset, bool bit) {
-        assert(isTrackNumber(t));
-        offset = offset % length.track[t][0];
-        if (bit) {
-            data.track[t][offset / 8] |= (0x80 >> (offset % 8));
-        } else {
-            data.track[t][offset / 8] &= ~(0x80 >> (offset % 8));
+            data.halftrack[ht][pos / 8] &= (0xFF7F >> (pos % 8));
         }
     }
     
+    void _writeBitToTrack(Track t, HeadPosition pos, bool bit) {
+        _writeBitToHalftrack(2 * t - 1, pos, bit);
+    }
     
-    /*! @brief  Writes a single byte to disk
-     *  @param  ht     Halftrack number
-     *  @param  offset Position of first bit to write
-     *  @param  byte   Byte to write
+    /*! @brief  Writes a single bit to disk.
      */
-    void writeByteToHalftrack(Halftrack ht, size_t offset, uint8_t byte) {
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            writeBitToHalftrack(ht, offset + i, byte & mask);
+    void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
+        _writeBitToHalftrack(ht, fitToBounds(ht, pos), bit);
+    }
+    
+    void writeBitToTrack(Track t, HeadPosition pos, bool bit) {
+        writeBitToHalftrack(2 * t - 1, pos, bit);
+    }
+    
+    /*! @brief  Writes a single byte to disk.
+     */
+    void writeByteToHalftrack(Halftrack ht, HeadPosition pos, uint8_t byte) {
+        for (uint8_t mask = 0x80; mask != 0; mask >>= 1)
+            writeBitToHalftrack(ht, pos++, byte & mask);
     }
 
-    /*! @brief  Writes a single byte to disk
-     *  @param  ht     Number of track to write to
-     *  @param  offset Position of first bit to write
-     *  @param  byte   Byte to write
-     */
-    void writeByteToTrack(Track t, size_t offset, uint8_t byte) {
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            writeBitToTrack(t, offset + i, byte & mask);
+    void writeByteToTrack(Track t, HeadPosition pos, uint8_t byte) {
+        writeByteToHalftrack(2 * t - 1, pos, byte);
     }
 
-    /*! @brief   Writes a certain number of SYNC bits
-     *  @param   dest Start address of track.
-     *  @param   offset Beginning of SYNC sequence relative to track start in bits
-     *  @param   length Number of SYNC bits to write
+    /*! @brief   Writes a certain number of SYNC bits to disk.
      */
-    void writeSyncBitsToTrack(Track t, size_t offset, size_t length) {
-        for (unsigned i = 0; i < length; i++)
-            writeBitToTrack(t, offset + i, 1);
+    void writeSyncBitsToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
+        for (size_t i = 0; i < length; i++)
+            writeBitToHalftrack(ht, pos++, 1);
+    }
+
+    void writeSyncBitsToTrack(Track t, HeadPosition pos, size_t length) {
+        writeSyncBitsToHalftrack(2 * t - 1, pos, length);
     }
     
-    /*! @brief   Write interblock gap
+    /*! @brief   Writes a certain number of interblock bytes to disk.
      */
-    void writeGapToTrack(Track t, size_t offset, size_t length) {
-        for (unsigned i = 0; i < length; i++)
-            writeByteToTrack(t, offset + i * 8, 0x55);
+    void writeGapToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
+        for (size_t i = 0; i < length; i++, pos += 8)
+            writeByteToHalftrack(ht, pos, 0x55);
     }
     
+    void writeGapToTrack(Track t, HeadPosition pos, size_t length) {
+        writeGapToHalftrack(2 * t - 1, pos, length);
+    }
     
-    //
-    //! @functiongroup Erasing data
-    //
-    
-    /*! @brief    Clears the whole disk
+    /*! @brief    Reverts to a factory-new disk.
+     *  @details  All disk data gets erased and the copy protection mark removed.
      */
     void clearDisk();
-
-    /*! @brief    Clears a single track
-     */
-    void clearTrack(Track t);
-
-
-    /*! @brief    Clears a single halftrack
-     */
-    void clearHalftrack(Halftrack ht);
-
-
+    
     /*! @brief    Returns true if a  if a track is cleared out.
      *  @warning  Don't call this method frequently, because it scans the whole track.
      */
@@ -340,47 +305,94 @@ public:
 
     
     //
-    //! @functiongroup Debugging disk data
-    //
-    
-    /*! @brief   Returns a textual represention of halftrack data
-     *  @details The starting position of the first bit is specified as an absolute position.
-     *  @todo    Clean this up, it's ugly 
-     */
-    // const char *dataAbs(Halftrack ht, size_t start, size_t n);
-
-    /*! @brief   Returns a textual represention of halftrack data
-     *  @details The starting position of the first bit is specified as an absolute position.
-     */
-    /*
-    const char *dataAbs(Halftrack ht, size_t start) {
-        assert(isHalftrackNumber(ht));
-        return dataAbs(ht, start, length.halftrack[ht]);
-    }
- */
-    
-    /*! @brief Prints some track data 
-     */
-    // void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
-    
-    //
-    //! @functiongroup Encoding disk data
+    //! @functiongroup Analyzing the disk
     //
 
 public:
     
+    //! @brief    Returns the length of a halftrack in bits
+    uint16_t lengthOfHalftrack(Halftrack ht) {
+        assert(isHalftrackNumber(ht)); return length.halftrack[ht]; }
+
+    //! @brief    Returns the length of a track in bits
+    uint16_t lengthOfTrack(Track t) {
+        assert(isTrackNumber(t)); return length.track[t][0]; }
+
+    //! @brief    Analyzes the sector layout
+    /*! @details  The start and end offsets of all sectors are determined and writes
+     *            into variable trackLayout.
+     */
+    void analyzeHalftrack(Halftrack ht);
+    void analyzeTrack(Track t);
+    
+private:
+    
+    void _analyzeTrack(uint8_t *data, uint16_t length);
+    
+public:
+    
+    //! @brief    Returns a sector layout from variable trackInfo
+    SectorInfo sectorLayout(Sector nr) {
+        assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
+    
+    //! @brief    Returns a textual representation of the disk name
+    const char *diskNameAsString();
+    
+    //! @brief    Returns a textual representation of the data stored in trackInfo
+    const char *trackDataAsString();
+
+    //! @brief    Returns a textual representation of the data stored in trackInfo
+    const char *sectorHeaderAsString(Sector nr);
+
+    //! @brief    Returns a textual representation of the data stored in trackInfo
+    const char *sectorDataAsString(Sector nr);
+
+private:
+    
+    //! @brief    Returns a textual representation
+    const char *sectorBytesAsString(uint8_t *buffer, size_t length);
+    
+    
+    //
+    //! @functiongroup Decoding disk data
+    //
+    
+public:
+    
+    /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
+     *  @details Returns the number of bytes written. If dest is NULL, a test run is
+     *           performed (used to determine how many bytes will be written). If
+     *           something went wrong, an error code is written into 'error' (0 = success)
+     */
+    unsigned decodeDisk(uint8_t *dest, int *error = NULL);
+    
+private:
+    
+    //! @brief   Decodes all sectors of a track
+    unsigned decodeTrack(Track t, uint8_t *dest, int *error = NULL);
+
+    //! @brief   Decodes a single sector
+    unsigned decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
+
+    
+    //
+    //! @functiongroup Encoding disk data
+    //
+    
+public:
+    
     /*! @brief   Converts a G64 archive into a virtual floppy disk */
     void encodeArchive(G64Archive *a);
-
+    
     /*! @brief   Converts a NIB archive into a virtual floppy disk */
     void encodeArchive(NIBArchive *a);
-
+    
     /*! @brief   Converts a D64 archive into a virtual floppy disk
      *  @details The method creates sync marks, GRC encoded header and data blocks,
      *           checksums and gaps.
      */
     void encodeArchive(D64Archive *a);
-
+    
 private:
     
     /*! @brief   Encode a single track
@@ -409,66 +421,6 @@ private:
      */
     void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset);
     
-    
-    //
-    //! @functiongroup Decoding disk data
-    //
-
-public:
-    
-    //! @brief    Analyzes a track
-    /*! @details  The start and end offsets of all sectors are determined and writes
-     *            into variable trackLayout.
-     */
-    void analyzeHalftrack(Halftrack ht);
-    void analyzeTrack(Track t);
-    
-private:
-    
-    void _analyzeTrack(uint8_t *data, uint16_t length);
-    
-public:
-    
-    //! @brief    Returns a sector layout from variable trackInfo
-    SectorInfo sectorLayout(unsigned nr) {
-        assert(nr < 22);
-        return trackInfo.sectorInfo[nr];
-    }
-    
-    //! @brief    Returns a textual representation of the disk name
-    const char *diskNameAsString();
-    
-    //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *trackDataAsString();
-
-    //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *sectorHeaderAsString(Sector nr);
-
-    //! @brief    Returns a textual representation of the data stored in trackInfo
-    const char *sectorDataAsString(Sector nr);
-
-private:
-    
-    //! @brief    Returns a textual representation
-    const char *sectorBytesAsString(uint8_t *buffer, size_t length);
-    
-public:
-    
-    /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
-     *  @details Returns the number of bytes written. If dest is NULL, a test run is
-     *           performed (used to determine how many bytes will be written). If
-     *           something went wrong, an error code is written into 'error' (0 = success)
-     */
-    unsigned decodeDisk(uint8_t *dest, int *error = NULL);
-    
-private:
-    
-    //! @brief   Decodes all sectors of a track
-    unsigned decodeTrack(Track t, uint8_t *dest, int *error = NULL);
-
-    //! @brief   Decodes a single sector
-    unsigned decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
-
 };
     
 #endif

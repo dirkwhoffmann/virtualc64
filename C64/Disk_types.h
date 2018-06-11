@@ -104,6 +104,10 @@ typedef unsigned Sector;
  */
 inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
 
+/*! @brief    Data type for specifying the head position inside a track
+ */
+typedef int32_t HeadPosition;
+
 
 //! @brief    Layout information of a single sector
 typedef struct {

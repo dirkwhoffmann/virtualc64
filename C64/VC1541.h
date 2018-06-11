@@ -240,8 +240,8 @@ private:
     //! @brief    Halftrack position of the read/write head
     Halftrack halftrack;
 
-    //! @brief    Bit position of the read/write head inside the current track
-    uint16_t offset;
+    //! @brief    Position of the drive head inside the current track
+    HeadPosition offset;
     
     /*! @brief    Current disk zone
      *  @details  Each track belongs to one of four zones. Whenever the drive moves
@@ -293,14 +293,15 @@ public:
     void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
     
     //! @brief    Returns the number of bits in the current halftrack
-    uint16_t sizeOfCurrentHalftrack() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
+    uint16_t sizeOfCurrentHalftrack() {
+        return hasDisk() ? disk.lengthOfHalftrack(halftrack) : 0; }
 
     //! @brief    Returns the position of the read/write head inside the current track
-    uint16_t getOffset() { return offset; }
+    HeadPosition getOffset() { return offset; }
 
-    //! @brief    Sets position of the read/write head inside the current track
-    void setOffset(uint16_t value) {
-        if (hasDisk() && disk.isValidDiskPositon(halftrack, value)) offset = value;
+    //! @brief    Sets the position of the drive head inside the current track
+    void setOffset(HeadPosition pos) {
+        if (hasDisk() && disk.isValidHeadPositon(halftrack, pos)) offset = pos;
     }
 
     //! @brief    Moves head one halftrack up
@@ -329,11 +330,10 @@ public:
     void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
     
     //! @brief  Advances drive head position by one bit
-    void rotateDisk() { if (++offset >= disk.length.halftrack[halftrack]) offset = 0; }
+    void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }
 
     //! @brief  Moves drive head position back by one bit
-    void rotateBack() {
-        offset = (offset > 0) ? (offset - 1) : (disk.length.halftrack[halftrack] - 1); }
+    void rotateBack() { if (--offset < 0) offset = disk.lengthOfHalftrack(halftrack) - 1; }
 
 private:
     

@@ -266,15 +266,15 @@ VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
 
-        float position = (float)offset / (float)disk.length.halftrack[halftrack];
+        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack++;
-        offset = position * disk.length.halftrack[halftrack];
+        offset = position * disk.lengthOfHalftrack(halftrack);
         
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
    
-    assert(disk.isValidDiskPositon(halftrack, offset));
+    assert(disk.isValidHeadPositon(halftrack, offset));
     
     c64->putMessage(MSG_VC1541_HEAD_UP);
     if (halftrack % 2 && sendSoundMessages)
@@ -285,15 +285,15 @@ void
 VC1541::moveHeadDown()
 {
     if (halftrack > 1) {
-        float position = (float)offset / (float)disk.length.halftrack[halftrack];
+        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack--;
-        offset = position * disk.length.halftrack[halftrack];
+        offset = position * disk.lengthOfHalftrack(halftrack);
         
         debug(3, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
     
-    assert(disk.isValidDiskPositon(halftrack, offset));
+    assert(disk.isValidHeadPositon(halftrack, offset));
     
     c64->putMessage(MSG_VC1541_HEAD_DOWN);
     if (halftrack % 2 && sendSoundMessages)

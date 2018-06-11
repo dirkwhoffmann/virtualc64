@@ -26,13 +26,12 @@
 
 Disk::Disk()
 {
-    setDescription("Disk525");
+    setDescription("Disk");
 
     // Register snapshot items
     SnapshotItem items[] = {        
-        { data.track[0],    sizeof(data.track),     KEEP_ON_RESET },
-        { length.track[0],  sizeof(length.track),   KEEP_ON_RESET | WORD_FORMAT },
-        // { &numTracks,       sizeof(numTracks),      KEEP_ON_RESET },
+        { &data,            sizeof(data),           KEEP_ON_RESET },
+        { &length,          sizeof(length),         KEEP_ON_RESET | WORD_FORMAT },
         { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },
         { &modified,        sizeof(modified),       KEEP_ON_RESET },
         { NULL,             0,                      0 }};
@@ -106,35 +105,12 @@ Disk::decodeGcr(uint8_t *gcr)
 void
 Disk::clearDisk()
 {
+    memset(&data, 0x55, sizeof(data));
     for (Halftrack ht = 1; ht <= 84; ht++) {
-        clearHalftrack(ht);
         length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
     }
     writeProtected = false;
     modified = false; 
-}
-
-void
-Disk::clearTrack(Track t)
-{
-    assert(isTrackNumber(t));
-    memset(data.track[t], 0x55, sizeof(data.track[t]));
-}
-
-void
-Disk::clearHalftrack(Halftrack ht)
-{
-    assert(isHalftrackNumber(ht));
-    memset(data.halftrack[ht], 0x55, sizeof(data.halftrack[ht]));
-}
-
-bool
-Disk::trackIsEmpty(Track t)
-{
-    assert(isTrackNumber(t));
-    for (unsigned i = 0; i < sizeof(data.track[t]); i++)
-        if (data.track[t][i] != 0x55) return false;
-    return true;
 }
 
 bool
@@ -144,6 +120,13 @@ Disk::halftrackIsEmpty(Halftrack ht)
     for (unsigned i = 0; i < sizeof(data.halftrack[ht]); i++)
         if (data.halftrack[ht][i] != 0x55) return false;
     return true;
+}
+
+bool
+Disk::trackIsEmpty(Track t)
+{
+    assert(isTrackNumber(t));
+    return halftrackIsEmpty(2 * t - 1);
 }
 
 unsigned
@@ -160,249 +143,15 @@ Disk::nonemptyHalftracks()
 }
 
 
-// ---------------------------------------------------------------------------------------------
-//                               Data encoding and decoding
-// ---------------------------------------------------------------------------------------------
+//
+// Analyzing the disk
+//
 
 void
-Disk::encodeArchive(G64Archive *a)
+Disk::analyzeHalftrack(Halftrack ht)
 {
-    debug(2, "Encoding G64 archive\n");
-    
-    assert(a != NULL);
-
-    clearDisk();
-    for (Halftrack ht = 1; ht <= 84; ht++) {
-        
-        unsigned item = ht - 1;
-        uint16_t size = a->getSizeOfItem(item);
-        
-        if (size == 0) {
-            continue;
-        }
-        
-        if (size > 7928) {
-            debug(2, "Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
-            continue;
-        }
-        debug(2, "  Encoding halftrack %d (%d bytes)\n", ht, size);
-        length.halftrack[ht] = 8 * size;
-        a->selectItem(item);
-        for (unsigned i = 0; i < size; i++) {
-            int b = a->getByte();
-            assert(b != -1);
-            data.halftrack[ht][i] = (uint8_t)b;
-        }
-        assert(a->getByte() == -1); /* check for EOF */
-    }
-}
-
-void
-Disk::encodeArchive(NIBArchive *a)
-{
-    debug(2, "Encoding NIB archive\n");
-    
-    assert(a != NULL);
-    
-    clearDisk();
-    for (Halftrack ht = 1; ht <= 84; ht++) {
-        
-        size_t size = a->getSizeOfItem(ht - 1);
-
-        if (size == 0) {
-            continue;
-        }
-        
-        if (size > 8 * 7928) {
-            debug(2, "Halftrack %d has %d bits. Must be less than 8 * 7928\n", ht, size);
-            size = 8 * 7928;
-        }
-        debug(2, "  Encoding halftrack %d (%d bits)\n", ht, size);
-        length.halftrack[ht] = size;
-        a->selectItem(ht - 1);
-        size_t bytesTotal = (size + 7) / 8;
-        for (unsigned i = 0; i < bytesTotal; i++) {
-            int b = a->getByte();
-            assert(b != -1);
-            data.halftrack[ht][i] = (uint8_t)b;
-        }
-    }
-}
-
-void
-Disk::encodeArchive(D64Archive *a)
-{
-    // Interleave patterns (no interleave)
-    /*
-    int zone1[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, -1 };
-    int track18[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, -1 };
-    int zone2[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, -1 };
-    int zone3[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, -1 };
-    int zone4[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, -1 };
-    */
-    
-    // Interleave patterns (minics real VC1541 sector layout)
-    int zone1[] = { 0, 10, 20, 9, 19, 8, 18, 7, 17, 6, 16, 5, 15, 4, 14, 3, 13, 2, 12, 1, 11, -1 };
-    int track18[] = { 0, 3, 6, 9, 12, 15, 18, 2, 5, 8, 11, 14, 17, 1, 4, 7, 10, 13, 16, -1 };
-    int zone2[] = { 0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, -1 };
-    int zone3[] = { 0, 10, 2, 12, 4, 14, 6, 16, 8, 1, 11, 3, 13, 5, 15, 7, 17, 9, -1 };
-    int zone4[] = { 0, 10, 3, 13, 6, 16, 9, 2, 12, 5, 15, 8, 1, 11, 4, 14, 7, -1 };
-
-    unsigned track, encodedBits;
-    
-    assert(a != NULL);
-    
-    clearDisk();
-    unsigned numTracks = a->numberOfTracks();
-    
-    debug(2, "Encoding D64 archive with %d tracks\n", numTracks);
-    
-    // Zone 1: Tracks 1 - 17 (21 sectors, tailgap 9/9 (even/odd sectors))
-    for (track = 1; track <= 17; track++) {
-        (void)encodeTrack(a, track, zone1, 9, 9);
-    }
-    
-    // Zone 2: Tracks 18 - 24 (19 sectors, tailgap 9/19 (even/odd sectors))
-    (void)encodeTrack(a, track, track18, 9, 19); // Directory track
-    for (track = 19; track <= 24; track++) {
-        (void)encodeTrack(a, track, zone2, 9, 19);
-    }
-    
-    // Zone 3: Tracks 25 - 30 (18 sectors, tailgap 9/13 (even/odd sectors))
-    for (track = 25; track <= 30; track++) {
-        (void)encodeTrack(a, track, zone3, 9, 13);
-    }
-    
-    // Zone 4: Tracks 31 - 35..42 (17 sectors, tailgap 9/10 (even/odd sectors))
-    for (track = 31; track <= a->numberOfTracks(); track++) {
-        encodedBits = encodeTrack(a, track, zone4, 9, 10);
-    }
-    
-    // Clear remaining tracks (if any)
-    for (track = numTracks + 1; track <= 42; track++) {
-        length.track[track][0] = encodedBits;  // Track t
-        length.track[track][1] = encodedBits;  // Half track above
-    }
-    
-    for (Halftrack ht = 1; ht <= 84; ht++) {
-        assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
-    }    
-}
-
-unsigned
-Disk::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEven, uint8_t tailGapOdd)
-{
-    assert(isTrackNumber(t));
-
-    unsigned encodedBits, totalEncodedBits = 0;
-    
-    debug(3, "Encoding track %d\n", t);
-    
-    // Scan the interleave pattern and encode each sector
-    for (unsigned i = 0; sectorList[i] != -1; i++) {
-        
-        encodedBits = encodeSector(a, t, sectorList[i], totalEncodedBits, (i % 2) ? tailGapOdd : tailGapEven);
-        // assert(encodedBits % 8 == 0);
-        totalEncodedBits += encodedBits;
-    }
-
-    length.track[t][0] = totalEncodedBits;  // Track t
-    length.track[t][1] = totalEncodedBits;  // Half track above
-    
-    return totalEncodedBits;
-}
-
-unsigned
-Disk::encodeSector(D64Archive *a, Track t, uint8_t sector, unsigned bitoffset, int gap)
-{
-    uint8_t *source;
-    // uint8_t *dest = data.track[t];
-    unsigned bitptr = bitoffset;
-    
-    assert(a != NULL);
-    assert(isTrackNumber(t));
-    
-    // Get source address from archive
-    if ((source = a->findSector(t, sector)) == 0) {
-        warn("Can't find halftrack data in archive\n");
-        return 0;
-    }
-    
-    debug(4, "  Encoding track/sector %d/%d\n", t, sector);
-    
-    // Get disk id and compute checksum
-    uint8_t id1 = a->diskId1();
-    uint8_t id2 = a->diskId2();
-    uint8_t checksum = id1 ^ id2 ^ t ^ sector; // Header checksum byte
-    
-    // 0xFF 0xFF 0xFF 0xFF 0xFF
-    // writeSyncBits(dest, bitptr, 5 * 8);
-    writeSyncBitsToTrack(t, bitptr, 5 * 8);
-    bitptr += 5 * 8;
-    
-    // Header ID, Checksum, Sector number, Track number
-    encodeGcr(0x08, checksum, sector, t, t, bitptr);
-    bitptr += 5 * 8;
-    
-    // Disk ID 2, Disk ID 1, 0x0F, 0x0F
-    encodeGcr(id2, id1, 0x0F, 0x0F, t, bitptr);
-    bitptr += 5 * 8;
-    
-    // 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55
-    writeGapToTrack(t, bitptr, 9);
-    bitptr += 9 * 8;
-    
-    // 0xFF 0xFF 0xFF 0xFF 0xFF
-    writeSyncBitsToTrack(t, bitptr, 5 * 8);
-    bitptr += 5 * 8;
-    
-    // Data ID, First three data bytes
-    encodeGcr(0x07, source[0], source[1], source[2], t, bitptr);
-    bitptr += 5 * 8;
-    
-    // Rest of the data bytes
-    for (unsigned i = 3; i < 255; i += 4, bitptr += 5 * 8)
-        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], t, bitptr);
-  
-    // Last data byte, Checksum, 0x00, 0x00
-    checksum = source[0];
-    for (unsigned i = 1; i < 256; i++) {
-        checksum ^= source[i];
-    }
-    encodeGcr(source[255], checksum, 0, 0, t, bitptr);
-    bitptr += 5 * 8;
-    
-    // 0x55 0x55 ... 0x55 (Tail gap)
-    writeGapToTrack(t, bitptr, gap);
-    bitptr += gap * 8;
-    
-    // Return number of encoded bytes
-    return bitptr - bitoffset;
-}
-
-void
-Disk::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset)
-{
-    assert(isTrackNumber(t));
-    
-    uint64_t shift_reg = 0;
-    
-    // Shift in
-    shift_reg = gcr[b1 >> 4];
-    shift_reg = (shift_reg << 5) | gcr[b1 & 0x0F];
-    shift_reg = (shift_reg << 5) | gcr[b2 >> 4];
-    shift_reg = (shift_reg << 5) | gcr[b2 & 0x0F];
-    shift_reg = (shift_reg << 5) | gcr[b3 >> 4];
-    shift_reg = (shift_reg << 5) | gcr[b3 & 0x0F];
-    shift_reg = (shift_reg << 5) | gcr[b4 >> 4];
-    shift_reg = (shift_reg << 5) | gcr[b4 & 0x0F];
-    
-    // Shift out
-    writeByteToTrack(t, offset + 4 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByteToTrack(t, offset + 3 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByteToTrack(t, offset + 2 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByteToTrack(t, offset + 1 * 8, shift_reg & 0xFF); shift_reg >>= 8;
-    writeByteToTrack(t, offset, shift_reg & 0xFF);
+    assert(isHalftrackNumber(ht));
+    _analyzeTrack(data.halftrack[ht], length.halftrack[ht]);
 }
 
 void
@@ -410,13 +159,6 @@ Disk::analyzeTrack(Track t)
 {
     assert(isTrackNumber(t));
     _analyzeTrack(data.track[t], length.track[t][0]);
-}
-
-void
-Disk::analyzeHalftrack(Halftrack ht)
-{
-    assert(isHalftrackNumber(ht));
-    _analyzeTrack(data.halftrack[ht], length.halftrack[ht]);
 }
 
 void
@@ -565,6 +307,10 @@ Disk::sectorBytesAsString(uint8_t *buffer, size_t length)
     return text;
 }
 
+//
+// Decoding disk data
+//
+
 unsigned
 Disk::decodeDisk(uint8_t *dest, int *error)
 {
@@ -589,7 +335,7 @@ Disk::decodeTrack(Track t, uint8_t *dest, int *error)
 {
     unsigned numBytes = 0;
     
-    // Find sectors
+    // Gather sector information
     analyzeTrack(t);
     
     // For each sector ...
@@ -622,6 +368,247 @@ Disk::decodeSector(size_t offset, uint8_t *dest, int *error)
     return 256;
 }
 
+//
+// Encoding disk data
+//
+
+void
+Disk::encodeArchive(G64Archive *a)
+{
+    debug(2, "Encoding G64 archive\n");
+    
+    assert(a != NULL);
+    
+    clearDisk();
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        
+        unsigned item = ht - 1;
+        uint16_t size = a->getSizeOfItem(item);
+        
+        if (size == 0) {
+            continue;
+        }
+        
+        if (size > 7928) {
+            debug(2, "Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
+            continue;
+        }
+        debug(2, "  Encoding halftrack %d (%d bytes)\n", ht, size);
+        length.halftrack[ht] = 8 * size;
+        a->selectItem(item);
+        for (unsigned i = 0; i < size; i++) {
+            int b = a->getByte();
+            assert(b != -1);
+            data.halftrack[ht][i] = (uint8_t)b;
+        }
+        assert(a->getByte() == -1 /* EOF */);
+    }
+}
+
+void
+Disk::encodeArchive(NIBArchive *a)
+{
+    debug(2, "Encoding NIB archive\n");
+    
+    assert(a != NULL);
+    
+    clearDisk();
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        
+        size_t size = a->getSizeOfItem(ht - 1);
+        
+        if (size == 0) {
+            continue;
+        }
+        
+        if (size > 8 * 7928) {
+            debug(2, "Halftrack %d has %d bits. Must be less than 8 * 7928\n", ht, size);
+            size = 8 * 7928;
+        }
+        debug(2, "  Encoding halftrack %d (%d bits)\n", ht, size);
+        length.halftrack[ht] = size;
+        a->selectItem(ht - 1);
+        size_t bytesTotal = (size + 7) / 8;
+        for (unsigned i = 0; i < bytesTotal; i++) {
+            int b = a->getByte();
+            assert(b != -1);
+            data.halftrack[ht][i] = (uint8_t)b;
+        }
+    }
+}
+
+void
+Disk::encodeArchive(D64Archive *a)
+{
+    assert(a != NULL);
+    
+    // Interleave patterns (no interleave)
+    /*
+     int zone1[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, -1 };
+     int track18[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, -1 };
+     int zone2[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, -1 };
+     int zone3[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, -1 };
+     int zone4[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, -1 };
+     */
+    
+    // Interleave patterns (minics real VC1541 sector layout)
+    int zone1[] = { 0, 10, 20, 9, 19, 8, 18, 7, 17, 6, 16, 5, 15, 4, 14, 3, 13, 2, 12, 1, 11, -1 };
+    int track18[] = { 0, 3, 6, 9, 12, 15, 18, 2, 5, 8, 11, 14, 17, 1, 4, 7, 10, 13, 16, -1 };
+    int zone2[] = { 0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, -1 };
+    int zone3[] = { 0, 10, 2, 12, 4, 14, 6, 16, 8, 1, 11, 3, 13, 5, 15, 7, 17, 9, -1 };
+    int zone4[] = { 0, 10, 3, 13, 6, 16, 9, 2, 12, 5, 15, 8, 1, 11, 4, 14, 7, -1 };
+    unsigned track, encodedBits;
+    unsigned numTracks = a->numberOfTracks();
+
+    debug(2, "Encoding D64 archive with %d tracks\n", numTracks);
+
+    clearDisk();
+    
+    // Zone 1: Tracks 1 - 17 (21 sectors, tailgap 9/9 (even/odd sectors))
+    for (track = 1; track <= 17; track++) {
+        (void)encodeTrack(a, track, zone1, 9, 9);
+    }
+    
+    // Zone 2: Tracks 18 - 24 (19 sectors, tailgap 9/19 (even/odd sectors))
+    (void)encodeTrack(a, track, track18, 9, 19); // Directory track
+    for (track = 19; track <= 24; track++) {
+        (void)encodeTrack(a, track, zone2, 9, 19);
+    }
+    
+    // Zone 3: Tracks 25 - 30 (18 sectors, tailgap 9/13 (even/odd sectors))
+    for (track = 25; track <= 30; track++) {
+        (void)encodeTrack(a, track, zone3, 9, 13);
+    }
+    
+    // Zone 4: Tracks 31 - 35..42 (17 sectors, tailgap 9/10 (even/odd sectors))
+    for (track = 31; track <= a->numberOfTracks(); track++) {
+        encodedBits = encodeTrack(a, track, zone4, 9, 10);
+    }
+    
+    // Clear remaining tracks (if any)
+    for (track = numTracks + 1; track <= 42; track++) {
+        length.track[track][0] = encodedBits;  // The track itself
+        length.track[track][1] = encodedBits;  // Half track above
+    }
+    
+    // Do some consistency checking
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
+    }
+}
+
+unsigned
+Disk::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEven, uint8_t tailGapOdd)
+{
+    assert(isTrackNumber(t));
+    
+    unsigned encodedBits, totalEncodedBits = 0;
+    
+    debug(3, "Encoding track %d\n", t);
+    
+    // For each sector in the provided list ...
+    for (unsigned i = 0; sectorList[i] != -1; i++) {
+        
+        encodedBits = encodeSector(a, t, sectorList[i], totalEncodedBits, (i % 2) ? tailGapOdd : tailGapEven);
+        totalEncodedBits += encodedBits;
+    }
+    
+    length.track[t][0] = totalEncodedBits;  // The track itself
+    length.track[t][1] = totalEncodedBits;  // Half track above
+    
+    return totalEncodedBits;
+}
+
+unsigned
+Disk::encodeSector(D64Archive *a, Track t, uint8_t sector, unsigned bitoffset, int gap)
+{
+    uint8_t *source;
+    unsigned bitptr = bitoffset;
+    
+    assert(a != NULL);
+    assert(isTrackNumber(t));
+    
+    // Get source address from archive
+    if ((source = a->findSector(t, sector)) == 0) {
+        warn("Can't find halftrack data in archive\n");
+        return 0;
+    }
+    
+    debug(4, "  Encoding track/sector %d/%d\n", t, sector);
+    
+    // Get disk id and compute checksum
+    uint8_t id1 = a->diskId1();
+    uint8_t id2 = a->diskId2();
+    uint8_t checksum = id1 ^ id2 ^ t ^ sector; // Header checksum byte
+    
+    // 0xFF 0xFF 0xFF 0xFF 0xFF
+    writeSyncBitsToTrack(t, bitptr, 5 * 8);
+    bitptr += 5 * 8;
+    
+    // Header ID, Checksum, Sector number, Track number
+    encodeGcr(0x08, checksum, sector, t, t, bitptr);
+    bitptr += 5 * 8;
+    
+    // Disk ID 2, Disk ID 1, 0x0F, 0x0F
+    encodeGcr(id2, id1, 0x0F, 0x0F, t, bitptr);
+    bitptr += 5 * 8;
+    
+    // 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55
+    writeGapToTrack(t, bitptr, 9);
+    bitptr += 9 * 8;
+    
+    // 0xFF 0xFF 0xFF 0xFF 0xFF
+    writeSyncBitsToTrack(t, bitptr, 5 * 8);
+    bitptr += 5 * 8;
+    
+    // Data ID, First three data bytes
+    encodeGcr(0x07, source[0], source[1], source[2], t, bitptr);
+    bitptr += 5 * 8;
+    
+    // Rest of the data bytes
+    for (unsigned i = 3; i < 255; i += 4, bitptr += 5 * 8)
+        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], t, bitptr);
+    
+    // Last data byte, checksum, 0x00, 0x00
+    checksum = source[0];
+    for (unsigned i = 1; i < 256; i++) {
+        checksum ^= source[i];
+    }
+    encodeGcr(source[255], checksum, 0, 0, t, bitptr);
+    bitptr += 5 * 8;
+    
+    // 0x55 0x55 ... 0x55 (tail gap)
+    writeGapToTrack(t, bitptr, gap);
+    bitptr += gap * 8;
+    
+    // Return the number of encoded bytes
+    return bitptr - bitoffset;
+}
+
+void
+Disk::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset)
+{
+    assert(isTrackNumber(t));
+    
+    uint64_t shift_reg = 0;
+    
+    // Shift in
+    shift_reg = gcr[b1 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b1 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b2 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b2 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b3 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b3 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b4 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b4 & 0x0F];
+    
+    // Shift out
+    writeByteToTrack(t, offset + 4 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset + 3 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset + 2 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset + 1 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByteToTrack(t, offset, shift_reg & 0xFF);
+}
 
 
 
