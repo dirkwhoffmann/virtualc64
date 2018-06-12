@@ -52,6 +52,7 @@ class DiskInspectorController : UserDialogController {
     @IBOutlet weak var halftrackField: NSTextField!
     @IBOutlet weak var headField: NSTextField!
     @IBOutlet weak var valueField: NSTextField!
+    @IBOutlet weak var gcrBox: NSBox!
     @IBOutlet weak var physicalViewHeader: NSTextField!
     @IBOutlet weak var physicalView: NSScrollView!
     @IBOutlet weak var logicalView: NSTableView!
@@ -148,10 +149,10 @@ class DiskInspectorController : UserDialogController {
         var gcr : String
         
         if hasDisk {
-            physicalViewHeader.stringValue = "\(drive.sizeOfCurrentHalftrack()) Bits"
+            gcrBox.title = "GCR Bitstream (\(drive.sizeOfCurrentHalftrack()) Bits)"
             gcr = String(cString: drive.disk.trackDataAsString())
         } else {
-            physicalViewHeader.stringValue = ""
+            gcrBox.title = "GCR Bitstream"
             gcr = ""
         }
         
@@ -161,7 +162,7 @@ class DiskInspectorController : UserDialogController {
         documentView?.layoutManager?.replaceTextStorage(textStorage)
     }
 
-    func refreshLogicalView() {        
+    func refreshLogicalView() {
         logicalView.reloadData()
     }
     
