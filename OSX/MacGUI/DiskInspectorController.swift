@@ -54,12 +54,9 @@ class DiskInspectorController : UserDialogController {
     @IBOutlet weak var valueField: NSTextField!
     @IBOutlet weak var physicalViewHeader: NSTextField!
     @IBOutlet weak var physicalView: NSScrollView!
-    @IBOutlet weak var logicalViewHeader: NSTextField!
     @IBOutlet weak var logicalView: NSTableView!
     
     @IBOutlet weak var icon: NSImageView!
-    @IBOutlet weak var iconText: NSTextField!
-    @IBOutlet weak var iconSubText: NSTextField!
     
     override public func awakeFromNib() {
         
@@ -108,12 +105,8 @@ class DiskInspectorController : UserDialogController {
         if diskInfoIsDirty {
             if hasDisk {
                 icon.image = diskImage
-                iconText.stringValue = String(cString: drive.disk.diskNameAsString())
-                iconSubText.stringValue = "\(drive.disk.nonemptyHalftracks()) tracks"
             } else {
                 icon.image = noDiskImage
-                iconText.stringValue = ""
-                iconSubText.stringValue = ""
             }
             diskInfoIsDirty = false
         }
@@ -168,9 +161,7 @@ class DiskInspectorController : UserDialogController {
         documentView?.layoutManager?.replaceTextStorage(textStorage)
     }
 
-    func refreshLogicalView() {
-        
-        logicalViewHeader.stringValue = "\(sectorForRow.count) sectors"
+    func refreshLogicalView() {        
         logicalView.reloadData()
     }
     

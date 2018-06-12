@@ -21,6 +21,10 @@
 #ifndef _DISK_INC
 #define _DISK_INC
 
+#include <string>
+#include <vector>
+#include <iostream>
+
 #include "VirtualComponent.h"
 #include "Disk_types.h"
 
@@ -148,13 +152,22 @@ private:
     // Debug information
     //
     
+    //! @brief    Information about a detected error
+    typedef struct {
+        size_t begin;
+        size_t end;
+        std::string msg;
+    } TrackInfoError;
+    
     //! @brief    Track layout as determined by analyzeTrack
     TrackInfo trackInfo;
-    
+
+    //! @brief    Error log created by analyzeTrack
+    std::vector<std::string> errorLog;
+
     //! @brief    Textual representation of track data
     char text[maxBitsOnTrack + 1];
     
-
 
 public:
     
@@ -324,6 +337,16 @@ public:
      */
     void analyzeHalftrack(Halftrack ht);
     void analyzeTrack(Track t);
+    
+    //! @brief    Returns the number of entries in the error log
+    unsigned numErrors() { return (unsigned)errorLog.size(); }
+    
+    //! @brief    Writes an error message into the error log
+    void log(const char *fmt, ...);
+
+    //! @brief    Reads an error message from the error log
+    std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
+
     
 private:
     

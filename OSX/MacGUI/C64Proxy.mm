@@ -432,6 +432,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
 - (void)analyzeTrack:(Track)t { wrapper->disk->analyzeTrack(t); }
 - (void)analyzeHalftrack:(Halftrack)ht { wrapper->disk->analyzeHalftrack(ht); }
+- (NSInteger)numErrors { return wrapper->disk->numErrors(); }
+- (NSString *)errorMessage:(NSInteger)nr {
+    std::string s = wrapper->disk->errorMessage((unsigned)nr);
+    return [NSString stringWithUTF8String:s.c_str()]; }
 - (SectorInfo)sectorInfo:(Sector)s { return wrapper->disk->sectorLayout(s); }
 - (const char *)trackDataAsString { return wrapper->disk->trackDataAsString(); }
 - (const char *)diskNameAsString { return wrapper->disk->diskNameAsString(); }

@@ -164,6 +164,9 @@ Disk::analyzeTrack(Track t)
 void
 Disk::_analyzeTrack(uint8_t *data, uint16_t length)
 {
+    errorLog.clear();
+    log("Analyzing track (%d bytes)", length);
+    
     // The result of the analysis is stored in variable trackInfo.
     memset(&trackInfo, 0, sizeof(trackInfo));
     trackInfo.length = length;
@@ -191,8 +194,12 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
             
             if (sync[i] == 0x08) {
                 debug(2, "Sector header block found at offset %d\n", i);
+                log("Sector header block found at offset %d", i);
+
             } else if (sync[i] == 0x07) {
                 debug(2, "Sector data block found at offset %d\n", i);
+                log("Sector data block found at offset %d", i);
+                
             } else {
                 warn("Unknown sector ID (%d) found at index %d\n", sync[i], i);
             }
@@ -238,6 +245,19 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
             }
         }
     }
+}
+
+void
+Disk::log(const char *fmt, ...)
+{
+    char buf[256];
+    
+    va_list ap;
+    va_start(ap, fmt);
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    va_end(ap);
+
+    errorLog.push_back(std::string(buf));
 }
 
 const char *
