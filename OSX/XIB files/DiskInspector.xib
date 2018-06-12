@@ -276,11 +276,11 @@ Gw
                         <rect key="frame" x="146" y="263" width="423" height="279"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="6Kl-LW-p42">
-                            <rect key="frame" x="2" y="2" width="419" height="257"/>
+                            <rect key="frame" x="2" y="2" width="419" height="259"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EoF-fF-HAG">
-                                    <rect key="frame" x="9" y="10" width="401" height="241"/>
+                                    <rect key="frame" x="9" y="12" width="401" height="241"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <clipView key="contentView" ambiguous="YES" id="2md-H9-Tzm">
                                         <rect key="frame" x="1" y="1" width="399" height="239"/>
@@ -314,7 +314,7 @@ Gw
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nzn-nG-PjZ">
                         <rect key="frame" x="48" y="447" width="72" height="72"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="diskette" id="7Qs-HD-g6E"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="inspect_disk" id="7Qs-HD-g6E"/>
                     </imageView>
                 </subviews>
             </view>
@@ -326,6 +326,6 @@ Gw
     </objects>
     <resources>
         <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
-        <image name="diskette" width="101" height="97"/>
+        <image name="inspect_disk" width="129" height="128"/>
     </resources>
 </document>

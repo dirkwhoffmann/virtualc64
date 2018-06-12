@@ -9,8 +9,8 @@ import Foundation
 
 class DiskInspectorController : UserDialogController {
     
-    let diskImage = NSImage.init(named: NSImage.Name.init(rawValue: "diskette"))
-    let noDiskImage = NSImage.init(named: NSImage.Name.init(rawValue: "diskette_light"))
+    let diskImage = NSImage.init(named: NSImage.Name.init(rawValue: "inspect_disk"))
+    let noDiskImage = NSImage.init(named: NSImage.Name.init(rawValue: "nodisk"))
     let monoFont = NSFont.monospacedDigitSystemFont(ofSize: 11.0, weight: .medium)
     let monoLarge = NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: .medium)
 
