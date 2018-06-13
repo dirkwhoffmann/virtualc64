@@ -165,6 +165,12 @@ private:
     //! @brief    Error log created by analyzeTrack
     std::vector<std::string> errorLog;
 
+    //! @brief    Stores the start offset of the erroneous bit sequence
+    std::vector<size_t> errorStartIndex;
+
+    //! @brief    Stores the end offset of the erroneous bit sequence
+    std::vector<size_t> errorEndIndex;
+
     //! @brief    Textual representation of track data
     char text[maxBitsOnTrack + 1];
     
@@ -342,10 +348,16 @@ public:
     unsigned numErrors() { return (unsigned)errorLog.size(); }
     
     //! @brief    Writes an error message into the error log
-    void log(const char *fmt, ...);
+    void log(size_t begin, size_t length, const char *fmt, ...);
 
     //! @brief    Reads an error message from the error log
     std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
+
+    //! @brief    Reads the error begin index from the error log
+    size_t firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
+
+    //! @brief    Reads the error end index from the error log
+    size_t lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
 
     
 private:

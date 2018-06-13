@@ -436,6 +436,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSString *)errorMessage:(NSInteger)nr {
     std::string s = wrapper->disk->errorMessage((unsigned)nr);
     return [NSString stringWithUTF8String:s.c_str()]; }
+- (NSInteger)firstErroneousBit:(NSInteger)nr {
+    return wrapper->disk->firstErroneousBit((unsigned)nr); }
+- (NSInteger)lastErroneousBit:(NSInteger)nr {
+    return wrapper->disk->lastErroneousBit((unsigned)nr); }
 - (SectorInfo)sectorInfo:(Sector)s { return wrapper->disk->sectorLayout(s); }
 - (const char *)trackDataAsString { return wrapper->disk->trackDataAsString(); }
 - (const char *)diskNameAsString { return wrapper->disk->diskNameAsString(); }

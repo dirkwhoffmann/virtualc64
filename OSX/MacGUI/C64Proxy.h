@@ -339,6 +339,8 @@ struct ContainerWrapper;
 - (void)analyzeHalftrack:(Halftrack)ht;
 - (NSInteger)numErrors;
 - (NSString *)errorMessage:(NSInteger)nr;
+- (NSInteger)firstErroneousBit:(NSInteger)nr;
+- (NSInteger)lastErroneousBit:(NSInteger)nr;
 - (SectorInfo)sectorInfo:(Sector)s;
 - (const char *)diskNameAsString;
 - (const char *)trackDataAsString;

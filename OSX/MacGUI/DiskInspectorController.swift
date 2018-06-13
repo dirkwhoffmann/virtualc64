@@ -35,11 +35,14 @@ class DiskInspectorController : UserDialogController {
     // Indicates if the head position stuff needs an update
     var headPositionIsDirty = true
     
-    // Highlighted head position in GCR view
-    var headPosition = NSRange.init(location: 0, length: 0)
+    // Highlighted head position in the GCR view
+    var headPosition : NSRange? // NSRange.init(location: 0, length: 0)
 
-    // Highlighted sector data in GCR view
-    var sectorRange = NSRange.init(location: 0, length: 0)
+    // First highlighted bit sequence in the GCR view
+    var firstSectorRange : NSRange?
+
+    // Second highlighted bit sequence in the GCR view
+    var secondSectorRange : NSRange?
 
     // Maps table row numbers to sector numbers
     var sectorForRow: [Int:Int] = [:]
@@ -48,17 +51,16 @@ class DiskInspectorController : UserDialogController {
     var timer: Timer!
     
     // Outlets
+    @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var trackField: NSTextField!
     @IBOutlet weak var halftrackField: NSTextField!
     @IBOutlet weak var headField: NSTextField!
     @IBOutlet weak var valueField: NSTextField!
     @IBOutlet weak var gcrBox: NSBox!
-    @IBOutlet weak var physicalViewHeader: NSTextField!
-    @IBOutlet weak var physicalView: NSScrollView!
-    @IBOutlet weak var logicalView: NSTableView!
-    
-    @IBOutlet weak var icon: NSImageView!
-    
+    @IBOutlet weak var gcrView: NSScrollView!
+    @IBOutlet weak var sectorView: NSTableView!
+    @IBOutlet weak var errorView: NSTableView!
+
     override public func awakeFromNib() {
         
         refresh()
@@ -127,7 +129,7 @@ class DiskInspectorController : UserDialogController {
             }
             refreshPhysicalView()
             refreshLogicalView()
-            singleClickAction(logicalView)
+            singleClickAction(sectorView)
             trackDataIsDirty = false
         }
         
@@ -158,58 +160,91 @@ class DiskInspectorController : UserDialogController {
         
         let textStorage = NSTextStorage.init(string: gcr)
         textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .medium)
-        let documentView = physicalView.documentView as? NSTextView
+        let documentView = gcrView.documentView as? NSTextView
         documentView?.layoutManager?.replaceTextStorage(textStorage)
     }
 
     func refreshLogicalView() {
-        logicalView.reloadData()
+        sectorView.reloadData()
+        errorView.reloadData()
     }
     
     func removeHeadMarker() {
         
-        let storage = (physicalView.documentView as! NSTextView).textStorage
-        storage?.removeAttribute(.backgroundColor, range: headPosition)
-        headPosition = NSRange.init(location: 0, length: 0)
+        let storage = (gcrView.documentView as! NSTextView).textStorage
+        if headPosition != nil {
+            storage?.removeAttribute(.backgroundColor, range: headPosition!)
+            headPosition = nil
+        }
     }
     
     func setHeadMarker() {
         
         removeHeadMarker()
-        let storage = (physicalView.documentView as! NSTextView).textStorage
+        let storage = (gcrView.documentView as! NSTextView).textStorage
         headPosition = NSRange.init(location: Int(c64.vc1541.offset()), length: 1)
-        storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition)
+        storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition!)
     }
     
     func scrollToHead() {
         
         let range = NSRange.init(location: offset, length: 1)
-        let view = physicalView.documentView as! NSTextView
+        let view = gcrView.documentView as! NSTextView
         view.scrollRangeToVisible(range)
     }
     
-    func removeSectorMarker() {
+    func removeSectorMarkers() {
         
-        let storage = (physicalView.documentView as! NSTextView).textStorage
-        storage?.removeAttribute(.foregroundColor, range: sectorRange)
-        sectorRange = NSRange.init(location: 0, length: 0)
-    }
-    
-    func setSectorMarker(begin: Int, end: Int) {
-        
-        removeSectorMarker()
-        if end > begin {
-            let color = NSColor.alternateSelectedControlColor
-            let storage = (physicalView.documentView as! NSTextView).textStorage
-            sectorRange = NSRange.init(location: begin, length: end - begin)
-            storage?.addAttribute(.foregroundColor, value: color, range: sectorRange)
+        let storage = (gcrView.documentView as! NSTextView).textStorage
+        if firstSectorRange != nil {
+            storage?.removeAttribute(.foregroundColor, range: firstSectorRange!)
+            firstSectorRange = nil
+        }
+        if secondSectorRange != nil {
+            storage?.removeAttribute(.foregroundColor, range: secondSectorRange!)
+            secondSectorRange = nil
         }
     }
     
-    func scrollToSectorMarker() {
+    func setSectorMarkers(begin: Int, end: Int) {
         
-        let view = physicalView.documentView as! NSTextView
-        view.scrollRangeToVisible(sectorRange)
+        let length = Int(c64.vc1541.sizeOfCurrentHalftrack())
+        if (length == 0) { return }
+        
+        let left = begin % (length + 1)
+        let right = end % (length + 1)
+        
+        // track("left = \(left) right = \(right)")
+        
+        removeSectorMarkers()
+        
+        if left < right {
+            firstSectorRange = NSRange.init(location: left, length: right - left)
+            secondSectorRange = nil
+        } else if left > right {
+            firstSectorRange = NSRange.init(location: 0, length: right + 1)
+            secondSectorRange = NSRange.init(location: left, length: length - left)
+        } else {
+            firstSectorRange = nil
+            secondSectorRange = nil
+        }
+    
+        let color = NSColor.alternateSelectedControlColor
+        let storage = (gcrView.documentView as! NSTextView).textStorage
+        if firstSectorRange != nil {
+            storage?.addAttribute(.foregroundColor, value: color, range: firstSectorRange!)
+        }
+        if secondSectorRange != nil {
+            storage?.addAttribute(.foregroundColor, value: color, range: secondSectorRange!)
+        }
+    }
+    
+    func scrollToFirstSectorMarker() {
+        
+        let view = gcrView.documentView as! NSTextView
+        if firstSectorRange != nil {
+            view.scrollRangeToVisible(firstSectorRange!)
+        }
     }
     
     
@@ -224,7 +259,7 @@ class DiskInspectorController : UserDialogController {
         if t < 1 { t = 1};
         c64.vc1541.setTrack(Track(t))
         refresh()
-        scrollToSectorMarker()
+        scrollToFirstSectorMarker()
     }
 
     @IBAction func trackStepperAction(_ sender: Any!) {
@@ -242,7 +277,7 @@ class DiskInspectorController : UserDialogController {
         if ht < 1 { ht = 1};
         c64.vc1541.setHalftrack(Halftrack(ht))
         refresh()
-        scrollToSectorMarker()
+        scrollToFirstSectorMarker()
     }
     
     @IBAction func halftrackStepperAction(_ sender: Any!) {
@@ -305,14 +340,31 @@ class DiskInspectorController : UserDialogController {
     
     @IBAction func singleClickAction(_ sender: Any!) {
         
+        var begin = 0
+        var end = 0
+        
         let sender = sender as! NSTableView
-        let sector = sender.selectedRow / 2
-        let headerRow = (sender.selectedRow % 2) == 0
-        let info = c64.vc1541.disk.sectorInfo(Sector(sector))
-        let begin = headerRow ? info.headerBegin : info.dataBegin
-        let end = headerRow ? info.headerEnd : info.dataEnd
-        setSectorMarker(begin: begin, end: end)
-        scrollToSectorMarker()
+        let row = sender.selectedRow
+        
+        if (sender == sectorView) {
+            
+            let sector = row / 2
+            let info = c64.vc1541.disk.sectorInfo(Sector(sector))
+            begin = (row % 2 == 0) ? info.headerBegin : info.dataBegin
+            end = (row % 2 == 0) ? info.headerEnd : info.dataEnd
+            
+        } else if (sender == errorView) {
+            
+            begin = (row > 0) ? c64.vc1541.disk.firstErroneousBit(row - 1) : 0
+            end = (row > 0) ? c64.vc1541.disk.lastErroneousBit(row - 1) : 0
+            
+        } else {
+            
+            assert(false)
+        }
+        
+        setSectorMarkers(begin: begin, end: end)
+        scrollToFirstSectorMarker()
     }
     
     override func cancelAction(_ sender: Any!) {
@@ -327,36 +379,74 @@ extension DiskInspectorController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return 2 * sectorForRow.count
+        if tableView == sectorView {
+            return 2 * sectorForRow.count
+        } else if tableView == errorView {
+            return hasDisk ? c64.vc1541.disk.numErrors() + 1 : 0
+        } else {
+            assert(false)
+        }
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
+        if tableView == sectorView {
+            
         guard let sectorNr = sectorForRow[row / 2] else { return nil }
         let headerRow = (row % 2) == 0
 
-        switch(tableColumn?.identifier.rawValue) {
-
-        case "sector":
-            return headerRow ? sectorNr : ""
-            
-        case "type":
-            return headerRow ? "Header:" : "Data:"
-            
-        case "data":
-            if headerRow {
-                let cStr = c64.vc1541.disk.sectorHeader(asString: Sector(sectorNr))!
-                return String.init(cString: cStr)
-
-            } else {
-                let cStr = c64.vc1541.disk.sectorData(asString: Sector(sectorNr))!
-                return String.init(cString: cStr)
+            switch(tableColumn?.identifier.rawValue) {
+                
+            case "sector":
+                return headerRow ? sectorNr : ""
+                
+            case "type":
+                return headerRow ? "Header:" : "Data:"
+                
+            case "data":
+                if headerRow {
+                    let cStr = c64.vc1541.disk.sectorHeader(asString: Sector(sectorNr))!
+                    return String.init(cString: cStr)
+                    
+                } else {
+                    let cStr = c64.vc1541.disk.sectorData(asString: Sector(sectorNr))!
+                    return String.init(cString: cStr)
+                }
+                
+            default:
+                return "???"
             }
             
-        default:
-            return "???"
+        } else if tableView == errorView {
+            
+            if row == 0 {
+                let count = c64.vc1541.disk.numErrors()
+                if count == 0 {
+                    return "No errors found."
+                } else {
+                    return "\(count) errors have been found."
+                }
+            } else {
+                return c64.vc1541.disk.errorMessage(row - 1)
+            }
+   
+        } else {
+            assert(false)
         }
     }
 }
+
+extension DiskInspectorController : NSTableViewDelegate {
+    
+    func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
+        
+        let cell = cell as! NSTextFieldCell
+        
+        if tableView == errorView {
+            cell.textColor = (row == 0) ? NSColor.black : NSColor.red
+        }
+    }
+}
+
 
 

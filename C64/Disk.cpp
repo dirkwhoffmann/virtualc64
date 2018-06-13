@@ -165,7 +165,8 @@ void
 Disk::_analyzeTrack(uint8_t *data, uint16_t length)
 {
     errorLog.clear();
-    log("Analyzing track (%d bytes)", length);
+    errorStartIndex.clear();
+    errorEndIndex.clear();
     
     // The result of the analysis is stored in variable trackInfo.
     memset(&trackInfo, 0, sizeof(trackInfo));
@@ -194,14 +195,10 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
             
             if (sync[i] == 0x08) {
                 debug(2, "Sector header block found at offset %d\n", i);
-                log("Sector header block found at offset %d", i);
-
             } else if (sync[i] == 0x07) {
                 debug(2, "Sector data block found at offset %d\n", i);
-                log("Sector data block found at offset %d", i);
-                
             } else {
-                warn("Unknown sector ID (%d) found at index %d\n", sync[i], i);
+                log(i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
             }
         }
         noOfOnes = trackInfo.bit[i] ? (noOfOnes + 1) : 0;
@@ -215,7 +212,7 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
         }
     }
     if (startOffset == length) {
-        debug(2, "Track contains no sector header block.\n");
+        log(0, length, "Track contains no sector header block.");
         return;
     }
     
@@ -232,7 +229,7 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
                 trackInfo.sectorInfo[sector].headerBegin = i;
                 trackInfo.sectorInfo[sector].headerEnd = i + headerBlockSize;
             } else {
-                warn("Invalid sector number (%d) in sector header block.\n", sector);
+                log(i + 20, 10, "Header block at index %d contains an invalid sector number (%d).", i, sector);
             }
         
         } else if (sync[i] == 0x07) {
@@ -241,14 +238,14 @@ Disk::_analyzeTrack(uint8_t *data, uint16_t length)
                 trackInfo.sectorInfo[sector].dataBegin = i;
                 trackInfo.sectorInfo[sector].dataEnd = i + dataBlockSize;
             } else {
-                warn("Invalid sector number (%d) in sector data block.\n", sector);
+                log(i + 20, 10, "Data block at index %d contains an invalid sector number (%d).", i, sector);
             }
         }
     }
 }
 
 void
-Disk::log(const char *fmt, ...)
+Disk::log(size_t begin, size_t length, const char *fmt, ...)
 {
     char buf[256];
     
@@ -258,6 +255,8 @@ Disk::log(const char *fmt, ...)
     va_end(ap);
 
     errorLog.push_back(std::string(buf));
+    errorStartIndex.push_back(begin);
+    errorEndIndex.push_back(begin + length);
 }
 
 const char *
