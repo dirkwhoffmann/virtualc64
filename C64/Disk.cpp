@@ -236,8 +236,8 @@ Disk::decodeGcr(uint8_t *gcr)
     uint4_t nibble1 = decodeGcrNibble(gcr);
     uint4_t nibble2 = decodeGcrNibble(gcr + 5);
 
-    assert(is_uint4_t(nibble1));
-    assert(is_uint4_t(nibble2));
+    // assert(is_uint4_t(nibble1));
+    // assert(is_uint4_t(nibble2));
     
     return (nibble1 << 4) | nibble2;
 }

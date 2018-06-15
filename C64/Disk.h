@@ -259,6 +259,8 @@ public:
     uint8_t decodeGcrNibble(uint8_t *gcrBits);
 
     //! @brief   Decodes a byte (8 bit) form a previously encoded GCR bitstream.
+    /*! @note    Returns an unpredictable result if invalid GCR sequences are found.
+     */
     uint8_t decodeGcr(uint8_t *gcrBits);
 
     
