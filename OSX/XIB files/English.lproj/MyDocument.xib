@@ -261,7 +261,7 @@
                             <action selector="resetAction:" target="-2" id="1869"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="tb_virtualmachine" id="2033" userLabel="Hardware Setup">
+                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="hardware" id="2033" userLabel="Hardware Setup">
                         <connections>
                             <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
@@ -296,7 +296,7 @@
                             <action selector="snapshotsAction:" target="-2" id="sMO-yF-dnB"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Monitor" paletteLabel="Monitor" toolTip="Open the debugger" tag="31" image="tb_scan" id="1855">
+                    <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Monitor" paletteLabel="Monitor" toolTip="Open the debugger" tag="31" image="debug" id="1855">
                         <connections>
                             <action selector="debugAction:" target="-2" id="h8p-Nc-0xz"/>
                         </connections>
@@ -2807,8 +2807,10 @@
     <resources>
         <image name="LEDgray" width="128" height="128"/>
         <image name="cartridge" width="128" height="128"/>
+        <image name="debug" width="129" height="129"/>
         <image name="diskette" width="101" height="97"/>
         <image name="fast" width="128" height="128"/>
+        <image name="hardware" width="129" height="129"/>
         <image name="inspect_disk" width="129" height="128"/>
         <image name="pause32" width="32" height="32"/>
         <image name="restart32" width="128" height="128"/>
@@ -2819,8 +2821,6 @@
         <image name="tb_freeze" width="129" height="129"/>
         <image name="tb_revert" width="129" height="129"/>
         <image name="tb_rewind" width="129" height="129"/>
-        <image name="tb_scan" width="409.60000610351562" height="409.60000610351562"/>
         <image name="tb_setup" width="129" height="129"/>
-        <image name="tb_virtualmachine" width="128" height="129"/>
     </resources>
 </document>

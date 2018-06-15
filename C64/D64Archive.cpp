@@ -21,6 +21,7 @@
 #include "PRGArchive.h"
 #include "P00Archive.h"
 #include "FileArchive.h"
+#include "Disk.h"
 
 typedef struct D64TrackInfo {
 	int numberOfSectors;
@@ -30,7 +31,7 @@ typedef struct D64TrackInfo {
 
 static const D64TrackInfo D64Map[] =
 {
-	{ 0,  0,   0 }, // Ignore - track starts at 1, sector starts at 0
+	{ 0,  0,   0 }, // Padding
 	{ 21, 0,   0x00000 },
 	{ 21, 21,  0x01500 },
 	{ 21, 42,  0x02A00 },
@@ -85,7 +86,7 @@ D64Archive::D64Archive()
     setDescription("D64Archive");
     memset(name, 0, sizeof(name));
     memset(data, 0, sizeof(data));
-    memset(errors, 0, sizeof(errors));
+    memset(errors, 0x01, sizeof(errors));
     numTracks = 35;
     fp = 0;
 }
@@ -224,7 +225,7 @@ D64Archive::hasSameType(const char *filename)
 bool 
 D64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-	int numberOfErrors = 0;
+	size_t numberOfErrors = 0;
 	
 	switch (length)
 	{
@@ -274,10 +275,10 @@ D64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 	
 	// Read tracks
 	uint8_t *source = (uint8_t *)buffer;
-	for(unsigned track = 1; track <= numTracks; track++) {
+	for(Track t = 1; t <= numTracks; t++) {
 		
-		uint8_t *destination = &data[D64Map[track].offset];
-		int sectors = D64Map[track].numberOfSectors;
+		uint8_t *destination = &data[D64Map[t].offset];
+		int sectors = D64Map[t].numberOfSectors;
 		memcpy(destination, source, 256 * sectors);
 		source += 256 * sectors;
 	}
@@ -555,10 +556,27 @@ D64Archive::setNumberOfTracks(unsigned tracks)
 //
 
 uint8_t *
-D64Archive::findSector(unsigned track, unsigned sector)
+D64Archive::findSector(Track t, Sector s)
 {
-    return data + offset(track, sector);
+    assert(isTrackNumber(t));
+    assert(isSectorNumber(s));
+    
+    return data + offset(t, s);
 }
+
+uint8_t
+D64Archive::errorCode(Track t, Sector s)
+{
+    assert(isTrackNumber(t));
+    assert(isSectorNumber(s));
+    
+    Sector index = Disk::trackDefaults[t].firstSectorNr + s;
+    assert(index < 802);
+    
+    return errors[index];
+    
+}
+
 
 int
 D64Archive::offset(int track, int sector)

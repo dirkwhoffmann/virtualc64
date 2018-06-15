@@ -422,9 +422,10 @@ extension DiskInspectorController : NSTableViewDataSource {
             if row == 0 {
                 let count = c64.vc1541.disk.numErrors()
                 if count == 0 {
-                    return "No errors found."
+                    return "The GCR bitstream has been scanned without errrors."
                 } else {
-                    return "\(count) errors have been found."
+                    let s = (count == 1) ? "" : "s"
+                    return "The GCR bitstream contains \(count) error\(s)."
                 }
             } else {
                 return c64.vc1541.disk.errorMessage(row - 1)

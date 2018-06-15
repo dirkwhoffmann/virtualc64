@@ -50,6 +50,41 @@ public:
     // Constants and lookup tables
     //
     
+    
+    //! @brief   Disk parameters of a standard floppy disk
+    typedef struct {
+        
+        uint8_t  sectors;       // Typical number of sectors in this track
+        uint8_t  speedZone;     // Default speed zone for this track
+        uint16_t lengthInBytes; // Typical track size in bits
+        uint16_t lengthInBits;  // Typical track size in bits
+        Sector   firstSectorNr; // Logical number of first sector in track
+        double   stagger;       // Relative position of the first bit (taken from Hoxs64)
+
+    } TrackDefaults;
+    
+    static const TrackDefaults trackDefaults[43];
+ 
+    
+    //! @brief   Disk error codes
+    /*! @details Some D64 files contain an error code for each sector.
+     *           If possible, these errors are reproduced during disk encoding.
+     */
+    typedef enum {
+        DISK_OK = 0x1,
+        HEADER_BLOCK_NOT_FOUND_ERROR = 0x2,
+        NO_SYNC_SEQUENCE_ERROR = 0x3,
+        DATA_BLOCK_NOT_FOUND_ERROR = 0x4,
+        DATA_BLOCK_CHECKSUM_ERROR = 0x5,
+        WRITE_VERIFY_ERROR_ON_FORMAT_ERROR = 0x6,
+        WRITE_VERIFY_ERROR = 0x7,
+        WRITE_PROTECT_ON_ERROR = 0x8,
+        HEADER_BLOCK_CHECKSUM_ERROR = 0x9,
+        WRITE_ERROR = 0xA,
+        DISK_ID_MISMATCH_ERROR = 0xB,
+        DRIVE_NOT_READY_ERRROR = 0xF
+    } DiskErrorCode;
+
 private:
     
     /*! @brief   GCR encoding table
@@ -64,32 +99,18 @@ private:
     };
     
     /*! @brief    Inverse GCR encoding table
-     *  @details  Maps 5 GCR bits to 4 data bits.
+     *  @detaiels  Maps 5 GCR bits to 4 data bits. Invalid patterns are marked with 255.
      */
     const uint4_t invgcr[32] = {
         
-        0,  0,  0,  0, /* 0x00 - 0x03 */
-        0,  0,  0,  0, /* 0x04 - 0x07 */
-        0,  8,  0,  1, /* 0x08 - 0x0B */
-        0, 12,  4,  5, /* 0x0C - 0x0F */
-        0,  0,  2,  3, /* 0x10 - 0x13 */
-        0, 15,  6,  7, /* 0x14 - 0x17 */
-        0,  9, 10, 11, /* 0x18 - 0x1B */
-        0, 13, 14,  0  /* 0x1C - 0x1F */
-    };
-
-    /*! @brief    Indicates which bit sequences are valid GCR bit patterns
-     */
-    const bool validGcrPattern[32] = {
-        
-        0,  0,  0,  0, /* 0x00 - 0x03 */
-        0,  0,  0,  0, /* 0x04 - 0x07 */
-        0,  1,  1,  1, /* 0x08 - 0x0B */
-        0,  1,  1,  1, /* 0x0C - 0x0F */
-        0,  0,  1,  1, /* 0x10 - 0x13 */
-        0,  1,  1,  1, /* 0x14 - 0x17 */
-        0,  1,  1,  1, /* 0x18 - 0x1B */
-        0,  1,  1,  0  /* 0x1C - 0x1F */
+        255, 255, 255, 255, /* 0x00 - 0x03 */
+        255, 255, 255, 255, /* 0x04 - 0x07 */
+        255,   8,   0,   1, /* 0x08 - 0x0B */
+        255,  12,   4,   5, /* 0x0C - 0x0F */
+        255, 255,   2,   3, /* 0x10 - 0x13 */
+        255,  15,   6,   7, /* 0x14 - 0x17 */
+        255,   9,  10,  11, /* 0x18 - 0x1B */
+        255,  13,  14, 255  /* 0x1C - 0x1F */
     };
 
     /*! @brief    Maps a byte to an expanded 64 bit representation
@@ -206,11 +227,38 @@ public:
     //! @brief   Converts a 5 bit GCR codeword to a 4 bit binary value
     uint4_t gcr2bin(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value]; }
 
+    //! @brief   Returns true if the provided 5 bit codeword is a valid GCR codeword
+    bool isGcr(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value] != 0xFF; }
+
     //! @brief   Encodes a byte as a GCR bitstream
     //! @details The created bitstream consists of 10 bytes (either 0x00 or 0x01)
-    void encodeGcr(uint8_t value, uint8_t *gcrBits);
+    // void encodeGcr(uint8_t value, uint8_t *gcrBits);
+
+    //! @brief   Encodes multiple bytes as a GCR bitstream
+    // void encodeGcr(uint8_t *values, uint8_t *gcrBits, size_t length);
+
+    //! @brief   Encodes a single byte as a GCR bitstream.
+    /*! @details Writes 10 bits to the specified position on disk.
+     */
+    void encodeGcr(uint8_t value, Track t, HeadPosition offset);
+
+    //! @brief   Encodes multiple bytes as a GCR bitstream.
+    /*! @details Writes length * 10 bits to the specified position on disk.
+     */
+    void encodeGcr(uint8_t *values, size_t length, Track t, HeadPosition offset);
+
     
-    //! @brief   Decodes a previously encoded GCR bitstream
+    /*! @brief   Translates four data bytes into five GCR encodes bytes
+     *! @deprecated
+     */
+    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset);
+    
+    //! @brief   Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
+    /*! @return  0xFF, if no valid GCR sequence is found.
+     */
+    uint8_t decodeGcrNibble(uint8_t *gcrBits);
+
+    //! @brief   Decodes a byte (8 bit) form a previously encoded GCR bitstream.
     uint8_t decodeGcr(uint8_t *gcrBits);
 
     
@@ -259,8 +307,7 @@ public:
         _writeBitToHalftrack(2 * t - 1, pos, bit);
     }
     
-    /*! @brief  Writes a single bit to disk.
-     */
+    //! @brief  Writes a single bit to disk.
     void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
         _writeBitToHalftrack(ht, fitToBounds(ht, pos), bit);
     }
@@ -269,6 +316,16 @@ public:
         writeBitToHalftrack(2 * t - 1, pos, bit);
     }
     
+    //! @brief  Writes a single bit to disk multiple times.
+    void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit, size_t count) {
+        for (size_t i = 0; i < count; i++)
+            writeBitToHalftrack(ht, pos++, bit);
+    }
+    
+    void writeBitToTrack(Track t, HeadPosition pos, bool bit, size_t count) {
+            writeBitToHalftrack(2 * t - 1, pos, bit, count);
+    }
+
     /*! @brief  Writes a single byte to disk.
      */
     void writeByteToHalftrack(Halftrack ht, HeadPosition pos, uint8_t byte) {
@@ -282,6 +339,7 @@ public:
 
     /*! @brief   Writes a certain number of SYNC bits to disk.
      */
+    /*
     void writeSyncBitsToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
         for (size_t i = 0; i < length; i++)
             writeBitToHalftrack(ht, pos++, 1);
@@ -290,6 +348,7 @@ public:
     void writeSyncBitsToTrack(Track t, HeadPosition pos, size_t length) {
         writeSyncBitsToHalftrack(2 * t - 1, pos, length);
     }
+    */
     
     /*! @brief   Writes a certain number of interblock bytes to disk.
      */
@@ -342,7 +401,8 @@ public:
      *            into variable trackLayout.
      */
     void analyzeHalftrack(Halftrack ht);
-    void analyzeTrack(Track t);
+    
+    void analyzeTrack(Track t) { assert(isTrackNumber(t)); analyzeTrack(2 * t - 1); }
     
     //! @brief    Returns the number of entries in the error log
     unsigned numErrors() { return (unsigned)errorLog.size(); }
@@ -362,8 +422,17 @@ public:
     
 private:
     
-    void _analyzeTrack(uint8_t *data, uint16_t length);
-    
+    //! @brief   Counts the number valid GCR nibbles in the provided buffer.
+    /*! @details This method is used to determine the size of a sector header or data block.
+     */
+    // size_t numberOfGcrNibbles(uint8_t *data);
+
+    //! @brief   Checks the integrity of a sector header block
+    void analyzeSectorHeaderBlock(size_t offset);
+
+    //! @brief   Checks the integrity of a sector data block
+    void analyzeSectorDataBlock(size_t offset);
+
 public:
     
     //! @brief    Returns a sector layout from variable trackInfo
@@ -416,18 +485,23 @@ private:
     
 public:
     
-    /*! @brief   Converts a G64 archive into a virtual floppy disk */
+    /*! @brief   Converts a G64 archive into a virtual floppy disk. */
     void encodeArchive(G64Archive *a);
     
-    /*! @brief   Converts a NIB archive into a virtual floppy disk */
+    /*! @brief   Converts a NIB archive into a virtual floppy disk. */
     void encodeArchive(NIBArchive *a);
     
-    /*! @brief   Converts a D64 archive into a virtual floppy disk
+    /*! @brief   Converts a D64 archive into a floppy disk.
      *  @details The method creates sync marks, GRC encoded header and data blocks,
      *           checksums and gaps.
+     *  @param   interleave  Set to true to apply the standard interleave pattern.
+     *  @param   alignTracks Set to true to let the first sector always start a position 0.
      */
-    void encodeArchive(D64Archive *a);
-    
+    void encodeArchive(D64Archive *a, bool interleave, bool alignTracks);
+
+    //! @brief   Converts a D64 archive into a floppy disk.
+    void encodeArchive(D64Archive *a) { encodeArchive(a, true, false); }
+
 private:
     
     /*! @brief   Encode a single track
@@ -438,24 +512,18 @@ private:
      *           Number of tail bytes follwowing sectors with even sector numbers.
      *  @param   tailGapOdd
      *           Number of tail bytes follwowing sectors with odd sector numbers.
-     *  @return  Number of bytes written.
+     *  @return  Number of written bits.
      */
-    unsigned encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEven, uint8_t tailGapOdd);
+    size_t encodeTrack(D64Archive *a, Track t, Sector sectorList[],
+                       uint8_t tailGapEven, uint8_t tailGapOdd, HeadPosition start);
     
     /*! @brief   Encode a single sector
      *  @details This function translates the logical byte sequence of a single sector
      *           into the native VC1541 byte representation. The sector is closed by
      *           'gap' tail gap bytes.
-     *  @return  Number of bytes written.
+     *  @return  Number of written bits.
      */
-    unsigned encodeSector(D64Archive *a, Track t, uint8_t sector, unsigned bitoffset, int gap);
-    
-    
-    /*! @brief   Translates four data bytes into five GCR encodes bytes
-     *! @deprecated
-     */
-    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset);
-    
+    size_t encodeSector(D64Archive *a, Track t, Sector sector, HeadPosition start, int gap);
 };
     
 #endif
