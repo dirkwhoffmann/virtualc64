@@ -743,74 +743,72 @@ extension MyController {
         return true
     }
     
-    @discardableResult
-    func processFile(url: URL?, warnAboutUnsafedDisk: Bool, showMountDialog: Bool) -> Bool {
+    func processFile(url: URL?, warnAboutUnsafedDisk: Bool, showMountDialog: Bool) throws {
 
-        let document = self.document as! MyDocument
-        guard let path = url?.path else { return false }
-
-        track("Processing file \(path)")
-
-        // Is it a snapshot from a different version?
-        if SnapshotProxy.isUnsupportedSnapshotFile(path) {
-            document.showSnapshotVersionAlert()
-            return false
-        }
+        if url == nil { return }
         
-        // Is it a snapshop with a matching version number?
-        document.attachment = SnapshotProxy.make(withFile: path)
-        if document.attachment != nil {
+        let document = self.document as! MyDocument
+        let path = url!.path
+        let name = url!.lastPathComponent
+        let suffix = url!.pathExtension
+
+        track("Processing file \(path) \(suffix)")
+
+        switch (suffix.uppercased()) {
+            
+        case "VC64":
+            // Is it a snapshot from a different version?
+            if SnapshotProxy.isUnsupportedSnapshotFile(path) {
+                throw NSError.snapshotVersionError(filename: name)
+            }
+            // Is it a snapshop with a matching version number?
+            document.attachment = SnapshotProxy.make(withFile: path)
+            if document.attachment == nil {
+                throw NSError.corruptedFileError(filename: name)
+            }
+            
             processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
                               showMountDialog: showMountDialog)
             document.fileURL = nil // Make document 'Untitled'
-            return true
-        }
-        
-        // Is it an archive?
-        document.attachment = ArchiveProxy.make(withFile: path)
-        if document.attachment != nil {
+            return
+            
+        case "CRT":
+            // Is it a cartridge?
+            document.attachment = CRTProxy.make(withFile: path)
+            if document.attachment == nil {
+                throw NSError.corruptedFileError(filename: name)
+            }
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                                  showMountDialog: showMountDialog)
+            return
+            
+        case "TAP":
+            // Is it a band tape?
+            document.attachment = TAPProxy.make(withFile: path)
+            if document.attachment == nil {
+                throw NSError.corruptedFileError(filename: name)
+            }
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                                  showMountDialog: showMountDialog)
+            return
+            
+        case "T64", "PRG", "D64", "P00", "G64", "NIB":
+            // Is it an archive?
+            document.attachment = ArchiveProxy.make(withFile: path)
+            if document.attachment == nil {
+                throw NSError.corruptedFileError(filename: name)
+            }
+            
             noteNewRecentDiskURL(url: url!)
             processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
                               showMountDialog: showMountDialog)
-            return true
+            return
+            
+        default:
+            throw NSError.unsupportedFormatError(filename: name)
         }
-        
-        // Is it a band tape?
-        document.attachment = TAPProxy.make(withFile: path)
-        if document.attachment != nil {
-            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
-                              showMountDialog: showMountDialog)
-            return true
-        }
-        
-        // Is it a cartridge?
-        document.attachment = CRTProxy.make(withFile: path)
-        if document.attachment != nil {
-            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
-                              showMountDialog: showMountDialog)
-            return true
-        }
-        
-        // We haven't found any known file format. We could attach an archive
-        // of type FileArchive which would copy the file's raw data in memory
-        // at the location where normal programs start.
-        /*
-         document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
-         if document.attachedArchive != nil {
-         track("Successfully read archive.")
-         processAttachment()
-         return true
-         }
-         */
-        
-        // However, it seems better to reject the operation.
-        track("Aborting. File has an unsupported type.")
-        
-        let name = url!.lastPathComponent
-        showLoadErrorAlert(name: "\(name)")
-        return false
     }
-    
+
     func processAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
        
         // Get attachment from document

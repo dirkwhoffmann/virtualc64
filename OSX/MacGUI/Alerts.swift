@@ -7,6 +7,27 @@
 
 import Foundation
 
+extension NSError {
+    
+    static func snapshotVersionError(filename: String) -> NSError {
+        return NSError(domain: "", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "Snapshot from other VirtualC64 release.",
+             NSLocalizedRecoverySuggestionErrorKey: "\(filename) was created with a different version of VirtualC64 and cannot be opened."])
+    }
+
+    static func unsupportedFormatError(filename: String) -> NSError {
+        return NSError(domain: "", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "Unsupported file format.",
+             NSLocalizedRecoverySuggestionErrorKey: "\(filename) cannot be opened because its format is not supported."])
+    }
+
+    static func corruptedFileError(filename: String) -> NSError {        
+        return NSError(domain: "", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "Corrupted file contents.",
+             NSLocalizedRecoverySuggestionErrorKey: "\(filename) does not comply to its purported format and cannot be opened."])
+    }
+}
+
 public extension MetalView {
     
     func showNoMetalSupportAlert() {
@@ -17,24 +38,6 @@ public extension MetalView {
         alert.messageText = "No suitable GPU hardware found"
         alert.informativeText = "VirtualC64 can only run on machines supporting the Metal graphics technology (2012 models and above)."
         alert.addButton(withTitle: "Exit")
-        alert.runModal()
-    }
-}
-
-extension MyDocument {
-    
-    func showSnapshotVersionAlert() {
-        
-        // TODO:
-        // The same dialog is shown in the application delegate.
-        // Is it possible to call a method on the application instance with an
-        // appropriate NSError object?
-        
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.messageText = "Snapshot from other VirtualC64 release"
-        alert.informativeText = "The snapshot was created with a different version of VirtualC64 and cannot be opened."
-        alert.addButton(withTitle: "OK")
         alert.runModal()
     }
 }
@@ -53,18 +56,6 @@ extension MyController {
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()
     }
-
-    func showLoadErrorAlert(name: String) {
-        
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        // alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Failed to load \(name)."
-        alert.informativeText = "The file is either damaged or contains an unsupported format."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-
 
     func showDiskIsEmptyAlert(format: String) {
         

@@ -114,16 +114,13 @@ class MyDocument : NSDocument {
             break
 
         default:
-            track("Unknown file type")
-            // throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
             throw NSError(domain: "VirtualC64", code: 2, userInfo: nil)
         }
         
         if attachment == nil {
-            track("File seems to be corrupt")
-            // throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-            throw NSError(domain: "VirtualC64", code: 2, userInfo: nil)
+            throw NSError(domain: "VirtualC64", code: 3, userInfo: nil)
         }
+        
         // fileURL = nil // Create an 'Untitled' document
     }
     

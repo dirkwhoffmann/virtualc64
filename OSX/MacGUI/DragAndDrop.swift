@@ -99,19 +99,20 @@ public extension MetalView {
             
         case .compatibleFileURL:
             
-            if let url = NSURL.init(from: pasteBoard) as URL? {
-                return controller.processFile(url: url,
-                                              warnAboutUnsafedDisk: true,
-                                              showMountDialog: !controller.autoMount)
-            } else {
+            guard let url = NSURL.init(from: pasteBoard) as URL? else { return false }
+            
+            do {
+                try controller.processFile(url: url,
+                                           warnAboutUnsafedDisk: true,
+                                           showMountDialog: !controller.autoMount)
+            } catch {
                 return false
             }
-   
-        default:
-            break
-        }
+            return true
         
-        return false
+        default:
+            return false
+        }
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {

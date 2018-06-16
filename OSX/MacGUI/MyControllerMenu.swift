@@ -359,9 +359,13 @@ extension MyController {
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 let url = openPanel.url
-                self.processFile(url: url,
-                                 warnAboutUnsafedDisk: false,
-                                 showMountDialog: false)
+                do {
+                    try self.processFile(url: url,
+                                         warnAboutUnsafedDisk: false,
+                                         showMountDialog: false)
+                } catch {
+                    NSApp.presentError(error)
+                }
             }
         })
     }
@@ -373,9 +377,13 @@ extension MyController {
         let tag = sender.tag
         
         if tag < recentDiskURLs.count {
-        processFile(url: recentDiskURLs[tag],
-                    warnAboutUnsafedDisk: true,
-                    showMountDialog: false)
+            do {
+                try processFile(url: recentDiskURLs[tag],
+                                warnAboutUnsafedDisk: true,
+                                showMountDialog: false)
+            } catch {
+                NSApp.presentError(error)
+            }
         }
     }
     

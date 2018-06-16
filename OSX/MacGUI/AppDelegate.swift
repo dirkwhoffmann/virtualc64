@@ -36,15 +36,14 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
             switch (nserror.code) {
                 
             case 1:
-                return NSError(domain: "", code: 0, userInfo:
-                    [NSLocalizedDescriptionKey: "Snapshot from other VirtualC64 release.",
-                     NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64 and cannot be opened."])
+                return NSError.snapshotVersionError(filename: "The provided snapshot")
 
             case 2:
-                return NSError(domain: "", code: 0, userInfo:
-                    [NSLocalizedDescriptionKey: "File could not be opened.",
-                     NSLocalizedRecoverySuggestionErrorKey: "The file is either damaged or contains an unsupported format."])
+                return NSError.unsupportedFormatError(filename: "The provided file")
 
+            case 3:
+                return NSError.corruptedFileError(filename: "The provided file")
+                
             default:
                 assert(false)
             }
