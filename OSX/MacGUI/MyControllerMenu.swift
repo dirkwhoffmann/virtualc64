@@ -317,9 +317,7 @@ extension MyController {
 
     @IBAction func driveEjectAction(_ sender: Any!) {
         
-        if !c64.vc1541.hasModifiedDisk() ||
-            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
-            
+        if proceedWithUnsafedDisk() {
             c64.vc1541.ejectDisk()
         }
     }

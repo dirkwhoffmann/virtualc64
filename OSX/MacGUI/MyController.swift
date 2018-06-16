@@ -475,7 +475,7 @@ extension MyController {
             metalScreen.drawC64texture = true
     
             // Show mount dialog if an attachment is present
-            processAttachment()
+            processAttachment(warnUserAboutUnsafedDisk: false)
             break;
     
         case MSG_RUN:
@@ -689,13 +689,95 @@ extension MyController {
     }    
 
     // --------------------------------------------------------------------------------
-    // Attachment processing
+    // File and attachment processing
+    //
+    // When a user inserts a disk or drags in an image file, it is processed the
+    // following way:
+    //
+    // 1. proceedWithUnsavedDisk()
+    //    If the drive contains a modified disk, the user is asked if he wants to
+    //    proceed.
+    //
+    // 2. processFile(URL)
+    //    This functions tries to load the specified file. If the file could be loaded
+    //    it tries to convert its contents to a ContainerProxy object and attaches
+    //    this object to the document.
+    //
+    // 3. processAttachment()
+    //    The attached container is processed. Depending on to the attachment type and
+    //    the user preferences, a user dialog is presented before loading the attachment
+    //    into the emulator.
     // --------------------------------------------------------------------------------
+ 
+    func proceedWithUnsafedDisk() -> Bool {
+       
+        if c64.vc1541.hasModifiedDisk() {
+            // Ask for user permission ...
+            return showDiskIsUnsafedAlert() == .alertFirstButtonReturn
+        }
+        return true
+    }
+    
+    func processFile(url: URL?, warnUserAboutUnsafedDisk: Bool) -> Bool {
 
-    /// System-level entry point for processing attachment
-    /// According to the attachment type and the user preferences, a user dialog is
-    /// presented before loading the attachment into the emulator.
-    func processAttachment() {
+        let document = self.document as! MyDocument
+        guard let path = url?.path else { return false }
+
+        track("Processing file \(path)")
+
+        // Is it a snapshot from a different version?
+        if SnapshotProxy.isUnsupportedSnapshotFile(path) {
+            document.showSnapshotVersionAlert()
+            return false
+        }
+        
+        // Is it a snapshop with a matching version number?
+        document.attachment = SnapshotProxy.make(withFile: path)
+        if document.attachment != nil {
+            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            document.fileURL = nil // Make document 'Untitled'
+            return true
+        }
+        
+        // Is it an archive?
+        document.attachment = ArchiveProxy.make(withFile: path)
+        if document.attachment != nil {
+            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            return true
+        }
+        
+        // Is it a band tape?
+        document.attachment = TAPProxy.make(withFile: path)
+        if document.attachment != nil {
+            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            return true
+        }
+        
+        // Is it a cartridge?
+        document.attachment = CRTProxy.make(withFile: path)
+        if document.attachment != nil {
+            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            return true
+        }
+        
+        // We haven't found any known file format. We could attach an archive
+        // of type FileArchive which would copy the file's raw data in memory
+        // at the location where normal programs start.
+        /*
+         document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
+         if document.attachedArchive != nil {
+         track("Successfully read archive.")
+         processAttachment()
+         return true
+         }
+         */
+        
+        // However, it seems better to reject the operation.
+        track("Aborting. File has an unsupported type.")
+        return false
+    }
+    
+    func processAttachment(warnUserAboutUnsafedDisk: Bool) {
        
         // Get attachment from document
         let document = self.document as! MyDocument
@@ -703,11 +785,13 @@ extension MyController {
             return
         }
         
-        // Process according to attachment type
+        // Process attachment
         switch attachment.type() {
             
         case V64_CONTAINER:
-            c64.load(fromSnapshot: attachment as! SnapshotProxy)
+            if !warnUserAboutUnsafedDisk || proceedWithUnsafedDisk() {
+                c64.load(fromSnapshot: attachment as! SnapshotProxy)
+            }
             return
             
         case CRT_CONTAINER:
@@ -728,22 +812,28 @@ extension MyController {
             return
             
         case T64_CONTAINER, PRG_CONTAINER, P00_CONTAINER, D64_CONTAINER:
-            if autoMount {
-                c64.insertDisk(attachment as! ArchiveProxy)
-            } else {
-                let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
-                let controller = ArchiveMountController.init(windowNibName: nibName)
-                controller.showSheet(withParent: self)
+            
+            if !warnUserAboutUnsafedDisk || proceedWithUnsafedDisk() {
+                if autoMount {
+                    c64.insertDisk(attachment as! ArchiveProxy)
+                } else {
+                    let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+                    let controller = ArchiveMountController.init(windowNibName: nibName)
+                    controller.showSheet(withParent: self)
+                }
             }
             return
             
         case G64_CONTAINER, NIB_CONTAINER:
-            if autoMount {
-                c64.insertDisk(attachment as! ArchiveProxy)
-            } else {
-                let nibName = NSNib.Name(rawValue: "DiskMountDialog")
-                let controller = DiskMountController.init(windowNibName: nibName)
-                controller.showSheet(withParent: self)
+            
+            if !warnUserAboutUnsafedDisk || proceedWithUnsafedDisk() {
+                if autoMount {
+                    c64.insertDisk(attachment as! ArchiveProxy)
+                } else {
+                    let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+                    let controller = DiskMountController.init(windowNibName: nibName)
+                    controller.showSheet(withParent: self)
+                }
             }
             return
             

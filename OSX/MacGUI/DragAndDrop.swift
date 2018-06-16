@@ -65,8 +65,6 @@ public extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
-        let document = controller.document as! MyDocument
-        
         let pasteBoard = sender.draggingPasteboard()
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return false
@@ -91,70 +89,22 @@ public extension MetalView {
             let length = fileData!.count
             let nsData = fileData! as NSData
             let rawPtr = nsData.bytes
-            let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length)
             
-            controller.c64.load(fromSnapshot: snapshot)
+            if let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) {
+                if controller.proceedWithUnsafedDisk() {
+                    controller.c64.load(fromSnapshot: snapshot)
+                }
+            }
             return true
             
         case .compatibleFileURL:
             
-            guard let url = NSURL.init(from: pasteBoard) as URL? else {
-               return false
-            }
-            let  path = url.path
-            track("Processing dragged in file \(path)")
-            
-            // Is it a snapshot from a different version?
-            if SnapshotProxy.isUnsupportedSnapshotFile(path) {
-                document.showSnapshotVersionAlert()
+            if let url = NSURL.init(from: pasteBoard) as URL? {
+                return controller.processFile(url: url, warnUserAboutUnsafedDisk: true)
+            } else {
                 return false
             }
-            
-            // Is it a snapshop with a matching version number?
-            document.attachment = SnapshotProxy.make(withFile: path)
-            if document.attachment != nil {
-                controller.processAttachment()
-                document.fileURL = nil // Make document 'Untitled'
-                return true
-            }
-            
-            // Is it an archive?
-            document.attachment = ArchiveProxy.make(withFile: path)
-            if document.attachment != nil {
-                controller.processAttachment()
-                return true
-            }
-        
-            // Is it a band tape?
-            document.attachment = TAPProxy.make(withFile: path)
-            if document.attachment != nil {
-                controller.processAttachment()
-                return true
-            }
-            
-            // Is it a cartridge?
-            document.attachment = CRTProxy.make(withFile: path)
-            if document.attachment != nil {
-                controller.processAttachment()
-                return true
-            }
-        
-            // We haven't found any known file format. We could attach an archive
-            // of type FileArchive which would copy the file's raw data in memory
-            // at the location where normal programs start.
-            /*
-            document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
-            if document.attachedArchive != nil {
-                track("Successfully read archive.")
-                controller.processAttachment()
-                return true
-            }
-            */
-            
-            // However, it seems better to reject the drag operation.
-            track("Unsupported file type dragged in.")
-            return false
-            
+   
         default:
             break
         }

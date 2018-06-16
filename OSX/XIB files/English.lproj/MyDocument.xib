@@ -266,7 +266,7 @@
                             <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Settings" paletteLabel="Settings" toolTip="Show the emulator preference window" tag="-1" image="tb_setup" id="2226" userLabel="Emulator Setup">
+                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator" paletteLabel="Emulator" toolTip="Show the emulator preference window" tag="-1" image="tb_setup" id="2226" userLabel="Emulator Setup">
                         <connections>
                             <action selector="propertiesAction:" target="-2" id="4xt-Za-auc"/>
                         </connections>

@@ -42,6 +42,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         return error
     }
     
+
     /*
     public func applicationShouldHandleReopen(_ sender: NSApplication,
                                               hasVisibleWindows flag: Bool) -> Bool {
@@ -58,3 +59,13 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
  */
 }
 
+/*
+extension AppDelegate: NSOpenSavePanelDelegate {
+    
+    public func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
+        
+        track()
+        return false
+    }
+}
+*/
