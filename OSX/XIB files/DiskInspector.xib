@@ -51,8 +51,8 @@ Gw
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Data View" identifier="" id="rOW-oM-6OI">
-                                <view key="view" id="RcZ-eM-SIm">
+                            <tabViewItem label="Sector View" identifier="" id="rOW-oM-6OI">
+                                <view key="view" ambiguous="YES" id="RcZ-eM-SIm">
                                     <rect key="frame" x="10" y="33" width="135" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -136,7 +136,7 @@ Gw
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Error Log" identifier="" id="VTX-gu-43O">
-                                <view key="view" ambiguous="YES" id="ed7-bl-Uxs">
+                                <view key="view" id="ed7-bl-Uxs">
                                     <rect key="frame" x="10" y="33" width="539" height="163"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -145,7 +145,7 @@ Gw
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="y9B-1w-LXz">
                                                 <rect key="frame" x="1" y="1" width="527" height="155"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" id="oqI-Tl-LFs">
                                                         <rect key="frame" x="0.0" y="0.0" width="527" height="155"/>

@@ -403,19 +403,6 @@ Disk::analyzeHalftrack(Halftrack ht)
     }
 }
 
-/*
-size_t
-Disk::numberOfGcrNibbles(uint8_t *data)
-{
-    for (size_t i = 0; i < maxBytesOnTrack; i++, data += 5) {
-        if (decodeGcrNibble(data) == 0xFF)
-            return i;
-    }
-    assert(false);
-    return 0;
-}
-*/
-
 void
 Disk::analyzeSectorHeaderBlock(size_t offset)
 {
@@ -549,7 +536,7 @@ Disk::decodeDisk(uint8_t *dest, int *error)
         if (trackIsEmpty(t))
             break;
         
-        debug(2, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
+        debug(1, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), error);
     }
     
@@ -567,7 +554,7 @@ Disk::decodeTrack(Track t, uint8_t *dest, int *error)
     // For each sector ...
     for (unsigned s = 0; s < 21; s++) {
         
-        debug(2, "   Decoding sector %d\n", s);
+        debug(1, "   Decoding sector %d\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0), error);

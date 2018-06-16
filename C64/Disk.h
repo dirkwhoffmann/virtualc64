@@ -230,13 +230,6 @@ public:
     //! @brief   Returns true if the provided 5 bit codeword is a valid GCR codeword
     bool isGcr(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value] != 0xFF; }
 
-    //! @brief   Encodes a byte as a GCR bitstream
-    //! @details The created bitstream consists of 10 bytes (either 0x00 or 0x01)
-    // void encodeGcr(uint8_t value, uint8_t *gcrBits);
-
-    //! @brief   Encodes multiple bytes as a GCR bitstream
-    // void encodeGcr(uint8_t *values, uint8_t *gcrBits, size_t length);
-
     //! @brief   Encodes a single byte as a GCR bitstream.
     /*! @details Writes 10 bits to the specified position on disk.
      */
@@ -338,19 +331,6 @@ public:
     void writeByteToTrack(Track t, HeadPosition pos, uint8_t byte) {
         writeByteToHalftrack(2 * t - 1, pos, byte);
     }
-
-    /*! @brief   Writes a certain number of SYNC bits to disk.
-     */
-    /*
-    void writeSyncBitsToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
-        for (size_t i = 0; i < length; i++)
-            writeBitToHalftrack(ht, pos++, 1);
-    }
-
-    void writeSyncBitsToTrack(Track t, HeadPosition pos, size_t length) {
-        writeSyncBitsToHalftrack(2 * t - 1, pos, length);
-    }
-    */
     
     /*! @brief   Writes a certain number of interblock bytes to disk.
      */
@@ -404,42 +384,36 @@ public:
      */
     void analyzeHalftrack(Halftrack ht);
     
-    void analyzeTrack(Track t) { assert(isTrackNumber(t)); analyzeTrack(2 * t - 1); }
-    
-    //! @brief    Returns the number of entries in the error log
-    unsigned numErrors() { return (unsigned)errorLog.size(); }
-    
-    //! @brief    Writes an error message into the error log
-    void log(size_t begin, size_t length, const char *fmt, ...);
-
-    //! @brief    Reads an error message from the error log
-    std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
-
-    //! @brief    Reads the error begin index from the error log
-    size_t firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
-
-    //! @brief    Reads the error end index from the error log
-    size_t lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
-
+    void analyzeTrack(Track t) { assert(isTrackNumber(t)); analyzeHalftrack(2 * t - 1); }
     
 private:
     
-    //! @brief   Counts the number valid GCR nibbles in the provided buffer.
-    /*! @details This method is used to determine the size of a sector header or data block.
-     */
-    // size_t numberOfGcrNibbles(uint8_t *data);
-
     //! @brief   Checks the integrity of a sector header block
     void analyzeSectorHeaderBlock(size_t offset);
-
+    
     //! @brief   Checks the integrity of a sector data block
     void analyzeSectorDataBlock(size_t offset);
 
+    //! @brief    Writes an error message into the error log
+    void log(size_t begin, size_t length, const char *fmt, ...);
+    
 public:
     
     //! @brief    Returns a sector layout from variable trackInfo
     SectorInfo sectorLayout(Sector nr) {
         assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
+    
+    //! @brief    Returns the number of entries in the error log
+    unsigned numErrors() { return (unsigned)errorLog.size(); }
+    
+    //! @brief    Reads an error message from the error log
+    std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
+    
+    //! @brief    Reads the error begin index from the error log
+    size_t firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
+    
+    //! @brief    Reads the error end index from the error log
+    size_t lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
     
     //! @brief    Returns a textual representation of the disk name
     const char *diskNameAsString();
