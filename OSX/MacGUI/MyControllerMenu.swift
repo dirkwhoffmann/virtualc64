@@ -32,18 +32,27 @@ extension MyController {
         }
  
         // Disk menu
-        if item.action == #selector(MyController.ejectDiskAction(_:)) {
-            return c64.iec.driveConnected() && c64.vc1541.hasDisk()
-        }
-        if item.action == #selector(MyController.drivePowerAction(_:)) {
-            item.title = c64.iec.driveConnected() ? "Power off" : "Power on"
-            return true
-        }
         if item.action == #selector(MyController.newDiskAction(_:)) {
             return c64.iec.driveConnected()
         }
+        if item.action == #selector(MyController.ejectDiskAction(_:)) {
+            return c64.iec.driveConnected() && c64.vc1541.hasDisk()
+        }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
+        }
+        if item.action == #selector(MyController.writeProtectAction(_:)) {
+            let hasDisk = c64.vc1541.hasDisk()
+            let protected = hasDisk && c64.vc1541.disk.writeProtected()
+            item.state = protected ? .on : .off
+            // item.title = protected ? "Remove write protection" : "Write protect disk"
+            return hasDisk
+        }
+        if item.action == #selector(MyController.drivePowerAction(_:)) {
+            let connected = c64.iec.driveConnected()
+            // item.state = connected ? .on : .off
+            item.title = connected ? "Disconnect drive" : "Connect drive"
+            return true
         }
 
         // Tape menu
@@ -325,7 +334,25 @@ extension MyController {
     
     @IBAction func insertDiskAction(_ sender: Any!) {
         
-        track()
+        if !proceedWithUnsafedDisk() { return }
+        
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.prompt = "Insert"
+        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "nib"]
+        
+        // Run panel as sheet
+        openPanel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                let url = openPanel.url
+                self.processFile(url: url,
+                                 warnAboutUnsafedDisk: false,
+                                 showMountDialog: false)
+            }
+        })
     }
     
     @IBAction func insertRecentDiskAction(_ sender: Any!) {
@@ -345,6 +372,12 @@ extension MyController {
         let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
         exportPanel.showSheet(withParent: self)
+    }
+ 
+    @IBAction func writeProtectAction(_ sender: Any!) {
+        
+        let protected = c64.vc1541.disk.writeProtected()
+        c64.vc1541.disk.setWriteProtection(!protected)
     }
     
     @IBAction func drivePowerAction(_ sender: Any!) {

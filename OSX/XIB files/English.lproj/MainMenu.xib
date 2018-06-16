@@ -573,7 +573,14 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
-                            <menuItem title="Power" id="1pD-kc-N8U">
+                            <menuItem title="Write Protect Disk" id="vbD-qh-Fhq">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="writeProtectAction:" target="-1" id="a7T-Ky-RJO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="UYP-Oc-o9f"/>
+                            <menuItem title="Drive is Connected" id="1pD-kc-N8U">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="drivePowerAction:" target="-1" id="ZZB-io-gQh"/>

@@ -475,7 +475,8 @@ extension MyController {
             metalScreen.drawC64texture = true
     
             // Show mount dialog if an attachment is present
-            processAttachment(warnUserAboutUnsafedDisk: false)
+            processAttachment(warnAboutUnsafedDisk: false,
+                              showMountDialog: !autoMount)
             break;
     
         case MSG_RUN:
@@ -718,7 +719,8 @@ extension MyController {
         return true
     }
     
-    func processFile(url: URL?, warnUserAboutUnsafedDisk: Bool) -> Bool {
+    @discardableResult
+    func processFile(url: URL?, warnAboutUnsafedDisk: Bool, showMountDialog: Bool) -> Bool {
 
         let document = self.document as! MyDocument
         guard let path = url?.path else { return false }
@@ -734,7 +736,8 @@ extension MyController {
         // Is it a snapshop with a matching version number?
         document.attachment = SnapshotProxy.make(withFile: path)
         if document.attachment != nil {
-            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                              showMountDialog: showMountDialog)
             document.fileURL = nil // Make document 'Untitled'
             return true
         }
@@ -742,21 +745,24 @@ extension MyController {
         // Is it an archive?
         document.attachment = ArchiveProxy.make(withFile: path)
         if document.attachment != nil {
-            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                              showMountDialog: showMountDialog)
             return true
         }
         
         // Is it a band tape?
         document.attachment = TAPProxy.make(withFile: path)
         if document.attachment != nil {
-            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                              showMountDialog: showMountDialog)
             return true
         }
         
         // Is it a cartridge?
         document.attachment = CRTProxy.make(withFile: path)
         if document.attachment != nil {
-            processAttachment(warnUserAboutUnsafedDisk: warnUserAboutUnsafedDisk)
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                              showMountDialog: showMountDialog)
             return true
         }
         
@@ -777,7 +783,7 @@ extension MyController {
         return false
     }
     
-    func processAttachment(warnUserAboutUnsafedDisk: Bool) {
+    func processAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
        
         // Get attachment from document
         let document = self.document as! MyDocument
@@ -789,7 +795,7 @@ extension MyController {
         switch attachment.type() {
             
         case V64_CONTAINER:
-            if !warnUserAboutUnsafedDisk || proceedWithUnsafedDisk() {
+            if !warnAboutUnsafedDisk || proceedWithUnsafedDisk() {
                 c64.load(fromSnapshot: attachment as! SnapshotProxy)
             }
             return
@@ -813,8 +819,8 @@ extension MyController {
             
         case T64_CONTAINER, PRG_CONTAINER, P00_CONTAINER, D64_CONTAINER:
             
-            if !warnUserAboutUnsafedDisk || proceedWithUnsafedDisk() {
-                if autoMount {
+            if !warnAboutUnsafedDisk || proceedWithUnsafedDisk() {
+                if !showMountDialog {
                     c64.insertDisk(attachment as! ArchiveProxy)
                 } else {
                     let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
@@ -826,8 +832,8 @@ extension MyController {
             
         case G64_CONTAINER, NIB_CONTAINER:
             
-            if !warnUserAboutUnsafedDisk || proceedWithUnsafedDisk() {
-                if autoMount {
+            if !warnAboutUnsafedDisk || proceedWithUnsafedDisk() {
+                if !showMountDialog {
                     c64.insertDisk(attachment as! ArchiveProxy)
                 } else {
                     let nibName = NSNib.Name(rawValue: "DiskMountDialog")

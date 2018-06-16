@@ -100,7 +100,9 @@ public extension MetalView {
         case .compatibleFileURL:
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
-                return controller.processFile(url: url, warnUserAboutUnsafedDisk: true)
+                return controller.processFile(url: url,
+                                              warnAboutUnsafedDisk: true,
+                                              showMountDialog: !controller.autoMount)
             } else {
                 return false
             }
