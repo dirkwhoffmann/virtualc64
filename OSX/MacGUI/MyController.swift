@@ -59,8 +59,14 @@ class MyController : NSWindowController {
     /// Default image for USB devices
     var genericDeviceImage: NSImage?
     
-    /// Indicates if the user dialog should be skipped when opening archives
+    /// Indicates if the user dialog should be skipped when opening archives.
     var autoMount = false
+    
+    /// The maximum number of items that may be presented in the Recent Disk menu.
+    var maximumRecentDiskCount = 10
+    
+    /// The list of recent-disk URLs.
+    var recentDiskURLs: [URL] = []
     
     //
     // Outlets
@@ -85,6 +91,9 @@ class MyController : NSWindowController {
     // Toolbar
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
+    
+    // Menu
+    @IBOutlet weak var recentDisksMenu: NSMenu!
     
     // Debug panel (commons)
     var hex = true
@@ -689,6 +698,21 @@ extension MyController {
         return false
     }    
 
+    //
+    // Handling the recentDiskURLs list
+    //
+    
+    func noteNewRecentDiskURL(url: URL) {
+        
+        if !recentDiskURLs.contains(url) {
+            if recentDiskURLs.count == maximumRecentDiskCount {
+                recentDiskURLs.remove(at: maximumRecentDiskCount - 1)
+            }
+            recentDiskURLs.insert(url, at: 0)
+        }
+    }
+    
+    
     // --------------------------------------------------------------------------------
     // File and attachment processing
     //
@@ -745,6 +769,7 @@ extension MyController {
         // Is it an archive?
         document.attachment = ArchiveProxy.make(withFile: path)
         if document.attachment != nil {
+            noteNewRecentDiskURL(url: url!)
             processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
                               showMountDialog: showMountDialog)
             return true

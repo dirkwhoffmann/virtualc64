@@ -35,6 +35,18 @@ extension MyController {
         if item.action == #selector(MyController.newDiskAction(_:)) {
             return c64.iec.driveConnected()
         }
+        if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
+            track("tag = \(item.tag), count = \(recentDiskURLs.count)")
+            if item.tag < recentDiskURLs.count {
+                item.title = recentDiskURLs[item.tag].lastPathComponent
+                item.isHidden = false
+                item.image = NSImage.init(named: NSImage.Name(rawValue: "icon_small"))
+            } else {
+                item.isHidden = true
+                item.image = nil
+            }
+            return true
+        }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return c64.iec.driveConnected() && c64.vc1541.hasDisk()
         }
@@ -358,6 +370,20 @@ extension MyController {
     @IBAction func insertRecentDiskAction(_ sender: Any!) {
         
         track()
+        let sender = sender as! NSMenuItem
+        let tag = sender.tag
+        
+        if tag < recentDiskURLs.count {
+        processFile(url: recentDiskURLs[tag],
+                    warnAboutUnsafedDisk: true,
+                    showMountDialog: false)
+        }
+    }
+    
+    @IBAction func clearRecentDisksAction(_ sender: Any!) {
+        
+        track()
+        recentDiskURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
