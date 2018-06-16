@@ -36,7 +36,6 @@ extension MyController {
             return c64.iec.driveConnected()
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            track("tag = \(item.tag), count = \(recentDiskURLs.count)")
             if item.tag < recentDiskURLs.count {
                 item.title = recentDiskURLs[item.tag].lastPathComponent
                 item.isHidden = false

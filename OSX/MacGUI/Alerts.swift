@@ -53,13 +53,25 @@ extension MyController {
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()
     }
- 
+
+    func showLoadErrorAlert(name: String) {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        // alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.messageText = "Failed to load \(name)."
+        alert.informativeText = "The file is either damaged or contains an unsupported format."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+
+
     func showDiskIsEmptyAlert(format: String) {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Cannot export empty disk."
+        alert.messageText = "Cannot export an empty disk."
         alert.informativeText = "The \(format) format is designed to store a single file."
         alert.addButton(withTitle: "OK")
         alert.runModal()

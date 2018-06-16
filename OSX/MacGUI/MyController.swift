@@ -805,6 +805,9 @@ extension MyController {
         
         // However, it seems better to reject the operation.
         track("Aborting. File has an unsupported type.")
+        
+        let name = url!.lastPathComponent
+        showLoadErrorAlert(name: "\(name)")
         return false
     }
     

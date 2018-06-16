@@ -32,10 +32,21 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         let nserror = error as NSError
         
         if (nserror.domain == "VirtualC64") {
-            if (nserror.code == 1) {
+
+            switch (nserror.code) {
+                
+            case 1:
                 return NSError(domain: "", code: 0, userInfo:
-                    [NSLocalizedDescriptionKey: "Snapshot from other VirtualC64 release",
+                    [NSLocalizedDescriptionKey: "Snapshot from other VirtualC64 release.",
                      NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64 and cannot be opened."])
+
+            case 2:
+                return NSError(domain: "", code: 0, userInfo:
+                    [NSLocalizedDescriptionKey: "File could not be opened.",
+                     NSLocalizedRecoverySuggestionErrorKey: "The file is either damaged or contains an unsupported format."])
+
+            default:
+                assert(false)
             }
         }
         
