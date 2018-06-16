@@ -21,6 +21,10 @@
 #ifndef _DISK_INC
 #define _DISK_INC
 
+#include <string>
+#include <vector>
+#include <iostream>
+
 #include "VirtualComponent.h"
 #include "Disk_types.h"
 
@@ -31,7 +35,7 @@ class G64Archive;
 class NIBArchive;
 
 
-//! @brief    A virtual 5,25" floppy disk
+//! @brief    A virtual floppy disk
 class Disk : public VirtualComponent {
     
 public:
@@ -39,14 +43,52 @@ public:
     Disk();
     ~Disk();
     
-    //! @brief    Method from VirtualComponent
+    //! @brief   Method from VirtualComponent
     void dumpState();
     
+    //
+    // Constants and lookup tables
+    //
     
+    
+    //! @brief   Disk parameters of a standard floppy disk
+    typedef struct {
+        
+        uint8_t  sectors;       // Typical number of sectors in this track
+        uint8_t  speedZone;     // Default speed zone for this track
+        uint16_t lengthInBytes; // Typical track size in bits
+        uint16_t lengthInBits;  // Typical track size in bits
+        Sector   firstSectorNr; // Logical number of first sector in track
+        double   stagger;       // Relative position of the first bit (taken from Hoxs64)
+
+    } TrackDefaults;
+    
+    static const TrackDefaults trackDefaults[43];
+ 
+    
+    //! @brief   Disk error codes
+    /*! @details Some D64 files contain an error code for each sector.
+     *           If possible, these errors are reproduced during disk encoding.
+     */
+    typedef enum {
+        DISK_OK = 0x1,
+        HEADER_BLOCK_NOT_FOUND_ERROR = 0x2,
+        NO_SYNC_SEQUENCE_ERROR = 0x3,
+        DATA_BLOCK_NOT_FOUND_ERROR = 0x4,
+        DATA_BLOCK_CHECKSUM_ERROR = 0x5,
+        WRITE_VERIFY_ERROR_ON_FORMAT_ERROR = 0x6,
+        WRITE_VERIFY_ERROR = 0x7,
+        WRITE_PROTECT_ON_ERROR = 0x8,
+        HEADER_BLOCK_CHECKSUM_ERROR = 0x9,
+        WRITE_ERROR = 0xA,
+        DISK_ID_MISMATCH_ERROR = 0xB,
+        DRIVE_NOT_READY_ERRROR = 0xF
+    } DiskErrorCode;
+
 private:
     
-    /*! @brief    GCR encoding table
-     * @details   Maps 4 data bits to 5 GCR bits.
+    /*! @brief   GCR encoding table
+     * @details  Maps 4 data bits to 5 GCR bits.
      */
     const uint5_t gcr[16] = {
         
@@ -57,32 +99,18 @@ private:
     };
     
     /*! @brief    Inverse GCR encoding table
-     *  @details  Maps 5 GCR bits to 4 data bits.
+     *  @detaiels  Maps 5 GCR bits to 4 data bits. Invalid patterns are marked with 255.
      */
     const uint4_t invgcr[32] = {
         
-        0,  0,  0,  0, /* 0x00 - 0x03 */
-        0,  0,  0,  0, /* 0x04 - 0x07 */
-        0,  8,  0,  1, /* 0x08 - 0x0B */
-        0, 12,  4,  5, /* 0x0C - 0x0F */
-        0,  0,  2,  3, /* 0x10 - 0x13 */
-        0, 15,  6,  7, /* 0x14 - 0x17 */
-        0,  9, 10, 11, /* 0x18 - 0x1B */
-        0, 13, 14,  0  /* 0x1C - 0x1F */
-    };
-
-    /*! @brief    Indicates which bit sequences are valid GCR bit patterns
-     */
-    const bool validGcrPattern[32] = {
-        
-        0,  0,  0,  0, /* 0x00 - 0x03 */
-        0,  0,  0,  0, /* 0x04 - 0x07 */
-        0,  1,  1,  1, /* 0x08 - 0x0B */
-        0,  1,  1,  1, /* 0x0C - 0x0F */
-        0,  0,  1,  1, /* 0x10 - 0x13 */
-        0,  1,  1,  1, /* 0x14 - 0x17 */
-        0,  1,  1,  1, /* 0x18 - 0x1B */
-        0,  1,  1,  0  /* 0x1C - 0x1F */
+        255, 255, 255, 255, /* 0x00 - 0x03 */
+        255, 255, 255, 255, /* 0x04 - 0x07 */
+        255,   8,   0,   1, /* 0x08 - 0x0B */
+        255,  12,   4,   5, /* 0x0C - 0x0F */
+        255, 255,   2,   3, /* 0x10 - 0x13 */
+        255,  15,   6,   7, /* 0x14 - 0x17 */
+        255,   9,  10,  11, /* 0x18 - 0x1B */
+        255,  13,  14, 255  /* 0x1C - 0x1F */
     };
 
     /*! @brief    Maps a byte to an expanded 64 bit representation
@@ -91,6 +119,21 @@ private:
      *            byte stream.
      */
     uint64_t bitExpansion[256];
+    
+    
+    //
+    // Disk properties
+    //
+    
+    /*! @brief   Write protection mark
+     */
+    bool writeProtected;
+    
+    /*! @brief   Indicates whether data has been written
+     *  @details Depending on this flag, the GUI shows a warning dialog
+     *           before a disk gets ejected.
+     */
+    bool modified;
     
     
     //
@@ -112,8 +155,6 @@ private:
         uint8_t track[43][2 * maxBytesOnTrack];
     } data;
     
-public:
-    
     /*! @brief    Length of each halftrack in bits
      *  @details  length.halftack[i] is the length of halftrack i,
      *            length.track[i][0] is the length of track i,
@@ -121,40 +162,40 @@ public:
      */
     union {
         struct {
-            size_t _pad;
-            size_t halftrack[85];
+            uint16_t _pad;
+            uint16_t halftrack[85];
         };
-        size_t track[43][2];
+        uint16_t track[43][2];
     } length;
 
+    
+    //
+    // Debug information
+    //
+    
+    //! @brief    Information about a detected error
+    typedef struct {
+        size_t begin;
+        size_t end;
+        std::string msg;
+    } TrackInfoError;
+    
     //! @brief    Track layout as determined by analyzeTrack
     TrackInfo trackInfo;
-    
+
+    //! @brief    Error log created by analyzeTrack
+    std::vector<std::string> errorLog;
+
+    //! @brief    Stores the start offset of the erroneous bit sequence
+    std::vector<size_t> errorStartIndex;
+
+    //! @brief    Stores the end offset of the erroneous bit sequence
+    std::vector<size_t> errorEndIndex;
+
     //! @brief    Textual representation of track data
     char text[maxBitsOnTrack + 1];
-        
-    /*! @brief       Total number of tracks on this disk
-     *  @deprecated  Add method bool emptyTrack(Track nr) as a replacement
-     */
-    // uint8_t numTracks;
-
-    /*! @brief    Returns true if track/offset indicates a valid disk position on disk
-     */
-    bool isValidDiskPositon(Halftrack ht, uint16_t bitoffset) {
-        return isHalftrackNumber(ht) && bitoffset < length.halftrack[ht]; }
- 
-private:
-
-    /*! @brief   Write protection mark
-     */
-    bool writeProtected;
-
-    /*! @brief   Indicates whether data has been written
-     *  @details According to this flag, the GUI shows a data loss warning dialog before a disk gets ejected.
-     */
-    bool modified;
-
     
+
 public:
     
     /*! @brief Returns write protection flag 
@@ -183,191 +224,130 @@ public:
     //! @brief   Converts a 4 bit binary value to a 5 bit GCR codeword
     uint5_t bin2gcr(uint4_t value) { assert(is_uint4_t(value)); return gcr[value]; }
 
-    //! @brief   Converts a 5 bit GC codeword to a 4 bit binary value
+    //! @brief   Converts a 5 bit GCR codeword to a 4 bit binary value
     uint4_t gcr2bin(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value]; }
 
-    //! @brief   Encodes a byte as a GCR bitstream
-    //! @details The created bitstream consists of 10 bytes (either 0 or 1)
-    void encodeGcr(uint8_t value, uint8_t *gcrBits);
+    //! @brief   Returns true if the provided 5 bit codeword is a valid GCR codeword
+    bool isGcr(uint5_t value) { assert(is_uint5_t(value)); return invgcr[value] != 0xFF; }
+
+    //! @brief   Encodes a single byte as a GCR bitstream.
+    /*! @details Writes 10 bits to the specified position on disk.
+     */
+    void encodeGcr(uint8_t value, Track t, HeadPosition offset);
+
+    //! @brief   Encodes multiple bytes as a GCR bitstream.
+    /*! @details Writes length * 10 bits to the specified position on disk.
+     */
+    void encodeGcr(uint8_t *values, size_t length, Track t, HeadPosition offset);
+
     
-    //! @brief   Decodes a previously encoded GCR bitstream
+    /*! @brief   Translates four data bytes into five GCR encodes bytes
+     *! @deprecated
+     */
+    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset);
+    
+    //! @brief   Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
+    /*! @return  0xFF, if no valid GCR sequence is found.
+     */
+    uint8_t decodeGcrNibble(uint8_t *gcrBits);
+
+    //! @brief   Decodes a byte (8 bit) form a previously encoded GCR bitstream.
+    /*! @note    Returns an unpredictable result if invalid GCR sequences are found.
+     */
     uint8_t decodeGcr(uint8_t *gcrBits);
 
     
     //
-    //! @functiongroup Reading data from disk
+    //! @functiongroup Accessing disk data
     //
     
-    /*! @brief   Reads a single bit from disk
-     *  @param   data    Pointer to the first data byte of a track
-     *  @param   offset  Number of bit to read (first bit has offset 0)
-     *  @result  0 or 1
+    //! @brief    Returns true if the provided drive head position is valid.
+    bool isValidHeadPositon(Halftrack ht, HeadPosition pos) {
+        return isHalftrackNumber(ht) && pos < length.halftrack[ht]; }
+    
+    //! @brief    Fixes a wrapped over head position.
+    HeadPosition fitToBounds(Halftrack ht, HeadPosition pos) {
+        uint16_t len = length.halftrack[ht];
+        return pos < 0 ? pos + len : pos >= len ? pos - len : pos; }
+    
+    /*! @brief   Reads a single bit from disk.
+     *  @note    The head position is expected to be inside the halftrack bounds.
+     *  @result  0x00 or 0x01
      */
-    //uint8_t readBit(uint8_t *data, unsigned offset) {
-    //     return (data[offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0; }
-
-    /*! @brief   Reads a single bit from disk
-     *  @param   ht      Halftrack to read from
-     *  @param   offset  Bit position (starting with 0)
-     *  @result	 0 or 1
-     */
-    uint8_t readBitFromHalftrack(Halftrack ht, size_t offset) {
-        assert(isHalftrackNumber(ht));
-        // return readBit(data.halftrack[ht], offset % length.halftrack[ht]);
-        offset = offset % length.halftrack[ht];
-        return (data.halftrack[ht][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
+    uint8_t _readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+        assert(isValidHeadPositon(ht, pos));
+        return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
     }
-
-    /*! @brief   Reads a single bit from disk
-     *  @param   t      Track to read from
-     *  @param   offset  Bit position (starting with 0)
-     *  @result     0 or 1
+    
+    /*! @brief   Reads a single bit from disk.
+     *  @result	 0x00 or 0x01
      */
-    uint8_t readBitFromTrack(Track t, size_t offset) {
-        assert(isTrackNumber(t));
-        offset = offset % length.track[t][0];
-        return (data.track[t][offset / 8] & (0x80 >> (offset % 8))) ? 1 : 0;
+    uint8_t readBitFromHalftrack(Halftrack ht, HeadPosition pos) {
+        return _readBitFromHalftrack(ht, fitToBounds(ht, pos));
     }
-
-    
-    
-    /*! @brief   Reads a single byte from disk
-     *  @param   data    Pointer to the first data byte of a track
-     *  @param   offset  Position of first bit to read (first bit has offset 0)
-     *  @result	 0 .. 255
-     */
-    /*
-    uint8_t readByte(uint8_t *data, unsigned offset) {
-        uint8_t result = 0;
-        
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            if (readBit(data, offset + i)) result |= mask;
-        return result;
-    }
-     */
-    
-    /*! @brief   Reads a single byte from disk
-     *  @param   ht      Number of halftrack to read from
-     *  @param   offset  Position of first bit to read (first bit has offset 0)
-     *  @result	 returns 0 or 1
-     */
-    uint8_t readByteFromHalftrack(Halftrack ht, size_t offset) {
-        uint8_t result = 0;
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            if (readBitFromHalftrack(ht, offset + i)) result |= mask;
-        return result;
-    }
-
-    
-    //
-    //! @functiongroup Writing data to disk
-    //
-    
  
-    /*! @brief  Writes a single bit to disk
-     *  @param  ht     Halftrack to write to
-     *  @param  offset Bit position (0 ... length.halftrack[ht] - 1)
-     *  @param  bit    Bit value (true = 1, false = 0)
+    /*! @brief  Writes a single bit to disk.
+     *  @note   The head position is expected to be inside the halftrack bounds.
      */
-    void writeBitToHalftrack(Halftrack ht, size_t offset, bool bit) {
-        assert(isHalftrackNumber(ht));
-        offset = offset % length.halftrack[ht];
+    void _writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
+        assert(isValidHeadPositon(ht, pos));
         if (bit) {
-            data.halftrack[ht][offset / 8] |= (0x80 >> (offset % 8));
+            data.halftrack[ht][pos / 8] |= (0x0080 >> (pos % 8));
         } else {
-            data.halftrack[ht][offset / 8] &= ~(0x80 >> (offset % 8));
-        }
-    }
-
-    /*! @brief  Writes a single bit to disk
-     *  @param  t      Track number
-     *  @param  offset Bit position (0 ... length.track[t] - 1)
-     *  @param  bit    Bit value (true = 1, false = 0)
-     */
-    void writeBitToTrack(Track t, size_t offset, bool bit) {
-        assert(isTrackNumber(t));
-        offset = offset % length.track[t][0];
-        if (bit) {
-            data.track[t][offset / 8] |= (0x80 >> (offset % 8));
-        } else {
-            data.track[t][offset / 8] &= ~(0x80 >> (offset % 8));
+            data.halftrack[ht][pos / 8] &= (0xFF7F >> (pos % 8));
         }
     }
     
-    /*! @brief  Writes a single byte to disk
-     *  @param  data   Pointer to the first data byte of a track
-     *  @param  offset Number of fist bit to write
-     *  @param  byte   Byte to write
-     */
-    /*
-    void writeByte(uint8_t *data, unsigned offset, uint8_t byte) {
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            writeBit(data, offset + i, byte & mask);
+    void _writeBitToTrack(Track t, HeadPosition pos, bool bit) {
+        _writeBitToHalftrack(2 * t - 1, pos, bit);
     }
-    */
     
-    /*! @brief  Writes a single byte to disk
-     *  @param  ht     Halftrack number
-     *  @param  offset Position of first bit to write
-     *  @param  byte   Byte to write
-     */
-    void writeByteToHalftrack(Halftrack ht, size_t offset, uint8_t byte) {
-        assert(isHalftrackNumber(ht));
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            writeBitToHalftrack(ht, offset + i, byte & mask);
+    //! @brief  Writes a single bit to disk.
+    void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit) {
+        _writeBitToHalftrack(ht, fitToBounds(ht, pos), bit);
     }
-
-    /*! @brief  Writes a single byte to disk
-     *  @param  ht     Number of track to write to
-     *  @param  offset Position of first bit to write
-     *  @param  byte   Byte to write
-     */
-    void writeByteToTrack(Track t, size_t offset, uint8_t byte) {
-        assert(isTrackNumber(t));
-        for (uint8_t i = 0, mask = 0x80; i < 8; i++, mask >>= 1)
-            writeBitToTrack(t, offset + i, byte & mask);
+    
+    void writeBitToTrack(Track t, HeadPosition pos, bool bit) {
+        writeBitToHalftrack(2 * t - 1, pos, bit);
+    }
+    
+    //! @brief  Writes a single bit to disk multiple times.
+    void writeBitToHalftrack(Halftrack ht, HeadPosition pos, bool bit, size_t count) {
+        for (size_t i = 0; i < count; i++)
+            writeBitToHalftrack(ht, pos++, bit);
+    }
+    
+    void writeBitToTrack(Track t, HeadPosition pos, bool bit, size_t count) {
+            writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
-    /*! @brief   Writes a certain number of SYNC bits
-     *  @param   dest Start address of track.
-     *  @param   offset Beginning of SYNC sequence relative to track start in bits
-     *  @param   length Number of SYNC bits to write
+    /*! @brief  Writes a single byte to disk.
      */
-    // void writeSyncBits(uint8_t *dest, unsigned offset, unsigned length) {
-    //     for (unsigned i = 0; i < length; i++) writeBit(dest, offset + i, 1); }
-    void writeSyncBitsToTrack(Track t, size_t offset, size_t length) {
-        assert(isTrackNumber(t));
-        for (unsigned i = 0; i < length; i++) writeBitToTrack(t, offset + i, 1);
+    void writeByteToHalftrack(Halftrack ht, HeadPosition pos, uint8_t byte) {
+        for (uint8_t mask = 0x80; mask != 0; mask >>= 1)
+            writeBitToHalftrack(ht, pos++, byte & mask);
+    }
+
+    void writeByteToTrack(Track t, HeadPosition pos, uint8_t byte) {
+        writeByteToHalftrack(2 * t - 1, pos, byte);
     }
     
-    /*! @brief   Write interblock gap
+    /*! @brief   Writes a certain number of interblock bytes to disk.
      */
-    //void writeGap(uint8_t *dest, unsigned offset, unsigned length) {
-    //     for (unsigned i = 0; i < length; i++) writeByte(dest, offset + i * 8, 0x55); }
-    void writeGapToTrack(Track t, size_t offset, size_t length) {
-        assert(isTrackNumber(t));
-        for (unsigned i = 0; i < length; i++) writeByteToTrack(t, offset + i * 8, 0x55);
+    void writeGapToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
+        for (size_t i = 0; i < length; i++, pos += 8)
+            writeByteToHalftrack(ht, pos, 0x55);
     }
     
+    void writeGapToTrack(Track t, HeadPosition pos, size_t length) {
+        writeGapToHalftrack(2 * t - 1, pos, length);
+    }
     
-    //
-    //! @functiongroup Erasing data
-    //
-    
-    /*! @brief    Clears the whole disk
+    /*! @brief    Reverts to a factory-new disk.
+     *  @details  All disk data gets erased and the copy protection mark removed.
      */
     void clearDisk();
-
-    /*! @brief    Clears a single track
-     */
-    void clearTrack(Track t);
-
-
-    /*! @brief    Clears a single halftrack
-     */
-    void clearHalftrack(Halftrack ht);
-
-
+    
     /*! @brief    Returns true if a  if a track is cleared out.
      *  @warning  Don't call this method frequently, because it scans the whole track.
      */
@@ -385,100 +365,55 @@ public:
 
     
     //
-    //! @functiongroup Debugging disk data
-    //
-    
-    /*! @brief   Returns a textual represention of halftrack data
-     *  @details The starting position of the first bit is specified as an absolute position.
-     *  @todo    Clean this up, it's ugly 
-     */
-    // const char *dataAbs(Halftrack ht, size_t start, size_t n);
-
-    /*! @brief   Returns a textual represention of halftrack data
-     *  @details The starting position of the first bit is specified as an absolute position.
-     */
-    /*
-    const char *dataAbs(Halftrack ht, size_t start) {
-        assert(isHalftrackNumber(ht));
-        return dataAbs(ht, start, length.halftrack[ht]);
-    }
- */
-    
-    /*! @brief Prints some track data 
-     */
-    // void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
-    
-    //
-    //! @functiongroup Encoding disk data
+    //! @functiongroup Analyzing the disk
     //
 
 public:
     
-    /*! @brief   Converts a G64 archive into a virtual floppy disk */
-    void encodeArchive(G64Archive *a);
+    //! @brief    Returns the length of a halftrack in bits
+    uint16_t lengthOfHalftrack(Halftrack ht) {
+        assert(isHalftrackNumber(ht)); return length.halftrack[ht]; }
 
-    /*! @brief   Converts a NIB archive into a virtual floppy disk */
-    void encodeArchive(NIBArchive *a);
+    //! @brief    Returns the length of a track in bits
+    uint16_t lengthOfTrack(Track t) {
+        assert(isTrackNumber(t)); return length.track[t][0]; }
 
-    /*! @brief   Converts a D64 archive into a virtual floppy disk
-     *  @details The method creates sync marks, GRC encoded header and data blocks,
-     *           checksums and gaps.
-     */
-    void encodeArchive(D64Archive *a);
-
-private:
-    
-    /*! @brief   Encode a single track
-     *  @details This function translates the logical byte sequence of a single track into
-     *           the native VC1541 byte representation. The native representation includes
-     *           sync marks, GCR data etc.
-     *  @param   tailGapEven
-     *           Number of tail bytes follwowing sectors with even sector numbers.
-     *  @param   tailGapOdd
-     *           Number of tail bytes follwowing sectors with odd sector numbers.
-     *  @return  Number of bytes written.
-     */
-    unsigned encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEven, uint8_t tailGapOdd);
-    
-    /*! @brief   Encode a single sector
-     *  @details This function translates the logical byte sequence of a single sector
-     *           into the native VC1541 byte representation. The sector is closed by
-     *           'gap' tail gap bytes.
-     *  @return  Number of bytes written.
-     */
-    unsigned encodeSector(D64Archive *a, Track t, uint8_t sector, unsigned bitoffset, int gap);
-    
-    
-    /*! @brief   Translates four data bytes into five GCR encodes bytes
-     *! @deprecated
-     */
-    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, Track t, unsigned offset);
-    
-    
-    //
-    //! @functiongroup Decoding disk data
-    //
-
-public:
-    
-    //! @brief    Analyzes a track
+    //! @brief    Analyzes the sector layout
     /*! @details  The start and end offsets of all sectors are determined and writes
      *            into variable trackLayout.
      */
     void analyzeHalftrack(Halftrack ht);
-    void analyzeTrack(Track t);
+    
+    void analyzeTrack(Track t) { assert(isTrackNumber(t)); analyzeHalftrack(2 * t - 1); }
     
 private:
     
-    void _analyzeTrack(uint8_t *data, uint16_t length);
+    //! @brief   Checks the integrity of a sector header block
+    void analyzeSectorHeaderBlock(size_t offset);
+    
+    //! @brief   Checks the integrity of a sector data block
+    void analyzeSectorDataBlock(size_t offset);
+
+    //! @brief    Writes an error message into the error log
+    void log(size_t begin, size_t length, const char *fmt, ...);
     
 public:
     
     //! @brief    Returns a sector layout from variable trackInfo
-    SectorInfo sectorLayout(unsigned nr) {
-        assert(nr < 22);
-        return trackInfo.sectorInfo[nr];
-    }
+    SectorInfo sectorLayout(Sector nr) {
+        assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
+    
+    //! @brief    Returns the number of entries in the error log
+    unsigned numErrors() { return (unsigned)errorLog.size(); }
+    
+    //! @brief    Reads an error message from the error log
+    std::string errorMessage(unsigned nr) { return errorLog.at(nr); }
+    
+    //! @brief    Reads the error begin index from the error log
+    size_t firstErroneousBit(unsigned nr) { return errorStartIndex.at(nr); }
+    
+    //! @brief    Reads the error end index from the error log
+    size_t lastErroneousBit(unsigned nr) { return errorEndIndex.at(nr); }
     
     //! @brief    Returns a textual representation of the disk name
     const char *diskNameAsString();
@@ -497,6 +432,11 @@ private:
     //! @brief    Returns a textual representation
     const char *sectorBytesAsString(uint8_t *buffer, size_t length);
     
+    
+    //
+    //! @functiongroup Decoding disk data
+    //
+    
 public:
     
     /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
@@ -514,6 +454,52 @@ private:
     //! @brief   Decodes a single sector
     unsigned decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
 
+    
+    //
+    //! @functiongroup Encoding disk data
+    //
+    
+public:
+    
+    /*! @brief   Converts a G64 archive into a virtual floppy disk. */
+    void encodeArchive(G64Archive *a);
+    
+    /*! @brief   Converts a NIB archive into a virtual floppy disk. */
+    void encodeArchive(NIBArchive *a);
+    
+    /*! @brief   Converts a D64 archive into a floppy disk.
+     *  @details The method creates sync marks, GRC encoded header and data blocks,
+     *           checksums and gaps.
+     *  @param   interleave  Set to true to apply the standard interleave pattern.
+     *  @param   alignTracks Set to true to let the first sector always start a position 0.
+     */
+    void encodeArchive(D64Archive *a, bool interleave, bool alignTracks);
+
+    //! @brief   Converts a D64 archive into a floppy disk.
+    void encodeArchive(D64Archive *a) { encodeArchive(a, true, false); }
+
+private:
+    
+    /*! @brief   Encode a single track
+     *  @details This function translates the logical byte sequence of a single track into
+     *           the native VC1541 byte representation. The native representation includes
+     *           sync marks, GCR data etc.
+     *  @param   tailGapEven
+     *           Number of tail bytes follwowing sectors with even sector numbers.
+     *  @param   tailGapOdd
+     *           Number of tail bytes follwowing sectors with odd sector numbers.
+     *  @return  Number of written bits.
+     */
+    size_t encodeTrack(D64Archive *a, Track t, Sector sectorList[],
+                       uint8_t tailGapEven, uint8_t tailGapOdd, HeadPosition start);
+    
+    /*! @brief   Encode a single sector
+     *  @details This function translates the logical byte sequence of a single sector
+     *           into the native VC1541 byte representation. The sector is closed by
+     *           'gap' tail gap bytes.
+     *  @return  Number of written bits.
+     */
+    size_t encodeSector(D64Archive *a, Track t, Sector sector, HeadPosition start, int gap);
 };
     
 #endif

@@ -47,8 +47,8 @@ extension MyController {
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "The inserted floppy disk has not yet been saved."
-        alert.informativeText = "All data will be lost if you proceed."
+        alert.messageText = "The current disk contains modified data."
+        alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()

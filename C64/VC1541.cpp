@@ -1,7 +1,9 @@
-/*
- * Written 2006 - 2015 by Dirk W. Hoffmann
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @file        VC1541.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2018 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -40,11 +42,11 @@ VC1541::VC1541()
         // Internal state
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
-        { &rotating,                sizeof(rotating),               CLEAR_ON_RESET },
+        { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
         { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
         { &diskPartiallyInserted,   sizeof(diskPartiallyInserted),  CLEAR_ON_RESET },
         { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
-        { &bitoffset,               sizeof(bitoffset),              CLEAR_ON_RESET },
+        { &offset,                  sizeof(offset),                 CLEAR_ON_RESET },
         { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
         { &read_shiftreg,           sizeof(read_shiftreg),          CLEAR_ON_RESET },
         { &write_shiftreg,          sizeof(write_shiftreg),         CLEAR_ON_RESET },
@@ -94,7 +96,7 @@ VC1541::ping()
 {
     debug(3, "Pinging VC1541...\n");
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF);
-    c64->putMessage(rotating ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
+    c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
     c64->putMessage(diskInserted ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
 
     // TODO: Replace manual pinging of sub components by a call to super::ping()
@@ -111,7 +113,7 @@ VC1541::dumpState()
 	msg("VC1541\n");
 	msg("------\n\n");
 	msg(" Bit ready timer : %d\n", bitReadyTimer);
-	msg("   Head position : Track %d, Bit offset %d\n", halftrack, bitoffset);
+	msg("   Head position : Track %d, Bit offset %d\n", halftrack, offset);
 	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
@@ -134,7 +136,7 @@ VC1541::executeOneCycle() {
     uint8_t result = cpu.executeOneCycle();
     
     // Only proceed if drive is active
-    if (!rotating)
+    if (!spinning)
         return result;
     
     // Wait until next bit is ready
@@ -193,9 +195,7 @@ VC1541::executeBitReady()
 
 void
 VC1541::executeByteReady()
-{
-    // assert(bitoffset % 8 == 0);
-    
+{    
     if (readMode() && !sync) {
         byteReady(read_shiftreg);
     }
@@ -227,13 +227,13 @@ VC1541::byteReady()
 }
 
 void
-VC1541::setZone(uint8_t z)
+VC1541::setZone(uint2_t value)
 {
-    assert (z <= 3);
+    assert(is_uint2_t(value));
     
-    if (z != zone) {
-        debug(3, "Switching from disk zone %d to disk zone %d\n", zone, z);
-        zone = z;
+    if (value != zone) {
+        debug(3, "Switching from disk zone %d to disk zone %d\n", zone, value);
+        zone = value;
     }
 }
 
@@ -252,11 +252,11 @@ VC1541::setRedLED(bool b)
 void
 VC1541::setRotating(bool b)
 {
-    if (!rotating && b) {
-        rotating = true;
+    if (!spinning && b) {
+        spinning = true;
         c64->putMessage(MSG_VC1541_MOTOR_ON);
-    } else if (rotating && !b) {
-        rotating = false;
+    } else if (spinning && !b) {
+        spinning = false;
         c64->putMessage(MSG_VC1541_MOTOR_OFF);
     }
 }
@@ -266,18 +266,15 @@ VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
 
-        float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
+        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack++;
-        bitoffset = position * disk.length.halftrack[halftrack];
-         
-        // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
-        alignHead();
+        offset = position * disk.lengthOfHalftrack(halftrack);
         
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
    
-    assert(disk.isValidDiskPositon(halftrack, bitoffset));
+    assert(disk.isValidHeadPositon(halftrack, offset));
     
     c64->putMessage(MSG_VC1541_HEAD_UP);
     if (halftrack % 2 && sendSoundMessages)
@@ -288,18 +285,15 @@ void
 VC1541::moveHeadDown()
 {
     if (halftrack > 1) {
-        float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
+        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
         halftrack--;
-        bitoffset = position * disk.length.halftrack[halftrack];
-
-        // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
-        alignHead();
+        offset = position * disk.lengthOfHalftrack(halftrack);
         
         debug(3, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
     
-    assert(disk.isValidDiskPositon(halftrack, bitoffset));
+    assert(disk.isValidHeadPositon(halftrack, offset));
     
     c64->putMessage(MSG_VC1541_HEAD_DOWN);
     if (halftrack % 2 && sendSoundMessages)

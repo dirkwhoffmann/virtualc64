@@ -142,8 +142,8 @@ extension MyController {
     @IBAction func mediaAction(_ sender: Any!) {
     
         let nibName = NSNib.Name(rawValue: "DiskInspector")
-        let dialogController = DiskInspectorController.init(windowNibName: nibName)
-        dialogController.showSheet(withParent: self)
+        let controller = DiskInspectorController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
     }
     
     public func debugOpenAction(_ sender: Any!) {

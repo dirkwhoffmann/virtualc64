@@ -32,18 +32,39 @@ extension MyController {
         }
  
         // Disk menu
-        if item.action == #selector(MyController.driveEjectAction(_:)) {
-            return c64.iec.driveConnected() && c64.vc1541.hasDisk()
-        }
-        if item.action == #selector(MyController.driveAction(_:)) {
-            item.title = c64.iec.driveConnected() ? "Power off" : "Power on"
-            return true
-        }
-        if item.action == #selector(MyController.insertBlankDisk(_:)) {
+        if item.action == #selector(MyController.newDiskAction(_:)) {
             return c64.iec.driveConnected()
         }
-        if item.action == #selector(MyController.exportDisk(_:)) {
+        if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
+            track("tag = \(item.tag), count = \(recentDiskURLs.count)")
+            if item.tag < recentDiskURLs.count {
+                item.title = recentDiskURLs[item.tag].lastPathComponent
+                item.isHidden = false
+                item.image = NSImage.init(named: NSImage.Name(rawValue: "icon_small"))
+            } else {
+                item.isHidden = true
+                item.image = nil
+            }
+            return true
+        }
+        if item.action == #selector(MyController.ejectDiskAction(_:)) {
+            return c64.iec.driveConnected() && c64.vc1541.hasDisk()
+        }
+        if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
+        }
+        if item.action == #selector(MyController.writeProtectAction(_:)) {
+            let hasDisk = c64.vc1541.hasDisk()
+            let protected = hasDisk && c64.vc1541.disk.writeProtected()
+            item.state = protected ? .on : .off
+            // item.title = protected ? "Remove write protection" : "Write protect disk"
+            return hasDisk
+        }
+        if item.action == #selector(MyController.drivePowerAction(_:)) {
+            let connected = c64.iec.driveConnected()
+            // item.state = connected ? .on : .off
+            item.title = connected ? "Disconnect drive" : "Connect drive"
+            return true
         }
 
         // Tape menu
@@ -315,16 +336,77 @@ extension MyController {
     // Action methods (Disk menu)
     //
 
-    @IBAction func driveEjectAction(_ sender: Any!) {
+    @IBAction func newDiskAction(_ sender: Any!) {
         
-        if !c64.vc1541.hasModifiedDisk() ||
-            showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
-            
+        if proceedWithUnsafedDisk() {
+            c64.vc1541.ejectDisk()
+            c64.insertDisk(ArchiveProxy.make())
+        }
+    }
+    
+    @IBAction func insertDiskAction(_ sender: Any!) {
+        
+        if !proceedWithUnsafedDisk() { return }
+        
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.prompt = "Insert"
+        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "nib"]
+        
+        // Run panel as sheet
+        openPanel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                let url = openPanel.url
+                self.processFile(url: url,
+                                 warnAboutUnsafedDisk: false,
+                                 showMountDialog: false)
+            }
+        })
+    }
+    
+    @IBAction func insertRecentDiskAction(_ sender: Any!) {
+        
+        track()
+        let sender = sender as! NSMenuItem
+        let tag = sender.tag
+        
+        if tag < recentDiskURLs.count {
+        processFile(url: recentDiskURLs[tag],
+                    warnAboutUnsafedDisk: true,
+                    showMountDialog: false)
+        }
+    }
+    
+    @IBAction func clearRecentDisksAction(_ sender: Any!) {
+        
+        track()
+        recentDiskURLs = []
+    }
+    
+    @IBAction func ejectDiskAction(_ sender: Any!) {
+        
+        if proceedWithUnsafedDisk() {
             c64.vc1541.ejectDisk()
         }
     }
     
-    @IBAction func driveAction(_ sender: Any!) {
+    @IBAction func exportDiskAction(_ sender: Any!) {
+
+        let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
+        let exportPanel = ExportDiskController.init(windowNibName: nibName)
+        exportPanel.showSheet(withParent: self)
+    }
+ 
+    @IBAction func writeProtectAction(_ sender: Any!) {
+        
+        let protected = c64.vc1541.disk.writeProtected()
+        c64.vc1541.disk.setWriteProtection(!protected)
+    }
+    
+    @IBAction func drivePowerAction(_ sender: Any!) {
         
         track()
         if c64.iec.driveConnected() {
@@ -333,19 +415,7 @@ extension MyController {
             c64.iec.connectDrive()
         }
     }
-
-    @IBAction func insertBlankDisk(_ sender: Any!) {
-        
-        driveEjectAction(sender)
-        c64.insertDisk(ArchiveProxy.make())
-    }
     
-    @IBAction func exportDisk(_ sender: Any!) {
-
-        let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
-        let exportPanel = ExportDiskController.init(windowNibName: nibName)
-        exportPanel.showSheet(withParent: self)
-    }
     
     //
     // Action methods (Datasette menu)

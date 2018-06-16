@@ -24,23 +24,15 @@
 
 #include "VIA6522.h"
 #include "Disk.h"
-#include "D64Archive.h"
-
-// Forward declarations
-class IEC;
-class C64;
 
 /*!
- * @brief    Virtual VC1541 drive
+ * @brief    Virtual floppy drive
  * @details  Bit-accurate emulation of a VC1541
  */
 class VC1541 : public VirtualComponent {
 
 public:
     
-	//! @brief    Reference to the virtual IEC bus
-	IEC *iec;
-
 	//! @brief    CPU of the virtual drive (6502)
 	CPU cpu;
 	
@@ -62,22 +54,15 @@ public:
     //! @brief    Destructor
     ~VC1541();
     
-    //! @brief    Resets the VC1541 drive.
+    //! @brief    Methods from VirtualComponent
     void reset();
+    void ping();
+    void dumpState();
 
     /*! @brief    Resets disk properties
      *  @details  Resets all disk related properties. reset() keeps the disk alive. 
      */
     void resetDisk();
-    
-    //! @brief    Dump current configuration into message queue
-    void ping();
-        
-    //! @brief    Dump current state into logfile
-    void dumpState();
-
-    
-private:
     
     /*! @brief    Indicates how many clock cycles are needed for reading or writing a single bit
      *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is divided by N where
@@ -92,18 +77,16 @@ private:
      *            NAND-gate computing the important BYTE-READY signal.
      */
     const uint16_t cyclesPerBit[4] = {
+        
         13 * 4, // Zone 0: One bit each (16 * 3.25) base clock cycles (= 3.25 CPU cycles)
         14 * 4, // Zone 1: One bit each (16 * 3.5) base clock cycles (= 3.5 CPU cycles)
         15 * 4, // Zone 2: One bit each (16 * 3.75) base clock cycles (3.75 CPU cycles)
         16 * 4, // Zone 3: One bit each (16 * 4) base clock cycles (4 CPU cycles)
     };
-
     
-    // --------------------------------------------------------------------------------------------
-    //                                    Main entry points
-    // --------------------------------------------------------------------------------------------
     
-public:
+    
+    
     
     //
     //! @functiongroup Configuring the device
@@ -120,14 +103,14 @@ public:
     //! @functiongroup Accessing drive properties
     //
     
-    //! @brief    Returns true iff the red drive LED is shining.
+    //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };
 
     //! @brief    Turns red drive LED on or off.
     void setRedLED(bool b);
 
     //! @brief    Returns true iff the drive engine is on.
-    bool isRotating() { return rotating; };
+    bool isRotating() { return spinning; };
 
     //! @brief    Turns the drive engine on or off.
     void setRotating(bool b);
@@ -204,63 +187,38 @@ private:
      */
     void executeByteReady();
     
-    //
-    //! @functiongroup Accessing disk data
-    //
 
-public:
-
-    /*! @brief   Returns a textual represention of a part of the current halftrack
-     *  @details The starting position of the first bit is specified as an absolute position.
-     *  @deprecated
-     */
-    /*
-    const char *dataAbs(int start, unsigned n) {
-        if (!hasDisk()) return "";
-        return disk.dataAbs(halftrack, start, n);
-    }
-    */
-    
-    /*! @brief   Returns a textual represention of the current halftrack
-     *  @details The starting position of the first bit is specified as an absolute position.
-     *  @deprecated
-     */
-    /*
-    const char *dataAbs(int start) {
-        if (!hasDisk()) return "";
-        return disk.dataAbs(halftrack, start);
-    }
-    */
-    
-    // ----------------------------------------------------------------------------------------
-    //                                   Drive properties
-    // ----------------------------------------------------------------------------------------
+    //
+    // Drive properties
+    //
    
 private:
     
     //! @brief    Indicates whether disk is rotating or not
-    bool rotating;
+    bool spinning;
     
     //! @brief    Indicates whether red LED is on or off
     bool redLED;
     
-    /*! @brief    Indicates whether a disk is inserted
-     *  @note     A fully inserted disk blocks the write protection barrier if it is write protected 
+    /*! @brief    Indicates whether a disk is inserted.
+     *  @note     A fully inserted disk blocks the write protection barrier
+     *            if it is write protected.
      */
     bool diskInserted;
     
-    /*! @brief    Indicates whether a disk is inserted only partially
-     *  @note     A partially inserted disk blocks always blocks the write protection barrier 
+    /*! @brief    Indicates whether a disk is inserted only partially.
+     *  @note     A partially inserted disk blocks always blocks the write
+     *            protection barrier
      */
     bool diskPartiallyInserted;
     
-    //! @brief    Indicates whether the VC1541 shall provide sound notification messages to the GUI
+    //! @brief    Indicates whether the drive shall seld sound notifications
     bool sendSoundMessages;
 
 
-    // ----------------------------------------------------------------------------------------
-    //                                  Read/Write logic
-    // ----------------------------------------------------------------------------------------
+    //
+    // Read/Write logic
+    //
 
 private:
     
@@ -268,11 +226,13 @@ private:
     int16_t bitReadyTimer;
 
     /*! @brief    Serial load signal
-     *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191 which is advanced whenever
-     *            a bit is ready. By reaching 7, the counter signals that a byte is ready. In that case,
-     *            the write shift register is loaded with new data and the byte ready signal, which is connected
-     *            to CA1 of VIA2, changes state. In read mode, this state change will feed the input latch of VIA2
-     *            with the current contents of the read shift register.
+     *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191
+     *            which is advanced whenever a bit is ready. By reaching 7, the
+     *            counter signals that a byte is ready. In that case, the write
+     *            shift register is loaded with new data and the byte ready signal,
+     *            which is connected to CA1 of VIA2, changes state. In read mode,
+     *            this state change will feed the input latch of VIA2 with the
+     *            current contents of the read shift register.
      */
     uint8_t byteReadyCounter;
     
@@ -280,14 +240,16 @@ private:
     //! @brief    Halftrack position of the read/write head
     Halftrack halftrack;
 
-    //! @brief    Bit position of the read/write head inside the current track
-    uint16_t bitoffset;
+    //! @brief    Position of the drive head inside the current track
+    HeadPosition offset;
     
     /*! @brief    Current disk zone
-     *  @details  Each track belongs to one of four zones. Whenever the drive moves the r/w head,
-     *            it computed the new number and writes into PB5 and PB6 of via2. These bits are
-     *            hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
-     *            frequency. This mechanism is used to slow down the read/write process on inner tracks.
+     *  @details  Each track belongs to one of four zones. Whenever the drive moves
+     *            the r/w head, it computes the new number and writes into PB5 and
+     *            PB6 of via2. These bits are hard-wired to a 74LS193 counter on
+     *            the logic board that breaks down the 16 Mhz base frequency.
+     *            This mechanism is used to slow down the read/write process on
+     *            inner tracks.
      */
     uint8_t zone;
 
@@ -302,41 +264,44 @@ private:
     uint8_t write_shiftreg;
 
     /*! @brief    Current value of the SYNC signal
-     *  @details  This signal plays an important role for timing synchronization. It becomes true when the
-     *            beginning of a SYNC is detected. On the logic board, the SYNC signal is computed by a NAND gate
-     *            that combines the 10 previously read bits rom the input shift register and CB2 of VIA2 (the
-     *            r/w mode pin). Connecting CB2 to the NAND gates ensures that SYNC can only be true in read mode.
-     *            When SYNC becomes false (meaning that a 0 was pushed into the shift register), the byteReadyCounter
-     *            is reset.
+     *  @details  This signal plays an important role for timing synchronization.
+     *            It becomes true when the beginning of a SYNC is detected. On the
+     *            logic board, the SYNC signal is computed by a NAND gate that combines
+     *            the 10 previously read bits rom the input shift register and CB2
+     *            of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
+     *            that SYNC can only be true in read mode. When SYNC becomes false
+     *            (meaning that a 0 was pushed into the shift register), the
+     *            byteReadyCounter is reset.
      */
     bool sync;
             
 public:
 
-    //! @brief    Returns true iff drive is currently in read mode
+    //! @brief    Returns true if drive is in read mode
     bool readMode() { return (via2.getPcr() & 0x20); }
 
-    //! @brief    Returns true iff drive is currently in write mode
+    //! @brief    Returns true if drive is in write mode
     bool writeMode() { return !(via2.getPcr() & 0x20); }
 
-    //! @brief    Returns the current halftrack position of the drive head
+    //! @brief    Returns the halftrack under the drive head
     Halftrack getHalftrack() { return halftrack; }
 
     //! @brief    Moves the drive head to the specified track
     void setTrack(Track t) { assert(isTrackNumber(t)); halftrack = 2 * t - 1; }
 
-    //! @brief    Moves the drive head to the specified track
+    //! @brief    Moves the drive head to the specified halftrack
     void setHalftrack(Halftrack ht) { assert(isHalftrackNumber(ht)); halftrack = ht; }
     
     //! @brief    Returns the number of bits in the current halftrack
-    uint16_t sizeOfCurrentHalftrack() { return hasDisk() ? disk.length.halftrack[halftrack] : 0; }
+    uint16_t sizeOfCurrentHalftrack() {
+        return hasDisk() ? disk.lengthOfHalftrack(halftrack) : 0; }
 
-    //! @brief    Bit position of the read/write head inside the current track
-    uint16_t getBitOffset() { return bitoffset; }
+    //! @brief    Returns the position of the read/write head inside the current track
+    HeadPosition getOffset() { return offset; }
 
-    //! @brief    Sets bit position of the read/write head inside the current track
-    void setBitOffset(uint16_t offset) {
-        if (hasDisk() && disk.isValidDiskPositon(halftrack, offset)) bitoffset = offset;
+    //! @brief    Sets the position of the drive head inside the current track
+    void setOffset(HeadPosition pos) {
+        if (hasDisk() && disk.isValidHeadPositon(halftrack, pos)) offset = pos;
     }
 
     //! @brief    Moves head one halftrack up
@@ -354,45 +319,36 @@ public:
     /*! @brief    Sets the current track zone
      *  @param    z drive zone (0 to 3)
      */
-    void setZone(uint8_t z);
+    void setZone(uint2_t value);
 
     /*! @brief    Reads a single bit from the disk head
      *  @result   0 or 1
      */
-    uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, bitoffset); }
-
-    /*! @brief    Reads a single byte from the disk head
-     *  @result   0 ... 255
-     */
-    uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
+    uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
     
     //! @brief Writes a single bit to the disk head
-    void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
+    void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
     
-    //! @brief Writes a single byte to the disk head
-    void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
-
     //! @brief  Advances drive head position by one bit
-    void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
+    void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }
 
     //! @brief  Moves drive head position back by one bit
-    void rotateBack() { bitoffset = (bitoffset > 0) ? (bitoffset - 1) : (disk.length.halftrack[halftrack] - 1); }
+    void rotateBack() { if (--offset < 0) offset = disk.lengthOfHalftrack(halftrack) - 1; }
 
 private:
     
-    //! @brief  Advances drive head position by eight bits
+    //! @brief    Advances drive head position by eight bits
     void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
 
-    //! @brief  Moves drive head position back by eight bits
+    //! @brief    Moves drive head position back by eight bits
     void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
 
-    //! @brief  Align drive head to the beginning of a byte
-    void alignHead() { bitoffset &= 0xFFF8; byteReadyCounter = 0; }
-
-    //! @brief Signals the CPU that a byte has been processed
+    //! @brief    Signals the CPU that a byte has been processed.
     void byteReady();
 
-    //! @brief Signals the CPU that a byte has been processed and load byte into input latch A of via 2
+    //! @brief    Signals the CPU that a byte has been processed.
+    /*! @details  Additionally, the byte is loaded into input latch A of VIA 2
+     */
     void byteReady(uint8_t byte);
 };
 

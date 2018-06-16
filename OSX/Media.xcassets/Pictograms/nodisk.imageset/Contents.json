@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "tb_virtualmachine.png",
+      "filename" : "nodisk.png",
       "scale" : "1x"
     },
     {

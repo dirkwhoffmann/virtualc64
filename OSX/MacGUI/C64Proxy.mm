@@ -432,6 +432,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
 - (void)analyzeTrack:(Track)t { wrapper->disk->analyzeTrack(t); }
 - (void)analyzeHalftrack:(Halftrack)ht { wrapper->disk->analyzeHalftrack(ht); }
+- (NSInteger)numErrors { return wrapper->disk->numErrors(); }
+- (NSString *)errorMessage:(NSInteger)nr {
+    std::string s = wrapper->disk->errorMessage((unsigned)nr);
+    return [NSString stringWithUTF8String:s.c_str()]; }
+- (NSInteger)firstErroneousBit:(NSInteger)nr {
+    return wrapper->disk->firstErroneousBit((unsigned)nr); }
+- (NSInteger)lastErroneousBit:(NSInteger)nr {
+    return wrapper->disk->lastErroneousBit((unsigned)nr); }
 - (SectorInfo)sectorInfo:(Sector)s { return wrapper->disk->sectorLayout(s); }
 - (const char *)trackDataAsString { return wrapper->disk->trackDataAsString(); }
 - (const char *)diskNameAsString { return wrapper->disk->diskNameAsString(); }
@@ -516,8 +524,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setTrack:(Track)t { wrapper->vc1541->setTrack(t); }
 - (void) setHalftrack:(Halftrack)ht { wrapper->vc1541->setHalftrack(ht); }
 - (uint16_t) sizeOfCurrentHalftrack { return wrapper->vc1541->sizeOfCurrentHalftrack(); }
-- (uint16_t) bitOffset { return wrapper->vc1541->getBitOffset(); }
-- (void) setBitOffset:(uint16_t)value { wrapper->vc1541->setBitOffset(value); }
+- (uint16_t) offset { return wrapper->vc1541->getOffset(); }
+- (void) setOffset:(uint16_t)value { wrapper->vc1541->setOffset(value); }
 - (uint8_t) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
 - (void) writeBitToHead:(uint8_t)value { wrapper->vc1541->writeBitToHead(value); }
 

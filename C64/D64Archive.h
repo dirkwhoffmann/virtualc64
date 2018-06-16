@@ -92,8 +92,7 @@ public:
     //! @brief    Returns true iff buffer contains a D64 file
     static bool isD64(const uint8_t *buffer, size_t length);
     
-    /*! @brief   Returns true iff the specified file is a D64 file.
-     */
+    //! @brief   Returns true iff the specified file is a D64 file.
     static bool isD64File(const char *filename);
 
     const char *getName();
@@ -132,12 +131,13 @@ public:
 
     
     /*! @brief    Returns true iff item is a visible file
-     *  @details  Whether a file is visible or not is determined by the type character, a special byte
-     *            stored inside the directory. The type character also determines how the file is displayed
-     *            when the directory is loaded via LOAD "$",8. E.g., standard program files are listes as PRG.
+     *  @details  Whether a file is visible or not is determined by the type character,
+     *            a special byte stored inside the directory. The type character also
+     *            determines how the file is displayed when the directory is loaded via
+     *            LOAD "$",8. E.g., standard program files are listes as PRG.
      *  @param    typeChar   The type character of a file.
-     *  @param    extension  If this parameter is provided, an extension string is returned (e.g. "PRG").
-     *            Invisible files will return "" as extension string.
+     *  @param    extension  If this argument is provided, an extension string is
+     *            returned (e.g. "PRG"). Invisible files return "" as extension string.
      */
     bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
     
@@ -157,9 +157,14 @@ public:
     
 public:
 
-    //! Returns a pointer to the raw sector data
-    uint8_t *findSector(unsigned track, unsigned sector);
+    //! @brief    Returns a pointer to the raw sector data.
+    uint8_t *findSector(Track track, Sector sector);
 
+    //! @brief    Returns the error for the specified sector.
+    /*! @note     Returns 01 (no error) for D64 archives that do not contain error codes.
+     */
+    uint8_t errorCode(Track t, Sector s);
+    
 private:
         
     //! Translates a track and sector number into an offset
@@ -181,8 +186,9 @@ private:
     
     /*! @brief   Jump to the beginning of the next sector
      *  @details pos is set to the beginning of the next sector.
-     *  @result  True if the jump to the next sector was successful; false if the current sector points to an 
-     *           invalid valid track/sector combination. In the failure case, pos remains untouched.
+     *  @result  True if the jump to the next sector was successful; false if the
+     *           current sector points to an invalid valid track/sector combination.
+     *           In the failure case, pos remains untouched.
      */
     bool jumpToNextSector(int *pos);
 
@@ -210,24 +216,26 @@ private:
     void writeBAM(const char *name);
 
     /*! @brief   Gathers data about all directory items
-     *  @details This function scans all directory items and stores the relative start address of the first
-     *           sector into the provided offsets array. Furthermore, the total number of files is written
-     *           into variable noOfFiles.
+     *  @details This function scans all directory items and stores the relative
+     *           start address of the first sector into the provided offsets array.
+     *           Furthermore, the total number of files is written into variable noOfFiles.
      *  @param   offsets Pointer to an array of type unsigned[MAX_FILES_ON_DISK]
      *  @param   noOfFiles Pointer to a variable of type unsigned
-     *  @param   skipInvisibleFiles If set to true, only those files are considered that would show
-     *           up when loading the directory via LOAD "$",8. Otherwise, all files are considered, i.e. those
-     *           that are marked as deleted.
+     *  @param   skipInvisibleFiles If set to true, only those files are considered
+     *           that would show up when loading the directory via LOAD "$",8. Otherwise,
+     *           all files are considered, i.e. those that are marked as deleted.
      */
     void scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles = true);
     
     /*! @brief   Looks up a directory item by number.
      *  @details This function searches the directory for the requested item. 
      *  @param   itemBumber Number of the item. The first item has number 0.
-     *  @param   skipInvisibleFiles If set to true, only those files are considered that would show
-     *           up when loading the directory via LOAD "$",8. Otherwise, all files are considered, i.e. those
-     *           that are marked as deleted.
-     *  @returns Offset to the first data sector of the requested file. If the file is not found, -1 is returned.
+     *  @param   skipInvisibleFiles If set to true, only those files are considered
+     *           that would show up when loading the directory via LOAD "$",8.
+     *           Otherwise, all files are considered, i.e. those that are marked as
+     *           deleted.
+     *  @return  Offset to the first data sector of the requested file. If the file
+     *           is not found, -1 is returned.
      */
     int findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
     
