@@ -32,17 +32,17 @@ extension MyController {
         }
  
         // Disk menu
-        if item.action == #selector(MyController.driveEjectAction(_:)) {
+        if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return c64.iec.driveConnected() && c64.vc1541.hasDisk()
         }
-        if item.action == #selector(MyController.driveAction(_:)) {
+        if item.action == #selector(MyController.drivePowerAction(_:)) {
             item.title = c64.iec.driveConnected() ? "Power off" : "Power on"
             return true
         }
-        if item.action == #selector(MyController.insertBlankDisk(_:)) {
+        if item.action == #selector(MyController.newDiskAction(_:)) {
             return c64.iec.driveConnected()
         }
-        if item.action == #selector(MyController.exportDisk(_:)) {
+        if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
         }
 
@@ -315,14 +315,39 @@ extension MyController {
     // Action methods (Disk menu)
     //
 
-    @IBAction func driveEjectAction(_ sender: Any!) {
+    @IBAction func newDiskAction(_ sender: Any!) {
+        
+        if proceedWithUnsafedDisk() {
+            c64.vc1541.ejectDisk()
+            c64.insertDisk(ArchiveProxy.make())
+        }
+    }
+    
+    @IBAction func insertDiskAction(_ sender: Any!) {
+        
+        track()
+    }
+    
+    @IBAction func insertRecentDiskAction(_ sender: Any!) {
+        
+        track()
+    }
+    
+    @IBAction func ejectDiskAction(_ sender: Any!) {
         
         if proceedWithUnsafedDisk() {
             c64.vc1541.ejectDisk()
         }
     }
     
-    @IBAction func driveAction(_ sender: Any!) {
+    @IBAction func exportDiskAction(_ sender: Any!) {
+
+        let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
+        let exportPanel = ExportDiskController.init(windowNibName: nibName)
+        exportPanel.showSheet(withParent: self)
+    }
+    
+    @IBAction func drivePowerAction(_ sender: Any!) {
         
         track()
         if c64.iec.driveConnected() {
@@ -331,19 +356,7 @@ extension MyController {
             c64.iec.connectDrive()
         }
     }
-
-    @IBAction func insertBlankDisk(_ sender: Any!) {
-        
-        driveEjectAction(sender)
-        c64.insertDisk(ArchiveProxy.make())
-    }
     
-    @IBAction func exportDisk(_ sender: Any!) {
-
-        let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
-        let exportPanel = ExportDiskController.init(windowNibName: nibName)
-        exportPanel.showSheet(withParent: self)
-    }
     
     //
     // Action methods (Datasette menu)

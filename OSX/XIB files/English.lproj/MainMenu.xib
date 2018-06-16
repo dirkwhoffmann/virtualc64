@@ -537,30 +537,46 @@ CA
                 <menuItem title="Drive" id="XQm-ka-Db5">
                     <menu key="submenu" title="Drive" id="Mqn-f5-oGB">
                         <items>
+                            <menuItem title="New Disk" id="e0B-5D-eZ0">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="newDiskAction:" target="-1" id="XVv-CW-F39"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Insert Disk ..." id="00r-Lf-ALU">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="insertDiskAction:" target="-1" id="Wrt-4R-3kT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Insert Recent" id="tpw-vR-07S">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Insert Recent" id="nci-he-Qsr">
+                                    <items>
+                                        <menuItem title="Item" id="XMp-BY-BB6">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="8fO-nY-y8g"/>
                             <menuItem title="Eject Disk" id="mVY-LA-phJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="driveEjectAction:" target="-1" id="jqu-Xs-erO"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="8fO-nY-y8g"/>
-                            <menuItem title="Power" id="1pD-kc-N8U">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="driveAction:" target="-1" id="ktl-Ud-lcb"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
-                            <menuItem title="Insert Blank Disk" id="e0B-5D-eZ0">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="insertBlankDisk:" target="-1" id="ZLQ-l2-2QE"/>
+                                    <action selector="ejectDiskAction:" target="-1" id="6hq-cd-dhx"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Export Disk ..." id="inq-yB-iPf" userLabel="Export disk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="exportDisk:" target="-1" id="avU-pb-XsW"/>
+                                    <action selector="exportDiskAction:" target="-1" id="rL4-3t-mjC"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
+                            <menuItem title="Power" id="1pD-kc-N8U">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="drivePowerAction:" target="-1" id="ZZB-io-gQh"/>
                                 </connections>
                             </menuItem>
                         </items>
