@@ -936,10 +936,17 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation CRTProxy
 
-+ (BOOL) isCRTFile:(NSString *)path
-{
-    return CRTContainer::isValidCRTFile([path UTF8String]);
-}
++ (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length {
+    return CRTContainer::typeOfCRTBuffer((uint8_t *)buffer, length); }
++ (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length {
+    const char *str = CRTContainer::typeNameOfCRTBuffer((uint8_t *)buffer, length);
+    return [NSString stringWithUTF8String: str]; }
++ (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length {
+    return CRTContainer::isSupportedCRTBuffer((uint8_t *)buffer, length); }
++ (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length {
+    return CRTContainer::isUnsupportedCRTBuffer((uint8_t *)buffer, length); }
++ (BOOL) isCRTFile:(NSString *)path {
+    return CRTContainer::isCRTFile([path UTF8String]); }
 
 + (instancetype) make:(CRTContainer *)container
 {

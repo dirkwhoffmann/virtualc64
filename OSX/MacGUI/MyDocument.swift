@@ -135,6 +135,10 @@ class MyDocument : NSDocument {
             attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
             break
         case "CRT":
+            if CRTProxy.isUnsupportedCRTBuffer(buffer, length: length) {
+                let type = CRTProxy.typeName(ofCRTBuffer: buffer, length: length)!
+                throw NSError.unsupportedCartridgeError(filename: filename, type: type)
+            }
             attachment = CRTProxy.make(withBuffer: buffer, length: length)
             break
         case "TAP":
@@ -193,11 +197,6 @@ class MyDocument : NSDocument {
             return
             
         case CRT_CONTAINER:
-            let cartridge = attachment as! CRTProxy
-            if !cartridge.isSupported() {
-                showUnsupportedCartridgeAlert(cartridge)
-                return
-            }
             let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
             let controller = CartridgeMountController.init(windowNibName: nibName)
             controller.showSheet(withParent: parent)
@@ -241,16 +240,6 @@ class MyDocument : NSDocument {
         }
     }
     
-    /*
-    func processFile(from url: URL?, warnAboutUnsafedDisk: Bool, showMountDialog: Bool) throws {
-        
-        if url != nil {
-            try createAttachment(from: url!)
-            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
-                              showMountDialog: showMountDialog)
-        }
-    }
-    */
     
     //
     // Loading and saving

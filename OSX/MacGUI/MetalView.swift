@@ -150,6 +150,9 @@ public class MetalView: MTKView {
     //! If false, the C64 screen is not drawn (background texture will be visible)
     var drawC64texture = false
     
+    //! Stores an error object that was created during a drop and drop operation
+    var dragAndDropError: Error?
+    
     required public init(coder: NSCoder) {
     
         super.init(coder: coder)

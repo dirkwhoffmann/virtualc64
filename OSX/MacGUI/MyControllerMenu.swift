@@ -40,7 +40,7 @@ extension MyController {
             if item.tag < document.recentDiskURLs.count {
                 item.title = document.recentDiskURLs[item.tag].lastPathComponent
                 item.isHidden = false
-                item.image = NSImage.init(named: NSImage.Name(rawValue: "icon_small"))
+                item.image = NSImage.init(named: NSImage.Name(rawValue: "disk_small"))
             } else {
                 item.isHidden = true
                 item.image = nil

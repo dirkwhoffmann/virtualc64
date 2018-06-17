@@ -12,25 +12,25 @@ extension NSError {
     static func snapshotVersionError(filename: String) -> NSError {
         return NSError(domain: "VirtualC64", code: 0, userInfo:
             [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
-             NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64."])
+                NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64."])
     }
 
     static func unsupportedFormatError(filename: String) -> NSError {
         return NSError(domain: "VirtualC64", code: 0, userInfo:
             [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
-             NSLocalizedRecoverySuggestionErrorKey: "The format of this file is not supported."])
+                NSLocalizedRecoverySuggestionErrorKey: "The format of this file is not supported."])
     }
 
     static func corruptedFileError(filename: String) -> NSError {        
         return NSError(domain: "VirtualC64", code: 0, userInfo:
             [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
-             NSLocalizedRecoverySuggestionErrorKey: "The file seems to be corrupt. Its contents does not match the purported format."])
+                NSLocalizedRecoverySuggestionErrorKey: "The file appears to be corrupt. It's contents does not match the purported format."])
     }
     
-    static func unsupportedCartridge(filename: String, type: String) -> NSError {
+    static func unsupportedCartridgeError(filename: String, type: String) -> NSError {
         return NSError(domain: "VirtualC64", code: 0, userInfo:
             [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
-                NSLocalizedRecoverySuggestionErrorKey: "A cartridge of the provided type (\(type)) contains special hardware which is not supported by the emulator yet."])
+                NSLocalizedRecoverySuggestionErrorKey: "Cartridges of type \"\(type)\" are no supported by the emulator, yet."])
     }
 }
 
@@ -50,6 +50,7 @@ public extension MetalView {
 
 extension MyDocument {
     
+    /*
     func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
         
         let name = container.cartridgeTypeName() as String
@@ -63,6 +64,7 @@ extension MyDocument {
         // alert.beginSheetModal(for: window!, completionHandler: nil)
         alert.runModal()
     }
+    */
     
     @discardableResult
     func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {

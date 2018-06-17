@@ -100,23 +100,27 @@ public extension MetalView {
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
                 do {
+                    dragAndDropError = nil
                     try document.createAttachment(from: url)
                     document.processAttachment(warnAboutUnsafedDisk: true,
                                                showMountDialog: !controller.autoMount)
                     return true
                     
                 } catch {
-                    // return false
+                    let dragAndDropError = error
+                    let deadline = DispatchTime.now() + .milliseconds(200)
+                    DispatchQueue.main.asyncAfter(deadline: deadline) {
+                        NSApp.presentError(dragAndDropError)
+                    }
                 }
             }
             return false
-        
+            
         default:
             return false
         }
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
-        
     }
 }
