@@ -35,12 +35,12 @@ class MyDocument : NSDocument {
      */
     var attachment: ContainerProxy? = nil
     
-    /// The maximum number of items presented in the Recent Disk menu.
-    var maximumRecentDiskCount = 10
-    
     /// The list of recent-disk URLs.
     var recentDiskURLs: [URL] = []
     
+    /// The maximum number of items stored in recentDiskURLs
+    var maximumRecentDiskCount = 10
+
     
     override init() {
         
@@ -60,8 +60,8 @@ class MyDocument : NSDocument {
         loadRom(defaults.url(forKey: VC64Keys.kernalRom))
         loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
         
-        // Try to run. The emulator will either run (if ROMs were found) or
-        // writes a MISSING_ROM message into the message queue.
+        // Try to run. The emulator will either run (if all ROMs were found)
+        // or writes a MISSING_ROM message into the message queue.
         c64.run()
     }
  
@@ -76,7 +76,7 @@ class MyDocument : NSDocument {
     }
     
     //
-    // Handling the lists of recently used files
+    // Handling the list of recently used files
     //
     
     func noteNewRecentDiskURL(url: URL) {
@@ -91,7 +91,7 @@ class MyDocument : NSDocument {
     
     
     //
-    // Handling attachments
+    // Loading
     //
     
     /// Creates an attachment from a URL
@@ -172,9 +172,9 @@ class MyDocument : NSDocument {
     }
     
     /**
-     Processes a document's attachment. Snapshots will be flashed, cartridges
+     Reads in the document's attachment. Snapshots will be flashed, cartridges
      attached and archives mounted as disk. Depending on the attachment type,
-     user dialogs may show up.
+     user dialogs show up.
      
      - parameter warnAboutUnsafedDisk: Asks the user for permission to proceed,
      if the currently inserted disk contains unsaved data.
@@ -240,21 +240,10 @@ class MyDocument : NSDocument {
         }
     }
     
-    
-    //
-    // Loading and saving
-    //
-    
     override open func read(from url: URL, ofType typeName: String) throws {
         
         try createAttachment(from: url)
     }
-    /*
-    override open func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
-        
-        try createAttachment(from: fileWrapper, ofType: typeName)
-    }
-    */
     
     /// Loads a ROM image file into the emulator and stores the URL in the
     /// the user defaults.
@@ -338,8 +327,8 @@ class MyDocument : NSDocument {
         super.removeWindowController(windowController)
         
         // Shut down the emulator.
-        // Note that all GUI elements need to be inactive when we set the proxy to nil.
-        // Hence, the emulator should be shut down as late as possible.
+        // Note that all GUI elements need to be inactive when we set the proxy
+        // to nil. Hence, the emulator should be shut down as late as possible.
         c64.kill()
     }
     

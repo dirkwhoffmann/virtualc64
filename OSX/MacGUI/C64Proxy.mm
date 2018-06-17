@@ -619,12 +619,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
-/*
-- (void) awakeFromNib
-{
-}
-*/
-
 - (struct C64Wrapper *)wrapper
 {
     return wrapper;
@@ -866,11 +860,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation SnapshotProxy
 
-/*
-+ (BOOL) isSnapshotFile:(NSString *)path {
-    return Snapshot::isSnapshotFile([path UTF8String]);
-}
- */ 
 + (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length {
     return Snapshot::isSupportedSnapshot((uint8_t *)buffer, length);
 }

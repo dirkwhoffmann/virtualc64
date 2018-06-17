@@ -773,9 +773,6 @@ C64::loadRom(const char *filename)
     }
     
     if (!wasRunnable && isRunnable()) {
-        
-        // Reset emulator and let the GUI know that the emulator is ready to run.
-        reset();
         putMessage(MSG_READY_TO_RUN);
     }
     resume();

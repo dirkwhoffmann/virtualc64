@@ -479,7 +479,7 @@ extension MyController {
             metalScreen.blendIn()
             metalScreen.drawC64texture = true
     
-            // Show mount dialog if an attachment is present
+            // Load attachment if present
             let document = self.document as! MyDocument
             document.readFromAttachment(warnAboutUnsafedDisk: true,
                                        showMountDialog: !autoMount)

@@ -385,6 +385,7 @@ extension DiskInspectorController : NSTableViewDataSource {
             return hasDisk ? c64.vc1541.disk.numErrors() + 1 : 0
         } else {
             assert(false)
+            return 0
         }
     }
     
@@ -433,6 +434,7 @@ extension DiskInspectorController : NSTableViewDataSource {
    
         } else {
             assert(false)
+            return nil
         }
     }
 }
