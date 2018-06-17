@@ -25,6 +25,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         track()
     }
     
+    /*
     public func application(_ application: NSApplication, willPresentError error: Error) -> Error {
 
         track()
@@ -51,7 +52,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         
         return error
     }
-    
+    */
 
     /*
     public func applicationShouldHandleReopen(_ sender: NSApplication,

@@ -36,8 +36,9 @@ extension MyController {
             return c64.iec.driveConnected()
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            if item.tag < recentDiskURLs.count {
-                item.title = recentDiskURLs[item.tag].lastPathComponent
+            let document = self.document as! MyDocument
+            if item.tag < document.recentDiskURLs.count {
+                item.title = document.recentDiskURLs[item.tag].lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: NSImage.Name(rawValue: "icon_small"))
             } else {
@@ -337,7 +338,7 @@ extension MyController {
 
     @IBAction func newDiskAction(_ sender: Any!) {
         
-        if proceedWithUnsafedDisk() {
+        if proceedWithUnsavedDisk() {
             c64.vc1541.ejectDisk()
             c64.insertDisk(ArchiveProxy.make())
         }
@@ -345,7 +346,7 @@ extension MyController {
     
     @IBAction func insertDiskAction(_ sender: Any!) {
         
-        if !proceedWithUnsafedDisk() { return }
+        if !proceedWithUnsavedDisk() { return }
         
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
@@ -355,16 +356,18 @@ extension MyController {
         openPanel.prompt = "Insert"
         openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "nib"]
         
-        // Run panel as sheet
+        // Run panel as a sheet
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
-                let url = openPanel.url
-                do {
-                    try self.processFile(url: url,
-                                         warnAboutUnsafedDisk: false,
-                                         showMountDialog: false)
-                } catch {
-                    NSApp.presentError(error)
+                if let url = openPanel.url {
+                    let document = self.document as! MyDocument
+                    do {
+                        try document.createAttachment(from: url)
+                        document.processAttachment(warnAboutUnsafedDisk: false,
+                                                   showMountDialog: false)
+                    } catch {
+                        NSApp.presentError(error)
+                    }
                 }
             }
         })
@@ -375,12 +378,13 @@ extension MyController {
         track()
         let sender = sender as! NSMenuItem
         let tag = sender.tag
+        let document = self.document as! MyDocument
         
-        if tag < recentDiskURLs.count {
+        if tag < document.recentDiskURLs.count {
             do {
-                try processFile(url: recentDiskURLs[tag],
-                                warnAboutUnsafedDisk: true,
-                                showMountDialog: false)
+                try document.createAttachment(from: document.recentDiskURLs[tag])
+                document.processAttachment(warnAboutUnsafedDisk: true,
+                                           showMountDialog: false)
             } catch {
                 NSApp.presentError(error)
             }
@@ -390,12 +394,13 @@ extension MyController {
     @IBAction func clearRecentDisksAction(_ sender: Any!) {
         
         track()
-        recentDiskURLs = []
+        let document = self.document as! MyDocument
+        document.recentDiskURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
-        if proceedWithUnsafedDisk() {
+        if proceedWithUnsavedDisk() {
             c64.vc1541.ejectDisk()
         }
     }

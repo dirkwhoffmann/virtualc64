@@ -62,11 +62,7 @@ class MyController : NSWindowController {
     /// Indicates if the user dialog should be skipped when opening archives.
     var autoMount = false
     
-    /// The maximum number of items that may be presented in the Recent Disk menu.
-    var maximumRecentDiskCount = 10
-    
-    /// The list of recent-disk URLs.
-    var recentDiskURLs: [URL] = []
+
     
     //
     // Outlets
@@ -484,8 +480,9 @@ extension MyController {
             metalScreen.drawC64texture = true
     
             // Show mount dialog if an attachment is present
-            processAttachment(warnAboutUnsafedDisk: false,
-                              showMountDialog: !autoMount)
+            let document = self.document as! MyDocument
+            document.processAttachment(warnAboutUnsafedDisk: true,
+                                       showMountDialog: !autoMount)
             break;
     
         case MSG_RUN:
@@ -698,20 +695,6 @@ extension MyController {
         return false
     }    
 
-    //
-    // Handling the recentDiskURLs list
-    //
-    
-    func noteNewRecentDiskURL(url: URL) {
-        
-        if !recentDiskURLs.contains(url) {
-            if recentDiskURLs.count == maximumRecentDiskCount {
-                recentDiskURLs.remove(at: maximumRecentDiskCount - 1)
-            }
-            recentDiskURLs.insert(url, at: 0)
-        }
-    }
-    
     
     // --------------------------------------------------------------------------------
     // File and attachment processing
@@ -734,7 +717,8 @@ extension MyController {
     //    into the emulator.
     // --------------------------------------------------------------------------------
  
-    func proceedWithUnsafedDisk() -> Bool {
+    /*
+    func proceedWithUnsavedDisk() -> Bool {
        
         if c64.vc1541.hasModifiedDisk() {
             // Ask for user permission ...
@@ -752,6 +736,9 @@ extension MyController {
         let name = url!.lastPathComponent
         let suffix = url!.pathExtension
 
+        // TEST STUFF
+        try document.createAttachment(from: url!)
+        
         track("Processing file \(path) \(suffix)")
 
         switch (suffix.uppercased()) {
@@ -821,7 +808,7 @@ extension MyController {
         switch attachment.type() {
             
         case V64_CONTAINER:
-            if !warnAboutUnsafedDisk || proceedWithUnsafedDisk() {
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
                 c64.load(fromSnapshot: attachment as! SnapshotProxy)
             }
             return
@@ -845,7 +832,7 @@ extension MyController {
             
         case T64_CONTAINER, PRG_CONTAINER, P00_CONTAINER, D64_CONTAINER:
             
-            if !warnAboutUnsafedDisk || proceedWithUnsafedDisk() {
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
                 if !showMountDialog {
                     c64.insertDisk(attachment as! ArchiveProxy)
                 } else {
@@ -858,7 +845,7 @@ extension MyController {
             
         case G64_CONTAINER, NIB_CONTAINER:
             
-            if !warnAboutUnsafedDisk || proceedWithUnsafedDisk() {
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
                 if !showMountDialog {
                     c64.insertDisk(attachment as! ArchiveProxy)
                 } else {
@@ -874,6 +861,7 @@ extension MyController {
             fatalError()
         }
     }
+    */
     
     // --------------------------------------------------------------------------------
     // Action methods (main screen)

@@ -20,21 +20,28 @@ import Foundation
 
 class MyDocument : NSDocument {
     
-    //! @brief   Emulator proxy object
-    /*! @details This object is an objC object bridging between the GUI (written in Swift)
-     *           an the core emulator (written in C++).
+    /**
+     Emulator proxy object. This object is an Objective-C bridge between
+     the GUI (written in Swift) an the core emulator (written in C++).
      */
     var c64: C64Proxy!
     
-    //! @brief   Attachment
-    /*! @details When the GUI receives the READY_TO_RUN message from the emulator,
-     *           it checks his variable. If an attachment is found, e.g., a T64 file archive,
-     *           is displays a user dialog. The user can then choose to mount the archive
-     *           as a disk or to flash a single file into memory. If the attachment is a
-     *           snapshot, it is read into the emulator without asking the user.
+    /**
+     When the GUI receives the READY_TO_RUN message from the emulator, it
+     checks this variable. If an attachment is present, e.g., a T64 archive,
+     is displays a user dialog. The user can then choose to mount the archive
+     as a disk or to flash a single file into memory. If the attachment is a
+     snapshot, it is read into the emulator without asking the user.
      */
     var attachment: ContainerProxy? = nil
-        
+    
+    /// The maximum number of items presented in the Recent Disk menu.
+    var maximumRecentDiskCount = 10
+    
+    /// The list of recent-disk URLs.
+    var recentDiskURLs: [URL] = []
+    
+    
     override init() {
         
         track()
@@ -53,8 +60,8 @@ class MyDocument : NSDocument {
         loadRom(defaults.url(forKey: VC64Keys.kernalRom))
         loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
         
-        // Try to run
-        // The emulator either runs or writes a MISSING_ROM message into message queue.
+        // Try to run. The emulator will either run (if ROMs were found) or
+        // writes a MISSING_ROM message into the message queue.
         c64.run()
     }
  
@@ -69,61 +76,199 @@ class MyDocument : NSDocument {
     }
     
     //
-    // Loading and saving
+    // Handling the lists of recently used files
     //
     
-    override open func read(from data: Data, ofType typeName: String) throws {
+    func noteNewRecentDiskURL(url: URL) {
         
-        let size = data.count
-        let ptr = (data as NSData).bytes
-        
-        track("Trying to read \(typeName) file from buffer with \(size) bytes")
-        
-        switch (typeName) {
-        
-        case "VC64":
-            // Check version number in snapshot data
-            if SnapshotProxy.isUnsupportedSnapshot(ptr, length: size) {
-                throw NSError(domain: "VirtualC64", code: 1, userInfo: nil)
+        if !recentDiskURLs.contains(url) {
+            if recentDiskURLs.count == maximumRecentDiskCount {
+                recentDiskURLs.remove(at: maximumRecentDiskCount - 1)
             }
-            attachment = SnapshotProxy.make(withBuffer: ptr, length: size)
-            return
+            recentDiskURLs.insert(url, at: 0)
+        }
+    }
+    
+    
+    //
+    // Handling attachments
+    //
+    
+    /// Creates an attachment from a URL
+    func createAttachment(from url: URL) throws {
+    
+        track("Trying to create attachment for file \(url.lastPathComponent).")
+
+        // Try to create the attachment
+        let fileWrapper = try FileWrapper.init(url: url)
+        try createAttachment(from: fileWrapper, ofType: url.pathExtension)
+        
+        // Add URL to list of recently used files
+        switch (url.pathExtension.uppercased()) {
+        case "T64", "PRG", "D64", "P00", "G64", "NIB":
+            noteNewRecentDiskURL(url: url)
+        default:
+            break
+        }
+    }
+    
+    /// Creates an attachment from a file wrapper
+    func createAttachment(from fileWrapper: FileWrapper, ofType typeName: String) throws {
+        
+        guard let filename = fileWrapper.filename else {
+            throw NSError(domain: "VirtualC64", code: 0, userInfo: nil)
+        }
+        guard let data = fileWrapper.regularFileContents else {
+            throw NSError(domain: "VirtualC64", code: 0, userInfo: nil)
+        }
+        
+        let buffer = (data as NSData).bytes
+        let length = data.count
+
+        track("Reading \(length) bytes for file \(filename) at \(buffer).")
+        
+        switch (typeName.uppercased()) {
+        case "VC64":
+            if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
+                throw NSError.snapshotVersionError(filename: filename)
+            }
+            attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
+            break
         case "CRT":
-            attachment = CRTProxy.make(withBuffer: ptr, length: size)
+            attachment = CRTProxy.make(withBuffer: buffer, length: length)
             break
         case "TAP":
-            attachment = TAPProxy.make(withBuffer: ptr, length: size)
+            attachment = TAPProxy.make(withBuffer: buffer, length: length)
             break
         case "T64":
-            attachment = T64Proxy.make(withBuffer: ptr, length: size)
+            attachment = T64Proxy.make(withBuffer: buffer, length: length)
             break
         case "PRG":
-            attachment = PRGProxy.make(withBuffer: ptr, length: size)
+            attachment = PRGProxy.make(withBuffer: buffer, length: length)
             break
         case "D64":
-            attachment = D64Proxy.make(withBuffer: ptr, length: size)
+            attachment = D64Proxy.make(withBuffer: buffer, length: length)
             break
         case "P00":
-            attachment = P00Proxy.make(withBuffer: ptr, length: size)
+            attachment = P00Proxy.make(withBuffer: buffer, length: length)
             break
         case "G64":
-            attachment = G64Proxy.make(withBuffer: ptr, length: size)
+            attachment = G64Proxy.make(withBuffer: buffer, length: length)
             break
         case "NIB":
-            attachment = NIBProxy.make(withBuffer: ptr, length: size)
+            attachment = NIBProxy.make(withBuffer: buffer, length: length)
             break
-
         default:
-            throw NSError(domain: "VirtualC64", code: 2, userInfo: nil)
+            throw NSError.unsupportedFormatError(filename: filename)
         }
         
         if attachment == nil {
-            throw NSError(domain: "VirtualC64", code: 3, userInfo: nil)
+            throw NSError.corruptedFileError(filename: filename)
         }
-        
-        // fileURL = nil // Create an 'Untitled' document
     }
     
+    /**
+     Processes a document's attachment. Snapshots will be flashed, cartridges
+     attached and archives mounted as disk. Depending on the attachment type,
+     user dialogs may show up.
+     
+     - parameter warnAboutUnsafedDisk: Asks the user for permission to proceed,
+     if the currently inserted disk contains unsaved data.
+     
+     - parameter showMountDialog: Pops up the mount dialog if the attachment
+     contains an archive that can be mounted as a disk.
+     */
+    func processAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
+        
+        if attachment == nil { return }
+        
+        let parent = windowForSheet!.windowController as! MyController
+        
+        switch attachment!.type() {
+            
+        case V64_CONTAINER:
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
+                c64.load(fromSnapshot: attachment as! SnapshotProxy)
+            }
+            return
+            
+        case CRT_CONTAINER:
+            let cartridge = attachment as! CRTProxy
+            if !cartridge.isSupported() {
+                showUnsupportedCartridgeAlert(cartridge)
+                return
+            }
+            let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
+            let controller = CartridgeMountController.init(windowNibName: nibName)
+            controller.showSheet(withParent: parent)
+            return
+            
+        case TAP_CONTAINER:
+            let nibName = NSNib.Name(rawValue: "TapeMountDialog")
+            let controller = TapeMountController.init(windowNibName: nibName)
+            controller.showSheet(withParent: parent)
+            return
+            
+        case T64_CONTAINER, PRG_CONTAINER, P00_CONTAINER, D64_CONTAINER:
+            
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
+                if !showMountDialog {
+                    c64.insertDisk(attachment as! ArchiveProxy)
+                } else {
+                    let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+                    let controller = ArchiveMountController.init(windowNibName: nibName)
+                    controller.showSheet(withParent: parent)
+                }
+            }
+            return
+            
+        case G64_CONTAINER, NIB_CONTAINER:
+            
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
+                if !showMountDialog {
+                    c64.insertDisk(attachment as! ArchiveProxy)
+                } else {
+                    let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+                    let controller = DiskMountController.init(windowNibName: nibName)
+                    controller.showSheet(withParent: parent)
+                }
+            }
+            return
+            
+        default:
+            track("Unknown attachment type")
+            fatalError()
+        }
+    }
+    
+    /*
+    func processFile(from url: URL?, warnAboutUnsafedDisk: Bool, showMountDialog: Bool) throws {
+        
+        if url != nil {
+            try createAttachment(from: url!)
+            processAttachment(warnAboutUnsafedDisk: warnAboutUnsafedDisk,
+                              showMountDialog: showMountDialog)
+        }
+    }
+    */
+    
+    //
+    // Loading and saving
+    //
+    
+    override open func read(from url: URL, ofType typeName: String) throws {
+        
+        try createAttachment(from: url)
+    }
+    /*
+    override open func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
+        
+        try createAttachment(from: fileWrapper, ofType: typeName)
+    }
+    */
+    
+    /// Loads a ROM image file into the emulator and stores the URL in the
+    /// the user defaults.
     @discardableResult
     func loadRom(_ url: URL?) -> Bool {
         
@@ -158,6 +303,19 @@ class MyDocument : NSDocument {
         return false
     }
 
+    /// Restores the emulator state from a snapshot.
+    @discardableResult
+    func loadSnapshot(_ snapshot: SnapshotProxy) -> Bool {
+                
+        if proceedWithUnsavedDisk() {
+            c64.load(fromSnapshot: snapshot)
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    
     //
     // Saving
     //

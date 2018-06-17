@@ -65,6 +65,7 @@ public extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
+        let document = controller.document as! MyDocument
         let pasteBoard = sender.draggingPasteboard()
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return false
@@ -90,25 +91,25 @@ public extension MetalView {
             let nsData = fileData! as NSData
             let rawPtr = nsData.bytes
             
-            if let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) {
-                if controller.proceedWithUnsafedDisk() {
-                    controller.c64.load(fromSnapshot: snapshot)
-                }
+            guard let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) else {
+                return false
             }
-            return true
+            return document.loadSnapshot(snapshot)
             
         case .compatibleFileURL:
             
-            guard let url = NSURL.init(from: pasteBoard) as URL? else { return false }
-            
-            do {
-                try controller.processFile(url: url,
-                                           warnAboutUnsafedDisk: true,
-                                           showMountDialog: !controller.autoMount)
-            } catch {
-                return false
+            if let url = NSURL.init(from: pasteBoard) as URL? {
+                do {
+                    try document.createAttachment(from: url)
+                    document.processAttachment(warnAboutUnsafedDisk: true,
+                                               showMountDialog: !controller.autoMount)
+                    return true
+                    
+                } catch {
+                    // return false
+                }
             }
-            return true
+            return false
         
         default:
             return false
