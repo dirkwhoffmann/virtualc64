@@ -182,7 +182,7 @@ class MyDocument : NSDocument {
      - parameter showMountDialog: Pops up the mount dialog if the attachment
      contains an archive that can be mounted as a disk.
      */
-    func processAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
+    func readFromAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
         
         if attachment == nil { return }
         

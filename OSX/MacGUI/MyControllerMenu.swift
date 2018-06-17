@@ -363,7 +363,7 @@ extension MyController {
                     let document = self.document as! MyDocument
                     do {
                         try document.createAttachment(from: url)
-                        document.processAttachment(warnAboutUnsafedDisk: false,
+                        document.readFromAttachment(warnAboutUnsafedDisk: false,
                                                    showMountDialog: false)
                     } catch {
                         NSApp.presentError(error)
@@ -383,7 +383,7 @@ extension MyController {
         if tag < document.recentDiskURLs.count {
             do {
                 try document.createAttachment(from: document.recentDiskURLs[tag])
-                document.processAttachment(warnAboutUnsafedDisk: true,
+                document.readFromAttachment(warnAboutUnsafedDisk: true,
                                            showMountDialog: false)
             } catch {
                 NSApp.presentError(error)

@@ -481,7 +481,7 @@ extension MyController {
     
             // Show mount dialog if an attachment is present
             let document = self.document as! MyDocument
-            document.processAttachment(warnAboutUnsafedDisk: true,
+            document.readFromAttachment(warnAboutUnsafedDisk: true,
                                        showMountDialog: !autoMount)
             break;
     
