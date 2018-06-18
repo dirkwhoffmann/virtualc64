@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="HardwarePrefsController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
-                <outlet property="SIDChipModel" destination="pHz-Uy-ZhU" id="GLz-VJ-bQB"/>
-                <outlet property="SIDEngine" destination="VQD-6p-1N4" id="3yx-AL-DgU"/>
-                <outlet property="SIDFilter" destination="ua4-tq-5vG" id="DBP-FF-BOi"/>
-                <outlet property="SIDSamplingMethod" destination="KHH-C4-ErA" id="39Q-f2-p1j"/>
                 <outlet property="driveNoise" destination="c6a-Gx-Xaz" id="FEK-yo-ZGc"/>
                 <outlet property="flag" destination="1ma-4u-W0a" id="4mw-TM-ZTs"/>
                 <outlet property="machineType" destination="jAz-gN-9Pm" id="kNl-FH-9C6"/>
                 <outlet property="mouseInfo" destination="Swr-mJ-8tR" id="VVd-sI-qjI"/>
                 <outlet property="mouseModel" destination="uHB-0P-N7e" id="isp-1K-4Af"/>
+                <outlet property="sidChipModel" destination="pHz-Uy-ZhU" id="GLz-VJ-bQB"/>
+                <outlet property="sidEngine" destination="VQD-6p-1N4" id="3yx-AL-DgU"/>
+                <outlet property="sidFilter" destination="ua4-tq-5vG" id="DBP-FF-BOi"/>
+                <outlet property="sidSamplingMethod" destination="KHH-C4-ErA" id="39Q-f2-p1j"/>
                 <outlet property="systemText" destination="DE9-lh-HiG" id="Ces-IG-v0M"/>
                 <outlet property="systemText2" destination="54O-kT-wnG" id="nYr-VV-lXZ"/>
                 <outlet property="warpLoad" destination="Pdp-iS-ZhE" id="XGM-4L-h4k"/>
@@ -144,7 +144,7 @@
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="aQ5-0j-Nod">
                                 <items>
-                                    <menuItem title="Nearest neighbor" state="on" hidden="YES" id="Wfe-Zj-Mhx">
+                                    <menuItem title="Nearest neighbor" state="on" id="Wfe-Zj-Mhx">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="Interpolate" tag="1" id="4yF-uL-0KE">

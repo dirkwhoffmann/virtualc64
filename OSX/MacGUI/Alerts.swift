@@ -124,6 +124,17 @@ extension MyController {
         alert.runModal()
     }
     
+    func showResidSamplingMethodAlert() {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning // .critical
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "pref_sid"))
+        alert.messageText = "Incompatible Sampling Method"
+        alert.informativeText = "The current sampling method is not compatible with the selected chip model and will be changed to \"Interpolate\"."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+    
     func proceedWithUnsavedDisk() -> Bool {
         
         let document = self.document as! MyDocument

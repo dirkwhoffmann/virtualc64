@@ -19,24 +19,22 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.0
+// RELEASE NOTES FOR NEXT RELEASE: 2.1
 //
-// Milestone reached: All remaining Objective-C files have been ported to Swift (hence version number 2.0)
-// The debugger has been reworked and a new SID panel has been added.
-// Fixed several bugs in the SID bridge which is the internal API for accessing the reSID library.
-// Replaced reSID files by those used in VICE 3.2.
-// Added support for the D-Pad on Sony's Dualshock controller.
 
-//
-//
 // TODO:
 //
-// Add setter API for SID stuff
+// Use lock for pausing the emulation in suspend() and resume()
+// Do we really need to terminate the execution thread?
+// Check why icons for D64 etc. do not show up
+// New icon is too big. Add new size(?)
+// Add support for EasyFlash cartridges
 //
 //
 // CLEANUP:
-// Intructions.c: A lot of commands have identical switch cases now. Use fallthroughs to
-//                simplify code. 
+// Intructions.c: A lot of commands have identical switch cases. Use fallthroughs to
+//                simplify code.
+// Add setter API for SID stuff
 //
 
 #ifndef _C64_INC
