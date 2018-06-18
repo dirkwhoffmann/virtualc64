@@ -247,7 +247,7 @@ extension MyController {
         defaults.set(c64.vc1541.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
-    // ◉◎▪▫▮▯01
+    
     func saveKeyMapUserDefaults() {
         
         let defaults = UserDefaults.standard

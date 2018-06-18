@@ -168,7 +168,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="driveAction:" target="-2" id="1370"/>
+                            <action selector="drivePowerAction:" target="-2" id="kfN-Jp-n59"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="214">

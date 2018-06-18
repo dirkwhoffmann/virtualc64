@@ -7,6 +7,33 @@
 
 import Foundation
 
+extension NSError {
+
+    static func snapshotVersionError(filename: String) -> NSError {
+        return NSError(domain: "VirtualC64", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
+                NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64."])
+    }
+
+    static func unsupportedFormatError(filename: String) -> NSError {
+        return NSError(domain: "VirtualC64", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
+                NSLocalizedRecoverySuggestionErrorKey: "The format of this file is not supported."])
+    }
+
+    static func corruptedFileError(filename: String) -> NSError {        
+        return NSError(domain: "VirtualC64", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
+                NSLocalizedRecoverySuggestionErrorKey: "The file appears to be corrupt. It's contents does not match the purported format."])
+    }
+    
+    static func unsupportedCartridgeError(filename: String, type: String) -> NSError {
+        return NSError(domain: "VirtualC64", code: 0, userInfo:
+            [NSLocalizedDescriptionKey: "The document \"\(filename)\" could not be opened.",
+                NSLocalizedRecoverySuggestionErrorKey: "Cartridges of type \"\(type)\" are no supported by the emulator, yet."])
+    }
+}
+
 public extension MetalView {
     
     func showNoMetalSupportAlert() {
@@ -23,23 +50,21 @@ public extension MetalView {
 
 extension MyDocument {
     
-    func showSnapshotVersionAlert() {
+    /*
+    func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
         
-        // TODO:
-        // The same dialog is shown in the application delegate.
-        // Is it possible to call a method on the application instance with an
-        // appropriate NSError object?
+        let name = container.cartridgeTypeName() as String
         
         let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.messageText = "Snapshot from other VirtualC64 release"
-        alert.informativeText = "The snapshot was created with a different version of VirtualC64 and cannot be opened."
+        alert.alertStyle = .warning
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "cartridge"))
+        alert.messageText = "Unsupported cartridge type: \(name)"
+        alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
         alert.addButton(withTitle: "OK")
+        // alert.beginSheetModal(for: window!, completionHandler: nil)
         alert.runModal()
     }
-}
-
-extension MyController {
+    */
     
     @discardableResult
     func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {
@@ -53,13 +78,25 @@ extension MyController {
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()
     }
- 
+    
+    func proceedWithUnsavedDisk() -> Bool {
+        
+        if c64.vc1541.hasModifiedDisk() {
+            return showDiskIsUnsafedAlert() == .alertFirstButtonReturn
+        } else {
+            return true
+        }
+    }
+}
+
+extension MyController {
+        
     func showDiskIsEmptyAlert(format: String) {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Cannot export empty disk."
+        alert.messageText = "Cannot export an empty disk."
         alert.informativeText = "The \(format) format is designed to store a single file."
         alert.addButton(withTitle: "OK")
         alert.runModal()
@@ -76,19 +113,6 @@ extension MyController {
         alert.runModal()
     }
     
-    func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
-        
-        let name = container.cartridgeTypeName() as String
-        
-        let alert = NSAlert()
-        alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "cartridge"))
-        alert.messageText = "Unsupported cartridge type: \(name)"
-        alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
-        alert.addButton(withTitle: "OK")
-        alert.beginSheetModal(for: window!, completionHandler: nil)
-    }
-    
     func userSnapshotStorageFull() {
         
         let alert = NSAlert()
@@ -99,5 +123,21 @@ extension MyController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
-
+    
+    func showResidSamplingMethodAlert() {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning // .critical
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "pref_sid"))
+        alert.messageText = "Incompatible Sampling Method"
+        alert.informativeText = "The current sampling method is not compatible with the selected chip model and will be changed to \"Interpolate\"."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+    
+    func proceedWithUnsavedDisk() -> Bool {
+        
+        let document = self.document as! MyDocument
+        return document.proceedWithUnsavedDisk()
+    }
 }

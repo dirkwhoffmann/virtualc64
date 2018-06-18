@@ -16,10 +16,10 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var systemText2: NSTextField!
     
     // Audio
-    @IBOutlet weak var SIDChipModel: NSPopUpButton!
-    @IBOutlet weak var SIDFilter: NSButton!
-    @IBOutlet weak var SIDEngine: NSPopUpButton!
-    @IBOutlet weak var SIDSamplingMethod: NSPopUpButton!
+    @IBOutlet weak var sidChipModel: NSPopUpButton!
+    @IBOutlet weak var sidFilter: NSButton!
+    @IBOutlet weak var sidEngine: NSPopUpButton!
+    @IBOutlet weak var sidSamplingMethod: NSPopUpButton!
 
     // VC1541
     @IBOutlet weak var warpLoad: NSButton!
@@ -49,12 +49,15 @@ class HardwarePrefsController : UserDialogController {
         }
         
         // Audio
-        SIDChipModel.selectItem(withTag: c64.sid.chipModel())
-        SIDFilter.state = c64.sid.audioFilter() ? .on : .off
-        SIDEngine.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
-        SIDSamplingMethod.isEnabled = c64.sid.reSID()
-        SIDSamplingMethod.selectItem(withTag: c64.sid.samplingMethod())
-        
+        let sidModel = c64.sid.chipModel()
+        sidChipModel.selectItem(withTag: sidModel)
+        sidFilter.state = c64.sid.audioFilter() ? .on : .off
+        sidEngine.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
+        sidSamplingMethod.isEnabled = c64.sid.reSID()
+        sidSamplingMethod.selectItem(withTag: c64.sid.samplingMethod())
+        let sampleFast = sidSamplingMethod.item(at: 0)
+        sampleFast?.isHidden = (sidModel == Int(MOS_8580.rawValue))
+            
         // VC1541
         warpLoad.state = c64.warpLoad() ? .on : .off
         driveNoise.state = c64.vc1541.sendSoundMessages() ? .on : .off
@@ -103,6 +106,14 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func SIDChipModelAction(_ sender: Any!) {
     
         let sender = sender as! NSPopUpButton
+        let model = UInt32(sender.selectedTag())
+        let method = UInt32(c64.sid.samplingMethod())
+        
+        track("Model = \(model) method = \(method)")
+        if (model == MOS_8580.rawValue && method == SID_SAMPLE_FAST.rawValue) {
+            parent.showResidSamplingMethodAlert()
+            c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
+        }
         c64.sid.setChipModel(sender.selectedTag())
         update()
     }
@@ -144,7 +155,7 @@ class HardwarePrefsController : UserDialogController {
         
         // SID
         c64.sid.setReSID(true)
-        c64.sid.setChipModel(1)
+        c64.sid.setChipModel(0)
         c64.sid.setAudioFilter(true)
         c64.sid.setSamplingMethod(0)
 

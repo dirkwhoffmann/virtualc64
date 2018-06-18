@@ -550,6 +550,8 @@
 				389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,
 				5020F28B0BBABE3C0093C396 /* IEC.cpp */,
+				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
+				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 			);
 			name = Computer;
 			sourceTree = "<group>";
@@ -663,6 +665,20 @@
 			path = MacGUI;
 			sourceTree = "<group>";
 		};
+		501F845820D7851000917A97 /* Drive */ = {
+			isa = PBXGroup;
+			children = (
+				5000C8220D13CEE10011A2E9 /* VC1541.h */,
+				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
+				500FC6770D17D2190044131D /* VIA6522.h */,
+				500FC6780D17D2190044131D /* VIA6522.cpp */,
+				5027F9DA20C5449E0041AD37 /* Disk_types.h */,
+				50775E101B8EE95B002EB58D /* Disk.h */,
+				50775E0E1B8EE8A9002EB58D /* Disk.cpp */,
+			);
+			name = Drive;
+			sourceTree = "<group>";
+		};
 		5038CA9820B6C2D8000D9193 /* Debugger */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,15 +709,7 @@
 			children = (
 				503C8BFA2014AC99000494A0 /* Cartridges */,
 				50FFF52420AB498000758683 /* Mouse */,
-				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
-				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
-				5000C8220D13CEE10011A2E9 /* VC1541.h */,
-				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
-				500FC6770D17D2190044131D /* VIA6522.h */,
-				500FC6780D17D2190044131D /* VIA6522.cpp */,
-				5027F9DA20C5449E0041AD37 /* Disk_types.h */,
-				50775E101B8EE95B002EB58D /* Disk.h */,
-				50775E0E1B8EE8A9002EB58D /* Disk.cpp */,
+				501F845820D7851000917A97 /* Drive */,
 				50F681E91BEA3BE4008568E3 /* Datasette.h */,
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
 			);

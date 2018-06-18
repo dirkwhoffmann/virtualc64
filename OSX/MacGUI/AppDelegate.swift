@@ -25,6 +25,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         track()
     }
     
+    /*
     public func application(_ application: NSApplication, willPresentError error: Error) -> Error {
 
         track()
@@ -32,16 +33,26 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         let nserror = error as NSError
         
         if (nserror.domain == "VirtualC64") {
-            if (nserror.code == 1) {
-                return NSError(domain: "", code: 0, userInfo:
-                    [NSLocalizedDescriptionKey: "Snapshot from other VirtualC64 release",
-                     NSLocalizedRecoverySuggestionErrorKey: "The snapshot was created with a different version of VirtualC64 and cannot be opened."])
+
+            switch (nserror.code) {
+                
+            case 1:
+                return NSError.snapshotVersionError(filename: "The provided snapshot")
+
+            case 2:
+                return NSError.unsupportedFormatError(filename: "The provided file")
+
+            case 3:
+                return NSError.corruptedFileError(filename: "The provided file")
+                
+            default:
+                assert(false)
             }
         }
         
         return error
     }
-    
+    */
 
     /*
     public func applicationShouldHandleReopen(_ sender: NSApplication,

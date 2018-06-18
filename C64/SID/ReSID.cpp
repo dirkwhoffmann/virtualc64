@@ -188,8 +188,9 @@ ReSID::setSamplingMethod(SamplingMethod value)
 {
     switch(value) {
         case SID_SAMPLE_FAST:
-            warn("SID_SAMPLE_FAST not supported. Using SAMPLE_INTERPOLATE.\n");
-            value = SID_SAMPLE_INTERPOLATE;
+            // warn("SID_SAMPLE_FAST not supported. Using SAMPLE_INTERPOLATE.\n");
+            // value = SID_SAMPLE_INTERPOLATE;
+            debug("Using sampling method SAMPLE_FAST.\n");
             break;
         case SID_SAMPLE_INTERPOLATE:
             debug("Using sampling method SAMPLE_INTERPOLATE.\n");

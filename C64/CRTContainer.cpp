@@ -19,6 +19,7 @@
  */
 
 #include "CRTContainer.h"
+#include "Cartridge.h"
 
 const uint8_t CRTContainer::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ', 0x00 };
@@ -75,24 +76,54 @@ CRTContainer::~CRTContainer()
 }
 
 bool
-CRTContainer::isValidCRTBuffer(const uint8_t *buffer, size_t length)
+CRTContainer::isCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
-bool
-CRTContainer::isValidCRTFile(const char *filename)
+CartridgeType
+CRTContainer::typeOfCRTBuffer(const uint8_t *buffer, size_t length)
 {
-    assert(filename != NULL);
-    
-    if (!checkFileSuffix(filename, ".CRT") && !checkFileSuffix(filename, ".crt"))
+    assert(isCRTBuffer(buffer, length));
+    return (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
+}
+
+const char *
+CRTContainer::typeNameOfCRTBuffer(const uint8_t *buffer, size_t length)
+{
+    CartridgeType type = typeOfCRTBuffer(buffer, length);
+    return CRTContainer::cartridgeTypeName(type);
+}
+
+bool
+CRTContainer::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
+{
+    if (!isCRTBuffer(buffer, length))
         return false;
     
-    if (!checkFileSize(filename, 0x40, -1))
+    // CartridgeType type = (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
+    return Cartridge::isSupportedType(typeOfCRTBuffer(buffer, length));
+}
+
+bool
+CRTContainer::isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length)
+{
+        return isCRTBuffer(buffer, length) && !isSupportedCRTBuffer(buffer, length);
+}
+
+bool
+CRTContainer::isCRTFile(const char *path)
+{
+    assert(path != NULL);
+    
+    if (!checkFileSuffix(path, ".CRT") && !checkFileSuffix(path, ".crt"))
         return false;
     
-    if (!checkFileHeader(filename, magicBytes))
+    if (!checkFileSize(path, 0x40, -1))
+        return false;
+    
+    if (!checkFileHeader(path, magicBytes))
         return false;
     
     return true;
@@ -147,9 +178,9 @@ CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 const char *
-CRTContainer::cartridgeTypeName()
+CRTContainer::cartridgeTypeName(CartridgeType type)
 {
-    switch (cartridgeType()) {
+    switch (type) {
             
         case CRT_NORMAL: return "Normal cartridge";
         case CRT_ACTION_REPLAY: return "Action Replay";
@@ -217,4 +248,9 @@ CRTContainer::cartridgeTypeName()
     }
 }
 
+const char *
+CRTContainer::cartridgeTypeName()
+{
+    return cartridgeTypeName(cartridgeType());
+}
 

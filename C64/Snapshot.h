@@ -117,16 +117,12 @@ public:
     //! @brief    Returns true if file is a snapshot with an outdated version number
     static bool isUnsupportedSnapshotFile(const char *path);
 
-    //
-	// Virtual functions from Container class
-    //
-    
+	// Methods from Container class
 	bool hasSameType(const char *filename);
 	bool readFromBuffer(const uint8_t *buffer, size_t length);
 	size_t writeToBuffer(uint8_t *buffer);
     ContainerType type();
 	const char *typeAsString();
-
 
     //! @brief    Returns size of header
     size_t headerSize() { return sizeof(SnapshotHeader); }

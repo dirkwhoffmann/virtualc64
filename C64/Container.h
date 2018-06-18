@@ -113,7 +113,9 @@ public:
     //! @brief    Required buffer size for this container
     size_t sizeOnDisk() { return writeToBuffer(NULL); }
 
-    //! @brief    Returns true iff the specified file stores a container of the same type
+    /*! @brief    Returns true iff this container has the same type as the
+     *            container stored in the specified file.
+     */
     virtual bool hasSameType(const char *filename) { return false; }
 
     /*! @brief    Read container contents from a memory buffer.

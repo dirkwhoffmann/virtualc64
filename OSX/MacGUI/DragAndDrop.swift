@@ -65,6 +65,7 @@ public extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
+        let document = controller.document as! MyDocument
         let pasteBoard = sender.draggingPasteboard()
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return false
@@ -90,31 +91,35 @@ public extension MetalView {
             let nsData = fileData! as NSData
             let rawPtr = nsData.bytes
             
-            if let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) {
-                if controller.proceedWithUnsafedDisk() {
-                    controller.c64.load(fromSnapshot: snapshot)
-                }
+            guard let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) else {
+                return false
             }
-            return true
+            return document.loadSnapshot(snapshot)
             
         case .compatibleFileURL:
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
-                return controller.processFile(url: url,
-                                              warnAboutUnsafedDisk: true,
-                                              showMountDialog: !controller.autoMount)
-            } else {
-                return false
+                do {
+                    try document.createAttachment(from: url)
+                    document.readFromAttachment(warnAboutUnsafedDisk: true,
+                                               showMountDialog: !controller.autoMount)
+                    return true
+                    
+                } catch {
+                    let dragAndDropError = error
+                    let deadline = DispatchTime.now() + .milliseconds(200)
+                    DispatchQueue.main.asyncAfter(deadline: deadline) {
+                        NSApp.presentError(dragAndDropError)
+                    }
+                }
             }
-   
+            return false
+            
         default:
-            break
+            return false
         }
-        
-        return false
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
-        
     }
 }

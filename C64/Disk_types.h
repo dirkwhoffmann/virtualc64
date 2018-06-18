@@ -28,37 +28,37 @@
 /*! @brief    Maximum number of tracks on a single disk.
  *  @note     Tracks are indexed from 1 to 42. There is no track 0!
  */
-const unsigned maxNumberOfTracks = 42;
+static const unsigned maxNumberOfTracks = 42;
 
 /*! @brief    Maximum number of halftracks on a single disk.
  *  @note     Tracks are indexed from 1 to 84. There is no halftrack 0!
  */
-const unsigned maxNumberOfHalftracks = 84;
+static const unsigned maxNumberOfHalftracks = 84;
 
 /*! @brief    Maximum number of sectors in a single track
  *  @details  Sectors are numbered from 0 to 20.
  */
-const unsigned maxNumberOfSectors = 21;
+static const unsigned maxNumberOfSectors = 21;
 
 /*! @brief    Maximum number of bits stored on a single track.
  *  @details  Each track can store a maximum of 7928 bytes. The exact number depends on
  *            the track number (inner tracks contain fewer bytes) and the actual write
  *            speed of a drive.
  */
-const unsigned maxBytesOnTrack = 7928;
+static const unsigned maxBytesOnTrack = 7928;
 
 /*! @brief    Maximum number of bits stored on a single track.
  */
-const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
+static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
 
 /*! @brief    Size of a sector header block in bits.
  */
-const unsigned headerBlockSize = 10 * 8;
+static const unsigned headerBlockSize = 10 * 8;
 
 //! @brief    Size of a sector data block in bits.
 /*! @details  Each data block consists of 325 GCR bytes (coding 260 real bytes)
  */
-const unsigned dataBlockSize = 325 * 8;
+static const unsigned dataBlockSize = 325 * 8;
 
 /*! @brief    Maximum number of files that can be stored on a single disk
  *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors.
@@ -79,7 +79,7 @@ typedef unsigned Track;
 
 /*! @brief    Checks if a given number is a valid track number
  */
-inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfTracks; }
+static inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfTracks; }
 
 /*! @brief    Data type for addressing half and full tracks on disk
  *  @details  The VC1541 drive head can move between position 1 and 85.
@@ -94,7 +94,7 @@ typedef unsigned Halftrack;
 
 /*! @brief    Checks if a given number is a valid halftrack number
  */
-inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfHalftracks; }
+static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfHalftracks; }
 
 /*! @brief    Data type for addressing sectors inside a track
  */
@@ -102,7 +102,7 @@ typedef unsigned Sector;
 
 /*! @brief    Checks if a given number is a valid sector number
  */
-inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
+static inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
 
 /*! @brief    Data type for specifying the head position inside a track
  */

@@ -166,25 +166,20 @@ C64::reset()
 {
     debug(1, "Resetting virtual C64[%p]\n", this);
     
-    // suspend();
-
     // Reset all sub components
     VirtualComponent::reset();
-    
-    // Make CPU ready to go
-    cpu.initPC();
     
     // Initialize processor port data direction register and processor port
     mem.poke(0x0000, 0x2F);  // Data direction
     mem.poke(0x0001, 0x1F);  // IO port, set default memory layout
-    
-    // Make memory ready to go
-    // mem.updatePeekPokeLookupTables();
+
+    // Initialize program counter
+    bool takeFromRom = mem.getPeekSource(0xFFFC) == M_ROM;
+    cpu.setPC(takeFromRom ? 0xFCE2 : LO_HI(mem.snoop(0xFFFC), mem.snoop(0xFFFD)));
     
     rasterlineCycle = 1;
     nanoTargetTime = 0UL;
     ping();
-    // resume();
 }
 
 void C64::ping()
@@ -778,9 +773,6 @@ C64::loadRom(const char *filename)
     }
     
     if (!wasRunnable && isRunnable()) {
-        
-        // Reset emulator and let the GUI know that the emulator is ready to run.
-        reset();
         putMessage(MSG_READY_TO_RUN);
     }
     resume();

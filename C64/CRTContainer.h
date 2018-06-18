@@ -94,7 +94,10 @@ public:
     /*! @details  Don't confuse with ContainerType
      */
     CartridgeType cartridgeType() { return CartridgeType(LO_HI(data[0x17], data[0x16])); }
-    
+
+    //! @brief    Returns the cartridge type in plain text
+    static const char *cartridgeTypeName(CartridgeType type);
+
     //! @brief    Returns the cartridge type in plain text
     const char *cartridgeTypeName();
     
@@ -128,17 +131,30 @@ public:
     //
     //! @functiongroup Serializing
     //
-
-    //! @brief    Returns true iff buffer contains a CRT file
-    static bool isValidCRTBuffer(const uint8_t *buffer, size_t length);
     
-    //! Returns true of filename points to a valid file of that type
-    static bool isValidCRTFile(const char *filename);
+    //! @brief    Returns true if buffer contains a CRT file.
+    static bool isCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns the cartridge type number stored in the CRT buffer.
+    static CartridgeType typeOfCRTBuffer(const uint8_t *buffer, size_t length);
 
-    //! Check file type
-    bool hasSameType(const char *filename) { return CRTContainer::isValidCRTFile(filename); }
+    //! @brief    Returns the cartridge type name stored in the CRT buffer.
+    static const char *typeNameOfCRTBuffer(const uint8_t *buffer, size_t length);
 
-    //! Read container data from memory buffer
+    //! @brief    Returns true if buffer contains a supported CRT file.
+    static bool isSupportedCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true if buffer contains a CRT file of unsupported type.
+    static bool isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length);
+
+    //! @brief    Returns true if path points to a CRT file.
+    //! @deprecated
+    static bool isCRTFile(const char *path);
+
+    //! @brief    Method from Container class
+    bool hasSameType(const char *filename) { return CRTContainer::isCRTFile(filename); }
+
+    //! @brief    Method from Container class
     bool readFromBuffer(const uint8_t *buffer, size_t length);
 
 };

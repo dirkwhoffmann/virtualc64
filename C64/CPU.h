@@ -251,9 +251,6 @@ public:
 	//! @brief    Returns current value of the Y register.
     uint8_t getY() { return Y; }
 
-    //! @brief    Initialize PC with its start up value.
-    void initPC() { PC = LO_HI(mem->snoop(0xFFFC), mem->snoop(0xFFFD)); }
-
 	//! @brief    Returns current value of the program counter.
     uint16_t getPC() { return PC; }
     
@@ -315,6 +312,9 @@ public:
 	//! @brief    Writes value to the freezend program counter.
     void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = fetch;}
     
+    //! @brief    Initialize PC with its start up value.
+    // void initPC() { PC = LO_HI(mem->snoop(0xFFFC), mem->snoop(0xFFFD)); }
+
 	//! @brief    Changes low byte of the program counter only.
     void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
     

@@ -653,6 +653,10 @@ struct ContainerWrapper;
 @interface CRTProxy : ContainerProxy {
 }
 
++ (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
++ (NSString *)typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length;
++ (BOOL)isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length;
 + (BOOL)isCRTFile:(NSString *)path;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;

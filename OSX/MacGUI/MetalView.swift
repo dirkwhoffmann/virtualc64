@@ -149,7 +149,7 @@ public class MetalView: MTKView {
     
     //! If false, the C64 screen is not drawn (background texture will be visible)
     var drawC64texture = false
-    
+        
     required public init(coder: NSCoder) {
     
         super.init(coder: coder)
