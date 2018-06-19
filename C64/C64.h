@@ -24,8 +24,6 @@
 
 // TODO:
 //
-// Use lock for pausing the emulation in suspend() and resume()
-// Do we really need to terminate the execution thread?
 // Check why icons for D64 etc. do not show up
 // New icon is too big. Add new size(?)
 // Add support for EasyFlash cartridges
