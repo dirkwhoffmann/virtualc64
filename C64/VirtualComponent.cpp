@@ -21,8 +21,6 @@
 
 VirtualComponent::VirtualComponent()
 {
-    running = false;
-	suspendCounter = 0;	
     snapshotItems = NULL;
     subComponents = NULL;
     snapshotSize = 0;
@@ -76,80 +74,6 @@ VirtualComponent::ping()
         for (unsigned i = 0; subComponents[i] != NULL; i++)
             subComponents[i]->ping();
 }
-
-void 
-VirtualComponent::run()
-{
-	running = true;
-}
-
-bool 
-VirtualComponent::isRunning()
-{
-	return running;
-}
-
-void 
-VirtualComponent::halt()
-{
-	running = false;
-}
-
-bool 
-VirtualComponent::isHalted()
-{
-	return !running;
-}
-
-void
-VirtualComponent::suspend()
-{
-    debug(2, "Suspending...(%d)\n", suspendCounter);
-
-    if (suspendCounter == 0 && isHalted())
-        return;
-    
-    halt();
-    suspendCounter++;
-}
-
-void
-VirtualComponent::resume()
-{
-    debug(2, "Resuming (%d)...\n", suspendCounter);
-    
-    if (suspendCounter == 0)
-        return;
-    
-    if (--suspendCounter == 0)
-        run();
-}
-
-/*
-void 
-VirtualComponent::suspend()
-{
-	debug(2, "Suspending...\n");
-	if (suspendCounter == 0) {
-		suspendedState = isRunning();
-		halt();
-	}
-	suspendCounter++;	
-
-	assert(suspendCounter > 0);
-}
-
-void 
-VirtualComponent::resume()
-{
-	debug(2, "Resuming...\n");
-	suspendCounter--;
-	if (suspendCounter == 0 && suspendedState == true)
-		run();
-	
-	assert(suspendCounter >= 0);
-}
-*/
 
 void 
 VirtualComponent::dumpState()

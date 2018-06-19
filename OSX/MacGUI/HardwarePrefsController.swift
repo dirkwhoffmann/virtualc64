@@ -149,7 +149,7 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
         c64.suspend()
- 
+
         // VIC
         c64.setNTSC(false)
         

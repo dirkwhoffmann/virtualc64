@@ -35,7 +35,7 @@ private:
     /*! @brief    Default debug level
      *  @details  On object creation, this value is used as debug level.
      */
-    static unsigned defaultDebugLevel;
+    // static unsigned defaultDebugLevel;
 
     /*! @brief    Debug level
      *  @details  Debug messages are written either to console or a logfile.
@@ -69,7 +69,7 @@ public:
     //
     
     //! @brief    Sets the default debug level.
-    static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }
+    // static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }
 
     //! @brief    Changes the debug level for a specific object.
     void setDebugLevel(unsigned level) { debugLevel = level; }
