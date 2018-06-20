@@ -39,8 +39,8 @@
 #define _C64_INC
 
 // Snapshot version number of this release
-#define V_MAJOR 1
-#define V_MINOR 12
+#define V_MAJOR 2
+#define V_MINOR 0
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
