@@ -47,6 +47,11 @@
 		501DE31020C9C41B00707130 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30320C9C41A00707130 /* wave.cc */; };
 		501DE31120C9C41B00707130 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30420C9C41A00707130 /* envelope.cc */; };
 		501DE31220C9C41B00707130 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE30620C9C41A00707130 /* filter.cc */; };
+		501E427C20D975AD000BB48D /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427720D975AC000BB48D /* IconD64.icns */; };
+		501E427D20D975AD000BB48D /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427820D975AC000BB48D /* IconCRT.icns */; };
+		501E427E20D975AD000BB48D /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427920D975AD000BB48D /* IconT64.icns */; };
+		501E427F20D975AD000BB48D /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427A20D975AD000BB48D /* IconPRG.icns */; };
+		501E428020D975AD000BB48D /* IconV64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427B20D975AD000BB48D /* IconV64.icns */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
@@ -262,6 +267,11 @@
 		501DE30720C9C41A00707130 /* wave8580_P_T.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_P_T.h; path = ../../../../tmp/resid3.2/wave8580_P_T.h; sourceTree = "<group>"; };
 		501DE30820C9C41B00707130 /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PS_.h; path = ../../../../tmp/resid3.2/wave6581_PS_.h; sourceTree = "<group>"; };
 		501DE30920C9C41B00707130 /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
+		501E427720D975AC000BB48D /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
+		501E427820D975AC000BB48D /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
+		501E427920D975AD000BB48D /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
+		501E427A20D975AD000BB48D /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
+		501E427B20D975AD000BB48D /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconV64.icns; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
@@ -488,6 +498,11 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				501E427820D975AC000BB48D /* IconCRT.icns */,
+				501E427720D975AC000BB48D /* IconD64.icns */,
+				501E427A20D975AD000BB48D /* IconPRG.icns */,
+				501E427920D975AD000BB48D /* IconT64.icns */,
+				501E427B20D975AD000BB48D /* IconV64.icns */,
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
@@ -984,14 +999,18 @@
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
 				50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */,
+				501E428020D975AD000BB48D /* IconV64.icns in Resources */,
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
 				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
+				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
 				50A519411B8DA230006771E2 /* drive_click.aiff in Resources */,
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
+				501E427C20D975AD000BB48D /* IconD64.icns in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
+				501E427D20D975AD000BB48D /* IconCRT.icns in Resources */,
 				50FB749C203306A700E05051 /* DiskInspector.xib in Resources */,
 				506D54CA20321EDF0026D8B4 /* RomDialog.xib in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
@@ -1002,6 +1021,7 @@
 				500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
+				501E427F20D975AD000BB48D /* IconPRG.icns in Resources */,
 				50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

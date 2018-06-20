@@ -24,8 +24,6 @@
 
 // TODO:
 //
-// Use lock for pausing the emulation in suspend() and resume()
-// Do we really need to terminate the execution thread?
 // Check why icons for D64 etc. do not show up
 // New icon is too big. Add new size(?)
 // Add support for EasyFlash cartridges
@@ -41,12 +39,15 @@
 #define _C64_INC
 
 // Snapshot version number of this release
-#define V_MAJOR 1
-#define V_MINOR 12
+#define V_MAJOR 2
+#define V_MINOR 0
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
 #define NDEBUG
+
+// Default debug level for all components
+#define DEBUG_LEVEL 1
 
 // Data types and constants
 #include "C64_types.h"
@@ -196,32 +197,42 @@ public:
      */
     uint8_t rasterlineCycle;
 
-private:
 
     //
     // Execution thread
     //
     
+    //! @brief    A mutex for implementing the suspend / resume mechanism
+    pthread_mutex_t mutex;
+
     //! @brief    The emulators execution thread
     pthread_t p;
     
+private:
+    
     /*! @brief    System timer information
-     *  @details  Used to put the emulation thread to sleep for the proper amount of time
+     *  @details  Used to put the emulation thread to sleep for the proper
+     *            amount of time.
      */
     mach_timebase_info_data_t timebase;
     
     /*! @brief    Wake-up time of the synchronization timer in nanoseconds
-     *  @details  This value is recomputed each time the emulator thread is put to sleep
+     *  @details  This value is recomputed each time the emulator thread is
+     *            put to sleep.
      */
     uint64_t nanoTargetTime;
 
-    //! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
+    /*! @brief    Indicates if c64 is currently running at maximum speed
+     *            (with timing synchronization disabled)
+     */
     bool warp;
     
-    //! Indicates that we should always run as possible
+    //! @brief    Indicates that we should always run as possible.
     bool alwaysWarp;
     
-    //! Indicates that we should run as fast as possible at least during disk operations
+    /*! @brief    Indicates that we should run as fast as possible at least
+     *            during disk operations.
+     */
     bool warpLoad;
     
     
@@ -344,27 +355,50 @@ public:
     //! @brief    Returns the potY bits as they show up in the SID register
     uint8_t potYBits();
 
+    
     //
     //! @functiongroup Running the emulator
     //
 
-    //! @brief    Cold starts the virtual C64
+    //! @brief    Cold starts the virtual C64.
     /*! @details  The emulator and all of its sub components are reset and
      *            the execution thread is started.
      */
     void powerUp();
     
-    //! @brief    Continues emulation
-    /*! @details  This method recreates the emulation thread and is usually called after
-     *            emulation was stopped by a call to halt() or by reaching a breakpoint.
+    //! @brief    Starts the execution thread.
+    /*! @details  This method launches the execution thread and is usually
+     *            called after emulation was stopped by a call to halt() or by
+     *            reaching a breakpoint.
      */
     void run();
     
-    /*! @brief    Pauses emulation
-     *  @details  The execution thread is canceled, but the internal state remains intact.
-     *            Emulation can be continued by a call to run()
+    /*! @brief    Stops the emulation execution thread.
+     *  @details  The execution thread is canceled, but the internal state
+     *            remains intact. Emulation can be continued by a call to run().
      */
     void halt();
+    
+    /*! @brief    Freezes the emulation thread.
+     *  @details  If the internal state of the emulator is changed from outside
+     *            the emulation thread, the change must be embedded in a
+     *            suspend / resume block as follows:
+     *
+     *            suspend();
+     *            do something with the internal state;
+     *            resume();
+     *
+     *  @note     The implementation uses a recursive mutex. Hence, multiple
+     *            suspend / resume blocks can be nested.
+     *  @see      resume
+     */
+    void suspend();
+    
+    /*! @brief    Continues the emulation thread.
+     *  @details  This functions concludes a suspend operation.
+     *  @see      suspend
+     */
+    void resume();
     
     /*! @brief    The tread exit function.
      *  @details  This method is invoked automatically when the execution thread terminates.
@@ -392,6 +426,10 @@ public:
     
     //! @brief    Executes until the end of the rasterline
     bool executeOneLine();
+
+    //! @brief    Executes until the end of the frame
+    bool executeOneFrame();
+
     
 private:
     

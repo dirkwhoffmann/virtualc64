@@ -52,22 +52,6 @@ public:
      */
     C64 *c64;
     
-private:
-    
-	/*! @brief    Indicates whether the component is currently active.
-     *  @details  All virtual components can be in two states. They can either be
-     *            'running' or 'halted'. During normal operation, all components
-     *            are running. If an error occurrs, or if the user requests the
-     *            virtual machine to halt in the debugger, the components will
-     *            enter the 'halted' state.
-     */
-	bool running;
-		
-	/*! @brief    Number of times the component is suspended.
-     *  @details  The value is equal to the number of suspend calls minus the
-     *            number of resume calls.
-     */
-	int suspendCounter;
 				
 public:
     
@@ -112,53 +96,6 @@ public:
 	 */ 
 	virtual void dumpState();
 	
-    
-    //
-    //! @functiongroup Running the component
-    //
-
-	//! @brief    Start component.
-	/*! @details  The function is called when the virtual computer is requested to run.
-     *            Some components such as the CPU require asynchronously running
-     *            threads and will start them here. Most of the other components are
-     *            of a static nature and won't implement additional functionality.
-     */
-	virtual void run();
-
-	/*! @brief    Returns true iff the component is running.
-     */
-	virtual bool isRunning();
-	
-	/*! @brief    Stops component.
-     *  @details  The function is called when the virtual computer is requested
-     *            to freeze. For example, the CPU will ask its asynchronously
-     *            running thread to halt. Most of the other components are of a
-     *            static nature and won't implement additional functionality.
-     */
-	virtual void halt();
-
-	/*! @brief    Returns true iff the component is halted
-     */
-	virtual bool isHalted();
-
-	/*! @brief    Suspends component.
-     *  @details  The suspend mechanism is a nested run/halt mechanism. First of all,
-     *            it works like halt, i.e., the component freezes. In contrast to halt,
-     *            the suspend function remembers whether the component was already
-     *            halted or running. When the resume function is invoked, the original
-     *            running state is reestablished. In other words: If your component
-     *            is currently running and you suspend it 10 times, you'll have to
-     *            resume it 10 times to make it run again.
-     *  @see      resume
-     */
-	void suspend();
-	
-	/*! @brief    Resumes component.
-     *  @details  This functions concludes a suspend operation.
-     *  @see      suspend
-     */
-	void resume();
-
     
     //
     //! @functiongroup Registering snapshot items and sub components

@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@ threadCleanup(void* thisC64)
     
     C64 *c64 = (C64 *)thisC64;
     c64->threadCleanup();
-
     c64->sid.halt();
+    
     c64->debug(2, "Execution thread terminated\n");
     c64->putMessage(MSG_HALT);
 }
@@ -44,6 +44,8 @@ void
     assert(thisC64 != NULL);
     
     C64 *c64 = (C64 *)thisC64;
+    bool success = true;
+    
     c64->debug(2, "Execution thread started\n");
     c64->putMessage(MSG_RUN);
     
@@ -57,12 +59,11 @@ void
     c64->floppy.cpu.clearErrorState();
     c64->restartTimer();
     
-    while (1) {        
-        if (!c64->executeOneLine())
-            break;        
-
-        if (c64->getRasterline() == 0 && c64->getFrame() % 8 == 0)
-            pthread_testcancel(); // Check if thread was requested to terminate
+    while (success) {
+        pthread_testcancel();
+        pthread_mutex_lock(&c64->mutex);
+        success = c64->executeOneFrame();
+        pthread_mutex_unlock(&c64->mutex);
     }
     
     pthread_cleanup_pop(1);
@@ -79,7 +80,12 @@ C64::C64()
     setDescription("C64");
     debug("Creating virtual C64[%p]\n", this);
 
-    p = NULL;    
+    p = NULL;
+    pthread_mutexattr_t attr;
+    pthread_mutexattr_init(&attr);
+    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init(&mutex, &attr);
+
     warp = false;
     alwaysWarp = false;
     warpLoad = false;
@@ -158,7 +164,9 @@ C64::C64()
 C64::~C64()
 {
     debug(1, "Destroying virtual C64[%p]\n", this);
+    
     halt();
+    pthread_mutex_destroy(&mutex);
 }
 
 void
@@ -333,6 +341,20 @@ C64::run()
         // Start execution thread
         pthread_create(&p, NULL, runThread, (void *)this);
     }
+}
+
+void
+C64::suspend()
+{
+    debug(2, "Suspending...\n");
+    pthread_mutex_lock(&mutex);
+}
+
+void
+C64::resume()
+{
+    debug(2, "Resuming...\n");
+    pthread_mutex_unlock(&mutex);
 }
 
 void
@@ -582,6 +604,16 @@ C64::executeOneLine()
         if (!executeOneCycle())
             return false;
     }
+    return true;
+}
+
+bool
+C64::executeOneFrame()
+{
+    do {
+        if (!executeOneLine())
+            return false;
+    } while (rasterline != 0);
     return true;
 }
 
