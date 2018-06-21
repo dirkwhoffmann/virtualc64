@@ -28,7 +28,6 @@
  *
  */
 
-
 #include "C64.h"
 
 FastSID::FastSID()
