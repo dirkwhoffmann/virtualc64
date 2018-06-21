@@ -791,8 +791,7 @@
 				50CA0D500A9076FD00A5A08D /* FastSID.h */,
 				50CA0D510A9076FD00A5A08D /* FastSID.cpp */,
 			);
-			name = fastsid;
-			path = "New Group";
+			path = fastsid;
 			sourceTree = "<group>";
 		};
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
