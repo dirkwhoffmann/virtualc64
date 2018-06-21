@@ -71,7 +71,6 @@
 		504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504606321BE4B99100463FD7 /* G64Archive.cpp */; };
 		5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */; };
 		5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* ArchiveMountController.swift */; };
-		504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
 		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
@@ -126,7 +125,6 @@
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
-		50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* FastSID.cpp */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D19B8620ACA0C40004C47B /* Mouse1350.cpp */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
@@ -135,6 +133,8 @@
 		50DBB44B2025CE5700489271 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Basics.swift */; };
 		50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC89C720B2EB53005E0557 /* CpuTableView.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
+		50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E8366820DC4A090017A5BB /* FastSID.cpp */; };
+		50E8366E20DC4A090017A5BB /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E8366B20DC4A090017A5BB /* FastVoice.cpp */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
@@ -295,9 +295,6 @@
 		504606331BE4B99100463FD7 /* G64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64Archive.h; sourceTree = "<group>"; };
 		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
 		5046C414202349EE000D9B1C /* ArchiveMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveMountController.swift; sourceTree = "<group>"; };
-		504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastVoice.cpp; sourceTree = "<group>"; };
-		504DDB5220A0431E00FFD5B2 /* FastVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastVoice.h; sourceTree = "<group>"; };
-		504DDB5320A0431E00FFD5B2 /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_door_closed_2.aiff; sourceTree = "<group>"; };
@@ -369,8 +366,6 @@
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
-		50CA0D500A9076FD00A5A08D /* FastSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSID.h; sourceTree = "<group>"; };
-		50CA0D510A9076FD00A5A08D /* FastSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSID.cpp; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D19B8620ACA0C40004C47B /* Mouse1350.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1350.cpp; sourceTree = "<group>"; };
 		50D19B8720ACA0C40004C47B /* Mouse1350.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse1350.h; sourceTree = "<group>"; };
@@ -384,6 +379,11 @@
 		50DBB44A2025CE5700489271 /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
 		50DC89C720B2EB53005E0557 /* CpuTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CpuTableView.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
+		50E8366820DC4A090017A5BB /* FastSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSID.cpp; sourceTree = "<group>"; };
+		50E8366920DC4A090017A5BB /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
+		50E8366A20DC4A090017A5BB /* FastSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSID.h; sourceTree = "<group>"; };
+		50E8366B20DC4A090017A5BB /* FastVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastVoice.cpp; sourceTree = "<group>"; };
+		50E8366C20DC4A090017A5BB /* FastVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastVoice.h; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
@@ -750,7 +750,7 @@
 		5062EE1320A4AD0400F77BA4 /* SID */ = {
 			isa = PBXGroup;
 			children = (
-				5083D5D320A04CA400C1B4EE /* fastsid */,
+				50E8366720DC4A090017A5BB /* fastsid */,
 				50D141641417A34B0024FC74 /* resid */,
 				50171A9F2083710E00C07AAD /* SID_types.h */,
 				506D39D3141780FF00268AF6 /* SIDBridge.h */,
@@ -780,18 +780,6 @@
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 			);
 			name = "User Dialog Controllers";
-			sourceTree = "<group>";
-		};
-		5083D5D320A04CA400C1B4EE /* fastsid */ = {
-			isa = PBXGroup;
-			children = (
-				504DDB5220A0431E00FFD5B2 /* FastVoice.h */,
-				504DDB5020A0431E00FFD5B2 /* FastVoice.cpp */,
-				504DDB5320A0431E00FFD5B2 /* waves.h */,
-				50CA0D500A9076FD00A5A08D /* FastSID.h */,
-				50CA0D510A9076FD00A5A08D /* FastSID.cpp */,
-			);
-			path = fastsid;
 			sourceTree = "<group>";
 		};
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
@@ -904,6 +892,18 @@
 				501DE2F820C9C41900707130 /* wave8580_PST.h */,
 			);
 			path = resid;
+			sourceTree = "<group>";
+		};
+		50E8366720DC4A090017A5BB /* fastsid */ = {
+			isa = PBXGroup;
+			children = (
+				50E8366820DC4A090017A5BB /* FastSID.cpp */,
+				50E8366920DC4A090017A5BB /* waves.h */,
+				50E8366A20DC4A090017A5BB /* FastSID.h */,
+				50E8366B20DC4A090017A5BB /* FastVoice.cpp */,
+				50E8366C20DC4A090017A5BB /* FastVoice.h */,
+			);
+			path = fastsid;
 			sourceTree = "<group>";
 		};
 		50FE5B342039B392006CE7C7 /* Keyboard Controller */ = {
@@ -1055,7 +1055,6 @@
 				50FFF52320AB495B00758683 /* Mouse.cpp in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
-				50CA0D520A9076FD00A5A08D /* FastSID.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				501DE30D20C9C41B00707130 /* voice.cc in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
@@ -1079,10 +1078,10 @@
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				501DE31120C9C41B00707130 /* envelope.cc in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
+				50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				501DE30E20C9C41B00707130 /* extfilt.cc in Sources */,
 				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
-				504DDB5520A0431F00FFD5B2 /* FastVoice.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
@@ -1115,6 +1114,7 @@
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,
+				50E8366E20DC4A090017A5BB /* FastVoice.cpp in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */,
 				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
