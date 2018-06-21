@@ -246,7 +246,7 @@
 		501DE2F220C9C41800707130 /* pot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pot.cc; sourceTree = "<group>"; };
 		501DE2F320C9C41800707130 /* resid-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "resid-config.h"; path = "../../../../tmp/resid3.2/resid-config.h"; sourceTree = "<group>"; };
 		501DE2F420C9C41800707130 /* wave6581_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave6581_PST.h; path = ../../../../tmp/resid3.2/wave6581_PST.h; sourceTree = "<group>"; };
-		501DE2F520C9C41800707130 /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dac.cc; path = ../../../../tmp/resid3.2/dac.cc; sourceTree = "<group>"; };
+		501DE2F520C9C41800707130 /* dac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dac.cc; sourceTree = "<group>"; };
 		501DE2F620C9C41800707130 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
 		501DE2F720C9C41800707130 /* sid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sid.cc; sourceTree = "<group>"; };
 		501DE2F820C9C41900707130 /* wave8580_PST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wave8580_PST.h; path = ../../../../tmp/resid3.2/wave8580_PST.h; sourceTree = "<group>"; };
