@@ -139,6 +139,7 @@ VIC::reset()
 void
 VIC::ping()
 {
+    VirtualComponent::ping();
     c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 

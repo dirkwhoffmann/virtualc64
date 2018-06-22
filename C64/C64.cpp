@@ -191,7 +191,7 @@ C64::reset()
 
 void C64::ping()
 {
-    debug (1, "Pinging virtual C64[%p]\n", this);
+    debug (2, "Pinging virtual C64[%p]\n", this);
 
     VirtualComponent::ping();
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);

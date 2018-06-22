@@ -90,17 +90,10 @@ VC1541::resetDisk()
 void
 VC1541::ping()
 {
-    debug(3, "Pinging VC1541...\n");
+    VirtualComponent::ping();
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF);
     c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
     c64->putMessage(diskInserted ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
-
-    // TODO: Replace manual pinging of sub components by a call to super::ping()
-    cpu.ping();
-    mem.ping();
-    via1.ping();
-    via2.ping();
-
 }
 
 void 

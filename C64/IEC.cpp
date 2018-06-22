@@ -77,6 +77,7 @@ IEC::reset()
 void
 IEC::ping()
 {
+    VirtualComponent::ping();
     c64->putMessage(driveConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
     c64->putMessage(busActivity > 0 ? MSG_VC1541_DATA_ON : MSG_VC1541_DATA_OFF );
 }

@@ -54,6 +54,7 @@ ExpansionPort::reset()
 void
 ExpansionPort::ping()
 {
+    VirtualComponent::ping();
     c64->putMessage(cartridge ? MSG_CARTRIDGE : MSG_NO_CARTRIDGE);
 }
 

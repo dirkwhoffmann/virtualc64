@@ -72,10 +72,8 @@ Datasette::reset()
 void
 Datasette::ping()
 {
-    debug(3, "Pinging Datasette...\n");
+    VirtualComponent::ping();
     c64->putMessage(hasTape() ? MSG_VC1530_TAPE : MSG_VC1530_NO_TAPE);
-    // c64->putMessage(MSG_VC1530_MOTOR, motor ? 1 : 0);
-    // c64->putMessage(MSG_VC1530_PLAY, playKey ? 1 : 0);
     c64->putMessage(MSG_VC1530_PROGRESS);
 }
 
