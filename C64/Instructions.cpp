@@ -470,7 +470,7 @@ CPU::executeOneCycle()
             PC_at_cycle_0 = PC;
             
             // Check interrupt lines
-            if (doNmi) {
+            if (unlikely(doNmi)) {
                 
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 clear8_delayed(edgeDetector);
@@ -479,7 +479,7 @@ CPU::executeOneCycle()
                 doIrq = false; // NMI wins
                 return true;
                 
-            } else if (doIrq) {
+            } else if (unlikely(doIrq)) {
                 
                 // if (tracingEnabled()) debug("IRQ (source = %02X)\n", irqLine);
                 next = irq_2;
@@ -492,7 +492,7 @@ CPU::executeOneCycle()
             next = actionFunc[opcode];
             
             // Disassemble command if requested
-            if (tracingEnabled()) {
+            if (unlikely(tracingEnabled())) {
                 
                 recordInstruction();
                 
@@ -510,7 +510,7 @@ CPU::executeOneCycle()
             }
             
             // Check breakpoint tag
-            if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
+            if (unlikely(breakpoint[PC_at_cycle_0] != NO_BREAKPOINT)) {
                 if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
                     // Soft breakpoints get deleted when reached
                     breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT;
@@ -521,6 +521,7 @@ CPU::executeOneCycle()
                 debug(1, "Breakpoint reached\n");
                 return false;
             }
+            
             return true;
             
         //

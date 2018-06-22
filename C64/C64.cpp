@@ -59,7 +59,7 @@ void
     c64->floppy.cpu.clearErrorState();
     c64->restartTimer();
     
-    while (success) {
+    while (likely(success)) {
         pthread_testcancel();
         pthread_mutex_lock(&c64->mutex);
         success = c64->executeOneFrame();

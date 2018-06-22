@@ -42,13 +42,8 @@ const bool false = 0;
 #endif
 
 // Branch prediction macros, lifted off the Linux kernel.
-#if RESID_BRANCH_HINTS && HAVE_BUILTIN_EXPECT
 #define likely(x)      __builtin_expect(!!(x), 1)
 #define unlikely(x)    __builtin_expect(!!(x), 0)
-#else
-#define likely(x)      (x)
-#define unlikely(x)    (x)
-#endif
 
 namespace reSID {
 

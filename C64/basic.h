@@ -1,7 +1,7 @@
 /*!
  * @header      basic.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2017 Dirk W. Hoffmann
+ * @copyright   2006 - 2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 #include <assert.h>
 #include <math.h>
 #include <ctype.h> 
+
 
 //! @brief    Two bit binary value
 typedef uint8_t uint2_t;
