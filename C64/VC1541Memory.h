@@ -1,7 +1,7 @@
 /*!
  * @header      VC151Memory.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2008 - 2016 Dirk W. Hoffmann
+ * @copyright   2008 - 2018 Dirk W. Hoffmann
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,18 +43,6 @@ public:
     //! @brief    Read Only Memory
     uint8_t rom[0x4000];
     
-    /*! @brief    File name of the VC1541 ROM image.
-     *  @details  The file name is set in loadRom().
-     */
-	// char *romFile;
-
-    /*! @brief    Checks the integrity of a VC1541 ROM image.
-     *  @details  Returns true, iff the specified file contains a valid
-     *            VC1541 ROM image.
-     *            File integrity is checked via the checkFileHeader function.
-     */
-	// static bool is1541Rom(const char *filename);
-	
 public:
 	
 	//! @brief    Constructor
@@ -63,27 +51,23 @@ public:
 	//! @brief    Destructor
 	~VC1541Memory();
 
-	//! @brief    Restores the initial state.
+	//! @brief    Method from VirtualComponent
 	void reset();
 		
-	//! @brief    Prints debugging information
+	//! @brief    Method from VirtualComponent
 	void dumpState();
 		
-	//! @brief    Returns true, iff the ROM image is alrady loaded
+	//! @brief    Returns true iff the ROM image has been loaded.
     bool romIsLoaded() { return rom[0] != 0x00; }
 				
     // Reading from memory
-    uint8_t peek(uint16_t addr, MemoryType source);
     uint8_t peek(uint16_t addr);
     
     // Snooping in memory (no side effects)
-    uint8_t snoop(uint16_t addr, MemoryType source);
     uint8_t snoop(uint16_t addr);
     
     // Writing into memory
-    void poke(uint16_t addr, uint8_t value, MemoryType target);
     void poke(uint16_t addr, uint8_t value);
-    void pokeIO(uint16_t addr, uint8_t value);
 };
 
 #endif

@@ -61,6 +61,7 @@ VC1541Memory::dumpState()
 	msg("\n");
 }
 
+/*
 uint8_t
 VC1541Memory::peek(uint16_t addr, MemoryType source)
 {
@@ -75,6 +76,7 @@ VC1541Memory::peek(uint16_t addr, MemoryType source)
     
     return peek(addr);
 }
+*/
 
 uint8_t 
 VC1541Memory::peek(uint16_t addr)
@@ -103,6 +105,7 @@ VC1541Memory::peek(uint16_t addr)
     }
 }
 
+/*
 uint8_t
 VC1541Memory::snoop(uint16_t addr, MemoryType source)
 {
@@ -117,6 +120,7 @@ VC1541Memory::snoop(uint16_t addr, MemoryType source)
     
     return snoop(addr);
 }
+*/
 
 uint8_t
 VC1541Memory::snoop(uint16_t addr)
@@ -133,6 +137,7 @@ VC1541Memory::snoop(uint16_t addr)
     }
 }
 
+/*
 void
 VC1541Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
 {
@@ -143,6 +148,7 @@ VC1541Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
         poke(addr, value);
     }
 }
+*/
 
 void 
 VC1541Memory::poke(uint16_t addr, uint8_t value)

@@ -11,7 +11,6 @@
 		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
-		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
@@ -29,7 +28,6 @@
 		50176C660A6F72F3009E80BD /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C550A6F72F3009E80BD /* CPU.cpp */; };
 		50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C570A6F72F3009E80BD /* Instructions.cpp */; };
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
-		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
@@ -92,6 +90,7 @@
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506B315220DCDF87007913A8 /* ROMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315020DCDF87007913A8 /* ROMFile.cpp */; };
+		506B315420DD0AEB007913A8 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315320DD0AEB007913A8 /* VC1541Memory.cpp */; };
 		506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDBridge.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
@@ -192,7 +191,6 @@
 		5000C8220D13CEE10011A2E9 /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
 		5000C8230D13CEE10011A2E9 /* VC1541.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541.cpp; sourceTree = "<group>"; };
 		5000C9610D13DED40011A2E9 /* VC1541Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541Memory.h; sourceTree = "<group>"; };
-		5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541Memory.cpp; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 		50176C580A6F72F3009E80BD /* Instructions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Instructions.h; sourceTree = "<group>"; };
 		50176C590A6F72F3009E80BD /* Keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Keyboard.cpp; sourceTree = "<group>"; };
 		50176C5A0A6F72F3009E80BD /* Keyboard.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Keyboard.h; sourceTree = "<group>"; };
-		50176C5B0A6F72F3009E80BD /* Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Memory.cpp; sourceTree = "<group>"; };
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VIC.h; sourceTree = "<group>"; };
@@ -325,6 +322,7 @@
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506B315020DCDF87007913A8 /* ROMFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ROMFile.cpp; sourceTree = "<group>"; };
 		506B315120DCDF87007913A8 /* ROMFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ROMFile.h; sourceTree = "<group>"; };
+		506B315320DD0AEB007913A8 /* VC1541Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541Memory.cpp; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
 		506D39D3141780FF00268AF6 /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
@@ -542,6 +540,10 @@
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50D43B5B1EE5701A009D163C /* C64_types.h */,
 				50176C510A6F72F3009E80BD /* C64.cpp */,
+				50176C5C0A6F72F3009E80BD /* Memory.h */,
+				50171AA12083722C00C07AAD /* Memory_types.h */,
+				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
+				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
 				50176C540A6F72F3009E80BD /* CIA.h */,
 				50171A9E2083708800C07AAD /* CIA_types.h */,
 				50176C530A6F72F3009E80BD /* CIA.cpp */,
@@ -645,11 +647,6 @@
 		5000C8070D13CE490011A2E9 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
-				50176C5C0A6F72F3009E80BD /* Memory.h */,
-				50171AA12083722C00C07AAD /* Memory_types.h */,
-				50176C5B0A6F72F3009E80BD /* Memory.cpp */,
-				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
-				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
 			);
 			name = Memory;
 			sourceTree = "<group>";
@@ -687,7 +684,7 @@
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
 				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
 				5000C9610D13DED40011A2E9 /* VC1541Memory.h */,
-				5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */,
+				506B315320DD0AEB007913A8 /* VC1541Memory.cpp */,
 				500FC6770D17D2190044131D /* VIA6522.h */,
 				500FC6780D17D2190044131D /* VIA6522.cpp */,
 				5027F9DA20C5449E0041AD37 /* Disk_types.h */,
@@ -1048,7 +1045,6 @@
 				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
-				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				501DE30F20C9C41B00707130 /* version.cc in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
@@ -1081,7 +1077,6 @@
 				50775E0F1B8EE8A9002EB58D /* Disk.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
-				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				501DE31120C9C41B00707130 /* envelope.cc in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */,
@@ -1112,6 +1107,7 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
+				506B315420DD0AEB007913A8 /* VC1541Memory.cpp in Sources */,
 				501DE31220C9C41B00707130 /* filter.cc in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
