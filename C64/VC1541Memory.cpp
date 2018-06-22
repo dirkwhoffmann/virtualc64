@@ -61,23 +61,6 @@ VC1541Memory::dumpState()
 	msg("\n");
 }
 
-/*
-uint8_t
-VC1541Memory::peek(uint16_t addr, MemoryType source)
-{
-    // In contrast to the C64 where certain memorys overlap each other,
-    // the type of each memory location in the VC1541 is unique.
-    // Hence, we simply do some consistency checking here.
-    
-    if (addr >= 0x8000) { assert(source == M_ROM); }
-    else if ((addr & 0x1FFF) < 0x0800) { assert(source == M_RAM); }
-    else if ((addr & 0x1FFF) < 0x1800) { assert(source == M_NONE); }
-    else { assert(source == M_IO); }
-    
-    return peek(addr);
-}
-*/
-
 uint8_t 
 VC1541Memory::peek(uint16_t addr)
 {
@@ -105,25 +88,8 @@ VC1541Memory::peek(uint16_t addr)
     }
 }
 
-/*
 uint8_t
-VC1541Memory::snoop(uint16_t addr, MemoryType source)
-{
-    // In contrast to the C64 where certain memorys overlap each other,
-    // the type of each memory location in the VC1541 is unique.
-    // Hence, we simply do some consistency checking here.
-    
-    if (addr >= 0x8000) { assert(source == M_ROM); }
-    else if ((addr & 0x1FFF) < 0x0800) { assert(source == M_RAM); }
-    else if ((addr & 0x1FFF) < 0x1800) { assert(source == M_NONE); }
-    else { assert(source == M_IO); }
-    
-    return snoop(addr);
-}
-*/
-
-uint8_t
-VC1541Memory::snoop(uint16_t addr)
+VC1541Memory::spypeek(uint16_t addr)
 {
     if (addr >= 0x8000) {
         return rom[addr & 0x3FFF];
@@ -132,23 +98,10 @@ VC1541Memory::snoop(uint16_t addr)
         return
         (addr < 0x0800) ? ram[addr] :
         (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? floppy->via1.snoop(addr & 0xF) :
-        floppy->via2.snoop(addr & 0xF);
+        (addr < 0x1C00) ? floppy->via1.spypeek(addr & 0xF) :
+        floppy->via2.spypeek(addr & 0xF);
     }
 }
-
-/*
-void
-VC1541Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
-{
-    if (target == M_ROM) {
-        assert(addr >= 0x8000);
-        rom[addr & 0x3FFF] = value;
-    } else {
-        poke(addr, value);
-    }
-}
-*/
 
 void 
 VC1541Memory::poke(uint16_t addr, uint8_t value)

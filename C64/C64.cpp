@@ -182,7 +182,7 @@ C64::reset()
 
     // Initialize program counter
     bool takeFromRom = mem.getPeekSource(0xFFFC) == M_ROM;
-    cpu.setPC(takeFromRom ? 0xFCE2 : LO_HI(mem.snoop(0xFFFC), mem.snoop(0xFFFD)));
+    cpu.setPC(takeFromRom ? 0xFCE2 : LO_HI(mem.spypeek(0xFFFC), mem.spypeek(0xFFFD)));
     
     rasterlineCycle = 1;
     nanoTargetTime = 0UL;
@@ -418,7 +418,7 @@ C64::stepOver()
     floppy.cpu.clearErrorState();
     
     // If the next instruction is a JSR instruction, ...
-    if (mem.snoop(cpu.getPC_at_cycle_0()) == 0x20) {
+    if (mem.spypeek(cpu.getPC_at_cycle_0()) == 0x20) {
         // set a soft breakpoint at the next memory location.
         cpu.setSoftBreakpoint(cpu.getAddressOfNextInstruction());
         run();
@@ -805,6 +805,8 @@ C64::loadRom(const char *filename)
     
     if (!wasRunnable && isRunnable())
         putMessage(MSG_READY_TO_RUN);
+
+    delete rom;
     return true;
 }
 

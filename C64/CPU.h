@@ -312,9 +312,6 @@ public:
 	//! @brief    Writes value to the freezend program counter.
     void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = fetch;}
     
-    //! @brief    Initialize PC with its start up value.
-    // void initPC() { PC = LO_HI(mem->snoop(0xFFFC), mem->snoop(0xFFFD)); }
-
 	//! @brief    Changes low byte of the program counter only.
     void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
     
@@ -424,7 +421,7 @@ public:
 	/*! @brief    Returns the length in bytes of the instruction with the specified address.
      *  @result   Integer value between 1 and 3.
      */
-    unsigned getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->snoop(addr)); }
+    unsigned getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->spypeek(addr)); }
     
 	/*! @brief    Returns the length in bytes of the next instruction to execute.
      *  @result   Integer value between 1 and 3.

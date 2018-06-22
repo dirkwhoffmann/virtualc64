@@ -64,7 +64,7 @@ public:
     uint8_t peek(uint16_t addr);
     
     // Snooping in memory (no side effects)
-    uint8_t snoop(uint16_t addr);
+    uint8_t spypeek(uint16_t addr);
     
     // Writing into memory
     void poke(uint16_t addr, uint8_t value);

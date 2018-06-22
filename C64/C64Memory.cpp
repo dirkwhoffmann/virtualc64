@@ -251,7 +251,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
-uint8_t C64Memory::snoop(uint16_t addr, MemoryType source)
+uint8_t C64Memory::spypeek(uint16_t addr, MemoryType source)
 {
     switch(source) {
             
@@ -262,7 +262,7 @@ uint8_t C64Memory::snoop(uint16_t addr, MemoryType source)
             return rom[addr];
             
         case M_IO:
-            return snoopIO(addr);
+            return spypeekIO(addr);
             
         case M_CRTLO:
         case M_CRTHI:
@@ -288,7 +288,7 @@ uint8_t C64Memory::snoop(uint16_t addr, MemoryType source)
     }
 }
 
-uint8_t C64Memory::snoopIO(uint16_t addr)
+uint8_t C64Memory::spypeekIO(uint16_t addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -299,24 +299,24 @@ uint8_t C64Memory::snoopIO(uint16_t addr)
         case 0x2: // VIC
         case 0x3: // VIC
             
-            return c64->vic.snoop(addr & 0x003F);
+            return c64->vic.spypeek(addr & 0x003F);
             
         case 0x4: // SID
         case 0x5: // SID
         case 0x6: // SID
         case 0x7: // SID
             
-            return c64->sid.snoop(addr & 0x001F);
+            return c64->sid.spypeek(addr & 0x001F);
             
         case 0xC: // CIA 1
             
             // Only the lower 4 bits are used for adressing the CIA I/O space.
             // As a result, CIA's I/O memory repeats every 16 bytes.
-            return c64->cia1.snoop(addr & 0x000F);
+            return c64->cia1.spypeek(addr & 0x000F);
             
         case 0xD: // CIA 2
             
-            return c64->cia2.snoop(addr & 0x000F);
+            return c64->cia2.spypeek(addr & 0x000F);
             
         case 0xE: // I/O space 1
             

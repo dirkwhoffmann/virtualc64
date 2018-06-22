@@ -335,7 +335,7 @@ private:
 public:
     
     //! @brief    Peeks a value from a CIA register without causing side effects.
-    uint8_t snoop(uint16_t addr);
+    uint8_t spypeek(uint16_t addr);
     
     //! @brief    Pokes a value into a CIA register.
     void poke(uint16_t addr, uint8_t value);

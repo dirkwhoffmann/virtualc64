@@ -119,10 +119,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
 - (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
 
-- (uint8_t) snoop:(uint16_t)addr source:(MemoryType)source {
-    return wrapper->mem->snoop(addr, source); }
-- (uint8_t) snoop:(uint16_t)addr { return wrapper->mem->snoop(addr); }
-- (uint8_t) snoopIO:(uint16_t)addr { return wrapper->mem->snoopIO(addr); }
+- (uint8_t) spypeek:(uint16_t)addr source:(MemoryType)source {
+    return wrapper->mem->spypeek(addr, source); }
+- (uint8_t) spypeek:(uint16_t)addr { return wrapper->mem->spypeek(addr); }
+- (uint8_t) spypeekIO:(uint16_t)addr { return wrapper->mem->spypeekIO(addr); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
     wrapper->mem->c64->suspend();
@@ -160,7 +160,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
 - (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing(); }
 
-- (uint8_t) snoop:(uint16_t)addr { return wrapper->cia->snoop(addr); }
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
     wrapper->cia->c64->suspend();
     wrapper->cia->poke(addr, value);

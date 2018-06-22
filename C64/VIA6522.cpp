@@ -368,7 +368,7 @@ VIA6522::peekORB()
 }
 
 uint8_t
-VIA6522::snoop(uint16_t addr)
+VIA6522::spypeek(uint16_t addr)
 {
     assert (addr <= 0xF);
     

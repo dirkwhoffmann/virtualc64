@@ -656,7 +656,7 @@ VIC::peek(uint16_t addr)
 }
 
 uint8_t
-VIC::snoop(uint16_t addr)
+VIC::spypeek(uint16_t addr)
 {
     assert(addr <= 0x003F);
     

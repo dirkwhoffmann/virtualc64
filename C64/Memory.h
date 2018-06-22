@@ -36,7 +36,7 @@ private:
     /*! @brief    Peeks a byte from memory.
      *  @details  Emulates a native read access including side effects.
      *            The value is read is from the currently visible memory.
-     *  @seealso  snoop
+     *  @seealso  spypeek
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
 
@@ -45,7 +45,7 @@ public:
     /*! @brief    Peeks a byte from memory without causing side effects.
      *  seealso   peek
      */
-    virtual uint8_t snoop(uint16_t addr) = 0;
+    virtual uint8_t spypeek(uint16_t addr) = 0;
     
     /*! @brief    Pokes a byte into memory.
      *  @details  Emulates a native write access including all side effects.

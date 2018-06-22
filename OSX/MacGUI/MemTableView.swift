@@ -144,7 +144,7 @@ extension MemTableView : NSTableViewDataSource {
             var str = ""
             let src = source(addr)
             for i in 0...3 {
-                var byte = Int(c!.c64.mem.snoop(addr + UInt16(i), source: src))
+                var byte = Int(c!.c64.mem.spypeek(addr + UInt16(i), source: src))
                 if (byte < 32 || byte > 90) { byte = 46 }
                 let scalar = UnicodeScalar(byte + 0xE000)
                 str.unicodeScalars.append(scalar!)
@@ -168,7 +168,7 @@ extension MemTableView : NSTableViewDataSource {
                 break
             }
             let src = source(addr)
-            return c?.c64.mem.snoop(addr, source: src) ?? ""
+            return c?.c64.mem.spypeek(addr, source: src) ?? ""
             
         default:
             break

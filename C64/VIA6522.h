@@ -229,7 +229,7 @@ public:
     uint8_t peekORB();
     
     //! @brief    Same as peek, but without side effects
-    virtual uint8_t snoop(uint16_t addr);
+    virtual uint8_t spypeek(uint16_t addr);
     
 	/*! @brief    Special poke function for the I/O memory range
 	 *  @details  The poke function only handles those registers that are treated

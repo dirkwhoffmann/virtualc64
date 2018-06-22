@@ -184,7 +184,7 @@ SIDBridge::peek(uint16_t addr)
 }
 
 uint8_t
-SIDBridge::snoop(uint16_t addr)
+SIDBridge::spypeek(uint16_t addr)
 {
     assert(addr <= 0x1F);
     return peek(addr);

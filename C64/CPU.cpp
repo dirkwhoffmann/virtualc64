@@ -117,8 +117,8 @@ CPU::dumpState()
     msg("      Irq line : %02X\n", irqLine);
     msg("Level detector : %02X\n", read8_delayed(levelDetector));
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-	msg("   IRQ routine : %02X%02X\n", mem->snoop(0xFFFF), mem->snoop(0xFFFE));
-	msg("   NMI routine : %02X%02X\n", mem->snoop(0xFFFB), mem->snoop(0xFFFA));
+	msg("   IRQ routine : %02X%02X\n", mem->spypeek(0xFFFF), mem->spypeek(0xFFFE));
+	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
 	msg("\n");
     
     c64->processorPort.dumpState();
@@ -270,14 +270,14 @@ void
 CPU::recordInstruction()
 {
     RecordedInstruction i;
-    uint8_t opcode = mem->snoop(PC_at_cycle_0);
+    uint8_t opcode = mem->spypeek(PC_at_cycle_0);
     unsigned length = getLengthOfInstruction(opcode);
     
     i.cycle = c64->cycle; 
     i.pc = PC_at_cycle_0;
     i.byte1 = opcode;
-    i.byte2 = length > 1 ? mem->snoop(i.pc + 1) : 0;
-    i.byte3 = length > 2 ? mem->snoop(i.pc + 2) : 0;
+    i.byte2 = length > 1 ? mem->spypeek(i.pc + 1) : 0;
+    i.byte3 = length > 2 ? mem->spypeek(i.pc + 2) : 0;
     i.a = A;
     i.x = X;
     i.y = Y;
@@ -336,7 +336,7 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
         case ADDR_INDIRECT_Y: {
-            uint8_t value = mem->snoop(instr.pc + 1);
+            uint8_t value = mem->spypeek(instr.pc + 1);
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
         }
@@ -345,12 +345,12 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
         case ADDR_ABSOLUTE_Y: {
-            uint16_t value = LO_HI(mem->snoop(instr.pc + 1),mem->snoop(instr.pc + 2));
+            uint16_t value = LO_HI(mem->spypeek(instr.pc + 1),mem->spypeek(instr.pc + 2));
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
         case ADDR_RELATIVE: {
-            uint16_t value = instr.pc + 2 + (int8_t)mem->snoop(instr.pc + 1);
+            uint16_t value = instr.pc + 2 + (int8_t)mem->spypeek(instr.pc + 1);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
@@ -460,9 +460,9 @@ CPU::disassemble(uint16_t addr, bool hex)
     RecordedInstruction instr;
 
     instr.pc = addr;
-    instr.byte1 = mem->snoop(addr);
-    instr.byte2 = mem->snoop(addr + 1);
-    instr.byte3 = mem->snoop(addr + 2);
+    instr.byte1 = mem->spypeek(addr);
+    instr.byte2 = mem->spypeek(addr + 1);
+    instr.byte3 = mem->spypeek(addr + 2);
     instr.a = A;
     instr.x = X;
     instr.y = Y;

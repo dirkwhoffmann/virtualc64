@@ -152,9 +152,9 @@ public:
     uint8_t peekIO(uint16_t addr);
     
     // Reading from memory without side effects
-    uint8_t snoop(uint16_t addr, MemoryType source);
-    uint8_t snoop(uint16_t addr) { return snoop(addr, peekSrc[addr >> 12]); }
-    uint8_t snoopIO(uint16_t addr);
+    uint8_t spypeek(uint16_t addr, MemoryType source);
+    uint8_t spypeek(uint16_t addr) { return spypeek(addr, peekSrc[addr >> 12]); }
+    uint8_t spypeekIO(uint16_t addr);
     
     // Writing into memory
     void poke(uint16_t addr, uint8_t value, MemoryType target);
