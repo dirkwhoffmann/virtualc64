@@ -19,7 +19,9 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.1
+// RELEASE NOTES FOR NEXT RELEASE: 2.0.1 or 2.1
+//
+// Passing VICE test openio/de00int.prg
 //
 
 // TODO:

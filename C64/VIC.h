@@ -79,6 +79,10 @@ public:
     uint8_t dataBus;
     
     //! @brief    Value of data bus one access earlier
+    /*! @note     This value is not used in the current implementation.
+     *            Delete in future releases.
+     * @deprecated
+     */
     uint8_t prevDataBus;
     
     //! @brief    Interrupt Request Register ($D019)
