@@ -25,9 +25,7 @@ C64Memory::C64Memory()
     
 	debug (3, "  Creating main memory at address %p...\n", this);
 		
-	charRomFile = NULL;
-	kernalRomFile = NULL;
-	basicRomFile = NULL;
+    memset(rom, 0, sizeof(rom));
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -104,100 +102,6 @@ C64Memory::dumpState()
             msg("Soft breakpoint at %04X\n", addr);
 	}
 	msg("\n");
-}
-
-
-//
-// Handling ROM images
-//
-
-/*
-bool C64Memory::isBasicRom(const char *filename)
-{
-    uint8_t magicBytes[] = { 0x94, 0xE3, 0x7B, 0x00 };
-
-	if (filename == NULL)
-		return false;
-	
-	if (!checkFileSize(filename, 0x2000, 0x2000))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes))
-		return false;
-		
-	return true;
-}
-
-bool C64Memory::isCharRom(const char *filename)
-{
-	uint8_t magicBytes[] = { 0x3C, 0x66, 0x6E, 0x00 };
-
-	if (filename == NULL)
-		return false;
-	
-	if (!checkFileSize(filename, 0x1000, 0x1000))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes))
-		return false;
-		
-	return true;
-}
-
-bool C64Memory::isKernalRom(const char *filename)
-{
-	uint8_t magicBytes[] = { 0x85, 0x56, 0x20, 0x00 };
-
-	if (filename == NULL)
-		return false;
-	
-	if (!checkFileSize(filename, 0x2000, 0x2000))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes))
-		return false;
-		
-	return true;
-}
-
-bool C64Memory::isRom(const char *filename) 
-{
-	return isBasicRom(filename) || isCharRom(filename) || isKernalRom(filename);
-}
-*/
-
-bool 
-C64Memory::loadBasicRom(const char *filename)
-{
-    if (ROMFile::isBasicRomFile(filename)) {
-		basicRomFile = strdup(filename);
-		flashRom(filename, 0xA000);
-		return true;
-	}
-	return false;
-}
-
-bool 
-C64Memory::loadCharRom(const char *filename)
-{
-	if (ROMFile::isCharRomFile(filename)) {
-		charRomFile = strdup(filename);
-		flashRom(filename, 0xD000);
-		return true;
-	}
-	return false;
-}
-
-bool 
-C64Memory::loadKernalRom(const char *filename)
-{
-	if (ROMFile::isKernalRomFile(filename)) {
-		kernalRomFile = strdup(filename);
-		flashRom(filename, 0xE000);
-		return true;
-	}
-    
-	return false;
 }
 
 

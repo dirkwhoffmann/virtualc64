@@ -99,46 +99,6 @@ public:
      */
     uint8_t rom[65536];
     
-    /*! @brief    Checks the integrity of a Basic ROM image.
-     *  @details  Returns true, iff the specified file contains a valid Basic ROM image.
-     */
-    // static bool isBasicRom(const char *filename);
-    
-    /*! @brief    Checks the integrity of a Kernal ROM image file.
-     *  @details  Returns true, iff the specified file contains a valid Kernal ROM image.
-     */
-    // static bool isKernalRom(const char *filename);
-    
-    /*! @brief    Checks the integrity of a Character ROM image file.
-     *  @details  Returns true, iff the specified file contains a valid Character ROM image.
-     */
-    // static bool isCharRom(const char *filename);
-    
-    /*! @brief    Checks the integrity of a ROM image file
-     *  @details  Returns true, iff the specified file is one of the three possible ROM images.
-     */
-    // static bool isRom(const char *filename);
-
-private:
-	
-	/*! @brief    File name of the Character ROM image.
-	 *  @details  The file name is set in loadRom().
-     */
-	char *charRomFile;
-
-    /*! @brief    File name of the Kernal ROM image.
-     *  @details  The file name is set in loadRom().
-     */
-	char *kernalRomFile;
-
-    /*! @brief    File name of the Basic ROM image.
-     *  @details  The file name is set in loadRom().
-     */
-	char *basicRomFile;
-
-			
-public:
-	
 	//! @brief    Constructor
 	C64Memory();
 	
@@ -153,32 +113,22 @@ public:
 
 	//! @brief    Method from VirtualComponent
 	void dumpState();
-		
-	//! @brief    Flashes a Basic ROM image into memory
-	bool loadBasicRom(const char *filename);
-    
-	//! @brief    Flashes a Character ROM image into memory
-	bool loadCharRom(const char *filename);
-    
-	//! @brief    Flashes a Kernal ROM image into memory
-	bool loadKernalRom(const char *filename);
 
 	//! @brief    Returns true, iff the Basic ROM is alrady loaded
-	bool basicRomIsLoaded() { return basicRomFile != NULL; }
+	bool basicRomIsLoaded() { return rom[0xA000] != 0x00; }
     
-	//! @brief    Returns true, iff the Kernal ROM is alrady loaded
-	bool kernalRomIsLoaded() { return kernalRomFile != NULL; }
-    
-	//! @brief    Returns true, iff the Character ROM is alrady loaded
-	bool charRomIsLoaded() { return charRomFile != NULL; }
+    //! @brief    Returns true, iff the Character ROM is alrady loaded
+    bool charRomIsLoaded() { return rom[0xD000] != 0x00; }
 
+    //! @brief    Returns true, iff the Kernal ROM is alrady loaded
+	bool kernalRomIsLoaded() { return rom[0xE000] != 0x00; }
     
 private:
     
-    //! @brief    Lookup table for peek()
+    //! @brief    Peek source lookup table
     MemoryType peekSrc[16];
     
-    //! @brief    Lookup table for poke()
+    //! @brief    Poke target lookup table
     MemoryType pokeTarget[16];
     
     

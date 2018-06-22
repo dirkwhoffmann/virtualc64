@@ -28,24 +28,3 @@ Memory::~Memory()
 {
 }
 
-void Memory::flashRom(const char *filename, uint16_t start)
-{
-	FILE *file;
-	uint16_t addr = start;
-	int  c;
-		
-	assert(start > 0);
-	
-	// Open and read
-	if (!(file = fopen(filename, "r")))
-		return;
-	c = fgetc(file);
-	while(c != EOF) {
-        poke(addr, (uint8_t)c, M_ROM);
-		c = fgetc(file);
-		addr++;
-	}
-	fclose(file);
-	
-	debug(2, "ROM image flashed from %X to %X.\n", (uint16_t)start, (uint16_t)(addr-1));
-}

@@ -84,14 +84,6 @@ public:
      *  @details  This function emulates a native write access including side effects.
      */
     virtual void poke(uint16_t addr, uint8_t value) = 0;
-    
-	//! Flashes a ROM image into memory.
-	/*! All bytes of the specified file are read into the ROM memory, starting at the
-     *  specified location. The function is unsafe, i.e., it does not check if the file
-     *  is a valid ROM file or if the address is adequate. Hence, call checkRomFile
-     *  prior to this function.
-     */
-	void flashRom(const char *filename, uint16_t start);
 };
 
 #endif

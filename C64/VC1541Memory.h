@@ -46,14 +46,14 @@ public:
     /*! @brief    File name of the VC1541 ROM image.
      *  @details  The file name is set in loadRom().
      */
-	char *romFile;
+	// char *romFile;
 
     /*! @brief    Checks the integrity of a VC1541 ROM image.
      *  @details  Returns true, iff the specified file contains a valid
      *            VC1541 ROM image.
      *            File integrity is checked via the checkFileHeader function.
      */
-	static bool is1541Rom(const char *filename);
+	// static bool is1541Rom(const char *filename);
 	
 public:
 	
@@ -69,18 +69,8 @@ public:
 	//! @brief    Prints debugging information
 	void dumpState();
 		
-	/*! @brief    Loads a ROM image into memory.
-	 *  @details  The function automatically determines the type of the
-     *            specified file. In case of a valid ROM image,
-     *            it is loaded into the ROM space at the proper location.
-     *  @return   Returns true, if the file could be loaded successfully.
-     *            In case of an error (file not found, the file is no proper
-     *            ROM image, ...) the function returns false.
-     */
-	bool loadRom(const char *filename);
-
 	//! @brief    Returns true, iff the ROM image is alrady loaded
-	bool romIsLoaded() { return romFile != NULL; }
+    bool romIsLoaded() { return rom[0] != 0x00; }
 				
     // Reading from memory
     uint8_t peek(uint16_t addr, MemoryType source);

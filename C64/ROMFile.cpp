@@ -160,7 +160,7 @@ ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 void
-ROMFile::flashRom(uint8_t *buffer)
+ROMFile::flash(uint8_t *buffer)
 {
     memcpy(buffer, data, size);
 }

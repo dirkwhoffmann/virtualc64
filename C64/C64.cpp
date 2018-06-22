@@ -138,7 +138,6 @@ C64::C64()
     floppy.cpu.mem = &c64->floppy.mem;
     floppy.mem.iec = &c64->iec;
     floppy.mem.floppy = &c64->floppy;
-    // floppy.iec = &c64->iec;
     
     // Set initial hardware configuration
     mouse = &mouse1350;
@@ -771,45 +770,42 @@ C64::synchronizeTiming()
 bool
 C64::loadRom(const char *filename)
 {
-    bool result = false;
-    
-    debug(2, "Trying to load ROM image %s\n", filename);
+    ROMFile *rom;
+    bool wasRunnable = isRunnable();
+
+    if (!(rom = ROMFile::makeRomFileWithFile(filename))) {
+        warn("Failed to load ROM image %s\n", filename);
+        return false;
+    }
     
     suspend();
-    bool wasRunnable = isRunnable();
-    
-    if (ROMFile::isBasicRomFile(filename)) {
-        result = mem.loadBasicRom(filename);
-        if (result) putMessage(MSG_BASIC_ROM_LOADED);
+    switch (rom->type()) {
+            
+        case BASIC_ROM_FILE:
+            rom->flash(mem.rom + 0xA000);
+            break;
+            
+        case CHAR_ROM_FILE:
+            rom->flash(mem.rom + 0xD000);
+            break;
+            
+        case KERNAL_ROM_FILE:
+            rom->flash(mem.rom + 0xE000);
+            break;
+            
+        case VC1541_ROM_FILE:
+            rom->flash(floppy.mem.rom);
+            break;
+            
+        default:
+            assert(false);
     }
-    
-    if (ROMFile::isCharRomFile(filename)) {
-        result = mem.loadCharRom(filename);
-        if (result) putMessage(MSG_CHAR_ROM_LOADED);
-    }
-    
-    if (ROMFile::isKernalRomFile(filename)) {
-        result = mem.loadKernalRom(filename);
-        if (result) putMessage(MSG_KERNAL_ROM_LOADED);
-    }
-    
-    if (ROMFile::isVC1541RomFile(filename)) {
-        result = floppy.mem.loadRom(filename);
-        if (result) putMessage(MSG_VC1541_ROM_LOADED);
-    }
-    
-    if (result) {
-        debug(2, "ROM image %s loaded successfully\n", filename);
-    } else {
-        warn("FAILED to load ROM image %s\n", filename);
-    }
-    
-    if (!wasRunnable && isRunnable()) {
-        putMessage(MSG_READY_TO_RUN);
-    }
+    debug(2, "Loaded ROM image %s.\n", filename);
     resume();
     
-    return result;
+    if (!wasRunnable && isRunnable())
+        putMessage(MSG_READY_TO_RUN);
+    return true;
 }
 
 

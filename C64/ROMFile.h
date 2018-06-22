@@ -104,7 +104,7 @@ public:
     
     //! @brief   Flushes the ROM into the emulator
     //! @details Copies the ROM data to the specified location.
-    void flashRom(uint8_t *buffer);
+    void flash(uint8_t *buffer);
     
 };
 #endif

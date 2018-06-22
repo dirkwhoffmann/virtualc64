@@ -128,7 +128,7 @@ File::readFromFile(const char *filename)
     name = ExtractFilenameWithoutSuffix(filename);
     setName(name);
         
-    debug(1, "Container %s (%s) read successfully from file %s\n", name, getName(), path);
+    debug(1, "File %s read successfully\n", path);
 	success = true;
 
 exit:

@@ -24,6 +24,8 @@ VC1541Memory::VC1541Memory()
     setDescription("1541MEM");
 	debug(3, "  Creating VC1541 memory at %p...\n", this);
 
+    memset(rom, 0, sizeof(rom));
+    
     // Register snapshot items
     SnapshotItem items[] = {
 
@@ -32,8 +34,6 @@ VC1541Memory::VC1541Memory()
     { NULL, 0,           0 }};
 
     registerSnapshotItems(items, sizeof(items));
-
-	romFile = NULL;
 }
 
 VC1541Memory::~VC1541Memory()
@@ -50,39 +50,6 @@ VC1541Memory::reset()
     for (unsigned i = 0; i < sizeof(ram); i++) {
         ram[i] = (i & 64) ? 0xFF : 0x00;
     }
-}
-
-//
-// Handling ROM images
-//
-
-bool 
-VC1541Memory::is1541Rom(const char *filename)
-{
-	uint8_t magicBytes1[] = { 0x97, 0xAA, 0xAA, 0x00 };
-	uint8_t magicBytes2[] = { 0x97, 0xE0, 0x43, 0x00 };
-
-	if (filename == NULL)
-		return false;
-	
-	if (!checkFileSize(filename, 0x4000, 0x4000))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes1) && !checkFileHeader(filename, magicBytes2))
-		return false;
-		
-	return true;
-}
- 
-bool 
-VC1541Memory::loadRom(const char *filename)
-{
-	if (is1541Rom(filename)) {
-		romFile = strdup(filename);
-		flashRom(filename, 0xC000);
-		return true;
-	}
-	return false;
 }
 
 void 
