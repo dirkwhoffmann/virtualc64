@@ -71,6 +71,7 @@
 #include "PRGArchive.h"
 #include "P00Archive.h"
 #include "FileArchive.h"
+#include "ROMFile.h"
 #include "TAPFile.h"
 #include "CRTFile.h"
 

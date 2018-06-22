@@ -32,6 +32,10 @@ typedef enum {
     G64_CONTAINER,
     NIB_CONTAINER,
     TAP_CONTAINER,
+    BASIC_ROM_FILE,
+    CHAR_ROM_FILE,
+    KERNAL_ROM_FILE,
+    VC1541_ROM_FILE,
     FILE_CONTAINER
 } ContainerType;
 

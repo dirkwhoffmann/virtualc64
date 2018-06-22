@@ -53,8 +53,7 @@ typedef struct {
 } SnapshotHeader;
 
 /*! @class    Snapshot
- *  @brief    The Snapshot class declares the programmatic interface for a file that contains
- *            an emulator snapshot (frozen internal state).
+ *  @brief    Represents an emulator snapshot.
  */
 class Snapshot : public File {
 	

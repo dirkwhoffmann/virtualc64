@@ -654,25 +654,25 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     [self _saveToSnapshotWrapper:[snapshot wrapper]]; }
 
 - (BOOL) isBasicRom:(NSURL *)url {
-    return wrapper->c64->mem.isBasicRom([[url path] UTF8String]); }
+    return ROMFile::isBasicRomFile([[url path] UTF8String]); }
 - (BOOL) loadBasicRom:(NSURL *)url {
     return [self isBasicRom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
 - (BOOL) isBasicRomLoaded {
     return wrapper->c64->mem.basicRomIsLoaded(); }
 - (BOOL) isCharRom:(NSURL *)url {
-    return wrapper->c64->mem.isCharRom([[url path] UTF8String]); }
+    return ROMFile::isCharRomFile([[url path] UTF8String]); }
 - (BOOL) loadCharRom:(NSURL *)url {
     return [self isCharRom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
 - (BOOL) isCharRomLoaded {
     return wrapper->c64->mem.charRomIsLoaded(); }
 - (BOOL) isKernalRom:(NSURL *)url {
-    return wrapper->c64->mem.isKernalRom([[url path] UTF8String]); }
+    return ROMFile::isKernalRomFile([[url path] UTF8String]); }
 - (BOOL) loadKernalRom:(NSURL *)url {
     return [self isKernalRom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
 - (BOOL) isKernalRomLoaded {
     return wrapper->c64->mem.kernalRomIsLoaded(); }
 - (BOOL) isVC1541Rom:(NSURL *)url {
-    return wrapper->c64->floppy.mem.is1541Rom([[url path] UTF8String]); }
+    return ROMFile::isVC1541RomFile([[url path] UTF8String]); }
 - (BOOL) loadVC1541Rom:(NSURL *)url {
     return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
 - (BOOL) isVC1541RomLoaded {

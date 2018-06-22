@@ -102,22 +102,22 @@ public:
     /*! @brief    Checks the integrity of a Basic ROM image.
      *  @details  Returns true, iff the specified file contains a valid Basic ROM image.
      */
-    static bool isBasicRom(const char *filename);
+    // static bool isBasicRom(const char *filename);
     
     /*! @brief    Checks the integrity of a Kernal ROM image file.
      *  @details  Returns true, iff the specified file contains a valid Kernal ROM image.
      */
-    static bool isKernalRom(const char *filename);
+    // static bool isKernalRom(const char *filename);
     
     /*! @brief    Checks the integrity of a Character ROM image file.
      *  @details  Returns true, iff the specified file contains a valid Character ROM image.
      */
-    static bool isCharRom(const char *filename);
+    // static bool isCharRom(const char *filename);
     
     /*! @brief    Checks the integrity of a ROM image file
      *  @details  Returns true, iff the specified file is one of the three possible ROM images.
      */
-    static bool isRom(const char *filename);
+    // static bool isRom(const char *filename);
 
 private:
 	

@@ -23,7 +23,7 @@ const uint8_t TAPFile::magicBytes[] = {
 
 TAPFile::TAPFile()
 {
-    setDescription("TAPContainer");
+    setDescription("TAPFile");
     data = NULL;
     dealloc();
 }
@@ -139,36 +139,3 @@ TAPFile::writeToBuffer(uint8_t *buffer)
     return size;
 }
 
-#if 0
-void
-TAPContainer::selectItem(int n)
-{
-    if (n == 0)
-        fp = 0x0014; // Rewind
-    else
-        fp = -1;     // No such item
-}
-
-int
-TAPContainer::getByte()
-{
-    int result;
-    
-    if (fp < 0)
-        return -1;
-    
-    // get byte
-    result = data[fp];
-    
-    // check for end of file
-    if (fp == (size - 1)) {
-        fp = -1;
-    } else {
-        // advance file pointer
-        fp++;
-    }
-    
-    return result;
-}
-
-#endif

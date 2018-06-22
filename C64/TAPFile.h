@@ -85,4 +85,5 @@ public:
     uint8_t *getData() { return &data[0x0014]; }
     size_t getSize() { return size - 0x14; }
 };
+
 #endif

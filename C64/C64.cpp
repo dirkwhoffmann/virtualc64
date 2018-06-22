@@ -778,22 +778,22 @@ C64::loadRom(const char *filename)
     suspend();
     bool wasRunnable = isRunnable();
     
-    if (C64Memory::isBasicRom(filename)) {
+    if (ROMFile::isBasicRomFile(filename)) {
         result = mem.loadBasicRom(filename);
         if (result) putMessage(MSG_BASIC_ROM_LOADED);
     }
     
-    if (C64Memory::isCharRom(filename)) {
+    if (ROMFile::isCharRomFile(filename)) {
         result = mem.loadCharRom(filename);
         if (result) putMessage(MSG_CHAR_ROM_LOADED);
     }
     
-    if (C64Memory::isKernalRom(filename)) {
+    if (ROMFile::isKernalRomFile(filename)) {
         result = mem.loadKernalRom(filename);
         if (result) putMessage(MSG_KERNAL_ROM_LOADED);
     }
     
-    if (VC1541Memory::is1541Rom(filename)) {
+    if (ROMFile::isVC1541RomFile(filename)) {
         result = floppy.mem.loadRom(filename);
         if (result) putMessage(MSG_VC1541_ROM_LOADED);
     }

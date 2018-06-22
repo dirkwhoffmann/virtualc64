@@ -111,6 +111,7 @@ C64Memory::dumpState()
 // Handling ROM images
 //
 
+/*
 bool C64Memory::isBasicRom(const char *filename)
 {
     uint8_t magicBytes[] = { 0x94, 0xE3, 0x7B, 0x00 };
@@ -163,11 +164,12 @@ bool C64Memory::isRom(const char *filename)
 {
 	return isBasicRom(filename) || isCharRom(filename) || isKernalRom(filename);
 }
+*/
 
 bool 
 C64Memory::loadBasicRom(const char *filename)
 {
-	if (isBasicRom(filename)) {
+    if (ROMFile::isBasicRomFile(filename)) {
 		basicRomFile = strdup(filename);
 		flashRom(filename, 0xA000);
 		return true;
@@ -178,7 +180,7 @@ C64Memory::loadBasicRom(const char *filename)
 bool 
 C64Memory::loadCharRom(const char *filename)
 {
-	if (isCharRom(filename)) {
+	if (ROMFile::isCharRomFile(filename)) {
 		charRomFile = strdup(filename);
 		flashRom(filename, 0xD000);
 		return true;
@@ -189,7 +191,7 @@ C64Memory::loadCharRom(const char *filename)
 bool 
 C64Memory::loadKernalRom(const char *filename)
 {
-	if (isKernalRom(filename)) {
+	if (ROMFile::isKernalRomFile(filename)) {
 		kernalRomFile = strdup(filename);
 		flashRom(filename, 0xE000);
 		return true;
