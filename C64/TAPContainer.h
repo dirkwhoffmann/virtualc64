@@ -19,12 +19,12 @@
 #ifndef _TAPCONTAINER_INC
 #define _TAPCONTAINER_INC
 
-#include "Container.h"
+#include "File.h"
 
 /*! @class  TAPContainer
  *  @brief  The TAPContainer class declares the programmatic interface for a file in TAP format.
  */
-class TAPContainer : public Container {
+class TAPContainer : public File {
     
 private:
     

@@ -58,7 +58,6 @@ VIC::VIC()
         { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
-        { &prevDataBus,                 sizeof(prevDataBus),                    CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
@@ -285,7 +284,6 @@ uint8_t VIC::memAccess(uint16_t addr)
     assert((addr & 0xC000) == 0); /* 14 bit address */
     assert((bankAddr & 0x3FFF) == 0); /* multiple of 16 KB */
     
-    prevDataBus = dataBus;
     addrBus = bankAddr | addr;
    
     // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)

@@ -25,12 +25,12 @@
 #ifndef _ARCHIVE_INC
 #define _ARCHIVE_INC
 
-#include "Container.h"
+#include "File.h"
 
 /*! @class    Archive
     @brief    Base class for all loadable objects with multiple files included. */
 
-class Archive : public Container {
+class Archive : public File {
     
 public:
 

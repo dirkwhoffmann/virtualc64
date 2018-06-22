@@ -20,7 +20,7 @@
 #ifndef _SNAPSHOT_INC
 #define _SNAPSHOT_INC
 
-#include "Container.h"
+#include "File.h"
 
 // Forward declarations
 class C64;
@@ -56,7 +56,7 @@ typedef struct {
  *  @brief    The Snapshot class declares the programmatic interface for a file that contains
  *            an emulator snapshot (frozen internal state).
  */
-class Snapshot : public Container {
+class Snapshot : public File {
 	
 private:
 	

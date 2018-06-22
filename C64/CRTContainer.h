@@ -30,13 +30,13 @@
 #ifndef _CRTContainer_H
 #define _CRTContainer_H
 
-#include "Container.h"
+#include "File.h"
 
 /*! @class    CRTContainer
  *  @brief    The CRTContainer class declares the programmatic interface for a file
  *            of the CRT format type.
  */
-class CRTContainer : public Container {
+class CRTContainer : public File {
     
 private:
     

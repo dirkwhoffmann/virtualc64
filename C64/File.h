@@ -25,11 +25,11 @@
 #include "C64_types.h"
 
 
-/*! @class    Container
- *  @brief    Base class for all loadable objects.
- *  @details  The class provides basic functionality for reading and writing files.
+/*! @class    File
+ *  @brief    Base class for all file containers.
+ *  @details  Provides the basic functionality for reading and writing files.
  */
-class Container : public VC64Object {
+class File : public VC64Object {
     
 private:
 	     
@@ -68,10 +68,10 @@ public:
     //
 
     //! @brief    Constructor
-    Container();
+    File();
 
     //! @brief    Destructor
-    virtual ~Container();
+    virtual ~File();
     
     //! @brief    Frees the memory allocated by this object.
     virtual void dealloc() { };
@@ -132,15 +132,16 @@ public:
 	bool readFromFile(const char *filename);
 
     /*! @brief    Write container contents into a memory buffer.
-     *  @details  If a NULL pointer is passed in, a test run is performed. Test runs are performed to
-     *            determine the size of the container on disk.
+     *  @details  If a NULL pointer is passed in, a test run is performed.
+     *            Test runs are performed to determine the size of the
+     *            container on disk.
      *   @param   buffer The address of the buffer in memory.
      */
 	virtual size_t writeToBuffer(uint8_t *buffer);
 
     /*! @brief    Write container contents to a file.
-     *  @details  This function requires no custom implementation. t first invokes writeToBuffer and 
-     *            writes the data to disk afterwards.
+     *  @details  This function requires no custom implementation. It invokes
+     *            writeToBuffer first and writes the data to disk afterwards.
      *  @param    filename The name of a file to be written.
      */
 	bool writeToFile(const char *filename);
