@@ -136,7 +136,7 @@ Datasette::setHeadInCycles(uint64_t value)
 }
 
 void
-Datasette::insertTape(TAPContainer *a)
+Datasette::insertTape(TAPFile *a)
 {
     size = a->getSize();
     type = a->TAPversion();

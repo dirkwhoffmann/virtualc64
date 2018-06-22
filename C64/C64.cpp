@@ -1054,7 +1054,7 @@ C64::mountArchive(Archive *a)
 }
 
 bool
-C64::insertTape(TAPContainer *a)
+C64::insertTape(TAPFile *a)
 {
     if (a == NULL)
         return false;

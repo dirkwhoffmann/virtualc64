@@ -142,7 +142,7 @@
 		50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
-		50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPContainer.cpp */; };
+		50F681E71BEA2927008568E3 /* TAPFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPFile.cpp */; };
 		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */; };
@@ -392,8 +392,8 @@
 		50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		50F681E51BEA2917008568E3 /* TAPContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPContainer.h; sourceTree = "<group>"; };
-		50F681E61BEA2927008568E3 /* TAPContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPContainer.cpp; sourceTree = "<group>"; };
+		50F681E51BEA2917008568E3 /* TAPFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPFile.h; sourceTree = "<group>"; };
+		50F681E61BEA2927008568E3 /* TAPFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPFile.cpp; sourceTree = "<group>"; };
 		50F681E81BEA3BE4008568E3 /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		50F681E91BEA3BE4008568E3 /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
@@ -789,8 +789,8 @@
 				5018E48012240F7100F0820E /* File.cpp */,
 				50414726122188FC00A80E0C /* CRTFile.h */,
 				50414725122188FC00A80E0C /* CRTFile.cpp */,
-				50F681E51BEA2917008568E3 /* TAPContainer.h */,
-				50F681E61BEA2927008568E3 /* TAPContainer.cpp */,
+				50F681E51BEA2917008568E3 /* TAPFile.h */,
+				50F681E61BEA2927008568E3 /* TAPFile.cpp */,
 				505EB09F0F3047C300960BC0 /* Snapshot.h */,
 				505EB0A00F3047C300960BC0 /* Snapshot.cpp */,
 				50D5004B0C2ED1200022CA3A /* Archive.h */,
@@ -1081,7 +1081,7 @@
 				50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				501DE30E20C9C41B00707130 /* extfilt.cc in Sources */,
-				50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */,
+				50F681E71BEA2927008568E3 /* TAPFile.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,

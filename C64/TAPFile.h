@@ -21,10 +21,10 @@
 
 #include "File.h"
 
-/*! @class  TAPContainer
- *  @brief  The TAPContainer class declares the programmatic interface for a file in TAP format.
+/*! @class  TAPFile
+ *  @brief  Represents a file of the TAP format type (band tapes).
  */
-class TAPContainer : public File {
+class TAPFile : public File {
     
 private:
     
@@ -45,16 +45,16 @@ private:
 public:
     
     //! @brief    Standard constructor
-    TAPContainer();
+    TAPFile();
     
     //! @brief    Factory method
-    static TAPContainer *makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length);
+    static TAPFile *makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static TAPContainer *makeTAPContainerWithFile(const char *filename);
+    static TAPFile *makeTAPContainerWithFile(const char *filename);
 
     //! @brief    Standard destructor
-    ~TAPContainer();
+    ~TAPFile();
     
     //! @brief    Returns true iff buffer contains a TAP file
     static bool isTAP(const uint8_t *buffer, size_t length);

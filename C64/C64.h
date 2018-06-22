@@ -71,7 +71,7 @@
 #include "PRGArchive.h"
 #include "P00Archive.h"
 #include "FileArchive.h"
-#include "TAPContainer.h"
+#include "TAPFile.h"
 #include "CRTFile.h"
 
 // Sub components
@@ -645,7 +645,7 @@ public:
     /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.
      */
-    bool insertTape(TAPContainer *a);
+    bool insertTape(TAPFile *a);
 
     //! @brief    Attaches a cartridge to the expansion port.
     bool attachCartridgeAndReset(CRTFile *c);

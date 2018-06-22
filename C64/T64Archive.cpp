@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "TAPContainer.h"
+#include "TAPFile.h"
 #include "T64Archive.h"
 
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
@@ -190,7 +190,7 @@ T64Archive::isT64(const uint8_t *buffer, size_t length)
     if (length < 0x40)
         return false;
     
-    if (TAPContainer::isTAP(buffer, length)) // Note: TAP files have a very similar header
+    if (TAPFile::isTAP(buffer, length)) // Note: TAP files have a very similar header
         return false;
         
     return checkBufferHeader(buffer, length, magicBytes);
@@ -204,7 +204,7 @@ T64Archive::isT64File(const char *path)
 	if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
 		return false;
 	
-    if (TAPContainer::isTAPFile(path)) // Note: TAP files have a very similar header
+    if (TAPFile::isTAPFile(path)) // Note: TAP files have a very similar header
         return false;
     
 	if (!checkFileSize(path, 0x40, -1))

@@ -39,7 +39,7 @@ struct ContainerWrapper { File *container; };
 // DEPRECATED
 struct SnapshotWrapper { Snapshot *snapshot; };
 struct ArchiveWrapper { Archive *archive; };
-struct TAPContainerWrapper { TAPContainer *tapcontainer; };
+struct TAPContainerWrapper { TAPFile *tapcontainer; };
 struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
@@ -723,7 +723,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return wrapper->c64->flushArchive(archive, (int)nr);
 }
 - (BOOL) insertTape:(TAPProxy *)c {
-    TAPContainer *container = (TAPContainer *)([c wrapper]->container);
+    TAPFile *container = (TAPFile *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
 }
 
@@ -1016,10 +1016,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (BOOL) isTAPFile:(NSString *)path
 {
-    return TAPContainer::isTAPFile([path UTF8String]);
+    return TAPFile::isTAPFile([path UTF8String]);
 }
 
-+ (instancetype) make:(TAPContainer *)container
++ (instancetype) make:(TAPFile *)container
 {
     if (container == NULL) {
         return nil;
@@ -1029,18 +1029,18 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    TAPContainer *container = TAPContainer::makeTAPContainerWithBuffer((const uint8_t *)buffer, length);
+    TAPFile *container = TAPFile::makeTAPContainerWithBuffer((const uint8_t *)buffer, length);
     return [self make: container];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    TAPContainer *container = TAPContainer::makeTAPContainerWithFile([path UTF8String]);
+    TAPFile *container = TAPFile::makeTAPContainerWithFile([path UTF8String]);
     return [self make: container];
 }
 
 - (NSInteger)TAPversion {
-    TAPContainer *container = (TAPContainer *)wrapper->container;
+    TAPFile *container = (TAPFile *)wrapper->container;
     return (NSInteger)container->TAPversion();
 }
 @end

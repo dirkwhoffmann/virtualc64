@@ -16,22 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "TAPContainer.h"
+#include "TAPFile.h"
 
-const uint8_t TAPContainer::magicBytes[] = {
+const uint8_t TAPFile::magicBytes[] = {
     0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57, 0x00 };
 
-TAPContainer::TAPContainer()
+TAPFile::TAPFile()
 {
     setDescription("TAPContainer");
     data = NULL;
     dealloc();
 }
 
-TAPContainer *
-TAPContainer::makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length)
+TAPFile *
+TAPFile::makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length)
 {
-    TAPContainer *tape = new TAPContainer();
+    TAPFile *tape = new TAPFile();
     
     if (!tape->readFromBuffer(buffer, length)) {
         delete tape;
@@ -41,10 +41,10 @@ TAPContainer::makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length)
     return tape;
 }
 
-TAPContainer *
-TAPContainer::makeTAPContainerWithFile(const char *filename)
+TAPFile *
+TAPFile::makeTAPContainerWithFile(const char *filename)
 {
-    TAPContainer *tape = new TAPContainer();
+    TAPFile *tape = new TAPFile();
     
     if (!tape->readFromFile(filename)) {
         delete tape;
@@ -54,20 +54,20 @@ TAPContainer::makeTAPContainerWithFile(const char *filename)
     return tape;
 }
 
-TAPContainer::~TAPContainer()
+TAPFile::~TAPFile()
 {
     dealloc();
 }
 
 bool
-TAPContainer::isTAP(const uint8_t *buffer, size_t length)
+TAPFile::isTAP(const uint8_t *buffer, size_t length)
 {
     if (length < 0x15) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool
-TAPContainer::isTAPFile(const char *filename)
+TAPFile::isTAPFile(const char *filename)
 {
     assert (filename != NULL);
     
@@ -85,7 +85,7 @@ TAPContainer::isTAPFile(const char *filename)
 }
 
 void
-TAPContainer::dealloc()
+TAPFile::dealloc()
 {
     if (data) free(data);
     data = NULL;
@@ -94,7 +94,7 @@ TAPContainer::dealloc()
 }
 
 const char *
-TAPContainer::getName()
+TAPFile::getName()
 {
     unsigned i;
     
@@ -106,13 +106,13 @@ TAPContainer::getName()
 }
 
 bool
-TAPContainer::hasSameType(const char *filename)
+TAPFile::hasSameType(const char *filename)
 {
     return isTAPFile(filename);
 }
 
 bool
-TAPContainer::readFromBuffer(const uint8_t *buffer, size_t length)
+TAPFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL)
         return false;
@@ -129,7 +129,7 @@ TAPContainer::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 size_t
-TAPContainer::writeToBuffer(uint8_t *buffer)
+TAPFile::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
     

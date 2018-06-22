@@ -34,7 +34,7 @@
 #include "File.h"
 
 /*! @class    CRTFile
- *  @brief    Represents a file of the CRT format type.
+ *  @brief    Represents a file of the CRT format type (cartridges).
  */
 class CRTFile : public File {
     
