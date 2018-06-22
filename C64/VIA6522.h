@@ -76,7 +76,7 @@ public:
     
     //! @brief    Peripheral A control lines
     /*! @details  "The two peripheral A control lines act as interrupt inputs
-     *             or ashandshake outputs. Each line controls an internal
+     *             or as handshake outputs. Each line controls an internal
      *             interrupt flag with a corresponding interrupt enable bit.
      *             In addition, CA1controls the latching of data on
      *             Peripheral A Port input lines. The various modes of
@@ -316,6 +316,7 @@ public:
     virtual void updatePB();
     
     //! Returns the current value on chip pin CA2
+    /*
     // DEPRECATED
     bool CA2() {
         switch ((pcr >> 1) & 0x07) {
@@ -326,6 +327,7 @@ public:
                 return false;
         }
     }
+    */
     
     // ----------------------------------------------------------------------------------------
     //                              Peripheral control lines

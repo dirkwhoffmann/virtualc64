@@ -74,6 +74,9 @@ VC1541::reset()
     
     cpu.setPC(0xEAA0);
     halftrack = 41;
+    
+    // Put drive in read mode by default
+    via2.pcr = 0x20;
 }
 
 void
@@ -156,14 +159,12 @@ VC1541::executeBitReady()
             sync = true;
             
         } else {
-
             if (sync)
                 byteReadyCounter = 0; // Cleared on falling edge of SYNC
             sync = false;
         }
         
     } else {
-        
         // Write mode
         writeBitToHead(write_shiftreg & 0x80);
         disk.setModified(true); 
@@ -203,7 +204,7 @@ VC1541::byteReady(uint8_t byte)
     // hard-wired to pin CA2 of VIA2. By pulling CA2 low, the CPU can
     // silence the byte ready line. E.g., this is done when moving
     // the drive head to a different track.
-    if (via2.CA2()) {
+    if (via2.ca2_out) {
         via2.ira = byte;
         byteReady();
     }
