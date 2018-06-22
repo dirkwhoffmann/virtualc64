@@ -26,12 +26,17 @@
 
 // TODO:
 //
-// Check why icons for D64 etc. do not show up
-// New icon is too big. Add new size(?)
-// Add support for EasyFlash cartridges
-//
 //
 // CLEANUP:
+// Loading and saving:
+// Rename Container to File, Archive to FileArchive
+// New object structure:
+// File -> RomFile, TapFile, CrtFile, Snapshot
+//      -> FileArchive -> T64Archive, D64Archive, PRGArchive, P00Archive
+//      -> DiskFile -> G64Disk, NIBDisk
+// Delete FileArchive
+// Delete Memory.h, root class for C64Memory and VC1541Memory no longer needed.
+//
 // Intructions.c: A lot of commands have identical switch cases. Use fallthroughs to
 //                simplify code.
 // Add setter API for SID stuff
@@ -43,7 +48,7 @@
 // Snapshot version number of this release
 #define V_MAJOR 2
 #define V_MINOR 0
-#define V_SUBMINOR 0
+#define V_SUBMINOR 1
 
 // Disables assertion checking in relase version
 #define NDEBUG

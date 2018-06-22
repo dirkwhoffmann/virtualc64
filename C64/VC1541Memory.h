@@ -25,7 +25,7 @@
 
 class VC1541;
 
-/*! @brief    This class represents the RAM and ROM of a virtual VC1541 floopy disk drive.
+/*! @brief    Represents RAM and ROM of a virtual VC1541 floopy disk drive.
  */
 class VC1541Memory : public Memory {
 
@@ -36,18 +36,21 @@ public:
 
 	//! @brief    Reference to the connected disk drive
 	VC1541 *floppy;
-		
-	//! @brief    The VC1541s memory space
-	uint8_t mem[65536];
 	
+    //! @brief    Random Access Memory
+    uint8_t ram[0x0800];
+    
+    //! @brief    Read Only Memory
+    uint8_t rom[0x4000];
+    
     /*! @brief    File name of the VC1541 ROM image.
-     *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
-     *            any time.
+     *  @details  The file name is set in loadRom().
      */
 	char *romFile;
 
     /*! @brief    Checks the integrity of a VC1541 ROM image.
-     *  @details  Returns true, iff the specified file contains a valid VC1541 ROM image.
+     *  @details  Returns true, iff the specified file contains a valid
+     *            VC1541 ROM image.
      *            File integrity is checked via the checkFileHeader function.
      */
 	static bool is1541Rom(const char *filename);
@@ -67,10 +70,12 @@ public:
 	void dumpState();
 		
 	/*! @brief    Loads a ROM image into memory.
-	 *  @details  The function automatically determines the type of the specified file. In case of a valid ROM image, 
+	 *  @details  The function automatically determines the type of the
+     *            specified file. In case of a valid ROM image,
      *            it is loaded into the ROM space at the proper location.
-     *  @return   Returns true, if the file could be loaded successfully. In case of an error (file not found,
-     *            the file is no proper ROM image, ...) the function returns false.
+     *  @return   Returns true, if the file could be loaded successfully.
+     *            In case of an error (file not found, the file is no proper
+     *            ROM image, ...) the function returns false.
      */
 	bool loadRom(const char *filename);
 
@@ -80,32 +85,15 @@ public:
     // Reading from memory
     uint8_t peek(uint16_t addr, MemoryType source);
     uint8_t peek(uint16_t addr);
-    uint8_t peekIO(uint16_t addr);
     
     // Snooping in memory (no side effects)
     uint8_t snoop(uint16_t addr, MemoryType source);
     uint8_t snoop(uint16_t addr);
-    uint8_t snoopIO(uint16_t addr);
     
     // Writing into memory
     void poke(uint16_t addr, uint8_t value, MemoryType target);
     void poke(uint16_t addr, uint8_t value);
     void pokeIO(uint16_t addr, uint8_t value);
-    
-    
-    
-    
-    
-    // uint8_t readRam(uint16_t addr) { return mem[addr]; }
-    // uint8_t readRom(uint16_t addr) { return mem[addr]; }
-	// uint8_t peekIO(uint16_t addr);
-    // uint8_t readIO(uint16_t addr);
-
-
-	// void pokeRam(uint16_t addr, uint8_t value);
-	// void pokeRom(uint16_t addr, uint8_t value);
-	// void pokeIO(uint16_t addr, uint8_t value);
-	// void poke(uint16_t addr, uint8_t value);
 };
 
 #endif

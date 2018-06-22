@@ -27,9 +27,9 @@ VC1541Memory::VC1541Memory()
     // Register snapshot items
     SnapshotItem items[] = {
 
-    { mem,              0xC000,     CLEAR_ON_RESET },
-    { &mem[0xC000],     0x4000,     KEEP_ON_RESET  }, /* VC1541 Rom */
-    { NULL,             0,          0 }};
+    { ram,  sizeof(ram), KEEP_ON_RESET },
+    { rom,  sizeof(rom), KEEP_ON_RESET },
+    { NULL, 0,           0 }};
 
     registerSnapshotItems(items, sizeof(items));
 
@@ -45,6 +45,11 @@ void
 VC1541Memory::reset()
 {
     VirtualComponent::reset();
+    
+    // Initialize RAM with powerup pattern (pattern from Hoxs64)
+    for (unsigned i = 0; i < sizeof(ram); i++) {
+        ram[i] = (i & 64) ? 0xFF : 0x00;
+    }
 }
 
 //
@@ -111,7 +116,8 @@ VC1541Memory::peek(uint16_t addr)
         
         // 0xC000 - 0xFFFF : ROM
         // 0x8000 - 0xBFFF : ROM (repeated)
-        return mem[addr | 0xC000];
+        //return mem[addr | 0xC000];
+        return rom[addr & 0x3FFF];
         
     } else {
         
@@ -123,7 +129,7 @@ VC1541Memory::peek(uint16_t addr)
         // 0x1800 - 0x1BFF : VIA 1 (repeats every 16 bytes)
         // 0x1C00 - 0x1FFF : VIA 2 (repeats every 16 bytes)
         return
-        (addr < 0x0800) ? mem[addr] :
+        (addr < 0x0800) ? ram[addr] :
         (addr < 0x1800) ? addr >> 8 :
         (addr < 0x1C00) ? floppy->via1.peek(addr & 0xF) :
         floppy->via2.peek(addr & 0xF);
@@ -148,29 +154,15 @@ VC1541Memory::snoop(uint16_t addr, MemoryType source)
 uint8_t
 VC1541Memory::snoop(uint16_t addr)
 {
-    uint8_t result;
-    
-    if (addr >= 0xc000) {
-        // ROM
-        result = mem[addr];
-    } else if (addr < 0x1000) {
-        result = mem[addr & 0x07ff];
+    if (addr >= 0x8000) {
+        return rom[addr & 0x3FFF];
     } else {
-        result = snoopIO(addr);
-    }
-    
-    return result;
-}
-
-uint8_t
-VC1541Memory::snoopIO(uint16_t addr)
-{
-    if ((addr & 0xFC00) == 0x1800) {
-        return floppy->via1.snoop(addr & 0x000F);
-    } else if ((addr & 0xFC00) == 0x1c00) {
-        return floppy->via2.snoop(addr & 0x000F);
-    } else {
-        return (addr >> 8);
+        addr &= 0x1FFF;
+        return
+        (addr < 0x0800) ? ram[addr] :
+        (addr < 0x1800) ? addr >> 8 :
+        (addr < 0x1C00) ? floppy->via1.snoop(addr & 0xF) :
+        floppy->via2.snoop(addr & 0xF);
     }
 }
 
@@ -179,7 +171,7 @@ VC1541Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
 {
     if (target == M_ROM) {
         assert(addr >= 0x8000);
-        mem[addr] = value;
+        rom[addr & 0x3FFF] = value;
     } else {
         poke(addr, value);
     }
@@ -196,7 +188,7 @@ VC1541Memory::poke(uint16_t addr, uint8_t value)
     addr &= 0x1FFF;
     
     if (addr < 0x0800) { // RAM
-        mem[addr] = value;
+        ram[addr] = value;
         return;
     }
     
