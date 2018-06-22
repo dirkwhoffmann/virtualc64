@@ -72,7 +72,7 @@
 #include "P00Archive.h"
 #include "FileArchive.h"
 #include "TAPContainer.h"
-#include "CRTContainer.h"
+#include "CRTFile.h"
 
 // Sub components
 #include "ProcessorPort.h"
@@ -648,7 +648,7 @@ public:
     bool insertTape(TAPContainer *a);
 
     //! @brief    Attaches a cartridge to the expansion port.
-    bool attachCartridgeAndReset(CRTContainer *c);
+    bool attachCartridgeAndReset(CRTFile *c);
 
     //! @brief    Detaches a cartridge from the expansion port.
     void detachCartridgeAndReset();

@@ -18,22 +18,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "CRTContainer.h"
+#include "CRTFile.h"
 #include "Cartridge.h"
 
-const uint8_t CRTContainer::magicBytes[] = {
+const uint8_t CRTFile::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ', 0x00 };
 
-CRTContainer::CRTContainer()
+CRTFile::CRTFile()
 {
     data = NULL;
     dealloc();
 }
 
-CRTContainer *
-CRTContainer::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
+CRTFile *
+CRTFile::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
 {
-    CRTContainer *cartridge = new CRTContainer();
+    CRTFile *cartridge = new CRTFile();
     
     if (!cartridge->readFromBuffer(buffer, length)) {
         delete cartridge;
@@ -43,10 +43,10 @@ CRTContainer::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
     return cartridge;
 }
 
-CRTContainer *
-CRTContainer::makeCRTContainerWithFile(const char *filename)
+CRTFile *
+CRTFile::makeCRTContainerWithFile(const char *filename)
 {
-    CRTContainer *cartridge = new CRTContainer();
+    CRTFile *cartridge = new CRTFile();
     
     if (!cartridge->readFromFile(filename)) {
         delete cartridge;
@@ -57,7 +57,7 @@ CRTContainer::makeCRTContainerWithFile(const char *filename)
 }
 
 void
-CRTContainer::dealloc()
+CRTFile::dealloc()
     {
         if (data) {
             free(data);
@@ -70,34 +70,34 @@ CRTContainer::dealloc()
         numberOfChips = 0;
     }
         
-CRTContainer::~CRTContainer()
+CRTFile::~CRTFile()
 {
 	dealloc();
 }
 
 bool
-CRTContainer::isCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::isCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
 CartridgeType
-CRTContainer::typeOfCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::typeOfCRTBuffer(const uint8_t *buffer, size_t length)
 {
     assert(isCRTBuffer(buffer, length));
     return (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
 }
 
 const char *
-CRTContainer::typeNameOfCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::typeNameOfCRTBuffer(const uint8_t *buffer, size_t length)
 {
     CartridgeType type = typeOfCRTBuffer(buffer, length);
-    return CRTContainer::cartridgeTypeName(type);
+    return CRTFile::cartridgeTypeName(type);
 }
 
 bool
-CRTContainer::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (!isCRTBuffer(buffer, length))
         return false;
@@ -107,13 +107,13 @@ CRTContainer::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
 }
 
 bool
-CRTContainer::isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length)
+CRTFile::isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length)
 {
         return isCRTBuffer(buffer, length) && !isSupportedCRTBuffer(buffer, length);
 }
 
 bool
-CRTContainer::isCRTFile(const char *path)
+CRTFile::isCRTFile(const char *path)
 {
     assert(path != NULL);
     
@@ -130,7 +130,7 @@ CRTContainer::isCRTFile(const char *path)
 }
 
 bool
-CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
+CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL) {
         return false;
@@ -178,7 +178,7 @@ CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 const char *
-CRTContainer::cartridgeTypeName(CartridgeType type)
+CRTFile::cartridgeTypeName(CartridgeType type)
 {
     switch (type) {
             
@@ -249,7 +249,7 @@ CRTContainer::cartridgeTypeName(CartridgeType type)
 }
 
 const char *
-CRTContainer::cartridgeTypeName()
+CRTFile::cartridgeTypeName()
 {
     return cartridgeTypeName(cartridgeType());
 }

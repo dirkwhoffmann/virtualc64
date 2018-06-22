@@ -40,7 +40,7 @@ struct ContainerWrapper { File *container; };
 struct SnapshotWrapper { Snapshot *snapshot; };
 struct ArchiveWrapper { Archive *archive; };
 struct TAPContainerWrapper { TAPContainer *tapcontainer; };
-struct CRTContainerWrapper { CRTContainer *crtcontainer; };
+struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
 // --------------------------------------------------------------------------
@@ -711,7 +711,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
-    return wrapper->c64->attachCartridgeAndReset((CRTContainer *)([c wrapper]->container)); }
+    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (BOOL) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 - (BOOL) insertDisk:(ArchiveProxy *)a {
@@ -926,18 +926,18 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 @implementation CRTProxy
 
 + (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    return CRTContainer::typeOfCRTBuffer((uint8_t *)buffer, length); }
+    return CRTFile::typeOfCRTBuffer((uint8_t *)buffer, length); }
 + (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    const char *str = CRTContainer::typeNameOfCRTBuffer((uint8_t *)buffer, length);
+    const char *str = CRTFile::typeNameOfCRTBuffer((uint8_t *)buffer, length);
     return [NSString stringWithUTF8String: str]; }
 + (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    return CRTContainer::isSupportedCRTBuffer((uint8_t *)buffer, length); }
+    return CRTFile::isSupportedCRTBuffer((uint8_t *)buffer, length); }
 + (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    return CRTContainer::isUnsupportedCRTBuffer((uint8_t *)buffer, length); }
+    return CRTFile::isUnsupportedCRTBuffer((uint8_t *)buffer, length); }
 + (BOOL) isCRTFile:(NSString *)path {
-    return CRTContainer::isCRTFile([path UTF8String]); }
+    return CRTFile::isCRTFile([path UTF8String]); }
 
-+ (instancetype) make:(CRTContainer *)container
++ (instancetype) make:(CRTFile *)container
 {
     if (container == NULL) {
         return nil;
@@ -947,29 +947,29 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    CRTContainer *container = CRTContainer::makeCRTContainerWithBuffer((const uint8_t *)buffer, length);
+    CRTFile *container = CRTFile::makeCRTContainerWithBuffer((const uint8_t *)buffer, length);
     return [self make: container];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    CRTContainer *container = CRTContainer::makeCRTContainerWithFile([path UTF8String]);
+    CRTFile *container = CRTFile::makeCRTContainerWithFile([path UTF8String]);
     return [self make: container];
 }
 
 - (NSString *)cartridgeName
 {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return [NSString stringWithUTF8String:c->cartridgeName()];
 }
 
 - (CartridgeType)cartridgeType {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->cartridgeType();
 }
 
 - (NSString *)cartridgeTypeName {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return [NSString stringWithUTF8String:c->cartridgeTypeName()];
 }
 
@@ -978,32 +978,32 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (NSInteger)exromLine {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->exromLine();
 }
 
 - (NSInteger)gameLine {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->gameLine();
 }
 
 - (NSInteger)chipCount {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->chipCount();
 }
 
 - (NSInteger)typeOfChip:(NSInteger)nr; {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->chipType((unsigned)nr);
 }
 
 - (NSInteger)loadAddrOfChip:(NSInteger)nr; {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->chipAddr((unsigned)nr);
 }
 
 - (NSInteger)sizeOfChip:(NSInteger)nr; {
-    CRTContainer *c = (CRTContainer *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->container;
     return c->chipSize((unsigned)nr);
 }
 @end

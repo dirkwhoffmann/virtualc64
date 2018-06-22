@@ -26,7 +26,7 @@
 
 #include "VirtualComponent.h"
 #include "Cartridge_types.h"
-#include "CRTContainer.h"
+#include "CRTFile.h"
 
 class ExpansionPort;
 
@@ -101,7 +101,7 @@ public:
      *            Make sure that you only pass containers of supported cartridge type.
      *  @seealso  isSupportedType
      */
-    static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container);
+    static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container);
     
     //! @brief    Resets the cartridge
     /*! @details  Overwritten by subclasses to add special start-up behavior
@@ -184,7 +184,7 @@ public:
     void bankOut(unsigned nr);
     
     //! @brief    Reads in chip stored in the provided CRT container
-    void loadChip(unsigned nr, CRTContainer *c);    
+    void loadChip(unsigned nr, CRTFile *c);    
 
     //! @brief    Press button on cartridge
     /*! @details  By default nothing is done here as most cartridges do not have any

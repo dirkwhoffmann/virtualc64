@@ -1,6 +1,7 @@
 /*!
  * @header      CRTContainer.h
- * @author      Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
+ * @author      Written by Dirk Hoffmann
+ *              based on the original code by A. Carl Douglas.
  * @copyright   All rights reserved.
  */
 /*
@@ -32,11 +33,10 @@
 
 #include "File.h"
 
-/*! @class    CRTContainer
- *  @brief    The CRTContainer class declares the programmatic interface for a file
- *            of the CRT format type.
+/*! @class    CRTFile
+ *  @brief    Represents a file of the CRT format type.
  */
-class CRTContainer : public File {
+class CRTFile : public File {
     
 private:
     
@@ -59,16 +59,16 @@ public:
     //
 
     //! @brief    Constructor
-    CRTContainer();
+    CRTFile();
     
     //! @brief    Factory method
-    static CRTContainer *makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length);
+    static CRTFile *makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length);
 
     //! @brief    Factory method
-    static CRTContainer *makeCRTContainerWithFile(const char *filename);
+    static CRTFile *makeCRTContainerWithFile(const char *filename);
 
     //! @brief    Destructor
-    ~CRTContainer();
+    ~CRTFile();
     
     //! @brief    Frees the allocated memory.
     void dealloc();
@@ -152,7 +152,7 @@ public:
     static bool isCRTFile(const char *path);
 
     //! @brief    Method from Container class
-    bool hasSameType(const char *filename) { return CRTContainer::isCRTFile(filename); }
+    bool hasSameType(const char *filename) { return CRTFile::isCRTFile(filename); }
 
     //! @brief    Method from Container class
     bool readFromBuffer(const uint8_t *buffer, size_t length);

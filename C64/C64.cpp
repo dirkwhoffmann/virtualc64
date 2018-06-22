@@ -1069,7 +1069,7 @@ C64::insertTape(TAPContainer *a)
 }
 
 bool
-C64::attachCartridgeAndReset(CRTContainer *container)
+C64::attachCartridgeAndReset(CRTFile *container)
 {
     assert(container != NULL);
     

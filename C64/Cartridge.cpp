@@ -114,7 +114,7 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
 }
 
 Cartridge *
-Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
+Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
 {
     Cartridge *cart;
     
@@ -315,7 +315,7 @@ Cartridge::bankOut(unsigned nr)
 }
 
 void
-Cartridge::loadChip(unsigned nr, CRTContainer *c)
+Cartridge::loadChip(unsigned nr, CRTFile *c)
 {
     assert(nr < 64);
     assert(c != NULL);
