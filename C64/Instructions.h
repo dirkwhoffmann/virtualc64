@@ -314,6 +314,7 @@ typedef enum {
 
 // Atomic CPU tasks
 #define FETCH_OPCODE if (rdyLine) opcode = mem->peek(PC++); else return true;
+#define FETCH_OPCODE_AND_DISCARD if (rdyLine) { (void)mem->peek(PC); opcode = 0; } else return true;
 #define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return true;
 #define FETCH_ADDR_HI if (rdyLine) addr_hi = mem->peek(PC++); else return true;
 #define FETCH_POINTER_ADDR if (rdyLine) ptr = mem->peek(PC++); else return true;
@@ -352,6 +353,7 @@ typedef enum {
 #define PULL_PCL if (rdyLine) setPCL(mem->peek(0x100 | SP)); else return true;
 #define PULL_PCH if (rdyLine) setPCH(mem->peek(0x100 | SP)); else return true;
 #define PULL_P if (rdyLine) setPWithoutB(mem->peek(0x100 | SP)); else return true;
+#define IDLE_PULL_P if (rdyLine) (void)mem->peek(0x100 | SP); else return true;
 #define PULL_A if (rdyLine) loadA(mem->peek(0x100 | SP)); else return true;
 
 #define PAGE_BOUNDARY_CROSSED overflow

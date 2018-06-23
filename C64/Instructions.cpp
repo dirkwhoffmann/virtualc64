@@ -473,6 +473,7 @@ CPU::executeOneCycle()
             if (unlikely(doNmi)) {
                 
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
+                FETCH_OPCODE_AND_DISCARD
                 clear8_delayed(edgeDetector);
                 next = nmi_2;
                 doNmi = false;
@@ -482,6 +483,7 @@ CPU::executeOneCycle()
             } else if (unlikely(doIrq)) {
                 
                 // if (tracingEnabled()) debug("IRQ (source = %02X)\n", irqLine);
+                FETCH_OPCODE_AND_DISCARD
                 next = irq_2;
                 doIrq = false;
                 return true;
@@ -606,12 +608,12 @@ CPU::executeOneCycle()
             
         case nmi_3:
             
-            mem->poke(0x100+(SP--), HI_BYTE(PC));
+            PUSH_PCH
             CONTINUE
             
         case nmi_4:
             
-            mem->poke(0x100+(SP--), LO_BYTE(PC));
+            PUSH_PCL
             CONTINUE
             
         case nmi_5:
@@ -627,6 +629,7 @@ CPU::executeOneCycle()
             CONTINUE
             
         case nmi_7:
+
             READ_FROM(0xFFFB)
             setPCH(data);
             DONE
@@ -2589,6 +2592,7 @@ CPU::executeOneCycle()
             
         case JSR_2:
             
+            IDLE_PULL_P
             CONTINUE
             
         case JSR_3:
@@ -3752,12 +3756,13 @@ CPU::executeOneCycle()
             CONTINUE
             
         case PLP_2:
-            
+
+            IDLE_PULL_P
             SP++;
             CONTINUE
             
         case PLP_3:
-            
+
             POLL_INT // Interrupts are polled before P is pulled
             PULL_P
             DONE
@@ -4142,6 +4147,7 @@ CPU::executeOneCycle()
             
         case RTI_2:
             
+            IDLE_PULL_P
             SP++;
             CONTINUE
             
