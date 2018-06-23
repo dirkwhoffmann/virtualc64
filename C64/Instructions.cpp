@@ -473,7 +473,7 @@ CPU::executeOneCycle()
             if (unlikely(doNmi)) {
                 
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
-                FETCH_OPCODE_AND_DISCARD
+                IDLE_FETCH
                 clear8_delayed(edgeDetector);
                 next = nmi_2;
                 doNmi = false;
@@ -483,7 +483,7 @@ CPU::executeOneCycle()
             } else if (unlikely(doIrq)) {
                 
                 // if (tracingEnabled()) debug("IRQ (source = %02X)\n", irqLine);
-                FETCH_OPCODE_AND_DISCARD
+                IDLE_FETCH
                 next = irq_2;
                 doIrq = false;
                 return true;
@@ -2590,7 +2590,7 @@ CPU::executeOneCycle()
             
         case JSR_2:
             
-            IDLE_PULL_P
+            IDLE_PULL
             CONTINUE
             
         case JSR_3:
@@ -3755,7 +3755,7 @@ CPU::executeOneCycle()
             
         case PLP_2:
 
-            IDLE_PULL_P
+            IDLE_PULL
             SP++;
             CONTINUE
             
@@ -4145,7 +4145,7 @@ CPU::executeOneCycle()
             
         case RTI_2:
             
-            IDLE_PULL_P
+            IDLE_PULL
             SP++;
             CONTINUE
             
@@ -4183,7 +4183,9 @@ CPU::executeOneCycle()
             
         case RTS_2:
             
-            IDLE_READ_IMMEDIATE_SP
+            // IDLE_READ_IMMEDIATE_SP
+            IDLE_PULL
+            SP++;
             CONTINUE
             
         case RTS_3:

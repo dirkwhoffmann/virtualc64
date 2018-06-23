@@ -59,7 +59,7 @@ public:
         EXPANSION = 0x08,
         KEYBOARD = 0x10
     } InterruptSource;
-
+    
 	//! @brief    Reference to the connected virtual memory
 	Memory *mem;
 
@@ -285,22 +285,23 @@ public:
     uint8_t getC() { return (C ? C_FLAG : 0); }
     
 	/*! @brief    Returns the contents of the status register
-	 *  @details  Each bit in the status register corresponds to the value of a single flag, 
-     *            except bit 5 which is always set. 
+	 *  @details  Each bit in the status register corresponds to the value of
+     *            a single flag, except bit 5 which is always set.
      */
     uint8_t getP() { return getN() | getV() | 32 | getB() | getD() | getI() | getZ() | getC(); }
     
 	/*! @brief    Returns the status register without the B flag
-	 *  @details  The bit position of the B flag is always 0. This function is needed for proper 
-     *            interrupt handling. When an IRQ or NMI is triggered internally, the status 
-     *            register is pushed on the stack with the B-flag cleared. 
+	 *  @details  The bit position of the B flag is always 0. This function is
+     *            needed for proper interrupt handling. When an IRQ or NMI is
+     *            triggered internally, the status register is pushed on the
+     *            stack with the B-flag cleared.
      */
     uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
 	
     //! @brief    Returns current opcode.
     uint8_t getOpcode() { return opcode; }
     
-	//! @brief    Writes value to the accumulator register. Flags remain untouched.
+	//! @brief    Writes value to the accumulator. Flags remain untouched.
     void setA(uint8_t a) { A = a; }
     
 	//! @brief    Writes value to the the X register. Flags remain untouched.
@@ -321,15 +322,17 @@ public:
 	//! @brief    Changes high byte of the program counter only.
     void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
     
-	/*! @brief    Increments the program counter by the specified amount.
-	 *  @details  If no argument is provided, the program counter is incremented by one. 
-     */
+	//! @brief    Increments the program counter by the specified amount.
     void incPC(uint8_t offset = 1) { PC += offset; }
     
-	//! @brief    Increments low byte of program counter (hi byte remains unchanged).
+	/*! @brief    Increments the program counter's low byte.
+     *  @note     The high byte does not change.
+     */
     void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(PC) + offset); }
     
-	//! @brief    Increments high byte of program counter (lo byte remains unchanged).
+	/*! @brief    Increments the program counter's high byte.
+     *  @note     The low byte does not change.
+     */
     void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
 	
 	//! @brief    Writes value to the stack pointer.
@@ -371,12 +374,6 @@ public:
 	//! @brief    Loads the Y register. The Z- and N-flag may change.
     void loadY(uint8_t y) { Y = y; N = y & 128; Z = (y == 0); }
     
-	//! @brief    Loads the stack register. The Z- and N-flag may change.
-    void loadSP(uint8_t s) { SP = s; N = s & 128; Z = (s == 0); }
-    
-	//! @brief    Loads a value into memory. The Z- and N-flag may change.
-    void loadM(uint16_t addr, uint8_t s) { mem->poke(addr, s); N = s & 128; Z = (s == 0); }
-
     
     //
     //! @functiongroup Handling interrupts
@@ -416,28 +413,33 @@ public:
 	//! @brief    Returns the adressing mode for a given opcode.
 	AddressingMode getAddressingMode(uint8_t opcode);
     
-	/*! @brief    Returns the length in bytes of the instruction with the specified opcode.
+	/*! @brief    Returns the length of an instruction in bytes.
 	 *  @result   Integer value between 1 and 3.
      */
 	unsigned getLengthOfInstruction(uint8_t opcode);
     
-	/*! @brief    Returns the length in bytes of the instruction with the specified address.
+	/*! @brief    Returns the length of instruction in bytes.
      *  @result   Integer value between 1 and 3.
      */
-    unsigned getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->spypeek(addr)); }
+    unsigned getLengthOfInstructionAtAddress(uint16_t addr) {
+        return getLengthOfInstruction(mem->spypeek(addr)); }
     
-	/*! @brief    Returns the length in bytes of the next instruction to execute.
+	/*! @brief    Returns the length of the currently executed instruction.
      *  @result   Integer value between 1 and 3.
      */
-    unsigned getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
+    unsigned getLengthOfCurrentInstruction() {
+        return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
     
-	/*! @brief    Returns the address of the instruction following the current instruction.
+	/*! @brief    Returns the address of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
-    uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
+    uint16_t getAddressOfNextInstruction() {
+        return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
     
-	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
-    bool atBeginningOfNewCommand() { return next == fetch; }
+	/*! @brief    Returns true if the next microcycle is the fetch cycle.
+     *  @details  The fetch cycle is the first microinstruction of each command.
+     */
+    bool inFetchPhase() { return next == fetch; }
 	
     
     //
@@ -446,7 +448,7 @@ public:
     
 	/*! @brief    Executes the next micro instruction.
 	 *  @return   true, if the micro instruction was processed successfully.
-     *            false, if the CPU was halted, e.g., by reaching a breakpoint
+     *            false, if the CPU was halted, e.g., by reaching a breakpoint.
      */
     bool executeOneCycle();
     
@@ -464,22 +466,22 @@ public:
     //! @functiongroup Handling breakpoints
     //
     
-    //! @brief    Returns true iff a hard breakpoint is set at the specified address
+    //! @brief    Checks if a hard breakpoint is set at the provided address.
     bool hardBreakpoint(uint16_t addr) { return (breakpoint[addr] & HARD_BREAKPOINT) != 0; }
     
-	//! @brief    Sets a hard breakpoint at the specified address.
+	//! @brief    Sets a hard breakpoint at the provided address.
     void setHardBreakpoint(uint16_t addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
 	
-	//! @brief    Deletes a hard breakpoint at the specified address.
+	//! @brief    Deletes a hard breakpoint at the provided address.
 	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= (0XFF - HARD_BREAKPOINT); }
 	
-	//! @brief    Sets or deletes a hard breakpoint at the specified address.
+	//! @brief    Sets or deletes a hard breakpoint at the provided address.
 	void toggleHardBreakpoint(uint16_t addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
     
-    //! @brief    Returns true iff a hard breakpoint is set at the specified address
+    //! @brief    Checks if a soft breakpoint is set at the provided address.
     bool softBreakpoint(uint16_t addr) { return (breakpoint[addr] & SOFT_BREAKPOINT) != 0; }
 
-	//! @brief    Sets a soft breakpoint at the specified address.
+	//! @brief    Sets a soft breakpoint at the provided address.
 	void setSoftBreakpoint(uint16_t addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
     
 	//! @brief    Deletes a soft breakpoint at the specified address.
@@ -514,12 +516,15 @@ public:
     //! @brief   Records an instruction.
     void recordInstruction();
     
-    //! @brief   Reads and removes a recorded instruction from the trace buffer.
-    //! @note    The trace buffer must not be empty.
+    /*! @brief   Reads and removes a recorded instruction from the trace buffer.
+     *  @note    The trace buffer must not be empty.
+     */
     RecordedInstruction readRecordedInstruction();
 
-    //! @brief   Reads a recorded instruction from the trace buffer.
-    //! @note    'previous' must be smaller than the number of recorded instructions.
+    /*! @brief   Reads a recorded instruction from the trace buffer.
+     *  @note    'previous' must be smaller than the number of recorded
+     *           instructions.
+     */
     RecordedInstruction readRecordedInstruction(unsigned previous);
 
     

@@ -1,5 +1,5 @@
 /*
- * (C) 2006-2009 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006-2018 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -313,53 +313,76 @@ typedef enum {
 } MicroInstruction;
 
 // Atomic CPU tasks
-#define FETCH_OPCODE if (rdyLine) opcode = mem->peek(PC++); else return true;
-#define FETCH_OPCODE_AND_DISCARD if (rdyLine) { (void)mem->peek(PC); opcode = 0; } else return true;
-#define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return true;
-#define FETCH_ADDR_HI if (rdyLine) addr_hi = mem->peek(PC++); else return true;
-#define FETCH_POINTER_ADDR if (rdyLine) ptr = mem->peek(PC++); else return true;
-#define FETCH_ADDR_LO_INDIRECT if (rdyLine) addr_lo = mem->peek((uint16_t)ptr++); else return true;
-#define FETCH_ADDR_HI_INDIRECT if (rdyLine) addr_hi = mem->peek((uint16_t)ptr++); else return true;
+#define FETCH_OPCODE \
+    if (rdyLine) opcode = mem->peek(PC++); else return true;
+#define FETCH_ADDR_LO \
+    if (rdyLine) addr_lo = mem->peek(PC++); else return true;
+#define FETCH_ADDR_HI \
+    if (rdyLine) addr_hi = mem->peek(PC++); else return true;
+#define FETCH_POINTER_ADDR \
+    if (rdyLine) ptr = mem->peek(PC++); else return true;
+#define FETCH_ADDR_LO_INDIRECT \
+    if (rdyLine) addr_lo = mem->peek((uint16_t)ptr++); else return true;
+#define FETCH_ADDR_HI_INDIRECT \
+    if (rdyLine) addr_hi = mem->peek((uint16_t)ptr++); else return true;
+#define IDLE_FETCH \
+    if (rdyLine) (void)mem->peek(PC); else return true;
 
-#define READ_RELATIVE if (rdyLine) data = mem->peek(PC); else return true;
-#define READ_IMMEDIATE if (rdyLine) data = mem->peek(PC++); else return true;
-#define READ_FROM(x) if (rdyLine) data = mem->peek(x); else return true;
-#define READ_FROM_ADDRESS if (rdyLine) data = mem->peek((addr_hi << 8) | addr_lo); else return true;
-#define READ_FROM_ZERO_PAGE if (rdyLine) data = mem->peek((uint16_t)addr_lo); else return true;
-#define READ_FROM_ADDRESS_INDIRECT if (rdyLine) data = mem->peek((uint16_t)ptr); else return true;
-#define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return true;
-#define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return true;
-#define IDLE_READ_IMMEDIATE_SP if (rdyLine) (void)mem->peek(0x100 | SP++); else return true;
-#define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return true;
-#define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return true;
-#define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return true;
-#define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return true;
 
-#define WRITE_TO_ADDRESS mem->poke((addr_hi << 8) | addr_lo, data);
-#define WRITE_TO_ADDRESS_AND_SET_FLAGS loadM((addr_hi << 8) | addr_lo, data);
-#define WRITE_TO_ZERO_PAGE mem->poke((uint16_t)addr_lo, data);
-#define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS loadM((uint16_t)addr_lo, data);
+#define READ_RELATIVE \
+    if (rdyLine) data = mem->peek(PC); else return true;
+#define READ_IMMEDIATE \
+    if (rdyLine) data = mem->peek(PC++); else return true;
+#define READ_FROM(x) \
+    if (rdyLine) data = mem->peek(x); else return true;
+#define READ_FROM_ADDRESS \
+    if (rdyLine) data = mem->peek(HI_LO(addr_hi, addr_lo)); else return true;
+#define READ_FROM_ZERO_PAGE \
+    if (rdyLine) data = mem->peekZP(addr_lo); else return true;
+#define READ_FROM_ADDRESS_INDIRECT \
+    if (rdyLine) data = mem->peekZP(ptr); else return true;
+
+#define IDLE_READ_IMPLIED \
+    if (rdyLine) (void)mem->peek(PC); else return true;
+#define IDLE_READ_IMMEDIATE \
+    if (rdyLine) (void)mem->peek(PC++); else return true;
+#define IDLE_READ_FROM(x) \
+    if (rdyLine) (void)mem->peek(x); else return true;
+#define IDLE_READ_FROM_ADDRESS \
+    if (rdyLine) (void)(mem->peek(HI_LO(addr_hi, addr_lo))); else return true;
+#define IDLE_READ_FROM_ZERO_PAGE \
+    if (rdyLine) (void)mem->peekZP(addr_lo); else return true;
+#define IDLE_READ_FROM_ADDRESS_INDIRECT \
+    if (rdyLine) (void)mem->peekZP(ptr); else return true;
+
+#define WRITE_TO_ADDRESS \
+mem->poke(HI_LO(addr_hi, addr_lo), data);
+#define WRITE_TO_ADDRESS_AND_SET_FLAGS \
+    mem->poke(HI_LO(addr_hi, addr_lo), data); N = data & 128; Z = (data == 0);
+#define WRITE_TO_ZERO_PAGE \
+    mem->pokeZP(addr_lo, data);
+#define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
+    mem->pokeZP(addr_lo, data); N = data & 128; Z = (data == 0);
 
 #define ADD_INDEX_X overflow = ((int)addr_lo + (int)X >= 0x100); addr_lo += X; 
 #define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y >= 0x100); addr_lo += Y; 
 #define ADD_INDEX_X_INDIRECT ptr += X;
 #define ADD_INDEX_Y_INDIRECT ptr += Y;
 
-#define PUSH_PCL mem->poke(0x100+(SP--), LO_BYTE(PC));
-#define PUSH_PCH mem->poke(0x100+(SP--), HI_BYTE(PC));
-#define PUSH_P mem->poke(0x100+(SP--), getP());
-#define PUSH_P_WITH_B_SET mem->poke(0x100+(SP--), getP() | B_FLAG);
-#define PUSH_A mem->poke(0x100+(SP--), A); 
-#define PULL_PCL if (rdyLine) setPCL(mem->peek(0x100 | SP)); else return true;
-#define PULL_PCH if (rdyLine) setPCH(mem->peek(0x100 | SP)); else return true;
-#define PULL_P if (rdyLine) setPWithoutB(mem->peek(0x100 | SP)); else return true;
-#define IDLE_PULL_P if (rdyLine) (void)mem->peek(0x100 | SP); else return true;
-#define PULL_A if (rdyLine) loadA(mem->peek(0x100 | SP)); else return true;
+#define PUSH_PCL mem->pokeStack(SP--, LO_BYTE(PC));
+#define PUSH_PCH mem->pokeStack(SP--, HI_BYTE(PC));
+#define PUSH_P mem->pokeStack(SP--, getP());
+#define PUSH_P_WITH_B_SET mem->pokeStack(SP--, getP() | B_FLAG);
+#define PUSH_A mem->pokeStack(SP--, A);
+#define PULL_PCL if (rdyLine) setPCL(mem->peekStack(SP)); else return true;
+#define PULL_PCH if (rdyLine) setPCH(mem->peekStack(SP)); else return true;
+#define PULL_P if (rdyLine) setPWithoutB(mem->peekStack(SP)); else return true;
+#define PULL_A if (rdyLine) loadA(mem->peekStack(SP)); else return true;
+#define IDLE_PULL if (rdyLine) (void)mem->peekStack(SP); else return true;
 
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
 
-// #define POLL_IRQ doIrq = (read8_delayed(levelDetector) && I == 0);
 #define POLL_INT doIrq = (read8_delayed(levelDetector) && I == 0); \
                  doNmi = read8_delayed(edgeDetector);
 #define POLL_INT_AGAIN doIrq |= (read8_delayed(levelDetector) && I == 0); \

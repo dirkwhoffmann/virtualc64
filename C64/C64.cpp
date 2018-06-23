@@ -424,10 +424,10 @@ C64::step()
     floppy.cpu.clearErrorState();
     
     // Wait until the execution of the next command has begun
-    while (cpu.atBeginningOfNewCommand()) executeOneCycle();
+    while (cpu.inFetchPhase()) executeOneCycle();
 
     // Finish the command
-    while (!cpu.atBeginningOfNewCommand()) executeOneCycle();
+    while (!cpu.inFetchPhase()) executeOneCycle();
     
     // Execute the first microcycle (fetch phase) and stop there
     executeOneCycle();
