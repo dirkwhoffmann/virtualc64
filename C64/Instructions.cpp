@@ -555,15 +555,13 @@ CPU::executeOneCycle()
             
         case irq_3:
             
-            mem->poke(0x100+(SP--), HI_BYTE(PC));
+            PUSH_PCH
             CONTINUE
             
         case irq_4:
             
-            mem->poke(0x100+(SP--), LO_BYTE(PC));
-            
+            PUSH_PCL
             // Check for interrupt hijacking
-            
             // If there is a positive edge on the NMI line ...
             if (edgeDetector.value) {
                 
