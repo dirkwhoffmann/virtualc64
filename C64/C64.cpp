@@ -395,6 +395,7 @@ C64::isHalted()
     return p == NULL;
 }
 
+/*
 void
 C64::step()
 {
@@ -413,6 +414,23 @@ C64::step()
     // Execute one more cycle (and stop in cycle 1)
     executeOneCycle();
            debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle());
+}
+*/
+
+void
+C64::step()
+{
+    cpu.clearErrorState();
+    floppy.cpu.clearErrorState();
+    
+    // Wait until the execution of the next command has begun
+    while (cpu.atBeginningOfNewCommand()) executeOneCycle();
+
+    // Finish the command
+    while (!cpu.atBeginningOfNewCommand()) executeOneCycle();
+    
+    // Execute the first microcycle (fetch phase) and stop there
+    executeOneCycle();
 }
 
 void
