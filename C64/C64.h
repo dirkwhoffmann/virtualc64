@@ -52,7 +52,7 @@
 #define V_SUBMINOR 1
 
 // Disables assertion checking in relase version
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1
@@ -101,7 +101,6 @@
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
-
 
 //! @class    A complete virtual C64
 class C64 : public VirtualComponent {

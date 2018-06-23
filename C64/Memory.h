@@ -40,6 +40,12 @@ private:
      */
 	virtual uint8_t peek(uint16_t addr) = 0;
 
+    //! @brief    Peeks a byte from the zero page.
+    virtual uint8_t peekZP(uint8_t addr) = 0;
+
+    //! @brief    Peeks a byte from the stack.
+    virtual uint8_t peekStack(uint8_t sp) = 0;
+    
 public:
     
     /*! @brief    Peeks a byte from memory without causing side effects.
@@ -51,6 +57,12 @@ public:
      *  @details  Emulates a native write access including all side effects.
      */
     virtual void poke(uint16_t addr, uint8_t value) = 0;
+
+    //! @brief    Pokes a byte into the zero page.
+    virtual void pokeStack(uint8_t sp, uint8_t value) = 0;
+
+    //! @brief    Pokes a byte onto the stack.
+    virtual void pokeZP(uint8_t addr, uint8_t value) = 0;
 };
 
 #endif

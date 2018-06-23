@@ -159,7 +159,8 @@ C64Memory::updatePeekPokeLookupTables()
     pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
 }
 
-uint8_t C64Memory::peek(uint16_t addr, MemoryType source)
+uint8_t
+C64Memory::peek(uint16_t addr, MemoryType source)
 {
     switch(source) {
             
@@ -174,19 +175,17 @@ uint8_t C64Memory::peek(uint16_t addr, MemoryType source)
             
         case M_CRTLO:
         case M_CRTHI:
-            
             return c64->expansionport.peek(addr);
             
         case M_PP:
-            
-            if (addr == 0x0000)
+            if (likely(addr >= 0x02)) {
+                return ram[addr];
+            } else if (addr == 0x00) {
                 return c64->processorPort.readDirection();
-            
-            if (addr == 0x0001)
+            } else {
                 return c64->processorPort.read();
-            
-            return ram[addr];
-            
+            }
+   
         case M_NONE:
             // what happens if RAM is unmapped?
             return ram[addr];
@@ -197,7 +196,20 @@ uint8_t C64Memory::peek(uint16_t addr, MemoryType source)
     }
 }
 
-uint8_t C64Memory::peekIO(uint16_t addr)
+uint8_t
+C64Memory::peekZP(uint8_t addr)
+{
+    if (likely(addr >= 0x02)) {
+        return ram[addr];
+    } else if (addr == 0x00) {
+        return c64->processorPort.readDirection();
+    } else {
+        return c64->processorPort.read();
+    }
+}
+
+uint8_t
+C64Memory::peekIO(uint16_t addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -251,7 +263,8 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
-uint8_t C64Memory::spypeek(uint16_t addr, MemoryType source)
+uint8_t
+C64Memory::spypeek(uint16_t addr, MemoryType source)
 {
     switch(source) {
             
@@ -266,19 +279,11 @@ uint8_t C64Memory::spypeek(uint16_t addr, MemoryType source)
             
         case M_CRTLO:
         case M_CRTHI:
-            
             return c64->expansionport.read(addr);
             
         case M_PP:
-            
-            if (addr == 0x0000)
-                return c64->processorPort.readDirection();
-            
-            if (addr == 0x0001)
-                return c64->processorPort.read();
-            
-            return ram[addr];
-            
+            return peek(addr, M_PP);
+      
         case M_NONE:
             return ram[addr];
             
@@ -345,17 +350,13 @@ void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
             return;
             
         case M_PP:
-            
-            if (addr == 0x0000) {
+            if (likely(addr >= 0x02)) {
+                ram[addr] = value;
+            } else if (addr == 0x00) {
                 c64->processorPort.writeDirection(value);
-                return;
-            }
-            if (addr == 0x0001) {
+            } else {
                 c64->processorPort.write(value);
-                return;
             }
-            
-            ram[addr] = value;
             return;
             
         case M_ROM:
@@ -365,6 +366,17 @@ void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
         default:
             assert(0);
             return;
+    }
+}
+
+void C64Memory::pokeZP(uint8_t addr, uint8_t value)
+{
+    if (likely(addr >= 0x02)) {
+        ram[addr] = value;
+    } else if (addr == 0x00) {
+        c64->processorPort.writeDirection(value);
+    } else {
+        c64->processorPort.write(value);
     }
 }
 
