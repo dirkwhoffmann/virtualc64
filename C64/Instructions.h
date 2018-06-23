@@ -322,13 +322,14 @@ typedef enum {
 
 #define READ_RELATIVE if (rdyLine) data = mem->peek(PC); else return true;
 #define READ_IMMEDIATE if (rdyLine) data = mem->peek(PC++); else return true;
+#define READ_FROM(x) if (rdyLine) data = mem->peek(x); else return true;
 #define READ_FROM_ADDRESS if (rdyLine) data = mem->peek((addr_hi << 8) | addr_lo); else return true;
 #define READ_FROM_ZERO_PAGE if (rdyLine) data = mem->peek((uint16_t)addr_lo); else return true;
 #define READ_FROM_ADDRESS_INDIRECT if (rdyLine) data = mem->peek((uint16_t)ptr); else return true;
-#define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return true;
 #define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return true;
 #define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return true;
 #define IDLE_READ_IMMEDIATE_SP if (rdyLine) (void)mem->peek(0x100 | SP++); else return true;
+#define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return true;
 #define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return true;
 #define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return true;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return true;

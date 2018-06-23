@@ -136,13 +136,16 @@ private:
     
 	//! @brief    Internal data register
 	uint8_t data;
-			
+		
+public:
+    
 	/*! @brief    RDY line (ready line)
 	 *  @details  If this line is LOW, the CPU freezes on the next read access.
      *            RDY is pulled down by VIC to perform longer lasting read operations.
      */
 	bool rdyLine;
-	
+private:
+    
     //! @brief    Cycle of the most recent rising edge of the rdyLine
     uint64_t rdyLineUp;
     

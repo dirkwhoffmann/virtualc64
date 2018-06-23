@@ -398,6 +398,8 @@ C64::isHalted()
 void
 C64::step()
 {
+    debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d, rdy = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle(),cpu.rdyLine);
+    
     cpu.clearErrorState();
     floppy.cpu.clearErrorState();
     
@@ -405,10 +407,12 @@ C64::step()
     do {
         executeOneCycle();
     } while (!cpu.atBeginningOfNewCommand());
+           debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle());
     
     // We are now at cycle 0 of the next command
     // Execute one more cycle (and stop in cycle 1)
     executeOneCycle();
+           debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle());
 }
 
 void

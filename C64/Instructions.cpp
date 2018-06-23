@@ -575,18 +575,19 @@ CPU::executeOneCycle()
         case irq_5:
             
             mem->poke(0x100+(SP--), getPWithClearedB());
-            setI(1);
             CONTINUE
             
         case irq_6:
             
-            data = mem->peek(0xFFFE);
+            READ_FROM(0xFFFE)
+            setPCL(data);
+            setI(1);
             CONTINUE
             
         case irq_7:
             
-            setPCL(data);
-            setPCH(mem->peek(0xFFFF));
+            READ_FROM(0xFFFF)
+            setPCH(data);
             DONE
             
         //
@@ -616,18 +617,18 @@ CPU::executeOneCycle()
         case nmi_5:
             
             mem->poke(0x100+(SP--), getPWithClearedB());
-            setI(1);
             CONTINUE
             
         case nmi_6:
             
-            data = mem->peek(0xFFFA);
+            READ_FROM(0xFFFA)
+            setPCL(data);
+            setI(1);
             CONTINUE
             
         case nmi_7:
-            
-            setPCL(data);
-            setPCH(mem->peek(0xFFFB));
+            READ_FROM(0xFFFB)
+            setPCH(data);
             DONE
 
         // -------------------------------------------------------------------------------
@@ -1490,18 +1491,19 @@ CPU::executeOneCycle()
             
         case BRK_5:
             
-            data = mem->peek(0xFFFE);
+            READ_FROM(0xFFFE);
+            setPCL(data);
+            setI(1);
             CONTINUE
             
         case BRK_6:
             
-            setPCL(data);
-            setPCH(mem->peek(0xFFFF));
-            setI(1);
-            
+            READ_FROM(0xFFFF);
+            setPCH(data);
             POLL_INT
-            doNmi = false; // Only the level detector is polled here. This is the reason why
-                           // only IRQs can be triggered right after a BRK command, but not NMIs.
+            doNmi = false; // Only the level detector is polled here. This is
+                           // the reason why only IRQs can be triggered right
+                           // after a BRK command, but not NMIs.
             DONE
             
         case BRK_nmi_4:
@@ -1511,14 +1513,15 @@ CPU::executeOneCycle()
             
         case BRK_nmi_5:
             
-            data = mem->peek(0xFFFA);
+            READ_FROM(0xFFFA);
+            setPCL(data);
+            setI(1);
             CONTINUE
             
         case BRK_nmi_6:
             
-            setPCL(data);
-            setPCH(mem->peek(0xFFFB));
-            setI(1);
+            READ_FROM(0xFFFB);
+            setPCH(data);
             POLL_INT
             DONE
 
@@ -2559,12 +2562,14 @@ CPU::executeOneCycle()
         case JMP_abs_ind_3:
             
             READ_FROM_ADDRESS
+            setPCL(data);
+            addr_lo++;
             CONTINUE
             
         case JMP_abs_ind_4:
             
-            setPCL(data);
-            setPCH(mem->peek(LO_HI(addr_lo + 1, addr_hi)));
+            READ_FROM_ADDRESS
+            setPCH(data);
             POLL_INT
             DONE
 
