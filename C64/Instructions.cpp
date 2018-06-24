@@ -537,11 +537,6 @@ CPU::executeOneCycle()
         //
         // IRQ handling
         //
-
-        case irq:
-            
-            IDLE_READ_IMPLIED
-            CONTINUE
             
         case irq_2:
             
@@ -588,12 +583,7 @@ CPU::executeOneCycle()
         //
         // NMI handling
         // 
-            
-        case nmi:
-            
-            IDLE_READ_IMPLIED
-            CONTINUE
-            
+        
         case nmi_2:
 
             IDLE_READ_IMPLIED
@@ -628,7 +618,7 @@ CPU::executeOneCycle()
             DONE
 
         //
-        // xxx_zpg:
+        // First microcycle (shared behavior)
         //
         
         case ADC_zpg: case AND_zpg: case ASL_zpg: case BIT_zpg:
@@ -639,20 +629,198 @@ CPU::executeOneCycle()
         case STX_zpg: case STY_zpg: case DCP_zpg: case ISC_zpg:
         case LAX_zpg: case RLA_zpg: case RRA_zpg: case SAX_zpg:
         case SLO_zpg: case SRE_zpg:
+        
+        case ADC_zpg_x: case AND_zpg_x: case ASL_zpg_x: case CMP_zpg_x:
+        case DEC_zpg_x: case EOR_zpg_x: case INC_zpg_x: case LDA_zpg_x:
+        case LDY_zpg_x: case LSR_zpg_x: case NOP_zpg_x: case ORA_zpg_x:
+        case ROL_zpg_x: case ROR_zpg_x: case SBC_zpg_x: case STA_zpg_x:
+        case STY_zpg_x: case DCP_zpg_x: case ISC_zpg_x: case RLA_zpg_x:
+        case RRA_zpg_x: case SLO_zpg_x: case SRE_zpg_x:
+        
+        case LDX_zpg_y: case STX_zpg_y: case LAX_zpg_y: case SAX_zpg_y:
+        
+        case ADC_abs: case AND_abs: case ASL_abs: case BIT_abs:
+        case CMP_abs: case CPX_abs: case CPY_abs: case DEC_abs:
+        case EOR_abs: case INC_abs: case JMP_abs: case LDA_abs:
+        case LDX_abs: case LDY_abs: case LSR_abs: case NOP_abs:
+        case ORA_abs: case ROL_abs: case ROR_abs: case SBC_abs:
+        case STA_abs: case STX_abs: case STY_abs: case DCP_abs:
+        case ISC_abs: case LAX_abs: case RLA_abs: case RRA_abs:
+        case SAX_abs: case SLO_abs: case SRE_abs:
+            
+        case ADC_abs_x: case AND_abs_x: case ASL_abs_x: case CMP_abs_x:
+        case DEC_abs_x: case EOR_abs_x: case INC_abs_x: case LDA_abs_x:
+        case LDY_abs_x: case LSR_abs_x: case NOP_abs_x: case ORA_abs_x:
+        case ROL_abs_x: case ROR_abs_x: case SBC_abs_x: case STA_abs_x:
+        case DCP_abs_x: case ISC_abs_x: case RLA_abs_x: case RRA_abs_x:
+        case SHY_abs_x: case SLO_abs_x: case SRE_abs_x:
+            
+        case ADC_abs_y: case AND_abs_y: case CMP_abs_y: case EOR_abs_y:
+        case LDA_abs_y: case LDX_abs_y: case LSR_abs_y: case ORA_abs_y:
+        case SBC_abs_y: case STA_abs_y: case DCP_abs_y: case ISC_abs_y:
+        case LAS_abs_y: case LAX_abs_y: case RLA_abs_y: case RRA_abs_y:
+        case SHA_abs_y: case SHX_abs_y: case SLO_abs_y: case SRE_abs_y:
+        case TAS_abs_y:
             
             FETCH_ADDR_LO
             CONTINUE
+        
+        case ADC_ind_x: case AND_ind_x: case ASL_ind_x: case CMP_ind_x:
+        case DEC_ind_x: case EOR_ind_x: case INC_ind_x: case LDA_ind_x:
+        case LDX_ind_x: case LDY_ind_x: case LSR_ind_x: case ORA_ind_x:
+        case ROL_ind_x: case ROR_ind_x: case SBC_ind_x: case STA_ind_x:
+        case DCP_ind_x: case ISC_ind_x: case LAX_ind_x: case RLA_ind_x:
+        case RRA_ind_x: case SAX_ind_x: case SLO_ind_x: case SRE_ind_x:
             
-        // -------------------------------------------------------------------------------
+        case ADC_ind_y: case AND_ind_y: case CMP_ind_y: case EOR_ind_y:
+        case LDA_ind_y: case LDX_ind_y: case LDY_ind_y: case LSR_ind_y:
+        case ORA_ind_y: case SBC_ind_y: case STA_ind_y: case DCP_ind_y:
+        case ISC_ind_y: case LAX_ind_y: case RLA_ind_y: case RRA_ind_y:
+        case SHA_ind_y: case SLO_ind_y: case SRE_ind_y:
+            
+            FETCH_POINTER_ADDR
+            CONTINUE
+            
+        //
+        // Second microcycle (shared behavior)
+        //
+            
+        case ADC_zpg_x_2: case AND_zpg_x_2: case ASL_zpg_x_2: case CMP_zpg_x_2:
+        case DEC_zpg_x_2: case EOR_zpg_x_2: case INC_zpg_x_2: case LDA_zpg_x_2:
+        case LDY_zpg_x_2: case LSR_zpg_x_2: case NOP_zpg_x_2: case ORA_zpg_x_2:
+        case ROL_zpg_x_2: case ROR_zpg_x_2: case SBC_zpg_x_2: case DCP_zpg_x_2:
+        case ISC_zpg_x_2: case RLA_zpg_x_2: case RRA_zpg_x_2: case SLO_zpg_x_2:
+        case SRE_zpg_x_2:
+            
+            READ_FROM_ZERO_PAGE
+            ADD_INDEX_X
+            CONTINUE
+            
+        case STA_zpg_x_2: case STY_zpg_x_2:
+            
+            IDLE_READ_FROM_ZERO_PAGE
+            ADD_INDEX_X
+            CONTINUE
+           
+        case LDX_zpg_y_2: case LAX_zpg_y_2:
+            
+            READ_FROM_ZERO_PAGE
+            ADD_INDEX_Y
+            CONTINUE
+        
+        case STX_zpg_y_2: case SAX_zpg_y_2:
+            
+            IDLE_READ_FROM_ZERO_PAGE
+            ADD_INDEX_Y
+            CONTINUE
+            
+        case ADC_abs_2: case AND_abs_2: case ASL_abs_2: case BIT_abs_2:
+        case CMP_abs_2: case CPX_abs_2: case CPY_abs_2: case DEC_abs_2:
+        case EOR_abs_2: case INC_abs_2: case LDA_abs_2: case LDX_abs_2:
+        case LDY_abs_2: case LSR_abs_2: case NOP_abs_2: case ORA_abs_2:
+        case ROL_abs_2: case ROR_abs_2: case SBC_abs_2: case STA_abs_2:
+        case STX_abs_2: case STY_abs_2: case DCP_abs_2: case ISC_abs_2:
+        case LAX_abs_2: case RLA_abs_2: case RRA_abs_2: case SAX_abs_2:
+        case SLO_abs_2: case SRE_abs_2:
+            
+            FETCH_ADDR_HI
+            CONTINUE
+            
+        case ADC_abs_x_2: case AND_abs_x_2: case ASL_abs_x_2: case CMP_abs_x_2:
+        case DEC_abs_x_2: case EOR_abs_x_2: case INC_abs_x_2: case LDA_abs_x_2:
+        case LDY_abs_x_2: case LSR_abs_x_2: case NOP_abs_x_2: case ORA_abs_x_2:
+        case ROL_abs_x_2: case ROR_abs_x_2: case SBC_abs_x_2: case STA_abs_x_2:
+        case DCP_abs_x_2: case ISC_abs_x_2: case RLA_abs_x_2: case RRA_abs_x_2:
+        case SHY_abs_x_2: case SLO_abs_x_2: case SRE_abs_x_2:
+            
+            FETCH_ADDR_HI
+            ADD_INDEX_X
+            CONTINUE
+            
+        case ADC_abs_y_2: case AND_abs_y_2: case CMP_abs_y_2: case EOR_abs_y_2:
+        case LDA_abs_y_2: case LDX_abs_y_2: case LSR_abs_y_2: case ORA_abs_y_2:
+        case SBC_abs_y_2: case STA_abs_y_2: case DCP_abs_y_2: case ISC_abs_y_2:
+        case LAS_abs_y_2: case LAX_abs_y_2: case RLA_abs_y_2: case RRA_abs_y_2:
+        case SHA_abs_y_2: case SHX_abs_y_2: case SLO_abs_y_2: case SRE_abs_y_2:
+        case TAS_abs_y_2:
+            
+            FETCH_ADDR_HI
+            ADD_INDEX_Y
+            CONTINUE
+            
+        case ADC_ind_x_2: case AND_ind_x_2: case ASL_ind_x_2: case CMP_ind_x_2:
+        case DEC_ind_x_2: case EOR_ind_x_2: case INC_ind_x_2: case LDA_ind_x_2:
+        case LDX_ind_x_2: case LDY_ind_x_2: case LSR_ind_x_2: case ORA_ind_x_2:
+        case ROL_ind_x_2: case ROR_ind_x_2: case SBC_ind_x_2: case STA_ind_x_2:
+        case DCP_ind_x_2: case ISC_ind_x_2: case LAX_ind_x_2: case RLA_ind_x_2:
+        case RRA_ind_x_2: case SAX_ind_x_2: case SLO_ind_x_2: case SRE_ind_x_2:
+            
+            IDLE_READ_FROM_ADDRESS_INDIRECT
+            ADD_INDEX_X_INDIRECT
+            CONTINUE
+           
+        case ADC_ind_y_2: case AND_ind_y_2: case CMP_ind_y_2: case EOR_ind_y_2:
+        case LDA_ind_y_2: case LDX_ind_y_2: case LDY_ind_y_2: case LSR_ind_y_2:
+        case ORA_ind_y_2: case SBC_ind_y_2: case STA_ind_y_2: case DCP_ind_y_2:
+        case ISC_ind_y_2: case LAX_ind_y_2: case RLA_ind_y_2: case RRA_ind_y_2:
+        case SHA_ind_y_2: case SLO_ind_y_2: case SRE_ind_y_2:
+            
+            FETCH_ADDR_LO_INDIRECT
+            CONTINUE
+            
+        //
+        // Third microcycle (shared behavior)
+        //
+            
+        case ADC_ind_x_3: case AND_ind_x_3: case ASL_ind_x_3: case CMP_ind_x_3:
+        case DEC_ind_x_3: case EOR_ind_x_3: case INC_ind_x_3: case LDA_ind_x_3:
+        case LDX_ind_x_3: case LDY_ind_x_3: case LSR_ind_x_3: case ORA_ind_x_3:
+        case ROL_ind_x_3: case ROR_ind_x_3: case SBC_ind_x_3: case STA_ind_x_3:
+        case DCP_ind_x_3: case ISC_ind_x_3: case LAX_ind_x_3: case RLA_ind_x_3:
+        case RRA_ind_x_3: case SAX_ind_x_3: case SLO_ind_x_3: case SRE_ind_x_3:
+            
+            FETCH_ADDR_LO_INDIRECT
+            CONTINUE
+          
+        case ADC_ind_y_3: case AND_ind_y_3: case CMP_ind_y_3: case EOR_ind_y_3:
+        case LDA_ind_y_3: case LDX_ind_y_3: case LDY_ind_y_3: case LSR_ind_y_3:
+        case ORA_ind_y_3: case SBC_ind_y_3: case STA_ind_y_3: case DCP_ind_y_3:
+        case ISC_ind_y_3: case LAX_ind_y_3: case RLA_ind_y_3: case RRA_ind_y_3:
+        case SHA_ind_y_3: case SLO_ind_y_3: case SRE_ind_y_3:
+            
+            FETCH_ADDR_HI_INDIRECT
+            ADD_INDEX_Y
+            CONTINUE
+            
+        //
+        // Fourth microcycle (shared behavior)
+        //
+            
+        case ADC_ind_x_4: case AND_ind_x_4: case ASL_ind_x_4: case CMP_ind_x_4:
+        case DEC_ind_x_4: case EOR_ind_x_4: case INC_ind_x_4: case LDA_ind_x_4:
+        case LDX_ind_x_4: case LDY_ind_x_4: case LSR_ind_x_4: case ORA_ind_x_4:
+        case ROL_ind_x_4: case ROR_ind_x_4: case SBC_ind_x_4: case STA_ind_x_4:
+        case DCP_ind_x_4: case ISC_ind_x_4: case LAX_ind_x_4: case RLA_ind_x_4:
+        case RRA_ind_x_4: case SAX_ind_x_4: case SLO_ind_x_4: case SRE_ind_x_4:
+            
+            FETCH_ADDR_HI_INDIRECT
+            CONTINUE
+           
+        //
+        // Fifth microcycle (shared behavior)
+        //
+            
+            
+        // ---------------------------------------------------------------------
         // Instruction: ADC
         //
         // Operation:   A,C := A+M+C
         //
         // Flags:       N Z C I D V
         //              / / / - - /
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         case ADC_imm:
 
             READ_IMMEDIATE
@@ -660,26 +828,8 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         case ADC_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            adc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-        case ADC_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ADC_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
-            
         case ADC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -687,132 +837,19 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-        case ADC_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ADC_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
-            
         case ADC_abs_3:
+        case ADC_abs_x_4:
+        case ADC_abs_y_4:
+        case ADC_ind_x_5:
+        case ADC_ind_y_5:
             
             READ_FROM_ADDRESS
             adc(data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-        case ADC_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ADC_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case ADC_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                adc(data);
-                POLL_INT
-                DONE
-            }
-            
-        case ADC_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            adc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-        case ADC_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ADC_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
-            
         case ADC_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                adc(data);
-                POLL_INT
-                DONE
-            }
-            
-        case ADC_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            adc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-        case ADC_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ADC_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case ADC_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ADC_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
-        case ADC_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            adc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-        case ADC_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ADC_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ADC_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y;
-            CONTINUE
-            
         case ADC_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -824,13 +861,8 @@ CPU::executeOneCycle()
                 POLL_INT
                 DONE
             }
-            
-        case ADC_ind_y_5:
-            
-            READ_FROM_ADDRESS
-            adc(data);
-            POLL_INT
-            DONE
+
+   
 
         // -------------------------------------------------------------------------------
         // Instruction: AND
@@ -849,16 +881,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case AND_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
-            
+     
         case AND_abs_3:
             READ_FROM_ADDRESS
             loadA(A & data);
@@ -874,16 +897,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case AND_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case AND_zpg_x_3:
             
@@ -893,16 +906,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case AND_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case AND_abs_x_3:
             
@@ -924,16 +927,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_abs_y:
-            
-            FETCH_ADDR_LO;
-            CONTINUE
-            
-        case AND_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case AND_abs_y_3:
             
@@ -955,26 +948,6 @@ CPU::executeOneCycle()
             DONE
         
         // -------------------------------------------------------------------------------
-        case AND_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case AND_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case AND_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case AND_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case AND_ind_x_5:
             
@@ -984,22 +957,7 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-        case AND_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case AND_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case AND_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
-            
+    
         case AND_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -1057,16 +1015,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ASL_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case ASL_zpg_x_3:
             
@@ -1086,15 +1034,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-        case ASL_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ASL_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case ASL_abs_3:
             
@@ -1114,16 +1053,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ASL_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case ASL_abs_x_3:
             
@@ -1149,26 +1078,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ASL_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case ASL_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ASL_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case ASL_ind_x_5:
             
@@ -1320,15 +1229,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case BIT_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case BIT_abs_2:
-            
-            FETCH_ADDR_HI;
-            CONTINUE
             
         case BIT_abs_3:
             
@@ -1666,15 +1566,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case CMP_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case CMP_abs_3:
             
@@ -1693,16 +1584,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case CMP_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case CMP_zpg_x_3:
             
@@ -1712,16 +1593,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case CMP_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case CMP_abs_x_3:
             
@@ -1743,16 +1614,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case CMP_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case CMP_abs_y_3:
             
@@ -1774,26 +1635,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case CMP_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case CMP_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case CMP_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case CMP_ind_x_5:
             
@@ -1803,21 +1644,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case CMP_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case CMP_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case CMP_ind_y_4:
             
@@ -1864,13 +1690,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPX_abs:
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case CPX_abs_2:
-            FETCH_ADDR_HI
-            CONTINUE
             
         case CPX_abs_3:
             READ_FROM_ADDRESS
@@ -1904,15 +1723,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPY_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case CPY_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case CPY_abs_3:
             
@@ -1952,16 +1762,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DEC_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case DEC_zpg_x_3:
             
@@ -1981,15 +1781,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DEC_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case DEC_abs_3:
             
@@ -2009,16 +1800,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DEC_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case DEC_abs_x_3:
             
@@ -2044,27 +1825,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DEC_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case DEC_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case DEC_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case DEC_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
+   
         case DEC_ind_x_5:
             
             READ_FROM_ADDRESS
@@ -2131,15 +1892,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case EOR_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case EOR_abs_3:
             
@@ -2158,16 +1910,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case EOR_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case EOR_zpg_x_3:
             
@@ -2177,16 +1919,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case EOR_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case EOR_abs_x_3:
             
@@ -2208,16 +1940,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case EOR_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case EOR_abs_y_3:
             
@@ -2239,26 +1961,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case EOR_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case EOR_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case EOR_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case EOR_ind_x_5:
             
@@ -2268,21 +1970,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case EOR_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case EOR_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case EOR_ind_y_4:
             
@@ -2334,16 +2021,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case INC_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case INC_zpg_x_3:
             
@@ -2363,15 +2040,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case INC_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case INC_abs_3:
             
@@ -2391,16 +2059,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case INC_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case INC_abs_x_3:
             
@@ -2426,26 +2084,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case INC_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case INC_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case INC_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case INC_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case INC_ind_x_5:
             
@@ -2504,11 +2142,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case JMP_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case JMP_abs_2:
             
@@ -2605,17 +2238,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDA_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
-            
+    
         case LDA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -2624,15 +2247,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDA_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case LDA_abs_3:
             
@@ -2642,16 +2256,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDA_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case LDA_abs_x_3:
             
@@ -2673,16 +2277,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-        case LDA_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDA_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case LDA_abs_y_3:
             
@@ -2704,26 +2298,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LDA_ind_x_2:
-
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case LDA_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LDA_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case LDA_ind_x_5:
             
@@ -2733,21 +2307,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_ind_y:
-
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LDA_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LDA_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case LDA_ind_y_4:
             
@@ -2795,16 +2354,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_zpg_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDX_zpg_y_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_Y
-            CONTINUE
             
         case LDX_zpg_y_3:
             
@@ -2814,15 +2363,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDX_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case LDX_abs_3:
             
@@ -2832,16 +2372,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDX_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case LDX_abs_y_3:
             
@@ -2863,26 +2393,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LDX_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case LDX_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LDX_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case LDX_ind_x_5:
             
@@ -2892,21 +2402,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LDX_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LDX_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case LDX_ind_y_4:
             
@@ -2954,17 +2449,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDY_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
-            
+       
         case LDY_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -2973,15 +2458,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LDY_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case LDY_abs_3:
             
@@ -2991,16 +2467,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-
-        case LDY_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case LDY_abs_x_3:
             
@@ -3022,26 +2488,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LDY_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case LDY_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LDY_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case LDY_ind_x_5:
             
@@ -3051,21 +2497,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LDY_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LDY_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case LDY_ind_y_4:
             
@@ -3125,16 +2556,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-        case LSR_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LSR_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case LSR_zpg_x_3:
             
@@ -3154,15 +2575,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-        case LSR_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LSR_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case LSR_abs_3:
             
@@ -3182,16 +2594,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-        case LSR_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LSR_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case LSR_abs_x_3:
             
@@ -3219,16 +2621,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LSR_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LSR_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case LSR_abs_y_3:
             
@@ -3256,27 +2648,7 @@ CPU::executeOneCycle()
             DONE
 
             // -------------------------------------------------------------------------------
-        case LSR_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LSR_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case LSR_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LSR_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
+    
         case LSR_ind_x_5:
             
             READ_FROM_ADDRESS
@@ -3295,21 +2667,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LSR_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LSR_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LSR_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case LSR_ind_y_4:
             
@@ -3367,16 +2724,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case NOP_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case NOP_zpg_x_3:
             
@@ -3385,15 +2732,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case NOP_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case NOP_abs_3:
             
@@ -3402,16 +2740,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case NOP_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case NOP_abs_x_3:
             
@@ -3447,15 +2775,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ORA_abs_2:
-            FETCH_ADDR_HI
-            // POLL_INT
-            CONTINUE
             
         case ORA_abs_3:
             READ_FROM_ADDRESS
@@ -3473,16 +2792,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ORA_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case ORA_zpg_x_3:
             
@@ -3492,16 +2801,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ORA_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case ORA_abs_x_3:
             
@@ -3523,16 +2822,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ORA_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case ORA_abs_y_3:
             
@@ -3554,26 +2843,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ORA_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case ORA_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE;
-            
-        case ORA_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case ORA_ind_x_5:
             
@@ -3583,21 +2852,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ORA_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ORA_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case ORA_ind_y_4:
             
@@ -3756,17 +3010,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ROL_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
-            
+     
         case ROL_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -3785,15 +3029,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ROL_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case ROL_abs_3:
             
@@ -3813,16 +3048,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ROL_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case ROL_abs_x_3:
             
@@ -3848,26 +3073,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ROL_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case ROL_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ROL_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case ROL_ind_x_5:
             
@@ -3933,16 +3138,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ROR_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case ROR_zpg_x_3:
             
@@ -3962,15 +3157,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ROR_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case ROR_abs_3:
             
@@ -3990,16 +3176,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ROR_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case ROR_abs_x_3:
             
@@ -4027,26 +3203,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ROR_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case ROR_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ROR_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case ROR_ind_x_5:
             
@@ -4168,16 +3324,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SBC_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case SBC_zpg_x_3:
             
@@ -4187,15 +3333,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SBC_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case SBC_abs_3:
             
@@ -4205,16 +3342,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SBC_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case SBC_abs_x_3:
             
@@ -4236,16 +3363,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SBC_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case SBC_abs_y_3:
             
@@ -4267,27 +3384,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SBC_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case SBC_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SBC_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
+
         case SBC_ind_x_5:
             
             READ_FROM_ADDRESS
@@ -4296,21 +3393,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SBC_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SBC_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case SBC_ind_y_4:
             
@@ -4401,16 +3483,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STA_zpg_x_2:
-            
-            IDLE_READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case STA_zpg_x_3:
             
@@ -4420,15 +3492,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STA_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case STA_abs_3:
             
@@ -4438,16 +3501,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STA_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case STA_abs_x_3:
             
@@ -4463,16 +3516,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STA_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case STA_abs_y_3:
             
@@ -4489,26 +3532,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case STA_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case STA_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case STA_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case STA_ind_x_5:
             
@@ -4518,26 +3541,13 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STA_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case STA_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case STA_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case STA_ind_y_4:
             
             IDLE_READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
+            if (PAGE_BOUNDARY_CROSSED) {
+                FIX_ADDR_HI
+            }
             CONTINUE
             
         case STA_ind_y_5:
@@ -4564,16 +3574,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STX_zpg_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STX_zpg_y_2:
-            
-            IDLE_READ_FROM_ZERO_PAGE
-            ADD_INDEX_Y
-            CONTINUE
             
         case STX_zpg_y_3:
             
@@ -4583,15 +3583,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STX_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STX_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case STX_abs_3:
             
@@ -4617,16 +3608,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STY_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STY_zpg_x_2:
-            
-            IDLE_READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case STY_zpg_x_3:
             
@@ -4636,15 +3617,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case STY_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case STY_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case STY_abs_3:
             
@@ -4881,16 +3853,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DCP_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case DCP_zpg_x_3:
             
@@ -4911,15 +3873,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DCP_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case DCP_abs_3:
             
@@ -4940,16 +3893,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DCP_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case DCP_abs_x_3:
             
@@ -4976,16 +3919,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case DCP_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case DCP_abs_y_3:
             
@@ -5012,26 +3945,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case DCP_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case DCP_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case DCP_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case DCP_ind_x_5:
             
@@ -5052,21 +3965,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case DCP_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case DCP_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case DCP_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case DCP_ind_y_4:
             
@@ -5120,16 +4018,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ISC_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case ISC_zpg_x_3:
             
@@ -5150,15 +4038,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ISC_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case ISC_abs_3:
             
@@ -5179,16 +4058,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ISC_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case ISC_abs_x_3:
             
@@ -5215,16 +4084,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case ISC_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case ISC_abs_y_3:
             
@@ -5251,26 +4110,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ISC_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case ISC_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ISC_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case ISC_ind_x_5:
             
@@ -5291,21 +4130,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ISC_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case ISC_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case ISC_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case ISC_ind_y_4:
             
@@ -5339,17 +4163,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / - - - -
         // -------------------------------------------------------------------------------
-
-        case LAS_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LAS_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case LAS_abs_y_3:
             
@@ -5394,16 +4207,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_zpg_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LAX_zpg_y_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_Y
-            CONTINUE
             
         case LAX_zpg_y_3:
             
@@ -5414,15 +4217,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LAX_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case LAX_abs_3:
             
@@ -5433,16 +4227,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case LAX_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case LAX_abs_y_3:
             
@@ -5466,27 +4250,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LAX_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case LAX_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LAX_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
+        
         case LAX_ind_x_5:
             
             READ_FROM_ADDRESS
@@ -5496,21 +4260,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LAX_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case LAX_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case LAX_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case LAX_ind_y_4:
             
@@ -5563,16 +4312,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RLA_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case RLA_zpg_x_3:
             
@@ -5593,15 +4332,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RLA_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case RLA_abs_3:
             
@@ -5622,16 +4352,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RLA_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case RLA_abs_x_3:
             
@@ -5658,16 +4378,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RLA_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case RLA_abs_y_3:
             
@@ -5694,27 +4404,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case RLA_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case RLA_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case RLA_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
+
         case RLA_ind_x_5:
             
             READ_FROM_ADDRESS
@@ -5734,21 +4424,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RLA_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case RLA_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case RLA_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case RLA_ind_y_4:
             
@@ -5804,16 +4479,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RRA_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case RRA_zpg_x_3:
             
@@ -5834,15 +4499,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RRA_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case RRA_abs_3:
             
@@ -5863,16 +4519,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RRA_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case RRA_abs_x_3:
             
@@ -5899,16 +4545,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case RRA_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case RRA_abs_y_3:
             
@@ -5935,26 +4571,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case RRA_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case RRA_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case RRA_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case RRA_ind_x_5:
             
@@ -5975,21 +4591,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case RRA_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case RRA_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case RRA_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case RRA_ind_y_4:
             
@@ -6032,16 +4633,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SAX_zpg_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SAX_zpg_y_2:
-            
-            IDLE_READ_FROM_ZERO_PAGE
-            ADD_INDEX_Y
-            CONTINUE
             
         case SAX_zpg_y_3:
             
@@ -6051,15 +4642,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SAX_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SAX_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case SAX_abs_3:
             
@@ -6069,26 +4651,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SAX_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SAX_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case SAX_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SAX_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case SAX_ind_x_5:
             
@@ -6105,32 +4667,21 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case SHA_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SHA_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case SHA_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
             
-            /* "There are two unstable conditions, the first is when a DMA is going on while
-             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off."
+            /* "There are two unstable conditions, the first is when a DMA is
+             *  going on while the instruction executes (the CPU is halted by
+             *  the VIC-II) then the & M+1 part drops off."
              */
             
             data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
             
-            /* "The other unstable condition is when the addressing/indexing causes a page
-             *  boundary crossing, in that case the highbyte of the target address may
-             *  become equal to the value stored."
+            /* "The other unstable condition is when the addressing/indexing
+             *  causes a page boundary crossing, in that case the highbyte of
+             *  the target address may become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
@@ -6147,21 +4698,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SHA_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SHA_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SHA_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case SHA_ind_y_4:
             
@@ -6200,18 +4736,7 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case SHX_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SHX_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
-         
+       
         case SHX_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
@@ -6249,17 +4774,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case SHY_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SHY_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case SHY_abs_x_3:
             
@@ -6322,16 +4836,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SLO_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case SLO_zpg_x_3:
             
@@ -6352,14 +4856,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_abs:
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SLO_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case SLO_abs_3:
             
@@ -6380,16 +4876,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SLO_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case SLO_abs_x_3:
             
@@ -6416,16 +4902,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SLO_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case SLO_abs_y_3:
             
@@ -6452,26 +4928,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SLO_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case SLO_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SLO_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
             
         case SLO_ind_x_5:
             
@@ -6492,21 +4948,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SLO_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SLO_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SLO_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case SLO_ind_y_4:
             
@@ -6563,16 +5004,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_zpg_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SRE_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
             
         case SRE_zpg_x_3:
             
@@ -6593,15 +5024,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_abs:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SRE_abs_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
             
         case SRE_abs_3:
             
@@ -6622,16 +5044,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_abs_x:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SRE_abs_x_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_X
-            CONTINUE
             
         case SRE_abs_x_3:
             
@@ -6658,16 +5070,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case SRE_abs_y_2:
-            
-            FETCH_ADDR_HI
-            ADD_INDEX_Y
-            CONTINUE
             
         case SRE_abs_y_3:
             
@@ -6694,27 +5096,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_ind_x:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SRE_ind_x_2:
-            
-            IDLE_READ_FROM_ADDRESS_INDIRECT
-            ADD_INDEX_X_INDIRECT
-            CONTINUE
-            
-        case SRE_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SRE_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-            
+ 
         case SRE_ind_x_5:
             
             READ_FROM_ADDRESS
@@ -6734,21 +5116,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SRE_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        case SRE_ind_y_2:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-            
-        case SRE_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
             
         case SRE_ind_y_4:
             
@@ -6783,17 +5150,6 @@ CPU::executeOneCycle()
         //              - - - - - -
         //
         // -------------------------------------------------------------------------------
-
-        case TAS_abs_y:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case TAS_abs_y_2:
-            
-            FETCH_ADDR_HI;
-            ADD_INDEX_Y;
-            CONTINUE
             
         case TAS_abs_y_3:
             

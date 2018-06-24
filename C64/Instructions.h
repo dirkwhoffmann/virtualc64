@@ -23,8 +23,8 @@ typedef enum {
     
     JAM, JAM_2,
     
-    irq, irq_2, irq_3, irq_4, irq_5, irq_6, irq_7,
-    nmi, nmi_2, nmi_3, nmi_4, nmi_5, nmi_6, nmi_7,
+    irq_2, irq_3, irq_4, irq_5, irq_6, irq_7,
+    nmi_2, nmi_3, nmi_4, nmi_5, nmi_6, nmi_7,
     
     ADC_imm,
     ADC_zpg,   ADC_zpg_2,
