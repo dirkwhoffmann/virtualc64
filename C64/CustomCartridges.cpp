@@ -37,10 +37,11 @@ FinalIII::reset()
      *
      * Final cartrige III switches frequently betwenn different exrom/game line
      * configurations. I.e., it uses ultimax mode to override the NMI vectors
-     * stored in Kernal ROM. Switching between configurations causes ROMH sometimes
-     * to be visible at $A000 and sometimes at $E000. As we do not want to copy memory
-     * back and forth, we simply add four new chips at location $E000 which
-     * reflect the upper half of the original four cartridge chips.
+     * stored in Kernal ROM. Switching between configurations causes ROMH
+     * sometimes to be visible at $A000 and sometimes at $E000. As we do not
+     * want to copy memory back and forth, we simply add four new chips at
+     * location $E000 which reflect the upper half of the original four
+     * cartridge chips.
      */
     for (unsigned i = 0; i < 4; i++) {
         
@@ -123,8 +124,11 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
 void
 FinalIII::pressFirstButton() {
     
-    // The freezer is enabled by selecting bank 0 in unimax mode and triggering an NMI
+    // The freezer is enabled by selecting bank 0 in ultimax mode and
+    // triggering an NMI
+    c64->suspend();
     pokeIO2(0xDFFF, 0x10);
+    c64->resume();
 }
 
 void
@@ -133,9 +137,11 @@ FinalIII::pressSecondButton() {
     // Note: Cartridge requires to keep the RAM
     uint8_t ram[0xFFFF];
 
+    c64->suspend();
     memcpy(ram, c64->mem.ram, 0xFFFF);
     c64->reset();
     memcpy(c64->mem.ram, ram, 0xFFFF);
+    c64->resume();
 }
 
 
