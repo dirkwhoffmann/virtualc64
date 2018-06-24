@@ -39,10 +39,10 @@ public:
     //
     
     //! @brief    Standard constructor
-	Archive();
+    Archive();
     
     //! @brief    Standard destructor
-	virtual ~Archive();
+    virtual ~Archive();
     
     //
     //! Factory methods
@@ -61,7 +61,7 @@ public:
     //
     //! Accessing item attributes
     //
-			
+            
     /*! @brief   Returns the name of an item
      *  @return  String in ASCII format, or NULL, if item does not exist
      */
@@ -76,21 +76,21 @@ public:
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
     virtual const char *getTypeOfItem(int n) { return NULL; }
-	
+    
     //! @brief    Returns the size of an item in bytes
-	virtual size_t getSizeOfItem(int n);
+    virtual size_t getSizeOfItem(int n);
 
     //! @brief    Returns the size of an item in bits
     virtual size_t getSizeOfItemInBits(int n) { return 8 * getSizeOfItem(n); }
 
     //! @brief    Returns the size of an item in blocks
-	virtual size_t getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
-		
+    virtual size_t getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
+        
     /*! @brief    Returns the proposed memory location of an item.
      *  @details  When a file is flashed into memory, the raw data is copied to this location.
      */
     virtual uint16_t getDestinationAddrOfItem(int n) { return 0; }
-	
+    
     
     //
     //! @functiongroup Reading an item
@@ -98,7 +98,7 @@ public:
 
     //! @brief    Selects an item to read from
     virtual void selectItem(int n) { }
-	
+    
     //! @brief    Reads the next byte from the currently selected item
     virtual int getByte() { return 0; }
 
