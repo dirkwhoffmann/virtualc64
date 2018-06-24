@@ -627,6 +627,22 @@ CPU::executeOneCycle()
             setPCH(data);
             DONE
 
+        //
+        // xxx_zpg:
+        //
+        
+        case ADC_zpg: case AND_zpg: case ASL_zpg: case BIT_zpg:
+        case CMP_zpg: case CPX_zpg: case CPY_zpg: case DEC_zpg:
+        case EOR_zpg: case INC_zpg: case LDA_zpg: case LDX_zpg:
+        case LDY_zpg: case LSR_zpg: case NOP_zpg: case ORA_zpg:
+        case ROL_zpg: case ROR_zpg: case SBC_zpg: case STA_zpg:
+        case STX_zpg: case STY_zpg: case DCP_zpg: case ISC_zpg:
+        case LAX_zpg: case RLA_zpg: case RRA_zpg: case SAX_zpg:
+        case SLO_zpg: case SRE_zpg:
+            
+            FETCH_ADDR_LO
+            CONTINUE
+            
         // -------------------------------------------------------------------------------
         // Instruction: ADC
         //
@@ -645,11 +661,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ADC_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
         case ADC_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -855,11 +866,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case AND_zpg:
-
-            FETCH_ADDR_LO
-            CONTINUE
-
         case AND_zpg_2:
 
             READ_FROM_ZERO_PAGE
@@ -1033,11 +1039,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ASL_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
         case ASL_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -1308,11 +1309,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / - - - /
         // -------------------------------------------------------------------------------
-
-        case BIT_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case BIT_zpg_2:
             
@@ -1688,11 +1684,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CMP_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
+   
         case CMP_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -1863,10 +1855,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPX_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case CPX_zpg_2:
             
@@ -1907,11 +1895,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case CPY_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
+ 
         case CPY_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -1949,10 +1933,6 @@ CPU::executeOneCycle()
         #define DO_DEC data--;
 
         // -------------------------------------------------------------------------------
-        case DEC_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case DEC_zpg_2:
             
@@ -2169,10 +2149,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case EOR_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case EOR_zpg_2:
             
@@ -2339,10 +2315,6 @@ CPU::executeOneCycle()
         #define DO_INC data++;
 
         // -------------------------------------------------------------------------------
-        case INC_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case INC_zpg_2:
             
@@ -2624,10 +2596,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDA_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case LDA_zpg_2:
             
@@ -2818,10 +2786,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDX_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case LDX_zpg_2:
             
@@ -2981,10 +2945,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LDY_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case LDY_zpg_2:
             
@@ -3146,10 +3106,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case LSR_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case LSR_zpg_2:
             
@@ -3403,11 +3359,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case NOP_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
+   
         case NOP_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -3512,10 +3464,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ORA_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case ORA_zpg_2:
             
@@ -3789,10 +3737,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROL_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case ROL_zpg_2:
             
@@ -3970,11 +3914,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case ROR_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
+   
         case ROR_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -4219,10 +4159,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-        case SBC_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case SBC_zpg_2:
             
@@ -4456,11 +4392,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case STA_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case STA_zpg_2:
             
@@ -4624,11 +4555,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case STX_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case STX_zpg_2:
             
@@ -4682,11 +4608,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case STY_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case STY_zpg_2:
             
@@ -4941,11 +4862,6 @@ CPU::executeOneCycle()
         //              / / / - - -
         // -------------------------------------------------------------------------------
             
-        case DCP_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
         case DCP_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -5184,11 +5100,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - /
         // -------------------------------------------------------------------------------
-
-        case ISC_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case ISC_zpg_2:
             
@@ -5473,11 +5384,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / - - - -
         // -------------------------------------------------------------------------------
-
-        case LAX_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case LAX_zpg_2:
             
@@ -5637,10 +5543,6 @@ CPU::executeOneCycle()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case RLA_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case RLA_zpg_2:
             
@@ -5882,10 +5784,6 @@ CPU::executeOneCycle()
         // -------------------------------------------------------------------------------
 
         // -------------------------------------------------------------------------------
-        case RRA_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case RRA_zpg_2:
             
@@ -6125,11 +6023,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        case SAX_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case SAX_zpg_2:
             
@@ -6409,11 +6302,7 @@ CPU::executeOneCycle()
         #define DO_SLO setC(data & 128); data <<= 1;
 
         // -------------------------------------------------------------------------------
-        case SLO_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
+   
         case SLO_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -6654,10 +6543,6 @@ CPU::executeOneCycle()
         #define DO_SRE setC(data & 1); data >>= 1;
 
         // -------------------------------------------------------------------------------
-        case SRE_zpg:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case SRE_zpg_2:
             
