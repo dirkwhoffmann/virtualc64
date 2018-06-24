@@ -820,7 +820,6 @@ CPU::executeOneCycle()
         //              / / / - - /
         // ---------------------------------------------------------------------
 
-        // ---------------------------------------------------------------------
         case ADC_imm:
 
             READ_IMMEDIATE
@@ -828,7 +827,6 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // ---------------------------------------------------------------------
         case ADC_zpg_2:
         case ADC_zpg_x_3:
             
@@ -837,17 +835,6 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        case ADC_abs_3:
-        case ADC_abs_x_4:
-        case ADC_abs_y_4:
-        case ADC_ind_x_5:
-        case ADC_ind_y_5:
-            
-            READ_FROM_ADDRESS
-            adc(data);
-            POLL_INT
-            DONE
-            
         case ADC_abs_x_3:
         case ADC_abs_y_3:
         case ADC_ind_y_4:
@@ -861,17 +848,26 @@ CPU::executeOneCycle()
                 POLL_INT
                 DONE
             }
-
-   
-
-        // -------------------------------------------------------------------------------
+            
+        case ADC_abs_3:
+        case ADC_abs_x_4:
+        case ADC_abs_y_4:
+        case ADC_ind_x_5:
+        case ADC_ind_y_5:
+            
+            READ_FROM_ADDRESS
+            adc(data);
+            POLL_INT
+            DONE
+            
+        // ---------------------------------------------------------------------
         // Instruction: AND
         //
         // Operation:   A := A AND M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
         case AND_imm:
             
@@ -880,84 +876,16 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-     
-        case AND_abs_3:
-            READ_FROM_ADDRESS
-            loadA(A & data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
         case AND_zpg_2:
-
-            READ_FROM_ZERO_PAGE
-            loadA(A & data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case AND_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(A & data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case AND_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(A & data);
-                POLL_INT
-                DONE
-            }
-            
-        case AND_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            loadA(A & data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case AND_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(A & data);
-                POLL_INT
-                DONE
-            }
-            
-        case AND_abs_y_4:
-        
-            READ_FROM_ADDRESS
-            loadA(A & data);
-            POLL_INT
-            DONE
-        
-        // -------------------------------------------------------------------------------
-            
-        case AND_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            loadA(A & data);
-            POLL_INT
-            DONE
-            
-        // -------------------------------------------------------------------------------
-    
         case AND_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -970,6 +898,10 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case AND_abs_3:
+        case AND_abs_x_4:
+        case AND_abs_y_4:
+        case AND_ind_x_5:
         case AND_ind_y_5:
             
             READ_FROM_ADDRESS
@@ -977,18 +909,18 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
             
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         // Instruction: ASL
         //
         // Operation:   C <- (A|M << 1) <- 0
         //
         // Flags:       N Z C I D V
         //              / / / - - -
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
     
         #define DO_ASL setC(data & 128); data = data << 1;
 
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         case ASL_acc:
             
             IDLE_READ_IMPLIED
@@ -996,7 +928,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
         case ASL_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -1014,7 +946,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------
             
         case ASL_zpg_x_3:
             
