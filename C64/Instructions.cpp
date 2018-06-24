@@ -125,146 +125,28 @@ CPU::sbc_bcd(uint8_t op)
 }
 
 void 
-CPU::registerCallback(uint8_t opcode, MicroInstruction mInstr)
-{
-	registerCallback(opcode, "???", ADDR_IMPLIED, mInstr);
-}
-
-void 
 CPU::registerCallback(uint8_t opcode, const char *mnc,
                       AddressingMode mode, MicroInstruction mInstr)
 {
-	// table is write once!
-	if (mInstr != JAM)
-		assert(actionFunc[opcode] == JAM);
+	// Table is write once!
+    assert(mInstr == JAM || actionFunc[opcode] == JAM);
 	
     mnemonic[opcode] = mnc;
     addressingMode[opcode] = mode;
 	actionFunc[opcode] = mInstr;
 }
 
-void 
-CPU::registerIllegalInstructions()
-{
-	registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
-	registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);
-
-	registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, ALR_imm);
-
-	registerCallback(0x0B, "ANC*", ADDR_IMMEDIATE, ANC_imm);
-	registerCallback(0x2B, "ANC*", ADDR_IMMEDIATE, ANC_imm);
-	
-	registerCallback(0x8B, "ANE*", ADDR_IMMEDIATE, ANE_imm);
-
-	registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, ARR_imm);
-	registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, AXS_imm);
-
-	registerCallback(0xC7, "DCP*", ADDR_ZERO_PAGE, DCP_zpg);
-	registerCallback(0xD7, "DCP*", ADDR_ZERO_PAGE_X, DCP_zpg_x);
-	registerCallback(0xC3, "DCP*", ADDR_INDIRECT_X, DCP_ind_x);
-	registerCallback(0xD3, "DCP*", ADDR_INDIRECT_Y, DCP_ind_y);
-	registerCallback(0xCF, "DCP*", ADDR_ABSOLUTE, DCP_abs);
-	registerCallback(0xDF, "DCP*", ADDR_ABSOLUTE_X, DCP_abs_x);
-	registerCallback(0xDB, "DCP*", ADDR_ABSOLUTE_Y, DCP_abs_y);
-
-	registerCallback(0xE7, "ISC*", ADDR_ZERO_PAGE, ISC_zpg);
-	registerCallback(0xF7, "ISC*", ADDR_ZERO_PAGE_X, ISC_zpg_x);
-	registerCallback(0xE3, "ISC*", ADDR_INDIRECT_X, ISC_ind_x);
-	registerCallback(0xF3, "ISC*", ADDR_INDIRECT_Y, ISC_ind_y);
-	registerCallback(0xEF, "ISC*", ADDR_ABSOLUTE, ISC_abs);
-	registerCallback(0xFF, "ISC*", ADDR_ABSOLUTE_X, ISC_abs_x);
-	registerCallback(0xFB, "ISC*", ADDR_ABSOLUTE_Y, ISC_abs_y);
-
-	registerCallback(0xBB, "LAS*", ADDR_ABSOLUTE_Y, LAS_abs_y);
-
-	registerCallback(0xA7, "LAX*", ADDR_ZERO_PAGE, LAX_zpg);
-	registerCallback(0xB7, "LAX*", ADDR_ZERO_PAGE_Y, LAX_zpg_y);
-	registerCallback(0xA3, "LAX*", ADDR_INDIRECT_X, LAX_ind_x);
-	registerCallback(0xB3, "LAX*", ADDR_INDIRECT_Y, LAX_ind_y);
-	registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, LAX_abs);
-	registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, LAX_abs_y);
-
-	registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, LXA_imm);
-
-	registerCallback(0x80, "NOP*", ADDR_IMMEDIATE, NOP_imm);
-	registerCallback(0x82, "NOP*", ADDR_IMMEDIATE, NOP_imm);
-	registerCallback(0x89, "NOP*", ADDR_IMMEDIATE, NOP_imm);
-	registerCallback(0xC2, "NOP*", ADDR_IMMEDIATE, NOP_imm);
-	registerCallback(0xE2, "NOP*", ADDR_IMMEDIATE, NOP_imm);
-	registerCallback(0x1A, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0x3A, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0x5A, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0x7A, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0xDA, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0xFA, "NOP*", ADDR_IMPLIED, NOP);
-	registerCallback(0x04, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
-	registerCallback(0x44, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
-	registerCallback(0x64, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
-	registerCallback(0x0C, "NOP*", ADDR_ABSOLUTE, NOP_abs);
-	registerCallback(0x14, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
-	registerCallback(0x34, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
-	registerCallback(0x54, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
-	registerCallback(0x74, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
-	registerCallback(0xD4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
-	registerCallback(0xF4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
-	registerCallback(0x1C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
-	registerCallback(0x3C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
-	registerCallback(0x5C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
-	registerCallback(0x7C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
-	registerCallback(0xDC, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
-	registerCallback(0xFC, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
-
-	registerCallback(0x27, "RLA*", ADDR_ZERO_PAGE, RLA_zpg);
-	registerCallback(0x37, "RLA*", ADDR_ZERO_PAGE_X, RLA_zpg_x);
-	registerCallback(0x23, "RLA*", ADDR_INDIRECT_X, RLA_ind_x);
-	registerCallback(0x33, "RLA*", ADDR_INDIRECT_Y, RLA_ind_y);
-	registerCallback(0x2F, "RLA*", ADDR_ABSOLUTE, RLA_abs);
-	registerCallback(0x3F, "RLA*", ADDR_ABSOLUTE_X, RLA_abs_x);
-	registerCallback(0x3B, "RLA*", ADDR_ABSOLUTE_Y, RLA_abs_y);
-
-	registerCallback(0x67, "RRA*", ADDR_ZERO_PAGE, RRA_zpg);
-	registerCallback(0x77, "RRA*", ADDR_ZERO_PAGE_X, RRA_zpg_x);
-	registerCallback(0x63, "RRA*", ADDR_INDIRECT_X, RRA_ind_x);
-	registerCallback(0x73, "RRA*", ADDR_INDIRECT_Y, RRA_ind_y);
-	registerCallback(0x6F, "RRA*", ADDR_ABSOLUTE, RRA_abs);
-	registerCallback(0x7F, "RRA*", ADDR_ABSOLUTE_X, RRA_abs_x);
-	registerCallback(0x7B, "RRA*", ADDR_ABSOLUTE_Y, RRA_abs_y);
-
-	registerCallback(0x87, "SAX*", ADDR_ZERO_PAGE, SAX_zpg);
-	registerCallback(0x97, "SAX*", ADDR_ZERO_PAGE_Y, SAX_zpg_y);
-	registerCallback(0x83, "SAX*", ADDR_INDIRECT_X, SAX_ind_x);
-	registerCallback(0x8F, "SAX*", ADDR_ABSOLUTE, SAX_abs);
-
-	registerCallback(0xEB, "SBC*", ADDR_IMMEDIATE, SBC_imm);
-
-	registerCallback(0x9E, "SHX*", ADDR_ABSOLUTE_Y, SHX_abs_y);
-	registerCallback(0x9C, "SHY*", ADDR_ABSOLUTE_X, SHY_abs_x);
-
-	registerCallback(0x07, "SLO*", ADDR_ZERO_PAGE, SLO_zpg);
-	registerCallback(0x17, "SLO*", ADDR_ZERO_PAGE_X, SLO_zpg_x);
-	registerCallback(0x03, "SLO*", ADDR_INDIRECT_X, SLO_ind_x);
-	registerCallback(0x13, "SLO*", ADDR_INDIRECT_Y, SLO_ind_y);
-	registerCallback(0x0F, "SLO*", ADDR_ABSOLUTE, SLO_abs);
-	registerCallback(0x1F, "SLO*", ADDR_ABSOLUTE_X, SLO_abs_x);
-	registerCallback(0x1B, "SLO*", ADDR_ABSOLUTE_Y, SLO_abs_y);
-
-	registerCallback(0x47, "SRE*", ADDR_ZERO_PAGE, SRE_zpg);
-	registerCallback(0x57, "SRE*", ADDR_ZERO_PAGE_X, SRE_zpg_x);
-	registerCallback(0x43, "SRE*", ADDR_INDIRECT_X, SRE_ind_x);
-	registerCallback(0x53, "SRE*", ADDR_INDIRECT_Y, SRE_ind_y);
-	registerCallback(0x4F, "SRE*", ADDR_ABSOLUTE, SRE_abs);
-	registerCallback(0x5F, "SRE*", ADDR_ABSOLUTE_X, SRE_abs_x);
-	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, SRE_abs_y);
-	
-	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
-}
-
-	
 void CPU::registerInstructions()
 {
-	for (int i=0; i<256; i++)
-		registerCallback(i, JAM);
+    for (int i=0; i<256; i++) {
+        registerCallback(i, "???", ADDR_IMPLIED, JAM);
+    }
+    registerLegalInstructions();
+    registerIllegalInstructions();
+}
 
+void CPU::registerLegalInstructions()
+{
 	registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_imm);
 	registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zpg);
 	registerCallback(0x75, "ADC", ADDR_ZERO_PAGE_X, ADC_zpg_x);
@@ -448,9 +330,122 @@ void CPU::registerInstructions()
 	registerCallback(0x8A, "TXA", ADDR_IMPLIED, TXA);
 	registerCallback(0x9A, "TXS", ADDR_IMPLIED, TXS);
 	registerCallback(0x98, "TYA", ADDR_IMPLIED, TYA);
+}
 
-	// Register illegal instructions
-	registerIllegalInstructions();	
+void
+CPU::registerIllegalInstructions()
+{
+    registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
+    registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);
+    
+    registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, ALR_imm);
+    
+    registerCallback(0x0B, "ANC*", ADDR_IMMEDIATE, ANC_imm);
+    registerCallback(0x2B, "ANC*", ADDR_IMMEDIATE, ANC_imm);
+    
+    registerCallback(0x8B, "ANE*", ADDR_IMMEDIATE, ANE_imm);
+    
+    registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, ARR_imm);
+    registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, AXS_imm);
+    
+    registerCallback(0xC7, "DCP*", ADDR_ZERO_PAGE, DCP_zpg);
+    registerCallback(0xD7, "DCP*", ADDR_ZERO_PAGE_X, DCP_zpg_x);
+    registerCallback(0xC3, "DCP*", ADDR_INDIRECT_X, DCP_ind_x);
+    registerCallback(0xD3, "DCP*", ADDR_INDIRECT_Y, DCP_ind_y);
+    registerCallback(0xCF, "DCP*", ADDR_ABSOLUTE, DCP_abs);
+    registerCallback(0xDF, "DCP*", ADDR_ABSOLUTE_X, DCP_abs_x);
+    registerCallback(0xDB, "DCP*", ADDR_ABSOLUTE_Y, DCP_abs_y);
+    
+    registerCallback(0xE7, "ISC*", ADDR_ZERO_PAGE, ISC_zpg);
+    registerCallback(0xF7, "ISC*", ADDR_ZERO_PAGE_X, ISC_zpg_x);
+    registerCallback(0xE3, "ISC*", ADDR_INDIRECT_X, ISC_ind_x);
+    registerCallback(0xF3, "ISC*", ADDR_INDIRECT_Y, ISC_ind_y);
+    registerCallback(0xEF, "ISC*", ADDR_ABSOLUTE, ISC_abs);
+    registerCallback(0xFF, "ISC*", ADDR_ABSOLUTE_X, ISC_abs_x);
+    registerCallback(0xFB, "ISC*", ADDR_ABSOLUTE_Y, ISC_abs_y);
+    
+    registerCallback(0xBB, "LAS*", ADDR_ABSOLUTE_Y, LAS_abs_y);
+    
+    registerCallback(0xA7, "LAX*", ADDR_ZERO_PAGE, LAX_zpg);
+    registerCallback(0xB7, "LAX*", ADDR_ZERO_PAGE_Y, LAX_zpg_y);
+    registerCallback(0xA3, "LAX*", ADDR_INDIRECT_X, LAX_ind_x);
+    registerCallback(0xB3, "LAX*", ADDR_INDIRECT_Y, LAX_ind_y);
+    registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, LAX_abs);
+    registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, LAX_abs_y);
+    
+    registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, LXA_imm);
+    
+    registerCallback(0x80, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+    registerCallback(0x82, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+    registerCallback(0x89, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+    registerCallback(0xC2, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+    registerCallback(0xE2, "NOP*", ADDR_IMMEDIATE, NOP_imm);
+    registerCallback(0x1A, "NOP*", ADDR_IMPLIED, NOP);
+    registerCallback(0x3A, "NOP*", ADDR_IMPLIED, NOP);
+    registerCallback(0x5A, "NOP*", ADDR_IMPLIED, NOP);
+    registerCallback(0x7A, "NOP*", ADDR_IMPLIED, NOP);
+    registerCallback(0xDA, "NOP*", ADDR_IMPLIED, NOP);
+    registerCallback(0xFA, "NOP*", ADDR_IMPLIED, NOP);
+    registerCallback(0x04, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
+    registerCallback(0x44, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
+    registerCallback(0x64, "NOP*", ADDR_ZERO_PAGE, NOP_zpg);
+    registerCallback(0x0C, "NOP*", ADDR_ABSOLUTE, NOP_abs);
+    registerCallback(0x14, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+    registerCallback(0x34, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+    registerCallback(0x54, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+    registerCallback(0x74, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+    registerCallback(0xD4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+    registerCallback(0xF4, "NOP*", ADDR_ZERO_PAGE_X, NOP_zpg_x);
+    registerCallback(0x1C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+    registerCallback(0x3C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+    registerCallback(0x5C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+    registerCallback(0x7C, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+    registerCallback(0xDC, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+    registerCallback(0xFC, "NOP*", ADDR_ABSOLUTE_X, NOP_abs_x);
+    
+    registerCallback(0x27, "RLA*", ADDR_ZERO_PAGE, RLA_zpg);
+    registerCallback(0x37, "RLA*", ADDR_ZERO_PAGE_X, RLA_zpg_x);
+    registerCallback(0x23, "RLA*", ADDR_INDIRECT_X, RLA_ind_x);
+    registerCallback(0x33, "RLA*", ADDR_INDIRECT_Y, RLA_ind_y);
+    registerCallback(0x2F, "RLA*", ADDR_ABSOLUTE, RLA_abs);
+    registerCallback(0x3F, "RLA*", ADDR_ABSOLUTE_X, RLA_abs_x);
+    registerCallback(0x3B, "RLA*", ADDR_ABSOLUTE_Y, RLA_abs_y);
+    
+    registerCallback(0x67, "RRA*", ADDR_ZERO_PAGE, RRA_zpg);
+    registerCallback(0x77, "RRA*", ADDR_ZERO_PAGE_X, RRA_zpg_x);
+    registerCallback(0x63, "RRA*", ADDR_INDIRECT_X, RRA_ind_x);
+    registerCallback(0x73, "RRA*", ADDR_INDIRECT_Y, RRA_ind_y);
+    registerCallback(0x6F, "RRA*", ADDR_ABSOLUTE, RRA_abs);
+    registerCallback(0x7F, "RRA*", ADDR_ABSOLUTE_X, RRA_abs_x);
+    registerCallback(0x7B, "RRA*", ADDR_ABSOLUTE_Y, RRA_abs_y);
+    
+    registerCallback(0x87, "SAX*", ADDR_ZERO_PAGE, SAX_zpg);
+    registerCallback(0x97, "SAX*", ADDR_ZERO_PAGE_Y, SAX_zpg_y);
+    registerCallback(0x83, "SAX*", ADDR_INDIRECT_X, SAX_ind_x);
+    registerCallback(0x8F, "SAX*", ADDR_ABSOLUTE, SAX_abs);
+    
+    registerCallback(0xEB, "SBC*", ADDR_IMMEDIATE, SBC_imm);
+    
+    registerCallback(0x9E, "SHX*", ADDR_ABSOLUTE_Y, SHX_abs_y);
+    registerCallback(0x9C, "SHY*", ADDR_ABSOLUTE_X, SHY_abs_x);
+    
+    registerCallback(0x07, "SLO*", ADDR_ZERO_PAGE, SLO_zpg);
+    registerCallback(0x17, "SLO*", ADDR_ZERO_PAGE_X, SLO_zpg_x);
+    registerCallback(0x03, "SLO*", ADDR_INDIRECT_X, SLO_ind_x);
+    registerCallback(0x13, "SLO*", ADDR_INDIRECT_Y, SLO_ind_y);
+    registerCallback(0x0F, "SLO*", ADDR_ABSOLUTE, SLO_abs);
+    registerCallback(0x1F, "SLO*", ADDR_ABSOLUTE_X, SLO_abs_x);
+    registerCallback(0x1B, "SLO*", ADDR_ABSOLUTE_Y, SLO_abs_y);
+    
+    registerCallback(0x47, "SRE*", ADDR_ZERO_PAGE, SRE_zpg);
+    registerCallback(0x57, "SRE*", ADDR_ZERO_PAGE_X, SRE_zpg_x);
+    registerCallback(0x43, "SRE*", ADDR_INDIRECT_X, SRE_ind_x);
+    registerCallback(0x53, "SRE*", ADDR_INDIRECT_Y, SRE_ind_y);
+    registerCallback(0x4F, "SRE*", ADDR_ABSOLUTE, SRE_abs);
+    registerCallback(0x5F, "SRE*", ADDR_ABSOLUTE_X, SRE_abs_x);
+    registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, SRE_abs_y);
+    
+    registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
 bool

@@ -358,14 +358,14 @@ typedef enum {
 #define WRITE_TO_ADDRESS \
 mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS \
-    mem->poke(HI_LO(addr_hi, addr_lo), data); N = data & 128; Z = (data == 0);
+    mem->poke(HI_LO(addr_hi, addr_lo), data); N = data & 0x80; Z = (data == 0);
 #define WRITE_TO_ZERO_PAGE \
     mem->pokeZP(addr_lo, data);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
-    mem->pokeZP(addr_lo, data); N = data & 128; Z = (data == 0);
+    mem->pokeZP(addr_lo, data); N = data & 0x80; Z = (data == 0);
 
-#define ADD_INDEX_X overflow = ((int)addr_lo + (int)X >= 0x100); addr_lo += X; 
-#define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y >= 0x100); addr_lo += Y; 
+#define ADD_INDEX_X overflow = ((int)addr_lo + (int)X > 0xFF); addr_lo += X;
+#define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y > 0xFF); addr_lo += Y;
 #define ADD_INDEX_X_INDIRECT ptr += X;
 #define ADD_INDEX_Y_INDIRECT ptr += Y;
 
@@ -392,33 +392,41 @@ mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define DONE     next = fetch; return true;
 
 
-//! Next microinstruction to be executed
+//! @brief    Next microinstruction to be executed
+/*! @see      executeOneCycle()
+ */
 MicroInstruction next;
 
-//! Callback function array pointing to the execution function of each instruction
+//! @brief    Mapping from opcodes to microinstructions
+/*! @details  The mapped microinstruction is the first microinstruction to be
+ *            executed after the fetch phase (second microcycle).
+ */
 MicroInstruction actionFunc[256];
 
-//! Mnemonic strings (used by the source level debugger only)
+/*! @brief    Textual representation for each opcode
+ *  @note     Used by the disassembler, only.
+ */
 const char *mnemonic[256];
 
-//! Adressing mode (used by the source level debugger only)
+/*! @brief    Adressing mode of each opcode
+ *  @note     Used by the disassembler, only.
+ */
 AddressingMode addressingMode[256];
 
-//! Static array containing all callback function
-static void (CPU::*callbacks[])(void);
-
-//! Register callback function for a single opcode
-void registerCallback(uint8_t opcode, MicroInstruction mInstr);
-
-//! Register callback function for a single opcode
+//! @brief    Registers a single opcode
+/*! @details  Initializes all lookup table entries for this opcode.
+ */
 void registerCallback(uint8_t opcode, const char *mnemonic,
                       AddressingMode mode, MicroInstruction mInstr);
 
-//! Register illegal instructions
-void registerIllegalInstructions();
-
-//! Register complete instruction set
+//! @brief    Registers the complete instruction set.
 void registerInstructions();
+
+//! @brief    Registers the legal instruction set, only.
+void registerLegalInstructions();
+
+//! @brief    Registers the illegal instructions set, only.
+void registerIllegalInstructions();
 
 // Helper functions
 void adc(uint8_t op);
@@ -427,7 +435,7 @@ void adc_bcd(uint8_t op);
 void sbc(uint8_t op);
 void sbc_binary(uint8_t op);
 void sbc_bcd(uint8_t op);
-void branch(int8_t offset); // returns number of penalty cycles
+void branch(int8_t offset);
 void cmp(uint8_t op1, uint8_t op2);
 uint8_t ror(uint8_t op);
 uint8_t rol(uint8_t op);
