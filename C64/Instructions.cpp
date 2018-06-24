@@ -1635,18 +1635,6 @@ CPU::executeOneCycle()
 
         case CLI:
             
-            /*
-            if (!rdyLine) {
-                setI(0);
-                return true;
-            }
-            IDLE_READ_IMPLIED
-            POLL_INT
-            setI(0);
-            DONE
-             */
-        
-            /* seems to work */
             POLL_INT
             setI(0);
             IDLE_READ_IMPLIED

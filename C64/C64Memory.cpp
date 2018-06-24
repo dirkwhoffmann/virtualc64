@@ -26,6 +26,7 @@ C64Memory::C64Memory()
 	debug (3, "  Creating main memory at address %p...\n", this);
 		
     memset(rom, 0, sizeof(rom));
+    stack = &ram[0x0100];
     
     // Register snapshot items
     SnapshotItem items[] = {

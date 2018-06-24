@@ -62,7 +62,6 @@ public:
 				
     // Reading from memory
     uint8_t peek(uint16_t addr);
-    uint8_t peekStack(uint8_t sp) { return ram[0x0100 | sp]; }
     uint8_t peekZP(uint8_t addr) { return ram[addr]; }
 
     // Snooping in memory (no side effects)
@@ -70,7 +69,6 @@ public:
     
     // Writing into memory
     void poke(uint16_t addr, uint8_t value);
-    void pokeStack(uint8_t sp, uint8_t value) { ram[0x0100 | sp] = value; }
     void pokeZP(uint8_t addr, uint8_t value) { ram[addr] = value; }
 };
 

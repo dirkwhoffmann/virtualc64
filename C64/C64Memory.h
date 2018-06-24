@@ -149,7 +149,6 @@ public:
     // Reading from memory
     uint8_t peek(uint16_t addr, MemoryType source);
     uint8_t peek(uint16_t addr) { return peek(addr, peekSrc[addr >> 12]); }
-    uint8_t peekStack(uint8_t sp) { return ram[0x0100 | sp]; }
     uint8_t peekZP(uint8_t addr);
     uint8_t peekIO(uint16_t addr);
     
@@ -161,7 +160,6 @@ public:
     // Writing into memory
     void poke(uint16_t addr, uint8_t value, MemoryType target);
     void poke(uint16_t addr, uint8_t value) { poke(addr, value, pokeTarget[addr >> 12]); }
-    void pokeStack(uint8_t sp, uint8_t value) { ram[0x0100 | sp] = value; }
     void pokeZP(uint8_t addr, uint8_t value);
     void pokeIO(uint16_t addr, uint8_t value);
 };

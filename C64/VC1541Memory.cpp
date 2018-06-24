@@ -25,6 +25,7 @@ VC1541Memory::VC1541Memory()
 	debug(3, "  Creating VC1541 memory at %p...\n", this);
 
     memset(rom, 0, sizeof(rom));
+    stack = &ram[0x0100];
     
     // Register snapshot items
     SnapshotItem items[] = {

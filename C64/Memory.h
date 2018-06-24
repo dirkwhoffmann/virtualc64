@@ -31,6 +31,13 @@ class Memory : public VirtualComponent {
 
     friend class CPU;
     
+protected:
+    
+    /*! @brief    Pointer to the first byte of the stack memory
+     *  @details  This value is used by peekStack and pokeStack, only.
+     */
+    uint8_t *stack = NULL;
+    
 private:
     
     /*! @brief    Peeks a byte from memory.
@@ -44,7 +51,7 @@ private:
     virtual uint8_t peekZP(uint8_t addr) = 0;
 
     //! @brief    Peeks a byte from the stack.
-    virtual uint8_t peekStack(uint8_t sp) = 0;
+    virtual uint8_t peekStack(uint8_t sp) { return stack[sp]; }
     
 public:
     
@@ -59,10 +66,10 @@ public:
     virtual void poke(uint16_t addr, uint8_t value) = 0;
 
     //! @brief    Pokes a byte into the zero page.
-    virtual void pokeStack(uint8_t sp, uint8_t value) = 0;
+    virtual void pokeZP(uint8_t addr, uint8_t value) = 0;
 
     //! @brief    Pokes a byte onto the stack.
-    virtual void pokeZP(uint8_t addr, uint8_t value) = 0;
+    virtual void pokeStack(uint8_t sp, uint8_t value) { stack[sp] = value; }
 };
 
 #endif
