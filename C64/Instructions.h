@@ -205,7 +205,7 @@ typedef enum {
     
     SEC,
     SED,
-    SEI,
+    SEI, SEI_cont,
     
     STA_zpg,   STA_zpg_2,
     STA_zpg_x, STA_zpg_x_2, STA_zpg_x_3,
@@ -383,8 +383,9 @@ mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
 
-#define POLL_INT doIrq = (read8_delayed(levelDetector) && I == 0); \
-                 doNmi = read8_delayed(edgeDetector);
+#define POLL_IRQ doIrq = (read8_delayed(levelDetector) && I == 0);
+#define POLL_NMI doNmi = read8_delayed(edgeDetector);
+#define POLL_INT POLL_IRQ POLL_NMI
 #define POLL_INT_AGAIN doIrq |= (read8_delayed(levelDetector) && I == 0); \
                        doNmi |= read8_delayed(edgeDetector);
 #define CONTINUE next = (MicroInstruction)((int)next+1); return true;

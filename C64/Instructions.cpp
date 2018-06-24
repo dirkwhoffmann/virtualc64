@@ -1635,11 +1635,24 @@ CPU::executeOneCycle()
 
         case CLI:
             
+            /*
+            if (!rdyLine) {
+                setI(0);
+                return true;
+            }
             IDLE_READ_IMPLIED
             POLL_INT
             setI(0);
             DONE
-
+             */
+        
+            /* seems to work */
+            POLL_INT
+            setI(0);
+            IDLE_READ_IMPLIED
+            DONE
+            
+            
         // -------------------------------------------------------------------------------
         // Instruction: CLV
         //
@@ -4442,11 +4455,16 @@ CPU::executeOneCycle()
 
         case SEI:
             
-            IDLE_READ_IMPLIED
-            POLL_INT
+            POLL_IRQ
             setI(1);
+            
+        case SEI_cont: // fallthrough
+            
+            next = SEI_cont;
+            IDLE_READ_IMPLIED
+            POLL_NMI
             DONE
-
+            
         // -------------------------------------------------------------------------------
         // Instruction: STA
         //

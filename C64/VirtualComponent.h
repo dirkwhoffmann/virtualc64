@@ -302,16 +302,16 @@ public:
     //! @functiongroup  Time delayed variables
     //
     
-    //! @brief    Reads a time delayed variable
+    //! @brief    Reads a time delayed variable.
     #define read8_delayed(var) ((c64->cycle >= var.timeStamp) ? var.value : var.prevValue)
 
-    //! @brief    Writes to a time delayed variable
+    //! @brief    Writes to a time delayed variable.
     void write8_delayed(uint8_delayed &var, uint8_t value);
 
-    //! @brief    Initializes a time delayed variable
+    //! @brief    Initializes a time delayed variable.
     void init8_delayed(uint8_delayed &var, uint8_t value);
 
-    //! @brief    Initializes a time delayed variable
+    //! @brief    Initializes a time delayed variable with 0.
     void clear8_delayed(uint8_delayed &var) { init8_delayed(var, 0); }
 
 };
