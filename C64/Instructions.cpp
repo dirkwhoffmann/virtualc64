@@ -775,6 +775,20 @@ CPU::executeOneCycle()
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
             
+        case BCC_rel_2: case BCS_rel_2: case BEQ_rel_2: case BMI_rel_2:
+        case BNE_rel_2: case BPL_rel_2: case BVC_rel_2: case BVS_rel_2:
+        {
+            IDLE_READ_IMPLIED
+            uint8_t pc_hi = HI_BYTE(PC);
+            PC += (int8_t)data;
+            
+            if (pc_hi != HI_BYTE(PC)) {
+                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
+                return true;
+            }
+            DONE
+        }
+            
         //
         // Third microcycle after fetch (shared behavior)
         //
@@ -821,6 +835,18 @@ CPU::executeOneCycle()
             ADD_INDEX_Y
             CONTINUE
             
+        case branch_3_underflow:
+            
+            IDLE_READ_FROM(PC + 0x100)
+            POLL_INT_AGAIN
+            DONE
+            
+        case branch_3_overflow:
+            
+            IDLE_READ_FROM(PC - 0x100)
+            POLL_INT_AGAIN
+            DONE
+
         //
         // Fourth microcycle after fetch (shared behavior)
         //
@@ -853,14 +879,13 @@ CPU::executeOneCycle()
             READ_FROM_ADDRESS
             CONTINUE
             
-        // ---------------------------------------------------------------------
+
         // Instruction: ADC
         //
         // Operation:   A,C := A+M+C
         //
         // Flags:       N Z C I D V
         //              / / / - - /
-        // ---------------------------------------------------------------------
 
         case ADC_imm:
 
@@ -902,14 +927,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
             
-        // ---------------------------------------------------------------------
+            
         // Instruction: AND
         //
         // Operation:   A := A AND M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // ---------------------------------------------------------------------
 
         case AND_imm:
             
@@ -951,14 +975,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
             
-        // ---------------------------------------------------------------------
+            
         // Instruction: ASL
         //
         // Operation:   C <- (A|M << 1) <- 0
         //
         // Flags:       N Z C I D V
         //              / / / - - -
-        // ---------------------------------------------------------------------
     
         #define DO_ASL setC(data & 0x80); data = data << 1;
 
@@ -999,28 +1022,14 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
             
-        // -------------------------------------------------------------------------------
+            
         // Instruction: BCC
         //
         // Operation:   Branch on C = 0
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
-            
-        case branch_3_underflow:
-            
-            IDLE_READ_FROM(PC + 0x100)
-            POLL_INT_AGAIN
-            DONE
-            
-        case branch_3_overflow:
-            
-            IDLE_READ_FROM(PC - 0x100)
-            POLL_INT_AGAIN
-            DONE
-
-        // ------------------------------------------------------------------------------
+    
         case BCC_rel:
             
             READ_IMMEDIATE
@@ -1032,27 +1041,13 @@ CPU::executeOneCycle()
                 DONE
             }
             
-        case BCC_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
             
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
-            
-        // -------------------------------------------------------------------------------
         // Instruction: BCS
         //
         // Operation:   Branch on C = 1
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
 
         case BCS_rel:
             
@@ -1065,27 +1060,13 @@ CPU::executeOneCycle()
                 DONE
             }
             
-        case BCS_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
-            
-        // -------------------------------------------------------------------------------
+        
         // Instruction: BEQ
         //
         // Operation:   Branch on Z = 1
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
             
         case BEQ_rel:
             
@@ -1097,19 +1078,6 @@ CPU::executeOneCycle()
             } else {
                 DONE
             }
-            
-        case BEQ_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
             
         // -------------------------------------------------------------------------------
         // Instruction: BIT
@@ -1160,19 +1128,6 @@ CPU::executeOneCycle()
                 DONE
             }
             
-        case BMI_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
-            
         // -------------------------------------------------------------------------------
         // Instruction: BNE
         //
@@ -1192,19 +1147,6 @@ CPU::executeOneCycle()
             } else {
                 DONE
             }
-            
-        case BNE_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
 
         // -------------------------------------------------------------------------------
         // Instruction: BPL
@@ -1225,19 +1167,6 @@ CPU::executeOneCycle()
             } else {
                 DONE
             }
-            
-        case BPL_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
 
         // -------------------------------------------------------------------------------
         // Instruction: BRK
@@ -1337,19 +1266,6 @@ CPU::executeOneCycle()
             } else {
                 DONE
             }
-            
-        case BVC_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
 
         // -------------------------------------------------------------------------------
         // Instruction: BVS
@@ -1370,19 +1286,6 @@ CPU::executeOneCycle()
             } else {
                 DONE
             }
-            
-        case BVS_rel_2:
-        {
-            IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
-            
-            if (pc_hi != HI_BYTE(PC)) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
-                return true;
-            }
-            DONE
-        }
 
         // -------------------------------------------------------------------------------
         // Instruction: CLC
