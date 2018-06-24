@@ -21,9 +21,10 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.0.1 or 2.1
 //
-// Passing VICE test openio/de00int
-// Passing VICE test irqdma/nmitest6 and nmitest6b
-// Fixes several minor bugs that have been introduced in V2.0
+// Passing VICE test openio/de00int.
+// Passing all VICE tests in the irqdma test suite.
+// Fixed a bug in the implementation of the LSR command
+// Fixes several minor GUI bugs
 
 // TODO:
 //

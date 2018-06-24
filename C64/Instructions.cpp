@@ -618,7 +618,7 @@ CPU::executeOneCycle()
             DONE
 
         //
-        // First microcycle (shared behavior)
+        // First microcycle after fetch (shared behavior)
         //
         
         case ADC_zpg: case AND_zpg: case ASL_zpg: case BIT_zpg:
@@ -682,8 +682,15 @@ CPU::executeOneCycle()
             CONTINUE
             
         //
-        // Second microcycle (shared behavior)
+        // Second microcycle after fetch (shared behavior)
         //
+            
+        case ASL_zpg_2: case DEC_zpg_2: case INC_zpg_2: case LSR_zpg_2:
+        case ROL_zpg_2: case ROR_zpg_2: case DCP_zpg_2: case ISC_zpg_2:
+        case RLA_zpg_2: case RRA_zpg_2: case SLO_zpg_2: case SRE_zpg_2:
+            
+            READ_FROM_ZERO_PAGE
+            CONTINUE
             
         case ADC_zpg_x_2: case AND_zpg_x_2: case ASL_zpg_x_2: case CMP_zpg_x_2:
         case DEC_zpg_x_2: case EOR_zpg_x_2: case INC_zpg_x_2: case LDA_zpg_x_2:
@@ -769,8 +776,30 @@ CPU::executeOneCycle()
             CONTINUE
             
         //
-        // Third microcycle (shared behavior)
+        // Third microcycle after fetch (shared behavior)
         //
+        
+        case ASL_zpg_x_3: case DEC_zpg_x_3: case INC_zpg_x_3: case LSR_zpg_x_3:
+        case ROL_zpg_x_3: case ROR_zpg_x_3: case DCP_zpg_x_3: case ISC_zpg_x_3:
+        case RLA_zpg_x_3: case RRA_zpg_x_3: case SLO_zpg_x_3: case SRE_zpg_x_3:
+            
+            READ_FROM_ZERO_PAGE
+            CONTINUE
+        
+        case ASL_abs_3: case DEC_abs_3: case INC_abs_3: case LSR_abs_3:
+        case ROL_abs_3: case ROR_abs_3: case DCP_abs_3: case ISC_abs_3:
+        case RLA_abs_3: case RRA_abs_3: case SLO_abs_3: case SRE_abs_3:
+            
+            READ_FROM_ADDRESS
+            CONTINUE
+            
+        case ASL_abs_x_3: case DEC_abs_x_3: case INC_abs_x_3: case LSR_abs_x_3:
+        case ROL_abs_x_3: case ROR_abs_x_3: case DCP_abs_x_3: case ISC_abs_x_3:
+        case RLA_abs_x_3: case RRA_abs_x_3: case SLO_abs_x_3: case SRE_abs_x_3:
+            
+            READ_FROM_ADDRESS;
+            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
+            CONTINUE
             
         case ADC_ind_x_3: case AND_ind_x_3: case ASL_ind_x_3: case CMP_ind_x_3:
         case DEC_ind_x_3: case EOR_ind_x_3: case INC_ind_x_3: case LDA_ind_x_3:
@@ -793,8 +822,15 @@ CPU::executeOneCycle()
             CONTINUE
             
         //
-        // Fourth microcycle (shared behavior)
+        // Fourth microcycle after fetch (shared behavior)
         //
+            
+        case ASL_abs_x_4: case DEC_abs_x_4: case INC_abs_x_4: case LSR_abs_x_4:
+        case ROL_abs_x_4: case ROR_abs_x_4: case DCP_abs_x_4: case ISC_abs_x_4:
+        case RLA_abs_x_4: case RRA_abs_x_4: case SLO_abs_x_4: case SRE_abs_x_4:
+            
+            READ_FROM_ADDRESS
+            CONTINUE
             
         case ADC_ind_x_4: case AND_ind_x_4: case ASL_ind_x_4: case CMP_ind_x_4:
         case DEC_ind_x_4: case EOR_ind_x_4: case INC_ind_x_4: case LDA_ind_x_4:
@@ -810,6 +846,12 @@ CPU::executeOneCycle()
         // Fifth microcycle (shared behavior)
         //
             
+        case ASL_ind_x_5: case DEC_ind_x_5: case INC_ind_x_5: case LSR_ind_x_5:
+        case ROL_ind_x_5: case ROR_ind_x_5: case DCP_ind_x_5: case ISC_ind_x_5:
+        case RLA_ind_x_5: case RRA_ind_x_5: case SLO_ind_x_5: case SRE_ind_x_5:
+            
+            READ_FROM_ADDRESS
+            CONTINUE
             
         // ---------------------------------------------------------------------
         // Instruction: ADC
@@ -918,110 +960,39 @@ CPU::executeOneCycle()
         //              / / / - - -
         // ---------------------------------------------------------------------
     
-        #define DO_ASL setC(data & 128); data = data << 1;
+        #define DO_ASL setC(data & 0x80); data = data << 1;
 
-        // ---------------------------------------------------------------------
         case ASL_acc:
             
             IDLE_READ_IMPLIED
-            setC(A & 128); loadA(A << 1);
+            setC(A & 0x80); loadA(A << 1);
             POLL_INT
             DONE
-
-        // ---------------------------------------------------------------------
-        case ASL_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case ASL_zpg_3:
-            
-            WRITE_TO_ZERO_PAGE
-            DO_ASL
-            CONTINUE
-            
-        case ASL_zpg_4:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // ---------------------------------------------------------------------
-            
-        case ASL_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case ASL_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ASL
             CONTINUE
-            
-        case ASL_zpg_x_5:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-            
-        // -------------------------------------------------------------------------------
-            
-        case ASL_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
+           
         case ASL_abs_4:
-            
-            WRITE_TO_ADDRESS
-            DO_ASL
-            CONTINUE
-            
-        case ASL_abs_5:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case ASL_abs_x_3:
-            
-            READ_FROM_ADDRESS;
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case ASL_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case ASL_abs_x_5:
-            
-            WRITE_TO_ADDRESS
-            DO_ASL
-            CONTINUE
-            
-        case ASL_abs_x_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case ASL_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case ASL_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ASL
             CONTINUE
             
+        case ASL_zpg_4:
+        case ASL_zpg_x_5:
+            
+            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
+            POLL_INT
+            DONE
+            
+        case ASL_abs_5:
+        case ASL_abs_x_6:
         case ASL_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
@@ -1036,8 +1007,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              - - - - - -
         // -------------------------------------------------------------------------------
-
-        // void CPU::branch(int8_t offset) { PC += offset; }
             
         case branch_3_underflow:
             
@@ -1676,11 +1645,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case DEC_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case DEC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -1694,11 +1658,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case DEC_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case DEC_zpg_x_4:
             
@@ -1714,11 +1673,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case DEC_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case DEC_abs_4:
             
             WRITE_TO_ADDRESS
@@ -1732,18 +1686,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case DEC_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case DEC_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
+         
         case DEC_abs_x_5:
             
             WRITE_TO_ADDRESS
@@ -1757,11 +1700,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-   
-        case DEC_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case DEC_ind_x_6:
             
@@ -1935,11 +1873,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case INC_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case INC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -1953,12 +1886,7 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case INC_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
+          
         case INC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
@@ -1972,11 +1900,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case INC_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case INC_abs_4:
             
@@ -1992,17 +1915,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case INC_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case INC_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case INC_abs_x_5:
             
             WRITE_TO_ADDRESS
@@ -2016,11 +1928,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case INC_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case INC_ind_x_6:
             
@@ -2470,11 +2377,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case LSR_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case LSR_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -2488,11 +2390,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-            
-        case LSR_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case LSR_zpg_x_4:
             
@@ -2508,11 +2405,6 @@ CPU::executeOneCycle()
             
         // -------------------------------------------------------------------------------
             
-        case LSR_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case LSR_abs_4:
             
             WRITE_TO_ADDRESS
@@ -2526,19 +2418,6 @@ CPU::executeOneCycle()
             DONE
             
         // -------------------------------------------------------------------------------
-            
-        case LSR_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-            }
-            CONTINUE
-            
-        case LSR_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case LSR_abs_x_5:
             
@@ -2580,11 +2459,6 @@ CPU::executeOneCycle()
             DONE
 
             // -------------------------------------------------------------------------------
-    
-        case LSR_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case LSR_ind_x_6:
             
@@ -2924,11 +2798,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case ROL_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case ROL_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -2942,11 +2811,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-     
-        case ROL_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case ROL_zpg_x_4:
             
@@ -2962,11 +2826,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case ROL_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case ROL_abs_4:
             
             WRITE_TO_ADDRESS
@@ -2981,17 +2840,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case ROL_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case ROL_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case ROL_abs_x_5:
             
             WRITE_TO_ADDRESS
@@ -3005,11 +2853,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case ROL_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case ROL_ind_x_6:
             
@@ -3051,11 +2894,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-   
-        case ROR_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case ROR_zpg_3:
             
@@ -3071,11 +2909,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case ROR_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case ROR_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
@@ -3089,11 +2922,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case ROR_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case ROR_abs_4:
             
@@ -3109,19 +2937,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case ROR_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-            }
-            CONTINUE
-            
-        case ROR_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case ROR_abs_x_5:
             
             WRITE_TO_ADDRESS
@@ -3135,11 +2950,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case ROR_ind_x_5:
-            
-            READ_FROM_ADDRESS;
-            CONTINUE
             
         case ROR_ind_x_6:
             
@@ -3766,11 +3576,6 @@ CPU::executeOneCycle()
         //              / / / - - -
         // -------------------------------------------------------------------------------
             
-        case DCP_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case DCP_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -3785,11 +3590,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case DCP_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case DCP_zpg_x_4:
             
@@ -3806,11 +3606,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case DCP_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case DCP_abs_4:
             
             WRITE_TO_ADDRESS
@@ -3825,17 +3620,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case DCP_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case DCP_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case DCP_abs_x_5:
             
@@ -3877,11 +3661,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case DCP_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case DCP_ind_x_6:
             
@@ -3931,11 +3710,6 @@ CPU::executeOneCycle()
         //              / / / - - /
         // -------------------------------------------------------------------------------
             
-        case ISC_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case ISC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -3950,11 +3724,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case ISC_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case ISC_zpg_x_4:
             
@@ -3971,11 +3740,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case ISC_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case ISC_abs_4:
             
             WRITE_TO_ADDRESS
@@ -3990,17 +3754,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case ISC_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case ISC_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case ISC_abs_x_5:
             
@@ -4042,11 +3795,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case ISC_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case ISC_ind_x_6:
             
@@ -4225,11 +3973,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case RLA_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case RLA_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -4244,11 +3987,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case RLA_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case RLA_zpg_x_4:
             
@@ -4265,11 +4003,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case RLA_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case RLA_abs_4:
             
             WRITE_TO_ADDRESS
@@ -4284,17 +4017,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case RLA_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case RLA_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case RLA_abs_x_5:
             
@@ -4335,12 +4057,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-
-        case RLA_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
+        // ---------------------------------------------------------------------
             
         case RLA_ind_x_6:
             
@@ -4392,11 +4109,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case RRA_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case RRA_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -4411,11 +4123,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case RRA_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case RRA_zpg_x_4:
             
@@ -4432,11 +4139,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case RRA_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case RRA_abs_4:
             
             WRITE_TO_ADDRESS
@@ -4451,17 +4153,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case RRA_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case RRA_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case RRA_abs_x_5:
             
@@ -4503,11 +4194,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case RRA_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case RRA_ind_x_6:
             
@@ -4748,11 +4434,6 @@ CPU::executeOneCycle()
         #define DO_SLO setC(data & 128); data <<= 1;
 
         // -------------------------------------------------------------------------------
-   
-        case SLO_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case SLO_zpg_3:
             
@@ -4769,11 +4450,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case SLO_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case SLO_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
@@ -4789,11 +4465,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case SLO_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case SLO_abs_4:
             
             WRITE_TO_ADDRESS
@@ -4808,17 +4479,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case SLO_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case SLO_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case SLO_abs_x_5:
             
@@ -4860,11 +4520,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case SLO_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case SLO_ind_x_6:
             
@@ -4917,11 +4572,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case SRE_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
         case SRE_zpg_3:
             
             WRITE_TO_ZERO_PAGE
@@ -4936,11 +4586,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case SRE_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
             
         case SRE_zpg_x_4:
             
@@ -4957,11 +4602,6 @@ CPU::executeOneCycle()
 
         // -------------------------------------------------------------------------------
             
-        case SRE_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
         case SRE_abs_4:
             
             WRITE_TO_ADDRESS
@@ -4976,17 +4616,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
-            
-        case SRE_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case SRE_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case SRE_abs_x_5:
             
@@ -5028,11 +4657,6 @@ CPU::executeOneCycle()
             DONE
 
         // -------------------------------------------------------------------------------
- 
-        case SRE_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
             
         case SRE_ind_x_6:
             

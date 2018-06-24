@@ -76,28 +76,19 @@ class Joystick;
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
- *  @details  The original C64 contains two CIA chips (CIA 1 and CIA 2). Each chip features
- *            two programmable timers and a real-time clock. Furthermore, the CIA chips manage
- *            the communication with connected peripheral devices such as joysticks, printers
- *            or the keyboard. The CIA class implements the common functionality of both CIAs.
+ *  @details  The original C64 contains two CIA chips (CIA 1 and CIA 2). Each
+ *            chip features two programmable timers and a real-time clock.
+ *            Furthermore, the CIA chips manage the communication with connected
+ *            peripheral devices such as joysticks, printers or the keyboard.
+ *            The CIA class implements the common functionality of both CIAs.
  */
 class CIA : public VirtualComponent {
     
     friend C64;
     friend C64Memory;
     
-    // ---------------------------------------------------------------------------------------
-    //                                          Properties
-    // ---------------------------------------------------------------------------------------
-
 public:
-    
-	//! @brief    Start address of the CIA I/O space (CIA 1 and CIA 2)
-	// static const uint16_t CIA_START_ADDR = 0xDC00;
 
-    //! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
-	// static const uint16_t CIA_END_ADDR = 0xDDFF;
-        
 	//! @brief    Timer A counter
 	uint16_t counterA;
 	
