@@ -898,18 +898,26 @@ VIA2::updatePB()
     if (GET_BIT(pb, 2) != GET_BIT(oldPb, 2))
         c64->floppy.setRotating(GET_BIT(pb, 2));
     
-    // Bits 1 and 0
-    if ((pb & 0x03) != (oldPb & 0x03)) {
+    // Head stepper motor
+    
+    if (pb & 0x04) { // We only move the head if the motor is on
         
-        // A  decrease (00-11-10-01-00...) moves the head down
-        // An increase (00-01-10-11-00...) moves the head up
+        // Relationship between halftracks and stepper positions:
+        //
+        // Halftrack number: 01  02  03  04  05  06  07  08 ...
+        // Stepper position:  0   1   2   3   0   1   2   3 ...
         
-        if ((pb & 0x03) == ((oldPb + 1) & 0x03)) {
-            c64->floppy.moveHeadUp();
-        } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
-            c64->floppy.moveHeadDown();
-        } else {
-            warn("Unexpected stepper motor control sequence\n");
+        int oldPos = (int)((c64->floppy.getHalftrack() - 1) & 0x03);
+        int newPos = (int)(pb & 0x03);
+        
+        if (newPos != oldPos) {
+            if (newPos == ((oldPos + 1) & 0x03)) {
+                c64->floppy.moveHeadUp();
+            } else if (newPos == ((oldPos - 1) & 0x03)) {
+                c64->floppy.moveHeadDown();
+            } else {
+                warn("Unexpected stepper motor control sequence\n");
+            }
         }
     }
 }
