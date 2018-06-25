@@ -118,7 +118,7 @@ typedef enum {
     INY,
     
     JMP_abs, JMP_abs_2,
-    JMP_abs_indirect, JMP_abs_ind_2, JMP_abs_ind_3, JMP_abs_ind_4,
+    JMP_abs_ind, JMP_abs_ind_2, JMP_abs_ind_3, JMP_abs_ind_4,
     
     JSR, JSR_2, JSR_3, JSR_4, JSR_5,
     

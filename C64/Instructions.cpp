@@ -233,7 +233,7 @@ void CPU::registerLegalInstructions()
 	registerCallback(0xC8, "INY", ADDR_IMPLIED, INY);
 
 	registerCallback(0x4C, "JMP", ADDR_DIRECT, JMP_abs);
-	registerCallback(0x6C, "JMP", ADDR_INDIRECT, JMP_abs_indirect);
+	registerCallback(0x6C, "JMP", ADDR_INDIRECT, JMP_abs_ind);
 
 	registerCallback(0x20, "JSR", ADDR_DIRECT, JSR);
 
@@ -618,19 +618,27 @@ CPU::executeOneCycle()
             DONE
 
         //
-        // First microcycle after fetch (shared behavior)
+        // Adressing mode: Immediate (shared behavior)
         //
-        
+
         case BRK: case RTI: case RTS:
             
             IDLE_READ_IMMEDIATE
             CONTINUE
             
+        //
+        // Adressing mode: Implied (shared behavior)
+        //
+
         case PHA: case PHP: case PLA: case PLP:
             
             IDLE_READ_IMPLIED
             CONTINUE
             
+        //
+        // Adressing mode: Zero-Page  (shared behavior)
+        //
+        
         case ADC_zpg: case AND_zpg: case ASL_zpg: case BIT_zpg:
         case CMP_zpg: case CPX_zpg: case CPY_zpg: case DEC_zpg:
         case EOR_zpg: case INC_zpg: case LDA_zpg: case LDX_zpg:
@@ -639,24 +647,96 @@ CPU::executeOneCycle()
         case STX_zpg: case STY_zpg: case DCP_zpg: case ISC_zpg:
         case LAX_zpg: case RLA_zpg: case RRA_zpg: case SAX_zpg:
         case SLO_zpg: case SRE_zpg:
-        
+            
+            FETCH_ADDR_LO
+            CONTINUE
+            
+        case ASL_zpg_2: case DEC_zpg_2: case INC_zpg_2: case LSR_zpg_2:
+        case ROL_zpg_2: case ROR_zpg_2: case DCP_zpg_2: case ISC_zpg_2:
+        case RLA_zpg_2: case RRA_zpg_2: case SLO_zpg_2: case SRE_zpg_2:
+            
+            READ_FROM_ZERO_PAGE
+            CONTINUE
+            
+        //
+        // Adressing mode: Zero-Page Indexed (shared behavior)
+        //
+            
         case ADC_zpg_x: case AND_zpg_x: case ASL_zpg_x: case CMP_zpg_x:
         case DEC_zpg_x: case EOR_zpg_x: case INC_zpg_x: case LDA_zpg_x:
         case LDY_zpg_x: case LSR_zpg_x: case NOP_zpg_x: case ORA_zpg_x:
         case ROL_zpg_x: case ROR_zpg_x: case SBC_zpg_x: case STA_zpg_x:
         case STY_zpg_x: case DCP_zpg_x: case ISC_zpg_x: case RLA_zpg_x:
         case RRA_zpg_x: case SLO_zpg_x: case SRE_zpg_x:
-        
+          
         case LDX_zpg_y: case STX_zpg_y: case LAX_zpg_y: case SAX_zpg_y:
+            
+            FETCH_ADDR_LO
+            CONTINUE
+           
+        case ADC_zpg_x_2: case AND_zpg_x_2: case ASL_zpg_x_2: case CMP_zpg_x_2:
+        case DEC_zpg_x_2: case EOR_zpg_x_2: case INC_zpg_x_2: case LDA_zpg_x_2:
+        case LDY_zpg_x_2: case LSR_zpg_x_2: case NOP_zpg_x_2: case ORA_zpg_x_2:
+        case ROL_zpg_x_2: case ROR_zpg_x_2: case SBC_zpg_x_2: case DCP_zpg_x_2:
+        case ISC_zpg_x_2: case RLA_zpg_x_2: case RRA_zpg_x_2: case SLO_zpg_x_2:
+        case SRE_zpg_x_2: case STA_zpg_x_2: case STY_zpg_x_2:
+            
+            READ_FROM_ZERO_PAGE
+            ADD_INDEX_X
+            CONTINUE
         
+        case LDX_zpg_y_2: case LAX_zpg_y_2: case STX_zpg_y_2: case SAX_zpg_y_2:
+            
+            READ_FROM_ZERO_PAGE
+            ADD_INDEX_Y
+            CONTINUE
+           
+        case ASL_zpg_x_3: case DEC_zpg_x_3: case INC_zpg_x_3: case LSR_zpg_x_3:
+        case ROL_zpg_x_3: case ROR_zpg_x_3: case DCP_zpg_x_3: case ISC_zpg_x_3:
+        case RLA_zpg_x_3: case RRA_zpg_x_3: case SLO_zpg_x_3: case SRE_zpg_x_3:
+            
+            READ_FROM_ZERO_PAGE
+            CONTINUE
+            
+            
+        //
+        // Adressing mode: Absolute (shared behavior)
+        //
+            
         case ADC_abs: case AND_abs: case ASL_abs: case BIT_abs:
         case CMP_abs: case CPX_abs: case CPY_abs: case DEC_abs:
-        case EOR_abs: case INC_abs: case JMP_abs: case LDA_abs:
-        case LDX_abs: case LDY_abs: case LSR_abs: case NOP_abs:
-        case ORA_abs: case ROL_abs: case ROR_abs: case SBC_abs:
-        case STA_abs: case STX_abs: case STY_abs: case DCP_abs:
-        case ISC_abs: case LAX_abs: case RLA_abs: case RRA_abs:
-        case SAX_abs: case SLO_abs: case SRE_abs:
+        case EOR_abs: case INC_abs: case LDA_abs: case LDX_abs:
+        case LDY_abs: case LSR_abs: case NOP_abs: case ORA_abs:
+        case ROL_abs: case ROR_abs: case SBC_abs: case STA_abs:
+        case STX_abs: case STY_abs: case DCP_abs: case ISC_abs:
+        case LAX_abs: case RLA_abs: case RRA_abs: case SAX_abs:
+        case SLO_abs: case SRE_abs:
+            
+            FETCH_ADDR_LO
+            CONTINUE
+           
+        case ADC_abs_2: case AND_abs_2: case ASL_abs_2: case BIT_abs_2:
+        case CMP_abs_2: case CPX_abs_2: case CPY_abs_2: case DEC_abs_2:
+        case EOR_abs_2: case INC_abs_2: case LDA_abs_2: case LDX_abs_2:
+        case LDY_abs_2: case LSR_abs_2: case NOP_abs_2: case ORA_abs_2:
+        case ROL_abs_2: case ROR_abs_2: case SBC_abs_2: case STA_abs_2:
+        case STX_abs_2: case STY_abs_2: case DCP_abs_2: case ISC_abs_2:
+        case LAX_abs_2: case RLA_abs_2: case RRA_abs_2: case SAX_abs_2:
+        case SLO_abs_2: case SRE_abs_2:
+            
+            FETCH_ADDR_HI
+            CONTINUE
+            
+        case ASL_abs_3: case DEC_abs_3: case INC_abs_3: case LSR_abs_3:
+        case ROL_abs_3: case ROR_abs_3: case DCP_abs_3: case ISC_abs_3:
+        case RLA_abs_3: case RRA_abs_3: case SLO_abs_3: case SRE_abs_3:
+            
+            READ_FROM_ADDRESS
+            CONTINUE
+            
+        //
+        // Adressing mode: Absolute Indexed (shared behavior)
+        //
             
         case ADC_abs_x: case AND_abs_x: case ASL_abs_x: case CMP_abs_x:
         case DEC_abs_x: case EOR_abs_x: case INC_abs_x: case LDA_abs_x:
@@ -671,80 +751,8 @@ CPU::executeOneCycle()
         case LAS_abs_y: case LAX_abs_y: case RLA_abs_y: case RRA_abs_y:
         case SHA_abs_y: case SHX_abs_y: case SLO_abs_y: case SRE_abs_y:
         case TAS_abs_y:
-        
-        case JMP_abs_indirect: case JSR:
             
             FETCH_ADDR_LO
-            CONTINUE
-        
-        case ADC_ind_x: case AND_ind_x: case ASL_ind_x: case CMP_ind_x:
-        case DEC_ind_x: case EOR_ind_x: case INC_ind_x: case LDA_ind_x:
-        case LDX_ind_x: case LDY_ind_x: case LSR_ind_x: case ORA_ind_x:
-        case ROL_ind_x: case ROR_ind_x: case SBC_ind_x: case STA_ind_x:
-        case DCP_ind_x: case ISC_ind_x: case LAX_ind_x: case RLA_ind_x:
-        case RRA_ind_x: case SAX_ind_x: case SLO_ind_x: case SRE_ind_x:
-            
-        case ADC_ind_y: case AND_ind_y: case CMP_ind_y: case EOR_ind_y:
-        case LDA_ind_y: case LDX_ind_y: case LDY_ind_y: case LSR_ind_y:
-        case ORA_ind_y: case SBC_ind_y: case STA_ind_y: case DCP_ind_y:
-        case ISC_ind_y: case LAX_ind_y: case RLA_ind_y: case RRA_ind_y:
-        case SHA_ind_y: case SLO_ind_y: case SRE_ind_y:
-            
-            FETCH_POINTER_ADDR
-            CONTINUE
-            
-        //
-        // Second microcycle after fetch (shared behavior)
-        //
-            
-        case ASL_zpg_2: case DEC_zpg_2: case INC_zpg_2: case LSR_zpg_2:
-        case ROL_zpg_2: case ROR_zpg_2: case DCP_zpg_2: case ISC_zpg_2:
-        case RLA_zpg_2: case RRA_zpg_2: case SLO_zpg_2: case SRE_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-            
-        case ADC_zpg_x_2: case AND_zpg_x_2: case ASL_zpg_x_2: case CMP_zpg_x_2:
-        case DEC_zpg_x_2: case EOR_zpg_x_2: case INC_zpg_x_2: case LDA_zpg_x_2:
-        case LDY_zpg_x_2: case LSR_zpg_x_2: case NOP_zpg_x_2: case ORA_zpg_x_2:
-        case ROL_zpg_x_2: case ROR_zpg_x_2: case SBC_zpg_x_2: case DCP_zpg_x_2:
-        case ISC_zpg_x_2: case RLA_zpg_x_2: case RRA_zpg_x_2: case SLO_zpg_x_2:
-        case SRE_zpg_x_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
-            
-        case STA_zpg_x_2: case STY_zpg_x_2:
-            
-            IDLE_READ_FROM_ZERO_PAGE
-            ADD_INDEX_X
-            CONTINUE
-           
-        case LDX_zpg_y_2: case LAX_zpg_y_2:
-            
-            READ_FROM_ZERO_PAGE
-            ADD_INDEX_Y
-            CONTINUE
-        
-        case STX_zpg_y_2: case SAX_zpg_y_2:
-            
-            IDLE_READ_FROM_ZERO_PAGE
-            ADD_INDEX_Y
-            CONTINUE
-            
-        case ADC_abs_2: case AND_abs_2: case ASL_abs_2: case BIT_abs_2:
-        case CMP_abs_2: case CPX_abs_2: case CPY_abs_2: case DEC_abs_2:
-        case EOR_abs_2: case INC_abs_2: case LDA_abs_2: case LDX_abs_2:
-        case LDY_abs_2: case LSR_abs_2: case NOP_abs_2: case ORA_abs_2:
-        case ROL_abs_2: case ROR_abs_2: case SBC_abs_2: case STA_abs_2:
-        case STX_abs_2: case STY_abs_2: case DCP_abs_2: case ISC_abs_2:
-        case LAX_abs_2: case RLA_abs_2: case RRA_abs_2: case SAX_abs_2:
-        case SLO_abs_2: case SRE_abs_2:
-            
-        case JMP_abs_ind_2:
-            
-            FETCH_ADDR_HI
             CONTINUE
             
         case ADC_abs_x_2: case AND_abs_x_2: case ASL_abs_x_2: case CMP_abs_x_2:
@@ -769,6 +777,36 @@ CPU::executeOneCycle()
             ADD_INDEX_Y
             CONTINUE
             
+        case ASL_abs_x_3: case DEC_abs_x_3: case INC_abs_x_3: case LSR_abs_x_3:
+        case ROL_abs_x_3: case ROR_abs_x_3: case DCP_abs_x_3: case ISC_abs_x_3:
+        case RLA_abs_x_3: case RRA_abs_x_3: case STA_abs_x_3: case SLO_abs_x_3:
+        case SRE_abs_x_3:
+            
+            READ_FROM_ADDRESS
+            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
+            CONTINUE
+            
+        case ASL_abs_x_4: case DEC_abs_x_4: case INC_abs_x_4: case LSR_abs_x_4:
+        case ROL_abs_x_4: case ROR_abs_x_4: case DCP_abs_x_4: case ISC_abs_x_4:
+        case RLA_abs_x_4: case RRA_abs_x_4: case SLO_abs_x_4: case SRE_abs_x_4:
+            
+            READ_FROM_ADDRESS
+            CONTINUE
+            
+        //
+        // Adressing mode: Indexed Indirect (shared behavior)
+        //
+    
+        case ADC_ind_x: case AND_ind_x: case ASL_ind_x: case CMP_ind_x:
+        case DEC_ind_x: case EOR_ind_x: case INC_ind_x: case LDA_ind_x:
+        case LDX_ind_x: case LDY_ind_x: case LSR_ind_x: case ORA_ind_x:
+        case ROL_ind_x: case ROR_ind_x: case SBC_ind_x: case STA_ind_x:
+        case DCP_ind_x: case ISC_ind_x: case LAX_ind_x: case RLA_ind_x:
+        case RRA_ind_x: case SAX_ind_x: case SLO_ind_x: case SRE_ind_x:
+            
+            FETCH_POINTER_ADDR
+            CONTINUE
+            
         case ADC_ind_x_2: case AND_ind_x_2: case ASL_ind_x_2: case CMP_ind_x_2:
         case DEC_ind_x_2: case EOR_ind_x_2: case INC_ind_x_2: case LDA_ind_x_2:
         case LDX_ind_x_2: case LDY_ind_x_2: case LSR_ind_x_2: case ORA_ind_x_2:
@@ -779,6 +817,46 @@ CPU::executeOneCycle()
             IDLE_READ_FROM_ADDRESS_INDIRECT
             ADD_INDEX_X_INDIRECT
             CONTINUE
+            
+        case ADC_ind_x_3: case AND_ind_x_3: case ASL_ind_x_3: case CMP_ind_x_3:
+        case DEC_ind_x_3: case EOR_ind_x_3: case INC_ind_x_3: case LDA_ind_x_3:
+        case LDX_ind_x_3: case LDY_ind_x_3: case LSR_ind_x_3: case ORA_ind_x_3:
+        case ROL_ind_x_3: case ROR_ind_x_3: case SBC_ind_x_3: case STA_ind_x_3:
+        case DCP_ind_x_3: case ISC_ind_x_3: case LAX_ind_x_3: case RLA_ind_x_3:
+        case RRA_ind_x_3: case SAX_ind_x_3: case SLO_ind_x_3: case SRE_ind_x_3:
+            
+            FETCH_ADDR_LO_INDIRECT
+            CONTINUE
+            
+        case ADC_ind_x_4: case AND_ind_x_4: case ASL_ind_x_4: case CMP_ind_x_4:
+        case DEC_ind_x_4: case EOR_ind_x_4: case INC_ind_x_4: case LDA_ind_x_4:
+        case LDX_ind_x_4: case LDY_ind_x_4: case LSR_ind_x_4: case ORA_ind_x_4:
+        case ROL_ind_x_4: case ROR_ind_x_4: case SBC_ind_x_4: case STA_ind_x_4:
+        case DCP_ind_x_4: case ISC_ind_x_4: case LAX_ind_x_4: case RLA_ind_x_4:
+        case RRA_ind_x_4: case SAX_ind_x_4: case SLO_ind_x_4: case SRE_ind_x_4:
+            
+            FETCH_ADDR_HI_INDIRECT
+            CONTINUE
+            
+        case ASL_ind_x_5: case DEC_ind_x_5: case INC_ind_x_5: case LSR_ind_x_5:
+        case ROL_ind_x_5: case ROR_ind_x_5: case DCP_ind_x_5: case ISC_ind_x_5:
+        case RLA_ind_x_5: case RRA_ind_x_5: case SLO_ind_x_5: case SRE_ind_x_5:
+            
+            READ_FROM_ADDRESS
+            CONTINUE
+            
+        //
+        // Adressing mode: Indirect Indexed (shared behavior)
+        //
+            
+        case ADC_ind_y: case AND_ind_y: case CMP_ind_y: case EOR_ind_y:
+        case LDA_ind_y: case LDX_ind_y: case LDY_ind_y: case LSR_ind_y:
+        case ORA_ind_y: case SBC_ind_y: case STA_ind_y: case DCP_ind_y:
+        case ISC_ind_y: case LAX_ind_y: case RLA_ind_y: case RRA_ind_y:
+        case SHA_ind_y: case SLO_ind_y: case SRE_ind_y:
+            
+            FETCH_POINTER_ADDR
+            CONTINUE
            
         case ADC_ind_y_2: case AND_ind_y_2: case CMP_ind_y_2: case EOR_ind_y_2:
         case LDA_ind_y_2: case LDX_ind_y_2: case LDY_ind_y_2: case LSR_ind_y_2:
@@ -788,6 +866,20 @@ CPU::executeOneCycle()
             
             FETCH_ADDR_LO_INDIRECT
             CONTINUE
+            
+        case ADC_ind_y_3: case AND_ind_y_3: case CMP_ind_y_3: case EOR_ind_y_3:
+        case LDA_ind_y_3: case LDX_ind_y_3: case LDY_ind_y_3: case LSR_ind_y_3:
+        case ORA_ind_y_3: case SBC_ind_y_3: case STA_ind_y_3: case DCP_ind_y_3:
+        case ISC_ind_y_3: case LAX_ind_y_3: case RLA_ind_y_3: case RRA_ind_y_3:
+        case SHA_ind_y_3: case SLO_ind_y_3: case SRE_ind_y_3:
+            
+            FETCH_ADDR_HI_INDIRECT
+            ADD_INDEX_Y
+            CONTINUE
+            
+        //
+        // Adressing mode: Relative (shared behavior)
+        //
             
         case BCC_rel_2: case BCS_rel_2: case BEQ_rel_2: case BMI_rel_2:
         case BNE_rel_2: case BPL_rel_2: case BVC_rel_2: case BVS_rel_2:
@@ -803,52 +895,6 @@ CPU::executeOneCycle()
             DONE
         }
             
-        //
-        // Third microcycle after fetch (shared behavior)
-        //
-        
-        case ASL_zpg_x_3: case DEC_zpg_x_3: case INC_zpg_x_3: case LSR_zpg_x_3:
-        case ROL_zpg_x_3: case ROR_zpg_x_3: case DCP_zpg_x_3: case ISC_zpg_x_3:
-        case RLA_zpg_x_3: case RRA_zpg_x_3: case SLO_zpg_x_3: case SRE_zpg_x_3:
-            
-            READ_FROM_ZERO_PAGE
-            CONTINUE
-        
-        case ASL_abs_3: case DEC_abs_3: case INC_abs_3: case LSR_abs_3:
-        case ROL_abs_3: case ROR_abs_3: case DCP_abs_3: case ISC_abs_3:
-        case RLA_abs_3: case RRA_abs_3: case SLO_abs_3: case SRE_abs_3:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
-        case ASL_abs_x_3: case DEC_abs_x_3: case INC_abs_x_3: case LSR_abs_x_3:
-        case ROL_abs_x_3: case ROR_abs_x_3: case DCP_abs_x_3: case ISC_abs_x_3:
-        case RLA_abs_x_3: case RRA_abs_x_3: case SLO_abs_x_3: case SRE_abs_x_3:
-            
-            READ_FROM_ADDRESS;
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
-        case ADC_ind_x_3: case AND_ind_x_3: case ASL_ind_x_3: case CMP_ind_x_3:
-        case DEC_ind_x_3: case EOR_ind_x_3: case INC_ind_x_3: case LDA_ind_x_3:
-        case LDX_ind_x_3: case LDY_ind_x_3: case LSR_ind_x_3: case ORA_ind_x_3:
-        case ROL_ind_x_3: case ROR_ind_x_3: case SBC_ind_x_3: case STA_ind_x_3:
-        case DCP_ind_x_3: case ISC_ind_x_3: case LAX_ind_x_3: case RLA_ind_x_3:
-        case RRA_ind_x_3: case SAX_ind_x_3: case SLO_ind_x_3: case SRE_ind_x_3:
-            
-            FETCH_ADDR_LO_INDIRECT
-            CONTINUE
-          
-        case ADC_ind_y_3: case AND_ind_y_3: case CMP_ind_y_3: case EOR_ind_y_3:
-        case LDA_ind_y_3: case LDX_ind_y_3: case LDY_ind_y_3: case LSR_ind_y_3:
-        case ORA_ind_y_3: case SBC_ind_y_3: case STA_ind_y_3: case DCP_ind_y_3:
-        case ISC_ind_y_3: case LAX_ind_y_3: case RLA_ind_y_3: case RRA_ind_y_3:
-        case SHA_ind_y_3: case SLO_ind_y_3: case SRE_ind_y_3:
-            
-            FETCH_ADDR_HI_INDIRECT
-            ADD_INDEX_Y
-            CONTINUE
-            
         case branch_3_underflow:
             
             IDLE_READ_FROM(PC + 0x100)
@@ -860,40 +906,8 @@ CPU::executeOneCycle()
             IDLE_READ_FROM(PC - 0x100)
             POLL_INT_AGAIN
             DONE
-
-        //
-        // Fourth microcycle after fetch (shared behavior)
-        //
             
-        case ASL_abs_x_4: case DEC_abs_x_4: case INC_abs_x_4: case LSR_abs_x_4:
-        case ROL_abs_x_4: case ROR_abs_x_4: case DCP_abs_x_4: case ISC_abs_x_4:
-        case RLA_abs_x_4: case RRA_abs_x_4: case SLO_abs_x_4: case SRE_abs_x_4:
             
-            READ_FROM_ADDRESS
-            CONTINUE
-            
-        case ADC_ind_x_4: case AND_ind_x_4: case ASL_ind_x_4: case CMP_ind_x_4:
-        case DEC_ind_x_4: case EOR_ind_x_4: case INC_ind_x_4: case LDA_ind_x_4:
-        case LDX_ind_x_4: case LDY_ind_x_4: case LSR_ind_x_4: case ORA_ind_x_4:
-        case ROL_ind_x_4: case ROR_ind_x_4: case SBC_ind_x_4: case STA_ind_x_4:
-        case DCP_ind_x_4: case ISC_ind_x_4: case LAX_ind_x_4: case RLA_ind_x_4:
-        case RRA_ind_x_4: case SAX_ind_x_4: case SLO_ind_x_4: case SRE_ind_x_4:
-            
-            FETCH_ADDR_HI_INDIRECT
-            CONTINUE
-           
-        //
-        // Fifth microcycle (shared behavior)
-        //
-            
-        case ASL_ind_x_5: case DEC_ind_x_5: case INC_ind_x_5: case LSR_ind_x_5:
-        case ROL_ind_x_5: case ROR_ind_x_5: case DCP_ind_x_5: case ISC_ind_x_5:
-        case RLA_ind_x_5: case RRA_ind_x_5: case SLO_ind_x_5: case SRE_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
-
         // Instruction: ADC
         //
         // Operation:   A,C := A+M+C
@@ -1643,6 +1657,11 @@ CPU::executeOneCycle()
         //
         // Flags:       N Z C I D V
         //              - - - - - -
+          
+        case JMP_abs:
+            
+            FETCH_ADDR_LO
+            CONTINUE
             
         case JMP_abs_2:
             
@@ -1651,6 +1670,16 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
+        case JMP_abs_ind:
+            
+            FETCH_ADDR_LO
+            CONTINUE
+            
+        case JMP_abs_ind_2:
+            
+            FETCH_ADDR_HI
+            CONTINUE
+            
         case JMP_abs_ind_3:
             
             READ_FROM_ADDRESS
@@ -1672,6 +1701,11 @@ CPU::executeOneCycle()
         //
         // Flags:       N Z C I D V
         //              - - - - - -
+            
+        case JSR:
+            
+            FETCH_ADDR_LO
+            CONTINUE
             
         case JSR_2:
             
@@ -2069,8 +2103,8 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
          
-        #define DO_ROL_ACC { int c = !!getC(); setC(A & 0x80); loadA((A << 1) + c); }
-        #define DO_ROL { int c = !!getC(); setC(data & 0x80); data = (data << 1) + c; }
+        #define DO_ROL_ACC { int c = !!getC(); setC(A & 0x80); loadA((A << 1) | c); }
+        #define DO_ROL { int c = !!getC(); setC(data & 0x80); data = (data << 1) | c; }
 
         case ROL_acc:
             
@@ -2110,9 +2144,6 @@ CPU::executeOneCycle()
             DONE
 
 
-    
-
-        // -------------------------------------------------------------------------------
         // Instruction: ROR
         //
         //              -----------------------
@@ -2123,100 +2154,53 @@ CPU::executeOneCycle()
         //              / / / - - -
         // -------------------------------------------------------------------------------
     
-        #define DO_ROR if (getC()) { setC(data & 1); data = (data >> 1) + 128; } else { setC(data & 1); data = (data >> 1); }
-
-        // -------------------------------------------------------------------------------
+        #define DO_ROR_ACC { int c = !!getC(); setC(A & 0x1); loadA((A >> 1) | (c << 7)); }
+        #define DO_ROR { int c = !!getC(); setC(data & 0x1); data = (data >> 1) | (c << 7); }
+            
         case ROR_acc:
             
             IDLE_READ_IMPLIED
-            if (getC()) {
-                setC(A & 1);
-                loadA((A >> 1) + 128);
-            } else {
-                setC(A & 1);
-                loadA(A >> 1);
-            }
+            DO_ROR_ACC
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case ROR_zpg_3:
-            
-            WRITE_TO_ZERO_PAGE
-            DO_ROR
-            CONTINUE
-            
-        case ROR_zpg_4:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ROR_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ROR
             CONTINUE
             
+        case ROR_zpg_4:
         case ROR_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case ROR_abs_4:
+        case ROR_abs_x_5:
+        case ROR_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ROR
             CONTINUE
             
         case ROR_abs_5:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case ROR_abs_x_5:
-            
-            WRITE_TO_ADDRESS
-            DO_ROR
-            CONTINUE
-            
         case ROR_abs_x_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case ROR_ind_x_6:
-            
-            WRITE_TO_ADDRESS;
-            DO_ROR;
-            CONTINUE
-            
         case ROR_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: RTI
         //
         // Operation:   P from Stack, PC from Stack
         //
         // Flags:       N Z C I D V
         //              / / / / / /
-        // -------------------------------------------------------------------------------
             
         case RTI_2:
             
@@ -2242,14 +2226,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: RTS
         //
         // Operation:   PC from Stack
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
             
         case RTS_2:
             
@@ -2274,103 +2257,31 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: SBC
         //
         // Operation:   A := A - M - (~C)
         //
         // Flags:       N Z C I D V
         //              / / / - - /
-        // -------------------------------------------------------------------------------
-
-        // -------------------------------------------------------------------------------
+  
         case SBC_imm:
             
             READ_IMMEDIATE
             sbc(data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case SBC_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            sbc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case SBC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             sbc(data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case SBC_abs_3:
-            
-            READ_FROM_ADDRESS;
-            sbc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
             
         case SBC_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                sbc(data);
-                POLL_INT
-                DONE
-            }
-            
-        case SBC_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            sbc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case SBC_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                sbc(data);
-                POLL_INT
-                DONE
-            }
-            
-        case SBC_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            sbc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-
-        case SBC_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            sbc(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case SBC_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -2383,6 +2294,10 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case SBC_abs_3:
+        case SBC_abs_x_4:
+        case SBC_abs_y_4:
+        case SBC_ind_x_5:
         case SBC_ind_y_5:
             
             READ_FROM_ADDRESS
@@ -2390,14 +2305,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: SEC
         //
         // Operation:   C := 1
         //
         // Flags:       N Z C I D V
         //              - - 1 - - -
-        // -------------------------------------------------------------------------------
 
         case SEC:
             
@@ -2406,14 +2320,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: SED
         //
         // Operation:   D := 1
         //
         // Flags:       N Z C I D V
         //              - - - - 1 -
-        // -------------------------------------------------------------------------------
 
         case SED:
             
@@ -2422,14 +2335,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: SEI
         //
         // Operation:   I := 1
         //
         // Flags:       N Z C I D V
         //              - - - 1 - -
-        // -------------------------------------------------------------------------------
 
         case SEI:
             
@@ -2443,56 +2355,31 @@ CPU::executeOneCycle()
             POLL_NMI
             DONE
             
-        // -------------------------------------------------------------------------------
+
         // Instruction: STA
         //
         // Operation:   M := A
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
             
         case STA_zpg_2:
-            
-            data = A;
-            WRITE_TO_ZERO_PAGE
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case STA_zpg_x_3:
             
             data = A;
             WRITE_TO_ZERO_PAGE
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case STA_abs_3:
-            
-            data = A;
-            WRITE_TO_ADDRESS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case STA_abs_x_3:
-            
-            IDLE_READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) { FIX_ADDR_HI }
-            CONTINUE
-            
         case STA_abs_x_4:
             
             data = A;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
+            
+      
             
         case STA_abs_y_3:
             
@@ -2501,9 +2388,9 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
                 
-                case STA_abs_y_4:
+        case STA_abs_y_4:
                 
-                data = A;
+            data = A;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
