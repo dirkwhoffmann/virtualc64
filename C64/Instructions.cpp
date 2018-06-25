@@ -621,6 +621,16 @@ CPU::executeOneCycle()
         // First microcycle after fetch (shared behavior)
         //
         
+        case BRK: case RTI: case RTS:
+            
+            IDLE_READ_IMMEDIATE
+            CONTINUE
+            
+        case PHA: case PHP: case PLA: case PLP:
+            
+            IDLE_READ_IMPLIED
+            CONTINUE
+            
         case ADC_zpg: case AND_zpg: case ASL_zpg: case BIT_zpg:
         case CMP_zpg: case CPX_zpg: case CPY_zpg: case DEC_zpg:
         case EOR_zpg: case INC_zpg: case LDA_zpg: case LDX_zpg:
@@ -661,6 +671,8 @@ CPU::executeOneCycle()
         case LAS_abs_y: case LAX_abs_y: case RLA_abs_y: case RRA_abs_y:
         case SHA_abs_y: case SHX_abs_y: case SLO_abs_y: case SRE_abs_y:
         case TAS_abs_y:
+        
+        case JMP_abs_indirect: case JSR:
             
             FETCH_ADDR_LO
             CONTINUE
@@ -730,6 +742,8 @@ CPU::executeOneCycle()
         case LAX_abs_2: case RLA_abs_2: case RRA_abs_2: case SAX_abs_2:
         case SLO_abs_2: case SRE_abs_2:
             
+        case JMP_abs_ind_2:
+            
             FETCH_ADDR_HI
             CONTINUE
             
@@ -782,7 +796,7 @@ CPU::executeOneCycle()
             uint8_t pc_hi = HI_BYTE(PC);
             PC += (int8_t)data;
             
-            if (pc_hi != HI_BYTE(PC)) {
+            if (unlikely(pc_hi != HI_BYTE(PC))) {
                 next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return true;
             }
@@ -1079,14 +1093,13 @@ CPU::executeOneCycle()
                 DONE
             }
             
-        // -------------------------------------------------------------------------------
+            
         // Instruction: BIT
         //
         // Operation:   A AND M, N := M7, V := M6
         //
         // Flags:       N Z C I D V
         //              / / - - - /
-        // -------------------------------------------------------------------------------
             
         case BIT_zpg_2:
             
@@ -1097,8 +1110,6 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case BIT_abs_3:
             
             READ_FROM_ADDRESS
@@ -1108,14 +1119,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: BMI
         //
         // Operation:   Branch on N = 1
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
 
         case BMI_rel:
             
@@ -1127,15 +1137,14 @@ CPU::executeOneCycle()
             } else {
                 DONE
             }
+
             
-        // -------------------------------------------------------------------------------
         // Instruction: BNE
         //
         // Operation:   Branch on Z = 0
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
             
         case BNE_rel:
             
@@ -1148,14 +1157,13 @@ CPU::executeOneCycle()
                 DONE
             }
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: BPL
         //
         // Operation:   Branch on N = 0
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
 
         case BPL_rel:
             
@@ -1168,19 +1176,13 @@ CPU::executeOneCycle()
                 DONE
             }
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: BRK
         //
         // Operation:   Forced Interrupt (Break)
         //
         // Flags:       N Z C I D V    B
         //              - - - 1 - -    1
-        // -------------------------------------------------------------------------------
-            
-        case BRK:
-            
-            IDLE_READ_IMMEDIATE
-            CONTINUE
             
         case BRK_2:
             
@@ -1193,11 +1195,10 @@ CPU::executeOneCycle()
             PUSH_PCL
             
             // Check for interrupt hijacking
-            
-            // If there is a positive edge on the NMI line ...
+            // If there is a positive edge on the NMI line, ...
             if (edgeDetector.value) {
             
-                // ... the processor will jump to the NMI vector instead of the IRQ vector
+                // ... jump to the NMI vector instead of the IRQ vector.
                 clear8_delayed(edgeDetector);
                 next = BRK_nmi_4;
                 return true;
@@ -1247,14 +1248,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: BVC
         //
         // Operation:   Branch on V = 0
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
 
         case BVC_rel:
             
@@ -1267,14 +1267,13 @@ CPU::executeOneCycle()
                 DONE
             }
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: BVS
         //
         // Operation:   Branch on V = 1
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
 
         case BVS_rel:
             
@@ -1287,14 +1286,13 @@ CPU::executeOneCycle()
                 DONE
             }
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: CLC
         //
         // Operation:   C := 0
         //
         // Flags:       N Z C I D V
         //              - - 0 - - -
-        // -------------------------------------------------------------------------------
 
         case CLC:
             
@@ -1303,14 +1301,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: CLD
         //
         // Operation:   D := 0
         //
         // Flags:       N Z C I D V
         //              - - - - 0 -
-        // -------------------------------------------------------------------------------
 
         case CLD:
             
@@ -1319,14 +1316,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: CLI
         //
         // Operation:   I := 0
         //
         // Flags:       N Z C I D V
         //              - - - 0 - -
-        // -------------------------------------------------------------------------------
 
         case CLI:
             
@@ -1336,14 +1332,12 @@ CPU::executeOneCycle()
             DONE
             
             
-        // -------------------------------------------------------------------------------
         // Instruction: CLV
         //
         // Operation:   V := 0
         //
         // Flags:       N Z C I D V
         //              - - - - - 0
-        // -------------------------------------------------------------------------------
 
         case CLV:
             
@@ -1352,16 +1346,14 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: CMP
         //
         // Operation:   A-M
         //
         // Flags:       N Z C I D V
         //              / / / - - -
-        // -------------------------------------------------------------------------------
 
-        // -------------------------------------------------------------------------------
         case CMP_imm:
             
             READ_IMMEDIATE
@@ -1369,26 +1361,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
-        case CMP_abs_3:
-            
-            READ_FROM_ADDRESS
-            cmp(A, data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-   
         case CMP_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            cmp(A, data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case CMP_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -1396,59 +1369,8 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case CMP_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                cmp(A, data);
-                POLL_INT
-                DONE
-            }
-            
-        case CMP_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            cmp(A, data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case CMP_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                cmp(A, data);
-                POLL_INT
-                DONE
-            }
-            
-        case CMP_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            cmp(A, data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case CMP_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            cmp(A, data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case CMP_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -1461,6 +1383,10 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case CMP_abs_3:
+        case CMP_abs_x_4:
+        case CMP_abs_y_4:
+        case CMP_ind_x_5:
         case CMP_ind_y_5:
             
             READ_FROM_ADDRESS
@@ -1468,14 +1394,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: CPX
         //
         // Operation:   X-M
         //
         // Flags:       N Z C I D V
         //              / / / - - -
-        // -------------------------------------------------------------------------------
 
         case CPX_imm:
             
@@ -1483,8 +1408,6 @@ CPU::executeOneCycle()
             cmp(X, data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case CPX_zpg_2:
             
@@ -1492,23 +1415,21 @@ CPU::executeOneCycle()
             cmp(X, data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case CPX_abs_3:
+            
             READ_FROM_ADDRESS
             cmp(X, data);
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: CPY
         //
         // Operation:   Y-M
         //
         // Flags:       N Z C I D V
         //              / / / - - -
-        // -------------------------------------------------------------------------------
 
         case CPY_imm:
             
@@ -1517,8 +1438,6 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
- 
         case CPY_zpg_2:
             
             READ_FROM_ZERO_PAGE
@@ -1526,8 +1445,6 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case CPY_abs_3:
             
             READ_FROM_ADDRESS
@@ -1535,95 +1452,51 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: DEC
         //
         // Operation:   M := : M - 1
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
-
-        #define DO_DEC data--;
-
-        // -------------------------------------------------------------------------------
             
         case DEC_zpg_3:
-            
-            WRITE_TO_ZERO_PAGE
-            DO_DEC
-            CONTINUE
-            
-        case DEC_zpg_4:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case DEC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            DO_DEC
+            data--;
             CONTINUE
             
+        case DEC_zpg_4:
         case DEC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case DEC_abs_4:
-            
-            WRITE_TO_ADDRESS
-            DO_DEC
-            CONTINUE
-            
-        case DEC_abs_5:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-         
         case DEC_abs_x_5:
-            
-            WRITE_TO_ADDRESS
-            DO_DEC
-            CONTINUE
-            
-        case DEC_abs_x_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case DEC_ind_x_6:
             
             WRITE_TO_ADDRESS
-            DO_DEC
+            data--;
             CONTINUE
             
+        case DEC_abs_5:
+        case DEC_abs_x_6:
         case DEC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: DEX
         //
         // Operation:   X := X - 1
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
         case DEX:
             
@@ -1632,14 +1505,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
             
-        // -------------------------------------------------------------------------------
+            
         // Instruction: DEY
         //
         // Operation:   Y := Y - 1
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
         case DEY:
             
@@ -1648,14 +1520,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: EOR
         //
         // Operation:   A := A XOR M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
         case EOR_imm:
             
@@ -1663,87 +1534,17 @@ CPU::executeOneCycle()
             loadA(A ^ data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case EOR_abs_3:
-            
-            READ_FROM_ADDRESS
-            loadA(A ^ data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
             
         case EOR_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            loadA(A ^ data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case EOR_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(A ^ data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case EOR_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI;
-                CONTINUE
-            } else {
-                loadA(A ^ data);
-                POLL_INT
-                DONE
-            }
-            
-        case EOR_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            loadA(A ^ data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case EOR_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(A ^ data);
-                POLL_INT
-                DONE
-            }
-            
-        case EOR_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            loadA(A ^ data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case EOR_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            loadA(A ^ data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case EOR_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -1755,7 +1556,11 @@ CPU::executeOneCycle()
                 POLL_INT
                 DONE
             }
-            
+
+        case EOR_abs_3:
+        case EOR_abs_x_4:
+        case EOR_abs_y_4:
+        case EOR_ind_x_5:
         case EOR_ind_y_5:
             
             READ_FROM_ADDRESS
@@ -1763,95 +1568,51 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: INC
         //
         // Operation:   M := M + 1
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
-
-        #define DO_INC data++;
-
-        // -------------------------------------------------------------------------------
             
         case INC_zpg_3:
-            
-            WRITE_TO_ZERO_PAGE
-            DO_INC
-            CONTINUE
-            
-        case INC_zpg_4:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-          
         case INC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            DO_INC
+            data++;
             CONTINUE
             
+        case INC_zpg_4:
         case INC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-            
+          
         case INC_abs_4:
-            
-            WRITE_TO_ADDRESS
-            DO_INC
-            CONTINUE
-            
-        case INC_abs_5:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case INC_abs_x_5:
-            
-            WRITE_TO_ADDRESS
-            DO_INC
-            CONTINUE
-            
-        case INC_abs_x_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case INC_ind_x_6:
             
             WRITE_TO_ADDRESS
-            DO_INC
+            data++;
             CONTINUE
             
+        case INC_abs_5:
+        case INC_abs_x_6:
         case INC_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             POLL_INT
             DONE
+            
 
-        // -------------------------------------------------------------------------------
         // Instruction: INX
         //
         // Operation:   X := X + 1
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
         case INX:
             
@@ -1860,14 +1621,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: INY
         //
         // Operation:   Y := Y + 1
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
         case INY:
             
@@ -1876,14 +1636,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+
         // Instruction: JMP
         //
         // Operation:   PC := Operand
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
             
         case JMP_abs_2:
             
@@ -1892,17 +1651,6 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-        case JMP_abs_indirect:
-            
-            FETCH_ADDR_LO
-            CONTINUE
-            
-        case JMP_abs_ind_2:
-            
-            FETCH_ADDR_HI
-            CONTINUE
-            
         case JMP_abs_ind_3:
             
             READ_FROM_ADDRESS
@@ -1917,19 +1665,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: JSR
         //
         // Operation:   PC to stack, PC := Operand
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
-            
-        case JSR:
-            
-            FETCH_ADDR_LO
-            CONTINUE
             
         case JSR_2:
             
@@ -1953,16 +1695,14 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: LDA
         //
         // Operation:   A := M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
-        // -------------------------------------------------------------------------------
         case LDA_imm:
             
             READ_IMMEDIATE
@@ -1970,86 +1710,16 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case LDA_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            loadA(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-    
         case LDA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
             loadA(data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case LDA_abs_3:
-            
-            READ_FROM_ADDRESS
-            loadA(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
+          
         case LDA_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(data);
-                POLL_INT
-                DONE
-            }
-            
-        case LDA_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            loadA(data);
-            POLL_INT
-            DONE
-            
-        // -------------------------------------------------------------------------------
-            
         case LDA_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(data);
-                POLL_INT
-                DONE
-            }
-            
-        case LDA_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            loadA(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case LDA_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            loadA(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LDA_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -2062,6 +1732,10 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case LDA_abs_3:
+        case LDA_abs_x_4:
+        case LDA_abs_y_4:
+        case LDA_ind_x_5:
         case LDA_ind_y_5:
             
             READ_FROM_ADDRESS
@@ -2069,16 +1743,14 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: LDX
         //
         // Operation:   X := M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
-        // -------------------------------------------------------------------------------
         case LDX_imm:
             
             READ_IMMEDIATE
@@ -2086,17 +1758,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case LDX_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            loadX(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LDX_zpg_y_3:
             
             READ_FROM_ZERO_PAGE
@@ -2104,47 +1766,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
-        case LDX_abs_3:
-            
-            READ_FROM_ADDRESS
-            loadX(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LDX_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadX(data);
-                POLL_INT
-                DONE
-            }
-            
-        case LDX_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            loadX(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case LDX_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            loadX(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LDX_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -2157,41 +1779,32 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case LDX_abs_3:
+        case LDX_abs_y_4:
+        case LDX_ind_x_5:
         case LDX_ind_y_5:
             
             READ_FROM_ADDRESS
             loadX(data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
+            
+            
         // Instruction: LDY
         //
         // Operation:   Y := M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
-
-        // -------------------------------------------------------------------------------
+ 
         case LDY_imm:
             
             READ_IMMEDIATE
             loadY(data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case LDY_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            loadY(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-       
         case LDY_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -2199,47 +1812,7 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
-        case LDY_abs_3:
-            
-            READ_FROM_ADDRESS;
-            loadY(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LDY_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadY(data);
-                POLL_INT
-                DONE
-            }
-            
-        case LDY_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            loadY(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case LDY_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            loadY(data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LDY_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -2251,26 +1824,25 @@ CPU::executeOneCycle()
                 POLL_INT
                 DONE
             }
-            
+
+        case LDY_abs_3:
+        case LDY_abs_x_4:
+        case LDY_ind_x_5:
         case LDY_ind_y_5:
             
             READ_FROM_ADDRESS
             loadY(data);
             POLL_INT
             DONE
+            
 
-        // -------------------------------------------------------------------------------
         // Instruction: LSR
         //
         // Operation:   0 -> (A|M >> 1) -> C
         //
         // Flags:       N Z C I D V
         //              0 / / - - -
-        // -------------------------------------------------------------------------------
 
-        #define DO_LSR setC(data & 1); data = data >> 1;
-
-        // -------------------------------------------------------------------------------
         case LSR_acc:
             
             IDLE_READ_IMPLIED
@@ -2278,105 +1850,21 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case LSR_zpg_3:
-            
-            WRITE_TO_ZERO_PAGE
-            DO_LSR
-            CONTINUE
-            
-        case LSR_zpg_4:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-            
-        // -------------------------------------------------------------------------------
-            
         case LSR_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            DO_LSR
+            setC(data & 1); data = data >> 1;
             CONTINUE
             
+        case LSR_zpg_4:
         case LSR_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             POLL_INT
             DONE
             
-        // -------------------------------------------------------------------------------
-            
-        case LSR_abs_4:
-            
-            WRITE_TO_ADDRESS
-            DO_LSR
-            CONTINUE
-            
-        case LSR_abs_5:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-            
-        // -------------------------------------------------------------------------------
-            
-        case LSR_abs_x_5:
-            
-            WRITE_TO_ADDRESS
-            DO_LSR
-            CONTINUE
-            
-        case LSR_abs_x_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LSR_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-            }
-            CONTINUE
-            
-        case LSR_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            CONTINUE
-            
-        case LSR_abs_y_5:
-            
-            WRITE_TO_ADDRESS
-            DO_LSR
-            CONTINUE
-            
-        case LSR_abs_y_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-            // -------------------------------------------------------------------------------
-            
-        case LSR_ind_x_6:
-            
-            WRITE_TO_ADDRESS
-            DO_LSR
-            CONTINUE
-            
-        case LSR_ind_x_7:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case LSR_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -2385,31 +1873,39 @@ CPU::executeOneCycle()
             }
             CONTINUE
             
+        case LSR_abs_y_4:
         case LSR_ind_y_5:
             
             READ_FROM_ADDRESS
             CONTINUE
             
+        case LSR_abs_4:
+        case LSR_abs_x_5:
+        case LSR_abs_y_5:
+        case LSR_ind_x_6:
         case LSR_ind_y_6:
             
             WRITE_TO_ADDRESS
-            DO_LSR
+            setC(data & 1); data = data >> 1;
             CONTINUE
             
+        case LSR_abs_5:
+        case LSR_abs_x_6:
+        case LSR_abs_y_6:
+        case LSR_ind_x_7:
         case LSR_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
+            
+ 
         // Instruction: NOP
         //
         // Operation:   No operation
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
 
         case NOP:
             
@@ -2417,42 +1913,22 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
         case NOP_imm:
             
             IDLE_READ_IMMEDIATE
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-   
         case NOP_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case NOP_zpg_x_3:
             
-            READ_FROM_ZERO_PAGE
+            IDLE_READ_FROM_ZERO_PAGE
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case NOP_abs_3:
-            
-            READ_FROM_ADDRESS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
             
         case NOP_abs_x_3:
             
-            READ_FROM_ADDRESS
+            IDLE_READ_FROM_ADDRESS
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI
                 CONTINUE
@@ -2461,20 +1937,20 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case NOP_abs_3:
         case NOP_abs_x_4:
             
-            READ_FROM_ADDRESS
+            IDLE_READ_FROM_ADDRESS
             POLL_INT
             DONE
+            
 
-        // -------------------------------------------------------------------------------
         // Instruction: ORA
         //
         // Operation:   A := A v M
         //
         // Flags:       N Z C I D V
         //              / / - - - -
-        // -------------------------------------------------------------------------------
 
         case ORA_imm:
             
@@ -2482,26 +1958,8 @@ CPU::executeOneCycle()
             loadA(A | data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case ORA_abs_3:
-            READ_FROM_ADDRESS
-            loadA(A | data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
             
         case ORA_zpg_2:
-            
-            READ_FROM_ZERO_PAGE
-            loadA(A | data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ORA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
@@ -2509,59 +1967,8 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
-            
         case ORA_abs_x_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(A | data);
-                POLL_INT
-                DONE
-            }
-            
-        case ORA_abs_x_4:
-            
-            READ_FROM_ADDRESS
-            loadA(A | data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ORA_abs_y_3:
-            
-            READ_FROM_ADDRESS
-            if (PAGE_BOUNDARY_CROSSED) {
-                FIX_ADDR_HI
-                CONTINUE
-            } else {
-                loadA(A | data);
-                POLL_INT
-                DONE
-            }
-            
-        case ORA_abs_y_4:
-            
-            READ_FROM_ADDRESS
-            loadA(A | data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
-        case ORA_ind_x_5:
-            
-            READ_FROM_ADDRESS
-            loadA(A | data);
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ORA_ind_y_4:
             
             READ_FROM_ADDRESS
@@ -2574,26 +1981,24 @@ CPU::executeOneCycle()
                 DONE
             }
             
+        case ORA_abs_3:
+        case ORA_abs_x_4:
+        case ORA_abs_y_4:
+        case ORA_ind_x_5:
         case ORA_ind_y_5:
             
             READ_FROM_ADDRESS
             loadA(A | data);
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
+            
+            
         // Instruction: PHA
         //
         // Operation:   A to stack
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
-
-        case PHA:
-            
-            IDLE_READ_IMPLIED
-            CONTINUE
             
         case PHA_2:
             
@@ -2601,19 +2006,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: PHA
         //
         // Operation:   P to stack
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
-            
-        case PHP:
-            
-            IDLE_READ_IMPLIED
-            CONTINUE
             
         case PHP_2:
             
@@ -2621,19 +2020,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: PLA
         //
         // Operation:   Stack to A
         //
         // Flags:       N Z C I D V
         //              - - - - - -
-        // -------------------------------------------------------------------------------
-
-        case PLA:
-            
-            IDLE_READ_IMPLIED
-            CONTINUE
             
         case PLA_2:
             
@@ -2646,19 +2039,13 @@ CPU::executeOneCycle()
             POLL_INT
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: PLP
         //
         // Operation:   Stack to p
         //
         // Flags:       N Z C I D V
         //              / / / / / /
-        // -------------------------------------------------------------------------------
-
-        case PLP:
-            
-            IDLE_READ_IMPLIED
-            CONTINUE
             
         case PLP_2:
 
@@ -2672,7 +2059,7 @@ CPU::executeOneCycle()
             PULL_P
             DONE
 
-        // -------------------------------------------------------------------------------
+            
         // Instruction: ROL
         //
         //              -----------------------
@@ -2681,93 +2068,49 @@ CPU::executeOneCycle()
         //
         // Flags:       N Z C I D V
         //              / / / - - -
-        // -------------------------------------------------------------------------------
-            
-        #define DO_ROL if (getC()) { setC(data & 128); data = (data << 1) + 1; } else { setC(data & 128); data = (data << 1); }
+         
+        #define DO_ROL_ACC { int c = !!getC(); setC(A & 0x80); loadA((A << 1) + c); }
+        #define DO_ROL { int c = !!getC(); setC(data & 0x80); data = (data << 1) + c; }
 
-        // -------------------------------------------------------------------------------
         case ROL_acc:
             
             IDLE_READ_IMPLIED
-            if (getC()) {
-                setC(A & 128);
-                loadA((A << 1) + 1);
-            } else {
-                setC(A & 128);
-                loadA(A << 1);
-            }
+            DO_ROL_ACC
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case ROL_zpg_3:
-            
-            WRITE_TO_ZERO_PAGE
-            DO_ROL
-            CONTINUE
-            
-        case ROL_zpg_4:
-            
-            WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ROL_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
             DO_ROL
             CONTINUE
             
+        case ROL_zpg_4:
         case ROL_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             POLL_INT
             DONE
-
-        // -------------------------------------------------------------------------------
             
         case ROL_abs_4:
-            
-            WRITE_TO_ADDRESS
-            DO_ROL
-            CONTINUE
-            
-        case ROL_abs_5:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ROL_abs_x_5:
-            
-            WRITE_TO_ADDRESS
-            DO_ROL
-            CONTINUE
-            
-        case ROL_abs_x_6:
-            
-            WRITE_TO_ADDRESS_AND_SET_FLAGS
-            POLL_INT
-            DONE
-
-        // -------------------------------------------------------------------------------
-            
         case ROL_ind_x_6:
             
             WRITE_TO_ADDRESS
             DO_ROL
             CONTINUE
             
+        case ROL_abs_5:
+        case ROL_abs_x_6:
         case ROL_ind_x_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
             POLL_INT
             DONE
+
+
+    
 
         // -------------------------------------------------------------------------------
         // Instruction: ROR
@@ -2874,11 +2217,6 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / / / /
         // -------------------------------------------------------------------------------
-
-        case RTI:
-            
-            IDLE_READ_IMMEDIATE;
-            CONTINUE
             
         case RTI_2:
             
@@ -2913,14 +2251,8 @@ CPU::executeOneCycle()
         //              - - - - - -
         // -------------------------------------------------------------------------------
             
-        case RTS:
-            
-            IDLE_READ_IMMEDIATE
-            CONTINUE
-            
         case RTS_2:
             
-            // IDLE_READ_IMMEDIATE_SP
             IDLE_PULL
             SP++;
             CONTINUE
@@ -3482,7 +2814,7 @@ CPU::executeOneCycle()
         case DCP_zpg_3:
             
             WRITE_TO_ZERO_PAGE
-            DO_DEC
+            data--;
             CONTINUE
             
         case DCP_zpg_4:
@@ -3497,7 +2829,7 @@ CPU::executeOneCycle()
         case DCP_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            DO_DEC
+            data--;
             CONTINUE
             
         case DCP_zpg_x_5:
@@ -3512,7 +2844,7 @@ CPU::executeOneCycle()
         case DCP_abs_4:
             
             WRITE_TO_ADDRESS
-            DO_DEC;
+            data--;
             CONTINUE
             
         case DCP_abs_5:
@@ -3527,7 +2859,7 @@ CPU::executeOneCycle()
         case DCP_abs_x_5:
             
             WRITE_TO_ADDRESS
-            DO_DEC
+            data--;
             CONTINUE
             
         case DCP_abs_x_6:
@@ -3553,7 +2885,7 @@ CPU::executeOneCycle()
         case DCP_abs_y_5:
             
             WRITE_TO_ADDRESS
-            DO_DEC
+            data--;
             CONTINUE
             
         case DCP_abs_y_6:
@@ -3568,7 +2900,7 @@ CPU::executeOneCycle()
         case DCP_ind_x_6:
             
             WRITE_TO_ADDRESS
-            DO_DEC
+            data--;
             CONTINUE
             
         case DCP_ind_x_7:
@@ -3594,7 +2926,7 @@ CPU::executeOneCycle()
         case DCP_ind_y_6:
             
             WRITE_TO_ADDRESS
-            DO_DEC
+            data--;
             CONTINUE
             
         case DCP_ind_y_7:
@@ -3616,7 +2948,7 @@ CPU::executeOneCycle()
         case ISC_zpg_3:
             
             WRITE_TO_ZERO_PAGE
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_zpg_4:
@@ -3631,7 +2963,7 @@ CPU::executeOneCycle()
         case ISC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_zpg_x_5:
@@ -3646,7 +2978,7 @@ CPU::executeOneCycle()
         case ISC_abs_4:
             
             WRITE_TO_ADDRESS
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_abs_5:
@@ -3661,7 +2993,7 @@ CPU::executeOneCycle()
         case ISC_abs_x_5:
             
             WRITE_TO_ADDRESS
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_abs_x_6:
@@ -3687,7 +3019,7 @@ CPU::executeOneCycle()
         case ISC_abs_y_5:
             
             WRITE_TO_ADDRESS
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_abs_y_6:
@@ -3702,7 +3034,7 @@ CPU::executeOneCycle()
         case ISC_ind_x_6:
             
             WRITE_TO_ADDRESS
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_ind_x_7:
@@ -3728,7 +3060,7 @@ CPU::executeOneCycle()
         case ISC_ind_y_6:
             
             WRITE_TO_ADDRESS
-            DO_INC
+            data++;
             CONTINUE
             
         case ISC_ind_y_7:

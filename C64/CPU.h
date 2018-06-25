@@ -366,13 +366,13 @@ public:
 		{ setN(p & N_FLAG); setV(p & V_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
 			
 	//! @brief    Loads the accumulator. The Z- and N-flag may change.
-    void loadA(uint8_t a) { A = a; N = a & 128; Z = (a == 0); }
-    
+    void loadA(uint8_t a) { A = a; N = a & 0x80; Z = (a == 0); }
+
 	//! @brief    Loads the X register. The Z- and N-flag may change.
-    void loadX(uint8_t x) { X = x; N = x & 128; Z = (x == 0); }
+    void loadX(uint8_t x) { X = x; N = x & 0x80; Z = (x == 0); }
     
 	//! @brief    Loads the Y register. The Z- and N-flag may change.
-    void loadY(uint8_t y) { Y = y; N = y & 128; Z = (y == 0); }
+    void loadY(uint8_t y) { Y = y; N = y & 0x80; Z = (y == 0); }
     
     
     //

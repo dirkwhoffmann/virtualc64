@@ -314,46 +314,46 @@ typedef enum {
 
 // Atomic CPU tasks
 #define FETCH_OPCODE \
-    if (rdyLine) opcode = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) opcode = mem->peek(PC++); else return true;
 #define FETCH_ADDR_LO \
-    if (rdyLine) addr_lo = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) addr_lo = mem->peek(PC++); else return true;
 #define FETCH_ADDR_HI \
-    if (rdyLine) addr_hi = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) addr_hi = mem->peek(PC++); else return true;
 #define FETCH_POINTER_ADDR \
-    if (rdyLine) ptr = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) ptr = mem->peek(PC++); else return true;
 #define FETCH_ADDR_LO_INDIRECT \
-    if (rdyLine) addr_lo = mem->peek((uint16_t)ptr++); else return true;
+    if (likely(rdyLine)) addr_lo = mem->peek((uint16_t)ptr++); else return true;
 #define FETCH_ADDR_HI_INDIRECT \
-    if (rdyLine) addr_hi = mem->peek((uint16_t)ptr++); else return true;
+    if (likely(rdyLine)) addr_hi = mem->peek((uint16_t)ptr++); else return true;
 #define IDLE_FETCH \
-    if (rdyLine) (void)mem->peek(PC); else return true;
+    if (likely(rdyLine)) (void)mem->peek(PC); else return true;
 
 
 #define READ_RELATIVE \
-    if (rdyLine) data = mem->peek(PC); else return true;
+    if (likely(rdyLine)) data = mem->peek(PC); else return true;
 #define READ_IMMEDIATE \
-    if (rdyLine) data = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) data = mem->peek(PC++); else return true;
 #define READ_FROM(x) \
-    if (rdyLine) data = mem->peek(x); else return true;
+    if (likely(rdyLine)) data = mem->peek(x); else return true;
 #define READ_FROM_ADDRESS \
-    if (rdyLine) data = mem->peek(HI_LO(addr_hi, addr_lo)); else return true;
+    if (likely(rdyLine)) data = mem->peek(HI_LO(addr_hi, addr_lo)); else return true;
 #define READ_FROM_ZERO_PAGE \
-    if (rdyLine) data = mem->peekZP(addr_lo); else return true;
+    if (likely(rdyLine)) data = mem->peekZP(addr_lo); else return true;
 #define READ_FROM_ADDRESS_INDIRECT \
-    if (rdyLine) data = mem->peekZP(ptr); else return true;
+    if (likely(rdyLine)) data = mem->peekZP(ptr); else return true;
 
 #define IDLE_READ_IMPLIED \
-    if (rdyLine) (void)mem->peek(PC); else return true;
+    if (likely(rdyLine)) (void)mem->peek(PC); else return true;
 #define IDLE_READ_IMMEDIATE \
-    if (rdyLine) (void)mem->peek(PC++); else return true;
+    if (likely(rdyLine)) (void)mem->peek(PC++); else return true;
 #define IDLE_READ_FROM(x) \
-    if (rdyLine) (void)mem->peek(x); else return true;
+    if (likely(rdyLine)) (void)mem->peek(x); else return true;
 #define IDLE_READ_FROM_ADDRESS \
-    if (rdyLine) (void)(mem->peek(HI_LO(addr_hi, addr_lo))); else return true;
+    if (likely(rdyLine)) (void)(mem->peek(HI_LO(addr_hi, addr_lo))); else return true;
 #define IDLE_READ_FROM_ZERO_PAGE \
-    if (rdyLine) (void)mem->peekZP(addr_lo); else return true;
+    if (likely(rdyLine)) (void)mem->peekZP(addr_lo); else return true;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
-    if (rdyLine) (void)mem->peekZP(ptr); else return true;
+    if (likely(rdyLine)) (void)mem->peekZP(ptr); else return true;
 
 #define WRITE_TO_ADDRESS \
 mem->poke(HI_LO(addr_hi, addr_lo), data);
@@ -374,11 +374,11 @@ mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define PUSH_P mem->pokeStack(SP--, getP());
 #define PUSH_P_WITH_B_SET mem->pokeStack(SP--, getP() | B_FLAG);
 #define PUSH_A mem->pokeStack(SP--, A);
-#define PULL_PCL if (rdyLine) setPCL(mem->peekStack(SP)); else return true;
-#define PULL_PCH if (rdyLine) setPCH(mem->peekStack(SP)); else return true;
-#define PULL_P if (rdyLine) setPWithoutB(mem->peekStack(SP)); else return true;
-#define PULL_A if (rdyLine) loadA(mem->peekStack(SP)); else return true;
-#define IDLE_PULL if (rdyLine) (void)mem->peekStack(SP); else return true;
+#define PULL_PCL if (likely(rdyLine)) setPCL(mem->peekStack(SP)); else return true;
+#define PULL_PCH if (likely(rdyLine)) setPCH(mem->peekStack(SP)); else return true;
+#define PULL_P if (likely(rdyLine)) setPWithoutB(mem->peekStack(SP)); else return true;
+#define PULL_A if (likely(rdyLine)) loadA(mem->peekStack(SP)); else return true;
+#define IDLE_PULL if (likely(rdyLine)) (void)mem->peekStack(SP); else return true;
 
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
