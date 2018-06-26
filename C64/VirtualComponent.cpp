@@ -73,6 +73,17 @@ VirtualComponent::ping()
             subComponents[i]->ping();
 }
 
+void
+VirtualComponent::setClockFrequency(uint32_t frequency)
+{
+    assert(frequency == PAL_CLOCK_FREQUENCY || frequency == NTSC_CLOCK_FREQUENCY);
+    
+    // Call method for all sub components
+    if (subComponents != NULL)
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            subComponents[i]->setClockFrequency(frequency);
+}
+
 void 
 VirtualComponent::dumpState()
 {

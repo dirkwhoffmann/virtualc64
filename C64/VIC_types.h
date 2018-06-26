@@ -27,7 +27,7 @@
 //
 
 //! @brief    NTSC clock frequency in Hz
-static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
+static const uint32_t NTSC_CLOCK_FREQUENCY = 1022727;
 
 //! @brief    Frames per second in NTSC mode
 static const double NTSC_REFRESH_RATE = 59.826;
@@ -39,7 +39,7 @@ static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
 static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
 
 //! @brief    CPU cycles per second in NTSC mode
-static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_REFRESH_RATE * NTSC_CYCLES_PER_FRAME;
+static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_CLOCK_FREQUENCY;
 
 //! @brief    Pixel aspect ratio in NTSC mode
 static const double NTSC_PIXEL_ASPECT_RATIO = 0.75;
@@ -104,7 +104,7 @@ static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 //
 
 //! @brief    PAL clock frequency in Hz
-static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
+static const uint32_t PAL_CLOCK_FREQUENCY = 985249;
 
 //! @brief    Frames per second in PAL mode
 static const double PAL_REFRESH_RATE = 50.125;
@@ -116,7 +116,7 @@ static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
 static const unsigned PAL_CYCLES_PER_FRAME = 19656;
 
 //! @brief    CPU cycles per second in PAL mode
-static const unsigned PAL_CYCLES_PER_SECOND = PAL_REFRESH_RATE * PAL_CYCLES_PER_FRAME;
+static const unsigned PAL_CYCLES_PER_SECOND = PAL_CLOCK_FREQUENCY;
 
 //! @brief    Pixel aspect ratio in PAL mode
 static const double PAL_PIXEL_ASPECT_RATIO = 0.9365;

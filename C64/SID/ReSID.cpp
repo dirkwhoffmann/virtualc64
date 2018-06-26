@@ -29,7 +29,7 @@ ReSID::ReSID()
 
     sid = new reSID::SID();
     sid->set_chip_model(reSID::MOS6581);
-    sid->set_sampling_parameters((double)PAL_CYCLES_PER_SECOND,
+    sid->set_sampling_parameters((double)PAL_CLOCK_FREQUENCY,
                                  reSID::SAMPLE_FAST,
                                  (double)sampleRate);
     sid->enable_filter(emulateFilter);

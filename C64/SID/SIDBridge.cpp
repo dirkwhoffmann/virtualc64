@@ -62,6 +62,13 @@ SIDBridge::reset()
 }
 
 void
+SIDBridge::setClockFrequency(uint32_t frequency)
+{
+    resid.setClockFrequency(frequency);
+    fastsid.setClockFrequency(frequency);
+}
+
+void
 SIDBridge::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
@@ -145,20 +152,6 @@ VoiceInfo
 SIDBridge::getVoiceInfo(unsigned voice)
 {
     return useReSID ? resid.getVoiceInfo(voice) : fastsid.getVoiceInfo(voice);
-}
-
-void
-SIDBridge::setPAL()
-{
-    debug(2, "SIDWrapper::setPAL\n");
-    setClockFrequency(PAL_CYCLES_PER_SECOND);
-}
-
-void
-SIDBridge::setNTSC()
-{
-    debug(2, "SIDWrapper::setNTSC\n");
-    setClockFrequency(NTSC_CYCLES_PER_SECOND);
 }
 
 uint8_t 
@@ -323,15 +316,6 @@ SIDBridge::getClockFrequency()
         return fastsid.getClockFrequency();
     }
 }
-
-void 
-SIDBridge::setClockFrequency(uint32_t frequency)
-{
-    resid.setClockFrequency(frequency);
-    fastsid.setClockFrequency(frequency);
-}
-
-
 
 void
 SIDBridge::clearRingbuffer()

@@ -264,17 +264,26 @@ VIC::getSpriteInfo(unsigned i)
 void
 VIC::setChipModel(VICChipModel model)
 {
+    assert(model == MOS6569_PAL || model == MOS6567_NTSC);
+    
     debug(2, "VIC::setChipModel\n");
 
     chipModel = model;
     pixelEngine.resetScreenBuffers();
-    c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
+
+    if (model == MOS6569_PAL) {
+        c64->setClockFrequency(PAL_CLOCK_FREQUENCY);
+        c64->putMessage(MSG_PAL);
+    } else {
+        c64->setClockFrequency(NTSC_CLOCK_FREQUENCY);
+        c64->putMessage(MSG_NTSC);
+    }
 }
 
 
-// -----------------------------------------------------------------------------------------------
-//                             I/O memory handling and RAM access
-// -----------------------------------------------------------------------------------------------
+//
+// I/O memory handling and RAM access
+//
 
 uint8_t VIC::memAccess(uint16_t addr)
 {

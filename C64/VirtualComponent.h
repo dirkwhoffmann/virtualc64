@@ -67,23 +67,33 @@ public:
     //
 		
     /*! @brief    Assign top-level C64 object.
-     *  @details  The provided reference is propagated automatically to all sub components.
+     *  @details  The provided reference is propagated automatically to all
+     *            sub components.
      */
     void setC64(C64 *c64);
 
-    
     /*! @brief    Reset component to its initial state.
-     *  @details  By default, each component also resets all of its sub components.
+     *  @details  By default, each component also resets its sub components.
      */
 	virtual void reset();
 	
-    //! @brief    Trigger the component to send messages about its current state.
-    /*! @details  The GUI invokes this function to update its visual elements, e.g.,
-     *            after loading a snapshot file. Only a few components overwrite this
-     *            function. All others stay silent on default.
+    //! @brief    Triggers the component to send messages about the current state.
+    /*! @details  The GUI invokes this function to update its visual elements,
+     *            e.g., after loading a snapshot file. Only some components
+     *            overwrite this function. Most components stay silent on default.
      */
     virtual void ping();
 
+    //! @brief    Informs the component about a clock frequency change.
+    /*! @details  This delegation method is called on startup and whenever the
+     *            CPU clock frequency changes (i.e., when switching between
+     *            PAL and NTSC). Some components overwrite this function to
+     *            update clock dependent lookup tables.
+     *  @param    frequency Frequency of the C64 CPU in Hz.
+     *            Must be either PAL_CLOCK_FREQUENCY_PAL or NTSC_CLOCK_FREQUENCY.
+     */
+    virtual void setClockFrequency(uint32_t frequency);
+    
     
     //
     //! @functiongroup Debugging the component

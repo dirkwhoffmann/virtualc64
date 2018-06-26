@@ -99,6 +99,13 @@ VC1541::ping()
     c64->putMessage(diskInserted ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
 }
 
+void
+VC1541::setClockFrequency(uint32_t frequency)
+{
+    durationOfCpuCycle = 1000000000000 / frequency;
+    debug("Duration a CPU cycle is %lld pico seconds.\n", durationOfCpuCycle);
+}
+
 void 
 VC1541::dumpState()
 {
@@ -143,6 +150,66 @@ VC1541::executeOneCycle() {
     return result;
 }
 
+/* TODO:
+ 
+ //! @brief    Indicates when the next carry output pulse occurs on UE7.
+ @details The VC1541 drive is clocked by 16 Mhz. The clock signal is feed into
+  UE7, a 74SL193 16-bit couter, which generates a carry output signal on overflow. The pre-load inputs of this counter are connected to PB5 and PB6 of VIA2 (the 'zone bits'). This means that a carry signal is generated every 13th cycle (from the 16 Mhz clock) in zone 0 and every 16th cycle in zone 4. The carry signal is drives a second counter named uf4.
+ 
+ nextCarryPulseOnUE7 : double;
+ 
+ //! @brief    The second 74SL193 16-bit counter on the logic board.
+ @details  This counter is driven by the carry output of UE7 and has four outputs QA, QB, QC, and QD. QA and QB are used to clock most of the other components. QC and QD are fed into a NOR gate whose output is connected to the serial input pin of the input shift register.
+ 
+ uint4_t uf4;
+ 
+ //! @brief   Emulates a trigger event on the LOAD input pin of UE7.
+ void VC1541::loadUE7() {
+ 
+    // Get speed zone bits from VIA2
+    // These bits are used as the timer's start value
+    int start = (via2.pb & 0x03);
+ 
+    // Schedule the the next carry pulse
+    nextCarryPulseOnUE7 += ((16 - start) / 16.0);
+ }
+ 
+ //! @brief   Emulates a trigger event on the carry output pin of UE7.
+ void VC1541::executeUE7() {
+ 
+    // Reload counter
+    loadUE7();
+ 
+    // Trigger a count impulse on UF4
+    uf4++;
+ 
+    // TO BE WORKED ON ...
+    uint8_t QBQA = uf4 & 0x03;
+    if (QBQA == 0x03) {
+        executeBitReady();
+    }
+ }
+ 
+ Add to VC1541::executeOneCycle() {
+
+    // Subtract elapsed time since the previous call to this function
+    double durationOfOneClockCycle;
+ if (c64->isPAL) {
+    durationOfOneClockCycle = 1000000.0 / (double)PAL_CLOCK_FREQUENCY;
+ } else {
+ durationOfOneClockCycle = 1000000.0 / (double)NTSC_CLOCK_FREQUENCY;
+ }
+ 
+    nextCarryPulseOnUE7 -= durationOfOneClockCycle;
+
+    // Emulate all carry pulses that are overdue
+    while (nextCarryPulseOnUE7 < 0.0) {
+        executeUE7();
+    }
+ }
+ */
+
+ 
 void
 VC1541::executeBitReady()
 {

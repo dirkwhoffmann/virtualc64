@@ -63,7 +63,7 @@ FastSID::FastSID()
     voice[2].init(this, 2, &voice[1]);
     
     chipModel = MOS_6581;
-    cpuFrequency = PAL_CYCLES_PER_SECOND;
+    cpuFrequency = PAL_CLOCK_FREQUENCY;
     sampleRate = 44100;
     emulateFilter = true;
     
@@ -80,7 +80,7 @@ FastSID::reset()
 {
     VirtualComponent::reset();
     
-    cpuFrequency = PAL_CYCLES_PER_SECOND;
+    cpuFrequency = PAL_CLOCK_FREQUENCY; 
     sampleRate = 44100;
     emulateFilter = true;
     
@@ -88,9 +88,12 @@ FastSID::reset()
 }
 
 void
-FastSID::loadFromBuffer(uint8_t **buffer)
+FastSID::setClockFrequency(uint32_t frequency)
 {
-    VirtualComponent::loadFromBuffer(buffer);
+    cpuFrequency = frequency;
+    
+    // Recompute frequency dependent data structures
+    init(sampleRate, cpuFrequency);
 }
 
 void
@@ -132,6 +135,12 @@ FastSID::dumpState()
         msg("            Sustain rate: %d\n", vinfo.sustainRate);
         msg("            Release rate: %d\n", vinfo.releaseRate);
     }
+}
+
+void
+FastSID::loadFromBuffer(uint8_t **buffer)
+{
+    VirtualComponent::loadFromBuffer(buffer);
 }
 
 SIDInfo
@@ -180,15 +189,6 @@ FastSID::setChipModel(SIDChipModel model)
     voice[0].updateWaveTablePtr();
     voice[1].updateWaveTablePtr();
     voice[2].updateWaveTablePtr();
-}
-
-void
-FastSID::setClockFrequency(uint32_t frequency)
-{
-    cpuFrequency = frequency;
-    
-    // Recompute frequency dependent data structures
-    init(sampleRate, cpuFrequency);
 }
 
 void

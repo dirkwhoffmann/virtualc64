@@ -19,6 +19,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*
+ * This implementation is based on the following two documents written
+ * by Ruud Baltissen. Ruud, thank you for this excellent work!
+ *
+ * Description: http://www.baltissen.org/newhtm/1541a.htm
+ * Schematics:  http://www.baltissen.org/images/1540.gif
+ */
+ 
 #ifndef _VC1541_INC
 #define _VC1541_INC
 
@@ -48,6 +56,10 @@ public:
     //! @brief    Disk in this drive (single sided 5,25" floppy disk)
     Disk disk;
     
+    //! @brief    Duration of CPU clock cycle in pico seconds
+    //! @todo     Save in Snapshot
+    uint64_t      durationOfCpuCycle;
+    
     //! @brief    Constructor
     VC1541();
     
@@ -58,6 +70,7 @@ public:
     void reset();
     void ping();
     void dumpState();
+    void setClockFrequency(uint32_t frequency);
 
     /*! @brief    Resets disk properties
      *  @details  Resets all disk related properties. reset() keeps the disk alive. 
@@ -83,9 +96,6 @@ public:
         15 * 4, // Zone 2: One bit each (16 * 3.75) base clock cycles (3.75 CPU cycles)
         16 * 4, // Zone 3: One bit each (16 * 4) base clock cycles (4 CPU cycles)
     };
-    
-    
-    
     
     
     //

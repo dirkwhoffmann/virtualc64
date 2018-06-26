@@ -117,6 +117,9 @@ public:
     //! @brief    Method from VirtualComponent
     void reset();
     
+    //! @brief    Method from VirtualComponent
+    void setClockFrequency(uint32_t frequency);
+    
     //! Load state
     void loadFromBuffer(uint8_t **buffer);
     
@@ -134,12 +137,6 @@ public:
     //
 	// Configuring the device
 	//
-
-    //! @brief    Configures the SID chip for being used in PAL machines.
-    void setPAL();
-    
-    //! @brief    Configures the SID chip for being used in NTSC machines.
-    void setNTSC();
     
     //! @brief    Returns true, whether ReSID or the old implementation should be used.
     bool getReSID() { return useReSID; }
@@ -174,9 +171,6 @@ public:
     //! @brief    Returns the clock frequency.
     uint32_t getClockFrequency();
     
-	//! @brief    Sets the clock frequency.
-	void setClockFrequency(uint32_t frequency);	
-
     //
     // Running the device
     //

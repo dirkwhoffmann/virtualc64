@@ -225,9 +225,7 @@ C64::setPAL()
     debug(2, "C64::setPAL\n");
 
     suspend();
-    debug(2, "VIC::setPAL (2)\n");
     vic.setChipModel(MOS6569_PAL);
-    sid.setPAL();
     resume();
 }
 
@@ -238,7 +236,6 @@ C64::setNTSC()
 
     suspend();
     vic.setChipModel(MOS6567_NTSC);
-    sid.setNTSC();
     resume();
 }
 

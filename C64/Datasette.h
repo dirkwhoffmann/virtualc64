@@ -156,7 +156,7 @@ public:
     
     /*! @brief    Returns the tape length in seconds 
      */
-    uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (uint64_t)PAL_CYCLES_PER_SECOND); }
+    uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (uint64_t)PAL_CLOCK_FREQUENCY); }
 
     //
     //! @functiongroup Handling the read/write head

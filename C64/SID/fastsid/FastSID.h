@@ -118,11 +118,14 @@ public:
     //! Method from VirtualComponent
     void reset();
 
-    //! Load state
-    void loadFromBuffer(uint8_t **buffer);
-    
+    //! Sets the clock frequency
+    void setClockFrequency(uint32_t frequency);
+
     //! Dump internal state to console
     void dumpState();
+
+    //! Load state
+    void loadFromBuffer(uint8_t **buffer);
     
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();
@@ -158,9 +161,6 @@ public:
     
     //! Returns the clock frequency
     uint32_t getClockFrequency() { return cpuFrequency; }
-    
-    //! Sets the clock frequency
-    void setClockFrequency(uint32_t frequency);
     
     //! Returns the sample rate
     uint32_t getSampleRate() { return sampleRate; }
