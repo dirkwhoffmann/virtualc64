@@ -247,7 +247,7 @@
                     </progressIndicator>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1845">
+            <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="1849">
                         <connections>
