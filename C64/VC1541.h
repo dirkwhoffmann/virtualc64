@@ -56,10 +56,128 @@ public:
     //! @brief    Disk in this drive (single sided 5,25" floppy disk)
     Disk disk;
     
-    //! @brief    Duration of CPU clock cycle in pico seconds
-    //! @todo     Save in Snapshot
-    uint64_t      durationOfCpuCycle;
+    //
+    // Drive status
+    //
     
+private:
+    
+    //! @brief    Indicates whether disk is rotating or not
+    bool spinning;
+    
+    //! @brief    Indicates whether red LED is on or off
+    bool redLED;
+    
+    /*! @brief    Indicates whether a disk is inserted.
+     *  @note     A fully inserted disk blocks the write protection barrier
+     *            if it is write protected.
+     */
+    bool diskInserted;
+    
+    /*! @brief    Indicates whether a disk is inserted only partially.
+     *  @note     A partially inserted disk blocks always blocks the write
+     *            protection barrier
+     */
+    bool diskPartiallyInserted;
+    
+    //! @brief    Indicates whether the drive shall seld sound notifications
+    bool sendSoundMessages;
+    
+    
+    //
+    // Clocking logic
+    //
+    
+    //! @brief    Duration of a single CPU clock cycle in pico seconds
+    uint64_t durationOfOneCpuCycle;
+    
+    /*! @brief    Indicates when the next carry output pulse occurs on UE7.
+     *  @details  The VC1541 drive is clocked by 16 Mhz. The clock signal is
+     *            fed into UE7, a 74SL193 4-bit couter, which generates a
+     *            carry output signal on overflow. The pre-load inputs of this
+     *            counter are connected to PB5 and PB6 of VIA2 (the 'density
+     *            bits'). This means that a carry signal is generated every
+     *            13th cycle (from the 16 Mhz clock) when both density bits are
+     *            0 and every 16th cycle when both density bits are 1. The carry
+     *            signal drives uf4, a counter of the same type.
+     */
+    int64_t nextCarry;
+    
+    /*! @brief    The second 74SL193 4-bit counter on the logic board.
+     *  @details  This counter is driven by the carry output of UE7. It has
+     *            four outputs QA, QB, QC, and QD. QA and QB are used to clock
+     *            most of the other components. QC and QD are fed into a
+     *            NOR gate whose output is connected to the serial input pin of
+     *            the input shift register.
+     */
+    uint4_t counterUF4;
+    
+    /*! @brief    A 74SL191 4-bit counter on the logic board.
+     *  @details  This counter is driven by the output pin QB of UF4.
+     *            Whenever the three lower output bits equal 1, it generates
+     *            a pulse which is used to compute the write register's load
+     *            signal and the byte ready signal.
+     */
+    uint4_t counterUE3;
+    
+    //
+    // Read/Write logic
+    //
+    
+    //! @brief    The next bit will be ready after this number of cycles.
+    int16_t bitReadyTimer;
+    
+    /*! @brief    Serial load signal
+     *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191
+     *            which is advanced whenever a bit is ready. By reaching 7, the
+     *            counter signals that a byte is ready. In that case, the write
+     *            shift register is loaded with new data and the byte ready signal,
+     *            which is connected to CA1 of VIA2, changes state. In read mode,
+     *            this state change will feed the input latch of VIA2 with the
+     *            current contents of the read shift register.
+     */
+    uint8_t byteReadyCounter;
+    
+    //! @brief    Halftrack position of the read/write head
+    Halftrack halftrack;
+    
+    //! @brief    Position of the drive head inside the current track
+    HeadPosition offset;
+    
+    /*! @brief    Current disk zone
+     *  @details  Each track belongs to one of four zones. Whenever the drive moves
+     *            the r/w head, it computes the new number and writes into PB5 and
+     *            PB6 of via2. These bits are hard-wired to a 74LS193 counter on
+     *            the logic board that breaks down the 16 Mhz base frequency.
+     *            This mechanism is used to slow down the read/write process on
+     *            inner tracks.
+     */
+    uint8_t zone;
+    
+    /*! @brief    The 74LS164 serial to parallel shift register
+     *  @details  In read mode, this register is fed by the drive head with data.
+     */
+    uint16_t read_shiftreg;
+    
+    /*! @brief    The 74LS165 parallel to serial shift register
+     *  @details  In write mode, this register feeds the drive head with data.
+     */
+    uint8_t write_shiftreg;
+    
+    /*! @brief    Current value of the SYNC signal
+     *  @details  This signal plays an important role for timing synchronization.
+     *            It becomes true when the beginning of a SYNC is detected. On the
+     *            logic board, the SYNC signal is computed by a NAND gate that combines
+     *            the 10 previously read bits rom the input shift register and CB2
+     *            of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
+     *            that SYNC can only be true in read mode. When SYNC becomes false
+     *            (meaning that a 0 was pushed into the shift register), the
+     *            byteReadyCounter is reset.
+     */
+    bool sync;
+    
+public:
+
     //! @brief    Constructor
     VC1541();
     
@@ -88,7 +206,9 @@ public:
      *            cycles in zone 4. The resulting signal is fed into a third counter (of type
      *            74LS191). It divides the signal by 8 and its output is fed into a three input
      *            NAND-gate computing the important BYTE-READY signal.
+     * @deprecated and most likely wrong
      */
+    /*
     const uint16_t cyclesPerBit[4] = {
         
         13 * 4, // Zone 0: One bit each (16 * 3.25) base clock cycles (= 3.25 CPU cycles)
@@ -96,7 +216,38 @@ public:
         15 * 4, // Zone 2: One bit each (16 * 3.75) base clock cycles (3.75 CPU cycles)
         16 * 4, // Zone 3: One bit each (16 * 4) base clock cycles (4 CPU cycles)
     };
+    */
+    const uint16_t cyclesPerBit[4] = {
+        
+        16 * 4, // Zone 0: One bit each (16 * 4) base clock cycles (= 4 CPU cycles)
+        15 * 4, // Zone 1: One bit each (16 * 3.75) base clock cycles (= 3.75 CPU cycles)
+        14 * 4, // Zone 2: One bit each (16 * 3.5) base clock cycles (3.5 CPU cycles)
+        13 * 4, // Zone 3: One bit each (16 * 3.25) base clock cycles (3.25 CPU cycles)
+    };
     
+    //! @brief    Time between two carry pulses of counter UE7 in pico seconds
+    
+    const uint64_t delayBetweenTwoCarryPulses[4] = {
+        1000000, // Density bits = 00: Carry pulse every 16/16 * 10^6 psec
+        937500,  // Density bits = 01: Carry pulse every 15/16 * 10^6 psec
+        875000,  // Density bits = 10: Carry pulse every 14/16 * 10^6 psec
+        812500   // Density bits = 11: Carry pulse every 13/16 * 10^6 psec
+    };
+    
+    // For now, we use the values below. If we substitute the correct ones,
+    // we get a timing problem. Check VIA2 handling (which is most likely the
+    // culprit).
+    /*
+    const uint64_t delayBetweenTwoCarryPulses[4] = {
+        1000000, // Density bits = 00: Carry pulse every 16/16 * 10^6 psec
+        1000000,  // Density bits = 01: Carry pulse every 15/16 * 10^6 psec
+        1000000,  // Density bits = 10: Carry pulse every 14/16 * 10^6 psec
+        1000000   // Density bits = 11: Carry pulse every 13/16 * 10^6 psec
+    };
+     */
+    
+    // DELETE!
+    uint64_t oldCycle, oldCycle2, oldCycle3;
     
     //
     //! @functiongroup Configuring the device
@@ -180,6 +331,7 @@ public:
     void powerUp();
 
     /*! @brief    Executes the virtual drive for one clock cycle
+     *  @seealso  executeUE7
      *  @seealso  executeBitReady
      *  @seealso  executeByteReady 
      */
@@ -187,6 +339,9 @@ public:
 
 private:
     
+    //! @brief   Emulates a trigger event on the carry output pin of UE7.
+    void executeUE7(); 
+        
     /*! @brief    Helper method for executeOneCycle
      *  @details  Method is executed whenever a single bit is ready
      */
@@ -197,93 +352,6 @@ private:
      */
     void executeByteReady();
     
-
-    //
-    // Drive properties
-    //
-   
-private:
-    
-    //! @brief    Indicates whether disk is rotating or not
-    bool spinning;
-    
-    //! @brief    Indicates whether red LED is on or off
-    bool redLED;
-    
-    /*! @brief    Indicates whether a disk is inserted.
-     *  @note     A fully inserted disk blocks the write protection barrier
-     *            if it is write protected.
-     */
-    bool diskInserted;
-    
-    /*! @brief    Indicates whether a disk is inserted only partially.
-     *  @note     A partially inserted disk blocks always blocks the write
-     *            protection barrier
-     */
-    bool diskPartiallyInserted;
-    
-    //! @brief    Indicates whether the drive shall seld sound notifications
-    bool sendSoundMessages;
-
-
-    //
-    // Read/Write logic
-    //
-
-private:
-    
-    //! @brief    The next bit will be ready after this number of cycles.
-    int16_t bitReadyTimer;
-
-    /*! @brief    Serial load signal
-     *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191
-     *            which is advanced whenever a bit is ready. By reaching 7, the
-     *            counter signals that a byte is ready. In that case, the write
-     *            shift register is loaded with new data and the byte ready signal,
-     *            which is connected to CA1 of VIA2, changes state. In read mode,
-     *            this state change will feed the input latch of VIA2 with the
-     *            current contents of the read shift register.
-     */
-    uint8_t byteReadyCounter;
-    
-    
-    //! @brief    Halftrack position of the read/write head
-    Halftrack halftrack;
-
-    //! @brief    Position of the drive head inside the current track
-    HeadPosition offset;
-    
-    /*! @brief    Current disk zone
-     *  @details  Each track belongs to one of four zones. Whenever the drive moves
-     *            the r/w head, it computes the new number and writes into PB5 and
-     *            PB6 of via2. These bits are hard-wired to a 74LS193 counter on
-     *            the logic board that breaks down the 16 Mhz base frequency.
-     *            This mechanism is used to slow down the read/write process on
-     *            inner tracks.
-     */
-    uint8_t zone;
-
-    /*! @brief    The 74LS164 serial to parallel shift register
-     *  @details  In read mode, this register is fed by the drive head with data.
-     */
-    uint16_t read_shiftreg;
-    
-    /*! @brief    The 74LS165 parallel to serial shift register
-     *  @details  In write mode, this register feeds the drive head with data.
-     */
-    uint8_t write_shiftreg;
-
-    /*! @brief    Current value of the SYNC signal
-     *  @details  This signal plays an important role for timing synchronization.
-     *            It becomes true when the beginning of a SYNC is detected. On the
-     *            logic board, the SYNC signal is computed by a NAND gate that combines
-     *            the 10 previously read bits rom the input shift register and CB2
-     *            of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
-     *            that SYNC can only be true in read mode. When SYNC becomes false
-     *            (meaning that a 0 was pushed into the shift register), the
-     *            byteReadyCounter is reset.
-     */
-    bool sync;
             
 public:
 

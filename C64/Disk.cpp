@@ -123,6 +123,12 @@ Disk::dumpState()
 {
     msg("Floppy disk\n");
     msg("-----------\n\n");
+    
+    for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
+        uint16_t length = lengthOfHalftrack(ht);
+        msg("Halftrack %2d: %d Bits (%d Bytes)\n", ht, length, length / 8);
+    }
+    msg("\n");
 }
 
 /*

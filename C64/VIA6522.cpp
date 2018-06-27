@@ -900,6 +900,23 @@ VIA2::updatePB()
     
     // Head stepper motor
     
+    // Bits 1 and 0
+    /*
+    if ((pb & 0x03) != (oldPb & 0x03)) {
+        
+        // A  decrease (00-11-10-01-00...) moves the head down
+        // An increase (00-01-10-11-00...) moves the head up
+        
+        if ((pb & 0x03) == ((oldPb + 1) & 0x03)) {
+            c64->floppy.moveHeadUp();
+        } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
+            c64->floppy.moveHeadDown();
+        } else {
+            warn("Unexpected stepper motor control sequence\n");
+        }
+    }
+    */
+    
     if (pb & 0x04) { // We only move the head if the motor is on
         
         // Relationship between halftracks and stepper positions:

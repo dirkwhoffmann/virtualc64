@@ -40,6 +40,9 @@ VC1541::VC1541()
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         
         // Internal state
+        { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
+        { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
+        { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
@@ -77,6 +80,9 @@ VC1541::reset()
     
     // Put drive in read mode by default
     via2.pcr = 0x20;
+    
+    setDebugLevel(2);
+    via2.setDebugLevel(2);
 }
 
 void
@@ -102,8 +108,9 @@ VC1541::ping()
 void
 VC1541::setClockFrequency(uint32_t frequency)
 {
-    durationOfCpuCycle = 1000000000000 / frequency;
-    debug("Duration a CPU cycle is %lld pico seconds.\n", durationOfCpuCycle);
+//    durationOfOneCpuCycle = 1000000000000 / frequency;
+    durationOfOneCpuCycle = 1000000;
+    debug("Duration a CPU cycle is %lld pico seconds.\n", durationOfOneCpuCycle);
 }
 
 void 
@@ -120,16 +127,17 @@ VC1541::dumpState()
 }
 
 void
-VC1541::powerUp() {
-
+VC1541::powerUp()
+{
     c64->suspend();
     reset();
     c64->resume();
 }
     
 bool
-VC1541::executeOneCycle() {
-    
+VC1541::executeOneCycle()
+{
+
     via1.execute();
     via2.execute();
     uint8_t result = cpu.executeOneCycle();
@@ -138,6 +146,19 @@ VC1541::executeOneCycle() {
     if (!spinning)
         return result;
     
+    // debug("executeOneCycle: %lld\n", c64->getCycles());
+    
+    // Advance in time
+    // debug("nextCarry = %lld\n", nextCarry);
+    nextCarry -= durationOfOneCpuCycle;
+    // debug("nextCarry(after sub) = %lld\n", nextCarry);
+
+    // Emulate all carry pulses that are overdue
+    while (nextCarry < 0) {
+        executeUE7();
+    }
+    
+    // OLD CODE:
     // Wait until next bit is ready
     if (bitReadyTimer > 0) {
         bitReadyTimer -= 16;
@@ -145,23 +166,34 @@ VC1541::executeOneCycle() {
     }
     
     // Bit is ready
-    executeBitReady();
+    // debug("Execute bit ready %lld %d\n", cyclesPerBit[zone], c64->getCycles() - oldCycle);
+    oldCycle = c64->getCycles();
+    // executeBitReady();
     
     return result;
 }
 
+void
+VC1541::executeUE7() {
+    
+    // Reload counter
+    assert(is_uint2_t(zone));
+    nextCarry += delayBetweenTwoCarryPulses[zone];
+
+    // Increase UF4
+    counterUF4++;
+ 
+    // TO BE WORKED ON ...
+    uint8_t QBQA = counterUF4 & 0x03;
+    if (QBQA == 0x03) {
+        executeBitReady();
+        // debug("Would execute bit ready %lld %d\n", delayBetweenTwoCarryPulses[zone], c64->getCycles() - oldCycle2);
+        oldCycle2 = c64->getCycles();
+    }
+}
+
+
 /* TODO:
- 
- //! @brief    Indicates when the next carry output pulse occurs on UE7.
- @details The VC1541 drive is clocked by 16 Mhz. The clock signal is feed into
-  UE7, a 74SL193 16-bit couter, which generates a carry output signal on overflow. The pre-load inputs of this counter are connected to PB5 and PB6 of VIA2 (the 'zone bits'). This means that a carry signal is generated every 13th cycle (from the 16 Mhz clock) in zone 0 and every 16th cycle in zone 4. The carry signal is drives a second counter named uf4.
- 
- nextCarryPulseOnUE7 : double;
- 
- //! @brief    The second 74SL193 16-bit counter on the logic board.
- @details  This counter is driven by the carry output of UE7 and has four outputs QA, QB, QC, and QD. QA and QB are used to clock most of the other components. QC and QD are fed into a NOR gate whose output is connected to the serial input pin of the input shift register.
- 
- uint4_t uf4;
  
  //! @brief   Emulates a trigger event on the LOAD input pin of UE7.
  void VC1541::loadUE7() {
@@ -173,42 +205,7 @@ VC1541::executeOneCycle() {
     // Schedule the the next carry pulse
     nextCarryPulseOnUE7 += ((16 - start) / 16.0);
  }
- 
- //! @brief   Emulates a trigger event on the carry output pin of UE7.
- void VC1541::executeUE7() {
- 
-    // Reload counter
-    loadUE7();
- 
-    // Trigger a count impulse on UF4
-    uf4++;
- 
-    // TO BE WORKED ON ...
-    uint8_t QBQA = uf4 & 0x03;
-    if (QBQA == 0x03) {
-        executeBitReady();
-    }
- }
- 
- Add to VC1541::executeOneCycle() {
-
-    // Subtract elapsed time since the previous call to this function
-    double durationOfOneClockCycle;
- if (c64->isPAL) {
-    durationOfOneClockCycle = 1000000.0 / (double)PAL_CLOCK_FREQUENCY;
- } else {
- durationOfOneClockCycle = 1000000.0 / (double)NTSC_CLOCK_FREQUENCY;
- }
- 
-    nextCarryPulseOnUE7 -= durationOfOneClockCycle;
-
-    // Emulate all carry pulses that are overdue
-    while (nextCarryPulseOnUE7 < 0.0) {
-        executeUE7();
-    }
- }
- */
-
+*/
  
 void
 VC1541::executeBitReady()
@@ -245,6 +242,9 @@ VC1541::executeBitReady()
     if (byteReadyCounter++ == 7) {
         executeByteReady();
         byteReadyCounter = 0;
+        via2.setCA1(true);
+    } else {
+        via2.setCA1(false);
     }
     
     bitReadyTimer += cyclesPerBit[zone];
@@ -265,13 +265,15 @@ VC1541::executeByteReady()
 void
 VC1541::byteReady(uint8_t byte)
 {
-    // On the VC1541 logic board, the byte ready signal is computed by a
-    // NAND gate with three inputs. Two of them are clock lines ensuring
-    // that a signal is generated every eigths bit. The third signal is
-    // hard-wired to pin CA2 of VIA2. By pulling CA2 low, the CPU can
-    // silence the byte ready line. E.g., this is done when moving
-    // the drive head to a different track.
+    /* On the VC1541 logic board, the byte ready signal is computed by UF3C, a
+     * NAND gate with three inputs. Two of them are clock lines ensuring that a
+     * signal is generated every eigths bit. The third signal is hard-wired to
+     * pin CA2 of VIA2. By pulling CA2 low, the CPU can silence the byte ready
+     * line. E.g., this is done when moving the drive head to a different track.
+     */
     if (via2.ca2_out) {
+        // debug("BYTE READY (%d cycles)\n", c64->getCycles() - oldCycle3);
+        oldCycle3 = c64->getCycles();
         via2.ira = byte;
         byteReady();
     }
@@ -280,6 +282,7 @@ VC1541::byteReady(uint8_t byte)
 void
 VC1541::byteReady()
 {
+    // TODO: Connect byte ready to VIA2:CA1
     cpu.setV(1);
 }
 
@@ -289,7 +292,7 @@ VC1541::setZone(uint2_t value)
     assert(is_uint2_t(value));
     
     if (value != zone) {
-        debug(3, "Switching from disk zone %d to disk zone %d\n", zone, value);
+        debug(2, "Switching from disk zone %d to disk zone %d\n", zone, value);
         zone = value;
     }
 }
@@ -327,8 +330,10 @@ VC1541::moveHeadUp()
         halftrack++;
         offset = position * disk.lengthOfHalftrack(halftrack);
         
-        debug(3, "Moving head up to halftrack %d (track %2.1f)\n",
+        debug(2, "Moving head up to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
+        debug(2, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        // disk.dumpState();
     }
    
     assert(disk.isValidHeadPositon(halftrack, offset));
@@ -346,8 +351,9 @@ VC1541::moveHeadDown()
         halftrack--;
         offset = position * disk.lengthOfHalftrack(halftrack);
         
-        debug(3, "Moving head down to halftrack %d (track %2.1f)\n",
+        debug(2, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
+        debug(2, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
     
     assert(disk.isValidHeadPositon(halftrack, offset));
