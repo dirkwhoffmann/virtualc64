@@ -137,7 +137,7 @@ VC1541::powerUp()
 bool
 VC1541::executeOneCycle()
 {
-
+    // Execute both VIAs and the CPU
     via1.execute();
     via2.execute();
     uint8_t result = cpu.executeOneCycle();
@@ -146,29 +146,11 @@ VC1541::executeOneCycle()
     if (!spinning)
         return result;
     
-    // debug("executeOneCycle: %lld\n", c64->getCycles());
-    
-    // Advance in time
-    // debug("nextCarry = %lld\n", nextCarry);
+    // Emulate carry pulses on counter UE7
     nextCarry -= durationOfOneCpuCycle;
-    // debug("nextCarry(after sub) = %lld\n", nextCarry);
-
-    // Emulate all carry pulses that are overdue
     while (nextCarry < 0) {
         executeUE7();
     }
-    
-    // OLD CODE:
-    // Wait until next bit is ready
-    if (bitReadyTimer > 0) {
-        bitReadyTimer -= 16;
-        return result;
-    }
-    
-    // Bit is ready
-    // debug("Execute bit ready %lld %d\n", cyclesPerBit[zone], c64->getCycles() - oldCycle);
-    oldCycle = c64->getCycles();
-    // executeBitReady();
     
     return result;
 }
@@ -177,36 +159,18 @@ void
 VC1541::executeUE7() {
     
     // Reload counter
-    assert(is_uint2_t(zone));
     nextCarry += delayBetweenTwoCarryPulses[zone];
 
-    // Increase UF4
+    // Increase counter UF4
     counterUF4++;
  
     // TO BE WORKED ON ...
     uint8_t QBQA = counterUF4 & 0x03;
     if (QBQA == 0x03) {
         executeBitReady();
-        // debug("Would execute bit ready %lld %d\n", delayBetweenTwoCarryPulses[zone], c64->getCycles() - oldCycle2);
-        oldCycle2 = c64->getCycles();
     }
 }
 
-
-/* TODO:
- 
- //! @brief   Emulates a trigger event on the LOAD input pin of UE7.
- void VC1541::loadUE7() {
- 
-    // Get speed zone bits from VIA2
-    // These bits are used as the timer's start value
-    int start = (via2.pb & 0x03);
- 
-    // Schedule the the next carry pulse
-    nextCarryPulseOnUE7 += ((16 - start) / 16.0);
- }
-*/
- 
 void
 VC1541::executeBitReady()
 {
@@ -247,7 +211,7 @@ VC1541::executeBitReady()
         via2.setCA1(false);
     }
     
-    bitReadyTimer += cyclesPerBit[zone];
+    // bitReadyTimer += cyclesPerBit[zone];
 }
 
 void
@@ -272,8 +236,6 @@ VC1541::byteReady(uint8_t byte)
      * line. E.g., this is done when moving the drive head to a different track.
      */
     if (via2.ca2_out) {
-        // debug("BYTE READY (%d cycles)\n", c64->getCycles() - oldCycle3);
-        oldCycle3 = c64->getCycles();
         via2.ira = byte;
         byteReady();
     }

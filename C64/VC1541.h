@@ -195,38 +195,16 @@ public:
      */
     void resetDisk();
     
-    /*! @brief    Indicates how many clock cycles are needed for reading or writing a single bit
-     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is divided by N where
-     *            N ranges from 13 (zone 0) to 16 (zone 4). On the logic board, this is done with
-     *            a 4-bit counter of type 74SL193 whose reset value bits are connected to the two
-     *            "zone" bits (PB5 and PB6) coming from via 2. A second 74SL193 divides the signal
-     *            by 4. The result serves as the clock signal for all units operating on bit level
-     *            (i.e., the two shift registers that transfer bits from and to the head). It
-     *            follows that a single bit is ready after 3,25 CPU cycles in zone 0 and 4 CPU
-     *            cycles in zone 4. The resulting signal is fed into a third counter (of type
-     *            74LS191). It divides the signal by 8 and its output is fed into a three input
-     *            NAND-gate computing the important BYTE-READY signal.
-     * @deprecated and most likely wrong
+    /*! @brief    Time between two carry pulses of counter UE7 in pico seconds
+     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is
+     *            divided by N where N ranges from 13 (density bits = 11) to 16
+     *            (density bits = 00). On the logic board, this is done with
+     *            a 4-bit counter of type 74SL193 whose reset value bits are
+     *            connected to the two density bits (PB5 and PB6 of VIA2). It
+     *            follows that a single bit is ready after approx. 3.25 CPU
+     *            cycles in the fastest zone and approx. 4 CPU cycles in the
+     *            slowest zone.
      */
-    /*
-    const uint16_t cyclesPerBit[4] = {
-        
-        13 * 4, // Zone 0: One bit each (16 * 3.25) base clock cycles (= 3.25 CPU cycles)
-        14 * 4, // Zone 1: One bit each (16 * 3.5) base clock cycles (= 3.5 CPU cycles)
-        15 * 4, // Zone 2: One bit each (16 * 3.75) base clock cycles (3.75 CPU cycles)
-        16 * 4, // Zone 3: One bit each (16 * 4) base clock cycles (4 CPU cycles)
-    };
-    */
-    const uint16_t cyclesPerBit[4] = {
-        
-        16 * 4, // Zone 0: One bit each (16 * 4) base clock cycles (= 4 CPU cycles)
-        15 * 4, // Zone 1: One bit each (16 * 3.75) base clock cycles (= 3.75 CPU cycles)
-        14 * 4, // Zone 2: One bit each (16 * 3.5) base clock cycles (3.5 CPU cycles)
-        13 * 4, // Zone 3: One bit each (16 * 3.25) base clock cycles (3.25 CPU cycles)
-    };
-    
-    //! @brief    Time between two carry pulses of counter UE7 in pico seconds
-    
     const uint64_t delayBetweenTwoCarryPulses[4] = {
         1000000, // Density bits = 00: Carry pulse every 16/16 * 10^6 psec
         937500,  // Density bits = 01: Carry pulse every 15/16 * 10^6 psec
@@ -234,20 +212,6 @@ public:
         812500   // Density bits = 11: Carry pulse every 13/16 * 10^6 psec
     };
     
-    // For now, we use the values below. If we substitute the correct ones,
-    // we get a timing problem. Check VIA2 handling (which is most likely the
-    // culprit).
-    /*
-    const uint64_t delayBetweenTwoCarryPulses[4] = {
-        1000000, // Density bits = 00: Carry pulse every 16/16 * 10^6 psec
-        1000000,  // Density bits = 01: Carry pulse every 15/16 * 10^6 psec
-        1000000,  // Density bits = 10: Carry pulse every 14/16 * 10^6 psec
-        1000000   // Density bits = 11: Carry pulse every 13/16 * 10^6 psec
-    };
-     */
-    
-    // DELETE!
-    uint64_t oldCycle, oldCycle2, oldCycle3;
     
     //
     //! @functiongroup Configuring the device
