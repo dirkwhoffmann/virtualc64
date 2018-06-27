@@ -19,19 +19,18 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.0.1 or 2.1
+// RELEASE NOTES FOR NEXT RELEASE: 2.1
 //
-// Passing VICE test openio/de00int.
-// Passing all VICE tests in the irqdma test suite.
-// Fixed a bug in the implementation of the LSR command
-// Fixes several minor GUI bugs
+// Now the emulator passes VICE test openio/de00int and all tests in the irqdma test suite.
+// Fixed a bug in the implementation of the LSR command.
+// The floppy drive's clocking logic has been improved. Now the emulator can load the "WeComeInPeace" demo without any issues.
+// Some minor GUI issues have been fixed.
 
 // TODO:
 //
 //
 // CLEANUP:
 // Loading and saving:
-// Rename Container to File, Archive to FileArchive
 // New object structure:
 // File -> RomFile, TapFile, CrtFile, Snapshot
 //      -> FileArchive -> T64Archive, D64Archive, PRGArchive, P00Archive
@@ -39,8 +38,6 @@
 // Delete FileArchive
 // Delete Memory.h, root class for C64Memory and VC1541Memory no longer needed.
 //
-// Intructions.c: A lot of commands have identical switch cases. Use fallthroughs to
-//                simplify code.
 // Add setter API for SID stuff
 //
 
@@ -49,8 +46,8 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 2
-#define V_MINOR 0
-#define V_SUBMINOR 1
+#define V_MINOR 1
+#define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
 // #define NDEBUG

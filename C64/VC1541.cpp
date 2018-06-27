@@ -81,8 +81,8 @@ VC1541::reset()
     // Put drive in read mode by default
     via2.pcr = 0x20;
     
-    setDebugLevel(2);
-    via2.setDebugLevel(2);
+    // setDebugLevel(2);
+    // via2.setDebugLevel(2);
 }
 
 void
@@ -221,7 +221,7 @@ VC1541::executeByteReady()
         byteReady(read_shiftreg);
     }
     if (writeMode()) {
-        write_shiftreg = via2.ora; // TODO: Must be pa 
+        write_shiftreg = via2.pa; //  via2.ora;
         byteReady();
     }
 }
