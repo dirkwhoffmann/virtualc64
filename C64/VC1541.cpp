@@ -174,6 +174,7 @@ VC1541::executeUE7() {
         if (readMode() && readBitFromHead()) {
             counterUF4 = 0;
         }
+        rotateDisk();
     }
     
     // Most components on the logic board are clocked by QB2. Execute
@@ -210,8 +211,6 @@ VC1541::executeBitReady()
         sync = false;
     }
     write_shiftreg <<= 1;
-    
-    rotateDisk();
     
     // Perform action if byte is complete
     if (byteReadyCounter++ == 7) {
