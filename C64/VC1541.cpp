@@ -182,17 +182,17 @@ VC1541::executeUF4()
     
     // The lower two bits of counter UF4 are used as clock signal:
     //
-    //              (1) Compute the load signal for the write shift register
-    //               |
-    //               v
-    //           ---- ----           ---- ----
-    //  00   01 | 10   11 | 00   01 | 10   11
-    // ---- ----           ---- ----
-    //          ^
-    //          |
-    //         (2) Execute UE3 (the byte ready counter)
-    //         (3) Execute the write shift register
-    //         (4) Execute the read shift register
+    //                              (1) Compute load signal
+    //                               |  for the write shift register
+    //                               v
+    //                           ---- ----           ---- ----
+    // QBQA:  00   01 | 10   11 | 00   01 | 10   11
+    //                 ---- ----           ---- ----
+    //                          ^
+    //                          |
+    //                         (2) Execute UE3 (the byte ready counter)
+    //                         (3) Execute the write shift register
+    //                         (4) Execute the read shift register
 
     if (QBQA == 0x03) {
         
@@ -202,8 +202,22 @@ VC1541::executeUF4()
     
     if (QBQA == 0x02) {
     
-        /*
         // (2)
+        //           74LS191
+        //           -------
+        //  SYNC --o| Load  |
+        //    QB ---| Clk   |
+        //          |    QD |   ---
+        //          |    QC |--|   |    ---
+        //          |    QB |--| & |o--| 1 |o-- uc1c
+        //          |    QA |--|   |    ---
+        //           -------    ---
+        //            UE3
+        byteReadyCounter++;
+        // bool uc1c = (byteReadyCounter & 7) == 7;
+        
+        // (2)
+        /*
         {
          if (syncLine()) {
          counterUE3 = 0;
@@ -255,15 +269,12 @@ VC1541::setByteReady(bool value)
 void
 VC1541::executeBitReady()
 {
-    // Increment byte ready counter
-    byteReadyCounter++;
-    
     read_shiftreg <<= 1;
-
+    read_shiftreg |= ((counterUF4 & 0x0C) == 0);
+    
     if (readMode()) {
         
         // Feed in the bit computed by NOR gate UE5A
-        read_shiftreg |= ((counterUF4 & 0x0C) == 0);
 
         // Set SYNC signal
         if ((read_shiftreg & 0x3FF) == 0x3FF) {
