@@ -164,9 +164,22 @@ VC1541::executeUE7() {
     // Increase counter UF4
     counterUF4++;
  
-    // TO BE WORKED ON ...
+    // We assume that a new bit comes in every fourth cycle.
+    // Later, we can decouple timing here to emulate asynchronicity.
+    if (carryCounter++ % 4 == 0) {
+        
+        // When a bit comes in, the following happens:
+        //   If the bit equals 0, nothing happens.
+        //   If the bit equals 1, counter UF4 is reset.
+        if (readMode() && readBitFromHead()) {
+            counterUF4 = 0;
+        }
+    }
+    
+    // Most components on the logic board are clocked by QB2. Execute
+    // these components on a rising edge.
     uint8_t QBQA = counterUF4 & 0x03;
-    if (QBQA == 0x03) {
+    if (QBQA == 0x02) {
         executeBitReady();
     }
 }
@@ -178,14 +191,12 @@ VC1541::executeBitReady()
 
     if (readMode()) {
         
-        // Read mode
-        read_shiftreg |= readBitFromHead();
+        // Feed in the bit computed by NOR gate UE5A
+        read_shiftreg |= ((counterUF4 & 0x0C) == 0); // readBitFromHead();
 
         // Set SYNC signal
         if ((read_shiftreg & 0x3FF) == 0x3FF) {
-
             sync = true;
-            
         } else {
             if (sync)
                 byteReadyCounter = 0; // Cleared on falling edge of SYNC

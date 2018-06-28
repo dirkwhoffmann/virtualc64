@@ -102,6 +102,7 @@ private:
      *            signal drives uf4, a counter of the same type.
      */
     int64_t nextCarry;
+    int carryCounter; // REMOVE LATER
     
     /*! @brief    The second 74SL193 4-bit counter on the logic board.
      *  @details  This counter is driven by the carry output of UE7. It has
