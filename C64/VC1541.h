@@ -128,6 +128,11 @@ private:
     //! @brief    The next bit will be ready after this number of cycles.
     int16_t bitReadyTimer;
     
+    /*! @brief    Current value of the byte ready line.
+     *  @details  The value is updated whenever counter UF4 changes its value.
+     */
+    bool byteReadyLine;
+    
     /*! @brief    Serial load signal
      *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191
      *            which is advanced whenever a bit is ready. By reaching 7, the
@@ -305,8 +310,15 @@ public:
 private:
     
     //! @brief   Emulates a trigger event on the carry output pin of UE7.
-    void executeUE7(); 
-        
+    void executeUF4(); 
+
+    /*! @brief    Sets the value of the byte ready line
+     *  @details  When the line goes up, it latches the value of the read
+     *            shift register into VIA2. Furthermore, the CPU is informed
+     *            by setting the V flag.
+     */
+    void setByteReady(bool value);
+
     /*! @brief    Helper method for executeOneCycle
      *  @details  Method is executed whenever a single bit is ready
      */
@@ -385,9 +397,6 @@ private:
 
     //! @brief    Moves drive head position back by eight bits
     void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
-
-    //! @brief    Signals the CPU that a byte has been processed.
-    void byteReady();
 
     //! @brief    Signals the CPU that a byte has been processed.
     /*! @details  Additionally, the byte is loaded into input latch A of VIA 2

@@ -44,6 +44,7 @@ VC1541::VC1541()
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
+        { &byteReadyLine,           sizeof(byteReadyLine),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
         { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
@@ -137,7 +138,7 @@ VC1541::powerUp()
 bool
 VC1541::executeOneCycle()
 {
-    // Execute both VIAs and the CPU
+    // Execute sub components
     via1.execute();
     via2.execute();
     uint8_t result = cpu.executeOneCycle();
@@ -146,22 +147,21 @@ VC1541::executeOneCycle()
     if (!spinning)
         return result;
     
-    // Emulate carry pulses on counter UE7
+    // Emulate pending carry pulses on counter UE7
+    // Each carry pulse triggers counter UF4
     nextCarry -= durationOfOneCpuCycle;
     while (nextCarry < 0) {
-        executeUE7();
+        nextCarry += delayBetweenTwoCarryPulses[zone];
+        executeUF4();
     }
     
     return result;
 }
 
 void
-VC1541::executeUE7() {
-    
-    // Reload counter
-    nextCarry += delayBetweenTwoCarryPulses[zone];
-
-    // Increase counter UF4
+VC1541::executeUF4()
+{
+    // Increase counter
     counterUF4++;
  
     // We assume that a new bit comes in every fourth cycle.
@@ -182,6 +182,23 @@ VC1541::executeUE7() {
     uint8_t QBQA = counterUF4 & 0x03;
     if (QBQA == 0x02) {
         executeBitReady();
+    }
+    
+    // Compute byte ready signal
+}
+
+void
+VC1541::setByteReady(bool value)
+{
+    if (byteReadyLine == value)
+        return;
+    
+    if (value) {
+        via2.ira = read_shiftreg;
+        via2.setCA1(true);
+        cpu.setV(1);
+    } else {
+        via2.setCA1(false);
     }
 }
 
@@ -214,14 +231,14 @@ VC1541::executeBitReady()
     
     // Perform action if byte is complete
     if (byteReadyCounter++ == 7) {
+    // byteReadyCounter++;
+    // if ((byteReadyCounter & 7) == 7) {
         executeByteReady();
         byteReadyCounter = 0;
         via2.setCA1(true);
     } else {
         via2.setCA1(false);
     }
-    
-    // bitReadyTimer += cyclesPerBit[zone];
 }
 
 void
@@ -231,8 +248,8 @@ VC1541::executeByteReady()
         byteReady(read_shiftreg);
     }
     if (writeMode()) {
-        write_shiftreg = via2.pa; //  via2.ora;
-        byteReady();
+        write_shiftreg = via2.pa;
+        cpu.setV(1);
     }
 }
 
@@ -247,15 +264,9 @@ VC1541::byteReady(uint8_t byte)
      */
     if (via2.ca2_out) {
         via2.ira = byte;
-        byteReady();
+        // TODO: Connect byte ready to VIA2:CA1
+        cpu.setV(1);
     }
-}
-
-void
-VC1541::byteReady()
-{
-    // TODO: Connect byte ready to VIA2:CA1
-    cpu.setV(1);
 }
 
 void
