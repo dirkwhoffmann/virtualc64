@@ -21,9 +21,9 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.1
 //
-// Now the emulator passes VICE test openio/de00int and all tests in the irqdma test suite.
+// Now passing VICE test openio/de00int and all tests in the irqdma test suite.
 // Fixed a bug in the implementation of the LSR command.
-// The floppy drive's clocking logic has been improved. Now the emulator can load the "WeComeInPeace" demo without any issues.
+// The floppy drive's clocking logic has been improved.
 // Some minor GUI issues have been fixed.
 
 // TODO:
@@ -50,7 +50,7 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1
