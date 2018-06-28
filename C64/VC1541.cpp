@@ -203,17 +203,28 @@ VC1541::executeUF4()
     if (QBQA == 0x02) {
     
         // (2)
-        //           74LS191
-        //           -------
-        //  SYNC --o| Load  |
-        //    QB ---| Clk   |
-        //          |    QD |   ---
-        //          |    QC |--|   |    ---
-        //          |    QB |--| & |o--| 1 |o-- uc1c
-        //          |    QA |--|   |    ---
-        //           -------    ---
-        //            UE3
-        byteReadyCounter++;
+        //           74LS191                             ---
+        //           -------               VIA2::CA2 --o|   |
+        //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- byte ready
+        //    QB ---| Clk   |                        ---|   |
+        //          |    QD |   ---                  |   ---
+        //          |    QC |--|   |    ---          |   ---
+        //          |    QB |--| & |o--| 1 |o-----------|   |
+        //          |    QA |--|   |    ---   UF4::QB --| & |o-- load
+        //           -------    ---           UF4::QA --|   |
+        //             UE3                               ---
+        
+        // TODO:
+        // Change polarity of SYNC signal.
+        // Change order
+        // Run read shift register
+        // Update Sync
+        // Run UE3 
+        if (!sync) {
+            byteReadyCounter++;
+        } else {
+            byteReadyCounter = 0;
+        }
         // bool uc1c = (byteReadyCounter & 7) == 7;
         
         // (2)
@@ -248,6 +259,15 @@ VC1541::executeUF4()
         executeBitReady();
     }
     
+    // Compute SYNC signal and clear byte ready counter on a falling edge
+    /*
+    bool newSync = (read_shiftreg & 0x3FF) == 0x3FF && readMode();
+    if (!newSync && sync) {
+        byteReadyCounter = 0;
+    }
+    sync = newSync;
+    */
+    sync = (read_shiftreg & 0x3FF) == 0x3FF && readMode();
     // Compute byte ready signal
 }
 
@@ -272,20 +292,7 @@ VC1541::executeBitReady()
     read_shiftreg <<= 1;
     read_shiftreg |= ((counterUF4 & 0x0C) == 0);
     
-    if (readMode()) {
-        
-        // Feed in the bit computed by NOR gate UE5A
-
-        // Set SYNC signal
-        if ((read_shiftreg & 0x3FF) == 0x3FF) {
-            sync = true;
-        } else {
-            if (sync)
-                byteReadyCounter = 0; // Cleared on falling edge of SYNC
-            sync = false;
-        }
-        
-    } else {
+    if (writeMode()) {
         // Write mode
         writeBitToHead(write_shiftreg & 0x80);
         disk.setModified(true); 
