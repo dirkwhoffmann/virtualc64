@@ -255,12 +255,15 @@ VC1541::setByteReady(bool value)
 void
 VC1541::executeBitReady()
 {
+    // Increment byte ready counter
+    byteReadyCounter++;
+    
     read_shiftreg <<= 1;
 
     if (readMode()) {
         
         // Feed in the bit computed by NOR gate UE5A
-        read_shiftreg |= ((counterUF4 & 0x0C) == 0); // readBitFromHead();
+        read_shiftreg |= ((counterUF4 & 0x0C) == 0);
 
         // Set SYNC signal
         if ((read_shiftreg & 0x3FF) == 0x3FF) {
@@ -280,11 +283,8 @@ VC1541::executeBitReady()
     write_shiftreg <<= 1;
     
     // Perform action if byte is complete
-    byteReadyCounter++;
-    if ((byteReadyCounter & 7) == 0) {
-    // if (byteReadyCounter++ == 7) {
+    if ((byteReadyCounter & 7) == 7) {
         executeByteReady();
-        // byteReadyCounter = 0;
         via2.setCA1(true);
     } else {
         via2.setCA1(false);
