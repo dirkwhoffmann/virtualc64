@@ -170,6 +170,9 @@ private:
      */
     uint8_t write_shiftreg;
     
+    //! @brief    Load signal of the write shift register
+    bool writeShiftregShouldLoad;
+    
     /*! @brief    Current value of the SYNC signal
      *  @details  This signal plays an important role for timing synchronization.
      *            It becomes true when the beginning of a SYNC is detected. On the

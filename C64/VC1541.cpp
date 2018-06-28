@@ -54,6 +54,7 @@ VC1541::VC1541()
         { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
         { &read_shiftreg,           sizeof(read_shiftreg),          CLEAR_ON_RESET },
         { &write_shiftreg,          sizeof(write_shiftreg),         CLEAR_ON_RESET },
+        { &writeShiftregShouldLoad, sizeof(writeShiftregShouldLoad),CLEAR_ON_RESET },
         { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
         
         // Disk properties (will survive reset)
@@ -177,10 +178,56 @@ VC1541::executeUF4()
         rotateDisk();
     }
     
-    // Most components on the logic board are clocked by QB2. Execute
-    // these components on a rising edge.
     uint8_t QBQA = counterUF4 & 0x03;
+    
+    // The lower two bits of counter UF4 are used as clock signal:
+    //
+    //              (1) Compute the load signal for the write shift register
+    //               |
+    //               v
+    //           ---- ----           ---- ----
+    //  00   01 | 10   11 | 00   01 | 10   11
+    // ---- ----           ---- ----
+    //          ^
+    //          |
+    //         (2) Execute UE3 (the byte ready counter)
+    //         (3) Execute the write shift register
+    //         (4) Execute the read shift register
+
+    if (QBQA == 0x03) {
+        
+        // (1)
+        writeShiftregShouldLoad = (counterUE3 & 7) == 7;
+    }
+    
     if (QBQA == 0x02) {
+    
+        /*
+        // (2)
+        {
+            
+        }
+        
+        // (3)
+        {
+            
+        }
+        
+        // (4)
+        {
+            // Compute bit to feed in (done by NOR gate UE5A)
+            uint8_t ue5a = (counterUF4 & 0x0C) == 0;
+
+            // Feed bit in and update the SYNC signal
+            read_shiftreg = (read_shiftreg << 1) | ue5a;
+            sync = ((read_shiftreg & 0x3FF) == 0x3FF) && readMode();
+        }
+        
+        // Compute the byte ready signal
+        
+        */
+        
+        // OLD
         executeBitReady();
     }
     
