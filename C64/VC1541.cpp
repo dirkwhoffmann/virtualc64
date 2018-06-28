@@ -205,7 +205,10 @@ VC1541::executeUF4()
         /*
         // (2)
         {
-            
+         if (syncLine()) {
+         counterUE3 = 0;
+         } else {
+         counteUE3++;
         }
         
         // (3)
@@ -224,7 +227,7 @@ VC1541::executeUF4()
         }
         
         // Compute the byte ready signal
-        
+         bool bRdy = (counterUF4 & 0x02) && (counterUE3 & 7) == 7 && via2.ca2_out;
         */
         
         // OLD
@@ -277,11 +280,11 @@ VC1541::executeBitReady()
     write_shiftreg <<= 1;
     
     // Perform action if byte is complete
-    if (byteReadyCounter++ == 7) {
-    // byteReadyCounter++;
-    // if ((byteReadyCounter & 7) == 7) {
+    byteReadyCounter++;
+    if ((byteReadyCounter & 7) == 0) {
+    // if (byteReadyCounter++ == 7) {
         executeByteReady();
-        byteReadyCounter = 0;
+        // byteReadyCounter = 0;
         via2.setCA1(true);
     } else {
         via2.setCA1(false);
