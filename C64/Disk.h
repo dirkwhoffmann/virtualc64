@@ -270,6 +270,20 @@ public:
         uint16_t len = length.halftrack[ht];
         return pos < 0 ? pos + len : pos >= len ? pos - len : pos; }
     
+    /*! @brief   Returns the duration of a single bit in pico seconds.
+     *  @details The returned value is the time span the drive head resists
+     *           over the specified bit. The value is determined by the
+     *           the density bits at the time the bit was written to disk.
+     *  @note    The head position is expected to be inside the halftrack bounds.
+     */
+    uint64_t _bitDelay(Halftrack ht, HeadPosition pos);
+
+    /*! @brief   Returns the duration of a single bit in pico seconds.
+     */
+    uint64_t bitDelay(Halftrack ht, HeadPosition pos) {
+        return _bitDelay(ht, fitToBounds(ht, pos));
+    }
+    
     /*! @brief   Reads a single bit from disk.
      *  @note    The head position is expected to be inside the halftrack bounds.
      *  @result  0x00 or 0x01

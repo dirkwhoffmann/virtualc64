@@ -248,6 +248,26 @@ Disk::decodeGcr(uint8_t *gcr)
     return (nibble1 << 4) | nibble2;
 }
 
+uint64_t
+Disk::_bitDelay(Halftrack ht, HeadPosition pos) {
+    
+    assert(isValidHeadPositon(ht, pos));
+
+    // In the current implementation, we assume that the density bits were
+    // set to their correct values when a bit was written to disk. According
+    // to this assumption, the returned value is determined solely by the
+    // track position of the drive head.
+    
+    if (ht <= 33)
+        return 4 * 1000000; // Density bits = 00: 4 * 16/16 * 10^6 psec
+    if (ht <= 47)
+        return 4 * 937500;  // Density bits = 01: 4 * 15/16 * 10^6 psec
+    if (ht <= 59)
+        return 4 * 937500;  // Density bits = 10: 4 * 14/16 * 10^6 psec
+    
+     return 4 * 812500;     // Density bits = 11: 4 * 13/16 * 10^6 psec
+}
+
 void
 Disk::clearDisk()
 {
