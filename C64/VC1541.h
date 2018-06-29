@@ -343,13 +343,16 @@ public:
     bool getSync() { return sync; }
     // bool getSync() { return !((read_shiftreg & 0x3FF) == 0x3FF && writeMode()); }
 
-    //! @brief    Sets the value of the Byte Ready line
-    /*! @note     This function triggers several side effects when the line goes
-     *            low. It pulls down VIA2::CA1 which latches the contents of the
-     *            read shift register into the VIA chip. Furthermore, the V flag
-     *            is set inside the CPU.
+    //! @brief    Clears the Byte Ready line
+    /*! @note     This function causes several side effects on a falling edge.
+     *            Firstly, it pulls down VIA2::CA1 which latches the contents of
+     *            the read shift register into the VIA chip. Secondly, the V
+     *            flag is set inside the CPU.
      */
-    void setByteReady(bool value);
+    void clearByteReadyLine();
+
+    //! @brief    Raises the Byte Ready line
+    void raiseByteReadyLine();
     
     //! @brief    Returns the current track zone (0 to 3)
     bool getZone() { return zone; }

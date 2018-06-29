@@ -205,20 +205,25 @@ VC1541::executeUF4()
         case 0x01:
             
             // (5)
-            setByteReady(!(byteReadyCounter == 7 && via2.ca2_out));
-            /*
-            if (byteReadyCounter == 7 && via2.ca2_out) {
-                via2.ira = readShiftreg;
-                via2.setCA1(false);
-                cpu.setV(1);
-            }
-            */
+            //           74LS191                             ---
+            //           -------               VIA2::CA2 --o|   |
+            //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- Byte Ready
+            //    QB ---| Clk   |                        ---|   |
+            //          |    QD |   ---                  |   ---
+            //          |    QC |--|   |    ---          |   ---
+            //          |    QB |--| & |o--| 1 |o-----------|   |
+            //          |    QA |--|   |    ---   UF4::QB --| & |o-- load UD3
+            //           -------    ---           UF4::QA --|   |
+            //             UE3                               ---
+            
+            if (byteReadyCounter == 7 && via2.ca2_out)
+                clearByteReadyLine();
             break;
             
         case 0x03:
             
             // (6)
-            setByteReady(true);
+            raiseByteReadyLine();
             
             // (1)
             if (byteReadyCounter == 7) {
@@ -287,17 +292,23 @@ VC1541::executeUF4()
 }
 
 void
-VC1541::setByteReady(bool value)
+VC1541::clearByteReadyLine()
 {
-    if (byteReady && !value) {
+    if (byteReady) {
+        byteReady = false;
         via2.setCA1(false);
         via2.ira = readShiftreg;
         cpu.setV(1);
     }
-    else if (!byteReady && value) {
+}
+
+void
+VC1541::raiseByteReadyLine()
+{
+    if (!byteReady) {
+        byteReady = true;
         via2.setCA1(true);
     }
-    byteReady = value;
 }
 
 void
