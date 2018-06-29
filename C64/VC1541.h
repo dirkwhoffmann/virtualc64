@@ -368,7 +368,9 @@ public:
     uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, offset); }
     
     //! @brief Writes a single bit to the disk head
-    void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
+    void writeBitToHead(uint8_t bit) {
+        debug("Writing bit %d (was %d)\n", bit, readBitFromHead());
+        disk.writeBitToHalftrack(halftrack, offset, bit); }
     
     //! @brief  Advances drive head position by one bit
     void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }

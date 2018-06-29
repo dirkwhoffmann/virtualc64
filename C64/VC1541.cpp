@@ -231,8 +231,7 @@ VC1541::executeUF4()
             byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
         
             // (4) Execute the write shift register
-            // TODO: ONLY WRITE IF PB4 (WPROTECT) is 0 (or 1?)
-            if (writeMode()) {
+            if (writeMode() && !getLightBarrier()) {
                 writeBitToHead(writeShiftreg & 0x80);
                 disk.setModified(true);
             }
