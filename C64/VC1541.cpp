@@ -192,8 +192,8 @@ VC1541::executeUF4()
     //                   ---- ----           ---- ----
     //                   ^          ^    ^    ^    ^
     //                   |          |    |    |    |
-    //                   |          |    |    Byte ready is always 1 here.
-    //                   |          Byte ready may be 0 here.
+    //                   |          |    |   (6) Byte ready is always 1 here.
+    //                   |         (5)  (5) Byte ready may be 0 here.
     //                   |
     //                  (2) Execute UE3 (the byte ready counter)
     //                  (3) Execute the write shift register
@@ -204,9 +204,22 @@ VC1541::executeUF4()
         
         case 0x00:
         case 0x01:
+            
+            // (5)
+            if (byteReadyCounter == 7 && via2.ca2_out) {
+                via2.ira = read_shiftreg;
+                via2.setCA1(false);
+                cpu.setV(1);
+            }
+            // executeBitReady();
+            
+            
             break;
             
         case 0x03:
+            
+            // (6)
+            via2.setCA1(true);
             
             // (1)
             if (byteReadyCounter == 7) {
@@ -262,9 +275,6 @@ VC1541::executeUF4()
                  sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
                  if (!sync) byteReadyCounter = 0;
              }
-            
-            // OLD
-            executeBitReady();
             break;
             
         default:
