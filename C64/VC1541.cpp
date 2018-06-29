@@ -215,11 +215,8 @@ VC1541::executeUF4()
         //             UE3                               ---
         
         // TODO:
-        // Change polarity of SYNC signal.
-        // Change order
-        // Run read shift register
-        // Update Sync
-        // Run UE3 
+        // Change polarity of SYNC signal. Polarity is wrong
+        // updateSync: If sync == 0, byteReady = 0
         if (!sync) {
             byteReadyCounter++;
         } else {

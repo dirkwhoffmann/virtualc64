@@ -335,12 +335,14 @@ private:
             
 public:
 
-    //! @brief    Returns true if drive is in read mode
-    bool readMode() { return (via2.getPcr() & 0x20); }
-
-    //! @brief    Returns true if drive is in write mode
-    bool writeMode() { return !(via2.getPcr() & 0x20); }
-
+    /*! @brief    Returns true iff drive is in read mode
+     *  @details  The drive operates in read mode if port pin VIA2::CB2 equals 1.
+     */
+    bool readMode() { return via2.cb2_out; }
+    
+    //! @brief    Returns true iff drive is in write mode
+    bool writeMode() { return !readMode(); }
+    
     //! @brief    Returns the halftrack under the drive head
     Halftrack getHalftrack() { return halftrack; }
 
