@@ -177,94 +177,93 @@ VC1541::executeUF4()
         }
         rotateDisk();
     }
-    
-    uint8_t QBQA = counterUF4 & 0x03;
-    
-    // The lower two bits of counter UF4 are used as clock signal:
+
+    // The lower two bits of counter UF4 are used to clock the logic board:
     //
-    //                              (1) Compute load signal
-    //                               |  for the write shift register
-    //                               v
-    //                           ---- ----           ---- ----
-    // QBQA:  00   01 | 10   11 | 00   01 | 10   11
-    //                 ---- ----           ---- ----
-    //                          ^
-    //                          |
-    //                         (2) Execute UE3 (the byte ready counter)
-    //                         (3) Execute the write shift register
-    //                         (4) Execute the read shift register
-
-    if (QBQA == 0x03) {
-        
-        // (1)
-        writeShiftregShouldLoad = (counterUE3 & 7) == 7;
-    }
+    //                        (1) Load the write shift register
+    //                         |      if the byte ready counter equals 7.
+    //                         v
+    //         ---- ----           ---- ----
+    // QBQA:  | 00   01 | 10   11 | 00   01 | 10   11 |
+    //                   ---- ----           ---- ----
+    //                   ^          ^    ^    ^    ^
+    //                   |          |    |    |    |
+    //                   |          |    |    Byte ready is always 1 here.
+    //                   |          Byte ready may be 0 here.
+    //                   |
+    //                  (2) Execute UE3 (the byte ready counter)
+    //                  (3) Execute the write shift register
+    //                  (4) Execute the read shift register
+    //
     
-    if (QBQA == 0x02) {
-    
-        // (2)
-        //           74LS191                             ---
-        //           -------               VIA2::CA2 --o|   |
-        //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- byte ready
-        //    QB ---| Clk   |                        ---|   |
-        //          |    QD |   ---                  |   ---
-        //          |    QC |--|   |    ---          |   ---
-        //          |    QB |--| & |o--| 1 |o-----------|   |
-        //          |    QA |--|   |    ---   UF4::QB --| & |o-- load
-        //           -------    ---           UF4::QA --|   |
-        //             UE3                               ---
-        
-        // TODO:
-        // Change polarity of SYNC signal. Polarity is wrong
-        // updateSync: If sync == 0, byteReady = 0
-        if (!sync) {
-            byteReadyCounter++;
-        } else {
-            byteReadyCounter = 0;
-        }
-        // bool uc1c = (byteReadyCounter & 7) == 7;
-        
-        // (2)
-        /*
-        {
-         if (syncLine()) {
-         counterUE3 = 0;
-         } else {
-         counteUE3++;
-        }
-        
-        // (3)
-        {
+    switch (counterUF4 & 0x03) {
             
-        }
-        
-        // (4)
-        {
-            // Compute bit to feed in (done by NOR gate UE5A)
-            uint8_t ue5a = (counterUF4 & 0x0C) == 0;
-
-            // Feed bit in and update the SYNC signal
-            read_shiftreg = (read_shiftreg << 1) | ue5a;
-            sync = ((read_shiftreg & 0x3FF) == 0x3FF) && readMode();
-        }
-        
-        // Compute the byte ready signal
-         bool bRdy = (counterUF4 & 0x02) && (counterUE3 & 7) == 7 && via2.ca2_out;
-        */
-        
-        // OLD
-        executeBitReady();
+        case 0x03:
+            
+            // (1)
+            writeShiftregShouldLoad = (counterUE3 & 7) == 7;
+            break;
+            
+        case 0x02:
+            
+            // (2)
+            //           74LS191                             ---
+            //           -------               VIA2::CA2 --o|   |
+            //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- byte ready
+            //    QB ---| Clk   |                        ---|   |
+            //          |    QD |   ---                  |   ---
+            //          |    QC |--|   |    ---          |   ---
+            //          |    QB |--| & |o--| 1 |o-----------|   |
+            //          |    QA |--|   |    ---   UF4::QB --| & |o-- load
+            //           -------    ---           UF4::QA --|   |
+            //             UE3                               ---
+            
+            if (sync) {
+                byteReadyCounter++;
+            } else {
+                byteReadyCounter = 0;
+            }
+            // bool uc1c = (byteReadyCounter & 7) == 7;
+            
+            // (2)
+            /*
+             {
+             if (syncLine()) {
+             counterUE3 = 0;
+             } else {
+             counteUE3++;
+             }
+             
+             // (3)
+             {
+             
+             }
+             
+             // (4)
+             {
+             // Compute bit to feed in (done by NOR gate UE5A)
+             uint8_t ue5a = (counterUF4 & 0x0C) == 0;
+             
+             // Feed bit in and update the SYNC signal
+             read_shiftreg = (read_shiftreg << 1) | ue5a;
+             sync = ((read_shiftreg & 0x3FF) == 0x3FF) && readMode();
+             }
+             
+             // Compute the byte ready signal
+             bool bRdy = (counterUF4 & 0x02) && (counterUE3 & 7) == 7 && via2.ca2_out;
+             */
+            
+            // OLD
+            executeBitReady();
+            break;
+            
+        default:
+            break;
     }
     
     // Compute SYNC signal and clear byte ready counter on a falling edge
-    /*
-    bool newSync = (read_shiftreg & 0x3FF) == 0x3FF && readMode();
-    if (!newSync && sync) {
-        byteReadyCounter = 0;
-    }
-    sync = newSync;
-    */
-    sync = (read_shiftreg & 0x3FF) == 0x3FF && readMode();
+    sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
+    
     // Compute byte ready signal
 }
 
@@ -293,7 +292,7 @@ VC1541::executeBitReady()
         // Write mode
         writeBitToHead(write_shiftreg & 0x80);
         disk.setModified(true); 
-        sync = false;
+        sync = true;
     }
     write_shiftreg <<= 1;
     
@@ -309,7 +308,7 @@ VC1541::executeBitReady()
 void
 VC1541::executeByteReady()
 {    
-    if (readMode() && !sync) {
+    if (readMode() && sync) {
         byteReady(read_shiftreg);
     }
     if (writeMode()) {

@@ -871,7 +871,7 @@ VIA2::portBexternal()
     bool sync     = c64->floppy.getSync();
     bool barrier  = c64->floppy.getLightBarrier();
 
-    return (sync ? 0x00 : 0x80) | (barrier ? 0x00 : 0x10) | 0x6F;
+    return (sync ? 0x80 : 0x00) | (barrier ? 0x00 : 0x10) | 0x6F;
 }
 
 void
