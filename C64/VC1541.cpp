@@ -183,7 +183,7 @@ VC1541::executeUF4()
     
     // The lower two bits of counter UF4 are used to clock the logic board:
     //
-    //                        (1) Load the write shift register
+    //                        (6) Load the write shift register
     //                         |      if the byte ready counter equals 7.
     //                         v
     //         ---- ----           ---- ----
@@ -191,12 +191,12 @@ VC1541::executeUF4()
     //                   ---- ----           ---- ----
     //                   ^          ^    ^    ^    ^
     //                   |          |    |    |    |
-    //                   |          |    |   (6) Byte ready is always 1 here.
-    //                   |         (5)  (5) Byte ready may be 0 here.
+    //                   |          |    |   (2) Byte ready is always 1 here.
+    //                   |         (1)  (1) Byte ready may be 0 here.
     //                   |
-    //                  (2) Execute UE3 (the byte ready counter)
-    //                  (3) Execute the write shift register
-    //                  (4) Execute the read shift register
+    //                  (3) Execute UE3 (the byte ready counter)
+    //                  (4) Execute write shift register
+    //                  (5) Execute read shift register
     //
     
     switch (counterUF4 & 0x03) {
@@ -204,7 +204,6 @@ VC1541::executeUF4()
         case 0x00:
         case 0x01:
             
-            // (5)
             //           74LS191                             ---
             //           -------               VIA2::CA2 --o|   |
             //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- Byte Ready
@@ -216,79 +215,43 @@ VC1541::executeUF4()
             //           -------    ---           UF4::QA --|   |
             //             UE3                               ---
             
+            // (1) Check Byte Ready line
             if (byteReadyCounter == 7 && via2.ca2_out)
                 clearByteReadyLine();
+            break;
+            
+        case 0x02:
+        
+            // (2)
+            raiseByteReadyLine();
+            
+            // (3) Execute byte ready counter
+            byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
+        
+            // (4) Execute the write shift register
+            // TODO: ONLY WRITE IF PB4 (WPROTECT) is 0 (or 1?)
+            if (writeMode()) {
+                writeBitToHead(writeShiftreg & 0x80);
+                disk.setModified(true);
+            }
+            writeShiftreg <<= 1;
+            
+            // (5) Execute read shift register
+            readShiftreg <<= 1;
+            readShiftreg |= ((counterUF4 & 0x0C) == 0);
+            // Update SYNC signal
+            sync = (readShiftreg & 0x3FF) != 0x3FF || writeMode();
+            if (!sync) byteReadyCounter = 0;
             break;
             
         case 0x03:
             
             // (6)
-            raiseByteReadyLine();
-            
-            // (1)
             if (byteReadyCounter == 7) {
                 writeShiftreg = via2.pa;
             }
             break;
-            
-        case 0x02:
-            
-            // (2)
-            //           74LS191                             ---
-            //           -------               VIA2::CA2 --o|   |
-            //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- byte ready
-            //    QB ---| Clk   |                        ---|   |
-            //          |    QD |   ---                  |   ---
-            //          |    QC |--|   |    ---          |   ---
-            //          |    QB |--| & |o--| 1 |o-----------|   |
-            //          |    QA |--|   |    ---   UF4::QB --| & |o-- load
-            //           -------    ---           UF4::QA --|   |
-            //             UE3                               ---
-            
-            if (sync) {
-                byteReadyCounter = (byteReadyCounter + 1) % 8;
-            } else {
-                byteReadyCounter = 0;
-            }
-            
-            // (2)
-            /*
-             {
-             if (syncLine()) {
-             counterUE3 = 0;
-             } else {
-             counteUE3++;
-             }
-             */
-            
-             // (3)
-             {
-                 // TODO: ONLY WRITE IF PB4 (WPROTECT) is 0 (or 1?)
-                 if (writeMode()) {
-                     writeBitToHead(writeShiftreg & 0x80);
-                     disk.setModified(true);
-                 }
-                 writeShiftreg <<= 1;
-             }
-            
-             // (4)
-             {
-                 readShiftreg <<= 1;
-                 readShiftreg |= ((counterUF4 & 0x0C) == 0);
-                 // Update SYNC signal
-                 sync = (readShiftreg & 0x3FF) != 0x3FF || writeMode();
-                 if (!sync) byteReadyCounter = 0;
-             }
-            break;
-            
-        default:
-            break;
     }
-    
-    // Compute SYNC signal and clear byte ready counter on a falling edge
-    // sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
-    
-    // Compute byte ready signal
 }
 
 void
