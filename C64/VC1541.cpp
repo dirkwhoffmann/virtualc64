@@ -204,6 +204,8 @@ VC1541::executeUF4()
         case 0x00:
         case 0x01:
             
+            // Computation of the Byte Ready and the Load signal
+            //
             //           74LS191                             ---
             //           -------               VIA2::CA2 --o|   |
             //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- Byte Ready
@@ -215,7 +217,7 @@ VC1541::executeUF4()
             //           -------    ---           UF4::QA --|   |
             //             UE3                               ---
             
-            // (1) Check Byte Ready line
+            // (1) Update value on Byte Ready line
             if (byteReadyCounter == 7 && via2.ca2_out)
                 clearByteReadyLine();
             break;
@@ -239,9 +241,6 @@ VC1541::executeUF4()
             // (5) Execute read shift register
             readShiftreg <<= 1;
             readShiftreg |= ((counterUF4 & 0x0C) == 0);
-            // Update SYNC signal
-            sync = (readShiftreg & 0x3FF) != 0x3FF || writeMode();
-            if (!sync) byteReadyCounter = 0;
             break;
             
         case 0x03:
