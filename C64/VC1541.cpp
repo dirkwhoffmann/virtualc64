@@ -178,6 +178,10 @@ VC1541::executeUF4()
         rotateDisk();
     }
 
+    // Update SYNC signal
+    sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
+    if (!sync) byteReadyCounter = 0;
+    
     // The lower two bits of counter UF4 are used to clock the logic board:
     //
     //                        (1) Load the write shift register
@@ -197,6 +201,10 @@ VC1541::executeUF4()
     //
     
     switch (counterUF4 & 0x03) {
+        
+        case 0x00:
+        case 0x01:
+            break;
             
         case 0x03:
             
@@ -225,7 +233,6 @@ VC1541::executeUF4()
             } else {
                 byteReadyCounter = 0;
             }
-            // bool uc1c = (byteReadyCounter & 7) == 7;
             
             // (2)
             /*
@@ -251,6 +258,9 @@ VC1541::executeUF4()
              {
                  read_shiftreg <<= 1;
                  read_shiftreg |= ((counterUF4 & 0x0C) == 0);
+                 // Update SYNC signal
+                 sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
+                 if (!sync) byteReadyCounter = 0;
              }
             
             // OLD
@@ -262,8 +272,7 @@ VC1541::executeUF4()
     }
     
     // Compute SYNC signal and clear byte ready counter on a falling edge
-    sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
-    assert(sync == getSync());
+    // sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
     
     // Compute byte ready signal
 }
