@@ -44,7 +44,6 @@ VC1541::VC1541()
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
-        { &byteReadyLine,           sizeof(byteReadyLine),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
         { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
@@ -52,9 +51,8 @@ VC1541::VC1541()
         { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
         { &offset,                  sizeof(offset),                 CLEAR_ON_RESET },
         { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
-        { &read_shiftreg,           sizeof(read_shiftreg),          CLEAR_ON_RESET },
-        { &write_shiftreg,          sizeof(write_shiftreg),         CLEAR_ON_RESET },
-        { &writeShiftregShouldLoad, sizeof(writeShiftregShouldLoad),CLEAR_ON_RESET },
+        { &readShiftreg,           sizeof(readShiftreg),          CLEAR_ON_RESET },
+        { &writeShiftreg,          sizeof(writeShiftreg),         CLEAR_ON_RESET },
         { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
         
         // Disk properties (will survive reset)
@@ -179,7 +177,7 @@ VC1541::executeUF4()
     }
 
     // Update SYNC signal
-    sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
+    sync = (readShiftreg & 0x3FF) != 0x3FF || writeMode();
     if (!sync) byteReadyCounter = 0;
     
     // The lower two bits of counter UF4 are used to clock the logic board:
@@ -207,13 +205,10 @@ VC1541::executeUF4()
             
             // (5)
             if (byteReadyCounter == 7 && via2.ca2_out) {
-                via2.ira = read_shiftreg;
+                via2.ira = readShiftreg;
                 via2.setCA1(false);
                 cpu.setV(1);
             }
-            // executeBitReady();
-            
-            
             break;
             
         case 0x03:
@@ -223,7 +218,7 @@ VC1541::executeUF4()
             
             // (1)
             if (byteReadyCounter == 7) {
-                write_shiftreg = via2.pa;
+                writeShiftreg = via2.pa;
             }
             break;
             
@@ -261,18 +256,18 @@ VC1541::executeUF4()
              {
                  // TODO: ONLY WRITE IF PB4 (WPROTECT) is 0 (or 1?)
                  if (writeMode()) {
-                     writeBitToHead(write_shiftreg & 0x80);
+                     writeBitToHead(writeShiftreg & 0x80);
                      disk.setModified(true);
                  }
-                 write_shiftreg <<= 1;
+                 writeShiftreg <<= 1;
              }
             
              // (4)
              {
-                 read_shiftreg <<= 1;
-                 read_shiftreg |= ((counterUF4 & 0x0C) == 0);
+                 readShiftreg <<= 1;
+                 readShiftreg |= ((counterUF4 & 0x0C) == 0);
                  // Update SYNC signal
-                 sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
+                 sync = (readShiftreg & 0x3FF) != 0x3FF || writeMode();
                  if (!sync) byteReadyCounter = 0;
              }
             break;
@@ -287,49 +282,6 @@ VC1541::executeUF4()
     // Compute byte ready signal
 }
 
-#if 0
-void
-VC1541::setByteReady(bool value)
-{
-    if (byteReadyLine == value)
-        return;
-    
-    if (value) {
-        via2.ira = read_shiftreg;
-        via2.setCA1(true);
-        cpu.setV(1);
-    } else {
-        via2.setCA1(false);
-    }
-}
-#endif
-
-void
-VC1541::executeBitReady()
-{
-    // Perform action if byte is complete
-    if ((byteReadyCounter & 7) == 7) {
-        executeByteReady();
-        via2.setCA1(true);
-    } else {
-        via2.setCA1(false);
-    }
-}
-
-void
-VC1541::executeByteReady()
-{    
-    if (readMode() && sync) {
-        if (via2.ca2_out) {
-            via2.ira = read_shiftreg;
-            cpu.setV(1);
-        }
-    }
-    if (writeMode()) {
-        // write_shiftreg = via2.pa;
-        cpu.setV(1);
-    }
-}
 
 #if 0
 void

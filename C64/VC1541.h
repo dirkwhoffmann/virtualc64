@@ -120,11 +120,6 @@ private:
     //! @brief    The next bit will be ready after this number of cycles.
     int16_t bitReadyTimer;
     
-    /*! @brief    Current value of the byte ready line.
-     *  @details  The value is updated whenever counter UF4 changes its value.
-     */
-    bool byteReadyLine;
-    
     /*! @brief    Byte ready counter (UE3)
      *  @details  The VC1540 logic board contains a 4-bit-counter of type
      *            72LS191 which is advanced whenever a bit is ready. By reaching
@@ -155,15 +150,12 @@ private:
     /*! @brief    The 74LS164 serial to parallel shift register
      *  @details  In read mode, this register is fed by the drive head with data.
      */
-    uint16_t read_shiftreg;
+    uint16_t readShiftreg;
     
     /*! @brief    The 74LS165 parallel to serial shift register
      *  @details  In write mode, this register feeds the drive head with data.
      */
-    uint8_t write_shiftreg;
-    
-    //! @brief    Load signal of the write shift register
-    bool writeShiftregShouldLoad;
+    uint8_t writeShiftreg;
     
     /*! @brief    Current value of the SYNC signal
      *  @details  This signal plays an important role for timing synchronization.
@@ -296,35 +288,15 @@ public:
     void powerUp();
 
     /*! @brief    Executes the virtual drive for one clock cycle
-     *  @seealso  executeUE7
-     *  @seealso  executeBitReady
-     *  @seealso  executeByteReady 
+     *  @seealso  executeUF4
      */
     bool executeOneCycle();
 
 private:
     
     //! @brief   Emulates a trigger event on the carry output pin of UE7.
-    void executeUF4(); 
-
-    /*! @brief    Sets the value of the byte ready line
-     *  @details  When the line goes up, it latches the value of the read
-     *            shift register into VIA2. Furthermore, the CPU is informed
-     *            by setting the V flag.
-     */
-    // void setByteReady(bool value);
-
-    /*! @brief    Helper method for executeOneCycle
-     *  @details  Method is executed whenever a single bit is ready
-     */
-    void executeBitReady();
-
-    /*! @brief    Helper method for executeBitReady
-     *  @details  Method is executed whenever a single byte is ready
-     */
-    void executeByteReady();
+    void executeUF4();
     
-            
 public:
 
     /*! @brief    Returns true iff drive is in read mode
@@ -395,11 +367,6 @@ private:
 
     //! @brief    Moves drive head position back by eight bits
     void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
-
-    //! @brief    Signals the CPU that a byte has been processed.
-    /*! @details  Additionally, the byte is loaded into input latch A of VIA 2
-     */
-    // void byteReady(uint8_t byte);
 };
 
 #endif
