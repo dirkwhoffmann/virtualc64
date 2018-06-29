@@ -113,14 +113,6 @@ private:
      */
     uint4_t counterUF4;
     
-    /*! @brief    A 74SL191 4-bit counter on the logic board.
-     *  @details  This counter is driven by the output pin QB of UF4.
-     *            Whenever the three lower output bits equal 1, it generates
-     *            a pulse which is used to compute the write register's load
-     *            signal and the byte ready signal.
-     */
-    uint4_t counterUE3;
-    
     //
     // Read/Write logic
     //
@@ -133,14 +125,14 @@ private:
      */
     bool byteReadyLine;
     
-    /*! @brief    Serial load signal
-     *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191
-     *            which is advanced whenever a bit is ready. By reaching 7, the
-     *            counter signals that a byte is ready. In that case, the write
-     *            shift register is loaded with new data and the byte ready signal,
-     *            which is connected to CA1 of VIA2, changes state. In read mode,
-     *            this state change will feed the input latch of VIA2 with the
-     *            current contents of the read shift register.
+    /*! @brief    Byte ready counter (UE3)
+     *  @details  The VC1540 logic board contains a 4-bit-counter of type
+     *            72LS191 which is advanced whenever a bit is ready. By reaching
+     *            7, the counter signals that a byte is ready. In that case,
+     *            the write shift register is loaded with new data and pin CA1
+     *            of VIA2 changes state. This state change causes the current
+     *            contents of the read shift register to be latched into the
+     *            input register of VIA2.
      */
     uint8_t byteReadyCounter;
     

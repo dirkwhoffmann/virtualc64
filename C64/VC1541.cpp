@@ -201,7 +201,9 @@ VC1541::executeUF4()
         case 0x03:
             
             // (1)
-            writeShiftregShouldLoad = (counterUE3 & 7) == 7;
+            if (byteReadyCounter == 7) {
+                write_shiftreg = via2.pa;
+            }
             break;
             
         case 0x02:
@@ -219,7 +221,7 @@ VC1541::executeUF4()
             //             UE3                               ---
             
             if (sync) {
-                byteReadyCounter++;
+                byteReadyCounter = (byteReadyCounter + 1) % 8;
             } else {
                 byteReadyCounter = 0;
             }
@@ -233,12 +235,19 @@ VC1541::executeUF4()
              } else {
              counteUE3++;
              }
-             
+             */
+            
              // (3)
              {
-             
+                 // TODO: ONLY WRITE IF PB4 (WPROTECT) is 0 (or 1?)
+                 if (writeMode()) {
+                     writeBitToHead(write_shiftreg & 0x80);
+                     disk.setModified(true);
+                 }
+                 write_shiftreg <<= 1;
              }
-             
+            
+            /*
              // (4)
              {
              // Compute bit to feed in (done by NOR gate UE5A)
@@ -250,7 +259,6 @@ VC1541::executeUF4()
              }
              
              // Compute the byte ready signal
-             bool bRdy = (counterUF4 & 0x02) && (counterUE3 & 7) == 7 && via2.ca2_out;
              */
             
             // OLD
@@ -288,14 +296,6 @@ VC1541::executeBitReady()
     read_shiftreg <<= 1;
     read_shiftreg |= ((counterUF4 & 0x0C) == 0);
     
-    if (writeMode()) {
-        // Write mode
-        writeBitToHead(write_shiftreg & 0x80);
-        disk.setModified(true); 
-        sync = true;
-    }
-    write_shiftreg <<= 1;
-    
     // Perform action if byte is complete
     if ((byteReadyCounter & 7) == 7) {
         executeByteReady();
@@ -312,7 +312,7 @@ VC1541::executeByteReady()
         byteReady(read_shiftreg);
     }
     if (writeMode()) {
-        write_shiftreg = via2.pa;
+        // write_shiftreg = via2.pa;
         cpu.setV(1);
     }
 }
