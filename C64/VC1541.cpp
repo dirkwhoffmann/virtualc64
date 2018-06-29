@@ -51,10 +51,11 @@ VC1541::VC1541()
         { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
         { &offset,                  sizeof(offset),                 CLEAR_ON_RESET },
         { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
-        { &readShiftreg,           sizeof(readShiftreg),          CLEAR_ON_RESET },
-        { &writeShiftreg,          sizeof(writeShiftreg),         CLEAR_ON_RESET },
+        { &readShiftreg,            sizeof(readShiftreg),           CLEAR_ON_RESET },
+        { &writeShiftreg,           sizeof(writeShiftreg),          CLEAR_ON_RESET },
         { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
-        
+        { &byteReady,               sizeof(byteReady),              CLEAR_ON_RESET },
+
         // Disk properties (will survive reset)
         { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
         { NULL,                     0,                              0 }};
@@ -204,17 +205,20 @@ VC1541::executeUF4()
         case 0x01:
             
             // (5)
+            setByteReady(!(byteReadyCounter == 7 && via2.ca2_out));
+            /*
             if (byteReadyCounter == 7 && via2.ca2_out) {
                 via2.ira = readShiftreg;
                 via2.setCA1(false);
                 cpu.setV(1);
             }
+            */
             break;
             
         case 0x03:
             
             // (6)
-            via2.setCA1(true);
+            setByteReady(true);
             
             // (1)
             if (byteReadyCounter == 7) {
@@ -282,24 +286,19 @@ VC1541::executeUF4()
     // Compute byte ready signal
 }
 
-
-#if 0
 void
-VC1541::byteReady(uint8_t byte)
+VC1541::setByteReady(bool value)
 {
-    /* On the VC1541 logic board, the byte ready signal is computed by UF3C, a
-     * NAND gate with three inputs. Two of them are clock lines ensuring that a
-     * signal is generated every eigths bit. The third signal is hard-wired to
-     * pin CA2 of VIA2. By pulling CA2 low, the CPU can silence the byte ready
-     * line. E.g., this is done when moving the drive head to a different track.
-     */
-    if (via2.ca2_out) {
-        via2.ira = byte;
-        // TODO: Connect byte ready to VIA2:CA1
+    if (byteReady && !value) {
+        via2.setCA1(false);
+        via2.ira = readShiftreg;
         cpu.setV(1);
     }
+    else if (!byteReady && value) {
+        via2.setCA1(true);
+    }
+    byteReady = value;
 }
-#endif
 
 void
 VC1541::setZone(uint2_t value)

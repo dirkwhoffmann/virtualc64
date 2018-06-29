@@ -157,7 +157,7 @@ private:
      */
     uint8_t writeShiftreg;
     
-    /*! @brief    Current value of the SYNC signal
+    /*! @brief    Current value of the SYNC line
      *  @details  This signal plays an important role for timing synchronization.
      *            It becomes true when the beginning of a SYNC is detected. On the
      *            logic board, the SYNC signal is computed by a NAND gate that combines
@@ -168,6 +168,11 @@ private:
      *            byteReadyCounter is reset.
      */
     bool sync;
+    
+    /*! @brief    Current value of the ByteReady line
+     *  @details  This signal goes low when a byte has been processed.
+     */
+    bool byteReady;
     
 public:
 
@@ -338,6 +343,14 @@ public:
     bool getSync() { return sync; }
     // bool getSync() { return !((read_shiftreg & 0x3FF) == 0x3FF && writeMode()); }
 
+    //! @brief    Sets the value of the Byte Ready line
+    /*! @note     This function triggers several side effects when the line goes
+     *            low. It pulls down VIA2::CA1 which latches the contents of the
+     *            read shift register into the VIA chip. Furthermore, the V flag
+     *            is set inside the CPU.
+     */
+    void setByteReady(bool value);
+    
     //! @brief    Returns the current track zone (0 to 3)
     bool getZone() { return zone; }
 
