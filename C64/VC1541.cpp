@@ -247,19 +247,11 @@ VC1541::executeUF4()
                  write_shiftreg <<= 1;
              }
             
-            /*
              // (4)
              {
-             // Compute bit to feed in (done by NOR gate UE5A)
-             uint8_t ue5a = (counterUF4 & 0x0C) == 0;
-             
-             // Feed bit in and update the SYNC signal
-             read_shiftreg = (read_shiftreg << 1) | ue5a;
-             sync = ((read_shiftreg & 0x3FF) == 0x3FF) && readMode();
+                 read_shiftreg <<= 1;
+                 read_shiftreg |= ((counterUF4 & 0x0C) == 0);
              }
-             
-             // Compute the byte ready signal
-             */
             
             // OLD
             executeBitReady();
@@ -271,10 +263,12 @@ VC1541::executeUF4()
     
     // Compute SYNC signal and clear byte ready counter on a falling edge
     sync = (read_shiftreg & 0x3FF) != 0x3FF || writeMode();
+    assert(sync == getSync());
     
     // Compute byte ready signal
 }
 
+#if 0
 void
 VC1541::setByteReady(bool value)
 {
@@ -289,13 +283,11 @@ VC1541::setByteReady(bool value)
         via2.setCA1(false);
     }
 }
+#endif
 
 void
 VC1541::executeBitReady()
 {
-    read_shiftreg <<= 1;
-    read_shiftreg |= ((counterUF4 & 0x0C) == 0);
-    
     // Perform action if byte is complete
     if ((byteReadyCounter & 7) == 7) {
         executeByteReady();
@@ -309,7 +301,10 @@ void
 VC1541::executeByteReady()
 {    
     if (readMode() && sync) {
-        byteReady(read_shiftreg);
+        if (via2.ca2_out) {
+            via2.ira = read_shiftreg;
+            cpu.setV(1);
+        }
     }
     if (writeMode()) {
         // write_shiftreg = via2.pa;
@@ -317,6 +312,7 @@ VC1541::executeByteReady()
     }
 }
 
+#if 0
 void
 VC1541::byteReady(uint8_t byte)
 {
@@ -332,6 +328,7 @@ VC1541::byteReady(uint8_t byte)
         cpu.setV(1);
     }
 }
+#endif
 
 void
 VC1541::setZone(uint2_t value)

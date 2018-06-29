@@ -312,7 +312,7 @@ private:
      *            shift register into VIA2. Furthermore, the CPU is informed
      *            by setting the V flag.
      */
-    void setByteReady(bool value);
+    // void setByteReady(bool value);
 
     /*! @brief    Helper method for executeOneCycle
      *  @details  Method is executed whenever a single bit is ready
@@ -364,6 +364,7 @@ public:
 
     //! @brief    Returns the current value of the sync signal
     bool getSync() { return sync; }
+    // bool getSync() { return !((read_shiftreg & 0x3FF) == 0x3FF && writeMode()); }
 
     //! @brief    Returns the current track zone (0 to 3)
     bool getZone() { return zone; }
@@ -398,7 +399,7 @@ private:
     //! @brief    Signals the CPU that a byte has been processed.
     /*! @details  Additionally, the byte is loaded into input latch A of VIA 2
      */
-    void byteReady(uint8_t byte);
+    // void byteReady(uint8_t byte);
 };
 
 #endif
