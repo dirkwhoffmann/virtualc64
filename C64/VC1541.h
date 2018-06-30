@@ -369,7 +369,7 @@ public:
     
     //! @brief Writes a single bit to the disk head
     void writeBitToHead(uint8_t bit) {
-        debug("Writing bit %d (was %d)\n", bit, readBitFromHead());
+        // debug("Writing bit %d (was %d)\n", bit, readBitFromHead());
         disk.writeBitToHalftrack(halftrack, offset, bit); }
     
     //! @brief  Advances drive head position by one bit

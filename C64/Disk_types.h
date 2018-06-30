@@ -51,12 +51,46 @@ static const unsigned maxBytesOnTrack = 7928;
  */
 static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
 
+/*! @brief    Returns the average duration of a single bit in pico seconds.
+ *  @details  The returned value is the time span the drive head resists
+ *            over a single bit.
+ *  @note     The exact value depends on the speed zone and the drive's
+ *            rotation speed. We assume a rotation speed of 300 rpm.
+ */
+ static const uint64_t averageBitTimeSpan[] = {
+     4 * 1000000, // 4 * 16/16 * 10^6 psec
+     4 * 937500,  // 4 * 15/16 * 10^6 psec
+     4 * 875000,  // 4 * 14/16 * 10^6 psec
+     4 * 812500   // 4 * 13/16 * 10^6 psec
+ };
+
+/*! @brief    Average number of bits stored on a single track.
+ *  @note     The values are based on a drive with 300 rotations per minute
+ *            which means that a full rotation lasts 200.000.000.000 psec.
+ */
+static const unsigned averageBitsOnTrack[4] = {
+    50000, // 200.000.000.000 / averageBitTimeSpan[0]
+    53333, // 200.000.000.000 / averageBitTimeSpan[1]
+    57142, // 200.000.000.000 / averageBitTimeSpan[2]
+    61528
+};
+
+/*! @brief    Average number of bytes stored on a single track.
+ *  @note     The values are based on a drive with 300 rotations per minute.
+ */
+static const unsigned averageBytesOnTrack[4] = {
+    6250, // averageBitsOnTrack[0] / 8
+    6666, // averageBitsOnTrack[1] / 8
+    7142, // averageBitsOnTrack[2] / 8
+    7692  // averageBitsOnTrack[3] / 8
+};
+
 /*! @brief    Size of a sector header block in bits.
  */
 static const unsigned headerBlockSize = 10 * 8;
 
-//! @brief    Size of a sector data block in bits.
-/*! @details  Each data block consists of 325 GCR bytes (coding 260 real bytes)
+/*! @brief    Size of a sector data block in bits.
+ *  @details  Each data block consists of 325 GCR bytes (coding 260 real bytes)
  */
 static const unsigned dataBlockSize = 325 * 8;
 

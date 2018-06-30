@@ -263,7 +263,7 @@ Disk::_bitDelay(Halftrack ht, HeadPosition pos) {
     if (ht <= 47)
         return 4 * 937500;  // Density bits = 01: 4 * 15/16 * 10^6 psec
     if (ht <= 59)
-        return 4 * 937500;  // Density bits = 10: 4 * 14/16 * 10^6 psec
+        return 4 * 875000;  // Density bits = 10: 4 * 14/16 * 10^6 psec
     
      return 4 * 812500;     // Density bits = 11: 4 * 13/16 * 10^6 psec
 }
