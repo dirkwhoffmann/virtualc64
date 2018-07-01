@@ -930,8 +930,10 @@ VIA2::updatePB()
         if (newPos != oldPos) {
             if (newPos == ((oldPos + 1) & 0x03)) {
                 c64->floppy.moveHeadUp();
+                assert(newPos == (c64->floppy.getHalftrack() - 1) & 0x03);
             } else if (newPos == ((oldPos - 1) & 0x03)) {
                 c64->floppy.moveHeadDown();
+                assert(newPos == (c64->floppy.getHalftrack() - 1) & 0x03);
             } else {
                 warn("Unexpected stepper motor control sequence\n");
             }

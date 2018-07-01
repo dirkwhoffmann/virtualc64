@@ -454,19 +454,27 @@ private:
 public:
     
     /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
-     *  @details Returns the number of bytes written. If dest is NULL, a test run is
-     *           performed (used to determine how many bytes will be written). If
-     *           something went wrong, an error code is written into 'error' (0 = success)
+     *  @param   dest Target buffer. If a NULL reference is provided, a test run
+     *           is performed. Test runs are used to determine upfront how many
+     *           bytes will be written. If something went wrong, an error code
+     *           is written into 'error' (0 = success).
+     *  @return  Number of bytes written.
      */
-    unsigned decodeDisk(uint8_t *dest, int *error = NULL);
+    // size_t decodeDisk(uint8_t *dest, int *error = NULL);
     
+    /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
+     *  @param   numTracks must be either 35, 40, or 42.
+     */
+    size_t decodeDisk(uint8_t *dest, unsigned numTracks, int *error = NULL);
+     
+     
 private:
     
     //! @brief   Decodes all sectors of a track
-    unsigned decodeTrack(Track t, uint8_t *dest, int *error = NULL);
+    size_t decodeTrack(Track t, uint8_t *dest, int *error = NULL);
 
     //! @brief   Decodes a single sector
-    unsigned decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
+    size_t decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
 
     
     //

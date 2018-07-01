@@ -272,7 +272,7 @@ void
 Disk::clearDisk()
 {
     memset(&data, 0x55, sizeof(data));
-    for (Halftrack ht = 1; ht <= 84; ht++) {
+    for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
         length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
     }
     writeProtected = false;
@@ -550,14 +550,33 @@ Disk::sectorBytesAsString(uint8_t *buffer, size_t length)
 // Decoding disk data
 //
 
-unsigned
+/*
+size_t
 Disk::decodeDisk(uint8_t *dest, int *error)
+{
+    Track t = 42;
+    while ( t > 0 && trackIsEmpty(t)) {
+        // debug("Track %d is empty", t);
+        t--;
+    }
+
+    return
+    (t <= 35) ? decodeDisk(dest, 35, error) :
+    (t <= 40) ? decodeDisk(dest, 40, error) :
+    decodeDisk(dest, 42, error);
+}
+*/
+
+size_t
+Disk::decodeDisk(uint8_t *dest, unsigned numTracks, int *error)
 {
     unsigned numBytes = 0;
      if (error) *error = 0;
-    
+
+    assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
+
     // For each full track ...
-    for (Track t = 1; t <= maxNumberOfTracks; t++) {
+   for (Track t = 1; t <= numTracks; t++) {
         
         if (trackIsEmpty(t))
             break;
@@ -569,7 +588,7 @@ Disk::decodeDisk(uint8_t *dest, int *error)
     return numBytes;
 }
 
-unsigned
+size_t
 Disk::decodeTrack(Track t, uint8_t *dest, int *error)
 {
     unsigned numBytes = 0;
@@ -580,7 +599,7 @@ Disk::decodeTrack(Track t, uint8_t *dest, int *error)
     // For each sector ...
     for (unsigned s = 0; s < 21; s++) {
         
-        debug(1, "   Decoding sector %d\n", s);
+        debug(3, "   Decoding sector %d\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0), error);
@@ -590,7 +609,7 @@ Disk::decodeTrack(Track t, uint8_t *dest, int *error)
     return numBytes;
 }
 
-unsigned
+size_t
 Disk::decodeSector(size_t offset, uint8_t *dest, int *error)
 {
     // The first byte must be 0x07 (indicating a data block)
@@ -811,6 +830,8 @@ Disk::encodeSector(D64Archive *a, Track t, Sector s, HeadPosition start, int tai
     uint8_t *source;
     HeadPosition offset = start;
     uint8_t errorCode = a->errorCode(t, s);
+    if (errorCode != 1)
+        debug("Error code track %d sector %d = %d\n", t, s, errorCode);
     
     assert(a != NULL);
     assert(isTrackNumber(t));
@@ -891,6 +912,12 @@ Disk::encodeSector(D64Archive *a, Track t, Sector s, HeadPosition start, int tai
     
     // Data ID
     if (errorCode == 0x4) {
+        // The error value is important here:
+        // (1) If the first GCR bit equals 0, the sector can still be read.
+        // (2) If the first GCR bit equals 1, the SYNC sequence continues.
+        //     In this case, the bit sequence gets out of sync and the data
+        //     can't be read.
+        // Hoxs64 and VICE 3.2 write 0x00 which results in option (1)
         encodeGcr(0x00, t, offset); // DATA_BLOCK_NOT_FOUND_ERROR
     } else {
         encodeGcr(0x07, t, offset);
@@ -925,9 +952,3 @@ Disk::encodeSector(D64Archive *a, Track t, Sector s, HeadPosition start, int tai
     // Return the number of encoded bits
     return offset - start;
 }
-
-
-
-
-
-

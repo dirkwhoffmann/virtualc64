@@ -418,20 +418,34 @@ VC1541::ejectDisk()
 D64Archive *
 VC1541::convertToD64()
 {
+    int error;
+    
     D64Archive *archive = new D64Archive();
     debug(1, "Creating D64 archive from currently inserted diskette ...\n");
     
+    // Determine D64 format (35, 40, or 42 track format)
+    Track t = 42;
+    while (t > 0 && disk.trackIsEmpty(t)) t--;
+    unsigned numTracks = (t <= 35) ? 35 : (t <= 40) ? 40 : 42;
+
     // Perform test run
-    int error;
-    if (disk.decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
-        archive->warn("Cannot create archive (error code: %d)\n", error);
+    size_t numBytes = disk.decodeDisk(NULL, numTracks, &error);
+    if (error) {
+        archive->warn("Decoder failure (error code: %d)\n", error);
         delete archive;
         return NULL;
     }
-    
+    if ((t == 35 && numBytes != D64_683_SECTORS) ||
+        (t == 40 && numBytes != D64_768_SECTORS) ||
+        (t == 42 && numBytes != D64_802_SECTORS)) {
+        archive->warn("Decoder failure (wrong byte count: %d)\n", numBytes);
+        delete archive;
+        return NULL;
+    }
+
     // Decode disk
-    archive->setNumberOfTracks(42);
-    disk.decodeDisk(archive->getData());
+    archive->setNumberOfTracks(numTracks);
+    disk.decodeDisk(archive->getData(), numTracks);
     
     archive->debug(2, "Archive has %d files\n", archive->getNumberOfItems());
     archive->debug(2, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
