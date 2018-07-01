@@ -680,6 +680,13 @@ void
 Disk::encodeArchive(D64Archive *a, bool interleave, bool alignTracks)
 {
     assert(a != NULL);
+    
+    uint16_t trackLength[4];
+    int tailGap[4] = { 13, 16, 21, 12 };
+    trackLength[0] = 48144 + (8 * 17 * tailGap[0]);
+    trackLength[1] = 50976 + (8 * 18 * tailGap[1]);
+    trackLength[2] = 53808 + (8 * 19 * tailGap[2]);
+    trackLength[3] = 59472 + (8 * 21 * tailGap[3]);
 
     Sector zone3i[] = { 0,10,20,9,19,8,18,7,17,6,16,5,15,4,14,3,13,2,12,1,11 };
     Sector trk18i[] = { 0,3,6,9,12,15,18,2,5,8,11,14,17,1,4,7,10,13,16 };
@@ -709,61 +716,61 @@ Disk::encodeArchive(D64Archive *a, bool interleave, bool alignTracks)
     
     // Tracks 1 - 17 (speed zone 3, 21 sectors, tailgap 9/9)
     for (Track t = 1; t <= 17; t++) {
-        length.track[t][0] = 60984;  // The track itself
-        length.track[t][1] = 60984;  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(60984 * trackDefaults[t].stagger);
+        length.track[t][0] = trackLength[3];  // The track itself
+        length.track[t][1] = trackLength[3];  // Half track above
+        start = alignTracks ? 0 : (HeadPosition)(trackLength[3] * trackDefaults[t].stagger);
         assert(trackDefaults[t].sectors == sizeof(zone3i) / sizeof(Sector));
         assert(trackDefaults[t].sectors == sizeof(zone3n) / sizeof(Sector));
-        encodedBits = encodeTrack(a, t, zone3, 9, 9, start);
+        encodedBits = encodeTrack(a, t, zone3, tailGap[3], tailGap[3], start);
         assert(encodedBits == length.track[t][0]);
     }
-    debug("Encoded %d bits for tracks 1 to 17.\n", encodedBits);
+    debug("Encoded %d bits (%d bytes) for tracks 1 to 17.\n", encodedBits, encodedBits / 8);
 
     // Track 18 (directory track)
-    length.track[18][0] = 55896;  // The track itself
-    length.track[18][1] = 55896;  // Half track above
-    start = alignTracks ? 0 : 55896 * (HeadPosition)(trackDefaults[18].stagger);
+    length.track[18][0] = trackLength[2];  // The track itself
+    length.track[18][1] = trackLength[2];  // Half track above
+    start = alignTracks ? 0 : (HeadPosition)(trackLength[2] * trackDefaults[18].stagger);
     assert(trackDefaults[18].sectors == sizeof(trk18i) / sizeof(Sector));
     assert(trackDefaults[18].sectors == sizeof(trk18n) / sizeof(Sector));
-    encodedBits = encodeTrack(a, 18, trk18, 9, 19, start);
+    encodedBits = encodeTrack(a, 18, trk18, tailGap[2], tailGap[2], start);
     assert(encodedBits == length.track[18][0]);
-    debug("Encoded %d bits for track 18 (directory).\n", encodedBits);
+    debug("Encoded %d bits (%d bytes) for track 18 (directory).\n", encodedBits, encodedBits / 8);
     
     // Tracks 19 - 24 (speed zone 2, 19 sectors, tail gap 9/19)
     for (Track t = 19; t <= 24; t++) {
-        length.track[t][0] = 55896;  // The track itself
-        length.track[t][1] = 55896;  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(55896 * trackDefaults[t].stagger);
+        length.track[t][0] = trackLength[2];  // The track itself
+        length.track[t][1] = trackLength[2];  // Half track above
+        start = alignTracks ? 0 : (HeadPosition)(trackLength[1] * trackDefaults[t].stagger);
         assert(trackDefaults[t].sectors == sizeof(zone2i) / sizeof(Sector));
         assert(trackDefaults[t].sectors == sizeof(zone2n) / sizeof(Sector));
-        encodedBits = encodeTrack(a, t, zone2, 9, 19, start);
+        encodedBits = encodeTrack(a, t, zone2, tailGap[2], tailGap[2], start);
         assert(encodedBits == length.track[t][0]);
     }
-    debug("Encoded %d bits for tracks 19 to 24.\n", encodedBits);
+    debug("Encoded %d bits (%d bytes) for tracks 19 to 24.\n", encodedBits, encodedBits / 8);
     
     // Tracks 25 - 30 (speed zone 1, 18 sectors, tail gap 9/13)
     for (Track t = 25; t <= 30; t++) {
-        length.track[t][0] = 52560;  // The track itself
-        length.track[t][1] = 52560;  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(52560 * trackDefaults[t].stagger);
+        length.track[t][0] = trackLength[1];  // The track itself
+        length.track[t][1] = trackLength[1];  // Half track above
+        start = alignTracks ? 0 : (HeadPosition)(trackLength[1] * trackDefaults[t].stagger);
         assert(trackDefaults[t].sectors == sizeof(zone1i) / sizeof(Sector));
         assert(trackDefaults[t].sectors == sizeof(zone1n) / sizeof(Sector));
-        encodedBits = encodeTrack(a, t, zone1, 9, 13, start);
+        encodedBits = encodeTrack(a, t, zone1, tailGap[1], tailGap[1], start);
         assert(encodedBits == length.track[t][0]);
     }
-    debug("Encoded %d bits for tracks 25 to 30.\n", encodedBits);
+    debug("Encoded %d bits (%d bytes) for tracks 25 to 30.\n", encodedBits, encodedBits / 8);
     
     // Tracks 31 - 35..42 (speed zone 0, 17 sectors, tail gap 9/10)
     for (Track t = 31; t <= a->numberOfTracks(); t++) {
-        length.track[t][0] = 49432;  // The track itself
-        length.track[t][1] = 49432;  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(49432 * trackDefaults[t].stagger);
+        length.track[t][0] = trackLength[0];  // The track itself
+        length.track[t][1] = trackLength[0];  // Half track above
+        start = alignTracks ? 0 : (HeadPosition)(trackLength[0] * trackDefaults[t].stagger);
         assert(trackDefaults[t].sectors == sizeof(zone0i) / sizeof(Sector));
         assert(trackDefaults[t].sectors == sizeof(zone0n) / sizeof(Sector));
-        encodedBits = encodeTrack(a, t, zone0, 9, 10, start);
+        encodedBits = encodeTrack(a, t, zone0, tailGap[0], tailGap[0], start);
         assert(encodedBits == length.track[t][0]);
     }
-    debug("Encoded %d bits for tracks 31 and above.\n", encodedBits);
+    debug("Encoded %d bits (%d bytes) for tracks 31 and above.\n", encodedBits, encodedBits / 8);
     
     // Clear remaining tracks (if any)
     for (Track t = numTracks + 1; t <= 42; t++) {
@@ -876,7 +883,7 @@ Disk::encodeSector(D64Archive *a, Track t, Sector s, HeadPosition start, int tai
     
     // SYNC (0xFF 0xFF 0xFF 0xFF 0xFF)
     if (errorCode == 3) {
-        writeBitToTrack(t, offset, 0, 40); // NO_SYNC SEQUENCE_ERROR
+        writeBitToTrack(t, offset, 0, 40); // NO_SYNC_SEQUENCE_ERROR
     } else {
         writeBitToTrack(t, offset, 1, 40);
     }

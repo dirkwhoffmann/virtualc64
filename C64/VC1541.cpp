@@ -134,7 +134,7 @@ VC1541::powerUp()
     reset();
     c64->resume();
 }
-    
+
 bool
 VC1541::executeOneCycle()
 {
@@ -319,7 +319,6 @@ VC1541::moveHeadUp()
         debug(2, "Moving head up to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
         debug(2, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
-        // disk.dumpState();
     }
    
     assert(disk.isValidHeadPositon(halftrack, offset));

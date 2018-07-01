@@ -72,7 +72,7 @@ static const unsigned averageBitsOnTrack[4] = {
     50000, // 200.000.000.000 / averageBitTimeSpan[0]
     53333, // 200.000.000.000 / averageBitTimeSpan[1]
     57142, // 200.000.000.000 / averageBitTimeSpan[2]
-    61528
+    61528  // 200.000.000.000 / averageBitTimeSpan[3]
 };
 
 /*! @brief    Average number of bytes stored on a single track.
