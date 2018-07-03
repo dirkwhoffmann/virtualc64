@@ -269,7 +269,8 @@ VC1541::clearByteReadyLine()
     if (byteReady) {
         byteReady = false;
         via2.setCA1(false);
-        via2.ira = readShiftreg;
+        // debug("clearByteReadyLine: shiftreg = %02X\n", readShiftreg);
+        // via2.ira = readShiftreg;
         cpu.setV(1);
     }
 }

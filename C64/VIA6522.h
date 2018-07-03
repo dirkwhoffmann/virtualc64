@@ -127,10 +127,27 @@ public:
     uint8_t ddrb;
 
     //! @brief    Output registers
+    /*! @details  "Each peripheral pin is also controlled by a bit in the
+     *             Output Register (ORA, ORB) and an Input Register (IRA, IRB).
+     *             When the pin is programmed to act as an output, the voltage
+     *             on the pin is controlled by the corre­sponding bit of the
+     *             Output Register. A 1 in the Output Register causes the pin
+     *             to go high, and a 0 causes the pin to go low. Data can be
+     *             written into Output Register bits corresponding to pins
+     *             which are programmed to act as inputs; however, the pin will
+     *             be unaffected.
+     */
     uint8_t ora;
     uint8_t orb;
 
     //! @brief    Input registers
+    /*! @details  "Reading a peripheral port causes the contents of the Input
+     *             Register (IRA, IRB) to be transferred onto the Data Bus.
+     *             With input latching disabled, IRA will always reflect the
+     *             data on the PA pins. With input latching enabled, IRA will
+     *             reflect the contents of the Port A prior to setting the CA1
+     *             Interrupt Flag (IFRl) by an active transition on CA1.
+     */
     uint8_t ira;
     uint8_t irb;
 
@@ -373,6 +390,9 @@ public:
     // CB1 - Set by:     Active edge on CB1
     //       Cleared by: Read or write to register 0 (ORB)
     
+    //! @brief    Returns true if the CB1 interrupt flag is set.
+    bool interruptFlagCB1() { return !!GET_BIT(ifr, 4); }
+    
     // void setInterruptFlag_CB1() { SET_BIT(ifr,4); IRQ(); }
     void setInterruptFlag_CB1() { SET_BIT(ifr,4); }
     // void clearInterruptFlag_CB1() { CLR_BIT(ifr,4); IRQ(); }
@@ -381,6 +401,9 @@ public:
     // CB2 - Set by:     Active edge on CB2
     //       Cleared by: Read or write to register 0 (ORB) (only if CB2 is not selected as "INDEPENDENT")
     
+    //! @brief    Returns true if the CB2 interrupt flag is set.
+    bool interruptFlagCB2() { return !!GET_BIT(ifr, 3); }
+
     // void setInterruptFlag_CB2() { SET_BIT(ifr,3); IRQ(); }
     void setInterruptFlag_CB2() { SET_BIT(ifr,3); }
     // void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); IRQ(); }
@@ -396,6 +419,9 @@ public:
     // CA1 - Set by:     Active edge on CA1
     //       Cleared by: Read or write to register 1 (ORA)
     
+    //! @brief    Returns true if the CA1 interrupt flag is set.
+    bool interruptFlagCA1() { return !!GET_BIT(ifr, 1); }
+
     // void setInterruptFlag_CA1() { SET_BIT(ifr,1); IRQ(); }
     void setInterruptFlag_CA1() { SET_BIT(ifr,1); }
     // void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); IRQ(); }
@@ -404,6 +430,9 @@ public:
     // CA2 - Set by:     Active edge on CA2
     //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")
     
+    //! @brief    Returns true if the CA2 interrupt flag is set.
+    bool interruptFlagCA2() { return !!GET_BIT(ifr, 0); }
+
     // void setInterruptFlag_CA2() { SET_BIT(ifr,0); IRQ(); }
     void setInterruptFlag_CA2() { SET_BIT(ifr,0); }
     // void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); IRQ(); }

@@ -147,10 +147,14 @@ private:
      */
     uint8_t zone;
     
+public:
+    
     /*! @brief    The 74LS164 serial to parallel shift register
      *  @details  In read mode, this register is fed by the drive head with data.
      */
     uint16_t readShiftreg;
+
+private:
     
     /*! @brief    The 74LS165 parallel to serial shift register
      *  @details  In write mode, this register feeds the drive head with data.

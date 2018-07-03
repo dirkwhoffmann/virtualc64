@@ -348,8 +348,20 @@ VIA6522::peekORA(bool handshake)
     }
     
     releaseIrqLineIfNeeded();
+    
+    // Update processor port
     updatePA();
-    return pa;
+    
+    // Update input register
+    // "As long as the interrupt flag is set, the data on the peripheral pins
+    //  can change without affecting the data in the latches."
+    // "As long as this bit is a 0, the latches will directly reflect the data
+    //  on the pins."
+    // if (!interruptFlagCA1() || !inputLatchingEnabledA()) {
+    if (!inputLatchingEnabledA()) {
+        ira = pa;
+    }
+    return ira;
 }
 
 uint8_t
@@ -383,8 +395,20 @@ VIA6522::peekORB()
     }
     
     releaseIrqLineIfNeeded();
+
+    // Update processor port
     updatePB();
-    return pb;
+    
+    // Update input register
+    // "As long as the interrupt flag is set, the data on the peripheral pins
+    //  can change without affecting the data in the latches."
+    // "As long as this bit is a 0, the latches will directly reflect the data
+    //  on the pins."
+    //if (!interruptFlagCB1() || !inputLatchingEnabledB()) {
+    if (!inputLatchingEnabledB()) {
+        irb = pb;
+    }
+    return irb;
 }
 
 uint8_t
@@ -751,9 +775,19 @@ VIA6522::setCA1(bool value)
     if (GET_BIT(ier, 1)) {
         delay |= VIAInterrupt1;
     }
+    
+    // Latch peripheral port into input register if latching is enabled
+    if (inputLatchingEnabledA()) {
+        updatePA();
+        // debug("LATCH IN VALUE ca1 = %d PA = %02X readshift = %02X\n", ca1, pa, c64->floppy.readShiftreg);
+        ira = pa;
+    }
+    
     // Check for handshake mode with CA2
-    if (ca2Control() == 0x4)
+    if (ca2Control() == 0x4) {
+        // debug("HANDSHAKING\n");
         setCA2out(true);
+    }
 }
 
 void
@@ -791,6 +825,12 @@ VIA6522::setCB1(bool value)
     setInterruptFlag_CB1();
     if (GET_BIT(ier, 4)) {
         delay |= VIAInterrupt1;
+    }
+    
+    // Latch peripheral port into input register if latching is enabled
+    if (inputLatchingEnabledB()) {
+        updatePB();
+        irb = pb;
     }
     
     // Check for handshake mode with CB2
@@ -918,7 +958,8 @@ VIA2::portAinternal()
 uint8_t
 VIA2::portAexternal()
 {
-    return ira;
+    // return ira; // Change to readMode() ? readShiftReg : 0xFF when latching is implemented.
+    return c64->floppy.readMode() ? c64->floppy.readShiftreg : 0xFF;
 }
 
 uint8_t
@@ -986,10 +1027,10 @@ VIA2::updatePB()
         if (newPos != oldPos) {
             if (newPos == ((oldPos + 1) & 0x03)) {
                 c64->floppy.moveHeadUp();
-                assert(newPos == (c64->floppy.getHalftrack() - 1) & 0x03);
+                assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
             } else if (newPos == ((oldPos - 1) & 0x03)) {
                 c64->floppy.moveHeadDown();
-                assert(newPos == (c64->floppy.getHalftrack() - 1) & 0x03);
+                assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
             } else {
                 warn("Unexpected stepper motor control sequence\n");
             }
