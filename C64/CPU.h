@@ -53,12 +53,12 @@ public:
 	
     //! @brief    Possible interrupt sources
     typedef enum : uint8_t {
-        CIA = 0x01,
-        VIC = 0x02,
+        INTSRC_CIA = 0x01,
+        INTSRC_VIC = 0x02,
         INTSRC_VIA1 = 0x04,
-        EXPANSION = 0x08,
-        KEYBOARD = 0x10,
-        INTSRC_VIA2 = 0x20
+        INTSRC_VIA2 = 0x08,
+        INTSRC_EXPANSION = 0x10,
+        INTSRC_KEYBOARD = 0x20
     } InterruptSource;
     
 	//! @brief    Reference to the connected virtual memory

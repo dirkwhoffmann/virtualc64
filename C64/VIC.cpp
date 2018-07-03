@@ -789,7 +789,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             irr &= (~value & 0x0F);
     
             if (!(irr & imr)) {
-                c64->cpu.releaseIrqLine(CPU::VIC);
+                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
             }
 			return;
             
@@ -798,9 +798,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             imr = value & 0x0F;
             
             if (irr & imr) {
-                c64->cpu.pullDownIrqLine(CPU::VIC);
+                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
             } else {
-                c64->cpu.releaseIrqLine(CPU::VIC);
+                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
             }
 			return;		
 			
@@ -902,7 +902,7 @@ VIC::triggerIRQ(uint8_t source)
 {
     irr |= source;
     if (irr & imr) {
-        c64->cpu.pullDownIrqLine(CPU::VIC);
+        c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
     }
 }
 

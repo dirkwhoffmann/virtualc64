@@ -1062,13 +1062,13 @@ CIA1::dumpState()
 void 
 CIA1::pullDownInterruptLine()
 {
-    c64->cpu.pullDownIrqLine(CPU::CIA);
+    c64->cpu.pullDownIrqLine(CPU::INTSRC_CIA);
 }
 
 void 
 CIA1::releaseInterruptLine()
 {
-    c64->cpu.releaseIrqLine(CPU::CIA);
+    c64->cpu.releaseIrqLine(CPU::INTSRC_CIA);
 }
 
 //                    -------
@@ -1217,13 +1217,13 @@ CIA2::dumpState()
 void 
 CIA2::pullDownInterruptLine()
 {
-    c64->cpu.pullDownNmiLine(CPU::CIA);
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_CIA);
 }
 
 void 
 CIA2::releaseInterruptLine()
 {
-    c64->cpu.releaseNmiLine(CPU::CIA);
+    c64->cpu.releaseNmiLine(CPU::INTSRC_CIA);
 }
 
 //                        -------
