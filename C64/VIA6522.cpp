@@ -751,12 +751,8 @@ VIA6522::setCA1(bool value)
     if (GET_BIT(ier, 1)) {
         delay |= VIAInterrupt1;
     }
-    // Check for handshake mode (ctrl == 100b)
-    // In handshake mode, CA2 goes high on an active transition of CA1
-    
-    // BUG: ctrl is 0x0 or 0x1, never 0x4
-    // if (ctrl == 0x4)
-    if ((pcr & 0x0E) == 0x08)
+    // Check for handshake mode with CA2
+    if (ca2Control() == 0x4)
         setCA2out(true);
 }
 
@@ -797,10 +793,8 @@ VIA6522::setCB1(bool value)
         delay |= VIAInterrupt1;
     }
     
-    // Check for handshake mode (ctrl == 100b)
-    // In handshake mode, CB2 goes high on an active transition of CB1
-    // TODO: BUG: ctrl is never 0 or 1
-    if (ctrl == 0x4)
+    // Check for handshake mode with CB2
+    if (cb2Control() == 0x4)
         setCB2out(true);
 }
 
