@@ -150,10 +150,21 @@ VC1541::executeOneCycle()
     // Emulate pending carry pulses on counter UE7
     // Each carry pulse triggers counter UF4
     nextCarry -= durationOfOneCpuCycle;
+    /*
     while (nextCarry < 0) {
         nextCarry += delayBetweenTwoCarryPulses[zone];
         executeUF4();
     }
+    */
+    if (likely(nextCarry < 0)) {
+        nextCarry += delayBetweenTwoCarryPulses[zone];
+        executeUF4();
+        if (unlikely(nextCarry < 0)) {
+            nextCarry += delayBetweenTwoCarryPulses[zone];
+            executeUF4();
+        }
+    }
+    assert(nextCarry >= 0);
     
     return result;
 }

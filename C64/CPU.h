@@ -160,6 +160,7 @@ private:
      */
     uint8_t nmiLine;
     
+public:
     /*! @brief    IRQ line (maskable interrupts)
      *  @details  This variable is usually set to 0 which means that the IRQ line is in
      *            high state. When an external component requests an IRQ nterrupt, this line
@@ -168,6 +169,7 @@ private:
      */
 	uint8_t irqLine;
 
+private: 
 	/*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
      *            "The NMI input is connected to an edge detector. This edge detector polls

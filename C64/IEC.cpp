@@ -221,10 +221,12 @@ bool IEC::_updateIecLines()
     //               ---      ----     UB1
     //               UA1      UD3
     
-    bool UA1 = !atnLine;
-    bool UD3 = UA1 ^ deviceAtn;
-    bool UB1 = !UD3;
-    dataLine &= UB1;
+    if (driveIsConnected()) {
+        bool ua1 = !atnLine;
+        bool ud3 = ua1 ^ deviceAtn;
+        bool ub1 = !ud3;
+        dataLine &= ub1;
+    }
     
     // Return true iff one of the three bus signals changed.
     return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);

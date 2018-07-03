@@ -250,9 +250,9 @@ public:
     void pokePCR(uint8_t value);
     
     
-    // ----------------------------------------------------------------------------------------
-    //                                Internal Configuration
-    // ----------------------------------------------------------------------------------------
+    //
+    // Internal Configuration
+    // 
 
     //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRun() { return (acr & 0x40) != 0; }
@@ -269,15 +269,13 @@ public:
     //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledB() { return (GET_BIT(acr,1)); }
 
-    // ----------------------------------------------------------------------------------------
-    //                         Peripheral Control Register (PCR)
-    // ----------------------------------------------------------------------------------------
     
-    //! @brief    Returns the current value of the peripheral control register
-    uint8_t getPcr() { return pcr & 0x20; }
+    //
+    // Peripheral Control Register (PCR)
+    //
 
     //! @brief    Returns the CA1 control bit of the peripheral control register
-    uint8_t ca1Control() { return (pcr >> 0) & 0x01; }
+    uint8_t ca1Control() { return pcr & 0x01; }
     
     //! @brief    Returns the three CA2 control bits of the peripheral control register
     uint8_t ca2Control() { return (pcr >> 1) & 0x07; }
@@ -289,9 +287,9 @@ public:
     uint8_t cb2Control() { return (pcr >> 5) & 0x07; }
 
     
-    // ----------------------------------------------------------------------------------------
-    //                                        Ports
-    // ----------------------------------------------------------------------------------------
+    //
+    // Ports
+    //
 
     //! @brief   Bit values driving port A from inside the chip
     virtual uint8_t portAinternal() = 0;
@@ -315,23 +313,10 @@ public:
      */
     virtual void updatePB();
     
-    //! Returns the current value on chip pin CA2
-    /*
-    // DEPRECATED
-    bool CA2() {
-        switch ((pcr >> 1) & 0x07) {
-            case 6: return false; // LOW OUTPUT
-            case 7: return true; // HIGH OUTPUT
-            default:
-                warn("UNUSAL OPERATION MODE FOR CA2 DETECTED");
-                return false;
-        }
-    }
-    */
-    
-    // ----------------------------------------------------------------------------------------
-    //                              Peripheral control lines
-    // ----------------------------------------------------------------------------------------
+ 
+    //
+    // Peripheral control lines
+    //
 
     void setCA1(bool value);
     void setCA2(bool value);
@@ -341,17 +326,15 @@ public:
     virtual void setCB2out(bool value);
 
     
-    
-    // ----------------------------------------------------------------------------------------
-    //                                   Interrupt handling
-    // ----------------------------------------------------------------------------------------
+    //
+    // Interrupt handling
+    //
 
     /*! @brief    Updates the IRQ line
      *  @details  This method is invoked whenever register IFR or register IER changes.
      */
     void IRQ();
 
-    //
     // |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
     // ---------------------------------------------------------------------------------
     // |   IRQ   | Timer 1 | Timer 2 |   CB1   |   CB2   |Shift Reg|   CA1   |   CA2   |

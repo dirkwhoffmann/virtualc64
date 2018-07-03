@@ -111,6 +111,11 @@ VIA6522::execute()
     executeTimer1();
     executeTimer2();
     
+    /*
+    if (c64->floppy.cpu.tracingEnabled())
+        debug("IFR: %02X IER: %02X Int0: %d Int1: %d INT line: %d\n", ifr, ier, (delay & VIAInterrupt0) != 0, (delay & VIAInterrupt1) != 0, (c64->floppy.cpu.irqLine & CPU::VIA) != 0);
+    */
+    
     // Check for interrupt condition
     if (ifr & ier) {
         delay |= VIAInterrupt0;
@@ -297,7 +302,7 @@ uint8_t
 VIA6522::peekORA(bool handshake)
 {
     clearInterruptFlag_CA1();
-    
+
     uint8_t CA2control = (pcr >> 1) & 0x07; // ----xxx-
     
     switch (CA2control) {
@@ -716,7 +721,10 @@ VIA6522::setCA1(bool value)
     
     // Check for handshake mode (ctrl == 100b)
     // In handshake mode, CA2 goes high on an active transition of CA1
-    if (ctrl == 0x4)
+    
+    // BUG: ctrl is 0x0 or 0x1, never 0x4
+    // if (ctrl == 0x4)
+    if ((pcr & 0x0E) == 0x08)
         setCA2out(true);
 }
 
@@ -753,6 +761,7 @@ VIA6522::setCB1(bool value)
     
     // Check for handshake mode (ctrl == 100b)
     // In handshake mode, CB2 goes high on an active transition of CB1
+    // TODO: BUG: ctrl is never 0 or 1
     if (ctrl == 0x4)
         setCB2out(true);
 }
@@ -836,6 +845,7 @@ VIA1::updatePB()
 {
     VIA6522::updatePB();
     c64->iec.updateDevicePins(orb, ddrb);
+    // VIA6522::updatePB();
 }
 
 //

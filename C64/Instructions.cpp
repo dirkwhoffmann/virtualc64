@@ -456,11 +456,7 @@ CPU::executeOneCycle()
         case fetch:
             
             /* DEBUG */
-            /*
-             if (PC == 0x46AA) {
-                 startTracing(2);
-             }
-            */
+            // if (PC == 0x03B1) { startTracing(); }
             
             PC_at_cycle_0 = PC;
             
@@ -492,18 +488,17 @@ CPU::executeOneCycle()
             if (unlikely(tracingEnabled())) {
                 
                 recordInstruction();
-                
-                /*
+            
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
 
                 msg("%s: %s %s %s   %s %s %s %s %s %s\n",
                         instr.pc,
                         instr.byte1, instr.byte2, instr.byte3,
-                        instr.A, instr.X, instr.Y, instr.SP,
+                        instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                 */
+                
             }
             
             // Check breakpoint tag
