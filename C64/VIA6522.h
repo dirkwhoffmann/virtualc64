@@ -39,7 +39,7 @@ class VC1541;
 #define VIAReloadB2      (1ULL << 9)
 #define VIAPostOneShotA0 (1ULL << 10) // Indicates that timer 1 has fired in one shot mode
 #define VIAPostOneShotB0 (1ULL << 11) // Indicates that timer 2 has fired in one shot mode
-#define VIAInterrupt0    (1ULL << 12) // Triggers an interrupt
+#define VIAInterrupt0    (1ULL << 12) // Holds down the interrupt line
 #define VIAInterrupt1    (1ULL << 13)
 #define VIASetCA2out0    (1ULL << 14) // Sets CA2 pin high
 #define VIASetCA2out1    (1ULL << 15)
@@ -50,8 +50,10 @@ class VC1541;
 #define VIAClearCB2out0  (1ULL << 20) // Sets CB2 pin low
 #define VIAClearCB2out1  (1ULL << 21)
 #define VIAPB7out0       (1ULL << 22) // Current value of PB7 pin (if output is enabled)
+#define VIAClrInterrupt0 (1ULL << 23) // Releases the interrupt line
+#define VIAClrInterrupt1 (1ULL << 24)
 
-#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0)
+#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -339,10 +341,16 @@ public:
     //! @brief    Releases the IRQ line
     virtual void releaseIrqLine() = 0;
 
+    /*! @brief    Releases the IRQ line if IFR and IER have no matching bits.
+     *  @details  This method is invoked whenever register IFR or register IER changes.
+     */
+    // void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) releaseIrqLine(); }
+    void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
+
     /*! @brief    Updates the IRQ line
      *  @details  This method is invoked whenever register IFR or register IER changes.
      */
-    void IRQ();
+    // void IRQ();
 
     // |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
     // ---------------------------------------------------------------------------------
@@ -351,44 +359,55 @@ public:
     // Timer 1 - Set by:     Time-out of T1
     //           Cleared by: Read t1 low or write t1 high
     
-    void setInterruptFlag_T1() { SET_BIT(ifr,6); IRQ(); }
-    void clearInterruptFlag_T1() { CLR_BIT(ifr,6); IRQ(); }
+    // NOT USED, YET: void setInterruptFlag_T1() { SET_BIT(ifr,6); IRQ(); }
+    // void clearInterruptFlag_T1() { CLR_BIT(ifr,6); IRQ(); }
+    void clearInterruptFlag_T1() { CLR_BIT(ifr,6); }
 
     // Timer 2 - Set by:     Time-out of T2
     //           Cleared by: Read t2 low or write t2 high
     
-    void setInterruptFlag_T2() { SET_BIT(ifr,5); IRQ(); }
-    void clearInterruptFlag_T2() { CLR_BIT(ifr,5); IRQ(); }
+    // NOT USED, YET: void setInterruptFlag_T2() { SET_BIT(ifr,5); IRQ(); }
+    // void clearInterruptFlag_T2() { CLR_BIT(ifr,5); IRQ(); }
+    void clearInterruptFlag_T2() { CLR_BIT(ifr,5); }
 
     // CB1 - Set by:     Active edge on CB1
     //       Cleared by: Read or write to register 0 (ORB)
     
-    void setInterruptFlag_CB1() { SET_BIT(ifr,4); IRQ(); }
-    void clearInterruptFlag_CB1() { CLR_BIT(ifr,4); IRQ(); }
+    // void setInterruptFlag_CB1() { SET_BIT(ifr,4); IRQ(); }
+    void setInterruptFlag_CB1() { SET_BIT(ifr,4); }
+    // void clearInterruptFlag_CB1() { CLR_BIT(ifr,4); IRQ(); }
+    void clearInterruptFlag_CB1() { CLR_BIT(ifr,4); }
 
     // CB2 - Set by:     Active edge on CB2
     //       Cleared by: Read or write to register 0 (ORB) (only if CB2 is not selected as "INDEPENDENT")
     
-    void setInterruptFlag_CB2() { SET_BIT(ifr,3); IRQ(); }
-    void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); IRQ(); }
-    
+    // void setInterruptFlag_CB2() { SET_BIT(ifr,3); IRQ(); }
+    void setInterruptFlag_CB2() { SET_BIT(ifr,3); }
+    // void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); IRQ(); }
+    void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); }
+
     // Shift register - Set by:     8 shifts completed
     //                  Cleared by: Read or write to register 10 (0xA) (shift register)
     
-    void setInterruptFlag_SR() { SET_BIT(ifr,2); IRQ(); }
-    void clearInterruptFlag_SR() { CLR_BIT(ifr,2); IRQ(); }
+    // NOT USED, YET: void setInterruptFlag_SR() { SET_BIT(ifr,2); IRQ(); }
+    // void clearInterruptFlag_SR() { CLR_BIT(ifr,2); IRQ(); }
+    void clearInterruptFlag_SR() { CLR_BIT(ifr,2); }
 
     // CA1 - Set by:     Active edge on CA1
     //       Cleared by: Read or write to register 1 (ORA)
     
-    void setInterruptFlag_CA1() { SET_BIT(ifr,1); IRQ(); }
-    void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); IRQ(); }
+    // void setInterruptFlag_CA1() { SET_BIT(ifr,1); IRQ(); }
+    void setInterruptFlag_CA1() { SET_BIT(ifr,1); }
+    // void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); IRQ(); }
+    void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); }
 
     // CA2 - Set by:     Active edge on CA2
     //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")
     
-    void setInterruptFlag_CA2() { SET_BIT(ifr,0); IRQ(); }
-    void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); IRQ(); }
+    // void setInterruptFlag_CA2() { SET_BIT(ifr,0); IRQ(); }
+    void setInterruptFlag_CA2() { SET_BIT(ifr,0); }
+    // void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); IRQ(); }
+    void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); }
 };
 
 

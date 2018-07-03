@@ -123,14 +123,14 @@ VIA6522::execute()
     ifr |= newifr;
     if (newifr & ier) {
         delay |= VIAInterrupt0;
-    } else {
-        // releaseIrqLine();
     }
     
     // Trigger interrupt if requested
+    if (delay & VIAClrInterrupt1) {
+        releaseIrqLine();
+    }
     if (delay & VIAInterrupt1) {
-        // if (ifr & ier)
-            pullDownIrqLine();
+        pullDownIrqLine();
     }
     
     // Set or clear CA2 or CB2 if requested
@@ -204,14 +204,17 @@ VIA6522::executeTimer2()
     }
 }
 
+/*
 void
 VIA6522::IRQ() {
     if (ifr & ier) {
         pullDownIrqLine();
     } else {
-        releaseIrqLine();
+        delay |= VIAClrInterrupt0;
+        // releaseIrqLine();
     }
 }
+*/
 
 //
 // Peeking and poking
@@ -242,6 +245,7 @@ VIA6522::peek(uint16_t addr)
             //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
             
             clearInterruptFlag_T1();
+            releaseIrqLineIfNeeded();
             return LO_BYTE(t1);
 
         case 0x5: // T1 high-order counter
@@ -267,6 +271,7 @@ VIA6522::peek(uint16_t addr)
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
+            releaseIrqLineIfNeeded();
 			return LO_BYTE(t2);
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
@@ -277,6 +282,7 @@ VIA6522::peek(uint16_t addr)
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
+            releaseIrqLineIfNeeded();
             return sr;
 			
 		case 0xB: // Auxiliary control register
@@ -341,6 +347,7 @@ VIA6522::peekORA(bool handshake)
             break;
     }
     
+    releaseIrqLineIfNeeded();
     updatePA();
     return pa;
 }
@@ -375,6 +382,7 @@ VIA6522::peekORB()
             break;
     }
     
+    releaseIrqLineIfNeeded();
     updatePB();
     return pb;
 }
@@ -465,6 +473,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Reset T1 interrupt flag.
             clearInterruptFlag_T1();
+            releaseIrqLineIfNeeded();
             
             // If ACR7 = 1, a "write T1C-H" operation will cause PB7 to go low.
             if (PB7OutputEnabled()) {
@@ -492,7 +501,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // (2) Reset Tl interrupt flag.
             clearInterruptFlag_T1();
-            
+            releaseIrqLineIfNeeded();
             return;
             
         case 0x8: // T2L-L (write) / T2C-L (read)
@@ -504,6 +513,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
+            releaseIrqLineIfNeeded();
             feed &= ~(VIAPostOneShotB0);
             delay &= ~(VIAPostOneShotB0);
             delay &= ~(VIACountB1 | VIAReloadB1);
@@ -512,6 +522,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xA: // Shift register
             
             clearInterruptFlag_SR();
+            releaseIrqLineIfNeeded();
             sr = value;
             return;
             
@@ -549,7 +560,12 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Writing 1 will clear the corresponding bit
             ifr &= ~value;
-            IRQ();
+            // IRQ();
+            if (ifr & ier) {
+                pullDownIrqLine();
+            } else {
+                releaseIrqLine();
+            }
             return;
             
         case 0xE: // IER - Interrupt Enable Register
@@ -563,7 +579,12 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
                 ier &= ~value;
             }
             ier &= 0x7F;
-            IRQ();
+            // IRQ();
+            if (ifr & ier) {
+                pullDownIrqLine();
+            } else {
+                releaseIrqLine();
+            }
             return;
             
         case 0xF: // ORA - Output register A (no handshake)
@@ -604,6 +625,7 @@ VIA6522::pokeORA(uint8_t value, bool handshake)
             break;
     }
     
+    releaseIrqLineIfNeeded();
     ora = value;
     updatePA();
 }
@@ -639,6 +661,7 @@ VIA6522::pokeORB(uint8_t value)
             break;
     }
     
+    releaseIrqLineIfNeeded();
     orb = value;
     updatePB();
 }
@@ -725,7 +748,9 @@ VIA6522::setCA1(bool value)
     
     // Set interrupt flag
     setInterruptFlag_CA1();
-    
+    if (GET_BIT(ier, 1)) {
+        delay |= VIAInterrupt1;
+    }
     // Check for handshake mode (ctrl == 100b)
     // In handshake mode, CA2 goes high on an active transition of CA1
     
@@ -748,7 +773,10 @@ VIA6522::setCA2(bool value)
     if (!active) return;
     
     // Set interrupt flag
-    setInterruptFlag_CA1();
+    setInterruptFlag_CA2();
+    if (GET_BIT(ier, 0)) {
+        delay |= VIAInterrupt1;
+    }
 }
 
 void
@@ -765,6 +793,9 @@ VIA6522::setCB1(bool value)
     
     // Set interrupt flag
     setInterruptFlag_CB1();
+    if (GET_BIT(ier, 4)) {
+        delay |= VIAInterrupt1;
+    }
     
     // Check for handshake mode (ctrl == 100b)
     // In handshake mode, CB2 goes high on an active transition of CB1
@@ -787,6 +818,9 @@ VIA6522::setCB2(bool value)
     
     // Set interrupt flag
     setInterruptFlag_CB2();
+    if (GET_BIT(ier, 3)) {
+        delay |= VIAInterrupt1;
+    }
 }
 
 void
