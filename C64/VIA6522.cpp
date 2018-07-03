@@ -204,17 +204,6 @@ VIA6522::executeTimer2()
     }
 }
 
-/*
-void
-VIA6522::IRQ() {
-    if (ifr & ier) {
-        pullDownIrqLine();
-    } else {
-        delay |= VIAClrInterrupt0;
-        // releaseIrqLine();
-    }
-}
-*/
 
 //
 // Peeking and poking
@@ -353,11 +342,6 @@ VIA6522::peekORA(bool handshake)
     updatePA();
     
     // Update input register
-    // "As long as the interrupt flag is set, the data on the peripheral pins
-    //  can change without affecting the data in the latches."
-    // "As long as this bit is a 0, the latches will directly reflect the data
-    //  on the pins."
-    // if (!interruptFlagCA1() || !inputLatchingEnabledA()) {
     if (!inputLatchingEnabledA()) {
         ira = pa;
     }
@@ -400,11 +384,6 @@ VIA6522::peekORB()
     updatePB();
     
     // Update input register
-    // "As long as the interrupt flag is set, the data on the peripheral pins
-    //  can change without affecting the data in the latches."
-    // "As long as this bit is a 0, the latches will directly reflect the data
-    //  on the pins."
-    //if (!interruptFlagCB1() || !inputLatchingEnabledB()) {
     if (!inputLatchingEnabledB()) {
         irb = pb;
     }
@@ -959,7 +938,7 @@ uint8_t
 VIA2::portAexternal()
 {
     // return ira; // Change to readMode() ? readShiftReg : 0xFF when latching is implemented.
-    return c64->floppy.readMode() ? c64->floppy.readShiftreg : 0xFF;
+    return c64->floppy.readShiftreg & 0xFF;
 }
 
 uint8_t
@@ -1027,10 +1006,10 @@ VIA2::updatePB()
         if (newPos != oldPos) {
             if (newPos == ((oldPos + 1) & 0x03)) {
                 c64->floppy.moveHeadUp();
-                assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
+                // assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
             } else if (newPos == ((oldPos - 1) & 0x03)) {
                 c64->floppy.moveHeadDown();
-                assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
+                // assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
             } else {
                 warn("Unexpected stepper motor control sequence\n");
             }

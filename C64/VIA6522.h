@@ -364,10 +364,6 @@ public:
     // void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) releaseIrqLine(); }
     void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
 
-    /*! @brief    Updates the IRQ line
-     *  @details  This method is invoked whenever register IFR or register IER changes.
-     */
-    // void IRQ();
 
     // |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
     // ---------------------------------------------------------------------------------
