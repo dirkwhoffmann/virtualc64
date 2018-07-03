@@ -55,9 +55,10 @@ public:
     typedef enum : uint8_t {
         CIA = 0x01,
         VIC = 0x02,
-        VIA = 0x04,
-        EXPANSION = 0x08,
-        KEYBOARD = 0x10
+        VIA1 = 0x04,
+        VIA2 = 0x08,
+        EXPANSION = 0x10,
+        KEYBOARD = 0x20
     } InterruptSource;
     
 	//! @brief    Reference to the connected virtual memory

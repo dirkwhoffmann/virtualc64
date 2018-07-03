@@ -330,6 +330,12 @@ public:
     // Interrupt handling
     //
 
+    //! @brief    Pulls down the IRQ line
+    virtual void pullDownIrqLine() = 0;
+
+    //! @brief    Releases the IRQ line
+    virtual void releaseIrqLine() = 0;
+
     /*! @brief    Updates the IRQ line
      *  @details  This method is invoked whenever register IFR or register IER changes.
      */
@@ -398,6 +404,8 @@ public:
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
+    void pullDownIrqLine();
+    void releaseIrqLine();
 };
 
 /*! @brief   Second virtual VIA6522 controller
@@ -415,6 +423,8 @@ public:
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
+    void pullDownIrqLine();
+    void releaseIrqLine();
 };
 
 #endif

@@ -123,7 +123,7 @@ VIA6522::execute()
     
     // Trigger interrupt if requested
     if (delay & VIAInterrupt1) {
-        c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
+        pullDownIrqLine();
     }
     
     // Set or clear CA2 or CB2 if requested
@@ -200,9 +200,9 @@ VIA6522::executeTimer2()
 void
 VIA6522::IRQ() {
     if (ifr & ier) {
-        c64->floppy.cpu.pullDownIrqLine(CPU::VIA);
+        pullDownIrqLine();
     } else {
-        c64->floppy.cpu.releaseIrqLine(CPU::VIA);
+        releaseIrqLine();
     }
 }
 
@@ -794,6 +794,17 @@ VIA6522::setCB2out(bool value)
     cb2_out = value;
 }
 
+void
+VIA1::pullDownIrqLine() {
+    c64->floppy.cpu.pullDownIrqLine(CPU::VIA1);
+}
+
+void
+VIA1::releaseIrqLine() {
+    c64->floppy.cpu.releaseIrqLine(CPU::VIA1);
+}
+
+
 //
 // VIA 1
 //
@@ -950,3 +961,15 @@ VIA2::updatePB()
         }
     }
 }
+
+void
+VIA2::pullDownIrqLine() {
+    c64->floppy.cpu.pullDownIrqLine(CPU::VIA2);
+}
+
+void
+VIA2::releaseIrqLine() {
+    c64->floppy.cpu.releaseIrqLine(CPU::VIA2);
+}
+
+
