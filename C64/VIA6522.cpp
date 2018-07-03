@@ -51,6 +51,7 @@ VIA6522::VIA6522()
         { &acr,             sizeof(acr),            CLEAR_ON_RESET },
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
         { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
+        { &newifr,          sizeof(newifr),         CLEAR_ON_RESET },
         { &sr,              sizeof(sr),             CLEAR_ON_RESET },
         { &delay,           sizeof(delay),          CLEAR_ON_RESET },
         { &feed,            sizeof(feed),           CLEAR_ON_RESET },
@@ -107,6 +108,8 @@ VIA6522::dumpState()
 void
 VIA6522::execute()
 {
+    newifr = 0;
+    
     // Execute timers
     executeTimer1();
     executeTimer2();
@@ -117,13 +120,17 @@ VIA6522::execute()
     */
     
     // Check for interrupt condition
-    if (ifr & ier) {
+    ifr |= newifr;
+    if (newifr & ier) {
         delay |= VIAInterrupt0;
+    } else {
+        // releaseIrqLine();
     }
     
     // Trigger interrupt if requested
     if (delay & VIAInterrupt1) {
-        pullDownIrqLine();
+        // if (ifr & ier)
+            pullDownIrqLine();
     }
     
     // Set or clear CA2 or CB2 if requested
@@ -161,7 +168,7 @@ VIA6522::executeTimer1()
         if (!(feed & VIAPostOneShotA0)) {
 
             // Set interrupt flag
-            SET_BIT(ifr, 6);
+            SET_BIT(newifr, 6);
             
             // Toggle PB7 output bit
             feed ^= VIAPB7out0;
@@ -189,7 +196,7 @@ VIA6522::executeTimer2()
         if (!(delay & VIAPostOneShotB0)) {
             
             // Set interrupt flag
-            SET_BIT(ifr,5);
+            SET_BIT(newifr,5);
             
             // Prevent further interrupts
             feed |= VIAPostOneShotB0;
@@ -796,12 +803,12 @@ VIA6522::setCB2out(bool value)
 
 void
 VIA1::pullDownIrqLine() {
-    c64->floppy.cpu.pullDownIrqLine(CPU::VIA1);
+    c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA1);
 }
 
 void
 VIA1::releaseIrqLine() {
-    c64->floppy.cpu.releaseIrqLine(CPU::VIA1);
+    c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA1);
 }
 
 
@@ -964,12 +971,12 @@ VIA2::updatePB()
 
 void
 VIA2::pullDownIrqLine() {
-    c64->floppy.cpu.pullDownIrqLine(CPU::VIA2);
+    c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA2);
 }
 
 void
 VIA2::releaseIrqLine() {
-    c64->floppy.cpu.releaseIrqLine(CPU::VIA2);
+    c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA2);
 }
 
 

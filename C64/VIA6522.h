@@ -181,6 +181,9 @@ public:
     //! @brief    Interrupt flag register
     uint8_t ifr;
 
+    //! @brief    Debugging. Mimic Hoxs64 behaviour
+    uint8_t newifr;
+    
     //! @brief    Shift register
     uint8_t sr;
     
