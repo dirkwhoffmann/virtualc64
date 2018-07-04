@@ -110,7 +110,6 @@ void
 VC1541::setClockFrequency(uint32_t frequency)
 {
     durationOfOneCpuCycle = 1000000000000 / frequency;
-    // durationOfOneCpuCycle = 1000000;
     debug("Duration a CPU cycle is %lld pico seconds.\n", durationOfOneCpuCycle);
 }
 
@@ -125,6 +124,7 @@ VC1541::dumpState()
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
     mem.dumpState();
+    cpu.startTracing();
 }
 
 void
@@ -219,7 +219,7 @@ VC1541::executeUF4()
             //
             //           74LS191                             ---
             //           -------               VIA2::CA2 --o|   |
-            //  SYNC --o| Load  |               UF4::QB2 --o| & |o-- Byte Ready
+            //  SYNC --o| Load  |                UF4::QB --o| & |o-- Byte Ready
             //    QB ---| Clk   |                        ---|   |
             //          |    QD |   ---                  |   ---
             //          |    QC |--|   |    ---          |   ---

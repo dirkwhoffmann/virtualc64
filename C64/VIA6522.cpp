@@ -153,6 +153,13 @@ VIA6522::execute()
         if (delay & (VIACB2Trans1)) { toggleCB2(); }
     }
     
+    // Set V flag if needed
+    /*
+    if (unlikely(delay & VIASetVFlag1)) {
+        c64->floppy.cpu.setV(1);
+    }
+    */
+    
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
 }
@@ -1048,7 +1055,6 @@ VIA1::updatePB()
 {
     VIA6522::updatePB();
     c64->iec.updateDevicePins(orb, ddrb);
-    // VIA6522::updatePB();
 }
 
 //
@@ -1158,6 +1164,7 @@ VIA2::updatePB()
 void
 VIA2::CA1LowAction()
 {
+    // delay |= VIASetVFlag1;
     c64->floppy.cpu.setV(1);
 }
 

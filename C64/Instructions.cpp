@@ -489,17 +489,16 @@ CPU::executeOneCycle()
                 
                 recordInstruction();
             
-                /*
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
+                if (this == &c64->floppy.cpu)
                 msg("%s: %s %s %s   %s %s %s %s %s %s\n",
                         instr.pc,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                */
             }
             
             // Check breakpoint tag
