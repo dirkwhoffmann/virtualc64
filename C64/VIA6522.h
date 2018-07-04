@@ -52,8 +52,9 @@ class VC1541;
 #define VIAPB7out0       (1ULL << 22) // Current value of PB7 pin (if output is enabled)
 #define VIAClrInterrupt0 (1ULL << 23) // Releases the interrupt line
 #define VIAClrInterrupt1 (1ULL << 24)
-
-#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0)
+#define VIACA1Trans0     (1ULL << 25) // Emulates a change on pin CA1
+#define VIACA1Trans1     (1ULL << 26)
+#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -88,6 +89,7 @@ public:
     bool ca1;
     bool ca2;
     bool ca2_out;
+    bool ca1_prev; // from Hoxs64
     
     //! @brief    Peripheral port B
     /*! @details  "The Peripheral B port consists of 8 lines which can be
@@ -340,7 +342,15 @@ public:
     // Peripheral control lines
     //
 
-    void setCA1(bool value);
+    //! @brief    Simulates an edge on the CA1 pin
+    void toggleCA1();
+    
+    //! @brief    Custom action on a falling edge of the CA1 pin
+    virtual void CA1LowAction() { };
+    
+    // void setCA1(bool value); // Deprecated
+    void setCA1early(bool value);
+    void setCA1late(bool value);
     void setCA2(bool value);
     void setCB1(bool value);
     void setCB2(bool value);
@@ -470,6 +480,7 @@ public:
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
+    void CA1LowAction();
     void pullDownIrqLine();
     void releaseIrqLine();
 };

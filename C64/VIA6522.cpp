@@ -30,6 +30,7 @@ VIA6522::VIA6522()
     SnapshotItem items[] = {
         { &pa,              sizeof(pa),             CLEAR_ON_RESET },
         { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
+        { &ca1_prev,        sizeof(ca1_prev),       CLEAR_ON_RESET },
         { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
         { &ca2_out,         sizeof(ca2_out),        CLEAR_ON_RESET },
         { &pb,              sizeof(pb),             CLEAR_ON_RESET },
@@ -139,6 +140,11 @@ VIA6522::execute()
         if (delay & VIAClearCA2out1) { setCA2out(false); }
         if (delay & VIASetCB2out1) { setCB2out(true); }
         if (delay & VIAClearCB2out1) { setCB2out(false); }
+    }
+    
+    // Simulate transitions on CA and CB pins
+    if (delay & (VIACA1Trans1)) {
+        if (delay & (VIACA1Trans1)) { toggleCA1(); }
     }
     
     // Move trigger event flags left and feed in new bits
@@ -738,6 +744,41 @@ VIA6522::updatePB()
 }
 
 void
+VIA6522::toggleCA1()
+{
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = ca1Control();
+    bool active = (ca1_prev && ctrl == 0) || (!ca1_prev && ctrl == 1);
+    ca1_prev = !ca1_prev;
+    
+    if (!ca1_prev)
+        CA1LowAction();
+    
+    if (!active)
+        return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CA1();
+    if (GET_BIT(ier, 1)) {
+        delay |= VIAInterrupt1;
+    }
+    
+    // Latch peripheral port into input register if latching is enabled
+    if (inputLatchingEnabledA()) {
+        updatePA();
+        // debug("LATCH IN VALUE ca1 = %d PA = %02X readshift = %02X\n", ca1, pa, c64->floppy.readShiftreg);
+        ira = pa;
+    }
+    
+    // Check for handshake mode with CA2
+    if (ca2Control() == 0x4) {
+        // debug("HANDSHAKING\n");
+        setCA2out(true);
+    }
+}
+
+/*
+void
 VIA6522::setCA1(bool value)
 {
     if (ca1 == value) return;
@@ -767,6 +808,25 @@ VIA6522::setCA1(bool value)
         // debug("HANDSHAKING\n");
         setCA2out(true);
     }
+}
+*/
+void
+VIA6522::setCA1early(bool value)
+{
+    if (ca1_prev != value)
+        delay |= VIACA1Trans1;
+    else
+        delay &= ~VIACA1Trans1;
+}
+
+void
+VIA6522::setCA1late(bool value)
+{
+    uint8_t next = (delay & VIACA1Trans1) ? !ca1_prev : ca1_prev;
+    if (next != value)
+        delay |= VIACA1Trans0;
+    else
+        delay &= ~VIACA1Trans0;
 }
 
 void
@@ -1015,6 +1075,12 @@ VIA2::updatePB()
             }
         }
     }
+}
+
+void
+VIA2::CA1LowAction()
+{
+    c64->floppy.cpu.setV(1);
 }
 
 void
