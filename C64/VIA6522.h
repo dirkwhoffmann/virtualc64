@@ -54,7 +54,14 @@ class VC1541;
 #define VIAClrInterrupt1 (1ULL << 24)
 #define VIACA1Trans0     (1ULL << 25) // Emulates a change on pin CA1
 #define VIACA1Trans1     (1ULL << 26)
-#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
+#define VIACA2Trans0     (1ULL << 27) // Emulates a change on pin CA2
+#define VIACA2Trans1     (1ULL << 28)
+#define VIACB1Trans0     (1ULL << 29) // Emulates a change on pin CB1
+#define VIACB1Trans1     (1ULL << 30)
+#define VIACB2Trans0     (1ULL << 31) // Emulates a change on pin CB2
+#define VIACB2Trans1     (1ULL << 32)
+
+#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0 | VIACA2Trans0 | VIACB1Trans0 | VIACB2Trans0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -90,7 +97,10 @@ public:
     bool ca2;
     bool ca2_out;
     bool ca1_prev; // from Hoxs64
-    
+    bool ca2_prev; // from Hoxs64
+    bool cb1_prev; // from Hoxs64
+    bool cb2_prev; // from Hoxs64
+
     //! @brief    Peripheral port B
     /*! @details  "The Peripheral B port consists of 8 lines which can be
      *             individually programmed to act as an input or an output
@@ -344,7 +354,16 @@ public:
 
     //! @brief    Simulates an edge on the CA1 pin
     void toggleCA1();
-    
+
+    //! @brief    Simulates an edge on the CA2 pin
+    void toggleCA2();
+
+    //! @brief    Simulates an edge on the CB1 pin
+    void toggleCB1();
+
+    //! @brief    Simulates an edge on the CB2 pin
+    void toggleCB2();
+
     //! @brief    Custom action on a falling edge of the CA1 pin
     virtual void CA1LowAction() { };
     
@@ -411,16 +430,16 @@ public:
     bool interruptFlagCB2() { return !!GET_BIT(ifr, 3); }
 
     // void setInterruptFlag_CB2() { SET_BIT(ifr,3); IRQ(); }
-    void setInterruptFlag_CB2() { SET_BIT(ifr,3); }
+    void setInterruptFlag_CB2() { SET_BIT(ifr, 3); }
     // void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); IRQ(); }
-    void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); }
+    void clearInterruptFlag_CB2() { CLR_BIT(ifr, 3); }
 
     // Shift register - Set by:     8 shifts completed
     //                  Cleared by: Read or write to register 10 (0xA) (shift register)
     
     // NOT USED, YET: void setInterruptFlag_SR() { SET_BIT(ifr,2); IRQ(); }
     // void clearInterruptFlag_SR() { CLR_BIT(ifr,2); IRQ(); }
-    void clearInterruptFlag_SR() { CLR_BIT(ifr,2); }
+    void clearInterruptFlag_SR() { CLR_BIT(ifr, 2); }
 
     // CA1 - Set by:     Active edge on CA1
     //       Cleared by: Read or write to register 1 (ORA)
@@ -429,9 +448,9 @@ public:
     bool interruptFlagCA1() { return !!GET_BIT(ifr, 1); }
 
     // void setInterruptFlag_CA1() { SET_BIT(ifr,1); IRQ(); }
-    void setInterruptFlag_CA1() { SET_BIT(ifr,1); }
+    void setInterruptFlag_CA1() { SET_BIT(ifr, 1); }
     // void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); IRQ(); }
-    void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); }
+    void clearInterruptFlag_CA1() { CLR_BIT(ifr, 1); }
 
     // CA2 - Set by:     Active edge on CA2
     //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")

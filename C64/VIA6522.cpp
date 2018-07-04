@@ -32,10 +32,13 @@ VIA6522::VIA6522()
         { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
         { &ca1_prev,        sizeof(ca1_prev),       CLEAR_ON_RESET },
         { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
+        { &ca2_prev,        sizeof(ca2_prev),       CLEAR_ON_RESET },
         { &ca2_out,         sizeof(ca2_out),        CLEAR_ON_RESET },
         { &pb,              sizeof(pb),             CLEAR_ON_RESET },
         { &cb1,             sizeof(cb1),            CLEAR_ON_RESET },
+        { &cb1_prev,        sizeof(cb1_prev),       CLEAR_ON_RESET },
         { &cb2,             sizeof(cb2),            CLEAR_ON_RESET },
+        { &cb2_prev,        sizeof(cb2_prev),       CLEAR_ON_RESET },
         { &cb2_out,         sizeof(cb2_out),        CLEAR_ON_RESET },
         { &ddra,            sizeof(ddra),           CLEAR_ON_RESET },
         { &ddrb,            sizeof(ddrb),           CLEAR_ON_RESET },
@@ -122,29 +125,32 @@ VIA6522::execute()
     
     // Check for interrupt condition
     ifr |= newifr;
-    if (newifr & ier) {
+    if (unlikely(newifr & ier)) {
         delay |= VIAInterrupt0;
     }
     
     // Trigger interrupt if requested
-    if (delay & VIAClrInterrupt1) {
+    if (unlikely(delay & VIAClrInterrupt1)) {
         releaseIrqLine();
     }
-    if (delay & VIAInterrupt1) {
+    if (unlikely(delay & VIAInterrupt1)) {
         pullDownIrqLine();
     }
     
     // Set or clear CA2 or CB2 if requested
-    if (delay & (VIASetCA2out1 | VIAClearCA2out1 | VIASetCB2out1 | VIAClearCB2out1)) {
+    if (unlikely(delay & (VIASetCA2out1 | VIAClearCA2out1 | VIASetCB2out1 | VIAClearCB2out1))) {
         if (delay & VIASetCA2out1) { setCA2out(true); }
         if (delay & VIAClearCA2out1) { setCA2out(false); }
         if (delay & VIASetCB2out1) { setCB2out(true); }
         if (delay & VIAClearCB2out1) { setCB2out(false); }
     }
     
-    // Simulate transitions on CA and CB pins
-    if (delay & (VIACA1Trans1)) {
+    // Simulate transitions on pins CA1, CA2, CB1, and CB2
+    if (unlikely(delay & (VIACA1Trans1 | VIACA2Trans1 | VIACB1Trans1 | VIACB2Trans1))) {
         if (delay & (VIACA1Trans1)) { toggleCA1(); }
+        if (delay & (VIACA2Trans1)) { toggleCA2(); }
+        if (delay & (VIACB1Trans1)) { toggleCB1(); }
+        if (delay & (VIACB2Trans1)) { toggleCB2(); }
     }
     
     // Move trigger event flags left and feed in new bits
@@ -766,16 +772,86 @@ VIA6522::toggleCA1()
     // Latch peripheral port into input register if latching is enabled
     if (inputLatchingEnabledA()) {
         updatePA();
-        // debug("LATCH IN VALUE ca1 = %d PA = %02X readshift = %02X\n", ca1, pa, c64->floppy.readShiftreg);
         ira = pa;
     }
     
     // Check for handshake mode with CA2
-    if (ca2Control() == 0x4) {
-        // debug("HANDSHAKING\n");
+    if (ca2Control() == 4) {
         setCA2out(true);
     }
 }
+
+void
+VIA6522::toggleCA2()
+{
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = ca2Control();
+    bool active = (ca2_prev && (ctrl == 0 || ctrl == 1)) || (!ca2_prev && (ctrl == 2 || ctrl == 3));
+    
+    ca2_prev = !ca2_prev;
+    
+    if (!active)
+        return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CA2();
+    if (GET_BIT(ier, 0)) {
+        delay |= VIAInterrupt1;
+    }
+}
+
+void
+VIA6522::toggleCB1()
+{
+    // Check for active transition (positive or negative edge)
+    uint8_t ctrl = cb1Control();
+    bool active = (cb1_prev && ctrl == 0) || (!cb1_prev && ctrl == 1);
+    cb1_prev = !cb1_prev;
+    
+    if (!ca1_prev)
+        CA1LowAction();
+    
+    if (!active)
+        return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CB1();
+    if (GET_BIT(ier, 4)) {
+        delay |= VIAInterrupt1;
+    }
+    
+    // Latch peripheral port into input register if latching is enabled
+    if (inputLatchingEnabledB()) {
+        updatePB();
+        irb = pb;
+    }
+    
+    // Check for handshake mode with CB2
+    if (cb2Control() == 0x4)
+        setCB2out(true);
+}
+
+void
+VIA6522::toggleCB2()
+{
+    // Check for active transition
+    uint8_t ctrl = cb2Control();
+    bool active = (cb2_prev && (ctrl == 0 || ctrl == 1)) || (!cb2_prev && (ctrl == 2 || ctrl == 3));
+    
+    cb2_prev = !cb2_prev;
+    
+    if (!active)
+        return;
+    
+    // Set interrupt flag
+    setInterruptFlag_CB2();
+    if (GET_BIT(ier, 3)) {
+        delay |= VIAInterrupt1;
+    }
+}
+
+
+
 
 /*
 void
@@ -848,6 +924,7 @@ VIA6522::setCA2(bool value)
     }
 }
 
+/*
 void
 VIA6522::setCB1(bool value)
 {
@@ -876,6 +953,7 @@ VIA6522::setCB1(bool value)
     if (cb2Control() == 0x4)
         setCB2out(true);
 }
+*/
 
 void
 VIA6522::setCB2(bool value)

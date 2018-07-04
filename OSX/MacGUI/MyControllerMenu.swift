@@ -550,7 +550,7 @@ extension MyController {
     @IBAction func dumpC64Memory(_ sender: Any!) { c64.mem.dump() }
     @IBAction func dumpVC1541(_ sender: Any!) { c64.vc1541.dump() }
     @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.vc1541.dump() }
-    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.dump() }
+    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.via1.dump() }
     @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.vc1541.via2.dump() }
     @IBAction func dumpDisk(_ sender: Any!) { c64.vc1541.disk.dump() }
     @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump() }
