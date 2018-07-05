@@ -73,6 +73,9 @@ public:
 
 private:
     
+    //! @brief    Elapsed C64 clock cycles since power up
+    uint64_t cycle;
+
 	//! @brief    Accumulator
 	uint8_t A;
     

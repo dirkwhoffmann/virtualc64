@@ -313,10 +313,11 @@ public:
     //
     
     //! @brief    Reads a time delayed variable.
-    #define read8_delayed(var) ((c64->cycle >= var.timeStamp) ? var.value : var.prevValue)
+    #define read8_delayed(var, cycle) \
+        ((cycle >= var.timeStamp) ? var.value : var.prevValue)
 
     //! @brief    Writes to a time delayed variable.
-    void write8_delayed(uint8_delayed &var, uint8_t value);
+    void write8_delayed(uint8_delayed &var, uint8_t value, uint64_t cycle);
 
     //! @brief    Initializes a time delayed variable.
     void init8_delayed(uint8_delayed &var, uint8_t value);

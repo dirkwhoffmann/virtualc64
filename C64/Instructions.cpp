@@ -451,6 +451,9 @@ CPU::registerIllegalInstructions()
 bool
 CPU::executeOneCycle()
 {
+    assert(this != &c64->cpu || cycle == c64->cycle);
+    cycle++;
+    
     switch (next) {
             
         case fetch:
