@@ -139,38 +139,29 @@ VC1541::powerUp()
 bool
 VC1541::executeOneCycle()
 {
-    uint8_t result;
+    uint8_t result = CPU_OK;
     
-    // Execute CPU and VIAs
     nextClock -= durationOfOneCpuCycle;
-    while (nextClock < 0) {
-        nextClock += 1000000; // 1 MHz
-        via1.execute();
-        via2.execute();
-        result = cpu.executeOneCycle();
-    }
-    
-    // Only proceed if disk is rotating
-    if (!spinning)
-        return result;
-    
-    // Execute counter UE7. Each carry pulse triggers counter UF4
     nextCarry -= durationOfOneCpuCycle;
-    /*
-    while (nextCarry < 0) {
-        nextCarry += delayBetweenTwoCarryPulses[zone];
-        executeUF4();
-    }
-    */
-    if (likely(nextCarry < 0)) {
-        nextCarry += delayBetweenTwoCarryPulses[zone];
-        executeUF4();
-        if (unlikely(nextCarry < 0)) {
-            nextCarry += delayBetweenTwoCarryPulses[zone];
-            executeUF4();
+    
+    while (nextClock < 0 || nextCarry < 0) {
+        
+        if (nextClock <= nextCarry) {
+            
+            // Execute CPU and VIAs
+            nextClock += 1000000;
+            via1.execute();
+            via2.execute();
+            result = cpu.executeOneCycle();
+   
+        } else {
+            
+            // Execute read/write logic
+             nextCarry += delayBetweenTwoCarryPulses[zone];
+            if (spinning)
+                executeUF4();
         }
     }
-    assert(nextCarry >= 0);
     
     return result;
 }
@@ -185,9 +176,9 @@ VC1541::executeUF4()
     // Later, we can decouple timing here to emulate asynchronicity.
     if (carryCounter++ % 4 == 0) {
         
-        // When a bit comes in, the following happens:
-        //   If the bit equals 0, nothing happens.
-        //   If the bit equals 1, counter UF4 is reset.
+        // When a bit comes in and ...
+        //   ... it's value equals 0, nothing happens.
+        //   ... it's value equals 1, counter UF4 is reset.
         if (readMode() && readBitFromHead()) {
             counterUF4 = 0;
         }
