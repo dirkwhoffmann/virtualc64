@@ -130,7 +130,7 @@ CPU::getInfo()
 {
     CPUInfo info;
     
-    info.cycle = c64->cycle;
+    info.cycle = cycle;
     info.pc = PC_at_cycle_0;
     info.a = A;
     info.x = X;
@@ -187,12 +187,12 @@ CPU::setRDY(bool value)
     if (rdyLine)
     {
         rdyLine = value;
-        if (!rdyLine) rdyLineDown = c64->cycle;
+        if (!rdyLine) rdyLineDown = cycle;
     }
     else
     {
         rdyLine = value;
-        if (rdyLine) rdyLineUp = c64->cycle;
+        if (rdyLine) rdyLineUp = cycle;
     }
 }
 
@@ -274,7 +274,7 @@ CPU::recordInstruction()
     uint8_t opcode = mem->spypeek(PC_at_cycle_0);
     unsigned length = getLengthOfInstruction(opcode);
     
-    i.cycle = c64->cycle; 
+    i.cycle = cycle;
     i.pc = PC_at_cycle_0;
     i.byte1 = opcode;
     i.byte2 = length > 1 ? mem->spypeek(i.pc + 1) : 0;

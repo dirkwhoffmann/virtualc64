@@ -451,8 +451,8 @@ CPU::registerIllegalInstructions()
 bool
 CPU::executeOneCycle()
 {
-    assert(this != &c64->cpu || cycle == c64->cycle);
     cycle++;
+    assert(this != &c64->cpu || cycle == c64->cycle);
     
     switch (next) {
             
@@ -2923,7 +2923,7 @@ CPU::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            data = A & X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -2952,7 +2952,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            data = A & X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -2989,7 +2989,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            data = X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3026,7 +3026,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = Y & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            data = Y & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3157,7 +3157,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = A & X & (rdyLineUp == c64->cycle ? 0xFF : addr_hi + 1);
+            data = A & X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
