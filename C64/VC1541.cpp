@@ -41,6 +41,7 @@ VC1541::VC1541()
         
         // Internal state
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
+        { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
@@ -138,17 +139,22 @@ VC1541::powerUp()
 bool
 VC1541::executeOneCycle()
 {
-    // Execute sub components
-    via1.execute();
-    via2.execute();
-    uint8_t result = cpu.executeOneCycle();
+    uint8_t result;
     
-    // Only proceed if drive is active
+    // Execute CPU and VIAs
+    nextClock -= durationOfOneCpuCycle;
+    while (nextClock < 0) {
+        nextClock += 1000000; // 1 MHz
+        via1.execute();
+        via2.execute();
+        result = cpu.executeOneCycle();
+    }
+    
+    // Only proceed if disk is rotating
     if (!spinning)
         return result;
     
-    // Emulate pending carry pulses on counter UE7
-    // Each carry pulse triggers counter UF4
+    // Execute counter UE7. Each carry pulse triggers counter UF4
     nextCarry -= durationOfOneCpuCycle;
     /*
     while (nextCarry < 0) {

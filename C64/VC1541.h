@@ -91,18 +91,30 @@ private:
     //! @brief    Duration of a single CPU clock cycle in pico seconds
     uint64_t durationOfOneCpuCycle;
     
+    /*! @brief    Indicates when the next drive clock cycle occurs.
+     *  @details  The VC1541 drive is clocked by 16 MHz. The clock signal is
+     *            fed into a counter which serves as a frequency divider. It's
+     *            output is used to clock the drive's CPU and the two VIA chips.
+     */
+    int64_t nextClock;
+     
     /*! @brief    Indicates when the next carry output pulse occurs on UE7.
-     *  @details  The VC1541 drive is clocked by 16 Mhz. The clock signal is
-     *            fed into UE7, a 74SL193 4-bit couter, which generates a
-     *            carry output signal on overflow. The pre-load inputs of this
-     *            counter are connected to PB5 and PB6 of VIA2 (the 'density
-     *            bits'). This means that a carry signal is generated every
-     *            13th cycle (from the 16 Mhz clock) when both density bits are
-     *            0 and every 16th cycle when both density bits are 1. The carry
-     *            signal drives uf4, a counter of the same type.
+     *  @details  The 16 MHz signal is also fed into UE7, a 74SL193 4-bit
+     *            couter, which generates a carry output signal on overflow.
+     *            The pre-load inputs of this counter are connected to PB5 and
+     *            PB6 of VIA2 (the 'density bits'). This means that a carry
+     *            signal is generated every 13th cycle (from the 16 Mhz clock)
+     *            when both density bits are 0 and every 16th cycle when both
+     *            density bits are 1. The carry signal drives uf4, a counter of
+     *            the same type.
      */
     int64_t nextCarry;
-    int carryCounter; // REMOVE LATER
+    
+    /*! @brief    Counts the number of carry pulses from UE7.
+     *  @details  In a perfect setting, a new bit is read from or written to the
+     *            drive after four carry pulses.
+     */
+    int64_t carryCounter;
     
     /*! @brief    The second 74SL193 4-bit counter on the logic board.
      *  @details  This counter is driven by the carry output of UE7. It has
