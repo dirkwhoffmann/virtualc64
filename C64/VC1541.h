@@ -56,6 +56,8 @@ public:
     //! @brief    Disk in this drive (single sided 5,25" floppy disk)
     Disk disk;
     
+    uint64_t driveClk; // REMOVE LATER
+
     //
     // Drive status
     //
@@ -110,6 +112,8 @@ private:
      */
     int64_t nextCarry;
     
+public:
+    
     /*! @brief    Counts the number of carry pulses from UE7.
      *  @details  In a perfect setting, a new bit is read from or written to the
      *            drive after four carry pulses.
@@ -124,6 +128,9 @@ private:
      *            the input shift register.
      */
     uint4_t counterUF4;
+    
+    uint64_t byteReadyCycle; // FOR DEBUGGING. REMOVE.
+private:
     
     //
     // Read/Write logic

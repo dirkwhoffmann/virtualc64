@@ -57,6 +57,9 @@ VC1541::VC1541()
         { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
         { &byteReady,               sizeof(byteReady),              CLEAR_ON_RESET },
 
+        // REMOVE
+        { &driveClk,                sizeof(driveClk),               CLEAR_ON_RESET },
+
         // Disk properties (will survive reset)
         { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
         { NULL,                     0,                              0 }};
@@ -125,7 +128,7 @@ VC1541::dumpState()
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
     mem.dumpState();
-    cpu.startTracing();
+    startTracing();
 }
 
 void
@@ -141,6 +144,14 @@ VC1541::executeOneCycle()
 {
     uint8_t result = CPU_OK;
     
+    /*
+    via1.execute();
+    via2.execute();
+    result = cpu.executeOneCycle();
+    */
+    
+    // nextClock -= 1000000;
+    // nextCarry -= 1000000;
     nextClock -= durationOfOneCpuCycle;
     nextCarry -= durationOfOneCpuCycle;
     
@@ -148,14 +159,18 @@ VC1541::executeOneCycle()
         
         if (nextClock <= nextCarry) {
             
+            driveClk++;
+            
             // Execute CPU and VIAs
             nextClock += 1000000;
             via1.execute();
             via2.execute();
             result = cpu.executeOneCycle();
-   
+            
         } else {
             
+            if (tracingEnabled()) debug("executeUF4()\n");
+
             // Execute read/write logic
              nextCarry += delayBetweenTwoCarryPulses[zone];
             if (spinning)
@@ -171,10 +186,11 @@ VC1541::executeUF4()
 {
     // Increase counter
     counterUF4++;
- 
+    carryCounter++;
+    
     // We assume that a new bit comes in every fourth cycle.
     // Later, we can decouple timing here to emulate asynchronicity.
-    if (carryCounter++ % 4 == 0) {
+    if (carryCounter % 4 == 0) {
         
         // When a bit comes in and ...
         //   ... it's value equals 0, nothing happens.
@@ -210,7 +226,7 @@ VC1541::executeUF4()
     switch (counterUF4 & 0x03) {
         
         case 0x00:
-        case 0x01:
+        // case 0x01:
             
             // Computation of the Byte Ready and the Load signal
             //
@@ -228,6 +244,9 @@ VC1541::executeUF4()
             // (1) Update value on Byte Ready line
             if (byteReadyCounter == 7 && via2.ca2_out)
                 clearByteReadyLine();
+            break;
+        
+        case 0x01:
             break;
             
         case 0x02:
