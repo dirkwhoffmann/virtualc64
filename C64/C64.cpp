@@ -125,6 +125,7 @@ C64::C64()
         { &alwaysWarp,          sizeof(alwaysWarp),          CLEAR_ON_RESET },
         { &warpLoad,            sizeof(warpLoad),            KEEP_ON_RESET },
         { &cycle,               sizeof(cycle),               CLEAR_ON_RESET },
+        { &elapsedTime,         sizeof(elapsedTime),         CLEAR_ON_RESET },
         { &durationOfHalfCycle, sizeof(durationOfHalfCycle), KEEP_ON_RESET },
         { &frame,               sizeof(frame),               CLEAR_ON_RESET },
         { &rasterline,          sizeof(rasterline),          CLEAR_ON_RESET },
@@ -446,6 +447,7 @@ C64::stepOver()
 // |   '-----'   |   '----------------'     '------'     '------'  |
 // '---------------------------------------------------------------'
 
+/*
 #define EXECUTE \
 cycle++; \
 if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++; \
@@ -454,11 +456,37 @@ if (!cpu.executeOneCycle()) result = false; \
 if (!floppy.executeOneCycle()) result = false; \
 datasette.execute(); \
 rasterlineCycle++;
+*/
+#define EXECUTE executeCommons();
+
+bool
+C64::executeCommons()
+{
+    bool result = true;
+    
+    cycle++;
+    if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
+    if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
+    //if (!cpu.executeOneCycle()) result = false;
+    result &= cpu.executeOneCycle();
+    datasette.execute();
+
+    elapsedTime += durationOfHalfCycle;
+    result &= floppy.executeUntilNew(elapsedTime);
+    iec.updateIecLines();
+    elapsedTime += durationOfHalfCycle;
+    result &= floppy.executeUntilNew(elapsedTime);
+    
+    // if (!floppy.executeOneCycle()) result = false;
+    
+    rasterlineCycle++;
+    return result;
+}
 
 bool
 C64::executeOneCycle()
 {
-    bool result = true; // Don't break execution
+    bool result = true;
     
     switch(rasterlineCycle) {
         case 1:

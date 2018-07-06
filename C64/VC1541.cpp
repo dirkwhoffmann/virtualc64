@@ -142,15 +142,6 @@ VC1541::executeOneCycle()
 {
     uint8_t result = true;
     
-    /*
-    via1.execute();
-    via2.execute();
-    result = cpu.executeOneCycle();
-    */
-    
-    // nextClock -= 1000000;
-    // nextCarry -= 1000000;
-    
     uint64_t half = elapsedTime + (durationOfOneCpuCycle / 2);
     elapsedTime += durationOfOneCpuCycle;
 
@@ -159,11 +150,37 @@ VC1541::executeOneCycle()
     result = executeUntil(elapsedTime);
 
     return true;
-    // return result;
 }
 
 bool
 VC1541::executeUntil(uint64_t targetTime)
+{
+    uint8_t result = true;
+    
+    while (nextClock < targetTime || nextCarry < targetTime) {
+        
+        if (nextClock <= nextCarry) {
+            
+            // Execute CPU and VIAs
+            nextClock += 1000000;
+            via1.execute();
+            via2.execute();
+            result = cpu.executeOneCycle();
+            
+        } else {
+            
+            // Execute read/write logic
+            nextCarry += delayBetweenTwoCarryPulses[zone];
+            if (spinning)
+                executeUF4();
+        }
+    }
+    
+    return result;
+}
+
+bool
+VC1541::executeUntilNew(uint64_t targetTime)
 {
     uint8_t result = true;
     

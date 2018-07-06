@@ -320,12 +320,14 @@ public:
 
     /*! @brief    Executes the virtual drive for one clock cycle
      *  @seealso  executeUF4
+     *  @deprecated Will be replaced by executeUntil
      */
     bool executeOneCycle();
 
     // EXPERIMENTAL
     bool executeUntil(uint64_t targetTime);
-    
+    bool executeUntilNew(uint64_t targetTime);
+
 private:
     
     //! @brief   Emulates a trigger event on the carry output pin of UE7.

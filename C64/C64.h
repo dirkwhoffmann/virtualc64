@@ -451,12 +451,14 @@ public:
     //! @brief    Executes until the end of the frame
     bool executeOneFrame();
 
-    
 private:
     
     //! @brief    Executes virtual C64 for one cycle
     bool executeOneCycle();
-    
+
+    //! @brief    Work horse for executeOneCycle()
+    bool executeCommons();
+
     //! @brief    Invoked before executing the first cycle of rasterline
     void beginOfRasterline();
     
