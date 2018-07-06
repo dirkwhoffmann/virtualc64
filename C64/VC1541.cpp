@@ -179,14 +179,11 @@ VC1541::executeUntil(uint64_t targetTime)
             
         } else {
             
-            // if (tracingEnabled()) debug("executeUF4()\n");
-            
             // Execute read/write logic
             nextCarry += delayBetweenTwoCarryPulses[zone];
             if (spinning)
                 executeUF4();
         }
-        // debug("***\n");
     }
     
     return result;

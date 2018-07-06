@@ -117,19 +117,20 @@ C64::C64()
     // Register snapshot items
     SnapshotItem items[] = {
  
-        { &wakeUpCycleCIA1, sizeof(wakeUpCycleCIA1),    CLEAR_ON_RESET },
-        { &idleCounterCIA1, sizeof(idleCounterCIA1),    CLEAR_ON_RESET },
-        { &wakeUpCycleCIA2, sizeof(wakeUpCycleCIA2),    CLEAR_ON_RESET },
-        { &idleCounterCIA2, sizeof(idleCounterCIA2),    CLEAR_ON_RESET },
-        { &warp,            sizeof(warp),               CLEAR_ON_RESET },
-        { &alwaysWarp,      sizeof(alwaysWarp),         CLEAR_ON_RESET },
-        { &warpLoad,        sizeof(warpLoad),           KEEP_ON_RESET },
-        { &cycle,           sizeof(cycle),              CLEAR_ON_RESET },
-        { &frame,           sizeof(frame),              CLEAR_ON_RESET },
-        { &rasterline,      sizeof(rasterline),         CLEAR_ON_RESET },
-        { &rasterlineCycle, sizeof(rasterlineCycle),    CLEAR_ON_RESET },
-        { &ultimax,         sizeof(ultimax),            CLEAR_ON_RESET },
-        { NULL,             0,                          0 }};
+        { &wakeUpCycleCIA1,     sizeof(wakeUpCycleCIA1),     CLEAR_ON_RESET },
+        { &idleCounterCIA1,     sizeof(idleCounterCIA1),     CLEAR_ON_RESET },
+        { &wakeUpCycleCIA2,     sizeof(wakeUpCycleCIA2),     CLEAR_ON_RESET },
+        { &idleCounterCIA2,     sizeof(idleCounterCIA2),     CLEAR_ON_RESET },
+        { &warp,                sizeof(warp),                CLEAR_ON_RESET },
+        { &alwaysWarp,          sizeof(alwaysWarp),          CLEAR_ON_RESET },
+        { &warpLoad,            sizeof(warpLoad),            KEEP_ON_RESET },
+        { &cycle,               sizeof(cycle),               CLEAR_ON_RESET },
+        { &durationOfHalfCycle, sizeof(durationOfHalfCycle), KEEP_ON_RESET },
+        { &frame,               sizeof(frame),               CLEAR_ON_RESET },
+        { &rasterline,          sizeof(rasterline),          CLEAR_ON_RESET },
+        { &rasterlineCycle,     sizeof(rasterlineCycle),     CLEAR_ON_RESET },
+        { &ultimax,             sizeof(ultimax),             CLEAR_ON_RESET },
+        { NULL,                 0,                           0 }};
     
     registerSnapshotItems(items, sizeof(items));
 
@@ -197,7 +198,16 @@ void C64::ping()
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
     putMessage(alwaysWarp ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
 }
+
+void
+C64::setClockFrequency(uint32_t frequency)
+{
+    VirtualComponent::setClockFrequency(frequency);
     
+    durationOfHalfCycle = 1000000000000 / frequency / 2;
+    debug("Duration of a CPU cycle is %lld pico seconds.\n", 2 * durationOfHalfCycle);
+}
+
 void 
 C64::dumpState() {
     msg("C64:\n");
@@ -391,28 +401,6 @@ C64::isHalted()
 {
     return p == NULL;
 }
-
-/*
-void
-C64::step()
-{
-    debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d, rdy = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle(),cpu.rdyLine);
-    
-    cpu.clearErrorState();
-    floppy.cpu.clearErrorState();
-    
-    // Execute next command
-    do {
-        executeOneCycle();
-    } while (!cpu.atBeginningOfNewCommand());
-           debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle());
-    
-    // We are now at cycle 0 of the next command
-    // Execute one more cycle (and stop in cycle 1)
-    executeOneCycle();
-           debug("Step (PC = %04X %04X cycle = %lld rasterline = %d rastercycle = %d)\n", cpu.getPC(), cpu.getPC_at_cycle_0(), getCycles(), getRasterline(), getRasterlineCycle());
-}
-*/
 
 void
 C64::step()

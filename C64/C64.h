@@ -189,9 +189,21 @@ public:
     // Executed cycle, rasterline, and frame
     //
     
-    //! @brief    Elapsed C64 clock cycles since power up
-    uint64_t cycle;
+    //! @brief    Elapsed time since power up in pico seconds
+    /*! @todo     Change unit to nano seconds
+     */
+    uint64_t elapsedTime;
 
+    //! @brief    Duration of half a CPU cycle in pico seconds
+    /*! @todo     Change unit to nano seconds
+     */
+    uint64_t durationOfHalfCycle;
+
+    //! @brief    Elapsed C64 clock cycles since power up
+    /*! @deprecated Use CPU::cycle of the C64 cpu which matches this value.
+     */
+    uint64_t cycle;
+    
     //! @brief    Total number of frames drawn since power up
     uint64_t frame;
     
@@ -299,13 +311,16 @@ public:
     //! @brief    Destructor
     ~C64();
 
-    //! @brief    Resets the virtual C64 and all of its sub components.
+    //! @brief    Method from VirtualComponent
     void reset();
      
-    //! @brief    Dumps current configuration into message queue
+    //! @brief    Method from VirtualComponent
     void ping();
 
-    //! @brief    Prints debugging information
+    //! @brief    Method from VirtualComponent
+    void setClockFrequency(uint32_t frequency);
+    
+    //! @brief    Method from VirtualComponent
     void dumpState();
     
     //! @brief    Returns true if the executable was compiled for development

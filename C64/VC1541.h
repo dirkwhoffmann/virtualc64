@@ -133,7 +133,6 @@ public:
      */
     uint4_t counterUF4;
     
-    uint64_t byteReadyCycle; // FOR DEBUGGING. REMOVE.
 private:
     
     //
