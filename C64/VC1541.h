@@ -59,11 +59,9 @@ public:
     //! @brief    Elapsed time since power up in pico seconds
     /*! @todo     Change unit to nano seconds
      */
-    uint64_t time;
+    uint64_t elapsedTime;
     
     
-    uint64_t driveClk; // REMOVE LATER
-
     //
     // Drive status
     //

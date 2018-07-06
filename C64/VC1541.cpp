@@ -41,7 +41,7 @@ VC1541::VC1541()
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
 
         // Internal state
-        { &time,                    sizeof(time),                   CLEAR_ON_RESET },
+        { &elapsedTime,             sizeof(elapsedTime),            CLEAR_ON_RESET },
         { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
@@ -57,9 +57,6 @@ VC1541::VC1541()
         { &writeShiftreg,           sizeof(writeShiftreg),          CLEAR_ON_RESET },
         { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
         { &byteReady,               sizeof(byteReady),              CLEAR_ON_RESET },
-
-        // REMOVE
-        { &driveClk,                sizeof(driveClk),               CLEAR_ON_RESET },
 
         // Disk properties (will survive reset)
         { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
@@ -154,12 +151,12 @@ VC1541::executeOneCycle()
     // nextClock -= 1000000;
     // nextCarry -= 1000000;
     
-    uint64_t half = time + (durationOfOneCpuCycle / 2);
-    time += durationOfOneCpuCycle;
+    uint64_t half = elapsedTime + (durationOfOneCpuCycle / 2);
+    elapsedTime += durationOfOneCpuCycle;
 
     result = executeUntil(half);
     c64->iec.updateIecLines();
-    result = executeUntil(time);
+    result = executeUntil(elapsedTime);
 
     return true;
     // return result;
@@ -173,8 +170,6 @@ VC1541::executeUntil(uint64_t targetTime)
     while (nextClock < targetTime || nextCarry < targetTime) {
         
         if (nextClock <= nextCarry) {
-            
-            driveClk++;
             
             // Execute CPU and VIAs
             nextClock += 1000000;
