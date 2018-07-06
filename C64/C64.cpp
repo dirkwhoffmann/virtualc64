@@ -467,15 +467,14 @@ C64::executeCommons()
     cycle++;
     if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
     if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
-    //if (!cpu.executeOneCycle()) result = false;
     result &= cpu.executeOneCycle();
     datasette.execute();
 
     elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntilNew(elapsedTime);
+    result &= floppy.executeUntil(elapsedTime);
     iec.updateIecLines();
     elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntilNew(elapsedTime);
+    result &= floppy.executeUntil(elapsedTime);
     
     // if (!floppy.executeOneCycle()) result = false;
     

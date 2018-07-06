@@ -322,11 +322,12 @@ public:
      *  @seealso  executeUF4
      *  @deprecated Will be replaced by executeUntil
      */
-    bool executeOneCycle();
+    // bool executeOneCycle();
 
-    // EXPERIMENTAL
+    //! @brief    Executes all pending cycles of the virtual drive
+    /*! @todo     Run this function in a seperate thread
+     */
     bool executeUntil(uint64_t targetTime);
-    bool executeUntilNew(uint64_t targetTime);
 
 private:
     
