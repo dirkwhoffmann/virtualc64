@@ -57,7 +57,11 @@ public:
     Disk disk;
     
     //! @brief    Elapsed time since power up in pico seconds
-    /*! @todo     Change unit to nano seconds
+    /*! @todo     This variable is used to synchronize execution of the C64 and
+     *            the drive. After the C64 has been executed, it updates this
+     *            variable with the current time. After that, it calls
+     *            executeUntil() which executes all drive cycles that are
+     *            overdue.
      */
     uint64_t elapsedTime;
     
@@ -327,7 +331,7 @@ public:
     //! @brief    Executes all pending cycles of the virtual drive
     /*! @todo     Run this function in a seperate thread
      */
-    bool executeUntil(uint64_t targetTime);
+    bool executeUntil();
 
 private:
     

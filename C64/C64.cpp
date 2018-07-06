@@ -125,7 +125,7 @@ C64::C64()
         { &alwaysWarp,          sizeof(alwaysWarp),          CLEAR_ON_RESET },
         { &warpLoad,            sizeof(warpLoad),            KEEP_ON_RESET },
         { &cycle,               sizeof(cycle),               CLEAR_ON_RESET },
-        { &elapsedTime,         sizeof(elapsedTime),         CLEAR_ON_RESET },
+        // { &elapsedTime,         sizeof(elapsedTime),         CLEAR_ON_RESET },
         { &durationOfHalfCycle, sizeof(durationOfHalfCycle), KEEP_ON_RESET },
         { &frame,               sizeof(frame),               CLEAR_ON_RESET },
         { &rasterline,          sizeof(rasterline),          CLEAR_ON_RESET },
@@ -470,11 +470,13 @@ C64::executeCommons()
     result &= cpu.executeOneCycle();
     datasette.execute();
 
-    elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntil(elapsedTime);
+    // elapsedTime += durationOfHalfCycle;
+    floppy.elapsedTime += durationOfHalfCycle;
+    result &= floppy.executeUntil();
     iec.updateIecLines();
-    elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntil(elapsedTime);
+    // elapsedTime += durationOfHalfCycle;
+    floppy.elapsedTime += durationOfHalfCycle;
+    result &= floppy.executeUntil();
     
     // if (!floppy.executeOneCycle()) result = false;
     

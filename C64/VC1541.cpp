@@ -155,11 +155,11 @@ VC1541::executeOneCycle()
 */
  
 bool
-VC1541::executeUntil(uint64_t targetTime)
+VC1541::executeUntil()
 {
     uint8_t result = true;
     
-    while (nextClock < targetTime || nextCarry < targetTime) {
+    while (nextClock < elapsedTime || nextCarry < elapsedTime) {
         
         if (nextClock <= nextCarry) {
             

@@ -192,7 +192,7 @@ public:
     //! @brief    Elapsed time since power up in pico seconds
     /*! @todo     Change unit to nano seconds
      */
-    uint64_t elapsedTime;
+    // uint64_t elapsedTime;
 
     //! @brief    Duration of half a CPU cycle in pico seconds
     /*! @todo     Change unit to nano seconds
