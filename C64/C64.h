@@ -191,7 +191,7 @@ public:
     
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
-    
+
     //! @brief    Total number of frames drawn since power up
     uint64_t frame;
     

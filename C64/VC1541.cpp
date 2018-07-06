@@ -38,9 +38,10 @@ VC1541::VC1541()
 
         // Configuration items
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
-        
-        // Internal state
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
+
+        // Internal state
+        { &time,                    sizeof(time),                   CLEAR_ON_RESET },
         { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
@@ -152,10 +153,10 @@ VC1541::executeOneCycle()
     
     // nextClock -= 1000000;
     // nextCarry -= 1000000;
-    nextClock -= durationOfOneCpuCycle;
-    nextCarry -= durationOfOneCpuCycle;
     
-    while (nextClock < 0 || nextCarry < 0) {
+    time += durationOfOneCpuCycle;
+        
+    while (nextClock < time || nextCarry < time) {
         
         if (nextClock <= nextCarry) {
             

@@ -488,15 +488,19 @@ CPU::executeOneCycle()
             next = actionFunc[opcode];
             
             // Disassemble command if requested
-            if (unlikely(tracingEnabled())) {
-                
+            // if (unlikely(tracingEnabled())) {
+            if (PC_at_cycle_0 == 0x85D) debug("RECEIVE ONE BYTE\n");
+            if (PC_at_cycle_0 == 0x346) debug("SEND ONE BYTE\n");
+            if ((PC_at_cycle_0 >= 0x346 && PC_at_cycle_0 <= 0x365) ||
+                (PC_at_cycle_0 >= 0x85D && PC_at_cycle_0 <= 0x87F)) {
                 recordInstruction();
             
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
-                if (this == &c64->floppy.cpu)
-                msg("%s: %s %s %s   %s %s %s %s %s %s\n",
+                // if (this == &c64->floppy.cpu)
+                msg("%s %s: %s %s %s   %s %s %s %s %s %s\n",
+                    (this == &c64->floppy.cpu) ? " " : "",
                         instr.pc,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.a, instr.x, instr.y, instr.sp,
