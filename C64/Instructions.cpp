@@ -488,11 +488,13 @@ CPU::executeOneCycle()
             next = actionFunc[opcode];
             
             // Disassemble command if requested
-            // if (unlikely(tracingEnabled())) {
-            if (PC_at_cycle_0 == 0x85D) debug("RECEIVE ONE BYTE\n");
-            if (PC_at_cycle_0 == 0x346) debug("SEND ONE BYTE\n");
-            if ((PC_at_cycle_0 >= 0x346 && PC_at_cycle_0 <= 0x365) ||
-                (PC_at_cycle_0 >= 0x85D && PC_at_cycle_0 <= 0x87F)) {
+            if (unlikely(tracingEnabled())) {
+                /*
+                 if (PC_at_cycle_0 == 0x85D) debug("RECEIVE ONE BYTE\n");
+                 if (PC_at_cycle_0 == 0x346) debug("SEND ONE BYTE\n");
+                 if ((PC_at_cycle_0 >= 0x346 && PC_at_cycle_0 <= 0x365) ||
+                 (PC_at_cycle_0 >= 0x85D && PC_at_cycle_0 <= 0x87F)) {
+                 */
                 recordInstruction();
             
                 RecordedInstruction recorded = readRecordedInstruction(0);

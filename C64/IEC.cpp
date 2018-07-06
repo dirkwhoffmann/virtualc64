@@ -140,46 +140,6 @@ IEC::disconnectDrive()
     c64->floppy.powerUp();
 }
 
-/*
-bool IEC::_updateIecLines()
-{
-	// save current values
-	bool oldAtnLine = atnLine;
-	bool oldClockLine = clockLine;
-	bool oldDataLine = dataLine;
-
-	// determine new values
-	atnLine = 1;
-	if (ciaAtnIsOutput) atnLine &= ciaAtnPin;
-
-	clockLine = 1;
-	if (ciaClockIsOutput) clockLine &= ciaClockPin;
-	if (driveConnected && deviceClockIsOutput) clockLine &= deviceClockPin;
-	
-	dataLine = 1;
-	if (ciaDataIsOutput) dataLine &= ciaDataPin;
-	if (driveConnected && deviceDataIsOutput) dataLine &= deviceDataPin;
-
-    // Hypthesis: If an output pin (CLKout), (DATAout) is configured as input, it pulls
-    // down the bus line as a side effect.
-    uint8_t ddrb = c64->floppy.via1.ddrb;
-    if (GET_BIT(ddrb, 1) == 0)
-        dataLine = 0;
-    if (GET_BIT(ddrb,3) == 0)
-        clockLine = 0;
-    
-	// Note: The device atn pin is not connected to the ATN line.
-	// It implements an auto acknowledge feature. When set to 1, the ATN signal
-	// is automatically acknowledged by the drive. This feature allows the C64
-	// to detect a connected drive without any interaction by the drive itself.
-    if (driveConnected && deviceAtnPin == 1)
-		dataLine &= atnLine;
-    
-	// Did any signal change its value?
-	return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);	
-}
-*/
-
 bool IEC::_updateIecLines()
 {
     // Save current values
@@ -270,7 +230,7 @@ void IEC::updateCiaPins(uint8_t cia_data, uint8_t cia_direction)
 	ciaClockPin = (cia_data & 0x10) ? 0 : 1; // Pin and line are connected via an inverter
 	ciaDataPin = (cia_data & 0x20) ? 0 : 1; // Pin and line are connected via an inverter
 		
-	updateIecLines(); 
+	// updateIecLines();
 }
 
 void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
@@ -284,7 +244,7 @@ void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
 	deviceClockPin = (device_data & 0x08) ? 0 : 1; // Pin and line are connected via an inverter
 	deviceDataPin = (device_data & 0x02) ? 0 : 1; // Pin and line are connected via an inverter
     
-	updateIecLines(); 
+	// updateIecLines();
 }
 
 void IEC::execute()

@@ -326,6 +326,9 @@ public:
      */
     bool executeOneCycle();
 
+    // EXPERIMENTAL
+    bool executeUntil(uint64_t targetTime);
+    
 private:
     
     //! @brief   Emulates a trigger event on the carry output pin of UE7.
