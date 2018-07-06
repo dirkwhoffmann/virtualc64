@@ -19,13 +19,12 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.1
+// RELEASE NOTES FOR NEXT RELEASE: 2.2
 //
-// Now passing VICE test openio/de00int and all tests in the irqdma test suite.
-// Fixed a bug in the implementation of the LSR command.
-// The floppy drive's clocking logic has been improved.
-// Some minor GUI issues have been fixed.
-
+// Emulation of the VC1541 disk drive has been improved considerably. The
+// emulator is compatible with various fast loaders now.
+// TODO: Fixed a bug that caused the drive to enter write mode after a reset.
+//
 // TODO:
 //
 //
@@ -36,7 +35,6 @@
 //      -> FileArchive -> T64Archive, D64Archive, PRGArchive, P00Archive
 //      -> DiskFile -> G64Disk, NIBDisk
 // Delete FileArchive
-// Delete Memory.h, root class for C64Memory and VC1541Memory no longer needed.
 //
 // Add setter API for SID stuff
 //
@@ -46,7 +44,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 2
-#define V_MINOR 1
+#define V_MINOR 2
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
@@ -210,7 +208,7 @@ public:
     //! @brief    Currently drawn rasterline
     uint16_t rasterline;
     
-    /*! @brief    Currently executed clock cycle relative to the current rasterline
+    /*! @brief    Currently executed rasterline cycle
      *  @details  Range: 1 ... 63 on PAL machines, 1 ... 65 on NTSC machines
      */
     uint8_t rasterlineCycle;
@@ -422,11 +420,14 @@ public:
     void resume();
     
     /*! @brief    The tread exit function.
-     *  @details  This method is invoked automatically when the execution thread terminates.
+     *  @details  This method is invoked automatically when the emulator thread
+     *            terminates.
      */
     void threadCleanup();
 
-    //! @brief    Returns true iff the virtual C64 is able to run (i.e., all ROMs are loaded)
+    //! @brief    Returns true iff the virtual C64 is able to run.
+    /*! @details  The emulator can run when all ROMs are loaded.
+     */
     bool isRunnable();
     
     //! @brief    Returns true iff the virtual C64 is in the "running" state
@@ -481,7 +482,7 @@ private:
     
 public:
     
-    //! @brief    Returns true iff cpu runs at maximum speed (timing sychronization is disabled).
+    //! @brief    Returns true if timing synchronization is disabled.
     bool getWarp() { return warp; }
     
     //! @brief    Enables or disables timing synchronization.
@@ -500,8 +501,8 @@ public:
     void setWarpLoad(bool b);
     
     /*! @brief    Restarts the synchronization timer
-     *  @details  The function is invoked at launch time to initialize the timer and reinvoked
-     *            when the synchronization timer gets out of sync.
+     *  @details  The function is invoked at launch time to initialize the timer
+     *            and reinvoked when the synchronization timer gets out of sync.
      */
     void restartTimer();
     
@@ -606,8 +607,9 @@ public:
     Snapshot *autoSnapshot(unsigned nr) { return autoSavedSnapshots[nr]; }
     
     /*! @brief    Takes a snapshot and inserts it into the auto-save storage
-     *  @details  The new snapshot is inserted at position 0 and all others are moved
-     *            one position up. If the buffer is full, the oldest snapshot is deleted.
+     *  @details  The new snapshot is inserted at position 0 and all others are
+     *            moved one position up. If the buffer is full, the oldest
+     *            snapshot is deleted.
      *  @note     This function does not halt the emulator and must therefore be
      *            called inside the execution thread, only.
      */
@@ -625,11 +627,11 @@ public:
     Snapshot *userSnapshot(unsigned nr) { return userSavedSnapshots[nr]; }
     
     /*! @brief    Takes a snapshot and inserts it into the user-save storage
-     *  @details  If there is free space, the new snapshot is inserted at position 0
-     *            and all others are moved one position up.
+     *  @details  If there is free space, the new snapshot is inserted at
+     *            position 0 and all others are moved one position up.
      *  @return   false, if all slots are occupied
-     *  @note     In contrast to takeAutoSnapshot(), this function is thread-safe an
-     *            can be called any time.
+     *  @note     In contrast to takeAutoSnapshot(), this function is
+     *            thread-safe an can be called any time.
      */
     bool takeUserSnapshot();
     
