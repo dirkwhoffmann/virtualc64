@@ -1262,7 +1262,10 @@ CIA2::updatePA()
     c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
     
     // Update values on IEC bus
-    c64->iec.updateCiaPins(PRA, DDRA);
+    // c64->iec.updateCiaPins(PRA, DDRA);
+
+    // Mark IEC bus as dirty
+    c64->iec.setNeedsUpdate();
 }
 
 //                        -------

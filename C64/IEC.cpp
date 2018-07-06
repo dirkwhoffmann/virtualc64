@@ -31,18 +31,6 @@ IEC::IEC()
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
         { &isDirty,             sizeof(isDirty),                CLEAR_ON_RESET },
-        // { &deviceAtnPin,        sizeof(deviceAtnPin),           CLEAR_ON_RESET },
-        // { &deviceAtnIsOutput,   sizeof(deviceAtnIsOutput),      CLEAR_ON_RESET },
-        // { &deviceDataPin,       sizeof(deviceDataPin),          CLEAR_ON_RESET },
-        // { &deviceDataIsOutput,  sizeof(deviceDataIsOutput),     CLEAR_ON_RESET },
-        // { &deviceClockPin,      sizeof(deviceClockPin),         CLEAR_ON_RESET },
-        // { &deviceClockIsOutput, sizeof(deviceClockIsOutput),    CLEAR_ON_RESET },
-        // { &ciaDataPin,          sizeof(ciaDataPin),             CLEAR_ON_RESET },
-        // { &ciaDataIsOutput,     sizeof(ciaDataIsOutput),        CLEAR_ON_RESET },
-        // { &ciaClockPin,         sizeof(ciaClockPin),            CLEAR_ON_RESET },
-        // { &ciaClockIsOutput,    sizeof(ciaClockIsOutput),       CLEAR_ON_RESET },
-        // { &ciaAtnPin,           sizeof(ciaAtnPin),              CLEAR_ON_RESET },
-        // { &ciaAtnIsOutput,      sizeof(ciaAtnIsOutput),         CLEAR_ON_RESET },
         { &busActivity,         sizeof(busActivity),            CLEAR_ON_RESET },
         { NULL,                 0,                              0 }};
     
@@ -60,18 +48,6 @@ IEC::reset()
     VirtualComponent::reset();
     
     driveConnected = 1;
-	atnLine = 1;
-	clockLine = 1;
-	dataLine = 1;
-	// deviceDataPin = 1;
-	// deviceClockPin = 1;
-	// ciaDataPin = 1;
-	// ciaDataIsOutput = 1;
-	// ciaClockPin = 1;
-	// ciaClockIsOutput = 1;
-	// ciaAtnPin = 1;
-	// ciaAtnIsOutput = 1;
-	
     _updateIecLines();
 }
 
@@ -102,24 +78,6 @@ void
 IEC::dumpTrace()
 {
     debug(1, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
-    /*
-	debug(1, "ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
-		  atnLine ? "1 F" : "0 T", 
-		  deviceAtnPin ? "1" : "0",
-		  deviceAtnIsOutput ? "<-" : "->", 
-		  ciaAtnPin ? "1" : "0",
-		  ciaAtnIsOutput ? "<-" : "->",
-		  clockLine ? "1 F" : "0 T", 
-		  deviceClockPin ? "1" : "0",
-		  deviceClockIsOutput ? "<-" : "->", 
-		  ciaClockPin ? "1" : "0",
-		  ciaClockIsOutput ? "<-" : "->",
-		  dataLine ? "1 F" : "0 T",
-		  deviceDataPin ? "1" : "0",
-		  deviceDataIsOutput ? "<-" : "->",
-		  ciaDataPin ? "1" : "0",
-		  ciaDataIsOutput ? "<-" : "->");
-     */
 }
 
 void 
@@ -153,15 +111,15 @@ bool IEC::_updateIecLines()
     
     // Get bus signals from device side
     uint8_t deviceBits = c64->floppy.via1.pb;
-    bool deviceAtn = (deviceBits & 0x10) ? 1 : 0;
-    bool deviceClock = (deviceBits & 0x08) ? 1 : 0;
-    bool deviceData = (deviceBits & 0x02) ? 1 : 0;
+    bool deviceAtn = !!(deviceBits & 0x10);
+    bool deviceClock = !!(deviceBits & 0x08);
+    bool deviceData = !!(deviceBits & 0x02);
 
     // Get bus signals from c64 side
     uint8_t ciaBits = c64->cia2.PA;
-    bool ciaAtn = (ciaBits & 0x08) ? 1 : 0;
-    bool ciaClock = (ciaBits & 0x10) ? 1 : 0;
-    bool ciaData = (ciaBits & 0x20) ? 1 : 0;
+    bool ciaAtn = !!(ciaBits & 0x08);
+    bool ciaClock = !!(ciaBits & 0x10);
+    bool ciaData = !!(ciaBits & 0x20);
     
     // Compute bus signals (inverted and "wired AND")
     atnLine = !ciaAtn;
@@ -186,10 +144,13 @@ bool IEC::_updateIecLines()
     //               UA1      UD3
     
     if (driveIsConnected()) {
+        dataLine &= atnLine ^ deviceAtn;
+        /*
         bool ua1 = !atnLine;
         bool ud3 = ua1 ^ deviceAtn;
         bool ub1 = !ud3;
         dataLine &= ub1;
+        */
     }
     
     isDirty = false;
@@ -223,35 +184,6 @@ void IEC::updateIecLines()
         // Reset watchdog counter
 		busActivity = 30;
 	}
-}
-	
-void IEC::updateCiaPins(uint8_t cia_data, uint8_t cia_direction)
-{
-	// 0 is dominant on the bus. A single 0-source brings the signal down
-	
-    /*
-	ciaAtnIsOutput = (cia_direction & 0x08) ? 1 : 0;
-	ciaClockIsOutput = (cia_direction & 0x10) ? 1 : 0;
-	ciaDataIsOutput = (cia_direction & 0x20) ? 1 : 0;
-	ciaAtnPin = (cia_data & 0x08) ? 0 : 1; // Pin and line are connected via an inverter
-	ciaClockPin = (cia_data & 0x10) ? 0 : 1; // Pin and line are connected via an inverter
-	ciaDataPin = (cia_data & 0x20) ? 0 : 1; // Pin and line are connected via an inverter
-    */
-	// updateIecLines();
-}
-
-void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
-{
-	// 0 is dominant on the bus. A single 0-source brings the signal down
-	/*
-	deviceAtnIsOutput = (device_direction & 0x10) ? 1 : 0;
-	deviceClockIsOutput = (device_direction & 0x08) ? 1 : 0;
-	deviceDataIsOutput = (device_direction & 0x02) ? 1 : 0;
-	deviceAtnPin = (device_data & 0x10) ? 0 : 1; // Pin and line are connected via an inverter
-	deviceClockPin = (device_data & 0x08) ? 0 : 1; // Pin and line are connected via an inverter
-	deviceDataPin = (device_data & 0x02) ? 0 : 1; // Pin and line are connected via an inverter
-    */
-	// updateIecLines();
 }
 
 void IEC::execute()

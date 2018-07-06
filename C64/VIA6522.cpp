@@ -1060,7 +1060,10 @@ void
 VIA1::updatePB()
 {
     VIA6522::updatePB();
-    c64->iec.updateDevicePins(orb, ddrb);
+    // c64->iec.updateDevicePins(orb, ddrb);
+
+    // Mark IEC bus as dirty
+    c64->iec.setNeedsUpdate();
 }
 
 //

@@ -39,45 +39,6 @@ private:
 	//! @brief    Current value of the IEC bus data line
 	bool dataLine;
 	 	
-    //! @brief    Indicates if the bus lines variables need an undate.
-    bool isDirty;
-    
-	//! Current value of the atn pin of the connected external device
-	// bool deviceAtnPin;
-
-	//! True, iff the device atn pin is configured as output
-	// bool deviceAtnIsOutput;
-
-	//! Current value of the data pin of the connected external device
-	// bool deviceDataPin;
-
-	//! True, iff the device data pin is configured as output
-	// bool deviceDataIsOutput;
-		
-	//! Current value of the clock pin of the connected external device
-	// bool deviceClockPin;
-
-	//! True, iff the device clock pin is configured as output
-	// bool deviceClockIsOutput;
-	
-	//! Current value of the data pin of the connected CIA chip
-	// bool ciaDataPin;
-	
-	//! True, iff the CIA data pin is configured as output
-	// bool ciaDataIsOutput;
-	
-	//! Current value of the clock pin of the connected CIA chip
-	// bool ciaClockPin;
-
-	//! True, iff the CIA clock pin is configured as output
-	// bool ciaClockIsOutput;
-	
-	//! Current value of the ATN pin of the connected CIA chip
-	// bool ciaAtnPin;
-
-	//! True, iff the CIA ATN pin is configured as output
-	// bool ciaAtnIsOutput;
-
 	//! @brief    Used to determine if the bus is idle or if data is transferred
 	uint32_t busActivity;
 	
@@ -88,6 +49,9 @@ private:
 
 public:
 
+    //! @brief    Indicates if the bus lines variables need an undate.
+    bool isDirty;
+    
 	//! Constructor
 	IEC();
 	
@@ -126,11 +90,11 @@ public:
 	
     //! Updates the values of the CIA pin variables
 	//  This function is to be invoked by the cia chip, only.
-	void updateCiaPins(uint8_t cia_data, uint8_t cia_direction);	
+	// void updateCiaPins(uint8_t cia_data, uint8_t cia_direction);
 
     //! Updates the values of the device pin variables
 	//  This function is to be invoked by the VC1541 drive, only.
-	void updateDevicePins(uint8_t device_data, uint8_t device_direction);	
+	// void updateDevicePins(uint8_t device_data, uint8_t device_direction);
     
     //! @todo  Call updateIECLines() first
 	bool getAtnLine() { return atnLine; }
