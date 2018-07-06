@@ -30,18 +30,19 @@ IEC::IEC()
         { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
-        { &deviceAtnPin,        sizeof(deviceAtnPin),           CLEAR_ON_RESET },
-        { &deviceAtnIsOutput,   sizeof(deviceAtnIsOutput),      CLEAR_ON_RESET },
-        { &deviceDataPin,       sizeof(deviceDataPin),          CLEAR_ON_RESET },
-        { &deviceDataIsOutput,  sizeof(deviceDataIsOutput),     CLEAR_ON_RESET },
-        { &deviceClockPin,      sizeof(deviceClockPin),         CLEAR_ON_RESET },
-        { &deviceClockIsOutput, sizeof(deviceClockIsOutput),    CLEAR_ON_RESET },
-        { &ciaDataPin,          sizeof(ciaDataPin),             CLEAR_ON_RESET },
-        { &ciaDataIsOutput,     sizeof(ciaDataIsOutput),        CLEAR_ON_RESET },
-        { &ciaClockPin,         sizeof(ciaClockPin),            CLEAR_ON_RESET },
-        { &ciaClockIsOutput,    sizeof(ciaClockIsOutput),       CLEAR_ON_RESET },
-        { &ciaAtnPin,           sizeof(ciaAtnPin),              CLEAR_ON_RESET },
-        { &ciaAtnIsOutput,      sizeof(ciaAtnIsOutput),         CLEAR_ON_RESET },
+        { &isDirty,             sizeof(isDirty),                CLEAR_ON_RESET },
+        // { &deviceAtnPin,        sizeof(deviceAtnPin),           CLEAR_ON_RESET },
+        // { &deviceAtnIsOutput,   sizeof(deviceAtnIsOutput),      CLEAR_ON_RESET },
+        // { &deviceDataPin,       sizeof(deviceDataPin),          CLEAR_ON_RESET },
+        // { &deviceDataIsOutput,  sizeof(deviceDataIsOutput),     CLEAR_ON_RESET },
+        // { &deviceClockPin,      sizeof(deviceClockPin),         CLEAR_ON_RESET },
+        // { &deviceClockIsOutput, sizeof(deviceClockIsOutput),    CLEAR_ON_RESET },
+        // { &ciaDataPin,          sizeof(ciaDataPin),             CLEAR_ON_RESET },
+        // { &ciaDataIsOutput,     sizeof(ciaDataIsOutput),        CLEAR_ON_RESET },
+        // { &ciaClockPin,         sizeof(ciaClockPin),            CLEAR_ON_RESET },
+        // { &ciaClockIsOutput,    sizeof(ciaClockIsOutput),       CLEAR_ON_RESET },
+        // { &ciaAtnPin,           sizeof(ciaAtnPin),              CLEAR_ON_RESET },
+        // { &ciaAtnIsOutput,      sizeof(ciaAtnIsOutput),         CLEAR_ON_RESET },
         { &busActivity,         sizeof(busActivity),            CLEAR_ON_RESET },
         { NULL,                 0,                              0 }};
     
@@ -62,14 +63,14 @@ IEC::reset()
 	atnLine = 1;
 	clockLine = 1;
 	dataLine = 1;
-	deviceDataPin = 1;
-	deviceClockPin = 1;
-	ciaDataPin = 1;
-	ciaDataIsOutput = 1;
-	ciaClockPin = 1;
-	ciaClockIsOutput = 1;
-	ciaAtnPin = 1;
-	ciaAtnIsOutput = 1;
+	// deviceDataPin = 1;
+	// deviceClockPin = 1;
+	// ciaDataPin = 1;
+	// ciaDataIsOutput = 1;
+	// ciaClockPin = 1;
+	// ciaClockIsOutput = 1;
+	// ciaAtnPin = 1;
+	// ciaAtnIsOutput = 1;
 	
     _updateIecLines();
 }
@@ -100,6 +101,8 @@ IEC::dumpState()
 void 
 IEC::dumpTrace()
 {
+    debug(1, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
+    /*
 	debug(1, "ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
 		  atnLine ? "1 F" : "0 T", 
 		  deviceAtnPin ? "1" : "0",
@@ -115,7 +118,8 @@ IEC::dumpTrace()
 		  deviceDataPin ? "1" : "0",
 		  deviceDataIsOutput ? "<-" : "->",
 		  ciaDataPin ? "1" : "0",
-		  ciaDataIsOutput ? "<-" : "->"); 
+		  ciaDataIsOutput ? "<-" : "->");
+     */
 }
 
 void 
@@ -188,8 +192,10 @@ bool IEC::_updateIecLines()
         dataLine &= ub1;
     }
     
-    // Return true iff one of the three bus signals changed.
-    return (oldAtnLine != atnLine || oldClockLine != clockLine || oldDataLine != dataLine);
+    isDirty = false;
+    return (oldAtnLine != atnLine ||
+            oldClockLine != clockLine ||
+            oldDataLine != dataLine);
 }
 
 void IEC::updateIecLines()
@@ -198,7 +204,7 @@ void IEC::updateIecLines()
 			
 	// Update port lines
 	signals_changed = _updateIecLines();	
-
+    
     // ATN signal is connected to CA1 pin of VIA 1
     c64->floppy.via1.setCA1late(!getAtnLine());
     
@@ -223,27 +229,28 @@ void IEC::updateCiaPins(uint8_t cia_data, uint8_t cia_direction)
 {
 	// 0 is dominant on the bus. A single 0-source brings the signal down
 	
+    /*
 	ciaAtnIsOutput = (cia_direction & 0x08) ? 1 : 0;
 	ciaClockIsOutput = (cia_direction & 0x10) ? 1 : 0;
 	ciaDataIsOutput = (cia_direction & 0x20) ? 1 : 0;
 	ciaAtnPin = (cia_data & 0x08) ? 0 : 1; // Pin and line are connected via an inverter
 	ciaClockPin = (cia_data & 0x10) ? 0 : 1; // Pin and line are connected via an inverter
 	ciaDataPin = (cia_data & 0x20) ? 0 : 1; // Pin and line are connected via an inverter
-		
+    */
 	// updateIecLines();
 }
 
 void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
 {
 	// 0 is dominant on the bus. A single 0-source brings the signal down
-	
+	/*
 	deviceAtnIsOutput = (device_direction & 0x10) ? 1 : 0;
 	deviceClockIsOutput = (device_direction & 0x08) ? 1 : 0;
 	deviceDataIsOutput = (device_direction & 0x02) ? 1 : 0;
 	deviceAtnPin = (device_data & 0x10) ? 0 : 1; // Pin and line are connected via an inverter
 	deviceClockPin = (device_data & 0x08) ? 0 : 1; // Pin and line are connected via an inverter
 	deviceDataPin = (device_data & 0x02) ? 0 : 1; // Pin and line are connected via an inverter
-    
+    */
 	// updateIecLines();
 }
 

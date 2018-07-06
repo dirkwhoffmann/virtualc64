@@ -27,58 +27,63 @@ class IEC : public VirtualComponent {
 
 private:
 
-	//! True, iff drive is connected to the IEC bus
+	//! @brief    Indicates if the floopy drive is connected to the IEC bus.
 	bool driveConnected;
 	
-	//! Current value of the IEC bus atn line	
+	//! @brief    Current value of the IEC bus atn line
 	bool atnLine;
 
-	//! Current value of the IEC bus clock line	
+	//! @brief    Current value of the IEC bus clock line
 	bool clockLine;
 
-	//! Current value of the IEC bus data line
+	//! @brief    Current value of the IEC bus data line
 	bool dataLine;
 	 	
+    //! @brief    Indicates if the bus lines variables need an undate.
+    bool isDirty;
+    
 	//! Current value of the atn pin of the connected external device
-	bool deviceAtnPin;
+	// bool deviceAtnPin;
 
 	//! True, iff the device atn pin is configured as output
-	bool deviceAtnIsOutput;
+	// bool deviceAtnIsOutput;
 
 	//! Current value of the data pin of the connected external device
-	bool deviceDataPin;
+	// bool deviceDataPin;
 
 	//! True, iff the device data pin is configured as output
-	bool deviceDataIsOutput;
+	// bool deviceDataIsOutput;
 		
 	//! Current value of the clock pin of the connected external device
-	bool deviceClockPin;
+	// bool deviceClockPin;
 
 	//! True, iff the device clock pin is configured as output
-	bool deviceClockIsOutput;
+	// bool deviceClockIsOutput;
 	
 	//! Current value of the data pin of the connected CIA chip
-	bool ciaDataPin;
+	// bool ciaDataPin;
 	
 	//! True, iff the CIA data pin is configured as output
-	bool ciaDataIsOutput;
+	// bool ciaDataIsOutput;
 	
 	//! Current value of the clock pin of the connected CIA chip
-	bool ciaClockPin;
+	// bool ciaClockPin;
 
 	//! True, iff the CIA clock pin is configured as output
-	bool ciaClockIsOutput;
+	// bool ciaClockIsOutput;
 	
 	//! Current value of the ATN pin of the connected CIA chip
-	bool ciaAtnPin;
+	// bool ciaAtnPin;
 
 	//! True, iff the CIA ATN pin is configured as output
-	bool ciaAtnIsOutput;
+	// bool ciaAtnIsOutput;
 
-	//! Used to determine if the bus is idle or if data is transferred 
+	//! @brief    Used to determine if the bus is idle or if data is transferred
 	uint32_t busActivity;
 	
-	//! Update IEC bus lines depending on the CIA and device pins
+	//! @brief    Updates the three bus lines.
+    /*! @details  Returns true if at least one line changed it's value.
+     */
 	bool _updateIecLines();
 
 public:
@@ -110,7 +115,13 @@ public:
 	//! Returns true, iff a virtual disk drive is connected
 	bool driveIsConnected() { return driveConnected; }
 		
-	//! Change/Update the value of all three bus lines 
+    //! @brief    Indicates that the bus lines need an update.
+    void setNeedsUpdate() { isDirty = true; }
+    
+    //! @brief    Updates the three bus lines.
+    /*! @details  The new values are determined by the VIA2 (drive side)
+     *            and CIA2 (c64 side).
+     */
 	void updateIecLines();
 	
     //! Updates the values of the CIA pin variables
@@ -120,7 +131,8 @@ public:
     //! Updates the values of the device pin variables
 	//  This function is to be invoked by the VC1541 drive, only.
 	void updateDevicePins(uint8_t device_data, uint8_t device_direction);	
-	    
+    
+    //! @todo  Call updateIECLines() first
 	bool getAtnLine() { return atnLine; }
 	bool getClockLine() { return clockLine; }
 	bool getDataLine() { return dataLine; }
