@@ -1046,9 +1046,9 @@ VIA1::portBexternal()
     // |  in   |               |  ack  |  out  |  in   |  out  |  in   |
     
     uint8_t external =
-    (c64->iec.getAtnLine() ? 0x00 : 0x80) |
-    (c64->iec.getClockLine() ? 0x00 : 0x04) |
-    (c64->iec.getDataLine() ? 0x00 : 0x01);
+    (c64->iec.atnLine ? 0x00 : 0x80) |
+    (c64->iec.clockLine ? 0x00 : 0x04) |
+    (c64->iec.dataLine ? 0x00 : 0x01);
     
     external |= 0x1A; // All "out" pins are read as 1
     external &= 0x9F; // Device address 8

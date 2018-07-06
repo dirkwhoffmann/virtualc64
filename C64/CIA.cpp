@@ -1247,8 +1247,8 @@ uint8_t
 CIA2::portAexternal()
 {
     uint8_t result = 0x3F;
-    result |= (c64->iec.getClockLine() ? 0x40 : 0x00);
-    result |= (c64->iec.getDataLine() ? 0x80 : 0x00);
+    result |= (c64->iec.clockLine ? 0x40 : 0x00);
+    result |= (c64->iec.dataLine ? 0x80 : 0x00);
     
     return result;
 }

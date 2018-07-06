@@ -26,7 +26,7 @@ IEC::IEC()
     // Register snapshot items
     SnapshotItem items[] = {
         
-        { &driveConnected,      sizeof(driveConnected),         CLEAR_ON_RESET },
+        { &driveIsConnected,    sizeof(driveIsConnected),       CLEAR_ON_RESET },
         { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
@@ -47,7 +47,7 @@ IEC::reset()
 {
     VirtualComponent::reset();
     
-    driveConnected = 1;
+    driveIsConnected = 1;
     _updateIecLines();
 }
 
@@ -55,7 +55,7 @@ void
 IEC::ping()
 {
     VirtualComponent::ping();
-    c64->putMessage(driveConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
+    c64->putMessage(driveIsConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
     c64->putMessage(busActivity > 0 ? MSG_VC1541_DATA_ON : MSG_VC1541_DATA_OFF );
 }
 
@@ -67,7 +67,7 @@ IEC::dumpState()
 	msg("\n");
 	dumpTrace();
 	msg("\n");
-	msg("Drive connected : %s\n", driveConnected ? "yes" : "no");
+	msg("Drive connected : %s\n", driveIsConnected ? "yes" : "no");
     msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.ddrb);
     msg("    DDRA (CIA2) : %02X\n", c64->cia2.DDRA);
 
@@ -83,7 +83,7 @@ IEC::dumpTrace()
 void 
 IEC::connectDrive() 
 { 
-	driveConnected = true; 
+	driveIsConnected = true;
 	c64->putMessage(MSG_VC1541_ATTACHED);
     if (c64->floppy.soundMessagesEnabled())
         c64->putMessage(MSG_VC1541_ATTACHED_SOUND);
@@ -93,7 +93,7 @@ void
 IEC::disconnectDrive()
 {
     // Disconnect drive from bus
-	driveConnected = false; 
+	driveIsConnected = false;
 	c64->putMessage(MSG_VC1541_DETACHED);
     if (c64->floppy.soundMessagesEnabled())
         c64->putMessage(MSG_VC1541_DETACHED_SOUND);
@@ -128,30 +128,29 @@ bool IEC::_updateIecLines()
     
     // Auto-acknowdlege logic
     
-    // From the SERVICE MANUAL MODEL 1540/1541 DISK DRIVE (PN-314002-01)
-    //
-    // "ATN (Attention) is an input on pin 3 of P2 and P3 that is sensed
-    //  at PB7 and CA1 of UC3 after being inverted by UA1. ATNA (Attention
-    //  Acknowledge) is an output from PB4 of UC3 which is sensed on the data
-    // line pin 5 of P2 and P3 after being exclusively "ored" by UD3 and
-    // inverted by UB1."
-    //
-    //                        ----
-    // ATNA (VIA) -----------|    |    ---
-    //               ---     | =1 |---| 1 |o---> & DATA (IEC)
-    //  ATN (IEC) --| 1 |o---|    |    ---
-    //               ---      ----     UB1
-    //               UA1      UD3
-    
-    if (driveIsConnected()) {
-        dataLine &= atnLine ^ deviceAtn;
-        /*
-        bool ua1 = !atnLine;
-        bool ud3 = ua1 ^ deviceAtn;
-        bool ub1 = !ud3;
-        dataLine &= ub1;
-        */
-    }
+    /* From the SERVICE MANUAL MODEL 1540/1541 DISK DRIVE (PN-314002-01)
+     *
+     * "ATN (Attention) is an input on pin 3 of P2 and P3 that is sensed
+     *  at PB7 and CA1 of UC3 after being inverted by UA1. ATNA (Attention
+     *  Acknowledge) is an output from PB4 of UC3 which is sensed on the data
+     *  line pin 5 of P2 and P3 after being exclusively "ored" by UD3 and
+     *  inverted by UB1."
+     *
+     *                        ----
+     * ATNA (VIA) -----------|    |    ---
+     *               ---     | =1 |---| 1 |o---> & DATA (IEC)
+     *  ATN (IEC) --| 1 |o---|    |    ---
+     *               ---      ----     UB1
+     *               UA1      UD3
+     *
+     * if (driveIsConnected()) {
+     *    bool ua1 = !atnLine;
+     *    bool ud3 = ua1 ^ deviceAtn;
+     *    bool ub1 = !ud3;
+     *    dataLine &= ub1;
+     * }
+    */
+    dataLine &= !driveIsConnected || (atnLine ^ deviceAtn);
     
     isDirty = false;
     return (oldAtnLine != atnLine ||
@@ -167,7 +166,7 @@ void IEC::updateIecLines()
 	signals_changed = _updateIecLines();	
     
     // ATN signal is connected to CA1 pin of VIA 1
-    c64->floppy.via1.setCA1late(!getAtnLine());
+    c64->floppy.via1.setCA1late(!atnLine);
     
 	if (signals_changed) {
         
@@ -176,7 +175,8 @@ void IEC::updateIecLines()
         }
         
 		if (busActivity == 0) {
-			// Bus activated
+            
+			// Bus has just been activated
 			c64->putMessage(MSG_VC1541_DATA_ON);
 			c64->setWarp(c64->getAlwaysWarp() || c64->getWarpLoad());
 		}
@@ -189,9 +189,7 @@ void IEC::updateIecLines()
 void IEC::execute()
 {
 	if (busActivity > 0) {
-
-		busActivity--;
-		if (busActivity == 0) {
+		if (--busActivity == 0) {
 			// Bus is idle 
 			c64->putMessage(MSG_VC1541_DATA_OFF);
 			c64->setWarp(c64->getAlwaysWarp());

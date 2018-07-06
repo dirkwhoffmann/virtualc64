@@ -250,12 +250,12 @@ struct ContainerWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-- (BOOL) driveConnected;
+- (BOOL) driveIsConnected;
 - (void) connectDrive;
 - (void) disconnectDrive;
-- (BOOL) atnLine;
-- (BOOL) clockLine;
-- (BOOL) dataLine;
+// - (BOOL) atnLine;
+// - (BOOL) clockLine;
+// - (BOOL) dataLine;
 
 @end
 

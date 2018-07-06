@@ -320,10 +320,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setTracing:(BOOL)b { b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing(); }
 - (void) connectDrive { wrapper->iec->connectDrive(); }
 - (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
-- (BOOL) driveConnected { return wrapper->iec->driveIsConnected(); }
-- (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
-- (BOOL) clockLine { return wrapper->iec->getClockLine(); }
-- (BOOL) dataLine { return wrapper->iec->getDataLine(); }
+- (BOOL) driveIsConnected { return wrapper->iec->driveIsConnected; }
+// - (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
+// - (BOOL) clockLine { return wrapper->iec->getClockLine(); }
+// - (BOOL) dataLine { return wrapper->iec->getDataLine(); }
 
 @end
 

@@ -25,10 +25,10 @@
 
 class IEC : public VirtualComponent {
 
-private:
-
+public:
+    
 	//! @brief    Indicates if the floopy drive is connected to the IEC bus.
-	bool driveConnected;
+	bool driveIsConnected;
 	
 	//! @brief    Current value of the IEC bus atn line
 	bool atnLine;
@@ -39,70 +39,61 @@ private:
 	//! @brief    Current value of the IEC bus data line
 	bool dataLine;
 	 	
-	//! @brief    Used to determine if the bus is idle or if data is transferred
-	uint32_t busActivity;
-	
-	//! @brief    Updates the three bus lines.
-    /*! @details  Returns true if at least one line changed it's value.
-     */
-	bool _updateIecLines();
-
-public:
-
     //! @brief    Indicates if the bus lines variables need an undate.
     bool isDirty;
     
-	//! Constructor
+private:
+    
+	//! @brief    Used to determine if the bus is idle or if data is transferred
+	uint32_t busActivity;
+	
+public:
+    
+	//! @brief    Constructor
 	IEC();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~IEC();
 			
-	//! Bring the component back to its initial state
+	//! @brief    Method from VirtualComponent
 	void reset();
 
-    //! Dump current configuration into message queue
+    //! @brief    Method from VirtualComponent
     void ping();
 	
-	//! Dump internal state to console
+    //! @brief    Method from VirtualComponent
 	void dumpState();
 	
-	//! Write trace output to console
+	//! @brief    Writes trace output to console.
 	void dumpTrace();
 	
-	//! Connect drive to the IEC bus
+	//! @brief    Connects the virtual drive to the IEC bus.
 	void connectDrive();
 	
-	//! Disconnect the drive from the IEC bus
+	//! @brief    Disconnects the virtual drive from the IEC bus.
 	void disconnectDrive();
-
-	//! Returns true, iff a virtual disk drive is connected
-	bool driveIsConnected() { return driveConnected; }
 		
-    //! @brief    Indicates that the bus lines need an update.
+    //! @brief    Requensts an update of the bus lines.
     void setNeedsUpdate() { isDirty = true; }
     
-    //! @brief    Updates the three bus lines.
-    /*! @details  The new values are determined by the VIA2 (drive side)
-     *            and CIA2 (c64 side).
+    //! @brief    Updates all three bus lines.
+    /*! @details  The new values are determined by VIA1 (drive side) and
+     *            CIA2 (C64 side).
      */
 	void updateIecLines();
-	
-    //! Updates the values of the CIA pin variables
-	//  This function is to be invoked by the cia chip, only.
-	// void updateCiaPins(uint8_t cia_data, uint8_t cia_direction);
-
-    //! Updates the values of the device pin variables
-	//  This function is to be invoked by the VC1541 drive, only.
-	// void updateDevicePins(uint8_t device_data, uint8_t device_direction);
     
-    //! @todo  Call updateIECLines() first
-	bool getAtnLine() { return atnLine; }
-	bool getClockLine() { return clockLine; }
-	bool getDataLine() { return dataLine; }
-    
-	//! Is invoked periodically by the run thread
+	//! @brief    Executin function for observing the bus activity.
+    /*! @details  This method is invoked periodically. It's only purpose is to
+     *            determines if data is transmitted on the bus.
+     */
 	void execute();
+    
+private:
+    
+    //! @brief    Work horse for method updateIecLines
+    /*! @details  Returns true if at least one line changed it's value.
+     */
+    bool _updateIecLines();
 };
 	
 #endif
