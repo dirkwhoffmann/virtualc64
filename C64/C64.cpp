@@ -435,15 +435,15 @@ C64::stepOver()
     step();
 }
 
-// From Wolfgang Lorenz: Clock.txt
+// Adapted from Wolfgang Lorenz: Clock.txt
 //
-// o2 high phase |                  o2 low phase
-//     .-----.   |   .----------------.     .------.     .------.
-//     |     |   |   | 1. Next Clock  |     |      |     |      |
-// .-> | CPU | ----> | 2. Fire Timers | --> | CIA1 | --> | CIA2 | -.
-// |   |     |   |   | 3. VIC         |     |      |     |      |  |
-// |   '-----'   |   '----------------'     '------'     '------'  |
-// '---------------------------------------------------------------'
+//                    o2 low phase                    | o2 high phase
+//     ,----------------,     ,------,     ,------,   |    ,-----,
+//     | 1. Next Clock  |     |      |     |      |   |    |     |
+// ,-->| 2. Fire Timers | --> | CIA1 | --> | CIA2 | --|--> | CPU | --,
+// |   | 3. VIC         |     |      |     |      |   |    |     |   |
+// |   '----------------'     '------'     '------'   |    '-----'   |
+// '--------------------------------------------------|--------------'
 
 /*
 #define EXECUTE \
@@ -462,24 +462,40 @@ C64::executeCommons()
 {
     bool result = true;
     
+    // Execute low phase
     cycle++;
+    // TODO: runDriveAsync()
     if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
     if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
-    result &= cpu.executeOneCycle();
-    datasette.execute();
-
     floppy.elapsedTime += durationOfHalfCycle;
     result &= floppy.executeUntil();
+    // TODO: waitForDrive()
     
+    // Update IEC bus
     if (iec.isDirty) iec.updateIecLines();
     
+    // Execute high phase
+    // TODO: runDriveAsync()
+    result &= cpu.executeOneCycle();
+    datasette.execute();
     floppy.elapsedTime += durationOfHalfCycle;
     result &= floppy.executeUntil();
+    // TODO: waitForDrive()
     
     rasterlineCycle++;
     return result;
 }
 
+// TODO (speedup):
+// Remove endOfRasterlineStuff from this function and call it _executeOneCycle
+// 1. Change executeOneCycle to { _executeOneCycle; if (lastCycle) endOfRasterline(); }
+// 2. Only allow executeOneCycle to be called from outside (single stepping)
+// 3. In executeOneLine, call _executeOneCycle and execute endOfRasterline(); after the loop
+//    Caution: Make sure that endOfRasterline(); is called on a pre exit
+// 4. Move executeCommons stuff at the end of _executeOneCycle. This saves us
+//    about a million function calls every second.
+// 5. Once the stuff has been moved, move the first executeDriveAsync in front of the
+//    switch statement, so it is triggered prior to VIC execution.
 bool
 C64::executeOneCycle()
 {
