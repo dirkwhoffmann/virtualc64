@@ -252,40 +252,51 @@ class DiskInspectorController : UserDialogController {
     // Action methods
     //
 
-    @IBAction func trackAction(_ sender: Any!) {
+    func _trackAction(_ t: Track) {
         
-        var t = (sender as! NSTextField).integerValue
-        if t > maxNumberOfTracks { t = Int(maxNumberOfTracks) }
-        if t < 1 { t = 1};
-        c64.vc1541.setTrack(Track(t))
+        let track = (t > maxNumberOfTracks) ? maxNumberOfTracks : (t < 1) ? 1 : t
+        c64.vc1541.setTrack(track)
+        trackDataIsDirty = true
         refresh()
         scrollToFirstSectorMarker()
+    }
+    
+    @IBAction func trackAction(_ sender: Any!) {
+        
+        // let t = (sender as! NSTextField).integerValue
+        // _trackAction(Track(t))
+        let ht = (sender as! NSTextField).doubleValue * 2 - 1
+        _halftrackAction(Halftrack(ht))
     }
 
     @IBAction func trackStepperAction(_ sender: Any!) {
         
         let value = (sender as! NSStepper).integerValue
-        let t = Int((c64.vc1541.halftrack() + 1) / 2)
-        trackField.integerValue = t + (value == 1 ? 1 : -1)
-        trackAction(trackField)
+        // let t = Int(c64.vc1541.halftrack() + 1 / 2) + (value == 1 ? 1 : -1)
+        let t = (Int(c64.vc1541.halftrack()) + (value == 1 ? 2 : -1) + 1) / 2
+        _trackAction(Track(t))
+    }
+    
+    func _halftrackAction(_ ht: Halftrack) {
+        
+        let htrack = (ht > maxNumberOfHalftracks) ? maxNumberOfHalftracks : (ht < 1) ? 1 : ht
+        c64.vc1541.setHalftrack(htrack)
+        trackDataIsDirty = true
+        refresh()
+        scrollToFirstSectorMarker()
     }
     
     @IBAction func halftrackAction(_ sender: Any!) {
         
-        var ht = (sender as! NSTextField).integerValue
-        if ht > maxNumberOfHalftracks { ht = Int(maxNumberOfHalftracks) }
-        if ht < 1 { ht = 1};
-        c64.vc1541.setHalftrack(Halftrack(ht))
-        refresh()
-        scrollToFirstSectorMarker()
+        let ht = (sender as! NSTextField).integerValue
+        _halftrackAction(Halftrack(ht))
     }
     
     @IBAction func halftrackStepperAction(_ sender: Any!) {
         
         let value = (sender as! NSStepper).integerValue
-        let t = Int(c64.vc1541.halftrack())
-        halftrackField.integerValue = t + (value == 1 ? 1 : -1)
-        halftrackAction(halftrackField)
+        let ht = Int(c64.vc1541.halftrack()) + (value == 1 ? 1 : -1)
+        _halftrackAction(Halftrack(ht))
     }
     
     @IBAction func headAction(_ sender: Any!) {
