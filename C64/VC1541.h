@@ -50,7 +50,7 @@ public:
 	//! @brief    VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1;
 
-    //! @brief    VIA6522 connecting the drive CPU with the drives read/write head
+    //! @brief    VIA6522 connecting the drive's CPU with it's read/write head
     VIA2 via2;
 
     //! @brief    Disk in this drive (single sided 5,25" floppy disk)
@@ -164,12 +164,12 @@ private:
     HeadPosition offset;
     
     /*! @brief    Current disk zone
-     *  @details  Each track belongs to one of four zones. Whenever the drive moves
-     *            the r/w head, it computes the new number and writes into PB5 and
-     *            PB6 of via2. These bits are hard-wired to a 74LS193 counter on
-     *            the logic board that breaks down the 16 Mhz base frequency.
-     *            This mechanism is used to slow down the read/write process on
-     *            inner tracks.
+     *  @details  Each track belongs to one of four zones. Whenever the drive
+     *            moves the r/w head, it computes the new number and writes into
+     *            PB5 and PB6 of via2. These bits are hard-wired to a 74LS193
+     *            counter on the logic board that breaks down the 16 Mhz base
+     *            frequency. This mechanism is used to slow down the read/write
+     *            process on inner tracks.
      */
     uint8_t zone;
     
@@ -188,14 +188,15 @@ private:
     uint8_t writeShiftreg;
     
     /*! @brief    Current value of the SYNC line
-     *  @details  This signal plays an important role for timing synchronization.
-     *            It becomes true when the beginning of a SYNC is detected. On the
-     *            logic board, the SYNC signal is computed by a NAND gate that combines
-     *            the 10 previously read bits rom the input shift register and CB2
-     *            of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
-     *            that SYNC can only be true in read mode. When SYNC becomes false
-     *            (meaning that a 0 was pushed into the shift register), the
-     *            byteReadyCounter is reset.
+     *  @details  The SYNC signal plays an important role for timing
+     *            synchronization. It becomes true when the beginning of a SYNC
+     *            is detected. On the logic board, the SYNC signal is computed
+     *            by a NAND gate that combines the 10 previously read bits from
+     *            the input shift register and VIA2::CB2 (the r/w mode pin).
+     *            Connecting CB2 to the NAND gates ensures that SYNC can only be
+     *            true in read mode. When SYNC becomes false (meaning that a 0
+     *            was pushed into the shift register), the byteReadyCounter is
+     *            reset.
      */
     bool sync;
     
@@ -218,8 +219,8 @@ public:
     void dumpState();
     void setClockFrequency(uint32_t frequency);
 
-    /*! @brief    Resets disk properties
-     *  @details  Resets all disk related properties. reset() keeps the disk alive. 
+    /*! @brief    Resets all disk related properties
+     *  @note     This method is needed, because reset() keeps the disk alive.
      */
     void resetDisk();
     
@@ -280,9 +281,10 @@ public:
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
 
     /*! @brief    Inserts an archive as a virtual disk.
-     *  @details  This function consumes some time as it needs to perform various conversions.
-     *            E.g., if you provide a T64 archive, it is first converted to an D64 archive.
-     *            After that, all tracks will be GCR-encoded and written to a new disk.
+     *  @warning  This function is very time consuming as it has to perform
+     *            various conversions. E.g., if you provide a T64 archive, it
+     *            is first converted to a D64 archive. After that, all tracks
+     *            will be GCR-encoded and written to a new disk.
      */
     bool insertDisk(Archive *a);
     
@@ -292,21 +294,32 @@ public:
     //! @brief    Sets if a disk is partially inserted.
     void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
 
-    /*! @brief    Returns the current status of the write protection light barrier
-     *  @details  If the light barrier is blocked, the drive head is unable to change data bits
+    /*! @brief    Returns the current state of the write protection barrier
+     *  @details  If the light barrier is blocked, the drive head is unable to
+     *            modify bits on disk.
+     *  @note     We block the write barrier on power up for about 1.5 sec,
+     *            because the drive enters write mode during the power up phase.
+     *            I'm unsure if this is normal drive behavior or an emulator
+     *            bug. Any hint on this is very welcome!
      */
-    bool getLightBarrier() { return isDiskPartiallyInserted() || disk.isWriteProtected(); }
+    bool getLightBarrier() {
+        return
+        (cpu.getCycle() < 1500000)
+        || isDiskPartiallyInserted()
+        || disk.isWriteProtected();
+    }
 
     /*! @brief    Ejects the virtual disk
-     *  @details  Does nothing, if no disk is present. Beware that this function causes a considerable time delay,
-     *            because it is necessary to block the write protection light barrier for a while. Otherwise,
-     *            VC1541 DOS would not recognize the ejection.
+     *  @details  Does nothing, if no disk is present.
+     *  @warning  This function causes a considerable time delay, because it is
+     *            necessary to block the write protection light barrier for a
+     *            while. Otherwise, VC1541 DOS would not recognize the ejection.
      */
     void ejectDisk();
    
     /*! @brief    Converts the currently inserted disk into a D64 archive.
-     *  @result   A D64 archive containing the same files as the currently inserted disk;
-     *            NULL if no disk is inserted.
+     *  @result   A D64 archive containing the same files as the currently
+     *            inserted disk; NULL if no disk is inserted.
      */
     D64Archive *convertToD64();
 
@@ -341,7 +354,7 @@ private:
 public:
 
     /*! @brief    Returns true iff drive is in read mode
-     *  @details  The drive operates in read mode if port pin VIA2::CB2 equals 1.
+     *  @details  The drive is in read mode iff port pin VIA2::CB2 equals 1.
      */
     bool readMode() { return via2.cb2_out; }
     
@@ -361,7 +374,7 @@ public:
     uint16_t sizeOfCurrentHalftrack() {
         return hasDisk() ? disk.lengthOfHalftrack(halftrack) : 0; }
 
-    //! @brief    Returns the position of the read/write head inside the current track
+    //! @brief    Returns the position of the drive head inside the current track
     HeadPosition getOffset() { return offset; }
 
     //! @brief    Sets the position of the drive head inside the current track
@@ -377,7 +390,6 @@ public:
 
     //! @brief    Returns the current value of the sync signal
     bool getSync() { return sync; }
-    // bool getSync() { return !((read_shiftreg & 0x3FF) == 0x3FF && writeMode()); }
 
     //! @brief    Clears the Byte Ready line
     /*! @note     This function causes several side effects on a falling edge.

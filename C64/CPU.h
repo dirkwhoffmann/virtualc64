@@ -251,6 +251,9 @@ public:
     //! @functiongroup Handling registers and flags
     //
 
+    //! @brief    Returns the current execution cycle.
+    uint64_t getCycle() { return cycle; }
+
 	//! @brief    Returns the contents of the accumulator.
     uint8_t getA() { return A; }
     
