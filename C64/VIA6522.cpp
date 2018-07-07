@@ -1164,7 +1164,7 @@ VIA2::updatePB()
                 c64->floppy.moveHeadDown();
                 // assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
             } else {
-                warn("Unexpected stepper motor control sequence\n");
+                debug(2, "Unexpected stepper motor control sequence\n");
             }
         }
     }

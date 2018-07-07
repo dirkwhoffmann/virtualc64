@@ -23,7 +23,8 @@
 //
 // Emulation of the VC1541 disk drive has been improved considerably. The
 // emulator is compatible with various fast loaders now.
-// TODO: Fixed a bug that caused the drive to enter write mode after a reset.
+// Added an option to the emulator preferences to disable the auto-snapshot feature.
+// Fixed a bug that caused the drive to enter write mode after a reset.
 //
 // TODO:
 //
@@ -48,7 +49,7 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1
