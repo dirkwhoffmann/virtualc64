@@ -24,17 +24,18 @@ struct VC64Keys {
     static let eyeY = "VC64EyeY"
     static let eyeZ = "VC64EyeZ"
     
-    static let colorScheme    = "VC64ColorSchemeKey"
-    static let videoUpscaler  = "VC64VideoUpscalerKey"
-    static let videoFilter    = "VC64VideoFilterKey"
-    static let aspectRatio    = "VC64FullscreenKeepAspectRatioKey"
+    static let colorScheme   = "VC64ColorSchemeKey"
+    static let videoUpscaler = "VC64VideoUpscalerKey"
+    static let videoFilter   = "VC64VideoFilterKey"
+    static let aspectRatio   = "VC64FullscreenKeepAspectRatioKey"
 
     static let joyKeyMap1     = "VC64JoyKeyMap1"
     static let joyKeyMap2     = "VC64JoyKeyMap2"
     static let disconnectKeys = "VC64DisconnectKeys"
     
-    static let autoMount      = "VC64AutoMount"
-    
+    static let autoMount        = "VC64AutoMount"
+    static let snapshotInterval = "VC64SnapshotInterval"
+
     // Hardware preferences dialog
     static let ntsc = "VC64PALorNTSCKey"
 
@@ -95,7 +96,8 @@ extension MyController {
             VC64Keys.aspectRatio: false,
         
             VC64Keys.disconnectKeys: true,
-            VC64Keys.autoMount: false
+            VC64Keys.autoMount: false,
+            VC64Keys.snapshotInterval: 3
 ]
         
         let defaults = UserDefaults.standard
@@ -167,6 +169,7 @@ extension MyController {
         }
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
+        c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -231,6 +234,7 @@ extension MyController {
         }
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
         defaults.set(autoMount, forKey: VC64Keys.autoMount)
+        defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
     }
     
     /// Saves the user defaults for all properties that are set in the hardware dialog

@@ -43,7 +43,7 @@ class SnapshotDialog : UserDialogController  {
         if numAutoSnapshots == -1 {
             
             // Disable auto snapshot saving while dialog is open
-            c64.setAutoSaveSnapshots(false)
+            c64.suspendAutoSnapshots()
             
             // Setup snapshot caches
             reloadAutoSnapshotCache()
@@ -116,7 +116,7 @@ class SnapshotDialog : UserDialogController  {
     @IBAction override func cancelAction(_ sender: Any!) {
         
         track()
-        c64.setAutoSaveSnapshots(true)
+        c64.resumeAutoSnapshots()
         hideSheet()
     }
     

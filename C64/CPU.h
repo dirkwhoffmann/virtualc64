@@ -65,9 +65,9 @@ public:
 	Memory *mem;
 
     /*! @brief    Selected chip model
-     *  @details  Right now, this atrribute is only used to distinguish the C64 CPU (MOS6510)
-     *            from the VC1541 CPU (MOS6502). Hardware differences between both models
-     *            are not emulated.
+     *  @details  Right now, this atrribute is only used to distinguish the
+     *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
+     *            differences between both models are not emulated.
      */
     CPUChipModel chipModel;
 

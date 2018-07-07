@@ -747,7 +747,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (UInt64) frames { return wrapper->c64->getFrame(); }
 
 // Snapshot storage
-- (void) setAutoSaveSnapshots:(BOOL)b { wrapper->c64->autoSaveSnapshots = b; }
+- (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }
+- (void) enableAutoSnapshots { wrapper->c64->enableAutoSnapshots(); }
+- (void) suspendAutoSnapshots { wrapper->c64->suspendAutoSnapshots(); }
+- (void) resumeAutoSnapshots { wrapper->c64->resumeAutoSnapshots(); }
+- (NSInteger) snapshotInterval { return wrapper->c64->getSnapshotInterval(); }
+- (void) setSnapshotInterval:(NSInteger)value { wrapper->c64->setSnapshotInterval(value); }
 - (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
 - (NSData *)autoSnapshotData:(NSInteger)nr {
     Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);

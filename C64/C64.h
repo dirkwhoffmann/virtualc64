@@ -281,10 +281,12 @@ private:
 public:
     
     //! @brief    Indicates if snapshots should be recorded automatically
-    bool autoSaveSnapshots;
+    // bool autoSaveSnapshots;
     
     //! @brief    Time in seconds between two auto-saved snapshots
-    unsigned autoSaveInterval;
+    /*! @note     Setting this variable to 0 or less disables auto-snapshots.
+     */
+    long snapshotInterval;
     
 private:
     
@@ -547,9 +549,27 @@ public:
 
 
     //
-    //! @functiongroup Loading and saving snapshots
+    //! @functiongroup Handling snapshots
     //
     
+    //! @brief    Disables the auto-snapshot feature.
+    void disableAutoSnapshots() { if (snapshotInterval > 0) snapshotInterval *= -1; }
+
+    //! @brief    Enables the auto-snapshot feature.
+    void enableAutoSnapshots() { if (snapshotInterval < 0) snapshotInterval *= -1; }
+
+    //! @brief    Disables the auto-snapshot feature temporarily.
+    void suspendAutoSnapshots() { snapshotInterval -= (LONG_MAX / 2); }
+
+    //! @brief    Disables the auto-snapshot feature temporarily.
+    void resumeAutoSnapshots() { snapshotInterval += (LONG_MAX / 2); }
+
+    //! @brief    Returns the currently set snapshot interval in seconds.
+    long getSnapshotInterval() { return snapshotInterval; }
+
+    //! @brief    Sets the time interval between two auto-snapshots.
+    void setSnapshotInterval(long value) { snapshotInterval = value; }
+
     /*! @brief    Loads the current state from a snapshot container
      *  @note     THIS FUNCTION IS NOT THREAD SAFE. 
      *            Only use on halted emulators or within the emulation thread

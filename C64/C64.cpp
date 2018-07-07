@@ -155,8 +155,7 @@ C64::C64()
     for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
         userSavedSnapshots[i] = new Snapshot();
     }
-    autoSaveSnapshots = true;
-    autoSaveInterval = 3;
+    snapshotInterval = 3;
 
     reset();
 }
@@ -693,7 +692,8 @@ C64::endOfFrame()
     if (mousePort != 0) mouse->execute();
     
     // Take a snapshot once in a while
-    if (autoSaveSnapshots && frame % (vic.getFramesPerSecond() * autoSaveInterval) == 0) {
+    if (snapshotInterval > 0 &&
+        frame % (vic.getFramesPerSecond() * snapshotInterval) == 0) {
         takeAutoSnapshot();
     }
     
@@ -845,7 +845,7 @@ C64::loadRom(const char *filename)
 
 
 //
-//! @functiongroup Loading and saving snapshots
+//! @functiongroup Handling snapshots
 //
 
 void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)

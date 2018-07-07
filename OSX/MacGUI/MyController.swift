@@ -63,7 +63,6 @@ class MyController : NSWindowController {
     var autoMount = false
     
 
-    
     //
     // Outlets
     //

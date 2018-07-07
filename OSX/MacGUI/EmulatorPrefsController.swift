@@ -96,8 +96,10 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var fire2button: NSButton!
     @IBOutlet weak var disconnectKeys: NSButton!
     
-    // Documents
+    // Misc
     @IBOutlet weak var autoMount: NSButton!
+    @IBOutlet weak var autoSnapshots: NSButton!
+    @IBOutlet weak var snapshotInterval: NSTextField!
 
     override func awakeFromNib() {
         update()
@@ -145,6 +147,9 @@ class EmulatorPrefsController : UserDialogController {
         
         // Documents
         autoMount.state = parent.autoMount ? .on : .off
+        autoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
+        snapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
+        snapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
@@ -297,6 +302,29 @@ class EmulatorPrefsController : UserDialogController {
         parent.autoMount =  (sender.state == .on)
         update()
     }
+
+    @IBAction func autoSnapshotAction(_ sender: Any!) {
+        
+        let sender = sender as! NSButton
+        if sender.state == .on {
+            c64.enableAutoSnapshots()
+        } else {
+            c64.disableAutoSnapshots()
+        }
+        update()
+    }
+
+    @IBAction func snapshotIntervalAction(_ sender: Any!) {
+        
+        let sender = sender as! NSTextField
+        let value = sender.integerValue
+        
+        track("Value = \(value)")
+        
+        c64.setSnapshotInterval(value)
+        update()
+    }
+    
     
     //
     // Action methods (General)
@@ -330,9 +358,10 @@ class EmulatorPrefsController : UserDialogController {
         parent.gamePadManager.restoreFactorySettings()
         parent.keyboardcontroller.disconnectEmulationKeys = true
         
-        // File handling
+        // Misc
         parent.autoMount = false
-    
+        c64.setSnapshotInterval(3);
+        
         update()
     }
     
