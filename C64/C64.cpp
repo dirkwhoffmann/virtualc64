@@ -435,29 +435,6 @@ C64::stepOver()
     step();
 }
 
-/*
-#define EXECUTE \
-cycle++; \
-if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++; \
-if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++; \
-if (!cpu.executeOneCycle()) result = false; \
-if (!floppy.executeOneCycle()) result = false; \
-datasette.execute(); \
-rasterlineCycle++;
-*/
-
-// TODO (speedup):
-// Remove endOfRasterlineStuff from this function and call it _executeOneCycle
-// 1. Change executeOneCycle to { _executeOneCycle; if (lastCycle) endOfRasterline(); }
-// 2. Only allow executeOneCycle to be called from outside (single stepping)
-// 3. In executeOneLine, call _executeOneCycle and execute endOfRasterline(); after the loop
-//    Caution: Make sure that endOfRasterline(); is called on a pre exit
-// 4. Move executeCommons stuff at the end of _executeOneCycle. This saves us
-//    about a million function calls every second.
-// 5. Once the stuff has been moved, move the first executeDriveAsync in front of the
-//    switch statement, so it is triggered prior to VIC execution.
-
-
 bool
 C64::executeOneCycle()
 {
@@ -482,7 +459,7 @@ C64::_executeOneCycle()
     //     |     |     |  1  |     |  2  |   |    |     |
     //     '-----'     '-----'     '-----'   |    '-----'
     //                                       v
-    //                                Update of IEC bus
+    //                                 IEC bus update
     //                                       ^
     //     ,--------,                        |    ,--------,
     //     |        |                        |    |        |
@@ -560,11 +537,15 @@ C64::_executeOneCycle()
 bool
 C64::executeOneLine()
 {
-    uint8_t lastCycle = vic.getCyclesPerRasterline();
+    int lastCycle = vic.getCyclesPerRasterline();
     for (unsigned i = rasterlineCycle; i <= lastCycle; i++) {
-        if (!executeOneCycle())
+        if (!_executeOneCycle()) {
+            if (i == lastCycle)
+                endOfRasterline();
             return false;
+        }
     }
+    endOfRasterline();
     return true;
 }
 
