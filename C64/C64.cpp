@@ -435,16 +435,6 @@ C64::stepOver()
     step();
 }
 
-// Adapted from Wolfgang Lorenz: Clock.txt
-//
-//                    o2 low phase                    | o2 high phase
-//     ,----------------,     ,------,     ,------,   |    ,-----,
-//     | 1. Next Clock  |     |      |     |      |   |    |     |
-// ,-->| 2. Fire Timers | --> | CIA1 | --> | CIA2 | --|--> | CPU | --,
-// |   | 3. VIC         |     |      |     |      |   |    |     |   |
-// |   '----------------'     '------'     '------'   |    '-----'   |
-// '--------------------------------------------------|--------------'
-
 /*
 #define EXECUTE \
 cycle++; \
@@ -455,36 +445,6 @@ if (!floppy.executeOneCycle()) result = false; \
 datasette.execute(); \
 rasterlineCycle++;
 */
-#define EXECUTE executeCommons();
-
-bool
-C64::executeCommons()
-{
-    bool result = true;
-    
-    // Execute low phase
-    cycle++;
-    // TODO: runDriveAsync()
-    if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
-    if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
-    floppy.elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntil();
-    // TODO: waitForDrive()
-    
-    // Update IEC bus
-    if (iec.isDirty) iec.updateIecLines();
-    
-    // Execute high phase
-    // TODO: runDriveAsync()
-    result &= cpu.executeOneCycle();
-    datasette.execute();
-    floppy.elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntil();
-    // TODO: waitForDrive()
-    
-    rasterlineCycle++;
-    return result;
-}
 
 // TODO (speedup):
 // Remove endOfRasterlineStuff from this function and call it _executeOneCycle
@@ -496,150 +456,104 @@ C64::executeCommons()
 //    about a million function calls every second.
 // 5. Once the stuff has been moved, move the first executeDriveAsync in front of the
 //    switch statement, so it is triggered prior to VIC execution.
+
+
 bool
 C64::executeOneCycle()
 {
-    bool result = true;
+    bool lastCycle = vic.isLastCycleInRasterline(rasterlineCycle);
+    bool result = _executeOneCycle();
+    if (lastCycle)
+        endOfRasterline();
+    return result;
+}
+
+bool
+C64::_executeOneCycle()
+{
+    uint8_t result = true;
     
+    //  <---------- o2 low phase ----------->|<- o2 high phase ->
+    //                                       |
+    // ,- C64 thread ------------------------|------------------,
+    // |   ,-----,     ,-----,     ,-----,   |    ,-----,       |
+    // |   |     |     |     |     |     |   |    |     |       |
+    // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | ------'
+    //     |     |     |  1  |     |  2  |   |    |     |
+    //     '-----'     '-----'     '-----'   |    '-----'
+    //                                       v
+    //                                Update of IEC bus
+    //                                       ^
+    //     ,--------,                        |    ,--------,
+    //     |        |                        |    |        |
+    // ,-->| VC1541 | -----------------------|--> | VC1541 | ---,
+    // |   |        |                        |    |        |    |
+    // |   '--------'                        |    '--------'    |
+    // '- Drive thread ----------------------|------------------'
+    
+    // Low phase
     switch(rasterlineCycle) {
-        case 1:
-            beginOfRasterline();
-            vic.cycle1();
-            EXECUTE
-            break;
-        case 2:
-            vic.cycle2();
-            EXECUTE
-            break;
-        case 3:
-            vic.cycle3();
-            EXECUTE
-            break;
-        case 4:
-            vic.cycle4();
-            EXECUTE
-            break;
-        case 5:
-            vic.cycle5();
-            EXECUTE
-            break;
-        case 6:
-            vic.cycle6();
-            EXECUTE
-            break;
-        case 7:
-            vic.cycle7();
-            EXECUTE
-            break;
-        case 8:
-            vic.cycle8();
-            EXECUTE
-            break;
-        case 9:
-            vic.cycle9();
-            EXECUTE
-            break;
-        case 10:
-            vic.cycle10();
-            EXECUTE
-            break;
-        case 11:
-            vic.cycle11();
-            EXECUTE
-            break;
-        case 12:
-            vic.cycle12();
-            EXECUTE
-            break;
-        case 13:
-            vic.cycle13();
-            EXECUTE
-            break;
-        case 14:
-            vic.cycle14();
-            EXECUTE
-            break;
-        case 15:
-            vic.cycle15();
-            EXECUTE
-            break;
-        case 16:
-            vic.cycle16();
-            EXECUTE
-            break;
-        case 17:
-            vic.cycle17();
-            EXECUTE
-            break;
-        case 18:
-            vic.cycle18();
-            EXECUTE
-            break;
+        case 1: beginOfRasterline(); vic.cycle1(); break;
+        case 2: vic.cycle2(); break;
+        case 3: vic.cycle3(); break;
+        case 4: vic.cycle4(); break;
+        case 5: vic.cycle5(); break;
+        case 6: vic.cycle6(); break;
+        case 7: vic.cycle7(); break;
+        case 8: vic.cycle8(); break;
+        case 9: vic.cycle9(); break;
+        case 10: vic.cycle10(); break;
+        case 11: vic.cycle11(); break;
+        case 12: vic.cycle12(); break;
+        case 13: vic.cycle13(); break;
+        case 14: vic.cycle14(); break;
+        case 15: vic.cycle15(); break;
+        case 16: vic.cycle16(); break;
+        case 17: vic.cycle17(); break;
+        case 18: vic.cycle18(); break;
         case 19: case 20: case 21: case 22: case 23: case 24: case 25: case 26:
         case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34:
         case 35: case 36: case 37: case 38: case 39: case 40: case 41: case 42:
         case 43: case 44: case 45: case 46: case 47: case 48: case 49: case 50:
-        case 51: case 52: case 53: case 54:
-            vic.cycle19to54();
-            EXECUTE
-            break;
-        case 55:
-            vic.cycle55();
-            EXECUTE
-            break;
-        case 56:
-            vic.cycle56();
-            EXECUTE
-            break;
-        case 57: 
-            vic.cycle57();
-            EXECUTE
-            break;
-        case 58: 
-            vic.cycle58();
-            EXECUTE
-            break;
-        case 59: 
-            vic.cycle59();
-            EXECUTE
-            break;
-        case 60: 
-            vic.cycle60();
-            EXECUTE
-            break;
-        case 61: 
-            vic.cycle61();
-            EXECUTE
-            break;
-        case 62: 
-            vic.cycle62();
-            EXECUTE
-            break;
-        case 63: 
-            vic.cycle63();
-            EXECUTE
-            
-            // This is the last cycle on PAL machines
-            if (vic.getCyclesPerRasterline() == 63) {
-                endOfRasterline();
-            }            
-            break;
-        case 64: 
-            vic.cycle64();
-            EXECUTE
-            break;
-        case 65: 
-            vic.cycle65();
-            EXECUTE
-            endOfRasterline();
-            break;
-            
+        case 51: case 52: case 53: case 54: vic.cycle19to54(); break;
+        case 55: vic.cycle55(); break;
+        case 56: vic.cycle56(); break;
+        case 57: vic.cycle57(); break;
+        case 58: vic.cycle58(); break;
+        case 59: vic.cycle59(); break;
+        case 60: vic.cycle60(); break;
+        case 61: vic.cycle61(); break;
+        case 62: vic.cycle62(); break;
+        case 63: vic.cycle63(); break; // Last PAL cycle
+        case 64: vic.cycle64(); break; // NTSC only
+        case 65: vic.cycle65(); break; // NTSC only
         default:
             // can't reach
             assert(false);
             return false;
     }
     
+    // First clock phase (o2 low)
+    cycle++;
+    // TODO: runDriveAsync()
+    if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
+    if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
+    floppy.elapsedTime += durationOfHalfCycle;
+    result &= floppy.executeUntil();
+    // TODO: waitForDrive()
+    
+    // Update IEC bus
+    if (iec.isDirty) iec.updateIecLines();
+    
+    // Second clock phase (o2 high)
+    // TODO: runDriveAsync()
+    result &= cpu.executeOneCycle();
+    datasette.execute();
+    floppy.elapsedTime += durationOfHalfCycle;
+    result &= floppy.executeUntil();
+    // TODO: waitForDrive()
+    
+    rasterlineCycle++;
     return result;
 }
 

@@ -517,10 +517,17 @@ public:
     unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     
     //! @brief    Returns the number of rasterlines per frame.
-    int getRasterlinesPerFrame() { return isPAL() ? PAL_HEIGHT : NTSC_HEIGHT; }
+    int getRasterlinesPerFrame() {
+        return isPAL() ? PAL_HEIGHT : NTSC_HEIGHT; }
     
     //! @brief    Returns the number of CPU cycles performed per rasterline.
-    int getCyclesPerRasterline() { return isPAL() ? PAL_CYCLES_PER_RASTERLINE : NTSC_CYCLES_PER_RASTERLINE; }
+    int getCyclesPerRasterline() {
+        return isPAL() ? PAL_CYCLES_PER_RASTERLINE : NTSC_CYCLES_PER_RASTERLINE; }
+
+    //! @brief    Returns true if the end of the rasterline has been reached.
+    bool isLastCycleInRasterline(int cycle) {
+        return (cycle == PAL_CYCLES_PER_RASTERLINE && isPAL()) || cycle == NTSC_CYCLES_PER_RASTERLINE;
+    }
     
     //! @brief    Returns the number of CPU cycles performed per frame.
     int getCyclesPerFrame() {

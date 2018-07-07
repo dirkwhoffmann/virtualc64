@@ -49,7 +49,7 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1
@@ -461,7 +461,10 @@ private:
     bool executeOneCycle();
 
     //! @brief    Work horse for executeOneCycle()
-    bool executeCommons();
+    bool _executeOneCycle();
+
+    //! @brief    Work horse for executeOneCycle()
+    // bool executeCommons();
 
     //! @brief    Invoked before executing the first cycle of rasterline
     void beginOfRasterline();
