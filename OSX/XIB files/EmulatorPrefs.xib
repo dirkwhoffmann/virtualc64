@@ -49,7 +49,7 @@
                 <outlet property="right1button" destination="il6-aN-JBM" id="ugf-75-S86"/>
                 <outlet property="right2" destination="Oky-bg-WAd" id="ext-xN-eAy"/>
                 <outlet property="right2button" destination="fEP-TP-Jdi" id="3ul-td-KiP"/>
-                <outlet property="snapshotInterval" destination="p4h-4I-dFv" id="v96-Ab-koP"/>
+                <outlet property="snapshotInterval" destination="Hkd-vs-kdQ" id="1yS-ly-Jej"/>
                 <outlet property="up1" destination="9kj-h4-d8s" id="smC-80-XiC"/>
                 <outlet property="up1button" destination="vd9-u1-Lvr" id="Wre-Y9-vf2"/>
                 <outlet property="up2" destination="IWz-gg-pKF" id="IgF-Qs-OoI"/>
@@ -688,18 +688,6 @@ DQ
                             <action selector="autoMountAction:" target="-2" id="dGr-eq-oyF"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p4h-4I-dFv">
-                        <rect key="frame" x="248" y="119" width="32" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="rt1-2y-4t3">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <action selector="snapshotIntervalAction:" target="-2" id="TGy-C2-oZ9"/>
-                        </connections>
-                    </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C5o-Wm-bLH">
                         <rect key="frame" x="87" y="117" width="161" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -728,6 +716,22 @@ DQ
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hkd-vs-kdQ">
+                        <rect key="frame" x="248" y="119" width="32" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="VXq-Be-vml">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="HpG-8v-eeK">
+                                <real key="minimum" value="1"/>
+                                <real key="maximum" value="999"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <action selector="snapshotIntervalAction:" target="-2" id="hsK-GC-LIz"/>
+                        </connections>
                     </textField>
                 </subviews>
             </view>

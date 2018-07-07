@@ -318,9 +318,7 @@ class EmulatorPrefsController : UserDialogController {
         
         let sender = sender as! NSTextField
         let value = sender.integerValue
-        
-        track("Value = \(value)")
-        
+
         c64.setSnapshotInterval(value)
         update()
     }
