@@ -422,9 +422,9 @@ public:
     
 private:
     
-    void setCA2(bool value);
-    void setCB1(bool value);
-    void setCB2(bool value);
+    // void setCA2(bool value);
+    // void setCB1(bool value);
+    // void setCB2(bool value);
     virtual void setCA2out(bool value);
     virtual void setCB2out(bool value);
 

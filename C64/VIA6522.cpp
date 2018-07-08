@@ -952,11 +952,12 @@ VIA6522::setCA1late(bool value)
     }
 }
 
+/*
 void
 VIA6522::setCA2(bool value)
 {
     if (ca2 == value) return;
-    
+ 
     ca2 = value;
     
     // Check for active transition (positive or negative edge)
@@ -970,6 +971,7 @@ VIA6522::setCA2(bool value)
         delay |= VIAInterrupt1;
     }
 }
+*/
 
 /*
 void
@@ -1002,6 +1004,7 @@ VIA6522::setCB1(bool value)
 }
 */
 
+/*
 void
 VIA6522::setCB2(bool value)
 {
@@ -1020,6 +1023,7 @@ VIA6522::setCB2(bool value)
         delay |= VIAInterrupt1;
     }
 }
+*/
 
 void
 VIA6522::setCA2out(bool value)
@@ -1058,7 +1062,7 @@ VIA6522::wakeUp()
     
     // Make up for missed cycles
     if (idleCycles) {
-        debug("Making up %d cycles\n", idleCycles);
+        // debug("Making up %d cycles\n", idleCycles);
         if (feed & CountA0) {
             assert(t1 >= idleCycles);
             t1 -= idleCycles;
