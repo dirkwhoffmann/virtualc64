@@ -59,6 +59,7 @@ VIA6522::VIA6522()
         { &sr,              sizeof(sr),             CLEAR_ON_RESET },
         { &delay,           sizeof(delay),          CLEAR_ON_RESET },
         { &feed,            sizeof(feed),           CLEAR_ON_RESET },
+        { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -77,8 +78,7 @@ void VIA6522::reset()
     t1_latch_hi = 0x01;
     t1_latch_lo = 0xAA;
     t2_latch_lo = 0xAA;
-    
-    feed |= (VIACountA0 | VIACountB0);
+    feed = (VIACountA0 | VIACountB0);
 }
 
 void 
@@ -112,7 +112,11 @@ VIA6522::dumpState()
 void
 VIA6522::execute()
 {
-    newifr = 0;
+    wakeUp();
+    
+    uint64_t oldDelay = delay;
+    uint64_t oldFeed  = feed;
+    newifr = 0; // TODO: Make it a local variable (or is it used globally?)
     
     // Execute timers
     executeTimer1();
@@ -162,6 +166,16 @@ VIA6522::execute()
     
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
+    
+    // Go into idle state if possible
+    if (oldDelay == delay && oldFeed == feed) {
+        if (++tiredness > 4) {
+            sleep();
+            tiredness = 0;
+        }
+    } else {
+        tiredness = 0;
+    }
 }
 
 void
@@ -233,6 +247,8 @@ VIA6522::peek(uint16_t addr)
 {
 	assert (addr <= 0xF);
 		
+    wakeUp();
+    
 	switch(addr) {
             
         case 0x0: // ORB - Output register B
@@ -414,6 +430,11 @@ VIA6522::spypeek(uint16_t addr)
 {
     assert (addr <= 0xF);
     
+    // spypeek is not functional yet, because the VIA counter values are
+    // wrong if the chip is in idle state. Fix this before using this function.
+    // Look at CIA::spypeek to see how this can be done.
+    assert(false);
+    
     switch(addr) {
             
         case 0x4: // T1 low-order counter
@@ -447,6 +468,8 @@ VIA6522::spypeek(uint16_t addr)
 void VIA6522::poke(uint16_t addr, uint8_t value)
 {
     assert (addr <= 0x0F);
+    
+    wakeUp();
     
     switch(addr) {
             
@@ -730,6 +753,12 @@ VIA6522::pokePCR(uint8_t value)
     }
 }
 
+uint8_t
+VIA6522::portAinternal()
+{
+    return ora;
+}
+
 void
 VIA6522::updatePA()
 {
@@ -897,6 +926,9 @@ void
 VIA6522::setCA1early(bool value)
 {
     assert((delay & VIACA1Trans1) == 0);
+    
+    wakeUp();
+    
     delay |= VIACA1Trans1;
     /*
     if (ca1_prev != value) {
@@ -910,6 +942,8 @@ VIA6522::setCA1early(bool value)
 void
 VIA6522::setCA1late(bool value)
 {
+    wakeUp();
+    
     uint8_t next = (delay & VIACA1Trans1) ? !ca1_prev : ca1_prev;
     if (next != value) {
         delay |= VIACA1Trans0;
@@ -1000,13 +1034,42 @@ VIA6522::setCB2out(bool value)
 }
 
 void
-VIA1::pullDownIrqLine() {
-    c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA1);
+VIA6522::sleep()
+{
+    assert(idleCounter() == 0);
+    
+    // Determine maximum possible sleep cycles based on timer counts
+    uint64_t sleepA = (t1 > 2) ? (c64->floppy.cpu.getCycle() + t1 - 1) : 0;
+    uint64_t sleepB = (t2 > 2) ? (c64->floppy.cpu.getCycle() + t2 - 1) : 0;
+    
+    // VIAs with stopped timers can sleep forever
+    if (!(feed & CountA0)) sleepA = UINT64_MAX;
+    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    
+    // uint64_t c = c64->floppy.cpu.getCycle();
+    // debug("VIA can sleep for %d cycles (MIN(%d,%d)\n", MIN(sleepA, sleepB) - c, sleepA - c, sleepB - c);
+    setWakeUpCycle(MIN(sleepA, sleepB));
 }
 
 void
-VIA1::releaseIrqLine() {
-    c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA1);
+VIA6522::wakeUp()
+{
+    uint64_t idleCycles = idleCounter();
+    
+    // Make up for missed cycles
+    if (idleCycles) {
+        debug("Making up %d cycles\n", idleCycles);
+        if (feed & CountA0) {
+            assert(t1 >= idleCycles);
+            t1 -= idleCycles;
+        }
+        if (feed & CountB0) {
+            assert(t2 >= idleCycles);
+            t2 -= idleCycles;
+        }
+        resetIdleCounter();
+    }
+    setWakeUpCycle(0);
 }
 
 
@@ -1025,11 +1088,23 @@ VIA1::~VIA1()
     debug(3, "  Releasing VIA1...\n");
 }
 
+void
+VIA1::pullDownIrqLine() {
+    c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA1);
+}
+
+void
+VIA1::releaseIrqLine() {
+    c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA1);
+}
+
+/*
 uint8_t
 VIA1::portAinternal()
 {
-    return ora;
+    return getORA();
 }
+*/
 
 uint8_t
 VIA1::portAexternal()
@@ -1066,6 +1141,31 @@ VIA1::updatePB()
     c64->iec.setNeedsUpdate();
 }
 
+uint64_t
+VIA1::wakeUpCycle()
+{
+    return c64->floppy.wakeUpCycleVIA1;
+}
+
+void
+VIA1::setWakeUpCycle(uint64_t cycle)
+{
+    c64->floppy.wakeUpCycleVIA1 = cycle;
+}
+
+uint64_t
+VIA1::idleCounter()
+{
+    return c64->floppy.idleCounterVIA1;
+}
+
+void
+VIA1::resetIdleCounter()
+{
+    c64->floppy.idleCounterVIA1 = 0;
+}
+
+
 //
 // VIA 2
 // 
@@ -1081,16 +1181,18 @@ VIA2::~VIA2()
 	debug(3, "  Releasing VIA2...\n");
 }
 
+/*
 uint8_t
 VIA2::portAinternal()
 {
-    return ora;
+    return getORA();
 }
+*/
 
 uint8_t
 VIA2::portAexternal()
 {
-    // return ira; // Change to readMode() ? readShiftReg : 0xFF when latching is implemented.
+    // TODO: Which value is returned in write mode?
     return c64->floppy.readShiftreg & 0xFF;
 }
 
@@ -1106,9 +1208,9 @@ VIA2::portBexternal()
 void
 VIA2::updatePB()
 {
-    uint8_t oldPb = pb;
-    
+    uint8_t oldPb = getPB();
     VIA6522::updatePB();
+    uint8_t newPb = getPB();
     
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------
@@ -1116,16 +1218,16 @@ VIA2::updatePB()
     // |       | (4 disk zones)|protect|       | motor | (head move)   |
     
     // Bits 6 and 5
-    if ((pb & 0x60) != (oldPb & 0x60))
-        c64->floppy.setZone((pb >> 5) & 0x03);
+    if ((newPb & 0x60) != (oldPb & 0x60))
+        c64->floppy.setZone((newPb >> 5) & 0x03);
     
     // Bit 3
-    if (GET_BIT(pb, 3) != GET_BIT(oldPb, 3))
-        c64->floppy.setRedLED(GET_BIT(pb, 3));
+    if (GET_BIT(newPb, 3) != GET_BIT(oldPb, 3))
+        c64->floppy.setRedLED(GET_BIT(newPb, 3));
     
     // Bit 2
-    if (GET_BIT(pb, 2) != GET_BIT(oldPb, 2))
-        c64->floppy.setRotating(GET_BIT(pb, 2));
+    if (GET_BIT(newPb, 2) != GET_BIT(oldPb, 2))
+        c64->floppy.setRotating(GET_BIT(newPb, 2));
     
     // Head stepper motor
     
@@ -1146,7 +1248,7 @@ VIA2::updatePB()
     }
     */
     
-    if (pb & 0x04) { // We only move the head if the motor is on
+    if (newPb & 0x04) { // We only move the head if the motor is on
         
         // Relationship between halftracks and stepper positions:
         //
@@ -1154,7 +1256,7 @@ VIA2::updatePB()
         // Stepper position:  0   1   2   3   0   1   2   3 ...
         
         int oldPos = (int)((c64->floppy.getHalftrack() - 1) & 0x03);
-        int newPos = (int)(pb & 0x03);
+        int newPos = (int)(newPb & 0x03);
         
         if (newPos != oldPos) {
             if (newPos == ((oldPos + 1) & 0x03)) {
@@ -1185,6 +1287,30 @@ VIA2::pullDownIrqLine() {
 void
 VIA2::releaseIrqLine() {
     c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA2);
+}
+
+uint64_t
+VIA2::wakeUpCycle()
+{
+    return c64->floppy.wakeUpCycleVIA2;
+}
+
+void
+VIA2::setWakeUpCycle(uint64_t cycle)
+{
+    c64->floppy.wakeUpCycleVIA2 = cycle;
+}
+
+uint64_t
+VIA2::idleCounter()
+{
+    return c64->floppy.idleCounterVIA2;
+}
+
+void
+VIA2::resetIdleCounter()
+{
+    c64->floppy.idleCounterVIA2 = 0;
 }
 
 

@@ -68,7 +68,7 @@ IEC::dumpState()
 	dumpTrace();
 	msg("\n");
 	msg("Drive connected : %s\n", driveIsConnected ? "yes" : "no");
-    msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.ddrb);
+    msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.getDDRB());
     msg("    DDRA (CIA2) : %02X\n", c64->cia2.DDRA);
 
     msg("\n");
@@ -110,7 +110,7 @@ bool IEC::_updateIecLines()
     bool oldDataLine = dataLine;
     
     // Get bus signals from device side
-    uint8_t deviceBits = c64->floppy.via1.pb;
+    uint8_t deviceBits = c64->floppy.via1.getPB();
     bool deviceAtn = !!(deviceBits & 0x10);
     bool deviceClock = !!(deviceBits & 0x08);
     bool deviceData = !!(deviceBits & 0x02);

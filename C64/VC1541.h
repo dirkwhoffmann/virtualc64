@@ -137,6 +137,24 @@ public:
      */
     uint4_t counterUF4;
     
+    
+    //
+    // Sleep logic for VIA chips
+    //
+    
+    //! @brief    Wakeup cycle for VIA1
+    uint64_t wakeUpCycleVIA1;
+    
+    //! @brief    Number of skipped executions of VIA1
+    uint64_t idleCounterVIA1;
+    
+    //! @brief    Wakeup cycle for VIA2
+    uint64_t wakeUpCycleVIA2;
+    
+    //! @brief    Number of skipped executions of VIA2
+    uint64_t idleCounterVIA2;
+    
+    
 private:
     
     //
@@ -356,7 +374,7 @@ public:
     /*! @brief    Returns true iff drive is in read mode
      *  @details  The drive is in read mode iff port pin VIA2::CB2 equals 1.
      */
-    bool readMode() { return via2.cb2_out; }
+    bool readMode() { return via2.getCB2(); }
     
     //! @brief    Returns true iff drive is in write mode
     bool writeMode() { return !readMode(); }

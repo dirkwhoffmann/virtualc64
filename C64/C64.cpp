@@ -467,6 +467,8 @@ C64::_executeOneCycle()
     // |   |        |                        |    |        |    |
     // |   '--------'                        |    '--------'    |
     // '- Drive thread ----------------------|------------------'
+    //
+    // TODO: Do we need a second IEC bus update after o2 high? Probably yes.
     
     // Low phase
     switch(rasterlineCycle) {
@@ -504,10 +506,7 @@ C64::_executeOneCycle()
         case 63: vic.cycle63(); break; // Last PAL cycle
         case 64: vic.cycle64(); break; // NTSC only
         case 65: vic.cycle65(); break; // NTSC only
-        default:
-            // can't reach
-            assert(false);
-            return false;
+        default: assert(false);
     }
     
     // First clock phase (o2 low)

@@ -123,20 +123,8 @@ public:
     //! @brief    The C64s first versatile interface adapter
     CIA1 cia1;
     
-    //! @brief    Wakeup cycle for CIA1
-    uint64_t wakeUpCycleCIA1;
-    
-    //! @brief    Number of skipped executions of CIA1
-    uint64_t idleCounterCIA1;
-    
     //! @brief    The C64s second versatile interface adapter
     CIA2 cia2;
-
-    //! @brief    Wakeup cycle for CIA2
-    uint64_t wakeUpCycleCIA2;
-
-    //! @brief    Number of skipped executions of CIA2
-    uint64_t idleCounterCIA2;
 
     //! @brief    Sound chip
     SIDBridge sid;
@@ -188,11 +176,6 @@ public:
     // Executed cycle, rasterline, and frame
     //
     
-    //! @brief    Elapsed time since power up in pico seconds
-    /*! @todo     Change unit to nano seconds
-     */
-    // uint64_t elapsedTime;
-
     //! @brief    Duration of half a CPU cycle in pico seconds
     /*! @todo     Change unit to nano seconds
      */
@@ -254,16 +237,6 @@ private:
     
     
     //
-    // Message queue
-    //
-    
-    /*! @brief    Message queue.
-     *  @details  Used to communicate with the graphical user interface.
-     */
-    MessageQueue queue;
-    
-
-    //
     // Operation modes
     //
     
@@ -275,6 +248,17 @@ private:
      */
     bool ultimax;
     
+    
+    //
+    // Message queue
+    //
+    
+    /*! @brief    Message queue.
+     *  @details  Used to communicate with the graphical user interface.
+     */
+    MessageQueue queue;
+    
+
     //
     // Snapshot storage
     //
@@ -303,6 +287,25 @@ private:
     //! @brief    Storage for user-taken snapshots
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
+    
+public:
+    
+    //
+    // Speeding up emulation (CIA sleep logic)
+    //
+    
+    //! @brief    Wakeup cycle for CIA1
+    uint64_t wakeUpCycleCIA1;
+    
+    //! @brief    Number of skipped executions of CIA1
+    uint64_t idleCounterCIA1;
+    
+    //! @brief    Wakeup cycle for CIA2
+    uint64_t wakeUpCycleCIA2;
+    
+    //! @brief    Number of skipped executions of CIA2
+    uint64_t idleCounterCIA2;
+
     
 public:
     

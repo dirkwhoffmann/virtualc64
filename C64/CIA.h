@@ -213,13 +213,13 @@ public:
 
     
     //
-    // Sleep logic (speedup)
+    // Speeding up emulation (CIA sleep logic)
     //
     
     //! @brief    Idle counter
-    /*! @details  When the CIA state does not change during execution, this variable is
-     *            increased by one. If it exceeds a certain threshhold value, the chip
-     *            is put into idle state via sleep()
+    /*! @details  When the VIA state does not change during execution, this
+     *            variable is increased by one. If it exceeds a certain
+     *            threshhold, the chip is put into idle state via sleep()
      */
     uint8_t tiredness;
     
@@ -355,27 +355,27 @@ public:
 
     
     //
-    //! @functiongroup Speeding up the emulation
+    //! @functiongroup Speeding up emulation
     //
     
 private:
     
-    //! @brief    Puts the CIA chip into idle state
-    virtual void sleep();
+    //! @brief    Puts the CIA into idle state.
+    void sleep();
     
-    //! @brief    Emulate all previously skipped cycles
-    virtual void wakeUp();
+    //! @brief    Emulates all previously skipped cycles.
+    void wakeUp();
     
-    //! @brief    Returns the wake up cycle for this CIA chip
+    //! @brief    Returns the wake up cycle for this CIA.
     virtual uint64_t wakeUpCycle() = 0;
 
-    //! @brief    Sets the wake up cycle for this CIA chip
+    //! @brief    Sets the wake up cycle for this CIA.
     virtual void setWakeUpCycle(uint64_t cycle) = 0;
     
-    //! @brief    Returns the number of skipped executions for this CIA chip
+    //! @brief    Returns the number of skipped executions for this CIA.
     virtual uint64_t idleCounter() = 0;
     
-    //! @brief    Resets the skipped execution cycle counter to zero
+    //! @brief    Resets the skipped execution cycle counter to zero.
     virtual void resetIdleCounter() = 0;
 };
 

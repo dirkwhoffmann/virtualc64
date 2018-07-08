@@ -45,6 +45,10 @@ VC1541::VC1541()
         { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
+        { &wakeUpCycleVIA1,         sizeof(wakeUpCycleVIA1),        CLEAR_ON_RESET },
+        { &idleCounterVIA1,         sizeof(idleCounterVIA1),        CLEAR_ON_RESET },
+        { &wakeUpCycleVIA2,         sizeof(wakeUpCycleVIA2),        CLEAR_ON_RESET },
+        { &idleCounterVIA2,         sizeof(idleCounterVIA2),        CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
@@ -80,10 +84,7 @@ VC1541::reset()
     
     cpu.setPC(0xEAA0);
     halftrack = 41;
-    
-    // Put drive in read mode by default
-    via2.pcr = 0x20;
-    
+        
     // setDebugLevel(2);
     // via2.setDebugLevel(2);
 }
@@ -137,23 +138,6 @@ VC1541::powerUp()
     c64->resume();
 }
 
-/*
-bool
-VC1541::executeOneCycle()
-{
-    uint8_t result = true;
-    
-    uint64_t half = elapsedTime + (durationOfOneCpuCycle / 2);
-    elapsedTime += durationOfOneCpuCycle;
-
-    result = executeUntil(half);
-    c64->iec.updateIecLines();
-    result = executeUntil(elapsedTime);
-
-    return true;
-}
-*/
- 
 bool
 VC1541::executeUntil()
 {
@@ -165,8 +149,13 @@ VC1541::executeUntil()
             
             // Execute CPU and VIAs
             nextClock += 1000000;
-            via1.execute();
-            via2.execute();
+            // REMOVE TO ACTIVATE SLEEPING:
+            wakeUpCycleVIA1 = 0;
+            wakeUpCycleVIA2 = 0;
+            if (cpu.getCycle() >= wakeUpCycleVIA1) via1.execute(); else idleCounterVIA1++;
+            if (cpu.getCycle() >= wakeUpCycleVIA2) via2.execute(); else idleCounterVIA2++;
+            // via1.execute();
+            // via2.execute();
             result = cpu.executeOneCycle();
             
         } else {
@@ -224,9 +213,9 @@ VC1541::executeUF4()
     //
     
     switch (counterUF4 & 0x03) {
-        
+            
         case 0x00:
-        // case 0x01:
+            // case 0x01:
             
             // Computation of the Byte Ready and the Load signal
             //
@@ -242,21 +231,21 @@ VC1541::executeUF4()
             //             UE3                               ---
             
             // (1) Update value on Byte Ready line
-            if (byteReadyCounter == 7 && via2.ca2_out)
+            if (byteReadyCounter == 7 && via2.getCA2())
                 clearByteReadyLine();
             break;
-        
+            
         case 0x01:
             break;
             
         case 0x02:
-        
+            
             // (2)
             raiseByteReadyLine();
             
             // (3) Execute byte ready counter
             byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
-        
+            
             // (4) Execute the write shift register
             if (writeMode() && !getLightBarrier()) {
                 writeBitToHead(writeShiftreg & 0x80);
@@ -273,7 +262,7 @@ VC1541::executeUF4()
             
             // (6)
             if (byteReadyCounter == 7) {
-                writeShiftreg = via2.pa;
+                writeShiftreg = via2.getPA();
             }
             break;
     }

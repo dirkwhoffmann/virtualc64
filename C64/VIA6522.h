@@ -70,7 +70,7 @@ class VC1541;
  */
 class VIA6522 : public VirtualComponent {
 	
-public:
+private:
     
     //
     // Peripheral interface
@@ -123,12 +123,11 @@ public:
     bool cb1;
     bool cb2;
     bool cb2_out;
-     
+    
+    
     //
     // Port registers
     //
-    
-public:
     
     //! @brief    Data direction registers
     /*! @details  "Each port has a Data Direction Register (DDRA, DDRB) for
@@ -165,7 +164,6 @@ public:
     uint8_t ira;
     uint8_t irb;
 
-public:
     
     //
     // Timers
@@ -227,7 +225,20 @@ public:
     //! @details  Bits set in this variable makes a trigger event persistent.
     uint64_t feed;
     
-public:	
+    //
+    // Speeding up emulation (VIA sleep logic)
+    //
+    
+    //! @brief    Idle counter
+    /*! @details  When the VIA state does not change during execution, this
+     *            variable is increased by one. If it exceeds a certain
+     *            threshhold, the chip is put into idle state via sleep()
+     */
+    uint8_t tiredness;
+    
+    
+public:
+    
 	//! @brief    Constructor
 	VIA6522();
 	
@@ -239,6 +250,30 @@ public:
 
     //! @brief    Dumps debug information.
     void dumpState();
+
+    //! @brief    Getter for output register A
+    // uint8_t getORA() { return ora; }
+
+    //! @brief    Getter for output register B
+    // uint8_t getORB() { return orb; }
+
+    //! @brief    Getter for data directon register A
+    uint8_t getDDRA() { return ddra; }
+
+    //! @brief    Getter for data directon register B
+    uint8_t getDDRB() { return ddrb; }
+
+    //! @brief    Getter for peripheral A port
+    uint8_t getPA() { return pa; }
+
+    //! @brief    Getter for peripheral B port
+    uint8_t getPB() { return pb; }
+
+    //! @brief    Getter for peripheral A control pin 2
+    bool getCA2() { return ca2_out; }
+
+    //! @brief    Getter for peripheral B control pin 2
+    bool getCB2() { return cb2_out; }
 
     //! @brief    Executes the virtual VIA for one cycle.
     void execute(); 
@@ -255,6 +290,8 @@ public:
      */
 	virtual uint8_t peek(uint16_t addr);
 	
+private:
+    
     //! @brief    Special peek function for output register A
     /*! @details  Variable handshake is needed to distiguish if ORA is read
      *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
@@ -263,6 +300,8 @@ public:
 
     //! @brief    Special peek function for output register B
     uint8_t peekORB();
+    
+public:
     
     //! @brief    Same as peek, but without side effects
     virtual uint8_t spypeek(uint16_t addr);
@@ -273,6 +312,8 @@ public:
      */
 	virtual void poke(uint16_t addr, uint8_t value);
 
+private:
+    
     //! @brief    Special poke function for output register A
     /*! @details  Variable handshake is needed to distiguish if ORA is written
      *            via address 0x1 (handshake enabled) or address 0xF (no handshake).
@@ -327,8 +368,10 @@ public:
     // Ports
     //
 
+protected:
+    
     //! @brief   Bit values driving port A from inside the chip
-    virtual uint8_t portAinternal() = 0;
+    uint8_t portAinternal();
 
     //! @brief   Bit values driving port A from outside the chip
     virtual uint8_t portAexternal() = 0;
@@ -339,7 +382,7 @@ public:
     virtual void updatePA();
 
     //! @brief   Bit values driving port B from inside the chip
-    virtual uint8_t portBinternal();
+    uint8_t portBinternal();
     
     //! @brief   Bit values driving port B from outside the chip
     virtual uint8_t portBexternal() = 0;
@@ -354,6 +397,8 @@ public:
     // Peripheral control lines
     //
 
+private:
+    
     //! @brief    Simulates an edge on the CA1 pin
     void toggleCA1();
 
@@ -369,9 +414,14 @@ public:
     //! @brief    Custom action on a falling edge of the CA1 pin
     virtual void CA1LowAction() { };
     
+public:
+    
     // void setCA1(bool value); // Deprecated
     void setCA1early(bool value);
     void setCA1late(bool value);
+    
+private:
+    
     void setCA2(bool value);
     void setCB1(bool value);
     void setCB2(bool value);
@@ -464,6 +514,29 @@ public:
     void setInterruptFlag_CA2() { SET_BIT(ifr,0); }
     // void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); IRQ(); }
     void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); }
+
+    
+    //
+    //! @functiongroup Speeding up emulation
+    //
+    
+    //! @brief    Puts the VIA into idle state.
+    void sleep();
+    
+    //! @brief    Emulates all previously skipped cycles.
+    void wakeUp();
+    
+    //! @brief    Returns the wake up cycle for this VIA.
+    virtual uint64_t wakeUpCycle() = 0;
+    
+    //! @brief    Sets the wake up cycle for this VIA.
+    virtual void setWakeUpCycle(uint64_t cycle) = 0;
+    
+    //! @brief    Returns the number of skipped executions for this VIA.
+    virtual uint64_t idleCounter() = 0;
+    
+    //! @brief    Resets the skipped execution cycle counter to zero.
+    virtual void resetIdleCounter() = 0;
 };
 
 
@@ -478,12 +551,16 @@ public:
 	VIA1();
 	~VIA1();
     
-    uint8_t portAinternal();
+    // uint8_t portAinternal();
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
     void pullDownIrqLine();
     void releaseIrqLine();
+    uint64_t wakeUpCycle();
+    void setWakeUpCycle(uint64_t cycle);
+    uint64_t idleCounter();
+    void resetIdleCounter();
 };
 
 /*! @brief   Second virtual VIA6522 controller
@@ -497,13 +574,17 @@ public:
 	VIA2();
 	~VIA2();
  
-    uint8_t portAinternal();
+    // uint8_t portAinternal();
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
     void CA1LowAction();
     void pullDownIrqLine();
     void releaseIrqLine();
+    uint64_t wakeUpCycle();
+    void setWakeUpCycle(uint64_t cycle);
+    uint64_t idleCounter();
+    void resetIdleCounter();
 };
 
 #endif

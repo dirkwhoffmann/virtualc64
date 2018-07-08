@@ -279,7 +279,8 @@ CIA::spypeek(uint16_t addr)
     }
 }
 
-void CIA::poke(uint16_t addr, uint8_t value)
+void
+CIA::poke(uint16_t addr, uint8_t value)
 {
     wakeUp();
     
