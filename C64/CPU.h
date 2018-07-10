@@ -70,12 +70,12 @@ public:
      *            differences between both models are not emulated.
      */
     CPUChipModel chipModel;
-
-private:
     
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
 
+private:
+    
 	//! @brief    Accumulator
 	uint8_t A;
     

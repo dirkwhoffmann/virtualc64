@@ -297,7 +297,7 @@ EpyxFastLoad::dischargeCapacitor()
     /* The capacitor will be charged in about 512 cycles (value taken from VICE).
      * We store this value variable 'cycle', so it can be picked up in execute().
      */
-    cycle = c64->getCycles() + 512;
+    cycle = c64->currentCycle() + 512;
     
     if (c64->expansionport.getGameLine() == 1 && c64->expansionport.getExromLine() == 1) {
     }
@@ -312,7 +312,7 @@ EpyxFastLoad::checkCapacitor()
     
     // debug("Capacitor check: Cartridge continues to live for %ld cycles\n", disable_at_cycle - c64->getCycles());
     
-    if (c64->getCycles() > cycle) {
+    if (c64->currentCycle() > cycle) {
         
         if (c64->expansionport.getGameLine() != 1 || c64->expansionport.getExromLine() != 1) {
         }

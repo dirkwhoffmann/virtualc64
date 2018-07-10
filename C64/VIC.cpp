@@ -885,7 +885,7 @@ void
 VIC::setBAlow(uint8_t value)
 {
     if (!BAlow && value)
-        BAwentLowAtCycle = c64->getCycles();
+        BAwentLowAtCycle = c64->currentCycle();
     
     BAlow = value;
     c64->cpu.setRDY(value == 0);
@@ -894,7 +894,7 @@ VIC::setBAlow(uint8_t value)
 bool
 VIC::BApulledDownForAtLeastThreeCycles()
 {
-    return BAlow && (c64->getCycles() - BAwentLowAtCycle > 2);
+    return BAlow && (c64->currentCycle() - BAwentLowAtCycle > 2);
 }
 
 void 

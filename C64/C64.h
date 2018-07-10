@@ -173,19 +173,9 @@ public:
     unsigned mousePort;
     
     //
-    // Executed cycle, rasterline, and frame
+    // Frame, rasterline, and rasterline cycle
     //
-    
-    //! @brief    Duration of half a CPU cycle in pico seconds
-    /*! @todo     Change unit to nano seconds
-     */
-    uint64_t durationOfHalfCycle;
-
-    //! @brief    Elapsed C64 clock cycles since power up
-    /*! @deprecated Use CPU::cycle of the C64 cpu which matches this value.
-     */
-    uint64_t cycle;
-    
+        
     //! @brief    Total number of frames drawn since power up
     uint64_t frame;
     
@@ -197,6 +187,11 @@ public:
      */
     uint8_t rasterlineCycle;
 
+    //! @brief    Duration of half a CPU cycle in pico seconds
+    /*! @todo     Change unit to nano seconds
+     */
+    uint64_t durationOfHalfCycle;
+    
 
     //
     // Execution thread
@@ -524,7 +519,7 @@ public:
     //
     
     //! @brief    Returns the number of CPU cycles elapsed so far.
-    uint64_t getCycles() { return cycle; }
+    uint64_t currentCycle() { return cpu.cycle; }
     
     //! @brief    Returns the number of the currently drawn frame.
     uint64_t getFrame() { return frame; }

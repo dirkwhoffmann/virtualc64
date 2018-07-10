@@ -160,7 +160,7 @@ SIDBridge::peek(uint16_t addr)
     assert(addr <= 0x1F);
     
     // Get SID up to date
-    executeUntil(c64->getCycles());
+    executeUntil(c64->currentCycle());
     
     if (addr == 0x19) {
         return c64->potXBits();
@@ -187,7 +187,7 @@ void
 SIDBridge::poke(uint16_t addr, uint8_t value)
 {
     // Get SID up to date
-    executeUntil(c64->getCycles());
+    executeUntil(c64->currentCycle());
 
     // Keep both SID implementations up to date
     resid.poke(addr, value);

@@ -124,7 +124,6 @@ C64::C64()
         { &warp,                sizeof(warp),                CLEAR_ON_RESET },
         { &alwaysWarp,          sizeof(alwaysWarp),          CLEAR_ON_RESET },
         { &warpLoad,            sizeof(warpLoad),            KEEP_ON_RESET },
-        { &cycle,               sizeof(cycle),               CLEAR_ON_RESET },
         { &durationOfHalfCycle, sizeof(durationOfHalfCycle), KEEP_ON_RESET },
         { &frame,               sizeof(frame),               CLEAR_ON_RESET },
         { &rasterline,          sizeof(rasterline),          CLEAR_ON_RESET },
@@ -215,7 +214,7 @@ C64::dumpState() {
     msg("       Frames per second : %d\n", vic.getFramesPerSecond());
     msg("   Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
     msg("   Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
-    msg("           Current cycle : %llu\n", cycle);
+    msg("           Current cycle : %llu\n", cpu.cycle);
     msg("           Current frame : %d\n", frame);
     msg("      Current rasterline : %d\n", rasterline);
     msg("Current rasterline cycle : %d\n", rasterlineCycle);
@@ -450,25 +449,23 @@ C64::_executeOneCycle()
 {
     uint8_t result = true;
     
-    //  <---------- o2 low phase ----------->|<- o2 high phase ->
-    //                                       |
-    // ,- C64 thread ------------------------|------------------,
-    // |   ,-----,     ,-----,     ,-----,   |    ,-----,       |
-    // |   |     |     |     |     |     |   |    |     |       |
-    // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | ------'
-    //     |     |     |  1  |     |  2  |   |    |     |
-    //     '-----'     '-----'     '-----'   |    '-----'
-    //                                       v
-    //                                 IEC bus update
-    //                                       ^
-    //     ,--------,                        |    ,--------,
-    //     |        |                        |    |        |
-    // ,-->| VC1541 | -----------------------|--> | VC1541 | ---,
-    // |   |        |                        |    |        |    |
-    // |   '--------'                        |    '--------'    |
-    // '- Drive thread ----------------------|------------------'
-    //
-    // TODO: Do we need a second IEC bus update after o2 high? Probably yes.
+    //  <---------- o2 low phase ----------->|<- o2 high phase ->|
+    //                                       |                   |
+    // ,- C64 thread ------------------------|-------------------|--,
+    // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
+    // |   |     |     |     |     |     |   |    |     |        |  |
+    // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
+    //     |     |     |  1  |     |  2  |   |    |     |        |
+    //     '-----'     '-----'     '-----'   |    '-----'        |
+    //                                       v                   v
+    //                                 IEC bus update      IEC bus update
+    //                                       ^                   ^
+    //     ,--------,                        |    ,--------,     |
+    //     |        |                        |    |        |     |
+    // ,-->| VC1541 | -----------------------|--> | VC1541 | ----|--,
+    // |   |        |                        |    |        |     |  |
+    // |   '--------'                        |    '--------'     |  |
+    // '- Drive thread ----------------------|-------------------|--'
     
     // Low phase
     switch(rasterlineCycle) {
@@ -509,16 +506,13 @@ C64::_executeOneCycle()
         default: assert(false);
     }
     
-    // First clock phase (o2 low)
-    cycle++;
+    uint64_t cycle = ++cpu.cycle;
     // TODO: runDriveAsync()
     if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
     if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
     floppy.elapsedTime += durationOfHalfCycle;
     result &= floppy.executeUntil();
     // TODO: waitForDrive()
-    
-    // Update IEC bus
     if (iec.isDirty) iec.updateIecLines();
     
     // Second clock phase (o2 high)
@@ -528,6 +522,7 @@ C64::_executeOneCycle()
     floppy.elapsedTime += durationOfHalfCycle;
     result &= floppy.executeUntil();
     // TODO: waitForDrive()
+    if (iec.isDirty) iec.updateIecLines();
     
     rasterlineCycle++;
     return result;
@@ -592,7 +587,7 @@ C64::endOfFrame()
     cia2.incrementTOD();
     
     // Execute remaining SID cycles
-    sid.executeUntil(cycle);
+    sid.executeUntil(cpu.cycle);
     
     // Execute other components
     iec.execute();

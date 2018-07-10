@@ -148,6 +148,7 @@ VC1541::executeUntil()
         if (nextClock <= nextCarry) {
             
             // Execute CPU and VIAs
+            cpu.cycle++;
             nextClock += 1000000;
             if (cpu.getCycle() >= wakeUpCycleVIA1) via1.execute(); else idleCounterVIA1++;
             if (cpu.getCycle() >= wakeUpCycleVIA2) via2.execute(); else idleCounterVIA2++;

@@ -450,10 +450,7 @@ CPU::registerIllegalInstructions()
 
 bool
 CPU::executeOneCycle()
-{
-    cycle++;
-    assert(this != &c64->cpu || cycle == c64->cycle);
-    
+{    
     switch (next) {
             
         case fetch:
