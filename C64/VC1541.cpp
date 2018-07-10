@@ -149,15 +149,10 @@ VC1541::executeUntil()
             
             // Execute CPU and VIAs
             nextClock += 1000000;
-            // REMOVE TO ACTIVATE SLEEPING:
-            wakeUpCycleVIA1 = 0;
-            wakeUpCycleVIA2 = 0;
             if (cpu.getCycle() >= wakeUpCycleVIA1) via1.execute(); else idleCounterVIA1++;
             if (cpu.getCycle() >= wakeUpCycleVIA2) via2.execute(); else idleCounterVIA2++;
-            // via1.execute();
-            // via2.execute();
             result = cpu.executeOneCycle();
-            
+        
         } else {
             
             // Execute read/write logic

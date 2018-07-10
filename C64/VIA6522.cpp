@@ -79,6 +79,7 @@ void VIA6522::reset()
     t1_latch_lo = 0xAA;
     t2_latch_lo = 0xAA;
     feed = (VIACountA0 | VIACountB0);
+    // updatePB();
 }
 
 void 
@@ -109,6 +110,8 @@ VIA6522::dumpState()
 // Execution functions
 //
 
+
+
 void
 VIA6522::execute()
 {
@@ -116,16 +119,11 @@ VIA6522::execute()
     
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
-    newifr = 0; // TODO: Make it a local variable (or is it used globally?)
+    newifr = 0; // TODO: Make it a local variable (and let it return by executeTimer)
     
     // Execute timers
     executeTimer1();
     executeTimer2();
-    
-    /*
-    if (c64->floppy.cpu.tracingEnabled())
-        debug("IFR: %02X IER: %02X Int0: %d Int1: %d INT line: %d\n", ifr, ier, (delay & VIAInterrupt0) != 0, (delay & VIAInterrupt1) != 0, (c64->floppy.cpu.irqLine & CPU::VIA) != 0);
-    */
     
     // Check for interrupt condition
     ifr |= newifr;
@@ -1047,11 +1045,9 @@ VIA6522::sleep()
     uint64_t sleepB = (t2 > 2) ? (c64->floppy.cpu.getCycle() + t2 - 1) : 0;
     
     // VIAs with stopped timers can sleep forever
-    if (!(feed & CountA0)) sleepA = UINT64_MAX;
-    if (!(feed & CountB0)) sleepB = UINT64_MAX;
+    if (!(delay & VIACountA1)) sleepA = UINT64_MAX;
+    if (!(delay & VIACountB1)) sleepB = UINT64_MAX;
     
-    // uint64_t c = c64->floppy.cpu.getCycle();
-    // debug("VIA can sleep for %d cycles (MIN(%d,%d)\n", MIN(sleepA, sleepB) - c, sleepA - c, sleepB - c);
     setWakeUpCycle(MIN(sleepA, sleepB));
 }
 
@@ -1062,13 +1058,12 @@ VIA6522::wakeUp()
     
     // Make up for missed cycles
     if (idleCycles) {
-        // debug("Making up %d cycles\n", idleCycles);
-        if (feed & CountA0) {
-            assert(t1 >= idleCycles);
+        if (delay & VIACountA1) {
+            assert(t1 > idleCycles);
             t1 -= idleCycles;
         }
-        if (feed & CountB0) {
-            assert(t2 >= idleCycles);
+        if (delay & VIACountB1) {
+            assert(t2 > idleCycles);
             t2 -= idleCycles;
         }
         resetIdleCounter();
@@ -1101,14 +1096,6 @@ void
 VIA1::releaseIrqLine() {
     c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA1);
 }
-
-/*
-uint8_t
-VIA1::portAinternal()
-{
-    return getORA();
-}
-*/
 
 uint8_t
 VIA1::portAexternal()
@@ -1185,14 +1172,6 @@ VIA2::~VIA2()
 	debug(3, "  Releasing VIA2...\n");
 }
 
-/*
-uint8_t
-VIA2::portAinternal()
-{
-    return getORA();
-}
-*/
-
 uint8_t
 VIA2::portAexternal()
 {
@@ -1212,9 +1191,9 @@ VIA2::portBexternal()
 void
 VIA2::updatePB()
 {
-    uint8_t oldPb = getPB();
+    uint8_t oldPb = pb;
     VIA6522::updatePB();
-    uint8_t newPb = getPB();
+    uint8_t newPb = pb;
     
     // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
     // -----------------------------------------------------------------

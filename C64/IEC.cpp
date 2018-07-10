@@ -48,7 +48,9 @@ IEC::reset()
     VirtualComponent::reset();
     
     driveIsConnected = 1;
-    _updateIecLines();
+    atnLine = 1;
+    clockLine = 1;
+    dataLine = 1;
 }
 
 void

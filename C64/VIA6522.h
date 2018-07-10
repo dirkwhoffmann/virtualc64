@@ -70,7 +70,7 @@ class VC1541;
  */
 class VIA6522 : public VirtualComponent {
 	
-private:
+protected:
     
     //
     // Peripheral interface
@@ -102,7 +102,7 @@ private:
     bool ca2_prev; // from Hoxs64
     bool cb1_prev; // from Hoxs64
     bool cb2_prev; // from Hoxs64
-
+    
     //! @brief    Peripheral port B
     /*! @details  "The Peripheral B port consists of 8 lines which can be
      *             individually programmed to act as an input or an output
@@ -278,15 +278,19 @@ public:
     //! @brief    Executes the virtual VIA for one cycle.
     void execute(); 
 
+private:
+    
     //! @brief    Executes timer 1 for one cycle.
     void executeTimer1();
 
     //! @brief    Executes timer 2 for one cycle.
     void executeTimer2();
 	
+public:
+    
 	/*! @brief    Special peek function for the I/O memory range
-	 *  @details  The peek function only handles those registers that are treated
-     *            similarly by both VIA chips
+	 *  @details  The peek function only handles those registers that are
+     *            treated similarly by both VIA chips
      */
 	virtual uint8_t peek(uint16_t addr);
 	
@@ -304,13 +308,13 @@ private:
 public:
     
     //! @brief    Same as peek, but without side effects
-    virtual uint8_t spypeek(uint16_t addr);
+    uint8_t spypeek(uint16_t addr);
     
 	/*! @brief    Special poke function for the I/O memory range
 	 *  @details  The poke function only handles those registers that are treated
      *            similarly by both VIA chips
      */
-	virtual void poke(uint16_t addr, uint8_t value);
+    void poke(uint16_t addr, uint8_t value);
 
 private:
     

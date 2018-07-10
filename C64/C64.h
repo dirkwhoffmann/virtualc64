@@ -45,7 +45,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 2
-#define V_MINOR 2
+#define V_MINOR 3
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
