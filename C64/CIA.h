@@ -31,48 +31,48 @@ class Keyboard;
 class Joystick;
 
 // Adapted from PC64WIN
-#define CountA0     (1ULL << 0) // Decrements timer A
-#define CountA1     (1ULL << 1)
-#define CountA2     (1ULL << 2)
-#define CountA3     (1ULL << 3)
-#define CountB0     (1ULL << 4) // Decrements timer B
-#define CountB1     (1ULL << 5)
-#define CountB2     (1ULL << 6)
-#define CountB3     (1ULL << 7)
-#define LoadA0      (1ULL << 8) // Loads timer A
-#define LoadA1      (1ULL << 9)
-#define LoadA2      (1ULL << 10)
-#define LoadB0      (1ULL << 11) // Loads timer B
-#define LoadB1      (1ULL << 12)
-#define LoadB2      (1ULL << 13)
-#define PB6Low0     (1ULL << 14) // Sets pin PB6 low
-#define PB6Low1     (1ULL << 15)
-#define PB7Low0     (1ULL << 16) // Sets pin PB7 low
-#define PB7Low1     (1ULL << 17)
-#define SetInt0     (1ULL << 18) // Triggers an interrupt
-#define SetInt1     (1ULL << 19)
-#define ClearInt0   (1ULL << 20) // Releases the interrupt line
-#define OneShotA0   (1ULL << 21)
-#define OneShotB0   (1ULL << 22)
-#define ReadIcr0    (1ULL << 23) // Indicates that ICR was read recently
-#define ReadIcr1    (1ULL << 24)
-#define ClearIcr0   (1ULL << 25) // Clears bit 8 in ICR register
-#define ClearIcr1   (1ULL << 26)
-#define ClearIcr2   (1ULL << 27)
-#define SetIcr0     (1ULL << 28) // Sets bit 8 in ICR register
-#define SetIcr1     (1ULL << 29)
-#define TODInt0     (1ULL << 30) // Triggers an interrupt with TOD as source
-#define SerInt0     (1ULL << 31) // Triggers an interrupt with serial register as source
-#define SerInt1     (1ULL << 32)
-#define SerInt2     (1ULL << 33)
-#define SerLoad0    (1ULL << 34) // Loads the serial shift register
-#define SerLoad1    (1ULL << 35)
-#define SerClk0     (1ULL << 36) // Clock signal driving the serial register
-#define SerClk1     (1ULL << 37)
-#define SerClk2     (1ULL << 38)
-#define SerClk3     (1ULL << 39)
+#define CIACountA0     (1ULL << 0) // Decrements timer A
+#define CIACountA1     (1ULL << 1)
+#define CIACountA2     (1ULL << 2)
+#define CIACountA3     (1ULL << 3)
+#define CIACountB0     (1ULL << 4) // Decrements timer B
+#define CIACountB1     (1ULL << 5)
+#define CIACountB2     (1ULL << 6)
+#define CIACountB3     (1ULL << 7)
+#define CIALoadA0      (1ULL << 8) // Loads timer A
+#define CIALoadA1      (1ULL << 9)
+#define CIALoadA2      (1ULL << 10)
+#define CIALoadB0      (1ULL << 11) // Loads timer B
+#define CIALoadB1      (1ULL << 12)
+#define CIALoadB2      (1ULL << 13)
+#define CIAPB6Low0     (1ULL << 14) // Sets pin PB6 low
+#define CIAPB6Low1     (1ULL << 15)
+#define CIAPB7Low0     (1ULL << 16) // Sets pin PB7 low
+#define CIAPB7Low1     (1ULL << 17)
+#define CIASetInt0     (1ULL << 18) // Triggers an interrupt
+#define CIASetInt1     (1ULL << 19)
+#define CIAClearInt0   (1ULL << 20) // Releases the interrupt line
+#define CIAOneShotA0   (1ULL << 21)
+#define CIAOneShotB0   (1ULL << 22)
+#define CIAReadIcr0    (1ULL << 23) // Indicates that ICR was read recently
+#define CIAReadIcr1    (1ULL << 24)
+#define CIAClearIcr0   (1ULL << 25) // Clears bit 8 in ICR register
+#define CIAClearIcr1   (1ULL << 26)
+#define CIAClearIcr2   (1ULL << 27)
+#define CIASetIcr0     (1ULL << 28) // Sets bit 8 in ICR register
+#define CIASetIcr1     (1ULL << 29)
+#define CIATODInt0     (1ULL << 30) // Triggers an interrupt with TOD as source
+#define CIASerInt0     (1ULL << 31) // Triggers an interrupt with serial register as source
+#define CIASerInt1     (1ULL << 32)
+#define CIASerInt2     (1ULL << 33)
+#define CIASerLoad0    (1ULL << 34) // Loads the serial shift register
+#define CIASerLoad1    (1ULL << 35)
+#define CIASerClk0     (1ULL << 36) // Clock signal driving the serial register
+#define CIASerClk1     (1ULL << 37)
+#define CIASerClk2     (1ULL << 38)
+#define CIASerClk3     (1ULL << 39)
 
-#define DelayMask ~((1ULL << 40) | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | SetInt0 | ClearInt0 | OneShotA0 | OneShotB0 | ReadIcr0 | ClearIcr0 | SetIcr0 | TODInt0 | SerInt0 | SerLoad0 | SerClk0)
+#define DelayMask ~((1ULL << 40) | CIACountA0 | CIACountB0 | CIALoadA0 | CIALoadB0 | CIAPB6Low0 | CIAPB7Low0 | CIASetInt0 | CIAClearInt0 | CIAOneShotA0 | CIAOneShotB0 | CIAReadIcr0 | CIAClearIcr0 | CIASetIcr0 | CIATODInt0 | CIASerInt0 | CIASerLoad0 | CIASerClk0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)
@@ -281,13 +281,13 @@ private:
 	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait
      *            for one cycle before it continues to count.
      */
-    void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
+    void reloadTimerA() { counterA = latchA; delay &= ~CIACountA2; }
 	
 	/*! @brief    Loads latched value into timer.
 	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for
      *            one cycle before it continues to count.
      */
-    void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
+    void reloadTimerB() { counterB = latchB; delay &= ~CIACountB2; }
 	
 private:
     
