@@ -252,10 +252,6 @@ C64::updateVicFunctionTable()
 {
     // Initialize VIC function table
     vicfunc[0] = NULL;
-
-    vicfunc[5] = &VIC::cycle5;
-    vicfunc[6] = &VIC::cycle6;
-    vicfunc[7] = &VIC::cycle7;
     vicfunc[8] = &VIC::cycle8;
     vicfunc[9] = &VIC::cycle9;
     vicfunc[10] = &VIC::cycle10;
@@ -285,6 +281,9 @@ C64::updateVicFunctionTable()
         vicfunc[2] = &VIC::cycle2pal;
         vicfunc[3] = &VIC::cycle3pal;
         vicfunc[4] = &VIC::cycle4pal;
+        vicfunc[5] = &VIC::cycle5pal;
+        vicfunc[6] = &VIC::cycle6pal;
+        vicfunc[7] = &VIC::cycle7pal;
         vicfunc[64] = NULL;
         vicfunc[65] = NULL;
 
@@ -294,6 +293,9 @@ C64::updateVicFunctionTable()
         vicfunc[2] = &VIC::cycle2ntsc;
         vicfunc[3] = &VIC::cycle3ntsc;
         vicfunc[4] = &VIC::cycle4ntsc;
+        vicfunc[5] = &VIC::cycle5ntsc;
+        vicfunc[6] = &VIC::cycle6ntsc;
+        vicfunc[7] = &VIC::cycle7ntsc;
         vicfunc[64] = &VIC::cycle64;
         vicfunc[65] = &VIC::cycle65;
     }

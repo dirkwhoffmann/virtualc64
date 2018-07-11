@@ -27,6 +27,18 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
+/* All cycles are processed in this order:
+ *
+ *   Phi1.1 Frame logic
+ *   Phi1.2 Draw
+ *   Phi1.3 Fetch
+ *   Phi2.1 Rasterline interrupt
+ *   Phi2.2 Sprite logic
+ *   Phi2.3 VC/RC logic
+ *   Phi2.4 BA logic
+ *   Phi2.5 Fetch
+ */
+
 void
 VIC::cycle1pal()
 {
@@ -245,6 +257,144 @@ VIC::cycle4ntsc()
     
     // Phi2.5 Fetch
     sFirstAccess(5);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle5pal()
+{
+    debug_cycle(5);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sFinalize(4);
+    pixelEngine.loadShiftRegister(4);
+    pAccess(5);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(5);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle5ntsc()
+{
+    debug_cycle(5);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sSecondAccess(5);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(5);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle6pal()
+{
+    debug_cycle(6);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sSecondAccess(5);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(5);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle6ntsc()
+{
+    debug_cycle(6);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sFinalize(5);
+    pixelEngine.loadShiftRegister(5);
+    pAccess(6);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(6);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle7pal()
+{
+    debug_cycle(7);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sFinalize(5);
+    pixelEngine.loadShiftRegister(5);
+    pAccess(6);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(6);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle7ntsc()
+{
+    debug_cycle(7);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sSecondAccess(6);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(6);
     
     // Finalize
     updateDisplayState();
