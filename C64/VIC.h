@@ -958,9 +958,14 @@ public:
     void cycle55pal(); void cycle55ntsc();
     void cycle56();
     void cycle57pal(); void cycle57ntsc();
-    void cycle58();
-    void cycle59(); void cycle60(); void cycle61(); void cycle62();
-    void cycle63(); void cycle64(); void cycle65();
+    void cycle58pal(); void cycle58ntsc();
+    void cycle59pal(); void cycle59ntsc();
+    void cycle60pal(); void cycle60ntsc();
+    void cycle61pal(); void cycle61ntsc();
+    void cycle62pal(); void cycle62ntsc();
+    void cycle63pal(); void cycle63ntsc();
+    void cycle64ntsc();
+    void cycle65ntsc();
 	
 private:
     

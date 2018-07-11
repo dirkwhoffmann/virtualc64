@@ -262,12 +262,6 @@ C64::updateVicFunctionTable()
     for (unsigned cycle = 19; cycle <= 54; cycle++)
         vicfunc[cycle] = &VIC::cycle19to54;
     vicfunc[56] = &VIC::cycle56;
-    vicfunc[58] = &VIC::cycle58;
-    vicfunc[59] = &VIC::cycle59;
-    vicfunc[60] = &VIC::cycle60;
-    vicfunc[61] = &VIC::cycle61;
-    vicfunc[62] = &VIC::cycle62;
-    vicfunc[63] = &VIC::cycle63;
     
     if (isPAL()) {
         
@@ -284,6 +278,12 @@ C64::updateVicFunctionTable()
         vicfunc[11] = &VIC::cycle11pal;
         vicfunc[55] = &VIC::cycle55pal;
         vicfunc[57] = &VIC::cycle57pal;
+        vicfunc[58] = &VIC::cycle58pal;
+        vicfunc[59] = &VIC::cycle59pal;
+        vicfunc[60] = &VIC::cycle60pal;
+        vicfunc[61] = &VIC::cycle61pal;
+        vicfunc[62] = &VIC::cycle62pal;
+        vicfunc[63] = &VIC::cycle63pal;
         vicfunc[64] = NULL;
         vicfunc[65] = NULL;
 
@@ -302,8 +302,14 @@ C64::updateVicFunctionTable()
         vicfunc[11] = &VIC::cycle11ntsc;
         vicfunc[55] = &VIC::cycle55ntsc;
         vicfunc[57] = &VIC::cycle57ntsc;
-        vicfunc[64] = &VIC::cycle64;
-        vicfunc[65] = &VIC::cycle65;
+        vicfunc[58] = &VIC::cycle58ntsc;
+        vicfunc[59] = &VIC::cycle59ntsc;
+        vicfunc[60] = &VIC::cycle60ntsc;
+        vicfunc[61] = &VIC::cycle61ntsc;
+        vicfunc[62] = &VIC::cycle62ntsc;
+        vicfunc[63] = &VIC::cycle63ntsc;
+        vicfunc[64] = &VIC::cycle64ntsc;
+        vicfunc[65] = &VIC::cycle65ntsc;
     }
 }
 

@@ -40,6 +40,11 @@
  */
 
 void
+VIC::debug_cycle(unsigned c)
+{
+}
+
+void
 VIC::cycle1pal()
 {
     debug_cycle(1);
@@ -947,6 +952,436 @@ VIC::cycle57ntsc()
     
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & SPR0);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle58pal()
+{
+    debug_cycle(58);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    pixelEngine.draw(); // Draw previous cycle (first column of right border)
+    preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
+    
+    // Phi1.3 Fetch
+    pAccess(0);
+    
+    // Phi2.2 Sprite logic
+    
+    // Reset mc with mcbase for all sprites
+    for (unsigned i = 0; i < 8; i++)
+        mc[i] = mcbase[i];
+    
+    // Turn display on for all sprites with a matching y coordinate
+    // Sprite display remains off if sprite DMA is off or sprite is disabled (register 0x15)
+    spriteOnOff |= spriteDmaOnOff & iomem[0x15] & compareSpriteY((uint8_t)yCounter);
+    
+    // Turn display off for all sprites that lost DMA.
+    spriteOnOff &= spriteDmaOnOff;
+    
+    // Phi2.3 VC/RC logic
+    
+    // "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
+    //     geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+    //     (VC->VCBASE)." [C.B.]
+    
+    // "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
+    //  wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
+    
+    
+    if (registerRC == 7) {
+        registerVCBASE = registerVC;
+        if (!badLineCondition)
+            displayState = false;
+    }
+    
+    updateDisplayState();
+    
+    if (displayState) {
+        // 3 bit overflow register
+        registerRC = (registerRC + 1) & 0x07;
+    }
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(0);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle58ntsc()
+{
+    debug_cycle(58);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    pixelEngine.draw(); // Draw previous cycle (first column of right border)
+    preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
+    
+    // Phi1.3 Fetch
+    rIdleAccess();
+    
+    // Phi2.2 Sprite logic
+    
+    // Reset mc with mcbase for all sprites
+    for (unsigned i = 0; i < 8; i++)
+        mc[i] = mcbase[i];
+    
+    // Turn display on for all sprites with a matching y coordinate
+    // Sprite display remains off if sprite DMA is off or sprite is disabled (register 0x15)
+    spriteOnOff |= spriteDmaOnOff & iomem[0x15] & compareSpriteY((uint8_t)yCounter);
+    
+    // Turn display off for all sprites that lost DMA.
+    spriteOnOff &= spriteDmaOnOff;
+    
+    // Phi2.3 VC/RC logic
+    
+    // "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
+    //     geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+    //     (VC->VCBASE)." [C.B.]
+    
+    // "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
+    //  wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
+    
+    
+    if (registerRC == 7) {
+        registerVCBASE = registerVC;
+        if (!badLineCondition)
+            displayState = false;
+    }
+    
+    updateDisplayState();
+    
+    if (displayState) {
+        // 3 bit overflow register
+        registerRC = (registerRC + 1) & 0x07;
+    }
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle59pal()
+{
+    debug_cycle(59);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
+    preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
+    
+    // Phi1.3 Fetch
+    sSecondAccess(0);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(0);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle59ntsc()
+{
+    debug_cycle(59);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
+    preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
+    
+    // Phi1.3 Fetch
+    pAccess(0);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(0);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle60pal()
+{
+    debug_cycle(60);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw (last visible cycle)
+    pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
+    preparePixelEngine(); // Prepare for next cycle (last column of right border)
+    
+    // Phi1.3 Fetch
+    sFinalize(0);
+    pAccess(1);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(1);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle60ntsc()
+{
+    debug_cycle(60);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw (last visible cycle)
+    pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
+    preparePixelEngine(); // Prepare for next cycle (last column of right border)
+    
+    // Phi1.3 Fetch
+    sSecondAccess(0);
+
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(0);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle61pal()
+{
+    debug_cycle(61);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    pixelEngine.draw(); // Draw previous cycle (last column of right border)
+    pixelEngine.visibleColumn = false; // This was the last visible column
+    
+    // Phi1.3 Fetch
+    sSecondAccess(1);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(1);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle61ntsc()
+{
+    debug_cycle(61);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    pixelEngine.draw(); // Draw previous cycle (last column of right border)
+    pixelEngine.visibleColumn = false; // This was the last visible column
+    
+    // Phi1.3 Fetch
+    sFinalize(0);
+    pAccess(1);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(1);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle62pal()
+{
+    debug_cycle(62);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sFinalize(1);
+    pixelEngine.loadShiftRegister(1);
+    pAccess(2);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(2);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle62ntsc()
+{
+    debug_cycle(62);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sSecondAccess(1);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(1);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle63pal()
+{
+    debug_cycle(63);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
+    
+    // Phi1.3 Fetch
+    sSecondAccess(2);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(2);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle63ntsc()
+{
+    debug_cycle(63);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
+    
+    // Phi1.3 Fetch
+    sFinalize(1);
+    pixelEngine.loadShiftRegister(1);
+    pAccess(2);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(2);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle64ntsc()
+{
+    debug_cycle(64);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
+    sSecondAccess(2);
+    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(2);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle65ntsc()
+{
+    debug_cycle(65);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
+    
+    // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
+    // Phi1.3 Fetch
+    sFinalize(2);
+    pixelEngine.loadShiftRegister(2);
+    pAccess(3);
+    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
+    
+    // Phi2.5 Fetch
+    sFirstAccess(3);
     
     // Finalize
     updateDisplayState();
