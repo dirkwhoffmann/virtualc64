@@ -159,6 +159,7 @@ public:
     //! @brief    Neos Mouse
     NeosMouse neosMouse;
     
+    
     //
     // Mouse
     //
@@ -192,7 +193,13 @@ public:
      */
     uint64_t durationOfHalfCycle;
     
+    //! @brief    VIC execution function table.
+    /*! @details  Stores a pointer to the VIC method that needs to be executed
+     *            in the current rasterline cycle.
+     */
+    void (VIC::*vicfunc[66])(void);
 
+    
     //
     // Execution thread
     //

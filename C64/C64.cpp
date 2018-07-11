@@ -147,6 +147,40 @@ C64::C64()
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
+    // Initialize VIC function table
+    vicfunc[0] = NULL;
+    vicfunc[1] = &VIC::cycle1;
+    vicfunc[2] = &VIC::cycle2;
+    vicfunc[3] = &VIC::cycle3;
+    vicfunc[4] = &VIC::cycle4;
+    vicfunc[5] = &VIC::cycle5;
+    vicfunc[6] = &VIC::cycle6;
+    vicfunc[7] = &VIC::cycle7;
+    vicfunc[8] = &VIC::cycle8;
+    vicfunc[9] = &VIC::cycle9;
+    vicfunc[10] = &VIC::cycle10;
+    vicfunc[11] = &VIC::cycle11;
+    vicfunc[12] = &VIC::cycle12;
+    vicfunc[13] = &VIC::cycle13;
+    vicfunc[14] = &VIC::cycle14;
+    vicfunc[15] = &VIC::cycle15;
+    vicfunc[16] = &VIC::cycle16;
+    vicfunc[17] = &VIC::cycle17;
+    vicfunc[18] = &VIC::cycle18;
+    for (unsigned cycle = 19; cycle <= 54; cycle++)
+        vicfunc[cycle] = &VIC::cycle19to54;
+    vicfunc[55] = &VIC::cycle55;
+    vicfunc[56] = &VIC::cycle56;
+    vicfunc[57] = &VIC::cycle57;
+    vicfunc[58] = &VIC::cycle58;
+    vicfunc[59] = &VIC::cycle59;
+    vicfunc[60] = &VIC::cycle60;
+    vicfunc[61] = &VIC::cycle61;
+    vicfunc[62] = &VIC::cycle62;
+    vicfunc[63] = &VIC::cycle63; // Last PAL cycle
+    vicfunc[64] = &VIC::cycle64; // NTSC only
+    vicfunc[65] = &VIC::cycle65; // NTSC only
+
     // Initialize snapshot ringbuffers
     for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
         autoSavedSnapshots[i] = new Snapshot();
@@ -437,10 +471,13 @@ C64::stepOver()
 bool
 C64::executeOneCycle()
 {
-    bool lastCycle = vic.isLastCycleInRasterline(rasterlineCycle);
+    bool isFirstCycle = rasterlineCycle == 1;
+    bool isLastCycle = vic.isLastCycleInRasterline(rasterlineCycle);
+    
+    if (isFirstCycle) beginOfRasterline();
     bool result = _executeOneCycle();
-    if (lastCycle)
-        endOfRasterline();
+    if (isLastCycle) endOfRasterline();
+    
     return result;
 }
 
@@ -467,47 +504,10 @@ C64::_executeOneCycle()
     // |   '--------'                        |    '--------'     |  |
     // '- Drive thread ----------------------|-------------------|--'
     
-    // Low phase
-    switch(rasterlineCycle) {
-        case 1: beginOfRasterline(); vic.cycle1(); break;
-        case 2: vic.cycle2(); break;
-        case 3: vic.cycle3(); break;
-        case 4: vic.cycle4(); break;
-        case 5: vic.cycle5(); break;
-        case 6: vic.cycle6(); break;
-        case 7: vic.cycle7(); break;
-        case 8: vic.cycle8(); break;
-        case 9: vic.cycle9(); break;
-        case 10: vic.cycle10(); break;
-        case 11: vic.cycle11(); break;
-        case 12: vic.cycle12(); break;
-        case 13: vic.cycle13(); break;
-        case 14: vic.cycle14(); break;
-        case 15: vic.cycle15(); break;
-        case 16: vic.cycle16(); break;
-        case 17: vic.cycle17(); break;
-        case 18: vic.cycle18(); break;
-        case 19: case 20: case 21: case 22: case 23: case 24: case 25: case 26:
-        case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34:
-        case 35: case 36: case 37: case 38: case 39: case 40: case 41: case 42:
-        case 43: case 44: case 45: case 46: case 47: case 48: case 49: case 50:
-        case 51: case 52: case 53: case 54: vic.cycle19to54(); break;
-        case 55: vic.cycle55(); break;
-        case 56: vic.cycle56(); break;
-        case 57: vic.cycle57(); break;
-        case 58: vic.cycle58(); break;
-        case 59: vic.cycle59(); break;
-        case 60: vic.cycle60(); break;
-        case 61: vic.cycle61(); break;
-        case 62: vic.cycle62(); break;
-        case 63: vic.cycle63(); break; // Last PAL cycle
-        case 64: vic.cycle64(); break; // NTSC only
-        case 65: vic.cycle65(); break; // NTSC only
-        default: assert(false);
-    }
-    
+    // First clock phase (o2 low)
     uint64_t cycle = ++cpu.cycle;
     // TODO: runDriveAsync()
+    (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
     if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
     floppy.elapsedTime += durationOfHalfCycle;
@@ -531,6 +531,9 @@ C64::_executeOneCycle()
 bool
 C64::executeOneLine()
 {
+    if (rasterlineCycle == 1)
+        beginOfRasterline();
+
     int lastCycle = vic.getCyclesPerRasterline();
     for (unsigned i = rasterlineCycle; i <= lastCycle; i++) {
         if (!_executeOneCycle()) {
