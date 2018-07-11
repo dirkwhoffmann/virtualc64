@@ -270,7 +270,8 @@ VIC::setChipModel(VICChipModel model)
 
     chipModel = model;
     pixelEngine.resetScreenBuffers();
-
+    c64->updateVicFunctionTable();
+    
     if (model == MOS6569_PAL) {
         c64->setClockFrequency(PAL_CLOCK_FREQUENCY);
         c64->putMessage(MSG_PAL);
@@ -1049,22 +1050,6 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
     }
 }
 
-// -----------------------------------------------------------------------------------------------
-//                                    Execution functions
-//
-// All cycles are processed in this order:
-//
-//   Phi1.1 Frame logic
-//   Phi1.2 Draw
-//   Phi1.3 Fetch
-//   Phi2.1 Rasterline interrupt
-//   Phi2.2 Sprite logic
-//   Phi2.3 VC/RC logic
-//   Phi2.4 BA logic
-//   Phi2.5 Fetch
-// -----------------------------------------------------------------------------------------------
-
-
 void 
 VIC::beginFrame()
 {
@@ -1159,176 +1144,22 @@ VIC::yCounterOverflow()
     return c64->getRasterline() == (c64->isPAL() ? 0 : 238);
 }
 
-void
-VIC::cycle1()
-{
-    debug_cycle(1);
-        
-    // Phi1.1 Frame logic
-    checkVerticalFrameFF();
-    if (verticalFrameFFsetCond) {
-        p.verticalFrameFF = true;
-    }
-    
-    // Phi1.2 Draw
-    // Phi1.3 Fetch
-    if (isPAL()) {
-        sFinalize(2);
-        pixelEngine.loadShiftRegister(2);
-        pAccess(3);
-    } else {
-        sSecondAccess(3);
-    }
-    
-    // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (c64->getRasterline() != 0);
-    bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
-    if (edgeOnYCounter && edgeOnIrqCond)
-        triggerIRQ(1);
-    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
-    
-    // Phi2.2 Sprite logic
-    // Phi2.3 VC/RC logic
-    // Phi2.4 BA logic
-    if (isPAL())
-        setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
-    else
-        setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
-    
-    // Phi2.5 Fetch
-    if (isPAL()) {
-        sFirstAccess(3);
-    } else {
-        sThirdAccess(3);
-    }
-    // Finalize
-    updateDisplayState();
-	countX();
-}
 
-void
-VIC::cycle2()
-{
-    debug_cycle(2);
+//
+// Execution functions
+//
 
-    // Check for yCounter overflows
-    if (yCounterOverflow())
-            yCounter = 0;
-    
-    // Phi1.1 Frame logic
-    checkVerticalFrameFF();
-    
-    // Phi1.2 Draw
-    // Phi1.3 Fetch
-    if (isPAL()) {
-        sSecondAccess(3);
-    } else {
-        sFinalize(3);
-        pixelEngine.loadShiftRegister(3);
-        pAccess(4);
-    }
-
-    // Phi2.2 Sprite logic
-    // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (yCounter == 0);
-    bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
-    if (edgeOnYCounter && edgeOnIrqCond)
-        triggerIRQ(1);
-
-    // Phi2.3 VC/RC logic
-    // Phi2.4 BA logic
-    if (isPAL())
-        setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
-    else
-        setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
-
-    // Phi2.5 Fetch
-    if (isPAL())
-        sThirdAccess(3);
-    else
-        sFirstAccess(4);
-    
-    // Finalize
-    updateDisplayState();
-    countX();
-}
-
-void 
-VIC::cycle3()
-{
-    debug_cycle(3);
-    
-    // Phi1.1 Frame logic
-    checkVerticalFrameFF();
-
-    // Phi1.2 Draw
-    // Phi1.3 Fetch
-    if (isPAL()) {
-        sFinalize(3);
-        pixelEngine.loadShiftRegister(3);
-        pAccess(4);
-    } else {
-        sSecondAccess(4);
-    }
-    
-    // Phi2.1 Rasterline interrupt
-    // Phi2.2 Sprite logic
-    // Phi2.3 VC/RC logic
-    // Phi2.4 BA logic
-    if (isPAL())
-        setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
-    else
-        setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
-    
-    // Phi2.5 Fetch
-    if (isPAL())
-        sFirstAccess(4);
-    else
-        sThirdAccess(4);
-    
-    // Finalize
-    updateDisplayState();
-	countX();
-}
-
-void 
-VIC::cycle4()
-{
-    debug_cycle(4);
-    
-    // Phi1.1 Frame logic
-    checkVerticalFrameFF();
-
-    // Phi1.2 Draw
-    // Phi1.3 Fetch
-    if (isPAL()) {
-        sSecondAccess(4);
-    } else {
-        sFinalize(4);
-        pixelEngine.loadShiftRegister(4);
-        pAccess(5);
-    }
-    
-    // Phi2.1 Rasterline interrupt
-    // Phi2.2 Sprite logic
-    // Phi2.3 VC/RC logic
-    // Phi2.4 BA logic
-    if (isPAL()) {
-        setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
-    } else {
-        setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
-    }
-
-    // Phi2.5 Fetch
-    if (isPAL())
-        sThirdAccess(4);
-    else
-        sFirstAccess(5);
-    
-    // Finalize
-    updateDisplayState();
-    countX();
-}
+/* All cycles are processed in this order:
+ *
+ *   Phi1.1 Frame logic
+ *   Phi1.2 Draw
+ *   Phi1.3 Fetch
+ *   Phi2.1 Rasterline interrupt
+ *   Phi2.2 Sprite logic
+ *   Phi2.3 VC/RC logic
+ *   Phi2.4 BA logic
+ *   Phi2.5 Fetch
+ */
 
 void
 VIC::cycle5()

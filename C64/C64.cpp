@@ -147,40 +147,6 @@ C64::C64()
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
-    // Initialize VIC function table
-    vicfunc[0] = NULL;
-    vicfunc[1] = &VIC::cycle1;
-    vicfunc[2] = &VIC::cycle2;
-    vicfunc[3] = &VIC::cycle3;
-    vicfunc[4] = &VIC::cycle4;
-    vicfunc[5] = &VIC::cycle5;
-    vicfunc[6] = &VIC::cycle6;
-    vicfunc[7] = &VIC::cycle7;
-    vicfunc[8] = &VIC::cycle8;
-    vicfunc[9] = &VIC::cycle9;
-    vicfunc[10] = &VIC::cycle10;
-    vicfunc[11] = &VIC::cycle11;
-    vicfunc[12] = &VIC::cycle12;
-    vicfunc[13] = &VIC::cycle13;
-    vicfunc[14] = &VIC::cycle14;
-    vicfunc[15] = &VIC::cycle15;
-    vicfunc[16] = &VIC::cycle16;
-    vicfunc[17] = &VIC::cycle17;
-    vicfunc[18] = &VIC::cycle18;
-    for (unsigned cycle = 19; cycle <= 54; cycle++)
-        vicfunc[cycle] = &VIC::cycle19to54;
-    vicfunc[55] = &VIC::cycle55;
-    vicfunc[56] = &VIC::cycle56;
-    vicfunc[57] = &VIC::cycle57;
-    vicfunc[58] = &VIC::cycle58;
-    vicfunc[59] = &VIC::cycle59;
-    vicfunc[60] = &VIC::cycle60;
-    vicfunc[61] = &VIC::cycle61;
-    vicfunc[62] = &VIC::cycle62;
-    vicfunc[63] = &VIC::cycle63; // Last PAL cycle
-    vicfunc[64] = &VIC::cycle64; // NTSC only
-    vicfunc[65] = &VIC::cycle65; // NTSC only
-
     // Initialize snapshot ringbuffers
     for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
         autoSavedSnapshots[i] = new Snapshot();
@@ -279,6 +245,58 @@ C64::setNTSC()
     suspend();
     vic.setChipModel(MOS6567_NTSC);
     resume();
+}
+
+void
+C64::updateVicFunctionTable()
+{
+    // Initialize VIC function table
+    vicfunc[0] = NULL;
+
+    vicfunc[5] = &VIC::cycle5;
+    vicfunc[6] = &VIC::cycle6;
+    vicfunc[7] = &VIC::cycle7;
+    vicfunc[8] = &VIC::cycle8;
+    vicfunc[9] = &VIC::cycle9;
+    vicfunc[10] = &VIC::cycle10;
+    vicfunc[11] = &VIC::cycle11;
+    vicfunc[12] = &VIC::cycle12;
+    vicfunc[13] = &VIC::cycle13;
+    vicfunc[14] = &VIC::cycle14;
+    vicfunc[15] = &VIC::cycle15;
+    vicfunc[16] = &VIC::cycle16;
+    vicfunc[17] = &VIC::cycle17;
+    vicfunc[18] = &VIC::cycle18;
+    for (unsigned cycle = 19; cycle <= 54; cycle++)
+        vicfunc[cycle] = &VIC::cycle19to54;
+    vicfunc[55] = &VIC::cycle55;
+    vicfunc[56] = &VIC::cycle56;
+    vicfunc[57] = &VIC::cycle57;
+    vicfunc[58] = &VIC::cycle58;
+    vicfunc[59] = &VIC::cycle59;
+    vicfunc[60] = &VIC::cycle60;
+    vicfunc[61] = &VIC::cycle61;
+    vicfunc[62] = &VIC::cycle62;
+    vicfunc[63] = &VIC::cycle63;
+    
+    if (isPAL()) {
+        
+        vicfunc[1] = &VIC::cycle1pal;
+        vicfunc[2] = &VIC::cycle2pal;
+        vicfunc[3] = &VIC::cycle3pal;
+        vicfunc[4] = &VIC::cycle4pal;
+        vicfunc[64] = NULL;
+        vicfunc[65] = NULL;
+
+    } else {
+        
+        vicfunc[1] = &VIC::cycle1ntsc;
+        vicfunc[2] = &VIC::cycle2ntsc;
+        vicfunc[3] = &VIC::cycle3ntsc;
+        vicfunc[4] = &VIC::cycle4ntsc;
+        vicfunc[64] = &VIC::cycle64;
+        vicfunc[65] = &VIC::cycle65;
+    }
 }
 
 void

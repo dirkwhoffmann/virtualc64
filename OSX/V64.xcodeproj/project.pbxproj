@@ -56,6 +56,7 @@
 		50265F57202D00940041C315 /* TapeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50265F56202D00940041C315 /* TapeMountController.swift */; };
 		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
+		50340D4020F63AFE009A53A5 /* VIC_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50340D3F20F63AFE009A53A5 /* VIC_cycles.cpp */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
@@ -278,6 +279,7 @@
 		5030B2A820AEE44600E591BE /* Mouse_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse_types.h; sourceTree = "<group>"; };
 		5031D599200B47B70088C802 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		50340D3F20F63AFE009A53A5 /* VIC_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles.cpp; sourceTree = "<group>"; };
 		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
 		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				501D2C7D1B85C0F700B1AD0F /* VIC_types.h */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
+				50340D3F20F63AFE009A53A5 /* VIC_cycles.cpp */,
 				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
@@ -1140,6 +1143,7 @@
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
 				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
+				50340D4020F63AFE009A53A5 /* VIC_cycles.cpp in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 			);

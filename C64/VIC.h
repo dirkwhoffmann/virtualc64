@@ -936,7 +936,9 @@ public:
     }
     
 	//! @brief    Executes a specific rasterline cycle
-	void cycle1();  void cycle2();  void cycle3();  void cycle4();
+    //! @todo     Move all implementation to VIC_cycles.cpp
+    void cycle1pal(); void cycle1ntsc(); void cycle2pal(); void cycle2ntsc();
+    void cycle3pal(); void cycle3ntsc(); void cycle4pal(); void cycle4ntsc();
     void cycle5();  void cycle6();  void cycle7();  void cycle8();
     void cycle9();  void cycle10(); void cycle11(); void cycle12();
     void cycle13(); void cycle14(); void cycle15(); void cycle16();

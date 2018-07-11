@@ -359,7 +359,13 @@ public:
      */
     void setNTSC();
 
+    //! @brief    Updates the VIC function table
+    /*! @details  The function pointers need to be changed when switching from
+     *            PAL to NTSC and vice versa.
+     */
+    void updateVicFunctionTable();
     
+     
     //
     //! @functiongroup Handling mice
     //
