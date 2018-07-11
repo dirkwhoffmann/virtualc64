@@ -936,7 +936,6 @@ public:
     }
     
 	//! @brief    Executes a specific rasterline cycle
-    //! @todo     Move all implementation to VIC_cycles.cpp
     void cycle1pal(); void cycle1ntsc();
     void cycle2pal(); void cycle2ntsc();
     void cycle3pal(); void cycle3ntsc();
@@ -946,13 +945,20 @@ public:
     void cycle7pal(); void cycle7ntsc();
     void cycle8pal(); void cycle8ntsc();
     void cycle9pal(); void cycle9ntsc();
-    void cycle10(); void cycle11(); void cycle12();
-    void cycle13(); void cycle14(); void cycle15(); void cycle16();
-    void cycle17(); void cycle18();
-
+    void cycle10pal(); void cycle10ntsc();
+    void cycle11pal(); void cycle11ntsc();
+    void cycle12();
+    void cycle13();
+    void cycle14();
+    void cycle15();
+    void cycle16();
+    void cycle17();
+    void cycle18();
     void cycle19to54();
-
-    void cycle55(); void cycle56(); void cycle57(); void cycle58();
+    void cycle55pal(); void cycle55ntsc();
+    void cycle56();
+    void cycle57pal(); void cycle57ntsc();
+    void cycle58();
     void cycle59(); void cycle60(); void cycle61(); void cycle62();
     void cycle63(); void cycle64(); void cycle65();
 	
