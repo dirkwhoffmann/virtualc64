@@ -400,3 +400,95 @@ VIC::cycle7ntsc()
     updateDisplayState();
     countX();
 }
+
+void
+VIC::cycle8pal()
+{
+    debug_cycle(8);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sSecondAccess(6);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    
+    // Phi2.5 Fetch
+    sThirdAccess(6);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle8ntsc()
+{
+    debug_cycle(8);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sFinalize(6);
+    pixelEngine.loadShiftRegister(6);
+    pAccess(7);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & SPR7);
+    
+    // Phi2.5 Fetch
+    sFirstAccess(7);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle9pal()
+{
+    debug_cycle(9);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sFinalize(6);
+    pixelEngine.loadShiftRegister(6);
+    pAccess(7);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & SPR7);
+    
+    // Phi2.5 Fetch
+    sFirstAccess(7);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
+
+void
+VIC::cycle9ntsc()
+{
+    debug_cycle(9);
+    
+    // Phi1.1 Frame logic
+    checkVerticalFrameFF();
+    
+    // Phi1.3 Fetch
+    sSecondAccess(7);
+    
+    // Phi2.4 BA logic
+    setBAlow(spriteDmaOnOff & SPR7);
+    
+    // Phi2.5 Fetch
+    sThirdAccess(7);
+    
+    // Finalize
+    updateDisplayState();
+    countX();
+}
