@@ -134,6 +134,7 @@ VC1541::powerUp()
     c64->resume();
 }
 
+/*
 bool
 VC1541::execute(uint64_t duration)
 {
@@ -141,7 +142,7 @@ VC1541::execute(uint64_t duration)
     
     elapsedTime += duration;
     while (nextClock < elapsedTime || nextCarry < elapsedTime) {
-        
+
         if (nextClock <= nextCarry) {
             
             // Execute CPU and VIAs
@@ -158,7 +159,41 @@ VC1541::execute(uint64_t duration)
             nextCarry += delayBetweenTwoCarryPulses[zone];
         }
     }
+    assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
     
+    return result;
+}
+*/
+
+bool
+VC1541::execute(uint64_t duration)
+{
+    uint8_t result = true;
+    
+    elapsedTime += duration;
+    
+    if (nextCarry < elapsedTime && nextCarry < nextClock) {
+        // Execute read/write logic
+        if (spinning) executeUF4();
+        nextCarry += delayBetweenTwoCarryPulses[zone];
+    }
+    
+    if (nextClock < elapsedTime) {
+        // Execute CPU and VIAs
+        uint64_t cycle = ++cpu.cycle;
+        if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
+        if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
+        result = cpu.executeOneCycle();
+        nextClock += 1000000;
+    }
+    
+    if (nextCarry < elapsedTime) {
+        // Execute read/write logic
+        if (spinning) executeUF4();
+        nextCarry += delayBetweenTwoCarryPulses[zone];
+    }
+    
+    assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
     return result;
 }
 
