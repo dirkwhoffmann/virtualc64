@@ -223,11 +223,12 @@ public:
      */
     uint8_t tiredness;
     
+    //! @brief    Wakeup cycle
+    uint64_t wakeUpCycle;
     
-    //
-    // Methods
-    //
-
+    //! @brief    Number of skipped executions
+    uint64_t idleCounter;
+    
 public:	
 	
 	//! @brief    Constructor
@@ -365,18 +366,6 @@ private:
     
     //! @brief    Emulates all previously skipped cycles.
     void wakeUp();
-    
-    //! @brief    Returns the wake up cycle for this CIA.
-    virtual uint64_t wakeUpCycle() = 0;
-
-    //! @brief    Sets the wake up cycle for this CIA.
-    virtual void setWakeUpCycle(uint64_t cycle) = 0;
-    
-    //! @brief    Returns the number of skipped executions for this CIA.
-    virtual uint64_t idleCounter() = 0;
-    
-    //! @brief    Resets the skipped execution cycle counter to zero.
-    virtual void resetIdleCounter() = 0;
 };
 
 
@@ -405,13 +394,6 @@ private:
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
-    
-    uint64_t wakeUpCycle();
-    void setWakeUpCycle(uint64_t cycle);
-    uint64_t idleCounter();
-    void resetIdleCounter();
-    
-    
 };
 	
 /*! @brief    The second virtual complex interface adapter (CIA 2)
@@ -440,11 +422,6 @@ private:
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
-    
-    uint64_t wakeUpCycle();
-    void setWakeUpCycle(uint64_t cycle);
-    uint64_t idleCounter();
-    void resetIdleCounter();
 };
 
 #endif

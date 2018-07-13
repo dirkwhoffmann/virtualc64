@@ -287,26 +287,6 @@ private:
     //! @brief    Storage for user-taken snapshots
     Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
     
-    
-public:
-    
-    //
-    // Speeding up emulation (CIA sleep logic)
-    //
-    
-    //! @brief    Wakeup cycle for CIA1
-    uint64_t wakeUpCycleCIA1;
-    
-    //! @brief    Number of skipped executions of CIA1
-    uint64_t idleCounterCIA1;
-    
-    //! @brief    Wakeup cycle for CIA2
-    uint64_t wakeUpCycleCIA2;
-    
-    //! @brief    Number of skipped executions of CIA2
-    uint64_t idleCounterCIA2;
-
-    
 public:
     
     //! @brief    Constructor

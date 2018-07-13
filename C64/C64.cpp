@@ -117,10 +117,6 @@ C64::C64()
     // Register snapshot items
     SnapshotItem items[] = {
  
-        { &wakeUpCycleCIA1,     sizeof(wakeUpCycleCIA1),     CLEAR_ON_RESET },
-        { &idleCounterCIA1,     sizeof(idleCounterCIA1),     CLEAR_ON_RESET },
-        { &wakeUpCycleCIA2,     sizeof(wakeUpCycleCIA2),     CLEAR_ON_RESET },
-        { &idleCounterCIA2,     sizeof(idleCounterCIA2),     CLEAR_ON_RESET },
         { &warp,                sizeof(warp),                CLEAR_ON_RESET },
         { &alwaysWarp,          sizeof(alwaysWarp),          CLEAR_ON_RESET },
         { &warpLoad,            sizeof(warpLoad),            KEEP_ON_RESET },
@@ -540,8 +536,8 @@ C64::_executeOneCycle()
     uint64_t cycle = ++cpu.cycle;
     // TODO: runDriveAsync()
     (vic.*vicfunc[rasterlineCycle])();
-    if (cycle >= wakeUpCycleCIA1) cia1.executeOneCycle(); else idleCounterCIA1++;
-    if (cycle >= wakeUpCycleCIA2) cia2.executeOneCycle(); else idleCounterCIA2++;
+    if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
+    if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
     floppy.elapsedTime += durationOfHalfCycle;
     result &= floppy.executeUntil();
     // TODO: waitForDrive()

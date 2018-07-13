@@ -52,6 +52,8 @@ CIA::CIA()
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
         { &INT,             sizeof(INT),            CLEAR_ON_RESET },
         { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
+        { &wakeUpCycle,     sizeof(wakeUpCycle),    CLEAR_ON_RESET },
+        { &idleCounter,     sizeof(idleCounter),    CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
@@ -235,19 +237,19 @@ CIA::spypeek(uint16_t addr)
             
         case 0x04: // CIA_TIMER_A_LOW
             running = delay & CIACountA3;
-            return LO_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
+            return LO_BYTE(counterA - (running ? (uint16_t)idleCounter : 0));
             
         case 0x05: // CIA_TIMER_A_HIGH
             running = delay & CIACountA3;
-            return HI_BYTE(counterA - (running ? (uint16_t)idleCounter() : 0));
+            return HI_BYTE(counterA - (running ? (uint16_t)idleCounter : 0));
             
         case 0x06: // CIA_TIMER_B_LOW
             running = delay & CIACountB3;
-            return LO_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
+            return LO_BYTE(counterB - (running ? (uint16_t)idleCounter : 0));
             
         case 0x07: // CIA_TIMER_B_HIGH
             running = delay & CIACountB3;
-            return HI_BYTE(counterB - (running ? (uint16_t)idleCounter() : 0));
+            return HI_BYTE(counterB - (running ? (uint16_t)idleCounter : 0));
             
         case 0x08: // CIA_TIME_OF_DAY_SEC_FRAC
             return tod.getTodTenth();
@@ -1003,7 +1005,7 @@ CIA::executeOneCycle()
 void
 CIA::sleep()
 {
-    assert(idleCounter() == 0);
+    assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
     uint64_t cycle = c64->currentCycle();
@@ -1014,27 +1016,30 @@ CIA::sleep()
     if (!(feed & CIACountA0)) sleepA = UINT64_MAX;
     if (!(feed & CIACountB0)) sleepB = UINT64_MAX;
     
-    setWakeUpCycle(MIN(sleepA, sleepB));
+    wakeUpCycle = MIN(sleepA, sleepB);
+    // setWakeUpCycle(MIN(sleepA, sleepB));
 }
 
 void
 CIA::wakeUp()
 {
-    uint64_t idleCycles = idleCounter();
+    // uint64_t idleCycles = idleCounter;
     
     // Make up for missed cycles
-    if (idleCycles) {
+    if (idleCounter) {
         if (feed & CIACountA0) {
-            assert(counterA >= idleCycles);
-            counterA -= idleCycles;
+            assert(counterA >= idleCounter);
+            counterA -= idleCounter;
         }
         if (feed & CIACountB0) {
-            assert(counterB >= idleCycles);
-            counterB -= idleCycles;
+            assert(counterB >= idleCounter);
+            counterB -= idleCounter;
         }
-        resetIdleCounter();
+        idleCounter = 0;
+        // resetIdleCounter();
     }
-    setWakeUpCycle(0);
+    wakeUpCycle = 0;
+    // setWakeUpCycle(0);
 }
 
 
@@ -1178,11 +1183,6 @@ CIA1::updatePB()
         c64->neosMouse.risingStrobe(1 /* Port */);
 }
 
-uint64_t CIA1::wakeUpCycle() { return c64->wakeUpCycleCIA1; }
-void CIA1::setWakeUpCycle(uint64_t cycle) { c64->wakeUpCycleCIA1 = cycle; }
-uint64_t CIA1::idleCounter() { return c64->idleCounterCIA1; }
-void CIA1::resetIdleCounter() { c64->idleCounterCIA1 = 0; }
-
 
 // -----------------------------------------------------------------------------------------
 // Complex Interface Adapter 2
@@ -1310,7 +1310,3 @@ CIA2::updatePB()
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
 }
 
-uint64_t CIA2::wakeUpCycle() { return c64->wakeUpCycleCIA2; }
-void CIA2::setWakeUpCycle(uint64_t cycle) { c64->wakeUpCycleCIA2 = cycle; }
-uint64_t CIA2::idleCounter() { return c64->idleCounterCIA2; }
-void CIA2::resetIdleCounter() { c64->idleCounterCIA2 = 0; }
