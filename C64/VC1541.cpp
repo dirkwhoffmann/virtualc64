@@ -135,27 +135,27 @@ VC1541::powerUp()
 }
 
 bool
-VC1541::executeUntil()
+VC1541::execute(uint64_t duration)
 {
     uint8_t result = true;
     
+    elapsedTime += duration;
     while (nextClock < elapsedTime || nextCarry < elapsedTime) {
         
         if (nextClock <= nextCarry) {
             
             // Execute CPU and VIAs
             uint64_t cycle = ++cpu.cycle;
-            nextClock += 1000000;
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             result = cpu.executeOneCycle();
-        
+            nextClock += 1000000;
+
         } else {
             
             // Execute read/write logic
+            if (spinning) executeUF4();
             nextCarry += delayBetweenTwoCarryPulses[zone];
-            if (spinning)
-                executeUF4();
         }
     }
     

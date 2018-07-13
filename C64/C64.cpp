@@ -513,10 +513,11 @@ bool
 C64::_executeOneCycle()
 {
     uint8_t result = true;
+    uint64_t cycle = ++cpu.cycle;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
     //                                       |                   |
-    // ,- C64 thread ------------------------|-------------------|--,
+    // ,-- C64 ------------------------------|-------------------|--,
     // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
     // |   |     |     |     |     |     |   |    |     |        |  |
     // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
@@ -530,26 +531,19 @@ C64::_executeOneCycle()
     // ,-->| VC1541 | -----------------------|--> | VC1541 | ----|--,
     // |   |        |                        |    |        |     |  |
     // |   '--------'                        |    '--------'     |  |
-    // '- Drive thread ----------------------|-------------------|--'
+    // '-- Drive ----------------------------|-------------------|--'
     
     // First clock phase (o2 low)
-    uint64_t cycle = ++cpu.cycle;
-    // TODO: runDriveAsync()
     (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
-    floppy.elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntil();
-    // TODO: waitForDrive()
+    result &= floppy.execute(durationOfHalfCycle);
     if (iec.isDirty) iec.updateIecLines();
     
     // Second clock phase (o2 high)
-    // TODO: runDriveAsync()
     result &= cpu.executeOneCycle();
+    result &= floppy.execute(durationOfHalfCycle);
     datasette.execute();
-    floppy.elapsedTime += durationOfHalfCycle;
-    result &= floppy.executeUntil();
-    // TODO: waitForDrive()
     if (iec.isDirty) iec.updateIecLines();
     
     rasterlineCycle++;
