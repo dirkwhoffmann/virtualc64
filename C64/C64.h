@@ -19,12 +19,10 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.2
+// RELEASE NOTES FOR NEXT RELEASE: 2.3
 //
-// Emulation of the VC1541 disk drive has been improved considerably. The
-// emulator is compatible with various fast loaders now.
-// Added an option to the emulator preferences to disable the auto-snapshot feature.
-// Fixed a bug that caused the drive to enter write mode after a reset.
+// Added a sleep logic to the virtual VIA chips that partly compensates the
+// performance loss showing up in Version 2.2 due to the improved drive emulation.
 //
 // TODO:
 //

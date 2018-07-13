@@ -137,24 +137,6 @@ public:
      */
     uint4_t counterUF4;
     
-    
-    //
-    // Sleep logic for VIA chips
-    //
-    
-    //! @brief    Wakeup cycle for VIA1
-    uint64_t wakeUpCycleVIA1;
-    
-    //! @brief    Number of skipped executions of VIA1
-    uint64_t idleCounterVIA1;
-    
-    //! @brief    Wakeup cycle for VIA2
-    uint64_t wakeUpCycleVIA2;
-    
-    //! @brief    Number of skipped executions of VIA2
-    uint64_t idleCounterVIA2;
-    
-    
 private:
     
     //
@@ -353,12 +335,6 @@ public:
      */
     void powerUp();
 
-    /*! @brief    Executes the virtual drive for one clock cycle
-     *  @seealso  executeUF4
-     *  @deprecated Will be replaced by executeUntil
-     */
-    // bool executeOneCycle();
-
     //! @brief    Executes all pending cycles of the virtual drive
     /*! @todo     Run this function in a seperate thread
      */
@@ -435,7 +411,6 @@ public:
     
     //! @brief Writes a single bit to the disk head
     void writeBitToHead(uint8_t bit) {
-        // debug("Writing bit %d (was %d)\n", bit, readBitFromHead());
         disk.writeBitToHalftrack(halftrack, offset, bit); }
     
     //! @brief  Advances drive head position by one bit

@@ -60,6 +60,8 @@ VIA6522::VIA6522()
         { &delay,           sizeof(delay),          CLEAR_ON_RESET },
         { &feed,            sizeof(feed),           CLEAR_ON_RESET },
         { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
+        { &wakeUpCycle,     sizeof(wakeUpCycle),    CLEAR_ON_RESET },
+        { &idleCounter,     sizeof(idleCounter),    CLEAR_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -1038,7 +1040,7 @@ VIA6522::setCB2out(bool value)
 void
 VIA6522::sleep()
 {
-    assert(idleCounter() == 0);
+    assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
     uint64_t sleepA = (t1 > 2) ? (c64->floppy.cpu.getCycle() + t1 - 1) : 0;
@@ -1048,27 +1050,37 @@ VIA6522::sleep()
     if (!(delay & VIACountA1)) sleepA = UINT64_MAX;
     if (!(delay & VIACountB1)) sleepB = UINT64_MAX;
     
-    setWakeUpCycle(MIN(sleepA, sleepB));
+    wakeUpCycle = MIN(sleepA, sleepB);
 }
 
 void
 VIA6522::wakeUp()
 {
-    uint64_t idleCycles = idleCounter();
+    uint64_t idleCycles = idleCounter;
     
     // Make up for missed cycles
     if (idleCycles) {
         if (delay & VIACountA1) {
+            assert((delay & (VIACountA0)) != 0);
+            assert((feed & (VIACountA0)) != 0);
             assert(t1 > idleCycles);
             t1 -= idleCycles;
+        } else {
+            assert((delay & (VIACountA0)) == 0);
+            assert((feed & (VIACountA0)) == 0);
         }
         if (delay & VIACountB1) {
+            assert((delay & (VIACountB0)) != 0);
+            assert((feed & (VIACountB0)) != 0);
             assert(t2 > idleCycles);
             t2 -= idleCycles;
+        } else {
+            assert((delay & (VIACountB0)) == 0);
+            assert((feed & (VIACountB0)) == 0);
         }
-        resetIdleCounter();
+        idleCounter = 0;
     }
-    setWakeUpCycle(0);
+    wakeUpCycle = 0;
 }
 
 
@@ -1126,36 +1138,8 @@ void
 VIA1::updatePB()
 {
     VIA6522::updatePB();
-    // c64->iec.updateDevicePins(orb, ddrb);
-
-    // Mark IEC bus as dirty
-    c64->iec.setNeedsUpdate();
+    c64->iec.setNeedsUpdate(); // Mark IEC bus as dirty
 }
-
-uint64_t
-VIA1::wakeUpCycle()
-{
-    return c64->floppy.wakeUpCycleVIA1;
-}
-
-void
-VIA1::setWakeUpCycle(uint64_t cycle)
-{
-    c64->floppy.wakeUpCycleVIA1 = cycle;
-}
-
-uint64_t
-VIA1::idleCounter()
-{
-    return c64->floppy.idleCounterVIA1;
-}
-
-void
-VIA1::resetIdleCounter()
-{
-    c64->floppy.idleCounterVIA1 = 0;
-}
-
 
 //
 // VIA 2
@@ -1270,30 +1254,6 @@ VIA2::pullDownIrqLine() {
 void
 VIA2::releaseIrqLine() {
     c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA2);
-}
-
-uint64_t
-VIA2::wakeUpCycle()
-{
-    return c64->floppy.wakeUpCycleVIA2;
-}
-
-void
-VIA2::setWakeUpCycle(uint64_t cycle)
-{
-    c64->floppy.wakeUpCycleVIA2 = cycle;
-}
-
-uint64_t
-VIA2::idleCounter()
-{
-    return c64->floppy.idleCounterVIA2;
-}
-
-void
-VIA2::resetIdleCounter()
-{
-    c64->floppy.idleCounterVIA2 = 0;
 }
 
 

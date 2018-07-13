@@ -45,10 +45,6 @@ VC1541::VC1541()
         { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
-        { &wakeUpCycleVIA1,         sizeof(wakeUpCycleVIA1),        CLEAR_ON_RESET },
-        { &idleCounterVIA1,         sizeof(idleCounterVIA1),        CLEAR_ON_RESET },
-        { &wakeUpCycleVIA2,         sizeof(wakeUpCycleVIA2),        CLEAR_ON_RESET },
-        { &idleCounterVIA2,         sizeof(idleCounterVIA2),        CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
@@ -148,10 +144,10 @@ VC1541::executeUntil()
         if (nextClock <= nextCarry) {
             
             // Execute CPU and VIAs
-            cpu.cycle++;
+            uint64_t cycle = ++cpu.cycle;
             nextClock += 1000000;
-            if (cpu.getCycle() >= wakeUpCycleVIA1) via1.execute(); else idleCounterVIA1++;
-            if (cpu.getCycle() >= wakeUpCycleVIA2) via2.execute(); else idleCounterVIA2++;
+            if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
+            if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             result = cpu.executeOneCycle();
         
         } else {

@@ -70,6 +70,8 @@ class VC1541;
  */
 class VIA6522 : public VirtualComponent {
 	
+    friend class VC1541;
+    
 protected:
     
     //
@@ -229,6 +231,10 @@ protected:
     // Speeding up emulation (VIA sleep logic)
     //
     
+    //
+    // Sleep logic for VIA chips
+    //
+    
     //! @brief    Idle counter
     /*! @details  When the VIA state does not change during execution, this
      *            variable is increased by one. If it exceeds a certain
@@ -236,6 +242,11 @@ protected:
      */
     uint8_t tiredness;
     
+    //! @brief    Wakeup cycle
+    uint64_t wakeUpCycle;
+    
+    //! @brief    Number of skipped executions
+    uint64_t idleCounter;
     
 public:
     
@@ -529,18 +540,6 @@ private:
     
     //! @brief    Emulates all previously skipped cycles.
     void wakeUp();
-    
-    //! @brief    Returns the wake up cycle for this VIA.
-    virtual uint64_t wakeUpCycle() = 0;
-    
-    //! @brief    Sets the wake up cycle for this VIA.
-    virtual void setWakeUpCycle(uint64_t cycle) = 0;
-    
-    //! @brief    Returns the number of skipped executions for this VIA.
-    virtual uint64_t idleCounter() = 0;
-    
-    //! @brief    Resets the skipped execution cycle counter to zero.
-    virtual void resetIdleCounter() = 0;
 };
 
 
@@ -555,16 +554,11 @@ public:
 	VIA1();
 	~VIA1();
     
-    // uint8_t portAinternal();
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
     void pullDownIrqLine();
     void releaseIrqLine();
-    uint64_t wakeUpCycle();
-    void setWakeUpCycle(uint64_t cycle);
-    uint64_t idleCounter();
-    void resetIdleCounter();
 };
 
 /*! @brief   Second virtual VIA6522 controller
@@ -578,17 +572,12 @@ public:
 	VIA2();
 	~VIA2();
  
-    // uint8_t portAinternal();
     uint8_t portAexternal();
     uint8_t portBexternal();
     void updatePB();
     void CA1LowAction();
     void pullDownIrqLine();
     void releaseIrqLine();
-    uint64_t wakeUpCycle();
-    void setWakeUpCycle(uint64_t cycle);
-    uint64_t idleCounter();
-    void resetIdleCounter();
 };
 
 #endif
