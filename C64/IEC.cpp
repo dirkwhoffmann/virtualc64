@@ -168,7 +168,6 @@ void IEC::updateIecLines()
 	signals_changed = _updateIecLines();	
     
     // ATN signal is connected to CA1 pin of VIA 1
-    // c64->floppy.via1.setCA1late(!atnLine);
     c64->floppy.via1.CA1action(!atnLine);
     
 	if (signals_changed) {

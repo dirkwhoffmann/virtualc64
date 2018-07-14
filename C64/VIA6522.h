@@ -421,9 +421,6 @@ public:
     //! @brief   Performs a transition on the CA1 pin
     void setCA1(bool value);
     
-    void setCA1early(bool value); // Deprecated
-    void setCA1late(bool value); // Deprecated
-    
 private:
     
     //

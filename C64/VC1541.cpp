@@ -300,7 +300,6 @@ VC1541::clearByteReadyLine()
 {
     if (byteReady) {
         byteReady = false;
-        // via2.setCA1early(false);
         via2.CA1action(false);
     }
 }
@@ -311,7 +310,6 @@ VC1541::raiseByteReadyLine()
     if (!byteReady) {
         byteReady = true;
         via2.CA1action(true);
-        // via2.setCA1early(true);
     }
 }
 

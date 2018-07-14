@@ -867,29 +867,6 @@ VIA6522::CA1action(bool value)
 }
 
 void
-VIA6522::setCA1early(bool value)
-{
-    assert((delay & VIACA1Trans1) == 0);
-    
-    wakeUp();
-    
-    delay |= VIACA1Trans1;
-}
-
-void
-VIA6522::setCA1late(bool value)
-{
-    wakeUp();
-    
-    uint8_t next = (delay & VIACA1Trans1) ? !ca1 : ca1;
-    if (next != value) {
-        delay |= VIACA1Trans0;
-    } else {
-        delay &= ~VIACA1Trans0;
-    }
-}
-
-void
 VIA6522::sleep()
 {
     assert(idleCounter == 0);
