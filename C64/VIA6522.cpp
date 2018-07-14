@@ -87,6 +87,11 @@ void VIA6522::reset()
 void 
 VIA6522::dumpState()
 {
+    const char *latchingA = inputLatchingEnabledA() ? "enabled" : "disabled";
+    const char *latchingB = inputLatchingEnabledB() ? "enabled" : "disabled";
+    uint16_t t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
+    uint16_t t2Latch = LO_HI(t2_latch_lo, 0);
+
 	msg("VIA:\n");
 	msg("----\n\n");
 	msg("             Input register (IRA) : %02X\n", ira);
@@ -100,19 +105,24 @@ VIA6522::dumpState()
     msg("  Interrupt enable register (IER) : %02X\n", ier);
     msg("    Interrupt flag register (IFR) : %02X\n", ifr);
     msg("              Shift register (SR) : %02X\n", sr);
-	msg("              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
-	msg("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
-	msg("                       Timer 1 : %d (latched: %d)\n", t1, LO_HI(t1_latch_lo, t1_latch_hi));
-	msg("                       Timer 2 : %d (latched: %d)\n", t2, LO_HI(t2_latch_lo, 0));
-	msg("                     IO memory : ");
+    msg("                 Input latching A : %s\n", latchingA);
+	msg("                 Input latching B : %s\n", latchingB);
+	msg("                          Timer 1 : %d (latched: %d)\n", t1, t1Latch);
+	msg("                          Timer 2 : %d (latched: %d)\n", t2, t2Latch);
+	msg("                        IO memory : ");
 	msg("\n");
 }
+
+bool
+VIA6522::isVia1()
+{
+    return this == &c64->floppy.via1;
+}
+
 
 //
 // Execution functions
 //
-
-
 
 void
 VIA6522::execute()
@@ -143,6 +153,8 @@ VIA6522::execute()
     
     // Set or clear CA2 or CB2 if requested
     if (unlikely(delay & (VIASetCA2out1 | VIAClearCA2out1 | VIASetCB2out1 | VIAClearCB2out1))) {
+        if (delay & VIASetCA1out1) { setCA1(true); }
+        if (delay & VIAClearCA1out1) { setCA1(false); }
         if (delay & VIASetCA2out1) { ca2_out = true; }
         if (delay & VIAClearCA2out1) { ca2_out = false; }
         if (delay & VIASetCB2out1) { cb2_out = true; }
@@ -810,10 +822,9 @@ VIA6522::toggleCA1()
 void
 VIA6522::setCA1(bool value)
 {
-    if (ca1 == value) {
+    if (ca1 == value)
         return;
-    }
-    
+ 
     ca1 = value;
 
     // Check for negative transition
@@ -840,6 +851,18 @@ VIA6522::setCA1(bool value)
     // Check for handshake mode with CA2
     if (ca2Control() == 4) {
         ca2_out = true;
+    }
+}
+
+void
+VIA6522::CA1action(bool value)
+{
+    wakeUp();
+    
+    if (value) {
+        delay |= VIASetCA1out0;
+    } else {
+        delay |= VIAClearCA1out0;
     }
 }
 

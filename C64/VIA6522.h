@@ -252,12 +252,15 @@ public:
 	//! @brief    Destructor
 	~VIA6522();
 		
-	//! @brief    Brings the VIA back to its initial state.
+	//! @brief    Method from VirtualComponent
 	void reset();
 
-    //! @brief    Dumps debug information.
+    //! @brief    Method from VirtualComponent
     void dumpState();
 
+    //! @brief    Returns true if this object emulates is VIA1
+    bool isVia1();
+    
     //! @brief    Getter for data directon register A
     uint8_t getDDRA() { return ddra; }
 
@@ -412,7 +415,12 @@ private:
     
 public:
     
+    //! @brief   Schedules a transition on the CA1 pin for the next cycle
+    void CA1action(bool value);
+    
+    //! @brief   Performs a transition on the CA1 pin
     void setCA1(bool value);
+    
     void setCA1early(bool value); // Deprecated
     void setCA1late(bool value); // Deprecated
     
