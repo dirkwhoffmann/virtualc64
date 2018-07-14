@@ -107,9 +107,9 @@ VIA6522::dumpState()
 }
 
 bool
-VIA6522::isVia1()
+VIA6522::isVia2()
 {
-    return this == &c64->floppy.via1;
+    return this == &c64->floppy.via2;
 }
 
 
@@ -146,14 +146,7 @@ VIA6522::execute()
         if (delay & VIASetCB2out1) { cb2 = true; }
         if (delay & VIAClearCB2out1) { cb2 = false; }
     }
-    
-    // Simulate transitions on pins CA1, CA2, CB1, and CB2
-    /*
-    if (unlikely(delay & VIACA1Trans1)) {
-        if (delay & (VIACA1Trans1)) { toggleCA1(); }
-    }
-    */
-    
+        
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
     
@@ -804,9 +797,8 @@ VIA6522::setCA1(bool value)
  
     ca1 = value;
 
-    // Check for negative transition
-    if (!value)
-        CA1LowAction();
+    // VIA2 sets the V flag on a negative transition
+    if (!value && isVia2()) c64->floppy.cpu.setV(1);
     
     // Check for active transition (can be positive or negative)
     uint8_t ctrl = ca1Control();
@@ -1044,12 +1036,6 @@ VIA2::updatePB()
             }
         }
     }
-}
-
-void
-VIA2::CA1LowAction()
-{
-    c64->floppy.cpu.setV(1);
 }
 
 void
