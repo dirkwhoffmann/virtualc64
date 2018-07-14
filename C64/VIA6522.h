@@ -396,7 +396,7 @@ protected:
 private:
     
     //! @brief    Simulates an edge on the CA1 pin
-    void toggleCA1();
+    // void toggleCA1();
 
     //! @brief    Custom action on a falling edge of the CA1 pin
     virtual void CA1LowAction() { };
@@ -427,85 +427,80 @@ private:
      */
     void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
 
-
-    // |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
-    // ---------------------------------------------------------------------------------
-    // |   IRQ   | Timer 1 | Timer 2 |   CB1   |   CB2   |Shift Reg|   CA1   |   CA2   |
-
-    // Timer 1 - Set by:     Time-out of T1
-    //           Cleared by: Read t1 low or write t1 high
-    void setInterruptFlag_T1() {
+    /* |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
+     * ---------------------------------------------------------------------------------
+     * |   IRQ   | Timer 1 | Timer 2 |   CB1   |   CB2   |Shift Reg|   CA1   |   CA2   |
+     *
+     *    Timer 1 - Set by:     Time-out of T1
+     *              Cleared by: Read t1 low or write t1 high
+     *    Timer 2 - Set by:     Time-out of T2
+     *              Cleared by: Read t2 low or write t2 high
+     *        CB1 - Set by:     Active edge on CB1
+     *              Cleared by: Read or write to register 0 (ORB)
+     *        CB2 - Set by:     Active edge on CB2
+     *              Cleared by: Read or write to register 0 (ORB),
+     *                             if CB2 is not selected as "INDEPENDENT".
+     *  Shift Reg - Set by:     8 shifts completed
+     *              Cleared by: Read or write to register 10 (0xA)
+     *        CA1 - Set by:     Active edge on CA1
+     *              Cleared by: Read or write to register 1 (ORA)
+     *        CA2 - Set by:     Active edge on CA2
+     *              Cleared by: Read or write to register 1 (ORA),
+     *                             if CA2 is not selected as "INDEPENDENT".
+     */
+    
+    /*! @brief    Sets the Timer 1 interrupt flag
+     *  @details  If the bit was 0, an interrupt is triggered if enabled.
+     */
+     void setInterruptFlag_T1() {
         if (!GET_BIT(ifr, 6) && GET_BIT(ier, 6)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 6);
     }
-    void clearInterruptFlag_T1() {
-        CLR_BIT(ifr, 6);
-        if ((ifr & ier) == 0) delay |= VIAClrInterrupt0;
-    }
+    /*! @brief    Clears the Timer 1 interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_T1() { CLR_BIT(ifr, 6); releaseIrqLineIfNeeded(); }
 
-    // Timer 2 - Set by:     Time-out of T2
-    //           Cleared by: Read t2 low or write t2 high
-    
-    // NOT USED, YET: void setInterruptFlag_T2() { SET_BIT(ifr,5); IRQ(); }
+    /*! @brief    Sets the Timer 2 interrupt flag
+     *  @details  If the bit was 0, an interrupt is triggered if enabled.
+     */
     void setInterruptFlag_T2() {
         if (!GET_BIT(ifr, 5) && GET_BIT(ier, 5)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 5);
     }
-    void clearInterruptFlag_T2() {
-        CLR_BIT(ifr, 5);
-        if ((ifr & ier) == 0) delay |= VIAClrInterrupt0;
-    }
-
-    // CB1 - Set by:     Active edge on CB1
-    //       Cleared by: Read or write to register 0 (ORB)
     
-    //! @brief    Returns true if the CB1 interrupt flag is set.
-    bool interruptFlagCB1() { return !!GET_BIT(ifr, 4); }
+    /*! @brief    Clears the Timer 2 interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_T2() { CLR_BIT(ifr, 5); releaseIrqLineIfNeeded(); }
+
+    /*! @brief    Clears the CB1 interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_CB1() { CLR_BIT(ifr, 4); releaseIrqLineIfNeeded(); }
+
+    /*! @brief    Clears the CB2 interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_CB2() { CLR_BIT(ifr, 3); releaseIrqLineIfNeeded(); }
+
+    /*! @brief    Clears the Shift Register interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_SR() { CLR_BIT(ifr, 2); releaseIrqLineIfNeeded(); }
+
+    //! @brief    Sets the CB1 interrupt flag
+    // void setInterruptFlag_CA1() { SET_BIT(ifr, 1); }
     
-    // void setInterruptFlag_CB1() { SET_BIT(ifr,4); IRQ(); }
-    void setInterruptFlag_CB1() { SET_BIT(ifr,4); }
-    // void clearInterruptFlag_CB1() { CLR_BIT(ifr,4); IRQ(); }
-    void clearInterruptFlag_CB1() { CLR_BIT(ifr,4); }
+    /*! @brief    Clears the CB1 interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_CA1() { CLR_BIT(ifr, 1); releaseIrqLineIfNeeded(); }
 
-    // CB2 - Set by:     Active edge on CB2
-    //       Cleared by: Read or write to register 0 (ORB) (only if CB2 is not selected as "INDEPENDENT")
-    
-    //! @brief    Returns true if the CB2 interrupt flag is set.
-    bool interruptFlagCB2() { return !!GET_BIT(ifr, 3); }
-
-    // void setInterruptFlag_CB2() { SET_BIT(ifr,3); IRQ(); }
-    void setInterruptFlag_CB2() { SET_BIT(ifr, 3); }
-    // void clearInterruptFlag_CB2() { CLR_BIT(ifr,3); IRQ(); }
-    void clearInterruptFlag_CB2() { CLR_BIT(ifr, 3); }
-
-    // Shift register - Set by:     8 shifts completed
-    //                  Cleared by: Read or write to register 10 (0xA) (shift register)
-    
-    // NOT USED, YET: void setInterruptFlag_SR() { SET_BIT(ifr,2); IRQ(); }
-    // void clearInterruptFlag_SR() { CLR_BIT(ifr,2); IRQ(); }
-    void clearInterruptFlag_SR() { CLR_BIT(ifr, 2); }
-
-    // CA1 - Set by:     Active edge on CA1
-    //       Cleared by: Read or write to register 1 (ORA)
-    
-    //! @brief    Returns true if the CA1 interrupt flag is set.
-    bool interruptFlagCA1() { return !!GET_BIT(ifr, 1); }
-
-    // void setInterruptFlag_CA1() { SET_BIT(ifr,1); IRQ(); }
-    void setInterruptFlag_CA1() { SET_BIT(ifr, 1); }
-    // void clearInterruptFlag_CA1() { CLR_BIT(ifr,1); IRQ(); }
-    void clearInterruptFlag_CA1() { CLR_BIT(ifr, 1); }
-
-    // CA2 - Set by:     Active edge on CA2
-    //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")
-    
-    //! @brief    Returns true if the CA2 interrupt flag is set.
-    bool interruptFlagCA2() { return !!GET_BIT(ifr, 0); }
-
-    // void setInterruptFlag_CA2() { SET_BIT(ifr,0); IRQ(); }
-    void setInterruptFlag_CA2() { SET_BIT(ifr,0); }
-    // void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); IRQ(); }
-    void clearInterruptFlag_CA2() { CLR_BIT(ifr,0); }
+    /*! @brief    Clears the CA2 interrupt flag
+     *  @details  The interrupt line may be cleared as a side effect.
+     */
+    void clearInterruptFlag_CA2() { CLR_BIT(ifr, 0); releaseIrqLineIfNeeded(); }
 
     
     //

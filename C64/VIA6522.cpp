@@ -148,9 +148,11 @@ VIA6522::execute()
     }
     
     // Simulate transitions on pins CA1, CA2, CB1, and CB2
+    /*
     if (unlikely(delay & VIACA1Trans1)) {
         if (delay & (VIACA1Trans1)) { toggleCA1(); }
     }
+    */
     
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
@@ -292,7 +294,6 @@ VIA6522::peek(uint16_t addr)
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
-            releaseIrqLineIfNeeded();
             return sr;
 			
 		case 0xB: // Auxiliary control register
@@ -357,8 +358,6 @@ VIA6522::peekORA(bool handshake)
             break;
     }
     
-    releaseIrqLineIfNeeded();
-    
     // Update processor port
     updatePA();
     
@@ -398,8 +397,6 @@ VIA6522::peekORB()
         case 7: // Manual output mode (keep line low)
             break;
     }
-    
-    releaseIrqLineIfNeeded();
 
     // Update processor port
     updatePB();
@@ -550,7 +547,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xA: // Shift register
             
             clearInterruptFlag_SR();
-            releaseIrqLineIfNeeded();
             sr = value;
             return;
             
@@ -653,7 +649,6 @@ VIA6522::pokeORA(uint8_t value, bool handshake)
             break;
     }
     
-    releaseIrqLineIfNeeded();
     ora = value;
     updatePA();
 }
@@ -689,7 +684,6 @@ VIA6522::pokeORB(uint8_t value)
             break;
     }
     
-    releaseIrqLineIfNeeded();
     orb = value;
     updatePB();
 }
@@ -768,6 +762,7 @@ VIA6522::updatePB()
     }
 }
 
+/*
 void
 VIA6522::toggleCA1()
 {
@@ -799,6 +794,7 @@ VIA6522::toggleCA1()
         ca2 = true;
     }
 }
+*/
 
 void
 VIA6522::setCA1(bool value)
@@ -818,7 +814,8 @@ VIA6522::setCA1(bool value)
     if (!active) return;
     
     // Set interrupt flag
-    setInterruptFlag_CA1();
+    SET_BIT(ifr, 1);
+    // setInterruptFlag_CA1();
     if (GET_BIT(ier, 1)) {
         delay |= VIAInterrupt1;
     }
