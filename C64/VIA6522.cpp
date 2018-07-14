@@ -30,16 +30,10 @@ VIA6522::VIA6522()
     SnapshotItem items[] = {
         { &pa,              sizeof(pa),             CLEAR_ON_RESET },
         { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
-        // { &ca1_prev,        sizeof(ca1_prev),       CLEAR_ON_RESET },
         { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
-        { &ca2_prev,        sizeof(ca2_prev),       CLEAR_ON_RESET },
-        { &ca2_out,         sizeof(ca2_out),        CLEAR_ON_RESET },
         { &pb,              sizeof(pb),             CLEAR_ON_RESET },
         { &cb1,             sizeof(cb1),            CLEAR_ON_RESET },
-        { &cb1_prev,        sizeof(cb1_prev),       CLEAR_ON_RESET },
         { &cb2,             sizeof(cb2),            CLEAR_ON_RESET },
-        { &cb2_prev,        sizeof(cb2_prev),       CLEAR_ON_RESET },
-        { &cb2_out,         sizeof(cb2_out),        CLEAR_ON_RESET },
         { &ddra,            sizeof(ddra),           CLEAR_ON_RESET },
         { &ddrb,            sizeof(ddrb),           CLEAR_ON_RESET },
         { &ora,             sizeof(ora),            CLEAR_ON_RESET },
@@ -55,7 +49,6 @@ VIA6522::VIA6522()
         { &acr,             sizeof(acr),            CLEAR_ON_RESET },
         { &ier,             sizeof(ier),            CLEAR_ON_RESET },
         { &ifr,             sizeof(ifr),            CLEAR_ON_RESET },
-        { &newifr,          sizeof(newifr),         CLEAR_ON_RESET },
         { &sr,              sizeof(sr),             CLEAR_ON_RESET },
         { &delay,           sizeof(delay),          CLEAR_ON_RESET },
         { &feed,            sizeof(feed),           CLEAR_ON_RESET },
@@ -131,17 +124,10 @@ VIA6522::execute()
     
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
-    newifr = 0; // TODO: Make it a local variable (and let it return by executeTimer)
     
     // Execute timers
     executeTimer1();
     executeTimer2();
-    
-    // Check for interrupt condition
-    ifr |= newifr;
-    if (unlikely(newifr & ier)) {
-        delay |= VIAInterrupt0;
-    }
     
     // Trigger interrupt if requested
     if (unlikely(delay & VIAClrInterrupt1)) {
@@ -155,10 +141,10 @@ VIA6522::execute()
     if (unlikely(delay & (VIASetCA1out1 | VIAClearCA1out1 | VIASetCA2out1 | VIAClearCA2out1 | VIASetCB2out1 | VIAClearCB2out1))) {
         if (delay & VIASetCA1out1) { setCA1(true); }
         if (delay & VIAClearCA1out1) { setCA1(false); }
-        if (delay & VIASetCA2out1) { ca2_out = true; }
-        if (delay & VIAClearCA2out1) { ca2_out = false; }
-        if (delay & VIASetCB2out1) { cb2_out = true; }
-        if (delay & VIAClearCB2out1) { cb2_out = false; }
+        if (delay & VIASetCA2out1) { ca2 = true; }
+        if (delay & VIAClearCA2out1) { ca2 = false; }
+        if (delay & VIASetCB2out1) { cb2 = true; }
+        if (delay & VIAClearCB2out1) { cb2 = false; }
     }
     
     // Simulate transitions on pins CA1, CA2, CB1, and CB2
@@ -203,7 +189,7 @@ VIA6522::executeTimer1()
         if (!(feed & VIAPostOneShotA0)) {
 
             // Set interrupt flag
-            SET_BIT(newifr, 6);
+            setInterruptFlag_T1();
             
             // Toggle PB7 output bit
             feed ^= VIAPB7out0;
@@ -231,7 +217,7 @@ VIA6522::executeTimer2()
         if (!(delay & VIAPostOneShotB0)) {
             
             // Set interrupt flag
-            SET_BIT(newifr,5);
+            setInterruptFlag_T2();
             
             // Prevent further interrupts
             feed |= VIAPostOneShotB0;
@@ -271,7 +257,6 @@ VIA6522::peek(uint16_t addr)
             //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
             
             clearInterruptFlag_T1();
-            releaseIrqLineIfNeeded();
             return LO_BYTE(t1);
 
         case 0x5: // T1 high-order counter
@@ -297,7 +282,6 @@ VIA6522::peek(uint16_t addr)
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
-            releaseIrqLineIfNeeded();
 			return LO_BYTE(t2);
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
@@ -520,7 +504,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // Reset T1 interrupt flag.
             clearInterruptFlag_T1();
-            releaseIrqLineIfNeeded();
             
             // If ACR7 = 1, a "write T1C-H" operation will cause PB7 to go low.
             if (PB7OutputEnabled()) {
@@ -548,7 +531,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             // (2) Reset Tl interrupt flag.
             clearInterruptFlag_T1();
-            releaseIrqLineIfNeeded();
             return;
             
         case 0x8: // T2L-L (write) / T2C-L (read)
@@ -560,7 +542,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
-            releaseIrqLineIfNeeded();
             feed &= ~(VIAPostOneShotB0);
             delay &= ~(VIAPostOneShotB0);
             delay &= ~(VIACountB1 | VIAReloadB1);
@@ -726,13 +707,13 @@ VIA6522::pokePCR(uint8_t value)
         case 3:
         case 4:
         case 5:
-            ca2_out = true;
+            ca2 = true;
             break;
         case 6: // Hold CA2 low
-            ca2_out = false;
+            ca2 = false;
             break;
         case 7: // Hold CA2 high
-            ca2_out = true;
+            ca2 = true;
             break;
     }
     
@@ -744,13 +725,13 @@ VIA6522::pokePCR(uint8_t value)
         case 3:
         case 4:
         case 5:
-            cb2_out = true;
+            cb2 = true;
             break;
         case 6: // Hold CB2 low
-            cb2_out = false;
+            cb2 = false;
             break;
         case 7: // Hold CB2 high
-            cb2_out = true;
+            cb2 = true;
             break;
     }
 }
@@ -815,7 +796,7 @@ VIA6522::toggleCA1()
     
     // Check for handshake mode with CA2
     if (ca2Control() == 4) {
-        ca2_out = true;
+        ca2 = true;
     }
 }
 
@@ -850,7 +831,7 @@ VIA6522::setCA1(bool value)
     
     // Check for handshake mode with CA2
     if (ca2Control() == 4) {
-        ca2_out = true;
+        ca2 = true;
     }
 }
 

@@ -95,11 +95,6 @@ protected:
      */
     bool ca1;
     bool ca2;
-    bool ca2_out;
-    // bool ca1_prev; // from Hoxs64
-    bool ca2_prev; // from Hoxs64
-    bool cb1_prev; // from Hoxs64
-    bool cb2_prev; // from Hoxs64
     
     //! @brief    Peripheral port B
     /*! @details  "The Peripheral B port consists of 8 lines which can be
@@ -120,7 +115,6 @@ protected:
      */
     bool cb1;
     bool cb2;
-    bool cb2_out;
     
     
     //
@@ -209,9 +203,6 @@ protected:
 
     //! @brief    Interrupt flag register
     uint8_t ifr;
-
-    //! @brief    Debugging. Mimic Hoxs64 behaviour
-    uint8_t newifr;
     
     //! @brief    Shift register
     uint8_t sr;
@@ -223,12 +214,9 @@ protected:
     //! @details  Bits set in this variable makes a trigger event persistent.
     uint64_t feed;
     
-    //
-    // Speeding up emulation (VIA sleep logic)
-    //
     
     //
-    // Sleep logic for VIA chips
+    // Speeding up emulation (sleep logic)
     //
     
     //! @brief    Idle counter
@@ -274,10 +262,10 @@ public:
     uint8_t getPB() { return pb; }
 
     //! @brief    Getter for peripheral A control pin 2
-    bool getCA2() { return ca2_out; }
+    bool getCA2() { return ca2; }
 
     //! @brief    Getter for peripheral B control pin 2
-    bool getCB2() { return cb2_out; }
+    bool getCB2() { return cb2; }
 
     //! @brief    Executes the virtual VIA for one cycle.
     void execute(); 
@@ -434,7 +422,8 @@ private:
     virtual void releaseIrqLine() = 0;
 
     /*! @brief    Releases the IRQ line if IFR and IER have no matching bits.
-     *  @details  This method is invoked whenever register IFR or register IER changes.
+     *  @details  This method is invoked whenever a bit in the IFR or IER is
+     *            is cleared.
      */
     void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
 
@@ -445,17 +434,27 @@ private:
 
     // Timer 1 - Set by:     Time-out of T1
     //           Cleared by: Read t1 low or write t1 high
-    
-    // NOT USED, YET: void setInterruptFlag_T1() { SET_BIT(ifr,6); IRQ(); }
-    // void clearInterruptFlag_T1() { CLR_BIT(ifr,6); IRQ(); }
-    void clearInterruptFlag_T1() { CLR_BIT(ifr,6); }
+    void setInterruptFlag_T1() {
+        if (!GET_BIT(ifr, 6) && GET_BIT(ier, 6)) delay |= VIAInterrupt0;
+        SET_BIT(ifr, 6);
+    }
+    void clearInterruptFlag_T1() {
+        CLR_BIT(ifr, 6);
+        if ((ifr & ier) == 0) delay |= VIAClrInterrupt0;
+    }
 
     // Timer 2 - Set by:     Time-out of T2
     //           Cleared by: Read t2 low or write t2 high
     
     // NOT USED, YET: void setInterruptFlag_T2() { SET_BIT(ifr,5); IRQ(); }
-    // void clearInterruptFlag_T2() { CLR_BIT(ifr,5); IRQ(); }
-    void clearInterruptFlag_T2() { CLR_BIT(ifr,5); }
+    void setInterruptFlag_T2() {
+        if (!GET_BIT(ifr, 5) && GET_BIT(ier, 5)) delay |= VIAInterrupt0;
+        SET_BIT(ifr, 5);
+    }
+    void clearInterruptFlag_T2() {
+        CLR_BIT(ifr, 5);
+        if ((ifr & ier) == 0) delay |= VIAClrInterrupt0;
+    }
 
     // CB1 - Set by:     Active edge on CB1
     //       Cleared by: Read or write to register 0 (ORB)
