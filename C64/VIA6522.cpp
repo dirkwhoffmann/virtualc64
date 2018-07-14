@@ -150,19 +150,9 @@ VIA6522::execute()
     }
     
     // Simulate transitions on pins CA1, CA2, CB1, and CB2
-    if (unlikely(delay & (VIACA1Trans1 | VIACA2Trans1 | VIACB1Trans1 | VIACB2Trans1))) {
+    if (unlikely(delay & VIACA1Trans1)) {
         if (delay & (VIACA1Trans1)) { toggleCA1(); }
-        if (delay & (VIACA2Trans1)) { toggleCA2(); }
-        if (delay & (VIACB1Trans1)) { toggleCB1(); }
-        if (delay & (VIACB2Trans1)) { toggleCB2(); }
     }
-    
-    // Set V flag if needed
-    /*
-    if (unlikely(delay & VIASetVFlag1)) {
-        c64->floppy.cpu.setV(1);
-    }
-    */
     
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
@@ -1242,17 +1232,18 @@ VIA2::updatePB()
 void
 VIA2::CA1LowAction()
 {
-    // delay |= VIASetVFlag1;
     c64->floppy.cpu.setV(1);
 }
 
 void
-VIA2::pullDownIrqLine() {
+VIA2::pullDownIrqLine()
+{
     c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA2);
 }
 
 void
-VIA2::releaseIrqLine() {
+VIA2::releaseIrqLine()
+{
     c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA2);
 }
 

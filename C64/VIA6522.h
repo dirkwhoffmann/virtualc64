@@ -54,16 +54,8 @@ class VC1541;
 #define VIAClrInterrupt1 (1ULL << 24)
 #define VIACA1Trans0     (1ULL << 25) // Emulates a change on pin CA1
 #define VIACA1Trans1     (1ULL << 26)
-#define VIACA2Trans0     (1ULL << 27) // Emulates a change on pin CA2
-#define VIACA2Trans1     (1ULL << 28)
-#define VIACB1Trans0     (1ULL << 29) // Emulates a change on pin CB1
-#define VIACB1Trans1     (1ULL << 30)
-#define VIACB2Trans0     (1ULL << 31) // Emulates a change on pin CB2
-#define VIACB2Trans1     (1ULL << 32)
-#define VIASetVFlag0     (1ULL << 33)
-#define VIASetVFlag1     (1ULL << 34)
 
-#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0 | VIACA2Trans0 | VIACB1Trans0 | VIACB2Trans0 | VIASetVFlag0)
+#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
