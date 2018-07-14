@@ -41,21 +41,25 @@ class VC1541;
 #define VIAPostOneShotB0 (1ULL << 11) // Indicates that timer 2 has fired in one shot mode
 #define VIAInterrupt0    (1ULL << 12) // Holds down the interrupt line
 #define VIAInterrupt1    (1ULL << 13)
-#define VIASetCA2out0    (1ULL << 14) // Sets CA2 pin high
-#define VIASetCA2out1    (1ULL << 15)
-#define VIAClearCA2out0  (1ULL << 16) // Sets CA2 pin low
-#define VIAClearCA2out1  (1ULL << 17)
-#define VIASetCB2out0    (1ULL << 18) // Sets CB2 pin high
-#define VIASetCB2out1    (1ULL << 19)
-#define VIAClearCB2out0  (1ULL << 20) // Sets CB2 pin low
-#define VIAClearCB2out1  (1ULL << 21)
-#define VIAPB7out0       (1ULL << 22) // Current value of PB7 pin (if output is enabled)
-#define VIAClrInterrupt0 (1ULL << 23) // Releases the interrupt line
-#define VIAClrInterrupt1 (1ULL << 24)
-#define VIACA1Trans0     (1ULL << 25) // Emulates a change on pin CA1
-#define VIACA1Trans1     (1ULL << 26)
+#define VIASetCA1out0    (1ULL << 14) // Sets CA2 pin high
+#define VIASetCA1out1    (1ULL << 15)
+#define VIAClearCA1out0  (1ULL << 16) // Sets CA2 pin low
+#define VIAClearCA1out1  (1ULL << 17)
+#define VIASetCA2out0    (1ULL << 18) // Sets CA2 pin high
+#define VIASetCA2out1    (1ULL << 19)
+#define VIAClearCA2out0  (1ULL << 20) // Sets CA2 pin low
+#define VIAClearCA2out1  (1ULL << 21)
+#define VIASetCB2out0    (1ULL << 22) // Sets CB2 pin high
+#define VIASetCB2out1    (1ULL << 23)
+#define VIAClearCB2out0  (1ULL << 24) // Sets CB2 pin low
+#define VIAClearCB2out1  (1ULL << 25)
+#define VIAPB7out0       (1ULL << 26) // Current value of PB7 pin (if output is enabled)
+#define VIAClrInterrupt0 (1ULL << 27) // Releases the interrupt line
+#define VIAClrInterrupt1 (1ULL << 28)
+#define VIACA1Trans0     (1ULL << 29) // Emulates a change on pin CA1
+#define VIACA1Trans1     (1ULL << 30)
 
-#define VIAClearBits   ~((1ULL << 23) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
+#define VIAClearBits   ~((1ULL << 31) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -254,12 +258,6 @@ public:
     //! @brief    Dumps debug information.
     void dumpState();
 
-    //! @brief    Getter for output register A
-    // uint8_t getORA() { return ora; }
-
-    //! @brief    Getter for output register B
-    // uint8_t getORB() { return orb; }
-
     //! @brief    Getter for data directon register A
     uint8_t getDDRA() { return ddra; }
 
@@ -409,32 +407,16 @@ private:
     //! @brief    Simulates an edge on the CA1 pin
     void toggleCA1();
 
-    //! @brief    Simulates an edge on the CA2 pin
-    void toggleCA2();
-
-    //! @brief    Simulates an edge on the CB1 pin
-    void toggleCB1();
-
-    //! @brief    Simulates an edge on the CB2 pin
-    void toggleCB2();
-
     //! @brief    Custom action on a falling edge of the CA1 pin
     virtual void CA1LowAction() { };
     
 public:
     
-    // void setCA1(bool value); // Deprecated
-    void setCA1early(bool value);
-    void setCA1late(bool value);
+    void setCA1(bool value);
+    void setCA1early(bool value); // Deprecated
+    void setCA1late(bool value); // Deprecated
     
 private:
-    
-    // void setCA2(bool value);
-    // void setCB1(bool value);
-    // void setCB2(bool value);
-    virtual void setCA2out(bool value);
-    virtual void setCB2out(bool value);
-
     
     //
     // Interrupt handling
@@ -449,7 +431,6 @@ private:
     /*! @brief    Releases the IRQ line if IFR and IER have no matching bits.
      *  @details  This method is invoked whenever register IFR or register IER changes.
      */
-    // void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) releaseIrqLine(); }
     void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
 
 
