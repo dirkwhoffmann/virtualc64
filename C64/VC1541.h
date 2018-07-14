@@ -380,16 +380,20 @@ public:
     //! @brief    Returns the current value of the sync signal
     bool getSync() { return sync; }
 
-    //! @brief    Clears the Byte Ready line
-    /*! @note     This function causes several side effects on a falling edge.
-     *            Firstly, it pulls down VIA2::CA1 which latches the contents of
-     *            the read shift register into the VIA chip. Secondly, the V
-     *            flag is set inside the CPU.
+    //! @brief    Sets the byte ready line
+    /*! @note     The byte ready line is connected to the CA1 pin of VIA2.
+     *            Pulling this signal low causes important side effects.
+     *            Firstly, the contents of the read shift register is latched
+     *            into the VIA chip. Secondly, the V flag is set inside the CPU.
+     *  @seealso  CA1action()
      */
-    void clearByteReadyLine();
+    void setByteReadyLine(bool value);
 
-    //! @brief    Raises the Byte Ready line
-    void raiseByteReadyLine();
+    //! @brief    Convenience wrapper
+    void clearByteReadyLine() { setByteReadyLine(false); }
+
+    //! @brief    Convenience wrapper
+    void raiseByteReadyLine() { setByteReadyLine(true); }
     
     //! @brief    Returns the current track zone (0 to 3)
     bool getZone() { return zone; }

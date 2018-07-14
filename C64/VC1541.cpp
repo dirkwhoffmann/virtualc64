@@ -296,20 +296,11 @@ VC1541::executeUF4()
 }
 
 void
-VC1541::clearByteReadyLine()
+VC1541::setByteReadyLine(bool value)
 {
-    if (byteReady) {
-        byteReady = false;
-        via2.CA1action(false);
-    }
-}
-
-void
-VC1541::raiseByteReadyLine()
-{
-    if (!byteReady) {
-        byteReady = true;
-        via2.CA1action(true);
+    if (byteReady != value) {
+        byteReady = value;
+        via2.CA1action(value);
     }
 }
 
