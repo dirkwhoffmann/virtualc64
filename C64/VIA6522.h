@@ -59,7 +59,7 @@ class VC1541;
 #define VIACA1Trans0     (1ULL << 29) // Emulates a change on pin CA1
 #define VIACA1Trans1     (1ULL << 30)
 
-#define VIAClearBits   ~((1ULL << 31) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
+#define VIAClearBits   ~((1ULL << 31) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA1out0 | VIAClearCA1out0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0 | VIACA1Trans0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.
@@ -96,7 +96,7 @@ protected:
     bool ca1;
     bool ca2;
     bool ca2_out;
-    bool ca1_prev; // from Hoxs64
+    // bool ca1_prev; // from Hoxs64
     bool ca2_prev; // from Hoxs64
     bool cb1_prev; // from Hoxs64
     bool cb2_prev; // from Hoxs64

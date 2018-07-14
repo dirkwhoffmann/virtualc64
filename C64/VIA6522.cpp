@@ -30,7 +30,7 @@ VIA6522::VIA6522()
     SnapshotItem items[] = {
         { &pa,              sizeof(pa),             CLEAR_ON_RESET },
         { &ca1,             sizeof(ca1),            CLEAR_ON_RESET },
-        { &ca1_prev,        sizeof(ca1_prev),       CLEAR_ON_RESET },
+        // { &ca1_prev,        sizeof(ca1_prev),       CLEAR_ON_RESET },
         { &ca2,             sizeof(ca2),            CLEAR_ON_RESET },
         { &ca2_prev,        sizeof(ca2_prev),       CLEAR_ON_RESET },
         { &ca2_out,         sizeof(ca2_out),        CLEAR_ON_RESET },
@@ -152,7 +152,7 @@ VIA6522::execute()
     }
     
     // Set or clear CA2 or CB2 if requested
-    if (unlikely(delay & (VIASetCA2out1 | VIAClearCA2out1 | VIASetCB2out1 | VIAClearCB2out1))) {
+    if (unlikely(delay & (VIASetCA1out1 | VIAClearCA1out1 | VIASetCA2out1 | VIAClearCA2out1 | VIASetCB2out1 | VIAClearCB2out1))) {
         if (delay & VIASetCA1out1) { setCA1(true); }
         if (delay & VIAClearCA1out1) { setCA1(false); }
         if (delay & VIASetCA2out1) { ca2_out = true; }
@@ -792,10 +792,10 @@ VIA6522::toggleCA1()
 {
     // Check for active transition (positive or negative edge)
     uint8_t ctrl = ca1Control();
-    bool active = (ca1_prev && ctrl == 0) || (!ca1_prev && ctrl == 1);
-    ca1_prev = !ca1_prev;
+    bool active = (ca1 && ctrl == 0) || (!ca1 && ctrl == 1);
+    ca1 = !ca1;
     
-    if (!ca1_prev)
+    if (!ca1)
         CA1LowAction();
     
     if (!active)
@@ -860,9 +860,9 @@ VIA6522::CA1action(bool value)
     wakeUp();
     
     if (value) {
-        delay |= VIASetCA1out0;
+        delay |= VIASetCA1out1;
     } else {
-        delay |= VIAClearCA1out0;
+        delay |= VIAClearCA1out1;
     }
 }
 
@@ -881,7 +881,7 @@ VIA6522::setCA1late(bool value)
 {
     wakeUp();
     
-    uint8_t next = (delay & VIACA1Trans1) ? !ca1_prev : ca1_prev;
+    uint8_t next = (delay & VIACA1Trans1) ? !ca1 : ca1;
     if (next != value) {
         delay |= VIACA1Trans0;
     } else {
