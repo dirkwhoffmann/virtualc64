@@ -402,6 +402,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
 - (BOOL) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
+- (BOOL) hasBattery { return wrapper->expansionPort->hasBattery(); }
+- (void) setBattery:(BOOL)value { wrapper->expansionPort->setBattery(value); }
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity { return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
 - (void) pressFirstButton { wrapper->expansionPort->pressFirstButton(); }
 - (void) pressSecondButton { wrapper->expansionPort->pressSecondButton(); }

@@ -26,9 +26,10 @@ Cartridge::Cartridge(C64 *c64)
     
     externalRam = NULL;
     ramCapacity = 0;
+    hasBattery = false;
     
     cycle = 0;
-    regValue = regValue2 = 0;
+    regValue = 0;
 }
 
 Cartridge::~Cartridge()
@@ -49,6 +50,11 @@ Cartridge::~Cartridge()
 void
 Cartridge::reset()
 {
+    // Delete RAM
+    if (externalRam && !hasBattery) {
+        memset(externalRam, 0, ramCapacity);
+    }
+    
     // Bank in chip 0 on startup
     bankIn(0);
     cycle = 0;
@@ -153,11 +159,11 @@ Cartridge::stateSize()
     }
     size += sizeof(ramCapacity);
     size += ramCapacity;
+    size += sizeof(hasBattery);
 
     size += sizeof(blendedIn);
     size += sizeof(cycle);
     size += sizeof(regValue);
-    size += sizeof(regValue2);
 
     return size;
 }
@@ -184,14 +190,14 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     }
     setRamCapacity(read32(buffer));
     readBlock(buffer, externalRam, ramCapacity);
+    hasBattery = read8(buffer);
     
     readBlock(buffer, blendedIn, sizeof(blendedIn));
     cycle = read64(buffer);
     regValue = read8(buffer);
-    regValue2 = read8(buffer);
 
     debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
+    assert(*buffer - old == Cartridge::stateSize());
 }
 
 void
@@ -212,14 +218,15 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     }
     write32(buffer, ramCapacity);
     writeBlock(buffer, externalRam, ramCapacity);
+    write8(buffer, hasBattery);
     
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
     write64(buffer, cycle);
     write8(buffer, regValue);
-    write8(buffer, regValue2);
+    // write8(buffer, regValue2);
 
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
+    assert(*buffer - old == Cartridge::stateSize());
 }
 
 void
@@ -259,6 +266,7 @@ Cartridge::peek(uint16_t addr)
     // No cartridge chip is mapped to this memory area
     // debug("Peeking from unmapped location: %04X\n", addr);
     return c64->mem.ram[addr];
+    // return c64->mem.peek(addr);
 }
 
 unsigned
@@ -311,6 +319,7 @@ Cartridge::setRamCapacity(uint32_t size)
     if (size > 0) {
         externalRam = (uint8_t *)malloc((size_t)size);
         ramCapacity = size;
+        memset(externalRam, 0, size);
     }
 }
 

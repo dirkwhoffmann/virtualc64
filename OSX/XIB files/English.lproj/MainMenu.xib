@@ -738,6 +738,12 @@ CA
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Use Battery Backed RAM" id="wKq-Mc-2EU">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="geoRamBatteryAction:" target="-1" id="3NE-mB-L1P"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>
                             <menuItem title="Action Replay" id="4hq-fg-qHb">
                                 <modifierMask key="keyEquivalentModifierMask"/>

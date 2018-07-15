@@ -153,6 +153,11 @@ public:
     //! @brief    Press second button on cartridge
     void pressSecondButton() { if (cartridge) cartridge->pressSecondButton(); }
 
+    //! @brief    Returns true if the attached cartridge has a RAM backing battery.
+    bool hasBattery() { return cartridge != NULL && cartridge->hasBattery; }
+
+    //! @brief    Enables or disables RAM backing during a reset.
+    void setBattery(bool value) { if (cartridge) cartridge->hasBattery = value; }
 };
     
 #endif

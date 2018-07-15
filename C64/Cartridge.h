@@ -86,7 +86,11 @@ public:
      *            variable. Only a few cartridges make use of this variable.
      */
     uint8_t regValue;
-    uint8_t regValue2;
+
+public:
+    
+    //! @brief    Indicates if the RAM is kept alive during a reset.
+    bool hasBattery;
     
 public:
     
@@ -122,8 +126,8 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     void dumpState();
-    
-    //! @brief    Returns true if cartride ROM is blended in at the specified address.
+
+    //! @brief    Indicates if CRT ROM is blended in at the specified address.
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Execution thread callback

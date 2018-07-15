@@ -530,17 +530,50 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
 // GeoRAM
 //
 
+GeoRAM::GeoRAM(C64 *c64) : Cartridge(c64)
+{
+    setDescription("GeoRAM");
+}
+
 void
 GeoRAM::reset()
 {
-    debug("GeoRAM::reset\n");
-    c64->expansionport.setExromLine(0);
-    c64->expansionport.setGameLine(0);
-    bankIn(0);
+    if (!hasBattery) {
+        debug("Erasing GeoRAM\n");
+        memset(externalRam, 0, ramCapacity);
+    } else {
+        debug("Preserving GeoRAM\n");
+    }
+}
+
+size_t
+GeoRAM::stateSize()
+{
+    return Cartridge::stateSize() + sizeof(bank) + sizeof(page);
+}
+
+void
+GeoRAM::loadFromBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    Cartridge::loadFromBuffer(buffer);
+    bank = read8(buffer);
+    page = read8(buffer);
+    assert(*buffer - old == stateSize());
+}
+
+void
+GeoRAM::saveToBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    Cartridge::saveToBuffer(buffer);
+    write8(buffer, bank);
+    write8(buffer, page);
+    assert(*buffer - old == stateSize());
 }
 
 unsigned
-GeoRAM::offset(uint8_t bank, uint8_t page, uint8_t addr)
+GeoRAM::offset(uint8_t addr)
 {
     /* From VICE:
      * "The GeoRAM is a banked memory system. It uses the registers at
@@ -552,7 +585,7 @@ GeoRAM::offset(uint8_t bank, uint8_t page, uint8_t addr)
      */
     
     unsigned bankOffset = (bank * 16384) % ramCapacity;
-    unsigned pageOffset = page & 0x3F;
+    unsigned pageOffset = (page & 0x3F) * 256;
     return bankOffset + pageOffset + addr;
 }
 
@@ -560,7 +593,7 @@ uint8_t
 GeoRAM::peekIO1(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    unsigned i = offset(regValue, regValue2, addr - 0xDE00);
+    unsigned i = offset(addr - 0xDE00);
     assert(externalRam != NULL);
     assert(i < ramCapacity);
     return externalRam[i];
@@ -569,18 +602,14 @@ GeoRAM::peekIO1(uint16_t addr)
 uint8_t
 GeoRAM::peekIO2(uint16_t addr)
 {
-    switch(addr) {
-        case 0xDF00: return regValue2;
-        case 0xDF01: return regValue;
-        default: return 0;
-    }
+    return 0;
 }
 
 void
 GeoRAM::pokeIO1(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    unsigned i = offset(regValue, regValue2, addr - 0xDE00);
+    unsigned i = offset(addr - 0xDE00);
     assert(externalRam != NULL);
     assert(i < ramCapacity);
     externalRam[i] = value;
@@ -590,8 +619,8 @@ void
 GeoRAM::pokeIO2(uint16_t addr, uint8_t value)
 {
     if (addr & 1) {
-        regValue = value;  // Bank select
+        bank = value; // Bank select
     } else {
-        regValue2 = value; // Page select
+        page = value; // Page select
     }
 }

@@ -89,14 +89,10 @@ extension MyController {
         if item.action == #selector(MyController.actionReplayAction(_:)) {
             return c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY
         }
-        /*
-        if item.action == #selector(MyController.attachGeoRamAction(_:)) {
-            let isGeoRam = // TODO
-            let matchingCapacity = // TODO
-            item.state = (isGeoRam && matchingCapacity) ? .on : .off
-            return true
+        if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
+            item.state = c64.expansionport.hasBattery() ? .on : .off
+            return c64.expansionport.cartridgeType() == CRT_GEO_RAM
         }
-        */
         
         // Debug menu
         if item.action == #selector(MyController.pauseAction(_:)) {
@@ -478,6 +474,10 @@ extension MyController {
         let capacity = sender.tag
         track("RAM capacity = \(capacity)")
         c64.expansionport.attachGeoRamCartridge(capacity)
+    }
+    
+    @IBAction func geoRamBatteryAction(_ sender: Any!) {
+        c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
     
     @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
