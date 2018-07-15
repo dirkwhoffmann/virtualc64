@@ -312,7 +312,7 @@ struct ContainerWrapper;
 
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
-
+- (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
 - (void) pressFirstButton;
 - (void) pressSecondButton;
 

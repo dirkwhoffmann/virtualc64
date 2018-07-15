@@ -402,6 +402,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
 - (BOOL) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
+- (BOOL) attachGeoRamCartridge:(NSInteger)capacity { return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
 - (void) pressFirstButton { wrapper->expansionPort->pressFirstButton(); }
 - (void) pressSecondButton { wrapper->expansionPort->pressSecondButton(); }
 
@@ -571,9 +572,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) playKey { return wrapper->datasette->getPlayKey(); }
 @end
 
-// --------------------------------------------------------------------------
-//                                     C64
-// --------------------------------------------------------------------------
+
+//
+// C64
+//
 
 @implementation C64Proxy {
     AudioEngine *audioEngine;
@@ -635,7 +637,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     delete wrapper->c64;
 	wrapper->c64 = NULL;
 }
-
 
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
@@ -802,9 +803,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @end
 
-// --------------------------------------------------------------------------
-//                                Container
-// --------------------------------------------------------------------------
+
+//
+// Container
+//
 
 @implementation ContainerProxy
 
@@ -858,9 +860,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                              SnapshotProxy
-// --------------------------------------------------------------------------
+
+//
+// SnapshotProxy
+//
 
 @implementation SnapshotProxy
 
@@ -923,9 +926,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @end
 
-// --------------------------------------------------------------------------
-//                                CRTProxy
-// --------------------------------------------------------------------------
+
+//
+// CRTProxy
+//
 
 @implementation CRTProxy
 
@@ -1012,9 +1016,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                  TAPProxy
-// --------------------------------------------------------------------------
+
+//
+// TAPProxy
+//
 
 @implementation TAPProxy
 
@@ -1049,9 +1054,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                  Archive
-// --------------------------------------------------------------------------
+
+//
+// Archive
+//
 
 @implementation ArchiveProxy
 
@@ -1116,9 +1122,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 T64Proxy
-// --------------------------------------------------------------------------
+
+//
+// T64Proxy
+//
 
 @implementation T64Proxy
 
@@ -1149,9 +1156,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 PRGProxy
-// --------------------------------------------------------------------------
+
+//
+// PRGProxy
+//
 
 @implementation PRGProxy
 
@@ -1182,9 +1190,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 P00Proxy
-// --------------------------------------------------------------------------
+
+//
+// P00Proxy
+//
 
 @implementation P00Proxy
 
@@ -1215,9 +1224,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 D64Proxy
-// --------------------------------------------------------------------------
+
+//
+// D64Proxy
+//
 
 @implementation D64Proxy
 
@@ -1253,9 +1263,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 PG64Proxy
-// --------------------------------------------------------------------------
+
+//
+// PG64Proxy
+//
 
 @implementation G64Proxy
 
@@ -1280,9 +1291,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 NIBProxy
-// --------------------------------------------------------------------------
+
+//
+// NIBProxy
+//
 
 @implementation NIBProxy
 
@@ -1307,9 +1319,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
-// --------------------------------------------------------------------------
-//                                 FileProxy
-// --------------------------------------------------------------------------
+
+//
+// FileProxy
+//
 
 @implementation FileProxy
 

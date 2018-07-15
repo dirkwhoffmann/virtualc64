@@ -682,13 +682,61 @@ CA
                 <menuItem title="Cartridge" id="6Nh-dL-Pbk" userLabel="Cartridge">
                     <menu key="submenu" title="Cartridge" id="ZzZ-hT-u7h">
                         <items>
-                            <menuItem title="Detach cartridge" id="d8T-Ms-VBm">
+                            <menuItem title="Detach" id="d8T-Ms-VBm">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="detachCartridgeAction:" target="-1" id="cg8-3B-XuP"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="6wW-eK-Rtw"/>
+                            <menuItem title="Attach GeoRAM" id="ZWy-ig-b3R">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Attach GeoRAM" id="7j5-aX-oSo">
+                                    <items>
+                                        <menuItem title="64 KB" tag="64" id="UjY-4P-9Du">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="qyn-Py-GIU"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="128 KB" tag="128" id="Ih5-c5-Alt">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="WKS-rU-KLB"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="256 KB" tag="256" id="Wz7-fL-tvu">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="uu1-sL-uk4"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>
+                            <menuItem title="Action Replay" id="4hq-fg-qHb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Action Replay" id="gIs-wR-no0">
+                                    <items>
+                                        <menuItem title="Freeze" id="KqP-hK-eI5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="actionReplayFreezeAction:" target="-1" id="vY9-CS-xez"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reset" id="2oe-rD-sgA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="actionReplayResetAction:" target="-1" id="1be-Br-1Qc"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <action selector="actionReplayAction:" target="-1" id="Sfd-Bp-hsP"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Final Cartridge III" id="ldk-GO-tsE" userLabel="Final Cartridge III">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Final Cartridge III" id="uai-Ed-uEb">
@@ -752,5 +800,8 @@ CA
             </items>
         </menu>
         <customObject id="411" userLabel="Sparkle Updater" customClass="SUUpdater"/>
+        <menuItem title="64 K" id="XV5-0f-y2u">
+            <modifierMask key="keyEquivalentModifierMask"/>
+        </menuItem>
     </objects>
 </document>

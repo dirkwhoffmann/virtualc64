@@ -86,6 +86,17 @@ extension MyController {
         if item.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
             return c64.expansionport.cartridgeType() == CRT_FINAL_III
         }
+        if item.action == #selector(MyController.actionReplayAction(_:)) {
+            return c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY
+        }
+        /*
+        if item.action == #selector(MyController.attachGeoRamAction(_:)) {
+            let isGeoRam = // TODO
+            let matchingCapacity = // TODO
+            item.state = (isGeoRam && matchingCapacity) ? .on : .off
+            return true
+        }
+        */
         
         // Debug menu
         if item.action == #selector(MyController.pauseAction(_:)) {
@@ -462,6 +473,13 @@ extension MyController {
         c64.detachCartridgeAndReset()
     }
     
+    @IBAction func attachGeoRamAction(_ sender: Any!) {
+        let sender = sender as! NSMenuItem
+        let capacity = sender.tag
+        track("RAM capacity = \(capacity)")
+        c64.expansionport.attachGeoRamCartridge(capacity)
+    }
+    
     @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
@@ -471,6 +489,20 @@ extension MyController {
     }
     
     @IBAction func finalCartridgeIIIresetAction(_ sender: Any!) {
+        c64.expansionport.pressSecondButton()
+    }
+    
+    @IBAction func actionReplayAction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+    
+    @IBAction func actionReplayFreezeAction(_ sender: Any!) {
+        track()
+        c64.expansionport.pressFirstButton()
+    }
+    
+    @IBAction func actionReplayResetAction(_ sender: Any!) {
+        track()
         c64.expansionport.pressSecondButton()
     }
     

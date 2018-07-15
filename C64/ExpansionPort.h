@@ -66,22 +66,22 @@ public:
     //! @brief    Destructor
     ~ExpansionPort();
         
-    //! @brief    Resets the expansion port
+    //! @brief    Method from VirtualComponent
     void reset();
     
-    //! @brief    Dumps the current configuration into the message queue
+    //! @brief    Method from VirtualComponent
     void ping();
 
-    //! @brief    Returns the size of the internal state
+    //! @brief    Method from VirtualComponent
     size_t stateSize();
 
-    //! @brief    Loads the current state from a buffer
+    //! @brief    Method from VirtualComponent
     void loadFromBuffer(uint8_t **buffer);
     
-    //! @brief    Save the current state into a buffer
+    //! @brief    Method from VirtualComponent
     void saveToBuffer(uint8_t **buffer);
     
-    //! @brief    Prints debugging information
+    //! @brief    Method from VirtualComponent
     void dumpState();	
     
     //! @brief    Returns true if cartride ROM is blended in at the specified location
@@ -138,9 +138,12 @@ public:
     //! @brief    Returns true if a cartridge is attached to the expansion port
     bool getCartridgeAttached() { return cartridge != NULL; }
 
-    //! @brief    Attaches a cartridge to the expansion port
+    //! @brief    Attaches an existing cartridge to the expansion port
     bool attachCartridge(Cartridge *c);
 
+    //! @brief    Creates and attaches a GeoRAM cartridge
+    bool attachGeoRamCartridge(uint32_t capacity);
+    
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 

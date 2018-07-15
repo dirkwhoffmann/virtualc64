@@ -229,21 +229,23 @@ ExpansionPort::attachCartridge(Cartridge *c)
     return true;
 }
 
-/*
 bool
-ExpansionPort::attachCartridge(CRTContainer *c)
+ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
 {
-    assert(c != NULL);
-    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(c64, c);
-
-    if (cartridge == NULL) {
-        warn("Cannot create Cartridge from CRTContainer");
-        return false;
+    switch (capacity) {
+        case 64: case 128: case 256: case 512: case 1024: case 2048: case 4096:
+            break;
+        default:
+            warn("Cannot create GeoRAM cartridge of size %d\n", capacity);
+            return false;
     }
     
-    return attachCartridge(cartridge);
+    Cartridge *geoRAM = new GeoRAM(c64);
+    geoRAM->setRamCapacity(capacity);
+    debug("Created GeoRAM cartridge (%d KB)\n", capacity);
+    
+    return attachCartridge(geoRAM);
 }
-*/
 
 void
 ExpansionPort::detachCartridge()

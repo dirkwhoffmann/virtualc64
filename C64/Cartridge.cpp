@@ -10,7 +10,7 @@
 Cartridge::Cartridge(C64 *c64)
 {
     setDescription("Cartridge");
-    debug(1, "  Creating cartridge at address %p...\n", this);
+    debug("  Creating cartridge at address %p...\n", this);
 
     this->c64 = c64;
     
