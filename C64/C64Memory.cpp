@@ -113,6 +113,9 @@ C64Memory::dumpState()
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
+    MemoryType source;
+    MemoryType target;
+    
     uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
     uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
     uint8_t index = (c64->processorPort.read() & 0x07) | exrom | game;
@@ -121,7 +124,6 @@ C64Memory::updatePeekPokeLookupTables()
     c64->setUltimax(exrom && !game);
 
     // Set peek sources
-    MemoryType source;
     source = BankMap[index][0]; // 0x1000 - 0x7FFF (RAM or open)
     assert(source == M_RAM || source == M_NONE);
     peekSrc[0x1] = source;
@@ -155,9 +157,24 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0xF] = source;
 
     // Set poke targets
-    MemoryType target;
+    target = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
+    if (target != M_CRTLO && target != M_CRTHI) target = M_RAM;
+    pokeTarget[0x8] = target;
+    pokeTarget[0x9] = target;
+    
+    target = BankMap[index][2]; // 0xA000 - 0xBFFF (CRT, or RAM)
+    if (target != M_CRTLO && target != M_CRTHI) target = M_RAM;
+    pokeTarget[0xA] = target;
+    pokeTarget[0xB] = target;
+    
     target = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O or RAM)
-    pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
+    if (target != M_IO) target = M_RAM;
+    pokeTarget[0xD] = target;
+    
+    target = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, or RAM)
+    if (target != M_CRTLO && target != M_CRTHI) target = M_RAM;
+    pokeTarget[0xE] = target;
+    pokeTarget[0xF] = target;
 }
 
 uint8_t
@@ -280,7 +297,7 @@ C64Memory::spypeek(uint16_t addr, MemoryType source)
             
         case M_CRTLO:
         case M_CRTHI:
-            return c64->expansionport.read(addr);
+            return c64->expansionport.spypeek(addr);
             
         case M_PP:
             return peek(addr, M_PP);
@@ -326,11 +343,11 @@ uint8_t C64Memory::spypeekIO(uint16_t addr)
             
         case 0xE: // I/O space 1
             
-            return c64->expansionport.readIO1(addr);
+            return c64->expansionport.spypeekIO1(addr);
             
         case 0xF: // I/O space 2
             
-            return c64->expansionport.readIO2(addr);
+            return c64->expansionport.spypeekIO2(addr);
 
         default:
             
@@ -349,6 +366,10 @@ void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
         case M_IO:
             pokeIO(addr, value);
             return;
+            
+        case M_CRTLO:
+        case M_CRTHI:
+            c64->expansionport.poke(addr, value);
             
         case M_PP:
             if (likely(addr >= 0x02)) {

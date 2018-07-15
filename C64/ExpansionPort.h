@@ -94,21 +94,24 @@ public:
     
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);
-
+    
     //! @brief    Same as peek, but without side effects
-    uint8_t read(uint16_t addr);
+    uint8_t spypeek(uint16_t addr);
 
     //! @brief    Peek fallthrough for I/O space 1
     uint8_t peekIO1(uint16_t addr);
     
     //! @brief    Same as peekIO1, but without side effects
-    uint8_t readIO1(uint16_t addr);
+    uint8_t spypeekIO1(uint16_t addr);
     
     //! @brief    Peek fallthrough for I/O space 2
     uint8_t peekIO2(uint16_t addr);
 
     //! @brief    Same as peekIO2, but without side effects
-    uint8_t readIO2(uint16_t addr);
+    uint8_t spypeekIO2(uint16_t addr);
+    
+    //! @brief    Poke fallthrough
+    void poke(uint16_t addr, uint8_t value);
     
     //! @brief    Poke fallthrough for I/O space 1
     void pokeIO1(uint16_t addr, uint8_t value);
@@ -154,10 +157,10 @@ public:
     void pressSecondButton() { if (cartridge) cartridge->pressSecondButton(); }
 
     //! @brief    Returns true if the attached cartridge has a RAM backing battery.
-    bool hasBattery() { return cartridge != NULL && cartridge->hasBattery; }
+    bool hasBattery() { return cartridge != NULL && cartridge->persistentRam; }
 
     //! @brief    Enables or disables RAM backing during a reset.
-    void setBattery(bool value) { if (cartridge) cartridge->hasBattery = value; }
+    void setBattery(bool value) { if (cartridge) cartridge->persistentRam = value; }
 };
     
 #endif

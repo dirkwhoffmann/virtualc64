@@ -26,7 +26,7 @@ Cartridge::Cartridge(C64 *c64)
     
     externalRam = NULL;
     ramCapacity = 0;
-    hasBattery = false;
+    persistentRam = false;
     
     cycle = 0;
     regValue = 0;
@@ -51,7 +51,7 @@ void
 Cartridge::reset()
 {
     // Delete RAM
-    if (externalRam && !hasBattery) {
+    if (externalRam && !persistentRam) {
         memset(externalRam, 0, ramCapacity);
     }
     
@@ -67,6 +67,7 @@ Cartridge::isSupportedType(CartridgeType type)
     switch (type) {
         
         case CRT_NORMAL:
+        case CRT_ACTION_REPLAY:
             
         case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
@@ -100,6 +101,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             
         case CRT_NORMAL:
             return new Cartridge(c64);
+        case CRT_ACTION_REPLAY:
+            return new ActionReplay(c64);
         case CRT_FINAL_III:
             return new FinalIII(c64);
         case CRT_SIMONS_BASIC:
@@ -159,7 +162,7 @@ Cartridge::stateSize()
     }
     size += sizeof(ramCapacity);
     size += ramCapacity;
-    size += sizeof(hasBattery);
+    size += sizeof(persistentRam);
 
     size += sizeof(blendedIn);
     size += sizeof(cycle);
@@ -190,7 +193,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     }
     setRamCapacity(read32(buffer));
     readBlock(buffer, externalRam, ramCapacity);
-    hasBattery = read8(buffer);
+    persistentRam = read8(buffer);
     
     readBlock(buffer, blendedIn, sizeof(blendedIn));
     cycle = read64(buffer);
@@ -218,7 +221,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     }
     write32(buffer, ramCapacity);
     writeBlock(buffer, externalRam, ramCapacity);
-    write8(buffer, hasBattery);
+    write8(buffer, persistentRam);
     
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
     write64(buffer, cycle);

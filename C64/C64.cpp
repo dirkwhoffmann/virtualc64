@@ -100,7 +100,6 @@ C64::C64()
         &sid,
         &cia1, &cia2,
         &iec,
-        &expansionport,
         &floppy,
         &datasette,
         &mouse1350,
@@ -109,6 +108,7 @@ C64::C64()
         &keyboard,
         &port1,
         &port2,
+        &expansionport,
         NULL };
     
     registerSubComponents(subcomponents, sizeof(subcomponents));

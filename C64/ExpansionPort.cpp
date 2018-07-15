@@ -144,9 +144,9 @@ ExpansionPort::peek(uint16_t addr)
 }
 
 uint8_t
-ExpansionPort::read(uint16_t addr)
+ExpansionPort::spypeek(uint16_t addr)
 {
-    return cartridge ? cartridge->read(addr) : 0;
+    return cartridge ? cartridge->spypeek(addr) : 0;
 }
 
 uint8_t
@@ -163,9 +163,9 @@ ExpansionPort::peekIO1(uint16_t addr)
 }
 
 uint8_t
-ExpansionPort::readIO1(uint16_t addr)
+ExpansionPort::spypeekIO1(uint16_t addr)
 {
-    return cartridge ? cartridge->readIO1(addr) : c64->vic.dataBus;
+    return cartridge ? cartridge->spypeekIO1(addr) : c64->vic.dataBus;
 }
 
 uint8_t
@@ -175,9 +175,16 @@ ExpansionPort::peekIO2(uint16_t addr)
 }
 
 uint8_t
-ExpansionPort::readIO2(uint16_t addr)
+ExpansionPort::spypeekIO2(uint16_t addr)
 {
-    return cartridge ? cartridge->readIO2(addr) : c64->vic.dataBus;
+    return cartridge ? cartridge->spypeekIO2(addr) : c64->vic.dataBus;
+}
+
+void
+ExpansionPort::poke(uint16_t addr, uint8_t value)
+{
+    if (cartridge == NULL || !cartridge->poke(addr, value))
+        c64->mem.ram[addr] = value;
 }
 
 void

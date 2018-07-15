@@ -19,9 +19,220 @@
 
 #include "C64.h"
 
-// -----------------------------------------------------------------------------
-//                                Final Cartridge III
-// -----------------------------------------------------------------------------
+
+//
+// Action Replay
+//
+
+ActionReplay::ActionReplay(C64 *c64) : Cartridge(c64)
+{
+    debug("ActionReplay constructor\n");
+    
+    // The ActionReplay cartridge has 8KB on-board memory
+    setRamCapacity(8 * 1024);
+}
+
+void
+ActionReplay::reset()
+{
+    debug("**** ActionReplay::reset\n");
+    Cartridge::reset();
+    // bankOut(0);
+    selectedChip = 0;
+    ramShowsUp = false;
+    active = 1;
+    // initialGameLine = 0;
+    // initialExromLine = 0;
+}
+
+size_t
+ActionReplay::stateSize()
+{
+    return Cartridge::stateSize() + 3;
+}
+
+void
+ActionReplay::loadFromBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    Cartridge::loadFromBuffer(buffer);
+    active = read8(buffer);
+    ramShowsUp = read8(buffer);
+    selectedChip = read8(buffer);
+    assert(*buffer - old == stateSize());
+}
+
+void
+ActionReplay::saveToBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    Cartridge::saveToBuffer(buffer);
+    write8(buffer, active);
+    write8(buffer, ramShowsUp);
+    write8(buffer, selectedChip);
+    assert(*buffer - old == stateSize());
+}
+
+uint8_t
+ActionReplay::peek(uint16_t addr)
+{
+    if (addr >= 0x8000 && addr <= 0x9FFF) {
+        if (ramShowsUp) {
+            return externalRam[addr - 0x8000];
+        } else {
+            return chip[selectedChip][addr - 0x8000];
+        }
+    }
+    
+    if (addr >= 0xE000 && addr <= 0xFFFF) {
+        return chip[selectedChip][addr - 0xE000];
+    }
+    
+    
+    if (addr >= 0xA000 && addr <= 0xBFFF) {
+        return chip[selectedChip][addr - 0xA000];
+    }
+    
+    assert(false);
+    
+    /*
+    if (ramShowsUp && addr >= 0x8000 && addr <= 0x9FFF) {
+        return externalRam[addr - 0x8000];
+    } else {
+        return Cartridge::peek(addr);
+    }
+     */
+}
+
+bool
+ActionReplay::poke(uint16_t addr, uint8_t value)
+{
+    // debug("ActionReplay::poke(%04X, %02X)\n", addr, value);
+    if (ramShowsUp && addr >= 0x8000 && addr <= 0x9FFF) {
+        externalRam[addr - 0x8000] = value;
+        return true;
+    }
+    return false;
+}
+
+uint8_t
+ActionReplay::peekIO1(uint16_t addr)
+{
+    return regValue;
+}
+
+uint8_t
+ActionReplay::peekIO2(uint16_t addr)
+{
+    uint16_t offset = addr - 0xDF00;
+    assert(offset <= 0xFF);
+    
+    // I/O space 2 mirrors $1F00 to $1FFF from the selected bank or RAM.
+    if (ramShowsUp) {
+        return externalRam[0x1F00 + offset];
+    } else {
+        return chip[selectedChip][0x1F00 + offset];
+    }
+}
+
+void
+ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
+{
+    debug("ActionReplay::pokeIO1(%02X)\n", value);
+    
+    if (!active) return;
+    regValue = value;
+    
+    /*  "7    extra ROM bank selector (A15) (unused)
+     *   6    1 = resets FREEZE-mode (turns back to normal mode)
+     *   5    1 = enable RAM at ROML ($8000-$9FFF) &
+     *                          I/O2 ($DF00-$DFFF = $9F00-$9FFF)
+     *   4    ROM bank selector high (A14)
+     *   3    ROM bank selector low  (A13)
+     *   2    1 = disable cartridge (turn off $DE00)
+     *   1    1 = /EXROM high
+     *   0    1 = /GAME low" [VICE]
+     */
+    uint8_t ram   = (value & 0x02);
+    uint8_t bank  = (value & 0x18) >> 3;
+    uint8_t hide  = (value & 0x04);
+    uint8_t game  = (value & 0x02);
+    uint8_t exrom = (value & 0x01);
+
+    active = !hide;
+    
+    if (value & 0x40) {
+        debug("Reset freeze mode\n");
+
+        // TODO: mode |= CMODE_RELEASE_FREEZE;
+    }
+    
+    // Bits 0 and 1 (game and exrom line)
+    debug("game = %d exrom = %d\n", !game, exrom);
+    c64->expansionport.setGameLine(!game);
+    c64->expansionport.setExromLine(exrom);
+
+    // Bit 2 (disable cartrige)
+    if (hide) {
+        debug("Hiding ActionReplay cartridge\n");
+        c64->expansionport.setGameLine(1);
+        c64->expansionport.setExromLine(1);
+    }
+    
+    // Bits 3 and 4 (bank select)
+    selectedChip = bank;
+    // bankIn(bank);
+    
+    // Bit 5 (enable RAM)
+    ramShowsUp = !!ram;
+    if (ramShowsUp) {
+        debug("ramShowUp: %d\n", ramShowsUp);
+    }
+    
+    // Bit 6 (reset freeze mode)
+    // TODO
+}
+
+void
+ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
+{
+    debug("ActionReplay::pokeIO2(%04X, %02X)\n", addr, value);
+    if (ramShowsUp) {
+        externalRam[0x1F00 + (addr & 0xFF)] = value;
+    }
+}
+
+void
+ActionReplay::pressFirstButton()
+{
+    /*
+     // The freezer is enabled by selecting bank 0 in ultimax mode and
+     // triggering an NMI
+     c64->suspend();
+     pokeIO2(0xDFFF, 0x10);
+     c64->resume();
+     */
+}
+
+void
+ActionReplay::pressSecondButton()
+{
+    // Note: Cartridge requires to keep the RAM
+    /*
+     uint8_t ram[0xFFFF];
+     
+     c64->suspend();
+     memcpy(ram, c64->mem.ram, 0xFFFF);
+     c64->reset();
+     memcpy(c64->mem.ram, ram, 0xFFFF);
+     c64->resume();
+     */
+}
+
+
+//
+// Final Cartridge III
+//
 
 void
 FinalIII::reset()
@@ -61,7 +272,7 @@ FinalIII::reset()
 uint8_t
 FinalIII::peekIO1(uint16_t addr)
 {
-    // The I/O 1 space mirrors $1E00 to $1EFF from the selected bank.
+    // I/O space 1 mirrors $1E00 to $1EFF from the selected bank.
     uint16_t offset = addr - 0xDE00;
     return peek(0x8000 + 0x1E00 + offset);
 }
@@ -69,7 +280,7 @@ FinalIII::peekIO1(uint16_t addr)
 uint8_t
 FinalIII::peekIO2(uint16_t addr)
 {    
-    // The I/O 2 space mirrors $1F00 to $1FFF from the selected bank.
+    // I/O space 2 space mirrors $1F00 to $1FFF from the selected bank.
     uint16_t offset = addr - 0xDF00;
     return peek(0x8000 + 0x1F00 + offset);
 }
@@ -146,9 +357,9 @@ FinalIII::pressSecondButton() {
 }
 
 
-// -----------------------------------------------------------------------------
-//                                  Simons Basic
-// -----------------------------------------------------------------------------
+//
+// Simons Basic
+//
 
 void
 SimonsBasic::reset()
@@ -538,7 +749,7 @@ GeoRAM::GeoRAM(C64 *c64) : Cartridge(c64)
 void
 GeoRAM::reset()
 {
-    if (!hasBattery) {
+    if (!persistentRam) {
         debug("Erasing GeoRAM\n");
         memset(externalRam, 0, ramCapacity);
     } else {
