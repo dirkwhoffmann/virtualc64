@@ -711,6 +711,30 @@ CA
                                                 <action selector="attachGeoRamAction:" target="-1" id="uu1-sL-uk4"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="512 KB" tag="512" id="HAU-nh-ha2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="B6c-ID-l7n"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="1024 KB" tag="1024" id="ZQA-u8-gy9">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="Ffj-Ky-Lrk"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="2048 KB" tag="2048" id="D3E-7F-aMl">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="g9u-Jv-cG2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="4096 KB" tag="4096" id="b7O-tE-XhB">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachGeoRamAction:" target="-1" id="unP-gr-RPf"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

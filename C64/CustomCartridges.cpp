@@ -539,20 +539,59 @@ GeoRAM::reset()
     bankIn(0);
 }
 
+unsigned
+GeoRAM::offset(uint8_t bank, uint8_t page, uint8_t addr)
+{
+    /* From VICE:
+     * "The GeoRAM is a banked memory system. It uses the registers at
+     *  $dffe and $dfff to determine what part of the GeoRAM memory should
+     *  be mapped to $de00-$deff.
+     *  The register at $dfff selects which 16k block to map, and $dffe
+     *  selects a 256-byte page in that block. Since there are only 64
+     *  256-byte pages inside of 16k, the value in $dffe ranges from 0 to 63."
+     */
+    
+    unsigned bankOffset = (bank * 16384) % ramCapacity;
+    unsigned pageOffset = page & 0x3F;
+    return bankOffset + pageOffset + addr;
+}
+
 uint8_t
 GeoRAM::peekIO1(uint16_t addr)
 {
-    return 0;
+    assert(addr >= 0xDE00 && addr <= 0xDEFF);
+    unsigned i = offset(regValue, regValue2, addr - 0xDE00);
+    assert(externalRam != NULL);
+    assert(i < ramCapacity);
+    return externalRam[i];
 }
 
 uint8_t
 GeoRAM::peekIO2(uint16_t addr)
 {
-    return 0;
+    switch(addr) {
+        case 0xDF00: return regValue2;
+        case 0xDF01: return regValue;
+        default: return 0;
+    }
+}
+
+void
+GeoRAM::pokeIO1(uint16_t addr, uint8_t value)
+{
+    assert(addr >= 0xDE00 && addr <= 0xDEFF);
+    unsigned i = offset(regValue, regValue2, addr - 0xDE00);
+    assert(externalRam != NULL);
+    assert(i < ramCapacity);
+    externalRam[i] = value;
 }
 
 void
 GeoRAM::pokeIO2(uint16_t addr, uint8_t value)
 {
- 
+    if (addr & 1) {
+        regValue = value;  // Bank select
+    } else {
+        regValue2 = value; // Page select
+    }
 }

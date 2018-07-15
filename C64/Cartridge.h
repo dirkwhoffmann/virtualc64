@@ -86,6 +86,7 @@ public:
      *            variable. Only a few cartridges make use of this variable.
      */
     uint8_t regValue;
+    uint8_t regValue2;
     
 public:
     

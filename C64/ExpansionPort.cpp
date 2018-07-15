@@ -241,7 +241,8 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
     }
     
     Cartridge *geoRAM = new GeoRAM(c64);
-    geoRAM->setRamCapacity(capacity);
+    uint32_t capacityInBytes = capacity * 1024;
+    geoRAM->setRamCapacity(capacityInBytes);
     debug("Created GeoRAM cartridge (%d KB)\n", capacity);
     
     return attachCartridge(geoRAM);

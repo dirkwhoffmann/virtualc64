@@ -28,7 +28,7 @@ Cartridge::Cartridge(C64 *c64)
     ramCapacity = 0;
     
     cycle = 0;
-    regValue = 0;
+    regValue = regValue2 = 0;
 }
 
 Cartridge::~Cartridge()
@@ -157,6 +157,7 @@ Cartridge::stateSize()
     size += sizeof(blendedIn);
     size += sizeof(cycle);
     size += sizeof(regValue);
+    size += sizeof(regValue2);
 
     return size;
 }
@@ -187,7 +188,8 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     readBlock(buffer, blendedIn, sizeof(blendedIn));
     cycle = read64(buffer);
     regValue = read8(buffer);
-    
+    regValue2 = read8(buffer);
+
     debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
@@ -214,7 +216,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
     write64(buffer, cycle);
     write8(buffer, regValue);
-    
+    write8(buffer, regValue2);
+
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }

@@ -172,11 +172,17 @@ public:
 //! @brief    GeoRAM cartridge
 class GeoRAM : public Cartridge {
     
+private:
+    
+    //! @brief   Compute offset for accessing the cartridge RAM
+    unsigned offset(uint8_t bank, uint8_t page, uint8_t addr);
+    
 public:
     using Cartridge::Cartridge;
     void reset();
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
 };
 
