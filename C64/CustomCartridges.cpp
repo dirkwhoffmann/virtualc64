@@ -153,7 +153,7 @@ ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
      *   1    1 = /EXROM high
      *   0    1 = /GAME low" [VICE]
      */
-    uint8_t ram   = (value & 0x02);
+    uint8_t ram   = (value & 0x20);
     uint8_t bank  = (value & 0x18) >> 3;
     uint8_t hide  = (value & 0x04);
     uint8_t game  = (value & 0x02);
@@ -163,12 +163,9 @@ ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
     
     if (value & 0x40) {
         debug("Reset freeze mode\n");
-
-        // TODO: mode |= CMODE_RELEASE_FREEZE;
     }
     
     // Bits 0 and 1 (game and exrom line)
-    debug("game = %d exrom = %d\n", !game, exrom);
     c64->expansionport.setGameLine(!game);
     c64->expansionport.setExromLine(exrom);
 
@@ -185,9 +182,7 @@ ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
     
     // Bit 5 (enable RAM)
     ramShowsUp = !!ram;
-    if (ramShowsUp) {
-        debug("ramShowUp: %d\n", ramShowsUp);
-    }
+    debug("game = %d exrom = %d ramShowUp = %d bank = %d %s\n", !game, exrom, ramShowsUp, selectedChip, (game == 1 || exrom == 0) ? "(ULTIMAX)" : "");
     
     // Bit 6 (reset freeze mode)
     // TODO

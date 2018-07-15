@@ -135,12 +135,12 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0x7] = source;
 
     source = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
-    assert(source == M_CRTLO || source == M_CRTHI || source == M_RAM);
+    assert(source == M_CRTLO || source == M_RAM);
     peekSrc[0x8] = source;
     peekSrc[0x9] = source;
 
     source = BankMap[index][2]; // 0xA000 - 0xBFFF (CRT, Basic ROM, RAM, or open)
-    assert(source == M_CRTLO || source == M_CRTHI || source == M_BASIC ||
+    assert(source == M_CRTHI || source == M_BASIC ||
            source == M_RAM   || source == M_NONE);
     peekSrc[0xA] = source;
     peekSrc[0xB] = source;
@@ -150,20 +150,22 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0xC] = source;
 
     source = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O, Character ROM, or RAM)
+    assert(source == M_IO || source == M_CHAR || source == M_RAM);
     peekSrc[0xD] = source;
 
     source = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, Kernal ROM, or RAM)
+    assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
     peekSrc[0xE] = source;
     peekSrc[0xF] = source;
 
     // Set poke targets
     target = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
-    if (target != M_CRTLO && target != M_CRTHI) target = M_RAM;
+    if (target != M_CRTLO) target = M_RAM;
     pokeTarget[0x8] = target;
     pokeTarget[0x9] = target;
     
     target = BankMap[index][2]; // 0xA000 - 0xBFFF (CRT, or RAM)
-    if (target != M_CRTLO && target != M_CRTHI) target = M_RAM;
+    if (target != M_CRTHI) target = M_RAM;
     pokeTarget[0xA] = target;
     pokeTarget[0xB] = target;
     
@@ -172,7 +174,7 @@ C64Memory::updatePeekPokeLookupTables()
     pokeTarget[0xD] = target;
     
     target = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, or RAM)
-    if (target != M_CRTLO && target != M_CRTHI) target = M_RAM;
+    if (target != M_CRTHI) target = M_RAM;
     pokeTarget[0xE] = target;
     pokeTarget[0xF] = target;
 }
