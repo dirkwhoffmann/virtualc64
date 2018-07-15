@@ -63,16 +63,27 @@ public:
      */
     uint8_t blendedIn[16];
     
+    /*! @brief    Additional RAM
+     *  @details  Some cartridges such as ActionReplay contain additional RAM.
+     *            For normal cartridges, this variable is NULL.
+     */
+    uint8_t *externalRam;
+    
+    //! @brief    Capacity of additional RAM in bytes
+    uint32_t ramCapacity; 
+    
     /*! @brief    Temporary storage for cycle information
-     *  @details  Some custom cartridges need to remember when certain event took place.
-     *            When such an event happens, they preserve the cycle in this variable.
-     *            Most cartridges do not use this variable.
+     *  @details  Some custom cartridges need to remember when certain event
+     *            took place. When such an event happens, they preserve the
+     *            cycle in this variable. Only a few cartridges make use of this
+     *            variable.
      */
     uint64_t cycle;
     
     /*! @brief    Temporary storage for peeked or poked values
-     *  @details  Some custom cartridges need to remember the last value that has been
-     *            peeked or poked. They preserve this value in this variable.
+     *  @details  Some custom cartridges need to remember the last value that
+     *            has been peeked or poked. They preserve this value in this
+     *            variable. Only a few cartridges make use of this variable.
      */
     uint8_t regValue;
     
@@ -90,45 +101,33 @@ public:
     static bool isSupportedType(CartridgeType type);
     
     //! @brief    Factory method
-    /*! @details  Creates a cartridge with the specified type.
-     *            Make sure that you only pass containers of supported cartridge type.
+    /*! @details  Creates a cartridge with the specified type. Make sure to pass
+     *            containers of the supported cartridge type, only.
      *  @seealso  isSupportedType
      */
     static Cartridge *makeCartridgeWithType(C64 *c64, CartridgeType type);
     
     //! @brief    Factory method
-    /*! @details  Creates a cartridge from a CRT container.
-     *            Make sure that you only pass containers of supported cartridge type.
+    /*! @details  Creates a cartridge from a CRT container. Make sure to pass
+     *            containers of the supported cartridge type, only.
      *  @seealso  isSupportedType
      */
     static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container);
     
-    //! @brief    Resets the cartridge
-    /*! @details  Overwritten by subclasses to add special start-up behavior
-     */
+    //! @brief    Methods from VirtualComponent
     void reset();
-    
-    //! @brief    Dumps the current configuration into the message queue
     void ping() { };
-    
-    //! @brief    Returns the size of the internal state
     size_t stateSize();
-    
-    //! @brief    Loads the current state from a buffer
     void loadFromBuffer(uint8_t **buffer);
-    
-    //! @brief    Save the current state into a buffer
     void saveToBuffer(uint8_t **buffer);
-    
-    //! @brief    Prints debugging information
     void dumpState();
     
-    //! @brief    Returns true if cartride ROM is blended in at the specified location
+    //! @brief    Returns true if cartride ROM is blended in at the specified address.
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Execution thread callback
-    /*! @details  This function is invoked by the expansion port. Only a few cartridges
-     *            such as EpyxFastLoader will do some action here.
+    /*! @details  This function is invoked by the expansion port. Only a few
+     *            cartridges such as EpyxFastLoader will do some action here.
      */
     virtual void execute() { };
     
@@ -167,6 +166,16 @@ public:
     //! @brief    Sums up the sizes of all chips in bytes
     unsigned numberOfBytes();
     
+    //! @brief    Returns the RAM size in bytes.
+    uint32_t getRamCapacity(); 
+
+    //! @brief    Assigns external RAM to this cartridge.
+    /*! @details  This functions frees any previously assigned RAM and allocates
+     *            memory of the specified size. The size is stored in variable
+     *            ramCapacity.
+     */
+    void setRamCapacity(uint32_t size);
+
     //! @brief    Returns the initial state of the game line
     bool getInitialGameLine() { return initialGameLine; }
         
@@ -187,9 +196,10 @@ public:
     void loadChip(unsigned nr, CRTFile *c);    
 
     //! @brief    Press button on cartridge
-    /*! @details  By default nothing is done here as most cartridges do not have any
-     *            button. Some special cartriges such aus Final Cartridge III
-     *            overwrite this function to emulate a freezer button.
+    /*! @details  By default nothing is done here as most cartridges do not
+     *            have any button. Some special cartriges such aus Final
+     *            Cartridge III overwrite this function to emulate a freezer
+     *            button.
      */
     virtual void pressFirstButton() { };
     virtual void pressSecondButton() { };

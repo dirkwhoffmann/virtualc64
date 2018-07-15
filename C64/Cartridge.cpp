@@ -23,6 +23,10 @@ Cartridge::Cartridge(C64 *c64)
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
     }
+    
+    externalRam = NULL;
+    ramCapacity = 0;
+    
     cycle = 0;
     regValue = 0;
 }
@@ -31,9 +35,15 @@ Cartridge::~Cartridge()
 {
     debug(1, "  Releasing cartridge...\n");
     
-    // Deallocate chip memory
+    // Deallocate ROM chips
     for (unsigned i = 0; i < 64; i++)
         if (chip[i]) free(chip[i]);
+    
+    // Deallocate RAM (if any)
+    if (externalRam) {
+        assert(ramCapacity > 0);
+        free(externalRam);
+    }
 }
 
 void
@@ -141,6 +151,8 @@ Cartridge::stateSize()
     for (unsigned i = 0; i < 64; i++) {
         size += 4 + chipSize[i];
     }
+    size += sizeof(ramCapacity);
+    size += ramCapacity;
 
     size += sizeof(blendedIn);
     size += sizeof(cycle);
@@ -169,6 +181,8 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
             chip[i] = NULL;
         }
     }
+    setRamCapacity(read32(buffer));
+    readBlock(buffer, externalRam, ramCapacity);
     
     readBlock(buffer, blendedIn, sizeof(blendedIn));
     cycle = read64(buffer);
@@ -194,6 +208,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
             writeBlock(buffer, chip[i], chipSize[i]);
         }
     }
+    write32(buffer, ramCapacity);
+    writeBlock(buffer, externalRam, ramCapacity);
     
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
     write64(buffer, cycle);
@@ -264,6 +280,35 @@ Cartridge::numberOfBytes()
             result += chipSize[i];
     
     return result;
+}
+
+uint32_t
+Cartridge::getRamCapacity()
+{
+    if (ramCapacity == 0) {
+        assert(externalRam == NULL);
+    } else {
+        assert(externalRam != NULL);
+    }
+    return ramCapacity;
+}
+
+void
+Cartridge::setRamCapacity(uint32_t size)
+{
+    // Free
+    if (ramCapacity != 0 || externalRam != NULL) {
+        assert(ramCapacity > 0 && externalRam != NULL);
+        free(externalRam);
+        externalRam = NULL;
+        ramCapacity = 0;
+    }
+    
+    // Allocate
+    if (size > 0) {
+        externalRam = (uint8_t *)malloc((size_t)size);
+        ramCapacity = size;
+    }
 }
 
 void

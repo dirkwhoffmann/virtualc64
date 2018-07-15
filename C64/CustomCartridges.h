@@ -169,5 +169,15 @@ public:
     void pokeIO1(uint16_t addr, uint8_t value);
 };
 
+//! @brief    GeoRAM cartridge
+class GeoRAM : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    void reset();
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO2(uint16_t addr, uint8_t value);
+};
 
 #endif
