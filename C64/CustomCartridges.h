@@ -26,12 +26,12 @@
 //! @brief    Type 1 cartridges
 class ActionReplay : public Cartridge {
     
-    //! @brief    Indicates if the cartridge is active
+    //! @brief    Indicates if the cartridge is disabled
     /*! @details  The ActionReplay cartridge is controlled by poking into
      *            I/O space 1 (no matter which register). If the cartridge is
      *            deactivated, poking into I/O space 1 has no effect.
      */
-    bool active;
+    bool hide;
     
     //! @brief   Decides whether RAM or ROM shows up at $8000-$9FFF.
     bool ramShowsUp;
@@ -49,11 +49,18 @@ public:
     uint8_t peek(uint16_t addr); 
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
-    bool poke(uint16_t addr, uint8_t value);
+    void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
     void pressFirstButton();
     void pressSecondButton();
+    
+    //! @brief   Clears the control register
+    /*! @details The ActionReplay cartridge has one control register which
+     *           can be accessed by writing at an arbitrary address in
+     *           I/O space 1.
+     */
+    void clearControlReg(); 
 };
 
 //! @brief    Type 3 cartridges

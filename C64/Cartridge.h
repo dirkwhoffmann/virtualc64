@@ -140,12 +140,7 @@ public:
     virtual uint8_t peek(uint16_t addr); 
 
     //! @brief    Poke fallthrough
-    /*! @result   true, if the poke request has been handled by the cartridge.
-     *  @note     Only cartridges with on board RAM will handle the poke
-     *            request themself. All others return false and let the
-     *            expansion port do the writing.
-     */
-    virtual bool poke(uint16_t addr, uint8_t value) { return false; }
+    virtual void poke(uint16_t addr, uint8_t value) { return; }
 
     //! @brief    Same as peek, but without side effects.
     virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }

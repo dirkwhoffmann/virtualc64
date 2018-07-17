@@ -183,20 +183,19 @@ ExpansionPort::spypeekIO2(uint16_t addr)
 void
 ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
- 
     /*
     if (cartridge == NULL || !cartridge->poke(addr, value))
         c64->mem.ram[addr] = value;
     */
-    
+ 
     if (cartridge != NULL) cartridge->poke(addr, value);
-    c64->mem.ram[addr] = value;
-    
-    /*
-    if (cartridge != NULL) cartridge->poke(addr, value);
+    if (c64->getUltimax()) {
+        assert(exromLine == 1 && gameLine == 0);
+    } else {
+        assert(exromLine != 1 || gameLine != 0);
+    }
     if (!c64->getUltimax())
         c64->mem.ram[addr] = value;
-     */
 }
 
 void
