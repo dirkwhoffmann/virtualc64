@@ -222,6 +222,7 @@ ActionReplay::clearControlReg()
 // Action Replay 3
 //
 
+/*
 ActionReplay3::ActionReplay3(C64 *c64) : Cartridge(c64)
 {
     debug("ActionReplay3 constructor\n");
@@ -232,38 +233,6 @@ ActionReplay3::reset()
 {
     debug("**** ActionReplay3::reset\n");
     Cartridge::reset();
-    // setControlReg(0);
-    // initialGameLine = game();
-    // initialExromLine = exrom();
-}
-
-/*
-size_t
-ActionReplay3::stateSize()
-{
-    return Cartridge::stateSize() + 3;
-}
-
-void
-ActionReplay3::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    Cartridge::loadFromBuffer(buffer);
-    hide = read8(buffer);
-    ramShowsUp = read8(buffer);
-    selectedChip = read8(buffer);
-    assert(*buffer - old == stateSize());
-}
-
-void
-ActionReplay3::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    Cartridge::saveToBuffer(buffer);
-    write8(buffer, hide);
-    write8(buffer, ramShowsUp);
-    write8(buffer, selectedChip);
-    assert(*buffer - old == stateSize());
 }
 */
 
@@ -285,18 +254,6 @@ ActionReplay3::peek(uint16_t addr)
     assert(false);
 }
 
-/*
-void
-ActionReplay3::poke(uint16_t addr, uint8_t value)
-{
-    // debug("ActionReplay::poke(%04X, %02X)\n", addr, value);
-    if (ramShowsUp && addr >= 0x8000 && addr <= 0x9FFF) {
-        externalRam[addr - 0x8000] = value;
-        // debug("Poking to RAM %04X\n", addr - 0x8000);
-    }
-}
-*/
-
 uint8_t
 ActionReplay3::peekIO1(uint16_t addr)
 {
@@ -307,34 +264,27 @@ uint8_t
 ActionReplay3::peekIO2(uint16_t addr)
 {
     uint16_t offset = addr - 0xDF00;
-    assert(offset <= 0xFF);
-    
-    return chip[bank()][0x1F00 + offset];
+    return disabled() ? 0 : chip[bank()][0x1F00 + offset];
 }
 
 void
 ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
 {
-    debug("ActionReplay3::pokeIO1(%04X, %02X)\n", addr, value);
-    setControlReg(value);
-}
-
-void
-ActionReplay3::pokeIO2(uint16_t addr, uint8_t value)
-{
-    debug("ActionReplay3::pokeIO2(%04X, %02X)\n", addr, value);
+    if (!disabled())
+        setControlReg(value);
 }
 
 void
 ActionReplay3::pressFirstButton()
 {
     debug("ActionReplay3::pressFirstButton\n");
-    c64->
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
-    setControlReg(0); // will switch to Ultimax mode
-    // c64->expansionport.setGameLine(0);
-    // c64->expansionport.setExromLine(1);
+    
+    // By setting the control register to 0, exrom/game is set to 1/0
+    // which activates ultimax mode. This mode is reset later, in the
+    // ActionReplay's interrupt handler.
+    setControlReg(0);
 }
 
 void
@@ -343,7 +293,6 @@ ActionReplay3::releaseFirstButton()
     debug("ActionReplay3::releaseFirstButton\n");
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
-    
 }
 
 void
