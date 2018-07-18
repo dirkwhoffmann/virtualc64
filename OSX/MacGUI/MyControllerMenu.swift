@@ -87,7 +87,8 @@ extension MyController {
             return c64.expansionport.cartridgeType() == CRT_FINAL_III
         }
         if item.action == #selector(MyController.actionReplayAction(_:)) {
-            return c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY
+            return c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY ||
+            c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY3
         }
         if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
             item.state = c64.expansionport.hasBattery() ? .on : .off
@@ -499,11 +500,17 @@ extension MyController {
     @IBAction func actionReplayFreezeAction(_ sender: Any!) {
         track()
         c64.expansionport.pressFirstButton()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.c64.expansionport.releaseFirstButton()
+        }
     }
     
     @IBAction func actionReplayResetAction(_ sender: Any!) {
         track()
         c64.expansionport.pressSecondButton()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.c64.expansionport.releaseSecondButton()
+        }
     }
     
     //

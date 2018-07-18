@@ -203,7 +203,7 @@ public:
     //! @brief    Reads in chip stored in the provided CRT container
     void loadChip(unsigned nr, CRTFile *c);    
 
-    //! @brief    Press button on cartridge
+    //! @brief    Simulates pressing a cartridge button
     /*! @details  By default nothing is done here as most cartridges do not
      *            have any button. Some special cartriges such aus Final
      *            Cartridge III overwrite this function to emulate a freezer
@@ -211,6 +211,10 @@ public:
      */
     virtual void pressFirstButton() { };
     virtual void pressSecondButton() { };
+    
+    //! @brief    Simulates releasing a cartridge button
+    virtual void releaseFirstButton() { };
+    virtual void releaseSecondButton() { };
 };
 
 #endif 

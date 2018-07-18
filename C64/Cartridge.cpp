@@ -68,6 +68,7 @@ Cartridge::isSupportedType(CartridgeType type)
         
         case CRT_NORMAL:
         case CRT_ACTION_REPLAY:
+        case CRT_ACTION_REPLAY3:
             
         case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
@@ -103,6 +104,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new Cartridge(c64);
         case CRT_ACTION_REPLAY:
             return new ActionReplay(c64);
+        case CRT_ACTION_REPLAY3:
+            return new ActionReplay3(c64);
         case CRT_FINAL_III:
             return new FinalIII(c64);
         case CRT_SIMONS_BASIC:

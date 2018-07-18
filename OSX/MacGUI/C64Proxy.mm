@@ -407,6 +407,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity { return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
 - (void) pressFirstButton { wrapper->expansionPort->pressFirstButton(); }
 - (void) pressSecondButton { wrapper->expansionPort->pressSecondButton(); }
+- (void) releaseFirstButton { wrapper->expansionPort->releaseFirstButton(); }
+- (void) releaseSecondButton { wrapper->expansionPort->releaseSecondButton(); }
 
 @end
 

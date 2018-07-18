@@ -54,13 +54,43 @@ public:
     void pokeIO2(uint16_t addr, uint8_t value);
     void pressFirstButton();
     void pressSecondButton();
-    
+
     //! @brief   Clears the control register
     /*! @details The ActionReplay cartridge has one control register which
      *           can be accessed by writing at an arbitrary address in
      *           I/O space 1.
      */
     void clearControlReg(); 
+};
+
+//! @brief    Type 35 cartridges
+class ActionReplay3 : public Cartridge {
+    
+public:
+    ActionReplay3(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
+    void reset();
+    uint8_t peek(uint16_t addr);
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    // void poke(uint16_t addr, uint8_t value);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
+    void pressFirstButton();
+    void pressSecondButton();
+    void releaseFirstButton();
+    // void releaseSecondButton();
+    
+    //! @brief   Sets the cartridge's control register
+    /*! @details This function triggers all side effects taking place when
+     *           the control register contents changes.
+     */
+    void setControlReg(uint8_t value);
+
+    unsigned bank() { return regValue & 0x01; }
+    bool game() { return !!(regValue & 0x02); }
+    bool exrom() { return !(regValue & 0x08); }
+    bool disabled() { return !!(regValue & 0x04); }
 };
 
 //! @brief    Type 3 cartridges

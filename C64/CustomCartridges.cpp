@@ -219,6 +219,150 @@ ActionReplay::clearControlReg()
 }
 
 //
+// Action Replay 3
+//
+
+ActionReplay3::ActionReplay3(C64 *c64) : Cartridge(c64)
+{
+    debug("ActionReplay3 constructor\n");
+}
+
+void
+ActionReplay3::reset()
+{
+    debug("**** ActionReplay::reset\n");
+    Cartridge::reset();
+    setControlReg(0);
+}
+
+/*
+size_t
+ActionReplay3::stateSize()
+{
+    return Cartridge::stateSize() + 3;
+}
+
+void
+ActionReplay3::loadFromBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    Cartridge::loadFromBuffer(buffer);
+    hide = read8(buffer);
+    ramShowsUp = read8(buffer);
+    selectedChip = read8(buffer);
+    assert(*buffer - old == stateSize());
+}
+
+void
+ActionReplay3::saveToBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    Cartridge::saveToBuffer(buffer);
+    write8(buffer, hide);
+    write8(buffer, ramShowsUp);
+    write8(buffer, selectedChip);
+    assert(*buffer - old == stateSize());
+}
+*/
+
+uint8_t
+ActionReplay3::peek(uint16_t addr)
+{
+    if (addr >= 0x8000 && addr <= 0x9FFF) {
+        return chip[bank()][addr - 0x8000];
+    }
+    
+    if (addr >= 0xE000 && addr <= 0xFFFF) {
+        return chip[bank()][addr - 0xE000];
+    }
+    
+    if (addr >= 0xA000 && addr <= 0xBFFF) {
+        return chip[bank()][addr - 0xA000];
+    }
+    
+    assert(false);
+}
+
+/*
+void
+ActionReplay3::poke(uint16_t addr, uint8_t value)
+{
+    // debug("ActionReplay::poke(%04X, %02X)\n", addr, value);
+    if (ramShowsUp && addr >= 0x8000 && addr <= 0x9FFF) {
+        externalRam[addr - 0x8000] = value;
+        // debug("Poking to RAM %04X\n", addr - 0x8000);
+    }
+}
+*/
+
+uint8_t
+ActionReplay3::peekIO1(uint16_t addr)
+{
+    return 0;
+}
+
+uint8_t
+ActionReplay3::peekIO2(uint16_t addr)
+{
+    uint16_t offset = addr - 0xDF00;
+    assert(offset <= 0xFF);
+    
+    return chip[bank()][0x1F00 + offset];
+}
+
+void
+ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
+{
+    debug("ActionReplay3::pokeIO1(%04X, %02X)\n", addr, value);
+    setControlReg(value);
+}
+
+void
+ActionReplay3::pokeIO2(uint16_t addr, uint8_t value)
+{
+}
+
+void
+ActionReplay3::pressFirstButton()
+{
+    debug("ActionReplay3::pressFirstButton\n");
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);    
+}
+
+void
+ActionReplay3::releaseFirstButton()
+{
+    debug("ActionReplay3::releaseFirstButton\n");
+    // c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    // c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+}
+
+void
+ActionReplay3::pressSecondButton()
+{
+    debug("ActionReplay3::pressSecondButton\n");
+    // Note: Cartridge requires to keep the RAM
+    // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
+    uint8_t ram[0xFFFF];
+    
+    c64->suspend();
+    memcpy(ram, c64->mem.ram, 0xFFFF);
+    c64->reset();
+    memcpy(c64->mem.ram, ram, 0xFFFF);
+    c64->resume();
+}
+
+void
+ActionReplay3::setControlReg(uint8_t value)
+{
+    regValue = value;
+    debug("setControlReg: game = %d exrom = %d bank = %d disable = %d\n",game(),exrom(),bank(),disabled());
+    c64->expansionport.setGameLine(game());
+    c64->expansionport.setExromLine(exrom());
+}
+
+//
 // Final Cartridge III
 //
 

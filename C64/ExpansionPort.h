@@ -150,12 +150,18 @@ public:
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 
-    //! @brief    Press first button on cartridge
+    //! @brief    Presses the first cartridge button
     void pressFirstButton() { if (cartridge) cartridge->pressFirstButton(); }
 
-    //! @brief    Press second button on cartridge
+    //! @brief    Presses the second cartridge button
     void pressSecondButton() { if (cartridge) cartridge->pressSecondButton(); }
 
+    //! @brief    Releases the first cartridge button
+    void releaseFirstButton() { if (cartridge) cartridge->releaseFirstButton(); }
+    
+    //! @brief    Releases the second cartridge button
+    void releaseSecondButton() { if (cartridge) cartridge->releaseSecondButton(); }
+    
     //! @brief    Returns true if the attached cartridge has a RAM backing battery.
     bool hasBattery() { return cartridge != NULL && cartridge->persistentRam; }
 

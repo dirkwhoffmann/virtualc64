@@ -315,6 +315,8 @@ struct ContainerWrapper;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
 - (void) pressFirstButton;
 - (void) pressSecondButton;
+- (void) releaseFirstButton;
+- (void) releaseSecondButton;
 - (BOOL) hasBattery;
 - (void) setBattery:(BOOL)value;
 
