@@ -31,21 +31,21 @@ class ActionReplay : public Cartridge {
      *            I/O space 1 (no matter which register). If the cartridge is
      *            deactivated, poking into I/O space 1 has no effect.
      */
-    bool hide;
+    // bool hide;
     
     //! @brief   Decides whether RAM or ROM shows up at $8000-$9FFF.
-    bool ramShowsUp;
+    // bool ramShowsUp;
 
     //! @brief   Currently visible ROM chip (0 ... 3)
-    uint8_t selectedChip;
+    // uint8_t selectedChip;
 
 public:
     ActionReplay(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
     void reset();
-    size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    // size_t stateSize();
+    // void loadFromBuffer(uint8_t **buffer);
+    // void saveToBuffer(uint8_t **buffer);
     uint8_t peek(uint16_t addr); 
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
@@ -55,12 +55,18 @@ public:
     void pressFirstButton();
     void pressSecondButton();
 
-    //! @brief   Clears the control register
-    /*! @details The ActionReplay cartridge has one control register which
-     *           can be accessed by writing at an arbitrary address in
-     *           I/O space 1.
+    //! @brief   Sets the cartridge's control register
+    /*! @details This function triggers all side effects that take place when
+     *           the control register value changes.
      */
-    void clearControlReg(); 
+    void setControlReg(uint8_t value);
+    
+    unsigned bank() { return (regValue >> 3) & 0x03; }
+    bool game() { return !(regValue & 0x01); }
+    bool exrom() { return (regValue >> 1) & 0x01; }
+    bool disabled() { return regValue & 0x04; }
+    bool ramIsEnabled() { return regValue & 0x20; }
+    bool resetFreezeMode() { return regValue & 0x40; }
 };
 
 //! @brief    Type 35 cartridges

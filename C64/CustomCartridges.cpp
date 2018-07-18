@@ -28,64 +28,34 @@ ActionReplay::ActionReplay(C64 *c64) : Cartridge(c64)
 {
     debug("ActionReplay constructor\n");
     
-    // The ActionReplay cartridge has 8KB on-board memory
+    // Allocate 8KB on-board memory
     setRamCapacity(8 * 1024);
 }
 
 void
 ActionReplay::reset()
 {
-    debug("**** ActionReplay::reset\n");
     Cartridge::reset();
-    clearControlReg();
-}
-
-size_t
-ActionReplay::stateSize()
-{
-    return Cartridge::stateSize() + 3;
-}
-
-void
-ActionReplay::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    Cartridge::loadFromBuffer(buffer);
-    hide = read8(buffer);
-    ramShowsUp = read8(buffer);
-    selectedChip = read8(buffer);
-    assert(*buffer - old == stateSize());
-}
-
-void
-ActionReplay::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    Cartridge::saveToBuffer(buffer);
-    write8(buffer, hide);
-    write8(buffer, ramShowsUp);
-    write8(buffer, selectedChip);
-    assert(*buffer - old == stateSize());
+    setControlReg(0x040);
 }
 
 uint8_t
 ActionReplay::peek(uint16_t addr)
 {
     if (addr >= 0x8000 && addr <= 0x9FFF) {
-        if (ramShowsUp) {
+        if (ramIsEnabled()) {
             return externalRam[addr - 0x8000];
         } else {
-            return chip[selectedChip][addr - 0x8000];
+            return chip[bank()][addr - 0x8000];
         }
     }
     
     if (addr >= 0xE000 && addr <= 0xFFFF) {
-        return chip[selectedChip][addr - 0xE000];
+        return chip[bank()][addr - 0xE000];
     }
     
-    
     if (addr >= 0xA000 && addr <= 0xBFFF) {
-        return chip[selectedChip][addr - 0xA000];
+        return chip[bank()][addr - 0xA000];
     }
     
     assert(false);
@@ -94,10 +64,8 @@ ActionReplay::peek(uint16_t addr)
 void
 ActionReplay::poke(uint16_t addr, uint8_t value)
 {
-    // debug("ActionReplay::poke(%04X, %02X)\n", addr, value);
-    if (ramShowsUp && addr >= 0x8000 && addr <= 0x9FFF) {
+    if (ramIsEnabled() && addr >= 0x8000 && addr <= 0x9FFF) {
         externalRam[addr - 0x8000] = value;
-        // debug("Poking to RAM %04X\n", addr - 0x8000);
     }
 }
 
@@ -113,70 +81,25 @@ ActionReplay::peekIO2(uint16_t addr)
     uint16_t offset = addr - 0xDF00;
     assert(offset <= 0xFF);
     
-    debug("ActionReplay::peekIO2(%04X)\n", addr);
     // I/O space 2 mirrors $1F00 to $1FFF from the selected bank or RAM.
-    if (ramShowsUp) {
-        debug("Returning %02X from RAM (%04X)\n", externalRam[0x1F00 + offset], 0x1F00 + offset);
+    if (ramIsEnabled()) {
         return externalRam[0x1F00 + offset];
     } else {
-        debug("Returning %02X from ROM %d (%04X)\n", chip[selectedChip][0x1F00 + offset], selectedChip, 0x1F00 + offset);
-        return chip[selectedChip][0x1F00 + offset];
+        return chip[bank()][0x1F00 + offset];
     }
 }
 
 void
 ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
 {
-    debug("ActionReplay::pokeIO1(%04X, %02X)\n", addr, value);
-    
-    if (hide) return;
-    regValue = value;
-    
-    /*  "7    extra ROM bank selector (A15) (unused)
-     *   6    1 = resets FREEZE-mode (turns back to normal mode)
-     *   5    1 = enable RAM at ROML ($8000-$9FFF) &
-     *                          I/O2 ($DF00-$DFFF = $9F00-$9FFF)
-     *   4    ROM bank selector high (A14)
-     *   3    ROM bank selector low  (A13)
-     *   2    1 = disable cartridge (turn off $DE00)
-     *   1    1 = /EXROM high
-     *   0    1 = /GAME low" [VICE]
-     */
-    uint8_t resetFreeze = (value & 0x40);
-    uint8_t ram    = (value & 0x20);
-    uint8_t bank   = (value & 0x18) >> 3;
-    uint8_t game   = (value & 0x02);
-    uint8_t exrom  = (value & 0x01);
-    
-    // Bits 0 and 1 (game and exrom line)
-    c64->expansionport.setGameLine(!game);
-    c64->expansionport.setExromLine(exrom);
-
-    // Bit 2 (disable cartrige)
-    hide = (value & 0x04);
-    
-    // Bits 3 and 4 (bank select)
-    selectedChip = bank;
-    
-    // Bit 5 (enable RAM)
-    ramShowsUp = !!ram;
-    debug("game = %d exrom = %d ramShowUp = %d bank = %d %s\n", !game, exrom, ramShowsUp, selectedChip, (game == 1 || exrom == 0) ? "(ULTIMAX)" : "");
-    
-    // Bit 6 (reset freeze mode)
-    if (resetFreeze) {
-        debug("Reset freeze mode %02X\n", value);
-        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-        c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
-        
-    }
+    if (!disabled())
+        setControlReg(value);
 }
 
 void
 ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 {
-    debug("ActionReplay::pokeIO2(%04X, %02X)\n", addr, value);
-    if (ramShowsUp) {
-        debug("Poking to RAM %04X\n", 0x1F00 + (addr & 0xFF));
+    if (ramIsEnabled()) {
         externalRam[0x1F00 + (addr & 0xFF)] = value;
     }
 }
@@ -184,10 +107,11 @@ ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 void
 ActionReplay::pressFirstButton()
 {
-    debug("ActionReplay::pressFirstButton\n");
     // Pressing the freeze bottom pulls down both the NMI and the IRQ line
     c64->suspend();
-    clearControlReg(); 
+    setControlReg(0);
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(1);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
     c64->resume();
@@ -196,7 +120,6 @@ ActionReplay::pressFirstButton()
 void
 ActionReplay::pressSecondButton()
 {
-    debug("ActionReplay::pressSecondButton\n");
     // Note: Cartridge requires to keep the RAM
     // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
      uint8_t ram[0xFFFF];
@@ -209,32 +132,33 @@ ActionReplay::pressSecondButton()
 }
 
 void
-ActionReplay::clearControlReg()
+ActionReplay::setControlReg(uint8_t value)
 {
-    hide = false;
-    ramShowsUp = false;
-    selectedChip = 0;
-    c64->expansionport.setGameLine(1);
-    c64->expansionport.setExromLine(0);
+    regValue = value;
+    
+    /*  "7    extra ROM bank selector (A15) (unused)
+     *   6    1 = resets FREEZE-mode (turns back to normal mode)
+     *   5    1 = enable RAM at ROML ($8000-$9FFF) &
+     *                          I/O2 ($DF00-$DFFF = $9F00-$9FFF)
+     *   4    ROM bank selector high (A14)
+     *   3    ROM bank selector low  (A13)
+     *   2    1 = disable cartridge (turn off $DE00)
+     *   1    1 = /EXROM high
+     *   0    1 = /GAME low" [VICE]
+     */
+ 
+    c64->expansionport.setGameLine(game());
+    c64->expansionport.setExromLine(exrom());
+    
+    if (resetFreezeMode()) {
+        c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+        c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+    }
 }
 
 //
 // Action Replay 3
 //
-
-/*
-ActionReplay3::ActionReplay3(C64 *c64) : Cartridge(c64)
-{
-    debug("ActionReplay3 constructor\n");
-}
-
-void
-ActionReplay3::reset()
-{
-    debug("**** ActionReplay3::reset\n");
-    Cartridge::reset();
-}
-*/
 
 uint8_t
 ActionReplay3::peek(uint16_t addr)
@@ -277,7 +201,7 @@ ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
 void
 ActionReplay3::pressFirstButton()
 {
-    debug("ActionReplay3::pressFirstButton\n");
+    c64->suspend();
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
     
@@ -285,20 +209,21 @@ ActionReplay3::pressFirstButton()
     // which activates ultimax mode. This mode is reset later, in the
     // ActionReplay's interrupt handler.
     setControlReg(0);
+    c64->resume();
 }
 
 void
 ActionReplay3::releaseFirstButton()
 {
-    debug("ActionReplay3::releaseFirstButton\n");
+    c64->suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
 }
 
 void
 ActionReplay3::pressSecondButton()
 {
-    debug("ActionReplay3::pressSecondButton\n");
     // Note: Cartridge requires to keep the RAM
     // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
     uint8_t ram[0xFFFF];
@@ -314,10 +239,10 @@ void
 ActionReplay3::setControlReg(uint8_t value)
 {
     regValue = value;
-    debug("setControlReg: game = %d exrom = %d bank = %d disable = %d\n",game(),exrom(),bank(),disabled());
     c64->expansionport.setGameLine(game());
     c64->expansionport.setExromLine(exrom());
 }
+
 
 //
 // Final Cartridge III
