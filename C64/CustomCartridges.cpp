@@ -214,8 +214,8 @@ ActionReplay::clearControlReg()
     hide = false;
     ramShowsUp = false;
     selectedChip = 0;
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(1);
+    c64->expansionport.setGameLine(1);
+    c64->expansionport.setExromLine(0);
 }
 
 //
@@ -230,9 +230,11 @@ ActionReplay3::ActionReplay3(C64 *c64) : Cartridge(c64)
 void
 ActionReplay3::reset()
 {
-    debug("**** ActionReplay::reset\n");
+    debug("**** ActionReplay3::reset\n");
     Cartridge::reset();
-    setControlReg(0);
+    // setControlReg(0);
+    // initialGameLine = game();
+    // initialExromLine = exrom();
 }
 
 /*
@@ -320,22 +322,28 @@ ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
 void
 ActionReplay3::pokeIO2(uint16_t addr, uint8_t value)
 {
+    debug("ActionReplay3::pokeIO2(%04X, %02X)\n", addr, value);
 }
 
 void
 ActionReplay3::pressFirstButton()
 {
     debug("ActionReplay3::pressFirstButton\n");
+    c64->
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);    
+    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+    setControlReg(0); // will switch to Ultimax mode
+    // c64->expansionport.setGameLine(0);
+    // c64->expansionport.setExromLine(1);
 }
 
 void
 ActionReplay3::releaseFirstButton()
 {
     debug("ActionReplay3::releaseFirstButton\n");
-    // c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    // c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+    
 }
 
 void

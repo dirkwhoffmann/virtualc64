@@ -90,7 +90,7 @@ public:
     unsigned bank() { return regValue & 0x01; }
     bool game() { return !!(regValue & 0x02); }
     bool exrom() { return !(regValue & 0x08); }
-    bool disabled() { return !!(regValue & 0x04); }
+    bool disabled() { assert((regValue & 0x04) == 0); return !!(regValue & 0x04); }
 };
 
 //! @brief    Type 3 cartridges

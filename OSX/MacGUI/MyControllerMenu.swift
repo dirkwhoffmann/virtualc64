@@ -500,7 +500,7 @@ extension MyController {
     @IBAction func actionReplayFreezeAction(_ sender: Any!) {
         track()
         c64.expansionport.pressFirstButton()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.c64.expansionport.releaseFirstButton()
         }
     }
@@ -508,7 +508,7 @@ extension MyController {
     @IBAction func actionReplayResetAction(_ sender: Any!) {
         track()
         c64.expansionport.pressSecondButton()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.c64.expansionport.releaseSecondButton()
         }
     }
