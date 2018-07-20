@@ -124,7 +124,8 @@ class MyDocument : NSDocument {
         
         let buffer = (data as NSData).bytes
         let length = data.count
-
+        var openAsUntitled = true
+        
         track("Reading \(length) bytes for file \(filename) at \(buffer).")
         
         switch (typeName.uppercased()) {
@@ -133,6 +134,8 @@ class MyDocument : NSDocument {
                 throw NSError.snapshotVersionError(filename: filename)
             }
             attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
+            openAsUntitled = false
+            
             break
         case "CRT":
             if CRTProxy.isUnsupportedCRTBuffer(buffer, length: length) {
@@ -166,6 +169,9 @@ class MyDocument : NSDocument {
             throw NSError.unsupportedFormatError(filename: filename)
         }
         
+        if openAsUntitled {
+            fileURL = nil
+        }
         if attachment == nil {
             throw NSError.corruptedFileError(filename: filename)
         }
