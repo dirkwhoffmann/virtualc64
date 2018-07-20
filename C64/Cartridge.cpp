@@ -86,6 +86,7 @@ Cartridge::isSupportedType(CartridgeType type)
 
         case CRT_COMAL80:
             
+        case CRT_GEO_RAM:
             return true;
             
         default:
@@ -128,6 +129,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new MagicDesk(c64);
         case CRT_COMAL80:
             return new Comal80(c64);
+        case CRT_GEO_RAM:
+            return new GeoRAM(c64);
             
         default:
             assert(false); // should not reach
@@ -158,14 +161,17 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
 size_t
 Cartridge::stateSize()
 {
-    uint32_t size = 2;
-    
+    uint32_t size = 0;
+
+    size += 1; // initialGameLine
+    size += 1; // initialExromLine
+
     for (unsigned i = 0; i < 64; i++) {
         size += 4 + chipSize[i];
     }
     size += sizeof(ramCapacity);
     size += ramCapacity;
-    size += sizeof(persistentRam);
+    size += 1; // persistentRam
 
     size += sizeof(blendedIn);
     size += sizeof(cycle);
@@ -196,7 +202,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     }
     setRamCapacity(read32(buffer));
     readBlock(buffer, externalRam, ramCapacity);
-    persistentRam = read8(buffer);
+    persistentRam = (bool)read8(buffer);
     
     readBlock(buffer, blendedIn, sizeof(blendedIn));
     cycle = read64(buffer);
@@ -224,12 +230,11 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     }
     write32(buffer, ramCapacity);
     writeBlock(buffer, externalRam, ramCapacity);
-    write8(buffer, persistentRam);
+    write8(buffer, (uint8_t)persistentRam);
     
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
     write64(buffer, cycle);
     write8(buffer, regValue);
-    // write8(buffer, regValue2);
 
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == Cartridge::stateSize());

@@ -523,9 +523,9 @@ C64::_executeOneCycle()
     // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
     //     |     |     |  1  |     |  2  |   |    |     |        |
     //     '-----'     '-----'     '-----'   |    '-----'        |
-    //                                       v                   v
-    //                                 IEC bus update    IEC bus update(?)
-    //                                       ^                   ^
+    //                                       v                   |
+    //                                 IEC bus update            |
+    //                                       ^                   |
     //     ,--------,                        |    ,--------,     |
     //     |        |                        |    |        |     |
     // ,-->| VC1541 | -----------------------|--> | VC1541 | ----|--,
@@ -544,9 +544,6 @@ C64::_executeOneCycle()
     result &= cpu.executeOneCycle();
     result &= floppy.execute(durationOfHalfCycle);
     datasette.execute();
-    // ActionReplay fast loader required the following line to be commented out.
-    // Ergo: Only update IEC bus once in a cycle (?!)
-    // if (iec.isDirty) iec.updateIecLines();
     
     rasterlineCycle++;
     return result;

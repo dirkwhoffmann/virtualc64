@@ -72,6 +72,9 @@ public:
     //! @brief    Capacity of additional RAM in bytes
     uint32_t ramCapacity; 
     
+    //! @brief    Indicates if the RAM is kept alive during a reset.
+    bool persistentRam;
+    
     /*! @brief    Temporary storage for cycle information
      *  @details  Some custom cartridges need to remember when certain event
      *            took place. When such an event happens, they preserve the
@@ -87,10 +90,6 @@ public:
      */
     uint8_t regValue;
 
-public:
-    
-    //! @brief    Indicates if the RAM is kept alive during a reset.
-    bool persistentRam;
     
 public:
     

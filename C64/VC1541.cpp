@@ -134,7 +134,6 @@ VC1541::powerUp()
     c64->resume();
 }
 
-/*
 bool
 VC1541::execute(uint64_t duration)
 {
@@ -163,8 +162,8 @@ VC1541::execute(uint64_t duration)
     
     return result;
 }
-*/
 
+/*
 bool
 VC1541::execute(uint64_t duration)
 {
@@ -196,6 +195,7 @@ VC1541::execute(uint64_t duration)
     assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
     return result;
 }
+*/
 
 void
 VC1541::executeUF4()
