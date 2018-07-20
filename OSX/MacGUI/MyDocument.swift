@@ -172,9 +172,9 @@ class MyDocument : NSDocument {
     }
     
     /**
-     Reads in the document's attachment. Snapshots will be flashed, cartridges
-     attached and archives mounted as disk. Depending on the attachment type,
-     user dialogs show up.
+     Reads in the document's attachment. Snapshots, PRGs, and P00s will be
+     flashed, cartridges attached, and archives mounted as disk. Depending on
+     the attachment type, user dialogs show up.
      
      - parameter warnAboutUnsafedDisk: Asks the user for permission to proceed,
      if the currently inserted disk contains unsaved data.
@@ -197,26 +197,48 @@ class MyDocument : NSDocument {
             return
             
         case CRT_CONTAINER:
-            let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
-            let controller = CartridgeMountController.init(windowNibName: nibName)
-            controller.showSheet(withParent: parent)
+            if showMountDialog {
+                let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
+                let controller = CartridgeMountController.init(windowNibName: nibName)
+                controller.showSheet(withParent: parent)
+            } else {
+                c64.attachCartridgeAndReset(attachment as! CRTProxy)
+            }
             return
             
         case TAP_CONTAINER:
-            let nibName = NSNib.Name(rawValue: "TapeMountDialog")
-            let controller = TapeMountController.init(windowNibName: nibName)
-            controller.showSheet(withParent: parent)
+            if showMountDialog {
+                let nibName = NSNib.Name(rawValue: "TapeMountDialog")
+                let controller = TapeMountController.init(windowNibName: nibName)
+                controller.showSheet(withParent: parent)
+            } else {
+                c64.insertTape(attachment as! TAPProxy)
+            }
             return
             
-        case T64_CONTAINER, PRG_CONTAINER, P00_CONTAINER, D64_CONTAINER:
+        case T64_CONTAINER, D64_CONTAINER:
             
             if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                if !showMountDialog {
-                    c64.insertDisk(attachment as! ArchiveProxy)
-                } else {
+                if showMountDialog {
                     let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
                     let controller = ArchiveMountController.init(windowNibName: nibName)
                     controller.showSheet(withParent: parent)
+                } else {
+                   c64.insertDisk(attachment as! ArchiveProxy)
+                }
+            }
+            return
+            
+        case PRG_CONTAINER, P00_CONTAINER:
+            
+            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
+                if showMountDialog {
+                    let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+                    let controller = ArchiveMountController.init(windowNibName: nibName)
+                    controller.showSheet(withParent: parent)
+                } else {
+                    c64.flushArchive(attachment as! ArchiveProxy, item: 0)
+                    parent.keyboardcontroller.typeOnKeyboard(string: "RUN\n", completion: nil)
                 }
             }
             return
@@ -224,12 +246,12 @@ class MyDocument : NSDocument {
         case G64_CONTAINER, NIB_CONTAINER:
             
             if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                if !showMountDialog {
-                    c64.insertDisk(attachment as! ArchiveProxy)
-                } else {
+                if showMountDialog {
                     let nibName = NSNib.Name(rawValue: "DiskMountDialog")
                     let controller = DiskMountController.init(windowNibName: nibName)
                     controller.showSheet(withParent: parent)
+                } else {
+                    c64.insertDisk(attachment as! ArchiveProxy)
                 }
             }
             return

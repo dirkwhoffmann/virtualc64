@@ -981,7 +981,7 @@ C64::flushArchive(Archive *a, int item)
         return false;
     
     addr = a->getDestinationAddrOfItem(item);
-    debug("Flushing at addr: %04X %d\n", addr, addr);
+    debug("Flushing item %d at addr: %04X %d\n", item, addr, addr);
     a->selectItem(item);
     while (1) {
         data = a->getByte();
