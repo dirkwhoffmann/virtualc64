@@ -22,7 +22,8 @@ class ArchiveMountController : UserDialogController {
     @IBOutlet weak var subsubheader: NSTextField!
     @IBOutlet weak var contents: NSTableView!
     @IBOutlet weak var protect: NSButton!
-
+    @IBOutlet weak var insertButton: NSButton!
+    
     override func showSheet(withParent controller: MyController,
                             completionHandler:(() -> Void)? = nil) {
         
@@ -53,16 +54,19 @@ class ArchiveMountController : UserDialogController {
         case T64_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
             header.stringValue = "T64 File Archive"
+            insertButton.title = "Insert as Disk"
             break
             
         case PRG_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconPRG"))
             header.stringValue = "PRG File Container"
+            insertButton.title = "Insert as Disk"
             break
             
         case P00_CONTAINER:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconP00"))
             header.stringValue = "P00 File Container"
+            insertButton.title = "Insert as Disk"
             break
             
         case D64_CONTAINER:

@@ -206,7 +206,7 @@ P00Archive::getUnicodeNameOfItem(int n, size_t maxChars)
 const char *
 P00Archive::getTypeOfItem(int n)
 {
-	return "P00";
+	return "PRG";
 }
 
 uint16_t 
