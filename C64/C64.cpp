@@ -636,6 +636,7 @@ C64::endOfFrame()
 //! @functiongroup Managing the execution thread
 //
 
+/*
 void
 C64::setWarp(bool b)
 {
@@ -660,16 +661,42 @@ C64::setWarp(bool b)
     
     putMessage(b ? MSG_WARP_ON : MSG_WARP_OFF);
 }
+*/
+
+void
+C64::updateWarp()
+{
+    bool newValue = (warpLoad && iec.isBusy()) || alwaysWarp;
+
+    if (newValue == warp)
+        return;
+    
+    warp = newValue;
+    
+    // Warping has the unavoidable drawback that audio playback gets out of sync.
+    // To cope with this issue, we silence SID during warp mode and fade in smoothly
+    // after warping has ended.
+    
+    if (warp) {
+        // Quickly fade out SID
+        sid.rampDown();
+        
+    } else {
+        // Smoothly fade in SID
+        sid.rampUp();
+        restartTimer();
+    }
+    
+    putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
+}
 
 void
 C64::setAlwaysWarp(bool b)
 {
-    if (alwaysWarp == b)
-        return;
-    
     if (alwaysWarp != b) {
+        
         alwaysWarp = b;
-        setWarp(b);
+        updateWarp();
         putMessage(b ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
     }
 }
@@ -677,7 +704,11 @@ C64::setAlwaysWarp(bool b)
 void
 C64::setWarpLoad(bool b)
 {
-    warpLoad = b;
+    if (warpLoad != b) {
+        
+        warpLoad = b;
+        updateWarp();
+    }
 }
 
 void

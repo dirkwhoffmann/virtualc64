@@ -178,23 +178,30 @@ void IEC::updateIecLines()
         
 		if (busActivity == 0) {
             
+            // Reset watchdog counter
+            busActivity = 30;
+            
 			// Bus has just been activated
+            c64->updateWarp();
 			c64->putMessage(MSG_VC1541_DATA_ON);
-			c64->setWarp(c64->getAlwaysWarp() || c64->getWarpLoad());
-		}
-        
-        // Reset watchdog counter
-		busActivity = 30;
+
+        } else {
+            
+            // Reset watchdog counter
+            busActivity = 30;
+        }
 	}
 }
 
 void IEC::execute()
 {
 	if (busActivity > 0) {
+        
 		if (--busActivity == 0) {
-			// Bus is idle 
+            
+			// Bus goes idle
+            c64->updateWarp();
 			c64->putMessage(MSG_VC1541_DATA_OFF);
-			c64->setWarp(c64->getAlwaysWarp());
 		}
 	}
 }

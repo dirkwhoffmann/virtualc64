@@ -742,7 +742,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
 
 - (BOOL) warp { return wrapper->c64->getWarp(); }
-- (void) setWarp:(BOOL)b { wrapper->c64->setWarp(b); }
 - (BOOL) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
 - (void) setAlwaysWarp:(BOOL)b { wrapper->c64->setAlwaysWarp(b); }
 - (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }

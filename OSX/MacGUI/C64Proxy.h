@@ -568,7 +568,6 @@ struct ContainerWrapper;
 - (void) setMouseRightButton:(BOOL)pressed;
 
 - (BOOL) warp;
-- (void) setWarp:(BOOL)b;
 - (BOOL) alwaysWarp;
 - (void) setAlwaysWarp:(BOOL)b;
 - (BOOL) warpLoad;

@@ -73,6 +73,9 @@ public:
 	//! @brief    Disconnects the virtual drive from the IEC bus.
 	void disconnectDrive();
 		
+    //! @brief    Returns true if the IEC currently transfers data.
+    bool isBusy() { return busActivity > 0; }
+    
     //! @brief    Requensts an update of the bus lines.
     void setNeedsUpdate() { isDirty = true; }
     

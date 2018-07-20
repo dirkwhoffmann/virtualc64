@@ -480,8 +480,12 @@ public:
     //! @brief    Returns true if timing synchronization is disabled.
     bool getWarp() { return warp; }
     
-    //! @brief    Enables or disables timing synchronization.
-    void setWarp(bool b);
+    //! @brief    Updates variable warp
+    /*! @details  This method has to be called whenever variable alwaysWarp or
+     *            variable warpLoad change or whenever variable IEC::busActivity
+     *            changes from zero to non-zero or vice versa.
+     */
+    void updateWarp();
     
     //! @brief    Returns true iff cpu should always run at maximun speed.
     bool getAlwaysWarp() { return alwaysWarp; }
