@@ -35,10 +35,21 @@ class MyDocument : NSDocument {
      */
     var attachment: ContainerProxy? = nil
     
-    /// The list of recent-disk URLs.
-    var recentDiskURLs: [URL] = []
+    /**
+     If the attachment is a file archive, this variable determines how it is
+     handled. If set to true, the first item is flushed directly into memory.
+     If set to false, the archive is mounted as disk. For other attachment
+     types (snapshots, cartridges, etc.), this variable has no effect.
+     */
+    var flushAttachment = false
     
-    /// The maximum number of items stored in recentDiskURLs
+    /// The list of recently inserted disk URLs.
+    var recentlyInsertedDiskURLs: [URL] = []
+
+    /// The list of recently inserted disk URLs.
+    var recentlyExportedDiskURLs: [URL] = []
+
+    /// The maximum number of items stored in the recentlyXXX lists
     var maximumRecentDiskCount = 10
 
     
@@ -76,16 +87,26 @@ class MyDocument : NSDocument {
     }
     
     //
-    // Handling the list of recently used files
+    // Handling the lists of recently used files
     //
     
-    func noteNewRecentDiskURL(url: URL) {
+    func noteNewRecentlyInsertedDiskURL(url: URL) {
         
-        if !recentDiskURLs.contains(url) {
-            if recentDiskURLs.count == maximumRecentDiskCount {
-                recentDiskURLs.remove(at: maximumRecentDiskCount - 1)
+        if !recentlyInsertedDiskURLs.contains(url) {
+            if recentlyInsertedDiskURLs.count == maximumRecentDiskCount {
+                recentlyInsertedDiskURLs.remove(at: maximumRecentDiskCount - 1)
             }
-            recentDiskURLs.insert(url, at: 0)
+            recentlyInsertedDiskURLs.insert(url, at: 0)
+        }
+    }
+    
+    func noteNewRecentlyExportedDiskURL(url: URL) {
+        
+        if !recentlyExportedDiskURLs.contains(url) {
+            if recentlyExportedDiskURLs.count == maximumRecentDiskCount {
+                recentlyExportedDiskURLs.remove(at: maximumRecentDiskCount - 1)
+            }
+            recentlyExportedDiskURLs.insert(url, at: 0)
         }
     }
     
@@ -106,7 +127,7 @@ class MyDocument : NSDocument {
         // Add URL to list of recently used files
         switch (url.pathExtension.uppercased()) {
         case "T64", "PRG", "D64", "P00", "G64", "NIB":
-            noteNewRecentDiskURL(url: url)
+            noteNewRecentlyInsertedDiskURL(url: url)
         default:
             break
         }

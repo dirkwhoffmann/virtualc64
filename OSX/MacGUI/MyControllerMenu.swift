@@ -37,8 +37,8 @@ extension MyController {
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
             let document = self.document as! MyDocument
-            if item.tag < document.recentDiskURLs.count {
-                item.title = document.recentDiskURLs[item.tag].lastPathComponent
+            if item.tag < document.recentlyInsertedDiskURLs.count {
+                item.title = document.recentlyInsertedDiskURLs[item.tag].lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: NSImage.Name(rawValue: "disk_small"))
             } else {
@@ -52,6 +52,18 @@ extension MyController {
         }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
+        }
+        if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
+            let document = self.document as! MyDocument
+            if item.tag < document.recentlyExportedDiskURLs.count {
+                item.title = document.recentlyExportedDiskURLs[item.tag].lastPathComponent
+                item.isHidden = false
+                item.image = NSImage.init(named: NSImage.Name(rawValue: "disk_small"))
+            } else {
+                item.isHidden = true
+                item.image = nil
+            }
+            return true
         }
         if item.action == #selector(MyController.writeProtectAction(_:)) {
             let hasDisk = c64.vc1541.hasDisk()
@@ -388,9 +400,9 @@ extension MyController {
         let tag = sender.tag
         let document = self.document as! MyDocument
         
-        if tag < document.recentDiskURLs.count {
+        if tag < document.recentlyInsertedDiskURLs.count {
             do {
-                try document.createAttachment(from: document.recentDiskURLs[tag])
+                try document.createAttachment(from: document.recentlyInsertedDiskURLs[tag])
                 document.readFromAttachment(warnAboutUnsafedDisk: true,
                                            showMountDialog: false)
             } catch {
@@ -399,11 +411,35 @@ extension MyController {
         }
     }
     
-    @IBAction func clearRecentDisksAction(_ sender: Any!) {
+    @IBAction func exportRecentDiskAction(_ sender: Any!) {
         
         track()
+        let sender = sender as! NSMenuItem
+        let tag = sender.tag
         let document = self.document as! MyDocument
-        document.recentDiskURLs = []
+        
+        if tag < document.recentlyExportedDiskURLs.count {
+            track()
+            /*
+            do {
+                track();
+            } catch {
+                NSApp.presentError(error)
+            }
+            */
+        }
+    }
+    
+    @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
+        
+        let document = self.document as! MyDocument
+        document.recentlyInsertedDiskURLs = []
+    }
+    
+    @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
+        
+        let document = self.document as! MyDocument
+        document.recentlyExportedDiskURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {

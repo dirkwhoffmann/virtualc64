@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "ROMFile.h"
+#include "C64.h"
 
 const uint8_t ROMFile::magicBasicRomBytes[]   = { 0x94, 0xE3, 0x7B, 0x00 };
 const uint8_t ROMFile::magicCharRomBytes[]    = { 0x3C, 0x66, 0x6E, 0x00 };
@@ -159,9 +159,38 @@ ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
     return true;
 }
 
+/*
 void
 ROMFile::flash(uint8_t *buffer)
 {
     memcpy(buffer, data, size);
+}
+*/
+bool
+ROMFile::flash(C64 *c64)
+{
+    switch(romtype) {
+        case BASIC_ROM_FILE:
+            memcpy(c64->mem.rom + 0xA000, data, size);
+            break;
+            
+        case CHAR_ROM_FILE:
+            memcpy(c64->mem.rom + 0xD000, data, size);
+            break;
+            
+        case KERNAL_ROM_FILE:
+            memcpy(c64->mem.rom + 0xE000, data, size);
+            break;
+            
+        case VC1541_ROM_FILE:
+            memcpy(c64->floppy.mem.rom, data, size);
+            break;
+            
+        default:
+            assert(false);
+            return false;
+    }
+
+    return true;
 }
 

@@ -763,44 +763,30 @@ C64::synchronizeTiming()
 bool
 C64::loadRom(const char *filename)
 {
-    ROMFile *rom;
+    bool result;
     bool wasRunnable = isRunnable();
-
-    if (!(rom = ROMFile::makeRomFileWithFile(filename))) {
-        warn("Failed to load ROM image %s\n", filename);
+    ROMFile *rom = ROMFile::makeRomFileWithFile(filename);
+    
+    if (!rom) {
+        warn("Failed to read ROM image file %s\n", filename);
         return false;
     }
     
     suspend();
-    switch (rom->type()) {
-            
-        case BASIC_ROM_FILE:
-            rom->flash(mem.rom + 0xA000);
-            break;
-            
-        case CHAR_ROM_FILE:
-            rom->flash(mem.rom + 0xD000);
-            break;
-            
-        case KERNAL_ROM_FILE:
-            rom->flash(mem.rom + 0xE000);
-            break;
-            
-        case VC1541_ROM_FILE:
-            rom->flash(floppy.mem.rom);
-            break;
-            
-        default:
-            assert(false);
-    }
-    debug(2, "Loaded ROM image %s.\n", filename);
+    result = rom->flash(this);
     resume();
+    
+    if (result) {
+        debug(2, "Loaded ROM image %s.\n", filename);
+    } else {
+        debug(2, "Failed to flush ROM image %s.\n", filename);
+    }
     
     if (!wasRunnable && isRunnable())
         putMessage(MSG_READY_TO_RUN);
 
     delete rom;
-    return true;
+    return result;
 }
 
 
