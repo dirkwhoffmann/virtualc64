@@ -319,6 +319,9 @@ extension MyController {
     @IBAction func deleteKeyAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(key: C64Key.delete)
     }
+    @IBAction func leftarrowKeyAction(_ sender: Any!) {
+        keyboardcontroller.typeOnKeyboard(key: C64Key.leftArrow)
+    }
     @IBAction func shiftLockAction(_ sender: Any!) {
         
         undoManager?.registerUndo(withTarget: self) {

@@ -486,6 +486,12 @@ CA
                                                 <action selector="insertKeyAction:" target="-1" id="IEY-Sr-0Wx"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="LEFT ARROW" id="q9V-Gy-eCL">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="leftarrowKeyAction:" target="-1" id="tYs-2R-d3U"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
