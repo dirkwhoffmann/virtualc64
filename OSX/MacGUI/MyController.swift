@@ -480,8 +480,8 @@ extension MyController {
     
             // Load attachment if present
             let document = self.document as! MyDocument
-            document.readFromAttachment(warnAboutUnsafedDisk: true,
-                                       showMountDialog: !autoMount)
+            document.processAttachmentAfterOpen()
+            //document.readFromAttachment(warnAboutUnsafedDisk: true,  showMountDialog: !autoMount)
             break;
     
         case MSG_RUN:

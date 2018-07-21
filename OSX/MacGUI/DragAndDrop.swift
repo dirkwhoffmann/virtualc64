@@ -94,16 +94,21 @@ public extension MetalView {
             guard let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) else {
                 return false
             }
-            return document.loadSnapshot(snapshot)
+            if document.proceedWithUnsavedDisk() {
+                controller.c64.flash(snapshot)
+                return true
+            } else {
+                return false
+            }
             
         case .compatibleFileURL:
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
                 do {
                     try document.createAttachment(from: url)
-                    document.readFromAttachment(warnAboutUnsafedDisk: true,
-                                               showMountDialog: !controller.autoMount)
-                    return true
+                    return document.processAttachmentAfterDragAndDrop()
+                    // document.readFromAttachment(warnAboutUnsafedDisk: true, showMountDialog: !controller.autoMount)
+                    // return true
                     
                 } catch {
                     let dragAndDropError = error

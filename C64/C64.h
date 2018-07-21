@@ -29,11 +29,11 @@
 //
 // CLEANUP:
 // Loading and saving:
-// New object structure:
-// File -> RomFile, TapFile, CrtFile, Snapshot
-//      -> FileArchive -> T64Archive, D64Archive, PRGArchive, P00Archive
-//      -> DiskFile -> G64Disk, NIBDisk
-// Delete FileArchive
+// New object structure (??):
+// MediaFile -> RomFile, TapFile, CrtFile, Snapshot
+//           -> MediaArchive -> T64Archive, D64Archive, PRGArchive, P00Archive
+//           -> DiskFile -> G64Disk, NIBDisk
+// Delete Archive
 //
 // Add setter API for SID stuff
 //
@@ -477,15 +477,19 @@ private:
     
 public:
     
-    //! @brief    Returns true if timing synchronization is disabled.
-    bool getWarp() { return warp; }
+    //! @brief    Updates variable warp and returns the new value
+    /*! @details  As a side effect, messages are sent to the GUI if the variable
+     *            has changed its value.
+     */
+    bool getWarp(); //  { return warp; }
     
     //! @brief    Updates variable warp
     /*! @details  This method has to be called whenever variable alwaysWarp or
      *            variable warpLoad change or whenever variable IEC::busActivity
      *            changes from zero to non-zero or vice versa.
+     * @deprecated
      */
-    void updateWarp();
+    // void updateWarp();
     
     //! @brief    Returns true iff cpu should always run at maximun speed.
     bool getAlwaysWarp() { return alwaysWarp; }
@@ -536,14 +540,6 @@ public:
     //! @brief    Setter for ultimax.
     void setUltimax(bool b) { ultimax = b; }
     
-    
-    //
-    //! @functiongroup Loading ROM images
-    //
-    
-    //! @brief    Loads ROM image into memory
-    bool loadRom(const char *filename);
-
 
     //
     //! @functiongroup Handling snapshots
@@ -659,11 +655,24 @@ public:
 
     
     //
-    //! @functiongroup Handling disks, tapes, and cartridges
+    //! @functiongroup Attaching media objects
     //
     
-    /*! @brief    Flushes a single item from an archive into memory.
+    //! @brief    Mounts an object stored in a file of supported type
+    /*! @details  Mountable objects are disks, tapes, and cartridges.
      */
+    bool mount(File *file);
+    
+    //! @brief    Flashes an item stored in a file of supported type
+    /*! @details  Flashable objects are single programs, roms, and snapshots.
+     */
+    bool flash(File *file, unsigned item = 0);
+    
+    //! @brief    Loads ROM image into memory
+    bool loadRom(const char *filename);
+    
+    //! @brief    Flushes a single item from an archive into memory.
+    //! @deprecated
     bool flushArchive(Archive *a, int item);
     
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
@@ -671,14 +680,9 @@ public:
      */
     bool insertDisk(Archive *a);
     
-    /*! @brief    Old function for mounting an archive as a disk.
-     *  @details  Only D64 and G64 archives are supported.
-     *  @deprecated Use insertDisk instead
-     */
-    bool mountArchive(Archive *a);
-
     /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.
+     *  @deprecated
      */
     bool insertTape(TAPFile *a);
 

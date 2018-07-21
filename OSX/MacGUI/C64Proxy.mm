@@ -645,7 +645,14 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 
+
+- (BOOL)mount:(ContainerProxy *)container {
+    return wrapper->c64->mount([container wrapper]->container); }
+- (BOOL)flash:(ContainerProxy *)container {
+    return wrapper->c64->flash([container wrapper]->container); }
+
 // DEPRECATED
+/*
 - (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper {
     Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
     wrapper->c64->loadFromSnapshotSafe(snapshot); }
@@ -656,6 +663,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     wrapper->c64->saveToSnapshotSafe(snapshot); }
 - (void) saveToSnapshot:(SnapshotProxy *)snapshot {
     [self _saveToSnapshotWrapper:[snapshot wrapper]]; }
+*/
 
 - (BOOL) isBasicRom:(NSURL *)url {
     return ROMFile::isBasicRomFile([[url path] UTF8String]); }

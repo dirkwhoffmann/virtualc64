@@ -9,6 +9,7 @@ import Foundation
 
 extension MyController {
 
+    /*
     @discardableResult func mountCartridge() -> Bool {
     
         // Does this document have an attachment?
@@ -26,5 +27,5 @@ extension MyController {
         c64.attachCartridgeAndReset(attachment as! CRTProxy)
         return true
     }
-    
+    */
 }

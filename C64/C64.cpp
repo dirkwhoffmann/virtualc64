@@ -206,15 +206,17 @@ void
 C64::dumpState() {
     msg("C64:\n");
     msg("----\n\n");
-    msg("            Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
-    msg("       Frames per second : %d\n", vic.getFramesPerSecond());
-    msg("   Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
-    msg("   Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
-    msg("           Current cycle : %llu\n", cpu.cycle);
-    msg("           Current frame : %d\n", frame);
-    msg("      Current rasterline : %d\n", rasterline);
-    msg("Current rasterline cycle : %d\n", rasterlineCycle);
-    msg("            Ultimax mode : %s\n", getUltimax() ? "YES" : "NO");
+    msg("              Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
+    msg("         Frames per second : %d\n", vic.getFramesPerSecond());
+    msg("     Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
+    msg("     Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
+    msg("             Current cycle : %llu\n", cpu.cycle);
+    msg("             Current frame : %d\n", frame);
+    msg("        Current rasterline : %d\n", rasterline);
+    msg("  Current rasterline cycle : %d\n", rasterlineCycle);
+    msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");
+    
+    msg("warp, warpLoad, alwaysWarp : %d %d %d\n", warp, warpLoad, alwaysWarp);
     msg("\n");
 }
 
@@ -663,6 +665,38 @@ C64::setWarp(bool b)
 }
 */
 
+bool
+C64::getWarp()
+{
+    bool newValue = (warpLoad && iec.isBusy()) || alwaysWarp;
+    
+    if (newValue != warp) {
+        warp = newValue;
+        
+        /* Warping has the unavoidable drawback that audio playback gets out of
+         * sync. To cope with this issue, we silence SID during warp mode and
+         * fade in smoothly after warping has ended.
+         */
+        
+        if (warp) {
+            // Quickly fade out SID
+            sid.rampDown();
+            
+        } else {
+            // Smoothly fade in SID
+            sid.rampUp();
+            restartTimer();
+        }
+        
+        putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
+    }
+    
+    return warp;
+}
+
+
+
+/*
 void
 C64::updateWarp()
 {
@@ -689,6 +723,7 @@ C64::updateWarp()
     
     putMessage(warp ? MSG_WARP_ON : MSG_WARP_OFF);
 }
+*/
 
 void
 C64::setAlwaysWarp(bool b)
@@ -696,7 +731,7 @@ C64::setAlwaysWarp(bool b)
     if (alwaysWarp != b) {
         
         alwaysWarp = b;
-        updateWarp();
+        // updateWarp();
         putMessage(b ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
     }
 }
@@ -704,11 +739,14 @@ C64::setAlwaysWarp(bool b)
 void
 C64::setWarpLoad(bool b)
 {
+    warpLoad = b;
+    /*
     if (warpLoad != b) {
         
         warpLoad = b;
         updateWarp();
     }
+    */
 }
 
 void
@@ -725,19 +763,22 @@ C64::synchronizeTiming()
 {
     const uint64_t earlyWakeup = 1500000; /* 1.5 milliseconds */
     
-    // Convert usec into kernel unit
-    int64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
+    // Get current time in nano seconds
+    uint64_t nanoAbsTime = abs_to_nanos(mach_absolute_time());
     
     // Check how long we're supposed to sleep
-    int64_t timediff = kernelTargetTime - (int64_t)mach_absolute_time();
-    if (timediff > 200000000 /* 0.2 sec */) {
+    int64_t timediff = (int64_t)nanoTargetTime - (int64_t)nanoAbsTime;
+    if (timediff > 200000000 || timediff < -200000000 /* 0.2 sec */) {
         
-        // The emulator seems to be out of sync, so we better reset the synchronization timer
+        // The emulator seems to be out of sync, so we better reset the
+        // synchronization timer
         
-        debug(2, "Emulator lost synchronization (%lld). Restarting synchronization timer.\n", timediff);
+        debug(2, "Emulator lost synchronization (%lld). Restarting timer.\n", timediff);
         restartTimer();
-        // return;
     }
+    
+    // Convert nanoTargetTime into kernel unit
+    int64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
     
     // Sleep and update target timer
     // debug(2, "%p Sleeping for %lld\n", this, kernelTargetTime - mach_absolute_time());
@@ -753,40 +794,6 @@ C64::synchronizeTiming()
         debug(2, "Jitter exceeds limit (%lld). Restarting synchronization timer.\n", jitter);
         restartTimer();
     }
-}
-
-
-//
-//! @functiongroup Loading ROM images
-//
-
-bool
-C64::loadRom(const char *filename)
-{
-    bool result;
-    bool wasRunnable = isRunnable();
-    ROMFile *rom = ROMFile::makeRomFileWithFile(filename);
-    
-    if (!rom) {
-        warn("Failed to read ROM image file %s\n", filename);
-        return false;
-    }
-    
-    suspend();
-    result = rom->flash(this);
-    resume();
-    
-    if (result) {
-        debug(2, "Loaded ROM image %s.\n", filename);
-    } else {
-        debug(2, "Failed to flush ROM image %s.\n", filename);
-    }
-    
-    if (!wasRunnable && isRunnable())
-        putMessage(MSG_READY_TO_RUN);
-
-    delete rom;
-    return result;
 }
 
 
@@ -988,6 +995,113 @@ C64::deleteUserSnapshot(unsigned index)
 //! @functiongroup Handling archives, tapes, and cartridges
 //
 
+bool
+C64::mount(File *file)
+{
+    bool result = true;
+    
+    suspend();
+    switch (file->type()) {
+       
+        case CRT_CONTAINER:
+            result = attachCartridgeAndReset((CRTFile *)file);
+            break;
+
+        case D64_CONTAINER:
+        case T64_CONTAINER:
+        case PRG_CONTAINER:
+        case P00_CONTAINER:
+        case G64_CONTAINER:
+        case NIB_CONTAINER:
+            result = insertDisk((Archive *)file);
+            break;
+    
+        case TAP_CONTAINER:
+            result = insertTape((TAPFile *)file);
+            break;
+            
+        default: 
+            assert(false); // not mountable
+            result = false;
+    }
+    resume();
+    return result;
+}
+
+bool
+C64::flash(File *file, unsigned item)
+{
+    bool result = true;
+    
+    suspend();
+    switch (file->type()) {
+            
+        case BASIC_ROM_FILE:
+            ((ROMFile *)file)->flash(mem.rom + 0xA000);
+            break;
+            
+        case CHAR_ROM_FILE:
+            ((ROMFile *)file)->flash(mem.rom + 0xD000);
+            break;
+            
+        case KERNAL_ROM_FILE:
+            ((ROMFile *)file)->flash(mem.rom + 0xE000);
+            break;
+            
+        case VC1541_ROM_FILE:
+            ((ROMFile *)file)->flash(floppy.mem.rom);
+            break;
+                    
+        case V64_CONTAINER:
+            loadFromSnapshotUnsafe((Snapshot *)file);
+            break;
+            
+        case D64_CONTAINER:
+        case T64_CONTAINER:
+        case PRG_CONTAINER:
+        case P00_CONTAINER:
+            result = flushArchive((Archive *)file, item);
+            break;
+            
+        default:
+            assert(false); // not mountable
+            result = false;
+    }
+    resume();
+    return result;
+}
+
+bool
+C64::loadRom(const char *filename)
+{
+    bool result;
+    bool wasRunnable = isRunnable();
+    ROMFile *rom = ROMFile::makeRomFileWithFile(filename);
+    
+    if (!rom) {
+        warn("Failed to read ROM image file %s\n", filename);
+        return false;
+    }
+    
+    result = flash(rom);
+    
+    if (result) {
+        debug(2, "Loaded ROM image %s.\n", filename);
+    } else {
+        debug(2, "Failed to flush ROM image %s.\n", filename);
+    }
+    
+    if (!wasRunnable && isRunnable())
+        putMessage(MSG_READY_TO_RUN);
+    
+    delete rom;
+    return result;
+}
+
+
+// OLD STUFF
+
+
 bool 
 C64::flushArchive(Archive *a, int item)
 {
@@ -1018,16 +1132,6 @@ C64::insertDisk(Archive *a)
     floppy.insertDisk(a);
     return true;
     
-}
-
-bool 
-C64::mountArchive(Archive *a)
-{    
-    if (a == NULL)
-        return false;
-        
-    floppy.insertDisk(a);
-    return true;
 }
 
 bool

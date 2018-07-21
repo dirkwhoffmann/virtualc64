@@ -23,6 +23,7 @@
 // Forward declarations of proxy classes
 @class MyController;
 @class C64Proxy;
+@class ContainerProxy;
 @class SnapshotProxy;
 @class ArchiveProxy;
 @class TAPProxy;
@@ -502,10 +503,15 @@ struct ContainerWrapper;
 - (BOOL) developmentMode;
 
 // Loading and saving
+
+- (BOOL)mount:(ContainerProxy *)container;
+- (BOOL)flash:(ContainerProxy *)container;
+/*
 - (void)_loadFromSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
 - (void)_saveToSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
+*/
 
 // Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url;

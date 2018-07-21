@@ -366,8 +366,10 @@ extension MyController {
     
     @IBAction func insertDiskAction(_ sender: Any!) {
         
+        // Ask user to continue if the current disk contains modified data
         if !proceedWithUnsavedDisk() { return }
         
+        // Show the OpenPanel
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
@@ -375,16 +377,14 @@ extension MyController {
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
         openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "nib"]
-        
-        // Run panel as a sheet
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = openPanel.url {
                     let document = self.document as! MyDocument
                     do {
                         try document.createAttachment(from: url)
-                        document.readFromAttachment(warnAboutUnsafedDisk: false,
-                                                   showMountDialog: false)
+                        document.processAttachmentAfterInsert()
+                        //document.readFromAttachment(warnAboutUnsafedDisk: false,showMountDialog: false)
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -403,8 +403,10 @@ extension MyController {
         if tag < document.recentlyInsertedDiskURLs.count {
             do {
                 try document.createAttachment(from: document.recentlyInsertedDiskURLs[tag])
-                document.readFromAttachment(warnAboutUnsafedDisk: true,
-                                           showMountDialog: false)
+                if (document.proceedWithUnsavedDisk()) {
+                    document.processAttachmentAfterInsert()
+                }
+                //  document.readFromAttachment(warnAboutUnsafedDisk: true,showMountDialog: false)
             } catch {
                 NSApp.presentError(error)
             }

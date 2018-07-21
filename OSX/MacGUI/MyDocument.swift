@@ -112,7 +112,7 @@ class MyDocument : NSDocument {
     
     
     //
-    // Loading
+    // Creating attachments
     //
     
     /// Creates an attachment from a URL
@@ -198,17 +198,193 @@ class MyDocument : NSDocument {
         }
     }
     
+    
+    //
+    // Processing attachments
+    //
+    
+    func runCartridgeMountDialog(_ parent: MyController) {
+        let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
+        let controller = CartridgeMountController.init(windowNibName: nibName)
+        controller.showSheet(withParent: parent)
+    }
+    
+    func runTapeMountDialog(_ parent: MyController) {
+        let nibName = NSNib.Name(rawValue: "TapeMountDialog")
+        let controller = TapeMountController.init(windowNibName: nibName)
+        controller.showSheet(withParent: parent)
+    }
+    
+    func runArchiveMountDialog(_ parent: MyController) {
+        let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+        let controller = ArchiveMountController.init(windowNibName: nibName)
+        controller.showSheet(withParent: parent)
+    }
+    
+    func runDiskMountDialog(_ parent: MyController) {
+        let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+        let controller = DiskMountController.init(windowNibName: nibName)
+        controller.showSheet(withParent: parent)
+    }
+    
+    
     /**
-     Reads in the document's attachment. Snapshots, PRGs, and P00s will be
-     flashed, cartridges attached, and archives mounted as disk. Depending on
-     the attachment type, user dialogs show up.
-     
-     - parameter warnAboutUnsafedDisk: Asks the user for permission to proceed,
-     if the currently inserted disk contains unsaved data.
-     
-     - parameter showMountDialog: Pops up the mount dialog if the attachment
-     contains an archive that can be mounted as a disk.
+     This method is called when the user selects "Open..." or "Open recent"
+     and a new document has been created. It analyzes the attachment type and
+     performs several actions. When mount dialogs are enabled, it opens the
+     corresponding dialog and let's the user decide what to do. Otherwise, a
+     default action is performed.
      */
+    func processAttachmentAfterOpen() {
+        
+        let parent = windowForSheet!.windowController as! MyController
+        
+        if attachment == nil {
+            return
+        }
+        if attachment!.type() == V64_CONTAINER {
+            c64.flash(attachment!)
+            return
+        }
+        if parent.autoMount {
+            c64.mount(attachment!)
+            return
+        }
+        
+        let type = attachment!.type()
+        switch type {
+    
+        case CRT_CONTAINER:
+            runCartridgeMountDialog(parent)
+            return
+                
+        case TAP_CONTAINER:
+            runTapeMountDialog(parent)
+            return
+                
+        case T64_CONTAINER, D64_CONTAINER,
+             PRG_CONTAINER, P00_CONTAINER:
+            runArchiveMountDialog(parent)
+            return
+                
+        case G64_CONTAINER, NIB_CONTAINER:
+            runDiskMountDialog(parent)
+            return
+            
+        default:
+            track("Unknown attachment type \(type).")
+            fatalError()
+        }
+    }
+    
+    /**
+     This method is called when the user selects "Insert Disk..." or "Insert
+     Recent" from the Drive menu. In contrast to processAttachmentAfterOpen(),
+     no user dialogs show up.
+     */
+    @discardableResult
+    func processAttachmentAfterInsert() -> Bool {
+        
+        var result = true
+        // let parent = windowForSheet!.windowController as! MyController
+        
+        if attachment == nil {
+            return false
+        }
+        
+        let type = attachment!.type()
+        switch type {
+            
+        case V64_CONTAINER:
+            result = c64.flash(attachment!)
+            break
+            
+        case PRG_CONTAINER, P00_CONTAINER,
+             CRT_CONTAINER, TAP_CONTAINER,
+             T64_CONTAINER, D64_CONTAINER,
+             G64_CONTAINER, NIB_CONTAINER:
+            result = c64.mount(attachment!)
+            break
+            
+        default:
+            track("Attachments of type \(type) cannot be mounted as a disk.")
+            fatalError()
+        }
+        
+        return result
+    }
+    
+    /**
+     This method is called after a media file has been dragged and dropped
+     into the emulator.
+     */
+    @discardableResult
+    func processAttachmentAfterDragAndDrop() -> Bool {
+        
+        let parent = windowForSheet!.windowController as! MyController
+        
+        if attachment == nil {
+            return false
+        }
+        
+        // Check if disk data would be lost, if we continue
+        let type = attachment!.type()
+        switch type {
+        case V64_CONTAINER,
+             T64_CONTAINER, D64_CONTAINER,
+             G64_CONTAINER, NIB_CONTAINER:
+            if (!proceedWithUnsavedDisk()) { return false }
+        default:
+            break;
+        }
+        
+        if attachment!.type() == V64_CONTAINER {
+            return c64.flash(attachment!)
+        }
+        
+        // Perform default behavior if mount dialogs are disabled
+        if parent.autoMount {
+            if type == PRG_CONTAINER || type == P00_CONTAINER {
+                c64.flash(attachment)
+                parent.keyboardcontroller.typeRUN()
+                return true
+            } else {
+                return c64.mount(attachment!)
+            }
+        }
+        
+        // Show mount dialog
+        switch type {
+            
+        case CRT_CONTAINER:
+            runCartridgeMountDialog(parent)
+            return true
+            
+        case TAP_CONTAINER:
+            runTapeMountDialog(parent)
+            return true
+            
+        case T64_CONTAINER, D64_CONTAINER,
+             PRG_CONTAINER, P00_CONTAINER:
+            runArchiveMountDialog(parent)
+            return true
+            
+        case G64_CONTAINER, NIB_CONTAINER:
+            runDiskMountDialog(parent)
+            return true
+            
+        default:
+            track("Unknown attachment type \(type).")
+            fatalError()
+        }
+    }
+    
+    
+    
+    
+    
+    /// DEPRECATED
+    /*
     func readFromAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
         
         if attachment == nil { return }
@@ -219,7 +395,8 @@ class MyDocument : NSDocument {
             
         case V64_CONTAINER:
             if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                c64.load(fromSnapshot: attachment as! SnapshotProxy)
+                // c64.load(fromSnapshot: attachment as! SnapshotProxy)
+                c64.flash(attachment!)
             }
             return
             
@@ -251,7 +428,7 @@ class MyDocument : NSDocument {
                     let controller = ArchiveMountController.init(windowNibName: nibName)
                     controller.showSheet(withParent: parent)
                 } else {
-                   c64.insertDisk(attachment as! ArchiveProxy)
+                    c64.insertDisk(attachment as! ArchiveProxy)
                 }
             }
             return
@@ -288,6 +465,11 @@ class MyDocument : NSDocument {
             fatalError()
         }
     }
+    */
+    
+    //
+    // Loading
+    //
     
     override open func read(from url: URL, ofType typeName: String) throws {
         
@@ -328,18 +510,6 @@ class MyDocument : NSDocument {
         
         track("ROM file \(url!) not found")
         return false
-    }
-
-    /// Restores the emulator state from a snapshot.
-    @discardableResult
-    func loadSnapshot(_ snapshot: SnapshotProxy) -> Bool {
-                
-        if proceedWithUnsavedDisk() {
-            c64.load(fromSnapshot: snapshot)
-            return true
-        } else {
-            return false
-        }
     }
     
     

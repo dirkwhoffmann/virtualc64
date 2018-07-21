@@ -71,7 +71,8 @@ IEC::dumpState()
 	msg("\n");
 	msg("Drive connected : %s\n", driveIsConnected ? "yes" : "no");
     msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.getDDRB());
-    msg("    DDRA (CIA2) : %02X\n", c64->cia2.DDRA);
+    msg("    DDRA (CIA2) : %02X\n\n", c64->cia2.DDRA);
+    msg("   Bus activity : %d\n", busActivity); 
 
     msg("\n");
 }
@@ -182,7 +183,7 @@ void IEC::updateIecLines()
             busActivity = 30;
             
 			// Bus has just been activated
-            c64->updateWarp();
+            // c64->updateWarp();
 			c64->putMessage(MSG_VC1541_DATA_ON);
 
         } else {
@@ -200,7 +201,7 @@ void IEC::execute()
 		if (--busActivity == 0) {
             
 			// Bus goes idle
-            c64->updateWarp();
+            // c64->updateWarp();
 			c64->putMessage(MSG_VC1541_DATA_OFF);
 		}
 	}

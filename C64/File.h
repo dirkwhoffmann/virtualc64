@@ -24,7 +24,7 @@
 #include "VC64Object.h"
 #include "C64_types.h"
 
-class C64;
+// class C64;
 
 /*! @class    File
  *  @brief    Base class for all file containers.
@@ -148,19 +148,6 @@ public:
      *  @param    filename The name of a file to be written.
      */
 	bool writeToFile(const char *filename);
-    
-    //! @brief    Mount action
-    /*! @details  This function is overwritten by all file types that represent
-     *            a mountable object, i.e., a disk, a tape, or a cartridge.
-     */
-    virtual bool mount(C64 *c64) { assert(false); }
-    
-    //! @brief    Flash action
-    /*! @details  This function is overwritten by all file types that represent
-     *            a flushable object, e.g., a program file or a snapshot.
-     *  @note     Some file types are both mountable and flashable.
-     */
-    virtual bool flash(C64 *c64) { assert(false); }
 };
 
 #endif

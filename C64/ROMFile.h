@@ -96,15 +96,17 @@ public:
     const char *typeAsString() { return "ROM"; }
     bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
-    bool flash(C64 *c64);
+    
     
     //
     //! @functiongroup Handling ROM data
     //
     
+    // uint8_t *getData() { return data; }
+    // uint16_t getSize() { return size; }
+    
     //! @brief   Flushes the ROM into the emulator
     //! @details Copies the ROM data to the specified location.
-    // void flash(uint8_t *buffer);
-    
+    void flash(uint8_t *buffer);
 };
 #endif
