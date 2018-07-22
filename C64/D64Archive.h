@@ -161,7 +161,8 @@ public:
     uint8_t *findSector(Track track, Sector sector);
 
     //! @brief    Returns the error for the specified sector.
-    /*! @note     Returns 01 (no error) for D64 archives that do not contain error codes.
+    /*! @note     Returns 01 (no error) if the D64 file does not contain
+     *            error codes.
      */
     uint8_t errorCode(Track t, Sector s);
     
@@ -185,9 +186,9 @@ private:
     int nextSector(int offset) { return data[(offset & (~0xFF)) + 1]; }
     
     //! @brief   Returns the next physical track and sector.
-    bool nextTrackAndSector(uint8_t track, uint8_t sector,
-                            uint8_t *nextTrack, uint8_t *nextSector,
-                            bool skipDirectory = false);
+    bool nextTrackAndSector(Track track, Sector sector,
+                            Track *nextTrack, Sector *nextSector,
+                            bool skipDirectory = true);
     
     /*! @brief   Jump to the beginning of the next sector
      *  @details pos is set to the beginning of the next sector.
@@ -198,10 +199,12 @@ private:
     bool jumpToNextSector(int *pos);
 
     /*! @brief   Writes a byte to the specified track and sector
-     *  @details If the sector overflows, the values of track and sector are overwritten with the next free sector
-     *  @result  true if the byte was written successfully; false if there is no free space left on disk.
+     *  @details If the sector overflows, the values of track and sector are
+     *           overwritten with the next free sector.
+     *  @result  true if the byte was written successfully; false if there is
+     *           no space left on disk.
      */
-    bool writeByteToSector(uint8_t byte, uint8_t *track, uint8_t *sector);
+    bool writeByteToSector(uint8_t byte, Track *track, Sector *sector);
 
     
     //
@@ -212,7 +215,7 @@ private:
     
     /*! @brief   Marks a single sector as "used"
      */
-    void markSectorAsUsed(uint8_t track, uint8_t sector);
+    void markSectorAsUsed(Track track, Sector sector);
 
     /*! @brief   Writes the Block Availability Map (BAM)
      *  @details On a C64 diskette, the BAM is located ion track 18, sector 0.
@@ -222,25 +225,27 @@ private:
 
     /*! @brief   Gathers data about all directory items
      *  @details This function scans all directory items and stores the relative
-     *           start address of the first sector into the provided offsets array.
-     *           Furthermore, the total number of files is written into variable noOfFiles.
+     *           start address of the first sector into the provided offsets
+     *           array. Furthermore, the total number of files is written into
+     *           variable noOfFiles.
      *  @param   offsets Pointer to an array of type unsigned[MAX_FILES_ON_DISK]
      *  @param   noOfFiles Pointer to a variable of type unsigned
-     *  @param   skipInvisibleFiles If set to true, only those files are considered
-     *           that would show up when loading the directory via LOAD "$",8. Otherwise,
-     *           all files are considered, i.e. those that are marked as deleted.
+     *  @param   skipInvisibleFiles If set to true, only those files are
+     *           considered that would show up when loading the directory via
+     *           LOAD "$",8. Otherwise, all files are considered, i.e. those
+     *           that are marked as deleted.
      */
     void scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles = true);
     
     /*! @brief   Looks up a directory item by number.
      *  @details This function searches the directory for the requested item. 
      *  @param   itemBumber Number of the item. The first item has number 0.
-     *  @param   skipInvisibleFiles If set to true, only those files are considered
-     *           that would show up when loading the directory via LOAD "$",8.
-     *           Otherwise, all files are considered, i.e. those that are marked as
-     *           deleted.
-     *  @return  Offset to the first data sector of the requested file. If the file
-     *           is not found, -1 is returned.
+     *  @param   skipInvisibleFiles If set to true, only those files are
+     *           considered that would show up when loading the directory via
+     *           LOAD "$",8. Otherwise, all files are considered, i.e. those
+     *           that are marked as deleted.
+     *  @return  Offset to the first data sector of the requested file. If the
+     *           file is not found, -1 is returned.
      */
     int findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
     
@@ -255,12 +260,16 @@ private:
     
     /*! @brief    Returns true iff offset points to the last byte of a file 
      */
-    bool isEndOfFile(int offset) { return nextTrack(offset) == 0x00 && nextSector(offset) == offset % 256; }
+    bool isEndOfFile(int offset) {
+        return nextTrack(offset) == 0 && nextSector(offset) == offset % 256; }
 
     /*! @brief    Writes a directory item
-     *  @details  This function is used to convert other archive formats into the D64 format. 
+     *  @details  This function is used to convert other archive formats into
+     *            the D64 format.
      */
-    bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, size_t filesize);
+    bool writeDirectoryEntry(unsigned nr, const char *name,
+                             Track startTrack, Sector startSector,
+                             size_t filesize);
     
 
     //
@@ -270,6 +279,6 @@ private:
 private:
     
 	//! @brief    Dumps the contents of a sector to stderr
-	void dumpSector(int track, int sector);
+	void dumpSector(Track track, Sector sector);
 };
 #endif

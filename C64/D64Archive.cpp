@@ -130,7 +130,8 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
     archive->setPath(otherArchive->getPath());
     
     // Current position of data write ptr
-    uint8_t track = 1, sector = 0;
+    Track track = 1;
+    Sector sector = 0;
     
     // Write BAM
     archive->writeBAM(otherArchive->getName());
@@ -142,8 +143,9 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
         archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
         
         // Every file is preceded with two bytes containing its load address
-        archive->writeByteToSector(LO_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
-        archive->writeByteToSector(HI_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
+        uint8_t loadAddr = otherArchive->getDestinationAddrOfItem(i);
+        archive->writeByteToSector(LO_BYTE(loadAddr), &track, &sector);
+        archive->writeByteToSector(HI_BYTE(loadAddr), &track, &sector);
         
         // Write raw data to disk
         int byte;
@@ -159,7 +161,7 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
         
         archive->debug(2, "D64 item %d: %d bytes written\n", i, num);
         // Item i has been written. Goto next free sector and proceed with the next item
-        (void)archive->nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
+        (void)archive->nextTrackAndSector(track, sector, &track, &sector);
     }
     
     archive->debug(2, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
@@ -588,8 +590,8 @@ D64Archive::offset(Track track, Sector sector)
 }
 
 bool
-D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector,
-                               uint8_t *nextTrack, uint8_t *nextSector,
+D64Archive::nextTrackAndSector(Track track, Sector sector,
+                               Track *nextTrack, Sector *nextSector,
                                bool skipDirectoryTrack)
 {
     unsigned highestSectorNumberInThisTrack = D64Map[track].numberOfSectors - 1;
@@ -635,10 +637,10 @@ D64Archive::jumpToNextSector(int *pos)
 }
 
 bool
-D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
+D64Archive::writeByteToSector(uint8_t byte, Track *t, Sector *s)
 {
-    uint8_t track = *t;
-    uint8_t sector = *s;
+    Track track = *t;
+    Sector sector = *s;
  
     assert(isValidTrackSectorPair(track, sector));
 
@@ -648,13 +650,13 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
     if (positionOfLastDataByte == 0xFF) {
 
         // No free slots in this sector, proceed to next one
-        if (!nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */)) {
+        if (!nextTrackAndSector(track, sector, &track, &sector)) {
             return false; // Sorry, disk is full
         }
 
         // link previous sector with the new one
-        data[pos++] = track;
-        data[pos] = sector;
+        data[pos++] = (uint8_t)track;
+        data[pos] = (uint8_t)sector;
         pos = offset(track, sector);
         positionOfLastDataByte = 0;
     }
@@ -682,13 +684,13 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
 //
 
 void
-D64Archive::markSectorAsUsed(uint8_t track, uint8_t sector)
+D64Archive::markSectorAsUsed(Track track, Sector sector)
 {
     // For each track and sector, there exists a single bit in the BAM.
     // 1 = used, 0 = unused
     
     // First byte of BAM
-    int bam = offset(18,0);
+    int bam = offset(18, 0);
     
     // Select byte group correspondig to track
     bam += (4 * track);
@@ -838,7 +840,9 @@ D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
 }
 
 bool
-D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, size_t filesize)
+D64Archive::writeDirectoryEntry(unsigned nr, const char *name,
+                                Track startTrack, Sector startSector,
+                                size_t filesize)
 {
 	int pos;
 	
@@ -875,8 +879,8 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 	data[pos++] = 0x82;
 	
 	// 03-04: Track/sector location of first sector of file
-	data[pos++] = startTrack;
-	data[pos++] = startSector;
+	data[pos++] = (uint8_t)startTrack;
+	data[pos++] = (uint8_t)startSector;
 	
 	// 05-14: 16 character filename (in PETASCII, padded with $A0)
 	size_t len = strlen(name);
@@ -901,7 +905,7 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 //
 
 void
-D64Archive::dumpSector(int track, int sector)
+D64Archive::dumpSector(Track track, Sector sector)
 {
     int pos = offset(track, sector);
     
