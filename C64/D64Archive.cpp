@@ -593,7 +593,7 @@ D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector,
                                bool skipDirectoryTrack)
 {
     unsigned highestSectorNumberInThisTrack = D64Map[track].numberOfSectors - 1;
-    assert(highestSectorNumberInThisTrack == numberOfSectorsInTrack(track));
+    assert(highestSectorNumberInThisTrack == numberOfSectorsInTrack(track) - 1);
     // PROBLEM?: A REAL VC1541 DISK USUALLY SHOWS AN INTERLEAVE OF 10
     
     if (sector < highestSectorNumberInThisTrack) {

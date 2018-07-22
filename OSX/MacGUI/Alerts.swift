@@ -50,22 +50,6 @@ public extension MetalView {
 
 extension MyDocument {
     
-    /*
-    func showUnsupportedCartridgeAlert(_ container: CRTProxy) {
-        
-        let name = container.cartridgeTypeName() as String
-        
-        let alert = NSAlert()
-        alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "cartridge"))
-        alert.messageText = "Unsupported cartridge type: \(name)"
-        alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
-        alert.addButton(withTitle: "OK")
-        // alert.beginSheetModal(for: window!, completionHandler: nil)
-        alert.runModal()
-    }
-    */
-    
     @discardableResult
     func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {
        
@@ -90,7 +74,31 @@ extension MyDocument {
 }
 
 extension MyController {
+    
+    func showDiskHasBeenExportedAlert(url: URL) {
         
+        let path = url.path
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.messageText = "Disk has been exported successfully."
+        alert.informativeText = "Destination: \(path)"
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+ 
+    func showExportErrorAlert(url: URL) {
+        
+        let path = url.path
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.messageText = "Failed to export disk"
+        alert.informativeText = "Cannot write to \(path)."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+    
     func showDiskIsEmptyAlert(format: String) {
         
         let alert = NSAlert()
@@ -101,7 +109,7 @@ extension MyController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
- 
+    
     func showDiskHasMultipleFilesAlert(format: String) {
         
         let alert = NSAlert()
@@ -116,7 +124,7 @@ extension MyController {
     func userSnapshotStorageFull() {
         
         let alert = NSAlert()
-        alert.alertStyle = .informational
+        alert.alertStyle = .warning
         // alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
         alert.messageText = "Cannot save snapshot"
         alert.informativeText = "All slots are filled. Delete some snapshots manually."

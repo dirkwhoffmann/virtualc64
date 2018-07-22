@@ -424,14 +424,15 @@ extension MyController {
         let document = self.document as! MyDocument
         
         if tag < document.recentlyExportedDiskURLs.count {
-            track()
-            /*
-            do {
-                track();
-            } catch {
-                NSApp.presentError(error)
+            
+            let url = document.recentlyExportedDiskURLs[tag]
+            
+            track("url = \(url)")
+            if export(to: url) {
+                showDiskHasBeenExportedAlert(url: url)
+            } else {
+                showExportErrorAlert(url: url)
             }
-            */
         }
     }
     
@@ -461,7 +462,7 @@ extension MyController {
         exportPanel.showSheet(withParent: self)
     }
  
-    func export(to url: URL, ofType typeName: String) {
+    func export(to url: URL, ofType typeName: String) -> Bool {
         
         track("url = \(url)")
 
@@ -470,7 +471,7 @@ extension MyController {
         
         // Convert inserted disk to D64 archive
         guard let d64archive = D64Proxy.make(withVC1541: c64.vc1541) else {
-            return
+            return false
         }
         
         // Convert D64 archive to target format
@@ -512,21 +513,24 @@ extension MyController {
         archive!.write(toBuffer: ptr)
         
         // Export
-        track("Exporting to file \(url)")
-        data!.write(to: url, atomically: true)
-    }
-    
-    func export(to url: URL?) {
-        
-        if url != nil {
-            let suffix = url!.pathExtension
-            export(to: url!, ofType: suffix)
+        track("Tryping to export to file \(url)")
+        if data!.write(to: url, atomically: true) {
+            track("Export successful");
+            (document as! MyDocument).noteNewRecentlyUsedDiskURL(url)
+            return true
+        } else {
+            track("Export failed");
+            return false
         }
     }
     
-    
-    
-    
+    func export(to url: URL?) -> Bool {
+        
+        if url == nil { return false }
+        
+        let suffix = url!.pathExtension
+        return export(to: url!, ofType: suffix)
+    }
     
     @IBAction func writeProtectAction(_ sender: Any!) {
         

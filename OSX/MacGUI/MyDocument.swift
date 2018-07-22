@@ -82,7 +82,25 @@ class MyDocument : NSDocument {
     // Handling the lists of recently used files
     //
     
-    func noteNewRecentlyInsertedDiskURL(url: URL) {
+    func noteNewRecentlyUsedDiskURL(_ url: URL) {
+        
+        switch url.pathExtension.uppercased() {
+        
+        case "T64", "PRG", "D64", "P00":
+            noteNewRecentlyInsertedDiskURL(url)
+            noteNewRecentlyExportedDiskURL(url)
+            break
+            
+        case "G64", "NIB":
+            noteNewRecentlyInsertedDiskURL(url)
+            break
+            
+        default:
+            break
+        }
+    }
+        
+    fileprivate func noteNewRecentlyInsertedDiskURL(_ url: URL) {
         
         if !recentlyInsertedDiskURLs.contains(url) {
             if recentlyInsertedDiskURLs.count == maximumRecentDiskCount {
@@ -92,7 +110,7 @@ class MyDocument : NSDocument {
         }
     }
     
-    func noteNewRecentlyExportedDiskURL(url: URL) {
+    fileprivate func noteNewRecentlyExportedDiskURL(_ url: URL) {
         
         if !recentlyExportedDiskURLs.contains(url) {
             if recentlyExportedDiskURLs.count == maximumRecentDiskCount {
@@ -116,13 +134,8 @@ class MyDocument : NSDocument {
         let fileWrapper = try FileWrapper.init(url: url)
         try createAttachment(from: fileWrapper, ofType: url.pathExtension)
         
-        // Add URL to list of recently used files
-        switch (url.pathExtension.uppercased()) {
-        case "T64", "PRG", "D64", "P00", "G64", "NIB":
-            noteNewRecentlyInsertedDiskURL(url: url)
-        default:
-            break
-        }
+        // Add URL to the lists of recently used files
+        noteNewRecentlyUsedDiskURL(url)
     }
     
     /// Creates an attachment from a file wrapper
