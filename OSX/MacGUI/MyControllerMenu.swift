@@ -409,7 +409,6 @@ extension MyController {
                 if (document.proceedWithUnsavedDisk()) {
                     document.processAttachmentAfterInsert()
                 }
-                //  document.readFromAttachment(warnAboutUnsafedDisk: true,showMountDialog: false)
             } catch {
                 NSApp.presentError(error)
             }
@@ -426,8 +425,6 @@ extension MyController {
         if tag < document.recentlyExportedDiskURLs.count {
             
             let url = document.recentlyExportedDiskURLs[tag]
-            
-            track("url = \(url)")
             if export(to: url) {
                 showDiskHasBeenExportedAlert(url: url)
             } else {
@@ -463,8 +460,6 @@ extension MyController {
     }
  
     func export(to url: URL, ofType typeName: String) -> Bool {
-        
-        track("url = \(url)")
 
         let type = typeName.uppercased()
         var archive: ArchiveProxy?
@@ -516,6 +511,7 @@ extension MyController {
         track("Tryping to export to file \(url)")
         if data!.write(to: url, atomically: true) {
             track("Export successful");
+            c64.vc1541.disk.setModified(false)
             (document as! MyDocument).noteNewRecentlyUsedDiskURL(url)
             return true
         } else {
