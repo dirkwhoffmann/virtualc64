@@ -506,6 +506,7 @@ struct ContainerWrapper;
 
 - (BOOL)mount:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container;
+- (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item;
 /*
 - (void)_loadFromSnapshotWrapper:(struct ContainerWrapper *) snapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
@@ -561,7 +562,7 @@ struct ContainerWrapper;
 - (BOOL) isCartridgeAttached;
 
 - (BOOL) insertDisk:(ArchiveProxy *)a;
-- (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
+// - (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
 - (BOOL) insertTape:(TAPProxy *)a;
 
@@ -715,6 +716,7 @@ struct ContainerWrapper;
 - (NSInteger)sizeOfItem:(NSInteger)item;
 - (NSInteger)sizeOfItemInBlocks:(NSInteger)item;
 - (NSString *)typeOfItem:(NSInteger)item;
+- (NSInteger)destinationAddrOfItem:(NSInteger)item;
 
 // Think about a better API for accessing tracks and sectors directly
 - (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;

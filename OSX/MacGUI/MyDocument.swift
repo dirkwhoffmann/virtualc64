@@ -345,8 +345,7 @@ class MyDocument : NSDocument {
         // Perform default behavior if mount dialogs are disabled
         if parent.autoMount {
             if type == PRG_CONTAINER || type == P00_CONTAINER {
-                c64.flash(attachment)
-                parent.keyboardcontroller.typeRUN()
+                flashAttachment(archive: attachment as! ArchiveProxy)
                 return true
             } else {
                 return c64.mount(attachment!)
@@ -379,6 +378,23 @@ class MyDocument : NSDocument {
         }
     }
     
+    func flashAttachment(archive: ArchiveProxy, item: Int = 0) {
+        
+        let parent = windowForSheet!.windowController as! MyController
+        
+        // Get load address of the flashed item
+        let loadAddr = (attachment as! ArchiveProxy).destinationAddr(ofItem: item)
+
+        // Flash program at it's designated load address
+        c64.flash(archive, item: item)
+    
+        // Type RUN or SYS
+        if loadAddr == 0x801 {
+            parent.keyboardcontroller.type("RUN")
+        } else {
+            parent.keyboardcontroller.type("SYS \(loadAddr)")
+        }
+    }
     
     //
     // Loading

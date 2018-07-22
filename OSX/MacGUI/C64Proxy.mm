@@ -648,22 +648,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (BOOL)mount:(ContainerProxy *)container {
     return wrapper->c64->mount([container wrapper]->container); }
+- (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item; {
+    return wrapper->c64->flash([container wrapper]->container, (int)item); }
 - (BOOL)flash:(ContainerProxy *)container {
     return wrapper->c64->flash([container wrapper]->container); }
-
-// DEPRECATED
-/*
-- (void) _loadFromSnapshotWrapper:(ContainerWrapper *)containerWrapper {
-    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
-    wrapper->c64->loadFromSnapshotSafe(snapshot); }
-- (void) loadFromSnapshot:(SnapshotProxy *)snapshot {
-    [self _loadFromSnapshotWrapper:[snapshot wrapper]]; }
-- (void) _saveToSnapshotWrapper:(ContainerWrapper *)containerWrapper {
-    Snapshot *snapshot = (Snapshot *)(containerWrapper->container);
-    wrapper->c64->saveToSnapshotSafe(snapshot); }
-- (void) saveToSnapshot:(SnapshotProxy *)snapshot {
-    [self _saveToSnapshotWrapper:[snapshot wrapper]]; }
-*/
 
 - (BOOL) isBasicRom:(NSURL *)url {
     return ROMFile::isBasicRomFile([[url path] UTF8String]); }
@@ -730,10 +718,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     Archive *archive = (Archive *)([a wrapper]->container);
     return wrapper->c64->insertDisk(archive);
 }
+/*
 - (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
     Archive *archive = (Archive *)([a wrapper]->container);
     return wrapper->c64->flushArchive(archive, (int)nr);
 }
+*/
 - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *container = (TAPFile *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
@@ -1125,6 +1115,11 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 {
     Archive *archive = (Archive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->getTypeOfItem((int)item)];
+}
+- (NSInteger)destinationAddrOfItem:(NSInteger)item
+{
+    Archive *archive = (Archive *)([self wrapper]->container);
+    return archive->getDestinationAddrOfItem((int)item);
 }
 - (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
 {

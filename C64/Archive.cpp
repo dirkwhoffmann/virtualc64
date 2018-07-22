@@ -93,6 +93,25 @@ Archive::dumpDirectory()
     }
 }
 
+void
+Archive::flash(int item, uint8_t *buffer)
+{
+    assert(buffer != NULL);
+    
+    uint16_t addr = getDestinationAddrOfItem(item);
+    debug("Flashing item %d to %p with offset %04X\n", item, buffer, addr);
+    
+    selectItem(item);
+    while (1) {
+        int data = getByte();
+        if (data < 0) break;
+        buffer[addr] = (uint8_t)data;
+        if (addr == 0xFFFF) break;
+        addr++;
+    }
+}
+
+
 const char *
 Archive::byteStream(unsigned n, size_t offset, size_t num)
 {

@@ -1060,7 +1060,7 @@ C64::flash(File *file, unsigned item)
         case T64_CONTAINER:
         case PRG_CONTAINER:
         case P00_CONTAINER:
-            result = flushArchive((Archive *)file, item);
+            ((Archive *)file)->flash(item, mem.ram);
             break;
             
         default:
@@ -1101,7 +1101,7 @@ C64::loadRom(const char *filename)
 
 // OLD STUFF
 
-
+/*
 bool 
 C64::flushArchive(Archive *a, int item)
 {
@@ -1123,6 +1123,7 @@ C64::flushArchive(Archive *a, int item)
     }
     return true;
 }
+*/
 
 bool
 C64::insertDisk(Archive *a)

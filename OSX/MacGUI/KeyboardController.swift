@@ -402,8 +402,8 @@ class KeyboardController: NSObject {
         }
     }
     
-    func typeRUN() {
-        typeOnKeyboard(string: "RUN\n", completion: nil)
+    func type(_ string: String) {
+        typeOnKeyboard(string: string, completion: nil)
     }
         
     func typeOnKeyboardAndPressPlay(string: String) {

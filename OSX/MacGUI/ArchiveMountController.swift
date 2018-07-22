@@ -109,10 +109,12 @@ class ArchiveMountController : UserDialogController {
         }
         
         // Flash file into memory
-        c64.flushArchive(archive, item: contents.selectedRow)
+        let document = parent.document as! MyDocument
+        document.flashAttachment(archive: archive, item: contents.selectedRow)
+        // c64.flash(archive, item: contents.selectedRow)
         
         // Type "RUN"
-        parent.keyboardcontroller.typeOnKeyboard(string: "RUN\n", completion: nil)
+        // parent.keyboardcontroller.typeOnKeyboard(string: "RUN\n", completion: nil)
         
         hideSheet()
     }

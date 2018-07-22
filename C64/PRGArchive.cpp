@@ -60,7 +60,8 @@ PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
         return NULL;
     
     PRGArchive *archive = new PRGArchive();
-    archive->debug(1, "Creating PRG archive from %s archive...\n", otherArchive->typeAsString());
+    archive->debug(1, "Creating PRG archive from %s archive...\n",
+                   otherArchive->typeAsString());
     
     // Determine container size and allocate memory
     archive->size = 2 + otherArchive->getSizeOfItem(exportItem);
