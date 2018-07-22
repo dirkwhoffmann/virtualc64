@@ -520,6 +520,7 @@ extension MyController {
         }
     }
     
+    @discardableResult
     func export(to url: URL?) -> Bool {
         
         if url == nil { return false }
