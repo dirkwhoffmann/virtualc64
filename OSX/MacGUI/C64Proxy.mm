@@ -520,8 +520,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
 - (BOOL) writeProtected { return wrapper->vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }
-- (BOOL) diskModified { return wrapper->vc1541->disk.isModified(); }
-- (void) setDiskModified:(BOOL)b { wrapper->vc1541->disk.setModified(b); }
+// - (BOOL) diskModified { return wrapper->vc1541->disk.isModified(); }
+// - (void) setDiskModified:(BOOL)b { wrapper->vc1541->disk.setModified(b); }
 - (BOOL) sendSoundMessages { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(BOOL)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (Halftrack) halftrack { return wrapper->vc1541->getHalftrack(); }

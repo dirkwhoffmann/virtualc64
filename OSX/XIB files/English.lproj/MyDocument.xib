@@ -228,7 +228,7 @@
                     <button hidden="YES" misplaced="YES" id="1045">
                         <rect key="frame" x="71" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="diskette" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="disk_saved" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -2808,7 +2808,7 @@
         <image name="LEDgray" width="128" height="128"/>
         <image name="cartridge" width="128" height="128"/>
         <image name="debug" width="129" height="129"/>
-        <image name="diskette" width="101" height="97"/>
+        <image name="disk_saved" width="97" height="97"/>
         <image name="fast" width="128" height="128"/>
         <image name="hardware" width="129" height="129"/>
         <image name="inspect_disk" width="129" height="128"/>

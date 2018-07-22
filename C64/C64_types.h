@@ -86,6 +86,10 @@ typedef enum {
     MSG_VC1541_HEAD_DOWN,
     MSG_VC1541_HEAD_DOWN_SOUND,
 
+    // Peripherals (Disk)
+    MSG_DISK_SAVED,
+    MSG_DISK_UNSAVED,
+    
     // Peripherals (Datasette)
     MSG_VC1530_TAPE,
     MSG_VC1530_NO_TAPE,

@@ -608,6 +608,12 @@ extension MyController {
             driveIcon.isHidden = true
             break
             
+        case MSG_DISK_SAVED:
+            driveIcon.image = NSImage.init(named: NSImage.Name(rawValue: "disk_saved"))
+
+        case MSG_DISK_UNSAVED:
+            driveIcon.image = NSImage.init(named: NSImage.Name(rawValue: "disk_unsaved"))
+
         case MSG_VC1541_RED_LED_ON:
             
             redLED.image = NSImage.init(named: NSImage.Name(rawValue: "LEDred"))

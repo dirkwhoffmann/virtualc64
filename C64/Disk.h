@@ -45,7 +45,8 @@ public:
     
     //! @brief   Method from VirtualComponent
     void dumpState();
-    
+    void ping();
+
     //
     // Constants and lookup tables
     //
@@ -198,21 +199,17 @@ private:
 
 public:
     
-    /*! @brief Returns write protection flag 
-     */
+    //! @brief Returns write protection flag
     bool isWriteProtected() { return writeProtected; }
 
-    /*! @brief Sets write protection flag 
-     */
+    //! @brief Sets write protection flag
     void setWriteProtection(bool b) { writeProtected = b; }
 
-    /*! @brief Returns modified flag
-     */
+    //! @brief Returns modified flag
     bool isModified() { return modified; }
     
-    /*! @brief Sets modified flag
-     */
-    void setModified(bool b) { modified = b; }
+    //! @brief Sets modified flag
+    void setModified(bool b);
 
     
 public:

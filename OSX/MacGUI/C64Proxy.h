@@ -402,8 +402,8 @@ struct ContainerWrapper;
 - (void) ejectDisk;
 - (BOOL) writeProtected;
 - (void) setWriteProtection:(BOOL)b;
-- (BOOL) diskModified;
-- (void) setDiskModified:(BOOL)b;
+// - (BOOL) diskModified;
+// - (void) setDiskModified:(BOOL)b;
 - (BOOL) sendSoundMessages;
 - (void) setSendSoundMessages:(BOOL)b;
 

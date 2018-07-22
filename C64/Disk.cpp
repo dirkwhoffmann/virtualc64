@@ -18,11 +18,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "basic.h"
+#include "C64.h"
+/*
+ #include "basic.h"
 #include "Disk.h"
 #include "D64Archive.h"
 #include "G64Archive.h"
 #include "NIBArchive.h"
+*/
 
 const Disk::TrackDefaults Disk::trackDefaults[43] = {
     
@@ -131,38 +134,22 @@ Disk::dumpState()
     msg("\n");
 }
 
-/*
 void
-Disk::encodeGcr(uint8_t value, uint8_t *gcrBits)
+Disk::ping()
 {
-    assert(gcrBits != NULL);
-
-    uint8_t nibble1 = bin2gcr(value >> 4);
-    uint8_t nibble2 = bin2gcr(value & 0xF);
-    
-    gcrBits[0] = (nibble1 & 0x10) ? 1 : 0;
-    gcrBits[1] = (nibble1 & 0x08) ? 1 : 0;
-    gcrBits[2] = (nibble1 & 0x04) ? 1 : 0;
-    gcrBits[3] = (nibble1 & 0x02) ? 1 : 0;
-    gcrBits[4] = (nibble1 & 0x01) ? 1 : 0;
-
-    gcrBits[5] = (nibble2 & 0x10) ? 1 : 0;
-    gcrBits[6] = (nibble2 & 0x08) ? 1 : 0;
-    gcrBits[7] = (nibble2 & 0x04) ? 1 : 0;
-    gcrBits[8] = (nibble2 & 0x02) ? 1 : 0;
-    gcrBits[9] = (nibble2 & 0x01) ? 1 : 0;
+    VirtualComponent::ping();
+    c64->putMessage(modified ? MSG_DISK_UNSAVED : MSG_DISK_SAVED);
 }
-*/
 
-/*
 void
-Disk::encodeGcr(uint8_t *values, uint8_t *gcrBits, size_t length)
+Disk::setModified(bool b)
 {
-    for (size_t i = 0; i < length; i++, values++, gcrBits += 10) {
-        encodeGcr(*values, gcrBits);
+    if (b != modified) {
+        modified = b;
+        c64->putMessage(modified ? MSG_DISK_UNSAVED : MSG_DISK_SAVED);
     }
 }
-*/
+
 
 void
 Disk::encodeGcr(uint8_t value, Track t, HeadPosition offset)
@@ -549,23 +536,6 @@ Disk::sectorBytesAsString(uint8_t *buffer, size_t length)
 //
 // Decoding disk data
 //
-
-/*
-size_t
-Disk::decodeDisk(uint8_t *dest, int *error)
-{
-    Track t = 42;
-    while ( t > 0 && trackIsEmpty(t)) {
-        // debug("Track %d is empty", t);
-        t--;
-    }
-
-    return
-    (t <= 35) ? decodeDisk(dest, 35, error) :
-    (t <= 40) ? decodeDisk(dest, 40, error) :
-    decodeDisk(dest, 42, error);
-}
-*/
 
 size_t
 Disk::decodeDisk(uint8_t *dest, unsigned numTracks, int *error)

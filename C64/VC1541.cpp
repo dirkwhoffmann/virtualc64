@@ -417,6 +417,7 @@ VC1541::insertDisk(Archive *a)
     
     diskInserted = true;
     c64->putMessage(MSG_VC1541_DISK);
+    c64->putMessage(MSG_DISK_SAVED);
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_DISK_SOUND);
     
