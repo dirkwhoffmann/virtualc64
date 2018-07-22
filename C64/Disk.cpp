@@ -581,7 +581,7 @@ Disk::decodeDisk(uint8_t *dest, unsigned numTracks, int *error)
         if (trackIsEmpty(t))
             break;
         
-        debug(1, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
+        debug(2, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), error);
     }
     

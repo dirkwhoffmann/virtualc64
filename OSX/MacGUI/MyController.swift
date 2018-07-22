@@ -714,10 +714,7 @@ extension MyController {
     // Action methods (Cartridge)
     // --------------------------------------------------------------------------------
 
-    @IBAction func cartridgeEjectAction(_ sender: Any!) {
-  
-        c64.detachCartridgeAndReset()
-    }
+ 
     
     func playSound(name: String, volume: Float) {
         

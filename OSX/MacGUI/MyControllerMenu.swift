@@ -461,6 +461,73 @@ extension MyController {
         exportPanel.showSheet(withParent: self)
     }
  
+    func export(to url: URL, ofType typeName: String) {
+        
+        track("url = \(url)")
+
+        let type = typeName.uppercased()
+        var archive: ArchiveProxy?
+        
+        // Convert inserted disk to D64 archive
+        guard let d64archive = D64Proxy.make(withVC1541: c64.vc1541) else {
+            return
+        }
+        
+        // Convert D64 archive to target format
+        switch type {
+        case "D64":
+            track("Exporting to D64 format")
+            archive = d64archive
+            break;
+            
+        case "T64":
+            track("Exporting to T64 format")
+            archive = T64Proxy.make(withAnyArchive: d64archive)
+            break;
+            
+        case "PRG":
+            track("Exporting to PRG format")
+            if d64archive.numberOfItems() > 1  {
+                showDiskHasMultipleFilesAlert(format: "PRG")
+            }
+            archive = PRGProxy.make(withAnyArchive: d64archive)
+            break;
+            
+        case "P00":
+            track("Exporting to P00 format")
+            if d64archive.numberOfItems() > 1  {
+                showDiskHasMultipleFilesAlert(format: "P00")
+            }
+            archive = P00Proxy.make(withAnyArchive: d64archive)
+            break;
+            
+        default:
+            track("Unknown format")
+            break;
+        }
+        
+        // Serialize archive
+        let data = NSMutableData.init(length: archive!.sizeOnDisk())
+        let ptr = data!.mutableBytes
+        archive!.write(toBuffer: ptr)
+        
+        // Export
+        track("Exporting to file \(url)")
+        data!.write(to: url, atomically: true)
+    }
+    
+    func export(to url: URL?) {
+        
+        if url != nil {
+            let suffix = url!.pathExtension
+            export(to: url!, ofType: suffix)
+        }
+    }
+    
+    
+    
+    
+    
     @IBAction func writeProtectAction(_ sender: Any!) {
         
         let protected = c64.vc1541.disk.writeProtected()

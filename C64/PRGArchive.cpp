@@ -54,14 +54,16 @@ PRGArchive::makePRGArchiveWithFile(const char *filename)
 PRGArchive *
 PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
     
-    if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
+    int exportItem = 0;
+    
+    if (otherArchive == NULL || otherArchive->getNumberOfItems() <= exportItem)
         return NULL;
     
     PRGArchive *archive = new PRGArchive();
     archive->debug(1, "Creating PRG archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
-    archive->size = 2 + otherArchive->getSizeOfItem(0);
+    archive->size = 2 + otherArchive->getSizeOfItem(exportItem);
     if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
@@ -70,12 +72,12 @@ PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
     
     // Load address
     uint8_t* ptr = archive->data;
-    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(0));
-    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(0));
+    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(exportItem));
+    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(exportItem));
     
     // File data
     int byte;
-    otherArchive->selectItem(0);
+    otherArchive->selectItem(exportItem);
     while ((byte = otherArchive->getByte()) != EOF) {
         *ptr++ = (uint8_t)byte;
     }

@@ -380,93 +380,6 @@ class MyDocument : NSDocument {
     }
     
     
-    
-    
-    
-    /// DEPRECATED
-    /*
-    func readFromAttachment(warnAboutUnsafedDisk: Bool, showMountDialog: Bool) {
-        
-        if attachment == nil { return }
-        
-        let parent = windowForSheet!.windowController as! MyController
-        
-        switch attachment!.type() {
-            
-        case V64_CONTAINER:
-            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                // c64.load(fromSnapshot: attachment as! SnapshotProxy)
-                c64.flash(attachment!)
-            }
-            return
-            
-        case CRT_CONTAINER:
-            if showMountDialog {
-                let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
-                let controller = CartridgeMountController.init(windowNibName: nibName)
-                controller.showSheet(withParent: parent)
-            } else {
-                c64.attachCartridgeAndReset(attachment as! CRTProxy)
-            }
-            return
-            
-        case TAP_CONTAINER:
-            if showMountDialog {
-                let nibName = NSNib.Name(rawValue: "TapeMountDialog")
-                let controller = TapeMountController.init(windowNibName: nibName)
-                controller.showSheet(withParent: parent)
-            } else {
-                c64.insertTape(attachment as! TAPProxy)
-            }
-            return
-            
-        case T64_CONTAINER, D64_CONTAINER:
-            
-            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                if showMountDialog {
-                    let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
-                    let controller = ArchiveMountController.init(windowNibName: nibName)
-                    controller.showSheet(withParent: parent)
-                } else {
-                    c64.insertDisk(attachment as! ArchiveProxy)
-                }
-            }
-            return
-            
-        case PRG_CONTAINER, P00_CONTAINER:
-            
-            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                if showMountDialog {
-                    let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
-                    let controller = ArchiveMountController.init(windowNibName: nibName)
-                    controller.showSheet(withParent: parent)
-                } else {
-                    c64.flushArchive(attachment as! ArchiveProxy, item: 0)
-                    parent.keyboardcontroller.typeOnKeyboard(string: "RUN\n", completion: nil)
-                }
-            }
-            return
-            
-        case G64_CONTAINER, NIB_CONTAINER:
-            
-            if !warnAboutUnsafedDisk || proceedWithUnsavedDisk() {
-                if showMountDialog {
-                    let nibName = NSNib.Name(rawValue: "DiskMountDialog")
-                    let controller = DiskMountController.init(windowNibName: nibName)
-                    controller.showSheet(withParent: parent)
-                } else {
-                    c64.insertDisk(attachment as! ArchiveProxy)
-                }
-            }
-            return
-            
-        default:
-            track("Unknown attachment type")
-            fatalError()
-        }
-    }
-    */
-    
     //
     // Loading
     //
@@ -550,6 +463,5 @@ class MyDocument : NSDocument {
         // to nil. Hence, the emulator should be shut down as late as possible.
         c64.kill()
     }
-    
 }
 

@@ -9,23 +9,8 @@ import Foundation
 
 extension MyController {
 
-    /*
-    @discardableResult func mountCartridge() -> Bool {
-    
-        // Does this document have an attachment?
-        let document = self.document as! MyDocument
-        guard let attachment = document.attachment else {
-            return false;
-        }
+    @IBAction func cartridgeEjectAction(_ sender: Any!) {
         
-        // Is the attachment a cartridge?
-        if attachment.type() != CRT_CONTAINER {
-            return false;
-        }
-        
-        // Attach cartride 
-        c64.attachCartridgeAndReset(attachment as! CRTProxy)
-        return true
+        c64.detachCartridgeAndReset()
     }
-    */
 }

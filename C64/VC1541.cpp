@@ -479,8 +479,8 @@ VC1541::convertToD64()
     archive->setNumberOfTracks(numTracks);
     disk.decodeDisk(archive->getData(), numTracks);
     
-    archive->debug(2, "Archive has %d files\n", archive->getNumberOfItems());
-    archive->debug(2, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
+    // archive->debug("Archive has %d files\n", archive->getNumberOfItems());
+    // archive->debug("Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
     
     return archive;
 }

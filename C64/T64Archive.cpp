@@ -70,7 +70,7 @@ T64Archive::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
     unsigned maxFiles = (currentFiles < 30) ? 30 : currentFiles;
     archive->size = 64 /* header */ + maxFiles * 32 /* tape entries */;
     
-    for (unsigned i = 0; i < otherArchive->getNumberOfItems(); i++)
+    for (unsigned i = 0; i < currentFiles; i++)
         archive->size += otherArchive->getSizeOfItem(i);
     
     if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
@@ -414,11 +414,12 @@ T64Archive::repair()
         
             data[0x24] = LO_BYTE(noOfItems);
             data[0x25] = HI_BYTE(noOfItems);
-            assert(noOfItems == getNumberOfItems());
+            
         }
+        assert(noOfItems == getNumberOfItems());
     }
     
-    for (i = 0; i < getNumberOfItems(); i++) {
+    for (i = 0; i < noOfItems; i++) {
 
         //
         // 2. Check relative offset information for each item

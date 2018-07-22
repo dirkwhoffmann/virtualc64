@@ -136,7 +136,8 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
     archive->writeBAM(otherArchive->getName());
     
     // Loop over all entries in archive
-    for (int i = 0; i < otherArchive->getNumberOfItems(); i++) {
+    int numberOfItems = otherArchive->getNumberOfItems();
+    for (int i = 0; i < numberOfItems; i++) {
         
         archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
         
@@ -473,7 +474,6 @@ D64Archive::selectItem(int item)
     if ((fp = offset(data[fp+0x01], data[fp+0x02])) < 0)
         return;
     
-    
     // Skip t/s sequence
     fp += 2;
     
@@ -525,6 +525,7 @@ D64Archive::getByte()
 // Accessing archive attributes
 //
 
+/*
 unsigned
 D64Archive::numberOfSectors(unsigned halftrack)
 {
@@ -535,6 +536,7 @@ D64Archive::numberOfSectors(unsigned halftrack)
     
     return D64Map[track].numberOfSectors;
 }
+*/
 
 unsigned
 D64Archive::numberOfTracks()
@@ -558,17 +560,14 @@ D64Archive::setNumberOfTracks(unsigned tracks)
 uint8_t *
 D64Archive::findSector(Track t, Sector s)
 {
-    assert(isTrackNumber(t));
-    assert(isSectorNumber(s));
-    
+    assert(isValidTrackSectorPair(t, s));
     return data + offset(t, s);
 }
 
 uint8_t
 D64Archive::errorCode(Track t, Sector s)
 {
-    assert(isTrackNumber(t));
-    assert(isSectorNumber(s));
+   assert(isValidTrackSectorPair(t, s));
     
     Sector index = Disk::trackDefaults[t].firstSectorNr + s;
     assert(index < 802);
@@ -579,19 +578,22 @@ D64Archive::errorCode(Track t, Sector s)
 
 
 int
-D64Archive::offset(int track, int sector)
+D64Archive::offset(Track track, Sector sector)
 {
-    assert(1 <= track && track <= 42);
-    assert(sector < D64Map[track].numberOfSectors);
-    
-    return D64Map[track].offset + (sector * 256);
+    if (isValidTrackSectorPair(track, sector)) {
+        return D64Map[track].offset + (sector * 256);
+    } else {
+        return -1;
+    }
 }
 
 bool
-D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectoryTrack)
+D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector,
+                               uint8_t *nextTrack, uint8_t *nextSector,
+                               bool skipDirectoryTrack)
 {
     unsigned highestSectorNumberInThisTrack = D64Map[track].numberOfSectors - 1;
-    
+    assert(highestSectorNumberInThisTrack == numberOfSectorsInTrack(track));
     // PROBLEM?: A REAL VC1541 DISK USUALLY SHOWS AN INTERLEAVE OF 10
     
     if (sector < highestSectorNumberInThisTrack) {
@@ -617,16 +619,18 @@ D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack
 bool
 D64Archive::jumpToNextSector(int *pos)
 { 
-	int nTrack, nSector;
+	int nTrack, nSector, newPos;
     
 	nTrack = nextTrack(*pos);
 	nSector = nextSector(*pos);
     
-    if (nTrack > (int)numTracks || nSector > D64Map[nTrack].numberOfSectors) {
+    if (nTrack > (int)numTracks)
         return false;
-    }
     
-    *pos = offset(nTrack, nSector);
+    if ((newPos = offset(nTrack, nSector)) < 0)
+        return false;
+    
+    *pos = newPos;
     return true;
 }
 
@@ -635,7 +639,9 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
 {
     uint8_t track = *t;
     uint8_t sector = *s;
-    
+ 
+    assert(isValidTrackSectorPair(track, sector));
+
     int pos = offset(track, sector);
     uint8_t positionOfLastDataByte = data[pos + 1];
     
@@ -678,7 +684,8 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
 void
 D64Archive::markSectorAsUsed(uint8_t track, uint8_t sector)
 {
-    // For each track and sector, there exists a single bit in the BAM. 1 = used, 0 = unused
+    // For each track and sector, there exists a single bit in the BAM.
+    // 1 = used, 0 = unused
     
     // First byte of BAM
     int bam = offset(18,0);
@@ -710,7 +717,7 @@ D64Archive::writeBAM(const char *name)
     
     // 00/01: Track/Sector location of the first directory sector (should be 18/1)
     markSectorAsUsed(18, 0);
-    pos = offset(18,0);
+    pos = offset(18, 0);
     data[pos++] = 18;
     data[pos++] = 1;
     
@@ -739,14 +746,14 @@ D64Archive::writeBAM(const char *name)
             else assert(0);
         }
     }
-    assert(pos == offset(18,0) + 0x90);
+    assert(pos == offset(18, 0) + 0x90);
     
     // 90-9F: Disk Name (padded with $A0)
     size_t len = strlen(name);
     for (unsigned k = 0; k < 16; k++)
         data[pos++] = (len > k) ? name[k] : 0xA0;
     
-    assert(pos == offset(18,0) + 0xA0);
+    assert(pos == offset(18, 0) + 0xA0);
     
     // A0-A1: Filled with $A0
     data[pos++] = 0xA0;
@@ -769,18 +776,22 @@ D64Archive::writeBAM(const char *name)
     data[pos++] = 0xA0;
     data[pos++] = 0xA0;
     
-    assert(pos == offset(18,0) + 0xAB);	
+    assert(pos == offset(18, 0) + 0xAB);
 }
 
 void
 D64Archive::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles)
 {
-    int pos = offset(18, 1);                // Directory starts on track 18 in sector 1
-    bool last_sector = (data[pos] == 0x00); // Does the directory continue in another sector?
-    unsigned i = 0, item = 0;
+    // Directory starts on track 18 in sector 1
+    int pos = offset(18, 1);
     
-    pos += 2;                               // Move to the beginning of the first directory entry
+    // Does the directory continue in another sector?
+    bool last_sector = (data[pos] == 0x00);
 
+    // Move to the beginning of the first directory entry
+    pos += 2;
+
+    unsigned i = 0, item = 0;
     while (i < 144 /* maximum number of files on disk */) {
         
         // Only proceed if the directory entry is not a null entry

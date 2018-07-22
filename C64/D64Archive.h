@@ -142,7 +142,7 @@ public:
     bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
     
     //! @brief    Class function that returns the total number of sectors in a specific track
-    static unsigned numberOfSectors(unsigned trackNr);
+    // static unsigned numberOfSectors(unsigned trackNr);
 
 	//! @brief    Returns the first disk ID character
 	uint8_t diskId1() { return data[offset(18, 0) + 0xA2]; }
@@ -167,28 +167,33 @@ public:
     
 private:
         
-    //! Translates a track and sector number into an offset
-    int offset(int track, int sector);
+    //! @brief   Translates a track and sector number into an offset.
+    //! @return  -1, if an invalid track or sector number is provided.
+    int offset(Track track, Sector sector);
     
-    //! @brief Returns true iff offset points to the last byte of a sector
+    //! @brief   Returns true iff offset points to the last byte of a sector.
     bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }
     
-    //! Returns the next logical track number following this sector
-    /*! The track number is stored in the first byte of the current track */
+    //! @brief   Returns the next logical track number following this sector.
+    /*! @note    The number is stored in the first byte of the current sector.
+     */
     int nextTrack(int offset) { return data[offset & (~0xFF)]; }
     
-    //! Returns the next logical sector number following this sector
-    /*! The track number is stored in the second byte of the current track */
+    //! @brief   Returns the next sector number following this sector.
+    /*! @note    The number is stored in the second byte of the current sector.
+     */
     int nextSector(int offset) { return data[(offset & (~0xFF)) + 1]; }
     
-    //! @brief Return the next physical track and sector
-    bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
+    //! @brief   Returns the next physical track and sector.
+    bool nextTrackAndSector(uint8_t track, uint8_t sector,
+                            uint8_t *nextTrack, uint8_t *nextSector,
+                            bool skipDirectory = false);
     
     /*! @brief   Jump to the beginning of the next sector
      *  @details pos is set to the beginning of the next sector.
-     *  @result  True if the jump to the next sector was successful; false if the
-     *           current sector points to an invalid valid track/sector combination.
-     *           In the failure case, pos remains untouched.
+     *  @result  True if the jump to the next sector was successful; false if
+     *           the current sector points to an invalid valid track/sector
+     *           combination. In the failure case, pos remains untouched.
      */
     bool jumpToNextSector(int *pos);
 

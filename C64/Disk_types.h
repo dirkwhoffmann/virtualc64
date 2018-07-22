@@ -130,16 +130,33 @@ typedef unsigned Halftrack;
  */
 static inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= maxNumberOfHalftracks; }
 
-/*! @brief    Data type for addressing sectors inside a track
- */
+//! @brief    Data type for addressing sectors inside a track
 typedef unsigned Sector;
 
-/*! @brief    Checks if a given number is a valid sector number
- */
+//! @brief    Checks if a given number is a valid sector number
 static inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
 
-/*! @brief    Data type for specifying the head position inside a track
- */
+//! @brief    Return the number of sectors stored in a certain track
+static inline unsigned numberOfSectorsInTrack(Track t) {
+    return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0;
+}
+
+//! @brief    Return the number of sectors stored in a certain halftrack
+static inline unsigned numberOfSectorsInHalftrack(Halftrack ht) {
+    return numberOfSectorsInTrack((ht + 1) / 2);
+}
+
+//! @brief    Checks if the given pair is a valid track / sector combination
+static inline bool isValidTrackSectorPair(Track t, Sector s) {
+    return s < numberOfSectorsInTrack(t);
+}
+
+//! @brief    Checks if the given pair is a valid halftrack / sector combination
+static inline bool isValidHalftrackSectorPair(Halftrack ht, Sector s) {
+    return s < numberOfSectorsInHalftrack(ht);
+}
+
+//! @brief    Data type for specifying the head position inside a track
 typedef int32_t HeadPosition;
 
 //! @brief    Layout information of a single sector

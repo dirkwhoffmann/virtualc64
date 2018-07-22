@@ -61,13 +61,10 @@ size_t
 Archive::getSizeOfItem(int n)
 {
     int size = 0;
-
-    if (n < getNumberOfItems()) {
-        
-        selectItem(n);
-        while (getByte() != EOF)
-            size++;
-        }
+    
+    selectItem(n);
+    while (getByte() != EOF)
+        size++;
 
     return size;
 }
@@ -75,12 +72,14 @@ Archive::getSizeOfItem(int n)
 void
 Archive::dumpDirectory()
 {
+    int numberOfItems = getNumberOfItems();
+    
     msg("Archive:           %s\n", getName());
     msg("-------\n");
     msg("  Path:            %s\n", getPath());
-    msg("  Items:           %d\n", getNumberOfItems());
+    msg("  Items:           %d\n", numberOfItems);
 
-    for (unsigned i = 0; i < getNumberOfItems(); i++) {
+    for (unsigned i = 0; i < numberOfItems; i++) {
         msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
                 i, getNameOfItem(i), getSizeOfItem(i), getDestinationAddrOfItem(i));
         msg("                 ");
