@@ -562,8 +562,6 @@ struct ContainerWrapper;
 - (BOOL) isCartridgeAttached;
 
 - (BOOL) insertDisk:(ArchiveProxy *)a;
-// - (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
-
 - (BOOL) insertTape:(TAPProxy *)a;
 
 - (NSInteger) mouseModel;

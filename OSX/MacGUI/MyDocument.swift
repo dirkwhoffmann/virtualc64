@@ -35,14 +35,6 @@ class MyDocument : NSDocument {
      */
     var attachment: ContainerProxy? = nil
     
-    /**
-     If the attachment is a file archive, this variable determines how it is
-     handled. If set to true, the first item is flushed directly into memory.
-     If set to false, the archive is mounted as disk. For other attachment
-     types (snapshots, cartridges, etc.), this variable has no effect.
-     */
-    var flushAttachment = false
-    
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
 

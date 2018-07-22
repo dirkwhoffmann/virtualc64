@@ -714,21 +714,15 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (BOOL) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
+
 - (BOOL) insertDisk:(ArchiveProxy *)a {
     Archive *archive = (Archive *)([a wrapper]->container);
     return wrapper->c64->insertDisk(archive);
 }
-/*
-- (BOOL) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
-    Archive *archive = (Archive *)([a wrapper]->container);
-    return wrapper->c64->flushArchive(archive, (int)nr);
-}
-*/
 - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *container = (TAPFile *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
 }
-
 - (NSInteger) mouseModel { return (NSInteger)wrapper->c64->getMouseModel(); }
 - (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
 - (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }

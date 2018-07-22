@@ -671,10 +671,6 @@ public:
     //! @brief    Loads ROM image into memory
     bool loadRom(const char *filename);
     
-    //! @brief    Flushes a single item from an archive into memory.
-    //! @deprecated
-    // bool flushArchive(Archive *a, int item);
-    
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @details  Only D64 and G64 archives are supported.
      */

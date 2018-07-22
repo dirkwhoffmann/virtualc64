@@ -1088,7 +1088,7 @@ C64::loadRom(const char *filename)
     if (result) {
         debug(2, "Loaded ROM image %s.\n", filename);
     } else {
-        debug(2, "Failed to flush ROM image %s.\n", filename);
+        debug(2, "Failed to flash ROM image %s.\n", filename);
     }
     
     if (!wasRunnable && isRunnable())
@@ -1097,33 +1097,6 @@ C64::loadRom(const char *filename)
     delete rom;
     return result;
 }
-
-
-// OLD STUFF
-
-/*
-bool 
-C64::flushArchive(Archive *a, int item)
-{
-    uint16_t addr;
-    int data;
-    
-    if (a == NULL)
-        return false;
-    
-    addr = a->getDestinationAddrOfItem(item);
-    debug("Flushing item %d at addr: %04X %d\n", item, addr, addr);
-    a->selectItem(item);
-    while (1) {
-        data = a->getByte();
-        if (data < 0) break;
-        mem.ram[addr] = (uint8_t)data;
-        if (addr == 0xFFFF) break;
-        addr++;
-    }
-    return true;
-}
-*/
 
 bool
 C64::insertDisk(Archive *a)

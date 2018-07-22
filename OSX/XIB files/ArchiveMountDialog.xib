@@ -180,7 +180,7 @@ Gw
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dSZ-Fi-yHu">
                         <rect key="frame" x="23" y="141" width="95" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Double-click to flush file directly into memory" id="q9i-JQ-NCZ">
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Double-click to flash file directly into memory" id="q9i-JQ-NCZ">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
