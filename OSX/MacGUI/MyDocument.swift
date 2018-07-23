@@ -85,52 +85,50 @@ class MyDocument : NSDocument {
         self.addWindowController(controller)
     }
     
+    
     //
     // Handling the lists of recently used URLs
     //
     
-    func noteNewRecentlyInsertedDiskURL(_ url: URL) {
-        
-        let maxItems = 10
-        
-        if !recentlyInsertedDiskURLs.contains(url) {
-            if recentlyInsertedDiskURLs.count == maxItems {
-                recentlyInsertedDiskURLs.remove(at: maxItems - 1)
+    func insertURL(_ url: URL, toList list: inout [URL], ofSize count: Int) {
+        if !list.contains(url) {
+            if list.count == count {
+                list.remove(at: count - 1)
             }
-            recentlyInsertedDiskURLs.insert(url, at: 0)
-        }
-    }
- 
-    func noteNewRecentlyExportedDiskURL(_ url: URL) {
-        
-        let maxItems = 1
-        
-        if !recentlyExportedDiskURLs.contains(url) {
-            if recentlyExportedDiskURLs.count == maxItems {
-                recentlyExportedDiskURLs.remove(at: maxItems - 1)
-            }
-            recentlyExportedDiskURLs.insert(url, at: 0)
-            // parent.driveIcon.toolTip = url.path
+            list.insert(url, at: 0)
         }
     }
     
-    func clearRecentlyExportedDiskURLs() {
-        
-        // let parent = windowForSheet!.windowController as! MyController
-        
-        recentlyExportedDiskURLs = []
-        // parent.driveIcon.toolTip = nil
+    func noteNewRecentlyInsertedDiskURL(_ url: URL) {
+        insertURL(url, toList: &recentlyInsertedDiskURLs, ofSize: 10)
     }
-        
+ 
+    func noteNewRecentlyExportedDiskURL(_ url: URL) {
+        insertURL(url, toList: &recentlyExportedDiskURLs, ofSize: 1)
+    }
+    
     func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
+        insertURL(url, toList: &recentlyAttachedCartridgeURLs, ofSize: 10)
+    }
+  
+    func noteNewRecentlyUsedURL(_ url: URL) {
         
-        let maxItems = 10
-        
-        if !recentlyAttachedCartridgeURLs.contains(url) {
-            if recentlyAttachedCartridgeURLs.count == maxItems {
-                recentlyAttachedCartridgeURLs.remove(at: maxItems - 1)
-            }
-            recentlyAttachedCartridgeURLs.insert(url, at: 0)
+        switch (url.pathExtension.uppercased()) {
+            
+        case "D64", "T64":
+            noteNewRecentlyInsertedDiskURL(url)
+            noteNewRecentlyExportedDiskURL(url)
+            break
+            
+        case "PRG", "P00":
+            noteNewRecentlyInsertedDiskURL(url)
+            break
+            
+        case "CRT":
+            noteNewRecentlyAtachedCartridgeURL(url)
+            
+        default:
+            break
         }
     }
     
@@ -147,29 +145,9 @@ class MyDocument : NSDocument {
         let fileWrapper = try FileWrapper.init(url: url)
         let pathExtension = url.pathExtension.uppercased()
         try createAttachment(from: fileWrapper, ofType: pathExtension)
-        
-        // Remember URLs for certain file types
-        switch (pathExtension) {
-        
-        case "D64", "T64":
-            // URLs of such files are remembered for inserting and exporting.
-            noteNewRecentlyInsertedDiskURL(url)
-            noteNewRecentlyExportedDiskURL(url)
-            break
-            
-        case "PRG", "P00":
-            // URLs of such files are remembered for inserting, only.
-            noteNewRecentlyInsertedDiskURL(url)
-            break
-            
-        case "CRT":
-            // URLs of such files are remembered for attaching, only.
-            noteNewRecentlyAtachedCartridgeURL(url)
-            
-        default:
-            // All other URLs are not remembered.
-            break
-        }
+
+        // Put URL in recently used URL lists
+        noteNewRecentlyUsedURL(url)
     }
     
     /// Creates an attachment from a file wrapper

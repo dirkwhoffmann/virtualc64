@@ -379,7 +379,7 @@ extension MyController {
             let emptyArchive = ArchiveProxy.make()
             let emptyD64Archive = D64Proxy.make(withAnyArchive: emptyArchive)
             mount(emptyD64Archive)
-            (document as! MyDocument).clearRecentlyExportedDiskURLs()
+            (document as! MyDocument).recentlyExportedDiskURLs = []
         }
     }
     
@@ -479,18 +479,20 @@ extension MyController {
         document.recentlyAttachedCartridgeURLs = []
     }
     
+    /*
     @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
         
         let document = self.document as! MyDocument
         document.recentlyExportedDiskURLs = []
     }
+    */
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
         if proceedWithUnsavedDisk() {
             
             changeDisk(nil)
-            (document as! MyDocument).clearRecentlyExportedDiskURLs()
+            (document as! MyDocument).recentlyExportedDiskURLs = []
         }
     }
     
@@ -504,7 +506,6 @@ extension MyController {
     func export(to url: URL, ofType typeName: String) -> Bool {
 
         let document = self.document as! MyDocument
-        let type = typeName.uppercased()
         var archive: ArchiveProxy?
         
         // Convert inserted disk to D64 archive
@@ -513,7 +514,7 @@ extension MyController {
         }
         
         // Convert D64 archive to target format
-        switch type {
+        switch typeName.uppercased() {
         case "D64":
             track("Exporting to D64 format")
             archive = d64archive
@@ -541,8 +542,8 @@ extension MyController {
             break;
             
         default:
-            track("Unknown format")
-            break;
+            track("Cannot export disk to format \(typeName)")
+            return false;
         }
         
         // Serialize archive
@@ -551,19 +552,17 @@ extension MyController {
         archive!.write(toBuffer: ptr)
         
         // Write to file
-        track("Trying to export to file \(url)")
         if !(data!.write(to: url, atomically: true)) {
-            track("Export failed");
+            track("Failed to export disk (cannot write to file)");
             return false
         }
         
         // Mark disk as "not modified"
         c64.vc1541.disk.setModified(false)
         
-        // Remember export URL and add it to the list of recent inserts
-        document.noteNewRecentlyExportedDiskURL(url)
-        document.noteNewRecentlyInsertedDiskURL(url)
-    
+        // Put URL in recently used URL lists
+        document.noteNewRecentlyUsedURL(url)
+        
         return true
     }
     
