@@ -608,11 +608,15 @@ extension MyController {
             break
             
         case MSG_DISK_SAVED:
+            
             driveIcon.image = NSImage.init(named: NSImage.Name(rawValue: "disk_saved"))
-
+            break
+            
         case MSG_DISK_UNSAVED:
+            
             driveIcon.image = NSImage.init(named: NSImage.Name(rawValue: "disk_unsaved"))
-
+            break
+            
         case MSG_VC1541_RED_LED_ON:
             
             redLED.image = NSImage.init(named: NSImage.Name(rawValue: "LEDred"))
@@ -659,7 +663,7 @@ extension MyController {
             break
     
         case MSG_NO_CARTRIDGE:
-         
+            
             cartridgeIcon.isHidden = true
             break
             

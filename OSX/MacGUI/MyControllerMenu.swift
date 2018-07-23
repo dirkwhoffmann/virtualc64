@@ -58,7 +58,7 @@ extension MyController {
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             let document = self.document as! MyDocument
             if item.tag < document.recentlyExportedDiskURLs.count {
-                item.title = document.recentlyExportedDiskURLs[item.tag].lastPathComponent
+                item.title = document.recentlyExportedDiskURLs[item.tag].path // lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: NSImage.Name(rawValue: "disk_small"))
             } else {
@@ -379,7 +379,7 @@ extension MyController {
             let emptyArchive = ArchiveProxy.make()
             let emptyD64Archive = D64Proxy.make(withAnyArchive: emptyArchive)
             mount(emptyD64Archive)
-            (document as! MyDocument).recentlyExportedDiskURLs = []
+            (document as! MyDocument).clearRecentlyExportedDiskURLs()
         }
     }
     
@@ -490,7 +490,7 @@ extension MyController {
         if proceedWithUnsavedDisk() {
             
             changeDisk(nil)
-            (document as! MyDocument).recentlyExportedDiskURLs = []
+            (document as! MyDocument).clearRecentlyExportedDiskURLs()
         }
     }
     

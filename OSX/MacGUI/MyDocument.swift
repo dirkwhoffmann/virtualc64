@@ -86,27 +86,8 @@ class MyDocument : NSDocument {
     }
     
     //
-    // Handling the lists of recently used files
+    // Handling the lists of recently used URLs
     //
-    
-    /*
-    func noteNewRecentlyUsedDiskURL(_ url: URL) {
-        
-        switch url.pathExtension.uppercased() {
-        
-        case "T64", "PRG", "D64", "P00":
-            noteNewRecentlyInsertedDiskURL(url)
-            break
-            
-        case "G64", "NIB":
-            noteNewRecentlyInsertedDiskURL(url)
-            break
-            
-        default:
-            break
-        }
-    }
-    */
     
     func noteNewRecentlyInsertedDiskURL(_ url: URL) {
         
@@ -129,9 +110,18 @@ class MyDocument : NSDocument {
                 recentlyExportedDiskURLs.remove(at: maxItems - 1)
             }
             recentlyExportedDiskURLs.insert(url, at: 0)
+            // parent.driveIcon.toolTip = url.path
         }
     }
     
+    func clearRecentlyExportedDiskURLs() {
+        
+        // let parent = windowForSheet!.windowController as! MyController
+        
+        recentlyExportedDiskURLs = []
+        // parent.driveIcon.toolTip = nil
+    }
+        
     func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
         
         let maxItems = 10

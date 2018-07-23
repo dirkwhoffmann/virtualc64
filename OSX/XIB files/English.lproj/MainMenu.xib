@@ -639,17 +639,24 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="8fO-nY-y8g"/>
-                            <menuItem title="Export" id="qCl-TJ-dqC">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="exportRecentDiskAction:" target="-1" id="COa-hQ-08A"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Export Disk..." id="inq-yB-iPf" userLabel="Export disk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportDiskAction:" target="-1" id="rL4-3t-mjC"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem title="Export Disk To" id="Hkb-4l-9Ts">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Export Disk To" id="pDh-nd-HeL">
+                                    <items>
+                                        <menuItem title="Disk" id="qCl-TJ-dqC">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportRecentDiskAction:" target="-1" id="COa-hQ-08A"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
                             <menuItem title="Write Protect" id="vbD-qh-Fhq">
