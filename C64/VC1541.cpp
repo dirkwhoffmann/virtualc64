@@ -49,7 +49,7 @@ VC1541::VC1541()
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
         { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
-        { &diskPartiallyInserted,   sizeof(diskPartiallyInserted),  CLEAR_ON_RESET },
+        // { &diskPartiallyInserted,   sizeof(diskPartiallyInserted),  CLEAR_ON_RESET },
         { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
         { &offset,                  sizeof(offset),                 CLEAR_ON_RESET },
         { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
@@ -59,11 +59,13 @@ VC1541::VC1541()
         { &byteReady,               sizeof(byteReady),              CLEAR_ON_RESET },
 
         // Disk properties (will survive reset)
-        { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
+        // { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
+        { &insertionStatus,         sizeof(insertionStatus),        KEEP_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
     
+    insertionStatus = NOT_INSERTED;
     sendSoundMessages = true;
     resetDisk();
 }
@@ -90,10 +92,11 @@ VC1541::resetDisk()
 {
     debug (3, "Resetting disk in VC1541...\n");
     
-    // Disk properties
     disk.clearDisk();
-    diskInserted = false;
-    diskPartiallyInserted = false;
+    
+    // insertionStatus = NOT_INSERTED;
+    // diskInserted = false;
+    // diskPartiallyInserted = false;
 }
 
 void
@@ -102,7 +105,7 @@ VC1541::ping()
     VirtualComponent::ping();
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF);
     c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
-    c64->putMessage(diskInserted ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
+    c64->putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
 }
 
 void
@@ -384,38 +387,40 @@ bool
 VC1541::insertDisk(Archive *a)
 {
     assert(a != NULL);
-
-    D64Archive *converted;
+    assert(insertionStatus == NOT_INSERTED);
     
     switch (a->type()) {
             
         case D64_CONTAINER:
-            ejectDisk();
+            disk.clearDisk();
             disk.encodeArchive((D64Archive *)a);
             break;
             
         case G64_CONTAINER:
-            ejectDisk();
+            disk.clearDisk();
             disk.encodeArchive((G64Archive *)a);
             break;
             
         case NIB_CONTAINER:
-            ejectDisk();
+            disk.clearDisk();
             disk.encodeArchive((NIBArchive *)a);
             break;
             
-        default:
-            
-            // All other archives cannot be encoded directly. We convert them to D64 first.
+        default: {
+            D64Archive *converted;
+    
+            // All other archives cannot be encoded directly. We convert them
+            // to a D64 archive first.
             if (!(converted = D64Archive::makeD64ArchiveWithAnyArchive(a)))
                 return false;
 
-            ejectDisk();
+            disk.clearDisk();
             disk.encodeArchive(converted);
             break;
+        }
     }
-    
-    diskInserted = true;
+    insertionStatus = FULLY_INSERTED;
+
     c64->putMessage(MSG_VC1541_DISK);
     c64->putMessage(MSG_DISK_SAVED);
     if (sendSoundMessages)
@@ -424,28 +429,34 @@ VC1541::insertDisk(Archive *a)
     return true; 
 }
 
+void
+VC1541::openLid()
+{
+    if (insertionStatus == FULLY_INSERTED) {
+        
+        // Block the light barrier by taking the disk half out
+        insertionStatus = PARTIALLY_INSERTED;
+        
+        // Make sure the drive can no longer read from this disk
+        disk.clearDisk();
+    }
+}
+
 void 
 VC1541::ejectDisk()
 {
-    if (!hasDisk())
-        return;
+    assert(insertionStatus != FULLY_INSERTED); // call openLid() first
     
-	// Open lid (this blocks the light barrier)
-    setDiskPartiallyInserted(true);
-
-	// Let the drive notice the blocked light barrier in its interrupt routine ...
-	sleepMicrosec((uint64_t)200000);
-
-    // Erase disk data and reset write protection flag
-    resetDisk();
-
-	// Remove disk (this unblocks the light barrier)
-	setDiskPartiallyInserted(false);
-		
-    // Notify listener
-	c64->putMessage(MSG_VC1541_NO_DISK);
-    if (sendSoundMessages)
-        c64->putMessage(MSG_VC1541_NO_DISK_SOUND);
+    if (insertionStatus == PARTIALLY_INSERTED) {
+        
+        // Unblock the light barrier by taking the disk out
+        insertionStatus = NOT_INSERTED;
+        
+        // Notify listener
+        c64->putMessage(MSG_VC1541_NO_DISK);
+        if (sendSoundMessages)
+            c64->putMessage(MSG_VC1541_NO_DISK_SOUND);
+    }
 }
 
 D64Archive *

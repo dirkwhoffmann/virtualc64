@@ -291,6 +291,7 @@
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTFile.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* CRTFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTFile.h; sourceTree = "<group>"; };
+		5045C4FE2105D07200A9A62D /* VC1541_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VC1541_types.h; sourceTree = "<group>"; };
 		504606321BE4B99100463FD7 /* G64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G64Archive.cpp; sourceTree = "<group>"; };
 		504606331BE4B99100463FD7 /* G64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64Archive.h; sourceTree = "<group>"; };
 		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
@@ -684,6 +685,7 @@
 		501F845820D7851000917A97 /* Drive */ = {
 			isa = PBXGroup;
 			children = (
+				5045C4FE2105D07200A9A62D /* VC1541_types.h */,
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
 				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
 				5000C9610D13DED40011A2E9 /* VC1541Memory.h */,

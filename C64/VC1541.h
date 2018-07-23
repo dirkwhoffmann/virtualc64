@@ -72,17 +72,21 @@ private:
     //! @brief    Indicates whether red LED is on or off
     bool redLED;
     
+    //! @brief    Indicates if a disk is inserted
+    DiskInsertionStatus insertionStatus;
+    
     /*! @brief    Indicates whether a disk is inserted.
      *  @note     A fully inserted disk blocks the write protection barrier
      *            if it is write protected.
      */
-    bool diskInserted;
+    // bool diskInserted;
     
     /*! @brief    Indicates whether a disk is inserted only partially.
      *  @note     A partially inserted disk blocks always blocks the write
      *            protection barrier
      */
-    bool diskPartiallyInserted;
+    // bool diskPartiallyInserted;
+    
     
     //! @brief    Indicates whether the drive shall seld sound notifications
     bool sendSoundMessages;
@@ -268,25 +272,28 @@ public:
     //! @functiongroup Handling virtual disks
     //
 
-    //! @brief    Returns true if a disk is inserted.
-    bool hasDisk() { return diskInserted; }
+    //! @brief    Returns true if a disk is partially inserted.
+    bool hasPartiallyInsertedDisk() { return insertionStatus == PARTIALLY_INSERTED; }
+    
+    //! @brief    Returns true if a disk is fully inserted.
+    bool hasDisk() { return insertionStatus == FULLY_INSERTED; }
 
-    //! @brief    Returns true if a modified disk is inserted.
+    //! @brief    Returns true if a modified disk is fully inserted.
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
 
     /*! @brief    Inserts an archive as a virtual disk.
-     *  @warning  This function is very time consuming as it has to perform
-     *            various conversions. E.g., if you provide a T64 archive, it
-     *            is first converted to a D64 archive. After that, all tracks
-     *            will be GCR-encoded and written to a new disk.
+     *  @warning  Make sure to eject a previously inserted disk before calling
+     *            this function.
+     *  @note     Inserting an archive as a disk is a time consuming task
+     *            because variouls conversion have to take place. E.g., if you
+     *            provide a T64 archive, it is first converted to a D64 archive.
+     *            After that, all tracks will be GCR-encoded and written to a
+     *            new disk.
      */
     bool insertDisk(Archive *a);
-    
-    //! @brief    Returns true if a disk is partially inserted.
-    bool isDiskPartiallyInserted() { return diskPartiallyInserted; }
 
     //! @brief    Sets if a disk is partially inserted.
-    void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
+    // void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
 
     /*! @brief    Returns the current state of the write protection barrier
      *  @details  If the light barrier is blocked, the drive head is unable to
@@ -299,15 +306,26 @@ public:
     bool getLightBarrier() {
         return
         (cpu.getCycle() < 1500000)
-        || isDiskPartiallyInserted()
+        || hasPartiallyInsertedDisk()
         || disk.isWriteProtected();
     }
 
+    /*! @brief    Opens the drive lid
+     *  @details  This functions has no effect, if no disk is present.
+     *            If a disk is present, it partially comes out and blocks the
+     *            write protection light barrier.
+     */
+    void openLid();
+    
     /*! @brief    Ejects the virtual disk
-     *  @details  Does nothing, if no disk is present.
-     *  @warning  This function causes a considerable time delay, because it is
-     *            necessary to block the write protection light barrier for a
-     *            while. Otherwise, VC1541 DOS would not recognize the ejection.
+     *  @details  This functions has no effect, if no disk is present.
+     *            If a disk is present, it assumed that the lid is already
+     *            open. In that case, the disk is fully removed which frees
+     *            the light barrier.
+     *  @note     To eject a disk in the right way, make sure that the emulator
+     *            runs some time between opening the lid (via openLid()) and
+     *            calling this function. Otherwise, VC1541 DOS would not
+     *            recognize the ejection.
      */
     void ejectDisk();
    

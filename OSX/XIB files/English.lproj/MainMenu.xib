@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="411" userLabel="Sparkle Updater" customClass="SUUpdater"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Virtual C64" id="56">
@@ -171,6 +172,118 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
+                            <menuItem title="Keyboard" id="212">
+                                <menu key="submenu" title="Keyboard" id="213">
+                                    <items>
+                                        <menuItem title="Map Keys by Position" keyEquivalent="k" id="aTC-sX-55k">
+                                            <connections>
+                                                <action selector="mapKeysByPositionAction:" target="-1" id="N4d-4B-r1l"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Customize Key Map ..." id="u9X-4V-cX3">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="customizeKeyMap:" target="-1" id="hhn-Tz-hk8"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="349"/>
+                                        <menuItem title="Press" id="rVt-Hc-gQG" userLabel="Press">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Press" id="Xvx-By-SBS">
+                                                <items>
+                                                    <menuItem title="RUNSTOP" id="306">
+                                                        <connections>
+                                                            <action selector="runstopAction:" target="-1" id="h99-wl-I6J"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="RESTORE" id="305" userLabel="RESTORE">
+                                                        <connections>
+                                                            <action selector="restoreAction:" target="-1" id="XDR-D8-h89"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="RUNSTOP RESTORE" id="VdY-b4-dYs">
+                                                        <connections>
+                                                            <action selector="runstopRestoreAction:" target="-1" id="OF3-DS-8i4"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="CLR" id="512">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="clearKeyAction:" target="-1" id="NgL-jP-5vs"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="HOME" id="515">
+                                                        <connections>
+                                                            <action selector="homeKeyAction:" target="-1" id="fhb-me-fFL"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="DEL" id="MPz-Ta-mSQ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="deleteKeyAction:" target="-1" id="6fc-Gs-5bU"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="INST" id="518">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="insertKeyAction:" target="-1" id="IEY-Sr-0Wx"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="LEFT ARROW" id="q9V-Gy-eCL">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="leftarrowKeyAction:" target="-1" id="tYs-2R-d3U"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="Shift Lock" id="eLl-99-KML">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftLockAction:" target="-1" id="oZ1-8S-Ba3"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="YmU-rj-Jhy"/>
+                                        <menuItem title="Load Directory" keyEquivalent="d" id="328">
+                                            <connections>
+                                                <action selector="loadDirectoryAction:" target="-1" id="JuA-2C-Ups"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="List" id="3oz-UI-kft">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="listAction:" target="-1" id="k64-op-GK2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Load First File" keyEquivalent="l" id="511">
+                                            <connections>
+                                                <action selector="loadFirstFileAction:" target="-1" id="cMu-Ip-rBc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Run" id="rvY-S2-GXz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="runProgramAction:" target="-1" id="Ds9-wO-9jQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Format Disk" id="510">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="formatDiskAction:" target="-1" id="IvR-x1-Puy"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="QAf-kY-aho"/>
+                                        <menuItem title="Clear Keyboard Matrix" id="8aX-Ro-7wg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="clearKeyboardMatrixAction:" target="-1" id="sGi-3e-BCA"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="rLR-9y-0BS"/>
                             <menuItem title="Debug" id="414">
                                 <menu key="submenu" title="Debug" id="415">
                                     <items>
@@ -429,127 +542,16 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Keyboard" id="212">
-                    <menu key="submenu" title="Keyboard" id="213">
+                <menuItem title="Drive" id="XQm-ka-Db5">
+                    <menu key="submenu" title="Drive" id="Mqn-f5-oGB">
                         <items>
-                            <menuItem title="Map Keys by Position" keyEquivalent="k" id="aTC-sX-55k">
-                                <connections>
-                                    <action selector="mapKeysByPositionAction:" target="-1" id="N4d-4B-r1l"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Customize Key Map ..." id="u9X-4V-cX3">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="customizeKeyMap:" target="-1" id="hhn-Tz-hk8"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="349"/>
-                            <menuItem title="Press" id="rVt-Hc-gQG" userLabel="Press">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Press" id="Xvx-By-SBS">
-                                    <items>
-                                        <menuItem title="RUNSTOP" id="306">
-                                            <connections>
-                                                <action selector="runstopAction:" target="-1" id="h99-wl-I6J"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="RESTORE" id="305" userLabel="RESTORE">
-                                            <connections>
-                                                <action selector="restoreAction:" target="-1" id="XDR-D8-h89"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="RUNSTOP RESTORE" id="VdY-b4-dYs">
-                                            <connections>
-                                                <action selector="runstopRestoreAction:" target="-1" id="OF3-DS-8i4"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="CLR" id="512">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="clearKeyAction:" target="-1" id="NgL-jP-5vs"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="HOME" id="515">
-                                            <connections>
-                                                <action selector="homeKeyAction:" target="-1" id="fhb-me-fFL"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="DEL" id="MPz-Ta-mSQ">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="deleteKeyAction:" target="-1" id="6fc-Gs-5bU"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="INST" id="518">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="insertKeyAction:" target="-1" id="IEY-Sr-0Wx"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="LEFT ARROW" id="q9V-Gy-eCL">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="leftarrowKeyAction:" target="-1" id="tYs-2R-d3U"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem title="Shift Lock" id="eLl-99-KML">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="shiftLockAction:" target="-1" id="oZ1-8S-Ba3"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="YmU-rj-Jhy"/>
-                            <menuItem title="Load Directory" keyEquivalent="d" id="328">
-                                <connections>
-                                    <action selector="loadDirectoryAction:" target="-1" id="JuA-2C-Ups"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="List" id="3oz-UI-kft">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="listAction:" target="-1" id="k64-op-GK2"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Load First File" keyEquivalent="l" id="511">
-                                <connections>
-                                    <action selector="loadFirstFileAction:" target="-1" id="cMu-Ip-rBc"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Run" id="rvY-S2-GXz">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="runProgramAction:" target="-1" id="Ds9-wO-9jQ"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Format Disk" id="510">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="formatDiskAction:" target="-1" id="IvR-x1-Puy"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="QAf-kY-aho"/>
-                            <menuItem title="Clear Keyboard Matrix" id="8aX-Ro-7wg">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="clearKeyboardMatrixAction:" target="-1" id="sGi-3e-BCA"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="Disk" id="XQm-ka-Db5">
-                    <menu key="submenu" title="Disk" id="Mqn-f5-oGB">
-                        <items>
-                            <menuItem title="New" id="e0B-5D-eZ0">
+                            <menuItem title="New Disk" id="e0B-5D-eZ0">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="newDiskAction:" target="-1" id="XVv-CW-F39"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Insert ..." id="00r-Lf-ALU">
+                            <menuItem title="Insert Disk..." id="00r-Lf-ALU">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="insertDiskAction:" target="-1" id="Wrt-4R-3kT"/>
@@ -630,92 +632,24 @@ CA
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="wq6-oh-IIt"/>
-                            <menuItem title="Eject" id="mVY-LA-phJ">
+                            <menuItem title="Eject Disk" id="mVY-LA-phJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="ejectDiskAction:" target="-1" id="6hq-cd-dhx"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="8fO-nY-y8g"/>
-                            <menuItem title="Export ..." id="inq-yB-iPf" userLabel="Export disk">
+                            <menuItem title="Export" id="qCl-TJ-dqC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportRecentDiskAction:" target="-1" id="COa-hQ-08A"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export Disk..." id="inq-yB-iPf" userLabel="Export disk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportDiskAction:" target="-1" id="rL4-3t-mjC"/>
                                 </connections>
-                            </menuItem>
-                            <menuItem title="Export Recent" id="tpw-vR-07S">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Export Recent" id="nci-he-Qsr">
-                                    <items>
-                                        <menuItem title="Disk 1" id="XMp-BY-BB6">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="PSQ-2m-KFD"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 2" tag="1" id="yss-Uc-ls7">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="ZgG-wt-oO7"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 3" tag="2" id="rov-xI-M4K">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="ldl-cz-a9L"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 4" tag="3" id="gHE-pm-4bs">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="f3j-YK-LJd"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 5" tag="4" id="qZO-S9-Axz">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="kzC-LP-Fpe"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 6" tag="5" id="pCY-Hg-iFr">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="qYg-Dz-gON"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 7" tag="6" id="bSc-3z-fcQ">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="hre-Xj-nXW"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 8" tag="7" id="9VL-5B-UMy">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="RtL-Dc-lVo"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 9" tag="8" id="31O-gC-Usx">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="Gmy-WV-huK"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Disk 10" tag="9" id="Rad-nV-JOY">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportRecentDiskAction:" target="-1" id="cKf-vu-LBo"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" tag="-1" id="JQx-PD-ucM"/>
-                                        <menuItem title="Clear Menu" tag="-1" id="1Mt-wJ-8ti">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="clearRecentlyExportedDisksAction:" target="-1" id="lIF-O3-bpe"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
                             <menuItem title="Write Protect" id="vbD-qh-Fhq">
@@ -734,17 +668,17 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Tape" id="qM3-ZW-mhJ">
+                <menuItem title="Datasette" id="qM3-ZW-mhJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Tape" id="fgB-qc-rPk">
+                    <menu key="submenu" title="Datasette" id="fgB-qc-rPk">
                         <items>
-                            <menuItem title="Eject" id="3h6-Hc-BgC">
+                            <menuItem title="Eject Tape" id="3h6-Hc-BgC">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="ejectTapeAction:" target="-1" id="agh-Ez-H8n"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Rewind" id="4up-R5-h6f">
+                            <menuItem title="Rewind Tape" id="4up-R5-h6f">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="rewindAction:" target="-1" id="5Ea-fA-j9g"/>
@@ -760,10 +694,91 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Cartridge" id="6Nh-dL-Pbk" userLabel="Cartridge">
-                    <menu key="submenu" title="Cartridge" id="ZzZ-hT-u7h">
+                <menuItem title="Expansion Port" id="6Nh-dL-Pbk" userLabel="Cartridge">
+                    <menu key="submenu" title="Expansion Port" id="ZzZ-hT-u7h">
                         <items>
-                            <menuItem title="Detach" id="d8T-Ms-VBm">
+                            <menuItem title="Attach Cartridge..." id="HQ0-7X-gN7">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="attachCartridgeAction:" target="-1" id="PTY-zT-xQs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Attach Recent" id="tpw-vR-07S">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Attach Recent" id="nci-he-Qsr">
+                                    <items>
+                                        <menuItem title="Cartridge 1" id="XMp-BY-BB6">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="E3f-wj-ftt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 2" tag="1" id="yss-Uc-ls7">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="n9I-uL-PeI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 3" tag="2" id="rov-xI-M4K">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="0Hf-Rj-b9b"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 4" tag="3" id="gHE-pm-4bs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="eGF-6x-TPP"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 5" tag="4" id="qZO-S9-Axz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="NOB-TW-5FE"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 6" tag="5" id="pCY-Hg-iFr">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="Xbm-2d-67T"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 7" tag="6" id="bSc-3z-fcQ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="ivI-QC-GFt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 8" tag="7" id="9VL-5B-UMy">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="GrZ-Ck-4kg"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 9" tag="8" id="31O-gC-Usx">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="LUD-yh-KsB"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Cartridge 10" tag="9" id="Rad-nV-JOY">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="Rbh-eF-9Zr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" tag="-1" id="JQx-PD-ucM"/>
+                                        <menuItem title="Clear Menu" tag="-1" id="1Mt-wJ-8ti">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="clearRecentlyAttachedCartridgesAction:" target="-1" id="roN-9N-UVS"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="hdS-qK-f9s"/>
+                            <menuItem title="Detach Cartridge" id="d8T-Ms-VBm">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="detachCartridgeAction:" target="-1" id="cg8-3B-XuP"/>
@@ -910,9 +925,5 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <customObject id="411" userLabel="Sparkle Updater" customClass="SUUpdater"/>
-        <menuItem title="64 K" id="XV5-0f-y2u">
-            <modifierMask key="keyEquivalentModifierMask"/>
-        </menuItem>
     </objects>
 </document>

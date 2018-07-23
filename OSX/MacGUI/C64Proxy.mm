@@ -517,6 +517,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
 - (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }
 - (BOOL) hasModifiedDisk { return wrapper->vc1541->hasModifiedDisk(); }
+- (void) openLid { wrapper->vc1541->openLid(); }
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
 - (BOOL) writeProtected { return wrapper->vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }
@@ -715,10 +716,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (BOOL) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
+/* USE mount INSTEAD
 - (BOOL) insertDisk:(ArchiveProxy *)a {
     Archive *archive = (Archive *)([a wrapper]->container);
     return wrapper->c64->insertDisk(archive);
 }
+ */
 - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *container = (TAPFile *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);

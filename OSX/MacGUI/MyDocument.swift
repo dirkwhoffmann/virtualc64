@@ -38,11 +38,18 @@ class MyDocument : NSDocument {
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
 
-    /// The list of recently inserted disk URLs.
-    var recentlyExportedDiskURLs: [URL] = []
+    /// The list of recently atached cartridge URLs.
+    var recentlyAttachedCartridgeURLs: [URL] = []
 
-    /// The maximum number of items stored in the recentlyXXX lists
-    var maximumRecentDiskCount = 10
+    /// The URL that was used in the lastest disk export.
+    var recentlyExportedDiskURL: URL? = nil
+
+    
+    /// The list of recently exported disk URLs.
+    // var recentlyExportedDiskURLs: [URL] = []
+
+    /// The maximum number of items stored in the lists of recently used URLs
+    var maximumRecentItemsCount = 10
 
     
     override init() {
@@ -82,13 +89,13 @@ class MyDocument : NSDocument {
     // Handling the lists of recently used files
     //
     
+    /*
     func noteNewRecentlyUsedDiskURL(_ url: URL) {
         
         switch url.pathExtension.uppercased() {
         
         case "T64", "PRG", "D64", "P00":
             noteNewRecentlyInsertedDiskURL(url)
-            noteNewRecentlyExportedDiskURL(url)
             break
             
         case "G64", "NIB":
@@ -99,25 +106,36 @@ class MyDocument : NSDocument {
             break
         }
     }
-        
-    fileprivate func noteNewRecentlyInsertedDiskURL(_ url: URL) {
+    */
+    
+    func noteNewRecentlyInsertedDiskURL(_ url: URL) {
         
         if !recentlyInsertedDiskURLs.contains(url) {
-            if recentlyInsertedDiskURLs.count == maximumRecentDiskCount {
-                recentlyInsertedDiskURLs.remove(at: maximumRecentDiskCount - 1)
+            if recentlyInsertedDiskURLs.count == maximumRecentItemsCount {
+                recentlyInsertedDiskURLs.remove(at: maximumRecentItemsCount - 1)
             }
             recentlyInsertedDiskURLs.insert(url, at: 0)
         }
     }
-    
-    fileprivate func noteNewRecentlyExportedDiskURL(_ url: URL) {
+ 
+    func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
         
-        if !recentlyExportedDiskURLs.contains(url) {
-            if recentlyExportedDiskURLs.count == maximumRecentDiskCount {
-                recentlyExportedDiskURLs.remove(at: maximumRecentDiskCount - 1)
+        if !recentlyAttachedCartridgeURLs.contains(url) {
+            if recentlyAttachedCartridgeURLs.count == maximumRecentItemsCount {
+                recentlyAttachedCartridgeURLs.remove(at: maximumRecentItemsCount - 1)
             }
-            recentlyExportedDiskURLs.insert(url, at: 0)
+            recentlyAttachedCartridgeURLs.insert(url, at: 0)
         }
+    }
+    
+    func noteNewRecentlyExportedDiskURL(_ url: URL?) {
+        
+        // Remember URL
+        recentlyExportedDiskURL = url
+        
+        // Show export URL in disk icon tooltip
+        let parent = windowForSheet!.windowController as! MyController
+        parent.driveIcon.toolTip = url?.path
     }
     
     
@@ -132,14 +150,32 @@ class MyDocument : NSDocument {
 
         // Try to create the attachment
         let fileWrapper = try FileWrapper.init(url: url)
-        try createAttachment(from: fileWrapper, ofType: url.pathExtension)
+        let pathExtension = url.pathExtension.uppercased()
+        try createAttachment(from: fileWrapper, ofType: pathExtension)
         
-        // Add URL to the lists of recently used files
-        noteNewRecentlyUsedDiskURL(url)
+        // Remember URLs for certain file types
+        switch (pathExtension) {
+        
+        case "D64", "T64":
+            // URLs of such files are remembered for inserting and exporting.
+            noteNewRecentlyInsertedDiskURL(url)
+            noteNewRecentlyExportedDiskURL(url)
+            break
+            
+        case "PRG", "P00":
+            // URLs of such files are remembered for inserting, only.
+            noteNewRecentlyInsertedDiskURL(url)
+            break
+            
+        default:
+            // All other URLs are not remembered.
+            break
+        }
     }
     
     /// Creates an attachment from a file wrapper
-    func createAttachment(from fileWrapper: FileWrapper, ofType typeName: String) throws {
+    fileprivate func createAttachment(from fileWrapper: FileWrapper,
+                                      ofType typeName: String) throws {
         
         guard let filename = fileWrapper.filename else {
             throw NSError(domain: "VirtualC64", code: 0, userInfo: nil)
@@ -152,9 +188,9 @@ class MyDocument : NSDocument {
         let length = data.count
         var openAsUntitled = true
         
-        track("Reading \(length) bytes for file \(filename) at \(buffer).")
+        track("Reading \(length) bytes for file \(filename) \(typeName) at \(buffer).")
         
-        switch (typeName.uppercased()) {
+        switch (typeName) {
         case "VC64":
             if SnapshotProxy.isUnsupportedSnapshot(buffer, length: length) {
                 throw NSError.snapshotVersionError(filename: filename)
@@ -252,7 +288,8 @@ class MyDocument : NSDocument {
             return
         }
         if parent.autoMount {
-            c64.mount(attachment!)
+            parent.mount(attachment)
+            // c64.mount(attachment!)
             return
         }
         
@@ -291,7 +328,7 @@ class MyDocument : NSDocument {
     func processAttachmentAfterInsert() -> Bool {
         
         var result = true
-        // let parent = windowForSheet!.windowController as! MyController
+        let parent = windowForSheet!.windowController as! MyController
         
         if attachment == nil {
             return false
@@ -300,15 +337,11 @@ class MyDocument : NSDocument {
         let type = attachment!.type()
         switch type {
             
-        case V64_CONTAINER:
-            result = c64.flash(attachment!)
-            break
-            
         case PRG_CONTAINER, P00_CONTAINER,
-             CRT_CONTAINER, TAP_CONTAINER,
              T64_CONTAINER, D64_CONTAINER,
              G64_CONTAINER, NIB_CONTAINER:
-            result = c64.mount(attachment!)
+            // result = c64.mount(attachment!)
+            result = parent.mount(attachment)
             break
             
         default:
@@ -317,6 +350,29 @@ class MyDocument : NSDocument {
         }
         
         return result
+    }
+    
+    /**
+     This method is called when the user selects "Attach Cartridge..." or
+     "Attach Recent" from the Cartridge menu. In contrast to
+     processAttachmentAfterOpen(), no user dialogs show up.
+     */
+    @discardableResult
+    func processAttachmentAfterAttach() -> Bool {
+        
+        guard let type = attachment?.type() else {
+            return false
+        }
+        
+        switch type {
+        
+        case CRT_CONTAINER:
+            return c64.mount(attachment!)
+            
+        default:
+            track("Attachments of type \(type) cannot be attached as cartridge.")
+            fatalError()
+        }
     }
     
     /**
@@ -353,7 +409,8 @@ class MyDocument : NSDocument {
                 flashAttachment(archive: attachment as! ArchiveProxy)
                 return true
             } else {
-                return c64.mount(attachment!)
+                return parent.mount(attachment)
+                // return c64.mount(attachment!)
             }
         }
         

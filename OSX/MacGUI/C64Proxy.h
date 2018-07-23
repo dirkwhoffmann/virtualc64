@@ -399,6 +399,7 @@ struct ContainerWrapper;
 - (BOOL) redLED;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
+- (void) openLid;
 - (void) ejectDisk;
 - (BOOL) writeProtected;
 - (void) setWriteProtection:(BOOL)b;
@@ -561,7 +562,7 @@ struct ContainerWrapper;
 - (void) detachCartridgeAndReset;
 - (BOOL) isCartridgeAttached;
 
-- (BOOL) insertDisk:(ArchiveProxy *)a;
+// - (BOOL) insertDisk:(ArchiveProxy *)a;
 - (BOOL) insertTape:(TAPProxy *)a;
 
 - (NSInteger) mouseModel;

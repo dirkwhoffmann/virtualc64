@@ -91,9 +91,9 @@ class ArchiveMountController : UserDialogController {
         track()
         
         // Insert archive as disk
-        c64.insertDisk(archive)
+        parent.mount(archive)
         parent.metalScreen.rotateBack()
-        
+
         // Set write protection
         let value = protect.integerValue
         c64.vc1541.setWriteProtection(value != 0)

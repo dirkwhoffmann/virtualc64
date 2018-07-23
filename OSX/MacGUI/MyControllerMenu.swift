@@ -11,6 +11,8 @@ extension MyController {
     
     override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
   
+        let document = self.document as! MyDocument
+        
         // View menu
         if item.action == #selector(MyController.toggleStatusBarAction(_:)) {
             item.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
@@ -50,9 +52,13 @@ extension MyController {
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return c64.iec.driveIsConnected() && c64.vc1541.hasDisk()
         }
+        if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
+            return c64.vc1541.hasModifiedDisk() && document.recentlyExportedDiskURL != nil
+        }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
         }
+        /*
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             let document = self.document as! MyDocument
             if item.tag < document.recentlyExportedDiskURLs.count {
@@ -65,6 +71,7 @@ extension MyController {
             }
             return true
         }
+        */
         if item.action == #selector(MyController.writeProtectAction(_:)) {
             let hasDisk = c64.vc1541.hasDisk()
             let protected = hasDisk && c64.vc1541.disk.writeProtected()
@@ -92,6 +99,18 @@ extension MyController {
         }
         
         // Cartridge menu
+        if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
+            let document = self.document as! MyDocument
+            if item.tag < document.recentlyAttachedCartridgeURLs.count {
+                item.title = document.recentlyAttachedCartridgeURLs[item.tag].lastPathComponent
+                item.isHidden = false
+                item.image = NSImage.init(named: NSImage.Name(rawValue: "cartridge_small"))
+            } else {
+                item.isHidden = true
+                item.image = nil
+            }
+            return true
+        }
         if item.action == #selector(MyController.detachCartridgeAction(_:)) {
             return c64.expansionport.cartridgeAttached()
         }
@@ -362,8 +381,10 @@ extension MyController {
     @IBAction func newDiskAction(_ sender: Any!) {
         
         if proceedWithUnsavedDisk() {
-            c64.vc1541.ejectDisk()
-            c64.insertDisk(ArchiveProxy.make())
+            let emptyArchive = ArchiveProxy.make()
+            let emptyD64Archive = D64Proxy.make(withAnyArchive: emptyArchive)
+            mount(emptyD64Archive)
+            (document as! MyDocument).noteNewRecentlyExportedDiskURL(nil)
         }
     }
     
@@ -386,8 +407,9 @@ extension MyController {
                     let document = self.document as! MyDocument
                     do {
                         try document.createAttachment(from: url)
+                        //     (self.document as! MyDocument).processAttachmentAfterInsert()
+                        //}
                         document.processAttachmentAfterInsert()
-                        //document.readFromAttachment(warnAboutUnsafedDisk: false,showMountDialog: false)
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -418,10 +440,23 @@ extension MyController {
     @IBAction func exportRecentDiskAction(_ sender: Any!) {
         
         track()
+        let document = self.document as! MyDocument
+        
+        if let url = document.recentlyExportedDiskURL {
+            if !export(to: url) {
+                showExportErrorAlert(url: url)
+            }
+        }
+    }
+    
+    /*
+    @IBAction func exportRecentDiskAction(_ sender: Any!) {
+        
+        track()
         let sender = sender as! NSMenuItem
         let tag = sender.tag
         let document = self.document as! MyDocument
-        
+    
         if tag < document.recentlyExportedDiskURLs.count {
             
             let url = document.recentlyExportedDiskURLs[tag]
@@ -432,23 +467,32 @@ extension MyController {
             }
         }
     }
+    */
     
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
         
         let document = self.document as! MyDocument
         document.recentlyInsertedDiskURLs = []
     }
+
+    @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
+        
+        let document = self.document as! MyDocument
+        document.recentlyAttachedCartridgeURLs = []
+    }
     
     @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
         
         let document = self.document as! MyDocument
-        document.recentlyExportedDiskURLs = []
+        document.recentlyExportedDiskURL = nil
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
         if proceedWithUnsavedDisk() {
+            
             c64.vc1541.ejectDisk()
+            (document as! MyDocument).noteNewRecentlyExportedDiskURL(nil)
         }
     }
     
@@ -461,6 +505,7 @@ extension MyController {
  
     func export(to url: URL, ofType typeName: String) -> Bool {
 
+        let document = self.document as! MyDocument
         let type = typeName.uppercased()
         var archive: ArchiveProxy?
         
@@ -507,17 +552,21 @@ extension MyController {
         let ptr = data!.mutableBytes
         archive!.write(toBuffer: ptr)
         
-        // Export
-        track("Tryping to export to file \(url)")
-        if data!.write(to: url, atomically: true) {
-            track("Export successful");
-            c64.vc1541.disk.setModified(false)
-            (document as! MyDocument).noteNewRecentlyUsedDiskURL(url)
-            return true
-        } else {
+        // Write to file
+        track("Trying to export to file \(url)")
+        if !(data!.write(to: url, atomically: true)) {
             track("Export failed");
             return false
         }
+        
+        // Mark disk as "not modified"
+        c64.vc1541.disk.setModified(false)
+        
+        // Remember export URL and add it to the list of recent inserts
+        document.noteNewRecentlyExportedDiskURL(url)
+        document.noteNewRecentlyInsertedDiskURL(url)
+    
+        return true
     }
     
     @discardableResult
@@ -574,6 +623,48 @@ extension MyController {
     // Action methods (Cartridge menu)
     //
 
+    @IBAction func attachCartridgeAction(_ sender: Any!) {
+        
+        // Show the OpenPanel
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.prompt = "Attach"
+        openPanel.allowedFileTypes = ["crt"]
+        openPanel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                if let url = openPanel.url {
+                    let document = self.document as! MyDocument
+                    do {
+                        try document.createAttachment(from: url)
+                        document.processAttachmentAfterAttach()
+                    } catch {
+                        NSApp.presentError(error)
+                    }
+                }
+            }
+        })
+    }
+    
+    @IBAction func attachRecentCartridgeAction(_ sender: Any!) {
+        
+        track()
+        let sender = sender as! NSMenuItem
+        let tag = sender.tag
+        let document = self.document as! MyDocument
+        
+        if tag < document.recentlyAttachedCartridgeURLs.count {
+            do {
+                try document.createAttachment(from: document.recentlyAttachedCartridgeURLs[tag])
+                document.processAttachmentAfterAttach()
+            } catch {
+                NSApp.presentError(error)
+            }
+        }
+    }
+    
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         track()
         c64.detachCartridgeAndReset()

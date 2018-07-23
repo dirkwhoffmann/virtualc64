@@ -75,6 +75,7 @@ extension MyDocument {
 
 extension MyController {
     
+    /*
     func showDiskHasBeenExportedAlert(url: URL) {
         
         let path = url.path
@@ -86,15 +87,16 @@ extension MyController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
- 
+    */
+    
     func showExportErrorAlert(url: URL) {
         
         let path = url.path
         let alert = NSAlert()
         alert.alertStyle = .critical
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Failed to export disk"
-        alert.informativeText = "Cannot write to \(path)."
+        alert.messageText = "Failed to export disk to file"
+        alert.informativeText = "\(path)."
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }

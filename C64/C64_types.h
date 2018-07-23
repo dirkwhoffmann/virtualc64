@@ -11,6 +11,7 @@
 #include "SID_types.h"
 #include "ControlPort_types.h"
 #include "Cartridge_types.h"
+#include "VC1541_types.h"
 #include "Disk_types.h"
 #include "Mouse_types.h"
 

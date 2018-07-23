@@ -88,7 +88,7 @@ class MyController : NSWindowController {
     @IBOutlet weak var controlPort2: NSPopUpButton!
     
     // Menu
-    @IBOutlet weak var recentDisksMenu: NSMenu!
+    // @IBOutlet weak var recentDisksMenu: NSMenu!
     
     // Debug panel (commons)
     var hex = true
@@ -671,16 +671,17 @@ extension MyController {
         }
     }
 
-    // --------------------------------------------------------------------------------
-    //  Keyboard events
-    // --------------------------------------------------------------------------------
+    //
+    // Keyboard events
+    //
 
     // Keyboard events are handled by the emulator window.
     // If they are handled here, some keys such as 'TAB' don't trigger an event.
  
-    // --------------------------------------------------------------------------------
+    
+    //
     //  Game pad events
-    // --------------------------------------------------------------------------------
+    //
     
     /// GamePadManager delegation method
     /// - Returns: true, iff a joystick event has been triggered on port A or B
@@ -701,9 +702,9 @@ extension MyController {
     }    
 
     
-    // --------------------------------------------------------------------------------
+    //
     // Action methods (main screen)
-    // --------------------------------------------------------------------------------
+    //
     
     @IBAction func alwaysWarpAction(_ sender: Any!) {
         
@@ -716,12 +717,73 @@ extension MyController {
     }
     
     
-    // --------------------------------------------------------------------------------
-    // Action methods (Cartridge)
-    // --------------------------------------------------------------------------------
-
- 
+    //
+    // Mounting media files
+    //
+    //
     
+    @discardableResult
+    func mount(_ item: ContainerProxy?) -> Bool {
+
+        guard let type = item?.type() else { return false }
+            
+        // We need to take some special care for items that mount as a disk.
+        // In that case, we need to check for an already inserted disk. This
+        // disk needs to be removed first. After that, we need to wait some
+        // time before we can insert the new one. Otherweise, the VC 1541
+        // would not detect the disk change.
+        
+        switch (type) {
+            
+        case T64_CONTAINER, D64_CONTAINER,
+             PRG_CONTAINER, P00_CONTAINER:
+            if c64.vc1541.hasDisk() {
+                
+                // Open the lid and break the light barrier
+                c64.vc1541.openLid()
+                
+                // Wait some time before unbreaking the light barrier
+                usleep(200000)
+                c64.vc1541.ejectDisk()
+                
+                // Wait some time and call this method again with no disk present.
+                /*
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                 self.c64.vc1541.ejectDisk()
+                 self.mount(item)
+                 }
+                 */
+            }
+            break
+            
+        default:
+            break
+        }
+        
+        // Finally, let's mount that thing
+        return c64.mount(item)
+    }
+    
+    
+    // Drive control
+    //
+    
+    // Emulates the removal of disk from the floppy drive including the
+    // time that has to elapse between opening the drive lid and taking the
+    // disk out. Note that this function will only work correctly on a
+    // running emulator. Otherwise, the drive won't detect the removal.
+    func emulateDiskRemoval() {
+        if (c64.vc1541.hasDisk()) {
+            c64.vc1541.openLid()
+            usleep(400000)
+            c64.vc1541.ejectDisk()
+        }
+    }
+    
+    //
+    // Misc
+    //
+
     func playSound(name: String, volume: Float) {
         
         if let s = NSSound.init(named: NSSound.Name(rawValue: name)) {
