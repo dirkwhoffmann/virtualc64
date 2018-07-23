@@ -481,7 +481,6 @@ extension MyController {
             // Load attachment if present
             let document = self.document as! MyDocument
             document.processAttachmentAfterOpen()
-            //document.readFromAttachment(warnAboutUnsafedDisk: true,  showMountDialog: !autoMount)
             break;
     
         case MSG_RUN:
@@ -720,7 +719,6 @@ extension MyController {
     //
     // Mounting media files
     //
-    //
     
     @discardableResult
     func mount(_ item: ContainerProxy?) -> Bool {
@@ -728,33 +726,14 @@ extension MyController {
         guard let type = item?.type() else { return false }
             
         // We need to take some special care for items that mount as a disk.
-        // In that case, we need to check for an already inserted disk. This
-        // disk needs to be removed first. After that, we need to wait some
-        // time before we can insert the new one. Otherweise, the VC 1541
-        // would not detect the disk change.
+        // In that case, the light barrier has to be broken several times.
         
         switch (type) {
             
         case T64_CONTAINER, D64_CONTAINER,
              PRG_CONTAINER, P00_CONTAINER:
-            if c64.vc1541.hasDisk() {
-                
-                // Open the lid and break the light barrier
-                c64.vc1541.openLid()
-                
-                // Wait some time before unbreaking the light barrier
-                usleep(200000)
-                c64.vc1541.ejectDisk()
-                
-                // Wait some time and call this method again with no disk present.
-                /*
-                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                 self.c64.vc1541.ejectDisk()
-                 self.mount(item)
-                 }
-                 */
-            }
-            break
+                changeDisk(item)
+            return true
             
         default:
             break
@@ -764,21 +743,52 @@ extension MyController {
         return c64.mount(item)
     }
     
+    // Emulates changing a disk including the necessary light barrier breaks
+    // If disk is nil, only the ejection is emulated.
+    func changeDisk(_ disk: ContainerProxy?) {
+        
+        DispatchQueue.global().async {
+            
+            // Remove old disk if present
+            if self.c64.vc1541.hasDisk() {
+
+                self.c64.vc1541.prepareToEject()
+                usleep(300000)
+                self.c64.vc1541.ejectDisk()
+            }
+            
+            // Insert new disk if provided
+            if disk != nil {
+                self.c64.vc1541.prepareToInsert()
+                usleep(300000)
+                self.c64.vc1541.insertDisk(disk as! ArchiveProxy)
+            }
+        }
+    }
     
-    // Drive control
-    //
     
     // Emulates the removal of disk from the floppy drive including the
     // time that has to elapse between opening the drive lid and taking the
     // disk out. Note that this function will only work correctly on a
     // running emulator. Otherwise, the drive won't detect the removal.
+    // DEPRECATED
+    /*
     func emulateDiskRemoval() {
+        
         if (c64.vc1541.hasDisk()) {
+            
+            // Open the lid and break the light barrier
             c64.vc1541.openLid()
-            usleep(400000)
+            
+            // Wait some time before unbreaking the light barrier
+            usleep(300000)
+            
+            // Take the disk out
             c64.vc1541.ejectDisk()
         }
     }
+    */
+    
     
     //
     // Misc

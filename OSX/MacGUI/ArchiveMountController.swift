@@ -91,7 +91,7 @@ class ArchiveMountController : UserDialogController {
         track()
         
         // Insert archive as disk
-        parent.mount(archive)
+        parent.changeDisk(archive)
         parent.metalScreen.rotateBack()
 
         // Set write protection

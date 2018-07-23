@@ -120,11 +120,11 @@ D64Archive::makeD64ArchiveWithFile(const char *path)
 D64Archive *
 D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
 {
-    if (otherArchive == NULL)
-        return NULL;
+    assert(otherArchive != NULL);
     
     D64Archive *archive = new D64Archive();
-    archive->debug(1, "Creating D64 archive from a %s archive...\n", otherArchive->typeAsString());
+    archive->debug(1, "Creating D64 archive from a %s archive...\n",
+                   otherArchive->typeAsString());
     
     // Copy file path
     archive->setPath(otherArchive->getPath());

@@ -41,15 +41,15 @@ class MyDocument : NSDocument {
     /// The list of recently atached cartridge URLs.
     var recentlyAttachedCartridgeURLs: [URL] = []
 
-    /// The URL that was used in the lastest disk export.
-    var recentlyExportedDiskURL: URL? = nil
+    /// The list of recently exported disk URLs.
+    var recentlyExportedDiskURLs: [URL] = []
 
     
     /// The list of recently exported disk URLs.
     // var recentlyExportedDiskURLs: [URL] = []
 
     /// The maximum number of items stored in the lists of recently used URLs
-    var maximumRecentItemsCount = 10
+    // var maximumRecentItemsCount = 10
 
     
     override init() {
@@ -110,34 +110,39 @@ class MyDocument : NSDocument {
     
     func noteNewRecentlyInsertedDiskURL(_ url: URL) {
         
+        let maxItems = 10
+        
         if !recentlyInsertedDiskURLs.contains(url) {
-            if recentlyInsertedDiskURLs.count == maximumRecentItemsCount {
-                recentlyInsertedDiskURLs.remove(at: maximumRecentItemsCount - 1)
+            if recentlyInsertedDiskURLs.count == maxItems {
+                recentlyInsertedDiskURLs.remove(at: maxItems - 1)
             }
             recentlyInsertedDiskURLs.insert(url, at: 0)
         }
     }
  
+    func noteNewRecentlyExportedDiskURL(_ url: URL) {
+        
+        let maxItems = 1
+        
+        if !recentlyExportedDiskURLs.contains(url) {
+            if recentlyExportedDiskURLs.count == maxItems {
+                recentlyExportedDiskURLs.remove(at: maxItems - 1)
+            }
+            recentlyExportedDiskURLs.insert(url, at: 0)
+        }
+    }
+    
     func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
         
+        let maxItems = 10
+        
         if !recentlyAttachedCartridgeURLs.contains(url) {
-            if recentlyAttachedCartridgeURLs.count == maximumRecentItemsCount {
-                recentlyAttachedCartridgeURLs.remove(at: maximumRecentItemsCount - 1)
+            if recentlyAttachedCartridgeURLs.count == maxItems {
+                recentlyAttachedCartridgeURLs.remove(at: maxItems - 1)
             }
             recentlyAttachedCartridgeURLs.insert(url, at: 0)
         }
     }
-    
-    func noteNewRecentlyExportedDiskURL(_ url: URL?) {
-        
-        // Remember URL
-        recentlyExportedDiskURL = url
-        
-        // Show export URL in disk icon tooltip
-        let parent = windowForSheet!.windowController as! MyController
-        parent.driveIcon.toolTip = url?.path
-    }
-    
     
     //
     // Creating attachments
@@ -166,6 +171,10 @@ class MyDocument : NSDocument {
             // URLs of such files are remembered for inserting, only.
             noteNewRecentlyInsertedDiskURL(url)
             break
+            
+        case "CRT":
+            // URLs of such files are remembered for attaching, only.
+            noteNewRecentlyAtachedCartridgeURL(url)
             
         default:
             // All other URLs are not remembered.
@@ -289,7 +298,6 @@ class MyDocument : NSDocument {
         }
         if parent.autoMount {
             parent.mount(attachment)
-            // c64.mount(attachment!)
             return
         }
         
@@ -340,7 +348,6 @@ class MyDocument : NSDocument {
         case PRG_CONTAINER, P00_CONTAINER,
              T64_CONTAINER, D64_CONTAINER,
              G64_CONTAINER, NIB_CONTAINER:
-            // result = c64.mount(attachment!)
             result = parent.mount(attachment)
             break
             
@@ -367,7 +374,8 @@ class MyDocument : NSDocument {
         switch type {
         
         case CRT_CONTAINER:
-            return c64.mount(attachment!)
+            let parent = windowForSheet!.windowController as! MyController
+            return parent.mount(attachment!)
             
         default:
             track("Attachments of type \(type) cannot be attached as cartridge.")
@@ -410,7 +418,6 @@ class MyDocument : NSDocument {
                 return true
             } else {
                 return parent.mount(attachment)
-                // return c64.mount(attachment!)
             }
         }
         

@@ -107,7 +107,7 @@ class DiskMountController : UserDialogController {
         NSLog("OK Action")
         
         // Insert archive as disk
-        parent.mount(archive)
+        parent.changeDisk(archive)
         parent.metalScreen.rotateBack()
         
         hideSheet()

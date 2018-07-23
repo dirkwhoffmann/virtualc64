@@ -516,8 +516,13 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
 - (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }
-- (BOOL) hasModifiedDisk { return wrapper->vc1541->hasModifiedDisk(); }
-- (void) openLid { wrapper->vc1541->openLid(); }
+- (BOOL) hasModifiedDisk {return wrapper->vc1541->hasModifiedDisk(); }
+- (void) prepareToInsert { wrapper->vc1541->prepareToInsert(); }
+- (void) insertDisk:(ArchiveProxy *)disk {
+    Archive *archive = (Archive *)([disk wrapper]->container);
+    wrapper->vc1541->insertDisk(archive);
+}
+- (void) prepareToEject { wrapper->vc1541->prepareToEject(); }
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
 - (BOOL) writeProtected { return wrapper->vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }

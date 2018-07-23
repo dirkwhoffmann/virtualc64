@@ -11,7 +11,7 @@ extension MyController {
     
     override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
   
-        let document = self.document as! MyDocument
+        // let document = self.document as! MyDocument
         
         // View menu
         if item.action == #selector(MyController.toggleStatusBarAction(_:)) {
@@ -52,13 +52,9 @@ extension MyController {
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return c64.iec.driveIsConnected() && c64.vc1541.hasDisk()
         }
-        if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
-            return c64.vc1541.hasModifiedDisk() && document.recentlyExportedDiskURL != nil
-        }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
         }
-        /*
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             let document = self.document as! MyDocument
             if item.tag < document.recentlyExportedDiskURLs.count {
@@ -71,7 +67,6 @@ extension MyController {
             }
             return true
         }
-        */
         if item.action == #selector(MyController.writeProtectAction(_:)) {
             let hasDisk = c64.vc1541.hasDisk()
             let protected = hasDisk && c64.vc1541.disk.writeProtected()
@@ -384,7 +379,7 @@ extension MyController {
             let emptyArchive = ArchiveProxy.make()
             let emptyD64Archive = D64Proxy.make(withAnyArchive: emptyArchive)
             mount(emptyD64Archive)
-            (document as! MyDocument).noteNewRecentlyExportedDiskURL(nil)
+            (document as! MyDocument).recentlyExportedDiskURLs = []
         }
     }
     
@@ -440,9 +435,12 @@ extension MyController {
     @IBAction func exportRecentDiskAction(_ sender: Any!) {
         
         track()
+        let sender = sender as! NSMenuItem
+        let tag = sender.tag
         let document = self.document as! MyDocument
         
-        if let url = document.recentlyExportedDiskURL {
+        if tag < document.recentlyExportedDiskURLs.count {
+            let url = document.recentlyExportedDiskURLs[tag]
             if !export(to: url) {
                 showExportErrorAlert(url: url)
             }
@@ -484,15 +482,15 @@ extension MyController {
     @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
         
         let document = self.document as! MyDocument
-        document.recentlyExportedDiskURL = nil
+        document.recentlyExportedDiskURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
         if proceedWithUnsavedDisk() {
             
-            c64.vc1541.ejectDisk()
-            (document as! MyDocument).noteNewRecentlyExportedDiskURL(nil)
+            changeDisk(nil)
+            (document as! MyDocument).recentlyExportedDiskURLs = []
         }
     }
     

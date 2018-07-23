@@ -281,6 +281,13 @@ public:
     //! @brief    Returns true if a modified disk is fully inserted.
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
 
+    /*! @brief    Prepares to insert a disk
+     *  @details  This functions puts a disk partially into the drive.
+     *            disk. As a result, the light barrier is blocked.
+     *  @warning  Only call this functions if no disk is inserted.
+     */
+    void prepareToInsert();
+    
     /*! @brief    Inserts an archive as a virtual disk.
      *  @warning  Make sure to eject a previously inserted disk before calling
      *            this function.
@@ -290,10 +297,7 @@ public:
      *            After that, all tracks will be GCR-encoded and written to a
      *            new disk.
      */
-    bool insertDisk(Archive *a);
-
-    //! @brief    Sets if a disk is partially inserted.
-    // void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
+    void insertDisk(Archive *a);
 
     /*! @brief    Returns the current state of the write protection barrier
      *  @details  If the light barrier is blocked, the drive head is unable to
@@ -310,22 +314,21 @@ public:
         || disk.isWriteProtected();
     }
 
-    /*! @brief    Opens the drive lid
-     *  @details  This functions has no effect, if no disk is present.
-     *            If a disk is present, it partially comes out and blocks the
-     *            write protection light barrier.
+    /*! @brief    Prepares to eject a disk
+     *  @details  This functions opens the drive lid and partially removes the
+     *            disk. As a result, no data can be read any more and the light
+     *            barrier is blocked.
+     *  @warning  Only call this functions if a disk is inserted.
      */
-    void openLid();
+    void prepareToEject();
     
-    /*! @brief    Ejects the virtual disk
-     *  @details  This functions has no effect, if no disk is present.
-     *            If a disk is present, it assumed that the lid is already
-     *            open. In that case, the disk is fully removed which frees
-     *            the light barrier.
-     *  @note     To eject a disk in the right way, make sure that the emulator
-     *            runs some time between opening the lid (via openLid()) and
-     *            calling this function. Otherwise, VC1541 DOS would not
-     *            recognize the ejection.
+    /*! @brief    Finishes the ejection of a disk
+     *  @details  This function assumes that the drive lid is already open.
+     *            It fully removes the disk and frees the light barrier.
+     *  @note     To eject a disk in the right way, make sure that some time
+     *            elapsed between the two calls to prepareToEject() and
+     *            ejectDisk(). Otherwise, the VC1541 DOS does not recognize
+     *            the ejection.
      */
     void ejectDisk();
    
