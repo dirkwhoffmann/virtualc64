@@ -11,7 +11,20 @@ extension MyController {
     
     override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
   
-        // let document = self.document as! MyDocument
+        let document = self.document as! MyDocument
+        
+        func validateURLlist(_ list : [URL], image: String) -> Bool {
+            
+            if let url = document.getRecentlyUsedURL(item.tag, from: list) {
+                item.title = url.lastPathComponent
+                item.isHidden = false
+                item.image = NSImage.init(named: NSImage.Name(rawValue: image))
+            } else {
+                item.isHidden = true
+                item.image = nil
+            }
+            return true
+        }
         
         // View menu
         if item.action == #selector(MyController.toggleStatusBarAction(_:)) {
@@ -38,16 +51,7 @@ extension MyController {
             return c64.iec.driveIsConnected()
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            let document = self.document as! MyDocument
-            if item.tag < document.recentlyInsertedDiskURLs.count {
-                item.title = document.recentlyInsertedDiskURLs[item.tag].lastPathComponent
-                item.isHidden = false
-                item.image = NSImage.init(named: NSImage.Name(rawValue: "disk_small"))
-            } else {
-                item.isHidden = true
-                item.image = nil
-            }
-            return true
+            return validateURLlist(document.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return c64.iec.driveIsConnected() && c64.vc1541.hasDisk()
@@ -56,32 +60,24 @@ extension MyController {
             return c64.vc1541.hasDisk()
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
-            let document = self.document as! MyDocument
-            if item.tag < document.recentlyExportedDiskURLs.count {
-                item.title = document.recentlyExportedDiskURLs[item.tag].path // lastPathComponent
-                item.isHidden = false
-                item.image = NSImage.init(named: NSImage.Name(rawValue: "disk_small"))
-            } else {
-                item.isHidden = true
-                item.image = nil
-            }
-            return true
+            return validateURLlist(document.recentlyExportedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.writeProtectAction(_:)) {
             let hasDisk = c64.vc1541.hasDisk()
             let protected = hasDisk && c64.vc1541.disk.writeProtected()
             item.state = protected ? .on : .off
-            // item.title = protected ? "Remove write protection" : "Write protect disk"
             return hasDisk
         }
         if item.action == #selector(MyController.drivePowerAction(_:)) {
             let connected = c64.iec.driveIsConnected()
-            // item.state = connected ? .on : .off
             item.title = connected ? "Disconnect drive" : "Connect drive"
             return true
         }
 
         // Tape menu
+        if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
+            return validateURLlist(document.recentlyInsertedTapeURLs, image: "tape_small")
+        }
         if item.action == #selector(MyController.ejectTapeAction(_:)) {
             return c64.datasette.hasTape()
         }
@@ -95,16 +91,7 @@ extension MyController {
         
         // Cartridge menu
         if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
-            let document = self.document as! MyDocument
-            if item.tag < document.recentlyAttachedCartridgeURLs.count {
-                item.title = document.recentlyAttachedCartridgeURLs[item.tag].lastPathComponent
-                item.isHidden = false
-                item.image = NSImage.init(named: NSImage.Name(rawValue: "cartridge_small"))
-            } else {
-                item.isHidden = true
-                item.image = nil
-            }
-            return true
+            return validateURLlist(document.recentlyAttachedCartridgeURLs, image: "cartridge_small")
         }
         if item.action == #selector(MyController.detachCartridgeAction(_:)) {
             return c64.expansionport.cartridgeAttached()
@@ -402,8 +389,6 @@ extension MyController {
                     let document = self.document as! MyDocument
                     do {
                         try document.createAttachment(from: url)
-                        //     (self.document as! MyDocument).processAttachmentAfterInsert()
-                        //}
                         document.processAttachmentAfterInsert()
                     } catch {
                         NSApp.presentError(error)
@@ -420,9 +405,9 @@ extension MyController {
         let tag = sender.tag
         let document = self.document as! MyDocument
         
-        if tag < document.recentlyInsertedDiskURLs.count {
+        if let url = document.getRecentlyInsertedDiskURL(tag) {
             do {
-                try document.createAttachment(from: document.recentlyInsertedDiskURLs[tag])
+                try document.createAttachment(from: url)
                 if (document.proceedWithUnsavedDisk()) {
                     document.processAttachmentAfterInsert()
                 }
@@ -439,53 +424,28 @@ extension MyController {
         let tag = sender.tag
         let document = self.document as! MyDocument
         
-        if tag < document.recentlyExportedDiskURLs.count {
-            let url = document.recentlyExportedDiskURLs[tag]
+        if let url = document.getRecentlyExportedDiskURL(tag) {
             if !export(to: url) {
                 showExportErrorAlert(url: url)
             }
         }
     }
     
-    /*
-    @IBAction func exportRecentDiskAction(_ sender: Any!) {
-        
-        track()
-        let sender = sender as! NSMenuItem
-        let tag = sender.tag
-        let document = self.document as! MyDocument
-    
-        if tag < document.recentlyExportedDiskURLs.count {
-            
-            let url = document.recentlyExportedDiskURLs[tag]
-            if export(to: url) {
-                showDiskHasBeenExportedAlert(url: url)
-            } else {
-                showExportErrorAlert(url: url)
-            }
-        }
-    }
-    */
-    
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
-        
-        let document = self.document as! MyDocument
-        document.recentlyInsertedDiskURLs = []
+        (document as! MyDocument).recentlyInsertedDiskURLs = []
     }
 
-    @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
-        
-        let document = self.document as! MyDocument
-        document.recentlyAttachedCartridgeURLs = []
+    @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
+        (document as! MyDocument).recentlyExportedDiskURLs = []
+    }
+
+    @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
+        (document as! MyDocument).recentlyInsertedTapeURLs = []
     }
     
-    /*
-    @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
-        
-        let document = self.document as! MyDocument
-        document.recentlyExportedDiskURLs = []
+    @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
+        (document as! MyDocument).recentlyAttachedCartridgeURLs = []
     }
-    */
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
@@ -652,9 +612,9 @@ extension MyController {
         let tag = sender.tag
         let document = self.document as! MyDocument
         
-        if tag < document.recentlyAttachedCartridgeURLs.count {
+        if let url = document.getRecentlyAtachedCartridgeURL(tag) {
             do {
-                try document.createAttachment(from: document.recentlyAttachedCartridgeURLs[tag])
+                try document.createAttachment(from: url)
                 document.processAttachmentAfterAttach()
             } catch {
                 NSApp.presentError(error)

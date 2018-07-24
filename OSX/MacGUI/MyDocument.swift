@@ -27,29 +27,32 @@ class MyDocument : NSDocument {
     var c64: C64Proxy!
     
     /**
-     When the GUI receives the READY_TO_RUN message from the emulator, it
-     checks this variable. If an attachment is present, e.g., a T64 archive,
+     An otional media object attached to this document.
+     This variable is checked by the GUI, e.g., when the READY_TO_RUN message
+     is received. If an attachment is present, e.g., a T64 archive,
      is displays a user dialog. The user can then choose to mount the archive
      as a disk or to flash a single file into memory. If the attachment is a
      snapshot, it is read into the emulator without asking the user.
+     This variable is also used when the user selects the "Insert Disk",
+     "Insert Tape" or "Attach Cartridge" menu items. In that case, the selected
+     URL is translated into an attachment and then processed. The actual
+     post-processing depends on the attachment type and user options. E.g.,
+     snapshots are flashed while T64 archives are converted to a disk and
+     inserted into the disk drive.
      */
     var attachment: ContainerProxy? = nil
     
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
 
-    /// The list of recently atached cartridge URLs.
-    var recentlyAttachedCartridgeURLs: [URL] = []
-
     /// The list of recently exported disk URLs.
     var recentlyExportedDiskURLs: [URL] = []
 
-    
-    /// The list of recently exported disk URLs.
-    // var recentlyExportedDiskURLs: [URL] = []
+    /// The list of recently inserted tape URLs.
+    var recentlyInsertedTapeURLs: [URL] = []
 
-    /// The maximum number of items stored in the lists of recently used URLs
-    // var maximumRecentItemsCount = 10
+    /// The list of recently atached cartridge URLs.
+    var recentlyAttachedCartridgeURLs: [URL] = []
 
     
     override init() {
@@ -90,27 +93,51 @@ class MyDocument : NSDocument {
     // Handling the lists of recently used URLs
     //
     
-    func insertURL(_ url: URL, toList list: inout [URL], ofSize count: Int) {
+    func noteRecentlyUsedURL(_ url: URL, to list: inout [URL], size: Int) {
         if !list.contains(url) {
-            if list.count == count {
-                list.remove(at: count - 1)
+            if list.count == size {
+                list.remove(at: size - 1)
             }
             list.insert(url, at: 0)
         }
     }
     
+    func getRecentlyUsedURL(_ nr: Int, from list: [URL]) -> URL? {
+        return (nr < list.count) ? list[nr] : nil
+    }
+    
     func noteNewRecentlyInsertedDiskURL(_ url: URL) {
-        insertURL(url, toList: &recentlyInsertedDiskURLs, ofSize: 10)
+        noteRecentlyUsedURL(url, to: &recentlyInsertedDiskURLs, size: 10)
     }
  
+    func getRecentlyInsertedDiskURL(_ nr: Int) -> URL? {
+        return getRecentlyUsedURL(nr, from: recentlyInsertedDiskURLs)
+    }
+    
     func noteNewRecentlyExportedDiskURL(_ url: URL) {
-        insertURL(url, toList: &recentlyExportedDiskURLs, ofSize: 1)
+        noteRecentlyUsedURL(url, to: &recentlyExportedDiskURLs, size: 1)
+    }
+
+    func getRecentlyExportedDiskURL(_ nr: Int) -> URL? {
+        return getRecentlyUsedURL(nr, from: recentlyExportedDiskURLs)
+    }
+
+    func noteNewRecentlyInsertedTapeURL(_ url: URL) {
+        noteRecentlyUsedURL(url, to: &recentlyInsertedTapeURLs, size: 10)
+    }
+
+    func getRecentlyInsertedTapeURL(_ nr: Int) -> URL? {
+        return getRecentlyUsedURL(nr, from: recentlyInsertedTapeURLs)
     }
     
     func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
-        insertURL(url, toList: &recentlyAttachedCartridgeURLs, ofSize: 10)
+        noteRecentlyUsedURL(url, to: &recentlyAttachedCartridgeURLs, size: 10)
     }
   
+    func getRecentlyAtachedCartridgeURL(_ nr: Int) -> URL? {
+        return getRecentlyUsedURL(nr, from: recentlyAttachedCartridgeURLs)
+    }
+    
     func noteNewRecentlyUsedURL(_ url: URL) {
         
         switch (url.pathExtension.uppercased()) {
