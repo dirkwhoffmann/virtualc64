@@ -27,8 +27,8 @@ TOD::TOD()
     SnapshotItem items[] = {
                 
         { &tod.value,        sizeof(tod.value),        CLEAR_ON_RESET },
-        { &alarm.value,      sizeof(alarm.value),      CLEAR_ON_RESET },
         { &latch.value,      sizeof(latch.value),      CLEAR_ON_RESET },
+        { &alarm.value,      sizeof(alarm.value),      CLEAR_ON_RESET },
         { &frozen,           sizeof(frozen),           CLEAR_ON_RESET },
         { &stopped,          sizeof(stopped),          CLEAR_ON_RESET },
         { &matching,         sizeof(matching),         CLEAR_ON_RESET },

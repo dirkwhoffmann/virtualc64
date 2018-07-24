@@ -265,9 +265,6 @@ private:
     
 public:
     
-    //! @brief    Indicates if snapshots should be recorded automatically
-    // bool autoSaveSnapshots;
-    
     //! @brief    Time in seconds between two auto-saved snapshots
     /*! @note     Setting this variable to 0 or less disables auto-snapshots.
      */
@@ -481,15 +478,7 @@ public:
     /*! @details  As a side effect, messages are sent to the GUI if the variable
      *            has changed its value.
      */
-    bool getWarp(); //  { return warp; }
-    
-    //! @brief    Updates variable warp
-    /*! @details  This method has to be called whenever variable alwaysWarp or
-     *            variable warpLoad change or whenever variable IEC::busActivity
-     *            changes from zero to non-zero or vice versa.
-     * @deprecated
-     */
-    // void updateWarp();
+    bool getWarp();
     
     //! @brief    Returns true iff cpu should always run at maximun speed.
     bool getAlwaysWarp() { return alwaysWarp; }

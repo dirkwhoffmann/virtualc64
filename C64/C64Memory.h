@@ -99,6 +99,16 @@ public:
      */
     uint8_t rom[65536];
     
+private:
+    
+    //! @brief    Peek source lookup table
+    MemoryType peekSrc[16];
+    
+    //! @brief    Poke target lookup table
+    MemoryType pokeTarget[16];
+    
+public:
+    
 	//! @brief    Constructor
 	C64Memory();
 	
@@ -122,15 +132,6 @@ public:
 
     //! @brief    Returns true, iff the Kernal ROM is alrady loaded
 	bool kernalRomIsLoaded() { return rom[0xE000] != 0x00; }
-    
-private:
-    
-    //! @brief    Peek source lookup table
-    MemoryType peekSrc[16];
-    
-    //! @brief    Poke target lookup table
-    MemoryType pokeTarget[16];
-    
     
 public:
     

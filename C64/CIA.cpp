@@ -46,6 +46,8 @@ CIA::CIA()
         { &PRB,             sizeof(PRB),            CLEAR_ON_RESET },
         { &DDRA,            sizeof(DDRA),           CLEAR_ON_RESET },
         { &DDRB,            sizeof(DDRB),           CLEAR_ON_RESET },
+        { &PA,              sizeof(PA),             CLEAR_ON_RESET },
+        { &PB,              sizeof(PB),             CLEAR_ON_RESET },
         { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
         { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
         { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
