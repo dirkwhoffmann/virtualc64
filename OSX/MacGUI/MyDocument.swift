@@ -74,7 +74,7 @@ class MyDocument : NSDocument {
         loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
         
         // Try to run. The emulator will either run (if all ROMs were found)
-        // or writes a MISSING_ROM message into the message queue.
+        // or write a MISSING_ROM message into the message queue.
         c64.run()
     }
  
@@ -166,7 +166,7 @@ class MyDocument : NSDocument {
     /// Creates an attachment from a URL
     func createAttachment(from url: URL) throws {
     
-        track("Trying to create attachment for file \(url.lastPathComponent).")
+        track("Creating attachment for file \(url.lastPathComponent).")
 
         // Try to create the attachment
         let fileWrapper = try FileWrapper.init(url: url)
@@ -192,7 +192,7 @@ class MyDocument : NSDocument {
         let length = data.count
         var openAsUntitled = true
         
-        track("Reading \(length) bytes for file \(filename) \(typeName) at \(buffer).")
+        track("Read \(length) bytes from file \(filename).")
         
         switch (typeName) {
         case "VC64":
@@ -201,7 +201,6 @@ class MyDocument : NSDocument {
             }
             attachment = SnapshotProxy.make(withBuffer: buffer, length: length)
             openAsUntitled = false
-            
             break
         case "CRT":
             if CRTProxy.isUnsupportedCRTBuffer(buffer, length: length) {
@@ -248,18 +247,6 @@ class MyDocument : NSDocument {
     // Processing attachments
     //
     
-    func runCartridgeMountDialog(_ parent: MyController) {
-        let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
-        let controller = CartridgeMountController.init(windowNibName: nibName)
-        controller.showSheet(withParent: parent)
-    }
-    
-    func runTapeMountDialog(_ parent: MyController) {
-        let nibName = NSNib.Name(rawValue: "TapeMountDialog")
-        let controller = TapeMountController.init(windowNibName: nibName)
-        controller.showSheet(withParent: parent)
-    }
-    
     func runArchiveMountDialog(_ parent: MyController) {
         let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
         let controller = ArchiveMountController.init(windowNibName: nibName)
@@ -272,15 +259,26 @@ class MyDocument : NSDocument {
         controller.showSheet(withParent: parent)
     }
     
+    func runTapeMountDialog(_ parent: MyController) {
+        let nibName = NSNib.Name(rawValue: "TapeMountDialog")
+        let controller = TapeMountController.init(windowNibName: nibName)
+        controller.showSheet(withParent: parent)
+    }
+    
+    func runCartridgeMountDialog(_ parent: MyController) {
+        let nibName = NSNib.Name(rawValue: "CartridgeMountDialog")
+        let controller = CartridgeMountController.init(windowNibName: nibName)
+        controller.showSheet(withParent: parent)
+    }
+    
     
     /**
-     This method is called when the user selects "Open..." or "Open recent"
-     and a new document has been created. It analyzes the attachment type and
-     performs several actions. When mount dialogs are enabled, it opens the
-     corresponding dialog and let's the user decide what to do. Otherwise, a
-     default action is performed.
+     This method is called when a new document is created. It analyzes the
+     attachment type and performs several actions. When mount dialogs are
+     enabled, it opens the corresponding dialog and let's the user decide what
+     to do. Otherwise, a default action is performed.
      */
-    func processAttachmentAfterOpen() {
+    func openAttachmentWithDocument() {
         
         let parent = windowForSheet!.windowController as! MyController
         
@@ -324,11 +322,11 @@ class MyDocument : NSDocument {
     
     /**
      This method is called when the user selects "Insert Disk..." or "Insert
-     Recent" from the Drive menu. In contrast to processAttachmentAfterOpen(),
+     Recent" from the Drive menu. In contrast to openAttachmentWithDocument(),
      no user dialogs show up.
      */
     @discardableResult
-    func processAttachmentAfterInsert() -> Bool {
+    func insertAttachmentAsDisk() -> Bool {
         
         var result = true
         let parent = windowForSheet!.windowController as! MyController
@@ -357,10 +355,10 @@ class MyDocument : NSDocument {
     /**
      This method is called when the user selects "Attach Cartridge..." or
      "Attach Recent" from the Cartridge menu. In contrast to
-     processAttachmentAfterOpen(), no user dialogs show up.
+     openAttachmentWithDocument(), no user dialogs show up.
      */
     @discardableResult
-    func processAttachmentAfterAttach() -> Bool {
+    func attachAttachmentAsCartridge() -> Bool {
         
         guard let type = attachment?.type() else {
             return false
@@ -460,6 +458,7 @@ class MyDocument : NSDocument {
         }
     }
     
+    
     //
     // Loading
     //
@@ -481,22 +480,18 @@ class MyDocument : NSDocument {
         let defaults = UserDefaults.standard
         
         if c64.loadBasicRom(url!) {
-            // track("Basic ROM:  \(url!)")
             defaults.set(url, forKey: VC64Keys.basicRom)
             return true
         }
         if c64.loadCharRom(url!) {
-            // track("Char ROM:   \(url!)")
             defaults.set(url, forKey: VC64Keys.charRom)
             return true
         }
         if c64.loadKernalRom(url!) {
-            // track("Kernal ROM: \(url!)")
             defaults.set(url, forKey: VC64Keys.kernalRom)
             return true
         }
         if c64.loadVC1541Rom(url!) {
-            // track("VC1541 ROM: \(url!)")
             defaults.set(url, forKey: VC64Keys.vc1541Rom)
             return true
         }

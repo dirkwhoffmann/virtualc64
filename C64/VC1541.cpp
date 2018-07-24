@@ -41,15 +41,14 @@ VC1541::VC1541()
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
 
         // Internal state
+        { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
+        { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
         { &elapsedTime,             sizeof(elapsedTime),            CLEAR_ON_RESET },
         { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
-        { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
-        { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
-        // { &diskPartiallyInserted,   sizeof(diskPartiallyInserted),  CLEAR_ON_RESET },
         { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
         { &offset,                  sizeof(offset),                 CLEAR_ON_RESET },
         { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
@@ -59,7 +58,6 @@ VC1541::VC1541()
         { &byteReady,               sizeof(byteReady),              CLEAR_ON_RESET },
 
         // Disk properties (will survive reset)
-        // { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
         { &insertionStatus,         sizeof(insertionStatus),        KEEP_ON_RESET },
         { NULL,                     0,                              0 }};
     

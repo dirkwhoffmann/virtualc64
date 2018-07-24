@@ -91,10 +91,10 @@ Disk::Disk()
 
     // Register snapshot items
     SnapshotItem items[] = {        
-        { &data,            sizeof(data),           KEEP_ON_RESET },
-        { &length,          sizeof(length),         KEEP_ON_RESET | WORD_FORMAT },
         { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },
         { &modified,        sizeof(modified),       KEEP_ON_RESET },
+        { &data,            sizeof(data),           KEEP_ON_RESET },
+        { &length,          sizeof(length),         KEEP_ON_RESET | WORD_FORMAT },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));

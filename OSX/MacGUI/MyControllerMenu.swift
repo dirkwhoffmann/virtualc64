@@ -389,7 +389,7 @@ extension MyController {
                     let document = self.document as! MyDocument
                     do {
                         try document.createAttachment(from: url)
-                        document.processAttachmentAfterInsert()
+                        document.insertAttachmentAsDisk()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -409,7 +409,7 @@ extension MyController {
             do {
                 try document.createAttachment(from: url)
                 if (document.proceedWithUnsavedDisk()) {
-                    document.processAttachmentAfterInsert()
+                    document.insertAttachmentAsDisk()
                 }
             } catch {
                 NSApp.presentError(error)
@@ -596,7 +596,7 @@ extension MyController {
                     let document = self.document as! MyDocument
                     do {
                         try document.createAttachment(from: url)
-                        document.processAttachmentAfterAttach()
+                        document.attachAttachmentAsCartridge()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -615,7 +615,7 @@ extension MyController {
         if let url = document.getRecentlyAtachedCartridgeURL(tag) {
             do {
                 try document.createAttachment(from: url)
-                document.processAttachmentAfterAttach()
+                document.attachAttachmentAsCartridge()
             } catch {
                 NSApp.presentError(error)
             }

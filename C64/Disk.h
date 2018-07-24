@@ -174,7 +174,7 @@ private:
     // Debug information
     //
     
-    //! @brief    Information about a detected error
+    //! @brief    Information about a detected track error
     typedef struct {
         size_t begin;
         size_t end;

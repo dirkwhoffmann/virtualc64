@@ -478,9 +478,9 @@ extension MyController {
             metalScreen.blendIn()
             metalScreen.drawC64texture = true
     
-            // Load attachment if present
+            // Open attachment if present
             let document = self.document as! MyDocument
-            document.processAttachmentAfterOpen()
+            document.openAttachmentWithDocument()
             break;
     
         case MSG_RUN:

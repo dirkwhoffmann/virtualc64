@@ -56,10 +56,7 @@ public:
     //! @brief    Disk in this drive (single sided 5,25" floppy disk)
     Disk disk;
     
-    //! @brief    Elapsed time since power up in pico seconds
-    uint64_t elapsedTime;
-    
-    
+ 
     //
     // Drive status
     //
@@ -95,6 +92,13 @@ private:
     //
     // Clocking logic
     //
+    
+public:
+    
+    //! @brief    Elapsed time since power up in pico seconds
+    uint64_t elapsedTime;
+    
+private:
     
     //! @brief    Duration of a single CPU clock cycle in pico seconds
     uint64_t durationOfOneCpuCycle;

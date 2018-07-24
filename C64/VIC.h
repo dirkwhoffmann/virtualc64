@@ -413,37 +413,43 @@ private:
 	//
 	
 	/*! @brief    Determines whether sprites are drawn or not
-	 *  @details  During normal emulation, the value is always true. For debugging purposes, the value 
-     *            can be set to false. In this case, sprites are no longer drawn.
+	 *  @details  During normal emulation, the value is always true. For
+     *            debugging purposes, the value can be set to false. In this
+     *            case, sprites are no longer drawn.
 	 */
 	bool drawSprites;
 	
-	/*! @brief    Enable sprite-sprite collision
-	 *  @details  If set to true, the virtual VIC chips checks for sprite-sprite collision as the 
-     *            original C64 does. For debugging purposes and cheating, collision detection can be 
-     *            disabled by setting the variabel to false. Collision detection can be enabled or 
-     *            disabled for each sprite seperately. Each bit is dedicated to a single sprite.
+	/*! @brief    Enables sprite-sprite collision
+	 *  @details  If set to true, the virtual VIC chips checks for sprite-sprite
+     *            collision as the original C64 does. For debugging purposes and
+     *            cheating, collision detection can be disabled by setting the
+     *            variabel to false. Collision detection can be enabled or
+     *            disabled for each sprite seperately. Each bit is dedicated to
+     *            a single sprite.
      */
 	uint8_t spriteSpriteCollisionEnabled;
 	
 	/*! @brief    Enable sprite-background collision
-	 *  @details  If set to true, the virtual VIC chips checks for sprite-background collision as the 
-     *            original C64 does. For debugging purposes and cheating, collision detection can be 
-     *            disabled by setting the variabel to false. Collision detection can be enabled or 
-     *            disabled for each sprite seperately. Each bit is dedicated to a single sprite.
+	 *  @details  If set to true, the virtual VIC chips checks for sprite-
+     *            background collision as the original C64 does. For debugging
+     *            purposes and cheating, collision detection can be disabled by
+     *            setting the variabel to false. Collision detection can be
+     *            enabled or disabled for each sprite seperately. Each bit is
+     *            dedicated to a single sprite.
      */
 	uint8_t spriteBackgroundCollisionEnabled;
 	
 	/*! @brief    Determines whether IRQ lines will be made visible.
-	 *  @details  Each rasterline that will potentially trigger a raster IRQ is highlighted. This feature 
-     *            is useful for debugging purposes as it visualizes how the screen is divided into 
-     *            multiple parts. 
+	 *  @details  Each rasterline that will potentially trigger a raster IRQ is
+     *            highlighted. This feature is useful for debugging purposes as
+     *            it visualizes how the screen is divided into multiple parts.
      */
 	bool markIRQLines;
 	
 	/*! @brief    Determines whether DMA lines will be made visible.
-	 *  @details  Each rasterline in which the vic will read additional data from the memory and 
-     *            stun the CPU is made visible. Note that partial DMA lines may not appear. 
+	 *  @details  Each rasterline in which the vic will read additional data
+     *            from the memory and stun the CPU is made visible. Note that
+     *            partial DMA lines may not appear. 
      */
 	bool markDMALines;
 
