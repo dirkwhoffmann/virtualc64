@@ -75,14 +75,14 @@ extension MyController {
         }
 
         // Tape menu
-        if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
+        if item.action == #selector(MyController.insertRecentTapeAction(_:)) {
             return validateURLlist(document.recentlyInsertedTapeURLs, image: "tape_small")
         }
         if item.action == #selector(MyController.ejectTapeAction(_:)) {
             return c64.datasette.hasTape()
         }
         if item.action == #selector(MyController.playOrStopAction(_:)) {
-            item.title = c64.datasette.playKey() ? "Press Stop" : "Press Play"
+            item.title = c64.datasette.playKey() ? "Press Stop Key" : "Press Play On Tape"
             return c64.datasette.hasTape()
         }
         if item.action == #selector(MyController.rewindAction(_:)) {
@@ -555,6 +555,48 @@ extension MyController {
     //
     // Action methods (Datasette menu)
     //
+    
+    @IBAction func insertTapeAction(_ sender: Any!) {
+        
+        // Show the OpenPanel
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.prompt = "Insert"
+        openPanel.allowedFileTypes = ["tap"]
+        openPanel.beginSheetModal(for: window!, completionHandler: { result in
+            if result == .OK {
+                if let url = openPanel.url {
+                    let document = self.document as! MyDocument
+                    do {
+                        try document.createAttachment(from: url)
+                        document.insertAttachmentAsTape()
+                    } catch {
+                        NSApp.presentError(error)
+                    }
+                }
+            }
+        })
+    }
+    
+    @IBAction func insertRecentTapeAction(_ sender: Any!) {
+        
+        track()
+        let sender = sender as! NSMenuItem
+        let tag = sender.tag
+        let document = self.document as! MyDocument
+        
+        if let url = document.getRecentlyInsertedTapeURL(tag) {
+            do {
+                try document.createAttachment(from: url)
+                document.insertAttachmentAsTape()
+            } catch {
+                NSApp.presentError(error)
+            }
+        }
+    }
     
     @IBAction func ejectTapeAction(_ sender: Any!) {
         track()

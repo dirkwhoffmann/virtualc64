@@ -150,7 +150,10 @@ class MyDocument : NSDocument {
         case "PRG", "P00":
             noteNewRecentlyInsertedDiskURL(url)
             break
-            
+
+        case "TAP":
+            noteNewRecentlyInsertedTapeURL(url)
+
         case "CRT":
             noteNewRecentlyAtachedCartridgeURL(url)
             
@@ -350,6 +353,30 @@ class MyDocument : NSDocument {
         }
         
         return result
+    }
+    
+    /**
+     This method is called when the user selects "Insert Tape..." or "Insert
+     Recent" from the Tape menu. In contrast to openAttachmentWithDocument(),
+     no user dialogs show up.
+     */
+    @discardableResult
+    func insertAttachmentAsTape() -> Bool {
+        
+        guard let type = attachment?.type() else {
+            return false
+        }
+        
+        switch type {
+            
+        case TAP_CONTAINER:
+            let parent = windowForSheet!.windowController as! MyController
+            return parent.mount(attachment!)
+            
+        default:
+            track("Attachments of type \(type) cannot be inserted as tape.")
+            fatalError()
+        }
     }
     
     /**

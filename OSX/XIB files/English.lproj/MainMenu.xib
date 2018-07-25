@@ -679,6 +679,87 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Datasette" id="fgB-qc-rPk">
                         <items>
+                            <menuItem title="Insert Tape..." id="pKX-DW-L39">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="insertTapeAction:" target="-1" id="zzM-1b-qcQ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Insert Recent" id="f0S-oe-20D">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Insert Recent" id="0Bm-bW-cdW">
+                                    <items>
+                                        <menuItem title="Tape 1" id="lvk-kw-PWs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="SCO-yK-4KC"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 2" tag="1" id="8Q1-q5-SHm">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="NNQ-vm-LJw"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 3" tag="2" id="2fE-v7-gIC">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="2p6-Eb-59G"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 4" tag="3" id="Yv8-l0-mfi">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="VoQ-tT-Bm3"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 5" tag="4" id="gH0-jN-y1L">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="tSH-MA-uG2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 6" tag="5" id="qv6-dl-m6w">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="rgM-FX-qK0"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 7" tag="6" id="5Bu-Y1-YT1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="k9X-A6-6Xm"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 8" tag="7" id="2ih-R1-P7P">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="BJh-vS-jhA"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 9" tag="8" id="9XV-BD-dZI">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="kvm-oa-ePl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Tape 10" tag="9" id="I5K-Cf-AsV">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="insertRecentTapeAction:" target="-1" id="kJj-Zd-IDo"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" tag="-1" id="0aI-wk-axm"/>
+                                        <menuItem title="Clear Menu" tag="-1" id="C88-9Q-NvU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="clearRecentlyInsertedTapesAction:" target="-1" id="EqC-zF-iGT"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="oeP-OU-b0a"/>
                             <menuItem title="Eject Tape" id="3h6-Hc-BgC">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
