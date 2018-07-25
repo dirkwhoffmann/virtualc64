@@ -59,6 +59,7 @@ ActionReplay::peek(uint16_t addr)
     }
     
     assert(false);
+    return 0;
 }
 
 void
@@ -176,6 +177,7 @@ ActionReplay3::peek(uint16_t addr)
     }
     
     assert(false);
+    return 0;
 }
 
 uint8_t
@@ -784,7 +786,9 @@ GeoRAM::loadFromBuffer(uint8_t **buffer)
     Cartridge::loadFromBuffer(buffer);
     bank = read8(buffer);
     page = read8(buffer);
-    assert(*buffer - old == stateSize());
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
 }
 
 void
@@ -794,7 +798,9 @@ GeoRAM::saveToBuffer(uint8_t **buffer)
     Cartridge::saveToBuffer(buffer);
     write8(buffer, bank);
     write8(buffer, page);
-    assert(*buffer - old == stateSize());
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
 }
 
 unsigned

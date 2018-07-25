@@ -19,19 +19,8 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.3
+// RELEASE NOTES FOR NEXT RELEASE: 2.4
 //
-// Added support for GeoRAMs of different sizes.
-// Added experimental support for the ActionReplay cartridge. Most features
-// except the fast loader seem to work.
-// Added a sleep logic to the virtual VIA chips that partly compensates the
-// performance loss showing up in Version 2.2 due to the improved drive emulation.
-// Some internal CIA and VIC variables were not saved into snapshot files and
-// prevented the emulator state to be restored accurately.
-// Added a couple of new menu items and renamed others.
-//
-//
-
 // TODO:
 //
 //
@@ -55,7 +44,7 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1
