@@ -143,7 +143,7 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
         archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
         
         // Every file is preceded with two bytes containing its load address
-        uint8_t loadAddr = otherArchive->getDestinationAddrOfItem(i);
+        uint16_t loadAddr = otherArchive->getDestinationAddrOfItem(i);
         archive->writeByteToSector(LO_BYTE(loadAddr), &track, &sector);
         archive->writeByteToSector(HI_BYTE(loadAddr), &track, &sector);
         

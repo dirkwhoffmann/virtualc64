@@ -21,9 +21,17 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.3
 //
+// Added support for GeoRAMs of different sizes.
+// Added experimental support for the ActionReplay cartridge. Most features
+// except the fast loader seem to work.
 // Added a sleep logic to the virtual VIA chips that partly compensates the
 // performance loss showing up in Version 2.2 due to the improved drive emulation.
+// Some internal CIA and VIC variables were not saved into snapshot files and
+// prevented the emulator state to be restored accurately.
+// Added a couple of new menu items and renamed others.
 //
+//
+
 // TODO:
 //
 //
