@@ -973,6 +973,22 @@ CA
                                     <action selector="finalCartridgeIIIaction:" target="-1" id="PmV-Tl-uyw"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Freeze Frame" id="Rfe-1n-KtG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Freeze Frame" id="YIn-1r-O4K">
+                                    <items>
+                                        <menuItem title="Freeze" id="dcO-z8-v63">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="freezeFrameFreezeAction:" target="-1" id="ikM-Ye-1aR"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <action selector="freezeFrameAction:" target="-1" id="NbS-Su-Tjm"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

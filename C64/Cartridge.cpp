@@ -89,6 +89,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_MAGIC_DESK:
 
         case CRT_COMAL80:
+        case CRT_FREEZE_FRAME:
             
         case CRT_GEO_RAM:
             return true;
@@ -133,6 +134,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new MagicDesk(c64);
         case CRT_COMAL80:
             return new Comal80(c64);
+        case CRT_FREEZE_FRAME:
+            return new FreezeFrame(c64);
         case CRT_GEO_RAM:
             return new GeoRAM(c64);
             

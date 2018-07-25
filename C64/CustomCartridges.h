@@ -244,6 +244,17 @@ public:
     void pokeIO1(uint16_t addr, uint8_t value);
 };
 
+//! @brief    Type 45 cartridges
+class FreezeFrame : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_FREEZE_FRAME; }
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pressFirstButton();
+};
+
 //! @brief    GeoRAM cartridge
 class GeoRAM : public Cartridge {
     

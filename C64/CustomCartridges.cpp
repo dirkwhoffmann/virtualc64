@@ -811,6 +811,31 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
 
 
 //
+// FreezeFrame
+//
+
+uint8_t
+FreezeFrame::peekIO1(uint16_t addr)
+{
+    // Reading from IO1 switched to 8K game mode
+    return 0;
+}
+
+uint8_t
+FreezeFrame::peekIO2(uint16_t addr)
+{
+    // Reading from IO2 disables the cartridge
+    return 0; 
+}
+
+void
+FreezeFrame::pressFirstButton()
+{
+    // Pressing the freeze button enables ultimax mode
+}
+
+
+//
 // GeoRAM
 //
 

@@ -101,8 +101,6 @@ CRTFile::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (!isCRTBuffer(buffer, length))
         return false;
-    
-    // CartridgeType type = (CartridgeType)LO_HI(buffer[0x17], buffer[0x16]);
     return Cartridge::isSupportedType(typeOfCRTBuffer(buffer, length));
 }
 

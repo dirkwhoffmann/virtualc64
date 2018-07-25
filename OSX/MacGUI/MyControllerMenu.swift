@@ -103,6 +103,9 @@ extension MyController {
             return c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY ||
             c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY3
         }
+        if item.action == #selector(MyController.freezeFrameAction(_:)) {
+            return c64.expansionport.cartridgeType() == CRT_FREEZE_FRAME
+        }
         if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
             item.state = c64.expansionport.hasBattery() ? .on : .off
             return c64.expansionport.cartridgeType() == CRT_GEO_RAM
@@ -680,18 +683,6 @@ extension MyController {
         c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
     
-    @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
-        // Dummy action method to enable menu item validation
-    }
-    
-    @IBAction func finalCartridgeIIIfreezeAction(_ sender: Any!) {
-        c64.expansionport.pressFirstButton()
-    }
-    
-    @IBAction func finalCartridgeIIIresetAction(_ sender: Any!) {
-        c64.expansionport.pressSecondButton()
-    }
-    
     @IBAction func actionReplayAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
@@ -711,6 +702,27 @@ extension MyController {
             self.c64.expansionport.releaseSecondButton()
         }
     }
+    
+    @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+    
+    @IBAction func finalCartridgeIIIfreezeAction(_ sender: Any!) {
+        c64.expansionport.pressFirstButton()
+    }
+    
+    @IBAction func finalCartridgeIIIresetAction(_ sender: Any!) {
+        c64.expansionport.pressSecondButton()
+    }
+    
+    @IBAction func freezeFrameAction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+    
+    @IBAction func freezeFrameFreezeAction(_ sender: Any!) {
+        c64.expansionport.pressFirstButton()
+    }
+    
     
     //
     // Action methods (Debug menu)
