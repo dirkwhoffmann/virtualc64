@@ -23,6 +23,9 @@ Cartridge::Cartridge(C64 *c64)
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
     }
+    chipL = chipH = -1;
+    offsetL = offsetH = 0;
+    mappedBytesL = mappedBytesH = 0;
     
     externalRam = NULL;
     ramCapacity = 0;
@@ -56,6 +59,7 @@ Cartridge::reset()
     }
     
     // Bank in chip 0 on startup
+    // bankIn(0); // Remove
     bankIn(0);
     cycle = 0;
     regValue = 0;
@@ -169,6 +173,13 @@ Cartridge::stateSize()
     for (unsigned i = 0; i < 64; i++) {
         size += 4 + chipSize[i];
     }
+    size += sizeof(chipL);
+    size += sizeof(chipH);
+    size += sizeof(mappedBytesL);
+    size += sizeof(mappedBytesH);
+    size += sizeof(offsetL);
+    size += sizeof(offsetH);
+
     size += sizeof(ramCapacity);
     size += ramCapacity;
     size += 1; // persistentRam
@@ -200,6 +211,13 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
             chip[i] = NULL;
         }
     }
+    chipL = read8(buffer);
+    chipH = read8(buffer);
+    mappedBytesL = read16(buffer);
+    mappedBytesH = read16(buffer);
+    offsetL = read16(buffer);
+    offsetH = read16(buffer);
+    
     setRamCapacity(read32(buffer));
     readBlock(buffer, externalRam, ramCapacity);
     persistentRam = (bool)read8(buffer);
@@ -228,6 +246,13 @@ Cartridge::saveToBuffer(uint8_t **buffer)
             writeBlock(buffer, chip[i], chipSize[i]);
         }
     }
+    write8(buffer, chipL);
+    write8(buffer, chipH);
+    write16(buffer, mappedBytesL);
+    write16(buffer, mappedBytesH);
+    write16(buffer, offsetL);
+    write16(buffer, offsetH);
+    
     write32(buffer, ramCapacity);
     writeBlock(buffer, externalRam, ramCapacity);
     write8(buffer, (uint8_t)persistentRam);
@@ -258,6 +283,7 @@ Cartridge::dumpState()
     }
 }
 
+/*
 uint8_t
 Cartridge::peek(uint16_t addr)
 {
@@ -278,6 +304,54 @@ Cartridge::peek(uint16_t addr)
     // debug("Peeking from unmapped location: %04X\n", addr);
     return c64->mem.ram[addr];
     // return c64->mem.peek(addr);
+}
+*/
+
+uint8_t
+Cartridge::peekRomLabs(uint16_t absAddr)
+{
+    assert(absAddr >= 0x8000 && absAddr <= 0x9FFF);
+    
+    uint16_t addr = absAddr & 0x1FFF;
+    
+    if (addr < mappedBytesL) {
+        return peekRomL(addr);
+    } else {
+        return c64->mem.ram[absAddr]; // Area is unmpapped
+    }
+}
+
+uint8_t
+Cartridge::peekRomL(uint16_t addr)
+{
+    assert(addr <= 0x1FFF);
+    assert(chipL >= 0 && chipL < 64);
+    
+    return chip[chipL][addr + offsetL];
+}
+
+uint8_t
+Cartridge::peekRomHabs(uint16_t absAddr)
+{
+    assert((absAddr >= 0xA000 && absAddr <= 0xBFFF) ||
+           (absAddr >= 0xE000 && absAddr <= 0xFFFF));
+    
+    uint16_t addr = absAddr & 0x1FFF;
+    
+    if (addr < mappedBytesH) {
+        return peekRomH(addr);
+    } else {
+        return c64->mem.ram[absAddr]; // Area is unmpapped
+    }
+}
+
+uint8_t
+Cartridge::peekRomH(uint16_t addr)
+{
+    assert(addr <= 0x1FFF);
+    assert(chipL >= 0 && chipL < 64);
+    
+    return chip[chipH][addr + offsetH];
 }
 
 unsigned
@@ -334,6 +408,7 @@ Cartridge::setRamCapacity(uint32_t size)
     }
 }
 
+/*
 void
 Cartridge::bankIn(unsigned nr)
 {
@@ -350,14 +425,71 @@ Cartridge::bankIn(unsigned nr)
 
     for (unsigned i = 0; i < numBanks; i++)
         blendedIn[firstBank + i] = nr;
+}
+*/
+
+bool
+Cartridge::mapsToL(unsigned nr) {
+    assert(nr < 64);
+    return chipStartAddress[nr] == 0x8000 && chipSize[nr] <= 0x2000;
+}
+
+bool
+Cartridge::mapsToLH(unsigned nr) {
+    assert(nr < 64);
+    return chipStartAddress[nr] == 0x8000 && chipSize[nr] > 0x2000;
+}
+
+bool
+Cartridge::mapsToH(unsigned nr) {
+    assert(nr < 64);
+    return chipStartAddress[nr] == 0xA000 || chipStartAddress[nr] == 0xE000;
+}
+
+void
+Cartridge::bankIn(unsigned nr)
+{
+    assert(nr < 64);
+    assert(chipSize[nr] <= 0x4000);
     
-    /*
-    debug(1, "Chip %d banked in (start: %04X size: %d KB)\n", nr, start, size / 1024);
-    for (unsigned i = 0; i < 16; i++) {
-        printf("%d ", blendedIn[i]);
+    if (chip[nr] == NULL)
+        return;
+
+    if (mapsToLH(nr)) {
+        
+        // The ROM chip covers ROML and (part of) ROMH
+        chipL = nr;
+        mappedBytesL = 0x2000;
+        offsetL = 0;
+        
+        chipH = nr;
+        mappedBytesH = chipSize[nr] - 0x2000;
+        offsetH = 0x2000;
+        
+        debug(2, "Banked in chip %d to ROML and ROMH\n", nr);
+    
+    } else if (mapsToL(nr)) {
+        
+        // The ROM chip covers (part of) ROML
+        chipL = nr;
+        mappedBytesL = chipSize[nr];
+        offsetL = 0;
+
+        debug(2, "Banked in chip %d to ROML\n", nr);
+        
+    } else if (mapsToH(nr)) {
+        
+        // The ROM chip covers (part of) ROMH
+        chipH = nr;
+        mappedBytesH = chipSize[nr];
+        offsetH = 0;
+        
+        debug(2, "Banked in chip %d to ROMH\n", nr);
+        
+    } else {
+
+        warn("Cannot map chip %d. Invalid start address.\n", nr);
     }
-    printf("\n");
-    */
 }
 
 void
@@ -380,6 +512,25 @@ Cartridge::bankOut(unsigned nr)
         printf("%d ", blendedIn[i]);
     }
     printf("\n");
+}
+
+void
+Cartridge::bankOutNew(unsigned nr)
+{
+    assert(nr < 64);
+
+    if (mapsToL(nr)) {
+        
+        chipL = -1;
+        mappedBytesL = 0;
+        offsetL = 0;
+        
+    } else if (mapsToH(nr)) {
+        
+        chipH = -1;
+        mappedBytesH = 0;
+        offsetH = 0;
+    }
 }
 
 void

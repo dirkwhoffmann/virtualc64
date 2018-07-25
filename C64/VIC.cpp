@@ -346,6 +346,7 @@ uint8_t VIC::memAccess(uint16_t addr)
             case 0x7:
             case 0x3:
                 dataBus = c64->expansionport.peek(addrBus | 0xF000);
+                // dataBus = c64->expansionport.peekRomH(addrBus | 0xF000);
                 break;
             case 0xE:
             case 0xD:

@@ -38,12 +38,14 @@ class Cartridge : public VirtualComponent {
 public:
     
     /*! @brief    Initial gameLine value used by this cartridge
-     *  @details  gameLine is set to this value when the cartridge is attached.
+     *  @details  The value is read from the CRT filt and the game line is set
+     *            to it when the cartridge is plugged into the expansion port.
      */
     bool initialGameLine;
     
     /*! @brief    Initial exromLine value used by this cartridge
-     *  @details  exromLine is set to this value when the cartridge is attached.
+     *  @details  The value is read from the CRT filt and the exrom line is set
+     *            to it when the cartridge is plugged into the expansion port.
      */
     bool initialExromLine;
     
@@ -58,18 +60,41 @@ public:
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[64];
     
+    //! @brief    Number of the ROM chip that is currently mapped to ROMX
+    /*! @details  -1 indicates that ROMX is unmapped.
+     */
+    int8_t chipL;
+    int8_t chipH;
+
+    //! @brief    Number of bytes that are mapped to ROMX
+    /*! @details  For most cartridges, this value is equals chipSize[romX],
+     *            which means that the ROM is completely mapped.
+     */
+    uint16_t mappedBytesL;
+    uint16_t mappedBytesH;
+
+    //! @brief    Offset into the ROM chip's data array
+    /*! @details  The first ROMX byte is: chip[romX] + romOffsetX
+     *            The last ROMX byte is: chip[romX] + romOffsetX + romSizeX - 1
+     */
+    uint16_t offsetL;
+    uint16_t offsetH;
+
     /*! @brief    Indicates which ROM chip blended it
      *  @details  Each array item represents a 4 KB block above $8000
+     *  @deprecated
      */
     uint8_t blendedIn[16];
     
     /*! @brief    Additional RAM
      *  @details  Some cartridges such as ActionReplay contain additional RAM.
-     *            For normal cartridges, this variable is NULL.
+     *            By default, this variable is NULL.
      */
     uint8_t *externalRam;
     
-    //! @brief    Capacity of additional RAM in bytes
+    /*! @brief    Capacity of the additional RAM in bytes
+     *  @note     This value is 0 if and only if externaRam is NULL.
+     */
     uint32_t ramCapacity; 
     
     //! @brief    Indicates if the RAM is kept alive during a reset.
@@ -83,10 +108,10 @@ public:
      */
     uint64_t cycle;
     
-    /*! @brief    Temporary storage for peeked or poked values
+    /*! @brief    Temporary value storage
      *  @details  Some custom cartridges need to remember the last value that
-     *            has been peeked or poked. They preserve this value in this
-     *            variable. Only a few cartridges make use of this variable.
+     *            has been peeked or poked into the I/O registers. They preserve
+     *            this value in this variable.
      */
     uint8_t regValue;
 
@@ -136,13 +161,48 @@ public:
     virtual void execute() { };
     
     //! @brief    Peek fallthrough
-    virtual uint8_t peek(uint16_t addr); 
+    //! @deprecated
+    // virtual uint8_t peek(uint16_t addr);
 
+    //! @brief    Peek fallthrough for the ROML space
+    /*! @param    addr is the absolute address of the accessed memory cell.
+     *            Valid range: 0x8000 - 0x9FFF
+     */
+    virtual uint8_t peekRomLabs(uint16_t absAddr);
+    
+    //! @brief    Peek fallthrough for the ROML space
+    /*! @details  addr is the relative address of the accessed memory cell.
+     *            Valid range: 0x0000 - 0x1FFF
+     */
+    virtual uint8_t peekRomL(uint16_t addr);
+    
+    //! @brief    Peek fallthrough for the ROMH space
+    /*! @param    addr is the absolute address of the accessed memory cell.
+     *            Valid range: 0xA000 - 0xBFFF and 0xE000 - 0xFFFF
+     */
+    virtual uint8_t peekRomHabs(uint16_t absAddr);
+    
+    //! @brief    Peek fallthrough for the ROMH space
+    /*! @details  addr is the relative address of the accessed memory cell.
+     *            Valid range: 0x0000 - 0x1FFF
+     */
+    virtual uint8_t peekRomH(uint16_t addr);
+    
     //! @brief    Poke fallthrough
+    //! @deprecated
     virtual void poke(uint16_t addr, uint8_t value) { return; }
 
     //! @brief    Same as peek, but without side effects.
-    virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }
+    //! @deprecated
+    // virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }
+    
+    //! @brief    Same as peekRomL, but without side effects
+    uint8_t spypeekRomLabs(uint16_t absAddr) { return peekRomLabs(absAddr); }
+    uint8_t spypeekRomL(uint16_t addr) { return peekRomL(addr); }
+    
+    //! @brief    Same as peekRomH, but without side effects
+    uint8_t spypeekRomHabs(uint16_t absAddr) { return peekRomHabs(absAddr); }
+    uint8_t spypeekRomH(uint16_t addr) { return peekRomH(addr); }
     
     //! @brief    Peek fallthrough for I/O space 1
     virtual uint8_t peekIO1(uint16_t addr) { return 0; }
@@ -183,22 +243,32 @@ public:
      */
     void setRamCapacity(uint32_t size);
 
-    //! @brief    Returns the initial state of the game line
+    //! @brief    Returns the initial state of the game line.
     bool getInitialGameLine() { return initialGameLine; }
         
-    //! @brief    Returns the initial state of the exrom line
+    //! @brief    Returns the initial state of the exrom line.
     bool getInitialExromLine() { return initialExromLine; }
     
-    //! @brief   Banks in a chip
-    /*  @details Chip contents will show up in memory
+    //! @brief    Returns true if a certain ROM chip maps to ROML, only.
+    bool mapsToL(unsigned nr);
+
+    //! @brief    Returns true if a certain ROM chip maps to ROML and ROMH.
+    bool mapsToLH(unsigned nr);
+
+    //! @brief    Returns true if a certain ROM chip maps to ROMH, only.
+    bool mapsToH(unsigned nr);
+
+    //! @brief    Banks in a chip
+    /*! @details  Chip contents will show up in memory
      */
     void bankIn(unsigned nr);
     
-    //! @brief   Banks in a chip
-    /*  @details RAM contents will show in memory
+    //! @brief    Banks in a chip
+    /*! @details  RAM contents will show in memory
      */
-    void bankOut(unsigned nr);
-    
+    void bankOut(unsigned nr); // Deprecated. Will be deleted
+    void bankOutNew(unsigned nr); // Rename to bankIn when stable
+
     //! @brief    Reads in chip stored in the provided CRT container
     void loadChip(unsigned nr, CRTFile *c);    
 

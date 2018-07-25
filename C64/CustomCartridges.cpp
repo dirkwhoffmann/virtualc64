@@ -288,17 +288,19 @@ FinalIII::reset()
 uint8_t
 FinalIII::peekIO1(uint16_t addr)
 {
-    // I/O space 1 mirrors $1E00 to $1EFF from the selected bank.
+    // I/O space 1 mirrors $1E00 to $1EFF from ROML
     uint16_t offset = addr - 0xDE00;
-    return peek(0x8000 + 0x1E00 + offset);
+    return peekRomL(0x1E00 + offset);
+    // return peek(0x8000 + 0x1E00 + offset);
 }
 
 uint8_t
 FinalIII::peekIO2(uint16_t addr)
 {    
-    // I/O space 2 space mirrors $1F00 to $1FFF from the selected bank.
+    // I/O space 2 space mirrors $1F00 to $1FFF from ROML
     uint16_t offset = addr - 0xDF00;
-    return peek(0x8000 + 0x1F00 + offset);
+    return peekRomL(0x1F00 + offset);
+    // return peek(0x8000 + 0x1F00 + offset);
 }
 
 void
@@ -409,9 +411,9 @@ SimonsBasic::pokeIO1(uint16_t addr, uint8_t value)
     }
 }
 
-// -----------------------------------------------------------------------------
-//                                   Ocean type 1
-// -----------------------------------------------------------------------------
+//
+// Ocean type 1
+//
 
 /*
  * For more information: http://codebase64.org/doku.php?id=base:crt_file_format
@@ -433,9 +435,9 @@ Ocean::pokeIO1(uint16_t addr, uint8_t value)
 }
 
 
-// -----------------------------------------------------------------------------
-//                                   Funplay
-// -----------------------------------------------------------------------------
+//
+// Funplay
+//
 
 void
 Funplay::pokeIO1(uint16_t addr, uint8_t value)
@@ -463,9 +465,10 @@ Funplay::pokeIO1(uint16_t addr, uint8_t value)
     }
 }
 
-// -----------------------------------------------------------------------------
-//                                     Supergames
-// -----------------------------------------------------------------------------
+
+//
+// Supergames
+//
 
 void
 Supergames::pokeIO2(uint16_t addr, uint8_t value)
@@ -495,9 +498,10 @@ Supergames::pokeIO2(uint16_t addr, uint8_t value)
     }
 }
 
-// -----------------------------------------------------------------------------
-//                                    Epyx Fast Loader
-// -----------------------------------------------------------------------------
+
+//
+// Epyx Fast Loader
+//
 
 void
 EpyxFastLoad::reset()
@@ -557,17 +561,32 @@ EpyxFastLoad::checkCapacitor()
 
 
 uint8_t
-EpyxFastLoad::peek(uint16_t addr)
+EpyxFastLoad::peekRomL(uint16_t addr)
 {
     dischargeCapacitor();
-    return Cartridge::peek(addr);
+    return Cartridge::peekRomL(addr);
 }
 
 uint8_t
-EpyxFastLoad::read(uint16_t addr)
+EpyxFastLoad::peekRomH(uint16_t addr)
 {
-    return Cartridge::peek(addr);
+    dischargeCapacitor();
+    return Cartridge::peekRomH(addr);
 }
+
+/*
+uint8_t
+EpyxFastLoad::spypeekRomL(uint16_t addr)
+{
+    return Cartridge::spypeekRomL(addr);
+}
+
+uint8_t
+EpyxFastLoad::spypeekRomL(uint16_t addr)
+{
+    return Cartridge::spypeekRomL(addr);
+}
+*/
 
 uint8_t
 EpyxFastLoad::peekIO1(uint16_t addr)
@@ -589,9 +608,10 @@ EpyxFastLoad::peekIO2(uint16_t addr)
     return chip[0][0x1f00 + (addr & 0xff)];
 }
 
-// -----------------------------------------------------------------------------
-//                                    Westermann learning
-// -----------------------------------------------------------------------------
+
+//
+// Westermann learning
+//
 
 uint8_t
 Westermann::peekIO2(uint16_t addr)
@@ -609,9 +629,9 @@ Westermann::readIO2(uint16_t addr)
     return 0;
 }
 
-// -----------------------------------------------------------------------------
-//                                         Rex
-// -----------------------------------------------------------------------------
+//
+// Rex
+//
 
 uint8_t
 Rex::peekIO2(uint16_t addr)
@@ -637,12 +657,23 @@ Rex::readIO2(uint16_t addr)
     return 0;
 }
 
-// -----------------------------------------------------------------------------
+
+//
 // Zaxxon
-// -----------------------------------------------------------------------------
+//
+
+void
+Zaxxon::reset()
+{
+    Cartridge::reset();
+    
+    // Make sure peekRomL() is called for the whole 8KB ROML range.
+    assert(chipSize[0] = 0x1000);
+    chipSize[0] = 0x2000;
+}
 
 uint8_t
-Zaxxon::peek(uint16_t addr)
+Zaxxon::peekRomL(uint16_t addr)
 {
     /* "The (Super) Zaxxon carts use a 4Kb ($1000) ROM at $8000-$8FFF (mirrored
      * in $9000-$9FFF) along with two 8Kb ($2000) cartridge banks  located  at
@@ -650,7 +681,29 @@ Zaxxon::peek(uint16_t addr)
      * either the $8000-$8FFF area (bank 0 is selected) or to $9000-$9FFF area
      * (bank 1 is selected)."
      */
-    
+    if (addr < 0x1000) {
+        bankIn(1);
+        return Cartridge::peekRomL(addr);
+    } else {
+        bankIn(2);
+        return Cartridge::peekRomL(addr - 0x1000);
+    }
+}
+
+uint8_t
+Zaxxon::spypeekRomL(uint16_t addr)
+{
+    if (addr < 0x1000) {
+        return Cartridge::peekRomL(addr);
+    } else {
+        return Cartridge::peekRomL(addr - 0x1000);
+    }
+}
+
+/*
+uint8_t
+Zaxxon::peek(uint16_t addr)
+{
     if (addr >= 0x8000 && addr <= 0x8FFF) {
         bankIn(1);
         return Cartridge::peek(addr);
@@ -668,10 +721,12 @@ Zaxxon::read(uint16_t addr)
 {
     return Cartridge::peek(addr);
 }
+*/
 
-// -----------------------------------------------------------------------------
+
+//
 // MagicDesk
-// -----------------------------------------------------------------------------
+//
 
 uint8_t
 MagicDesk::peekIO1(uint16_t addr)
@@ -698,9 +753,10 @@ MagicDesk::pokeIO1(uint16_t addr, uint8_t value)
     }
 }
 
-// -----------------------------------------------------------------------------
+
+//
 // COMAL 80
-// -----------------------------------------------------------------------------
+//
 
 void
 Comal80::reset()
@@ -752,6 +808,7 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
         }
     }
 }
+
 
 //
 // GeoRAM

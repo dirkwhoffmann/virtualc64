@@ -94,10 +94,23 @@ public:
     
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);
+
+    //! @brief    Peek fallthrough for the ROML space
+    // uint8_t peekRomL(uint16_t addr);
     
+    //! @brief    Peek fallthrough for the ROMH space
+    // uint8_t peekRomH(uint16_t addr);
+
     //! @brief    Same as peek, but without side effects
+    //! @deprecated
     uint8_t spypeek(uint16_t addr);
 
+    //! @brief    Same as peekRomL, but without side effects
+    // uint8_t spypeekRomL(uint16_t addr);
+    
+    //! @brief    Same as peekRomH, but without side effects
+    // uint8_t spypeekRomH(uint16_t addr);
+    
     //! @brief    Peek fallthrough for I/O space 1
     uint8_t peekIO1(uint16_t addr);
     

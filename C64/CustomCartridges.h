@@ -182,8 +182,10 @@ public:
     CartridgeType getCartridgeType() { return CRT_EPYX_FASTLOAD; }
     void reset();
     void execute();
-    uint8_t peek(uint16_t addr);
-    uint8_t read(uint16_t addr);
+    uint8_t peekRomL(uint16_t addr);
+    uint8_t peekRomH(uint16_t addr);
+    uint8_t spypeekRomL(uint16_t addr) { return Cartridge::peekRomL(addr); }
+    uint8_t spypeekRomH(uint16_t addr) { return Cartridge::peekRomH(addr); }
     uint8_t peekIO1(uint16_t addr);
     uint8_t readIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
@@ -214,9 +216,10 @@ class Zaxxon : public Cartridge {
     
 public:
     using Cartridge::Cartridge;
+    void reset();
     CartridgeType getCartridgeType() { return CRT_ZAXXON; }
-    uint8_t peek(uint16_t addr);
-    uint8_t read(uint16_t addr);
+    uint8_t peekRomL(uint16_t addr);
+    uint8_t spypeekRomL(uint16_t addr);
 };
 
 //! @brief    Type 19 cartridges
