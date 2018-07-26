@@ -82,30 +82,6 @@ IEC::dumpTrace()
     debug(1, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
 }
 
-/*
-void 
-IEC::connectDrive() 
-{ 
-	driveIsConnected = true;
-	c64->putMessage(MSG_VC1541_ATTACHED);
-    if (c64->floppy.soundMessagesEnabled())
-        c64->putMessage(MSG_VC1541_ATTACHED_SOUND);
-}
-	
-void 
-IEC::disconnectDrive()
-{
-    // Disconnect drive from bus
-	driveIsConnected = false;
-	c64->putMessage(MSG_VC1541_DETACHED);
-    if (c64->floppy.soundMessagesEnabled())
-        c64->putMessage(MSG_VC1541_DETACHED_SOUND);
-
-    // Switch drive off and on
-    c64->floppy.powerUp();
-}
-*/
-
 bool IEC::_updateIecLines()
 {
     // Save current values
