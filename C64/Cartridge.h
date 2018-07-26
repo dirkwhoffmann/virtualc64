@@ -189,7 +189,6 @@ public:
     virtual uint8_t peekRomH(uint16_t addr);
     
     //! @brief    Poke fallthrough
-    //! @deprecated
     virtual void poke(uint16_t addr, uint8_t value) { return; }
 
     //! @brief    Same as peek, but without side effects.
@@ -249,6 +248,14 @@ public:
     //! @brief    Returns the initial state of the exrom line.
     bool getInitialExromLine() { return initialExromLine; }
     
+    
+    //
+    // ROM chip handling
+    //
+    
+    //! @brief    Reads in chip stored in the provided CRT container
+    void loadChip(unsigned nr, CRTFile *c);
+
     //! @brief    Returns true if a certain ROM chip maps to ROML, only.
     bool mapsToL(unsigned nr);
 
@@ -258,31 +265,52 @@ public:
     //! @brief    Returns true if a certain ROM chip maps to ROMH, only.
     bool mapsToH(unsigned nr);
 
-    //! @brief    Banks in a chip
-    /*! @details  Chip contents will show up in memory
+    //! @brief    Banks in a rom chip into the ROML space
+    void bankInROML(unsigned nr, uint16_t size, uint16_t offset);
+
+    //! @brief    Banks in a rom chip into the ROMH space
+    void bankInROMH(unsigned nr, uint16_t size, uint16_t offset);
+
+    //! @brief    Banks in a rom chip
+    /*! @details  This function calls bankInROML or bankInROMH with the default
+     *            parameters for this chip as provided in the CRT file.
      */
     void bankIn(unsigned nr);
     
-    //! @brief    Banks in a chip
+    //! @brief    Banks out a chip
     /*! @details  RAM contents will show in memory
      */
-    void bankOut(unsigned nr); // Deprecated. Will be deleted
-    void bankOutNew(unsigned nr); // Rename to bankIn when stable
+    void bankOut(unsigned nr);
 
-    //! @brief    Reads in chip stored in the provided CRT container
-    void loadChip(unsigned nr, CRTFile *c);    
 
-    //! @brief    Simulates pressing a cartridge button
-    /*! @details  By default nothing is done here as most cartridges do not
-     *            have any button. Some special cartriges such aus Final
-     *            Cartridge III overwrite this function to emulate a freezer
-     *            button.
+    //
+    // Cartridge buttons
+    //
+    
+    //! @brief    Simulates pressing the first cartridge button
+    /*! @details  If present, the first button is usually a freeze button.
+     *  @note     Make sure to call releaseFirstButton() afterwards.
+     *  @seealso  releaseFirstButton
      */
     virtual void pressFirstButton() { };
+
+    //! @brief    Simulates releasing the first cartridge button
+    /*! @note     Make sure to call pressFirstButton() first.
+     *  @seealso  pressFirstButton
+     */
+    virtual void releaseFirstButton() { };
+    
+    //! @brief    Simulates pressing the second cartridge button
+    /*! @details  If present, the second button usually a reset button.
+     *  @note     Make sure to call releaseSecondButton() afterwards.
+     *  @seealso  releaseSecondButton
+     */
     virtual void pressSecondButton() { };
     
-    //! @brief    Simulates releasing a cartridge button
-    virtual void releaseFirstButton() { };
+    //! @brief    Simulates releasing the second cartridge button
+    /*! @note     Make sure to call pressSecondButton() first.
+     *  @seealso  pressSecondButton
+     */
     virtual void releaseSecondButton() { };
 };
 

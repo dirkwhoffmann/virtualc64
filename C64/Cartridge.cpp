@@ -411,6 +411,37 @@ Cartridge::setRamCapacity(uint32_t size)
     }
 }
 
+void
+Cartridge::loadChip(unsigned nr, CRTFile *c)
+{
+    assert(nr < 64);
+    assert(c != NULL);
+    
+    uint16_t start = c->chipAddr(nr);
+    uint16_t size  = c->chipSize(nr);
+    uint8_t  *data = c->chipData(nr);
+    
+    if (start < 0x8000) {
+        warn("Ignoring chip %d: Start address too low (%04X)", nr, start);
+        return;
+    }
+    
+    if (0x10000 - start < size) {
+        warn("Ignoring chip %d: Invalid size (start: %04X size: %04X)", nr, start, size);
+        return;
+    }
+    
+    if (chip[nr])
+        free(chip[nr]);
+    
+    if (!(chip[nr] = (uint8_t *)malloc(size)))
+        return;
+    
+    chipStartAddress[nr] = start;
+    chipSize[nr]         = size;
+    memcpy(chip[nr], data, size);
+}
+
 /*
 void
 Cartridge::bankIn(unsigned nr)
@@ -450,6 +481,22 @@ Cartridge::mapsToH(unsigned nr) {
 }
 
 void
+Cartridge::bankInROML(unsigned nr, uint16_t size, uint16_t offset)
+{
+    chipL = nr;
+    mappedBytesL = size;
+    offsetL = offset;
+}
+
+void
+Cartridge::bankInROMH(unsigned nr, uint16_t size, uint16_t offset)
+{
+    chipH = nr;
+    mappedBytesH = size;
+    offsetH = offset;
+}
+
+void
 Cartridge::bankIn(unsigned nr)
 {
     assert(nr < 64);
@@ -460,33 +507,18 @@ Cartridge::bankIn(unsigned nr)
 
     if (mapsToLH(nr)) {
         
-        // The ROM chip covers ROML and (part of) ROMH
-        chipL = nr;
-        mappedBytesL = 0x2000;
-        offsetL = 0;
-        
-        chipH = nr;
-        mappedBytesH = chipSize[nr] - 0x2000;
-        offsetH = 0x2000;
-        
-        debug(2, "Banked in chip %d to ROML and ROMH\n", nr);
+        bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
+        bankInROMH(nr, chipSize[nr] - 0x2000, 0x2000);
+        debug(2, "Banked in chip %d in ROML and ROMH\n", nr);
     
     } else if (mapsToL(nr)) {
         
-        // The ROM chip covers (part of) ROML
-        chipL = nr;
-        mappedBytesL = chipSize[nr];
-        offsetL = 0;
-
-        debug(2, "Banked in chip %d to ROML\n", nr);
+        bankInROML(nr, chipSize[nr], 0); // chip covers (part of) ROML
+        debug(2, "Banked in chip %d in ROML\n", nr);
         
     } else if (mapsToH(nr)) {
         
-        // The ROM chip covers (part of) ROMH
-        chipH = nr;
-        mappedBytesH = chipSize[nr];
-        offsetH = 0;
-        
+        bankInROMH(nr, chipSize[nr], 0); // chip covers (part of) ROMH
         debug(2, "Banked in chip %d to ROMH\n", nr);
         
     } else {
@@ -495,6 +527,7 @@ Cartridge::bankIn(unsigned nr)
     }
 }
 
+/*
 void
 Cartridge::bankOut(unsigned nr)
 {
@@ -516,9 +549,10 @@ Cartridge::bankOut(unsigned nr)
     }
     printf("\n");
 }
+*/
 
 void
-Cartridge::bankOutNew(unsigned nr)
+Cartridge::bankOut(unsigned nr)
 {
     assert(nr < 64);
 
@@ -536,41 +570,6 @@ Cartridge::bankOutNew(unsigned nr)
     }
 }
 
-void
-Cartridge::loadChip(unsigned nr, CRTFile *c)
-{
-    assert(nr < 64);
-    assert(c != NULL);
-    
-    uint16_t start = c->chipAddr(nr);
-    uint16_t size  = c->chipSize(nr);
-    uint8_t  *data = c->chipData(nr);
-    
-    if (start < 0x8000) {
-        warn("Ignoring chip %d: Start address too low (%04X)", nr, start);
-        return;
-    }
-    
-    if (0x10000 - start < size) {
-        warn("Ignoring chip %d: Invalid size (start: %04X size: %04X)", nr, start, size);
-        return;
-    }
-    
-    if (chip[nr])
-        free(chip[nr]);
-    
-    if (!(chip[nr] = (uint8_t *)malloc(size)))
-        return;
-    
-    chipStartAddress[nr] = start;
-    chipSize[nr]         = size;
-    memcpy(chip[nr], data, size);
-    
-    /*
-    debug(1, "Chip %d is in place: %d KB starting at $%04X (type: %d bank:%X)\n",
-          nr, chipSize[nr] / 1024, chipStartAddress[nr], c->getChipType(nr), c->getChipBank(nr));
-    */
-}
 
 
 

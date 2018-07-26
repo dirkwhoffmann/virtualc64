@@ -250,9 +250,15 @@ class FreezeFrame : public Cartridge {
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_FREEZE_FRAME; }
+    void reset();
     uint8_t peekIO1(uint16_t addr);
+    uint8_t spypeekIO1(uint16_t addr) { return 0; }
     uint8_t peekIO2(uint16_t addr);
+    uint8_t spypeekIO2(uint16_t addr) { return 0; }
+    // uint8_t peekRomH(uint16_t addr);
+    // uint8_t spypeekRomH(uint16_t addr);
     void pressFirstButton();
+    void releaseFirstButton(); 
 };
 
 //! @brief    GeoRAM cartridge

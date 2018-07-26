@@ -683,11 +683,7 @@ extension MyController {
         c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
     
-    @IBAction func actionReplayAction(_ sender: Any!) {
-        // Dummy action method to enable menu item validation
-    }
-    
-    @IBAction func actionReplayFreezeAction(_ sender: Any!) {
+    @IBAction func cartridgeFirstButtonAction(_ sender: Any!) {
         track()
         c64.expansionport.pressFirstButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -695,7 +691,7 @@ extension MyController {
         }
     }
     
-    @IBAction func actionReplayResetAction(_ sender: Any!) {
+    @IBAction func cartridgeSecondButtonAction(_ sender: Any!) {
         track()
         c64.expansionport.pressSecondButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -703,24 +699,16 @@ extension MyController {
         }
     }
     
+    @IBAction func actionReplayAction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+    
     @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
     
-    @IBAction func finalCartridgeIIIfreezeAction(_ sender: Any!) {
-        c64.expansionport.pressFirstButton()
-    }
-    
-    @IBAction func finalCartridgeIIIresetAction(_ sender: Any!) {
-        c64.expansionport.pressSecondButton()
-    }
-    
     @IBAction func freezeFrameAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
-    }
-    
-    @IBAction func freezeFrameFreezeAction(_ sender: Any!) {
-        c64.expansionport.pressFirstButton()
     }
     
     

@@ -814,24 +814,79 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
 // FreezeFrame
 //
 
+void
+FreezeFrame::reset()
+{
+    Cartridge::reset();
+    
+    // In Ultimax mode, the same ROM chip that appears in ROML also appears
+    // in ROMH. By default, it get banked in ROML only, so let's bank it in
+    // ROMH manually.
+    bankInROMH(0, 0x2000, 0);
+}
+
 uint8_t
 FreezeFrame::peekIO1(uint16_t addr)
 {
+    debug("Reading from IO1: %04X\n", addr);
     // Reading from IO1 switched to 8K game mode
+    // if (addr == 0) {
+    {
+        c64->expansionport.setExromLine(0);
+        c64->expansionport.setGameLine(1);
+    }
     return 0;
 }
 
 uint8_t
 FreezeFrame::peekIO2(uint16_t addr)
 {
+    debug("*Reading from IO2: %04X\n", addr);
+
     // Reading from IO2 disables the cartridge
+    // if (addr == 0) {
+    {
+        c64->expansionport.setExromLine(1);
+        c64->expansionport.setGameLine(1);
+    }
     return 0; 
 }
+
+/*
+uint8_t
+FreezeFrame::peekRomH(uint16_t addr)
+{
+    // When the cartridge switched to ultimax mode, the ROM chip gets visible
+    // in ROMH as well.
+    return peekRomL(addr);
+}
+
+uint8_t
+FreezeFrame::spypeekRomH(uint16_t addr)
+{
+    return spypeekRomL(addr);
+}
+*/
 
 void
 FreezeFrame::pressFirstButton()
 {
-    // Pressing the freeze button enables ultimax mode
+    debug("FreezeFrame::pressFirstButton()\n");
+    // Pressing the freeze button switches to ultimax mode and triggers an NMI
+    c64->suspend();
+    c64->expansionport.setExromLine(1);
+    c64->expansionport.setGameLine(0);
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
+}
+
+void
+FreezeFrame::releaseFirstButton()
+{
+    debug("FreezeFrame::releaseFirstButton()\n");
+    c64->suspend();
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
 }
 
 

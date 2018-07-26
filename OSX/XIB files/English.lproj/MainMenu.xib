@@ -936,13 +936,13 @@ CA
                                         <menuItem title="Freeze" id="KqP-hK-eI5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="actionReplayFreezeAction:" target="-1" id="vY9-CS-xez"/>
+                                                <action selector="cartridgeFirstButtonAction:" target="-1" id="pO5-ag-cRi"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Reset" id="2oe-rD-sgA">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="actionReplayResetAction:" target="-1" id="1be-Br-1Qc"/>
+                                                <action selector="cartridgeSecondButtonAction:" target="-1" id="mro-FJ-TK0"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -958,13 +958,13 @@ CA
                                         <menuItem title="Freeze" id="Eve-TE-pGi" userLabel="Freeze">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="finalCartridgeIIIfreezeAction:" target="-1" id="w6Q-hR-GPj"/>
+                                                <action selector="cartridgeFirstButtonAction:" target="-1" id="2gB-6b-fNf"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Reset" id="d0F-ds-yHj" userLabel="Freeze">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="finalCartridgeIIIresetAction:" target="-1" id="les-US-gYl"/>
+                                                <action selector="cartridgeSecondButtonAction:" target="-1" id="LSn-UF-Oj6"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -980,7 +980,7 @@ CA
                                         <menuItem title="Freeze" id="dcO-z8-v63">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="freezeFrameFreezeAction:" target="-1" id="ikM-Ye-1aR"/>
+                                                <action selector="cartridgeFirstButtonAction:" target="-1" id="Jbb-bc-08W"/>
                                             </connections>
                                         </menuItem>
                                     </items>
