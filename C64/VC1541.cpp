@@ -22,8 +22,8 @@
 
 VC1541::VC1541()
 {
-	setDescription("1541");
-    debug(3, "Creating virtual VC1541 at address %p\n", this);
+    setDescription("1541");
+    debug(3, "Creating virtual VC1541(%d) at address %p\n", deviceNr, this);
 	
 	// Configure CPU
 	cpu.setDescription("1541CPU");
@@ -36,9 +36,10 @@ VC1541::VC1541()
     // Register snapshot items
     SnapshotItem items[] = {
 
-        // Configuration items
+        // Life-time items
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
+        { &deviceNr,                sizeof(deviceNr),               KEEP_ON_RESET },
 
         // Internal state
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },

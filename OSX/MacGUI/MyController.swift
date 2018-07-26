@@ -631,10 +631,10 @@ extension MyController {
             redLED.setNeedsDisplay()
             break
     
-        case MSG_VC1541_DATA_ON:
+        case MSG_IEC_DATA_ON:
             break
     
-        case MSG_VC1541_DATA_OFF:
+        case MSG_IEC_DATA_OFF:
             break
             
         case MSG_VC1541_MOTOR_ON,

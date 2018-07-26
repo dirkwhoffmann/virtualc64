@@ -67,6 +67,10 @@ typedef enum {
     MSG_PAL,
     MSG_NTSC,
 
+    // IEC Bus
+    MSG_IEC_DATA_ON,
+    MSG_IEC_DATA_OFF,
+
     // Peripherals (Disk drive)
     MSG_VC1541_ATTACHED,
     MSG_VC1541_ATTACHED_SOUND,
@@ -78,8 +82,6 @@ typedef enum {
     MSG_VC1541_NO_DISK_SOUND,
     MSG_VC1541_RED_LED_ON,
     MSG_VC1541_RED_LED_OFF,
-    MSG_VC1541_DATA_ON,
-    MSG_VC1541_DATA_OFF,
     MSG_VC1541_MOTOR_ON,
     MSG_VC1541_MOTOR_OFF,
     MSG_VC1541_HEAD_UP,

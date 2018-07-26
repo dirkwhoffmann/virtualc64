@@ -57,8 +57,11 @@ void
 IEC::ping()
 {
     VirtualComponent::ping();
+    
+    // TODO: Move to VC1541 and change it to DRIVE_ON, DRIVE_OFF
     c64->putMessage(driveIsConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
-    c64->putMessage(busActivity > 0 ? MSG_VC1541_DATA_ON : MSG_VC1541_DATA_OFF );
+    
+    c64->putMessage(busActivity > 0 ? MSG_IEC_DATA_ON : MSG_IEC_DATA_OFF);
 }
 
 void 
@@ -183,8 +186,7 @@ void IEC::updateIecLines()
             busActivity = 30;
             
 			// Bus has just been activated
-            // c64->updateWarp();
-			c64->putMessage(MSG_VC1541_DATA_ON);
+			c64->putMessage(MSG_IEC_DATA_ON);
 
         } else {
             
@@ -201,8 +203,7 @@ void IEC::execute()
 		if (--busActivity == 0) {
             
 			// Bus goes idle
-            // c64->updateWarp();
-			c64->putMessage(MSG_VC1541_DATA_OFF);
+			c64->putMessage(MSG_IEC_DATA_OFF);
 		}
 	}
 }

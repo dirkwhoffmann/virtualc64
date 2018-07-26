@@ -61,6 +61,17 @@ public:
     // Drive status
     //
     
+public:
+    
+    //! @brief    Internal number of this drive
+    /*! @details  The first drive has number 0, the second drive number 1, etc.
+     *            The number is set once and never changed afterwards.
+     *            When the drive writes a message into the message queue, the
+     *            drive number is provided in the data field to let the GUI
+     *            GUI know about the sender.
+     */
+    unsigned deviceNr;
+    
 private:
     
     //! @brief    Indicates whether disk is rotating or not
@@ -245,7 +256,7 @@ public:
     //
     //! @functiongroup Accessing drive properties
     //
-    
+        
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };
 
