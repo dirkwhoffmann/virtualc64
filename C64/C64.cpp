@@ -135,12 +135,13 @@ C64::C64()
     floppy.mem.iec = &c64->iec;
     floppy.mem.floppy = &c64->floppy;
     floppy.deviceNr = 0;
-
+    
     // Set initial hardware configuration
     mouse = &mouse1350;
     mousePort = 0;
     setPAL();
-            
+    floppy.powerOn();
+    
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
@@ -540,12 +541,12 @@ C64::_executeOneCycle()
     (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
-    result &= floppy.execute(durationOfHalfCycle);
+    if (floppy.isPoweredOn()) result &= floppy.execute(durationOfHalfCycle);
     if (iec.isDirty) iec.updateIecLines();
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    result &= floppy.execute(durationOfHalfCycle);
+    if (floppy.isPoweredOn()) result &= floppy.execute(durationOfHalfCycle);
     datasette.execute();
     
     rasterlineCycle++;

@@ -26,7 +26,7 @@ IEC::IEC()
     // Register snapshot items
     SnapshotItem items[] = {
         
-        { &driveIsConnected,    sizeof(driveIsConnected),       CLEAR_ON_RESET },
+        // { &driveIsConnected,    sizeof(driveIsConnected),       CLEAR_ON_RESET },
         { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
@@ -47,7 +47,7 @@ IEC::reset()
 {
     VirtualComponent::reset();
     
-    driveIsConnected = 1;
+    // driveIsConnected = 1;
     atnLine = 1;
     clockLine = 1;
     dataLine = 1;
@@ -57,9 +57,6 @@ void
 IEC::ping()
 {
     VirtualComponent::ping();
-    
-    // TODO: Move to VC1541 and change it to DRIVE_ON, DRIVE_OFF
-    c64->putMessage(driveIsConnected ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
     
     c64->putMessage(busActivity > 0 ? MSG_IEC_DATA_ON : MSG_IEC_DATA_OFF);
 }
@@ -72,7 +69,6 @@ IEC::dumpState()
 	msg("\n");
 	dumpTrace();
 	msg("\n");
-	msg("Drive connected : %s\n", driveIsConnected ? "yes" : "no");
     msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.getDDRB());
     msg("    DDRA (CIA2) : %02X\n\n", c64->cia2.DDRA);
     msg("   Bus activity : %d\n", busActivity); 
@@ -86,6 +82,7 @@ IEC::dumpTrace()
     debug(1, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
 }
 
+/*
 void 
 IEC::connectDrive() 
 { 
@@ -107,6 +104,7 @@ IEC::disconnectDrive()
     // Switch drive off and on
     c64->floppy.powerUp();
 }
+*/
 
 bool IEC::_updateIecLines()
 {
@@ -156,7 +154,7 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= !driveIsConnected || (atnLine ^ deviceAtn);
+    dataLine &= c64->floppy.isPoweredOff() || (atnLine ^ deviceAtn);
     
     isDirty = false;
     return (oldAtnLine != atnLine ||

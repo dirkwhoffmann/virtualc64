@@ -103,6 +103,8 @@ void
 VC1541::ping()
 {
     VirtualComponent::ping();
+    
+    c64->putMessage(poweredOn ? MSG_VC1541_ATTACHED : MSG_VC1541_DETACHED);
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF);
     c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF);
     c64->putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK);
@@ -316,6 +318,38 @@ VC1541::setZone(uint2_t value)
         debug(2, "Switching from disk zone %d to disk zone %d\n", zone, value);
         zone = value;
     }
+}
+
+void
+VC1541::powerOn()
+{
+    if (poweredOn) return;
+    
+    c64->suspend();
+    
+    poweredOn = true;
+    if (c64->floppy.soundMessagesEnabled())
+        c64->putMessage(MSG_VC1541_ATTACHED_SOUND);
+    ping();
+    
+    c64->resume();
+}
+
+void
+VC1541::powerOff()
+{
+    if (!poweredOn) return;
+
+    c64->suspend();
+    
+    reset();
+    
+    poweredOn = false;
+    if (c64->floppy.soundMessagesEnabled())
+        c64->putMessage(MSG_VC1541_DETACHED_SOUND);
+    ping();
+    
+    c64->resume();
 }
 
 void

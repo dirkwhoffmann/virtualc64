@@ -46,15 +46,15 @@ extension MyController {
             return keyboardcontroller.mapKeysByPosition
         }
  
-        // Disk menu
+        // Drive menu
         if item.action == #selector(MyController.newDiskAction(_:)) {
-            return c64.iec.driveIsConnected()
+            return c64.vc1541.isPoweredOn()
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
             return validateURLlist(document.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
-            return c64.iec.driveIsConnected() && c64.vc1541.hasDisk()
+            return c64.vc1541.isPoweredOn() && c64.vc1541.hasDisk()
         }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
             return c64.vc1541.hasDisk()
@@ -69,8 +69,8 @@ extension MyController {
             return hasDisk
         }
         if item.action == #selector(MyController.drivePowerAction(_:)) {
-            let connected = c64.iec.driveIsConnected()
-            item.title = connected ? "Disconnect drive" : "Connect drive"
+            let poweredOn = c64.vc1541.isPoweredOn()
+            item.title = poweredOn ? "Disconnect drive" : "Connect drive"
             return true
         }
 
@@ -547,11 +547,19 @@ extension MyController {
     @IBAction func drivePowerAction(_ sender: Any!) {
         
         track()
+        
+        if (c64.vc1541.isPoweredOn()) {
+            c64.vc1541.powerOff()
+        } else {
+            c64.vc1541.powerOn()
+        }
+        /*
         if c64.iec.driveIsConnected() {
             c64.iec.disconnectDrive()
         } else {
             c64.iec.connectDrive()
         }
+        */
     }
     
     

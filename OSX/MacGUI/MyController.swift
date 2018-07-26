@@ -632,9 +632,11 @@ extension MyController {
             break
     
         case MSG_IEC_DATA_ON:
+            progress.startAnimation(self)
             break
     
         case MSG_IEC_DATA_OFF:
+            progress.stopAnimation(self)
             break
             
         case MSG_VC1541_MOTOR_ON,

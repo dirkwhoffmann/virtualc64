@@ -73,7 +73,10 @@ public:
     unsigned deviceNr;
     
 private:
-    
+
+    //! @brief    Indicates whether the disk drive is powered on
+    bool poweredOn;
+
     //! @brief    Indicates whether disk is rotating or not
     bool spinning;
     
@@ -254,9 +257,21 @@ public:
 
     
     //
-    //! @functiongroup Accessing drive properties
+    //! @functiongroup Working with the drive
     //
-        
+
+    //! @brief    Returns true iff the drive is powered on.
+    bool isPoweredOn() { return poweredOn; }
+
+    //! @brief    Returns true iff the drive is powered off.
+    bool isPoweredOff() { return !poweredOn; }
+
+    //! @brief    Powers the drive on
+    void powerOn();
+    
+    //! @brief    Powers the drive off
+    void powerOff();
+
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };
 

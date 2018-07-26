@@ -251,12 +251,10 @@ struct ContainerWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-- (BOOL) driveIsConnected;
-- (void) connectDrive;
-- (void) disconnectDrive;
-// - (BOOL) atnLine;
-// - (BOOL) clockLine;
-// - (BOOL) dataLine;
+// - (BOOL) driveIsConnected;
+// - (void) connectDrive;
+// - (void) disconnectDrive;
+
 
 @end
 
@@ -395,6 +393,10 @@ struct ContainerWrapper;
 - (void) dump;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
+
+- (BOOL) isPoweredOn;
+- (void) powerOn;
+- (void) powerOff;
 
 - (BOOL) redLED;
 - (BOOL) hasDisk;

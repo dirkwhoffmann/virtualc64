@@ -43,9 +43,9 @@ struct TAPContainerWrapper { TAPFile *tapcontainer; };
 struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
-// --------------------------------------------------------------------------
-//                                    CPU
-// --------------------------------------------------------------------------
+//
+// CPU
+//
 
 @implementation CPUProxy
 
@@ -99,9 +99,9 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 @end
 
 
-// --------------------------------------------------------------------------
-//                                   Memory
-// --------------------------------------------------------------------------
+//
+// Memory
+//
 
 @implementation MemoryProxy
 
@@ -139,6 +139,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @end
 
+
 //
 // CIA
 //
@@ -167,6 +168,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 @end
+
 
 //
 // VIC
@@ -318,12 +320,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->iec->dumpState(); }
 - (BOOL) tracing { return wrapper->iec->tracingEnabled(); }
 - (void) setTracing:(BOOL)b { b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing(); }
-- (void) connectDrive { wrapper->iec->connectDrive(); }
-- (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
-- (BOOL) driveIsConnected { return wrapper->iec->driveIsConnected; }
-// - (BOOL) atnLine { return wrapper->iec->getAtnLine(); }
-// - (BOOL) clockLine { return wrapper->iec->getClockLine(); }
-// - (BOOL) dataLine { return wrapper->iec->getDataLine(); }
 
 @end
 
@@ -513,6 +509,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->vc1541->dumpState(); }
 - (BOOL) tracing { return wrapper->vc1541->tracingEnabled(); }
 - (void) setTracing:(BOOL)b { b ? wrapper->vc1541->startTracing() : wrapper->vc1541->stopTracing(); }
+
+- (BOOL) isPoweredOn { return wrapper->vc1541->isPoweredOn(); }
+- (void) powerOn { wrapper->vc1541->powerOn(); }
+- (void) powerOff { wrapper->vc1541->powerOff(); }
 
 - (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
 - (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }

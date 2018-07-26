@@ -27,9 +27,6 @@ class IEC : public VirtualComponent {
 
 public:
     
-	//! @brief    Indicates if the floopy drive is connected to the IEC bus.
-	bool driveIsConnected;
-	
 	//! @brief    Current value of the IEC bus atn line
 	bool atnLine;
 
@@ -67,12 +64,6 @@ public:
 	//! @brief    Writes trace output to console.
 	void dumpTrace();
 	
-	//! @brief    Connects the virtual drive to the IEC bus.
-	void connectDrive();
-	
-	//! @brief    Disconnects the virtual drive from the IEC bus.
-	void disconnectDrive();
-		
     //! @brief    Returns true if the IEC currently transfers data.
     bool isBusy() { return busActivity > 0; }
     
