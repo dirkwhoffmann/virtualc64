@@ -58,7 +58,7 @@ IEC::ping()
 {
     VirtualComponent::ping();
     
-    c64->putMessage(busActivity > 0 ? MSG_IEC_DATA_ON : MSG_IEC_DATA_OFF);
+    c64->putMessage(busActivity > 0 ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
 }
 
 void 
@@ -184,7 +184,7 @@ void IEC::updateIecLines()
             busActivity = 30;
             
 			// Bus has just been activated
-			c64->putMessage(MSG_IEC_DATA_ON);
+			c64->putMessage(MSG_IEC_BUS_BUSY);
 
         } else {
             
@@ -201,7 +201,7 @@ void IEC::execute()
 		if (--busActivity == 0) {
             
 			// Bus goes idle
-			c64->putMessage(MSG_IEC_DATA_OFF);
+			c64->putMessage(MSG_IEC_BUS_IDLE);
 		}
 	}
 }

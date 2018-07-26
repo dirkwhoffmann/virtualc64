@@ -631,11 +631,11 @@ extension MyController {
             redLED.setNeedsDisplay()
             break
     
-        case MSG_IEC_DATA_ON:
+        case MSG_IEC_BUS_BUSY:
             progress.startAnimation(self)
             break
     
-        case MSG_IEC_DATA_OFF:
+        case MSG_IEC_BUS_IDLE:
             progress.stopAnimation(self)
             break
             

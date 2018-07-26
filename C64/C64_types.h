@@ -68,8 +68,8 @@ typedef enum {
     MSG_NTSC,
 
     // IEC Bus
-    MSG_IEC_DATA_ON,
-    MSG_IEC_DATA_OFF,
+    MSG_IEC_BUS_BUSY,
+    MSG_IEC_BUS_IDLE,
 
     // Peripherals (Disk drive)
     MSG_VC1541_ATTACHED,
