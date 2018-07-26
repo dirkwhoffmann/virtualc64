@@ -72,20 +72,7 @@ private:
     //! @brief    Indicates if a disk is inserted
     DiskInsertionStatus insertionStatus;
     
-    /*! @brief    Indicates whether a disk is inserted.
-     *  @note     A fully inserted disk blocks the write protection barrier
-     *            if it is write protected.
-     */
-    // bool diskInserted;
-    
-    /*! @brief    Indicates whether a disk is inserted only partially.
-     *  @note     A partially inserted disk blocks always blocks the write
-     *            protection barrier
-     */
-    // bool diskPartiallyInserted;
-    
-    
-    //! @brief    Indicates whether the drive shall seld sound notifications
+    //! @brief    Indicates whether the drive shall send sound notifications
     bool sendSoundMessages;
     
     
