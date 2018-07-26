@@ -685,14 +685,14 @@ public:
     //
     
     //! @brief    Registers a listener callback function
-    void setListener(const void *sender, void(*func)(const void *, int) ) {
+    void setListener(const void *sender, void(*func)(const void *, int, long) ) {
         queue.setListener(sender, func);
     }
     //! @brief    Gets a notification message from message queue
-    VC64Message getMessage() { return queue.getMessage(); }
+    Message getMessage() { return queue.getMessage(); }
     
     //! @brief    Feeds a notification message into message queue
-    void putMessage(VC64Message msg) { queue.putMessage(msg); }
+    void putMessage(MessageType msg, uint64_t data = 0) { queue.putMessage(msg, data); }
 };
 
 #endif

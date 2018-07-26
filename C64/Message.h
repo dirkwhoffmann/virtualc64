@@ -31,9 +31,9 @@ private:
     //! @brief    Maximum number of queued messages
     const static unsigned queue_size = 64;
     
-    //! @brief    Message queue ring buffer
-	VC64Message queue[queue_size];
-	
+    //! @brief    Message ring buffer
+	Message queue[queue_size];
+    
 	//! @brief    The ring buffers read pointer
 	int r; 
 	
@@ -44,12 +44,15 @@ private:
 	pthread_mutex_t lock;
     
     //! @brief    Callback function
-    /*! @details  If set, the function is called whenever a message is put into the queue
+    /*! @details  If set, the function is called whenever a message is put into
+     *            the queue. The second argument is the message type and the
+     *            third argument is the message data.
      */
-    void(*callback)(const void *, int);
+    void(*callback)(const void *, int, long);
 
     //! @brief    Registered listener
-    /*! @details  This value is passed back into the registered callback
+    /*! @details  This value is passed back into the registered callback as
+     *            the first argument.
      */
     const void *listener;
 
@@ -61,18 +64,18 @@ public:
 	~MessageQueue();
 
     //! @brief    Registers a listener callback function
-    void setListener(const void *sender, void(*func)(const void *, int));
+    void setListener(const void *sender, void(*func)(const void *, int, long));
     
 	/*! @brief    Returns the next pending message
      *  @return   Returns NULL, if the queue is empty
      */
-	VC64Message getMessage();
+	Message getMessage();
 
 	//! @brief    Writes new message into the message queue
     /*! @detals   If a callback function is set, the functions is invoked.
      */
 	// void putMessage(int id, int i = 0);
-    void putMessage(VC64Message id);
+    void putMessage(MessageType type, uint64_t data = 0);
 };
 
 #endif

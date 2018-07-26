@@ -46,6 +46,7 @@ VC1541::VC1541()
         { &elapsedTime,             sizeof(elapsedTime),            CLEAR_ON_RESET },
         { &nextClock,               sizeof(nextClock),              CLEAR_ON_RESET },
         { &nextCarry,               sizeof(nextCarry),              CLEAR_ON_RESET },
+        { &carryCounter,            sizeof(carryCounter),           CLEAR_ON_RESET },
         { &counterUF4,              sizeof(counterUF4),             CLEAR_ON_RESET },
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },

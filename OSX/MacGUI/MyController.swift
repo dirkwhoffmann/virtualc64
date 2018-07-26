@@ -358,14 +358,16 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.setListener(myself) { (ptr, msg) in
+        c64.setListener(myself) { (ptr, type, data) in
             
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
             
             // Process message in the main thread
             DispatchQueue.main.async {
-                myself.processMessage(VC64Message(UInt32(msg)))
+                let mType = MessageType(rawValue: UInt32(type))
+                myself.processMessage(Message(type: mType, data: data))
+                // myself.processMessage(Message(UInt32(msg)))
             }
         }
         
@@ -401,7 +403,7 @@ extension MyController {
         
         // Process all pending messages
         /*
-        var msg: VC64Message = c64.message()
+        var msg: Message = c64.message()
         while msg != MSG_NONE {
             processMessage(msg)
             msg = c64.message()
@@ -465,11 +467,11 @@ extension MyController {
         timerLock.unlock()
     }
  
-    func processMessage(_ msg: VC64Message) {
+    func processMessage(_ msg: Message) {
 
         // track("Message \(msg)")
     
-        switch (msg) {
+        switch (msg.type) {
     
         case MSG_READY_TO_RUN:
     

@@ -24,7 +24,7 @@ MessageQueue::~MessageQueue()
 }
     
 void
-MessageQueue::setListener(const void *sender, void(*func)(const void *, int)) {
+MessageQueue::setListener(const void *sender, void(*func)(const void *, int, long)) {
 
     pthread_mutex_lock(&lock);
     
@@ -34,22 +34,23 @@ MessageQueue::setListener(const void *sender, void(*func)(const void *, int)) {
     pthread_mutex_unlock(&lock);
     
     // Process all pending messages
-    VC64Message msg;
-    while (callback && (msg = getMessage()) != MSG_NONE) {
-        callback(listener, msg);
+    Message msg;
+    while (callback && (msg = getMessage()).type != MSG_NONE) {
+        callback(listener, msg.type, msg.data);
     }
 }
 
-VC64Message
+Message
 MessageQueue::getMessage()
 { 
-	VC64Message result;
+	Message result;
 
 	pthread_mutex_lock(&lock);	
 
 	// Read message
 	if (r == w) {
-		result = MSG_NONE; // Queue is empty
+		result.type = MSG_NONE; // Queue is empty
+        result.data = 0;
 	} else {
         result = queue[r];
         r = (r + 1) % queue_size;
@@ -61,11 +62,14 @@ MessageQueue::getMessage()
 }
 
 void
-MessageQueue::putMessage(VC64Message msg)
+MessageQueue::putMessage(MessageType type, uint64_t data)
 {
 	pthread_mutex_lock(&lock);
 		
 	// Write data
+    Message msg;
+    msg.type = type;
+    msg.data = data;
     queue[w] = msg;
     
 	// Move write pointer to next location
@@ -78,7 +82,7 @@ MessageQueue::putMessage(VC64Message msg)
     
     // Call listener function
     if (callback) {
-        callback(listener, msg);
+        callback(listener, type, data);
     }
     
 	pthread_mutex_unlock(&lock);

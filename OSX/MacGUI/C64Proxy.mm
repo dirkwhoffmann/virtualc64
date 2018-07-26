@@ -688,9 +688,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) loadRom:(NSURL *)url {
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
-- (VC64Message)message { return wrapper->c64->getMessage(); }
-- (void) putMessage:(VC64Message)msg { wrapper->c64->putMessage(msg); }
-- (void) setListener:(const void *)sender function:(void(*)(const void *, int))func {
+- (Message)message { return wrapper->c64->getMessage(); }
+- (void) setListener:(const void *)sender function:(void(*)(const void *, int, long))func {
     wrapper->c64->setListener(sender, func);
 }
 

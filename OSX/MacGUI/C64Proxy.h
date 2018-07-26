@@ -534,9 +534,8 @@ struct ContainerWrapper;
 - (BOOL) loadRom:(NSURL *)url;
 
 // Using the message queue
-- (VC64Message)message;
-- (void) putMessage:(VC64Message)msg;
-- (void) setListener:(const void *)sender function:(void(*)(const void *, int))func;
+- (Message)message;
+- (void) setListener:(const void *)sender function:(void(*)(const void *, int, long))func;
 
 // Running the emulator
 - (void) powerUp;

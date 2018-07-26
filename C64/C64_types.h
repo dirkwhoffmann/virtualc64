@@ -100,6 +100,14 @@ typedef enum {
     MSG_CARTRIDGE,
     MSG_NO_CARTRIDGE
 
-} VC64Message;
+} MessageType;
+
+/*! @brief    Message
+ *  @details  Each message consists of type and a data field.
+ */
+typedef struct {
+    MessageType type;
+    long data;
+} Message;
 
 #endif
