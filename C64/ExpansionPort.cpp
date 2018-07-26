@@ -130,21 +130,19 @@ ExpansionPort::getCartridgeType()
     return cartridge ? cartridge->getCartridgeType() : CRT_NONE;
 }
 
-bool
-ExpansionPort::romIsBlendedIn(uint16_t addr)
-{
-    
-    return cartridge ? cartridge->romIsBlendedIn(addr) : false;
-}
-
-/*
 uint8_t
 ExpansionPort::peek(uint16_t addr)
 {
     return cartridge ? cartridge->peek(addr) : 0;
 }
-*/
 
+uint8_t
+ExpansionPort::spypeek(uint16_t addr)
+{
+    return cartridge ? cartridge->spypeek(addr) : 0;
+}
+
+/*
 uint8_t
 ExpansionPort::peek(uint16_t addr)
 {
@@ -161,37 +159,7 @@ ExpansionPort::peek(uint16_t addr)
     }
     return 0;
 }
-
-/*
-uint8_t
-ExpansionPort::peekRomL(uint16_t addr)
-{
-    return cartridge ? cartridge->peekROML(addr & 0x1FFF, addr) : 0;
-}
-
-uint8_t
-ExpansionPort::peekRomH(uint16_t addr)
-{
-    return cartridge ? cartridge->peekROMH(addr & 0x1FFF, addr) : 0;
-}
 */
-
-uint8_t
-ExpansionPort::spypeek(uint16_t addr)
-{
-    assert((addr >= 0x8000 && addr <= 0x9FFF) ||
-           (addr >= 0xA000 && addr <= 0xBFFF) ||
-           (addr >= 0xE000 && addr <= 0xFFFF));
-    
-    if (cartridge) {
-        if (addr <= 0x9FFF) {
-            return cartridge->spypeekRomLabs(addr);
-        } else {
-            return cartridge->spypeekRomHabs(addr);
-        }
-    }
-    return 0;
-}
 
 uint8_t
 ExpansionPort::peekIO1(uint16_t addr)

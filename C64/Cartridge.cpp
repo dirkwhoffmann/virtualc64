@@ -16,14 +16,14 @@ Cartridge::Cartridge(C64 *c64)
     
     initialGameLine = 1;
     initialExromLine = 1;
-    memset(blendedIn, 255, sizeof(blendedIn));
+    // memset(blendedIn, 255, sizeof(blendedIn));
     
     for (unsigned i = 0; i < 64; i++) {
         chip[i] = NULL;
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
     }
-    chipL = chipH = -1;
+    chipL = chipH = 0;
     offsetL = offsetH = 0;
     mappedBytesL = mappedBytesH = 0;
     
@@ -187,7 +187,7 @@ Cartridge::stateSize()
     size += ramCapacity;
     size += 1; // persistentRam
 
-    size += sizeof(blendedIn);
+    // size += sizeof(blendedIn);
     size += sizeof(cycle);
     size += sizeof(regValue);
 
@@ -225,7 +225,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     readBlock(buffer, externalRam, ramCapacity);
     persistentRam = (bool)read8(buffer);
     
-    readBlock(buffer, blendedIn, sizeof(blendedIn));
+    // readBlock(buffer, blendedIn, sizeof(blendedIn));
     cycle = read64(buffer);
     regValue = read8(buffer);
 
@@ -260,7 +260,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     writeBlock(buffer, externalRam, ramCapacity);
     write8(buffer, (uint8_t)persistentRam);
     
-    writeBlock(buffer, blendedIn, sizeof(blendedIn));
+    // writeBlock(buffer, blendedIn, sizeof(blendedIn));
     write64(buffer, cycle);
     write8(buffer, regValue);
 
@@ -286,42 +286,20 @@ Cartridge::dumpState()
     }
 }
 
-/*
 uint8_t
 Cartridge::peek(uint16_t addr)
 {
-    uint8_t bank = addr / 0x1000;
-    uint8_t nr   = blendedIn[bank];
+    uint16_t relAddr = addr & 0x1FFF;
     
-    if (nr < 64) {
-        
-        assert(chip[nr] != NULL);
+    // Question: Is it correct to return a value from RAM if no ROM is mapped?
+    if (isROMLaddr(addr))
+        return (relAddr < mappedBytesL) ? peekRomL(relAddr) : c64->mem.ram[addr];
 
-        uint16_t offset = addr - chipStartAddress[nr];
-        assert(offset < chipSize[nr]);
-        
-        return chip[nr][offset];
-    }
+    // Question: Is it correct to return a value from RAM if no ROM is mapped?
+    if (isROMHaddr(addr))
+        return (relAddr < mappedBytesH) ? peekRomH(relAddr) : c64->mem.ram[addr];
     
-    // No cartridge chip is mapped to this memory area
-    // debug("Peeking from unmapped location: %04X\n", addr);
-    return c64->mem.ram[addr];
-    // return c64->mem.peek(addr);
-}
-*/
-
-uint8_t
-Cartridge::peekRomLabs(uint16_t absAddr)
-{
-    assert(absAddr >= 0x8000 && absAddr <= 0x9FFF);
-    
-    uint16_t addr = absAddr & 0x1FFF;
-    
-    if (addr < mappedBytesL) {
-        return peekRomL(addr);
-    } else {
-        return c64->mem.ram[absAddr]; // Area is unmpapped
-    }
+    assert(false);
 }
 
 uint8_t
@@ -329,30 +307,17 @@ Cartridge::peekRomL(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < 64);
+    assert(addr + offsetL < chipSize[chipL]);
     
     return chip[chipL][addr + offsetL];
-}
-
-uint8_t
-Cartridge::peekRomHabs(uint16_t absAddr)
-{
-    assert((absAddr >= 0xA000 && absAddr <= 0xBFFF) ||
-           (absAddr >= 0xE000 && absAddr <= 0xFFFF));
-    
-    uint16_t addr = absAddr & 0x1FFF;
-    
-    if (addr < mappedBytesH) {
-        return peekRomH(addr);
-    } else {
-        return c64->mem.ram[absAddr]; // Area is unmpapped
-    }
 }
 
 uint8_t
 Cartridge::peekRomH(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
-    assert(chipL >= 0 && chipL < 64);
+    assert(chipH >= 0 && chipH < 64);
+    assert(addr + offsetH < chipSize[chipH]);
     
     return chip[chipH][addr + offsetH];
 }

@@ -21,6 +21,8 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.4
 //
+// Added support for the Freeze Frame cartridge.
+//
 // TODO:
 //
 //

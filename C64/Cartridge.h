@@ -60,31 +60,21 @@ public:
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[64];
     
-    //! @brief    Number of the ROM chip that is currently mapped to ROMX
-    /*! @details  -1 indicates that ROMX is unmapped.
-     */
-    int8_t chipL;
-    int8_t chipH;
+    //! @brief    Number of the ROM chip that is currently mapped to ROMx
+    uint8_t chipL, chipH;
 
     //! @brief    Number of bytes that are mapped to ROMX
     /*! @details  For most cartridges, this value is equals chipSize[romX],
      *            which means that the ROM is completely mapped.
+     *            A value of 0 indicates that no ROM is currently mapped.
      */
-    uint16_t mappedBytesL;
-    uint16_t mappedBytesH;
+    uint16_t mappedBytesL, mappedBytesH;
 
     //! @brief    Offset into the ROM chip's data array
     /*! @details  The first ROMX byte is: chip[romX] + romOffsetX
      *            The last ROMX byte is: chip[romX] + romOffsetX + romSizeX - 1
      */
-    uint16_t offsetL;
-    uint16_t offsetH;
-
-    /*! @brief    Indicates which ROM chip blended it
-     *  @details  Each array item represents a 4 KB block above $8000
-     *  @deprecated
-     */
-    uint8_t blendedIn[16];
+    uint16_t offsetL, offsetH;
     
     /*! @brief    Additional RAM
      *  @details  Some cartridges such as ActionReplay contain additional RAM.
@@ -143,6 +133,17 @@ public:
      */
     static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container);
     
+    //! @brief    Returns true if addr is located in the ROML address space
+    /*! @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
+     */
+    bool isROMLaddr (uint16_t addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
+
+    //! @brief    Returns true if addr is located in the ROMH address space
+    /*! @details  ROMH can appear in 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
+     */
+    bool isROMHaddr (uint16_t addr) {
+        return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
+
     //! @brief    Methods from VirtualComponent
     void reset();
     void ping() { };
@@ -150,9 +151,6 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     void dumpState();
-
-    //! @brief    Indicates if CRT ROM is blended in at the specified address.
-    bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Execution thread callback
     /*! @details  This function is invoked by the expansion port. Only a few
@@ -161,30 +159,18 @@ public:
     virtual void execute() { };
     
     //! @brief    Peek fallthrough
-    //! @deprecated
-    // virtual uint8_t peek(uint16_t addr);
+    /*! @param    addr must be a value in the ROML range (0x8000 - 0x9FFF) or
+     *            the ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
+     */
+    virtual uint8_t peek(uint16_t addr);
 
     //! @brief    Peek fallthrough for the ROML space
-    /*! @param    addr is the absolute address of the accessed memory cell.
-     *            Valid range: 0x8000 - 0x9FFF
-     */
-    virtual uint8_t peekRomLabs(uint16_t absAddr);
-    
-    //! @brief    Peek fallthrough for the ROML space
-    /*! @details  addr is the relative address of the accessed memory cell.
-     *            Valid range: 0x0000 - 0x1FFF
+    /*! @param    addr must be a value between 0x0000 - 0x1FFF.
      */
     virtual uint8_t peekRomL(uint16_t addr);
     
     //! @brief    Peek fallthrough for the ROMH space
-    /*! @param    addr is the absolute address of the accessed memory cell.
-     *            Valid range: 0xA000 - 0xBFFF and 0xE000 - 0xFFFF
-     */
-    virtual uint8_t peekRomHabs(uint16_t absAddr);
-    
-    //! @brief    Peek fallthrough for the ROMH space
-    /*! @details  addr is the relative address of the accessed memory cell.
-     *            Valid range: 0x0000 - 0x1FFF
+    /*! @details  addr must be a value between 0x0000 - 0x1FFF.
      */
     virtual uint8_t peekRomH(uint16_t addr);
     
@@ -192,15 +178,12 @@ public:
     virtual void poke(uint16_t addr, uint8_t value) { return; }
 
     //! @brief    Same as peek, but without side effects.
-    //! @deprecated
-    // virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }
+    virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }
     
     //! @brief    Same as peekRomL, but without side effects
-    uint8_t spypeekRomLabs(uint16_t absAddr) { return peekRomLabs(absAddr); }
     uint8_t spypeekRomL(uint16_t addr) { return peekRomL(addr); }
     
     //! @brief    Same as peekRomH, but without side effects
-    uint8_t spypeekRomHabs(uint16_t absAddr) { return peekRomHabs(absAddr); }
     uint8_t spypeekRomH(uint16_t addr) { return peekRomH(addr); }
     
     //! @brief    Peek fallthrough for I/O space 1
