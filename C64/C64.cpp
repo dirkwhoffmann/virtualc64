@@ -527,26 +527,26 @@ C64::_executeOneCycle()
     // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
     //     |     |     |  1  |     |  2  |   |    |     |        |
     //     '-----'     '-----'     '-----'   |    '-----'        |
-    //                                       v                   |
-    //                                 IEC bus update            |
-    //                                       ^                   |
-    //     ,--------,                        |    ,--------,     |
-    //     |        |                        |    |        |     |
-    // ,-->| VC1541 | -----------------------|--> | VC1541 | ----|--,
-    // |   |        |                        |    |        |     |  |
-    // |   '--------'                        |    '--------'     |  |
-    // '-- Drive ----------------------------|-------------------|--'
+    //                                       v
+    //                                 IEC bus update      IEC bus update
+    //                                                           ^
+    //                                       |    ,--------,     |
+    //                                       |    |        |     |
+    // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
+    // |                                     |    |        |     |  |
+    // |                                     |    '--------'     |  |
+    // '-------------------------------------|-------------------|--'
     
     // First clock phase (o2 low)
     (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
-    if (floppy.isPoweredOn()) result &= floppy.execute(durationOfHalfCycle);
     if (iec.isDirty) iec.updateIecLines();
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    if (floppy.isPoweredOn()) result &= floppy.execute(durationOfHalfCycle);
+    if (floppy.isPoweredOn()) result &= floppy.execute(2 * durationOfHalfCycle);
+    if (iec.isDirty) iec.updateIecLines();
     datasette.execute();
     
     rasterlineCycle++;
