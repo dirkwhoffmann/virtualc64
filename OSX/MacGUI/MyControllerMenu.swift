@@ -490,7 +490,7 @@ extension MyController {
         var archive: ArchiveProxy?
         
         // Convert inserted disk to D64 archive
-        guard let d64archive = D64Proxy.make(withVC1541: c64.vc1541) else {
+        guard let d64archive = D64Proxy.make(withDrive: c64.vc1541) else {
             return false
         }
         

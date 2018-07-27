@@ -477,7 +477,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 // VC1541
 //
 
-@implementation VC1541Proxy
+@implementation DriveProxy
 
 @synthesize wrapper, cpu, via1, via2, disk;
 
@@ -618,7 +618,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
-	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
+	vc1541 = [[DriveProxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     
     // Initialize audio interface
@@ -1263,9 +1263,9 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     D64Archive *archive = D64Archive::makeD64ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
-+ (instancetype) makeWithVC1541:(VC1541Proxy *)vc1541
++ (instancetype) makeWithDrive:(DriveProxy *)drive
 {
-    D64Archive *archive = [vc1541 wrapper]->vc1541->convertToD64();
+    D64Archive *archive = [drive wrapper]->vc1541->convertToD64();
     return [self make: archive];
 }
 @end

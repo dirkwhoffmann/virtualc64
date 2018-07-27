@@ -371,7 +371,7 @@ struct ContainerWrapper;
 // VC1541
 //
 
-@interface VC1541Proxy : NSObject {
+@interface DriveProxy : NSObject {
     
 	struct Vc1541Wrapper *wrapper;
     
@@ -485,7 +485,7 @@ struct ContainerWrapper;
     ControlPortProxy *port2;
 	IECProxy *iec;
     ExpansionPortProxy *expansionport;
-	VC1541Proxy *vc1541;
+	DriveProxy *vc1541;
     DatasetteProxy *datasette;
 }
 
@@ -500,7 +500,7 @@ struct ContainerWrapper;
 @property (readonly) ControlPortProxy *port2;
 @property (readonly) IECProxy *iec;
 @property (readonly) ExpansionPortProxy *expansionport;
-@property (readonly) VC1541Proxy *vc1541;
+@property (readonly) DriveProxy *vc1541;
 @property (readonly) DatasetteProxy *datasette;
 
 - (struct C64Wrapper *)wrapper;
@@ -760,7 +760,7 @@ struct ContainerWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
 + (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
-+ (instancetype)makeWithVC1541:(VC1541Proxy *)vc1541;
++ (instancetype)makeWithDrive:(DriveProxy *)drive;
 @end
 
 @interface G64Proxy : ArchiveProxy
