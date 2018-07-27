@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -60,8 +59,8 @@
                 <outlet property="decayRate" destination="H4H-4t-pmr" id="GJp-Nq-b9R"/>
                 <outlet property="dezHexSelector" destination="367" id="759"/>
                 <outlet property="dflag" destination="188" id="UAV-Er-hPK"/>
-                <outlet property="driveIcon1" destination="1045" id="n8q-mY-NbG"/>
-                <outlet property="driveIcon2" destination="D1i-Ep-fTN" id="KXI-nI-XNr"/>
+                <outlet property="diskIcon1" destination="1045" id="n8q-mY-NbG"/>
+                <outlet property="diskIcon2" destination="D1i-Ep-fTN" id="KXI-nI-XNr"/>
                 <outlet property="filter1" destination="0Xk-c5-4dD" id="3iB-GJ-Dhl"/>
                 <outlet property="filter2" destination="tlW-U7-68D" id="OzC-gB-NkA"/>
                 <outlet property="filter3" destination="eg3-b5-F1Z" id="hSw-4a-8nU"/>

@@ -78,8 +78,8 @@ class MyController : NSWindowController {
     @IBOutlet weak var redLED2: NSButton!
     @IBOutlet weak var progress1: NSProgressIndicator!
     @IBOutlet weak var progress2: NSProgressIndicator!
-    @IBOutlet weak var driveIcon1: NSButton!
-    @IBOutlet weak var driveIcon2: NSButton!
+    @IBOutlet weak var diskIcon1: NSButton!
+    @IBOutlet weak var diskIcon2: NSButton!
     @IBOutlet weak var cartridgeIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
@@ -622,18 +622,18 @@ extension MyController {
         case MSG_VC1541_DISK:
             
             if firstDrive() {
-                driveIcon1.isHidden = false
+                diskIcon1.isHidden = false
             } else {
-                driveIcon2.isHidden = false
+                diskIcon2.isHidden = false
             }
             break
   
         case MSG_VC1541_NO_DISK:
             
             if firstDrive() {
-                driveIcon1.isHidden = true
+                diskIcon1.isHidden = true
             } else {
-                driveIcon2.isHidden = true
+                diskIcon2.isHidden = true
             }
             break
             
@@ -641,9 +641,9 @@ extension MyController {
             
             let image = NSImage.init(named: NSImage.Name(rawValue: "disk_saved"))
             if firstDrive() {
-                driveIcon1.image = image
+                diskIcon1.image = image
             } else {
-                driveIcon2.image = image
+                diskIcon2.image = image
             }
             break
             
@@ -652,9 +652,9 @@ extension MyController {
             track("Disk is unsaved")
             let image = NSImage.init(named: NSImage.Name(rawValue: "disk_unsaved"))
             if firstDrive() {
-                driveIcon1.image = image
+                diskIcon1.image = image
             } else {
-                driveIcon2.image = image
+                diskIcon2.image = image
             }
             break
             

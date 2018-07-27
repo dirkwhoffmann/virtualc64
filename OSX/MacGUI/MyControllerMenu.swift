@@ -233,11 +233,11 @@ extension MyController {
             greenLED1.isHidden = false
             redLED1.isHidden = false
             progress1.isHidden = false
-            driveIcon1.isHidden = !c64.vc1541.hasDisk()
+            diskIcon1.isHidden = !c64.vc1541.hasDisk()
             greenLED2.isHidden = false
             redLED2.isHidden = false
             progress2.isHidden = false
-            driveIcon2.isHidden = !c64.vc1541.hasDisk() // rename drive2
+            diskIcon2.isHidden = !c64.vc1541.hasDisk() // rename drive2
             cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
             tapeIcon.isHidden = !c64.datasette.hasTape()
             tapeProgress.isHidden = false
@@ -256,11 +256,11 @@ extension MyController {
             greenLED1.isHidden = true
             redLED1.isHidden = true
             progress1.isHidden = true
-            driveIcon1.isHidden = true
+            diskIcon1.isHidden = true
             greenLED2.isHidden = true
             redLED2.isHidden = true
             progress2.isHidden = true
-            driveIcon2.isHidden = true
+            diskIcon2.isHidden = true
             cartridgeIcon.isHidden = true
             tapeIcon.isHidden = true
             tapeProgress.isHidden = true

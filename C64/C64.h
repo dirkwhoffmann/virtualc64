@@ -21,12 +21,19 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.4
 //
-// A second disk drive has been added (TODO).
+// Added a second VC 1541 disk drive (TODO).
 // Added support for the Freeze Frame cartridge.
 // The Action Replay cartridge is fully supported now.
 //
 // TODO:
-//
+// Rename driveIcon1,2 to diskIcon1,2
+// Add second disk menu
+// Replace VC1541Proxy by DriveProxy
+// Replace vc1541 proxy object by drive1
+// Replace C64::floppy by C64::drive1 and C64::drive2
+// Adjust drive channel numbers (8 and 9)
+// Add second drive to executeOneCycle
+// Add second drive to IEC bus
 //
 // CLEANUP:
 // Loading and saving:
