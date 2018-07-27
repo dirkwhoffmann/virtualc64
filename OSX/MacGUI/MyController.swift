@@ -72,10 +72,14 @@ class MyController : NSWindowController {
     @IBOutlet weak var debugger: NSDrawer!
     
     // Bottom bar
-    @IBOutlet weak var greenLED: NSButton!
-    @IBOutlet weak var redLED: NSButton!
-    @IBOutlet weak var progress: NSProgressIndicator!
-    @IBOutlet weak var driveIcon: NSButton!
+    @IBOutlet weak var greenLED1: NSButton!
+    @IBOutlet weak var greenLED2: NSButton!
+    @IBOutlet weak var redLED1: NSButton!
+    @IBOutlet weak var redLED2: NSButton!
+    @IBOutlet weak var progress1: NSProgressIndicator!
+    @IBOutlet weak var progress2: NSProgressIndicator!
+    @IBOutlet weak var driveIcon1: NSButton!
+    @IBOutlet weak var driveIcon2: NSButton!
     @IBOutlet weak var cartridgeIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
@@ -469,6 +473,10 @@ extension MyController {
  
     func processMessage(_ msg: Message) {
 
+        func firstDrive() -> Bool {
+            precondition(msg.data == 1 || msg.data == 2)
+            return msg.data == 1;
+        }
         // track("Message \(msg)")
     
         switch (msg.type) {
@@ -547,12 +555,24 @@ extension MyController {
     
         case MSG_VC1541_ATTACHED:
             
-            greenLED.image = NSImage.init(named: NSImage.Name(rawValue:"LEDgreen"))
+            let image = NSImage.init(named: NSImage.Name(rawValue:"LEDgreen"))
+            
+            if firstDrive() {
+                greenLED1.image = image
+            } else {
+                greenLED2.image = image
+            }
             break
 
         case MSG_VC1541_DETACHED:
             
-            greenLED.image = NSImage.init(named: NSImage.Name(rawValue:"LEDgray"))
+            let image = NSImage.init(named: NSImage.Name(rawValue:"LEDgray"))
+            
+            if firstDrive() {
+                greenLED1.image = image
+            } else {
+                greenLED2.image = image
+            }
             break
 
         case MSG_VC1541_ATTACHED_SOUND:
@@ -601,42 +621,75 @@ extension MyController {
             
         case MSG_VC1541_DISK:
             
-            driveIcon.isHidden = false
+            if firstDrive() {
+                driveIcon1.isHidden = false
+            } else {
+                driveIcon2.isHidden = false
+            }
             break
   
         case MSG_VC1541_NO_DISK:
             
-            driveIcon.isHidden = true
+            if firstDrive() {
+                driveIcon1.isHidden = true
+            } else {
+                driveIcon2.isHidden = true
+            }
             break
             
         case MSG_DISK_SAVED:
             
-            driveIcon.image = NSImage.init(named: NSImage.Name(rawValue: "disk_saved"))
+            let image = NSImage.init(named: NSImage.Name(rawValue: "disk_saved"))
+            if firstDrive() {
+                driveIcon1.image = image
+            } else {
+                driveIcon2.image = image
+            }
             break
             
         case MSG_DISK_UNSAVED:
             
-            driveIcon.image = NSImage.init(named: NSImage.Name(rawValue: "disk_unsaved"))
+            track("Disk is unsaved")
+            let image = NSImage.init(named: NSImage.Name(rawValue: "disk_unsaved"))
+            if firstDrive() {
+                driveIcon1.image = image
+            } else {
+                driveIcon2.image = image
+            }
             break
             
         case MSG_VC1541_RED_LED_ON:
             
-            redLED.image = NSImage.init(named: NSImage.Name(rawValue: "LEDred"))
-            redLED.setNeedsDisplay()
+            let image = NSImage.init(named: NSImage.Name(rawValue: "LEDred"))
+            if firstDrive() {
+                redLED1.image = image
+                redLED1.setNeedsDisplay()
+            } else {
+                redLED2.image = image
+                redLED2.setNeedsDisplay()
+            }
             break
             
         case MSG_VC1541_RED_LED_OFF:
             
-            redLED.image = NSImage.init(named: NSImage.Name(rawValue: "LEDgray"))
-            redLED.setNeedsDisplay()
+            let image = NSImage.init(named: NSImage.Name(rawValue: "LEDgray"))
+            if firstDrive() {
+                redLED1.image = image
+                redLED1.setNeedsDisplay()
+            } else {
+                redLED2.image = image
+                redLED2.setNeedsDisplay()
+            }
             break
     
         case MSG_IEC_BUS_BUSY:
-            progress.startAnimation(self)
+            if c64.vc1541.isRotating() { progress1.startAnimation(self) }
+            // TODO: Second drive progress2.startAnimation(self)
             break
     
         case MSG_IEC_BUS_IDLE:
-            progress.stopAnimation(self)
+            progress1.stopAnimation(self)
+            progress2.stopAnimation(self)
             break
             
         case MSG_VC1541_MOTOR_ON,

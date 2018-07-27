@@ -298,6 +298,9 @@ public:
     //! @brief    Returns true if a modified disk is fully inserted.
     bool hasModifiedDisk() { return hasDisk() && disk.isModified(); }
 
+    //! @brief    Sets or clears the modification flags of a disk
+    void setModifiedDisk(bool value);
+
     /*! @brief    Prepares to insert a disk
      *  @details  This functions puts a disk partially into the drive.
      *            disk. As a result, the light barrier is blocked.

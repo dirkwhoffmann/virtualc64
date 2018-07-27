@@ -138,7 +138,6 @@ void
 Disk::ping()
 {
     VirtualComponent::ping();
-    c64->putMessage(modified ? MSG_DISK_UNSAVED : MSG_DISK_SAVED);
 }
 
 void
@@ -146,7 +145,7 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        c64->putMessage(modified ? MSG_DISK_UNSAVED : MSG_DISK_SAVED);
+        c64->floppy.ping();
     }
 }
 

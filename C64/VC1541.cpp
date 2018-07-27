@@ -104,6 +104,8 @@ VC1541::ping()
     c64->putMessage(redLED ? MSG_VC1541_RED_LED_ON : MSG_VC1541_RED_LED_OFF, deviceNr);
     c64->putMessage(spinning ? MSG_VC1541_MOTOR_ON : MSG_VC1541_MOTOR_OFF, deviceNr);
     c64->putMessage(hasDisk() ? MSG_VC1541_DISK : MSG_VC1541_NO_DISK, deviceNr);
+    c64->putMessage(hasModifiedDisk() ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
+
 }
 
 void
@@ -414,6 +416,13 @@ VC1541::moveHeadDown()
     if (halftrack % 2 && sendSoundMessages)
         // Play sound for full tracks, only
         c64->putMessage(MSG_VC1541_HEAD_DOWN_SOUND, deviceNr);
+}
+
+void
+VC1541::setModifiedDisk(bool value)
+{
+    disk.setModified(value);
+    c64->putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
 void

@@ -103,6 +103,16 @@ C64Memory::dumpState()
             msg("Soft breakpoint at %04X\n", addr);
 	}
 	msg("\n");
+    
+    /*
+    for (uint16_t addr = 0x1000; addr < 0xB000; addr += 0x400) {
+        msg("%04X: ", addr);
+        for (unsigned i = 0; i < 30; i++) {
+            msg("%02X ", ram[addr + i]);
+        }
+        msg("\n");
+    }
+    */
 }
 
 

@@ -427,8 +427,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->disk->dumpState(); }
 - (BOOL)writeProtected { return wrapper->disk->isWriteProtected(); }
 - (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
-- (BOOL)modified { return wrapper->disk->isModified(); }
-- (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
+// - (BOOL)modified { return wrapper->disk->isModified(); }
+// - (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
 - (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
 - (void)analyzeTrack:(Track)t { wrapper->disk->analyzeTrack(t); }
 - (void)analyzeHalftrack:(Halftrack)ht { wrapper->disk->analyzeHalftrack(ht); }
@@ -517,6 +517,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
 - (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }
 - (BOOL) hasModifiedDisk {return wrapper->vc1541->hasModifiedDisk(); }
+- (void) setModifiedDisk:(BOOL)b { wrapper->vc1541->setModifiedDisk(b); }
 - (void) prepareToInsert { wrapper->vc1541->prepareToInsert(); }
 - (void) insertDisk:(ArchiveProxy *)disk {
     Archive *archive = (Archive *)([disk wrapper]->container);
@@ -526,8 +527,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
 - (BOOL) writeProtected { return wrapper->vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }
-// - (BOOL) diskModified { return wrapper->vc1541->disk.isModified(); }
-// - (void) setDiskModified:(BOOL)b { wrapper->vc1541->disk.setModified(b); }
 - (BOOL) sendSoundMessages { return wrapper->vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(BOOL)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (Halftrack) halftrack { return wrapper->vc1541->getHalftrack(); }

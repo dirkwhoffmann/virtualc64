@@ -21,7 +21,9 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.4
 //
+// A second disk drive has been added (TODO).
 // Added support for the Freeze Frame cartridge.
+// The Action Replay cartridge is fully supported now.
 //
 // TODO:
 //

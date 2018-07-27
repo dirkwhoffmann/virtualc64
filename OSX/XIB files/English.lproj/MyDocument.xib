@@ -60,7 +60,8 @@
                 <outlet property="decayRate" destination="H4H-4t-pmr" id="GJp-Nq-b9R"/>
                 <outlet property="dezHexSelector" destination="367" id="759"/>
                 <outlet property="dflag" destination="188" id="UAV-Er-hPK"/>
-                <outlet property="driveIcon" destination="1045" id="Vlm-gT-AYk"/>
+                <outlet property="driveIcon1" destination="1045" id="n8q-mY-NbG"/>
+                <outlet property="driveIcon2" destination="D1i-Ep-fTN" id="KXI-nI-XNr"/>
                 <outlet property="filter1" destination="0Xk-c5-4dD" id="3iB-GJ-Dhl"/>
                 <outlet property="filter2" destination="tlW-U7-68D" id="OzC-gB-NkA"/>
                 <outlet property="filter3" destination="eg3-b5-F1Z" id="hSw-4a-8nU"/>
@@ -69,7 +70,8 @@
                 <outlet property="filterType" destination="kBO-1K-uPe" id="efJ-xr-P6I"/>
                 <outlet property="frequency" destination="wEw-3d-tZe" id="z6X-2V-r52"/>
                 <outlet property="gateBit" destination="nSu-jQ-U43" id="FdF-zb-5ze"/>
-                <outlet property="greenLED" destination="1208" id="1214"/>
+                <outlet property="greenLED1" destination="1208" id="m2j-eC-ad3"/>
+                <outlet property="greenLED2" destination="FWS-Ng-oe6" id="dka-fH-HFG"/>
                 <outlet property="iflag" destination="189" id="mWe-Ir-7Om"/>
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="metalScreen" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
@@ -77,10 +79,12 @@
                 <outlet property="pc" destination="47" id="163"/>
                 <outlet property="potX" destination="3YT-QQ-S7K" id="1yu-aO-gLC"/>
                 <outlet property="potY" destination="gEF-Sx-fBJ" id="nBd-zm-heN"/>
-                <outlet property="progress" destination="2203" id="tHU-2P-FXF"/>
+                <outlet property="progress1" destination="2203" id="atA-PK-Pgb"/>
+                <outlet property="progress2" destination="xzf-hU-AKK" id="hSk-HV-url"/>
                 <outlet property="pulseWidth" destination="9TK-r7-7WA" id="nXS-il-RQ5"/>
                 <outlet property="pulseWidthText" destination="JQn-Cc-SSF" id="BpL-T8-5Nv"/>
-                <outlet property="redLED" destination="1210" id="1215"/>
+                <outlet property="redLED1" destination="1210" id="0oc-Dc-53z"/>
+                <outlet property="redLED2" destination="iKN-RM-vsV" id="jl7-Pu-DM1"/>
                 <outlet property="releaseRate" destination="NEG-EB-tbc" id="wxu-tJ-Edy"/>
                 <outlet property="ringBit" destination="9lM-DR-BPP" id="sb1-4n-3vQ"/>
                 <outlet property="sp" destination="158" id="164"/>
@@ -160,7 +164,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button toolTip="Connect / Disconnect drive" misplaced="YES" id="1208">
+                    <button toolTip="Connect / Disconnect drive" misplaced="YES" tag="1" id="1208">
                         <rect key="frame" x="5" y="3" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1709">
@@ -168,7 +172,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="drivePowerAction:" target="-2" id="kfN-Jp-n59"/>
+                            <action selector="drivePowerButtonAction:" target="-1" id="yR5-YT-bLM"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="214">
@@ -206,10 +210,10 @@
                         </connections>
                     </customView>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
-                        <rect key="frame" x="50" y="4" width="16" height="16"/>
+                        <rect key="frame" x="74" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
-                    <button toolTip="Drive LED" misplaced="YES" id="1210">
+                    <button toolTip="Drive LED" misplaced="YES" tag="1" id="1210">
                         <rect key="frame" x="25" y="3" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1710">
@@ -218,15 +222,15 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" misplaced="YES" id="NlM-JA-g9p">
-                        <rect key="frame" x="123" y="2" width="20" height="20"/>
+                        <rect key="frame" x="211" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="tape" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
-                    <button hidden="YES" misplaced="YES" id="1045">
-                        <rect key="frame" x="71" y="2" width="20" height="20"/>
+                    <button hidden="YES" misplaced="YES" tag="1" id="1045">
+                        <rect key="frame" x="48" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="disk_saved" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -234,7 +238,7 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" misplaced="YES" id="2003">
-                        <rect key="frame" x="97" y="2" width="20" height="20"/>
+                        <rect key="frame" x="185" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -242,9 +246,40 @@
                         </buttonCell>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H1X-Kk-fcE">
-                        <rect key="frame" x="148" y="4" width="16" height="16"/>
+                        <rect key="frame" x="237" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
+                    <button toolTip="Connect / Disconnect drive" misplaced="YES" tag="2" id="FWS-Ng-oe6">
+                        <rect key="frame" x="97" y="3" width="17" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="i9n-Ra-mbF">
+                            <behavior key="behavior" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="drivePowerButtonAction:" target="-1" id="epN-b4-Xzf"/>
+                        </connections>
+                    </button>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="xzf-hU-AKK">
+                        <rect key="frame" x="165" y="4" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </progressIndicator>
+                    <button toolTip="Drive LED" misplaced="YES" tag="2" id="iKN-RM-vsV">
+                        <rect key="frame" x="117" y="3" width="17" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="v9S-no-L5h">
+                            <behavior key="behavior" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button hidden="YES" misplaced="YES" tag="1" id="D1i-Ep-fTN">
+                        <rect key="frame" x="140" y="2" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="disk_saved" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="dWc-LE-E52">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845">
@@ -714,7 +749,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <clipView key="contentView" id="n9s-md-sVQ">
                                                                 <rect key="frame" x="1" y="0.0" width="266" height="408"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="266" height="391"/>

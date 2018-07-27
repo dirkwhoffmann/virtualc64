@@ -13,6 +13,11 @@ extension MyController {
   
         let document = self.document as! MyDocument
         
+        func firstDrive() -> Bool {
+            precondition(item.tag == 1 || item.tag == 2)
+            return item.tag == 1
+        }
+        
         func validateURLlist(_ list : [URL], image: String) -> Bool {
             
             if let url = document.getRecentlyUsedURL(item.tag, from: list) {
@@ -69,8 +74,13 @@ extension MyController {
             return hasDisk
         }
         if item.action == #selector(MyController.drivePowerAction(_:)) {
-            let poweredOn = c64.vc1541.isPoweredOn()
-            item.title = poweredOn ? "Disconnect drive" : "Connect drive"
+            if firstDrive() {
+                let poweredOn = c64.vc1541.isPoweredOn()
+                item.title = poweredOn ? "Disconnect" : "Connect"
+            } else {
+                let poweredOn = c64.vc1541.isPoweredOn() // TODO: second drive
+                item.title = poweredOn ? "Disconnect" : "Connect"
+            }
             return true
         }
 
@@ -220,13 +230,17 @@ extension MyController {
         
         if !statusBar && value {
             
-            greenLED.isHidden = false
-            redLED.isHidden = false
-            progress.isHidden = false
-            tapeProgress.isHidden = false
-            driveIcon.isHidden = !c64.vc1541.hasDisk()
-            tapeIcon.isHidden = !c64.datasette.hasTape()
+            greenLED1.isHidden = false
+            redLED1.isHidden = false
+            progress1.isHidden = false
+            driveIcon1.isHidden = !c64.vc1541.hasDisk()
+            greenLED2.isHidden = false
+            redLED2.isHidden = false
+            progress2.isHidden = false
+            driveIcon2.isHidden = !c64.vc1541.hasDisk() // rename drive2
             cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
+            tapeIcon.isHidden = !c64.datasette.hasTape()
+            tapeProgress.isHidden = false
             clockSpeed.isHidden = false
             clockSpeedBar.isHidden = false
             warpIcon.isHidden = false
@@ -239,13 +253,17 @@ extension MyController {
  
         if statusBar && !value {
             
-            greenLED.isHidden = true
-            redLED.isHidden = true
-            progress.isHidden = true
-            tapeProgress.isHidden = true
-            driveIcon.isHidden = true
-            tapeIcon.isHidden = true
+            greenLED1.isHidden = true
+            redLED1.isHidden = true
+            progress1.isHidden = true
+            driveIcon1.isHidden = true
+            greenLED2.isHidden = true
+            redLED2.isHidden = true
+            progress2.isHidden = true
+            driveIcon2.isHidden = true
             cartridgeIcon.isHidden = true
+            tapeIcon.isHidden = true
+            tapeProgress.isHidden = true
             clockSpeed.isHidden = true
             clockSpeedBar.isHidden = true
             warpIcon.isHidden = true
@@ -521,7 +539,7 @@ extension MyController {
         }
         
         // Mark disk as "not modified"
-        c64.vc1541.disk.setModified(false)
+        c64.vc1541.setModifiedDisk(false)
         
         // Put URL in recently used URL lists
         document.noteNewRecentlyUsedURL(url)
@@ -546,22 +564,25 @@ extension MyController {
     
     @IBAction func drivePowerAction(_ sender: Any!) {
         
-        track()
+        let sender = sender as! NSMenuItem
+        precondition(sender.tag == 1 || sender.tag == 2)
+        drivePowerAction(driveNr: sender.tag)
+    }
+
+    @IBAction func drivePowerButtonAction(_ sender: Any!) {
         
-        if (c64.vc1541.isPoweredOn()) {
-            c64.vc1541.powerOff()
-        } else {
-            c64.vc1541.powerOn()
-        }
-        /*
-        if c64.iec.driveIsConnected() {
-            c64.iec.disconnectDrive()
-        } else {
-            c64.iec.connectDrive()
-        }
-        */
+        let sender = sender as! NSButton
+        precondition(sender.tag == 1 || sender.tag == 2)
+        drivePowerAction(driveNr: sender.tag)
     }
     
+    func drivePowerAction(driveNr: Int) {
+        if (driveNr == 1) {
+            c64.vc1541.isPoweredOn() ? c64.vc1541.powerOff() : c64.vc1541.powerOn();
+        } else {
+            // TODO: SECOND DRIVE
+        }
+    }
     
     //
     // Action methods (Datasette menu)
