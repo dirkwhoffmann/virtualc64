@@ -375,6 +375,7 @@ void C64Memory::poke(uint16_t addr, uint8_t value, MemoryType target)
         case M_CRTLO:
         case M_CRTHI:
             c64->expansionport.poke(addr, value);
+            return;
             
         case M_PP:
             if (likely(addr >= 0x02)) {

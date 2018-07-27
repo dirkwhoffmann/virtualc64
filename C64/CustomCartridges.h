@@ -43,10 +43,7 @@ public:
     ActionReplay(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
     void reset();
-    // size_t stateSize();
-    // void loadFromBuffer(uint8_t **buffer);
-    // void saveToBuffer(uint8_t **buffer);
-    uint8_t peek(uint16_t addr); 
+    uint8_t peekRomL(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);

@@ -29,7 +29,7 @@ ActionReplay::ActionReplay(C64 *c64) : Cartridge(c64)
     debug("ActionReplay constructor\n");
     
     // Allocate 8KB on-board memory
-    setRamCapacity(8 * 1024);
+    setRamCapacity(0x2000);
 }
 
 void
@@ -40,26 +40,13 @@ ActionReplay::reset()
 }
 
 uint8_t
-ActionReplay::peek(uint16_t addr)
+ActionReplay::peekRomL(uint16_t addr)
 {
-    if (addr >= 0x8000 && addr <= 0x9FFF) {
-        if (ramIsEnabled()) {
-            return externalRam[addr - 0x8000];
-        } else {
-            return chip[bank()][addr - 0x8000];
-        }
+    if (ramIsEnabled()) {
+        return externalRam[addr];
+    } else {
+        return chip[chipL][addr];
     }
-    
-    if (addr >= 0xE000 && addr <= 0xFFFF) {
-        return chip[bank()][addr - 0xE000];
-    }
-    
-    if (addr >= 0xA000 && addr <= 0xBFFF) {
-        return chip[bank()][addr - 0xA000];
-    }
-    
-    assert(false);
-    return 0;
 }
 
 void
@@ -86,7 +73,7 @@ ActionReplay::peekIO2(uint16_t addr)
     if (ramIsEnabled()) {
         return externalRam[0x1F00 + offset];
     } else {
-        return chip[bank()][0x1F00 + offset];
+        return chip[chipL][0x1F00 + offset];
     }
 }
 
@@ -101,6 +88,7 @@ void
 ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 {
     if (ramIsEnabled()) {
+        msg("/ %04X %02X / ", addr, value);
         externalRam[0x1F00 + (addr & 0xFF)] = value;
     }
 }
@@ -137,6 +125,7 @@ ActionReplay::setControlReg(uint8_t value)
 {
     regValue = value;
     
+    assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
      *   6    1 = resets FREEZE-mode (turns back to normal mode)
      *   5    1 = enable RAM at ROML ($8000-$9FFF) &
@@ -151,11 +140,15 @@ ActionReplay::setControlReg(uint8_t value)
     c64->expansionport.setGameLine(game());
     c64->expansionport.setExromLine(exrom());
     
-    if (resetFreezeMode()) {
+    bankInROML(bank(), 0x2000, 0);
+    bankInROMH(bank(), 0x2000, 0);
+    
+    if (resetFreezeMode() || disabled()) {
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
         c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
     }
 }
+
 
 //
 // Action Replay 3
