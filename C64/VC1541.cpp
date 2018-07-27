@@ -93,10 +93,6 @@ VC1541::resetDisk()
     debug (3, "Resetting disk in VC1541...\n");
     
     disk.clearDisk();
-    
-    // insertionStatus = NOT_INSERTED;
-    // diskInserted = false;
-    // diskPartiallyInserted = false;
 }
 
 void
