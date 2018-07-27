@@ -683,7 +683,9 @@ extension MyController {
             break
     
         case MSG_IEC_BUS_BUSY:
-            if c64.vc1541.isRotating() { progress1.startAnimation(self) }
+            if c64.vc1541.isRotating() {
+                progress1.startAnimation(self)
+            }
             // TODO: Second drive progress2.startAnimation(self)
             break
     

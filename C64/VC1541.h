@@ -272,6 +272,9 @@ public:
     //! @brief    Powers the drive off
     void powerOff();
 
+    //! @brief    Toggle between power on and power off
+    void togglePowerSwitch() { isPoweredOn() ? powerOff() : powerOn(); }
+    
     //! @brief    Returns true iff the red drive LED is on.
     bool getRedLED() { return redLED; };
 

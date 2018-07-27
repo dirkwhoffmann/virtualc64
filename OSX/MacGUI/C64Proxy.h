@@ -397,6 +397,7 @@ struct ContainerWrapper;
 - (BOOL) isPoweredOn;
 - (void) powerOn;
 - (void) powerOff;
+- (void) togglePowerSwitch;
 
 - (BOOL) redLED;
 - (BOOL) hasDisk;

@@ -513,6 +513,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) isPoweredOn { return wrapper->vc1541->isPoweredOn(); }
 - (void) powerOn { wrapper->vc1541->powerOn(); }
 - (void) powerOff { wrapper->vc1541->powerOff(); }
+- (void) togglePowerSwitch { wrapper->vc1541->togglePowerSwitch(); }
 
 - (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
 - (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }

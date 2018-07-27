@@ -578,7 +578,7 @@ extension MyController {
     
     func drivePowerAction(driveNr: Int) {
         if (driveNr == 1) {
-            c64.vc1541.isPoweredOn() ? c64.vc1541.powerOff() : c64.vc1541.powerOn();
+            c64.vc1541.togglePowerSwitch();
         } else {
             // TODO: SECOND DRIVE
         }
