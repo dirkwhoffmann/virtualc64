@@ -20,13 +20,16 @@
 
 #include "C64.h"
 
-VC1541::VC1541()
+VC1541::VC1541(unsigned deviceNr)
 {
-    setDescription("1541");
-    debug(3, "Creating virtual VC1541(%d) at address %p\n", deviceNr, this);
+    assert(deviceNr == 1 || deviceNr == 2);
+    
+    this->deviceNr = deviceNr;
+    setDescription(deviceNr == 1 ? "Drive1" : "Drive2");
+    debug(3, "Creating %s at address %p\n", getDescription());
 	
 	// Configure CPU
-	cpu.setDescription("1541CPU");
+	cpu.setDescription(deviceNr == 1 ? "Drive1CPU" : "Drive2CPU");
     cpu.chipModel = MOS_6502;
     
     // Register sub components

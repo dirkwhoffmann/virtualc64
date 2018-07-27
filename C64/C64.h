@@ -151,7 +151,7 @@ public:
     ExpansionPort expansionport;
 
     //! @brief    Commodore VC1541 floppy drive
-    VC1541 floppy;
+    VC1541 floppy = VC1541(1);
 
     //! @brief    Commodore 1530 (C2N) Datasette
     Datasette datasette;

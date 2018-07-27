@@ -61,7 +61,7 @@ public:
     // Drive status
     //
     
-public:
+private:
     
     //! @brief    Internal number of this drive
     /*! @details  The first drive has number 0, the second drive number 1, etc.
@@ -72,8 +72,6 @@ public:
      */
     unsigned deviceNr;
     
-private:
-
     //! @brief    Indicates whether the disk drive is powered on
     bool poweredOn;
 
@@ -211,7 +209,9 @@ private:
 public:
 
     //! @brief    Constructor
-    VC1541();
+    /*! @param    deviceNr must be 1 (first drive) or 2 (second drive)
+     */
+    VC1541(unsigned deviceNr);
     
     //! @brief    Destructor
     ~VC1541();
