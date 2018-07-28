@@ -26,10 +26,10 @@
 // The Action Replay cartridge is fully supported now.
 //
 // TODO:
-// Replace C64::floppy by C64::drive1 and C64::drive2
-// Replace vc1541 proxy object by drive1
-// Adjust drive channel numbers (8 and 9)
-// Add second drive to executeOneCycle
+// Add drive(Int) to Objective-C Proxy (return proxy object like CIA?!)
+// Add drive selector to ArchiveDialog and to G64 dialog
+// Don't use mount() for inserting disks. Use insertDisk instead
+// Adjust drive channel numbers (8 for first drive and 9 for second)
 // Add second drive to IEC bus
 //
 // CLEANUP:

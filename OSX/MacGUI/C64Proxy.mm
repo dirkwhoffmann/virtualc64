@@ -654,6 +654,17 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 
+- (DriveProxy *) drive:(NSInteger)num {
+    switch (num) {
+        case 1:
+            return [self drive1];
+        case 2:
+            return [self drive2];
+        default:
+            assert(false);
+            return NULL;
+    }
+}
 
 - (BOOL)mount:(ContainerProxy *)container {
     return wrapper->c64->mount([container wrapper]->container); }

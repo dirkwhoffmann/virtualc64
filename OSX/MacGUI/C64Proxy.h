@@ -513,8 +513,10 @@ struct ContainerWrapper;
 - (void) dump;
 - (BOOL) developmentMode;
 
-// Loading and saving
+// Disk drive
+- (DriveProxy *)drive:(NSInteger)nr;
 
+// Loading and saving
 - (BOOL)mount:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item;
