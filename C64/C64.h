@@ -26,9 +26,7 @@
 // The Action Replay cartridge is fully supported now.
 //
 // TODO:
-// Rename driveIcon1,2 to diskIcon1,2
 // Add second disk menu
-// Replace VC1541Proxy by DriveProxy
 // Replace vc1541 proxy object by drive1
 // Replace C64::floppy by C64::drive1 and C64::drive2
 // Adjust drive channel numbers (8 and 9)
