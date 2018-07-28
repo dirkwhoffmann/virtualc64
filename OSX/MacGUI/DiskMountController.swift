@@ -25,6 +25,7 @@ class DiskMountController : UserDialogController {
     @IBOutlet weak var trackinfo: NSTextField!
     @IBOutlet weak var trackSizeinfo: NSTextField!
     @IBOutlet weak var stepper: NSStepper!
+    @IBOutlet weak var driveSelector: NSPopUpButton!
     
     override func showSheet(withParent controller: MyController,
                             completionHandler:(() -> Void)? = nil) {
@@ -104,13 +105,15 @@ class DiskMountController : UserDialogController {
     
     @IBAction func okAction(_ sender: Any!) {
         
-        NSLog("OK Action")
+        track()
         
-        // Insert archive as disk
-        // TODO: Let the user the target drive
-        parent.changeDisk(archive, driveNr: 1)
+        if driveSelector.selectedItem!.tag == 1 {
+            parent.changeDisk(archive, driveNr: 1)
+        } else {
+            parent.changeDisk(archive, driveNr: 2)
+        }
+        
         parent.metalScreen.rotateBack()
-        
         hideSheet()
     }
 }

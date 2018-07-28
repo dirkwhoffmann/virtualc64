@@ -21,9 +21,9 @@ class ArchiveMountController : UserDialogController {
     @IBOutlet weak var subheader: NSTextField!
     @IBOutlet weak var subsubheader: NSTextField!
     @IBOutlet weak var contents: NSTableView!
-    @IBOutlet weak var protect: NSButton!
     @IBOutlet weak var insertButton: NSButton!
-    
+    @IBOutlet weak var driveSelector: NSPopUpButton!
+
     override func showSheet(withParent controller: MyController,
                             completionHandler:(() -> Void)? = nil) {
         
@@ -90,16 +90,13 @@ class ArchiveMountController : UserDialogController {
         
         track()
         
-        // Insert archive as disk
-        // TODO: Let the user choose between drive 1 and 2
-        parent.changeDisk(archive, driveNr: 1)
-        parent.metalScreen.rotateBack()
-
-        // Set write protection
-        let value = protect.integerValue
-        // TODO: Let the user choose between drive 1 and 2
-        c64.drive1.setWriteProtection(value != 0)
+        if driveSelector.selectedItem!.tag == 1 {
+            parent.changeDisk(archive, driveNr: 1)
+        } else {
+            parent.changeDisk(archive, driveNr: 2)
+        }
         
+        parent.metalScreen.rotateBack()
         hideSheet()
     }
     

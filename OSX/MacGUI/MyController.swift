@@ -813,14 +813,12 @@ extension MyController {
     // If disk is nil, only the ejection is emulated.
     func changeDisk(_ disk: ContainerProxy?, driveNr: Int) {
         
-        precondition(driveNr == 1 || driveNr == 2)
-        let drive = (driveNr == 1) ? c64.drive1! : c64.drive2!
+        let drive = c64.drive(driveNr)!
 
         DispatchQueue.global().async {
             
             // Remove old disk if present
             if drive.hasDisk() {
-
                 drive.prepareToEject()
                 usleep(300000)
                 drive.ejectDisk()

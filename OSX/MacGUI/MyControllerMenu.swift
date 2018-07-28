@@ -62,8 +62,8 @@ extension MyController {
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return firstDrive() ?
-                (c64.drive1.isPoweredOn() && c64.drive1.hasDisk()) :
-                (c64.drive2.isPoweredOn() && c64.drive2.hasDisk())
+                c64.drive1.hasDisk() :
+                c64.drive2.hasDisk()
         }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
             return firstDrive() ?

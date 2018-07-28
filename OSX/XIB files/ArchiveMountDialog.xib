@@ -9,10 +9,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ArchiveMountController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
                 <outlet property="contents" destination="LV6-8k-0lG" id="qFP-ds-BgN"/>
+                <outlet property="driveSelector" destination="oto-3f-lJM" id="nuX-8x-I34"/>
                 <outlet property="header" destination="uBS-zg-XUI" id="Xq6-dE-vs1"/>
                 <outlet property="icon" destination="KFl-AN-CmK" id="r1u-dW-Otn"/>
                 <outlet property="insertButton" destination="dn7-gw-Zwf" id="Xea-aR-YL4"/>
-                <outlet property="protect" destination="eSc-h6-6Tj" id="3cO-Sn-LK7"/>
                 <outlet property="subheader" destination="4dA-W3-WEJ" id="R07-N5-CIR"/>
                 <outlet property="subsubheader" destination="F5v-IL-MIl" id="4RN-b8-kVV"/>
                 <outlet property="window" destination="FSf-w1-keQ" id="dCe-mm-hva"/>
@@ -169,20 +169,35 @@ Gw
                             <action selector="cancelAction:" target="-2" id="pUd-4g-JQl"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-h6-6Tj">
-                        <rect key="frame" x="220" y="24" width="130" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="check" title="Write protect disk" bezelStyle="regularSquare" imagePosition="left" inset="2" id="o1q-EZ-MFa">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dSZ-Fi-yHu">
                         <rect key="frame" x="23" y="141" width="95" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Double-click to flash file directly into memory" id="q9i-JQ-NCZ">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oto-3f-lJM">
+                        <rect key="frame" x="268" y="20" width="80" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Drive 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="mVZ-XY-lQK" id="ya0-Hg-Toa">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="SRd-ni-LI2">
+                                <items>
+                                    <menuItem title="Drive 1" state="on" tag="1" id="mVZ-XY-lQK"/>
+                                    <menuItem title="Drive 2" tag="2" id="44N-WF-Sg0"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xmf-IX-P4c">
+                        <rect key="frame" x="220" y="26" width="47" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target:" id="atj-KP-EVL">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>

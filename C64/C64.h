@@ -26,8 +26,7 @@
 // The Action Replay cartridge is fully supported now.
 //
 // TODO:
-// Add drive(Int) to Objective-C Proxy (return proxy object like CIA?!)
-// Add drive selector to ArchiveDialog and to G64 dialog
+// ArchiveDialog and DiskDialog: proceedWithUnsafed disk has to be called in  okAction, because with two drive, we don't now the target upfront.
 // Don't use mount() for inserting disks. Use insertDisk instead
 // Adjust drive channel numbers (8 for first drive and 9 for second)
 // Add second drive to IEC bus
