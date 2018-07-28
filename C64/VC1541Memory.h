@@ -32,10 +32,10 @@ class VC1541Memory : public Memory {
 public:
     
 	//! @brief    Reference to the connected IEC bus
-	IEC *iec;
+	// IEC *iec;
 
 	//! @brief    Reference to the connected disk drive
-	VC1541 *floppy;
+	VC1541 *drive;
 	
     //! @brief    Random Access Memory
     uint8_t ram[0x0800];

@@ -165,32 +165,3 @@ ROMFile::flash(uint8_t *buffer)
     memcpy(buffer, data, size);
 }
 
-/*
-bool
-ROMFile::flash(C64 *c64)
-{
-    switch(romtype) {
-        case BASIC_ROM_FILE:
-            memcpy(c64->mem.rom + 0xA000, data, size);
-            break;
-            
-        case CHAR_ROM_FILE:
-            memcpy(c64->mem.rom + 0xD000, data, size);
-            break;
-            
-        case KERNAL_ROM_FILE:
-            memcpy(c64->mem.rom + 0xE000, data, size);
-            break;
-            
-        case VC1541_ROM_FILE:
-            memcpy(c64->floppy.mem.rom, data, size);
-            break;
-            
-        default:
-            assert(false);
-            return false;
-    }
-
-    return true;
-}
-*/

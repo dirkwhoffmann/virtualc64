@@ -35,7 +35,7 @@
 
 /*!
  * @brief    Virtual floppy drive
- * @details  Bit-accurate emulation of a VC1541
+ * @details  Bit-accurate emulation of a Commodore VC 1541
  */
 class VC1541 : public VirtualComponent {
 

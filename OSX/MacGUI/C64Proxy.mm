@@ -607,7 +607,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 	
     // Create sub proxys
     cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
-    // cpu = [[CPUProxy alloc] initWithCPU:&c64->floppy->cpu];
     mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
     vic = [[VICProxy alloc] initWithVIC:&c64->vic];
 	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
@@ -618,7 +617,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
-	vc1541 = [[DriveProxy alloc] initWithVC1541:&c64->floppy];
+	vc1541 = [[DriveProxy alloc] initWithVC1541:&c64->drive1];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     
     // Initialize audio interface
@@ -682,7 +681,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) loadVC1541Rom:(NSURL *)url {
     return [self isVC1541Rom:url] && wrapper->c64->loadRom([[url path] UTF8String]); }
 - (BOOL) isVC1541RomLoaded {
-    return wrapper->c64->floppy.mem.romIsLoaded(); }
+    return wrapper->c64->drive1.mem.romIsLoaded() && wrapper->c64->drive2.mem.romIsLoaded(); }
 - (BOOL) isRom:(NSURL *)url {
     return [self isBasicRom:url] || [self isCharRom:url] || [self isKernalRom:url] || [self isVC1541Rom:url]; }
 - (BOOL) loadRom:(NSURL *)url {

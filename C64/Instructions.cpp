@@ -494,7 +494,7 @@ CPU::executeOneCycle()
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
                 msg("%s %s: %s %s %s   %s %s %s %s %s %s\n",
-                    (this == &c64->floppy.cpu) ? " " : "",
+                    (this == &c64->drive1.cpu) ? " " : "",
                         instr.pc,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.a, instr.x, instr.y, instr.sp,

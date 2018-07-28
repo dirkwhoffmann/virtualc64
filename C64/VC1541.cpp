@@ -34,8 +34,14 @@ VC1541::VC1541(unsigned deviceNr)
     
     // Register sub components
     VirtualComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents)); 
-
+    registerSubComponents(subcomponents, sizeof(subcomponents));
+    
+    // Setup references
+    cpu.mem = &mem;
+    mem.drive = this;
+    via1.drive = this;
+    via2.drive = this;
+    
     // Register snapshot items
     SnapshotItem items[] = {
 
@@ -329,7 +335,7 @@ VC1541::powerOn()
     c64->suspend();
     
     poweredOn = true;
-    if (c64->floppy.soundMessagesEnabled())
+    if (soundMessagesEnabled())
         c64->putMessage(MSG_VC1541_ATTACHED_SOUND, deviceNr);
     ping();
     
@@ -346,7 +352,7 @@ VC1541::powerOff()
     reset();
     
     poweredOn = false;
-    if (c64->floppy.soundMessagesEnabled())
+    if (soundMessagesEnabled())
         c64->putMessage(MSG_VC1541_DETACHED_SOUND, deviceNr);
     ping();
     

@@ -8,6 +8,8 @@
 #ifndef VC1541_TYPES_H
 #define VC1541_TYPES_H
 
+inline bool isValidDriveNr(unsigned nr) { return nr == 1 || nr == 2; }
+
 /*! @enum     Disk insertion status
  */
 typedef enum {

@@ -109,7 +109,7 @@ VIA6522::dumpState()
 bool
 VIA6522::isVia2()
 {
-    return this == &c64->floppy.via2;
+    return this == &drive->via2;
 }
 
 
@@ -798,7 +798,7 @@ VIA6522::setCA1(bool value)
     ca1 = value;
 
     // VIA2 sets the V flag on a negative transition
-    if (!value && isVia2()) c64->floppy.cpu.setV(1);
+    if (!value && isVia2()) drive->cpu.setV(1);
     
     // Check for active transition (can be positive or negative)
     uint8_t ctrl = ca1Control();
@@ -842,8 +842,8 @@ VIA6522::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (t1 > 2) ? (c64->floppy.cpu.getCycle() + t1 - 1) : 0;
-    uint64_t sleepB = (t2 > 2) ? (c64->floppy.cpu.getCycle() + t2 - 1) : 0;
+    uint64_t sleepA = (t1 > 2) ? (drive->cpu.getCycle() + t1 - 1) : 0;
+    uint64_t sleepB = (t2 > 2) ? (drive->cpu.getCycle() + t2 - 1) : 0;
     
     // VIAs with stopped timers can sleep forever
     if (!(delay & VIACountA1)) sleepA = UINT64_MAX;
@@ -900,12 +900,12 @@ VIA1::~VIA1()
 
 void
 VIA1::pullDownIrqLine() {
-    c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA1);
+    drive->cpu.pullDownIrqLine(CPU::INTSRC_VIA1);
 }
 
 void
 VIA1::releaseIrqLine() {
-    c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA1);
+    drive->cpu.releaseIrqLine(CPU::INTSRC_VIA1);
 }
 
 uint8_t
@@ -959,14 +959,14 @@ uint8_t
 VIA2::portAexternal()
 {
     // TODO: Which value is returned in write mode?
-    return c64->floppy.readShiftreg & 0xFF;
+    return drive->readShiftreg & 0xFF;
 }
 
 uint8_t
 VIA2::portBexternal()
 {
-    bool sync     = c64->floppy.getSync();
-    bool barrier  = c64->floppy.getLightBarrier();
+    bool sync     = drive->getSync();
+    bool barrier  = drive->getLightBarrier();
 
     return (sync ? 0x80 : 0x00) | (barrier ? 0x00 : 0x10) | 0x6F;
 }
@@ -985,15 +985,15 @@ VIA2::updatePB()
     
     // Bits 6 and 5
     if ((newPb & 0x60) != (oldPb & 0x60))
-        c64->floppy.setZone((newPb >> 5) & 0x03);
+        drive->setZone((newPb >> 5) & 0x03);
     
     // Bit 3
     if (GET_BIT(newPb, 3) != GET_BIT(oldPb, 3))
-        c64->floppy.setRedLED(GET_BIT(newPb, 3));
+        drive->setRedLED(GET_BIT(newPb, 3));
     
     // Bit 2
     if (GET_BIT(newPb, 2) != GET_BIT(oldPb, 2))
-        c64->floppy.setRotating(GET_BIT(newPb, 2));
+        drive->setRotating(GET_BIT(newPb, 2));
     
     // Head stepper motor
     
@@ -1021,16 +1021,16 @@ VIA2::updatePB()
         // Halftrack number: 01  02  03  04  05  06  07  08 ...
         // Stepper position:  0   1   2   3   0   1   2   3 ...
         
-        int oldPos = (int)((c64->floppy.getHalftrack() - 1) & 0x03);
+        int oldPos = (int)((drive->getHalftrack() - 1) & 0x03);
         int newPos = (int)(newPb & 0x03);
         
         if (newPos != oldPos) {
             if (newPos == ((oldPos + 1) & 0x03)) {
-                c64->floppy.moveHeadUp();
-                // assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
+                drive->moveHeadUp();
+                // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else if (newPos == ((oldPos - 1) & 0x03)) {
-                c64->floppy.moveHeadDown();
-                // assert(newPos == ((c64->floppy.getHalftrack() - 1) & 0x03));
+                drive->moveHeadDown();
+                // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else {
                 debug(2, "Unexpected stepper motor control sequence\n");
             }
@@ -1041,13 +1041,13 @@ VIA2::updatePB()
 void
 VIA2::pullDownIrqLine()
 {
-    c64->floppy.cpu.pullDownIrqLine(CPU::INTSRC_VIA2);
+    drive->cpu.pullDownIrqLine(CPU::INTSRC_VIA2);
 }
 
 void
 VIA2::releaseIrqLine()
 {
-    c64->floppy.cpu.releaseIrqLine(CPU::INTSRC_VIA2);
+    drive->cpu.releaseIrqLine(CPU::INTSRC_VIA2);
 }
 
 

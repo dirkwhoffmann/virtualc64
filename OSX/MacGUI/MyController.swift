@@ -828,30 +828,7 @@ extension MyController {
             }
         }
     }
-    
-    
-    // Emulates the removal of disk from the floppy drive including the
-    // time that has to elapse between opening the drive lid and taking the
-    // disk out. Note that this function will only work correctly on a
-    // running emulator. Otherwise, the drive won't detect the removal.
-    // DEPRECATED
-    /*
-    func emulateDiskRemoval() {
-        
-        if (c64.vc1541.hasDisk()) {
-            
-            // Open the lid and break the light barrier
-            c64.vc1541.openLid()
-            
-            // Wait some time before unbreaking the light barrier
-            usleep(300000)
-            
-            // Take the disk out
-            c64.vc1541.ejectDisk()
-        }
-    }
-    */
-    
+
     
     //
     // Misc

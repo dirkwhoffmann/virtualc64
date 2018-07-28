@@ -69,7 +69,8 @@ IEC::dumpState()
 	msg("\n");
 	dumpTrace();
 	msg("\n");
-    msg("    DDRB (VIA1) : %02X\n", c64->floppy.via1.getDDRB());
+    msg("    DDRB (VIA1) : %02X (Drive 1)\n", c64->drive1.via1.getDDRB());
+    msg("    DDRB (VIA1) : %02X (Drive 2)\n", c64->drive2.via1.getDDRB());
     msg("    DDRA (CIA2) : %02X\n\n", c64->cia2.DDRA);
     msg("   Bus activity : %d\n", busActivity); 
 
@@ -90,7 +91,8 @@ bool IEC::_updateIecLines()
     bool oldDataLine = dataLine;
     
     // Get bus signals from device side
-    uint8_t deviceBits = c64->floppy.via1.getPB();
+    // TODO: Second drive
+    uint8_t deviceBits = c64->drive1.via1.getPB();
     bool deviceAtn = !!(deviceBits & 0x10);
     bool deviceClock = !!(deviceBits & 0x08);
     bool deviceData = !!(deviceBits & 0x02);
@@ -130,7 +132,7 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= c64->floppy.isPoweredOff() || (atnLine ^ deviceAtn);
+    dataLine &= c64->drive1.isPoweredOff() || (atnLine ^ deviceAtn);
     
     isDirty = false;
     return (oldAtnLine != atnLine ||
@@ -146,8 +148,9 @@ void IEC::updateIecLines()
 	signals_changed = _updateIecLines();	
     
     // ATN signal is connected to CA1 pin of VIA 1
-    c64->floppy.via1.CA1action(!atnLine);
-    
+    c64->drive1.via1.CA1action(!atnLine);
+    c64->drive2.via1.CA1action(!atnLine);
+
 	if (signals_changed) {
         
         if (tracingEnabled()) {

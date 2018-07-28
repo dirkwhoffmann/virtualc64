@@ -56,7 +56,8 @@ void
     
     // Prepare to run...
     c64->cpu.clearErrorState();
-    c64->floppy.cpu.clearErrorState();
+    c64->drive1.cpu.clearErrorState();
+    c64->drive2.cpu.clearErrorState();
     c64->restartTimer();
     
     while (likely(success)) {
@@ -100,7 +101,8 @@ C64::C64()
         &sid,
         &cia1, &cia2,
         &iec,
-        &floppy,
+        &drive1,
+        &drive2,
         &datasette,
         &mouse1350,
         &mouse1351,
@@ -131,15 +133,19 @@ C64::C64()
 
     // Setup references
     cpu.mem = &mem;
-    floppy.cpu.mem = &c64->floppy.mem;
-    floppy.mem.iec = &c64->iec;
-    floppy.mem.floppy = &c64->floppy;
-    
+    // drive1.cpu.mem = &c64->drive1.mem;
+    // drive1.mem.iec = &c64->iec;
+    // drive1.mem.drive = &c64->drive1;
+    // drive2.cpu.mem = &c64->drive2.mem;
+    // drive2.mem.iec = &c64->iec;
+    // drive2.mem.drive = &c64->drive2;
+
     // Set initial hardware configuration
     mouse = &mouse1350;
     mousePort = 0;
     setPAL();
-    floppy.powerOn();
+    drive1.powerOn();
+    drive2.powerOff();
     
     // Initialize mach timer info
     mach_timebase_info(&timebase);
@@ -436,7 +442,12 @@ C64::threadCleanup()
 bool
 C64::isRunnable()
 {
-    return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernalRomIsLoaded() && floppy.mem.romIsLoaded();
+    return
+    mem.basicRomIsLoaded() &&
+    mem.charRomIsLoaded() &&
+    mem.kernalRomIsLoaded() &&
+    drive1.mem.romIsLoaded() &&
+    drive2.mem.romIsLoaded();
 }
 
 bool
@@ -469,8 +480,9 @@ void
 C64::step()
 {
     cpu.clearErrorState();
-    floppy.cpu.clearErrorState();
-    
+    drive1.cpu.clearErrorState();
+    drive2.cpu.clearErrorState();
+
     // Wait until the execution of the next command has begun
     while (cpu.inFetchPhase()) executeOneCycle();
 
@@ -485,7 +497,8 @@ void
 C64::stepOver()
 {
     cpu.clearErrorState();
-    floppy.cpu.clearErrorState();
+    drive1.cpu.clearErrorState();
+    drive2.cpu.clearErrorState();
     
     // If the next instruction is a JSR instruction, ...
     if (mem.spypeek(cpu.getPC_at_cycle_0()) == 0x20) {
@@ -544,7 +557,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    if (floppy.isPoweredOn()) result &= floppy.execute(2 * durationOfHalfCycle);
+    if (drive1.isPoweredOn()) result &= drive1.execute(2 * durationOfHalfCycle);
+    if (drive2.isPoweredOn()) result &= drive2.execute(2 * durationOfHalfCycle);
     if (iec.isDirty) iec.updateIecLines();
     datasette.execute();
     
@@ -1014,7 +1028,7 @@ C64::mount(File *file)
         case P00_CONTAINER:
         case G64_CONTAINER:
         case NIB_CONTAINER:
-            result = insertDisk((Archive *)file);
+            result = insertDisk((Archive *)file, 1);
             break;
     
         case TAP_CONTAINER:
@@ -1050,7 +1064,8 @@ C64::flash(File *file, unsigned item)
             break;
             
         case VC1541_ROM_FILE:
-            ((ROMFile *)file)->flash(floppy.mem.rom);
+            ((ROMFile *)file)->flash(drive1.mem.rom);
+            ((ROMFile *)file)->flash(drive2.mem.rom);
             break;
                     
         case V64_CONTAINER:
@@ -1100,13 +1115,13 @@ C64::loadRom(const char *filename)
 }
 
 bool
-C64::insertDisk(Archive *a)
+C64::insertDisk(Archive *a, unsigned drive)
 {
     assert(a != NULL);
-    
-    floppy.insertDisk(a);
+    assert(isValidDriveNr(drive));
+           
+    drive == 1 ? drive1.insertDisk(a) : drive2.insertDisk(a);
     return true;
-    
 }
 
 bool

@@ -84,8 +84,8 @@ VC1541Memory::peek(uint16_t addr)
         return
         (addr < 0x0800) ? ram[addr] :
         (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? floppy->via1.peek(addr & 0xF) :
-        floppy->via2.peek(addr & 0xF);
+        (addr < 0x1C00) ? drive->via1.peek(addr & 0xF) :
+        drive->via2.peek(addr & 0xF);
     }
 }
 
@@ -99,8 +99,8 @@ VC1541Memory::spypeek(uint16_t addr)
         return
         (addr < 0x0800) ? ram[addr] :
         (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? floppy->via1.spypeek(addr & 0xF) :
-        floppy->via2.spypeek(addr & 0xF);
+        (addr < 0x1C00) ? drive->via1.spypeek(addr & 0xF) :
+        drive->via2.spypeek(addr & 0xF);
     }
 }
 
@@ -120,12 +120,12 @@ VC1541Memory::poke(uint16_t addr, uint8_t value)
     }
     
     if (addr >= 0x1C00) { // VIA 2
-        floppy->via2.poke(addr & 0xF, value);
+        drive->via2.poke(addr & 0xF, value);
         return;
     }
     
     if (addr >= 0x1800) { // VIA 1
-        floppy->via1.poke(addr & 0xF, value);
+        drive->via1.poke(addr & 0xF, value);
         return;
     }
 }

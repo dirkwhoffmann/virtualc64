@@ -26,9 +26,8 @@
 // The Action Replay cartridge is fully supported now.
 //
 // TODO:
-// Add second disk menu
-// Replace vc1541 proxy object by drive1
 // Replace C64::floppy by C64::drive1 and C64::drive2
+// Replace vc1541 proxy object by drive1
 // Adjust drive channel numbers (8 and 9)
 // Add second drive to executeOneCycle
 // Add second drive to IEC bus
@@ -148,8 +147,11 @@ public:
     //! @brief    Expansion port (cartdrige slot)
     ExpansionPort expansionport;
 
-    //! @brief    Commodore VC1541 floppy drive
-    VC1541 floppy = VC1541(1);
+    //! @brief    First Commodore VC1541 floppy drive
+    VC1541 drive1 = VC1541(1);
+
+    //! @brief    Second Commodore VC1541 floppy drive
+    VC1541 drive2 = VC1541(2);
 
     //! @brief    Commodore 1530 (C2N) Datasette
     Datasette datasette;
@@ -194,6 +196,7 @@ public:
 
     //! @brief    Duration of half a CPU cycle in pico seconds
     /*! @todo     Change unit to nano seconds
+     *  @todo     Replace by durationOfCycle
      */
     uint64_t durationOfHalfCycle;
     
@@ -669,7 +672,7 @@ public:
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @details  Only D64 and G64 archives are supported.
      */
-    bool insertDisk(Archive *a);
+    bool insertDisk(Archive *a, unsigned drive);
     
     /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.

@@ -145,7 +145,8 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        c64->floppy.ping();
+        c64->drive1.ping();
+        c64->drive2.ping();
     }
 }
 
