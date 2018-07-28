@@ -14,6 +14,9 @@ class DiskInspectorController : UserDialogController {
     let monoFont = NSFont.monospacedDigitSystemFont(ofSize: 11.0, weight: .medium)
     let monoLarge = NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: .medium)
 
+    // The currently analyzed drive
+    var drive: DriveProxy!
+    
     // Remembers the currently displayed halftrack number
     var halftrack = UInt32.max
 
@@ -63,8 +66,9 @@ class DiskInspectorController : UserDialogController {
 
     override public func awakeFromNib() {
         
+        drive = c64.drive1
         refresh()
-        
+    
         // Start refresh timer
         if #available(OSX 10.12, *) {
             timer = Timer.scheduledTimer(withTimeInterval: 0.10,
@@ -75,8 +79,6 @@ class DiskInspectorController : UserDialogController {
 
     /// Updates dirty GUI elements
     func refresh() {
-        
-        let drive = c64.vc1541!
         
         // Enable or disable user edition
         if drive.hasDisk() {
@@ -117,11 +119,11 @@ class DiskInspectorController : UserDialogController {
         if trackDataIsDirty {
             halftrackField.integerValue = Int(halftrack)
             trackField.doubleValue = Double(halftrack + 1) / 2.0
-            c64.vc1541.disk.analyzeHalftrack(halftrack)
+            drive.disk.analyzeHalftrack(halftrack)
             sectorForRow = [:]
             var row = 0
             for i in 0 ... Int(maxNumberOfSectors - 1) {
-                let info = c64.vc1541.disk.sectorInfo(Sector(i))
+                let info = drive.disk.sectorInfo(Sector(i))
                 if (info.headerBegin != info.headerEnd) {
                     sectorForRow[row] = i
                     row += 1
@@ -147,7 +149,6 @@ class DiskInspectorController : UserDialogController {
     
     func refreshPhysicalView() {
         
-        let drive = c64.vc1541!
         var gcr : String
         
         if hasDisk {
@@ -182,7 +183,7 @@ class DiskInspectorController : UserDialogController {
         
         removeHeadMarker()
         let storage = (gcrView.documentView as! NSTextView).textStorage
-        headPosition = NSRange.init(location: Int(c64.vc1541.offset()), length: 1)
+        headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
         storage?.addAttribute(.backgroundColor, value: NSColor.red, range: headPosition!)
     }
     
@@ -208,7 +209,7 @@ class DiskInspectorController : UserDialogController {
     
     func setSectorMarkers(begin: Int, end: Int) {
         
-        let length = Int(c64.vc1541.sizeOfCurrentHalftrack())
+        let length = Int(drive.sizeOfCurrentHalftrack())
         if (length == 0) { return }
         
         let left = begin % (length + 1)
@@ -255,7 +256,7 @@ class DiskInspectorController : UserDialogController {
     func _trackAction(_ t: Track) {
         
         let track = (t > maxNumberOfTracks) ? maxNumberOfTracks : (t < 1) ? 1 : t
-        c64.vc1541.setTrack(track)
+        drive.setTrack(track)
         trackDataIsDirty = true
         refresh()
         scrollToFirstSectorMarker()
@@ -273,14 +274,14 @@ class DiskInspectorController : UserDialogController {
         
         let value = (sender as! NSStepper).integerValue
         // let t = Int(c64.vc1541.halftrack() + 1 / 2) + (value == 1 ? 1 : -1)
-        let t = (Int(c64.vc1541.halftrack()) + (value == 1 ? 2 : -1) + 1) / 2
+        let t = (Int(drive.halftrack()) + (value == 1 ? 2 : -1) + 1) / 2
         _trackAction(Track(t))
     }
     
     func _halftrackAction(_ ht: Halftrack) {
         
         let htrack = (ht > maxNumberOfHalftracks) ? maxNumberOfHalftracks : (ht < 1) ? 1 : ht
-        c64.vc1541.setHalftrack(htrack)
+        drive.setHalftrack(htrack)
         trackDataIsDirty = true
         refresh()
         scrollToFirstSectorMarker()
@@ -295,18 +296,18 @@ class DiskInspectorController : UserDialogController {
     @IBAction func halftrackStepperAction(_ sender: Any!) {
         
         let value = (sender as! NSStepper).integerValue
-        let ht = Int(c64.vc1541.halftrack()) + (value == 1 ? 1 : -1)
+        let ht = Int(drive.halftrack()) + (value == 1 ? 1 : -1)
         _halftrackAction(Halftrack(ht))
     }
     
     @IBAction func headAction(_ sender: Any!) {
         
         var value = (sender as! NSTextField).integerValue
-        let maxValue = Int(c64.vc1541.sizeOfCurrentHalftrack())
+        let maxValue = Int(drive.sizeOfCurrentHalftrack())
         if value >= maxValue { value = maxValue - 1 }
         if value < 0 { value = 0 }
         
-        c64.vc1541.setOffset(UInt16(value))
+        drive.setOffset(UInt16(value))
         refresh()
         scrollToHead()
     }
@@ -315,9 +316,9 @@ class DiskInspectorController : UserDialogController {
         
         let value = (sender as! NSStepper).integerValue
         if value == 1 {
-            c64.vc1541.rotateDisk()
+            drive.rotateDisk()
         } else {
-            c64.vc1541.rotateBack()
+            drive.rotateBack()
         }
         refresh()
         scrollToHead()
@@ -326,7 +327,7 @@ class DiskInspectorController : UserDialogController {
     @IBAction func valueAction(_ sender: Any!) {
         
         let value = (sender as! NSTextField).integerValue
-        c64.vc1541.writeBit(toHead: UInt8(value))
+        drive.writeBit(toHead: UInt8(value))
         trackDataIsDirty = true
         refresh()
         scrollToHead()
@@ -334,7 +335,7 @@ class DiskInspectorController : UserDialogController {
  
     @IBAction func valueStepperAction(_ sender: Any!) {
         
-        let value = c64.vc1541.readBitFromHead()
+        let value = drive.readBitFromHead()
         valueField.integerValue = (value == 0) ? 1 : 0
         valueAction(valueField)
     }
@@ -360,14 +361,14 @@ class DiskInspectorController : UserDialogController {
         if (sender == sectorView) {
             
             let sector = row / 2
-            let info = c64.vc1541.disk.sectorInfo(Sector(sector))
+            let info = drive.disk.sectorInfo(Sector(sector))
             begin = (row % 2 == 0) ? info.headerBegin : info.dataBegin
             end = (row % 2 == 0) ? info.headerEnd : info.dataEnd
             
         } else if (sender == errorView) {
             
-            begin = (row > 0) ? c64.vc1541.disk.firstErroneousBit(row - 1) : 0
-            end = (row > 0) ? c64.vc1541.disk.lastErroneousBit(row - 1) : 0
+            begin = (row > 0) ? drive.disk.firstErroneousBit(row - 1) : 0
+            end = (row > 0) ? drive.disk.lastErroneousBit(row - 1) : 0
             
         } else {
             
@@ -393,7 +394,7 @@ extension DiskInspectorController : NSTableViewDataSource {
         if tableView == sectorView {
             return 2 * sectorForRow.count
         } else if tableView == errorView {
-            return hasDisk ? c64.vc1541.disk.numErrors() + 1 : 0
+            return hasDisk ? drive.disk.numErrors() + 1 : 0
         } else {
             assert(false)
             return 0
@@ -417,11 +418,11 @@ extension DiskInspectorController : NSTableViewDataSource {
                 
             case "data":
                 if headerRow {
-                    let cStr = c64.vc1541.disk.sectorHeader(asString: Sector(sectorNr))!
+                    let cStr = drive.disk.sectorHeader(asString: Sector(sectorNr))!
                     return String.init(cString: cStr)
                     
                 } else {
-                    let cStr = c64.vc1541.disk.sectorData(asString: Sector(sectorNr))!
+                    let cStr = drive.disk.sectorData(asString: Sector(sectorNr))!
                     return String.init(cString: cStr)
                 }
                 
@@ -432,7 +433,7 @@ extension DiskInspectorController : NSTableViewDataSource {
         } else if tableView == errorView {
             
             if row == 0 {
-                let count = c64.vc1541.disk.numErrors()
+                let count = drive.disk.numErrors()
                 if count == 0 {
                     return "The GCR bitstream has been scanned without errrors."
                 } else {
@@ -440,7 +441,7 @@ extension DiskInspectorController : NSTableViewDataSource {
                     return "The GCR bitstream contains \(count) error\(s)."
                 }
             } else {
-                return c64.vc1541.disk.errorMessage(row - 1)
+                return drive.disk.errorMessage(row - 1)
             }
    
         } else {

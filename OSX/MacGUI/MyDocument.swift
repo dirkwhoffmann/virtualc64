@@ -46,6 +46,7 @@ class MyDocument : NSDocument {
     var recentlyInsertedDiskURLs: [URL] = []
 
     /// The list of recently exported disk URLs.
+    /// TODO: We need a separate list for both drives
     var recentlyExportedDiskURLs: [URL] = []
 
     /// The list of recently inserted tape URLs.
@@ -422,7 +423,7 @@ class MyDocument : NSDocument {
         case V64_CONTAINER,
              T64_CONTAINER, D64_CONTAINER,
              G64_CONTAINER, NIB_CONTAINER:
-            if (!proceedWithUnsavedDisk()) { return false }
+            if (!proceedWithUnsavedDisk(driveNr: 1)) { return false }
         default:
             break;
         }

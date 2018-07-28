@@ -54,10 +54,9 @@ struct VC64Keys {
 
 extension MyController {
     
-    // --------------------------------------------------------------------------------
-    //                                 Default values
-    // --------------------------------------------------------------------------------
-
+    //
+    // Default values
+    //
 
     /// Registers the default values of all user definable properties
     static func registerUserDefaults() {
@@ -127,9 +126,10 @@ extension MyController {
         defaults.register(defaults: dictionary)
     }
     
-    // --------------------------------------------------------------------------------
-    //                                  Loading
-    // --------------------------------------------------------------------------------
+    
+    //
+    // Loading
+    //
 
     /// Loads all user defaults from database
     func loadUserDefaults() {
@@ -183,7 +183,8 @@ extension MyController {
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
         c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
-        c64.vc1541.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
         c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
     }
     
@@ -197,9 +198,10 @@ extension MyController {
         }
     }
     
-    // --------------------------------------------------------------------------------
-    //                                  Saving
-    // --------------------------------------------------------------------------------
+    
+    //
+    // Saving
+    //
 
     /// Saves all user defaults from database
     func saveUserDefaults() {
@@ -248,7 +250,8 @@ extension MyController {
         defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.sid.samplingMethod(), forKey: VC64Keys.samplingMethod)
         defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
-        defaults.set(c64.vc1541.sendSoundMessages(), forKey: VC64Keys.driveNoise)
+        defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
+        defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
     

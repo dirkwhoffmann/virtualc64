@@ -44,7 +44,7 @@ struct IecWrapper;
 struct ExpansionPortWrapper;
 struct Via6522Wrapper;
 struct DiskWrapper;
-struct Vc1541Wrapper;
+struct DriveWrapper;
 struct DatasetteWrapper;
 struct ContainerWrapper;
 
@@ -334,6 +334,7 @@ struct ContainerWrapper;
 - (void) dump;
 - (BOOL)writeProtected;
 - (void)setWriteProtection:(BOOL)b;
+- (void)toggleWriteProtection;
 // - (BOOL)modified;
 // - (void)setModified:(BOOL)b;
 - (NSInteger)nonemptyHalftracks;
@@ -368,12 +369,12 @@ struct ContainerWrapper;
 
 
 //
-// VC1541
+// VC 1541 disk drive
 //
 
 @interface DriveProxy : NSObject {
     
-	struct Vc1541Wrapper *wrapper;
+	struct DriveWrapper *wrapper;
     
     // Sub proxys
 	CPUProxy *cpu;
@@ -382,7 +383,7 @@ struct ContainerWrapper;
     DiskProxy *disk;
 }
 
-@property (readonly) struct Vc1541Wrapper *wrapper;
+@property (readonly) struct DriveWrapper *wrapper;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
@@ -402,13 +403,14 @@ struct ContainerWrapper;
 - (BOOL) redLED;
 - (BOOL) hasDisk;
 - (BOOL) hasModifiedDisk;
-- (void) setModifiedDisk:(BOOL)b; 
+- (void) setModifiedDisk:(BOOL)b;
 - (void) prepareToInsert;
 - (void) insertDisk:(ArchiveProxy *)disk;
 - (void) prepareToEject;
 - (void) ejectDisk;
 - (BOOL) writeProtected;
 - (void) setWriteProtection:(BOOL)b;
+- (BOOL) hasWriteProtectedDisk;
 // - (BOOL) diskModified;
 // - (void) setDiskModified:(BOOL)b;
 - (BOOL) sendSoundMessages;
@@ -485,7 +487,8 @@ struct ContainerWrapper;
     ControlPortProxy *port2;
 	IECProxy *iec;
     ExpansionPortProxy *expansionport;
-	DriveProxy *vc1541;
+	DriveProxy *drive1;
+    DriveProxy *drive2;
     DatasetteProxy *datasette;
 }
 
@@ -500,7 +503,8 @@ struct ContainerWrapper;
 @property (readonly) ControlPortProxy *port2;
 @property (readonly) IECProxy *iec;
 @property (readonly) ExpansionPortProxy *expansionport;
-@property (readonly) DriveProxy *vc1541;
+@property (readonly) DriveProxy *drive1;
+@property (readonly) DriveProxy *drive2;
 @property (readonly) DatasetteProxy *datasette;
 
 - (struct C64Wrapper *)wrapper;
@@ -514,12 +518,6 @@ struct ContainerWrapper;
 - (BOOL)mount:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item;
-/*
-- (void)_loadFromSnapshotWrapper:(struct ContainerWrapper *) snapshot;
-- (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
-- (void)_saveToSnapshotWrapper:(struct ContainerWrapper *) snapshot;
-- (void)saveToSnapshot:(SnapshotProxy *) snapshot;
-*/
 
 // Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url;

@@ -60,7 +60,7 @@ class HardwarePrefsController : UserDialogController {
             
         // VC1541
         warpLoad.state = c64.warpLoad() ? .on : .off
-        driveNoise.state = c64.vc1541.sendSoundMessages() ? .on : .off
+        driveNoise.state = c64.drive1.sendSoundMessages() ? .on : .off
         
         // Mouse
         let model = c64.mouseModel()
@@ -128,7 +128,8 @@ class HardwarePrefsController : UserDialogController {
     @IBAction func driveNoiseAction(_ sender: Any!) {
         
         let sender = sender as! NSButton
-        c64.vc1541.setSendSoundMessages(sender.state == .on)
+        c64.drive1.setSendSoundMessages(sender.state == .on)
+        c64.drive2.setSendSoundMessages(sender.state == .on)
         update()
     }
     
@@ -161,8 +162,9 @@ class HardwarePrefsController : UserDialogController {
 
         // VC1541
         c64.setWarpLoad(true)
-        c64.vc1541.setSendSoundMessages(true)
-        
+        c64.drive1.setSendSoundMessages(true)
+        c64.drive2.setSendSoundMessages(true)
+
         // Mouse
         c64.setMouseModel(0)
 

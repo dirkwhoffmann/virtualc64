@@ -17,7 +17,7 @@ extension MyController {
             precondition(item.tag == 1 || item.tag == 2)
             return item.tag == 1
         }
-        
+    
         func validateURLlist(_ list : [URL], image: String) -> Bool {
             
             if let url = document.getRecentlyUsedURL(item.tag, from: list) {
@@ -53,34 +53,41 @@ extension MyController {
  
         // Drive menu
         if item.action == #selector(MyController.newDiskAction(_:)) {
-            return c64.vc1541.isPoweredOn()
+            return firstDrive() ?
+                c64.drive1.isPoweredOn() :
+                c64.drive2.isPoweredOn()
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
             return validateURLlist(document.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
-            return c64.vc1541.isPoweredOn() && c64.vc1541.hasDisk()
+            return firstDrive() ?
+                (c64.drive1.isPoweredOn() && c64.drive1.hasDisk()) :
+                (c64.drive2.isPoweredOn() && c64.drive2.hasDisk())
         }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
-            return c64.vc1541.hasDisk()
+            return firstDrive() ?
+                c64.drive1.hasDisk() :
+                c64.drive2.hasDisk()
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             return validateURLlist(document.recentlyExportedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.writeProtectAction(_:)) {
-            let hasDisk = c64.vc1541.hasDisk()
-            let protected = hasDisk && c64.vc1541.disk.writeProtected()
-            item.state = protected ? .on : .off
+            let hasDisk = firstDrive() ?
+                c64.drive1.hasDisk() :
+                c64.drive2.hasDisk()
+            let hasWriteProtecteDisk = firstDrive() ?
+                c64.drive1.hasWriteProtectedDisk() :
+                c64.drive2.hasWriteProtectedDisk()
+            item.state = hasWriteProtecteDisk ? .on : .off
             return hasDisk
         }
         if item.action == #selector(MyController.drivePowerAction(_:)) {
-            if firstDrive() {
-                let poweredOn = c64.vc1541.isPoweredOn()
-                item.title = poweredOn ? "Disconnect" : "Connect"
-            } else {
-                let poweredOn = c64.vc1541.isPoweredOn() // TODO: second drive
-                item.title = poweredOn ? "Disconnect" : "Connect"
-            }
+            let poweredOn = firstDrive() ?
+                c64.drive1.isPoweredOn() :
+                c64.drive2.isPoweredOn()
+            item.title = poweredOn ? "Disconnect" : "Connect"
             return true
         }
 
@@ -148,10 +155,10 @@ extension MyController {
             item.state = c64.iec.tracing() ? .on : .off
         }
         if item.action == #selector(MyController.traceVC1541CpuAction(_:)) {
-            item.state = c64.vc1541.cpu.tracing() ? .on : .off
+            item.state = c64.drive1.cpu.tracing() ? .on : .off
         }
         if item.action == #selector(MyController.traceViaAction(_:)) {
-            item.state = c64.vc1541.via1.tracing() ? .on : .off
+            item.state = c64.drive1.via1.tracing() ? .on : .off
         }
         
         if item.action == #selector(MyController.dumpStateAction(_:)) {
@@ -233,11 +240,11 @@ extension MyController {
             greenLED1.isHidden = false
             redLED1.isHidden = false
             progress1.isHidden = false
-            diskIcon1.isHidden = !c64.vc1541.hasDisk()
+            diskIcon1.isHidden = !c64.drive1.hasDisk()
             greenLED2.isHidden = false
             redLED2.isHidden = false
             progress2.isHidden = false
-            diskIcon2.isHidden = !c64.vc1541.hasDisk() // rename drive2
+            diskIcon2.isHidden = !c64.drive2.hasDisk()
             cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
             tapeIcon.isHidden = !c64.datasette.hasTape()
             tapeProgress.isHidden = false
@@ -381,9 +388,14 @@ extension MyController {
     // Action methods (Disk menu)
     //
 
+    func driveNr(fromTagOf menuItem: Any!) -> Int {
+        let tag = (menuItem as! NSMenuItem).tag
+        precondition(tag == 1 || tag == 2)
+        return tag
+    }
     @IBAction func newDiskAction(_ sender: Any!) {
         
-        if proceedWithUnsavedDisk() {
+        if proceedWithUnsavedDisk(driveNr: driveNr(fromTagOf: sender)) {
             let emptyArchive = ArchiveProxy.make()
             let emptyD64Archive = D64Proxy.make(withAnyArchive: emptyArchive)
             mount(emptyD64Archive)
@@ -394,7 +406,9 @@ extension MyController {
     @IBAction func insertDiskAction(_ sender: Any!) {
         
         // Ask user to continue if the current disk contains modified data
-        if !proceedWithUnsavedDisk() { return }
+        if !proceedWithUnsavedDisk(driveNr: driveNr(fromTagOf: sender)) {
+            return
+        }
         
         // Show the OpenPanel
         let openPanel = NSOpenPanel()
@@ -423,13 +437,24 @@ extension MyController {
         
         track()
         let sender = sender as! NSMenuItem
-        let tag = sender.tag
+        var tag = sender.tag
         let document = self.document as! MyDocument
         
+        // Determine drive number which is coded into the tag
+        var driveNr: Int
+        if tag < 10 {
+            driveNr = 1
+        } else {
+            driveNr = 2
+            tag -= 10
+        }
+        
+        // Get URL and insert
         if let url = document.getRecentlyInsertedDiskURL(tag) {
             do {
                 try document.createAttachment(from: url)
-                if (document.proceedWithUnsavedDisk()) {
+                if (document.proceedWithUnsavedDisk(driveNr: driveNr)) {
+                    // TODO: Use insertDisk instead (requires drive number)
                     document.insertAttachmentAsDisk()
                 }
             } catch {
@@ -470,9 +495,10 @@ extension MyController {
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
-        if proceedWithUnsavedDisk() {
+        let nr = driveNr(fromTagOf: sender)
+        if proceedWithUnsavedDisk(driveNr: nr) {
             
-            changeDisk(nil)
+            changeDisk(nil, driveNr: nr)
             (document as! MyDocument).recentlyExportedDiskURLs = []
         }
     }
@@ -490,7 +516,8 @@ extension MyController {
         var archive: ArchiveProxy?
         
         // Convert inserted disk to D64 archive
-        guard let d64archive = D64Proxy.make(withDrive: c64.vc1541) else {
+        // TODO: Support second drive
+        guard let d64archive = D64Proxy.make(withDrive: c64.drive1) else {
             return false
         }
         
@@ -539,7 +566,8 @@ extension MyController {
         }
         
         // Mark disk as "not modified"
-        c64.vc1541.setModifiedDisk(false)
+        // TODO: Support second drive
+        c64.drive1.setModifiedDisk(false)
         
         // Put URL in recently used URL lists
         document.noteNewRecentlyUsedURL(url)
@@ -558,8 +586,12 @@ extension MyController {
     
     @IBAction func writeProtectAction(_ sender: Any!) {
         
-        let protected = c64.vc1541.disk.writeProtected()
-        c64.vc1541.disk.setWriteProtection(!protected)
+        let nr = driveNr(fromTagOf: sender)
+        if (nr == 1) {
+            c64.drive1.disk.toggleWriteProtection()
+        } else {
+            c64.drive2.disk.toggleWriteProtection()
+        }
     }
     
     @IBAction func drivePowerAction(_ sender: Any!) {
@@ -578,9 +610,9 @@ extension MyController {
     
     func drivePowerAction(driveNr: Int) {
         if (driveNr == 1) {
-            c64.vc1541.togglePowerSwitch();
+            c64.drive1.togglePowerSwitch()
         } else {
-            // TODO: SECOND DRIVE
+            c64.drive2.togglePowerSwitch()
         }
     }
     
@@ -795,7 +827,7 @@ extension MyController {
             targetSelf in targetSelf.traceVC1541CpuAction(sender)
         }
         
-        c64.vc1541.cpu.setTracing(!c64.vc1541.cpu.tracing())
+        c64.drive1.cpu.setTracing(!c64.drive1.cpu.tracing())
     }
   
     @IBAction func traceViaAction(_ sender: Any!) {
@@ -804,8 +836,8 @@ extension MyController {
             targetSelf in targetSelf.traceViaAction(sender)
         }
         
-        c64.vc1541.via1.setTracing(!c64.vc1541.via1.tracing())
-        c64.vc1541.via2.setTracing(!c64.vc1541.via2.tracing())
+        c64.drive1.via1.setTracing(!c64.drive1.via1.tracing())
+        c64.drive1.via2.setTracing(!c64.drive1.via2.tracing())
     }
     
     @IBAction func dumpC64(_ sender: Any!) { c64.dump() }
@@ -815,11 +847,11 @@ extension MyController {
     @IBAction func dumpC64VIC(_ sender: Any!) { c64.vic.dump() }
     @IBAction func dumpC64SID(_ sender: Any!) { c64.sid.dump() }
     @IBAction func dumpC64Memory(_ sender: Any!) { c64.mem.dump() }
-    @IBAction func dumpVC1541(_ sender: Any!) { c64.vc1541.dump() }
-    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.vc1541.dump() }
-    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.via1.dump() }
-    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.vc1541.via2.dump() }
-    @IBAction func dumpDisk(_ sender: Any!) { c64.vc1541.disk.dump() }
+    @IBAction func dumpVC1541(_ sender: Any!) { c64.drive1.dump() }
+    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.drive1.dump() }
+    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.drive1.via1.dump() }
+    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.drive1.via2.dump() }
+    @IBAction func dumpDisk(_ sender: Any!) { c64.drive1.disk.dump() }
     @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump() }
     @IBAction func dumpC64JoystickA(_ sender: Any!) { c64.port1.dump() }
     @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.port2.dump(); gamePadManager.listDevices()}

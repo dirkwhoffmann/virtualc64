@@ -91,12 +91,14 @@ class ArchiveMountController : UserDialogController {
         track()
         
         // Insert archive as disk
-        parent.changeDisk(archive)
+        // TODO: Let the user choose between drive 1 and 2
+        parent.changeDisk(archive, driveNr: 1)
         parent.metalScreen.rotateBack()
 
         // Set write protection
         let value = protect.integerValue
-        c64.vc1541.setWriteProtection(value != 0)
+        // TODO: Let the user choose between drive 1 and 2
+        c64.drive1.setWriteProtection(value != 0)
         
         hideSheet()
     }

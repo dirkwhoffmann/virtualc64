@@ -32,7 +32,7 @@ struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 struct Via6522Wrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
-struct Vc1541Wrapper { VC1541 *vc1541; };
+struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct ContainerWrapper { File *container; };
 
@@ -427,6 +427,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->disk->dumpState(); }
 - (BOOL)writeProtected { return wrapper->disk->isWriteProtected(); }
 - (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
+- (void)toggleWriteProtection { wrapper->disk->toggleWriteProtection(); }
 // - (BOOL)modified { return wrapper->disk->isModified(); }
 // - (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
 - (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
@@ -481,15 +482,15 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @synthesize wrapper, cpu, via1, via2, disk;
 
-- (instancetype) initWithVC1541:(VC1541 *)vc1541
+- (instancetype) initWithVC1541:(VC1541 *)drive
 {
     if (self = [super init]) {
-        wrapper = new Vc1541Wrapper();
-        wrapper->vc1541 = vc1541;
-        cpu = [[CPUProxy alloc] initWithCPU:&vc1541->cpu];
-        via1 = [[VIAProxy alloc] initWithVIA:&vc1541->via1];
-        via2 = [[VIAProxy alloc] initWithVIA:&vc1541->via2];
-        disk = [[DiskProxy alloc] initWithDisk525:&vc1541->disk];
+        wrapper = new DriveWrapper();
+        wrapper->drive = drive;
+        cpu = [[CPUProxy alloc] initWithCPU:&drive->cpu];
+        via1 = [[VIAProxy alloc] initWithVIA:&drive->via1];
+        via2 = [[VIAProxy alloc] initWithVIA:&drive->via2];
+        disk = [[DiskProxy alloc] initWithDisk525:&drive->disk];
     }
     return self;
 }
@@ -506,46 +507,47 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 	}
 }
 
-- (void) dump { wrapper->vc1541->dumpState(); }
-- (BOOL) tracing { return wrapper->vc1541->tracingEnabled(); }
-- (void) setTracing:(BOOL)b { b ? wrapper->vc1541->startTracing() : wrapper->vc1541->stopTracing(); }
+- (void) dump { wrapper->drive->dumpState(); }
+- (BOOL) tracing { return wrapper->drive->tracingEnabled(); }
+- (void) setTracing:(BOOL)b { b ? wrapper->drive->startTracing() : wrapper->drive->stopTracing(); }
 
-- (BOOL) isPoweredOn { return wrapper->vc1541->isPoweredOn(); }
-- (void) powerOn { wrapper->vc1541->powerOn(); }
-- (void) powerOff { wrapper->vc1541->powerOff(); }
-- (void) togglePowerSwitch { wrapper->vc1541->togglePowerSwitch(); }
+- (BOOL) isPoweredOn { return wrapper->drive->isPoweredOn(); }
+- (void) powerOn { wrapper->drive->powerOn(); }
+- (void) powerOff { wrapper->drive->powerOff(); }
+- (void) togglePowerSwitch { wrapper->drive->togglePowerSwitch(); }
 
-- (BOOL) redLED { return wrapper->vc1541->getRedLED(); }
-- (BOOL) hasDisk { return wrapper->vc1541->hasDisk(); }
-- (BOOL) hasModifiedDisk {return wrapper->vc1541->hasModifiedDisk(); }
-- (void) setModifiedDisk:(BOOL)b { wrapper->vc1541->setModifiedDisk(b); }
-- (void) prepareToInsert { wrapper->vc1541->prepareToInsert(); }
+- (BOOL) redLED { return wrapper->drive->getRedLED(); }
+- (BOOL) hasDisk { return wrapper->drive->hasDisk(); }
+- (BOOL) hasModifiedDisk {return wrapper->drive->hasModifiedDisk(); }
+- (void) setModifiedDisk:(BOOL)b { wrapper->drive->setModifiedDisk(b); }
+- (void) prepareToInsert { wrapper->drive->prepareToInsert(); }
 - (void) insertDisk:(ArchiveProxy *)disk {
     Archive *archive = (Archive *)([disk wrapper]->container);
-    wrapper->vc1541->insertDisk(archive);
+    wrapper->drive->insertDisk(archive);
 }
-- (void) prepareToEject { wrapper->vc1541->prepareToEject(); }
-- (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
-- (BOOL) writeProtected { return wrapper->vc1541->disk.isWriteProtected(); }
-- (void) setWriteProtection:(BOOL)b { wrapper->vc1541->disk.setWriteProtection(b); }
-- (BOOL) sendSoundMessages { return wrapper->vc1541->soundMessagesEnabled(); }
-- (void) setSendSoundMessages:(BOOL)b { wrapper->vc1541->setSendSoundMessages(b); }
-- (Halftrack) halftrack { return wrapper->vc1541->getHalftrack(); }
-- (void) setTrack:(Track)t { wrapper->vc1541->setTrack(t); }
-- (void) setHalftrack:(Halftrack)ht { wrapper->vc1541->setHalftrack(ht); }
-- (uint16_t) sizeOfCurrentHalftrack { return wrapper->vc1541->sizeOfCurrentHalftrack(); }
-- (uint16_t) offset { return wrapper->vc1541->getOffset(); }
-- (void) setOffset:(uint16_t)value { wrapper->vc1541->setOffset(value); }
-- (uint8_t) readBitFromHead { return wrapper->vc1541->readBitFromHead(); }
-- (void) writeBitToHead:(uint8_t)value { wrapper->vc1541->writeBitToHead(value); }
+- (void) prepareToEject { wrapper->drive->prepareToEject(); }
+- (void) ejectDisk { wrapper->drive->ejectDisk(); }
+- (BOOL) writeProtected { return wrapper->drive->disk.isWriteProtected(); }
+- (void) setWriteProtection:(BOOL)b { wrapper->drive->disk.setWriteProtection(b); }
+- (BOOL) hasWriteProtectedDisk { return wrapper->drive->hasWriteProtectedDisk(); }
+- (BOOL) sendSoundMessages { return wrapper->drive->soundMessagesEnabled(); }
+- (void) setSendSoundMessages:(BOOL)b { wrapper->drive->setSendSoundMessages(b); }
+- (Halftrack) halftrack { return wrapper->drive->getHalftrack(); }
+- (void) setTrack:(Track)t { wrapper->drive->setTrack(t); }
+- (void) setHalftrack:(Halftrack)ht { wrapper->drive->setHalftrack(ht); }
+- (uint16_t) sizeOfCurrentHalftrack { return wrapper->drive->sizeOfCurrentHalftrack(); }
+- (uint16_t) offset { return wrapper->drive->getOffset(); }
+- (void) setOffset:(uint16_t)value { wrapper->drive->setOffset(value); }
+- (uint8_t) readBitFromHead { return wrapper->drive->readBitFromHead(); }
+- (void) writeBitToHead:(uint8_t)value { wrapper->drive->writeBitToHead(value); }
 
-- (void) moveHeadUp { wrapper->vc1541->moveHeadUp(); }
-- (void) moveHeadDown { wrapper->vc1541->moveHeadDown(); }
-- (BOOL) isRotating { return wrapper->vc1541->isRotating(); }
-- (void) rotateDisk { wrapper->vc1541->rotateDisk(); }
-- (void) rotateBack { wrapper->vc1541->rotateBack(); }
+- (void) moveHeadUp { wrapper->drive->moveHeadUp(); }
+- (void) moveHeadDown { wrapper->drive->moveHeadDown(); }
+- (BOOL) isRotating { return wrapper->drive->isRotating(); }
+- (void) rotateDisk { wrapper->drive->rotateDisk(); }
+- (void) rotateBack { wrapper->drive->rotateBack(); }
 
-- (BOOL) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
+- (BOOL) exportToD64:(NSString *)path { return wrapper->drive->exportToD64([path UTF8String]); }
 
 @end
 
@@ -591,7 +593,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     AudioEngine *audioEngine;
 }
 
-@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
+@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec;
+@synthesize drive1, drive2, expansionport, datasette;
 @synthesize port1, port2;
 
 - (instancetype) init
@@ -617,7 +620,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     port2 = [[ControlPortProxy alloc] initWithJoystick:&c64->port2];
     iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
-	vc1541 = [[DriveProxy alloc] initWithVC1541:&c64->drive1];
+	drive1 = [[DriveProxy alloc] initWithVC1541:&c64->drive1];
+    drive2 = [[DriveProxy alloc] initWithVC1541:&c64->drive2];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     
     // Initialize audio interface
@@ -1264,7 +1268,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithDrive:(DriveProxy *)drive
 {
-    D64Archive *archive = [drive wrapper]->vc1541->convertToD64();
+    D64Archive *archive = [drive wrapper]->drive->convertToD64();
     return [self make: archive];
 }
 @end

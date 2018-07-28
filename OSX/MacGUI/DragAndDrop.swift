@@ -94,7 +94,7 @@ public extension MetalView {
             guard let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) else {
                 return false
             }
-            if document.proceedWithUnsavedDisk() {
+            if document.proceedWithUnsavedDisks() {
                 controller.c64.flash(snapshot)
                 return true
             } else {

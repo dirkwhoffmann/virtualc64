@@ -205,6 +205,9 @@ public:
     //! @brief Sets write protection flag
     void setWriteProtection(bool b) { writeProtected = b; }
 
+    //! @brief Toggles the write protection flag
+    void toggleWriteProtection() { writeProtected = !writeProtected; }
+
     //! @brief Returns modified flag
     bool isModified() { return modified; }
     

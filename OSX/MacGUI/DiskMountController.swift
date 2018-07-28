@@ -107,7 +107,8 @@ class DiskMountController : UserDialogController {
         NSLog("OK Action")
         
         // Insert archive as disk
-        parent.changeDisk(archive)
+        // TODO: Let the user the target drive
+        parent.changeDisk(archive, driveNr: 1)
         parent.metalScreen.rotateBack()
         
         hideSheet()

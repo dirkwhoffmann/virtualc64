@@ -578,7 +578,7 @@ extension MyController {
         case MSG_VC1541_ATTACHED_SOUND:
             
             // Not sure about the copyright of the following sound:
-            // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
+            // playSound:@"1541_power_on_0" volume:0.2];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
             break
@@ -586,27 +586,27 @@ extension MyController {
         case MSG_VC1541_DETACHED_SOUND:
             
             // Not sure about the copyright of the following sound:
-            // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+            // playSound:@"1541_track_change_0" volume:0.6];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
             break
     
         case MSG_VC1541_DISK_SOUND:
             
-            // [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
+            // playSound:@"1541_door_closed_2" volume:0.2];
             playSound(name: "drive_snatch_uae", volume: 0.1)
             break
             
         case MSG_VC1541_NO_DISK_SOUND:
             
-            // [[c64 vc1541] playSound:@"1541_door_open_1" volume:0.2];
+            // playSound:@"1541_door_open_1" volume:0.2];
             playSound(name: "drive_snatch_uae", volume: 0.1)
             break
             
         case MSG_VC1541_HEAD_UP_SOUND:
             
             // Not sure about the copyright of the following sound:
-            // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+            // playSound:@"1541_track_change_0" volume:0.6];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
             break
@@ -614,7 +614,7 @@ extension MyController {
         case MSG_VC1541_HEAD_DOWN_SOUND:
             
             // Not sure about the copyright of the following sound:
-            // [[c64 vc1541] playSound:@"1541_track_change_2" volume:1.0];
+            // playSound:@"1541_track_change_2" volume:1.0];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
             break
@@ -683,10 +683,12 @@ extension MyController {
             break
     
         case MSG_IEC_BUS_BUSY:
-            if c64.vc1541.isRotating() {
+            if c64.drive1.isRotating() {
                 progress1.startAnimation(self)
             }
-            // TODO: Second drive progress2.startAnimation(self)
+            if c64.drive2.isRotating() {
+                progress2.startAnimation(self)
+            }
             break
     
         case MSG_IEC_BUS_IDLE:
@@ -795,7 +797,8 @@ extension MyController {
             
         case T64_CONTAINER, D64_CONTAINER,
              PRG_CONTAINER, P00_CONTAINER:
-                changeDisk(item)
+            // TODO: Use insertDisk for these attachments in future
+            changeDisk(item, driveNr: 1)
             return true
             
         default:
@@ -808,23 +811,26 @@ extension MyController {
     
     // Emulates changing a disk including the necessary light barrier breaks
     // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: ContainerProxy?) {
+    func changeDisk(_ disk: ContainerProxy?, driveNr: Int) {
         
+        precondition(driveNr == 1 || driveNr == 2)
+        let drive = (driveNr == 1) ? c64.drive1! : c64.drive2!
+
         DispatchQueue.global().async {
             
             // Remove old disk if present
-            if self.c64.vc1541.hasDisk() {
+            if drive.hasDisk() {
 
-                self.c64.vc1541.prepareToEject()
+                drive.prepareToEject()
                 usleep(300000)
-                self.c64.vc1541.ejectDisk()
+                drive.ejectDisk()
             }
             
             // Insert new disk if provided
             if disk != nil {
-                self.c64.vc1541.prepareToInsert()
+                drive.prepareToInsert()
                 usleep(300000)
-                self.c64.vc1541.insertDisk(disk as! ArchiveProxy)
+                drive.insertDisk(disk as! ArchiveProxy)
             }
         }
     }

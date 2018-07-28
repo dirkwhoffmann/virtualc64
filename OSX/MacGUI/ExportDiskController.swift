@@ -36,7 +36,8 @@ class ExportDiskController : UserDialogController {
         
         
         // Convert inserted disk to D64 archive
-        d64archive = D64Proxy.make(withDrive: c64.vc1541)
+        // TODO: Only the first drive is exported which is wrong
+        d64archive = D64Proxy.make(withDrive: c64.drive1)
         
         // Create save panel
         savePanel = NSSavePanel()

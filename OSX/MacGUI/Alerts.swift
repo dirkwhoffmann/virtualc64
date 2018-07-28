@@ -63,9 +63,27 @@ extension MyDocument {
         return alert.runModal()
     }
     
-    func proceedWithUnsavedDisk() -> Bool {
+    func proceedWithUnsavedDisk(driveNr: Int) -> Bool {
         
-        if c64.vc1541.hasModifiedDisk() {
+        precondition(driveNr == 1 || driveNr == 2)
+        
+        let modified = (driveNr == 1) ?
+            c64.drive1.hasModifiedDisk() :
+            c64.drive2.hasModifiedDisk()
+
+        if modified {
+            return showDiskIsUnsafedAlert() == .alertFirstButtonReturn
+        } else {
+            return true
+        }
+    }
+    
+    /// Same as proceedWithUnsavedDisk, but both drives are checked
+    func proceedWithUnsavedDisks() -> Bool {
+    
+        let modified = c64.drive1.hasModifiedDisk() || c64.drive2.hasModifiedDisk()
+        
+        if modified {
             return showDiskIsUnsafedAlert() == .alertFirstButtonReturn
         } else {
             return true
@@ -145,9 +163,9 @@ extension MyController {
         alert.runModal()
     }
     
-    func proceedWithUnsavedDisk() -> Bool {
+    func proceedWithUnsavedDisk(driveNr: Int) -> Bool {
         
         let document = self.document as! MyDocument
-        return document.proceedWithUnsavedDisk()
+        return document.proceedWithUnsavedDisk(driveNr: driveNr)
     }
 }
