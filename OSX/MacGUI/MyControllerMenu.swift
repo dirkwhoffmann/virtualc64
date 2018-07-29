@@ -18,7 +18,9 @@ extension MyController {
     
         func validateURLlist(_ list : [URL], image: String) -> Bool {
             
-            if let url = mydocument.getRecentlyUsedURL(item.tag, from: list) {
+            let pos = (item.tag < 10) ? item.tag : item.tag - 10
+            
+            if let url = mydocument.getRecentlyUsedURL(pos, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: NSImage.Name(rawValue: image))
@@ -50,22 +52,14 @@ extension MyController {
         }
  
         // Drive menu
-        if item.action == #selector(MyController.newDiskAction(_:)) {
-            // return firstDrive() ? c64.drive1.isPoweredOn() : c64.drive2.isPoweredOn()
-            return true
-        }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
             return validateURLlist(mydocument.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
-            return firstDrive() ?
-                c64.drive1.hasDisk() :
-                c64.drive2.hasDisk()
+            return firstDrive() ? c64.drive1.hasDisk() : c64.drive2.hasDisk()
         }
         if item.action == #selector(MyController.exportDiskAction(_:)) {
-            return firstDrive() ?
-                c64.drive1.hasDisk() :
-                c64.drive2.hasDisk()
+            return firstDrive() ? c64.drive1.hasDisk() : c64.drive2.hasDisk()
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             if item.tag < 10 {
