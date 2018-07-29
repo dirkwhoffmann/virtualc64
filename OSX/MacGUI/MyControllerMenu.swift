@@ -63,8 +63,10 @@ extension MyController {
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
             if item.tag < 10 {
+                track("\(mydocument.recentlyExportedDisk1URLs)")
                 return validateURLlist(mydocument.recentlyExportedDisk1URLs, image: "disk_small")
             } else {
+                track("\(mydocument.recentlyExportedDisk2URLs)")
                 return validateURLlist(mydocument.recentlyExportedDisk2URLs, image: "disk_small")
             }
         }
@@ -456,12 +458,12 @@ extension MyController {
         var tag = (sender as! NSMenuItem).tag
         
         // Extract drive number from tag
-        var driveNr: Int
-        if tag < 10 { driveNr = 1 } else { driveNr = 2; tag -= 10 }
-        
+        let nr = (tag < 10) ? 1 : 2
+        tag = (tag < 10) ? tag : tag - 10
+       
         // Get URL and export
-        if let url = mydocument.getRecentlyExportedDiskURL(tag, driveNr: driveNr) {
-            mydocument.export(driveNr: driveNr, to: url)
+        if let url = mydocument.getRecentlyExportedDiskURL(tag, drive: nr) {
+            mydocument.export(drive: nr, to: url)
         }
     }
     
@@ -495,9 +497,12 @@ extension MyController {
     
     @IBAction func exportDiskAction(_ sender: Any!) {
 
+        let nr = (sender as! NSMenuItem).tag
+        precondition(nr == 1 || nr == 2)
+        
         let nibName = NSNib.Name(rawValue: "ExportDiskDialog")
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
-        exportPanel.showSheet(withParent: self)
+        exportPanel.showSheet(withParent: self, drive: nr)
     }
      
     @IBAction func writeProtectAction(_ sender: Any!) {

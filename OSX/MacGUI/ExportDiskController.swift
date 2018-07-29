@@ -12,12 +12,13 @@ class ExportDiskController : UserDialogController {
     @IBOutlet weak var button: NSPopUpButton!
     var type: ContainerType = D64_CONTAINER
     var savePanel: NSSavePanel!
-    var d64archive: D64Proxy!
+    // var d64archive: D64Proxy!
     var selectedURL: URL?
     
     override func awakeFromNib() {
         
         // Export format PRG and P00 will only be available if disk is not empty
+        /*
         let items = d64archive.numberOfItems()
         if items == 0 {
             track()
@@ -25,18 +26,19 @@ class ExportDiskController : UserDialogController {
             button.item(at: 2)?.isHidden = true // PRG
             button.item(at: 3)?.isHidden = true // P00
         }
+        */
     }
     
-    func showSheet(withParent: MyController, driveNr: Int) {
+    func showSheet(withParent: MyController, drive nr: Int) {
+        
+        precondition(nr == 1 || nr == 2)
         
         parent = withParent
         parentWindow = parent.window
         c64 = parent.mydocument.c64
        
-        // let document = parent.document as! MyDocument
-        
         // Convert inserted disk to D64 archive
-        d64archive = D64Proxy.make(withDrive: c64.drive(driveNr))
+        // d64archive = D64Proxy.make(withDrive: c64.drive(driveNr))
         
         // Create save panel
         savePanel = NSSavePanel()
@@ -49,7 +51,7 @@ class ExportDiskController : UserDialogController {
         // Run panel as sheet
         savePanel.beginSheetModal(for: parent.window!, completionHandler: { result in
             if result == .OK {
-                self.parent.mydocument.export(driveNr: driveNr, to: self.savePanel.url)
+                self.parent.mydocument.export(drive: nr, to: self.savePanel.url)
             }
         })
     }

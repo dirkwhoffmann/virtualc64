@@ -105,37 +105,37 @@ class MyDocument : NSDocument {
         }
     }
     
-    func getRecentlyUsedURL(_ nr: Int, from list: [URL]) -> URL? {
-        return (nr < list.count) ? list[nr] : nil
+    func getRecentlyUsedURL(_ pos: Int, from list: [URL]) -> URL? {
+        return (pos < list.count) ? list[pos] : nil
     }
     
     func noteNewRecentlyInsertedDiskURL(_ url: URL) {
         noteRecentlyUsedURL(url, to: &recentlyInsertedDiskURLs, size: 10)
     }
  
-    func getRecentlyInsertedDiskURL(_ nr: Int) -> URL? {
-        return getRecentlyUsedURL(nr, from: recentlyInsertedDiskURLs)
+    func getRecentlyInsertedDiskURL(_ pos: Int) -> URL? {
+        return getRecentlyUsedURL(pos, from: recentlyInsertedDiskURLs)
     }
     
-    func noteNewRecentlyExportedDiskURL(_ url: URL, driveNr: Int) {
+    func noteNewRecentlyExportedDiskURL(_ url: URL, drive nr: Int) {
 
-        precondition(driveNr == 1 || driveNr == 2)
+        precondition(nr == 1 || nr == 2)
         
-        if (driveNr == 1) {
+        if (nr == 1) {
             noteRecentlyUsedURL(url, to: &recentlyExportedDisk1URLs, size: 1)
         } else {
             noteRecentlyUsedURL(url, to: &recentlyExportedDisk2URLs, size: 1)
         }
     }
 
-    func getRecentlyExportedDiskURL(_ nr: Int, driveNr: Int) -> URL? {
+    func getRecentlyExportedDiskURL(_ pos: Int, drive nr: Int) -> URL? {
         
-        precondition(driveNr == 1 || driveNr == 2)
+        precondition(nr == 1 || nr == 2)
         
-        if (driveNr == 1) {
-            return getRecentlyUsedURL(nr, from: recentlyExportedDisk1URLs)
+        if (nr == 1) {
+            return getRecentlyUsedURL(pos, from: recentlyExportedDisk1URLs)
         } else {
-            return getRecentlyUsedURL(nr, from: recentlyExportedDisk2URLs)
+            return getRecentlyUsedURL(pos, from: recentlyExportedDisk2URLs)
         }
     }
    
@@ -154,16 +154,16 @@ class MyDocument : NSDocument {
         noteRecentlyUsedURL(url, to: &recentlyInsertedTapeURLs, size: 10)
     }
 
-    func getRecentlyInsertedTapeURL(_ nr: Int) -> URL? {
-        return getRecentlyUsedURL(nr, from: recentlyInsertedTapeURLs)
+    func getRecentlyInsertedTapeURL(_ pos: Int) -> URL? {
+        return getRecentlyUsedURL(pos, from: recentlyInsertedTapeURLs)
     }
     
     func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
         noteRecentlyUsedURL(url, to: &recentlyAttachedCartridgeURLs, size: 10)
     }
   
-    func getRecentlyAtachedCartridgeURL(_ nr: Int) -> URL? {
-        return getRecentlyUsedURL(nr, from: recentlyAttachedCartridgeURLs)
+    func getRecentlyAtachedCartridgeURL(_ pos: Int) -> URL? {
+        return getRecentlyUsedURL(pos, from: recentlyAttachedCartridgeURLs)
     }
     
     func noteNewRecentlyUsedURL(_ url: URL) {
@@ -570,11 +570,11 @@ class MyDocument : NSDocument {
     // Exporting disks
     //
     
-    func export(driveNr: Int, to url: URL, ofType typeName: String) -> Bool {
+    func export(drive nr: Int, to url: URL, ofType typeName: String) -> Bool {
         
         precondition(["D64", "T64", "PRG", "P00"].contains(typeName))
         
-        let drive = c64.drive(driveNr)!
+        let drive = c64.drive(nr)!
         
         // Convert disk to a D64 archive
         guard let d64archive = D64Proxy.make(withDrive: drive) else {
@@ -624,15 +624,15 @@ class MyDocument : NSDocument {
         drive.setModifiedDisk(false)
         
         // Remember export URL
-        noteNewRecentlyExportedDiskURL(url, driveNr: driveNr)
+        noteNewRecentlyExportedDiskURL(url, drive: nr)
         return true
     }
     
     @discardableResult
-    func export(driveNr: Int, to url: URL?) -> Bool {
+    func export(drive nr: Int, to url: URL?) -> Bool {
         
         if let suffix = url?.pathExtension {
-            return export(driveNr: driveNr, to: url!, ofType: suffix)
+            return export(drive: nr, to: url!, ofType: suffix)
         } else {
             return false
         }
