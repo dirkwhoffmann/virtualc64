@@ -90,12 +90,17 @@ bool IEC::_updateIecLines()
     bool oldClockLine = clockLine;
     bool oldDataLine = dataLine;
     
-    // Get bus signals from device side
-    // TODO: Second drive
-    uint8_t deviceBits = c64->drive1.via1.getPB();
-    bool deviceAtn = !!(deviceBits & 0x10);
-    bool deviceClock = !!(deviceBits & 0x08);
-    bool deviceData = !!(deviceBits & 0x02);
+    // Get bus signals from drive 1
+    uint8_t device1Bits = c64->drive1.via1.getPB();
+    bool device1Atn = !!(device1Bits & 0x10);
+    bool device1Clock = !!(device1Bits & 0x08);
+    bool device1Data = !!(device1Bits & 0x02);
+
+    // Get bus signals from drive 2
+    uint8_t device2Bits = c64->drive2.via1.getPB();
+    bool device2Atn = !!(device2Bits & 0x10);
+    bool device2Clock = !!(device2Bits & 0x08);
+    bool device2Data = !!(device2Bits & 0x02);
 
     // Get bus signals from c64 side
     uint8_t ciaBits = c64->cia2.PA;
@@ -105,8 +110,8 @@ bool IEC::_updateIecLines()
     
     // Compute bus signals (inverted and "wired AND")
     atnLine = !ciaAtn;
-    clockLine = !deviceClock && !ciaClock;
-    dataLine = !deviceData && !ciaData;
+    clockLine = !device1Clock && !device2Clock && !ciaClock;
+    dataLine = !device1Data && !device2Data && !ciaData;
     
     // Auto-acknowdlege logic
     
@@ -132,8 +137,9 @@ bool IEC::_updateIecLines()
      *    dataLine &= ub1;
      * }
     */
-    dataLine &= c64->drive1.isPoweredOff() || (atnLine ^ deviceAtn);
-    
+    dataLine &= c64->drive1.isPoweredOff() || (atnLine ^ device1Atn);
+    dataLine &= c64->drive2.isPoweredOff() || (atnLine ^ device2Atn);
+
     isDirty = false;
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||

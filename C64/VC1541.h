@@ -260,6 +260,11 @@ public:
     //! @functiongroup Working with the drive
     //
 
+    //! @brief    Returns the device number
+    /*! @return   0 for the first drive, 1 for the second.
+     */
+    unsigned getDeviceNr() { return deviceNr; }
+    
     //! @brief    Returns true iff the drive is powered on.
     bool isPoweredOn() { return poweredOn; }
 

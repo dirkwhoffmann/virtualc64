@@ -928,7 +928,10 @@ VIA1::portBexternal()
     (c64->iec.dataLine ? 0x00 : 0x01);
     
     external |= 0x1A; // All "out" pins are read as 1
-    external &= 0x9F; // Device address 8
+    
+    if (drive->getDeviceNr() == 2) {
+        external |= 0x20; /* device number 9 */
+    }
     
     return external;
 }
