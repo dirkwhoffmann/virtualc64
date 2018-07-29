@@ -14,7 +14,10 @@ class DiskInspectorController : UserDialogController {
     let monoFont = NSFont.monospacedDigitSystemFont(ofSize: 11.0, weight: .medium)
     let monoLarge = NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: .medium)
 
-    // The currently analyzed drive
+    // Number of the currently analyzed drive
+    var driveNr = 1
+
+    // Proxy of the currently analyzed drive
     var drive: DriveProxy!
     
     // Remembers the currently displayed halftrack number
@@ -63,9 +66,12 @@ class DiskInspectorController : UserDialogController {
     @IBOutlet weak var gcrView: NSScrollView!
     @IBOutlet weak var sectorView: NSTableView!
     @IBOutlet weak var errorView: NSTableView!
+    @IBOutlet weak var drive1: NSButton!
+    @IBOutlet weak var drive2: NSButton!
 
     override public func awakeFromNib() {
         
+        driveNr = 1
         drive = c64.drive1
         refresh()
     
@@ -80,6 +86,9 @@ class DiskInspectorController : UserDialogController {
     /// Updates dirty GUI elements
     func refresh() {
         
+        drive1.state = (driveNr == 1) ? .on : .off
+        drive2.state = (driveNr == 2) ? .on : .off
+
         // Enable or disable user edition
         if drive.hasDisk() {
             headField.isEnabled = !drive.isRotating()
@@ -253,6 +262,13 @@ class DiskInspectorController : UserDialogController {
     // Action methods
     //
 
+    @IBAction func selectDriveAction(_ sender: Any!) {
+    
+        driveNr = (sender as! NSButton).tag
+        drive = c64.drive(driveNr)
+        refresh()
+    }
+    
     func _trackAction(_ t: Track) {
         
         let track = (t > maxNumberOfTracks) ? maxNumberOfTracks : (t < 1) ? 1 : t
@@ -264,8 +280,6 @@ class DiskInspectorController : UserDialogController {
     
     @IBAction func trackAction(_ sender: Any!) {
         
-        // let t = (sender as! NSTextField).integerValue
-        // _trackAction(Track(t))
         let ht = (sender as! NSTextField).doubleValue * 2 - 1
         _halftrackAction(Halftrack(ht))
     }
