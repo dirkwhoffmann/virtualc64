@@ -354,14 +354,16 @@ class MyDocument : NSDocument {
     @discardableResult
     func insertAttachmentAsDisk(drive nr: Int) -> Bool {
         
-        let parent = windowForSheet!.windowController as! MyController
-        
-        guard let archive = attachment as? ArchiveProxy else {
-            return false
+        if let archive = attachment as? ArchiveProxy {
+           
+            if proceedWithUnexportedDisk(drive: nr) {
+             
+                let parent = windowForSheet!.windowController as! MyController
+                parent.changeDisk(archive, drive: nr)
+                return true;
+            }
         }
-  
-        parent.changeDisk(archive, drive: nr)
-        return true
+        return false
     }
     
     /**

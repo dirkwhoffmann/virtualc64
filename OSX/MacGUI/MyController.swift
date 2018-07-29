@@ -824,6 +824,12 @@ extension MyController {
 
         DispatchQueue.global().async {
             
+            // For a better user experience, we switch on automatically
+            // when a disk is inserted.
+            if disk != nil {
+                self.c64.drive(nr).powerOn()
+            }
+            
             // Remove old disk if present
             if drive.hasDisk() {
                 drive.prepareToEject()

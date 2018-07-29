@@ -51,9 +51,8 @@ extension MyController {
  
         // Drive menu
         if item.action == #selector(MyController.newDiskAction(_:)) {
-            return firstDrive() ?
-                c64.drive1.isPoweredOn() :
-                c64.drive2.isPoweredOn()
+            // return firstDrive() ? c64.drive1.isPoweredOn() : c64.drive2.isPoweredOn()
+            return true
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
             return validateURLlist(mydocument.recentlyInsertedDiskURLs, image: "disk_small")
@@ -305,7 +304,6 @@ extension MyController {
     // Action methods (Keyboard menu)
     //
 
-
     @IBAction func mapKeysByPositionAction(_ sender: Any!) {
         
         track()
@@ -398,14 +396,11 @@ extension MyController {
     @IBAction func newDiskAction(_ sender: Any!) {
         
         let tag = (sender as! NSMenuItem).tag
+        let emptyArchive = ArchiveProxy.make()
         
-        if proceedWithUnexportedDisk(drive: tag) {
-            
-            let emptyArchive = ArchiveProxy.make()
-            let newDisk = D64Proxy.make(withAnyArchive: emptyArchive)
-            changeDisk(newDisk, drive: tag)
-            mydocument.clearRecentlyExportedDiskURLs(drive: tag)
-        }
+        mydocument.attachment = D64Proxy.make(withAnyArchive: emptyArchive)
+        mydocument.insertAttachmentAsDisk(drive: tag)
+        mydocument.clearRecentlyExportedDiskURLs(drive: tag)
     }
     
     @IBAction func insertDiskAction(_ sender: Any!) {
