@@ -18,9 +18,8 @@ class UserDialogController : NSWindowController
         
         track()
         parent = controller
-        // mydocument = parent.document as! MyDocument
         parentWindow = parent.window
-        c64 = (parent.document as! MyDocument).c64
+        c64 = parent.mydocument.c64
 
         parentWindow.beginSheet(window!, completionHandler: { result in
             if result == NSApplication.ModalResponse.OK {

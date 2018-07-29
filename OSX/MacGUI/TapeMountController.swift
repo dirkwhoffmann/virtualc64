@@ -19,8 +19,7 @@ class TapeMountController : UserDialogController {
                    completionHandler:(() -> Void)? = nil) {
         
         track()
-        let document = controller.document as! MyDocument
-        tape = document.attachment as! TAPProxy
+        tape = controller.mydocument.attachment as! TAPProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     

@@ -51,72 +51,60 @@ public extension MetalView {
 extension MyDocument {
     
     @discardableResult
-    func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {
+    func showDiskIsUnexportedAlert(drive nr: Int) -> NSApplication.ModalResponse {
        
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "The current disk contains modified data."
+        alert.messageText = "Drive \(nr) contains an unexported disk."
         alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()
     }
     
-    func proceedWithUnsavedDisk(driveNr: Int) -> Bool {
+    @discardableResult
+    func showDiskIsUnexportedAlert() -> NSApplication.ModalResponse {
         
-        precondition(driveNr == 1 || driveNr == 2)
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.messageText = "Drive 1 and 2 contain unexported disks."
+        alert.informativeText = "Your changes will be lost if you proceed."
+        alert.addButton(withTitle: "Proceed")
+        alert.addButton(withTitle: "Cancel")
+        return alert.runModal()
+    }
+    
+    func proceedWithUnexportedDisk(drive nr: Int) -> Bool {
         
-        let modified = (driveNr == 1) ?
+        precondition(nr == 1 || nr == 2)
+        
+        let modified = (nr == 1) ?
             c64.drive1.hasModifiedDisk() :
             c64.drive2.hasModifiedDisk()
 
         if modified {
-            return showDiskIsUnsafedAlert() == .alertFirstButtonReturn
+            return showDiskIsUnexportedAlert(drive: nr) == .alertFirstButtonReturn
         } else {
             return true
         }
     }
     
-    /// Same as proceedWithUnsavedDisk, but both drives are checked
-    func proceedWithUnsavedDisks() -> Bool {
+    func proceedWithUnexportedDisk() -> Bool {
     
-        let modified = c64.drive1.hasModifiedDisk() || c64.drive2.hasModifiedDisk()
+        let modified1 = c64.drive1.hasModifiedDisk()
+        let modified2 = c64.drive2.hasModifiedDisk()
         
-        if modified {
-            return showDiskIsUnsafedAlert() == .alertFirstButtonReturn
+        if modified1 && modified2 {
+            return showDiskIsUnexportedAlert() == .alertFirstButtonReturn
+        } else if modified1 {
+            return showDiskIsUnexportedAlert(drive: 1) == .alertFirstButtonReturn
+        } else if modified2 {
+            return showDiskIsUnexportedAlert(drive: 2) == .alertFirstButtonReturn
         } else {
             return true
         }
-    }
-}
-
-extension MyController {
-    
-    /*
-    func showDiskHasBeenExportedAlert(url: URL) {
-        
-        let path = url.path
-        let alert = NSAlert()
-        alert.alertStyle = .informational
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Disk has been exported successfully."
-        alert.informativeText = "Destination: \(path)"
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-    }
-    */
-    
-    func showExportErrorAlert(url: URL) {
-        
-        let path = url.path
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
-        alert.messageText = "Failed to export disk to file"
-        alert.informativeText = "\(path)."
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
     }
     
     func showDiskIsEmptyAlert(format: String) {
@@ -141,6 +129,21 @@ extension MyController {
         alert.runModal()
     }
     
+    func showExportErrorAlert(url: URL) {
+        
+        let path = url.path
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.icon = NSImage.init(named: NSImage.Name(rawValue: "diskette"))
+        alert.messageText = "Failed to export disk to file"
+        alert.informativeText = "\(path)."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+}
+
+extension MyController {
+    
     func userSnapshotStorageFull() {
         
         let alert = NSAlert()
@@ -163,9 +166,12 @@ extension MyController {
         alert.runModal()
     }
     
-    func proceedWithUnsavedDisk(driveNr: Int) -> Bool {
-        
-        let document = self.document as! MyDocument
-        return document.proceedWithUnsavedDisk(driveNr: driveNr)
+    func proceedWithUnexportedDisk(drive nr: Int) -> Bool {
+        return mydocument.proceedWithUnexportedDisk(drive: nr)
     }
+
+    func proceedWithUnexportedDisk() -> Bool {
+        return mydocument.proceedWithUnexportedDisk()
+    }
+
 }

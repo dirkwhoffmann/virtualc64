@@ -65,7 +65,7 @@ public extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
-        let document = controller.document as! MyDocument
+        let document = controller.mydocument
         let pasteBoard = sender.draggingPasteboard()
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return false
@@ -94,7 +94,7 @@ public extension MetalView {
             guard let snapshot = SnapshotProxy.make(withBuffer: rawPtr, length: length) else {
                 return false
             }
-            if document.proceedWithUnsavedDisks() {
+            if document.proceedWithUnexportedDisk() {
                 controller.c64.flash(snapshot)
                 return true
             } else {

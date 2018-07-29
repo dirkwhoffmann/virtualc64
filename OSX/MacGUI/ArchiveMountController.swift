@@ -28,8 +28,7 @@ class ArchiveMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        let document = controller.document as! MyDocument
-        archive = document.attachment as! ArchiveProxy
+        archive = controller.mydocument.attachment as! ArchiveProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     
@@ -91,9 +90,9 @@ class ArchiveMountController : UserDialogController {
         track()
         
         if driveSelector.selectedItem!.tag == 1 {
-            parent.changeDisk(archive, driveNr: 1)
+            parent.changeDisk(archive, drive: 1)
         } else {
-            parent.changeDisk(archive, driveNr: 2)
+            parent.changeDisk(archive, drive: 2)
         }
         
         parent.metalScreen.rotateBack()
@@ -108,12 +107,7 @@ class ArchiveMountController : UserDialogController {
         }
         
         // Flash file into memory
-        let document = parent.document as! MyDocument
-        document.flashAttachment(archive: archive, item: contents.selectedRow)
-        // c64.flash(archive, item: contents.selectedRow)
-        
-        // Type "RUN"
-        // parent.keyboardcontroller.typeOnKeyboard(string: "RUN\n", completion: nil)
+        parent.mydocument.flashAttachment(archive: archive, item: contents.selectedRow)
         
         hideSheet()
     }

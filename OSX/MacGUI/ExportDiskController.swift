@@ -27,17 +27,16 @@ class ExportDiskController : UserDialogController {
         }
     }
     
-    override func showSheet(withParent: MyController, completionHandler:(() -> Void)? = nil) {
+    func showSheet(withParent: MyController, driveNr: Int) {
         
         parent = withParent
         parentWindow = parent.window
-        let mydocument = parent.document as! MyDocument
-        c64 = mydocument.c64
-        
+        c64 = parent.mydocument.c64
+       
+        // let document = parent.document as! MyDocument
         
         // Convert inserted disk to D64 archive
-        // TODO: Only the first drive is exported which is wrong
-        d64archive = D64Proxy.make(withDrive: c64.drive1)
+        d64archive = D64Proxy.make(withDrive: c64.drive(driveNr))
         
         // Create save panel
         savePanel = NSSavePanel()
@@ -46,13 +45,11 @@ class ExportDiskController : UserDialogController {
         savePanel.title = "Export"
         savePanel.nameFieldLabel = "Export As:"
         savePanel.accessoryView = window?.contentView
-        // savePanel.canSelectHiddenExtension = true
 
         // Run panel as sheet
-        // savePanel.beginSheetModal(for: parent.window!, completionHandler: { _ in })
         savePanel.beginSheetModal(for: parent.window!, completionHandler: { result in
             if result == .OK {
-                self.parent.export(to: self.savePanel.url)
+                self.parent.mydocument.export(driveNr: driveNr, to: self.savePanel.url)
             }
         })
     }

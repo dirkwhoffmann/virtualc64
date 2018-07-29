@@ -11,8 +11,6 @@ extension MyController {
     
     override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
   
-        let document = self.document as! MyDocument
-        
         func firstDrive() -> Bool {
             precondition(item.tag == 1 || item.tag == 2)
             return item.tag == 1
@@ -20,7 +18,7 @@ extension MyController {
     
         func validateURLlist(_ list : [URL], image: String) -> Bool {
             
-            if let url = document.getRecentlyUsedURL(item.tag, from: list) {
+            if let url = mydocument.getRecentlyUsedURL(item.tag, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
                 item.image = NSImage.init(named: NSImage.Name(rawValue: image))
@@ -58,7 +56,7 @@ extension MyController {
                 c64.drive2.isPoweredOn()
         }
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
-            return validateURLlist(document.recentlyInsertedDiskURLs, image: "disk_small")
+            return validateURLlist(mydocument.recentlyInsertedDiskURLs, image: "disk_small")
         }
         if item.action == #selector(MyController.ejectDiskAction(_:)) {
             return firstDrive() ?
@@ -71,7 +69,11 @@ extension MyController {
                 c64.drive2.hasDisk()
         }
         if item.action == #selector(MyController.exportRecentDiskAction(_:)) {
-            return validateURLlist(document.recentlyExportedDiskURLs, image: "disk_small")
+            if item.tag < 10 {
+                return validateURLlist(mydocument.recentlyExportedDisk1URLs, image: "disk_small")
+            } else {
+                return validateURLlist(mydocument.recentlyExportedDisk2URLs, image: "disk_small")
+            }
         }
         if item.action == #selector(MyController.writeProtectAction(_:)) {
             let hasDisk = firstDrive() ?
@@ -93,7 +95,7 @@ extension MyController {
 
         // Tape menu
         if item.action == #selector(MyController.insertRecentTapeAction(_:)) {
-            return validateURLlist(document.recentlyInsertedTapeURLs, image: "tape_small")
+            return validateURLlist(mydocument.recentlyInsertedTapeURLs, image: "tape_small")
         }
         if item.action == #selector(MyController.ejectTapeAction(_:)) {
             return c64.datasette.hasTape()
@@ -108,7 +110,7 @@ extension MyController {
         
         // Cartridge menu
         if item.action == #selector(MyController.attachRecentCartridgeAction(_:)) {
-            return validateURLlist(document.recentlyAttachedCartridgeURLs, image: "cartridge_small")
+            return validateURLlist(mydocument.recentlyAttachedCartridgeURLs, image: "cartridge_small")
         }
         if item.action == #selector(MyController.detachCartridgeAction(_:)) {
             return c64.expansionport.cartridgeAttached()
@@ -395,18 +397,23 @@ extension MyController {
     }
     @IBAction func newDiskAction(_ sender: Any!) {
         
-        if proceedWithUnsavedDisk(driveNr: driveNr(fromTagOf: sender)) {
+        let tag = (sender as! NSMenuItem).tag
+        
+        if proceedWithUnexportedDisk(drive: tag) {
+            
             let emptyArchive = ArchiveProxy.make()
-            let emptyD64Archive = D64Proxy.make(withAnyArchive: emptyArchive)
-            mount(emptyD64Archive)
-            (document as! MyDocument).recentlyExportedDiskURLs = []
+            let newDisk = D64Proxy.make(withAnyArchive: emptyArchive)
+            changeDisk(newDisk, drive: tag)
+            mydocument.clearRecentlyExportedDiskURLs(drive: tag)
         }
     }
     
     @IBAction func insertDiskAction(_ sender: Any!) {
         
+        let tag = (sender as! NSMenuItem).tag
+        
         // Ask user to continue if the current disk contains modified data
-        if !proceedWithUnsavedDisk(driveNr: driveNr(fromTagOf: sender)) {
+        if !proceedWithUnexportedDisk(drive: tag) {
             return
         }
         
@@ -421,10 +428,9 @@ extension MyController {
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = openPanel.url {
-                    let document = self.document as! MyDocument
                     do {
-                        try document.createAttachment(from: url)
-                        document.insertAttachmentAsDisk()
+                        try self.mydocument.createAttachment(from: url)
+                        self.mydocument.insertAttachmentAsDisk(drive: tag)
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -436,26 +442,18 @@ extension MyController {
     @IBAction func insertRecentDiskAction(_ sender: Any!) {
         
         track()
-        let sender = sender as! NSMenuItem
-        var tag = sender.tag
-        let document = self.document as! MyDocument
+        var tag = (sender as! NSMenuItem).tag
         
-        // Determine drive number which is coded into the tag
-        var driveNr: Int
-        if tag < 10 {
-            driveNr = 1
-        } else {
-            driveNr = 2
-            tag -= 10
-        }
+        // Extrace drive number from tag
+        var nr: Int
+        if tag < 10 { nr = 1 } else { nr = 2; tag -= 10 }
         
         // Get URL and insert
-        if let url = document.getRecentlyInsertedDiskURL(tag) {
+        if let url = mydocument.getRecentlyInsertedDiskURL(tag) {
             do {
-                try document.createAttachment(from: url)
-                if (document.proceedWithUnsavedDisk(driveNr: driveNr)) {
-                    // TODO: Use insertDisk instead (requires drive number)
-                    document.insertAttachmentAsDisk()
+                try mydocument.createAttachment(from: url)
+                if (mydocument.proceedWithUnexportedDisk(drive: nr)) {
+                    mydocument.insertAttachmentAsDisk(drive: nr)
                 }
             } catch {
                 NSApp.presentError(error)
@@ -466,40 +464,43 @@ extension MyController {
     @IBAction func exportRecentDiskAction(_ sender: Any!) {
         
         track()
-        let sender = sender as! NSMenuItem
-        let tag = sender.tag
-        let document = self.document as! MyDocument
+        var tag = (sender as! NSMenuItem).tag
         
-        if let url = document.getRecentlyExportedDiskURL(tag) {
-            if !export(to: url) {
-                showExportErrorAlert(url: url)
-            }
+        // Extract drive number from tag
+        var driveNr: Int
+        if tag < 10 { driveNr = 1 } else { driveNr = 2; tag -= 10 }
+        
+        // Get URL and export
+        if let url = mydocument.getRecentlyExportedDiskURL(tag, driveNr: driveNr) {
+            mydocument.export(driveNr: driveNr, to: url)
         }
     }
     
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
-        (document as! MyDocument).recentlyInsertedDiskURLs = []
+        mydocument.recentlyInsertedDiskURLs = []
     }
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: Any!) {
-        (document as! MyDocument).recentlyExportedDiskURLs = []
+
+        let driveNr = (sender as! NSMenuItem).tag
+        mydocument.clearRecentlyExportedDiskURLs(drive: driveNr)
     }
 
     @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
-        (document as! MyDocument).recentlyInsertedTapeURLs = []
+        mydocument.recentlyInsertedTapeURLs = []
     }
     
     @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
-        (document as! MyDocument).recentlyAttachedCartridgeURLs = []
+        mydocument.recentlyAttachedCartridgeURLs = []
     }
     
     @IBAction func ejectDiskAction(_ sender: Any!) {
         
-        let nr = driveNr(fromTagOf: sender)
-        if proceedWithUnsavedDisk(driveNr: nr) {
-            
-            changeDisk(nil, driveNr: nr)
-            (document as! MyDocument).recentlyExportedDiskURLs = []
+        let tag = (sender as! NSMenuItem).tag
+        
+        if proceedWithUnexportedDisk(drive: tag) {
+            changeDisk(nil, drive: tag)
+            mydocument.clearRecentlyExportedDiskURLs(drive: tag)
         }
     }
     
@@ -509,81 +510,7 @@ extension MyController {
         let exportPanel = ExportDiskController.init(windowNibName: nibName)
         exportPanel.showSheet(withParent: self)
     }
- 
-    func export(to url: URL, ofType typeName: String) -> Bool {
-
-        let document = self.document as! MyDocument
-        var archive: ArchiveProxy?
-        
-        // Convert inserted disk to D64 archive
-        // TODO: Support second drive
-        guard let d64archive = D64Proxy.make(withDrive: c64.drive1) else {
-            return false
-        }
-        
-        // Convert D64 archive to target format
-        switch typeName.uppercased() {
-        case "D64":
-            track("Exporting to D64 format")
-            archive = d64archive
-            break;
-            
-        case "T64":
-            track("Exporting to T64 format")
-            archive = T64Proxy.make(withAnyArchive: d64archive)
-            break;
-            
-        case "PRG":
-            track("Exporting to PRG format")
-            if d64archive.numberOfItems() > 1  {
-                showDiskHasMultipleFilesAlert(format: "PRG")
-            }
-            archive = PRGProxy.make(withAnyArchive: d64archive)
-            break;
-            
-        case "P00":
-            track("Exporting to P00 format")
-            if d64archive.numberOfItems() > 1  {
-                showDiskHasMultipleFilesAlert(format: "P00")
-            }
-            archive = P00Proxy.make(withAnyArchive: d64archive)
-            break;
-            
-        default:
-            track("Cannot export disk to format \(typeName)")
-            return false;
-        }
-        
-        // Serialize archive
-        let data = NSMutableData.init(length: archive!.sizeOnDisk())
-        let ptr = data!.mutableBytes
-        archive!.write(toBuffer: ptr)
-        
-        // Write to file
-        if !(data!.write(to: url, atomically: true)) {
-            track("Failed to export disk (cannot write to file)");
-            return false
-        }
-        
-        // Mark disk as "not modified"
-        // TODO: Support second drive
-        c64.drive1.setModifiedDisk(false)
-        
-        // Put URL in recently used URL lists
-        document.noteNewRecentlyUsedURL(url)
-        
-        return true
-    }
-    
-    @discardableResult
-    func export(to url: URL?) -> Bool {
-        
-        if url == nil { return false }
-        
-        let suffix = url!.pathExtension
-        return export(to: url!, ofType: suffix)
-    }
-    
+     
     @IBAction func writeProtectAction(_ sender: Any!) {
         
         let nr = driveNr(fromTagOf: sender)
@@ -633,10 +560,9 @@ extension MyController {
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = openPanel.url {
-                    let document = self.document as! MyDocument
                     do {
-                        try document.createAttachment(from: url)
-                        document.insertAttachmentAsTape()
+                        try self.mydocument.createAttachment(from: url)
+                        self.mydocument.insertAttachmentAsTape()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -650,12 +576,11 @@ extension MyController {
         track()
         let sender = sender as! NSMenuItem
         let tag = sender.tag
-        let document = self.document as! MyDocument
         
-        if let url = document.getRecentlyInsertedTapeURL(tag) {
+        if let url = mydocument.getRecentlyInsertedTapeURL(tag) {
             do {
-                try document.createAttachment(from: url)
-                document.insertAttachmentAsTape()
+                try mydocument.createAttachment(from: url)
+                mydocument.insertAttachmentAsTape()
             } catch {
                 NSApp.presentError(error)
             }
@@ -699,10 +624,9 @@ extension MyController {
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = openPanel.url {
-                    let document = self.document as! MyDocument
                     do {
-                        try document.createAttachment(from: url)
-                        document.attachAttachmentAsCartridge()
+                        try self.mydocument.createAttachment(from: url)
+                        self.mydocument.attachAttachmentAsCartridge()
                     } catch {
                         NSApp.presentError(error)
                     }
@@ -716,12 +640,11 @@ extension MyController {
         track()
         let sender = sender as! NSMenuItem
         let tag = sender.tag
-        let document = self.document as! MyDocument
         
-        if let url = document.getRecentlyAtachedCartridgeURL(tag) {
+        if let url = mydocument.getRecentlyAtachedCartridgeURL(tag) {
             do {
-                try document.createAttachment(from: url)
-                document.attachAttachmentAsCartridge()
+                try mydocument.createAttachment(from: url)
+                mydocument.attachAttachmentAsCartridge()
             } catch {
                 NSApp.presentError(error)
             }
@@ -864,9 +787,7 @@ extension MyController {
     
     @IBAction func resetAction(_ sender: Any!) {
         
-        let document = self.document as! MyDocument
-        document.updateChangeCount(.changeDone)
-        
+        mydocument.updateChangeCount(.changeDone)
         metalScreen.rotateBack()
         c64.powerUp()
         refresh()

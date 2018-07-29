@@ -41,13 +41,11 @@ class ExportScreenshotController : UserDialogController {
     override func showSheet(withParent: MyController, completionHandler:(() -> Void)? = nil) {
         
         parent = withParent
-        // mydocument = parent.document as! MyDocument
         parentWindow = parent.window
-        c64 = (parent.document as! MyDocument).c64
+        c64 = parent.mydocument.c64
         
         // Create save panel
         savePanel = NSSavePanel()
-        // savePanel.canSelectHiddenExtension = true
         savePanel.allowedFileTypes = ["png"]
         savePanel.prompt = "Export"
         savePanel.title = "Export"

@@ -33,9 +33,7 @@ extension MyController {
         // NSLog("Validating \(tag)...")
     
         if c64 != nil && c64.isRunning() {
-            
-            let document = self.document as! MyDocument?
-            document?.updateChangeCount(.changeDone)
+            mydocument.updateChangeCount(.changeDone)
         }
     
         // Snapshot handling
@@ -199,11 +197,10 @@ extension MyController {
     
     @IBAction func printDocument(_ sender: Any!) {
     
-        let document = self.document as! MyDocument
-        let window = document.windowForSheet!
+        let window = mydocument.windowForSheet!
 
         // Printing properties
-        let printInfo = document.printInfo
+        let printInfo = mydocument.printInfo
         printInfo.horizontalPagination = .fitPagination
         printInfo.isHorizontallyCentered = true
         printInfo.verticalPagination = .fitPagination

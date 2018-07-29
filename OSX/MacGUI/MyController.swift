@@ -239,12 +239,19 @@ class MyController : NSWindowController {
 
 extension MyController {
 
-    // Get the undo manager from the first responder (metalScreen)
-    
-    override open var undoManager: UndoManager? { get {
-        //let result = document?.undoManager!
-        let result = metalScreen.undoManager
-        return result } }
+    // Provides the undo manager
+    override open var undoManager: UndoManager? {
+        get {
+            return metalScreen.undoManager
+        }
+    }
+ 
+    // Provides the document casted to the correct type
+    var mydocument: MyDocument {
+        get {
+            return document as! MyDocument
+        }
+    }
     
     //
     // Initialization
@@ -489,8 +496,7 @@ extension MyController {
             metalScreen.drawC64texture = true
     
             // Open attachment if present
-            let document = self.document as! MyDocument
-            document.openAttachmentWithDocument()
+            mydocument.openAttachmentWithDocument()
             break;
     
         case MSG_RUN:
@@ -785,6 +791,7 @@ extension MyController {
     // Mounting media files
     //
     
+    /// DEPRECATED
     @discardableResult
     func mount(_ item: ContainerProxy?) -> Bool {
 
@@ -798,7 +805,7 @@ extension MyController {
         case T64_CONTAINER, D64_CONTAINER,
              PRG_CONTAINER, P00_CONTAINER:
             // TODO: Use insertDisk for these attachments in future
-            changeDisk(item, driveNr: 1)
+            changeDisk(item, drive: 1)
             return true
             
         default:
@@ -811,9 +818,9 @@ extension MyController {
     
     // Emulates changing a disk including the necessary light barrier breaks
     // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: ContainerProxy?, driveNr: Int) {
+    func changeDisk(_ disk: ContainerProxy?, drive nr: Int) {
         
-        let drive = c64.drive(driveNr)!
+        let drive = c64.drive(nr)!
 
         DispatchQueue.global().async {
             

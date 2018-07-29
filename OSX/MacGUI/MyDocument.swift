@@ -45,9 +45,11 @@ class MyDocument : NSDocument {
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []
 
-    /// The list of recently exported disk URLs.
-    /// TODO: We need a separate list for both drives
-    var recentlyExportedDiskURLs: [URL] = []
+    /// The list of recently exported disk URLs for drive 1.
+    var recentlyExportedDisk1URLs: [URL] = []
+
+    /// The list of recently exported disk URLs for drive 2.
+    var recentlyExportedDisk2URLs: [URL] = []
 
     /// The list of recently inserted tape URLs.
     var recentlyInsertedTapeURLs: [URL] = []
@@ -115,14 +117,39 @@ class MyDocument : NSDocument {
         return getRecentlyUsedURL(nr, from: recentlyInsertedDiskURLs)
     }
     
-    func noteNewRecentlyExportedDiskURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &recentlyExportedDiskURLs, size: 1)
+    func noteNewRecentlyExportedDiskURL(_ url: URL, driveNr: Int) {
+
+        precondition(driveNr == 1 || driveNr == 2)
+        
+        if (driveNr == 1) {
+            noteRecentlyUsedURL(url, to: &recentlyExportedDisk1URLs, size: 1)
+        } else {
+            noteRecentlyUsedURL(url, to: &recentlyExportedDisk2URLs, size: 1)
+        }
     }
 
-    func getRecentlyExportedDiskURL(_ nr: Int) -> URL? {
-        return getRecentlyUsedURL(nr, from: recentlyExportedDiskURLs)
+    func getRecentlyExportedDiskURL(_ nr: Int, driveNr: Int) -> URL? {
+        
+        precondition(driveNr == 1 || driveNr == 2)
+        
+        if (driveNr == 1) {
+            return getRecentlyUsedURL(nr, from: recentlyExportedDisk1URLs)
+        } else {
+            return getRecentlyUsedURL(nr, from: recentlyExportedDisk2URLs)
+        }
     }
-
+   
+    func clearRecentlyExportedDiskURLs(drive nr: Int) {
+        
+        precondition(nr == 1 || nr == 2)
+        
+        if (nr == 1) {
+            recentlyExportedDisk1URLs = []
+        } else {
+            recentlyExportedDisk2URLs = []
+        }
+    }
+    
     func noteNewRecentlyInsertedTapeURL(_ url: URL) {
         noteRecentlyUsedURL(url, to: &recentlyInsertedTapeURLs, size: 10)
     }
@@ -143,14 +170,8 @@ class MyDocument : NSDocument {
         
         switch (url.pathExtension.uppercased()) {
             
-        case "D64", "T64":
+        case "D64", "T64", "G64", "NIB", "PRG", "P00":
             noteNewRecentlyInsertedDiskURL(url)
-            noteNewRecentlyExportedDiskURL(url)
-            break
-            
-        case "PRG", "P00":
-            noteNewRecentlyInsertedDiskURL(url)
-            break
 
         case "TAP":
             noteNewRecentlyInsertedTapeURL(url)
@@ -162,6 +183,7 @@ class MyDocument : NSDocument {
             break
         }
     }
+    
     
     //
     // Creating attachments
@@ -330,30 +352,16 @@ class MyDocument : NSDocument {
      no user dialogs show up.
      */
     @discardableResult
-    func insertAttachmentAsDisk() -> Bool {
+    func insertAttachmentAsDisk(drive nr: Int) -> Bool {
         
-        var result = true
         let parent = windowForSheet!.windowController as! MyController
         
-        if attachment == nil {
+        guard let archive = attachment as? ArchiveProxy else {
             return false
         }
-        
-        let type = attachment!.type()
-        switch type {
-            
-        case PRG_CONTAINER, P00_CONTAINER,
-             T64_CONTAINER, D64_CONTAINER,
-             G64_CONTAINER, NIB_CONTAINER:
-            result = parent.mount(attachment)
-            break
-            
-        default:
-            track("Attachments of type \(type) cannot be mounted as a disk.")
-            fatalError()
-        }
-        
-        return result
+  
+        parent.changeDisk(archive, drive: nr)
+        return true
     }
     
     /**
@@ -423,7 +431,7 @@ class MyDocument : NSDocument {
         case V64_CONTAINER,
              T64_CONTAINER, D64_CONTAINER,
              G64_CONTAINER, NIB_CONTAINER:
-            if (!proceedWithUnsavedDisk(driveNr: 1)) { return false }
+            if (!proceedWithUnexportedDisk(drive: 1)) { return false }
         default:
             break;
         }
@@ -554,6 +562,84 @@ class MyDocument : NSDocument {
         
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
+    
+    
+    //
+    // Exporting disks
+    //
+    
+    func export(driveNr: Int, to url: URL, ofType typeName: String) -> Bool {
+        
+        precondition(["D64", "T64", "PRG", "P00"].contains(typeName))
+        
+        let drive = c64.drive(driveNr)!
+        
+        // Convert disk to a D64 archive
+        guard let d64archive = D64Proxy.make(withDrive: drive) else {
+            return false
+        }
+        
+        // Convert the D64 archive into the target format
+        var archive: ArchiveProxy?
+        switch typeName.uppercased() {
+        case "D64":
+            track("Exporting to D64 format")
+            archive = d64archive
+            
+        case "T64":
+            track("Exporting to T64 format")
+            archive = T64Proxy.make(withAnyArchive: d64archive)
+            
+        case "PRG":
+            track("Exporting to PRG format")
+            if d64archive.numberOfItems() > 1  {
+                showDiskHasMultipleFilesAlert(format: "PRG")
+            }
+            archive = PRGProxy.make(withAnyArchive: d64archive)
+            
+        case "P00":
+            track("Exporting to P00 format")
+            if d64archive.numberOfItems() > 1  {
+                showDiskHasMultipleFilesAlert(format: "P00")
+            }
+            archive = P00Proxy.make(withAnyArchive: d64archive)
+            
+        default:
+            fatalError()
+        }
+        
+        // Serialize archive
+        let data = NSMutableData.init(length: archive!.sizeOnDisk())!
+        archive!.write(toBuffer: data.mutableBytes)
+        
+        // Write to file
+        if !data.write(to: url, atomically: true) {
+            showExportErrorAlert(url: url)
+            return false
+        }
+        
+        // Mark disk as "not modified"
+        drive.setModifiedDisk(false)
+        
+        // Remember export URL
+        noteNewRecentlyExportedDiskURL(url, driveNr: driveNr)
+        return true
+    }
+    
+    @discardableResult
+    func export(driveNr: Int, to url: URL?) -> Bool {
+        
+        if let suffix = url?.pathExtension {
+            return export(driveNr: driveNr, to: url!, ofType: suffix)
+        } else {
+            return false
+        }
+    }
+    
+    
+    //
+    // Shutting down
+    //
     
     open override func removeWindowController(_ windowController: NSWindowController) {
         

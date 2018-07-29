@@ -31,8 +31,7 @@ class DiskMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        let document = controller.document as! MyDocument
-        archive = document.attachment as! ArchiveProxy
+        archive = controller.mydocument.attachment as! ArchiveProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     
@@ -108,9 +107,9 @@ class DiskMountController : UserDialogController {
         track()
         
         if driveSelector.selectedItem!.tag == 1 {
-            parent.changeDisk(archive, driveNr: 1)
+            parent.changeDisk(archive, drive: 1)
         } else {
-            parent.changeDisk(archive, driveNr: 2)
+            parent.changeDisk(archive, drive: 2)
         }
         
         parent.metalScreen.rotateBack()
