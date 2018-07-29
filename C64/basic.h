@@ -228,7 +228,8 @@ bool checkFileHeader(const char *filename, const uint8_t *header);
 //
 
 /*! @brief    Application launch time in seconds
- *  @details  The value is read by function msec for computing the elapsed number of microseconds. 
+ *  @details  The value is read by function msec for computing the elapsed
+ *            number of microseconds. 
  */
 extern long tv_base;
 

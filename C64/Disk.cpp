@@ -246,13 +246,13 @@ Disk::_bitDelay(Halftrack ht, HeadPosition pos) {
     // track position of the drive head.
     
     if (ht <= 33)
-        return 4 * 1000000; // Density bits = 00: 4 * 16/16 * 10^6 psec
+        return 4 * 10000; // Density bits = 00: 4 * 16/16 * 10^4 1/10 nsec
     if (ht <= 47)
-        return 4 * 937500;  // Density bits = 01: 4 * 15/16 * 10^6 psec
+        return 4 * 9375;  // Density bits = 01: 4 * 15/16 * 10^4 1/10 nsec
     if (ht <= 59)
-        return 4 * 875000;  // Density bits = 10: 4 * 14/16 * 10^6 psec
+        return 4 * 8750;  // Density bits = 10: 4 * 14/16 * 10^4 1/10 nsec
     
-     return 4 * 812500;     // Density bits = 11: 4 * 13/16 * 10^6 psec
+     return 4 * 8125;     // Density bits = 11: 4 * 13/16 * 10^4 1/10 nsec
 }
 
 void

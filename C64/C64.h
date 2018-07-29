@@ -193,11 +193,8 @@ public:
      */
     uint8_t rasterlineCycle;
 
-    //! @brief    Duration of half a CPU cycle in pico seconds
-    /*! @todo     Change unit to nano seconds
-     *  @todo     Replace by durationOfCycle
-     */
-    uint64_t durationOfHalfCycle;
+    //! @brief    Duration of a CPU cycle in 1/10 nano second
+    uint64_t durationOfCycle;
     
     //! @brief    VIC execution function table.
     /*! @details  Stores a pointer to the VIC method that needs to be executed

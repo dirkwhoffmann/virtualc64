@@ -51,22 +51,22 @@ static const unsigned maxBytesOnTrack = 7928;
  */
 static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
 
-/*! @brief    Returns the average duration of a single bit in pico seconds.
+/*! @brief    Returns the average duration of a single bit in 1/10 nano seconds.
  *  @details  The returned value is the time span the drive head resists
  *            over a single bit.
  *  @note     The exact value depends on the speed zone and the drive's
  *            rotation speed. We assume a rotation speed of 300 rpm.
  */
  static const uint64_t averageBitTimeSpan[] = {
-     4 * 1000000, // 4 * 16/16 * 10^6 psec
-     4 * 937500,  // 4 * 15/16 * 10^6 psec
-     4 * 875000,  // 4 * 14/16 * 10^6 psec
-     4 * 812500   // 4 * 13/16 * 10^6 psec
+     4 * 10000, // 4 * 16/16 * 10^4 1/10 nsec
+     4 * 9375,  // 4 * 15/16 * 10^4 1/10 nsec
+     4 * 8750,  // 4 * 14/16 * 10^4 1/10 nsec
+     4 * 8125   // 4 * 13/16 * 10^4 1/10 nsec
  };
 
 /*! @brief    Average number of bits stored on a single track.
  *  @note     The values are based on a drive with 300 rotations per minute
- *            which means that a full rotation lasts 200.000.000.000 psec.
+ *            which means that a full rotation lasts 2.000.000.000 1/10 nsec.
  */
 static const unsigned averageBitsOnTrack[4] = {
     50000, // 200.000.000.000 / averageBitTimeSpan[0]

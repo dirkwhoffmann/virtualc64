@@ -119,15 +119,15 @@ C64::C64()
     // Register snapshot items
     SnapshotItem items[] = {
  
-        { &warp,                sizeof(warp),                CLEAR_ON_RESET },
-        { &alwaysWarp,          sizeof(alwaysWarp),          CLEAR_ON_RESET },
-        { &warpLoad,            sizeof(warpLoad),            KEEP_ON_RESET },
-        { &durationOfHalfCycle, sizeof(durationOfHalfCycle), KEEP_ON_RESET },
-        { &frame,               sizeof(frame),               CLEAR_ON_RESET },
-        { &rasterline,          sizeof(rasterline),          CLEAR_ON_RESET },
-        { &rasterlineCycle,     sizeof(rasterlineCycle),     CLEAR_ON_RESET },
-        { &ultimax,             sizeof(ultimax),             CLEAR_ON_RESET },
-        { NULL,                 0,                           0 }};
+        { &warp,            sizeof(warp),            CLEAR_ON_RESET },
+        { &alwaysWarp,      sizeof(alwaysWarp),      CLEAR_ON_RESET },
+        { &warpLoad,        sizeof(warpLoad),        KEEP_ON_RESET },
+        { &durationOfCycle, sizeof(durationOfCycle), KEEP_ON_RESET },
+        { &frame,           sizeof(frame),           CLEAR_ON_RESET },
+        { &rasterline,      sizeof(rasterline),      CLEAR_ON_RESET },
+        { &rasterlineCycle, sizeof(rasterlineCycle), CLEAR_ON_RESET },
+        { &ultimax,         sizeof(ultimax),         CLEAR_ON_RESET },
+        { NULL,             0,                       0 }};
     
     registerSnapshotItems(items, sizeof(items));
 
@@ -205,8 +205,8 @@ C64::setClockFrequency(uint32_t frequency)
 {
     VirtualComponent::setClockFrequency(frequency);
     
-    durationOfHalfCycle = 1000000000000 / frequency / 2;
-    debug("Duration of a CPU cycle is %lld pico seconds.\n", 2 * durationOfHalfCycle);
+    durationOfCycle = 10000000000 / frequency;
+    debug("Duration of a CPU cycle is %lld 1/10 nsec.\n", durationOfCycle);
 }
 
 void 
@@ -557,8 +557,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    if (drive1.isPoweredOn()) result &= drive1.execute(2 * durationOfHalfCycle);
-    if (drive2.isPoweredOn()) result &= drive2.execute(2 * durationOfHalfCycle);
+    if (drive1.isPoweredOn()) result &= drive1.execute(durationOfCycle);
+    if (drive2.isPoweredOn()) result &= drive2.execute(durationOfCycle);
     if (iec.isDirty) iec.updateIecLines();
     datasette.execute();
     

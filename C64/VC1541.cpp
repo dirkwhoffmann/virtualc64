@@ -120,8 +120,8 @@ VC1541::ping()
 void
 VC1541::setClockFrequency(uint32_t frequency)
 {
-    durationOfOneCpuCycle = 1000000000000 / frequency;
-    debug("Duration a CPU cycle is %lld pico seconds.\n", durationOfOneCpuCycle);
+    durationOfOneCpuCycle = 10000000000 / frequency;
+    debug("Duration a CPU cycle is %lld 1/10 nsec.\n", durationOfOneCpuCycle);
 }
 
 void 
@@ -161,7 +161,7 @@ VC1541::execute(uint64_t duration)
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             result = cpu.executeOneCycle();
-            nextClock += 1000000;
+            nextClock += 10000;
 
         } else {
             
@@ -195,7 +195,7 @@ VC1541::execute(uint64_t duration)
         if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
         if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
         result = cpu.executeOneCycle();
-        nextClock += 1000000;
+        nextClock += 10000;
     }
     
     if (nextCarry < elapsedTime) {

@@ -94,12 +94,12 @@ private:
     
 public:
     
-    //! @brief    Elapsed time since power up in pico seconds
+    //! @brief    Elapsed time since power up in 1/10 nano seconds
     uint64_t elapsedTime;
     
 private:
     
-    //! @brief    Duration of a single CPU clock cycle in pico seconds
+    //! @brief    Duration of a single CPU clock cycle in 1/10 nano seconds
     uint64_t durationOfOneCpuCycle;
     
     /*! @brief    Indicates when the next drive clock cycle occurs.
@@ -227,7 +227,7 @@ public:
      */
     void resetDisk();
     
-    /*! @brief    Time between two carry pulses of counter UE7 in pico seconds
+    /*! @brief    Time between two carry pulses of UE7 in 1/10 nano seconds
      *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is
      *            divided by N where N ranges from 13 (density bits = 11) to 16
      *            (density bits = 00). On the logic board, this is done with
@@ -238,10 +238,10 @@ public:
      *            slowest zone.
      */
     const uint64_t delayBetweenTwoCarryPulses[4] = {
-        1000000, // Density bits = 00: Carry pulse every 16/16 * 10^6 psec
-        937500,  // Density bits = 01: Carry pulse every 15/16 * 10^6 psec
-        875000,  // Density bits = 10: Carry pulse every 14/16 * 10^6 psec
-        812500   // Density bits = 11: Carry pulse every 13/16 * 10^6 psec
+        10000, // Density bits = 00: Carry pulse every 16/16 * 10^4 1/10 nsec
+        9375,  // Density bits = 01: Carry pulse every 15/16 * 10^4 1/10 nsec
+        8750,  // Density bits = 10: Carry pulse every 14/16 * 10^4 1/10 nsec
+        8125   // Density bits = 11: Carry pulse every 13/16 * 10^4 1/10 nsec
     };
     
     
