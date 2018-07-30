@@ -123,6 +123,11 @@ extension MyController {
         validateJoystickToolbarItems();
     }
     
+    @IBAction func keyboardAction(_ sender: Any!) {
+        
+        track()
+    }
+    
     @IBAction func propertiesAction(_ sender: Any!) {
     
         let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
