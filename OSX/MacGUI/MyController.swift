@@ -21,6 +21,9 @@ class MyController : NSWindowController {
     /// Keyboard controller
     var keyboardcontroller: KeyboardController!
     
+    /// Virtual C64 keyboard
+    var virtualKeyboard: VirtualKeyboardController? = nil
+    
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be done
     /// perdiodically (e.g., updating the speedometer and the debug panels)

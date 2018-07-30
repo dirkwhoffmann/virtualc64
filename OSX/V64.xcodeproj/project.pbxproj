@@ -128,6 +128,8 @@
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D19B8620ACA0C40004C47B /* Mouse1350.cpp */; };
+		50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */; };
+		50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
@@ -373,6 +375,8 @@
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D19B8620ACA0C40004C47B /* Mouse1350.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1350.cpp; sourceTree = "<group>"; };
 		50D19B8720ACA0C40004C47B /* Mouse1350.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse1350.h; sourceTree = "<group>"; };
+		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
+		50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualKeyboardController.swift; sourceTree = "<group>"; };
 		50D43B5B1EE5701A009D163C /* C64_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64_types.h; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
@@ -771,6 +775,7 @@
 			children = (
 				50763276202989D300575110 /* UserDialogController.swift */,
 				506D54C720321C830026D8B4 /* RomDialogController.swift */,
+				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */,
 				500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */,
 				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
@@ -835,6 +840,7 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				506D54C920321EDF0026D8B4 /* RomDialog.xib */,
+				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
 				500EF688203EB0210043F4FC /* HardwarePrefs.xib */,
 				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
@@ -1004,6 +1010,7 @@
 				503E199020C42C6D007E91F1 /* Media.xcassets in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
+				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */,
 				501E428020D975AD000BB48D /* IconV64.icns in Resources */,
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
@@ -1053,6 +1060,7 @@
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				501DE30F20C9C41B00707130 /* version.cc in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
+				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50763277202989D300575110 /* UserDialogController.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
