@@ -405,15 +405,15 @@ extension C64Key {
         var text: String
         if shift {
             text = ["\u{2190}","!","\"","#","$","%","&","'","(",")","0","+","-","\u{00a3}","","", " f 2",
-                    "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}","", " f 4",
-                    "","","A","S","D","F","G","H","J","K","L","[","]","=","", " f 6",
-                    "","","Z","X","C","V","B","N","M","<",">","?","","","", " f 8",
+                    "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}","", "f 4",
+                    "","","A","S","D","F","G","H","J","K","L","[","]","=","", "f 6",
+                    "","","Z","X","C","V","B","N","M","<",">","?","","","", "f 8",
                 ""][nr]
         } else {
             text = ["\u{2190}","1","2","3","4","5","6","7","8","9","0","+","-","\u{00a3}","",""," f 1",
-                    "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}",""," f 3",
-                    "","","A","S","D","F","G","H","J","K","L",":",";","=",""," f 5",
-                    "","","Z","X","C","V","B","N","M",",",".","/","","",""," f 7",
+                    "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}","","f 3",
+                    "","","A","S","D","F","G","H","J","K","L",":",";","=","","f 5",
+                    "","","Z","X","C","V","B","N","M",",",".","/","","","","f 7",
                     ""][nr]
         }
    
@@ -431,17 +431,18 @@ extension C64Key {
         
         // Render key
         let image = plainKeyImage(width: width, height: height, dark: dark)
-        let textRect1 = CGRect(x: 12, y: -4, width: width-7, height: height-2)
-        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        let textRect = CGRect(x: 0, y: -6, width: width, height: height)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
         let font1 = NSFont.systemFont(ofSize: 13)
         let textFontAttributes1 = [
             NSAttributedStringKey.font: font1,
             NSAttributedStringKey.foregroundColor: NSColor.black,
-            NSAttributedStringKey.paragraphStyle: textStyle
+            NSAttributedStringKey.paragraphStyle: paragraphStyle,
         ]
         
         image.lockFocus()
-        text.draw(in: textRect1, withAttributes: textFontAttributes1)
+        text.draw(in: textRect, withAttributes: textFontAttributes1)
         image.unlockFocus()
         return image
     }
