@@ -114,7 +114,7 @@ class KeyboardDialog : UserDialogController {
         for row in 0...7 {
             for col in 0...7 {
                 if keyImage[row][col] == nil {
-                    keyImage[row][col] = C64Key.init(row: row, col: col).image()
+                    keyImage[row][col] = C64Key.init( (row, col) ).image()
                 }
             }
         }
@@ -210,7 +210,7 @@ extension KeyboardDialog : NSCollectionViewDelegate {
         
         let row = indexPath.section
         let col = indexPath.item
-        selectedKey = C64Key(row: row, col: col)
+        selectedKey = C64Key( (row,col) )
         icon.image = selectedKey?.image()
         update()
         

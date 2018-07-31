@@ -201,7 +201,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="16" translatesAutoresizingMaskIntoConstraints="NO" id="0pC-mc-Zos">
                         <rect key="frame" x="610" y="160" width="54" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="zj8-ms-PYU">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key_wide" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="zj8-ms-PYU">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -212,7 +212,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="32" translatesAutoresizingMaskIntoConstraints="NO" id="xAD-eA-B8N">
                         <rect key="frame" x="610" y="125" width="54" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="vue-kQ-3TM">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key_wide" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="vue-kQ-3TM">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -223,7 +223,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="48" translatesAutoresizingMaskIntoConstraints="NO" id="EB5-Xd-ejK">
                         <rect key="frame" x="610" y="90" width="54" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="CvT-zH-xhp">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key_wide" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="CvT-zH-xhp">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -234,7 +234,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="64" translatesAutoresizingMaskIntoConstraints="NO" id="52S-Xx-g6g">
                         <rect key="frame" x="610" y="55" width="54" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="J3s-Xo-dvH">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="key_wide" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="axesIndependently" inset="2" id="J3s-Xo-dvH">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -755,5 +755,6 @@
     </objects>
     <resources>
         <image name="key" width="198" height="187"/>
+        <image name="key_wide" width="299.7391357421875" height="200.34782409667969"/>
     </resources>
 </document>
