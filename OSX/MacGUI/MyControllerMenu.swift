@@ -50,7 +50,11 @@ extension MyController {
         if item.action == #selector(MyController.customizeKeyMap(_:)) {
             return keyboardcontroller.mapKeysByPosition
         }
- 
+        if item.action == #selector(MyController.shiftLockAction(_:)) {
+            item.state = c64.keyboard.shiftLockIsPressed() ? .on : .off
+            return true
+        }
+        
         // Drive menu
         if item.action == #selector(MyController.insertRecentDiskAction(_:)) {
             return validateURLlist(mydocument.recentlyInsertedDiskURLs, image: "disk_small")

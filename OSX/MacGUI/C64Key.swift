@@ -358,6 +358,7 @@ extension NSImage.Name {
     static let key_restore = NSImage.Name(rawValue: "key_restore")
     static let key_runstop = NSImage.Name(rawValue: "key_runstop")
     static let key_shiftlock = NSImage.Name(rawValue: "key_shiftlock")
+    static let key_shiftlock_pressed = NSImage.Name(rawValue: "key_shiftlock_pressed")
     static let key_return = NSImage.Name(rawValue: "key_return")
     static let key_commodore = NSImage.Name(rawValue: "key_commodore")
     static let key_commodore_pressed = NSImage.Name(rawValue: "key_commodore_pressed")
@@ -388,7 +389,7 @@ extension C64Key {
         case 17: return NSImage.init(named: .key_ctrl)!
         case 31: return NSImage.init(named: .key_restore)!
         case 33: return NSImage.init(named: .key_runstop)!
-        case 34: return NSImage.init(named: .key_shiftlock)!
+        case 34: return NSImage.init(named: pressed ? .key_shiftlock_pressed : .key_shiftlock)!
         case 47: return NSImage.init(named: .key_return)!
         case 49: return NSImage.init(named: pressed ? .key_commodore_pressed : .key_commodore)!
         case 50: return NSImage.init(named: pressed ? .key_shift_pressed : .key_shift)!
@@ -405,14 +406,14 @@ extension C64Key {
         if shift {
             text = ["\u{2190}","!","\"","#","$","%","&","'","(",")","0","+","-","\u{00a3}","","", " f 2",
                     "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}","", " f 4",
-                    "","","A","S","D","F","G","H","J","K","L",":",";","=","", " f 6",
+                    "","","A","S","D","F","G","H","J","K","L","[","]","=","", " f 6",
                     "","","Z","X","C","V","B","N","M","<",">","?","","","", " f 8",
                 ""][nr]
         } else {
             text = ["\u{2190}","1","2","3","4","5","6","7","8","9","0","+","-","\u{00a3}","",""," f 1",
                     "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}",""," f 3",
                     "","","A","S","D","F","G","H","J","K","L",":",";","=",""," f 5",
-                    "","","Z","X","C","V","B","N","M","<",">","?","","",""," f 7",
+                    "","","Z","X","C","V","B","N","M",",",".","/","","",""," f 7",
                     ""][nr]
         }
    

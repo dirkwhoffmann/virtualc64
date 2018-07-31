@@ -7,11 +7,8 @@
 
 import Foundation
 
-class VirtualKeyboardController : NSWindowController
+class VirtualKeyboardController : UserDialogController
 {
-    /// Reference to the parent controller
-    var parent: MyController!
-    
     /// Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
 
@@ -23,15 +20,9 @@ class VirtualKeyboardController : NSWindowController
 
     /// Indicates if the right Shift key is pressed
     var rshift = false
-
+    
     /// Indicates if the Commodore key is pressed
     var commodore = false
-
-    override open func showWindow(_ sender: Any?) {
-        
-        parent = sender as! MyController
-        super.showWindow(sender)
-    }
     
     override func windowDidLoad() {
         
@@ -44,35 +35,80 @@ class VirtualKeyboardController : NSWindowController
     }
     
     func updateImages() {
-        
-        var pressed: Bool
-        
+    
         for nr in 0 ... 65 {
             
-            switch(nr) {
-            case 49: pressed = commodore
-            case 50: pressed = lshift
-            case 61: pressed = rshift
-            default: pressed = false
-            }
-            keyView[nr]!.image = C64Key(nr).image(pressed: pressed,
-                                                  shift: lshift || rshift)
+            let shiftLock = c64.keyboard.shiftLockIsPressed()
+            let pressed =
+                (nr == 34 && shiftLock) ||
+                (nr == 49 && commodore) ||
+                (nr == 50 && lshift) ||
+                (nr == 61 && rshift)
+            let shift = lshift || rshift || shiftLock
+            
+            keyView[nr]!.image = C64Key(nr).image(pressed: pressed, shift: shift)
         }
     }
     
     @IBAction func pressVirtualC64Key(_ sender: Any!) {
         
         let tag = (sender as! NSButton).tag
-        track("Key = \(tag)")
+        let key = C64Key(tag)
         
-        switch (tag) {
-        case 49: commodore = !commodore
-        case 50: lshift = !lshift
-        case 61: rshift = !rshift
-        default: break
+        func press() {
+            parent.c64.keyboard.pressKey(atRow: key.row, col: key.col)
         }
         
-        updateImages()
+        func release() {
+            parent.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+        }
+
+        switch (key.nr) {
+            
+        case 49: // Commodore
+            
+            commodore = !commodore
+            commodore ? press() : release()
+            updateImages()
+            
+        case 50: // Left Shift
+            
+            lshift = !lshift
+            lshift ? press() : release()
+            updateImages()
+            
+        case 61: // Right Shift
+            
+            rshift = !rshift
+            rshift ? press() : release()
+            updateImages()
+           
+        case 34: // Shift Lock
+            
+            if c64.keyboard.shiftLockIsPressed() {
+                c64.keyboard.unlockShift()
+            } else {
+                c64.keyboard.lockShift()
+            }
+            updateImages()
+            
+        default:
+            
+            DispatchQueue.global().async {
+                
+                press()
+                usleep(useconds_t(20000))
+                release()
+                self.parent.c64.keyboard.releaseKey(atRow: C64Key.commodore.row,
+                                               col: C64Key.commodore.col)
+                self.parent.c64.keyboard.releaseKey(atRow: C64Key.shift.row,
+                                               col: C64Key.shift.col)
+                self.parent.c64.keyboard.releaseKey(atRow: C64Key.rightShift.row,
+                                               col: C64Key.rightShift.col)
+            }
+            
+            cancelAction(self)
+        }
     }
-        
+    
 }

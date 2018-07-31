@@ -127,8 +127,8 @@ extension MyController {
         
         track()
         let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
-        virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
-        virtualKeyboard!.showWindow(self)
+        let controller = VirtualKeyboardController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
     }
     
     @IBAction func propertiesAction(_ sender: Any!) {
