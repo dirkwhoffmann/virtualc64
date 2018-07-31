@@ -175,7 +175,7 @@ class EmulatorPrefsController : UserDialogController {
         let recordKey = (nr == 0) ? recordKey1 : recordKey2
         if (recordKey == direction) {
             button.title = ""
-            button.image = NSImage(named: NSImage.Name(rawValue: "keyRed"))
+            button.image = NSImage(named: NSImage.Name(rawValue: "key_red"))
             button.imageScaling = .scaleAxesIndependently
         } else {
             button.image = NSImage(named: NSImage.Name(rawValue: "key"))

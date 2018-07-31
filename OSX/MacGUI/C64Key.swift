@@ -26,11 +26,7 @@ struct C64Key : Codable {
     // Column index
     var col = -1
     
-    // Textual description of this key
-    // DEPRECATED
-    var description: String = ""
-    
-    init(_ nr: Int, characters: String) {
+    init(_ nr: Int) {
         
         precondition(nr >= 0 && nr <= 65)
         
@@ -64,17 +60,12 @@ struct C64Key : Codable {
         } else {
             precondition(rowcol[nr].0 == 9 && rowcol[nr].1 == 9)
         }
-        self.description = characters
-    }
-
-    init(_ nr: Int) {
-            self.init(nr, characters: "")
     }
     
     init(_ rowcol : (Int, Int) ) {
         
-        precondition(rowcol.0 >= 0 && rowcol.0 <= 8)
-        precondition(rowcol.1 >= 0 && rowcol.1 <= 8)
+        precondition(rowcol.0 >= 0 && rowcol.0 < 8)
+        precondition(rowcol.1 >= 0 && rowcol.1 < 8)
         
         let nr = [ 15, 47, 63, 64, 16, 32, 48, 62,
                     3, 19, 35,  4, 51, 36, 20, 50,
@@ -93,11 +84,13 @@ struct C64Key : Codable {
         self.nr = nr[8 * row + col]
     }
     
+    /// DEPRECATED
+    /*
     init(_ nr: Int, row: Int, col: Int, characters: String) {
         
-        precondition(nr >= 0 && nr <= 65)
-        precondition(row >= 0 && row <= 8)
-        precondition(col >= 0 && col <= 8)
+        precondition(nr >= 0 && nr < 66)
+        precondition(row >= 0 && row < 8)
+        precondition(col >= 0 && col < 8)
         
         self.init( (row,col) )
         if nr != 31 {
@@ -105,167 +98,129 @@ struct C64Key : Codable {
         }
     }
     
+    // DEPRECATED
     init(_ nr: Int, row: Int, col: Int) {
     
         let curUD = "CU \u{21c5}" // "\u{2191}\u{2193}"
         let curLR = "CU \u{21c6}" // "\u{2190}\u{2192}"
-        let shiftL = "\u{21e7}"
-        let shiftR = "      \u{21e7}"
+        let shftL = "\u{21e7}"
+        let shftR = "      \u{21e7}"
+        let pound = "\u{00a3}"
+        let lfArr = "\u{2190}"
+        let upArr = "\u{2191}"
+        let space = "\u{23b5}"
+        let retrn = "\u{21b5}"
+        
         var name = [
-            ["DEL",      "\u{21b5}", curLR,      "F7",   "F1",       "F3", "F5",      curUD],
-            ["3",        "W",        "A",        "4",    "Z",        "S",  "E",       shiftL],
-            ["5",        "R",        "D",        "6",    "C",        "F",  "T",       "X"],
-            ["7",        "Y",        "G",        "8",    "B",        "H",  "U",       "V"],
-            ["9",        "I",        "J",        "0",    "M",        "K",  "O",       "N"],
-            ["+",        "P",        "L",        "-",    ".",        ":",  "@",       ","],
-            ["\u{00a3}", "*",        ";",        "HOME", shiftR,     "=",  "\u{2191}", "/"],
-            ["1",        "\u{2190}", "CTRL",     "2",    "\u{23b5}", "C=", "Q",        "STOP"]]
+            ["DEL", retrn, curLR,  "F7",   "F1",  "F3", "F5",  curUD],
+            ["3",   "W",   "A",    "4",    "Z",   "S",  "E",   shftL],
+            ["5",   "R",   "D",    "6",    "C",   "F",  "T",   "X"],
+            ["7",   "Y",   "G",    "8",    "B",   "H",  "U",   "V"],
+            ["9",   "I",   "J",    "0",    "M",   "K",  "O",   "N"],
+            ["+",   "P",   "L",    "-",    ".",   ":",  "@",   ","],
+            [pound, "*",   ";",    "HOME", shftR, "=",  upArr, "/"],
+            ["1",   lfArr, "CTRL", "2",    space, "C=", "Q",   "STOP"]
+        ]
 
         self.init(nr, row: row, col: col, characters: name[row][col])
     }
-    
-   
-    /// Returns an image representation for this key that is used in the
-    /// virtual keyboard.
-    
-    /// Returns an image representation for this key that is used in the
-    /// user dialog for configuring the key mapping.
-    func image(auxiliaryText: NSString = "") -> NSImage {
-        
-        let background = NSImage(named: NSImage.Name(rawValue: "key"))!
-        let width = 48.0
-        let height = 48.0
-        let imageRect = CGRect(x: 0, y: 0, width: width, height: height)
-        let textRect1 = CGRect(x: 7, y: -2, width: width-7, height: height-2)
-        let textRect2 = CGRect(x: 14, y: -10, width: width-14, height: height-10)
-        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        let font1 = NSFont.systemFont(ofSize: 12)
-        let font2 = NSFont.systemFont(ofSize: 16)
-        let textFontAttributes1 = [
-            NSAttributedStringKey.font: font1,
-            NSAttributedStringKey.foregroundColor: NSColor.gray,
-            NSAttributedStringKey.paragraphStyle: textStyle
-        ]
-        let textFontAttributes2 = [
-            NSAttributedStringKey.font: font2,
-            NSAttributedStringKey.foregroundColor: NSColor.black,
-            NSAttributedStringKey.paragraphStyle: textStyle
-        ]
-        let outImage = NSImage(size: NSSize.init(width: width, height: height))
-        let rep:NSBitmapImageRep = NSBitmapImageRep(bitmapDataPlanes: nil,
-                                                    pixelsWide: Int(width),
-                                                    pixelsHigh: Int(height),
-                                                    bitsPerSample: 8,
-                                                    samplesPerPixel: 4,
-                                                    hasAlpha: true,
-                                                    isPlanar: false,
-                                                    colorSpaceName: NSColorSpaceName.calibratedRGB,
-                                                    bytesPerRow: 0,
-                                                    bitsPerPixel: 0)!
-        outImage.addRepresentation(rep)
-        outImage.lockFocus()
-        background.draw(in: imageRect)
-        description.draw(in: textRect1, withAttributes: textFontAttributes1)
-        auxiliaryText.draw(in: textRect2, withAttributes: textFontAttributes2)
-        outImage.unlockFocus()
-        return outImage
-    }
+    */
 }
 
 extension C64Key: Equatable {
     static func ==(lhs: C64Key, rhs: C64Key) -> Bool {
-        return lhs.row == rhs.row && lhs.col == rhs.col
+        return lhs.nr == rhs.nr
     }
 }
 
 extension C64Key: Hashable {
     var hashValue: Int {
-        return col + (8 * row)
+        return nr
     }
 }
 
 extension C64Key {
     
     // First row
-    static let delete       = C64Key.init(31, row: 0, col: 0)
-    static let ret          = C64Key.init(47, row: 0, col: 1)
-    static let curLeftRight = C64Key.init(63, row: 0, col: 2)
-    static let F7F8         = C64Key.init(64, row: 0, col: 3)
-    static let F1F2         = C64Key.init(16, row: 0, col: 4)
-    static let F3F4         = C64Key.init(32, row: 0, col: 5)
-    static let F5F6         = C64Key.init(48, row: 0, col: 6)
-    static let curUpDown    = C64Key.init(62, row: 0, col: 7)
+    static let delete       = C64Key.init(15)
+    static let ret          = C64Key.init(47)
+    static let curLeftRight = C64Key.init(63)
+    static let F7F8         = C64Key.init(64)
+    static let F1F2         = C64Key.init(16)
+    static let F3F4         = C64Key.init(32)
+    static let F5F6         = C64Key.init(48)
+    static let curUpDown    = C64Key.init(62)
     
     // Second row
-    static let digit3       = C64Key.init(3, row: 1, col: 0)
-    static let W            = C64Key.init(19, row: 1, col: 1)
-    static let A            = C64Key.init(35, row: 1, col: 2)
-    static let digit4       = C64Key.init(4, row: 1, col: 3)
-    static let Z            = C64Key.init(51, row: 1, col: 4)
-    static let S            = C64Key.init(36, row: 1, col: 5)
-    static let E            = C64Key.init(20, row: 1, col: 6)
-    static let shift        = C64Key.init(50, row: 1, col: 7)
+    static let digit3       = C64Key.init(3)
+    static let W            = C64Key.init(19)
+    static let A            = C64Key.init(35)
+    static let digit4       = C64Key.init(4)
+    static let Z            = C64Key.init(51)
+    static let S            = C64Key.init(36)
+    static let E            = C64Key.init(20)
+    static let shift        = C64Key.init(50)
     
     // Third row
-    static let digit5       = C64Key.init(5, row: 2, col: 0)
-    static let R            = C64Key.init(21, row: 2, col: 1)
-    static let D            = C64Key.init(37, row: 2, col: 2)
-    static let digit6       = C64Key.init(6, row: 2, col: 3)
-    static let C            = C64Key.init(53, row: 2, col: 4)
-    static let F            = C64Key.init(38, row: 2, col: 5)
-    static let T            = C64Key.init(22, row: 2, col: 6)
-    static let X            = C64Key.init(52, row: 2, col: 7)
+    static let digit5       = C64Key.init(5)
+    static let R            = C64Key.init(21)
+    static let D            = C64Key.init(37)
+    static let digit6       = C64Key.init(6)
+    static let C            = C64Key.init(53)
+    static let F            = C64Key.init(38)
+    static let T            = C64Key.init(22)
+    static let X            = C64Key.init(52)
     
     // Fourth row
-    static let digit7       = C64Key.init(7, row: 3, col: 0)
-    static let Y            = C64Key.init(23, row: 3, col: 1)
-    static let G            = C64Key.init(39, row: 3, col: 2)
-    static let digit8       = C64Key.init(8, row: 3, col: 3)
-    static let B            = C64Key.init(55, row: 3, col: 4)
-    static let H            = C64Key.init(40, row: 3, col: 5)
-    static let U            = C64Key.init(24, row: 3, col: 6)
-    static let V            = C64Key.init(54, row: 3, col: 7)
+    static let digit7       = C64Key.init(7)
+    static let Y            = C64Key.init(23)
+    static let G            = C64Key.init(39)
+    static let digit8       = C64Key.init(8)
+    static let B            = C64Key.init(55)
+    static let H            = C64Key.init(40)
+    static let U            = C64Key.init(24)
+    static let V            = C64Key.init(54)
     
     // Fifth row
-    static let digit9       = C64Key.init(9, row: 4, col: 0)
-    static let I            = C64Key.init(25, row: 4, col: 1)
-    static let J            = C64Key.init(41, row: 4, col: 2)
-    static let digit0       = C64Key.init(10, row: 4, col: 3)
-    static let M            = C64Key.init(57, row: 4, col: 4)
-    static let K            = C64Key.init(42, row: 4, col: 5)
-    static let O            = C64Key.init(26, row: 4, col: 6)
-    static let N            = C64Key.init(56, row: 4, col: 7)
+    static let digit9       = C64Key.init(9)
+    static let I            = C64Key.init(25)
+    static let J            = C64Key.init(41)
+    static let digit0       = C64Key.init(10)
+    static let M            = C64Key.init(57)
+    static let K            = C64Key.init(42)
+    static let O            = C64Key.init(26)
+    static let N            = C64Key.init(56)
     
     // Sixth row
-    static let plus         = C64Key.init(11, row: 5, col: 0)
-    static let P            = C64Key.init(27, row: 5, col: 1)
-    static let L            = C64Key.init(43, row: 5, col: 2)
-    static let minus        = C64Key.init(12, row: 5, col: 3)
-    static let period       = C64Key.init(59, row: 5, col: 4)
-    static let colon        = C64Key.init(44, row: 5, col: 5)
-    static let at           = C64Key.init(28, row: 5, col: 6)
-    static let comma        = C64Key.init(58, row: 5, col: 7)
+    static let plus         = C64Key.init(11)
+    static let P            = C64Key.init(27)
+    static let L            = C64Key.init(43)
+    static let minus        = C64Key.init(12)
+    static let period       = C64Key.init(59)
+    static let colon        = C64Key.init(44)
+    static let at           = C64Key.init(28)
+    static let comma        = C64Key.init(58)
     
     // Seventh row
-    static let pound        = C64Key.init(14, row: 6, col: 0)
-    static let asterisk     = C64Key.init(29, row: 6, col: 1)
-    static let semicolon    = C64Key.init(45, row: 6, col: 2)
-    static let home         = C64Key.init(15, row: 6, col: 3)
-    static let rightShift   = C64Key.init(61, row: 6, col: 4)
-    static let equal        = C64Key.init(46, row: 6, col: 5)
-    static let upArrow      = C64Key.init(30, row: 6, col: 6)
-    static let slash        = C64Key.init(60, row: 6, col: 7)
+    static let pound        = C64Key.init(14)
+    static let asterisk     = C64Key.init(29)
+    static let semicolon    = C64Key.init(45)
+    static let home         = C64Key.init(15)
+    static let rightShift   = C64Key.init(61)
+    static let equal        = C64Key.init(46)
+    static let upArrow      = C64Key.init(30)
+    static let slash        = C64Key.init(60)
     
     
     // Eights row
-    static let digit1       = C64Key.init(1, row: 7, col: 0)
-    static let leftArrow    = C64Key.init(0, row: 7, col: 1)
-    static let control      = C64Key.init(17, row: 7, col: 2)
-    static let digit2       = C64Key.init(2, row: 7, col: 3)
-    static let space        = C64Key.init(65, row: 7, col: 4)
-    static let commodore    = C64Key.init(49, row: 7, col: 5)
-    static let Q            = C64Key.init(18, row: 7, col: 6)
-    static let runStop      = C64Key.init(33, row: 7, col: 7)
+    static let digit1       = C64Key.init(1)
+    static let leftArrow    = C64Key.init(0)
+    static let control      = C64Key.init(17)
+    static let digit2       = C64Key.init(2)
+    static let space        = C64Key.init(65)
+    static let commodore    = C64Key.init(49)
+    static let Q            = C64Key.init(18)
+    static let runStop      = C64Key.init(33)
     
     // Restore key
     static let restore      = C64Key.init(31)
@@ -385,3 +340,172 @@ extension C64Key {
         }
     }
 }
+
+//
+// Image processing
+//
+
+extension NSImage.Name {
+    static let key_clr = NSImage.Name(rawValue: "key_clr")
+    static let key_home = NSImage.Name(rawValue: "key_home")
+    static let key_inst = NSImage.Name(rawValue: "key_inst")
+    static let key_del = NSImage.Name(rawValue: "key_del")
+    static let key_crsr_up = NSImage.Name(rawValue: "key_crsr_up")
+    static let key_crsr_down = NSImage.Name(rawValue: "key_crsr_down")
+    static let key_crsr_left = NSImage.Name(rawValue: "key_crsr_left")
+    static let key_crsr_right = NSImage.Name(rawValue: "key_crsr_right")
+    static let key_ctrl = NSImage.Name(rawValue: "key_ctrl")
+    static let key_restore = NSImage.Name(rawValue: "key_restore")
+    static let key_runstop = NSImage.Name(rawValue: "key_runstop")
+    static let key_shiftlock = NSImage.Name(rawValue: "key_shiftlock")
+    static let key_return = NSImage.Name(rawValue: "key_return")
+    static let key_commodore = NSImage.Name(rawValue: "key_commodore")
+    static let key_commodore_pressed = NSImage.Name(rawValue: "key_commodore_pressed")
+    static let key_shift = NSImage.Name(rawValue: "key_shift")
+    static let key_shift_pressed = NSImage.Name(rawValue: "key_shift_pressed")
+}
+
+extension C64Key {
+    
+    /// Returns an empty background key image
+    func plainKeyImage(width: Int, height: Int, dark: Bool = false) -> NSImage {
+
+        let name = NSImage.Name(rawValue: dark ? "key_dark" : "key")
+        let background = NSImage(named: name)!
+        return background.resizeImage(width: CGFloat(width), height: CGFloat(height))
+    }
+    
+    /// Returns an image representation for this key that is used in the
+    /// virtual keyboard.
+    func image(pressed: Bool = false, shift: Bool = false) -> NSImage {
+        
+        var width = 32
+        let height = 32
+        var dark = false
+        
+        // Check for keys with a predrawn image
+        switch (nr) {
+        case 17: return NSImage.init(named: .key_ctrl)!
+        case 31: return NSImage.init(named: .key_restore)!
+        case 33: return NSImage.init(named: .key_runstop)!
+        case 34: return NSImage.init(named: .key_shiftlock)!
+        case 47: return NSImage.init(named: .key_return)!
+        case 49: return NSImage.init(named: pressed ? .key_commodore_pressed : .key_commodore)!
+        case 50: return NSImage.init(named: pressed ? .key_shift_pressed : .key_shift)!
+        case 61: return NSImage.init(named: pressed ? .key_shift_pressed : .key_shift)!
+        case 14: return NSImage.init(named: shift ? .key_clr : .key_home)!
+        case 15: return NSImage.init(named: shift ? .key_inst : .key_del)!
+        case 62: return NSImage.init(named: shift ? .key_crsr_up : .key_crsr_down)!
+        case 63: return NSImage.init(named: shift ? .key_crsr_left : .key_crsr_right)!
+        default: break
+        }
+    
+        // Determine text to render
+        var text: String
+        if shift {
+            text = ["\u{2190}","!","\"","#","$","%","&","'","(",")","0","+","-","\u{00a3}","","", " f 2",
+                    "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}","", " f 4",
+                    "","","A","S","D","F","G","H","J","K","L",":",";","=","", " f 6",
+                    "","","Z","X","C","V","B","N","M","<",">","?","","","", " f 8",
+                ""][nr]
+        } else {
+            text = ["\u{2190}","1","2","3","4","5","6","7","8","9","0","+","-","\u{00a3}","",""," f 1",
+                    "","Q","W","E","R","T","Y","U","I","O","P","@","*","\u{2191}",""," f 3",
+                    "","","A","S","D","F","G","H","J","K","L",":",";","=",""," f 5",
+                    "","","Z","X","C","V","B","N","M","<",">","?","","",""," f 7",
+                    ""][nr]
+        }
+   
+        // Check for keys with special layout or color properties
+        if (nr == 47) {
+            width = 64 // Return
+        }
+        if (nr == 17 || nr == 31 || nr == 50 || nr == 61) {
+            width = 48 // Ctrl, Restore, Left Shift, Right Shift
+        }
+        if (nr == 16 || nr == 32 || nr == 48 || nr == 64) {
+            width = 48 // F1, F3, F5, F7
+            dark = true
+        }
+        
+        // Render key
+        let image = plainKeyImage(width: width, height: height, dark: dark)
+        let textRect1 = CGRect(x: 11, y: -4, width: width-7, height: height-2)
+        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        let font1 = NSFont.systemFont(ofSize: 15)
+        let textFontAttributes1 = [
+            NSAttributedStringKey.font: font1,
+            NSAttributedStringKey.foregroundColor: NSColor.black,
+            NSAttributedStringKey.paragraphStyle: textStyle
+        ]
+        
+        image.lockFocus()
+        text.draw(in: textRect1, withAttributes: textFontAttributes1)
+        image.unlockFocus()
+        return image
+    }
+    
+    /// Returns an image representation for this key that is used in the
+    /// user dialog for configuring the key mapping.
+    func image(keyCode: NSString) -> NSImage {
+        
+        precondition(nr != 31 /* RESTORE */);
+        precondition(nr != 34 /* SHIFT LOCK */);
+        precondition(row >= 0 && row < 8)
+        precondition(col >= 0 && col < 8)
+        
+        // Get textual description for this key
+        let curUD = "CU \u{21c5}"
+        let curLR = "CU \u{21c6}"
+        let shftL = "\u{21e7}"
+        let shftR = "      \u{21e7}"
+        let pound = "\u{00a3}"
+        let lfArr = "\u{2190}"
+        let upArr = "\u{2191}"
+        let space = "\u{23b5}"
+        let retrn = "\u{21b5}"
+        var name = [
+            ["DEL", retrn, curLR,  "F7",   "F1",  "F3", "F5",  curUD],
+            ["3",   "W",   "A",    "4",    "Z",   "S",  "E",   shftL],
+            ["5",   "R",   "D",    "6",    "C",   "F",  "T",   "X"],
+            ["7",   "Y",   "G",    "8",    "B",   "H",  "U",   "V"],
+            ["9",   "I",   "J",    "0",    "M",   "K",  "O",   "N"],
+            ["+",   "P",   "L",    "-",    ".",   ":",  "@",   ","],
+            [pound, "*",   ";",    "HOME", shftR, "=",  upArr, "/"],
+            ["1",   lfArr, "CTRL", "2",    space, "C=", "Q",   "STOP"]
+        ]
+        
+        let description = name[row][col]
+        
+        // Compute image
+        let width = 48.0
+        let height = 48.0
+
+        let image = plainKeyImage(width: Int(width), height: Int(height))
+        let imageRect = CGRect(x: 0, y: 0, width: width, height: height)
+        let textRect1 = CGRect(x: 7, y: -2, width: width-7, height: height-2)
+        let textRect2 = CGRect(x: 14, y: -10, width: width-14, height: height-10)
+        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        let font1 = NSFont.systemFont(ofSize: 12)
+        let font2 = NSFont.systemFont(ofSize: 16)
+        let textFontAttributes1 = [
+            NSAttributedStringKey.font: font1,
+            NSAttributedStringKey.foregroundColor: NSColor.gray,
+            NSAttributedStringKey.paragraphStyle: textStyle
+        ]
+        let textFontAttributes2 = [
+            NSAttributedStringKey.font: font2,
+            NSAttributedStringKey.foregroundColor: NSColor.black,
+            NSAttributedStringKey.paragraphStyle: textStyle
+        ]
+        
+        image.lockFocus()
+        image.draw(in: imageRect)
+        description.draw(in: textRect1, withAttributes: textFontAttributes1)
+        keyCode.draw(in: textRect2, withAttributes: textFontAttributes2)
+        image.unlockFocus()
+        
+        return image
+    }
+}
+

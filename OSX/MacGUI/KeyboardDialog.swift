@@ -107,14 +107,14 @@ class KeyboardDialog : UserDialogController {
         // Create images for all mapped keys
         for (macKey,c64Key) in keyMap {
             let keyCodeString = String.init(format: "%02X", macKey.keyCode) as NSString
-            keyImage[c64Key.row][c64Key.col] = c64Key.image(auxiliaryText: keyCodeString)
+            keyImage[c64Key.row][c64Key.col] = c64Key.image(keyCode: keyCodeString)
         }
         
         // Create images for all unmapped keys
         for row in 0...7 {
             for col in 0...7 {
                 if keyImage[row][col] == nil {
-                    keyImage[row][col] = C64Key.init( (row, col) ).image()
+                    keyImage[row][col] = C64Key.init( (row,col) ).image()
                 }
             }
         }
@@ -147,7 +147,7 @@ class KeyboardDialog : UserDialogController {
         keyMap[macKey] = selectedKey
         
         // Update  view
-        icon.image = selectedKey?.image(auxiliaryText: macKey.keyCodeStr as NSString)
+        icon.image = selectedKey?.image(keyCode: macKey.keyCodeStr as NSString)
         update()
     }
         
