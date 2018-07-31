@@ -336,7 +336,7 @@
                             <action selector="debugAction:" target="-2" id="h8p-Nc-0xz"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="D593D53D-4525-4947-A21A-5A07BB678458" label="Keyboard" paletteLabel="Keyboard" toolTip="Open the debugger" tag="-1" image="keyboard" id="RdU-o8-emV">
+                    <toolbarItem implicitItemIdentifier="D593D53D-4525-4947-A21A-5A07BB678458" label="Keyboard" paletteLabel="Keyboard" toolTip="Open the debugger" tag="-1" image="keypress" id="RdU-o8-emV">
                         <connections>
                             <action selector="keyboardAction:" target="-2" id="V4w-Gw-jK8"/>
                         </connections>
@@ -2854,7 +2854,7 @@
         <image name="fast" width="128" height="128"/>
         <image name="hardware" width="129" height="129"/>
         <image name="inspect_disk" width="129" height="128"/>
-        <image name="keyboard" width="38.365898132324219" height="38.365898132324219"/>
+        <image name="keypress" width="97" height="96"/>
         <image name="pause32" width="32" height="32"/>
         <image name="restart32" width="128" height="128"/>
         <image name="stepInto32" width="32" height="32"/>

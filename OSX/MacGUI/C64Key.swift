@@ -431,9 +431,9 @@ extension C64Key {
         
         // Render key
         let image = plainKeyImage(width: width, height: height, dark: dark)
-        let textRect1 = CGRect(x: 11, y: -4, width: width-7, height: height-2)
+        let textRect1 = CGRect(x: 12, y: -4, width: width-7, height: height-2)
         let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        let font1 = NSFont.systemFont(ofSize: 15)
+        let font1 = NSFont.systemFont(ofSize: 13)
         let textFontAttributes1 = [
             NSAttributedStringKey.font: font1,
             NSAttributedStringKey.foregroundColor: NSColor.black,
