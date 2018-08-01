@@ -46,7 +46,9 @@ class VirtualKeyboardController : UserDialogController
                 (nr == 61 && rshift)
             let shift = lshift || rshift || shiftLock
             
-            keyView[nr]!.image = C64Key(nr).image(pressed: pressed, shift: shift)
+            keyView[nr]!.image = C64Key(nr).image(pressed: pressed,
+                                                  shift: shift,
+                                                  commodore: commodore)
         }
     }
     
