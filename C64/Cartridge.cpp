@@ -289,17 +289,16 @@ Cartridge::dumpState()
 uint8_t
 Cartridge::peek(uint16_t addr)
 {
+    assert(isROMLaddr(addr) || isROMHaddr(addr));
+
     uint16_t relAddr = addr & 0x1FFF;
-    
-    // Question: Is it correct to return a value from RAM if no ROM is mapped?
-    if (isROMLaddr(addr))
-        return (relAddr < mappedBytesL) ? peekRomL(relAddr) : c64->mem.ram[addr];
 
     // Question: Is it correct to return a value from RAM if no ROM is mapped?
-    if (isROMHaddr(addr))
+    if (isROMLaddr(addr)) {
+        return (relAddr < mappedBytesL) ? peekRomL(relAddr) : c64->mem.ram[addr];
+    } else {
         return (relAddr < mappedBytesH) ? peekRomH(relAddr) : c64->mem.ram[addr];
-    
-    assert(false);
+    }
 }
 
 uint8_t

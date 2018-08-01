@@ -21,9 +21,10 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.4
 //
-// Added a second VC 1541 disk drive (TODO).
-// Added support for the Freeze Frame cartridge.
-// The Action Replay cartridge is fully supported now.
+// A virtual keyboard has been added to the toolbar.
+// A second VC 1541 disk drive has been added.
+// The Freeze Frame cartridge is fully supported now.
+// Fixed a bug that prevented the Action Replay 4.0 cartridges to work properly. AR cartridges with higher version numbers still have issues though.
 //
 // TODO:
 // ArchiveDialog and DiskDialog: proceedWithUnsafed disk has to be called in  okAction, because with two drive, we don't now the target upfront.
@@ -51,7 +52,7 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1

@@ -450,12 +450,12 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Press" id="Xvx-By-SBS">
                                     <items>
-                                        <menuItem title="RUNSTOP" id="306">
+                                        <menuItem title="RUNSTOP" hidden="YES" id="306">
                                             <connections>
                                                 <action selector="runstopAction:" target="-1" id="h99-wl-I6J"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="RESTORE" id="305" userLabel="RESTORE">
+                                        <menuItem title="RESTORE" hidden="YES" id="305" userLabel="RESTORE">
                                             <connections>
                                                 <action selector="restoreAction:" target="-1" id="XDR-D8-h89"/>
                                             </connections>
@@ -465,30 +465,30 @@ CA
                                                 <action selector="runstopRestoreAction:" target="-1" id="OF3-DS-8i4"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="CLR" id="512">
+                                        <menuItem title="CLR" hidden="YES" id="512">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="clearKeyAction:" target="-1" id="NgL-jP-5vs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="HOME" id="515">
+                                        <menuItem title="HOME" hidden="YES" id="515">
                                             <connections>
                                                 <action selector="homeKeyAction:" target="-1" id="fhb-me-fFL"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="DEL" id="MPz-Ta-mSQ">
+                                        <menuItem title="DEL" hidden="YES" id="MPz-Ta-mSQ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="deleteKeyAction:" target="-1" id="6fc-Gs-5bU"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="INST" id="518">
+                                        <menuItem title="INST" hidden="YES" id="518">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertKeyAction:" target="-1" id="IEY-Sr-0Wx"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="LEFT ARROW" id="q9V-Gy-eCL">
+                                        <menuItem title="LEFT ARROW" hidden="YES" id="q9V-Gy-eCL">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="leftarrowKeyAction:" target="-1" id="tYs-2R-d3U"/>
