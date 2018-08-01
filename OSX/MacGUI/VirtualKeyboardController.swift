@@ -58,15 +58,31 @@ class VirtualKeyboardController : UserDialogController
         let key = C64Key(tag)
         
         func press() {
-            parent.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            if key.nr == 31 {
+                parent.c64.keyboard.pressRestoreKey()
+            } else {
+                parent.c64.keyboard.pressKey(atRow: key.row, col: key.col)
+            }
+        }
+        func release() {
+            if key.nr == 31 {
+                parent.c64.keyboard.releaseRestoreKey()
+            } else {
+                parent.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
+            }
         }
         
-        func release() {
-            parent.c64.keyboard.releaseKey(atRow: key.row, col: key.col)
-        }
-
         switch (key.nr) {
             
+        case 34: // Shift Lock
+            
+            if c64.keyboard.shiftLockIsPressed() {
+                c64.keyboard.unlockShift()
+            } else {
+                c64.keyboard.lockShift()
+            }
+            updateImages()
+
         case 49: // Commodore
             
             commodore = !commodore
@@ -83,15 +99,6 @@ class VirtualKeyboardController : UserDialogController
             
             rshift = !rshift
             rshift ? press() : release()
-            updateImages()
-           
-        case 34: // Shift Lock
-            
-            if c64.keyboard.shiftLockIsPressed() {
-                c64.keyboard.unlockShift()
-            } else {
-                c64.keyboard.lockShift()
-            }
             updateImages()
             
         default:
