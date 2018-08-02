@@ -88,7 +88,6 @@ void
 ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 {
     if (ramIsEnabled()) {
-        msg("/ %04X %02X / ", addr, value);
         externalRam[0x1F00 + (addr & 0xFF)] = value;
     }
 }
