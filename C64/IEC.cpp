@@ -31,6 +31,19 @@ IEC::IEC()
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
         { &isDirty,             sizeof(isDirty),                CLEAR_ON_RESET },
+        
+        { &device1Atn,          sizeof(device1Atn),             CLEAR_ON_RESET },
+        { &device1Clock,        sizeof(device1Clock),           CLEAR_ON_RESET },
+        { &device1Data,         sizeof(device1Data),            CLEAR_ON_RESET },
+
+        { &device2Atn,          sizeof(device2Atn),             CLEAR_ON_RESET },
+        { &device2Clock,        sizeof(device2Clock),           CLEAR_ON_RESET },
+        { &device2Data,         sizeof(device2Data),            CLEAR_ON_RESET },
+
+        { &ciaAtn,              sizeof(ciaAtn),                 CLEAR_ON_RESET },
+        { &ciaClock,            sizeof(ciaClock),               CLEAR_ON_RESET },
+        { &ciaData,             sizeof(ciaData),                CLEAR_ON_RESET },
+
         { &busActivity,         sizeof(busActivity),            CLEAR_ON_RESET },
         { NULL,                 0,                              0 }};
     
@@ -90,24 +103,6 @@ bool IEC::_updateIecLines()
     bool oldClockLine = clockLine;
     bool oldDataLine = dataLine;
     
-    // Get bus signals from drive 1
-    uint8_t device1Bits = c64->drive1.via1.getPB();
-    bool device1Atn = !!(device1Bits & 0x10);
-    bool device1Clock = !!(device1Bits & 0x08);
-    bool device1Data = !!(device1Bits & 0x02);
-
-    // Get bus signals from drive 2
-    uint8_t device2Bits = c64->drive2.via1.getPB();
-    bool device2Atn = !!(device2Bits & 0x10);
-    bool device2Clock = !!(device2Bits & 0x08);
-    bool device2Data = !!(device2Bits & 0x02);
-
-    // Get bus signals from c64 side
-    uint8_t ciaBits = c64->cia2.PA;
-    bool ciaAtn = !!(ciaBits & 0x08);
-    bool ciaClock = !!(ciaBits & 0x10);
-    bool ciaData = !!(ciaBits & 0x20);
-    
     // Compute bus signals (inverted and "wired AND")
     atnLine = !ciaAtn;
     clockLine = !device1Clock && !device2Clock && !ciaClock;
@@ -146,11 +141,30 @@ bool IEC::_updateIecLines()
             oldDataLine != dataLine);
 }
 
-void IEC::updateIecLines()
+void
+IEC::updateIecLines()
 {
 	bool signals_changed;
 			
-	// Update port lines
+    // Get bus signals from drive 1
+    uint8_t device1Bits = c64->drive1.via1.getPB();
+    device1Atn = !!(device1Bits & 0x10);
+    device1Clock = !!(device1Bits & 0x08);
+    device1Data = !!(device1Bits & 0x02);
+    
+    // Get bus signals from drive 2
+    uint8_t device2Bits = c64->drive2.via1.getPB();
+    device2Atn = !!(device2Bits & 0x10);
+    device2Clock = !!(device2Bits & 0x08);
+    device2Data = !!(device2Bits & 0x02);
+    
+    // Get bus signals from C64 side
+    uint8_t ciaBits = c64->cia2.PA;
+    ciaAtn = !!(ciaBits & 0x08);
+    ciaClock = !!(ciaBits & 0x10);
+    ciaData = !!(ciaBits & 0x20);
+    
+	// Update bus lines
 	signals_changed = _updateIecLines();	
     
     // ATN signal is connected to CA1 pin of VIA 1
@@ -179,7 +193,20 @@ void IEC::updateIecLines()
 	}
 }
 
-void IEC::execute()
+void
+IEC::updateIecLinesC64Side()
+{
+    updateIecLines();
+}
+
+void
+IEC::updateIecLinesDriveSide()
+{
+    updateIecLines();
+}
+
+void
+IEC::execute()
 {
 	if (busActivity > 0) {
         

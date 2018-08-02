@@ -39,6 +39,21 @@ public:
     //! @brief    Indicates if the bus lines variables need an undate.
     bool isDirty;
     
+    //! @brief    Bus driving values from drive 1 side
+    bool device1Atn;
+    bool device1Clock;
+    bool device1Data;
+    
+    //! @brief    Bus driving values from drive 2 side
+    bool device2Atn;
+    bool device2Clock;
+    bool device2Data;
+    
+    //! @brief    Bus driving values from CIA side
+    bool ciaAtn;
+    bool ciaClock;
+    bool ciaData;
+    
 private:
     
 	//! @brief    Used to determine if the bus is idle or if data is transferred
@@ -74,8 +89,9 @@ public:
     /*! @details  The new values are determined by VIA1 (drive side) and
      *            CIA2 (C64 side).
      */
-	void updateIecLines();
-    
+    void updateIecLinesC64Side();
+    void updateIecLinesDriveSide();
+
 	//! @brief    Executin function for observing the bus activity.
     /*! @details  This method is invoked periodically. It's only purpose is to
      *            determines if data is transmitted on the bus.
@@ -83,6 +99,8 @@ public:
 	void execute();
     
 private:
+    
+    void updateIecLines();
     
     //! @brief    Work horse for method updateIecLines
     /*! @details  Returns true if at least one line changed it's value.
