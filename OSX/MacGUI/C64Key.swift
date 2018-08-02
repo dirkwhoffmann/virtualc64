@@ -83,48 +83,6 @@ struct C64Key : Codable {
         self.col = rowcol.1
         self.nr = nr[8 * row + col]
     }
-    
-    /// DEPRECATED
-    /*
-    init(_ nr: Int, row: Int, col: Int, characters: String) {
-        
-        precondition(nr >= 0 && nr < 66)
-        precondition(row >= 0 && row < 8)
-        precondition(col >= 0 && col < 8)
-        
-        self.init( (row,col) )
-        if nr != 31 {
-            precondition(self.nr == nr)
-        }
-    }
-    
-    // DEPRECATED
-    init(_ nr: Int, row: Int, col: Int) {
-    
-        let curUD = "CU \u{21c5}" // "\u{2191}\u{2193}"
-        let curLR = "CU \u{21c6}" // "\u{2190}\u{2192}"
-        let shftL = "\u{21e7}"
-        let shftR = "      \u{21e7}"
-        let pound = "\u{00a3}"
-        let lfArr = "\u{2190}"
-        let upArr = "\u{2191}"
-        let space = "\u{23b5}"
-        let retrn = "\u{21b5}"
-        
-        var name = [
-            ["DEL", retrn, curLR,  "F7",   "F1",  "F3", "F5",  curUD],
-            ["3",   "W",   "A",    "4",    "Z",   "S",  "E",   shftL],
-            ["5",   "R",   "D",    "6",    "C",   "F",  "T",   "X"],
-            ["7",   "Y",   "G",    "8",    "B",   "H",  "U",   "V"],
-            ["9",   "I",   "J",    "0",    "M",   "K",  "O",   "N"],
-            ["+",   "P",   "L",    "-",    ".",   ":",  "@",   ","],
-            [pound, "*",   ";",    "HOME", shftR, "=",  upArr, "/"],
-            ["1",   lfArr, "CTRL", "2",    space, "C=", "Q",   "STOP"]
-        ]
-
-        self.init(nr, row: row, col: col, characters: name[row][col])
-    }
-    */
 }
 
 extension C64Key: Equatable {
@@ -367,8 +325,32 @@ extension NSImage.Name {
 }
 
 extension C64Key {
+
+    /// Return the physical layout parameters (width and height) for this key
+    var layout: (Int,Int) {
+        get {
+            switch nr {
+            case 47:
+                return (64,32) // Return key
+            case 17, 31, 50, 61:
+                return (48,32) // Ctrl, Restore, Left Shift, Right Shift
+            case 16, 32, 48, 64:
+                return (48,32) // F1, F3, F5, F7
+            default:
+                return (32,32) // All other keys
+            }
+        }
+    }
     
     /// Returns an empty background key image
+    var background: NSImage {
+        get {
+            let imageName = (nr == 16 || nr == 32 || nr == 48 || nr == 64) ? "key_dark" : "key"
+            let background = NSImage(named: NSImage.Name(rawValue: imageName))!
+            return background.resizeImage(width: CGFloat(layout.0), height: CGFloat(layout.1))
+        }
+    }
+    
     func plainKeyImage(width: Int, height: Int, dark: Bool = false) -> NSImage {
 
         let name = NSImage.Name(rawValue: dark ? "key_dark" : "key")
@@ -379,10 +361,6 @@ extension C64Key {
     /// Returns an image representation for this key that is used in the
     /// virtual keyboard.
     func image(pressed: Bool = false, shift: Bool = false, commodore: Bool = false) -> NSImage {
-        
-        var width = 32
-        let height = 32
-        var dark = false
         
         // Check for keys with a predrawn image
         switch (nr) {
@@ -402,8 +380,7 @@ extension C64Key {
         }
     
         // Key properties (font, std char, shifted char, commodore char)
-        let keyinfo = [
-
+        let keyInfos = [
             // First row
             0: (("sys","\u{2190}"), ("sys","\u{2190}"), ("sys","\u{2190}")), // left arrow
             1: (("sys","1"), ("sys","!"), ("sys","1")), // 1
@@ -468,51 +445,28 @@ extension C64Key {
             // Fifth row
             65: (("sys",""), ("sys",""), ("sys","")) // space
         ]
-        let props = keyinfo[nr]!
+        let keyInfo = keyInfos[nr]!
+        let props = shift ? keyInfo.1 : commodore ? keyInfo.2 : keyInfo.0
         
-        // Determine font
-        var font: NSFont
-        var yoffset: Int
-        let fontstr = shift ? props.1.0 : commodore ? props.2.0 : props.0.0
-        if fontstr == "sys" {
-            font = NSFont.systemFont(ofSize: 13)
-            yoffset = -6
-        } else if fontstr == "pro" {
-            font = NSFont.init(name: "C64ProMono", size: 9)!
-            yoffset = -9
-        } else {
-            fatalError()
-        }
-        
-        // Determine render string
-        let text = shift ? props.1.1 : commodore ? props.2.1 : props.0.1
-     
-        // Determine layout properties
-        if (nr == 47) {
-            width = 64 // Return
-        }
-        if (nr == 17 || nr == 31 || nr == 50 || nr == 61) {
-            width = 48 // Ctrl, Restore, Left Shift, Right Shift
-        }
-        if (nr == 16 || nr == 32 || nr == 48 || nr == 64) {
-            width = 48 // F1, F3, F5, F7
-            dark = true
-        }
+        // Determine key label, font, and vertical drawing offset
+        let label = props.1
+        let font = (props.0 == "sys") ?
+            NSFont.systemFont(ofSize: 13) :
+            NSFont.init(name: "C64ProMono", size: 9)!
+        let yoffset = (props.0 == "sys") ? -6 : -9
         
         // Render key
-        let image = plainKeyImage(width: width, height: height, dark: dark)
-        let textRect = CGRect(x: 0, y: yoffset, width: width, height: height)
+        let textRect = CGRect(x: 0, y: yoffset, width: layout.0, height: layout.1)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        // let font1 = NSFont.systemFont(ofSize: 13)
         let textFontAttributes1 = [
             NSAttributedStringKey.font: font,
             NSAttributedStringKey.foregroundColor: NSColor.black,
             NSAttributedStringKey.paragraphStyle: paragraphStyle,
         ]
-        
+        let image = background
         image.lockFocus()
-        text.draw(in: textRect, withAttributes: textFontAttributes1)
+        label.draw(in: textRect, withAttributes: textFontAttributes1)
         image.unlockFocus()
         return image
     }
