@@ -432,6 +432,9 @@ public:
     //! @brief    Returns the current value of the sync signal
     bool getSync() { return sync; }
 
+    //! @brief    Computed the current value of the byte ready line
+    bool computeByteReady();
+    
     //! @brief    Sets the byte ready line
     /*! @note     The byte ready line is connected to the CA1 pin of VIA2.
      *            Pulling this signal low causes important side effects.
