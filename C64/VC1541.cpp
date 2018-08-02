@@ -172,6 +172,7 @@ VC1541::execute(uint64_t duration)
         }
     }
     assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
+    assert(byteReady == computeByteReady());
     
     return result;
 }
@@ -273,7 +274,6 @@ VC1541::executeUF4()
             // (1) Update value on Byte Ready line
             if (byteReadyCounter == 7 && via2.getCA2())
                 clearByteReadyLine();
-            assert(byteReady == computeByteReady());
             break;
             
         case 0x01:
@@ -283,7 +283,6 @@ VC1541::executeUF4()
             
             // (2)
             raiseByteReadyLine();
-            assert(byteReady == computeByteReady());
 
             // (3) Execute byte ready counter
             byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;

@@ -830,8 +830,10 @@ VIA6522::CA1action(bool value)
     wakeUp();
     
     if (value) {
+        // delay |= VIASetCA1out0;
         delay |= VIASetCA1out1;
     } else {
+        // delay |= VIAClearCA1out0;
         delay |= VIAClearCA1out1;
     }
 }
