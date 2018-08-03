@@ -259,12 +259,12 @@ public:
     //
     
     //! @brief    Getter for peripheral port A
-    bool getPA() { return PA; }
-    bool getDDRA() { return DDRA; }
+    uint8_t getPA() { return PA; }
+    uint8_t getDDRA() { return DDRA; }
 
     //! @brief    Getter for peripheral port B
-    bool getPB() { return PB; }
-    bool getDDRB() { return DDRB; }
+    uint8_t getPB() { return PB; }
+    uint8_t getDDRB() { return DDRB; }
 
     //! @brief    Collects all data to be shown in the GUI's debug panel
     CIAInfo getInfo();
