@@ -1272,10 +1272,6 @@ CIA2::updatePA()
     
     // Mark IEC bus as dirty
     c64->iec.setNeedsUpdateC64Side();
-
-    // Update values on IEC bus
-    // c64->iec.updateIecLinesC64Side();
-
 }
 
 //                        -------
