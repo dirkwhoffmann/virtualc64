@@ -554,7 +554,7 @@ C64::_executeOneCycle()
     (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
-    if (iec.isDirty) // isDirty IS BUGGY!!!
+    // if (iec.isDirty) // isDirty IS BUGGY!!!
         iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
