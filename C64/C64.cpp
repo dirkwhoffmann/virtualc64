@@ -560,8 +560,6 @@ C64::_executeOneCycle()
     result &= cpu.executeOneCycle();
     if (drive1.isPoweredOn()) result &= drive1.execute(durationOfCycle);
     if (drive2.isPoweredOn()) result &= drive2.execute(durationOfCycle);
-    if (iec.isDirtyDriveSide)
-        iec.updateIecLinesDriveSide();
     datasette.execute();
     
     rasterlineCycle++;

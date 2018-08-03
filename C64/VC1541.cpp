@@ -158,11 +158,16 @@ VC1541::execute(uint64_t duration)
             
             // Execute CPU and VIAs
             uint64_t cycle = ++cpu.cycle;
+            result = cpu.executeOneCycle();
+            updateByteReady();
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             updateByteReady();
-            result = cpu.executeOneCycle();
-            updateByteReady();
+            // Move IEC bus update inside via execute
+            if (c64->iec.isDirtyDriveSide)
+                c64->iec.updateIecLinesDriveSide();
+            // result = cpu.executeOneCycle();
+            
             nextClock += 10000;
 
         } else {
