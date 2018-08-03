@@ -38,11 +38,13 @@ public:
 	 	
     /*! @brief    Indicates if the bus lines variables need an undate,
      *            because the values coming from the C64 side have changed.
+     *  @deprecated
      */
     bool isDirtyC64Side;
 
     /*! @brief    Indicates if the bus lines variables need an undate,
      *            because the values coming from the drive side have changed.
+     *  @deprecated
      */
     bool isDirtyDriveSide;
 
@@ -90,9 +92,11 @@ public:
     bool isBusy() { return busActivity > 0; }
     
     //! @brief    Requensts an update of the bus lines from the C64 side.
+    //! @deprecated
     void setNeedsUpdateC64Side() { isDirtyC64Side = true; }
 
     //! @brief    Requensts an update of the bus lines from the drive side.
+    //! @deprecated
     void setNeedsUpdateDriveSide() { isDirtyDriveSide = true; }
 
     //! @brief    Updates all three bus lines.

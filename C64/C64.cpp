@@ -553,13 +553,13 @@ C64::_executeOneCycle()
     (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
-    if (iec.isDirtyC64Side)
-        iec.updateIecLinesC64Side();
+    if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
     if (drive1.isPoweredOn()) result &= drive1.execute(durationOfCycle);
     if (drive2.isPoweredOn()) result &= drive2.execute(durationOfCycle);
+    if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
     datasette.execute();
     
     rasterlineCycle++;

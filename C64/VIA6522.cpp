@@ -942,7 +942,8 @@ void
 VIA1::updatePB()
 {
     VIA6522::updatePB();
-    c64->iec.setNeedsUpdateDriveSide(); // Mark IEC bus as dirty
+    c64->iec.setNeedsUpdateDriveSide(); 
+    // c64->iec.updateIecLinesDriveSide();
 }
 
 //
