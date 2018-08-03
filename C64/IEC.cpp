@@ -95,7 +95,7 @@ IEC::dumpState()
 	msg("\n");
     msg("    DDRB (VIA1) : %02X (Drive 1)\n", c64->drive1.via1.getDDRB());
     msg("    DDRB (VIA1) : %02X (Drive 2)\n", c64->drive2.via1.getDDRB());
-    msg("    DDRA (CIA2) : %02X\n\n", c64->cia2.DDRA);
+    msg("    DDRA (CIA2) : %02X\n\n", c64->cia2.getDDRA());
     msg("   Bus activity : %d\n", busActivity); 
 
     msg("\n");
@@ -146,7 +146,6 @@ bool IEC::_updateIecLines()
     dataLine &= c64->drive1.isPoweredOff() || (atnLine ^ device1Atn);
     dataLine &= c64->drive2.isPoweredOff() || (atnLine ^ device2Atn);
 
-    isDirty = false;
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||
             oldDataLine != dataLine);
@@ -186,13 +185,15 @@ IEC::updateIecLines()
             busActivity = 30;
         }
 	}
+    
+    isDirty = false;
 }
 
 void
 IEC::updateIecLinesC64Side()
 {
     // Get bus signals from C64 side
-    uint8_t ciaBits = c64->cia2.PA;
+    uint8_t ciaBits = c64->cia2.getPA();
     ciaAtn = !!(ciaBits & 0x08);
     ciaClock = !!(ciaBits & 0x10);
     ciaData = !!(ciaBits & 0x20);

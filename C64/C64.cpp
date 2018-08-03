@@ -550,10 +550,11 @@ C64::_executeOneCycle()
     // '-------------------------------------|-------------------|--'
     
     // First clock phase (o2 low)
+    assert(!iec.isDirty);
     (vic.*vicfunc[rasterlineCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
-    // if (iec.isDirty)
+    if (iec.isDirty) // isDirty IS BUGGY!!!
         iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
@@ -562,6 +563,7 @@ C64::_executeOneCycle()
     if (drive2.isPoweredOn()) result &= drive2.execute(durationOfCycle);
     if (iec.isDirty)
         iec.updateIecLinesDriveSide();
+    assert(!iec.isDirty);
     datasette.execute();
     
     rasterlineCycle++;

@@ -84,27 +84,25 @@ class Joystick;
  */
 class CIA : public VirtualComponent {
     
-    friend C64;
-    friend C64Memory;
-    
-public:
+protected:
 
 	//! @brief    Timer A counter
 	uint16_t counterA;
 	
+    //! @brief    Timer B counter
+    uint16_t counterB;
+    
+private:
+    
 	//! @brief    Timer A latch
 	uint16_t latchA;
-
-	//! @brief    Timer B counter
-	uint16_t counterB;
 	
 	//! @brief    Timer B latch
 	uint16_t latchB;
 	
 	//! @brief    Time of day clock
 	TOD tod;
-	
-public:	
+    
 	
 	// 
 	// Adapted from PC64Win by Wolfgang Lorenz
@@ -132,6 +130,8 @@ public:
     //! @brief    Interrupt mask register
 	uint8_t IMR;
 
+protected:
+    
     //! @brief    Bit mask for PB outputs: 0 = port register, 1 = timer
     uint8_t PB67TimerMode;
     
@@ -141,9 +141,12 @@ public:
     //! @brief    PB outputs bits 6 and 7 in toggle mode
 	uint8_t PB67Toggle;
 		
+    
     //
     // Port registers
     //
+    
+protected:
     
     //! @brief    Peripheral data register A
     uint8_t PRA;
@@ -167,6 +170,8 @@ public:
     //
     // Shift register logic
     //
+    
+private:
     
     //! @brief    Serial data register
     /*! @details  http://unusedino.de/ec64/technical/misc/cia6526/serial.html
@@ -222,6 +227,8 @@ public:
      *            threshhold, the chip is put into idle state via sleep()
      */
     uint8_t tiredness;
+
+public:
     
     //! @brief    Wakeup cycle
     uint64_t wakeUpCycle;
@@ -251,6 +258,14 @@ public:
     //! @functiongroup Accessing device properties
     //
     
+    //! @brief    Getter for peripheral port A
+    bool getPA() { return PA; }
+    bool getDDRA() { return DDRA; }
+
+    //! @brief    Getter for peripheral port B
+    bool getPB() { return PB; }
+    bool getDDRB() { return DDRB; }
+
     //! @brief    Collects all data to be shown in the GUI's debug panel
     CIAInfo getInfo();
     
@@ -323,12 +338,10 @@ private:
     //! @functiongroup Accessing the I/O address space
     //
     
-private:
+public:
 
     //! @brief    Peeks a value from a CIA register.
     uint8_t peek(uint16_t addr);
-
-public:
     
     //! @brief    Peeks a value from a CIA register without causing side effects.
     uint8_t spypeek(uint16_t addr);
@@ -341,7 +354,7 @@ public:
     //! @functiongroup Running the device
     //
     
-private:
+public:
     
 	//! @brief    Executes the CIA for one cycle
 	void executeOneCycle();
@@ -349,11 +362,10 @@ private:
 	//! @brief    Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
+    
     //
     //! @functiongroup Handling interrupt requests
     //
-
-public:
     
     //! @brief    Handles an interrupt request from TOD
     void todInterrupt(); 
