@@ -36,9 +36,16 @@ public:
 	//! @brief    Current value of the IEC bus data line
 	bool dataLine;
 	 	
-    //! @brief    Indicates if the bus lines variables need an undate.
-    bool isDirty;
-    
+    /*! @brief    Indicates if the bus lines variables need an undate,
+     *            because the values coming from the C64 side have changed.
+     */
+    bool isDirtyC64Side;
+
+    /*! @brief    Indicates if the bus lines variables need an undate,
+     *            because the values coming from the drive side have changed.
+     */
+    bool isDirtyDriveSide;
+
     //! @brief    Bus driving values from drive 1 side
     bool device1Atn;
     bool device1Clock;
@@ -82,9 +89,12 @@ public:
     //! @brief    Returns true if the IEC currently transfers data.
     bool isBusy() { return busActivity > 0; }
     
-    //! @brief    Requensts an update of the bus lines.
-    void setNeedsUpdate() { isDirty = true; }
-    
+    //! @brief    Requensts an update of the bus lines from the C64 side.
+    void setNeedsUpdateC64Side() { isDirtyC64Side = true; }
+
+    //! @brief    Requensts an update of the bus lines from the drive side.
+    void setNeedsUpdateDriveSide() { isDirtyDriveSide = true; }
+
     //! @brief    Updates all three bus lines.
     /*! @details  The new values are determined by VIA1 (drive side) and
      *            CIA2 (C64 side).

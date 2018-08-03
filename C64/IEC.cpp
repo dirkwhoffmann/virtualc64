@@ -30,8 +30,9 @@ IEC::IEC()
         { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
         { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
         { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
-        { &isDirty,             sizeof(isDirty),                CLEAR_ON_RESET },
-        
+        { &isDirtyC64Side,      sizeof(isDirtyC64Side),         CLEAR_ON_RESET },
+        { &isDirtyDriveSide,    sizeof(isDirtyDriveSide),       CLEAR_ON_RESET },
+
         { &device1Atn,          sizeof(device1Atn),             CLEAR_ON_RESET },
         { &device1Clock,        sizeof(device1Clock),           CLEAR_ON_RESET },
         { &device1Data,         sizeof(device1Data),            CLEAR_ON_RESET },
@@ -185,8 +186,6 @@ IEC::updateIecLines()
             busActivity = 30;
         }
 	}
-    
-    isDirty = false;
 }
 
 void
@@ -199,6 +198,7 @@ IEC::updateIecLinesC64Side()
     ciaData = !!(ciaBits & 0x20);
     
     updateIecLines();
+    isDirtyC64Side = false;
 }
 
 void
@@ -217,6 +217,7 @@ IEC::updateIecLinesDriveSide()
     device2Data = !!(device2Bits & 0x02);
     
     updateIecLines();
+    isDirtyDriveSide = false;
 }
 
 void
