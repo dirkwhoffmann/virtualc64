@@ -302,8 +302,12 @@ private:
     //! @brief   Values driving port A from outside the chip
     virtual uint8_t portAexternal() = 0;
     
+public:
+    
     //! @brief   Computes the values which we currently see at port A
     virtual void updatePA() = 0;
+    
+private:
     
     //! @brief   Values driving port B from inside the chip
     virtual uint8_t portBinternal() = 0;
@@ -418,7 +422,13 @@ private:
     
     uint8_t portAinternal();
     uint8_t portAexternal();
+
+public:
+    
     void updatePA();
+    
+private:
+    
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();

@@ -433,6 +433,7 @@ public:
     bool getSync() { return sync; }
 
     //! @brief    Computed the current value of the byte ready line
+    //! @deprecated Experimental (for debugging only)
     bool computeByteReady();
     
     //! @brief    Sets the byte ready line
@@ -442,13 +443,27 @@ public:
      *            into the VIA chip. Secondly, the V flag is set inside the CPU.
      *  @seealso  CA1action()
      */
-    void setByteReadyLine(bool value);
+    // void setByteReadyLine(bool value);
 
     //! @brief    Convenience wrapper
-    void clearByteReadyLine() { setByteReadyLine(false); }
+    //! @deprecated
+    // void clearByteReadyLine() { setByteReadyLine(false); }
 
     //! @brief    Convenience wrapper
-    void raiseByteReadyLine() { setByteReadyLine(true); }
+    //! @deprecated
+    // void raiseByteReadyLine() { setByteReadyLine(true); }
+    
+    //! @brief    Updates the value on the byte ready line
+    /*! @note     The byte ready line is connected to the CA1 pin of VIA2.
+     *            Pulling this signal low causes important side effects.
+     *            Firstly, the contents of the read shift register is latched
+     *            into the VIA chip. Secondly, the V flag is set inside the CPU.
+     *  @seealso  CA1action()
+     */
+    void updateByteReady();
+    
+    //! @brief    Raises the byte ready line
+    void raiseByteReady();
     
     //! @brief    Returns the current track zone (0 to 3)
     bool getZone() { return zone; }

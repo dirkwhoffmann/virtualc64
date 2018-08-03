@@ -59,11 +59,22 @@ void
 IEC::reset()
 {
     VirtualComponent::reset();
-    
-    // driveIsConnected = 1;
+
     atnLine = 1;
     clockLine = 1;
     dataLine = 1;
+    
+    device1Atn = 1;
+    device1Clock = 1;
+    device1Data = 1;
+
+    device2Atn = 1;
+    device2Clock = 1;
+    device2Data = 1;
+    
+    ciaAtn = 1;
+    ciaClock = 1;
+    ciaData = 1;
 }
 
 void
@@ -145,33 +156,17 @@ void
 IEC::updateIecLines()
 {
 	bool signals_changed;
-			
-    // Get bus signals from drive 1
-    uint8_t device1Bits = c64->drive1.via1.getPB();
-    device1Atn = !!(device1Bits & 0x10);
-    device1Clock = !!(device1Bits & 0x08);
-    device1Data = !!(device1Bits & 0x02);
-    
-    // Get bus signals from drive 2
-    uint8_t device2Bits = c64->drive2.via1.getPB();
-    device2Atn = !!(device2Bits & 0x10);
-    device2Clock = !!(device2Bits & 0x08);
-    device2Data = !!(device2Bits & 0x02);
-    
-    // Get bus signals from C64 side
-    uint8_t ciaBits = c64->cia2.PA;
-    ciaAtn = !!(ciaBits & 0x08);
-    ciaClock = !!(ciaBits & 0x10);
-    ciaData = !!(ciaBits & 0x20);
-    
+
 	// Update bus lines
 	signals_changed = _updateIecLines();	
-    
-    // ATN signal is connected to CA1 pin of VIA 1
-    c64->drive1.via1.CA1action(!atnLine);
-    c64->drive2.via1.CA1action(!atnLine);
 
-	if (signals_changed) {
+    if (signals_changed) {
+        
+        c64->cia2.updatePA();
+        
+        // ATN signal is connected to CA1 pin of VIA 1
+        c64->drive1.via1.CA1action(!atnLine);
+        c64->drive2.via1.CA1action(!atnLine);
         
         if (tracingEnabled()) {
             dumpTrace();
@@ -196,12 +191,30 @@ IEC::updateIecLines()
 void
 IEC::updateIecLinesC64Side()
 {
+    // Get bus signals from C64 side
+    uint8_t ciaBits = c64->cia2.PA;
+    ciaAtn = !!(ciaBits & 0x08);
+    ciaClock = !!(ciaBits & 0x10);
+    ciaData = !!(ciaBits & 0x20);
+    
     updateIecLines();
 }
 
 void
 IEC::updateIecLinesDriveSide()
 {
+    // Get bus signals from drive 1
+    uint8_t device1Bits = c64->drive1.via1.getPB();
+    device1Atn = !!(device1Bits & 0x10);
+    device1Clock = !!(device1Bits & 0x08);
+    device1Data = !!(device1Bits & 0x02);
+
+    // Get bus signals from drive 2
+    uint8_t device2Bits = c64->drive2.via1.getPB();
+    device2Atn = !!(device2Bits & 0x10);
+    device2Clock = !!(device2Bits & 0x08);
+    device2Data = !!(device2Bits & 0x02);
+    
     updateIecLines();
 }
 

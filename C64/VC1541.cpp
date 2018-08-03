@@ -160,8 +160,9 @@ VC1541::execute(uint64_t duration)
             uint64_t cycle = ++cpu.cycle;
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
-            // setByteReadyLine(computeByteReady());
+            updateByteReady();
             result = cpu.executeOneCycle();
+            updateByteReady();
             nextClock += 10000;
 
         } else {
@@ -172,7 +173,6 @@ VC1541::execute(uint64_t duration)
         }
     }
     assert(nextClock >= elapsedTime && nextCarry >= elapsedTime);
-    assert(byteReady == computeByteReady());
     
     return result;
 }
@@ -256,12 +256,12 @@ VC1541::executeUF4()
     switch (counterUF4 & 0x03) {
             
         case 0x00:
-            // case 0x01:
+        case 0x01:
             
             // Computation of the Byte Ready and the Load signal
             //
             //           74LS191                             ---
-            //           -------               VIA2::CA2 --o|   |
+            //           -------               VIA2::CA2 ---|   |
             //  SYNC --o| Load  |                UF4::QB --o| & |o-- Byte Ready
             //    QB ---| Clk   |                        ---|   |
             //          |    QD |   ---                  |   ---
@@ -272,18 +272,14 @@ VC1541::executeUF4()
             //             UE3                               ---
             
             // (1) Update value on Byte Ready line
-            if (byteReadyCounter == 7 && via2.getCA2())
-                clearByteReadyLine();
-            break;
-            
-        case 0x01:
+            updateByteReady();
             break;
             
         case 0x02:
             
             // (2)
-            raiseByteReadyLine();
-
+            raiseByteReady();
+            
             // (3) Execute byte ready counter
             byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
             
@@ -314,7 +310,7 @@ VC1541::computeByteReady()
 {
     //
     //           74LS191                             ---
-    //           -------               VIA2::CA2 --o|   |
+    //           -------               VIA2::CA2 ---|   |
     //  SYNC --o| Load  |                UF4::QB --o| & |o-- Byte Ready
     //    QB ---| Clk   |                        ---|   |
     //          |    QD |   ---                  |   ---
@@ -327,9 +323,46 @@ VC1541::computeByteReady()
     bool ca2 = via2.getCA2();
     bool qb = counterUF4 & 0x02;
     bool ue3 = (byteReadyCounter == 7);
-    return !(!ca2 && !qb && ue3);
+    // debug("%d %d (%d) %d (%d)\n", ca2, qb, counterUF4, ue3, byteReadyCounter);
+    return !(ca2 && !qb && ue3);
 }
 
+void
+VC1541::updateByteReady()
+{
+    //
+    //           74LS191                             ---
+    //           -------               VIA2::CA2 ---|   |
+    //  SYNC --o| Load  |                UF4::QB --o| & |o-- Byte Ready
+    //    QB ---| Clk   |                        ---|   |
+    //          |    QD |   ---                  |   ---
+    //          |    QC |--|   |    ---          |
+    //          |    QB |--| & |o--| 1 |o---------
+    //          |    QA |--|   |    ---
+    //           -------    ---
+    //             UE3
+    
+    bool ca2 = via2.getCA2();
+    bool qb = counterUF4 & 0x02;
+    bool ue3 = (byteReadyCounter == 7);
+    bool newByteReady = !(ca2 && !qb && ue3);
+    
+    if (byteReady != newByteReady) {
+        byteReady = newByteReady;
+        via2.CA1action(byteReady);
+    }
+}
+
+void
+VC1541::raiseByteReady()
+{
+    if (!byteReady) {
+        byteReady = true;
+        via2.CA1action(true);
+    }
+}
+
+/*
 void
 VC1541::setByteReadyLine(bool value)
 {
@@ -338,6 +371,7 @@ VC1541::setByteReadyLine(bool value)
         via2.CA1action(value);
     }
 }
+*/
 
 void
 VC1541::setZone(uint2_t value)
