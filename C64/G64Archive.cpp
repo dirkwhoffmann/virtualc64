@@ -64,7 +64,8 @@ G64Archive::makeG64ArchiveWithFile(const char *filename)
     return archive;
 }
 
-G64Archive *makeG64ArchiveWithDisk(Disk *disk)
+G64Archive *
+G64Archive::makeG64ArchiveWithDisk(Disk *disk)
 {
     assert(disk != NULL);
     
@@ -82,7 +83,7 @@ G64Archive *makeG64ArchiveWithDisk(Disk *disk)
             offset[ht] = 0;
         } else {
             offset[ht] = pos;
-            pos += 2 /* Length */ + 7692 /* Data */;
+            pos += 2 /* Length */ + maxBytesOnTrack /* Data */;
         }
     }
     
@@ -99,7 +100,7 @@ G64Archive *makeG64ArchiveWithDisk(Disk *disk)
 
     // Write track offsets
     pos = 12;
-    for (Halftrack ht = 1; ht < 84; ht++) {
+    for (Halftrack ht = 1; ht <= 84; ht++) {
         buffer[pos++] = offset[ht] & 0xFF;
         buffer[pos++] = (offset[ht] >> 8) & 0xFF;
         buffer[pos++] = (offset[ht] >> 16) & 0xFF;
@@ -109,12 +110,15 @@ G64Archive *makeG64ArchiveWithDisk(Disk *disk)
     // Dump track data
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        assert(pos == offset[ht]);
         if (!empty[ht]) {
-            
-            uint16_t numDataBytes = disk->lengthOfHalftrack(ht);
+
+            uint16_t numDataBytes = disk->lengthOfHalftrack(ht) / 8;
             uint16_t numFillBytes = maxBytesOnTrack - numDataBytes;
 
+            if (disk->lengthOfHalftrack(ht) % 8 != 0) {
+                printf("WARNING: Size of halftrack %d is not a multiple of 8\n", ht);
+            }
+            assert(pos == offset[ht]);
             buffer[pos++] = LO_BYTE(numDataBytes);
             buffer[pos++] = HI_BYTE(numDataBytes);
             

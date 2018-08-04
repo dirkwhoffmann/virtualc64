@@ -44,19 +44,24 @@
                                             <action selector="selectD64:" target="-2" id="c3o-fh-eMx"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="T64" tag="1" id="Mxl-Oz-Nc0" userLabel="T64 Format">
+                                    <menuItem title="G64 (beta)" id="HRF-WS-Myd" userLabel="P00 Format">
                                         <connections>
-                                            <action selector="selectT64:" target="-2" id="4pA-k3-TJ3"/>
+                                            <action selector="selectG64:" target="-2" id="yxg-db-cMI"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="PRG" tag="2" id="iqX-ma-UIC" userLabel="PRG Format">
+                                    <menuItem title="PRG" id="iqX-ma-UIC" userLabel="PRG Format">
                                         <connections>
                                             <action selector="selectPRG:" target="-2" id="vG2-j9-JdD"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="P00" tag="3" id="Tt4-Qz-K62" userLabel="P00 Format">
+                                    <menuItem title="P00" id="Tt4-Qz-K62" userLabel="P00 Format">
                                         <connections>
                                             <action selector="selectP00:" target="-2" id="9B2-Hm-sId"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="T64" id="Mxl-Oz-Nc0" userLabel="T64 Format">
+                                        <connections>
+                                            <action selector="selectT64:" target="-2" id="4pA-k3-TJ3"/>
                                         </connections>
                                     </menuItem>
                                 </items>

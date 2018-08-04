@@ -266,6 +266,9 @@ class DiskInspectorController : UserDialogController {
     
         driveNr = (sender as! NSButton).tag
         drive = c64.drive(driveNr)
+        diskInfoIsDirty = true
+        trackDataIsDirty = true
+        headPositionIsDirty = true
         refresh()
     }
     

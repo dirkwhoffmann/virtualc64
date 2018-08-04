@@ -415,6 +415,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @implementation DiskProxy
 
+@synthesize wrapper;
+
 - (instancetype) initWithDisk525:(Disk *)disk
 {
     if (self = [super init]) {
@@ -428,8 +430,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL)writeProtected { return wrapper->disk->isWriteProtected(); }
 - (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
 - (void)toggleWriteProtection { wrapper->disk->toggleWriteProtection(); }
-// - (BOOL)modified { return wrapper->disk->isModified(); }
-// - (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
 - (NSInteger)nonemptyHalftracks { return (NSInteger)wrapper->disk->nonemptyHalftracks(); }
 - (void)analyzeTrack:(Track)t { wrapper->disk->analyzeTrack(t); }
 - (void)analyzeHalftrack:(Halftrack)ht { wrapper->disk->analyzeHalftrack(ht); }
@@ -1308,6 +1308,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) makeWithFile:(NSString *)path
 {
     G64Archive *archive = G64Archive::makeG64ArchiveWithFile([path UTF8String]);
+    return [self make: archive];
+}
++ (instancetype) makeWithDisk:(DiskProxy *)diskProxy
+{
+    Disk *disk = [diskProxy wrapper]->disk;
+    G64Archive *archive = G64Archive::makeG64ArchiveWithDisk(disk);
     return [self make: archive];
 }
 @end

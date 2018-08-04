@@ -572,7 +572,8 @@ class MyDocument : NSDocument {
     
     func export(drive nr: Int, to url: URL, ofType typeName: String) -> Bool {
         
-        precondition(["D64", "T64", "PRG", "P00"].contains(typeName))
+        track("url = \(url) typeName = \(typeName)")
+        precondition(["D64", "T64", "PRG", "P00", "G64"].contains(typeName))
         
         let drive = c64.drive(nr)!
         
@@ -587,6 +588,10 @@ class MyDocument : NSDocument {
         case "D64":
             track("Exporting to D64 format")
             archive = d64archive
+        
+        case "G64":
+            track("Exporting to G64 format")
+            archive = G64Proxy.make(withDisk: drive.disk)
             
         case "T64":
             track("Exporting to T64 format")
@@ -632,7 +637,7 @@ class MyDocument : NSDocument {
     func export(drive nr: Int, to url: URL?) -> Bool {
         
         if let suffix = url?.pathExtension {
-            return export(drive: nr, to: url!, ofType: suffix)
+            return export(drive: nr, to: url!, ofType: suffix.uppercased())
         } else {
             return false
         }

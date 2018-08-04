@@ -12,22 +12,12 @@ class ExportDiskController : UserDialogController {
     @IBOutlet weak var button: NSPopUpButton!
     var type: ContainerType = D64_CONTAINER
     var savePanel: NSSavePanel!
-    // var d64archive: D64Proxy!
     var selectedURL: URL?
     
+    /*
     override func awakeFromNib() {
-        
-        // Export format PRG and P00 will only be available if disk is not empty
-        /*
-        let items = d64archive.numberOfItems()
-        if items == 0 {
-            track()
-            print("\(button)")
-            button.item(at: 2)?.isHidden = true // PRG
-            button.item(at: 3)?.isHidden = true // P00
-        }
-        */
     }
+    */
     
     func showSheet(withParent: MyController, drive nr: Int) {
         
@@ -37,12 +27,9 @@ class ExportDiskController : UserDialogController {
         parentWindow = parent.window
         c64 = parent.mydocument.c64
        
-        // Convert inserted disk to D64 archive
-        // d64archive = D64Proxy.make(withDrive: c64.drive(driveNr))
-        
         // Create save panel
         savePanel = NSSavePanel()
-        savePanel.allowedFileTypes = ["D64"]
+        savePanel.allowedFileTypes = ["d64"]
         savePanel.prompt = "Export"
         savePanel.title = "Export"
         savePanel.nameFieldLabel = "Export As:"
@@ -61,11 +48,11 @@ class ExportDiskController : UserDialogController {
         savePanel.allowedFileTypes = ["d64"]
         type = D64_CONTAINER
     }
-    
-    @IBAction func selectT64(_ sender: Any!) {
+
+    @IBAction func selectG64(_ sender: Any!) {
         track()
-        savePanel.allowedFileTypes = ["t64"]
-        type = T64_CONTAINER
+        savePanel.allowedFileTypes = ["g64"]
+        type = G64_CONTAINER
     }
     
     @IBAction func selectPRG(_ sender: Any!) {
@@ -78,5 +65,11 @@ class ExportDiskController : UserDialogController {
         track()
         savePanel.allowedFileTypes = ["p00"]
         type = P00_CONTAINER
+    }
+    
+    @IBAction func selectT64(_ sender: Any!) {
+        track()
+        savePanel.allowedFileTypes = ["t64"]
+        type = T64_CONTAINER
     }
 }

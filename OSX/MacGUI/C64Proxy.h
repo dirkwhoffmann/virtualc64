@@ -251,11 +251,6 @@ struct ContainerWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-// - (BOOL) driveIsConnected;
-// - (void) connectDrive;
-// - (void) disconnectDrive;
-
-
 @end
 
 
@@ -331,12 +326,12 @@ struct ContainerWrapper;
     struct DiskWrapper *wrapper;
 }
 
+@property (readonly) struct DiskWrapper *wrapper;
+
 - (void) dump;
 - (BOOL)writeProtected;
 - (void)setWriteProtection:(BOOL)b;
 - (void)toggleWriteProtection;
-// - (BOOL)modified;
-// - (void)setModified:(BOOL)b;
 - (NSInteger)nonemptyHalftracks;
 - (void)analyzeTrack:(Track)t;
 - (void)analyzeHalftrack:(Halftrack)ht;
@@ -769,6 +764,7 @@ struct ContainerWrapper;
 + (BOOL)isG64File:(NSString *)filename;
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype) makeWithFile:(NSString *)filename;
++ (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
 @end
 
 @interface NIBProxy : ArchiveProxy
