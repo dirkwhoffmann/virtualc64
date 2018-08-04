@@ -24,8 +24,6 @@
 #include "VC64Object.h"
 #include "C64_types.h"
 
-// class C64;
-
 /*! @class    File
  *  @brief    Base class for all file containers.
  *  @details  Provides the basic functionality for reading and writing files.

@@ -27,6 +27,9 @@
 
 #include "File.h"
 
+// Forward declarations
+class Disk;
+
 /*! @class    Archive
     @brief    Base class for all loadable objects with multiple files included. */
 

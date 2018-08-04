@@ -26,10 +26,12 @@
  */
 class G64Archive : public Archive {
 
-private:	
+public:
 
     //! @brief    Header signature
     static const uint8_t magicBytes[];
+    
+private:
     
     //! @brief    The raw data of this archive.
     uint8_t *data;
@@ -55,13 +57,19 @@ public:
     
     //! @brief    Standard constructor
     G64Archive();
-    
+
+    //! @brief    Creates an empty G64 container with the specified capacity
+    G64Archive(size_t capacity);
+
     //! @brief    Factory method
     static G64Archive *makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
     static G64Archive *makeG64ArchiveWithFile(const char *path);
 
+    //! @brief    Factory method
+    static G64Archive *makeG64ArchiveWithDisk(const Disk *disk);
+    
     //! @brief    Standard destructor
     ~G64Archive();
 		
@@ -82,7 +90,6 @@ public:
     void dealloc();
     
     const char *getName();
-    // const char *getNameAsPETString();
     ContainerType type() { return G64_CONTAINER; }
     const char *typeAsString() { return "G64"; }
     

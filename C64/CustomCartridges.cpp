@@ -124,6 +124,8 @@ ActionReplay::setControlReg(uint8_t value)
 {
     regValue = value;
     
+    debug("ActionReplay::setControlReg(%02X)\n", value);
+    
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
      *   6    1 = resets FREEZE-mode (turns back to normal mode)
@@ -141,6 +143,10 @@ ActionReplay::setControlReg(uint8_t value)
     
     bankInROML(bank(), 0x2000, 0);
     bankInROMH(bank(), 0x2000, 0);
+    
+    if (disabled()) {
+        debug("***** DISABLING AR cart *****\n");
+    }
     
     if (resetFreezeMode() || disabled()) {
         c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);

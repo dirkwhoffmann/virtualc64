@@ -141,7 +141,7 @@ private:
     // Disk data
     //
 
-private:
+public:
     
     /*! @brief    Disk data
      *  @details  The first valid track and halftrack number is 1.
@@ -173,6 +173,8 @@ private:
     //
     // Debug information
     //
+    
+private:
     
     //! @brief    Information about a detected track error
     typedef struct {
@@ -215,11 +217,11 @@ public:
     void setModified(bool b);
 
     
-public:
-    
     //
     //! @functiongroup Handling Gcr encoded data
     //
+    
+public:
     
     //! @brief   Converts a 4 bit binary value to a 5 bit GCR codeword
     uint5_t bin2gcr(uint4_t value) { assert(is_uint4_t(value)); return gcr[value]; }
@@ -240,7 +242,6 @@ public:
      */
     void encodeGcr(uint8_t *values, size_t length, Track t, HeadPosition offset);
 
-    
     /*! @brief   Translates four data bytes into five GCR encodes bytes
      *! @deprecated
      */
@@ -335,8 +336,7 @@ public:
             writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
-    /*! @brief  Writes a single byte to disk.
-     */
+    //! @brief  Writes a single byte to disk.
     void writeByteToHalftrack(Halftrack ht, HeadPosition pos, uint8_t byte) {
         for (uint8_t mask = 0x80; mask != 0; mask >>= 1)
             writeBitToHalftrack(ht, pos++, byte & mask);
@@ -346,8 +346,7 @@ public:
         writeByteToHalftrack(2 * t - 1, pos, byte);
     }
     
-    /*! @brief   Writes a certain number of interblock bytes to disk.
-     */
+    //! @brief   Writes a certain number of interblock bytes to disk.
     void writeGapToHalftrack(Halftrack ht, HeadPosition pos, size_t length) {
         for (size_t i = 0; i < length; i++, pos += 8)
             writeByteToHalftrack(ht, pos, 0x55);
