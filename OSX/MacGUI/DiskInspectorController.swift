@@ -20,13 +20,13 @@ class DiskInspectorController : UserDialogController {
     // Proxy of the currently analyzed drive
     var drive: DriveProxy!
     
-    // Remembers the currently displayed halftrack number
+    // Number of the currently displayed halftrack
     var halftrack = UInt32.max
 
-    // Remebers the currently displayed head position
+    // The currently displayed head position
     var offset = Int.max
     
-    // Remembers if disk insertion status
+    // Remembers the disk insertion status
     var hasDisk = false
     
     // Remembers the drive motor status
@@ -73,6 +73,7 @@ class DiskInspectorController : UserDialogController {
         
         driveNr = 1
         drive = c64.drive1
+        
         refresh()
     
         // Start refresh timer

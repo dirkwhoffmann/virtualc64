@@ -594,27 +594,40 @@ D64Archive::nextTrackAndSector(Track track, Sector sector,
                                Track *nextTrack, Sector *nextSector,
                                bool skipDirectoryTrack)
 {
-    unsigned highestSectorNumberInThisTrack = D64Map[track].numberOfSectors - 1;
-    assert(highestSectorNumberInThisTrack == numberOfSectorsInTrack(track) - 1);
-    // PROBLEM?: A REAL VC1541 DISK USUALLY SHOWS AN INTERLEAVE OF 10
+    assert(nextTrack != NULL);
+    assert(nextSector != NULL);
+    assert(isValidTrackSectorPair(track, sector));
     
-    if (sector < highestSectorNumberInThisTrack) {
-        sector++;
-    } else if (track < numTracks) {
-        track++;
-        sector = 0;
-    } else {
-        return false; // there is no next sector
+    // Interleave pattern for all four speed zones and the directory track
+    Sector zone3[] = { 10,11,12,13,14,15,16,17,18,19,20,0,1,2,3,4,5,6,7,8,9 };
+    Sector zone2[] = { 10,11,12,13,14,15,16,17,18,0,1,2,3,4,5,6,7,8,9 };
+    Sector trk18[] = { 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,0,1,2 };
+    Sector zone1[] = { 10,11,12,13,14,15,16,17,1,0,2,3,4,5,6,7,8,9 };
+    Sector zone0[] = { 10,11,12,13,14,15,16,0,1,2,3,4,5,6,7,8,9 };
+
+    // Determine interleave pattern for this track
+    Sector *next =
+    (track < 18) ? zone3 :
+    (track == 18) ? trk18 :
+    (track < 25) ? zone2 :
+    (track < 31) ? zone1 : zone0;
+    
+    // Move to next sector
+    sector = next[sector];
+    
+    // Move to next track if we wrapped over
+    if (sector == 0) {
+        if (track < numTracks) {
+            track = (track == 17 && skipDirectoryTrack) ? 19 : track + 1;
+            sector = 0;
+        } else {
+            return false; // there is no next track
+        }
     }
     
-    if (track == 18 && skipDirectoryTrack) {
-        track = 19;
-        sector = 0;
-    }
-    
+    assert(isValidTrackSectorPair(track, sector));
     *nextTrack = track;
     *nextSector = sector;
-    
     return true;
 }
 
@@ -846,20 +859,26 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name,
 {
 	int pos;
 	
+    // Sector interleave pattern for the directory track
+    // 18,0 is the BAM, and the first 8 directory items are located at 18,1.
+    // After that, an interleave pattern of 3 is applied. 
+    Sector secnr[] = { 0,1,4,7,10,13,16,2,5,8,11,14,17,3,6,9,12,15,18 };
+        
     if (nr >= 144) {
         warn("Cannot write directory entry. Number of files is limited to 144\n");
 		return false;
 	}
 
-	// determine sector and relative sector position
-	uint8_t sector = 1 + (nr / 8);
+	// Determine sector and relative sector position for this entry
+    uint8_t sector = secnr[1 + (nr / 8)];
 	uint8_t rel = (nr % 8) * 0x20;
 	
+    // Update BAM
 	markSectorAsUsed(18, sector);
 
-	// link to this sector if it is not the first
-	if (sector >= 2) {
-		pos = offset(18, sector - 1);
+	// Link to this sector if it is not the first
+	if (sector != 1) {
+		pos = offset(18, secnr[nr / 8]);
 		data[pos++] = 18;
 		data[pos] = sector;
 	}

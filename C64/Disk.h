@@ -355,7 +355,10 @@ public:
     void writeGapToTrack(Track t, HeadPosition pos, size_t length) {
         writeGapToHalftrack(2 * t - 1, pos, length);
     }
-    
+
+    //! @brief    Clears a single half-track.
+    void clearHalftrack(Halftrack ht); 
+
     /*! @brief    Reverts to a factory-new disk.
      *  @details  All disk data gets erased and the copy protection mark removed.
      */
@@ -489,15 +492,15 @@ public:
     void encodeArchive(NIBArchive *a);
     
     /*! @brief   Converts a D64 archive into a floppy disk.
-     *  @details The method creates sync marks, GRC encoded header and data blocks,
-     *           checksums and gaps.
-     *  @param   interleave  Set to true to apply the standard interleave pattern.
-     *  @param   alignTracks Set to true to let the first sector always start a position 0.
+     *  @details The method creates sync marks, GRC encoded header and data
+     *           blocks, checksums and gaps.
+     *  @param   alignTracks If true, the first sector always starts at the
+     *           beginning of a track.
      */
-    void encodeArchive(D64Archive *a, bool interleave, bool alignTracks);
+    void encodeArchive(D64Archive *a, bool alignTracks);
 
     //! @brief   Converts a D64 archive into a floppy disk.
-    void encodeArchive(D64Archive *a) { encodeArchive(a, true, false); }
+    void encodeArchive(D64Archive *a) { encodeArchive(a, false); }
 
 private:
     
@@ -511,7 +514,7 @@ private:
      *           Number of tail bytes follwowing sectors with odd sector numbers.
      *  @return  Number of written bits.
      */
-    size_t encodeTrack(D64Archive *a, Track t, Sector sectorList[],
+    size_t encodeTrack(D64Archive *a, Track t,
                        uint8_t tailGapEven, uint8_t tailGapOdd, HeadPosition start);
     
     /*! @brief   Encode a single sector
