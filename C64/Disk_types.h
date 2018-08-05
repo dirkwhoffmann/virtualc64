@@ -136,15 +136,21 @@ typedef unsigned Sector;
 //! @brief    Checks if a given number is a valid sector number
 static inline bool isSectorNumber(unsigned nr) { return nr < maxNumberOfSectors; }
 
-//! @brief    Return the number of sectors stored in a certain track
+//! @brief    Returns the number of sectors stored in a track
 static inline unsigned numberOfSectorsInTrack(Track t) {
-    return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0;
-}
+    return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0; }
 
-//! @brief    Return the number of sectors stored in a certain halftrack
+//! @brief    Returns the number of sectors stored in a halftrack
 static inline unsigned numberOfSectorsInHalftrack(Halftrack ht) {
-    return numberOfSectorsInTrack((ht + 1) / 2);
-}
+    return numberOfSectorsInTrack((ht + 1) / 2); }
+
+//! @brief    Returns the default speed zone of a track
+static inline unsigned speedZoneOfTrack(Track t) {
+    return (t < 18) ? 3 : (t < 25) ? 2 : (t < 31) ? 1 : 0; }
+
+//! @brief    Returns the default speed zone of a halftrack
+static inline unsigned speedZoneOfHalftrack(Halftrack ht) {
+    return (ht < 35) ? 3 : (ht < 49) ? 2 : (ht < 61) ? 1 : 0; }
 
 //! @brief    Checks if the given pair is a valid track / sector combination
 static inline bool isValidTrackSectorPair(Track t, Sector s) {

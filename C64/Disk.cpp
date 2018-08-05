@@ -678,97 +678,73 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
 {
     assert(a != NULL);
     
-    uint16_t trackLength[4];
-
     /* 64COPY */
     int tailGap[4] = { 9, 9, 9, 9 };
-    trackLength[3] = 7692 * 8;
-    trackLength[2] = 7142 * 8;
-    trackLength[1] = 6666 * 8;
-    trackLength[0] = 6250 * 8;
+    uint16_t trackLength[4] =
+    {
+        6250 * 8, // Tracks 31 - 35..42 (inner tracks)
+        6666 * 8, // Tracks 25 - 30
+        7142 * 8, // Tracks 18 - 24
+        7692 * 8  // Tracks  1 - 17     (outer tracks)
+    };
     
     /* Hoxs64
     int tailGap[4] = { 9, 12, 17, 8 };
-    trackLength[3] = 7693 * 8;
-    trackLength[2] = 7143 * 8;
-    trackLength[1] = 6667 * 8;
-    trackLength[0] = 6250 * 8;
+    uint16_t trackLength[4] =
+    {
+        6250 * 8, // Tracks 31 - 35..42 (inner tracks)
+        6667 * 8, // Tracks 25 - 30
+        7143 * 8, // Tracks 18 - 24
+        7693 * 8  // Tracks  1 - 17     (outer tracks)
+    };
     */
     
     /* VirtualC64 2.4
     int tailGap[4] = { 13, 16, 21, 12 };
-    trackLength[0] = 8 * 354 * 17 * tailGap[0];
-    trackLength[1] = 8 * 354 * 18 * tailGap[1];
-    trackLength[2] = 8 * 354 * 19 * tailGap[2];
-    trackLength[3] = 8 * 354 * 21 * tailGap[3];
+    uint16_t trackLength[4] =
+    {
+        8 * 354 * 17 * tailGap[0], // Tracks 31 - 35..42 (inner tracks)
+        8 * 354 * 18 * tailGap[1], // Tracks 25 - 30
+        8 * 354 * 19 * tailGap[2], // Tracks 18 - 24
+        8 * 354 * 21 * tailGap[3]  // Tracks  1 - 17     (outer tracks)
+    };
     */
     
     size_t encodedBits;
-    HeadPosition start;
     unsigned numTracks = a->numberOfTracks();
 
     debug(2, "Encoding D64 archive with %d tracks\n", numTracks);
 
+    // Wipe out track data
     clearDisk();
-    
-    // Tracks 1 - 17 (speed zone 3, 21 sectors, tailgap 9/9)
-    for (Track t = 1; t <= 17; t++) {
-        length.track[t][0] = trackLength[3];  // The track itself
-        length.track[t][1] = trackLength[3];  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(trackLength[3] * trackDefaults[t].stagger);
-        encodedBits = encodeTrack(a, t, tailGap[3], tailGap[3], start);
-    }
-    debug("Encoded %d bits (%d bytes) for tracks 1 to 17.\n", encodedBits, encodedBits / 8);
 
-    // Track 18 (directory track)
-    length.track[18][0] = trackLength[2];  // The track itself
-    length.track[18][1] = trackLength[2];  // Half track above
-    start = alignTracks ? 0 : (HeadPosition)(trackLength[2] * trackDefaults[18].stagger);
-    encodedBits = encodeTrack(a, 18, tailGap[2], tailGap[2], start);
-    debug("Encoded %d bits (%d bytes) for track 18 (directory).\n", encodedBits, encodedBits / 8);
+    // Assign track length
+     for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++)
+         length.halftrack[ht] = trackLength[speedZoneOfHalftrack(ht)];
     
-    // Tracks 19 - 24 (speed zone 2, 19 sectors, tail gap 9/19)
-    for (Track t = 19; t <= 24; t++) {
-        length.track[t][0] = trackLength[2];  // The track itself
-        length.track[t][1] = trackLength[2];  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(trackLength[2] * trackDefaults[t].stagger);
-        encodedBits = encodeTrack(a, t, tailGap[2], tailGap[2], start);
+    // Encode tracks
+    HeadPosition start;
+    for (Track t = 1; t <= numTracks; t++) {
+        
+        unsigned zone = speedZoneOfTrack(t);
+        if (alignTracks) {
+            start = (HeadPosition)(length.track[t][0] * trackDefaults[t].stagger);
+        } else {
+            start = 0;
+        }
+        encodedBits = encodeTrack(a, t, tailGap[zone], start);
+        debug(2, "Encoded %d bits (%d bytes) for track %d.\n",
+              encodedBits, encodedBits / 8, t);
     }
-    debug("Encoded %d bits (%d bytes) for tracks 19 to 24.\n", encodedBits, encodedBits / 8);
-    
-    // Tracks 25 - 30 (speed zone 1, 18 sectors, tail gap 9/13)
-    for (Track t = 25; t <= 30; t++) {
-        length.track[t][0] = trackLength[1];  // The track itself
-        length.track[t][1] = trackLength[1];  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(trackLength[1] * trackDefaults[t].stagger);
-        encodedBits = encodeTrack(a, t, tailGap[1], tailGap[1], start);
-    }
-    debug("Encoded %d bits (%d bytes) for tracks 25 to 30.\n", encodedBits, encodedBits / 8);
-    
-    // Tracks 31 - 35..42 (speed zone 0, 17 sectors, tail gap 9/10)
-    for (Track t = 31; t <= a->numberOfTracks(); t++) {
-        length.track[t][0] = trackLength[0];  // The track itself
-        length.track[t][1] = trackLength[0];  // Half track above
-        start = alignTracks ? 0 : (HeadPosition)(trackLength[0] * trackDefaults[t].stagger);
-        encodedBits = encodeTrack(a, t, tailGap[0], tailGap[0], start);
-    }
-    debug("Encoded %d bits (%d bytes) for tracks 31 and above.\n", encodedBits, encodedBits / 8);
-    
-    // Clear remaining tracks (if any)
-    for (Track t = numTracks + 1; t <= 42; t++) {
-        length.track[t][0] = trackLength[0];  // The track itself
-        length.track[t][1] = trackLength[0];  // Half track above
-    }
-    
+
     // Do some consistency checking
-    for (Halftrack ht = 1; ht <= 84; ht++) {
+    for (Halftrack ht = 1; ht <= maxNumberOfHalftracks; ht++) {
         assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
     }
 }
 
 size_t
-Disk::encodeTrack(D64Archive *a, Track t,
-                  uint8_t tailGapEven, uint8_t tailGapOdd, HeadPosition start)
+Disk::encodeTrack(D64Archive *a, Track t, uint8_t tailGap, HeadPosition start)
 {
     assert(isTrackNumber(t));
     debug(3, "Encoding track %d\n", t);
@@ -778,7 +754,6 @@ Disk::encodeTrack(D64Archive *a, Track t,
     // For each sector in this track ...
     for (Sector s = 0; s < trackDefaults[t].sectors; s++) {
         
-        uint8_t tailGap = (s % 2) ? tailGapOdd : tailGapEven;
         size_t encodedBits = encodeSector(a, t, s, start, tailGap);
         start += (HeadPosition)encodedBits;
         totalEncodedBits += encodedBits;

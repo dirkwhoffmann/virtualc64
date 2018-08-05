@@ -514,8 +514,7 @@ private:
      *           Number of tail bytes follwowing sectors with odd sector numbers.
      *  @return  Number of written bits.
      */
-    size_t encodeTrack(D64Archive *a, Track t,
-                       uint8_t tailGapEven, uint8_t tailGapOdd, HeadPosition start);
+    size_t encodeTrack(D64Archive *a, Track t, uint8_t tailGap, HeadPosition start);
     
     /*! @brief   Encode a single sector
      *  @details This function translates the logical byte sequence of a single sector
