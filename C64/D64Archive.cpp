@@ -24,57 +24,57 @@
 #include "Disk.h"
 
 typedef struct D64TrackInfo {
-	int numberOfSectors;
-	int sectorsIn;
-	int offset;
+    int numberOfSectors;
+    int sectorsIn;
+    int offset;
 } D64TrackInfo;
 
 static const D64TrackInfo D64Map[] =
 {
-	{ 0,  0,   0 }, // Padding
-	{ 21, 0,   0x00000 },
-	{ 21, 21,  0x01500 },
-	{ 21, 42,  0x02A00 },
- 	{ 21, 63,  0x03F00 },
-	{ 21, 84,  0x05400 },
-	{ 21, 105, 0x06900 },
-	{ 21, 126, 0x07E00 },
-	{ 21, 147, 0x09300 },
-	{ 21, 168, 0x0A800 },
-	{ 21, 189, 0x0BD00 }, 
-	{ 21, 210, 0x0D200 },
-	{ 21, 231, 0x0E700 },
-	{ 21, 252, 0x0FC00 },
-	{ 21, 273, 0x11100 },
-	{ 21, 294, 0x12600 },
-	{ 21, 315, 0x13B00 },
-	{ 21, 336, 0x15000 },
-	{ 19, 357, 0x16500 }, // Track 18, Directory
-	{ 19, 376, 0x17800 },
-	{ 19, 395, 0x18B00 },
-	{ 19, 414, 0x19E00 },
-	{ 19, 433, 0x1B100 },
-	{ 19, 452, 0x1C400 },
-	{ 19, 471, 0x1D700 },
-	{ 18, 490, 0x1EA00 },
-	{ 18, 508, 0x1FC00 },
-	{ 18, 526, 0x20E00 },
-	{ 18, 544, 0x22000 },
-	{ 18, 562, 0x23200 },
-	{ 18, 580, 0x24400 },
-	{ 17, 598, 0x25600 },
-	{ 17, 615, 0x26700 },
-	{ 17, 632, 0x27800 },
-	{ 17, 649, 0x28900 },
-	{ 17, 666, 0x29A00 },
-	{ 17, 683, 0x2AB00 },
-	{ 17, 700, 0x2BC00 },
-	{ 17, 717, 0x2CD00 },
-	{ 17, 734, 0x2DE00 },
-	{ 17, 751, 0x2EF00 },
-	// Unusual, tracks 41 & 42
-	{ 17, 768, 0x30000 },
-	{ 17, 785, 0x31100 }
+    { 0,  0,   0 }, // Padding
+    { 21, 0,   0x00000 },
+    { 21, 21,  0x01500 },
+    { 21, 42,  0x02A00 },
+     { 21, 63,  0x03F00 },
+    { 21, 84,  0x05400 },
+    { 21, 105, 0x06900 },
+    { 21, 126, 0x07E00 },
+    { 21, 147, 0x09300 },
+    { 21, 168, 0x0A800 },
+    { 21, 189, 0x0BD00 }, 
+    { 21, 210, 0x0D200 },
+    { 21, 231, 0x0E700 },
+    { 21, 252, 0x0FC00 },
+    { 21, 273, 0x11100 },
+    { 21, 294, 0x12600 },
+    { 21, 315, 0x13B00 },
+    { 21, 336, 0x15000 },
+    { 19, 357, 0x16500 }, // Track 18, Directory
+    { 19, 376, 0x17800 },
+    { 19, 395, 0x18B00 },
+    { 19, 414, 0x19E00 },
+    { 19, 433, 0x1B100 },
+    { 19, 452, 0x1C400 },
+    { 19, 471, 0x1D700 },
+    { 18, 490, 0x1EA00 },
+    { 18, 508, 0x1FC00 },
+    { 18, 526, 0x20E00 },
+    { 18, 544, 0x22000 },
+    { 18, 562, 0x23200 },
+    { 18, 580, 0x24400 },
+    { 17, 598, 0x25600 },
+    { 17, 615, 0x26700 },
+    { 17, 632, 0x27800 },
+    { 17, 649, 0x28900 },
+    { 17, 666, 0x29A00 },
+    { 17, 683, 0x2AB00 },
+    { 17, 700, 0x2BC00 },
+    { 17, 717, 0x2CD00 },
+    { 17, 734, 0x2DE00 },
+    { 17, 751, 0x2EF00 },
+    // Unusual, tracks 41 & 42
+    { 17, 768, 0x30000 },
+    { 17, 785, 0x31100 }
 };
 
 //
@@ -173,7 +173,7 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
 
 D64Archive::~D64Archive()
 {
-	dealloc();
+    dealloc();
 }
 
 bool
@@ -194,24 +194,24 @@ D64Archive::isD64(const uint8_t *buffer, size_t length)
 bool 
 D64Archive::isD64File(const char *filename)
 {
-	bool fileOK = false;
-	
-	assert (filename != NULL);
-	
-	if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
-		return false;
-	
-	fileOK = checkFileSize(filename, D64_683_SECTORS, D64_683_SECTORS)
-	|| checkFileSize(filename, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC)
-	|| checkFileSize(filename, D64_768_SECTORS, D64_768_SECTORS)
-	|| checkFileSize(filename, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC)
-	|| checkFileSize(filename, D64_802_SECTORS, D64_802_SECTORS)
-	|| checkFileSize(filename, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
-	
-	// Unfortunaltely, D64 containers do not contain magic bytes,
-	// so we can't check anything further here
-	
-	return fileOK;
+    bool fileOK = false;
+    
+    assert (filename != NULL);
+    
+    if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
+        return false;
+    
+    fileOK = checkFileSize(filename, D64_683_SECTORS, D64_683_SECTORS)
+    || checkFileSize(filename, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC)
+    || checkFileSize(filename, D64_768_SECTORS, D64_768_SECTORS)
+    || checkFileSize(filename, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC)
+    || checkFileSize(filename, D64_802_SECTORS, D64_802_SECTORS)
+    || checkFileSize(filename, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
+    
+    // Unfortunaltely, D64 containers do not contain magic bytes,
+    // so we can't check anything further here
+    
+    return fileOK;
 }
 
 
@@ -222,76 +222,76 @@ D64Archive::isD64File(const char *filename)
 bool
 D64Archive::hasSameType(const char *filename)
 {
-	return D64Archive::isD64File(filename);
+    return D64Archive::isD64File(filename);
 }
 
 bool 
 D64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-	size_t numberOfErrors = 0;
-	
-	switch (length)
-	{
-		case D64_683_SECTORS: // 35 tracks, no errors
-			
+    size_t numberOfErrors = 0;
+    
+    switch (length)
+    {
+        case D64_683_SECTORS: // 35 tracks, no errors
+            
             debug(2, "D64 file contains 35 tracks, no EC bytes\n");
-			numTracks = 35;
-			break;
+            numTracks = 35;
+            break;
             
-		case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
-			
+        case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
+            
             debug(2, "D64 file contains 35 tracks, 683 EC bytes\n");
-			numTracks = 35;
-			numberOfErrors = 683;
-			break;
+            numTracks = 35;
+            numberOfErrors = 683;
+            break;
             
-		case D64_768_SECTORS: // 40 tracks, no errors
-			
+        case D64_768_SECTORS: // 40 tracks, no errors
+            
             debug(2, "D64 file contains 40 tracks, no EC bytes\n");
-			numTracks = 40;
-			break;
+            numTracks = 40;
+            break;
             
-		case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
-			
+        case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
+            
             debug(2, "D64 file contains 40 tracks, 768 EC bytes\n");
-			numTracks = 40;
-			numberOfErrors = 768;
-			break;
+            numTracks = 40;
+            numberOfErrors = 768;
+            break;
             
-		case D64_802_SECTORS: // 42 tracks, no error bytes
+        case D64_802_SECTORS: // 42 tracks, no error bytes
             
             debug(2, "D64 file contains 42 tracks, no EC bytes\n");
-			numTracks = 42;
-			break;
+            numTracks = 42;
+            break;
             
-		case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
+        case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
             debug(2, "D64 file contains 42 tracks, 802 EC bytes\n");
-			numTracks = 42;
+            numTracks = 42;
             numberOfErrors = 802;
-			break;
+            break;
             
-		default:
+        default:
             warn("D64 has an unknown format\n");
-			return false;
-	}
-	
-	// Read tracks
-	uint8_t *source = (uint8_t *)buffer;
-	for(Track t = 1; t <= numTracks; t++) {
-		
-		uint8_t *destination = &data[D64Map[t].offset];
-		int sectors = D64Map[t].numberOfSectors;
-		memcpy(destination, source, 256 * sectors);
-		source += 256 * sectors;
-	}
-	
-	// Read errors
-	if (numberOfErrors > 0) {
-		memcpy(errors, source, numberOfErrors);
-	}
+            return false;
+    }
+    
+    // Read tracks
+    uint8_t *source = (uint8_t *)buffer;
+    for(Track t = 1; t <= numTracks; t++) {
+        
+        uint8_t *destination = &data[D64Map[t].offset];
+        int sectors = D64Map[t].numberOfSectors;
+        memcpy(destination, source, 256 * sectors);
+        source += 256 * sectors;
+    }
+    
+    // Read errors
+    if (numberOfErrors > 0) {
+        memcpy(errors, source, numberOfErrors);
+    }
 
-	return true;	
+    return true;    
 }
 
 size_t
@@ -634,10 +634,10 @@ D64Archive::nextTrackAndSector(Track track, Sector sector,
 bool
 D64Archive::jumpToNextSector(int *pos)
 { 
-	int nTrack, nSector, newPos;
+    int nTrack, nSector, newPos;
     
-	nTrack = nextTrack(*pos);
-	nSector = nextSector(*pos);
+    nTrack = nextTrack(*pos);
+    nSector = nextSector(*pos);
     
     if (nTrack > (int)numTracks)
         return false;
@@ -682,7 +682,7 @@ D64Archive::writeByteToSector(uint8_t byte, Track *t, Sector *s)
     } else {
         positionOfLastDataByte++;
         data[pos + positionOfLastDataByte] = byte;
-        data[pos + 1] = positionOfLastDataByte;		
+        data[pos + 1] = positionOfLastDataByte;        
     }
     
     *t = track;
@@ -857,8 +857,8 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name,
                                 Track startTrack, Sector startSector,
                                 size_t filesize)
 {
-	int pos;
-	
+    int pos;
+    
     // Sector interleave pattern for the directory track
     // 18,0 is the BAM, and the first 8 directory items are located at 18,1.
     // After that, an interleave pattern of 3 is applied. 
@@ -866,56 +866,56 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name,
         
     if (nr >= 144) {
         warn("Cannot write directory entry. Number of files is limited to 144\n");
-		return false;
-	}
+        return false;
+    }
 
-	// Determine sector and relative sector position for this entry
+    // Determine sector and relative sector position for this entry
     uint8_t sector = secnr[1 + (nr / 8)];
-	uint8_t rel = (nr % 8) * 0x20;
-	
+    uint8_t rel = (nr % 8) * 0x20;
+    
     // Update BAM
-	markSectorAsUsed(18, sector);
+    markSectorAsUsed(18, sector);
 
-	// Link to this sector if it is not the first
-	if (sector != 1) {
-		pos = offset(18, secnr[nr / 8]);
-		data[pos++] = 18;
-		data[pos] = sector;
-	}
+    // Link to this sector if it is not the first
+    if (sector != 1) {
+        pos = offset(18, secnr[nr / 8]);
+        data[pos++] = 18;
+        data[pos] = sector;
+    }
 
-	pos = offset(18, sector) + rel;
-	
-	// 00-01: Next directory sector (item 0) or 00 00 (other items)
-	if (nr == 0) {
-		pos++; // don't modify
-		pos++; // don't modify
-	} else {
-		data[pos++] = 0x00;
-		data[pos++] = 0x00;
-	}
-		
-	// 02: File type (0x82 = PRG)
-	data[pos++] = 0x82;
-	
-	// 03-04: Track/sector location of first sector of file
-	data[pos++] = (uint8_t)startTrack;
-	data[pos++] = (uint8_t)startSector;
-	
-	// 05-14: 16 character filename (in PETASCII, padded with $A0)
-	size_t len = strlen(name);
-	for (unsigned k = 0; k < 16; k++)
-		data[pos++] = (len > k) ? name[k] : 0xA0;
-	
-	assert(pos == offset(18, sector) + rel + 0x15);
-	
-	// 1E-1F: File size in sectors, low/high byte order
-	pos = offset(18, sector) + rel + 0x1E;
-	filesize += 2; // Each file stores 2 additional bytes containing the load address
-	uint16_t fileSizeInSectors = (filesize % 254 == 0) ? filesize / 254 : filesize / 254 + 1; 
-	data[pos++] = LO_BYTE(fileSizeInSectors);
-	data[pos++] = HI_BYTE(fileSizeInSectors);
+    pos = offset(18, sector) + rel;
+    
+    // 00-01: Next directory sector (item 0) or 00 00 (other items)
+    if (nr == 0) {
+        pos++; // don't modify
+        pos++; // don't modify
+    } else {
+        data[pos++] = 0x00;
+        data[pos++] = 0x00;
+    }
+        
+    // 02: File type (0x82 = PRG)
+    data[pos++] = 0x82;
+    
+    // 03-04: Track/sector location of first sector of file
+    data[pos++] = (uint8_t)startTrack;
+    data[pos++] = (uint8_t)startSector;
+    
+    // 05-14: 16 character filename (in PETASCII, padded with $A0)
+    size_t len = strlen(name);
+    for (unsigned k = 0; k < 16; k++)
+        data[pos++] = (len > k) ? name[k] : 0xA0;
+    
+    assert(pos == offset(18, sector) + rel + 0x15);
+    
+    // 1E-1F: File size in sectors, low/high byte order
+    pos = offset(18, sector) + rel + 0x1E;
+    filesize += 2; // Each file stores 2 additional bytes containing the load address
+    uint16_t fileSizeInSectors = (filesize % 254 == 0) ? filesize / 254 : filesize / 254 + 1; 
+    data[pos++] = LO_BYTE(fileSizeInSectors);
+    data[pos++] = HI_BYTE(fileSizeInSectors);
 
-	return true;
+    return true;
 }
 
 
