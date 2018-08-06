@@ -401,13 +401,13 @@ public:
     /*! @brief    Pulls down the IRQ line
      *  @details  Pulling down the IRQ line requests the CPU to interrupt.
      */
-    void pullDownIrqLine(InterruptSource source);
+    void pullDownIrqLine(InterruptSource source, uint64_t delay = 1);
     
     /*! @brief    Releases the IRQ line
      *  @note     Other sources might still hold the line down.
      */
-    void releaseIrqLine(InterruptSource source);
-    
+    void releaseIrqLine(InterruptSource source, uint64_t delay = 1);
+
 	//! @brief    Sets the RDY line.
     void setRDY(bool value);
 		

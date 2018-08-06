@@ -1313,7 +1313,6 @@ VIC::cycle63ntsc()
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.3 Fetch
     sFinalize(1);
@@ -1365,9 +1364,6 @@ VIC::cycle65ntsc()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
-    
-    // Phi1.2 Draw
-    // pixelEngine.drawSprites();
     
     // Phi1.3 Fetch
     sFinalize(2);

@@ -769,8 +769,6 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 				if (yCounter == rasterInterruptLine())
 					triggerIRQ(1);
-			} else {
-				iomem[addr] = value;
 			}
 			return;
 
@@ -796,10 +794,10 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x19: // Interrupt Request Register (IRR)
             
             // Bits are cleared by writing '1'
-            irr &= (~value & 0x0F);
+            irr &= (~value) & 0x0F;
     
             if (!(irr & imr)) {
-                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC, 2 /* delay */);
             }
 			return;
             
@@ -808,9 +806,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             imr = value & 0x0F;
             
             if (irr & imr) {
-                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC, 2 /* delay */);
             } else {
-                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC, 2 /* delay */);
             }
 			return;		
 			

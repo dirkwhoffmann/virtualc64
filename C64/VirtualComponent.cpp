@@ -236,7 +236,8 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
 }
 
 void
-VirtualComponent::write8_delayed(uint8_delayed &var, uint8_t value, uint64_t cycle)
+VirtualComponent::write8_delayed(uint8_delayed &var,
+                                 uint8_t value, uint64_t cycle, uint64_t delay)
 {
     if (var.timeStamp > cycle) {
         // Multiple writes in the same cycle. We descard the previous value
@@ -245,7 +246,7 @@ VirtualComponent::write8_delayed(uint8_delayed &var, uint8_t value, uint64_t cyc
         // Shift values and store new time stamp
         var.prevValue = var.value;
         var.value = value;
-        var.timeStamp = cycle + 1;
+        var.timeStamp = cycle + delay;
     }
 }
 

@@ -164,19 +164,19 @@ CPU::releaseNmiLine(InterruptSource source)
 }
 
 void
-CPU::pullDownIrqLine(InterruptSource source)
+CPU::pullDownIrqLine(InterruptSource source, uint64_t delay)
 {
 	assert(source != 0);
     
 	irqLine |= source;
-    write8_delayed(levelDetector, irqLine, cycle);
+    write8_delayed(levelDetector, irqLine, cycle, delay);
 }
 
 void
-CPU::releaseIrqLine(InterruptSource source)
+CPU::releaseIrqLine(InterruptSource source, uint64_t delay)
 {
     irqLine &= ~source;
-    write8_delayed(levelDetector, irqLine, cycle);
+    write8_delayed(levelDetector, irqLine, cycle, delay);
 }
 
 void

@@ -19,12 +19,11 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.4
+// RELEASE NOTES FOR NEXT RELEASE: 2.5
 //
-// A virtual keyboard has been added to the toolbar.
-// A second VC 1541 disk drive has been added.
-// The Freeze Frame cartridge is fully supported now.
-// Fixed a bug that prevented the Action Replay 4.0 cartridges to work properly. AR cartridges with higher version numbers still have issues though.
+// Now passing VICE test irq-ack-vicii.prg
+// The disk encoder used a wrong sector ordering. It applied the correct interleaving factors now.
+// The G64 mount dialog ignored the selected target drive. G64 disks were always inserted into drive 2.
 //
 // TODO:
 // ArchiveDialog and DiskDialog: proceedWithUnsafed disk has to be called in  okAction, because with two drive, we don't now the target upfront.
