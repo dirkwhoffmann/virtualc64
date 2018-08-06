@@ -103,8 +103,9 @@ public:
     uint16_t xCounter;
     
     /*! @brief    Rasterline counter
-     *  @details  The rasterline counter is usually incremented in cycle 1.
-     *            The only exception is the overflow condition which is handled in cycle 2.
+     *  @details  The rasterline counter is usually incremented in cycle 1. The
+     *            only exception is the overflow condition which is handled in
+     *            cycle 2.
      */
     uint32_t yCounter;
     
@@ -691,11 +692,21 @@ public:
 
 private:
     
-    /*! @brief    Set to true in cycle 1, cycle 63 and cycle 65 iff yCounter equals D012
-     *  @details  Variable is needed to determine if a rasterline should be issued in cycle 1 or 2 
+    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
+     *  @details  Variable is needed to determine if a rasterline should be
+     *            issued in cycle 1 or 2.
+     *  @deprecates Will be replaced by rasterlineMatchesIrqLine
      */
     bool yCounterEqualsIrqRasterline;
     
+    /*! @brief    Result of comparing the rasterline with the irq rasterline
+     *  @details  In cycle 1 or 2, the rasterline is compared with the irq
+     *            rasterline and this variable keeps the result. Keeping the
+     *            result is necessary, because an interrupt is only issued when
+     *            this variable switches from false to true.
+     */
+    bool rasterlineMatchesIrqLine;
+      
     /*! @brief    Update bad line condition
      *  @details  "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
      *             negativen Flanke von ¯0 zu Beginn des
@@ -773,15 +784,18 @@ private:
     void turnSpriteDmaOff();
 
     /*! @brief    Turns on sprite dma accesses if drawing conditions are met.
-     *  @details  Sprite dma is turned on either in cycle 55 or cycle 56. Dma is turned on iff it's 
-     *            currently turned off and the sprite y positon equals the lower 8 bits of yCounter. 
+     *  @details  Sprite dma is turned on either in cycle 55 or cycle 56.
+     *            Dma is turned on iff it's currently turned off and the
+     *            sprite y positon equals the lower 8 bits of yCounter.
      */
     void turnSpriteDmaOn();
 
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
-     *  @details  In cycle 56, register D017 is read and the flipflop gets inverted for all sprites 
-     *            with vertical stretching enabled. When the flipflop goes down, advanceMCBase() will 
-     *            have no effect in the next rasterline. This causes each sprite line to be drawn twice. 
+     *  @details  In cycle 56, register D017 is read and the flipflop gets
+     *            inverted for all sprites with vertical stretching enabled.
+     *            When the flipflop goes down, advanceMCBase() will have no
+     *            effect in the next rasterline. This causes each sprite line
+     *            to be drawn twice.
      */
     void toggleExpansionFlipflop();
     

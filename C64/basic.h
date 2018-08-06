@@ -102,10 +102,16 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @brief Sets a single bit to 0 (value == 0) or 1 (value != 0)
 #define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
+//! @brief Returns true if value is rising when switching from x to y
+#define RISING_EDGE(x,y) (!(x) && (y))
+
 //! @brief Returns true if bit n is rising when switching from x to y
 #define RISING_EDGE_BIT(x,y,n) (!((x) & (1 << (n))) && ((y) & (1 << (n))))
 
-//! @brief Returns true if bit n is rising when switching from x to y
+//! @brief Returns true if value is falling when switching from x to y
+#define FALLING_EDGE(x,y) ((x) && !(y))
+
+//! @brief Returns true if bit n is falling when switching from x to y
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
 //

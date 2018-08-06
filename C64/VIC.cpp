@@ -96,6 +96,7 @@ VIC::VIC()
         { &spriteExtraColor2,           sizeof(spriteExtraColor2),              CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
+        { &rasterlineMatchesIrqLine,    sizeof(rasterlineMatchesIrqLine),       CLEAR_ON_RESET },
 
         // Pixel engine pipe
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
@@ -747,7 +748,8 @@ VIC::poke(uint16_t addr, uint8_t value)
             if ((p.registerCTRL1 & 0x80) != (value & 0x80)) {
                 // Value changed: Check if we need to trigger an interrupt immediately
                 p.registerCTRL1 = value;
-                if (yCounter == rasterInterruptLine())
+                rasterlineMatchesIrqLine = (yCounter == rasterInterruptLine());
+                if (rasterlineMatchesIrqLine)
                     triggerIRQ(1);
             } else {
                 p.registerCTRL1 = value;
@@ -767,7 +769,8 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if (iomem[addr] != value) {
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;
-				if (yCounter == rasterInterruptLine())
+                rasterlineMatchesIrqLine = (yCounter == rasterInterruptLine());
+				if (rasterlineMatchesIrqLine)
 					triggerIRQ(1);
 			}
 			return;
@@ -1112,8 +1115,9 @@ VIC::beginRasterline(uint16_t line)
     if (line == 0x30)
         DENwasSetInRasterline30 = DENbit();
 
-    // Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
-    // The initial value can change in the middle of a rasterline.
+    // Check, if we are currently processing a DMA line. The result is stored
+    // in variable badLineCondition. The initial value can change in the middle
+    // of a rasterline.
     updateBadLineCondition();
     
     pixelEngine.beginRasterline();
@@ -1145,9 +1149,10 @@ VIC::endRasterline()
 bool
 VIC::yCounterOverflow()
 {
-    // PAL machines reset yCounter in cycle 2 in the first physical rasterline
-    // NTSC machines reset yCounter in cycle 2 in the middle of the lower border area
-    // return (c64->isPAL() && c64->getRasterline() == 0) || (!c64->isPAL() && c64->getRasterline() == 238);
+    /* PAL machines reset the yCounter in cycle 2 in the first rasterline.
+     * NTSC machines reset the yCounter in cycle 2 in the middle of the lower
+     * border area.
+     */
     return c64->getRasterline() == (c64->isPAL() ? 0 : 238);
 }
 
