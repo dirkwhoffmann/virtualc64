@@ -45,9 +45,25 @@ VIC::debug_cycle(unsigned c)
 }
 
 void
+VIC::processDelayedActions()
+{
+    if (delay & VICTriggerIrq1) {
+        c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+    }
+    if (delay & VICReleaseIrq1) {
+        c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+    }
+    delay = (delay << 1) & VICClearanceMask;
+}
+
+#define PROCESS_DELAYED_ACTIONS \
+if (unlikely(delay != 0)) { processDelayedActions(); }
+
+void
 VIC::cycle1pal()
 {
     debug_cycle(1);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -82,6 +98,7 @@ void
 VIC::cycle1ntsc()
 {
     debug_cycle(1);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -114,6 +131,7 @@ void
 VIC::cycle2pal()
 {
     debug_cycle(2);
+    PROCESS_DELAYED_ACTIONS
     
     // Check for yCounter overflows
     if (yCounterOverflow())
@@ -146,6 +164,7 @@ void
 VIC::cycle2ntsc()
 {
     debug_cycle(2);
+    PROCESS_DELAYED_ACTIONS
     
     // Check for yCounter overflows
     if (yCounterOverflow())
@@ -180,6 +199,7 @@ void
 VIC::cycle3pal()
 {
     debug_cycle(3);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -204,6 +224,7 @@ void
 VIC::cycle3ntsc()
 {
     debug_cycle(3);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -226,6 +247,7 @@ void
 VIC::cycle4pal()
 {
     debug_cycle(4);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -248,6 +270,7 @@ void
 VIC::cycle4ntsc()
 {
     debug_cycle(4);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -272,6 +295,7 @@ void
 VIC::cycle5pal()
 {
     debug_cycle(5);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -296,6 +320,7 @@ void
 VIC::cycle5ntsc()
 {
     debug_cycle(5);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -318,6 +343,7 @@ void
 VIC::cycle6pal()
 {
     debug_cycle(6);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -340,6 +366,7 @@ void
 VIC::cycle6ntsc()
 {
     debug_cycle(6);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -364,6 +391,7 @@ void
 VIC::cycle7pal()
 {
     debug_cycle(7);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -388,6 +416,7 @@ void
 VIC::cycle7ntsc()
 {
     debug_cycle(7);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -410,6 +439,7 @@ void
 VIC::cycle8pal()
 {
     debug_cycle(8);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -432,6 +462,7 @@ void
 VIC::cycle8ntsc()
 {
     debug_cycle(8);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -456,6 +487,7 @@ void
 VIC::cycle9pal()
 {
     debug_cycle(9);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -480,6 +512,7 @@ void
 VIC::cycle9ntsc()
 {
     debug_cycle(9);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -502,6 +535,7 @@ void
 VIC::cycle10pal()
 {
     debug_cycle(10);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -527,6 +561,7 @@ void
 VIC::cycle10ntsc()
 {
     debug_cycle(10);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -551,6 +586,7 @@ void
 VIC::cycle11pal()
 {
     debug_cycle(11);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -576,6 +612,7 @@ void
 VIC::cycle11ntsc()
 {
     debug_cycle(11);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -601,6 +638,7 @@ void
 VIC::cycle12()
 {
     debug_cycle(12);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -634,6 +672,7 @@ void
 VIC::cycle13() // X Coordinate -3 - 4 (?)
 {
     debug_cycle(13);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -659,6 +698,7 @@ void
 VIC::cycle14() // SpriteX: 0 - 7 (?)
 {
     debug_cycle(14);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -695,6 +735,7 @@ void
 VIC::cycle15() // SpriteX: 8 - 15 (?)
 {
     debug_cycle(15);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -722,6 +763,7 @@ void
 VIC::cycle16() // SpriteX: 16 - 23 (?)
 {
     debug_cycle(16);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -751,6 +793,7 @@ void
 VIC::cycle17() // SpriteX: 24 - 31 (?)
 {
     debug_cycle(17);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -778,6 +821,7 @@ void
 VIC::cycle18() // SpriteX: 32 - 39
 {
     debug_cycle(18);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -806,6 +850,7 @@ void
 VIC::cycle19to54()
 {
     debug_cycle(19);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -832,6 +877,7 @@ void
 VIC::cycle55pal()
 {
     debug_cycle(55);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -858,6 +904,7 @@ void
 VIC::cycle55ntsc()
 {
     debug_cycle(55);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -884,6 +931,7 @@ void
 VIC::cycle56()
 {
     debug_cycle(56);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -912,6 +960,7 @@ void
 VIC::cycle57pal()
 {
     debug_cycle(57);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -937,6 +986,7 @@ void
 VIC::cycle57ntsc()
 {
     debug_cycle(57);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -962,6 +1012,7 @@ void
 VIC::cycle58pal()
 {
     debug_cycle(58);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1024,6 +1075,7 @@ void
 VIC::cycle58ntsc()
 {
     debug_cycle(58);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1083,6 +1135,7 @@ void
 VIC::cycle59pal()
 {
     debug_cycle(59);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1109,6 +1162,7 @@ void
 VIC::cycle59ntsc()
 {
     debug_cycle(59);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1135,6 +1189,7 @@ void
 VIC::cycle60pal()
 {
     debug_cycle(60);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1162,6 +1217,7 @@ void
 VIC::cycle60ntsc()
 {
     debug_cycle(60);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1188,6 +1244,7 @@ void
 VIC::cycle61pal()
 {
     debug_cycle(61);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1214,6 +1271,7 @@ void
 VIC::cycle61ntsc()
 {
     debug_cycle(61);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1241,6 +1299,7 @@ void
 VIC::cycle62pal()
 {
     debug_cycle(62);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1265,6 +1324,7 @@ void
 VIC::cycle62ntsc()
 {
     debug_cycle(62);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1287,6 +1347,7 @@ void
 VIC::cycle63pal()
 {
     debug_cycle(63);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1310,10 +1371,10 @@ void
 VIC::cycle63ntsc()
 {
     debug_cycle(63);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.3 Fetch
     sFinalize(1);
@@ -1335,6 +1396,7 @@ void
 VIC::cycle64ntsc()
 {
     debug_cycle(64);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1361,13 +1423,11 @@ void
 VIC::cycle65ntsc()
 {
     debug_cycle(65);
+    PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
-    
-    // Phi1.2 Draw
-    // pixelEngine.drawSprites();
     
     // Phi1.3 Fetch
     sFinalize(2);
@@ -1387,3 +1447,6 @@ VIC::cycle65ntsc()
     updateDisplayState();
     countX();
 }
+
+
+

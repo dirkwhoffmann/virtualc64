@@ -317,7 +317,8 @@ public:
         ((cycle >= var.timeStamp) ? var.value : var.prevValue)
 
     //! @brief    Writes to a time delayed variable.
-    void write8_delayed(uint8_delayed &var, uint8_t value, uint64_t cycle);
+    void write8_delayed(uint8_delayed &var,
+                        uint8_t value, uint64_t cycle, uint64_t delay = 1);
 
     //! @brief    Initializes a time delayed variable.
     void init8_delayed(uint8_delayed &var, uint8_t value);

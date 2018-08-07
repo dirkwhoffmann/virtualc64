@@ -455,8 +455,12 @@ CPU::executeOneCycle()
             
         case fetch:
             
-            /* DEBUG */
-            // if (PC == 0x03B1) { startTracing(); }
+            /* DEBUG
+            if (PC == 0x0B46) {
+                debug("irq_ack_test1\n");
+                // startTracing();
+            }
+            */
             
             PC_at_cycle_0 = PC;
             
