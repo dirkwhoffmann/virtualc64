@@ -699,14 +699,6 @@ private:
      */
     bool yCounterEqualsIrqRasterline;
     
-    /*! @brief    Result of comparing the rasterline with the irq rasterline
-     *  @details  In cycle 1 or 2, the rasterline is compared with the irq
-     *            rasterline and this variable keeps the result. Keeping the
-     *            result is necessary, because an interrupt is only issued when
-     *            this variable switches from false to true.
-     */
-    bool rasterlineMatchesIrqLine;
-      
     /*! @brief    Update bad line condition
      *  @details  "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
      *             negativen Flanke von ¯0 zu Beginn des

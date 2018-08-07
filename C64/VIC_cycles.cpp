@@ -61,22 +61,11 @@ VIC::cycle1pal()
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
-    /*
-    if (c64->getRasterline() != 0) {
-        bool oldValue = rasterlineMatchesIrqLine;
-        rasterlineMatchesIrqLine = (yCounter == rasterInterruptLine());
-        if (RISING_EDGE(oldValue, rasterlineMatchesIrqLine))
-            triggerIRQ(1);
-    }
-    */
-    
     bool edgeOnYCounter = (c64->getRasterline() != 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)
         triggerIRQ(1);
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
-
-    // assert(rasterlineMatchesIrqLine == yCounterEqualsIrqRasterline);
     
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
@@ -137,14 +126,6 @@ VIC::cycle2pal()
     sSecondAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
-    /*
-    if (c64->getRasterline() == 0) {
-        bool oldValue = rasterlineMatchesIrqLine;
-        rasterlineMatchesIrqLine = (yCounter == rasterInterruptLine());
-        if (RISING_EDGE(oldValue, rasterlineMatchesIrqLine))
-            triggerIRQ(1);
-    }
-    */
     bool edgeOnYCounter = (yCounter == 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)

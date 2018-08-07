@@ -96,7 +96,6 @@ VIC::VIC()
         { &spriteExtraColor2,           sizeof(spriteExtraColor2),              CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
-        { &rasterlineMatchesIrqLine,    sizeof(rasterlineMatchesIrqLine),       CLEAR_ON_RESET },
 
         // Pixel engine pipe
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
@@ -748,8 +747,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             if ((p.registerCTRL1 & 0x80) != (value & 0x80)) {
                 // Value changed: Check if we need to trigger an interrupt immediately
                 p.registerCTRL1 = value;
-                rasterlineMatchesIrqLine = (yCounter == rasterInterruptLine());
-                if (rasterlineMatchesIrqLine)
+                if (yCounter == rasterInterruptLine())
                     triggerIRQ(1);
             } else {
                 p.registerCTRL1 = value;
@@ -769,8 +767,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if (iomem[addr] != value) {
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;
-                rasterlineMatchesIrqLine = (yCounter == rasterInterruptLine());
-				if (rasterlineMatchesIrqLine)
+				if (yCounter == rasterInterruptLine())
 					triggerIRQ(1);
 			}
 			return;
@@ -800,7 +797,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             irr &= (~value) & 0x0F;
     
             if (!(irr & imr)) {
-                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC, 2 /* delay */);
+                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
             }
 			return;
             
@@ -809,9 +806,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             imr = value & 0x0F;
             
             if (irr & imr) {
-                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC, 2 /* delay */);
+                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
             } else {
-                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC, 2 /* delay */);
+                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
             }
 			return;		
 			
