@@ -57,7 +57,7 @@ class VC1541;
 #define VIAClrInterrupt0 (1ULL << 27) // Releases the interrupt line
 #define VIAClrInterrupt1 (1ULL << 28)
 
-#define VIAClearBits   ~((1ULL << 29) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA1out0 | VIAClearCA1out0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0)
+#define VIAClearBits ~((1ULL << 29) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA1out0 | VIAClearCA1out0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0)
 
 /*! @brief    Virtual VIA6522 controller
     @details  The VC1541 drive contains two VIAs on its logic board.

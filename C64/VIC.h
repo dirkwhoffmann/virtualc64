@@ -23,10 +23,16 @@
 #include "C64_types.h"
 #include "PixelEngine.h"
 
+#define VICTriggerIrq0     (1ULL << 0) // Sets the IRQ line
+#define VICTriggerIrq1     (1ULL << 1)
+#define VICReleaseIrq0     (1ULL << 2) // Clears the IRQ line
+#define VICReleaseIrq1     (1ULL << 3)
+
+#define VICClearanceMask ~((1ULL << 4) | VICTriggerIrq0 | VICReleaseIrq0)
+
 // Forward declarations
 class C64Memory;
 class PixelEngine; 
-
 
 /*! @brief    Virtual Video Controller (VICII)
  *  @details  VICII is the video controller chip of the Commodore 64.
@@ -43,13 +49,14 @@ private:
      *  @details  The PE encapsulates all drawing related routines in a seperate class.
      */
     PixelEngine pixelEngine;
+
+
+    //! @brief    Event pipeline
+    uint64_t delay;
+    
     
 public:
     
-    //! @brief    Dump current configuration into message queue
-    void ping();
-
-
 	//
 	// Internal state
 	//
@@ -257,24 +264,6 @@ private:
      *            +-------+------+-------+----------+-------------------------------------+
      */
     uint16_t bankAddr;
-
-    //! @brief    Simulates a memory access via the address and data bus.
-    uint8_t memAccess(uint16_t addr);
-
-    /*! @brief    Simulates an idle memory access.
-     *  @details  An idle memory access is an access of memory location 0x3fff.
-     */
-    uint8_t memIdleAccess();
-    
-    
-    //
-    // Character access (cAccess)
-    //
-    
-    /*! @brief    Performs a character access (cAccess)
-     *  @details  During a cAccess, VIC accesses the video matrix
-     */
-    void cAccess();
     
     /*! @brief    cAcess character storage
      *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills this
@@ -288,46 +277,6 @@ private:
      */
     uint8_t colorSpace[40];
     
-    
-    //
-    // Graphics access (gAccess)
-    //
-
-    /*! @brief    Performs a graphics access (gAccess)
-     *  @details  During a gAccess, VIC reads graphics data (character or bitmap patterns)
-     *            The result of the gAccess is stored in variables prefixed with 'g_', i.e.,
-     *            g_data, g_character, g_color, g_mode 
-     */
-    void gAccess();
-    
-
-    //
-    // Sprite accesses (pAccess and sAccess)
-    //
-    
-    //! @brief    Performs a sprite pointer access (sAccess)
-    void pAccess(unsigned sprite);
-    
-    /*! @brief    First sprite data access
-     *  @result   true iff sprite data was fetched (a memory access has occurred)
-     */
-    void sFirstAccess(unsigned sprite);
-
-    /*! @brief    Second sprite data access
-     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
-     */
-    void sSecondAccess(unsigned sprite);
-
-    /*! @brief    Third sprite data access
-     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
-     */
-    void sThirdAccess(unsigned sprite);
-
-    /*! @brief    Finalizes the sprite data access
-     *  @details  This method is invoked one cycle after the second and third sprite DMA
-     */
-    void sFinalize(unsigned sprite);
-
     //! @brief    Bit i is set to 1 iff sprite i performs its first DMA in the current cycle
     uint8_t isFirstDMAcycle;
 
@@ -467,20 +416,19 @@ public:
 	//! @brief    Destructor
 	~VIC();
 	
-	//! @brief    Returns the screen buffer that is currently stable.
-    void *screenBuffer() { return pixelEngine.screenBuffer(); }
-
-	//! @brief    Restores the initial state.
+	//! @brief    Methods from VirtualComponent
 	void reset();
-		
-	//! @brief    Prints debug information.
-	void dumpState();	
-	
+    void ping();
+	void dumpState();
+
     //! @brief    Gathers debug information.
     VICInfo getInfo();
 
-    //! @brief    Gathers debug information for a sprite.
+    //! @brief    Gathers debug information for a certain sprite.
     SpriteInfo getSpriteInfo(unsigned i);
+
+    //! @brief    Returns the currently stabel screen buffer.
+    void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
     
 	//
@@ -587,11 +535,54 @@ private:
 	//! @brief    Peek fallthrough
 	uint8_t peek(uint16_t addr);
     
-    //! @brief    Same as peek, but without side affects.
+    //! @brief    Same as peek, but without side affects
     uint8_t spypeek(uint16_t addr);
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
+    
+    //! @brief    Simulates a memory access via the address and data bus.
+    uint8_t memAccess(uint16_t addr);
+    
+    /*! @brief    Simulates an idle memory access.
+     *  @details  An idle memory access is an access of memory location 0x3fff.
+     */
+    uint8_t memIdleAccess();
+    
+    /*! @brief    Performs a character access (cAccess)
+     *  @details  During a cAccess, VIC accesses the video matrix
+     */
+    void cAccess();
+    
+    /*! @brief    Performs a graphics access (gAccess)
+     *  @details  During a gAccess, VIC reads graphics data (character or bitmap patterns)
+     *            The result of the gAccess is stored in variables prefixed with 'g_', i.e.,
+     *            g_data, g_character, g_color, g_mode
+     */
+    void gAccess();
+    
+    //! @brief    Performs a sprite pointer access (sAccess)
+    void pAccess(unsigned sprite);
+    
+    /*! @brief    First sprite data access
+     *  @result   true iff sprite data was fetched (a memory access has occurred)
+     */
+    void sFirstAccess(unsigned sprite);
+    
+    /*! @brief    Second sprite data access
+     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
+     */
+    void sSecondAccess(unsigned sprite);
+    
+    /*! @brief    Third sprite data access
+     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
+     */
+    void sThirdAccess(unsigned sprite);
+    
+    /*! @brief    Finalizes the sprite data access
+     *  @details  This method is invoked one cycle after the second and third sprite DMA
+     */
+    void sFinalize(unsigned sprite);
     
     
 	//
@@ -947,6 +938,11 @@ public:
         pixelEngine.pipe.previousCTRL1 = ctrl1;
     }
     
+    //! @brief    Processes all time delayed actions.
+    /*! @details  This function is called at the beginning of each VIC cycle.
+     */
+    void processDelayedActions();
+    
 	//! @brief    Executes a specific rasterline cycle
     void cycle1pal(); void cycle1ntsc();
     void cycle2pal(); void cycle2ntsc();
@@ -979,10 +975,12 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
+    
 private:
     
     /*! @brief    Implements a debug entry point for each rasterline cycle.
-     *  @details  As this function is invoked in each cycle, it should be empty in the relase version.
+     *  @details  As this function is invoked in each cycle, it should be empty
+     *            in the relase version.
      */
     void debug_cycle(unsigned cycle);
 

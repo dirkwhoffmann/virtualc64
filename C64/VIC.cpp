@@ -55,6 +55,7 @@ VIC::VIC()
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
         
         // Internal state
+        { &delay,                       sizeof(delay),                          CLEAR_ON_RESET },
         { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
@@ -290,260 +291,7 @@ VIC::setChipModel(VICChipModel model)
 }
 
 
-//
-// I/O memory handling and RAM access
-//
 
-uint8_t VIC::memAccess(uint16_t addr)
-{
-    // VIC has only 14 address lines. To be able to access the complete 64KB main memory,
-    // it inverts bit 0 and bit 1 of the CIA2 portA register and uses these values as the
-    // upper two address bits.
-    
-    assert((addr & 0xC000) == 0); /* 14 bit address */
-    assert((bankAddr & 0x3FFF) == 0); /* multiple of 16 KB */
-    
-    addrBus = bankAddr | addr;
-   
-    // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
-    // Note: Final Cartridge III (freezer mode) only works when BLANK is replaced
-    //       by RAM. So this mapping might not be 100% correct.
-    //
-    //          Ultimax  Standard
-    // 0xF000:   ROMH      RAM
-    // 0xE000:   RAM       RAM
-    // 0xD000:   RAM       RAM
-    // 0xC000:   BLANK     RAM
-    // --------------------------
-    // 0xB000:   ROMH      RAM
-    // 0xA000:   BLANK     RAM
-    // 0x9000:   RAM       CHAR
-    // 0x8000:   RAM       RAM
-    // --------------------------
-    // 0x7000:   ROMH      RAM
-    // 0x6000:   BLANK     RAM
-    // 0x5000:   BLANK     RAM
-    // 0x4000:   BLANK     RAM
-    // --------------------------
-    // 0x3000:   ROMH      RAM
-    // 0x2000:   BLANK     RAM
-    // 0x1000:   BLANK     CHAR
-    // 0x0000:   RAM       RAM
-
-    if (!c64->getUltimax()) {
-        switch (addrBus >> 12) {
-            case 0x9:
-            case 0x1:
-                dataBus = c64->mem.rom[0xC000 + addr];
-                break;
-            default:
-                dataBus = c64->mem.ram[addrBus];
-        }
-    } else {
-        switch (addrBus >> 12) {
-            case 0xF:
-            case 0xB:
-            case 0x7:
-            case 0x3:
-                dataBus = c64->expansionport.peek(addrBus | 0xF000);
-                // dataBus = c64->expansionport.peekRomH(addrBus | 0xF000);
-                break;
-            case 0xE:
-            case 0xD:
-            case 0x9:
-            case 0x8:
-            case 0x0:
-                dataBus = c64->mem.ram[addrBus];
-                break;
-            default:
-                dataBus = c64->mem.ram[addrBus]; 
-        }
-    }
-   
-    return dataBus;
-}
-
-uint8_t VIC::memIdleAccess()
-{
-    return memAccess(0x3FFF);
-}
-
-void VIC::cAccess()
-{
-    // Only proceed if the BA line is pulled down
-    if (!badLineCondition)
-        return;
-
-    // If BA is pulled down for at least three cycles, perform memory access
-    if (BApulledDownForAtLeastThreeCycles()) {
-        
-        // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
-        uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
-        
-        characterSpace[registerVMLI] = memAccess(addr);
-        colorSpace[registerVMLI] = c64->mem.colorRam[registerVC] & 0x0F;
-    }
-    
-    // VIC has no access, yet
-    else {
-        
-        /* "Trotzdem greift der VIC auf die Videomatrix zu, oder versucht es zumindest,
-            denn solange AEC in der zweiten Taktphase noch High ist, sind die
-            Adressbustreiber und Datenbustreiber D0-D7 des VIC im Tri-State und der VIC
-            liest statt der Daten aus der Videomatrix in den ersten drei Zyklen den
-            Wert $ff an D0-D7. Die Datenleitungen D8-D13 des VIC haben allerdings
-            keinen Tri-State-Treiber und sind immer auf Eingang geschaltet. Allerdings
-            bekommt der VIC auch dort keine g¸ltigen Farb-RAM-Daten, denn da AEC High
-            ist, kontrolliert offiziell der 6510 noch den Bus und sofern dieser nicht
-            zufällig gerade den nächsten Opcode vom Farb-RAM lesen will, ist der
-            Chip-Select-Eingang des Farb-RAMs nicht aktiv.
-         
-            Lange Rede, kurzer Sinn: Der VIC liest in den ersten drei
-            Zyklen, nachdem BA auf Low gegangen ist als Zeichenzeiger $ff und als
-            Farbinformation die untersten 4 Bit des Opcodes nach dem Zugriff auf $d011.
-            Erst danach werden wieder reguläre Videomatrixdaten gelesen." [C.B.] */
-        
-        characterSpace[registerVMLI] = 0xFF;
-        colorSpace[registerVMLI] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
-    }
-}
-
-void VIC::gAccess()
-{
-    uint16_t addr;
-    
-    assert ((registerVC & 0xFC00) == 0); // 10 bit register
-    assert ((registerRC & 0xF8) == 0);   // 3 bit register
-
-    if (displayState) {
-
-        // "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
-        //  besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
-        //  immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
-        //  entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
-        //  aus" [C.B.]
-        
-        //  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
-        //  BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
-        
-        if (BMMbitInPreviousCycle() | BMMbit()) {
-            addr = (CB13() << 10) | (registerVC << 3) | registerRC;
-        } else {
-            addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
-        }
-
-        // "Bei gesetztem ECM-Bit schaltet der Adressgenerator bei den g-Zugriffen die
-        //  Adressleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
-        //  (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.]
-        
-        if (ECMbit())
-            addr &= 0xF9FF;
-
-        // Prepare graphic sequencer
-        p.g_data = memAccess(addr);
-        p.g_character = characterSpace[registerVMLI];
-        p.g_color = colorSpace[registerVMLI];
-        
-        // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.]
-        registerVC++;
-        registerVC &= 0x3FF; // 10 bit overflow
-        registerVMLI++;
-        registerVMLI &= 0x3F; // 6 bit overflow
-        
-    } else {
-    
-        // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
-        addr = ECMbit() ? 0x39FF : 0x3FFF;
-        
-        // Prepare graphic sequencer
-        p.g_data = memAccess(addr);
-        p.g_character = 0;
-        p.g_color = 0;
-    }
-}
-
-void VIC::pAccess(unsigned sprite)
-{
-    assert(sprite < 8);
-
-    // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
-    spritePtr[sprite] = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite) << 6;
-
-}
-
-void VIC::sFirstAccess(unsigned sprite)
-{
-    assert(sprite < 8);
-    
-    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    
-    isFirstDMAcycle = (1 << sprite);
-    
-    if (spriteDmaOnOff & (1 << sprite)) {
-        
-        if (BApulledDownForAtLeastThreeCycles())
-            data = memAccess(spritePtr[sprite] | mc[sprite]);
-
-        mc[sprite]++;
-        mc[sprite] &= 0x3F; // 6 bit overflow
-    }
-    
-    pixelEngine.sprite_sr[sprite].chunk1 = data;
-}
-
-void VIC::sSecondAccess(unsigned sprite)
-{
-    assert(sprite < 8);
-    
-    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    bool memAccessed = false;
-    
-    isFirstDMAcycle = 0;
-    isSecondDMAcycle = (1 << sprite);
-    
-    if (spriteDmaOnOff & (1 << sprite)) {
-        
-        if (BApulledDownForAtLeastThreeCycles()) {
-            data = memAccess(spritePtr[sprite] | mc[sprite]);
-            memAccessed = true;
-        }
-        
-        mc[sprite]++;
-        mc[sprite] &= 0x3F; // 6 bit overflow
-    }
-    
-    // If no memory access has happened here, we perform an idle access
-    // The obtained data might be overwritten by the third sprite access
-    if (!memAccessed)
-        memIdleAccess();
-    
-    pixelEngine.sprite_sr[sprite].chunk2 = data;
-}
-
-void VIC::sThirdAccess(unsigned sprite)
-{
-    assert(sprite < 8);
-    
-    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    
-    if (spriteDmaOnOff & (1 << sprite)) {
-        
-        if (BApulledDownForAtLeastThreeCycles())
-            data = memAccess(spritePtr[sprite] | mc[sprite]);
-
-        mc[sprite]++;
-        mc[sprite] &= 0x3F; // 6 bit overflow
-    }
-    
-    pixelEngine.sprite_sr[sprite].chunk3 = data;
-}
-
-
-void VIC::sFinalize(unsigned sprite)
-{
-    assert(sprite < 8);
-    isSecondDMAcycle = 0;
-}
 
 // -----------------------------------------------------------------------------------------------
 //                                       Getter and setter
@@ -856,6 +604,261 @@ VIC::poke(uint16_t addr, uint8_t value)
 	iomem[addr] = value;
 }
 
+//
+// I/O memory handling and RAM access
+//
+
+uint8_t VIC::memAccess(uint16_t addr)
+{
+    // VIC has only 14 address lines. To be able to access the complete 64KB main memory,
+    // it inverts bit 0 and bit 1 of the CIA2 portA register and uses these values as the
+    // upper two address bits.
+    
+    assert((addr & 0xC000) == 0); /* 14 bit address */
+    assert((bankAddr & 0x3FFF) == 0); /* multiple of 16 KB */
+    
+    addrBus = bankAddr | addr;
+    
+    // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+    // Note: Final Cartridge III (freezer mode) only works when BLANK is replaced
+    //       by RAM. So this mapping might not be 100% correct.
+    //
+    //          Ultimax  Standard
+    // 0xF000:   ROMH      RAM
+    // 0xE000:   RAM       RAM
+    // 0xD000:   RAM       RAM
+    // 0xC000:   BLANK     RAM
+    // --------------------------
+    // 0xB000:   ROMH      RAM
+    // 0xA000:   BLANK     RAM
+    // 0x9000:   RAM       CHAR
+    // 0x8000:   RAM       RAM
+    // --------------------------
+    // 0x7000:   ROMH      RAM
+    // 0x6000:   BLANK     RAM
+    // 0x5000:   BLANK     RAM
+    // 0x4000:   BLANK     RAM
+    // --------------------------
+    // 0x3000:   ROMH      RAM
+    // 0x2000:   BLANK     RAM
+    // 0x1000:   BLANK     CHAR
+    // 0x0000:   RAM       RAM
+    
+    if (!c64->getUltimax()) {
+        switch (addrBus >> 12) {
+            case 0x9:
+            case 0x1:
+                dataBus = c64->mem.rom[0xC000 + addr];
+                break;
+            default:
+                dataBus = c64->mem.ram[addrBus];
+        }
+    } else {
+        switch (addrBus >> 12) {
+            case 0xF:
+            case 0xB:
+            case 0x7:
+            case 0x3:
+                dataBus = c64->expansionport.peek(addrBus | 0xF000);
+                // dataBus = c64->expansionport.peekRomH(addrBus | 0xF000);
+                break;
+            case 0xE:
+            case 0xD:
+            case 0x9:
+            case 0x8:
+            case 0x0:
+                dataBus = c64->mem.ram[addrBus];
+                break;
+            default:
+                dataBus = c64->mem.ram[addrBus];
+        }
+    }
+    
+    return dataBus;
+}
+
+uint8_t VIC::memIdleAccess()
+{
+    return memAccess(0x3FFF);
+}
+
+void VIC::cAccess()
+{
+    // Only proceed if the BA line is pulled down
+    if (!badLineCondition)
+        return;
+    
+    // If BA is pulled down for at least three cycles, perform memory access
+    if (BApulledDownForAtLeastThreeCycles()) {
+        
+        // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
+        uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
+        
+        characterSpace[registerVMLI] = memAccess(addr);
+        colorSpace[registerVMLI] = c64->mem.colorRam[registerVC] & 0x0F;
+    }
+    
+    // VIC has no access, yet
+    else {
+        
+        /* "Trotzdem greift der VIC auf die Videomatrix zu, oder versucht es zumindest,
+         denn solange AEC in der zweiten Taktphase noch High ist, sind die
+         Adressbustreiber und Datenbustreiber D0-D7 des VIC im Tri-State und der VIC
+         liest statt der Daten aus der Videomatrix in den ersten drei Zyklen den
+         Wert $ff an D0-D7. Die Datenleitungen D8-D13 des VIC haben allerdings
+         keinen Tri-State-Treiber und sind immer auf Eingang geschaltet. Allerdings
+         bekommt der VIC auch dort keine g¸ltigen Farb-RAM-Daten, denn da AEC High
+         ist, kontrolliert offiziell der 6510 noch den Bus und sofern dieser nicht
+         zufällig gerade den nächsten Opcode vom Farb-RAM lesen will, ist der
+         Chip-Select-Eingang des Farb-RAMs nicht aktiv.
+         
+         Lange Rede, kurzer Sinn: Der VIC liest in den ersten drei
+         Zyklen, nachdem BA auf Low gegangen ist als Zeichenzeiger $ff und als
+         Farbinformation die untersten 4 Bit des Opcodes nach dem Zugriff auf $d011.
+         Erst danach werden wieder reguläre Videomatrixdaten gelesen." [C.B.] */
+        
+        characterSpace[registerVMLI] = 0xFF;
+        colorSpace[registerVMLI] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
+    }
+}
+
+void VIC::gAccess()
+{
+    uint16_t addr;
+    
+    assert ((registerVC & 0xFC00) == 0); // 10 bit register
+    assert ((registerRC & 0xF8) == 0);   // 3 bit register
+    
+    if (displayState) {
+        
+        // "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
+        //  besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
+        //  immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
+        //  entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
+        //  aus" [C.B.]
+        
+        //  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
+        //  BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
+        
+        if (BMMbitInPreviousCycle() | BMMbit()) {
+            addr = (CB13() << 10) | (registerVC << 3) | registerRC;
+        } else {
+            addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
+        }
+        
+        // "Bei gesetztem ECM-Bit schaltet der Adressgenerator bei den g-Zugriffen die
+        //  Adressleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
+        //  (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.]
+        
+        if (ECMbit())
+            addr &= 0xF9FF;
+        
+        // Prepare graphic sequencer
+        p.g_data = memAccess(addr);
+        p.g_character = characterSpace[registerVMLI];
+        p.g_color = colorSpace[registerVMLI];
+        
+        // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.]
+        registerVC++;
+        registerVC &= 0x3FF; // 10 bit overflow
+        registerVMLI++;
+        registerVMLI &= 0x3F; // 6 bit overflow
+        
+    } else {
+        
+        // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
+        addr = ECMbit() ? 0x39FF : 0x3FFF;
+        
+        // Prepare graphic sequencer
+        p.g_data = memAccess(addr);
+        p.g_character = 0;
+        p.g_color = 0;
+    }
+}
+
+void VIC::pAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
+    spritePtr[sprite] = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite) << 6;
+    
+}
+
+void VIC::sFirstAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
+    
+    isFirstDMAcycle = (1 << sprite);
+    
+    if (spriteDmaOnOff & (1 << sprite)) {
+        
+        if (BApulledDownForAtLeastThreeCycles())
+            data = memAccess(spritePtr[sprite] | mc[sprite]);
+        
+        mc[sprite]++;
+        mc[sprite] &= 0x3F; // 6 bit overflow
+    }
+    
+    pixelEngine.sprite_sr[sprite].chunk1 = data;
+}
+
+void VIC::sSecondAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
+    bool memAccessed = false;
+    
+    isFirstDMAcycle = 0;
+    isSecondDMAcycle = (1 << sprite);
+    
+    if (spriteDmaOnOff & (1 << sprite)) {
+        
+        if (BApulledDownForAtLeastThreeCycles()) {
+            data = memAccess(spritePtr[sprite] | mc[sprite]);
+            memAccessed = true;
+        }
+        
+        mc[sprite]++;
+        mc[sprite] &= 0x3F; // 6 bit overflow
+    }
+    
+    // If no memory access has happened here, we perform an idle access
+    // The obtained data might be overwritten by the third sprite access
+    if (!memAccessed)
+        memIdleAccess();
+    
+    pixelEngine.sprite_sr[sprite].chunk2 = data;
+}
+
+void VIC::sThirdAccess(unsigned sprite)
+{
+    assert(sprite < 8);
+    
+    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
+    
+    if (spriteDmaOnOff & (1 << sprite)) {
+        
+        if (BApulledDownForAtLeastThreeCycles())
+            data = memAccess(spritePtr[sprite] | mc[sprite]);
+        
+        mc[sprite]++;
+        mc[sprite] &= 0x3F; // 6 bit overflow
+    }
+    
+    pixelEngine.sprite_sr[sprite].chunk3 = data;
+}
+
+
+void VIC::sFinalize(unsigned sprite)
+{
+    assert(sprite < 8);
+    isSecondDMAcycle = 0;
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //                                         Properties
@@ -885,9 +888,9 @@ VIC::getScreenGeometry()
 }
 
 
-// -----------------------------------------------------------------------------------------------
-//                                DMA lines, BA signal and IRQs
-// -----------------------------------------------------------------------------------------------
+//
+// DMA lines, BA signal, and IRQs
+//
 
 void
 VIC::setBAlow(uint8_t value)
@@ -955,9 +958,9 @@ VIC::setLP(bool value)
     lp = value;
 }
 
-// -----------------------------------------------------------------------------------------------
-//                                              Sprites
-// -----------------------------------------------------------------------------------------------
+//
+// Sprites
+//
 
 void
 VIC::turnSpriteDmaOff()
