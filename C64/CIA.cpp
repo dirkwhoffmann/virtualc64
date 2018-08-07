@@ -110,17 +110,13 @@ CIA::peek(uint16_t addr)
             
         case 0x00: // CIA_DATA_PORT_A
         {
-            uint8_t currentPA = PA;
-            updatePA(); // Remove here. Move to all sources connected to PA
-            assert(currentPA == PA);
+            updatePA();
             return PA;
         }
 
         case 0x01: // CIA_DATA_PORT_B
         {
-            // uint8_t currentPB = PB;
-            updatePB(); // Remove here. Move to all sources connected to PA
-            // assert(currentPB == PB);
+            updatePB();
             return PB;
         }
         case 0x02: // CIA_DATA_DIRECTION_A
