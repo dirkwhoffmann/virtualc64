@@ -712,12 +712,19 @@ private:
     //! @brief    Set BA line
     void setBAlow(uint8_t value);
 	
-	/*! @brief    Trigger a VIC interrupt
-	 *  @details  VIC interrupts can be triggered from multiple sources.
-     *            Each one is associated with a specific bit
+	/*! @brief    Triggers a VIC interrupt
+	 *  @param    source Interrupt source (1, 2, or 4)
+     *            1 : Rasterline interrupt
+     *            2 : Collision of a sprite with background pixels
+     *            4 : Collision between two sprites.
+     *            8 : Lightpen interrupt
+     *            cycleDelay lets you postpone the interrupt by up to 1 cycle.
      */
-	void triggerIRQ(uint8_t source);
-		
+	void triggerIRQ(uint8_t source, unsigned cycleDelay = 0);
+	
+    //! @brief    Triggers a VIC interrupt delayed by one cycle
+    void triggerDelayedIRQ(uint8_t source) { triggerIRQ(source, 1); }
+    
 public: 
 	
 	/*! @brief    Returns next interrupt rasterline

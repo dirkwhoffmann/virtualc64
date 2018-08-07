@@ -47,10 +47,10 @@ VIC::debug_cycle(unsigned c)
 void
 VIC::processDelayedActions()
 {
-    if (delay & VICTriggerIrq0) {
+    if (delay & VICTriggerIrq1) {
         c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
     }
-    if (delay & VICReleaseIrq0) {
+    if (delay & VICReleaseIrq1) {
         c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
     }
     delay = (delay << 1) & VICClearanceMask;

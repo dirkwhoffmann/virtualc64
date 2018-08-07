@@ -496,7 +496,7 @@ VIC::poke(uint16_t addr, uint8_t value)
                 // Value changed: Check if we need to trigger an interrupt immediately
                 p.registerCTRL1 = value;
                 if (yCounter == rasterInterruptLine())
-                    triggerIRQ(1);
+                    triggerDelayedIRQ(1);
             } else {
                 p.registerCTRL1 = value;
             }
@@ -516,7 +516,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;
 				if (yCounter == rasterInterruptLine())
-					triggerIRQ(1);
+					triggerDelayedIRQ(1);
 			}
 			return;
 
@@ -545,7 +545,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             irr &= (~value) & 0x0F;
     
             if (!(irr & imr)) {
-                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+                delay |= VICReleaseIrq1;
             }
 			return;
             
@@ -554,9 +554,11 @@ VIC::poke(uint16_t addr, uint8_t value)
             imr = value & 0x0F;
             
             if (irr & imr) {
-                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+                triggerDelayedIRQ(1);
+                // c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
             } else {
-                c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+                delay |= VICReleaseIrq1;
+                // c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
             }
 			return;		
 			
@@ -909,11 +911,22 @@ VIC::BApulledDownForAtLeastThreeCycles()
 }
 
 void 
-VIC::triggerIRQ(uint8_t source)
+VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
 {
+    assert(source == 1 || source == 2 || source == 4 || source == 8);
+    
     irr |= source;
     if (irr & imr) {
-        c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+        switch (cycleDelay) {
+            case 0:
+                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+                return;
+            case 1:
+                delay |= VICTriggerIrq1;
+                return;
+            default:
+                assert(false);
+        }
     }
 }
 
@@ -949,7 +962,7 @@ VIC::setLP(bool value)
         iomem[0x14] = y;
         
         // Simulate interrupt
-        triggerIRQ(0x08);
+        triggerIRQ(8);
         
         // Lightpen interrupts can only occur once per frame
         lightpenIRQhasOccured = true;
