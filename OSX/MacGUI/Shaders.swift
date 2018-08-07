@@ -53,23 +53,29 @@ class ComputeKernel : NSObject {
         super.init()
     }
 
-    convenience init(name: String, device: MTLDevice, library: MTLLibrary)
+    convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
     {
         self.init()
         
         // Lookup kernel function in library
         guard let function = library.makeFunction(name: name) else {
-            print("ERROR: Cannot find kernel function '\(name)' in library.")
-            abort()
+            track("ERROR: Cannot find kernel function '\(name)' in library.")
+            return nil
         }
         
         // Create kernel
         do {
             try kernel = device.makeComputePipelineState(function: function)
-        }
-        catch {
-            print("ERROR: Failed to create compute kernel '\(name)' in library.")
-            abort()
+        } catch {
+            track("ERROR: Cannot create compute kernel '\(name)'.")
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.icon = NSImage.init(named: NSImage.Name(rawValue: "metal"))
+            alert.messageText = "Failed to create compute kernel."
+            alert.informativeText = "Kernel '\(name)' will be ignored when selected."
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+            return nil
         }
         
         // Build texture samplers
@@ -124,8 +130,8 @@ class ComputeKernel : NSObject {
 
 class BypassUpscaler : ComputeKernel {
     
-    convenience init(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        
         self.init(name: "bypassupscaler", device: device, library: library)
         
         // Replace default texture sampler
@@ -135,18 +141,18 @@ class BypassUpscaler : ComputeKernel {
 
 class EPXUpscaler : ComputeKernel {
     
-    convenience init(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        
         self.init(name: "epxupscaler", device: device, library: library)
         
         // Replace default texture sampler
-          sampler = samplerNearest
+        sampler = samplerNearest
     }
 }
 
 class XBRUpscaler : ComputeKernel {
     
-    convenience init(device: MTLDevice, library: MTLLibrary)
+    convenience init?(device: MTLDevice, library: MTLLibrary)
     {
         self.init(name: "xbrupscaler", device: device, library: library)
         
@@ -155,13 +161,15 @@ class XBRUpscaler : ComputeKernel {
     }
 }
 
+
 //
 // Filters
 //
 
 class BypassFilter : ComputeKernel {
     
-    convenience init(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        
         self.init(name: "bypass", device: device, library: library)
 
         // Replace default texture sampler
@@ -173,7 +181,7 @@ class BlurFilter : ComputeKernel {
     
     var blurWeightTexture: MTLTexture!
     
-    convenience init(device: MTLDevice, library: MTLLibrary, radius: Float) {
+    convenience init?(device: MTLDevice, library: MTLLibrary, radius: Float) {
         self.init(name: "blur", device: device, library: library)
     
         // Build blur weight texture
@@ -231,7 +239,8 @@ class SaturationFilter : ComputeKernel {
 
     var uniformBuffer : MTLBuffer!
     
-    convenience init(device: MTLDevice, library: MTLLibrary, factor: Float) {
+    convenience init?(device: MTLDevice, library: MTLLibrary, factor: Float) {
+        
         self.init(name: "saturation", device: device, library: library)
         
         // Setup uniform buffer
@@ -244,20 +253,21 @@ class SaturationFilter : ComputeKernel {
     }
     
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
+        
         encoder.setBuffer(uniformBuffer, offset: 0, index: 0)
     }
 }
 
 class SepiaFilter : ComputeKernel {
     
-    convenience init(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "sepia", device: device, library: library)
     }
 }
 
 class CrtFilter : ComputeKernel {
     
-    convenience init(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "crt", device: device, library: library)
     }
 }

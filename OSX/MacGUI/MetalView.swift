@@ -265,10 +265,12 @@ public class MetalView: MTKView {
                          C64Upscaler.xbr: xbrUpscaler]
         
         if let result = upscalers[videoUpscaler] {
-            return result!
-        } else {
-            return bypassUpscaler!
+            if result != nil {
+                return result!
+            }
         }
+        
+        return bypassUpscaler! // Fallback
     }
     
     //! Returns the compute kernel of the currently selected postprocessing filer
@@ -284,10 +286,12 @@ public class MetalView: MTKView {
                        C64Filter.crt: crtFilter]
         
         if let result = filters[videoFilter] {
-            return result!
-        } else {
-            return bypassFilter!
+            if result != nil {
+                return result!
+            }
         }
+  
+        return bypassFilter! // Fallback
     }
     
     func startFrame() {

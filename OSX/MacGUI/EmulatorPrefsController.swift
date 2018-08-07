@@ -18,6 +18,7 @@ class EmulatorPrefsWindow : NSWindow {
     }
     
     override func awakeFromNib() {
+        
         respondToEvents()
     }
     
@@ -102,6 +103,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var snapshotInterval: NSTextField!
 
     override func awakeFromNib() {
+        
         update()
     }
     
