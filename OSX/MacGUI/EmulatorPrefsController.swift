@@ -103,13 +103,13 @@ class EmulatorPrefsController : UserDialogController {
     override func awakeFromNib() {
         
         // Check for available upscalers
-        var kernels = parent.metalScreen.upscaler
+        var kernels = parent.metalScreen.upscalers
         for i in 0 ... kernels.count - 1 {
             upscaler.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
         }
         
         // Check for available filters
-        kernels = parent.metalScreen.filter
+        kernels = parent.metalScreen.filters
         for i in 0 ... kernels.count - 1 {
             filter.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
         }

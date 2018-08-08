@@ -21,6 +21,7 @@ struct C64Texture {
     static let upscaled = NSSize.init(width: 2048, height: 2048)
 }
 
+/*
 struct C64Upscaler {
     static let none = 0
     static let epx = 1
@@ -36,6 +37,7 @@ struct C64Filter {
     static let sepia = 5
     static let crt = 6
 }
+*/
 
 public class MetalView: MTKView {
     
@@ -93,25 +95,11 @@ public class MetalView: MTKView {
     var depthTexture: MTLTexture! = nil
 
     /// Array holding all available upscalers
-    var upscaler = [ComputeKernel?](repeating: nil, count: 3)
+    var upscalers = [ComputeKernel?](repeating: nil, count: 3)
  
     /// Array holding all available filters
-    var filter = [ComputeKernel?](repeating: nil, count: 7)
+    var filters = [ComputeKernel?](repeating: nil, count: 7)
     
-    // All currently supported texture upscalers (DEPRECATED)
-    var bypassUpscaler: ComputeKernel?
-    var epxUpscaler: ComputeKernel?
-    var xbrUpscaler: ComputeKernel?
-
-    // All currently supported texture filters (DEPRECATED)
-    var bypassFilter: ComputeKernel?
-    var smoothFilter: ComputeKernel?
-    var blurFilter: ComputeKernel?
-    var saturationFilter: ComputeKernel?
-    var sepiaFilter: ComputeKernel?
-    var grayscaleFilter: ComputeKernel?
-    var crtFilter: ComputeKernel?
-
     // Animation parameters
     var currentXAngle = Float(0.0)
     var targetXAngle = Float(0.0)
@@ -139,20 +127,20 @@ public class MetalView: MTKView {
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
     // Currently selected texture upscaler
-    var videoUpscaler = C64Upscaler.none {
+    var videoUpscaler = 0 {
         didSet {
-            if videoUpscaler >= upscaler.count || upscaler[videoUpscaler] == nil {
-                track("GPU upscaling is disabled (compute kernel is unavailable)")
+            if videoUpscaler >= upscalers.count || upscalers[videoUpscaler] == nil {
+                track("Sorry, the selected GPU upscaler is unavailable.")
                 videoUpscaler = 0
             }
         }
     }
 
     // Currently selected texture filter
-    var videoFilter = C64Filter.smooth {
+    var videoFilter = 1 {
         didSet {
-            if videoFilter >= filter.count || filter[videoFilter] == nil {
-                track("GPU filtering is disabled (compute kernel is unavailable)")
+            if videoFilter >= filters.count || filters[videoFilter] == nil {
+                track("Sorry, the selected GPU filter is unavailable.")
                 videoFilter = 0
             }
         }
@@ -276,42 +264,22 @@ public class MetalView: MTKView {
                                 bytesPerImage: imageBytes)
     }
     
-    //! Returns the compute kernel of the currently selected upscaler
+    //! Returns the compute kernel of the currently selected pixel upscaler
     func currentUpscaler() -> ComputeKernel {
     
-        precondition(bypassUpscaler != nil)
+        precondition(videoUpscaler < upscalers.count)
+        precondition(upscalers[0] != nil)
         
-        let upscalers = [C64Upscaler.epx: epxUpscaler,
-                         C64Upscaler.xbr: xbrUpscaler]
-        
-        if let result = upscalers[videoUpscaler] {
-            if result != nil {
-                return result!
-            }
-        }
-        
-        return bypassUpscaler! // Fallback
+        return upscalers[videoUpscaler]!
     }
     
-    //! Returns the compute kernel of the currently selected postprocessing filer
+    //! Returns the compute kernel of the currently selected texture filer
     func currentFilter() -> ComputeKernel {
         
-        precondition(bypassFilter != nil)
+        precondition(videoFilter < filters.count)
+        precondition(filters[0] != nil)
         
-        let filters = [C64Filter.smooth: smoothFilter,
-                       C64Filter.blur: blurFilter,
-                       C64Filter.saturation: saturationFilter,
-                       C64Filter.grayscale: grayscaleFilter,
-                       C64Filter.sepia: sepiaFilter,
-                       C64Filter.crt: crtFilter]
-        
-        if let result = filters[videoFilter] {
-            if result != nil {
-                return result!
-            }
-        }
-  
-        return bypassFilter! // Fallback
+        return filters[videoFilter]!
     }
     
     func startFrame() {

@@ -107,30 +107,18 @@ public extension MetalView {
         precondition(library != nil)
         
         // Build upscalers
-        upscaler[0] = BypassUpscaler.init(device: device!, library: library)
-        upscaler[1] = EPXUpscaler.init(device: device!, library: library)
-        upscaler[2] = XBRUpscaler.init(device: device!, library: library)
-        
-        bypassUpscaler = upscaler[0]
-        epxUpscaler = upscaler[1]
-        xbrUpscaler = upscaler[2]
+        upscalers[0] = BypassUpscaler.init(device: device!, library: library)
+        upscalers[1] = EPXUpscaler.init(device: device!, library: library)
+        upscalers[2] = XBRUpscaler.init(device: device!, library: library)
         
         // Build filters
-        filter[0] = BypassFilter.init(device: device!, library: library)
-        filter[1] = SaturationFilter.init(device: device!, library: library, factor: 1.0)
-        filter[2] = BlurFilter.init(device: device!, library: library, radius: 3.0)
-        filter[3] = SaturationFilter.init(device: device!, library: library, factor: 0.5)
-        filter[4] = SepiaFilter.init(device: device!, library: library)
-        filter[5] = SaturationFilter.init(device: device!, library: library, factor: 0.0)
-        filter[6] = CrtFilter.init(device: device!, library: library)
-
-        bypassFilter = filter[0]
-        smoothFilter = filter[1]
-        blurFilter = filter[2]
-        saturationFilter = filter[3]
-        sepiaFilter = filter[4]
-        grayscaleFilter = filter[5]
-        crtFilter = filter[6]
+        filters[0] = BypassFilter.init(device: device!, library: library)
+        filters[1] = SaturationFilter.init(device: device!, library: library, factor: 1.0)
+        filters[2] = BlurFilter.init(device: device!, library: library, radius: 3.0)
+        filters[3] = SaturationFilter.init(device: device!, library: library, factor: 0.5)
+        filters[4] = SepiaFilter.init(device: device!, library: library)
+        filters[5] = SaturationFilter.init(device: device!, library: library, factor: 0.0)
+        filters[6] = CrtFilter.init(device: device!, library: library)
     }
     
     func buildBuffers() {
