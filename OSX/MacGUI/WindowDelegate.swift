@@ -28,6 +28,9 @@ extension MyController : NSWindowDelegate {
         
         track()
         
+        // Close virtual keyboard
+        virtualKeyboard?.close()
+        
         // Stop timer
         timer?.invalidate()
         timer = nil

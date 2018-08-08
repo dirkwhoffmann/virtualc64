@@ -304,6 +304,14 @@ extension MyController {
     // Action methods (Keyboard menu)
     //
 
+    @IBAction func stickyKeyboardAction(_ sender: Any!) {
+        
+        // Open the virtual keyboard as a window
+        let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
+        virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
+        virtualKeyboard?.showWindow(withParent: self)
+    }
+    
     @IBAction func mapKeysByPositionAction(_ sender: Any!) {
         
         track()

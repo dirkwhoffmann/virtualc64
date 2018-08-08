@@ -24,7 +24,26 @@ class VirtualKeyboardController : UserDialogController
     /// Indicates if the Commodore key is pressed
     var commodore = false
     
+    /// Indicates if the window should close itself when a key has been pressed.
+    /// If the virtual keyboard is opened as a sheet, this variable is set to
+    /// true. If it is opened as a seperate window, it is set to false.
+    var autoClose = true
+    
+    func showWindow(withParent controller: MyController) {
+        
+        track()
+        
+        parent = controller
+        parentWindow = parent.window
+        c64 = parent.mydocument.c64
+        autoClose = false
+        
+        showWindow(self)
+    }
+    
     override func windowDidLoad() {
+        
+        track()
         
         // Setup key references
         for tag in 0 ... 65 {
@@ -53,6 +72,8 @@ class VirtualKeyboardController : UserDialogController
     }
     
     @IBAction func pressVirtualC64Key(_ sender: Any!) {
+        
+        track()
         
         let tag = (sender as! NSButton).tag
         let key = C64Key(tag)
@@ -116,7 +137,9 @@ class VirtualKeyboardController : UserDialogController
                                                col: C64Key.rightShift.col)
             }
             
-            cancelAction(self)
+            if (autoClose) {
+                cancelAction(self)
+            }
         }
     }
     

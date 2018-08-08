@@ -21,10 +21,11 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.5
 //
-// Now passing VICE test irq-ack-vicii.prg. This bug fix makes the Vandalism demo work.
+// Now passing VICE test irq-ack-vicii.prg. This bug fixes the Vandalism demo issue, too.
 // The disk encoder used a wrong sector ordering. It arranged the sectors similar to a PC floppy drive (physical interleaving) which is wrong for the VC 1541.
+// The virtual keyboard can be opend via a new menu item. If it is opened that way, it is displayed as a seperate window and won't close automatically when a key is pressed.
 // The G64 mount dialog ignored the selected target drive. G64 disks were always inserted into drive 2.
-// The emulator no longe crashes when a GPU compute kernel fails to build.
+// If the emulator fails to build a GPU compute kernel (upscaler or filter), the corresponding option is grayed out in the emulator preferences. Previous versions crashed in this case.
 //
 // TODO:
 // ArchiveDialog and DiskDialog: proceedWithUnsafed disk has to be called in  okAction, because with two drive, we don't now the target upfront.
@@ -52,7 +53,7 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1

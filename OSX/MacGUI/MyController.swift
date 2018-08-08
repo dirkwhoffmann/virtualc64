@@ -403,10 +403,11 @@ extension MyController {
         
         track("GUI timer is up and running")
     }
+ 
     
-// --------------------------------------------------------------------------------
-//                           Timer and message processing
-// --------------------------------------------------------------------------------
+    //
+    // Timer and message processing
+    //
     
     @objc func timerFunc() {
 

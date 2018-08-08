@@ -125,10 +125,10 @@ extension MyController {
     
     @IBAction func keyboardAction(_ sender: Any!) {
         
-        track()
+        // Open the virtual keyboard as a sheet
         let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
-        let controller = VirtualKeyboardController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
+        virtualKeyboard = VirtualKeyboardController.init(windowNibName: nibName)
+        virtualKeyboard?.showSheet(withParent: self)
     }
     
     @IBAction func propertiesAction(_ sender: Any!) {
