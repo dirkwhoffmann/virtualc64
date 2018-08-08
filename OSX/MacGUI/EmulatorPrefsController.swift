@@ -9,8 +9,6 @@ import Foundation
 
 class EmulatorPrefsWindow : NSWindow {
     
-    // @IBOutlet weak var controller: EmulatorPrefsController!
-    
     func respondToEvents() {
         DispatchQueue.main.async {
             self.makeFirstResponder(self)
@@ -103,6 +101,18 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var snapshotInterval: NSTextField!
 
     override func awakeFromNib() {
+        
+        // Check for available upscalers
+        var kernels = parent.metalScreen.upscaler
+        for i in 0 ... kernels.count - 1 {
+            upscaler.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
+        }
+        
+        // Check for available filters
+        kernels = parent.metalScreen.filter
+        for i in 0 ... kernels.count - 1 {
+            filter.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
+        }
         
         update()
     }
@@ -349,8 +359,8 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.setEyeX(0.0)
         parent.metalScreen.setEyeY(0.0)
         parent.metalScreen.setEyeZ(0.0)
-        parent.metalScreen.videoUpscaler = 1
-        parent.metalScreen.videoFilter = 2
+        parent.metalScreen.videoUpscaler = 0
+        parent.metalScreen.videoFilter = 1
         c64.vic.setColorScheme(VICE)
         parent.metalScreen.fullscreenKeepAspectRatio = false
         

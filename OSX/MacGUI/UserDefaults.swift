@@ -25,8 +25,8 @@ struct VC64Keys {
     static let eyeZ = "VC64EyeZ"
     
     static let colorScheme   = "VC64ColorSchemeKey"
-    static let videoUpscaler = "VC64VideoUpscalerKey"
-    static let videoFilter   = "VC64VideoFilterKey"
+    static let videoUpscaler = "VC64UpscalerKey"
+    static let videoFilter   = "VC64FilterKey"
     static let aspectRatio   = "VC64FullscreenKeepAspectRatioKey"
 
     static let joyKeyMap1     = "VC64JoyKeyMap1"
@@ -90,8 +90,8 @@ extension MyController {
             VC64Keys.eyeZ: 0.0,
         
             VC64Keys.colorScheme: VICE.rawValue,
-            VC64Keys.videoUpscaler: 1,
-            VC64Keys.videoFilter: 2,
+            VC64Keys.videoUpscaler: 0,
+            VC64Keys.videoFilter: 1,
             VC64Keys.aspectRatio: false,
         
             VC64Keys.disconnectKeys: true,

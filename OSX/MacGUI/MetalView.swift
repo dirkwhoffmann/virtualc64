@@ -22,19 +22,19 @@ struct C64Texture {
 }
 
 struct C64Upscaler {
-    static let none = 1
-    static let epx = 2
-    static let xbr = 3
+    static let none = 0
+    static let epx = 1
+    static let xbr = 2
 }
 
 struct C64Filter {
-    static let none = 1
-    static let smooth = 2
-    static let blur = 3
-    static let saturation = 4
-    static let grayscale = 5
-    static let sepia = 6
-    static let crt = 7
+    static let none = 0
+    static let smooth = 1
+    static let blur = 2
+    static let saturation = 3
+    static let grayscale = 4
+    static let sepia = 5
+    static let crt = 6
 }
 
 public class MetalView: MTKView {
@@ -89,15 +89,21 @@ public class MetalView: MTKView {
      */
     var filteredTexture: MTLTexture! = nil
     
-    //! Texture to hold the pixel depth information
+    /// Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
 
-    // All currently supported texture upscalers
+    /// Array holding all available upscalers
+    var upscaler = [ComputeKernel?](repeating: nil, count: 3)
+ 
+    /// Array holding all available filters
+    var filter = [ComputeKernel?](repeating: nil, count: 7)
+    
+    // All currently supported texture upscalers (DEPRECATED)
     var bypassUpscaler: ComputeKernel?
     var epxUpscaler: ComputeKernel?
     var xbrUpscaler: ComputeKernel?
 
-    // All currently supported texture filters
+    // All currently supported texture filters (DEPRECATED)
     var bypassFilter: ComputeKernel?
     var smoothFilter: ComputeKernel?
     var blurFilter: ComputeKernel?
@@ -133,10 +139,24 @@ public class MetalView: MTKView {
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
     // Currently selected texture upscaler
-    var videoUpscaler = C64Upscaler.none
-    
+    var videoUpscaler = C64Upscaler.none {
+        didSet {
+            if videoUpscaler >= upscaler.count || upscaler[videoUpscaler] == nil {
+                track("GPU upscaling is disabled (compute kernel is unavailable)")
+                videoUpscaler = 0
+            }
+        }
+    }
+
     // Currently selected texture filter
-    var videoFilter = C64Filter.smooth
+    var videoFilter = C64Filter.smooth {
+        didSet {
+            if videoFilter >= filter.count || filter[videoFilter] == nil {
+                track("GPU filtering is disabled (compute kernel is unavailable)")
+                videoFilter = 0
+            }
+        }
+    }
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
     var enableMetal = false

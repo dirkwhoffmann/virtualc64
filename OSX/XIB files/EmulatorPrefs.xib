@@ -298,30 +298,30 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GFQ-XE-Kwn">
                         <rect key="frame" x="348" y="463" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="GuN-E2-8kC">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" id="GuN-E2-8kC">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="ZHY-Jf-Mks">
+                            <menu key="menu" title="OtherViews" autoenablesItems="NO" id="ZHY-Jf-Mks">
                                 <items>
-                                    <menuItem title="None" tag="1" id="zdp-3P-PHa">
+                                    <menuItem title="None" id="zdp-3P-PHa">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Smooth" tag="2" id="kWS-uo-eBS">
+                                    <menuItem title="Smooth" tag="1" id="kWS-uo-eBS">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Gaussian blur" tag="3" id="72g-g5-lh0">
+                                    <menuItem title="Gaussian blur" tag="2" id="72g-g5-lh0">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Desaturation" tag="4" id="Ugv-Bg-Bol">
+                                    <menuItem title="Desaturation" tag="3" id="Ugv-Bg-Bol">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Grayscale" tag="5" id="hQ4-i7-pto">
+                                    <menuItem title="Grayscale" tag="4" id="hQ4-i7-pto">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Sepia" tag="6" id="37m-Cf-i7g">
+                                    <menuItem title="Sepia" tag="5" id="37m-Cf-i7g">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="CRT" tag="7" id="rtm-MV-mOE">
+                                    <menuItem title="CRT" tag="6" id="rtm-MV-mOE">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>
@@ -334,18 +334,18 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PJx-0D-Gl7">
                         <rect key="frame" x="348" y="492" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="6p3-rD-cKA" id="FY3-L4-r3C">
+                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="6p3-rD-cKA" id="FY3-L4-r3C">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="Aar-D4-8q3">
+                            <menu key="menu" title="OtherViews" autoenablesItems="NO" id="Aar-D4-8q3">
                                 <items>
-                                    <menuItem title="None" state="on" tag="1" id="6p3-rD-cKA">
+                                    <menuItem title="None" state="on" id="6p3-rD-cKA">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="2x (EPX)" tag="2" id="TCS-bs-k5N">
+                                    <menuItem title="2x (EPX)" tag="1" id="TCS-bs-k5N">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="4x (xBR)" tag="3" id="LuS-g1-E2J">
+                                    <menuItem title="4x (xBR)" tag="2" id="LuS-g1-E2J">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>

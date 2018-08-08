@@ -107,18 +107,30 @@ public extension MetalView {
         precondition(library != nil)
         
         // Build upscalers
-        bypassUpscaler = BypassUpscaler.init(device: device!, library: library)
-        epxUpscaler = EPXUpscaler.init(device: device!, library: library)
-        xbrUpscaler = XBRUpscaler.init(device: device!, library: library)
+        upscaler[0] = BypassUpscaler.init(device: device!, library: library)
+        upscaler[1] = EPXUpscaler.init(device: device!, library: library)
+        upscaler[2] = XBRUpscaler.init(device: device!, library: library)
+        
+        bypassUpscaler = upscaler[0]
+        epxUpscaler = upscaler[1]
+        xbrUpscaler = upscaler[2]
         
         // Build filters
-        bypassFilter = BypassFilter.init(device: device!, library: library)
-        smoothFilter = SaturationFilter.init(device: device!, library: library, factor: 1.0)
-        blurFilter = BlurFilter.init(device: device!, library: library, radius: 3.0)
-        saturationFilter = SaturationFilter.init(device: device!, library: library, factor: 0.5)
-        sepiaFilter = SepiaFilter.init(device: device!, library: library)
-        grayscaleFilter = SaturationFilter.init(device: device!, library: library, factor: 0.0)
-        crtFilter = CrtFilter.init(device: device!, library: library)
+        filter[0] = BypassFilter.init(device: device!, library: library)
+        filter[1] = SaturationFilter.init(device: device!, library: library, factor: 1.0)
+        filter[2] = BlurFilter.init(device: device!, library: library, radius: 3.0)
+        filter[3] = SaturationFilter.init(device: device!, library: library, factor: 0.5)
+        filter[4] = SepiaFilter.init(device: device!, library: library)
+        filter[5] = SaturationFilter.init(device: device!, library: library, factor: 0.0)
+        filter[6] = CrtFilter.init(device: device!, library: library)
+
+        bypassFilter = filter[0]
+        smoothFilter = filter[1]
+        blurFilter = filter[2]
+        saturationFilter = filter[3]
+        sepiaFilter = filter[4]
+        grayscaleFilter = filter[5]
+        crtFilter = filter[6]
     }
     
     func buildBuffers() {
