@@ -1,9 +1,8 @@
 /*!
- * @header      Archive.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
-/*
- * This program is free software; you can redistribute it and/or modify
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -101,7 +100,7 @@ public:
     //
 
     //! @brief    Selects an item to read from
-    virtual void selectItem(int n) { }
+    virtual void selectItem(unsigned n) { }
     
     //! @brief    Reads the next byte from the currently selected item
     virtual int getByte() { return 0; }

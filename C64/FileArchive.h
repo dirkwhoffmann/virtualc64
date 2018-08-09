@@ -88,7 +88,7 @@ public:
     size_t getSizeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n);
     
-    void selectItem(int n);
+    void selectItem(unsigned n);
     int getByte();
 };
 #endif

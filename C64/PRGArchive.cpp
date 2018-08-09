@@ -183,7 +183,7 @@ PRGArchive::getDestinationAddrOfItem(unsigned n)
 }
 
 void 
-PRGArchive::selectItem(int n)
+PRGArchive::selectItem(unsigned n)
 {
 	fp = 2; // skip load address
 

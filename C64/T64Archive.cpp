@@ -321,7 +321,7 @@ T64Archive::getDestinationAddrOfItem(unsigned n)
 }
 
 void 
-T64Archive::selectItem(int n)
+T64Archive::selectItem(unsigned n)
 {
     if (n < getNumberOfItems()) {
 

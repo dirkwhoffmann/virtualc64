@@ -157,7 +157,7 @@ FileArchive::getDestinationAddrOfItem(unsigned n)
 }
 
 void 
-FileArchive::selectItem(int n)
+FileArchive::selectItem(unsigned n)
 {		
 	fp = 0x02;
 

@@ -149,7 +149,7 @@ public:
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
     
-    void selectItem(int n);
+    void selectItem(unsigned n);
     int getByte();
 };
 

@@ -218,7 +218,7 @@ P00Archive::getDestinationAddrOfItem(unsigned n)
 }
 
 void 
-P00Archive::selectItem(int n)
+P00Archive::selectItem(unsigned n)
 {		
 	fp = 0x1C; // skip header and load address
 

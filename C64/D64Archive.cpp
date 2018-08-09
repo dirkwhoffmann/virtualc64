@@ -138,7 +138,7 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
     
     // Loop over all entries in archive
     int numberOfItems = otherArchive->getNumberOfItems();
-    for (int i = 0; i < numberOfItems; i++) {
+    for (unsigned i = 0; i < numberOfItems; i++) {
         
         archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
         
@@ -460,7 +460,7 @@ D64Archive::getDestinationAddrOfItem(unsigned n)
 }
 
 void
-D64Archive::selectItem(int item)
+D64Archive::selectItem(unsigned item)
 {
     fp = -1;
     

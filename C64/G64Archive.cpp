@@ -223,10 +223,9 @@ G64Archive::getNumberOfItems()
 }
 
 uint32_t
-G64Archive::getStartOfItem(int n)
+G64Archive::getStartOfItem(unsigned n)
 {
-    if (n < 0 || n >= 84)
-        return -1;
+    if (n >= 84) return -1;
     
     int offset = 0x00C + (4 * n);
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
@@ -269,7 +268,7 @@ G64Archive::getTypeOfItem(unsigned n)
 }
 
 void 
-G64Archive::selectItem(int n)
+G64Archive::selectItem(unsigned n)
 {
     fp = getStartOfItem(n);
     fp += 2; // skip length information

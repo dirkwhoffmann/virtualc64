@@ -343,12 +343,9 @@ NIBArchive::getNumberOfItems()
 
 #if 0
 int
-NIBArchive::getStartOfItem(int n)
+NIBArchive::getStartOfItem(unsigned n)
 {
-    if (n < 0 || n >= 84)
-        return -1;
-
-    return halftrack[n + 1];
+    return (n < 84) ? halftrack[n + 1] : -1;
 }
 #endif
 
@@ -387,20 +384,18 @@ NIBArchive::getTypeOfItem(unsigned n)
 }
 
 void 
-NIBArchive::selectItem(int n)
+NIBArchive::selectItem(unsigned n)
 {
-    if (n < 0 || n >= 84)
-        return;
-    
-    selectedtrack = n + 1;
-    fp = 0;
+    if (n < 84) {
+        selectedtrack = n + 1;
+        fp = 0;
+    }
 }
 
 int
 NIBArchive::getByte()
 {
-	if (fp < 0)
-		return -1;
+	if (fp < 0) return -1;
 		
 	int result = (halftrack[selectedtrack][fp++] << 7);
     if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 6);
@@ -409,7 +404,8 @@ NIBArchive::getByte()
     if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 3);
     if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 2);
     if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 1);
-    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 0); else fp = -1;
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 0);
+    else fp = -1;
     
 	return result;
 }
