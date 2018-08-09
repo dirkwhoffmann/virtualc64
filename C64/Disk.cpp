@@ -679,6 +679,7 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
     assert(a != NULL);
     
     /* 64COPY */
+    /*
     int tailGap[4] = { 9, 9, 9, 9 };
     uint16_t trackLength[4] =
     {
@@ -687,8 +688,9 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
         7142 * 8, // Tracks 18 - 24
         7692 * 8  // Tracks  1 - 17     (outer tracks)
     };
+    */
     
-    /* Hoxs64
+    /* Hoxs64 */
     int tailGap[4] = { 9, 12, 17, 8 };
     uint16_t trackLength[4] =
     {
@@ -697,16 +699,16 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
         7143 * 8, // Tracks 18 - 24
         7693 * 8  // Tracks  1 - 17     (outer tracks)
     };
-    */
     
-    /* VirtualC64 2.4
-    int tailGap[4] = { 13, 16, 21, 12 };
-    uint16_t trackLength[4] =
+    /* VirtualC64 2.4 */
+    /*
+    const int tailGap[4] = { 13, 16, 21, 12 };
+    const uint16_t trackLength[4] =
     {
-        8 * 354 * 17 * tailGap[0], // Tracks 31 - 35..42 (inner tracks)
-        8 * 354 * 18 * tailGap[1], // Tracks 25 - 30
-        8 * 354 * 19 * tailGap[2], // Tracks 18 - 24
-        8 * 354 * 21 * tailGap[3]  // Tracks  1 - 17     (outer tracks)
+        (uint16_t)(8 * 17 * (354 + tailGap[0])), // Tracks 31 - 35..42 (inner tracks)
+        (uint16_t)(8 * 18 * (354 + tailGap[1])), // Tracks 25 - 30
+        (uint16_t)(8 * 19 * (354 + tailGap[2])), // Tracks 18 - 24
+        (uint16_t)(8 * 21 * (354 + tailGap[3]))  // Tracks  1 - 17     (outer tracks)
     };
     */
     
