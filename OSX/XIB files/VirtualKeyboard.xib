@@ -750,6 +750,9 @@
                     </button>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="286-gi-G3m"/>
+            </connections>
             <point key="canvasLocation" x="241" y="133"/>
         </window>
     </objects>

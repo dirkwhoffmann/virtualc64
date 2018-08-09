@@ -7,7 +7,7 @@
 
 import Foundation
 
-class VirtualKeyboardController : UserDialogController
+class VirtualKeyboardController : UserDialogController, NSWindowDelegate
 {
     /// Array holding a reference to the view of each key
     var keyView = Array(repeating: nil as NSButton?, count: 66)
@@ -53,6 +53,12 @@ class VirtualKeyboardController : UserDialogController
         updateImages()
     }
     
+    func windowWillClose(_ notification: Notification) {
+    
+        track()
+        releaseSpecialKeys()
+    }
+    
     func updateImages() {
     
         for nr in 0 ... 65 {
@@ -71,9 +77,17 @@ class VirtualKeyboardController : UserDialogController
         }
     }
     
-    @IBAction func pressVirtualC64Key(_ sender: Any!) {
+    func releaseSpecialKeys() {
         
-        track()
+        self.parent.c64.keyboard.releaseKey(atRow: C64Key.commodore.row,
+                                            col: C64Key.commodore.col)
+        self.parent.c64.keyboard.releaseKey(atRow: C64Key.shift.row,
+                                            col: C64Key.shift.col)
+        self.parent.c64.keyboard.releaseKey(atRow: C64Key.rightShift.row,
+                                            col: C64Key.rightShift.col)
+    }
+    
+    @IBAction func pressVirtualC64Key(_ sender: Any!) {
         
         let tag = (sender as! NSButton).tag
         let key = C64Key(tag)
@@ -129,12 +143,9 @@ class VirtualKeyboardController : UserDialogController
                 press()
                 usleep(useconds_t(20000))
                 release()
-                self.parent.c64.keyboard.releaseKey(atRow: C64Key.commodore.row,
-                                               col: C64Key.commodore.col)
-                self.parent.c64.keyboard.releaseKey(atRow: C64Key.shift.row,
-                                               col: C64Key.shift.col)
-                self.parent.c64.keyboard.releaseKey(atRow: C64Key.rightShift.row,
-                                               col: C64Key.rightShift.col)
+                if (self.autoClose) {
+                    self.releaseSpecialKeys()
+                }
             }
             
             if (autoClose) {
