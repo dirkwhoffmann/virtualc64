@@ -313,7 +313,6 @@ Disk::analyzeHalftrack(Halftrack ht)
 {
     assert(isHalftrackNumber(ht));
     
-    // uint8_t *data = data.halftrack[ht];
     uint16_t len = length.halftrack[ht];
 
     errorLog.clear();
@@ -622,11 +621,15 @@ Disk::encodeArchive(G64Archive *a)
         uint16_t size = a->getSizeOfItem(item);
         
         if (size == 0) {
+            if (ht > 1) {
+                // Make this halftrack as long as the previous halftrack
+                length.halftrack[ht] = length.halftrack[ht - 1];
+            }
             continue;
         }
         
         if (size > 7928) {
-            debug(2, "Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
+            warn("Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
             continue;
         }
         debug(2, "  Encoding halftrack %d (%d bytes)\n", ht, size);
@@ -678,7 +681,7 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
 {
     assert(a != NULL);
     
-    /* 64COPY */
+    // 64COPY (fails on VICE test drive/skew)
     /*
     int tailGap[4] = { 9, 9, 9, 9 };
     uint16_t trackLength[4] =
@@ -690,7 +693,7 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
     };
     */
     
-    /* Hoxs64 */
+    // Hoxs64 (passes VICE test drive/skew)
     int tailGap[4] = { 9, 12, 17, 8 };
     uint16_t trackLength[4] =
     {
@@ -700,7 +703,7 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
         7693 * 8  // Tracks  1 - 17     (outer tracks)
     };
     
-    /* VirtualC64 2.4 */
+    // VirtualC64 2.4
     /*
     const int tailGap[4] = { 13, 16, 21, 12 };
     const uint16_t trackLength[4] =

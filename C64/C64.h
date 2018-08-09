@@ -56,7 +56,7 @@
 // #define NDEBUG
 
 // Default debug level for all components
-#define DEBUG_LEVEL 1
+#define DEBUG_LEVEL 2
 
 // Data types and constants
 #include "C64_types.h"

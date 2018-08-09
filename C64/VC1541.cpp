@@ -450,8 +450,8 @@ VC1541::moveHeadUp()
         halftrack++;
         offset = position * disk.lengthOfHalftrack(halftrack);
         
-        debug(2, "Moving head up to halftrack %d (track %2.1f)\n",
-              halftrack, (halftrack + 1) / 2.0);
+        debug(2, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
+              halftrack, (halftrack + 1) / 2.0, offset);
         debug(2, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
    
