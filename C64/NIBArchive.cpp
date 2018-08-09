@@ -353,31 +353,27 @@ NIBArchive::getStartOfItem(int n)
 #endif
 
 size_t
-NIBArchive::getSizeOfItem(int n)
+NIBArchive::getSizeOfItem(unsigned n)
 {
-    if (n < 0 || n >= 84)
-        return 0;
-
-    return length[n + 1];
+    return n < 84 ? length[n + 1] : 0;
 }
 
 const char *
-NIBArchive::getNameOfItem(int n)
+NIBArchive::getNameOfItem(unsigned n)
 {
-    if (n < 0 || n >= 84)
-        return "";
-    
-    if (n % 2 == 0) {
-        sprintf(name, "Track %d", (n / 2) + 1);
-    } else {
-        sprintf(name, "Track %d.5", (n / 2) + 1);
+    if (n < 84) {
+        if (n % 2 == 0) {
+            sprintf(name, "Track %d", (n / 2) + 1);
+        } else {
+            sprintf(name, "Track %d.5", (n / 2) + 1);
+        }
+        return name;
     }
-    
-	return name;
+    return "";
 }
 
 const unsigned short *
-NIBArchive::getUnicodeNameOfItem(int n, size_t maxChars)
+NIBArchive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
 {
     (void)getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, maxChars);
@@ -385,7 +381,7 @@ NIBArchive::getUnicodeNameOfItem(int n, size_t maxChars)
 }
 
 const char *
-NIBArchive::getTypeOfItem(int n)
+NIBArchive::getTypeOfItem(unsigned n)
 {
     return ""; // (n % 2 == 0) ? "Full" : "Half";
 }

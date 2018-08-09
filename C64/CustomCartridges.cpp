@@ -124,7 +124,7 @@ ActionReplay::setControlReg(uint8_t value)
 {
     regValue = value;
     
-    debug("ActionReplay::setControlReg(%02X)\n", value);
+    debug(2, "ActionReplay::setControlReg(%02X)\n", value);
     
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)

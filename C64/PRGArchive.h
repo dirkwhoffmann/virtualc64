@@ -100,10 +100,10 @@ public:
     
     int getNumberOfItems();
     
-    const char *getNameOfItem(int n);
-    const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
-    const char *getTypeOfItem(int n);
-    uint16_t getDestinationAddrOfItem(int n);
+    const char *getNameOfItem(unsigned n);
+    const unsigned short *getUnicodeNameOfItem(unsigned n, size_t maxChars);
+    const char *getTypeOfItem(unsigned n);
+    uint16_t getDestinationAddrOfItem(unsigned n);
     
     void selectItem(int n);
     int getByte();

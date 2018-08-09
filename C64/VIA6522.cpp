@@ -1011,9 +1011,9 @@ VIA2::updatePB()
         // An increase (00-01-10-11-00...) moves the head up
         
         if ((pb & 0x03) == ((oldPb + 1) & 0x03)) {
-            c64->floppy.moveHeadUp();
+            drive->moveHeadUp();
         } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
-            c64->floppy.moveHeadDown();
+            drive->moveHeadDown();
         } else {
             warn("Unexpected stepper motor control sequence\n");
         }

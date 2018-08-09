@@ -233,29 +233,29 @@ G64Archive::getStartOfItem(int n)
 }
 
 size_t
-G64Archive::getSizeOfItem(int n)
+G64Archive::getSizeOfItem(unsigned n)
 {
     uint32_t offset = getStartOfItem(n);
     return offset ? (LO_HI(data[offset], data[offset+1])) : 0;
 }
 
 const char *
-G64Archive::getNameOfItem(int n)
+G64Archive::getNameOfItem(unsigned n)
 {
-    if (n < 0 || n >= 84)
-        return "";
-    
-    if (n % 2 == 0) {
-        sprintf(name, "Track %d", (n / 2) + 1);
-    } else {
-        sprintf(name, "Track %d.5", (n / 2) + 1);
+    if (n < 84) {
+        if (n % 2 == 0) {
+            sprintf(name, "Track %d", (n / 2) + 1);
+        } else {
+            sprintf(name, "Track %d.5", (n / 2) + 1);
+        }
+        return name;
     }
     
-	return name;
+    return "";
 }
 
 const unsigned short *
-G64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
+G64Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
 {
     (void)getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, maxChars);
@@ -263,7 +263,7 @@ G64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
 }
 
 const char *
-G64Archive::getTypeOfItem(int n)
+G64Archive::getTypeOfItem(unsigned n)
 {
     return ""; // (n % 2 == 0) ? "Full" : "Half";
 }

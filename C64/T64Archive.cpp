@@ -275,7 +275,7 @@ T64Archive::getNumberOfItems()
 }
 
 const char *
-T64Archive::getNameOfItem(int n)
+T64Archive::getNameOfItem(unsigned n)
 {
 	int i,j;
 	int first = 0x50 + (n * 0x20);
@@ -294,7 +294,7 @@ T64Archive::getNameOfItem(int n)
 }
 
 const unsigned short *
-T64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
+T64Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
 {
     (void)getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, maxChars);
@@ -302,7 +302,7 @@ T64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
 }
 
 const char *
-T64Archive::getTypeOfItem(int n)
+T64Archive::getTypeOfItem(unsigned n)
 {
 	int i = 0x41 + (n * 0x20);
 	if (data[i] != 00)
@@ -313,7 +313,7 @@ T64Archive::getTypeOfItem(int n)
 }
 
 uint16_t 
-T64Archive::getDestinationAddrOfItem(int n)
+T64Archive::getDestinationAddrOfItem(unsigned n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t result = LO_HI(data[i], data[i+1]);

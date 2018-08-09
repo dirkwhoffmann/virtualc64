@@ -156,13 +156,13 @@ PRGArchive::getNumberOfItems()
 }
 
 const char *
-PRGArchive::getNameOfItem(int n)
+PRGArchive::getNameOfItem(unsigned n)
 {
 	return "UNKNOWN";
 }
 
 const unsigned short *
-PRGArchive::getUnicodeNameOfItem(int n, size_t maxChars)
+PRGArchive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
 {
     (void)getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, maxChars);
@@ -170,13 +170,13 @@ PRGArchive::getUnicodeNameOfItem(int n, size_t maxChars)
 }
 
 const char *
-PRGArchive::getTypeOfItem(int n)
+PRGArchive::getTypeOfItem(unsigned n)
 {
 	return "PRG";
 }
 
 uint16_t 
-PRGArchive::getDestinationAddrOfItem(int n)
+PRGArchive::getDestinationAddrOfItem(unsigned n)
 {
 	uint16_t result = LO_HI(data[0], data[1]);
 	return result;

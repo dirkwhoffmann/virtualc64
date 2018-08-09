@@ -359,7 +359,7 @@ D64Archive::getNumberOfItems()
 }
 
 const char *
-D64Archive::getNameOfItem(int n)
+D64Archive::getNameOfItem(unsigned n)
 {
     int i, pos = findDirectoryEntry(n);
     
@@ -375,7 +375,7 @@ D64Archive::getNameOfItem(int n)
 }
 
 const unsigned short *
-D64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
+D64Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
 {
     (void)getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, maxChars);
@@ -383,7 +383,7 @@ D64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
 }
 
 const char *
-D64Archive::getTypeOfItem(int n)
+D64Archive::getTypeOfItem(unsigned n)
 {
     const char *extension = "";
     int pos = findDirectoryEntry(n);
@@ -430,7 +430,7 @@ D64Archive::itemIsVisible(uint8_t typeChar, const char **extension)
 }
 
 size_t
-D64Archive::getSizeOfItemInBlocks(int n)
+D64Archive::getSizeOfItemInBlocks(unsigned n)
 {
     int pos = findDirectoryEntry(n);
     
@@ -438,7 +438,7 @@ D64Archive::getSizeOfItemInBlocks(int n)
 }
 
 uint16_t
-D64Archive::getDestinationAddrOfItem(int n)
+D64Archive::getDestinationAddrOfItem(unsigned n)
 {
     int pos;
     int track;

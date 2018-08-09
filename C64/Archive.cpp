@@ -58,7 +58,7 @@ Archive::makeArchiveWithFile(const char *path)
 }
 
 size_t
-Archive::getSizeOfItem(int n)
+Archive::getSizeOfItem(unsigned n)
 {
     int size = 0;
     
@@ -94,7 +94,7 @@ Archive::dumpDirectory()
 }
 
 void
-Archive::flash(int item, uint8_t *buffer)
+Archive::flash(unsigned item, uint8_t *buffer)
 {
     assert(buffer != NULL);
     
@@ -110,7 +110,6 @@ Archive::flash(int item, uint8_t *buffer)
         addr++;
     }
 }
-
 
 const char *
 Archive::byteStream(unsigned n, size_t offset, size_t num)

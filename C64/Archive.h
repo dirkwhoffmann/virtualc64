@@ -65,34 +65,35 @@ public:
     //! Accessing item attributes
     //
             
-    /*! @brief   Returns the name of an item
+    /*! @brief   Returnsunsigned the name of an item
      *  @return  String in ASCII format, or NULL, if item does not exist
      */
-    virtual const char *getNameOfItem(int n) { return NULL; }
+    virtual const char *getNameOfItem(unsigned n) { return NULL; }
 
     /*! @brief   Returns the name of an item
      *  @return  Unicode character array, or NULL, if item does not exist
      *  @details The provides unicode format is compatible with font C64ProMono
      *           which is used, e.g., in the mount dialogs preview panel. 
      */
-    virtual const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars = 255) { return NULL; }
+    virtual const unsigned short *getUnicodeNameOfItem(unsigned n, size_t maxChars = 255) {
+        return NULL; }
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
-    virtual const char *getTypeOfItem(int n) { return NULL; }
+    virtual const char *getTypeOfItem(unsigned n) { return NULL; }
     
     //! @brief    Returns the size of an item in bytes
-    virtual size_t getSizeOfItem(int n);
+    virtual size_t getSizeOfItem(unsigned n);
 
     //! @brief    Returns the size of an item in bits
-    virtual size_t getSizeOfItemInBits(int n) { return 8 * getSizeOfItem(n); }
+    virtual size_t getSizeOfItemInBits(unsigned n) { return 8 * getSizeOfItem(n); }
 
     //! @brief    Returns the size of an item in blocks
-    virtual size_t getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
+    virtual size_t getSizeOfItemInBlocks(unsigned n) { return (getSizeOfItem(n) + 253) / 254; }
         
     /*! @brief    Returns the proposed memory location of an item.
      *  @details  When a file is flashed into memory, the raw data is copied to this location.
      */
-    virtual uint16_t getDestinationAddrOfItem(int n) { return 0; }
+    virtual uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
     
     
     //
@@ -109,7 +110,7 @@ public:
     virtual void skip(unsigned n) { for (unsigned i = 0; i < n; i++) (void)getByte(); }
 
     //! @brief    Copies an item into the specified buffer
-    void flash(int n, uint8_t *buffer);
+    void flash(unsigned n, uint8_t *buffer);
     
     //! @brief    Reads multiple bytes in form of string
     const char *byteStream(unsigned n, size_t offset, size_t num);

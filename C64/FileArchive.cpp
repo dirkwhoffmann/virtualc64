@@ -118,7 +118,7 @@ FileArchive::getNumberOfItems()
 }
 
 const char *
-FileArchive::getNameOfItem(int n)
+FileArchive::getNameOfItem(unsigned n)
 {
 	strncpy(name, getName(), 17);
 	for (unsigned i = 0; i < 17; i++) {
@@ -129,7 +129,7 @@ FileArchive::getNameOfItem(int n)
 }
 
 const unsigned short *
-FileArchive::getUnicodeNameOfItem(int n, size_t maxChars)
+FileArchive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
 {
     (void)getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, maxChars);
@@ -137,19 +137,19 @@ FileArchive::getUnicodeNameOfItem(int n, size_t maxChars)
 }
 
 size_t
-FileArchive::getSizeOfItem(int n)
+FileArchive::getSizeOfItem(unsigned n)
 {
 	return (uint16_t)size - 2;
 }		
 
 const char *
-FileArchive::getTypeOfItem(int n)
+FileArchive::getTypeOfItem(unsigned n)
 {
 	return "PRG";
 }
 
 uint16_t 
-FileArchive::getDestinationAddrOfItem(int n)
+FileArchive::getDestinationAddrOfItem(unsigned n)
 {
 	uint16_t result = data[0x00] + (data[0x01] << 8);
 	printf("Will load to location %X\n", result);
