@@ -807,9 +807,8 @@ VIA6522::setCA1(bool value)
     
     // Set interrupt flag
     SET_BIT(ifr, 1);
-    // setInterruptFlag_CA1();
     if (GET_BIT(ier, 1)) {
-        delay |= VIAInterrupt1;
+        delay |= VIAInterrupt0;
     }
     
     // Latch peripheral port into input register if latching is enabled
