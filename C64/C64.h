@@ -21,25 +21,30 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.5
 //
-// Now passing VICE test irq-ack-vicii.prg. This bug fixes the Vandalism demo issue, too.
+// Fixed a bug that suppressed an immediate interrupt at the drive CPU side when the ATN line went down. This bug fixes the Action Replay fast loader problem.
 // The disk encoder used a wrong sector ordering. It arranged the sectors similar to a PC floppy drive (physical interleaving) which is wrong for the VC 1541.
-// The virtual keyboard can be opend via a new menu item. If it is opened that way, it is displayed as a seperate window and won't close automatically when a key is pressed.
+// Fixed VICE test drive/skew.prg by adjusting the tail gap values the disk encoder uses.
+// Now passing VICE test irq-ack-vicii.prg. This bug fixes the Vandalism demo issue, too.
+// The virtual keyboard can be opened via a new menu item. If it is opened that way, it is displayed as a separate window and won't close automatically when a key is pressed.
 // The G64 mount dialog ignored the selected target drive. G64 disks were always inserted into drive 2.
 // If the emulator fails to build a GPU compute kernel (upscaler or filter), the corresponding option is grayed out in the emulator preferences. Previous versions crashed in this case.
 //
-// TODO:
-// ArchiveDialog and DiskDialog: proceedWithUnsafed disk has to be called in  okAction, because with two drive, we don't now the target upfront.
-// Don't use mount() for inserting disks. Use insertDisk instead
-// Adjust drive channel numbers (8 for first drive and 9 for second)
-// Add second drive to IEC bus
+// TODOs for the next release:
 //
 // CLEANUP:
+// Don't use mount() for inserting disks. Use insertDisk instead
+//
+// OPTIMIZATION:
+// Update IEC bus inside CIA and VIA. Use delay flags if neccessary
+// Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
+// Call CA1 action in VIA class only if the pin value really has changed.
+//
 // Loading and saving:
 // New object structure (??):
-// MediaFile -> RomFile, TapFile, CrtFile, Snapshot
-//           -> MediaArchive -> T64Archive, D64Archive, PRGArchive, P00Archive
-//           -> DiskFile -> G64Disk, NIBDisk
-// Delete Archive
+// AnyC64File -> RomFile, TapFile, CrtFile, Snapshot
+//             -> DiskFile -> G64Disk, NIBDisk
+//             -> AnyC64Archive -> T64Archive, D64Archive, PRGArchive, P00Archive
+// Delete "File" (which is now AnyC64File) and "Archive" (which is now AnyArchive)
 //
 // Add setter API for SID stuff
 //
@@ -53,10 +58,10 @@
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components
-#define DEBUG_LEVEL 2
+#define DEBUG_LEVEL 1
 
 // Data types and constants
 #include "C64_types.h"
