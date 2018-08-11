@@ -71,10 +71,9 @@ void VIA6522::reset()
     t1 = 0x01AA;
     t2 = 0x01AA;
     t1_latch_hi = 0x01;
-    t1_latch_lo = 0xAA;
+    t1_latch_lo = 0x05; // Makes "drive/defaults.prg" happy
     t2_latch_lo = 0xAA;
     feed = (VIACountA0 | VIACountB0);
-    // updatePB();
 }
 
 void 
