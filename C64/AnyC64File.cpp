@@ -66,6 +66,7 @@ AnyC64File::getName()
 const unsigned short *
 AnyC64File::getUnicodeName(size_t maxChars)
 {
+    memset(unicode, 0, sizeof(unicode));
     translateToUnicode(name, unicode, 0xE000, maxChars);
     return unicode;
 }

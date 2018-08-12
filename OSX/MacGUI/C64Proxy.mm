@@ -1105,15 +1105,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 - (NSString *)unicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max {
     Archive *archive = (Archive *)([self wrapper]->container);
-    const unsigned short *name = archive->getUnicodeNameOfItem((int)item, max);
-    
-    if (name == NULL)
-        return NULL;
-    
-    unsigned numChars;
-    for (numChars = 0; name[numChars] != 0; numChars++);
-    
-    return [NSString stringWithCharacters:name length:numChars];
+    const unsigned short *unichars = archive->getUnicodeNameOfItem((int)item, max);
+    return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 
 - (NSInteger)sizeOfItem:(NSInteger)item

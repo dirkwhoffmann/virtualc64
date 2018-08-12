@@ -67,11 +67,11 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 2
-#define V_MINOR 5
+#define V_MINOR 6
 #define V_SUBMINOR 0
 
 // Disables assertion checking in relase version
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components
 #define DEBUG_LEVEL 1

@@ -124,10 +124,10 @@ void printReadable(const void *data, int length);
 //! @functiongroup Converting low level data objects
 //
 
-/*! @brief    Translates a PETSCII string to a unicode string.
- *  @details  This functions creates unicode characters compatible 
- *            with C64ProMono font. The target font supports four different
- *            mapping tables starting at different base addresses:
+/*! @brief    Translates a PETSCII string to a unichar array.
+ *  @details  This functions creates unicode characters compatible with the
+ *            C64ProMono font. The target font supports four different mapping
+ *            tables starting at different base addresses:
  *
  *            0xE000 : Unshifted (only upper case characters)  
  *            0xE100 : Shifted   (upper and lower case characters)
@@ -137,7 +137,10 @@ void printReadable(const void *data, int length);
  *  @note     A maximum of max characters are translated. 
  *            The unicode array will always be terminated by a NULL character.
  */
-void translateToUnicode(char *petscii, uint16_t *unicode, uint16_t base, size_t max);
+void translateToUnicode(char *petscii, uint16_t *unichars, uint16_t base, size_t max);
+
+//! @brief    Returns the number of characters in a null terminated unichar array
+size_t strlen16(const uint16_t *unichars);
 
 /*! @brief    Converts a PETSCII character to a printable character.
  *  @details  Replaces all unprintable characters by subst.
