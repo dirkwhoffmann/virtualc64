@@ -96,9 +96,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     }
     
     func updateImages() {
-    
-        track("Lowercase mode: \(lowercase)")
-            
+                
         for nr in 0 ... 65 {
             
             let shiftLock = c64.keyboard.shiftLockIsPressed()
