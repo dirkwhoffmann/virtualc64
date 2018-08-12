@@ -629,6 +629,8 @@ struct ContainerWrapper;
     struct ContainerWrapper *wrapper;
 }
 
+- (void)setPath:(NSString *)path;
+
 - (struct ContainerWrapper *)wrapper;
 
 - (ContainerType)type; 

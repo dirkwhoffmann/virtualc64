@@ -51,10 +51,18 @@ AnyC64File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_
 void
 AnyC64File::setPath(const char *str)
 {
-    if (path)
-        free(path);
+    assert(str != NULL);
     
+    // Set path
+    if (path) free(path);
     path = strdup(str);
+    
+    // Set default name
+    memset(name, 0, sizeof(name));
+    char *filename = ExtractFilenameWithoutSuffix(path);
+    strncpy(name, filename, sizeof(name) - 1);
+    free(filename);
+    ascii2petStr(name);
 }
 
 const char *
@@ -70,12 +78,14 @@ AnyC64File::getUnicodeName()
     return unicode;
 }
 
+/*
 void
 AnyC64File::setName(const char *str)
 {
     strncpy(name, str, sizeof(name));
     name[sizeof(name) - 1] = 0;
 }
+*/
 
 bool
 AnyC64File::readFromFile(const char *filename)
@@ -123,10 +133,10 @@ AnyC64File::readFromFile(const char *filename)
 		goto exit;
 	}
 
-	// Set path and default name
+	// Set path
     setPath(filename);
-    name = ExtractFilenameWithoutSuffix(filename);
-    setName(name);
+    // name = ExtractFilenameWithoutSuffix(filename);
+    // setName(name);
         
     debug(1, "File %s read successfully\n", path);
 	success = true;

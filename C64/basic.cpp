@@ -86,6 +86,15 @@ ascii2pet(uint8_t asciichar)
 }
 
 void
+ascii2petStr(char *str)
+{
+    assert(str != NULL);
+    for (; *str != 0; str++) {
+        *str = ascii2pet(*str);
+    }
+}
+
+void
 sprint8d(char *s, uint8_t value)
 {
     for (int i = 2; i >= 0; i--) {

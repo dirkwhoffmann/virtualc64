@@ -108,7 +108,7 @@ public:
     virtual const unsigned short *getUnicodeName();
 
     //! @brief    Sets the logical name.
-    void setName(const char *name);
+    // void setName(const char *name);
 	
     
     //

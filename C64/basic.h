@@ -137,7 +137,8 @@ void printReadable(const void *data, int length);
  *  @note     A maximum of max characters are translated. 
  *            The unicode array will always be terminated by a NULL character.
  */
-void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, size_t max);
+void translateToUnicode(const char *petscii, uint16_t *unichars,
+                        uint16_t base, size_t max);
 
 //! @brief    Returns the number of characters in a null terminated unichar array
 size_t strlen16(const uint16_t *unichars);
@@ -147,12 +148,17 @@ size_t strlen16(const uint16_t *unichars);
  */
 uint8_t petscii2printable(uint8_t c, uint8_t subst);
 
-/*! @brief    Converts an ASCII character to an PETSCII character.
+/*! @brief    Converts an ASCII character to a PETSCII character.
  *  @details  This function translates into the unshifted PET character set.
  *            I.e., lower case characters are converted to uppercase characters.
- *  @result   Returns ' ' if the ASCII character is not supported by PETSCII charset.
+ *  @result   Returns ' ' for ASCII characters with no PETSCII representation.
  */
 uint8_t ascii2pet(uint8_t asciichar);
+
+//! @brief    Converts an ASCII string into a PETSCII string.
+/*! @details  Applies function ascii2pet to all characters of a string.
+ */
+void ascii2petStr(char *str);
 
 //! @brief    Writes an uint8_t value into a string in decimal format
 void sprint8d(char *s, uint8_t value);

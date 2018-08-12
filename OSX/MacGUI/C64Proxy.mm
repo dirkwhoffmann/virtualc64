@@ -828,8 +828,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (instancetype) initWithContainer:(AnyC64File *)container
 {
-    // NSLog(@"ContainerProxy::initWithContainer");
-
     if (container == nil) {
         return nil;
     }
@@ -842,14 +840,16 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (ContainerProxy *) makeWithContainer:(AnyC64File *)container
 {
-    // NSLog(@"ContainerProxy::makeWithContainer");
-    
     if (container == nil) {
         return nil;
     }
     return [[self alloc] initWithContainer:container];
 }
 
+- (void)setPath:(NSString *)path {
+    AnyC64File *file = (AnyC64File *)([self wrapper]->container);
+    file->setPath([path UTF8String]);
+}
 - (ContainerWrapper *)wrapper { return wrapper; }
 - (ContainerType)type { return wrapper->container->type(); }
 - (NSString *)name { return [NSString stringWithUTF8String:wrapper->container->getName()]; }
@@ -1099,10 +1099,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     Archive *archive = (Archive *)([self wrapper]->container);
     return (NSInteger)archive->getNumberOfItems();
 }
+
 - (NSString *)nameOfItem:(NSInteger)item {
     Archive *archive = (Archive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->getNameOfItem((int)item)];
 }
+
 - (NSString *)unicodeNameOfItem:(NSInteger)item {
     Archive *archive = (Archive *)([self wrapper]->container);
     const unsigned short *unichars = archive->getUnicodeNameOfItem((int)item);
@@ -1114,21 +1116,25 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     Archive *archive = (Archive *)([self wrapper]->container);
     return archive->getSizeOfItem((int)item);
 }
+
 - (NSInteger)sizeOfItemInBlocks:(NSInteger)item
 {
     Archive *archive = (Archive *)([self wrapper]->container);
     return archive->getSizeOfItemInBlocks((int)item);
 }
+
 - (NSString *)typeOfItem:(NSInteger)item
 {
     Archive *archive = (Archive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->getTypeOfItem((int)item)];
 }
+
 - (NSInteger)destinationAddrOfItem:(NSInteger)item
 {
     Archive *archive = (Archive *)([self wrapper]->container);
     return archive->getDestinationAddrOfItem((int)item);
 }
+
 - (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
 {
     Archive *archive = (Archive *)([self wrapper]->container);

@@ -266,6 +266,8 @@ class MyDocument : NSDocument {
         if attachment == nil {
             throw NSError.corruptedFileError(filename: filename)
         }
+        track("filename = \(filename)")
+        attachment!.setPath(filename)
     }
     
     
