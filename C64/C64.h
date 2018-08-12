@@ -31,6 +31,8 @@
 //
 // TODOs for the next release:
 //
+// Map right Mac shift key to right Commodore key
+//
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
 //
@@ -38,7 +40,8 @@
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
 // Call CA1 action in VIA class only if the pin value really has changed.
-//
+// Get rid of timer in DriveInspector. Do it message based
+
 // Loading and saving:
 //
 // New object structure:

@@ -272,6 +272,10 @@ struct ContainerWrapper;
 - (void) releaseRestoreKey;
 - (void) releaseAll;
 
+- (BOOL) shiftIsPressed;
+- (BOOL) rightShiftIsPressed;
+- (BOOL) commodoreIsPressed;
+
 - (BOOL) shiftLockIsPressed;
 - (void) lockShift;
 - (void) unlockShift;

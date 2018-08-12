@@ -21,9 +21,12 @@ class MyController : NSWindowController {
     /// Keyboard controller
     var keyboardcontroller: KeyboardController!
     
-    /// Virtual C64 keyboard
+    /// Virtual C64 keyboard (opened as a separate window)
     var virtualKeyboard: VirtualKeyboardController? = nil
-    
+
+    /// Virtual C64 keyboard (opened as a sheet)
+    var virtualKeyboardSheet: VirtualKeyboardController? = nil
+
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be done
     /// perdiodically (e.g., updating the speedometer and the debug panels)
@@ -501,20 +504,17 @@ extension MyController {
     
             // Open attachment if present
             mydocument.openAttachmentWithDocument()
-            break;
     
         case MSG_RUN:
             
             disableUserEditing()
             document?.updateChangeCount(.changeDone)
             refresh()
-            break
     
         case MSG_HALT:
             
             enableUserEditing()
             refresh()
-            break
     
         case MSG_BASIC_ROM_LOADED,
              MSG_CHAR_ROM_LOADED,
@@ -528,7 +528,6 @@ extension MyController {
             let nibName = NSNib.Name(rawValue: "RomDialog")
             let dialogController = RomDialogController.init(windowNibName: nibName)
             dialogController.showSheet(withParent: self)
-            break
             
         case MSG_SNAPSHOT_TAKEN:
             break
@@ -541,7 +540,6 @@ extension MyController {
              MSG_CPU_ILLEGAL_INSTRUCTION:
             self.debugOpenAction(self)
             refresh()
-            break
             
         case MSG_WARP_ON,
              MSG_WARP_OFF,
@@ -555,14 +553,18 @@ extension MyController {
             } else {
                 warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "clock_green"))
             }
-            break
     
         case MSG_PAL,
              MSG_NTSC:
 
             metalScreen.updateScreenGeometry()
-            break
     
+        case MSG_KEYMATRIX,
+             MSG_CHARSET:
+            
+            virtualKeyboard?.refresh()
+            virtualKeyboardSheet?.refresh()
+
         case MSG_VC1541_ATTACHED:
             
             let image = NSImage.init(named: NSImage.Name(rawValue:"LEDgreen"))
@@ -572,7 +574,6 @@ extension MyController {
             } else {
                 greenLED2.image = image
             }
-            break
 
         case MSG_VC1541_DETACHED:
             
@@ -583,7 +584,6 @@ extension MyController {
             } else {
                 greenLED2.image = image
             }
-            break
 
         case MSG_VC1541_ATTACHED_SOUND:
             
@@ -591,7 +591,6 @@ extension MyController {
             // playSound:@"1541_power_on_0" volume:0.2];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
-            break
         
         case MSG_VC1541_DETACHED_SOUND:
             
@@ -599,19 +598,16 @@ extension MyController {
             // playSound:@"1541_track_change_0" volume:0.6];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
-            break
     
         case MSG_VC1541_DISK_SOUND:
             
             // playSound:@"1541_door_closed_2" volume:0.2];
             playSound(name: "drive_snatch_uae", volume: 0.1)
-            break
             
         case MSG_VC1541_NO_DISK_SOUND:
             
             // playSound:@"1541_door_open_1" volume:0.2];
             playSound(name: "drive_snatch_uae", volume: 0.1)
-            break
             
         case MSG_VC1541_HEAD_UP_SOUND:
             
@@ -619,7 +615,6 @@ extension MyController {
             // playSound:@"1541_track_change_0" volume:0.6];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
-            break
             
         case MSG_VC1541_HEAD_DOWN_SOUND:
             
@@ -627,7 +622,6 @@ extension MyController {
             // playSound:@"1541_track_change_2" volume:1.0];
             // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
             playSound(name: "drive_click", volume: 1.0)
-            break
             
         case MSG_VC1541_DISK:
             
@@ -636,7 +630,6 @@ extension MyController {
             } else {
                 diskIcon2.isHidden = false
             }
-            break
   
         case MSG_VC1541_NO_DISK:
             
@@ -645,7 +638,6 @@ extension MyController {
             } else {
                 diskIcon2.isHidden = true
             }
-            break
             
         case MSG_DISK_SAVED:
             
@@ -655,7 +647,6 @@ extension MyController {
             } else {
                 diskIcon2.image = image
             }
-            break
             
         case MSG_DISK_UNSAVED:
             
@@ -666,7 +657,6 @@ extension MyController {
             } else {
                 diskIcon2.image = image
             }
-            break
             
         case MSG_VC1541_RED_LED_ON:
             
@@ -678,7 +668,6 @@ extension MyController {
                 redLED2.image = image
                 redLED2.setNeedsDisplay()
             }
-            break
             
         case MSG_VC1541_RED_LED_OFF:
             
@@ -690,7 +679,6 @@ extension MyController {
                 redLED2.image = image
                 redLED2.setNeedsDisplay()
             }
-            break
     
         case MSG_IEC_BUS_BUSY:
             if c64.drive1.isRotating() {
@@ -699,12 +687,10 @@ extension MyController {
             if c64.drive2.isRotating() {
                 progress2.startAnimation(self)
             }
-            break
     
         case MSG_IEC_BUS_IDLE:
             progress1.stopAnimation(self)
             progress2.stopAnimation(self)
-            break
             
         case MSG_VC1541_MOTOR_ON,
              MSG_VC1541_MOTOR_OFF,
@@ -715,12 +701,10 @@ extension MyController {
         case MSG_VC1530_TAPE:
             
             tapeIcon.isHidden = false
-            break
 
         case MSG_VC1530_NO_TAPE:
             
             tapeIcon.isHidden = true
-            break
 
         //case MSG_VC1530_PLAY:
         //    break
@@ -731,17 +715,14 @@ extension MyController {
         case MSG_CARTRIDGE:
             
             cartridgeIcon.isHidden = false
-            break
     
         case MSG_NO_CARTRIDGE:
             
             cartridgeIcon.isHidden = true
-            break
             
         default:
             track("Unknown message: \(msg)")
             assert(false)
-            break
         }
     }
 

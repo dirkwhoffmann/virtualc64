@@ -399,7 +399,6 @@ class DiskInspectorController : UserDialogController {
     
     override func cancelAction(_ sender: Any!) {
         
-        track("Canceling timer")
         timer.invalidate()
         super.cancelAction(self)
     }

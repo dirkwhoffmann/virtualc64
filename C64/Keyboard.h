@@ -25,19 +25,21 @@
 
 /*! @class    The virtual keyboard of a C64
  *  @details  This class manages the keyboard matrix of the virtual C64.
- *            Keyboard management works as follows: When the GUI recognizes a pressed or 
- *            release key, it calls one of the functions in this class to tell the virtual 
- *            keyboard about the event.	The called functions does nothing more than 
- *            clearing or setting a bit in the 8x8 keyboard matrix.Each key corresponds to a
- *            specific bit in the matrix and is uniquely determined by a row and a column value.
+ *            Keyboard management works as follows: When the GUI recognizes a
+ *            key press or a key release, it calls one of the functions in this
+ *            class to tell the virtual keyboard about the event. The called
+ *            functions do nothing more than clearing or setting a bit in the
+ *            8x8 keyboard matrix.Each key corresponds to a specific bit in the
+ *            matrix and is uniquely determined by a row and a column value.
  *
- *            Communication with the virtual computer is managed solely by the CIA chip. When a
- *            special CIA register is peeked, method getRowValues is called which finally gets
- *            the contents of the keyboard matrix into the virtual C64.
+ *            Communication with the virtual computer is managed solely by the
+ *            CIA chip. When a special CIA register is peeked, method
+ *            getRowValues is called which finally gets the contents of the
+ *            keyboard matrix into the virtual C64.
  */
 class Keyboard : public VirtualComponent {
 
-protected:
+private:
     
 	//! @brief    The C64 keyboard matrix indexed by row
 	uint8_t kbMatrixRow[8];
@@ -47,7 +49,7 @@ protected:
 
     //! @brief    True iff shift lock is pressed
     bool shiftLock;
-    
+
 public:
     
 	//! @brief    Constructor
@@ -68,8 +70,11 @@ public:
     //! @brief    Checks if the shift lock key is held down.
     bool shiftLockIsPressed() { return shiftLock; }
 
-    //! @brief    Checks if the shift key is currently pressed.
+    //! @brief    Checks if the left shift key is currently pressed.
     bool shiftKeyIsPressed() { return keyIsPressed(1,7); }
+    
+    //! @brief    Checks if the right shift key is currently pressed.
+    bool rightShiftKeyIsPressed() { return keyIsPressed(6,4); }
     
     //! @brief    Checks if the commodore key is currently pressed.
     bool commodoreKeyIsPressed() { return keyIsPressed(7,5); }
@@ -86,14 +91,6 @@ public:
      */
 	void pressKey(uint8_t row, uint8_t col);
     
-    /*! @brief    Presses the shift lock key
-     *  @details  The shift lock key permanently holds down the right shift key
-     */
-    void pressShiftLockKey() { shiftLock = true; pressKey(6,4); }
-    
-    //! @brief    Releases the shift lock key
-    void releaseShiftLockKey() { shiftLock = false; releaseKey(6,4); }
-
 	//! @brief    Presses the shift hey.
 	void pressShiftKey() { pressKey(1,7); }
     
@@ -105,9 +102,6 @@ public:
     
 	//! @brief    Presses the runstop key.
 	void pressRunstopKey() { pressKey(7,7); }
-
-    //! @brief    Presses shift and runstop simultaniously.
-    // void pressShiftRunstopKey() { pressShiftKey(); pressKey(7,7); }
 
     //! @brief    Presses the restore key.
     void pressRestoreKey();
@@ -129,9 +123,6 @@ public:
     
     //! @brief    Releases the runstop key.
 	void releaseRunstopKey() { releaseKey(7,7); }
-
-    //! @brief    Releases shift and runstop simultaniously.
-    // void releaseShiftRunstopKey() { releaseKey(7,7); releaseShiftKey(); }
 
     //! @brief    Releases the restore key.
     void releaseRestoreKey();
@@ -156,6 +147,29 @@ public:
     //! @brief    Toggles the runstop key.
     void toggleRunstopKey() { toggleKey(7,7); }
     
+    
+    //
+    //! @functiongroup Handling the shift lock key
+    //
+    
+    //! @brief    Setter for shiftLock
+    /*! @details  Sends a KEYMATRIX message if the variable changes
+     */
+    void setShiftLock(bool value);
+    
+    /*! @brief    Presses the shift lock key
+     *  @details  Pressing shift lock has the same effect as holding the
+     *            right shift key permanently.
+     */
+    void pressShiftLockKey() { setShiftLock(true); }
+    
+    //! @brief    Releases the shift lock key
+    void releaseShiftLockKey() { setShiftLock(false); }
+    
+    
+    //
+    //! @functiongroup Accessing the keyboard matrix
+    //
     
 	/*! @brief    Reads a row from keyboard matrix
 	 *  @param    columnMask  Indicates the rows to read

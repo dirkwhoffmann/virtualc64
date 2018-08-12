@@ -71,6 +71,10 @@ typedef enum {
     MSG_IEC_BUS_BUSY,
     MSG_IEC_BUS_IDLE,
 
+    // Keyboard
+    MSG_KEYMATRIX,
+    MSG_CHARSET,
+    
     // Peripherals (Disk drive)
     MSG_VC1541_ATTACHED,
     MSG_VC1541_ATTACHED_SOUND,

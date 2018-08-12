@@ -20,9 +20,15 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
 
     /// Indicates if the right Shift key is pressed
     var rshift = false
-    
+
+    /// Indicates if the shift lock key is pressed
+    var shiftLock = false
+
     /// Indicates if the Commodore key is pressed
     var commodore = false
+    
+    /// Indicates if the lower case character set is currently in use
+    var lowercase = false
     
     /// Indicates if the window should close itself when a key has been pressed.
     /// If the virtual keyboard is opened as a sheet, this variable is set to
@@ -59,11 +65,39 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         releaseSpecialKeys()
     }
     
+    func refresh() {
+        
+        var needsUpdate = false;
+        
+        if lshift != c64.keyboard.shiftIsPressed() {
+            lshift = c64.keyboard.shiftIsPressed()
+            needsUpdate = true
+        }
+        if rshift != c64.keyboard.rightShiftIsPressed() {
+            rshift = c64.keyboard.rightShiftIsPressed()
+            needsUpdate = true
+        }
+        if shiftLock != c64.keyboard.shiftLockIsPressed() {
+            shiftLock = c64.keyboard.shiftLockIsPressed()
+            needsUpdate = true
+        }
+        if commodore != c64.keyboard.commodoreIsPressed() {
+            commodore = c64.keyboard.commodoreIsPressed()
+            needsUpdate = true
+        }
+        if lowercase != !c64.keyboard.inUpperCaseMode() {
+            lowercase = !c64.keyboard.inUpperCaseMode()
+            needsUpdate = true
+        }
+        
+        if needsUpdate {
+            updateImages()
+        }
+    }
+    
     func updateImages() {
     
-        let uppercased = c64.keyboard.inUpperCaseMode()
-        
-        track("Uppercase mode: \(uppercased)")
+        track("Lowercase mode: \(lowercase)")
             
         for nr in 0 ... 65 {
             
@@ -77,7 +111,8 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
             
             keyView[nr]!.image = C64Key(nr).image(pressed: pressed,
                                                   shift: shift,
-                                                  commodore: commodore)
+                                                  commodore: commodore,
+                                                  lowercase: lowercase)
         }
     }
     
@@ -115,30 +150,29 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
             
         case 34: // Shift Lock
             
+            /*
             if c64.keyboard.shiftLockIsPressed() {
                 c64.keyboard.unlockShift()
             } else {
                 c64.keyboard.lockShift()
             }
-            updateImages()
+            */
+            shiftLock ? c64.keyboard.unlockShift() : c64.keyboard.lockShift()
 
         case 49: // Commodore
             
-            commodore = !commodore
-            commodore ? press() : release()
-            updateImages()
+            // commodore = !commodore
+            commodore ? release() : press()
             
         case 50: // Left Shift
             
-            lshift = !lshift
-            lshift ? press() : release()
-            updateImages()
+            // lshift = !lshift
+            lshift ? release() : press()
             
         case 61: // Right Shift
             
-            rshift = !rshift
-            rshift ? press() : release()
-            updateImages()
+            // rshift = !rshift
+            rshift ? release() : press()
             
         default:
             
@@ -157,5 +191,4 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
             }
         }
     }
-    
 }

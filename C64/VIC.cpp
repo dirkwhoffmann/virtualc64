@@ -535,10 +535,19 @@ VIC::poke(uint16_t addr, uint8_t value)
 			expansionFF |= ~value;
 			return;
 			
-		case 0x18: // MEMORY_SETUP_REGISTER
+        case 0x18: { // MEMORY_SETUP_REGISTER
+            
+            uint8_t oldValue = iomem[addr];
             iomem[addr] = value;
+            
+            // The GUI needs to know when the second bit changes. This bit
+            // lets us distinguish between uppercase / lowercase character mode
+            if ((oldValue ^ value) & 0x02) {
+                debug("CHARSET CHANGE\n");
+                c64->putMessage(MSG_CHARSET);
+            }
 			return;
-			
+        }
 		case 0x19: // Interrupt Request Register (IRR)
             
             // Bits are cleared by writing '1'

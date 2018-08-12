@@ -77,6 +77,15 @@ Keyboard::dumpState()
     msg("Shift lock: %s pressed\n", shiftLock ? "" : "not");
 }
 
+void
+Keyboard::setShiftLock(bool value)
+{
+    if (value != shiftLock) {
+        shiftLock = value;
+        c64->putMessage(MSG_KEYMATRIX);
+    }
+}
+
 uint8_t
 Keyboard::getRowValues(uint8_t columnMask)
 {
@@ -87,6 +96,10 @@ Keyboard::getRowValues(uint8_t columnMask)
 			result &= kbMatrixRow[i];
 		}
 	}
+    
+    // Check for shift lock
+    if (shiftLock && GET_BIT(columnMask, 6))
+        CLR_BIT(result, 4);
 	
 	return result;
 }
@@ -102,6 +115,10 @@ Keyboard::getColumnValues(uint8_t rowMask)
         }
     }
     
+    // Check for shift lock
+    if (shiftLock && GET_BIT(rowMask, 4))
+        CLR_BIT(result, 6);
+    
     return result;
 }
 
@@ -115,8 +132,7 @@ Keyboard::pressKey(uint8_t row, uint8_t col)
     kbMatrixRow[row] &= ~(1 << col);
     kbMatrixCol[col] &= ~(1 << row);
 
-    // debug("Set(%d %d)\n",row,col);
-    // dumpState();
+    c64->putMessage(MSG_KEYMATRIX);
 }
 
 void
@@ -138,8 +154,7 @@ Keyboard::releaseKey(uint8_t row, uint8_t col)
     kbMatrixRow[row] |= (1 << col);
     kbMatrixCol[col] |= (1 << row);
 
-    // debug("Unset(%d %d)\n",row,col);
-    // dumpState();
+     c64->putMessage(MSG_KEYMATRIX);
 }
 
 void

@@ -26,6 +26,12 @@ struct C64Key : Codable {
     // Column index
     var col = -1
     
+    // Flags for key modifiers
+    let DEFAULT = 0
+    let SHIFT = 1
+    let COMMODORE = 2
+    let LOWER = 4
+    
     init(_ nr: Int) {
         
         precondition(nr >= 0 && nr <= 65)
@@ -365,6 +371,9 @@ extension C64Key {
                commodore: Bool = false,
                lowercase: Bool = false) -> NSImage {
         
+        // Create mapping table if neccessary
+        if C64Key.map.isEmpty { initMap() }
+        
         // Check for keys with a predrawn image
         switch (nr) {
         case 17: return NSImage.init(named: .key_ctrl)!
@@ -448,15 +457,37 @@ extension C64Key {
             // Fifth row
             65: (("sys",""), ("sys",""), ("sys","")) // space
         ]
-        let keyInfo = keyInfos[nr]!
-        let props = shift ? keyInfo.1 : commodore ? keyInfo.2 : keyInfo.0
         
-        // Determine key label, font, and vertical drawing offset
-        let label = props.1
-        let font = (props.0 == "sys") ?
-            NSFont.systemFont(ofSize: 13) :
-            NSFont.init(name: "C64ProMono", size: 9)!
-        let yoffset = (props.0 == "sys") ? -6 : -9
+        var label: String
+        var font: NSFont
+        var yoffset: Int
+        
+        var index = 8 * nr
+        index += (shift ? SHIFT : 0)
+        index += (commodore ? COMMODORE : 0)
+        index += (lowercase ? LOWER : 0)
+        if let (l, f) = C64Key.map[index] {
+            if f == "" {
+                font = NSFont.systemFont(ofSize: 13)
+                yoffset = -6
+            } else {
+                font = NSFont.init(name: "C64ProMono", size: 9)!
+                yoffset = -9
+            }
+            label = l
+
+        } else { // OLD STUFF
+            
+            let keyInfo = keyInfos[nr]!
+            let props = shift ? keyInfo.1 : commodore ? keyInfo.2 : keyInfo.0
+            
+            // Determine key label, font, and vertical drawing offset
+            label = props.1
+            font = (props.0 == "sys") ?
+                NSFont.systemFont(ofSize: 13) :
+                NSFont.init(name: "C64ProMono", size: 9)!
+            yoffset = (props.0 == "sys") ? -6 : -9
+        }
         
         // Render key
         let textRect = CGRect(x: 0, y: yoffset, width: layout.0, height: layout.1)
@@ -538,3 +569,293 @@ extension C64Key {
     }
 }
 
+extension C64Key {
+
+    static var map: [Int: (String,String)] = [:]
+    
+    func assign(_ key: Int, _ flags: Int, _ label: String, _ font: String = "") {
+        
+        for i in 0 ... 7 {
+            if i & flags == flags {
+                C64Key.map[8 * key + i] = (label, font)
+            }
+        }
+    }
+    
+    func initMap() {
+        
+        //
+        // Function keys
+        //
+        
+        assign(16, DEFAULT, "f 1")
+        assign(16, SHIFT, "f 2")
+        assign(32, DEFAULT, "f 3")
+        assign(32, SHIFT, "f 4")
+        assign(48, DEFAULT, "f 5")
+        assign(48, SHIFT, "f 6")
+        assign(64, DEFAULT, "f 7")
+        assign(64, SHIFT, "f 8")
+        
+        //
+        // First row
+        //
+        
+        assign(0, DEFAULT, "\u{2190}" /* left arrow */)
+        
+        assign(1, DEFAULT, "1")
+        assign(1, SHIFT, "!")
+        assign(1, COMMODORE, "")
+
+        assign(2, DEFAULT, "2")
+        assign(2, SHIFT, "\"")
+        assign(2, COMMODORE, "")
+        
+        assign(3, DEFAULT, "3")
+        assign(3, SHIFT, "#")
+        assign(3, COMMODORE, "")
+
+        assign(4, DEFAULT, "4")
+        assign(4, SHIFT, "$")
+        assign(4, COMMODORE, "")
+
+        assign(5, DEFAULT, "5")
+        assign(5, SHIFT, "%")
+        assign(5, COMMODORE, "")
+
+        assign(6, DEFAULT, "6")
+        assign(6, SHIFT, "&")
+        assign(6, COMMODORE, "")
+
+        assign(7, DEFAULT, "7")
+        assign(7, SHIFT, "'")
+        assign(7, COMMODORE, "")
+
+        assign(8, DEFAULT, "8")
+        assign(8, SHIFT, "(")
+        assign(8, COMMODORE, "")
+
+        assign(9, DEFAULT, "9")
+        assign(9, SHIFT, ")")
+        assign(9, COMMODORE, "")
+
+        assign(10, DEFAULT, "0")
+        assign(10, COMMODORE, "")
+        
+        assign(11, DEFAULT, "+")
+        assign(11, COMMODORE, "\u{2592}", "C64")
+        assign(11, SHIFT, "\u{253c}", "C64")
+        
+        assign(12, DEFAULT, "-")
+        assign(12, COMMODORE, "\u{e0dc}", "C64")
+        assign(12, SHIFT, "\u{2502}", "C64")
+        
+        assign(13, DEFAULT, "\u{00a3}" /* Pound */)
+        assign(13, COMMODORE, "\u{e0a8}", "C64")
+        assign(13, SHIFT, "\u{25e4}", "C64")
+        
+        //
+        // Second row
+        //
+        
+        assign(18, DEFAULT, "Q")
+        assign(18, COMMODORE, "\u{251c}", "C64")
+        assign(18, SHIFT, "\u{2022}", "C64")
+        assign(18, LOWER, "q")
+        assign(18, LOWER | SHIFT, "Q")
+        
+        assign(19, DEFAULT, "W")
+        assign(19, COMMODORE, "\u{251c}", "C64")
+        assign(19, SHIFT, "\u{2022}", "C64")
+        assign(19, LOWER, "w")
+        assign(19, LOWER | SHIFT, "W")
+        
+        assign(20, DEFAULT, "E")
+        assign(20, COMMODORE, "\u{2534}", "C64")
+        assign(20, SHIFT, "\u{e0c5}", "C64")
+        assign(20, LOWER, "e")
+        assign(20, LOWER | SHIFT, "E")
+ 
+        assign(21, DEFAULT, "R")
+        assign(21, COMMODORE, "\u{252c}", "C64")
+        assign(21, SHIFT, "\u{e072}", "C64")
+        assign(21, LOWER, "r")
+        assign(21, LOWER | SHIFT, "R")
+  
+        assign(22, DEFAULT, "T")
+        assign(22, COMMODORE, "\u{2594}", "C64")
+        assign(22, SHIFT, "\u{e0d4}", "C64")
+        assign(22, LOWER, "t")
+        assign(22, LOWER | SHIFT, "T")
+        
+        assign(23, DEFAULT, "Y")
+        assign(23, COMMODORE, "\u{e0b7}", "C64")
+        assign(23, SHIFT, "\u{e0d9}", "C64")
+        assign(23, LOWER, "y")
+        assign(23, LOWER | SHIFT, "Y")
+ 
+        assign(24, DEFAULT, "U")
+        assign(24, COMMODORE, "\u{e0b8}", "C64")
+        assign(24, SHIFT, "\u{256d}", "C64")
+        assign(24, LOWER, "u")
+        assign(24, LOWER | SHIFT, "U")
+        
+        assign(25, DEFAULT, "I")
+        assign(25, COMMODORE, "\u{2584}", "C64")
+        assign(25, SHIFT, "\u{256e}", "C64")
+        assign(25, LOWER, "i")
+        assign(25, LOWER | SHIFT, "I")
+ 
+        assign(26, DEFAULT, "O")
+        assign(26, COMMODORE, "\u{2583}", "C64")
+        assign(26, SHIFT, "\u{e0cf}", "C64")
+        assign(26, LOWER, "o")
+        assign(26, LOWER | SHIFT, "O")
+ 
+        assign(27, DEFAULT, "P")
+        assign(27, COMMODORE, "\u{2582}", "C64")
+        assign(27, SHIFT, "\u{e0d0}", "C64")
+        assign(27, LOWER, "p")
+        assign(27, LOWER | SHIFT, "P")
+ 
+        assign(28, DEFAULT, "@")
+        assign(28, COMMODORE, "\u{2581}", "C64")
+        assign(28, SHIFT, "\u{e0ba}", "C64")
+        assign(28, LOWER | SHIFT, "\u{e1fa}", "C64")
+     
+        assign(29, DEFAULT, "*")
+        assign(29, COMMODORE, "\u{25e5}", "C64")
+        assign(29, SHIFT, "\u{2500}", "C64")
+        
+        assign(30, DEFAULT, "\u{2191}")
+        assign(30, COMMODORE, "\u{03C0}")
+        assign(30, SHIFT, "\u{03C0}")
+        assign(30, LOWER | SHIFT, "\u{e17e}", "C64")
+  
+        //
+        // Third row
+        //
+        
+        assign(35, DEFAULT, "A")
+        assign(35, COMMODORE, "\u{250c}", "C64")
+        assign(35, SHIFT, "\u{2660}", "C64")
+        assign(35, LOWER, "a")
+        assign(35, LOWER | SHIFT, "A")
+
+        assign(36, DEFAULT, "S")
+        assign(36, COMMODORE, "\u{2510}", "C64")
+        assign(36, SHIFT, "\u{2665}", "C64")
+        assign(36, LOWER, "s")
+        assign(36, LOWER | SHIFT, "S")
+
+        assign(37, DEFAULT, "D")
+        assign(37, COMMODORE, "\u{2597}", "C64")
+        assign(37, SHIFT, "\u{e064}", "C64")
+        assign(37, LOWER, "d")
+        assign(37, LOWER | SHIFT, "D")
+
+        assign(38, DEFAULT, "F")
+        assign(38, COMMODORE, "\u{2596}", "C64")
+        assign(38, SHIFT, "\u{e0c6}", "C64")
+        assign(38, LOWER, "f")
+        assign(38, LOWER | SHIFT, "F")
+ 
+        assign(39, DEFAULT, "G")
+        assign(39, COMMODORE, "\u{258e}", "C64")
+        assign(39, SHIFT, "\u{e0c7}", "C64")
+        assign(39, LOWER, "g")
+        assign(39, LOWER | SHIFT, "G")
+        
+        assign(40, DEFAULT, "H")
+        assign(40, COMMODORE, "\u{258e}", "C64")
+        assign(40, SHIFT, "\u{e0c8}", "C64")
+        assign(40, LOWER, "h")
+        assign(40, LOWER | SHIFT, "H")
+        
+        assign(41, DEFAULT, "J")
+        assign(41, COMMODORE, "\u{258d}", "C64")
+        assign(41, SHIFT, "\u{2570}", "C64")
+        assign(41, LOWER, "j")
+        assign(41, LOWER | SHIFT, "J")
+  
+        assign(42, DEFAULT, "K")
+        assign(42, COMMODORE, "\u{258c}", "C64")
+        assign(42, SHIFT, "\u{256f}", "C64")
+        assign(42, LOWER, "k")
+        assign(42, LOWER | SHIFT, "K")
+        
+        assign(43, DEFAULT, "L")
+        assign(43, COMMODORE, "\u{e0b6}", "C64")
+        assign(43, SHIFT, "\u{e0cc}", "C64")
+        assign(43, LOWER, "l")
+        assign(43, LOWER | SHIFT, "L")
+ 
+        assign(44, DEFAULT, ":")
+        assign(44, COMMODORE, "[")
+        assign(44, SHIFT, "[")
+        
+        assign(45, DEFAULT, ";")
+        assign(45, COMMODORE, "]")
+        assign(45, SHIFT, "]")
+        
+        assign(46, DEFAULT, "=")
+    
+        //
+        // Fourth row
+        //
+        
+        assign(51, DEFAULT, "Z")
+        assign(51, COMMODORE, "\u{2514}", "C64")
+        assign(51, SHIFT, "\u{2666}", "C64")
+        assign(51, LOWER, "z")
+        assign(51, LOWER | SHIFT, "Z")
+ 
+        assign(52, DEFAULT, "X")
+        assign(52, COMMODORE, "\u{2518}", "C64")
+        assign(52, SHIFT, "\u{2663}", "C64")
+        assign(52, LOWER, "x")
+        assign(52, LOWER | SHIFT, "X")
+ 
+        assign(53, DEFAULT, "C")
+        assign(53, COMMODORE, "\u{259d}", "C64")
+        assign(53, SHIFT, "\u{2500}", "C64")
+        assign(53, LOWER, "c")
+        assign(53, LOWER | SHIFT, "C")
+ 
+        assign(54, DEFAULT, "V")
+        assign(54, COMMODORE, "\u{2598}", "C64")
+        assign(54, SHIFT, "\u{2573}", "C64")
+        assign(54, LOWER, "v")
+        assign(54, LOWER | SHIFT, "V")
+        
+        assign(55, DEFAULT, "B")
+        assign(55, COMMODORE, "\u{259a}", "C64")
+        assign(55, SHIFT, "\u{2502}", "C64")
+        assign(55, LOWER, "b")
+        assign(55, LOWER | SHIFT, "B")
+        
+        assign(56, DEFAULT, "N")
+        assign(56, COMMODORE, "\u{e0aa}", "C64")
+        assign(56, SHIFT, "\u{2571}", "C64")
+        assign(56, LOWER, "n")
+        assign(56, LOWER | SHIFT, "N")
+        
+        assign(57, DEFAULT, "M")
+        assign(57, COMMODORE, "\u{e0a7}", "C64")
+        assign(57, SHIFT, "\u{2572}", "C64")
+        assign(57, LOWER, "m")
+        assign(57, LOWER | SHIFT, "M")
+        
+        assign(58, DEFAULT, "M")
+        assign(58, COMMODORE, "<")
+        assign(58, SHIFT, "<")
+        
+        assign(59, DEFAULT, ".")
+        assign(59, COMMODORE, ">")
+        assign(59, SHIFT, ">")
+        
+        assign(60, DEFAULT, "/")
+        assign(60, COMMODORE, "?")
+        assign(60, SHIFT, "?")
+    }
+}
