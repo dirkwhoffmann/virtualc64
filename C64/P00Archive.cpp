@@ -197,14 +197,6 @@ P00Archive::getNameOfItem(unsigned n)
     return name;
 }
 
-const unsigned short *
-P00Archive::getUnicodeNameOfItem(unsigned n)
-{
-    (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
-}
-
 const char *
 P00Archive::getTypeOfItem(unsigned n)
 {

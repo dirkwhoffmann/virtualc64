@@ -255,14 +255,6 @@ G64Archive::getNameOfItem(unsigned n)
     return "";
 }
 
-const unsigned short *
-G64Archive::getUnicodeNameOfItem(unsigned n)
-{
-    (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
-}
-
 const char *
 G64Archive::getTypeOfItem(unsigned n)
 {

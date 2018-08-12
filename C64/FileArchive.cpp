@@ -130,14 +130,6 @@ FileArchive::getNameOfItem(unsigned n)
 	return name;
 }
 
-const unsigned short *
-FileArchive::getUnicodeNameOfItem(unsigned n)
-{
-    (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
-}
-
 size_t
 FileArchive::getSizeOfItem(unsigned n)
 {

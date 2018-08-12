@@ -162,14 +162,6 @@ PRGArchive::getNameOfItem(unsigned n)
 	return "FILE";
 }
 
-const unsigned short *
-PRGArchive::getUnicodeNameOfItem(unsigned n)
-{
-    (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
-}
-
 const char *
 PRGArchive::getTypeOfItem(unsigned n)
 {

@@ -371,14 +371,6 @@ NIBArchive::getNameOfItem(unsigned n)
     return "";
 }
 
-const unsigned short *
-NIBArchive::getUnicodeNameOfItem(unsigned n)
-{
-    (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
-}
-
 const char *
 NIBArchive::getTypeOfItem(unsigned n)
 {
