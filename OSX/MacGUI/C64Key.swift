@@ -319,6 +319,7 @@ extension NSImage.Name {
     static let key_crsr_left = NSImage.Name(rawValue: "key_crsr_left")
     static let key_crsr_right = NSImage.Name(rawValue: "key_crsr_right")
     static let key_ctrl = NSImage.Name(rawValue: "key_ctrl")
+    static let key_ctrl_pressed = NSImage.Name(rawValue: "key_ctrl_pressed")
     static let key_restore = NSImage.Name(rawValue: "key_restore")
     static let key_runstop = NSImage.Name(rawValue: "key_runstop")
     static let key_shiftlock = NSImage.Name(rawValue: "key_shiftlock")
@@ -376,7 +377,7 @@ extension C64Key {
         
         // Check for keys with a predrawn image
         switch (nr) {
-        case 17: return NSImage.init(named: .key_ctrl)!
+        case 17: return NSImage.init(named: pressed ? .key_ctrl_pressed : .key_ctrl)!
         case 31: return NSImage.init(named: .key_restore)!
         case 33: return NSImage.init(named: .key_runstop)!
         case 34: return NSImage.init(named: pressed ? .key_shiftlock_pressed : .key_shiftlock)!
@@ -391,74 +392,6 @@ extension C64Key {
         default: break
         }
     
-        // Key properties (font, std char, shifted char, commodore char)
-        let keyInfos = [
-            // First row
-            0: (("sys","\u{2190}"), ("sys","\u{2190}"), ("sys","\u{2190}")), // left arrow
-            1: (("sys","1"), ("sys","!"), ("sys","1")), // 1
-            2: (("sys","2"), ("sys","\""), ("sys","2")), // 2
-            3: (("sys","3"), ("sys","#"), ("sys","3")), // 3
-            4: (("sys","4"), ("sys","$"), ("sys","4")), // 4
-            5: (("sys","5"), ("sys","%"), ("sys","5")), // 5
-            6: (("sys","6"), ("sys","&"), ("sys","6")), // 6
-            7: (("sys","7"), ("sys","'"), ("sys","7")), // 7
-            8: (("sys","8"), ("sys","("), ("sys","8")), // 8
-            9: (("sys","9"), ("sys",")"), ("sys","9")), // 9
-            10: (("sys","0"), ("sys","0"), ("sys","0")), // 0
-            11: (("sys","+"), ("pro","\u{253c}"), ("pro","\u{2592}")), // +
-            12: (("sys","-"), ("pro","\u{2502}"), ("pro","\u{e0dc}")), // -
-            13: (("sys","\u{00a3}"), ("pro","\u{25e4}"), ("pro","\u{e0a8}")), // pound
-            16: (("sys","f 1"), ("sys","f 2"), ("sys","f 1")), // f 1
-            
-            // Second row
-            18: (("sys","Q"), ("pro","\u{2022}"), ("pro","\u{251c}")), // Q
-            19: (("sys","W"), ("pro","\u{25cb}"), ("pro","\u{2524}")), // W
-            20: (("sys","E"), ("pro","\u{e0c5}"), ("pro","\u{2534}")), // E
-            21: (("sys","R"), ("pro","\u{e072}"), ("pro","\u{252c}")), // R
-            22: (("sys","T"), ("pro","\u{e0d4}"), ("pro","\u{2594}")), // T
-            23: (("sys","Y"), ("pro","\u{e0d9}"), ("pro","\u{e0b7}")), // Y
-            24: (("sys","U"), ("pro","\u{256d}"), ("pro","\u{e0b8}")), // U
-            25: (("sys","I"), ("pro","\u{256e}"), ("pro","\u{2584}")), // I
-            26: (("sys","O"), ("pro","\u{e0cf}"), ("pro","\u{2583}")), // O
-            27: (("sys","P"), ("pro","\u{e0d0}"), ("pro","\u{2582}")), // P
-            28: (("sys","@"), ("pro","\u{e0ba}"), ("pro","\u{2581}")), // @
-            29: (("sys","*"), ("pro","\u{2500}"), ("pro","\u{25e5}")), // *
-            30: (("sys","\u{2191}"), ("sys","\u{03C0}"), ("sys","\u{03C0}")), // up arrow
-            32: (("sys","f 3"), ("sys","f 4"), ("sys","f 3")), // f 3
-
-            // Third row
-            35: (("sys","A"), ("pro","\u{2660}"), ("pro","\u{250c}")), // A
-            36: (("sys","S"), ("pro","\u{2665}"), ("pro","\u{2510}")), // S
-            37: (("sys","D"), ("pro","\u{e064}"), ("pro","\u{2597}")), // D
-            38: (("sys","F"), ("pro","\u{e0c6}"), ("pro","\u{2596}")), // F
-            39: (("sys","G"), ("pro","\u{e0c7}"), ("pro","\u{258e}")), // G
-            40: (("sys","H"), ("pro","\u{e0c8}"), ("pro","\u{258e}")), // H
-            41: (("sys","J"), ("pro","\u{2570}"), ("pro","\u{258d}")), // J
-            42: (("sys","K"), ("pro","\u{256f}"), ("pro","\u{258c}")), // K
-            43: (("sys","L"), ("pro","\u{e0cc}"), ("pro","\u{e0b6}")), // L
-            44: (("sys",":"), ("sys","["), ("sys","[")), // :
-            45: (("sys",";"), ("sys","]"), ("sys","]")), // ;
-            46: (("sys","="), ("sys","="), ("sys","=")), // =
-            48: (("sys","f 5"), ("sys","f 6"), ("sys","f 5")), // f 5
-
-            // Fourth row
-            51: (("sys","Z"), ("pro","\u{2666}"), ("pro","\u{2514}")), // Z
-            52: (("sys","X"), ("pro","\u{2663}"), ("pro","\u{2518}")), // X
-            53: (("sys","C"), ("pro","\u{2500}"), ("pro","\u{259d}")), // C
-            54: (("sys","V"), ("pro","\u{2573}"), ("pro","\u{2598}")), // V
-            55: (("sys","B"), ("pro","\u{2502}"), ("pro","\u{259a}")), // B
-            56: (("sys","N"), ("pro","\u{2571}"), ("pro","\u{e0aa}")), // N
-            57: (("sys","M"), ("pro","\u{2572}"), ("pro","\u{e0a7}")), // M
-            58: (("sys",","), ("sys","<"), ("sys","<")), // ,
-            59: (("sys","."), ("sys",">"), ("sys",">")), // .
-            60: (("sys","/"), ("sys","?"), ("sys","?")), // /
-            64: (("sys","f 7"), ("sys","f 8"), ("sys","f 7")), // f 7
-
-            // Fifth row
-            65: (("sys",""), ("sys",""), ("sys","")) // space
-        ]
-        
-        var label: String
         var font: NSFont
         var yoffset: Int
         
@@ -466,28 +399,13 @@ extension C64Key {
         index += (shift ? SHIFT : 0)
         index += (commodore ? COMMODORE : 0)
         index += (lowercase ? LOWER : 0)
-        if let (l, f) = C64Key.map[index] {
-            if f == "" {
-                font = NSFont.systemFont(ofSize: 13)
-                yoffset = -6
-            } else {
-                font = NSFont.init(name: "C64ProMono", size: 9)!
-                yoffset = -9
-            }
-            label = l
-
-        } else { // OLD STUFF
-            
-            assert(false);
-            let keyInfo = keyInfos[nr]!
-            let props = shift ? keyInfo.1 : commodore ? keyInfo.2 : keyInfo.0
-            
-            // Determine key label, font, and vertical drawing offset
-            label = props.1
-            font = (props.0 == "sys") ?
-                NSFont.systemFont(ofSize: 13) :
-                NSFont.init(name: "C64ProMono", size: 9)!
-            yoffset = (props.0 == "sys") ? -6 : -9
+        let (label, fontname) = C64Key.map[index]!
+        if fontname == "" {
+            font = NSFont.systemFont(ofSize: 13)
+            yoffset = -6
+        } else {
+            font = NSFont.init(name: "C64ProMono", size: 9)!
+            yoffset = -9
         }
         
         // Render key

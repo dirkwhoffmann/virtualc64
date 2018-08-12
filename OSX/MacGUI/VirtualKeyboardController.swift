@@ -24,6 +24,9 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     /// Indicates if the shift lock key is pressed
     var shiftLock = false
 
+    /// Indicates if the Control key is pressed
+    var control = false
+    
     /// Indicates if the Commodore key is pressed
     var commodore = false
     
@@ -69,16 +72,20 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         
         var needsUpdate = false;
         
-        if lshift != c64.keyboard.shiftIsPressed() {
-            lshift = c64.keyboard.shiftIsPressed()
+        if lshift != c64.keyboard.leftShiftIsPressed() {
+            lshift = c64.keyboard.leftShiftIsPressed()
             needsUpdate = true
         }
         if rshift != c64.keyboard.rightShiftIsPressed() {
             rshift = c64.keyboard.rightShiftIsPressed()
             needsUpdate = true
         }
-        if shiftLock != c64.keyboard.shiftLockIsPressed() {
-            shiftLock = c64.keyboard.shiftLockIsPressed()
+        if shiftLock != c64.keyboard.shiftLockIsHoldDown() {
+            shiftLock = c64.keyboard.shiftLockIsHoldDown()
+            needsUpdate = true
+        }
+        if control != c64.keyboard.controlIsPressed() {
+            control = c64.keyboard.controlIsPressed()
             needsUpdate = true
         }
         if commodore != c64.keyboard.commodoreIsPressed() {
@@ -99,8 +106,9 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
                 
         for nr in 0 ... 65 {
             
-            let shiftLock = c64.keyboard.shiftLockIsPressed()
+            let shiftLock = c64.keyboard.shiftLockIsHoldDown()
             let pressed =
+                (nr == 17 && control) ||
                 (nr == 34 && shiftLock) ||
                 (nr == 49 && commodore) ||
                 (nr == 50 && lshift) ||
@@ -116,6 +124,8 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     func releaseSpecialKeys() {
         
+        self.parent.c64.keyboard.releaseKey(atRow: C64Key.control.row,
+                                            col: C64Key.control.col)
         self.parent.c64.keyboard.releaseKey(atRow: C64Key.commodore.row,
                                             col: C64Key.commodore.col)
         self.parent.c64.keyboard.releaseKey(atRow: C64Key.shift.row,
@@ -147,29 +157,18 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
         switch (key.nr) {
             
         case 34: // Shift Lock
-            
-            /*
-            if c64.keyboard.shiftLockIsPressed() {
-                c64.keyboard.unlockShift()
-            } else {
-                c64.keyboard.lockShift()
-            }
-            */
             shiftLock ? c64.keyboard.unlockShift() : c64.keyboard.lockShift()
 
+        case 17: // Control
+            control ? release() : press()
+
         case 49: // Commodore
-            
-            // commodore = !commodore
             commodore ? release() : press()
             
         case 50: // Left Shift
-            
-            // lshift = !lshift
             lshift ? release() : press()
             
         case 61: // Right Shift
-            
-            // rshift = !rshift
             rshift ? release() : press()
             
         default:

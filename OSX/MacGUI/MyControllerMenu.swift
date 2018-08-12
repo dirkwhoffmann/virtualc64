@@ -51,7 +51,7 @@ extension MyController {
             return keyboardcontroller.mapKeysByPosition
         }
         if item.action == #selector(MyController.shiftLockAction(_:)) {
-            item.state = c64.keyboard.shiftLockIsPressed() ? .on : .off
+            item.state = c64.keyboard.shiftLockIsHoldDown() ? .on : .off
             return true
         }
         
@@ -364,7 +364,7 @@ extension MyController {
         undoManager?.registerUndo(withTarget: self) {
             targetSelf in targetSelf.shiftLockAction(sender)
         }
-        if c64.keyboard.shiftLockIsPressed() {
+        if c64.keyboard.shiftLockIsHoldDown() {
             c64.keyboard.unlockShift()
         } else {
             c64.keyboard.lockShift()

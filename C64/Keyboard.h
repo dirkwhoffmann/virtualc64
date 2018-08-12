@@ -68,22 +68,22 @@ public:
     bool keyIsPressed(uint8_t row, uint8_t col);
 
     //! @brief    Checks if the shift lock key is held down.
-    bool shiftLockIsPressed() { return shiftLock; }
+    bool shiftLockIsHoldDown() { return shiftLock; }
 
     //! @brief    Checks if the left shift key is currently pressed.
-    bool shiftKeyIsPressed() { return keyIsPressed(1,7); }
+    bool leftShiftIsPressed() { return keyIsPressed(1,7); }
     
     //! @brief    Checks if the right shift key is currently pressed.
-    bool rightShiftKeyIsPressed() { return keyIsPressed(6,4); }
+    bool rightShiftIsPressed() { return keyIsPressed(6,4); }
     
     //! @brief    Checks if the commodore key is currently pressed.
-    bool commodoreKeyIsPressed() { return keyIsPressed(7,5); }
+    bool commodoreIsPressed() { return keyIsPressed(7,5); }
     
     //! @brief    Checks if the CTRL key is currently pressed.
-    bool ctrlKeyIsPressed() { return keyIsPressed(7,2); }
+    bool ctrlIsPressed() { return keyIsPressed(7,2); }
     
     //! @brief    Checks if the runstop key is currently pressed.
-    bool runstopKeyIsPressed() { return keyIsPressed(7,7); }
+    bool runstopIsPressed() { return keyIsPressed(7,7); }
     
     
 	/*! @brief    Presses a key.
@@ -91,8 +91,8 @@ public:
      */
 	void pressKey(uint8_t row, uint8_t col);
     
-	//! @brief    Presses the shift hey.
-	void pressShiftKey() { pressKey(1,7); }
+	//! @brief    Presses the left shift hey.
+	// void pressLeftShiftKey() { pressKey(1,7); }
     
 	//! @brief    Presses the commodore key.
 	void pressCommodoreKey() { pressKey(7,5); }
@@ -112,8 +112,8 @@ public:
      */
 	void releaseKey(uint8_t row, uint8_t col);
     
-    //! @brief    Releases the shift key.
-	void releaseShiftKey() { releaseKey(1,7); }
+    //! @brief    Releases the left shift key.
+	// void releaseShiftKey() { releaseKey(1,7); }
     
     //! @brief    Releases the commodore key.
 	void releaseCommodoreKey() { releaseKey(7,5); }
@@ -180,6 +180,7 @@ public:
      *  @param    rowMask  Indicates the rows to read
      */
     uint8_t getColumnValues(uint8_t rowMask);
+    
     
     //! @brief    Returns true if the C64 is currently in upper case mode.
     /*! @details  To shift between two modes, press SHIFT + COMMODORE.

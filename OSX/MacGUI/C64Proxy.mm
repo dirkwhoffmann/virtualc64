@@ -352,11 +352,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     wrapper->keyboard->releaseRestoreKey(); }
 - (void) releaseAll { wrapper->keyboard->releaseAll(); }
 
-- (BOOL) shiftIsPressed { return wrapper->keyboard->shiftKeyIsPressed(); }
-- (BOOL) rightShiftIsPressed { return wrapper->keyboard->rightShiftKeyIsPressed(); }
-- (BOOL) commodoreIsPressed { return wrapper->keyboard->commodoreKeyIsPressed(); }
+- (BOOL) leftShiftIsPressed { return wrapper->keyboard->leftShiftIsPressed(); }
+- (BOOL) rightShiftIsPressed { return wrapper->keyboard->rightShiftIsPressed(); }
+- (BOOL) controlIsPressed { return wrapper->keyboard->ctrlIsPressed(); }
+- (BOOL) commodoreIsPressed { return wrapper->keyboard->commodoreIsPressed(); }
 
-- (BOOL) shiftLockIsPressed { return wrapper->keyboard->shiftLockIsPressed(); }
+- (BOOL) shiftLockIsHoldDown { return wrapper->keyboard->shiftLockIsHoldDown(); }
 - (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
 - (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
 
