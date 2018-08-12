@@ -61,6 +61,10 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
     
     func updateImages() {
     
+        let uppercased = c64.keyboard.inUpperCaseMode()
+        
+        track("Uppercase mode: \(uppercased)")
+            
         for nr in 0 ... 65 {
             
             let shiftLock = c64.keyboard.shiftLockIsPressed()

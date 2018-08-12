@@ -56,10 +56,8 @@ public:
 	//! @brief    Destructor
 	~Keyboard();
 
-	//! @brief    Restores the initial state.
+	//! @brief    Methods from VirtualComponent
 	void reset();
-    	
-	//! @brief    Prints debug information.
 	void dumpState();	
 
     /*! @brief    Checks if a certain key is currently pressed.
@@ -168,6 +166,11 @@ public:
      *  @param    rowMask  Indicates the rows to read
      */
     uint8_t getColumnValues(uint8_t rowMask);
+    
+    //! @brief    Returns true if the C64 is currently in upper case mode.
+    /*! @details  To shift between two modes, press SHIFT + COMMODORE.
+     */
+    bool inUpperCaseMode();
 };
 	
 #endif

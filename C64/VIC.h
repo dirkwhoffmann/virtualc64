@@ -535,8 +535,12 @@ private:
 	//! @brief    Peek fallthrough
 	uint8_t peek(uint16_t addr);
     
+public:
+    
     //! @brief    Same as peek, but without side affects
     uint8_t spypeek(uint16_t addr);
+    
+private:
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);

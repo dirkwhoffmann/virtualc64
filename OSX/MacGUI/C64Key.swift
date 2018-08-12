@@ -360,7 +360,10 @@ extension C64Key {
     
     /// Returns an image representation for this key that is used in the
     /// virtual keyboard.
-    func image(pressed: Bool = false, shift: Bool = false, commodore: Bool = false) -> NSImage {
+    func image(pressed: Bool = false,
+               shift: Bool = false,
+               commodore: Bool = false,
+               lowercase: Bool = false) -> NSImage {
         
         // Check for keys with a predrawn image
         switch (nr) {

@@ -169,4 +169,9 @@ Keyboard::toggleKey(uint8_t row, uint8_t col)
     }
 }
 
+bool
+Keyboard::inUpperCaseMode()
+{
+    return (c64->vic.spypeek(0x18) & 0x02) == 0;
+}
 

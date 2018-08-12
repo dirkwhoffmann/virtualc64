@@ -276,6 +276,8 @@ struct ContainerWrapper;
 - (void) lockShift;
 - (void) unlockShift;
 
+- (BOOL) inUpperCaseMode;
+
 @end 
 
 //

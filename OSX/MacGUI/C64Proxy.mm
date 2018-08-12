@@ -356,6 +356,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
 - (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
 
+- (BOOL) inUpperCaseMode { return wrapper->keyboard->inUpperCaseMode(); }
 @end
 
 
