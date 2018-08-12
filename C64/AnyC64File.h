@@ -1,6 +1,6 @@
 /*!
- * @header      Container.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann, All rights reserved
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -18,17 +18,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _CONTAINER_INC
-#define _CONTAINER_INC
+#ifndef _ANYC64FILE_INC
+#define _ANYC64FILE_INC
 
 #include "VC64Object.h"
 #include "C64_types.h"
 
-/*! @class    File
- *  @brief    Base class for all file containers.
+/*! @class    AnyC64File
+ *  @brief    Base class for all supported file types.
  *  @details  Provides the basic functionality for reading and writing files.
  */
-class File : public VC64Object {
+class AnyC64File : public VC64Object {
     
 private:
 	     
@@ -67,10 +67,10 @@ public:
     //
 
     //! @brief    Constructor
-    File();
+    AnyC64File();
 
     //! @brief    Destructor
-    virtual ~File();
+    virtual ~AnyC64File();
     
     //! @brief    Frees the memory allocated by this object.
     virtual void dealloc() { };

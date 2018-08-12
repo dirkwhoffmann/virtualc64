@@ -20,7 +20,7 @@
 #ifndef _SNAPSHOT_INC
 #define _SNAPSHOT_INC
 
-#include "File.h"
+#include "AnyC64File.h"
 
 // Forward declarations
 class C64;
@@ -55,7 +55,7 @@ typedef struct {
 /*! @class    Snapshot
  *  @brief    Represents an emulator snapshot.
  */
-class Snapshot : public File {
+class Snapshot : public AnyC64File {
 	
 private:
 	

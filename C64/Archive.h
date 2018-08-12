@@ -24,7 +24,7 @@
 #ifndef _ARCHIVE_INC
 #define _ARCHIVE_INC
 
-#include "File.h"
+#include "AnyC64File.h"
 
 // Forward declarations
 class Disk;
@@ -32,7 +32,7 @@ class Disk;
 /*! @class    Archive
     @brief    Base class for all loadable objects with multiple files included. */
 
-class Archive : public File {
+class Archive : public AnyC64File {
     
 public:
 

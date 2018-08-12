@@ -1011,7 +1011,7 @@ C64::deleteUserSnapshot(unsigned index)
 //
 
 bool
-C64::mount(File *file)
+C64::mount(AnyC64File *file)
 {
     bool result = true;
     
@@ -1044,7 +1044,7 @@ C64::mount(File *file)
 }
 
 bool
-C64::flash(File *file, unsigned item)
+C64::flash(AnyC64File *file, unsigned item)
 {
     bool result = true;
     

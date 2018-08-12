@@ -19,12 +19,12 @@
 #ifndef _ROMFILE_INC
 #define _ROMFILE_INC
 
-#include "File.h"
+#include "AnyC64File.h"
 
 /*! @class  ROMFile
  *  @brief  Represents a ROM image file.
  */
-class ROMFile : public File {
+class ROMFile : public AnyC64File {
     
 private:
     

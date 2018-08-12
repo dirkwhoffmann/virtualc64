@@ -40,11 +40,24 @@
 // Call CA1 action in VIA class only if the pin value really has changed.
 //
 // Loading and saving:
-// New object structure (??):
-// AnyC64File -> RomFile, TapFile, CrtFile, Snapshot
-//             -> DiskFile -> G64Disk, NIBDisk
-//             -> AnyC64Archive -> T64Archive, D64Archive, PRGArchive, P00Archive
-// Delete "File" (which is now AnyC64File) and "Archive" (which is now AnyArchive)
+//
+// New object structure:
+// AnyC64File : Base class for all supported file types
+// AnyDisk : Interface for all files representing a floppy disk
+//           Gives access to tracks and sectors
+// AnyArchive : Interface for all files representing a file archive
+//           Gives access to files and their data
+//
+// Snapshot : AnyC64File
+// RomFile : AnyC64File
+// TapFile : AnyC64File
+// CrtFile : AnyC64File
+// G64File : AnyC64File, AnyDisk
+// D64File : AnyC64File, AnyDisk, AnyArchive
+// T64File : AnyC64File, AnyArchive
+// PRGFile : AnyC64File, AnyArchive
+// P00File : AnyC64File, AnyArchive
+
 //
 // Add setter API for SID stuff
 //
@@ -662,12 +675,12 @@ public:
     //! @brief    Mounts an object stored in a file of supported type
     /*! @details  Mountable objects are disks, tapes, and cartridges.
      */
-    bool mount(File *file);
+    bool mount(AnyC64File *file);
     
     //! @brief    Flashes an item stored in a file of supported type
     /*! @details  Flashable objects are single programs, roms, and snapshots.
      */
-    bool flash(File *file, unsigned item = 0);
+    bool flash(AnyC64File *file, unsigned item = 0);
     
     //! @brief    Loads ROM image into memory
     bool loadRom(const char *filename);

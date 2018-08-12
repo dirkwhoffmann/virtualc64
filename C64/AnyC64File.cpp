@@ -16,9 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "File.h"
+#include "AnyC64File.h"
 
-File::File()
+AnyC64File::AnyC64File()
 {
     const char *defaultName = "HELLO VIRTUALC64";
     
@@ -26,14 +26,14 @@ File::File()
     memcpy(name, defaultName, strlen(defaultName) + 1);
 }
 
-File::~File()
+AnyC64File::~AnyC64File()
 {
 	if (path)
 		free(path);
 }
 
 bool
-File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *header)
+AnyC64File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *header)
 {
     assert(buffer != NULL);
     assert(header != NULL);
@@ -49,7 +49,7 @@ File::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *hea
 }
 
 void
-File::setPath(const char *str)
+AnyC64File::setPath(const char *str)
 {
     if (path)
         free(path);
@@ -58,27 +58,27 @@ File::setPath(const char *str)
 }
 
 const char *
-File::getName()
+AnyC64File::getName()
 {
     return name;
 }
 
 const unsigned short *
-File::getUnicodeName(size_t maxChars)
+AnyC64File::getUnicodeName(size_t maxChars)
 {
     translateToUnicode(name, unicode, 0xE000, maxChars);
     return unicode;
 }
 
 void
-File::setName(const char *str)
+AnyC64File::setName(const char *str)
 {
     strncpy(name, str, sizeof(name));
     name[sizeof(name) - 1] = 0;
 }
 
 bool
-File::readFromFile(const char *filename)
+AnyC64File::readFromFile(const char *filename)
 {
     assert (filename != NULL);
     
@@ -144,13 +144,13 @@ exit:
 }
 
 size_t
-File::writeToBuffer(uint8_t *buffer)
+AnyC64File::writeToBuffer(uint8_t *buffer)
 {
 	return 0;
 }
 
 bool 
-File::writeToFile(const char *filename)
+AnyC64File::writeToFile(const char *filename)
 {
 	bool success = false;
 	uint8_t *data = NULL;

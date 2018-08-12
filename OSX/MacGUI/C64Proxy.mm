@@ -34,7 +34,7 @@ struct Via6522Wrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
-struct ContainerWrapper { File *container; };
+struct ContainerWrapper { AnyC64File *container; };
 
 // DEPRECATED
 struct SnapshotWrapper { Snapshot *snapshot; };
@@ -826,7 +826,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @implementation ContainerProxy
 
-- (instancetype) initWithContainer:(File *)container
+- (instancetype) initWithContainer:(AnyC64File *)container
 {
     // NSLog(@"ContainerProxy::initWithContainer");
 
@@ -840,7 +840,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return self;
 }
 
-+ (ContainerProxy *) makeWithContainer:(File *)container
++ (ContainerProxy *) makeWithContainer:(AnyC64File *)container
 {
     // NSLog(@"ContainerProxy::makeWithContainer");
     

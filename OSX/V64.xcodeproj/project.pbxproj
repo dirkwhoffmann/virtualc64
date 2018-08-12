@@ -34,7 +34,7 @@
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
-		5018E48112240F7100F0820E /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* File.cpp */; };
+		5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* AnyC64File.cpp */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
 		501DE30A20C9C41B00707130 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F220C9C41800707130 /* pot.cc */; };
 		501DE30B20C9C41B00707130 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F520C9C41800707130 /* dac.cc */; };
@@ -236,8 +236,8 @@
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
 		5018AF65202EDD2000B4C886 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		5018E47F12240F7100F0820E /* File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = File.h; sourceTree = "<group>"; };
-		5018E48012240F7100F0820E /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
+		5018E47F12240F7100F0820E /* AnyC64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyC64File.h; sourceTree = "<group>"; };
+		5018E48012240F7100F0820E /* AnyC64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyC64File.cpp; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
 		501DE2EE20C9C41700707130 /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
@@ -795,8 +795,8 @@
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
 			isa = PBXGroup;
 			children = (
-				5018E47F12240F7100F0820E /* File.h */,
-				5018E48012240F7100F0820E /* File.cpp */,
+				5018E47F12240F7100F0820E /* AnyC64File.h */,
+				5018E48012240F7100F0820E /* AnyC64File.cpp */,
 				506B315120DCDF87007913A8 /* ROMFile.h */,
 				506B315020DCDF87007913A8 /* ROMFile.cpp */,
 				50414726122188FC00A80E0C /* CRTFile.h */,
@@ -1106,7 +1106,7 @@
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				501DE31020C9C41B00707130 /* wave.cc in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
-				5018E48112240F7100F0820E /* File.cpp in Sources */,
+				5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				50D19B8820ACA0C40004C47B /* Mouse1350.cpp in Sources */,
 				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
