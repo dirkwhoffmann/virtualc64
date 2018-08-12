@@ -358,6 +358,8 @@ NIBArchive::getSizeOfItem(unsigned n)
 const char *
 NIBArchive::getNameOfItem(unsigned n)
 {
+    assert(n < getNumberOfItems());
+    
     if (n < 84) {
         if (n % 2 == 0) {
             sprintf(name, "Track %d", (n / 2) + 1);
@@ -370,10 +372,10 @@ NIBArchive::getNameOfItem(unsigned n)
 }
 
 const unsigned short *
-NIBArchive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
+NIBArchive::getUnicodeNameOfItem(unsigned n)
 {
     (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 

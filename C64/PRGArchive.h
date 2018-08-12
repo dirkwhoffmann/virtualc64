@@ -101,7 +101,7 @@ public:
     int getNumberOfItems();
     
     const char *getNameOfItem(unsigned n);
-    const unsigned short *getUnicodeNameOfItem(unsigned n, size_t maxChars);
+    const unsigned short *getUnicodeNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n);
     

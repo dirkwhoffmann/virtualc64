@@ -336,10 +336,10 @@ D64Archive::getName()
 }
 
 const unsigned short *
-D64Archive::getUnicodeName(size_t maxChars)
+D64Archive::getUnicodeName()
 {
     (void)getName();
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 
@@ -361,6 +361,8 @@ D64Archive::getNumberOfItems()
 const char *
 D64Archive::getNameOfItem(unsigned n)
 {
+    assert(n < getNumberOfItems());
+    
     int i, pos = findDirectoryEntry(n);
     
     if (pos <= 0) return NULL;
@@ -375,10 +377,10 @@ D64Archive::getNameOfItem(unsigned n)
 }
 
 const unsigned short *
-D64Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
+D64Archive::getUnicodeNameOfItem(unsigned n)
 {
     (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 

@@ -146,7 +146,7 @@ extension ArchiveMountController : NSTableViewDataSource {
    
         if (tableColumn?.identifier)!.rawValue == "filename" {
     
-            return archive.unicodeName(ofItem: row, maxChars: 16)
+            return archive.unicodeName(ofItem: row)
         }
         if (tableColumn?.identifier)!.rawValue == "filesize" {
             

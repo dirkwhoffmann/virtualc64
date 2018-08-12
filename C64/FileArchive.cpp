@@ -120,6 +120,8 @@ FileArchive::getNumberOfItems()
 const char *
 FileArchive::getNameOfItem(unsigned n)
 {
+    assert(n < getNumberOfItems());
+    
 	strncpy(name, getName(), 17);
 	for (unsigned i = 0; i < 17; i++) {
 		name[i] = toupper(name[i]);
@@ -129,10 +131,10 @@ FileArchive::getNameOfItem(unsigned n)
 }
 
 const unsigned short *
-FileArchive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
+FileArchive::getUnicodeNameOfItem(unsigned n)
 {
     (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 

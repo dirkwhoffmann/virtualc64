@@ -58,6 +58,21 @@ Archive::makeArchiveWithFile(const char *path)
     return NULL;
 }
 
+const char *
+Archive::getNameOfItem(unsigned n)
+{
+    assert(n < getNumberOfItems());
+    return "FILE";
+}
+
+const unsigned short *
+Archive::getUnicodeNameOfItem(unsigned n)
+{
+    const char *name = getNameOfItem(n);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
+    return unicode;
+}
+
 size_t
 Archive::getSizeOfItem(unsigned n)
 {

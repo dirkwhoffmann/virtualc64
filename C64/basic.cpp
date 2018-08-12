@@ -38,15 +38,16 @@ printReadable(const void *data, int length)
     }
 }
 
-void translateToUnicode(char *petscii, uint16_t *unichars, uint16_t base, size_t max)
+void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, size_t max)
 {
-    unsigned i;
-    
     assert(petscii != NULL);
     assert(unichars != NULL);
     
-    for (i = 0; i < strlen(petscii) && i < max; i++) {
-        unichars[i] = base + (unsigned char)petscii[i];
+    unsigned i;
+    size_t len = MIN(strlen(petscii), max);
+    
+    for (i = 0; i < len; i++) {
+        unichars[i] = base + (uint16_t)petscii[i];
     }
     unichars[i] = 0;
 }

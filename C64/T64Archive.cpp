@@ -261,10 +261,10 @@ T64Archive::getName()
 }
 
 const unsigned short *
-T64Archive::getUnicodeName(size_t maxChars)
+T64Archive::getUnicodeName()
 {
     (void)getName();
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 
@@ -277,6 +277,8 @@ T64Archive::getNumberOfItems()
 const char *
 T64Archive::getNameOfItem(unsigned n)
 {
+    assert(n < getNumberOfItems());
+    
 	int i,j;
 	int first = 0x50 + (n * 0x20);
 	int last  = 0x60 + (n * 0x20);
@@ -294,10 +296,10 @@ T64Archive::getNameOfItem(unsigned n)
 }
 
 const unsigned short *
-T64Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
+T64Archive::getUnicodeNameOfItem(unsigned n)
 {
     (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 

@@ -78,12 +78,12 @@ public:
     ContainerType type() { return T64_CONTAINER; }
     const char *typeAsString() { return "T64"; }
     const char *getName();
-    const unsigned short *getUnicodeName(size_t maxChars);
+    const unsigned short *getUnicodeName();
     
     // From Archive class
     int getNumberOfItems();
     const char *getNameOfItem(unsigned n);
-    const unsigned short *getUnicodeNameOfItem(unsigned n, size_t maxChars);
+    const unsigned short *getUnicodeNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n);
     

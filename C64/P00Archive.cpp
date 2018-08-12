@@ -183,6 +183,8 @@ P00Archive::getNumberOfItems()
 const char *
 P00Archive::getNameOfItem(unsigned n)
 {
+    assert(n < getNumberOfItems());
+    
     unsigned i;
     
     if (n != 0)
@@ -196,10 +198,10 @@ P00Archive::getNameOfItem(unsigned n)
 }
 
 const unsigned short *
-P00Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
+P00Archive::getUnicodeNameOfItem(unsigned n)
 {
     (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 

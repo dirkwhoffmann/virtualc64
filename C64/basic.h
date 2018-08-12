@@ -137,7 +137,7 @@ void printReadable(const void *data, int length);
  *  @note     A maximum of max characters are translated. 
  *            The unicode array will always be terminated by a NULL character.
  */
-void translateToUnicode(char *petscii, uint16_t *unichars, uint16_t base, size_t max);
+void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, size_t max);
 
 //! @brief    Returns the number of characters in a null terminated unichar array
 size_t strlen16(const uint16_t *unichars);

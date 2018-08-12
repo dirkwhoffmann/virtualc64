@@ -241,6 +241,8 @@ G64Archive::getSizeOfItem(unsigned n)
 const char *
 G64Archive::getNameOfItem(unsigned n)
 {
+    assert(n < getNumberOfItems());
+    
     if (n < 84) {
         if (n % 2 == 0) {
             sprintf(name, "Track %d", (n / 2) + 1);
@@ -254,10 +256,10 @@ G64Archive::getNameOfItem(unsigned n)
 }
 
 const unsigned short *
-G64Archive::getUnicodeNameOfItem(unsigned n, size_t maxChars)
+G64Archive::getUnicodeNameOfItem(unsigned n)
 {
     (void)getNameOfItem(n);
-    translateToUnicode(name, unicode, 0xE000, maxChars);
+    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 

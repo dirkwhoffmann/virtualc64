@@ -711,7 +711,7 @@ struct ContainerWrapper;
 
 - (NSInteger)numberOfItems;
 - (NSString *)nameOfItem:(NSInteger)item;
-- (NSString *)unicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max;
+- (NSString *)unicodeNameOfItem:(NSInteger)item;
 - (NSInteger)sizeOfItem:(NSInteger)item;
 - (NSInteger)sizeOfItemInBlocks:(NSInteger)item;
 - (NSString *)typeOfItem:(NSInteger)item;

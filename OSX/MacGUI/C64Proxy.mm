@@ -1103,9 +1103,9 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     Archive *archive = (Archive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->getNameOfItem((int)item)];
 }
-- (NSString *)unicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max {
+- (NSString *)unicodeNameOfItem:(NSInteger)item {
     Archive *archive = (Archive *)([self wrapper]->container);
-    const unsigned short *unichars = archive->getUnicodeNameOfItem((int)item, max);
+    const unsigned short *unichars = archive->getUnicodeNameOfItem((int)item);
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 

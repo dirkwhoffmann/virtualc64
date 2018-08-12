@@ -96,7 +96,7 @@ public:
     static bool isD64File(const char *filename);
 
     const char *getName();
-    const unsigned short *getUnicodeName(size_t maxChars);
+    const unsigned short *getUnicodeName();
     ContainerType type() { return D64_CONTAINER; }
     const char *typeAsString() { return "D64"; }
 	
@@ -107,7 +107,7 @@ public:
     int getNumberOfItems();
     
 	const char *getNameOfItem(unsigned n);
-    const unsigned short *getUnicodeNameOfItem(unsigned n, size_t maxChars);
+    const unsigned short *getUnicodeNameOfItem(unsigned n);
 	const char *getTypeOfItem(unsigned n);
     size_t getSizeOfItemInBlocks(unsigned n);
 	uint16_t getDestinationAddrOfItem(unsigned n);

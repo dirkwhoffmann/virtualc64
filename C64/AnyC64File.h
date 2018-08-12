@@ -46,7 +46,6 @@ protected:
     
     /*! @brief    Unicode representation of the logical name.
      *  @seealso  getUnicodeName
-     *            getUnicodeNameOfItem
      */
     unsigned short unicode[256];
     
@@ -106,7 +105,7 @@ public:
      *  @details  The provides unicode format is compatible with font C64ProMono
      *            which is used, e.g., in the mount dialogs preview panel.
      */
-    virtual const unsigned short *getUnicodeName(size_t maxChars = 255);
+    virtual const unsigned short *getUnicodeName();
 
     //! @brief    Sets the logical name.
     void setName(const char *name);

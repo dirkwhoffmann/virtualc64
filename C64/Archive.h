@@ -64,18 +64,17 @@ public:
     //! Accessing item attributes
     //
             
-    /*! @brief   Returnsunsigned the name of an item
-     *  @return  String in ASCII format, or NULL, if item does not exist
+    /*! @brief   Returns the name of an item in ASCII format.
+     *  @note    Never call this function for nonexisting items.
      */
-    virtual const char *getNameOfItem(unsigned n) { return NULL; }
+    virtual const char *getNameOfItem(unsigned n);
 
-    /*! @brief   Returns the name of an item
-     *  @return  Unicode character array, or NULL, if item does not exist
-     *  @details The provides unicode format is compatible with font C64ProMono
-     *           which is used, e.g., in the mount dialogs preview panel. 
+    /*! @brief   Returns the name of an item in unichar format.
+     *  @details The returned unichars are compatible with font C64ProMono
+     *           which is used, e.g., in the mount dialogs preview panel.
+     *  @note    Never call this function for nonexisting items.
      */
-    virtual const unsigned short *getUnicodeNameOfItem(unsigned n, size_t maxChars = 255) {
-        return NULL; }
+    virtual const unsigned short *getUnicodeNameOfItem(unsigned n);
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
     virtual const char *getTypeOfItem(unsigned n) { return NULL; }
