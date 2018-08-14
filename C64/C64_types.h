@@ -19,18 +19,22 @@
  *  @details  Predefined RGB color values
  */
 typedef enum {
-    VICE            = 0x00,
-    CCS64           = 0x01,
-    FRODO           = 0x02,
-    PC64            = 0x03,
-    C64S            = 0x04,
-    ALEC64          = 0x05,
-    WIN64           = 0x06,
-    C64ALIVE_0_9    = 0x07,
-    GODOT           = 0x08,
-    C64SALLY        = 0x09,
-    PEPTO           = 0x0A,
-    GRAYSCALE       = 0x0B
+    
+    CS_DEFAULT      = 0x00,
+    CS_VICE_PAL     = 0x01,
+    CS_VICE_NTSC    = 0x02,
+    CS_CCS64        = 0x03,
+    CS_FRODO        = 0x04,
+    CS_PC64         = 0x05,
+    CS_C64S         = 0x06,
+    CS_ALEC64       = 0x07,
+    CS_WIN64        = 0x08,
+    CS_C64ALIVE_0_9 = 0x09,
+    CS_GODOT        = 0x0A,
+    CS_C64SALLY     = 0x0B,
+    CS_PEPTO        = 0x0C,
+    CS_GRAYSCALE    = 0x0D
+    
 } ColorScheme;
 
 /*! @brief    Message types

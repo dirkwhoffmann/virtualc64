@@ -89,7 +89,7 @@ extension MyController {
             VC64Keys.eyeY: 0.0,
             VC64Keys.eyeZ: 0.0,
         
-            VC64Keys.colorScheme: VICE.rawValue,
+            VC64Keys.colorScheme: CS_DEFAULT.rawValue,
             VC64Keys.videoUpscaler: 0,
             VC64Keys.videoFilter: 1,
             VC64Keys.aspectRatio: false,

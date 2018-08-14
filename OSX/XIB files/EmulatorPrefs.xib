@@ -170,24 +170,25 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9WR-aO-C3q">
                         <rect key="frame" x="348" y="434" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="RDK-UA-IWf" id="1u5-1o-dMr">
+                        <popUpButtonCell key="cell" type="push" title="VICII dependent" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="RDK-UA-IWf" id="1u5-1o-dMr">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="111-x1-nYq">
                                 <items>
-                                    <menuItem title="Default" state="on" id="RDK-UA-IWf"/>
+                                    <menuItem title="VICII dependent" state="on" id="RDK-UA-IWf"/>
+                                    <menuItem isSeparatorItem="YES" id="Mbq-sI-OhR"/>
                                     <menuItem title="VICE (PAL)" tag="1" id="KKE-Hc-YhX"/>
-                                    <menuItem title="VICE (NTSC)" tag="1" id="tRb-p2-INb"/>
-                                    <menuItem title="CCS64" tag="1" id="8hz-SE-4DV"/>
-                                    <menuItem title="FRODO" tag="2" id="L8j-sx-FoG"/>
-                                    <menuItem title="PC64" tag="3" id="Ns8-R2-xXd"/>
-                                    <menuItem title="C64S" tag="4" id="KMJ-Fn-yDr"/>
-                                    <menuItem title="ALEC64" tag="5" id="ki7-1V-FLi"/>
-                                    <menuItem title="WIN64" tag="6" id="lP9-dh-sh7"/>
-                                    <menuItem title="C64ALIVE" tag="7" id="Jjc-2G-zUV"/>
-                                    <menuItem title="GODOT" tag="8" id="zdZ-ON-Oob"/>
-                                    <menuItem title="C64SALLY" tag="9" id="fFD-dk-d7N"/>
-                                    <menuItem title="PEPTO" tag="10" id="wvC-DR-3sS"/>
+                                    <menuItem title="VICE (NTSC)" tag="2" id="tRb-p2-INb"/>
+                                    <menuItem title="CCS64" tag="3" id="8hz-SE-4DV"/>
+                                    <menuItem title="FRODO" tag="4" id="L8j-sx-FoG"/>
+                                    <menuItem title="PC64" tag="5" id="Ns8-R2-xXd"/>
+                                    <menuItem title="C64S" tag="6" id="KMJ-Fn-yDr"/>
+                                    <menuItem title="ALEC64" tag="7" id="ki7-1V-FLi"/>
+                                    <menuItem title="WIN64" tag="8" id="lP9-dh-sh7"/>
+                                    <menuItem title="C64ALIVE" tag="9" id="Jjc-2G-zUV"/>
+                                    <menuItem title="GODOT" tag="10" id="zdZ-ON-Oob"/>
+                                    <menuItem title="C64SALLY" tag="11" id="fFD-dk-d7N"/>
+                                    <menuItem title="PEPTO" tag="12" id="wvC-DR-3sS"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>

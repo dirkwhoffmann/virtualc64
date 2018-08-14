@@ -474,6 +474,12 @@ public:
      */
     void setColorScheme(ColorScheme scheme);
 
+    //! @brief    Update all colors according to the currently set color scheme
+    /*! @details  This method needs to be called when switching from PAL to
+     *            NTSC or vice versa.
+     */
+    void updateColorScheme() { setColorScheme(pixelEngine.colorScheme); }
+        
     // @brief    Returns the number of frames per second.
     unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     

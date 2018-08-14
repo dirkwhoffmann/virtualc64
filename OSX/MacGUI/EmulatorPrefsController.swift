@@ -361,7 +361,7 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.setEyeZ(0.0)
         parent.metalScreen.videoUpscaler = 0
         parent.metalScreen.videoFilter = 1
-        c64.vic.setColorScheme(VICE)
+        c64.vic.setColorScheme(CS_DEFAULT)
         parent.metalScreen.fullscreenKeepAspectRatio = false
         
         // Joystick emulation

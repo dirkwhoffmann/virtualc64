@@ -42,7 +42,7 @@ VIC::VIC()
 	markDMALines = false;
     
     // Assign default color scheme
-    setColorScheme(VICE);
+    setColorScheme(CS_DEFAULT);
     
     // Register sub components
     VirtualComponent *subcomponents[] = { &pixelEngine, NULL };
@@ -273,9 +273,12 @@ VIC::getSpriteInfo(unsigned i)
 void
 VIC::setChipModel(VICChipModel model)
 {
-    debug(2, "VIC::setChipModel\n");
+    debug(2, "VIC::setChipModel(%d)\n", model);
+    
+    c64->suspend();
     
     chipModel = model;
+    updateColorScheme();
     pixelEngine.resetScreenBuffers();
     c64->updateVicFunctionTable();
     
@@ -298,6 +301,8 @@ VIC::setChipModel(VICChipModel model)
         default:
             assert(false);
     }
+    
+    c64->resume();
 }
 
 
