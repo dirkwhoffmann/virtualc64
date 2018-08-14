@@ -14,7 +14,8 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var flag: NSImageView!
     @IBOutlet weak var systemText: NSTextField!
     @IBOutlet weak var systemText2: NSTextField!
-    
+    @IBOutlet weak var systemText3: NSTextField!
+
     // Audio
     @IBOutlet weak var sidChipModel: NSPopUpButton!
     @IBOutlet weak var sidFilter: NSButton!
@@ -35,19 +36,38 @@ class HardwarePrefsController : UserDialogController {
     
     func update() {
         
-        // System
-        if c64.isPAL() {
-            machineType.selectItem(withTag: 0)
+        let vicModel = c64.vic.chipModel()
+        machineType.selectItem(withTag: vicModel)
+        switch (UInt32(vicModel)) {
+            
+        case PAL_6569_R1.rawValue,
+             PAL_6569_R3.rawValue,
+             PAL_8565.rawValue:
+            
             flag.image = NSImage(named: NSImage.Name(rawValue: "flag_eu"))
             systemText.stringValue = "PAL"
             systemText2.stringValue = "0.985 MHz"
-        } else {
-            machineType.selectItem(withTag: 1)
+            systemText3.stringValue = "65 raster cycles"
+
+        case NTSC_6567_R56A.rawValue:
+            
             flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa"))
             systemText.stringValue = "NTSC"
             systemText2.stringValue = "1.023 MHz"
+            systemText3.stringValue = "64 raster cycles"
+            
+        case NTSC_6567.rawValue,
+             NTSC_8562.rawValue:
+            
+            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa"))
+            systemText.stringValue = "NTSC "
+            systemText2.stringValue = "1.023 MHz"
+            systemText3.stringValue = "63 raster cycles"
+            
+        default:
+            assert(false)
         }
-        
+
         // Audio
         let sidModel = c64.sid.chipModel()
         sidChipModel.selectItem(withTag: sidModel)
@@ -68,6 +88,7 @@ class HardwarePrefsController : UserDialogController {
         mouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
     
+    /*
     @IBAction func setPalAction(_ sender: Any!) {
     
         track()
@@ -79,6 +100,13 @@ class HardwarePrefsController : UserDialogController {
     
         track()
         c64.setNTSC()
+        update()
+    }
+    */
+    
+    @IBAction func vicChipModelAction(_ sender: NSMenuItem!) {
+        
+        c64.vic.setChipModel(sender.tag)
         update()
     }
     
@@ -152,7 +180,7 @@ class HardwarePrefsController : UserDialogController {
         c64.suspend()
 
         // VIC
-        c64.setNTSC(false)
+        c64.vic.setChipModel(Int(PAL_8565.rawValue))
         
         // SID
         c64.sid.setReSID(true)

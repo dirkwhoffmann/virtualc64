@@ -144,6 +144,11 @@ struct ContainerWrapper;
 	struct VicWrapper *wrapper;
 }
 
+- (NSInteger) chipModel;
+- (void) setChipModel:(NSInteger)value;
+- (BOOL) isPAL;
+- (BOOL) isNTSC;
+
 - (void *) screenBuffer;
 - (NSColor *) color:(NSInteger)nr;
 - (ColorScheme) colorScheme;
@@ -558,12 +563,14 @@ struct ContainerWrapper;
 - (void) step;
 - (void) stepOver;
 
+/*
 - (BOOL) isPAL;
 - (void) setPAL;
 - (void) setPAL:(BOOL)b;
 - (BOOL) isNTSC;
 - (void) setNTSC;
 - (void) setNTSC:(BOOL)b;
+*/
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;

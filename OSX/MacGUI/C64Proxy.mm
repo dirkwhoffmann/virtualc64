@@ -185,6 +185,11 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return self;
 }
 
+- (NSInteger) chipModel { return (NSInteger)wrapper->vic->chipModel; }
+- (void) setChipModel:(NSInteger)value { wrapper->vic->setChipModel((VICChipModel)value); }
+- (BOOL) isPAL { return wrapper->vic->isPAL(); }
+- (BOOL) isNTSC { return wrapper->vic->isNTSC(); }
+
 - (VICInfo) getInfo { return wrapper->vic->getInfo(); }
 - (void) dump { wrapper->vic->dumpState(); }
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite { return wrapper->vic->getSpriteInfo((unsigned)sprite); }
@@ -727,13 +732,14 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) step { wrapper->c64->step(); }
 - (void) stepOver { wrapper->c64->stepOver(); }
 
+/*
 - (BOOL) isPAL { return wrapper->c64->isPAL(); }
 - (void) setPAL { wrapper->c64->setPAL(); }
 - (void) setPAL:(BOOL)b { if (b) [self setPAL]; else [self setNTSC]; }
 - (BOOL) isNTSC { return wrapper->c64->isNTSC(); }
 - (void) setNTSC { wrapper->c64->setNTSC(); }
 - (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
-
+*/
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }

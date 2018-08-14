@@ -438,10 +438,16 @@ public:
 public:
 	
     //! @brief    Returns true iff a PAL chip is plugged in.
-    bool isPAL() { return chipModel == MOS6569_PAL; }
+    bool isPAL() { return
+        chipModel == PAL_6569_R1 ||
+        chipModel == PAL_6569_R3 ||
+        chipModel == PAL_8565; }
 
     //! @brief    Returns true iff a NTSC chip is plugged in.
-    bool isNTSC() { return chipModel == MOS6567_NTSC; }
+    bool isNTSC() { return
+        chipModel == NTSC_6567 ||
+        chipModel == NTSC_6567_R56A ||
+        chipModel == NTSC_8562; }
 
 	//! @brief    Returns the currently plugged in chip model.
     VICChipModel getChipModel() { return chipModel; }

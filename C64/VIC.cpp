@@ -273,29 +273,37 @@ VIC::getSpriteInfo(unsigned i)
 void
 VIC::setChipModel(VICChipModel model)
 {
-    assert(model == MOS6569_PAL || model == MOS6567_NTSC);
-    
     debug(2, "VIC::setChipModel\n");
-
+    
     chipModel = model;
     pixelEngine.resetScreenBuffers();
     c64->updateVicFunctionTable();
     
-    if (model == MOS6569_PAL) {
-        c64->setClockFrequency(PAL_CLOCK_FREQUENCY);
-        c64->putMessage(MSG_PAL);
-    } else {
-        c64->setClockFrequency(NTSC_CLOCK_FREQUENCY);
-        c64->putMessage(MSG_NTSC);
+    switch(chipModel) {
+            
+        case PAL_6569_R1:
+        case PAL_6569_R3:
+        case PAL_8565:
+            c64->setClockFrequency(PAL_CLOCK_FREQUENCY);
+            c64->putMessage(MSG_PAL);
+            break;
+            
+        case NTSC_6567:
+        case NTSC_6567_R56A:
+        case NTSC_8562:
+            c64->setClockFrequency(NTSC_CLOCK_FREQUENCY);
+            c64->putMessage(MSG_NTSC);
+            break;
+            
+        default:
+            assert(false);
     }
 }
 
 
-
-
-// -----------------------------------------------------------------------------------------------
-//                                       Getter and setter
-// -----------------------------------------------------------------------------------------------
+//
+// Getter and setter
+//
 
 uint16_t 
 VIC::getMemoryBankAddr()
@@ -1175,7 +1183,7 @@ VIC::yCounterOverflow()
      * NTSC machines reset the yCounter in cycle 2 in the middle of the lower
      * border area.
      */
-    return c64->getRasterline() == (c64->isPAL() ? 0 : 238);
+    return c64->getRasterline() == (c64->vic.isPAL() ? 0 : 238);
 }
 
 

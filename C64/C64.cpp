@@ -143,7 +143,7 @@ C64::C64()
     // Set initial hardware configuration
     mouse = &mouse1350;
     mousePort = 0;
-    setPAL();
+    vic.setChipModel(PAL_8565);
     drive1.powerOn();
     drive2.powerOff();
     
@@ -213,7 +213,7 @@ void
 C64::dumpState() {
     msg("C64:\n");
     msg("----\n\n");
-    msg("              Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
+    msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");
     msg("         Frames per second : %d\n", vic.getFramesPerSecond());
     msg("     Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
     msg("     Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
@@ -232,6 +232,7 @@ C64::dumpState() {
 // Configuring the emulator
 //
 
+/*
 void
 C64::setPAL()
 {
@@ -251,6 +252,7 @@ C64::setNTSC()
     vic.setChipModel(MOS6567_NTSC);
     resume();
 }
+*/
 
 void
 C64::updateVicFunctionTable()
@@ -268,7 +270,7 @@ C64::updateVicFunctionTable()
         vicfunc[cycle] = &VIC::cycle19to54;
     vicfunc[56] = &VIC::cycle56;
     
-    if (isPAL()) {
+    if (vic.isPAL()) {
         
         vicfunc[1] = &VIC::cycle1pal;
         vicfunc[2] = &VIC::cycle2pal;
@@ -881,7 +883,7 @@ C64::saveToSnapshotUnsafe(Snapshot *snapshot)
     
     snapshot->setCapacity(stateSize());
     snapshot->setTimestamp(time(NULL));
-    snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), isPAL());
+    snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), vic.isPAL());
 
     uint8_t *ptr = snapshot->getData();
     saveToBuffer(&ptr);

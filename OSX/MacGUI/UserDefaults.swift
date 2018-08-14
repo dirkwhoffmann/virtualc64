@@ -10,44 +10,44 @@ import Foundation
 struct VC64Keys {
     
     // General
-    static let basicRom  = "VC64BasicRomFileKey"
-    static let charRom   = "VC64CharRomFileKey"
-    static let kernalRom = "VC64KernelRomFileKey"
-    static let vc1541Rom = "VC64VC1541RomFileKey"
+    static let basicRom          = "VC64BasicRomFileKey"
+    static let charRom           = "VC64CharRomFileKey"
+    static let kernalRom         = "VC64KernelRomFileKey"
+    static let vc1541Rom         = "VC64VC1541RomFileKey"
 
     // Keyboard
     static let mapKeysByPosition = "VC64MapKeysByPosition"
-    static let keyMap = "VC64KeyMap"
+    static let keyMap            = "VC64KeyMap"
     
     // Emulator preferences dialog
-    static let eyeX = "VC64EyeX"
-    static let eyeY = "VC64EyeY"
-    static let eyeZ = "VC64EyeZ"
+    static let eyeX              = "VC64EyeX"
+    static let eyeY              = "VC64EyeY"
+    static let eyeZ              = "VC64EyeZ"
     
-    static let colorScheme   = "VC64ColorSchemeKey"
-    static let videoUpscaler = "VC64UpscalerKey"
-    static let videoFilter   = "VC64FilterKey"
-    static let aspectRatio   = "VC64FullscreenKeepAspectRatioKey"
+    static let colorScheme       = "VC64ColorSchemeKey"
+    static let videoUpscaler     = "VC64UpscalerKey"
+    static let videoFilter       = "VC64FilterKey"
+    static let aspectRatio       = "VC64FullscreenKeepAspectRatioKey"
 
-    static let joyKeyMap1     = "VC64JoyKeyMap1"
-    static let joyKeyMap2     = "VC64JoyKeyMap2"
-    static let disconnectKeys = "VC64DisconnectKeys"
+    static let joyKeyMap1        = "VC64JoyKeyMap1"
+    static let joyKeyMap2        = "VC64JoyKeyMap2"
+    static let disconnectKeys    = "VC64DisconnectKeys"
     
-    static let autoMount        = "VC64AutoMount"
-    static let snapshotInterval = "VC64SnapshotInterval"
+    static let autoMount         = "VC64AutoMount"
+    static let snapshotInterval  = "VC64SnapshotInterval"
 
     // Hardware preferences dialog
-    static let ntsc = "VC64PALorNTSCKey"
+    static let vicChip           = "VC64VICChipModelKey"
+    
+    static let reSID             = "VC64SIDReSIDKey"
+    static let audioChip         = "VC64SIDChipModelKey"
+    static let audioFilter       = "VC64SIDFilterKey"
+    static let samplingMethod    = "VC64SIDSamplingMethodKey"
 
-    static let reSID          = "VC64SIDReSIDKey"
-    static let audioChip      = "VC64SIDChipModelKey"
-    static let audioFilter    = "VC64SIDFilterKey"
-    static let samplingMethod = "VC64SIDSamplingMethodKey"
+    static let warpLoad          = "VC64WarpLoadKey"
+    static let driveNoise        = "VC64DriveNoiseKey"
 
-    static let warpLoad    = "VC64WarpLoadKey"
-    static let driveNoise  = "VC64DriveNoiseKey"
-
-    static let mouseModel = "VC64MouseModelKey"
+    static let mouseModel        = "VC64MouseModelKey"
 }
 
 /// This class extension handles the UserDefaults management
@@ -109,10 +109,10 @@ extension MyController {
         track()
         let dictionary : [String:Any] = [
         
-            VC64Keys.ntsc: false,
+            VC64Keys.vicChip: PAL_8565.rawValue,
             
             VC64Keys.reSID: true,
-            VC64Keys.audioChip: 1,
+            VC64Keys.audioChip: MOS_8580.rawValue,
             VC64Keys.audioFilter: false,
             VC64Keys.samplingMethod: 0,
 
@@ -177,7 +177,7 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
-        c64.setNTSC(defaults.bool(forKey: VC64Keys.ntsc))
+        c64.vic.setChipModel(defaults.integer(forKey: VC64Keys.vicChip))
         c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
         c64.sid.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
@@ -244,7 +244,7 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
-        defaults.set(c64.isNTSC(), forKey: VC64Keys.ntsc)
+        defaults.set(c64.vic.chipModel(), forKey: VC64Keys.vicChip)
         defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)
         defaults.set(c64.sid.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)

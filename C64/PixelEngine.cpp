@@ -89,16 +89,9 @@ PixelEngine::beginFrame()
 void
 PixelEngine::beginRasterline()
 {
-    // Clear z buffer. The buffer is initialized with the highest positive 8-bit value (meaning the pixel is far away)
-    // Not necessary, because canvas pixels are drawn first
-    // memset(zBuffer, SCHAR_MAX, sizeof(zBuffer));
-    
-    // Clear pixel source
-    // Not necessary, because canvas pixels are drawn first
-    // memset(pixelSource, 0x00, sizeof(pixelSource));
-
-    // Adjust position of first pixel in buffer (make sure that screen is always centered)
-    if (c64->isPAL()) {
+    // We adjust the position of the first pixel in the pixel buffer to make
+    // sure that the screen always appears centered.
+    if (c64->vic.isPAL()) {
         bufferoffset = PAL_LEFT_BORDER_WIDTH - 32;
     } else {
         bufferoffset = NTSC_LEFT_BORDER_WIDTH - 32;
@@ -107,12 +100,11 @@ PixelEngine::beginRasterline()
     // Prepare sprite pixel shift register
     for (unsigned i = 0; i < 8; i++) {
         sprite_sr[i].remaining_bits = -1;
-        // sprite_sr[i].mcol_bits = sprite_sr[i].scol_bit = 0;
         sprite_sr[i].col_bits = 0;
     }
     
-    // Clear pixel buffer (has same size as pixelSource and zBuffer)
-    // FOR DEBUGGING ONLY, 0xBB is a randomly chose debug color
+    // Clear pixel buffer (has the same size as pixelSource and zBuffer)
+    // 0xBB is a randomly chosen debug color
     if (!vic->vblank)
         memset(pixelBuffer, 0xBB, sizeof(pixelSource));
 }
@@ -712,7 +704,7 @@ PixelEngine::expandBorders()
     unsigned leftPixelPos;
     unsigned rightPixelPos;
     
-    if (c64->isPAL()) {
+    if (c64->vic.isPAL()) {
         leftPixelPos = PAL_LEFT_BORDER_WIDTH - (4*8);
         rightPixelPos = PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + (4*8) - 1;
         lastX = PAL_PIXELS;

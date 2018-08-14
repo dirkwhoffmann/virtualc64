@@ -206,7 +206,7 @@ public class MetalView: MTKView {
     
         var rect: CGRect
         
-        if controller.c64.isPAL() {
+        if controller.c64.vic.isPAL() {
     
             // PAL border will be 36 pixels wide and 34 pixels heigh
             rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),

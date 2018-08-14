@@ -96,7 +96,7 @@ Gw
                         </connections>
                     </button>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Zrr-5n-0Fm">
-                        <rect key="frame" x="9" y="57" width="516" height="5"/>
+                        <rect key="frame" x="9" y="57" width="516" height="4"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </box>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="gQV-0j-8zd">
@@ -170,13 +170,15 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9WR-aO-C3q">
                         <rect key="frame" x="348" y="434" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="VICE" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="RDK-UA-IWf" id="1u5-1o-dMr">
+                        <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="RDK-UA-IWf" id="1u5-1o-dMr">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="111-x1-nYq">
                                 <items>
-                                    <menuItem title="VICE" state="on" id="RDK-UA-IWf"/>
-                                    <menuItem title="CCS64" tag="1" id="KKE-Hc-YhX"/>
+                                    <menuItem title="Default" state="on" id="RDK-UA-IWf"/>
+                                    <menuItem title="VICE (PAL)" tag="1" id="KKE-Hc-YhX"/>
+                                    <menuItem title="VICE (NTSC)" tag="1" id="tRb-p2-INb"/>
+                                    <menuItem title="CCS64" tag="1" id="8hz-SE-4DV"/>
                                     <menuItem title="FRODO" tag="2" id="L8j-sx-FoG"/>
                                     <menuItem title="PC64" tag="3" id="Ns8-R2-xXd"/>
                                     <menuItem title="C64S" tag="4" id="KMJ-Fn-yDr"/>

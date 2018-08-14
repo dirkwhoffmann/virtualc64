@@ -182,8 +182,12 @@ static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 //! @brief    VIC II chip model
 typedef enum {
-    MOS6567_NTSC = 0,
-    MOS6569_PAL = 1
+    PAL_6569_R1 = 0,
+    PAL_6569_R3,
+    PAL_8565,
+    NTSC_6567,
+    NTSC_6567_R56A,
+    NTSC_8562
 } VICChipModel;
 
 //! @brief    Screen geometries
