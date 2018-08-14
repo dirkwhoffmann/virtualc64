@@ -369,6 +369,7 @@ extension C64Key {
     /// virtual keyboard.
     func image(pressed: Bool = false,
                shift: Bool = false,
+               control: Bool = false,
                commodore: Bool = false,
                lowercase: Bool = false) -> NSImage {
         
@@ -392,6 +393,38 @@ extension C64Key {
         default: break
         }
     
+        // Check for keys with a color label
+        var color: NSColor?
+        if (nr >= 1 && nr <= 8) && (control || commodore) {
+            let rgb = [(0x00, 0x00, 0x00), (0xff, 0xff, 0xff),
+                       (0x91, 0x4a, 0x40), (0x86, 0xc5, 0xcc),
+                       (0x93, 0x4e, 0xb6), (0x73, 0xb2, 0x4b),
+                       (0x4a, 0x35, 0xaa), (0xd4, 0xe0, 0x7c),
+                       (0x98, 0x6a, 0x2d), (0x66, 0x53, 0x00),
+                       (0xc0, 0x81, 0x78), (0x60, 0x60, 0x60),
+                       (0x8a, 0x8a, 0x8a), (0xb4, 0xed, 0x91),
+                       (0x87, 0x77, 0xde), (0xb3, 0xb3, 0xb3)]
+            let index = (nr - 1) + (commodore ? 8 : 0)
+            let r = CGFloat(rgb[index].0) / 255.0
+            let g = CGFloat(rgb[index].1) / 255.0
+            let b = CGFloat(rgb[index].2) / 255.0
+            color = NSColor.init(red: r, green: g, blue: b, alpha: 1.0)
+            
+            // Draw colored circle ...
+            let image = background
+            image.lockFocus()
+            color?.setFill()
+            let border = CGFloat(3.0)
+            let width = image.size.width - (2.0 * border)
+            let height = image.size.height - (2.0 * border)
+            let rect = NSMakeRect(border, border, width, height)
+            let cPath = NSBezierPath.init(roundedRect: rect, xRadius: 3.0, yRadius: 3.0)
+            cPath.fill()
+            image.unlockFocus()
+            return image
+        }
+ 
+        // All other keys (textual label)
         var font: NSFont
         var yoffset: Int
         

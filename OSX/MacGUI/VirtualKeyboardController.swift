@@ -117,6 +117,7 @@ class VirtualKeyboardController : UserDialogController, NSWindowDelegate
             
             keyView[nr]!.image = C64Key(nr).image(pressed: pressed,
                                                   shift: shift,
+                                                  control: control,
                                                   commodore: commodore,
                                                   lowercase: lowercase)
         }
