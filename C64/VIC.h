@@ -170,7 +170,7 @@ public:
     uint64_t BAwentLowAtCycle;
     
     //! @brief    Increases the X counter by 8
-    inline void countX() { xCounter += 8; }
+    void countX() { xCounter += 8; }
     
     //! @brief    Returns true if yCounter needs to be reset to 0 in this rasterline
     bool yCounterOverflow();
@@ -358,6 +358,26 @@ private:
 	bool lightpenIRQhasOccured;
 	
 	
+    //
+    // Color management
+    //
+    
+    //! @brief    User adjustable brightness value used in palette computation
+    /*! @details  Value may range from 0.0 to 100.0
+     */
+    double brightness = 100.0;
+
+    //! @brief    User adjustable contrast value used in palette computation
+    /*! @details  Value may range from 0.0 to 100.0
+     */
+    double contrast = 50.0;
+
+    //! @brief    User adjustable saturation value used in palette computation
+    /*! @details  Value may range from 0.0 to 100.0
+     */
+    double saturation = 50.0;
+
+    
 	//
 	// Debugging
 	//
@@ -456,27 +476,41 @@ public:
     void setChipModel(VICChipModel model);
 	
     /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
-     *  @seealso  setColor
+     *  @seealso  updateColors
      */
     uint32_t getColor(unsigned nr);
 
+    /*! @brief    Updates the RGBA values for all sixteen C64 colors.
+     *! @details  The base palette is determined by the selected VICII model.
+     */
+    void updatePalette();
+
+    /*! @brief    Updates the RGBA values for all sixteen C64 colors.
+     *  @details  In addition to updating the palette, the brightness, contrast
+     *            and saturation values are updated with new values.
+     */
+    void updatePalette(double brightness, double contrast, double saturation);
+    
+    //! @brief    Updates the color palette
     /*! @brief    Sets one of the sixteen C64 colors in RGBA format.
      *  @note     Use setColorScheme to set all 16 C64 colors at once
      *  @seealso  setColorScheme
      */
-    void setColor(unsigned nr, uint32_t rgba);
+    // void setColor(unsigned nr, uint32_t rgba);
 
     //! @brief    Returns the currently used color scheme
+    //! @deprecated
     ColorScheme getColorScheme();
 
     /*! @brief    Replaces all 16 C64 colors by a predefined color palette.
-     *  @seealso  setColor
+     *  @deprecated
      */
     void setColorScheme(ColorScheme scheme);
 
     //! @brief    Update all colors according to the currently set color scheme
     /*! @details  This method needs to be called when switching from PAL to
      *            NTSC or vice versa.
+     *  @deprecated
      */
     void updateColorScheme() { setColorScheme(pixelEngine.colorScheme); }
         
@@ -611,7 +645,7 @@ public:
     bool DENbit() { return GET_BIT(p.registerCTRL1, 4); }
 
     //! @brief    Returns the value of the DEN bit in the previous cycle.
-    // inline bool DENbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 4); }
+    // bool DENbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 4); }
 
     //! @brief    Returns the current value of the BMM bit (Bit Map Mode).
     bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
