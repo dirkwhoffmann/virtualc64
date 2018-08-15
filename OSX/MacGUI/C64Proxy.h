@@ -159,9 +159,6 @@ struct ContainerWrapper;
 - (double)saturation;
 - (void)setSaturation:(double)value;
 
-- (ColorScheme) colorScheme;
-- (void) setColorScheme:(ColorScheme)scheme;
-
 - (VICInfo) getInfo;
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite;
 - (void) dump;

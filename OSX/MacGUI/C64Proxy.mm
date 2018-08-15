@@ -216,9 +216,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (double)saturation { return wrapper->vic->getSaturation(); }
 - (void)setSaturation:(double)value  { wrapper->vic->setSaturation(value); }
 
-- (ColorScheme) colorScheme { return wrapper->vic->getColorScheme(); }
-- (void) setColorScheme:(ColorScheme)scheme { wrapper->vic->setColorScheme(scheme); }
-
 - (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }
 - (void) setScreenMemoryAddr:(uint16_t)addr { wrapper->vic->setScreenMemoryAddr(addr); }
 - (void) setCharacterMemoryAddr:(uint16_t)addr { wrapper->vic->setCharacterMemoryAddr(addr); }

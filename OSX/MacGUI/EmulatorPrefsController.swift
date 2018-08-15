@@ -54,7 +54,6 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var brightnessSlider: NSSlider!
     @IBOutlet weak var contrastSlider: NSSlider!
     @IBOutlet weak var saturationSlider: NSSlider!
-    // @IBOutlet weak var colorScheme: NSPopUpButton!
     @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var filter: NSPopUpButton!
     @IBOutlet weak var colorWell0: NSColorWell!
@@ -133,7 +132,6 @@ class EmulatorPrefsController : UserDialogController {
         saturationSlider.doubleValue = document.c64.vic.saturation()
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         filter.selectItem(withTag: parent.metalScreen.videoFilter)
-        // colorScheme.selectItem(withTag: Int(c64.vic.colorScheme().rawValue))
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
         colorWell0.color = c64.vic.color(0)
         colorWell1.color = c64.vic.color(1)
@@ -252,14 +250,6 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func changeColorScheme(_ sender: Any!) {
-        
-        track()
-        let sender = sender as! NSPopUpButton
-        c64.vic.setColorScheme(ColorScheme(rawValue: UInt32(sender.selectedTag())))
-        update()
-    }
-
     @IBAction func setEyeXAction(_ sender: NSSlider!) {
     
         parent.metalScreen.setEyeX(sender.floatValue)

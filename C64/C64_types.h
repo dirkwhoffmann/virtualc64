@@ -15,28 +15,6 @@
 #include "Disk_types.h"
 #include "Mouse_types.h"
 
-/*! @brief    Color schemes
- *  @details  Predefined RGB color values
- */
-typedef enum {
-    
-    CS_DEFAULT      = 0x00,
-    CS_VICE_PAL     = 0x01,
-    CS_VICE_NTSC    = 0x02,
-    CS_CCS64        = 0x03,
-    CS_FRODO        = 0x04,
-    CS_PC64         = 0x05,
-    CS_C64S         = 0x06,
-    CS_ALEC64       = 0x07,
-    CS_WIN64        = 0x08,
-    CS_C64ALIVE_0_9 = 0x09,
-    CS_GODOT        = 0x0A,
-    CS_C64SALLY     = 0x0B,
-    CS_PEPTO        = 0x0C,
-    CS_GRAYSCALE    = 0x0D
-    
-} ColorScheme;
-
 /*! @brief    Message types
  *  @details  List of all possible message id's
  */

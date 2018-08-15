@@ -164,14 +164,11 @@ public:
     //
     
 private:
-
-    //! @brief    Currently used color palette
-    ColorScheme colorScheme;
     
     /*! @brief    All sixteen C64 colors in RGBA format
-     *  @details  Use setColorScheme or setColor to overwrite these values
+     *  @see      updatePalette()
      */
-     uint32_t colors[16] = { // Initialize by setColorScheme
+     uint32_t colors[16] = {
         LO_LO_HI_HI(0x10, 0x10, 0x10, 0xFF),
         LO_LO_HI_HI(0xff, 0xff, 0xff, 0xFF),
         LO_LO_HI_HI(0xe0, 0x40, 0x40, 0xFF),

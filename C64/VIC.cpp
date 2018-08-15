@@ -40,10 +40,7 @@ VIC::VIC()
 	// Start with all debug options disabled
 	markIRQLines = false;
 	markDMALines = false;
-    
-    // Assign default color scheme
-    setColorScheme(CS_DEFAULT);
-    
+
     // Register sub components
     VirtualComponent *subcomponents[] = { &pixelEngine, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
@@ -278,7 +275,7 @@ VIC::setChipModel(VICChipModel model)
     c64->suspend();
     
     chipModel = model;
-    updateColorScheme();
+    updatePalette();
     pixelEngine.resetScreenBuffers();
     c64->updateVicFunctionTable();
     

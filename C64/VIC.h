@@ -503,29 +503,6 @@ public:
     //! @brief    Sets the saturation monitor parameter
     void setSaturation(double value);
 
-    //! @brief    Updates the color palette
-    /*! @brief    Sets one of the sixteen C64 colors in RGBA format.
-     *  @note     Use setColorScheme to set all 16 C64 colors at once
-     *  @seealso  setColorScheme
-     */
-    // void setColor(unsigned nr, uint32_t rgba);
-
-    //! @brief    Returns the currently used color scheme
-    //! @deprecated
-    ColorScheme getColorScheme();
-
-    /*! @brief    Replaces all 16 C64 colors by a predefined color palette.
-     *  @deprecated
-     */
-    void setColorScheme(ColorScheme scheme);
-
-    //! @brief    Update all colors according to the currently set color scheme
-    /*! @details  This method needs to be called when switching from PAL to
-     *            NTSC or vice versa.
-     *  @deprecated
-     */
-    void updateColorScheme() { setColorScheme(pixelEngine.colorScheme); }
-        
     // @brief    Returns the number of frames per second.
     unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     
