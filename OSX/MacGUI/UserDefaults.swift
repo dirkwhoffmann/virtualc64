@@ -23,8 +23,9 @@ struct VC64Keys {
     static let eyeX              = "VC64EyeX"
     static let eyeY              = "VC64EyeY"
     static let eyeZ              = "VC64EyeZ"
-    
-    static let colorScheme       = "VC64ColorSchemeKey"
+    static let brightness        = "VC64BrightnessKey"
+    static let contrast          = "VC64ContrastKey"
+    static let saturation        = "VC64SaturationKey"
     static let videoUpscaler     = "VC64UpscalerKey"
     static let videoFilter       = "VC64FilterKey"
     static let aspectRatio       = "VC64FullscreenKeepAspectRatioKey"
@@ -88,8 +89,9 @@ extension MyController {
             VC64Keys.eyeX: 0.0,
             VC64Keys.eyeY: 0.0,
             VC64Keys.eyeZ: 0.0,
-        
-            VC64Keys.colorScheme: CS_DEFAULT.rawValue,
+            VC64Keys.brightness: 100.0,
+            VC64Keys.contrast: 50.0,
+            VC64Keys.saturation: 50.0,
             VC64Keys.videoUpscaler: 0,
             VC64Keys.videoFilter: 1,
             VC64Keys.aspectRatio: false,
@@ -151,8 +153,9 @@ extension MyController {
         metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
         metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
         metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
-        let colorScheme = UInt32(defaults.integer(forKey: VC64Keys.colorScheme))
-        c64.vic.setColorScheme(ColorScheme(rawValue: colorScheme))
+        c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
+        c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
+        c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
         metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
         metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
@@ -223,7 +226,9 @@ extension MyController {
         defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
         defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
         defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
-        defaults.set(Int(c64.vic.colorScheme().rawValue), forKey: VC64Keys.colorScheme)
+        defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
+        defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
+        defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
         defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
         defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
         defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)

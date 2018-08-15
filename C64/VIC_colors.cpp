@@ -27,8 +27,7 @@ double gammaCorrect(double value, double source, double target)
     double result = MAX(MIN(value, 255.0), 0.0);
     result = pow(255, 1 - source)     * pow(result, source);
     result = pow(255, 1 - 1 / target) * pow(result, 1 / target);
-   
-    return round(result);
+    return result;
 }
 
 uint32_t
@@ -208,8 +207,13 @@ VIC::updatePalette()
             b = gammaCorrect(b, 2.8, 2.2);
         }
         
+        // Clamp values to avoid jumping colors
+        uint8_t r_clamped = MAX(MIN(r, 255.0), 0.0);
+        uint8_t g_clamped = MAX(MIN(g, 255.0), 0.0);
+        uint8_t b_clamped = MAX(MIN(b, 255.0), 0.0);
+
         // Store result
-        uint32_t rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
+        uint32_t rgba = LO_LO_HI_HI(r_clamped, g_clamped, b_clamped, 0xFF);
         pixelEngine.colors[i] = rgba;
     }
 }

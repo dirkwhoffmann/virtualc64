@@ -215,7 +215,7 @@ Gw
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSm-AO-usU">
                         <rect key="frame" x="338" y="482" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" numberOfTickMarks="6" sliderType="circular" id="rzB-zf-fKF"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="200" numberOfTickMarks="6" sliderType="circular" id="rzB-zf-fKF"/>
                         <connections>
                             <action selector="brightnessAction:" target="-1" id="sbK-nA-bH2"/>
                         </connections>
