@@ -181,10 +181,6 @@ VIC::updatePalette()
     double saturation = this->saturation * (1 - screen);
     
     // Compute all sixteen colors
-    assert(chipModel < 6);
-    debug("Chip model = %d\n", chipModel);
-    debug("brightness %f contrast %f sat %f\n", brightness, contrast, saturation);
-    
     for (unsigned i = 0; i < 16; i++) {
         
         // Compute YUV values
@@ -194,11 +190,13 @@ VIC::updatePalette()
         double v = isnan(ang) ? 0 : sin(ang) * saturation;
         u *= contrast + screen;
         v *= contrast + screen;
-        
+        // debug("%d: r = %f g = %f b = %f\n", i, r, g, b);
+
         // Convert YUV to RGB
         double r = y             + 1.140 * v;
         double g = y - 0.396 * u - 0.581 * v;
         double b = y + 2.029 * u;
+        // debug("%d: r = %f g = %f b = %f\n", i, r, g, b);
         
         // Apply Gamma correction for PAL models
         if (isPAL()) {
@@ -211,7 +209,8 @@ VIC::updatePalette()
         uint8_t r_clamped = MAX(MIN(r, 255.0), 0.0);
         uint8_t g_clamped = MAX(MIN(g, 255.0), 0.0);
         uint8_t b_clamped = MAX(MIN(b, 255.0), 0.0);
-
+        // debug("%d: R = %d G = %d B = %d\n", i, r_clamped, g_clamped, b_clamped);
+        
         // Store result
         uint32_t rgba = LO_LO_HI_HI(r_clamped, g_clamped, b_clamped, 0xFF);
         pixelEngine.colors[i] = rgba;
