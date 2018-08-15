@@ -39,11 +39,23 @@ VIC::getColor(unsigned nr)
 }
 
 void
-VIC::updatePalette(double brightness, double contrast, double saturation)
+VIC::setBrightness(double value)
 {
-    this->brightness = brightness;
-    this->contrast = contrast;
-    this->saturation = saturation;
+    brightness = value;
+    updatePalette();
+}
+
+void
+VIC::setContrast(double value)
+{
+    contrast = value;
+    updatePalette();
+}
+
+void
+VIC::setSaturation(double value)
+{
+    saturation = value;
     updatePalette();
 }
 

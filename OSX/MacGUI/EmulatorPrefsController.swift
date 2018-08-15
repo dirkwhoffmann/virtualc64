@@ -51,7 +51,10 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var eyeXSlider: NSSlider!
     @IBOutlet weak var eyeYSlider: NSSlider!
     @IBOutlet weak var eyeZSlider: NSSlider!
-    @IBOutlet weak var colorScheme: NSPopUpButton!
+    @IBOutlet weak var brightnessSlider: NSSlider!
+    @IBOutlet weak var contrastSlider: NSSlider!
+    @IBOutlet weak var saturationSlider: NSSlider!
+    // @IBOutlet weak var colorScheme: NSPopUpButton!
     @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var filter: NSPopUpButton!
     @IBOutlet weak var colorWell0: NSColorWell!
@@ -119,13 +122,18 @@ class EmulatorPrefsController : UserDialogController {
     
     func update() {
        
+        let document = parent.document as! MyDocument
+        
         // Video
-        upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
-        filter.selectItem(withTag: parent.metalScreen.videoFilter)
-        colorScheme.selectItem(withTag: Int(c64.vic.colorScheme().rawValue))
         eyeXSlider.floatValue = parent.metalScreen.eyeX()
         eyeYSlider.floatValue = parent.metalScreen.eyeY()
         eyeZSlider.floatValue = parent.metalScreen.eyeZ()
+        brightnessSlider.doubleValue = document.c64.vic.brightness()
+        contrastSlider.doubleValue = document.c64.vic.contrast()
+        saturationSlider.doubleValue = document.c64.vic.saturation()
+        upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
+        filter.selectItem(withTag: parent.metalScreen.videoFilter)
+        // colorScheme.selectItem(withTag: Int(c64.vic.colorScheme().rawValue))
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
         colorWell0.color = c64.vic.color(0)
         colorWell1.color = c64.vic.color(1)
@@ -252,24 +260,45 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
 
-    @IBAction func setEyeXAction(_ sender: Any!) {
+    @IBAction func setEyeXAction(_ sender: NSSlider!) {
     
-        let sender = sender as! NSSlider
         parent.metalScreen.setEyeX(sender.floatValue)
         update()
     }
     
-    @IBAction func setEyeYAction(_ sender: Any!) {
+    @IBAction func setEyeYAction(_ sender: NSSlider!) {
     
-        let sender = sender as! NSSlider
         parent.metalScreen.setEyeY(sender.floatValue)
         update()
     }
     
-    @IBAction func setEyeZAction(_ sender: Any!) {
+    @IBAction func setEyeZAction(_ sender: NSSlider!) {
     
-        let sender = sender as! NSSlider
         parent.metalScreen.setEyeZ(sender.floatValue)
+        update()
+    }
+ 
+    @IBAction func brightnessAction(_ sender: NSSlider!) {
+        
+        track("Value = \(sender.doubleValue)")
+        let document = parent.document as! MyDocument
+        document.c64.vic.setBrightness(sender.doubleValue)
+        update()
+    }
+ 
+    @IBAction func contrastAction(_ sender: NSSlider!) {
+        
+        track("Value = \(sender.doubleValue)")
+        let document = parent.document as! MyDocument
+        document.c64.vic.setContrast(sender.doubleValue)
+        update()
+    }
+    
+    @IBAction func saturationAction(_ sender: NSSlider!) {
+        
+        track("Value = \(sender.doubleValue)")
+        let document = parent.document as! MyDocument
+        document.c64.vic.setSaturation(sender.doubleValue)
         update()
     }
     

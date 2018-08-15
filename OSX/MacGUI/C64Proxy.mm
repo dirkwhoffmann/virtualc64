@@ -209,6 +209,13 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
                                       blue:(float)b/255.0
                                      alpha:1.0];
 }
+- (double)brightness { return wrapper->vic->getBrightness(); }
+- (void)setBrightness:(double)value { wrapper->vic->setBrightness(value); }
+- (double)contrast { return wrapper->vic->getContrast(); }
+- (void)setContrast:(double)value  { wrapper->vic->setContrast(value); }
+- (double)saturation { return wrapper->vic->getSaturation(); }
+- (void)setSaturation:(double)value  { wrapper->vic->setSaturation(value); }
+
 - (ColorScheme) colorScheme { return wrapper->vic->getColorScheme(); }
 - (void) setColorScheme:(ColorScheme)scheme { wrapper->vic->setColorScheme(scheme); }
 

@@ -485,12 +485,24 @@ public:
      */
     void updatePalette();
 
-    /*! @brief    Updates the RGBA values for all sixteen C64 colors.
-     *  @details  In addition to updating the palette, the brightness, contrast
-     *            and saturation values are updated with new values.
-     */
-    void updatePalette(double brightness, double contrast, double saturation);
-    
+    //! @brief    Returns the brightness monitor parameter
+    double getBrightness() { return brightness; }
+
+    //! @brief    Sets the brightness monitor parameter
+    void setBrightness(double value);
+
+    //! @brief    Returns the contrast monitor parameter
+    double getContrast() { return contrast; }
+
+    //! @brief    Sets the contrast monitor parameter
+    void setContrast(double value);
+
+    //! @brief    Returns the saturation monitor parameter
+    double getSaturation() { return saturation; }
+
+    //! @brief    Sets the saturation monitor parameter
+    void setSaturation(double value);
+
     //! @brief    Updates the color palette
     /*! @brief    Sets one of the sixteen C64 colors in RGBA format.
      *  @note     Use setColorScheme to set all 16 C64 colors at once

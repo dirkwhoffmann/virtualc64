@@ -21,24 +21,6 @@ struct C64Texture {
     static let upscaled = NSSize.init(width: 2048, height: 2048)
 }
 
-/*
-struct C64Upscaler {
-    static let none = 0
-    static let epx = 1
-    static let xbr = 2
-}
-
-struct C64Filter {
-    static let none = 0
-    static let smooth = 1
-    static let blur = 2
-    static let saturation = 3
-    static let grayscale = 4
-    static let sepia = 5
-    static let crt = 6
-}
-*/
-
 public class MetalView: MTKView {
     
     @IBOutlet weak var controller: MyController!
@@ -122,6 +104,12 @@ public class MetalView: MTKView {
     var currentAlpha = Float(0.0)
     var targetAlpha = Float(0.0)
     var deltaAlpha = Float(0.0)
+    
+    // Monitor calibration parameters
+    /*
+    var contrast = 50.0
+    var saturation = 50.0
+    */
     
     // Texture cut-out (normalized)
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
