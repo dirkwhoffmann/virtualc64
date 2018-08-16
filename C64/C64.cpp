@@ -214,7 +214,7 @@ C64::dumpState() {
     msg("C64:\n");
     msg("----\n\n");
     msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");
-    msg("         Frames per second : %d\n", vic.getFramesPerSecond());
+    msg("         Frames per second : %f\n", vic.getFramesPerSecond());
     msg("     Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
     msg("     Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
     msg("             Current cycle : %llu\n", cpu.cycle);
@@ -232,32 +232,10 @@ C64::dumpState() {
 // Configuring the emulator
 //
 
-/*
-void
-C64::setPAL()
-{
-    debug(2, "C64::setPAL\n");
-
-    suspend();
-    vic.setChipModel(MOS6569_PAL);
-    resume();
-}
-
-void 
-C64::setNTSC()
-{
-    debug(2, "C64::setNTSC\n");
-
-    suspend();
-    vic.setChipModel(MOS6567_NTSC);
-    resume();
-}
-*/
-
 void
 C64::updateVicFunctionTable()
 {
-    // Initialize VIC function table
+    // Assign model independent execution functions
     vicfunc[0] = NULL;
     vicfunc[12] = &VIC::cycle12;
     vicfunc[13] = &VIC::cycle13;
@@ -266,57 +244,95 @@ C64::updateVicFunctionTable()
     vicfunc[16] = &VIC::cycle16;
     vicfunc[17] = &VIC::cycle17;
     vicfunc[18] = &VIC::cycle18;
+    
     for (unsigned cycle = 19; cycle <= 54; cycle++)
         vicfunc[cycle] = &VIC::cycle19to54;
+
     vicfunc[56] = &VIC::cycle56;
     
-    if (vic.isPAL()) {
-        
-        vicfunc[1] = &VIC::cycle1pal;
-        vicfunc[2] = &VIC::cycle2pal;
-        vicfunc[3] = &VIC::cycle3pal;
-        vicfunc[4] = &VIC::cycle4pal;
-        vicfunc[5] = &VIC::cycle5pal;
-        vicfunc[6] = &VIC::cycle6pal;
-        vicfunc[7] = &VIC::cycle7pal;
-        vicfunc[8] = &VIC::cycle8pal;
-        vicfunc[9] = &VIC::cycle9pal;
-        vicfunc[10] = &VIC::cycle10pal;
-        vicfunc[11] = &VIC::cycle11pal;
-        vicfunc[55] = &VIC::cycle55pal;
-        vicfunc[57] = &VIC::cycle57pal;
-        vicfunc[58] = &VIC::cycle58pal;
-        vicfunc[59] = &VIC::cycle59pal;
-        vicfunc[60] = &VIC::cycle60pal;
-        vicfunc[61] = &VIC::cycle61pal;
-        vicfunc[62] = &VIC::cycle62pal;
-        vicfunc[63] = &VIC::cycle63pal;
-        vicfunc[64] = NULL;
-        vicfunc[65] = NULL;
-
-    } else {
-        
-        vicfunc[1] = &VIC::cycle1ntsc;
-        vicfunc[2] = &VIC::cycle2ntsc;
-        vicfunc[3] = &VIC::cycle3ntsc;
-        vicfunc[4] = &VIC::cycle4ntsc;
-        vicfunc[5] = &VIC::cycle5ntsc;
-        vicfunc[6] = &VIC::cycle6ntsc;
-        vicfunc[7] = &VIC::cycle7ntsc;
-        vicfunc[8] = &VIC::cycle8ntsc;
-        vicfunc[9] = &VIC::cycle9ntsc;
-        vicfunc[10] = &VIC::cycle10ntsc;
-        vicfunc[11] = &VIC::cycle11ntsc;
-        vicfunc[55] = &VIC::cycle55ntsc;
-        vicfunc[57] = &VIC::cycle57ntsc;
-        vicfunc[58] = &VIC::cycle58ntsc;
-        vicfunc[59] = &VIC::cycle59ntsc;
-        vicfunc[60] = &VIC::cycle60ntsc;
-        vicfunc[61] = &VIC::cycle61ntsc;
-        vicfunc[62] = &VIC::cycle62ntsc;
-        vicfunc[63] = &VIC::cycle63ntsc;
-        vicfunc[64] = &VIC::cycle64ntsc;
-        vicfunc[65] = &VIC::cycle65ntsc;
+    // Assign model specific execution functions
+    switch (vic.getChipModel()) {
+            
+        case PAL_6569_R1:
+        case PAL_6569_R3:
+        case PAL_8565:
+            
+            vicfunc[1] = &VIC::cycle1pal;
+            vicfunc[2] = &VIC::cycle2pal;
+            vicfunc[3] = &VIC::cycle3pal;
+            vicfunc[4] = &VIC::cycle4pal;
+            vicfunc[5] = &VIC::cycle5pal;
+            vicfunc[6] = &VIC::cycle6pal;
+            vicfunc[7] = &VIC::cycle7pal;
+            vicfunc[8] = &VIC::cycle8pal;
+            vicfunc[9] = &VIC::cycle9pal;
+            vicfunc[10] = &VIC::cycle10pal;
+            vicfunc[11] = &VIC::cycle11pal;
+            vicfunc[55] = &VIC::cycle55pal;
+            vicfunc[57] = &VIC::cycle57pal;
+            vicfunc[58] = &VIC::cycle58pal;
+            vicfunc[59] = &VIC::cycle59pal;
+            vicfunc[60] = &VIC::cycle60pal;
+            vicfunc[61] = &VIC::cycle61pal;
+            vicfunc[62] = &VIC::cycle62pal;
+            vicfunc[63] = &VIC::cycle63pal;
+            vicfunc[64] = NULL;
+            vicfunc[65] = NULL;
+            break;
+            
+        case NTSC_6567_R56A:
+            
+            vicfunc[1] = &VIC::cycle1pal;
+            vicfunc[2] = &VIC::cycle2pal;
+            vicfunc[3] = &VIC::cycle3pal;
+            vicfunc[4] = &VIC::cycle4pal;
+            vicfunc[5] = &VIC::cycle5pal;
+            vicfunc[6] = &VIC::cycle6pal;
+            vicfunc[7] = &VIC::cycle7pal;
+            vicfunc[8] = &VIC::cycle8pal;
+            vicfunc[9] = &VIC::cycle9pal;
+            vicfunc[10] = &VIC::cycle10pal;
+            vicfunc[11] = &VIC::cycle11pal;
+            vicfunc[55] = &VIC::cycle55ntsc;
+            vicfunc[57] = &VIC::cycle57ntsc;
+            vicfunc[58] = &VIC::cycle58ntsc;
+            vicfunc[59] = &VIC::cycle59ntsc;
+            vicfunc[60] = &VIC::cycle60ntsc;
+            vicfunc[61] = &VIC::cycle61ntsc;
+            vicfunc[62] = &VIC::cycle62ntsc;
+            vicfunc[63] = &VIC::cycle63ntsc;
+            vicfunc[64] = &VIC::cycle64ntsc;
+            vicfunc[65] = NULL;
+            break;
+            
+        case NTSC_6567:
+        case NTSC_8562:
+            
+            vicfunc[1] = &VIC::cycle1ntsc;
+            vicfunc[2] = &VIC::cycle2ntsc;
+            vicfunc[3] = &VIC::cycle3ntsc;
+            vicfunc[4] = &VIC::cycle4ntsc;
+            vicfunc[5] = &VIC::cycle5ntsc;
+            vicfunc[6] = &VIC::cycle6ntsc;
+            vicfunc[7] = &VIC::cycle7ntsc;
+            vicfunc[8] = &VIC::cycle8ntsc;
+            vicfunc[9] = &VIC::cycle9ntsc;
+            vicfunc[10] = &VIC::cycle10ntsc;
+            vicfunc[11] = &VIC::cycle11ntsc;
+            vicfunc[55] = &VIC::cycle55ntsc;
+            vicfunc[57] = &VIC::cycle57ntsc;
+            vicfunc[58] = &VIC::cycle58ntsc;
+            vicfunc[59] = &VIC::cycle59ntsc;
+            vicfunc[60] = &VIC::cycle60ntsc;
+            vicfunc[61] = &VIC::cycle61ntsc;
+            vicfunc[62] = &VIC::cycle62ntsc;
+            vicfunc[63] = &VIC::cycle63ntsc;
+            vicfunc[64] = &VIC::cycle64ntsc;
+            vicfunc[65] = &VIC::cycle65ntsc;
+            break;
+            
+        default:
+            assert(false);
     }
 }
 
@@ -641,7 +657,7 @@ C64::endOfFrame()
     
     // Take a snapshot once in a while
     if (snapshotInterval > 0 &&
-        frame % (vic.getFramesPerSecond() * snapshotInterval) == 0) {
+        frame % ((unsigned)(vic.getFramesPerSecond() * snapshotInterval)) == 0) {
         takeAutoSnapshot();
     }
     

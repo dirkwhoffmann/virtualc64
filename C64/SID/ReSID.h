@@ -50,7 +50,7 @@ private:
     SIDChipModel chipModel;
     
     //! @brief   Clock frequency
-    /*! @details Either PAL_CYCLES_PER_SECOND or NTSC_CYCLES_PER_SECOND
+    /*! @details Either PAL_CLOCK_FREQUENCY or NTSC_CLOCK_FREQUENCY
      */
     uint32_t clockFrequency;
     

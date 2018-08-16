@@ -302,6 +302,78 @@ VIC::setChipModel(VICChipModel model)
     c64->resume();
 }
 
+unsigned
+VIC::getClockFrequency()
+{
+    switch (chipModel) {
+            
+        case NTSC_6567:
+        case NTSC_8562:
+        case NTSC_6567_R56A:
+            return NTSC_CLOCK_FREQUENCY;
+            
+        default:
+            return PAL_CLOCK_FREQUENCY;
+    }
+}
+
+unsigned
+VIC::getCyclesPerRasterline()
+{
+    switch (chipModel) {
+            
+        case NTSC_6567_R56A:
+            return 64;
+            
+        case NTSC_6567:
+        case NTSC_8562:
+            return 65;
+            
+        default:
+            return 63;
+    }
+}
+
+bool
+VIC::isLastCycleInRasterline(unsigned cycle)
+{
+    return cycle >= getCyclesPerRasterline();
+}
+
+unsigned
+VIC::getRasterlinesPerFrame()
+{
+    switch (chipModel) {
+            
+        case NTSC_6567_R56A:
+            return 262;
+            
+        case NTSC_6567:
+        case NTSC_8562:
+            return 263;
+            
+        default:
+            return 312;
+    }
+}
+
+bool
+VIC::isVBlankLine(unsigned rasterline)
+{
+    switch (chipModel) {
+            
+        case NTSC_6567_R56A:
+            return rasterline < 16 || rasterline >= 16 + 234;
+            
+        case NTSC_6567:
+        case NTSC_8562:
+            return rasterline < 16 || rasterline >= 16 + 235;
+            
+        default:
+            return rasterline < 16 || rasterline >= 16 + 284;
+    }
+}
+
 
 //
 // Getter and setter
@@ -1126,12 +1198,15 @@ VIC::beginRasterline(uint16_t line)
     verticalFrameFFsetCond = verticalFrameFFclearCond = false;
 
     // Determine if we're currently processing a VBLANK line (nothing is drawn in this area)
+    vblank = isVBlankLine(line);
+    /*
     if (isPAL()) {
         vblank = line < PAL_UPPER_VBLANK || line >= PAL_UPPER_VBLANK + PAL_RASTERLINES;
     } else {
         vblank = line < NTSC_UPPER_VBLANK || line >= NTSC_UPPER_VBLANK + NTSC_RASTERLINES;
     }
-
+    */
+    
     /* OLD CODE
     if (line != 0) {
         //assert(yCounter == c64->getRasterline());

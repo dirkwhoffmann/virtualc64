@@ -520,30 +520,41 @@ public:
     //! @brief    Sets the saturation monitor parameter
     void setSaturation(double value);
 
-    // @brief    Returns the number of frames per second.
-    unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
-    
-    //! @brief    Returns the number of rasterlines per frame.
-    int getRasterlinesPerFrame() {
-        return isPAL() ? PAL_HEIGHT : NTSC_HEIGHT; }
-    
+    //! @brief    Returns the clock frequencay of the selected VICII model.
+    unsigned getClockFrequency();
+
     //! @brief    Returns the number of CPU cycles performed per rasterline.
-    int getCyclesPerRasterline() {
-        return isPAL() ? PAL_CYCLES_PER_RASTERLINE : NTSC_CYCLES_PER_RASTERLINE; }
-
+    unsigned getCyclesPerRasterline();
+    
     //! @brief    Returns true if the end of the rasterline has been reached.
-    bool isLastCycleInRasterline(int cycle) {
-        return (cycle == PAL_CYCLES_PER_RASTERLINE && isPAL()) || cycle == NTSC_CYCLES_PER_RASTERLINE;
-    }
-    
-    //! @brief    Returns the number of CPU cycles performed per frame.
-    int getCyclesPerFrame() {
-        return isPAL() ? (PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE) : (NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE); }
-    
-    //! @brief    Returns the time interval between two frames in nanoseconds.
-    uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
+    bool isLastCycleInRasterline(unsigned cycle);
 
+    //! @brief    Returns the number of rasterlines drawn per frame.
+    unsigned getRasterlinesPerFrame();
+
+    //! @brief    Checks if a certain rasterline belongs to the VBLANK area.
+    bool isVBlankLine(unsigned rasterline);
+
+    //! @brief    Returns the number of CPU cycles executed in one frame.
+    unsigned getCyclesPerFrame() {
+        return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
     
+    /*! @brief    Returns the number of frames drawn per second.
+     *  @note     The result is returned as a floating point value, because
+     *            Commodore did not manage to match the expected values exactly
+     *            (50 Hz for PAL and 60 Hz for NTSC). E.g., a PAL C64 outputs
+     *            50.125 Hz.
+     */
+    double getFramesPerSecond() {
+        return (double)getClockFrequency() / (double)getCyclesPerFrame();
+    }
+
+    //! @brief    Returns the time interval between two frames in nanoseconds.
+    uint64_t getFrameDelay() {
+        return 1000000000.0 / (uint64_t)getFramesPerSecond();
+    }
+
+
 	//
 	// Getter and setter
 	//
@@ -563,7 +574,7 @@ public:
 	void setMemoryBankAddr(uint16_t addr);
 			
 	/*! @brief    Returns the screen memory address
-     *  @note     This function is not needed internally and only invoked by the GUI debug panel 
+     *  @deprecated Use getInfo() instead
      */
 	uint16_t getScreenMemoryAddr();
 	
@@ -573,7 +584,7 @@ public:
 	void setScreenMemoryAddr(uint16_t addr);
 		
     /*! @brief    Returns the character memory address
-     *  @note     This function is not needed internally and only invoked by the GUI debug panel
+     *  @deprecated Use getInfo() instead
      */
 	uint16_t getCharacterMemoryAddr();
 	

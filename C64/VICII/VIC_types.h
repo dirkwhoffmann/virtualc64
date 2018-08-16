@@ -30,13 +30,13 @@
 static const uint32_t NTSC_CLOCK_FREQUENCY = 1022727;
 
 //! @brief    Frames per second in NTSC mode
-static const double NTSC_REFRESH_RATE = 59.826;
+// static const double NTSC_REFRESH_RATE = 59.826;
 
 //! @brief    CPU cycles per rasterline in NTSC mode
-static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
+// static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
 
 //! @brief    CPU cycles per frame in NTSC mode
-static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
+// static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
 
 //! @brief    CPU cycles per second in NTSC mode
 static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_CLOCK_FREQUENCY;
@@ -93,10 +93,12 @@ static const uint16_t NTSC_LOWER_VBLANK = 12;
 static const uint16_t NTSC_HEIGHT = 263; // 16 + 10 + 200 + 25 + 12
 
 //! @brief    Number of drawn rasterlines per frame in NTSC mode
+//! @deprecated because the value differes between NTSC models
 static const uint16_t NTSC_RASTERLINES = 235; // 10 + 200 + 25
 
 //! @brief    Number of viewable rasterlines per frame in NTSC mode
-static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
+//! @deprecated because the value differes between NTSC models
+// static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 
 
 //
@@ -107,13 +109,13 @@ static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 static const uint32_t PAL_CLOCK_FREQUENCY = 985249;
 
 //! @brief    Frames per second in PAL mode
-static const double PAL_REFRESH_RATE = 50.125;
+// static const double PAL_REFRESH_RATE = 50.125;
 
 //! @brief    CPU cycles per rasterline in PAL mode
-static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
+// static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
 
 //! @brief    CPU cycles per frame in PAL mode
-static const unsigned PAL_CYCLES_PER_FRAME = 19656;
+// static const unsigned PAL_CYCLES_PER_FRAME = 19656;
 
 //! @brief    CPU cycles per second in PAL mode
 static const unsigned PAL_CYCLES_PER_SECOND = PAL_CLOCK_FREQUENCY;
@@ -146,7 +148,7 @@ static const uint16_t PAL_WIDTH = 504; // 76 + 48 + 320 + 37 + 23
 static const uint16_t PAL_PIXELS = 405; // 48 + 320 + 37
 
 //! @brief    Number of viewable pixels per rasterline in PAL mode
-static const uint16_t PAL_VISIBLE_PIXELS = 403;
+// static const uint16_t PAL_VISIBLE_PIXELS = 403;
 
 
 // Vertical screen parameters
