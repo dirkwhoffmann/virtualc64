@@ -13,6 +13,7 @@
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
+		5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
@@ -56,7 +57,7 @@
 		50265F57202D00940041C315 /* TapeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50265F56202D00940041C315 /* TapeMountController.swift */; };
 		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
-		50340D4020F63AFE009A53A5 /* VIC_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50340D3F20F63AFE009A53A5 /* VIC_cycles.cpp */; };
+		50340D4020F63AFE009A53A5 /* VIC_cycles_pal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50340D3F20F63AFE009A53A5 /* VIC_cycles_pal.cpp */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
@@ -196,6 +197,7 @@
 		5000C9610D13DED40011A2E9 /* VC1541Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541Memory.h; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
+		5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_ntsc.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -281,7 +283,7 @@
 		5030B2A820AEE44600E591BE /* Mouse_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse_types.h; sourceTree = "<group>"; };
 		5031D599200B47B70088C802 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
-		50340D3F20F63AFE009A53A5 /* VIC_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles.cpp; sourceTree = "<group>"; };
+		50340D3F20F63AFE009A53A5 /* VIC_cycles_pal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_pal.cpp; sourceTree = "<group>"; };
 		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
 		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
@@ -551,24 +553,9 @@
 				50171AA12083722C00C07AAD /* Memory_types.h */,
 				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
-				50176C540A6F72F3009E80BD /* CIA.h */,
-				50171A9E2083708800C07AAD /* CIA_types.h */,
-				50176C530A6F72F3009E80BD /* CIA.cpp */,
-				500B6CA30B905CEC002C36EC /* TOD.h */,
-				50171AA4208373E600C07AAD /* TOD_types.h */,
-				500B6CA40B905CEC002C36EC /* TOD.cpp */,
-				501D2C7D1B85C0F700B1AD0F /* VIC_types.h */,
-				50176C600A6F72F3009E80BD /* VIC.h */,
-				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
-				50340D3F20F63AFE009A53A5 /* VIC_cycles.cpp */,
-				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
-				506004651B78E9C500EBDD93 /* PixelEngine.h */,
-				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
-				50171AA02083716000C07AAD /* CPU_types.h */,
-				50176C560A6F72F3009E80BD /* CPU.h */,
-				50176C550A6F72F3009E80BD /* CPU.cpp */,
-				50176C580A6F72F3009E80BD /* Instructions.h */,
-				50176C570A6F72F3009E80BD /* Instructions.cpp */,
+				5006087B21256D8100C7C6C5 /* CIA */,
+				5006087A21256D6800C7C6C5 /* VICII */,
+				5006087C21256DA300C7C6C5 /* CPU */,
 				50FF16FC205D17F5000A729A /* ProcessorPort.h */,
 				50FF16FB205D17F5000A729A /* ProcessorPort.cpp */,
 				50176C5A0A6F72F3009E80BD /* Keyboard.h */,
@@ -657,6 +644,46 @@
 			children = (
 			);
 			name = Memory;
+			sourceTree = "<group>";
+		};
+		5006087A21256D6800C7C6C5 /* VICII */ = {
+			isa = PBXGroup;
+			children = (
+				501D2C7D1B85C0F700B1AD0F /* VIC_types.h */,
+				50176C600A6F72F3009E80BD /* VIC.h */,
+				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
+				50340D3F20F63AFE009A53A5 /* VIC_cycles_pal.cpp */,
+				5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */,
+				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
+				506004651B78E9C500EBDD93 /* PixelEngine.h */,
+				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
+			);
+			path = VICII;
+			sourceTree = "<group>";
+		};
+		5006087B21256D8100C7C6C5 /* CIA */ = {
+			isa = PBXGroup;
+			children = (
+				50176C540A6F72F3009E80BD /* CIA.h */,
+				50171A9E2083708800C07AAD /* CIA_types.h */,
+				50176C530A6F72F3009E80BD /* CIA.cpp */,
+				500B6CA30B905CEC002C36EC /* TOD.h */,
+				50171AA4208373E600C07AAD /* TOD_types.h */,
+				500B6CA40B905CEC002C36EC /* TOD.cpp */,
+			);
+			path = CIA;
+			sourceTree = "<group>";
+		};
+		5006087C21256DA300C7C6C5 /* CPU */ = {
+			isa = PBXGroup;
+			children = (
+				50171AA02083716000C07AAD /* CPU_types.h */,
+				50176C560A6F72F3009E80BD /* CPU.h */,
+				50176C550A6F72F3009E80BD /* CPU.cpp */,
+				50176C580A6F72F3009E80BD /* Instructions.h */,
+				50176C570A6F72F3009E80BD /* Instructions.cpp */,
+			);
+			path = CPU;
 			sourceTree = "<group>";
 		};
 		50176C4E0A6F72F3009E80BD /* C64 */ = {
@@ -1137,6 +1164,7 @@
 				501DE30B20C9C41B00707130 /* dac.cc in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
+				5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				50B1644C202DD52500447D3E /* ExportDiskController.swift in Sources */,
 				501DE30A20C9C41B00707130 /* pot.cc in Sources */,
@@ -1153,7 +1181,7 @@
 				50195C2A20B007A1003844FB /* Debugger.swift in Sources */,
 				500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
-				50340D4020F63AFE009A53A5 /* VIC_cycles.cpp in Sources */,
+				50340D4020F63AFE009A53A5 /* VIC_cycles_pal.cpp in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
 				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 			);

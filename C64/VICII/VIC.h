@@ -1,6 +1,6 @@
 /*!
- * @header      VIC.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -22,6 +22,15 @@
 #include "VirtualComponent.h"
 #include "C64_types.h"
 #include "PixelEngine.h"
+
+#define SPR0 0x01
+#define SPR1 0x02
+#define SPR2 0x04
+#define SPR3 0x08
+#define SPR4 0x10
+#define SPR5 0x20
+#define SPR6 0x40
+#define SPR7 0x80
 
 #define VICTriggerIrq0     (1ULL << 0) // Sets the IRQ line
 #define VICTriggerIrq1     (1ULL << 1)
@@ -67,21 +76,23 @@ public:
     //! @brief    Canvas color pipe
     CanvasColorPipe cp;
     
-    //! @brief    Selected chip model (determines whether video mode is PAL or NTSC)
+    //! @brief    Selected chip model
     VICChipModel chipModel;
     
-    //! @brief    LP pin
-    /*! @details  A negative edge on this pin triggers a lightpen interrupt.
+    /*! @brief    Current value of the LP pin
+     *  @details  A negative edge on this pin triggers a lightpen interrupt.
      */
      bool lp;
      
     /*! @brief    Address bus
-     * @details  Whenever VIC performs a memory read, the generated memory address is stored here
+     *  @details  Whenever VIC performs a memory read, the generated memory
+     *            address is stored in this variable.
      */
     uint16_t addrBus;
     
     /*! @brief    Data bus
-     *  @details  Whenever VIC performs a memory read, the result is stored here
+     *  @details  Whenever VIC performs a memory read, the result is stored
+     *            in this variable.
      */
     uint8_t dataBus;
     
@@ -91,7 +102,7 @@ public:
     //! @brief    Interrupt Mask Register ($D01A)
     uint8_t imr;
 
-    //! @brief    Indicates whether the currently drawn rasterline belongs to VBLANK area
+    //! @brief    True if the current rasterline belongs to the VBLANK area.
     bool vblank;
     
 	//! @brief    Internal VIC register, 10 bit video counter
@@ -117,12 +128,14 @@ public:
     uint32_t yCounter;
     
     /*! @brief    Vertical frame flipflop set condition
-     *  @details  Indicates whether the vertical frame ff needs to be set in current rasterline 
+     *  @details  Indicates whether the vertical frame flipflop needs to be set
+     *            in the current rasterline.
      */
     bool verticalFrameFFsetCond;
     
     /*! @brief    Vertical frame flipflop clear condition
-     *  @details  Indicates whether the vertical frame ff needs to be cleared in current rasterline
+     *  @details  Indicates whether the vertical frame ff needs to be cleared in
+     *            the current rasterline.
      */
     bool verticalFrameFFclearCond;
 
@@ -142,12 +155,13 @@ public:
     //! @brief    Background color fetched in latest gAccess
     uint8_t gAccessbgColor;
 
-	//! @brief    Indicates that we are curretly processing a DMA line (bad line)
+	//! @brief    True if we are currently processing a DMA line (bad line)
 	bool badLineCondition;
 	
-	/*! @brief    Determines, if DMA lines (bad lines) can occurr within the current frame.
-     *  @details  Bad lines can only occur, if the DEN bit was set during an arbitary cycle
-     *            in rasterline 30. The DEN bit is located in control register 1 (0x11)
+	/*! @brief    True, if DMA lines can occurr within the current frame.
+     *  @details  Bad lines can occur only if the DEN bit was set during an
+     *            arbitary cycle in rasterline 30. The DEN bit is located in
+     *            control register 1 (0x11).
      */
     bool DENwasSetInRasterline30;
 
@@ -156,13 +170,13 @@ public:
      */
 	bool displayState;
 
-	/*! @brief    The BA line
+	/*! @brief    Current value of the BA line
 	 *  @details  Remember: Each CPU cycle is split into two phases:
      *            First phase (LOW):   VIC gets access to the bus
      *            Second phase (HIGH): CPU gets access to the bus
      *            In rare cases, VIC needs access in the HIGH phase, too.
      *            To block the CPU, the BA line is pulled down.
-     *  @note     The BA line can be pulled down by multiple sources (wired AND). 
+     *  @note     BA can be pulled down by multiple sources (wired AND).
      */
     uint16_t BAlow;
 	
@@ -172,10 +186,13 @@ public:
     //! @brief    Increases the X counter by 8
     void countX() { xCounter += 8; }
     
-    //! @brief    Returns true if yCounter needs to be reset to 0 in this rasterline
+    //! @brief    True if yCounter needs to be reset to 0 in this rasterline.
     bool yCounterOverflow();
 
-    //! @brief    cAccesses can only be performed is BA line is down for more than 2 cycles
+    /*! @brief    True if a cAccess can occur.
+     *  @note     A cAccess can only be performed is BA line is down for more
+     *            than 2 cycles.
+     */
     bool BApulledDownForAtLeastThreeCycles();
     
     /* "Der VIC benutzt zwei Flipflops, um den Rahmen um das Anzeigefenster
@@ -989,18 +1006,21 @@ public:
      */
     void processDelayedActions();
     
-	//! @brief    Executes a specific rasterline cycle
-    void cycle1pal(); void cycle1ntsc();
-    void cycle2pal(); void cycle2ntsc();
-    void cycle3pal(); void cycle3ntsc();
-    void cycle4pal(); void cycle4ntsc();
-    void cycle5pal(); void cycle5ntsc();
-    void cycle6pal(); void cycle6ntsc();
-    void cycle7pal(); void cycle7ntsc();
-    void cycle8pal(); void cycle8ntsc();
-    void cycle9pal(); void cycle9ntsc();
-    void cycle10pal(); void cycle10ntsc();
-    void cycle11pal(); void cycle11ntsc();
+	/*! @brief    Executes a specific rasterline cycle
+     *  @note     The cycle specific actions differ depending on the selected
+     *            chip model.
+     */
+    void cycle1pal();   void cycle1ntsc();
+    void cycle2pal();   void cycle2ntsc();
+    void cycle3pal();   void cycle3ntsc();
+    void cycle4pal();   void cycle4ntsc();
+    void cycle5pal();   void cycle5ntsc();
+    void cycle6pal();   void cycle6ntsc();
+    void cycle7pal();   void cycle7ntsc();
+    void cycle8pal();   void cycle8ntsc();
+    void cycle9pal();   void cycle9ntsc();
+    void cycle10pal();  void cycle10ntsc();
+    void cycle11pal();  void cycle11ntsc();
     void cycle12();
     void cycle13();
     void cycle14();
@@ -1009,15 +1029,15 @@ public:
     void cycle17();
     void cycle18();
     void cycle19to54();
-    void cycle55pal(); void cycle55ntsc();
+    void cycle55pal();  void cycle55ntsc();
     void cycle56();
-    void cycle57pal(); void cycle57ntsc();
-    void cycle58pal(); void cycle58ntsc();
-    void cycle59pal(); void cycle59ntsc();
-    void cycle60pal(); void cycle60ntsc();
-    void cycle61pal(); void cycle61ntsc();
-    void cycle62pal(); void cycle62ntsc();
-    void cycle63pal(); void cycle63ntsc();
+    void cycle57pal();  void cycle57ntsc();
+    void cycle58pal();  void cycle58ntsc();
+    void cycle59pal();  void cycle59ntsc();
+    void cycle60pal();  void cycle60ntsc();
+    void cycle61pal();  void cycle61ntsc();
+    void cycle62pal();  void cycle62ntsc();
+    void cycle63pal();  void cycle63ntsc();
     void cycle64ntsc();
     void cycle65ntsc();
 	
