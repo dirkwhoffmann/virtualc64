@@ -19,15 +19,14 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 2.5
+// RELEASE NOTES FOR NEXT RELEASE: 2.6
 //
-// Fixed a bug that suppressed an immediate interrupt at the drive CPU side when the ATN line went down. This bug fixes the Action Replay fast loader problem.
-// The disk encoder used a wrong sector ordering. It arranged the sectors similar to a PC floppy drive (physical interleaving) which is wrong for the VC 1541.
-// Fixed VICE test drive/skew.prg by adjusting the tail gap values the disk encoder uses.
-// Now passing VICE test irq-ack-vicii.prg. This bug fixes the Vandalism demo issue, too.
-// The virtual keyboard can be opened via a new menu item. If it is opened that way, it is displayed as a separate window and won't close automatically when a key is pressed.
-// The G64 mount dialog ignored the selected target drive. G64 disks were always inserted into drive 2.
-// If the emulator fails to build a GPU compute kernel (upscaler or filter), the corresponding option is grayed out in the emulator preferences. Previous versions crashed in this case.
+// VirtualC64 now uses the Colores color palette (Thanks, Pepto).
+// Three new sliders have been added to the emulator preferences. They allow the
+// user to adjust brightness, contrast, and saturation of the used color palette.
+//
+// Added support for different VICII models (TODO).
+//
 //
 // TODOs for the next release:
 //

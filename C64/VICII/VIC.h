@@ -80,7 +80,7 @@ public:
     VICChipModel chipModel;
     
     /*! @brief    Current value of the LP pin
-     *  @details  A negative edge on this pin triggers a lightpen interrupt.
+     *  @details  A negative transition on this pin triggers a lightpen interrupt.
      */
      bool lp;
      
@@ -368,9 +368,9 @@ private:
 	//
 	
 	/*! @brief    Indicates whether the lightpen has triggered
-	 *  @details  This variable indicates whether a lightpen interrupt has occurred
-     *            within the current frame. The variable is needed, because a lightpen
-     *            interrupt can only occur once per frame.
+	 *  @details  This variable indicates whether a lightpen interrupt has
+     *            occurred within the current frame. The variable is needed,
+     *            because a lightpen interrupt can only occur once per frame.
      */
 	bool lightpenIRQhasOccured;
 	
@@ -532,7 +532,7 @@ public:
     //! @brief    Returns the number of rasterlines drawn per frame.
     unsigned getRasterlinesPerFrame();
 
-    //! @brief    Checks if a certain rasterline belongs to the VBLANK area.
+    //! @brief    Returns true if rasterline belongs to the VBLANK area.
     bool isVBlankLine(unsigned rasterline);
 
     //! @brief    Returns the number of CPU cycles executed in one frame.
