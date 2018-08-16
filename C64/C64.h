@@ -346,22 +346,6 @@ public:
     //! @functiongroup Configuring the emulator
     //
     
-    //! @brief    Returns true if the emulator is currently running in PAL mode
-    // bool isPAL() { return vic.isPAL(); }
-
-    /*! @brief    Puts the emulator in PAL mode
-     *  @details  Configures VIC to emulate a PAL model and reconfigures SID
-     */
-    // void setPAL();
-    
-    //! @brief    Returns true if the emulator is currently running in NTSC mode
-    // bool isNTSC() { return !vic.isPAL(); }
-
-    /*! @brief    Puts the emulator in PAL mode
-     *  @details  Configures VIC to emulate a PAL model and reconfigures SID
-     */
-    // void setNTSC();
-
     //! @brief    Updates the VIC function table
     /*! @details  The function pointers need to be changed when switching from
      *            PAL to NTSC and vice versa.
