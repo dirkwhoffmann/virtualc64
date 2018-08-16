@@ -380,8 +380,8 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.setEyeZ(0.0)
         parent.metalScreen.videoUpscaler = 0
         parent.metalScreen.videoFilter = 1
-        c64.vic.setBrightness(100.0)
-        c64.vic.setContrast(50.0)
+        c64.vic.setBrightness(50.0)
+        c64.vic.setContrast(100.0)
         c64.vic.setSaturation(50.0)
         parent.metalScreen.fullscreenKeepAspectRatio = false
         

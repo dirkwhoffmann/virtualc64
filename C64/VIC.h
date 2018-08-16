@@ -365,12 +365,12 @@ private:
     //! @brief    User adjustable brightness value used in palette computation
     /*! @details  Value may range from 0.0 to 100.0
      */
-    double brightness = 100.0;
+    double brightness = 50.0;
 
     //! @brief    User adjustable contrast value used in palette computation
     /*! @details  Value may range from 0.0 to 100.0
      */
-    double contrast = 50.0;
+    double contrast = 100.0;
 
     //! @brief    User adjustable saturation value used in palette computation
     /*! @details  Value may range from 0.0 to 100.0

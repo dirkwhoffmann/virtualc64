@@ -146,25 +146,25 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svW-5Y-UKa">
-                        <rect key="frame" x="262" y="482" width="32" height="32"/>
+                        <rect key="frame" x="262" y="482" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="c6t-o4-a80"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" sliderType="circular" id="c6t-o4-a80"/>
                         <connections>
                             <action selector="setEyeZAction:" target="-2" id="7jZ-Iw-5Uk"/>
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-Rw-YU3">
-                        <rect key="frame" x="186" y="482" width="32" height="32"/>
+                        <rect key="frame" x="186" y="482" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2ef-6l-MRD"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" sliderType="circular" id="2ef-6l-MRD"/>
                         <connections>
                             <action selector="setEyeYAction:" target="-2" id="Dfy-sl-Cf3"/>
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ghc-gB-6Bk">
-                        <rect key="frame" x="110" y="482" width="32" height="32"/>
+                        <rect key="frame" x="110" y="482" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="11r-EK-Ohs"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" sliderType="circular" id="11r-EK-Ohs"/>
                         <connections>
                             <action selector="setEyeXAction:" target="-2" id="uoz-2R-vJw"/>
                         </connections>
@@ -197,25 +197,25 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GPi-83-wzn">
-                        <rect key="frame" x="490" y="482" width="32" height="32"/>
+                        <rect key="frame" x="490" y="482" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" numberOfTickMarks="6" sliderType="circular" id="Oke-Qy-2Cx"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" sliderType="circular" id="Oke-Qy-2Cx"/>
                         <connections>
                             <action selector="saturationAction:" target="-1" id="Igf-mC-SPN"/>
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCy-1N-a2D">
-                        <rect key="frame" x="414" y="482" width="32" height="32"/>
+                        <rect key="frame" x="414" y="482" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" numberOfTickMarks="6" sliderType="circular" id="NYS-Nd-1du"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" sliderType="circular" id="NYS-Nd-1du"/>
                         <connections>
                             <action selector="contrastAction:" target="-1" id="ZYH-CJ-fJa"/>
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSm-AO-usU">
-                        <rect key="frame" x="338" y="482" width="32" height="32"/>
+                        <rect key="frame" x="338" y="482" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="200" numberOfTickMarks="6" sliderType="circular" id="rzB-zf-fKF"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" sliderType="circular" id="rzB-zf-fKF"/>
                         <connections>
                             <action selector="brightnessAction:" target="-1" id="sbK-nA-bH2"/>
                         </connections>
@@ -296,7 +296,7 @@ Gw
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5W7-xw-pIQ">
-                        <rect key="frame" x="351" y="404" width="43" height="17"/>
+                        <rect key="frame" x="352" y="406" width="43" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Filter:" id="E4K-5N-oT0">
                             <font key="font" metaFont="system"/>
@@ -305,7 +305,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XfY-TW-vCB">
-                        <rect key="frame" x="331" y="435" width="63" height="17"/>
+                        <rect key="frame" x="329" y="435" width="63" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Upscaler:" id="P6Z-Hc-FCG">
                             <font key="font" metaFont="system"/>
