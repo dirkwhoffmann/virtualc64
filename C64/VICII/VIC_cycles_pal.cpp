@@ -34,6 +34,7 @@
 void
 VIC::debug_cycle(unsigned c)
 {
+    // debug("%d %d: %d %d\n", c, c64->getRasterlineCycle(), vicXPosFromCycle(c64->getRasterlineCycle(),0), xCounter);
 }
 
 void
@@ -45,6 +46,10 @@ VIC::processDelayedActions()
     if (delay & VICReleaseIrq1) {
         c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
     }
+    if (delay & VICLpTransition0) {
+        triggerLightpenInterrupt();
+    }
+    
     delay = (delay << 1) & VICClearanceMask;
 }
 

@@ -34,7 +34,8 @@
 //
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
-//
+// Get rid of VIC::debug_cycle
+
 // OPTIMIZATION:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value

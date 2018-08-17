@@ -558,6 +558,7 @@ VIC::cycle64ntsc()
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.2 Draw
     // Phi1.3 Fetch

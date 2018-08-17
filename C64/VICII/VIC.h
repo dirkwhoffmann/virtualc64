@@ -36,8 +36,9 @@
 #define VICTriggerIrq1     (1ULL << 1)
 #define VICReleaseIrq0     (1ULL << 2) // Clears the IRQ line
 #define VICReleaseIrq1     (1ULL << 3)
+#define VICLpTransition0   (1ULL << 4) // Triggers a lightpen event
 
-#define VICClearanceMask ~((1ULL << 4) | VICTriggerIrq0 | VICReleaseIrq0)
+#define VICClearanceMask ~((1ULL << 5) | VICTriggerIrq0 | VICReleaseIrq0 | VICLpTransition0)
 
 // Forward declarations
 class C64Memory;
@@ -815,14 +816,43 @@ public:
 	
     //! @brief    Method from Hoxs64
     //! @details  Used to determine X coordinate when a lightpen interrupt takes place
+    //! @deprecated Use lightpenX(), lightpenY()
     uint16_t vicXPosFromCycle(uint8_t cycle, uint16_t offset);
     
+    //! @brief    Returns the X coordinate of a light pen event.
+    /*! @details  The coordinate depends on the current rasterline cycle and
+     *            differes slightly between the supported VICII chip models.
+     */
+    uint16_t lightpenX();
+    
+    //! @brief    Returns the Y coordinate of a light pen event.
+    uint16_t lightpenY();
+    
 	/*! @brief    Sets the value of the LP pin
-	 *  @details  The LP pin is connected to bit 4 of control port A
+	 *  @details  The LP pin is connected to bit 4 of control port A.
+     *  @seealso  triggerLightpenInterrupt()
      */
 	void setLP(bool value);
+    
+    /*! @brief    Trigger lightpen interrupt if conditions are met.
+     *  @details  This function is called on each negative transition of the
+     *            LP pin. It latches the x and y coordinates and immediately
+     *            triggers an interrupt if a newer VICII model is emulated.
+     *            Older models trigger the interrupt later, at the beginning of
+     *            a new frame.
+     *  @seealso  retriggerLightpenInterrupt()
+     */
+    void triggerLightpenInterrupt();
 
-	
+    /*! @brief    Retriggers a lightpen interrupt if conditions are met.
+     *  @details  This function is called at the beginning of each frame.
+     *            If the lp line is still low at this point of time, a lightpen
+     *            interrupt is retriggered. Note that older VICII models trigger
+     *            interrupts only at this point in time.
+     */
+    void retriggerLightpenInterrupt();
+    
+    
 	//
 	// Sprites
 	//

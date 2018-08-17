@@ -1024,8 +1024,12 @@ VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
 uint16_t
 VIC::vicXPosFromCycle(uint8_t cycle, uint16_t offset)
 {
-    uint16_t x = (cycle < 14) ? (cycle * 8 + 0x18C) : ((cycle - 14) * 8 + 4);
-    uint16_t result = (x + offset + 0x1f8) % 0x1f8;
+    // uint16_t x = (cycle < 14) ? (cycle * 8 + 0x18C) : ((cycle - 14) * 8 + 4);
+    // uint16_t result = (x + offset + 0x1f8) % 0x1f8;
+    uint16_t x = (cycle < 14) ? (cycle * 8 + 396) : ((cycle - 14) * 8 + 4);
+    uint16_t result = (x + offset + 504) % 504;
+    // cycle 1: 404  VICE: 404
+    // cycle 2:
     
     if (result != xCounter) {
         // debug("result = %d xCounter = %d", result, xCounter);
@@ -1034,33 +1038,150 @@ VIC::vicXPosFromCycle(uint8_t cycle, uint16_t offset)
     return result;
 }
 
+uint16_t
+VIC::lightpenX()
+{
+    uint8_t cycle = c64->getRasterlineCycle();
+    
+    switch (chipModel) {
+            
+        case PAL_6569_R1:
+        case PAL_6569_R3:
+
+            return 4 + (cycle < 14 ? 392 + (8 * cycle) : (cycle - 14) * 8);
+
+        case PAL_8565:
+            
+            return 2 + (cycle < 14 ? 392 + (8 * cycle) : (cycle - 14) * 8);
+            
+        case NTSC_6567:
+        case NTSC_6567_R56A:
+            
+            return 4 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
+            
+        case NTSC_8562:
+            
+            return 2 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
+            
+        default:
+            assert(false);
+    }
+}
+
+uint16_t
+VIC::lightpenY()
+{
+    return getRasterline();
+}
+
 void
 VIC::setLP(bool value)
 {
-    // An interrupt occurrs iff
-    // (1) There is a negative edge on the LP pin
-    // (2) No previous interrupt has occured in the current frame
-    // (3) We are above the last PAL rasterline
-    if (lp != 0 && value == 0 && !lightpenIRQhasOccured && yCounter != PAL_HEIGHT - 1) {
-        
-        // Determine lightpen coordinates
-        uint16_t x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-        uint16_t y = yCounter;
-        if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
-        
-        // Latch coordinates
-        iomem[0x13] = x / 2;
-        iomem[0x14] = y;
-        
-        // Simulate interrupt
-        triggerIRQ(8);
-        
-        // Lightpen interrupts can only occur once per frame
-        lightpenIRQhasOccured = true;
+    // A negative transition on LP triggers a lightpen event.
+    if (FALLING_EDGE(lp, value)) {
+        delay |= VICLpTransition0;
     }
     
     lp = value;
 }
+
+void
+VIC::triggerLightpenInterrupt()
+{
+    uint8_t vicCycle = c64->getRasterlineCycle();
+    debug("Negative LP transition at rastercycle %d\n", vicCycle);
+
+    // An interrupt is suppressed if ...
+    
+    // ... a previous interrupt has occured in the current frame.
+    if (lightpenIRQhasOccured)
+        return;
+
+    // ... we are in the last PAL rasterline and not in cycle 1.
+    if (yCounter == PAL_HEIGHT - 1 && vicCycle != 1)
+        return;
+    
+    // Latch coordinates
+    iomem[0x13] = lightpenX() / 2;
+    iomem[0x14] = lightpenY();
+    debug("Lightpen x = %d\n", lightpenX());
+    // Newer VIC models trigger an interrupt immediately
+    if (chipModel != PAL_6569_R1 && chipModel != NTSC_6567_R56A) {
+        triggerIRQ(8);
+    }
+    
+    // Lightpen interrupts can only occur once per frame
+    lightpenIRQhasOccured = true;
+}
+
+void
+VIC::retriggerLightpenInterrupt()
+{
+    // This function is called at the beginning of a frame, only.
+    assert(c64->getRasterline() == 0);
+    assert(c64->getRasterlineCycle() == 1);
+    assert(lightpenIRQhasOccured == false);
+ 
+    // Determine lightpen coordinates and trigger an interrupt if an old VICII
+    // model is emulated. 
+    uint16_t x, y;
+
+    switch (chipModel) {
+            
+        case PAL_6569_R1:
+            
+            x = 0xD1;vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+            y = yCounter;
+            triggerIRQ(8);
+            break;
+            
+        case PAL_6569_R3:
+            
+            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+            y = yCounter;
+            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
+            break;
+            
+        case PAL_8565:
+            
+            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+            y = yCounter;
+            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
+            break;
+            
+        case NTSC_6567:
+            
+            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+            y = yCounter;
+            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
+            break;
+            
+        case NTSC_6567_R56A:
+            
+            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+            y = yCounter;
+            triggerIRQ(8);
+            break;
+            
+        case NTSC_8562:
+            
+            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
+            y = yCounter;
+            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
+            break;
+            
+        default:
+            assert(false);
+    }
+    
+    // Latch coordinates
+    // iomem[0x13] = x / 2;
+    // iomem[0x14] = y;
+
+    // Lightpen interrupts can only occur once per frame
+    lightpenIRQhasOccured = true;
+}
+
 
 //
 // Sprites
@@ -1182,7 +1303,10 @@ VIC::beginFrame()
            Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
            nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
     registerVCBASE = 0;
-
+    
+    // Retrigger lightpen interrupt if lp line is still pulled down
+    if (!lp)
+        retriggerLightpenInterrupt();
 }
 
 void
