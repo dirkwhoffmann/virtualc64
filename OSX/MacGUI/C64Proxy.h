@@ -146,6 +146,9 @@ struct ContainerWrapper;
 
 - (NSInteger) chipModel;
 - (void) setChipModel:(NSInteger)value;
+- (BOOL) hasGrayDotBug;
+- (BOOL) emulateGrayDotBug;
+- (void) setEmulateGrayDotBug:(BOOL)value;
 - (BOOL) isPAL;
 - (BOOL) isNTSC;
 

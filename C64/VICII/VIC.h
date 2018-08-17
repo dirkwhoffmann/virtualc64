@@ -65,8 +65,6 @@ private:
     uint64_t delay;
     
     
-public:
-    
 	//
 	// Internal state
 	//
@@ -79,6 +77,13 @@ public:
     
     //! @brief    Selected chip model
     VICChipModel chipModel;
+
+public:
+    
+    //! @brief    Indicates if the gray dot bug should be emulated
+    /*! @note     The gray mode bug only affects the newer VICII models 856x
+     */
+    bool emulateGrayDotBug;
     
     /*! @brief    Current value of the LP pin
      *  @details  A negative transition on this pin triggers a lightpen interrupt.
@@ -375,7 +380,7 @@ private:
      */
 	bool lightpenIRQhasOccured;
 	
-	
+    
     //
     // Color management
     //
@@ -492,7 +497,10 @@ public:
 
     //! @brief    Sets the chip model.
     void setChipModel(VICChipModel model);
-	
+
+    //! @brief    Returns true if the emulated chip model has the gray dot bug.
+    bool hasGrayDotBug() { return chipModel == PAL_8565 || chipModel == NTSC_8562; }
+    
     /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
      *  @seealso  updateColors
      */
@@ -742,7 +750,7 @@ public:
     uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
 	
 	//! Returns extra background color (for multicolor modes).
-    uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
+    // uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
 	
 	
 	//

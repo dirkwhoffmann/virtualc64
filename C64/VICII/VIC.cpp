@@ -37,10 +37,10 @@ VIC::VIC()
 	setDescription("VIC");
 	debug(3, "  Creating VIC at address %p...\n", this);
     
-	// Start with all debug options disabled
 	markIRQLines = false;
 	markDMALines = false;
-
+    emulateGrayDotBug = true;
+    
     // Register sub components
     VirtualComponent *subcomponents[] = { &pixelEngine, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
@@ -50,7 +50,8 @@ VIC::VIC()
 
         // Configuration items
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
-        
+        { &emulateGrayDotBug,           sizeof(emulateGrayDotBug),              KEEP_ON_RESET },
+
         // Internal state
         { &delay,                       sizeof(delay),                          CLEAR_ON_RESET },
         { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },

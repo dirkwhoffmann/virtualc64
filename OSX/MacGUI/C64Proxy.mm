@@ -185,8 +185,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return self;
 }
 
-- (NSInteger) chipModel { return (NSInteger)wrapper->vic->chipModel; }
+- (NSInteger) chipModel { return (NSInteger)wrapper->vic->getChipModel(); }
 - (void) setChipModel:(NSInteger)value { wrapper->vic->setChipModel((VICChipModel)value); }
+- (BOOL) hasGrayDotBug { return wrapper->vic->hasGrayDotBug(); }
+- (BOOL) emulateGrayDotBug { return wrapper->vic->emulateGrayDotBug; }
+- (void) setEmulateGrayDotBug:(BOOL)value { wrapper->vic->emulateGrayDotBug = value; }
+
 - (BOOL) isPAL { return wrapper->vic->isPAL(); }
 - (BOOL) isNTSC { return wrapper->vic->isNTSC(); }
 

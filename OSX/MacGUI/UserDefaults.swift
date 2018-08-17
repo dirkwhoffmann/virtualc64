@@ -39,7 +39,8 @@ struct VC64Keys {
 
     // Hardware preferences dialog
     static let vicChip           = "VC64VICChipModelKey"
-    
+    static let grayDotBug        = "VC64VICGrayDotBugKey"
+
     static let reSID             = "VC64SIDReSIDKey"
     static let audioChip         = "VC64SIDChipModelKey"
     static let audioFilter       = "VC64SIDFilterKey"
@@ -181,6 +182,7 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         c64.vic.setChipModel(defaults.integer(forKey: VC64Keys.vicChip))
+        c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: VC64Keys.grayDotBug))
         c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
         c64.sid.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
@@ -250,6 +252,7 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         defaults.set(c64.vic.chipModel(), forKey: VC64Keys.vicChip)
+        defaults.set(c64.vic.emulateGrayDotBug(), forKey: VC64Keys.grayDotBug)
         defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)
         defaults.set(c64.sid.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)

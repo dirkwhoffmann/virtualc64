@@ -15,6 +15,7 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var systemText: NSTextField!
     @IBOutlet weak var systemText2: NSTextField!
     @IBOutlet weak var systemText3: NSTextField!
+    @IBOutlet weak var grayDotBug: NSButton!
 
     // Audio
     @IBOutlet weak var sidChipModel: NSPopUpButton!
@@ -67,7 +68,9 @@ class HardwarePrefsController : UserDialogController {
         default:
             assert(false)
         }
-
+        grayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
+        grayDotBug.isEnabled = c64.vic.hasGrayDotBug()
+        
         // Audio
         let sidModel = c64.sid.chipModel()
         sidChipModel.selectItem(withTag: sidModel)
@@ -88,52 +91,38 @@ class HardwarePrefsController : UserDialogController {
         mouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
     
-    /*
-    @IBAction func setPalAction(_ sender: Any!) {
-    
-        track()
-        c64.setPAL()
-        update()
-    }
-    
-    @IBAction func setNtscAction(_ sender: Any!) {
-    
-        track()
-        c64.setNTSC()
-        update()
-    }
-    */
-    
     @IBAction func vicChipModelAction(_ sender: NSMenuItem!) {
         
         c64.vic.setChipModel(sender.tag)
         update()
     }
+ 
+    @IBAction func vicGrayDotBugAction(_ sender: NSButton!) {
+        
+        c64.vic.setEmulateGrayDotBug(sender.state == .on)
+        update()
+    }
     
-    @IBAction func SIDFilterAction(_ sender: Any!) {
+    @IBAction func SIDFilterAction(_ sender: NSButton!) {
     
-        let sender = sender as! NSButton
         c64.sid.setAudioFilter(sender.state == .on)
         update()
     }
     
-    @IBAction func SIDEngineAction(_ sender: Any!) {
+    @IBAction func SIDEngineAction(_ sender: NSPopUpButton!) {
     
-        let sender = sender as! NSPopUpButton
         c64.sid.setReSID(sender.selectedTag() == 1)
         update()
     }
     
-    @IBAction func SIDSamplingMethodAction(_ sender: Any!) {
+    @IBAction func SIDSamplingMethodAction(_ sender: NSPopUpButton!) {
     
-        let sender = sender as! NSPopUpButton
         c64.sid.setSamplingMethod(sender.selectedTag())
         update()
     }
     
-    @IBAction func SIDChipModelAction(_ sender: Any!) {
+    @IBAction func SIDChipModelAction(_ sender: NSPopUpButton!) {
     
-        let sender = sender as! NSPopUpButton
         let model = UInt32(sender.selectedTag())
         let method = UInt32(c64.sid.samplingMethod())
         
@@ -146,24 +135,21 @@ class HardwarePrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func warpLoadAction(_ sender: Any!) {
+    @IBAction func warpLoadAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         c64.setWarpLoad(sender.state == .on)
         update()
     }
     
-    @IBAction func driveNoiseAction(_ sender: Any!) {
+    @IBAction func driveNoiseAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         c64.drive1.setSendSoundMessages(sender.state == .on)
         c64.drive2.setSendSoundMessages(sender.state == .on)
         update()
     }
     
-    @IBAction func mouseModelAction(_ sender: Any!) {
+    @IBAction func mouseModelAction(_ sender: NSPopUpButton!) {
         
-        let sender = sender as! NSPopUpButton
         c64.setMouseModel(sender.selectedTag())
         update()
     }
@@ -181,6 +167,7 @@ class HardwarePrefsController : UserDialogController {
 
         // VIC
         c64.vic.setChipModel(Int(PAL_8565.rawValue))
+        c64.vic.setEmulateGrayDotBug(true)
         
         // SID
         c64.sid.setReSID(true)
