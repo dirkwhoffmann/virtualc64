@@ -57,6 +57,9 @@ VIC::VIC()
         { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
+        { &lastPokeCycle,               sizeof(lastPokeCycle),                  CLEAR_ON_RESET },
+        { &lastPokeAddr,                sizeof(lastPokeAddr),                   CLEAR_ON_RESET },
+        { &lastPokeValue,               sizeof(lastPokeValue),                  CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
@@ -529,6 +532,11 @@ VIC::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr < 0x40);
 	
+    // TODO
+    lastPokeCycle = c64->cpu.cycle;
+    lastPokeAddr = addr;
+    lastPokeValue = value;
+    
 	switch(addr) {		
         case 0x00: // SPRITE_0_X
             p.spriteX[0] = value | ((iomem[0x10] & 0x01) << 8);
@@ -697,6 +705,13 @@ VIC::poke(uint16_t addr, uint8_t value)
 	// Default action
 	iomem[addr] = value;
 }
+
+bool
+VIC::isCurrentlyWrittenTo(uint16_t addr)
+{
+    return (addr == lastPokeAddr && c64->cpu.cycle == lastPokeCycle + 1);
+}
+
 
 //
 // I/O memory handling and RAM access

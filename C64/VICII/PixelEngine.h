@@ -26,6 +26,23 @@
 // Forward declarations
 class VIC;
 
+// Symbolic names for all color registers
+#define REG_BORDER_COL 0x20
+#define REG_BG_COL 0x21
+#define REG_EXT1_COL 0x22
+#define REG_EXT2_COL 0x23
+#define REG_EXT3_COL 0x24
+#define REG_SPR_MC1_COL 0x25
+#define REG_SPR_MC2_COL 0x26
+#define REG_SPR1_COL 0x27
+#define REG_SPR2_COL 0x28
+#define REG_SPR3_COL 0x29
+#define REG_SPR4_COL 0x2A
+#define REG_SPR5_COL 0x2B
+#define REG_SPR6_COL 0x2C
+#define REG_SPR7_COL 0x2D
+#define REG_SPR8_COL 0x2E
+
 // Depth of different drawing layers
 #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
 #define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */
@@ -369,16 +386,19 @@ public:
     //
     
     /*! @brief    Sprite shift registers
-     *  @details  The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores
-     *            the sprite for one rasterline. If a sprite is a display candidate in the current
-     *            rasterline, its shift register is activated when the raster X coordinate matches
-     *            the sprites X coordinate. The comparison is done in method drawSprite().
-     *            Once a shift register is activated, it remains activated until the beginning of
-     *            the next rasterline. However, after an activated shift register has dumped out
-     *            its 24 pixels, it can't draw anything else than transparent pixels (which is
-     *            the same as not to draw anything). An exception is during DMA cycles. When a
-     *            shift register is activated during such a cycle, it freezes a short period of
-     *            time in which it repeats the previous drawn pixel.
+     *  @details  The VIC chip has a 24 bit (3 byte) shift register for each
+     *            sprite. It stores the sprite for one rasterline. If a sprite
+     *            is a display candidate in the current rasterline, its shift
+     *            register is activated when the raster X coordinate matches
+     *            the sprites X coordinate. The comparison is done in method
+     *            drawSprite(). Once a shift register is activated, it remains
+     *            activated until the beginning of the next rasterline. However,
+     *            after an activated shift register has dumped out its 24 pixels,
+     *            it can't draw anything else than transparent pixels (which is
+     *            the same as not to draw anything). An exception is during DMA
+     *            cycles. When a shift register is activated during such a cycle,
+     *            it freezes a short period of time in which it repeats the
+     *            previous drawn pixel.
      */
     struct {
         
@@ -389,15 +409,17 @@ public:
         uint8_t chunk1, chunk2, chunk3;
         
         /*! @brief    Remaining bits to be pumped out
-         *  @details  At the beginning of each rasterline, this value is initialized with -1
-         *            and set to 26 when the horizontal trigger condition is met (sprite X trigger
-         *             coord reaches xCounter). When all bits are drawn, this value reaches 0.
+         *  @details  At the beginning of each rasterline, this value is
+         *            initialized with -1 and set to 26 when the horizontal
+         *            trigger condition is met (sprite X trigger coord reaches
+         *            xCounter). When all bits are drawn, this value reaches 0.
          */
         int remaining_bits;
 
         /*! @brief    Multi-color synchronization flipflop
-         *  @details  Whenever the shift register is loaded, the synchronization flipflop is also set.
-         *            It is toggled with each pixel and used to synchronize the synthesis of multi-color pixels. 
+         *  @details  Whenever the shift register is loaded, the synchronization
+         *            flipflop is also set. It is toggled with each pixel and
+         *            used to synchronize the synthesis of multi-color pixels.
          */
         bool mc_flop;
 
@@ -406,8 +428,8 @@ public:
 
         /*! @brief    Color bits of the currently processed pixel
          *  @details  In single-color mode, these bits are updated every cycle
-         *            In multi-color mode, these bits are updated every second cycle
-         *            (synchronized with mc_flop)
+         *            In multi-color mode, these bits are updated every second
+         *            cycle (synchronized with mc_flop).
          */
         uint8_t col_bits;
 
@@ -423,22 +445,38 @@ public:
     uint8_t spriteExtraColor2;
 
     /*! @brief    Loads the sprite shift register.
-     *  @details  The shift register is loaded with the three data bytes fetched in the previous sAccesses.
+     *  @details  The shift register is loaded with the three data bytes fetched
+     *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
         sprite_sr[nr].data = (sprite_sr[nr].chunk1 << 16) | (sprite_sr[nr].chunk2 << 8) | sprite_sr[nr].chunk3;
     }
     
-    // ------------------------------------------------------------------------------------------
-    //                          High level drawing (canvas, sprites, border)
-    // ------------------------------------------------------------------------------------------
+    
+    //
+    // Accessing colors
+    //
+    
+    /*! @brief    Reads a color register
+     *  @details  This function returns the value of a color register as the
+     *            pixel engine sees it. It takes into accout the time delays
+     *            as well as the gray dot bug.
+     *  @param    pixelNr Number of the pixel (0...7) that is currently drawn.
+     */
+    uint8_t readColorRegister(uint16_t addr, unsigned pixelNr = 1);
+    
+    
+    //
+    // High level drawing (canvas, sprites, border)
+    //
 
 public:
   
     /*! @brief    Synthesize 8 pixels according the the current drawing context.
-     *  @details  This is the main entry point and is invoked in each VIC drawing cycle, except cycle 17 and
-     *            cycle 55 which are handles seperately for speedup purposes.
-     *            To get the correct output, preparePixelEngineForCycle() must be called one cycle before. 
+     *  @details  This is the main entry point and is invoked in each VIC
+     *            drawing cycle, except cycle 17 and cycle 55 which are handles
+     *            seperately for speedup purposes. To get the correct output,
+     *            preparePixelEngineForCycle() must be called one cycle before.
      */
     void draw();
 
@@ -449,8 +487,9 @@ public:
     void draw55();
 
     /*! @brief    Draw routine for cycles outside the visible screen region.
-     *  @details  The sprite sequencer needs to be run outside the visible area, although no
-     *            pixels will be drawn (drawing is omitted by having visibleColumn set to false 
+     *  @details  The sprite sequencer needs to be run outside the visible area,
+     *            although no pixels will be drawn (drawing is omitted by having
+     *            visibleColumn set to false.
      */
     void drawOutsideBorder();
     
@@ -488,23 +527,37 @@ private:
 
     /*! @brief    Draws a single sprite pixel for all sprites
      *  @param    pixelnr  Pixel number (0 to 7)
-     *  @param    freeze   If the i-th bit is set to 1, the i-th shift register will freeze temporarily
-     *  @param    halt     If the i-th bit is set to 1, the i-th shift register will be deactivated
-     *  @param    load     If the i-th bit is set to 1, the i-th shift register will grab new data bits 
+     *  @param    freeze   If the i-th bit is set to 1, the i-th shift register
+     *                     will freeze temporarily
+     *  @param    halt     If the i-th bit is set to 1, the i-th shift register
+     *                     will be deactivated
+     *  @param    load     If the i-th bit is set to 1, the i-th shift register
+     *                     will grab new data bits
      */
-    void drawSpritePixel(unsigned pixelnr, uint8_t freeze, uint8_t halt, uint8_t load);
+    void drawSpritePixel(unsigned pixelnr,
+                         uint8_t freeze,
+                         uint8_t halt,
+                         uint8_t load);
 
     /*! @brief    Draws a single sprite pixel for a single sprite
      *  @param    spritenr Sprite number (0 to 7)
      *  @param    pixelnr  Pixel number (0 to 7)
-     *  @param    freeze   If set to true, the sprites shift register will freeze temporarily
-     *  @param    halt     If set to true, the sprites shift shift register will be deactivated
-     *  @param    load     If set to true, the sprites shift shift register will grab new data bits 
+     *  @param    freeze   If set to true, the sprites shift register will
+     *                     freeze temporarily
+     *  @param    halt     If set to true, the sprites shift shift register will
+     *                     be deactivated
+     *  @param    load     If set to true, the sprites shift shift register will
+     *                     grab new data bits
      */
-    void drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, bool halt, bool load);
+    void drawSpritePixel(unsigned spritenr,
+                         unsigned pixelnr,
+                         bool freeze,
+                         bool halt,
+                         bool load);
 
     /*! @brief    Draws all sprites into the pixelbuffer
-     *  @details  A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging 
+     *  @details  A sprite is only drawn if it's enabled and if sprite drawing
+     *            is not switched off for debugging
      */
     void drawAllSprites();
     
@@ -560,15 +613,16 @@ public:
     void setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t two_bits);
 
     /*! @brief    Draws a single sprite pixel
-     *  @details  This function is invoked by setSingleColorPixel() and setMultiColorPixel().
-     *            It takes care of collison and invokes setSpritePixel(4) to actually render the pixel. 
+     *  @details  This function is invoked by setSingleColorPixel() and
+     *            setMultiColorPixel(). It takes care of collison and invokes
+     *            setSpritePixel(4) to actually render the pixel.
      */
     void setSpritePixel(unsigned pixelnr, int color, int nr);
 
     
-    // -----------------------------------------------------------------------------------------------
-    //                        Low level drawing (pixel buffer access)
-    // -----------------------------------------------------------------------------------------------
+    //
+    // Low level drawing (pixel buffer access)
+    //
     
 public:
 
@@ -589,7 +643,8 @@ public:
     void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
 
     /*! @brief    Extend border to the left and right to look nice.
-     *  @details  This functions replicates the color of the leftmost and rightmost pixel 
+     *  @details  This functions replicates the color of the leftmost and
+     *            rightmost pixel
      */
     void expandBorders();
 

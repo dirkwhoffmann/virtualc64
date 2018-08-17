@@ -141,10 +141,6 @@ PixelEngine::endFrame()
     pixelBuffer = currentScreenBuffer;    
 }
 
-// -----------------------------------------------------------------------------------------------
-//                                   VIC state latching
-// -----------------------------------------------------------------------------------------------
-
 void
 PixelEngine::updateSpriteOnOff()
 {
@@ -152,9 +148,69 @@ PixelEngine::updateSpriteOnOff()
     dc.spriteOnOffPipe = vic->spriteOnOff;
 }
 
-// -----------------------------------------------------------------------------------------------
-//                          High level drawing (canvas, sprites, border)
-// -----------------------------------------------------------------------------------------------
+uint8_t
+PixelEngine::readColorRegister(uint16_t addr, unsigned pixelNr)
+{
+    assert(pixelNr < 8);
+    
+    // Check for gray dot bug
+    if (pixelNr == 0 && c64->vic.isCurrentlyWrittenTo(addr)) {
+        if (c64->vic.hasGrayDotBug() && c64->vic.emulateGrayDotBug) {
+            return GREY3;
+        }
+    }
+
+    switch (addr) {
+
+        case REG_BORDER_COL:
+            return pipe.borderColor;
+            
+        case REG_BG_COL:
+            return cpipe.backgroundColor[0];
+            
+        case REG_EXT1_COL:
+            return cpipe.backgroundColor[1];
+            
+        case REG_EXT2_COL:
+            return cpipe.backgroundColor[2];
+
+        case REG_EXT3_COL:
+            return cpipe.backgroundColor[3];
+            
+        case REG_SPR_MC1_COL:
+            return vic->spriteExtraColor1;
+            
+        case REG_SPR_MC2_COL:
+            return vic->spriteExtraColor2;
+            
+        case REG_SPR1_COL:
+            return vic->spriteColor[0];
+            
+        case REG_SPR2_COL:
+            return vic->spriteColor[1];
+
+        case REG_SPR3_COL:
+            return vic->spriteColor[2];
+
+        case REG_SPR4_COL:
+            return vic->spriteColor[3];
+
+        case REG_SPR5_COL:
+            return vic->spriteColor[4];
+
+        case REG_SPR6_COL:
+            return vic->spriteColor[5];
+
+        case REG_SPR7_COL:
+            return vic->spriteColor[6];
+
+        case REG_SPR8_COL:
+            return vic->spriteColor[7];
+
+        default:
+            assert(false);
+    }
+}
 
 void
 PixelEngine::draw()
@@ -489,10 +545,6 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
             setSingleColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x01);
     }
 }
-
-// -----------------------------------------------------------------------------------------------
-//                         Mid level drawing (semantic pixel rendering)
-// -----------------------------------------------------------------------------------------------
 
 void
 PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)

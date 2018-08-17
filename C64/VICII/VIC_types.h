@@ -22,6 +22,7 @@
 #ifndef _VIC_TYPES_INC
 #define _VIC_TYPES_INC
 
+
 //
 // NTSC constants
 //

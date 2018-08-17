@@ -56,19 +56,18 @@ class VIC : public VirtualComponent {
 private:
     
     /*! @brief    Reference to the attached pixel engine (PE). 
-     *  @details  The PE encapsulates all drawing related routines in a seperate class.
+     *  @details  The PE encapsulates all drawing related routines.
      */
     PixelEngine pixelEngine;
 
-
-    //! @brief    Event pipeline
+    /*! @brief    Event pipeline
+     *  @details  If a time delayed event needs to be performed, a flag is set
+     *            inside this variable and executed at the beginning of the next
+     *            cycle.
+     *  @see      processDelayedActions()
+     */
     uint64_t delay;
     
-    
-	//
-	// Internal state
-	//
-
     //! @brief    Main pixel engine pipe
     PixelEnginePipe p;
 
@@ -101,6 +100,21 @@ public:
      *            in this variable.
      */
     uint8_t dataBus;
+    
+    /*! @brief    Remembers the cycle of the most recent call to poke
+     *  @see      registerIsInUse()
+     */
+    uint64_t lastPokeCycle;
+
+    /*! @brief    Remembers the target address in the most recent call to poke
+     *  @see      registerIsInUse()
+     */
+    uint16_t lastPokeAddr;
+
+    /*! @brief    Remembers the most recent value that was written in poke
+     *  @see      registerIsInUse()
+     */
+    uint8_t lastPokeValue;
     
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
@@ -616,6 +630,9 @@ private:
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
+    
+    //! @brief    Checks if a register is currently written to
+    bool isCurrentlyWrittenTo(uint16_t addr);
     
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
