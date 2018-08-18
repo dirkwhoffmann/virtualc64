@@ -459,12 +459,38 @@ public:
     
     /*! @brief    Reads a color register
      *  @details  This function returns the value of a color register as the
-     *            pixel engine sees it. It takes into accout the time delays
-     *            as well as the gray dot bug.
-     *  @param    pixelNr Number of the pixel (0...7) that is currently drawn.
+     *            pixel engine sees it. It takes into accout that a certain
+     *            amount of cycles need to elapse until a written value shows
+     *            up.
      */
-    uint8_t readColorRegister(uint16_t addr, unsigned pixelNr = 1);
+    uint8_t readColorRegister(uint16_t addr);
+
+    //! @brief    Reads a color register and returns the result in RGBA format
+    int readColorRegisterRGBA(uint16_t addr) {
+        assert(is_uint4_t(readColorRegister(addr)));
+        return colors[readColorRegister(addr)];
+    }
+     
+    /*! @brief    Reads a color register
+     *  @details  This function returns the value of a color register as the
+     *            pixel engine sees it and additionally emulates the gray code
+     *            bug. The bug only affects the first out of eight pixels that
+     *            are drawn in one cycle and therefore takes the cycle number
+     *            (0...7) as an additional parameter.
+     */
+    uint8_t readColorRegister(uint16_t addr, unsigned pixelNr);
     
+    //! @brief    Reads a color register and returns the result in RGBA format
+    int readColorRegisterRGBA(uint16_t addr, unsigned pixelNr) {
+        assert(is_uint4_t(readColorRegister(addr, pixelNr)));
+        return colors[readColorRegister(addr, pixelNr)];
+    }
+    
+    /*! @brief    Checks if a color register is affected by the gray dot bug.
+     * @details   A color register is affected, if a write access happens at
+     *            the same time it is read.
+     */
+    bool grayDot(uint16_t addr);
     
     //
     // High level drawing (canvas, sprites, border)
@@ -583,6 +609,11 @@ private:
      */
     int col_rgba[4];
 
+    /*! @brief    Same as col_rgba[4], but for pixel 0
+     *  @details  Nedded to emulate the gray dot bug.
+     */
+    int col_rgba0[4];
+    
 public:
     
     //! @brief    Determines pixel colors accordig to the provided display mode

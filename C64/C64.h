@@ -31,11 +31,12 @@
 // TODOs for the next release:
 //
 // Map right Mac shift key to right Commodore key
+// Implement template based class TimeDelayed()
 //
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
 // Get rid of VIC::debug_cycle
-
+//
 // OPTIMIZATION:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
