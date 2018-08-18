@@ -434,7 +434,7 @@ CA
                 <menuItem title="Keyboard" id="212">
                     <menu key="submenu" title="Keyboard" id="213">
                         <items>
-                            <menuItem title="Open ..." id="q11-Wg-Mnp">
+                            <menuItem title="Show ..." id="q11-Wg-Mnp">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="stickyKeyboardAction:" target="-1" id="LWx-zK-yeK"/>
