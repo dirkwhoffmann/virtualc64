@@ -469,7 +469,8 @@ CPU::executeOneCycle()
                 
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 IDLE_FETCH
-                clear8_delayed(edgeDetector);
+                clear8_delayed(oldEdgeDetector);
+                edgeDetector.reset(0);
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
@@ -554,10 +555,12 @@ CPU::executeOneCycle()
             PUSH_PCL
             // Check for interrupt hijacking
             // If there is a positive edge on the NMI line ...
-            if (edgeDetector.value) {
+            assert(oldEdgeDetector.value == edgeDetector.readWithDelay(0));
+            if (oldEdgeDetector.value) {
                 
                 // ... the processor will jump to the NMI vector instead of the IRQ vector
-                clear8_delayed(edgeDetector);
+                clear8_delayed(oldEdgeDetector);
+                edgeDetector.reset(0);
                 next = nmi_5;
                 return true;
             }
@@ -1231,10 +1234,12 @@ CPU::executeOneCycle()
             
             // Check for interrupt hijacking
             // If there is a positive edge on the NMI line, ...
-            if (edgeDetector.value) {
+            assert(oldEdgeDetector.value == edgeDetector.readWithDelay(0));
+            if (oldEdgeDetector.value) {
             
                 // ... jump to the NMI vector instead of the IRQ vector.
-                clear8_delayed(edgeDetector);
+                clear8_delayed(oldEdgeDetector);
+                edgeDetector.reset(0);
                 next = BRK_nmi_4;
                 return true;
                 

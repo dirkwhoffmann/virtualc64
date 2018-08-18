@@ -69,8 +69,8 @@ CPU::CPU()
         { &rdyLineDown,             sizeof(rdyLineDown),            CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
-        { &edgeDetector,            sizeof(edgeDetector),           CLEAR_ON_RESET },
-        { &levelDetector,           sizeof(levelDetector),          CLEAR_ON_RESET },
+        { &oldEdgeDetector,            sizeof(oldEdgeDetector),           CLEAR_ON_RESET },
+        { &oldLevelDetector,           sizeof(oldLevelDetector),          CLEAR_ON_RESET },
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
         { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
@@ -92,7 +92,9 @@ CPU::reset()
     B = 1;
 	rdyLine = true;
 	next = fetch;
-
+    levelDetector.reset(0);
+    edgeDetector.reset(0);
+    
     clearTraceBuffer();
 }
 
@@ -111,16 +113,41 @@ CPU::dumpState()
         instr.command);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
     msg("      Nmi line : %02X\n", nmiLine);
-    msg(" Edge detector : %02X\n", read8_delayed(edgeDetector, cycle));
+    msg(" Edge detector : %02X\n", read8_delayed(oldEdgeDetector, cycle));
     msg("         doNmi : %s\n", doNmi ? "yes" : "no");
     msg("      Irq line : %02X\n", irqLine);
-    msg("Level detector : %02X\n", read8_delayed(levelDetector, cycle));
+    msg("Level detector : %02X\n", read8_delayed(oldLevelDetector, cycle));
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
 	msg("   IRQ routine : %02X%02X\n", mem->spypeek(0xFFFF), mem->spypeek(0xFFFE));
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
 	msg("\n");
     
     c64->processorPort.dumpState();
+}
+
+size_t
+CPU::stateSize()
+{
+    return
+    VirtualComponent::stateSize() +
+    levelDetector.stateSize() +
+    edgeDetector.stateSize();
+}
+
+void
+CPU::loadFromBuffer(uint8_t **buffer)
+{
+    VirtualComponent::loadFromBuffer(buffer);
+    levelDetector.loadFromBuffer(buffer);
+    edgeDetector.loadFromBuffer(buffer);
+}
+
+void
+CPU::saveToBuffer(uint8_t **buffer)
+{
+    VirtualComponent::saveToBuffer(buffer);
+    levelDetector.saveToBuffer(buffer);
+    edgeDetector.saveToBuffer(buffer);
 }
 
 CPUInfo
@@ -151,8 +178,10 @@ CPU::pullDownNmiLine(InterruptSource bit)
     assert(bit != 0);
     
     // Check for falling edge on physical line
-    if (!nmiLine)
-        write8_delayed(edgeDetector, 1, cycle);
+    if (!nmiLine) {
+        write8_delayed(oldEdgeDetector, 1, cycle);
+        edgeDetector.write(1);
+    }
     
     nmiLine |= bit;
 }
@@ -169,14 +198,16 @@ CPU::pullDownIrqLine(InterruptSource source)
 	assert(source != 0);
     
 	irqLine |= source;
-    write8_delayed(levelDetector, irqLine, cycle);
+    write8_delayed(oldLevelDetector, irqLine, cycle);
+    levelDetector.write(irqLine);
 }
 
 void
 CPU::releaseIrqLine(InterruptSource source)
 {
     irqLine &= ~source;
-    write8_delayed(levelDetector, irqLine, cycle);
+    write8_delayed(oldLevelDetector, irqLine, cycle);
+    levelDetector.write(irqLine);
 }
 
 void

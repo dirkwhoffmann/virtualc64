@@ -58,7 +58,7 @@ public:
     T read() { return readWithDelay(delay); }
     
     //! @brief   Reads a value from the pipeline with the specified delay.
-    T readWithDelay(long delay);
+    T readWithDelay(uint8_t delay);
     
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);

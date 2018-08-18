@@ -22,6 +22,7 @@
 #define _CPU_INC
 
 #include "CPU_types.h"
+#include "TimeDelayed.h"
 #include "Memory.h"
 
 /*! @class  The virtual 6502 / 6510 processor
@@ -145,7 +146,8 @@ public:
     
 	/*! @brief    RDY line (ready line)
 	 *  @details  If this line is LOW, the CPU freezes on the next read access.
-     *            RDY is pulled down by VIC to perform longer lasting read operations.
+     *            RDY is pulled down by VIC to perform longer lasting read
+     *            operations.
      */
 	bool rdyLine;
 private:
@@ -157,63 +159,73 @@ private:
     uint64_t rdyLineDown;
     
     /*! @brief    NMI line (non maskable interrupts)
-     *  @details  This variable is usually set to 0 which means that the NMI line is in
-     *            high state. When an external component requests an NMI nterrupt, this line
-     *            is pulled low. In that case, this variable has a positive value and the set
-     *            bits indicate the interrupt source.
+     *  @details  This variable is usually set to 0 which means that the NMI
+     *            line is in high state. When an external component requests an
+     *            NMI nterrupt, this line is pulled low. In that case, this
+     *            variable has a positive value and the set bits indicate the
+     *            interrupt source.
      */
     uint8_t nmiLine;
     
 public:
     /*! @brief    IRQ line (maskable interrupts)
-     *  @details  This variable is usually set to 0 which means that the IRQ line is in
-     *            high state. When an external component requests an IRQ nterrupt, this line
-     *            is pulled low. In that case, this variable has a positive value and the set
-     *            bits indicate the interrupt source.
+     *  @details  This variable is usually set to 0 which means that the IRQ
+     *            line is in high state. When an external component requests an
+     *            IRQ nterrupt, this line is pulled low. In that case, this
+     *            variable has a positive value and the set bits indicate the
+     *            interrupt source.
      */
 	uint8_t irqLine;
 
 private: 
 	/*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *            "The NMI input is connected to an edge detector. This edge detector polls
-     *             the status of the NMI line during φ2 of each CPU cycle (i.e., during the
-     *             second half of each cycle) and raises an internal signal if the input goes
-     *             from being high during one cycle to being low during the next. The internal
-     *             signal goes high during φ1 of the cycle that follows the one where the edge
-     *             is detected, and stays high until the NMI has been handled."
+     *            "The NMI input is connected to an edge detector. This edge
+     *             detector polls the status of the NMI line during φ2 of each
+     *             CPU cycle (i.e., during the second half of each cycle) and
+     *             raises an internal signal if the input goes from being high
+     *             during one cycle to being low during the next. The internal
+     *             signal goes high during φ1 of the cycle that follows the one
+     *             where the edge is detected, and stays high until the NMI has
+     *             been handled."
      */
-    uint8_delayed edgeDetector;
+    TimeDelayed<uint8_t> edgeDetector = TimeDelayed<uint8_t>(1, cycle);
+    uint8_delayed oldEdgeDetector;
     
     /*! @brief    Level detector of IRQ line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *            "The IRQ input is connected to a level detector. If a low level is detected
-     *             on the IRQ input during φ2 of a cycle, an internal signal is raised during
-     *             φ1 the following cycle, remaining high for that cycle only (or put another
-     *             way, remaining high as long as the IRQ input is low during the preceding
-     *             cycle's φ2).
+     *            "The IRQ input is connected to a level detector. If a low
+     *             level is detected on the IRQ input during φ2 of a cycle, an
+     *             internal signal is raised during φ1 the following cycle,
+     *             remaining high for that cycle only (or put another way,
+     *             remaining high as long as the IRQ input is low during the
+     *             preceding cycle's φ2).
      */
-    uint8_delayed levelDetector;
+    TimeDelayed<uint8_t> levelDetector = TimeDelayed<uint8_t>(1, cycle);
+    uint8_delayed oldLevelDetector;
     
     //! @brief    Result of the edge detector polling operation
     /*! @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *            "The output from the edge detector and level detector are polled at certain
-     *             points to detect pending interrupts. For most instructions, this polling
-     *             happens during the final cycle of the instruction, before the opcode fetch
-     *             for the next instruction. If the polling operation detects that an interrupt
-     *             has been asserted, the next "instruction" executed is the interrupt sequence.
-     *             Many references will claim that interrupts are polled during the last cycle
-     *             of an instruction, but this is true only when talking about the output from
-     *             the edge and level detectors."
+     *            "The output from the edge detector and level detector are
+     *             polled at certain points to detect pending interrupts. For
+     *             most instructions, this polling happens during the final
+     *             cycle of the instruction, before the opcode fetch for the
+     *             next instruction. If the polling operation detects that an
+     *             interrupt has been asserted, the next "instruction" executed
+     *             is the interrupt sequence. Many references will claim that
+     *             interrupts are polled during the last cycle of an
+     *             instruction, but this is true only when talking about the
+     *             output from the edge and level detectors."
      *            Variable is set in macro POLL_INTS (Instructions.h)
      */
     bool doNmi;
     
     //! @brief    Result of the level detector polling operation
     /*! details   https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     *  @note     "If both an NMI and an IRQ are pending at the end of an instruction, the
-     *             NMI will be handled and the pending status of the IRQ forgotten (though it's
-     *             likely to be detected again during later polling)."
+     *  @note     "If both an NMI and an IRQ are pending at the end of an
+     *             instruction, the NMI will be handled and the pending status
+     *             of the IRQ forgotten (though it's likely to be detected again
+     *             during later polling)."
      *            Variable is set in macro POLL_INTS (Instructions.h)
      */
     bool doIrq;
@@ -234,12 +246,13 @@ public:
 	//! @brief    Destructor
 	~CPU();
 
-	//! @brief    Restores the initial state.
+	//! @brief    Methods from VirtualComponent
 	void reset();
-	
-	//! @brief    Prints debugging information.
 	void dumpState();	
-
+    size_t stateSize();
+    void loadFromBuffer(uint8_t **buffer);
+    void saveToBuffer(uint8_t **buffer);
+    
     //! @brief    Gathers debug information.
     CPUInfo getInfo();
     
