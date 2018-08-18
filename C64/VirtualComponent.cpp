@@ -90,9 +90,9 @@ VirtualComponent::dumpState()
 }
 
 
-// ---------------------------------------------------------------------------------------------
-//                                      Snapshots
-// ---------------------------------------------------------------------------------------------
+//
+// Snapshots
+// 
 
 void
 VirtualComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {

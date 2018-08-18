@@ -22,12 +22,10 @@
 #include "TimeDelayed.h"
 
 template <class T>
-TimeDelayed<T>::TimeDelayed(long delay, uint64_t& clock) : clock(clock), delay(delay)
+TimeDelayed<T>::TimeDelayed(uint8_t delay, uint64_t& clock) : clock(clock), delay(delay)
 {
     pipeline = new T[delay + 1];
-    for (unsigned i = 0; i < delay + 1; i++) {
-        pipeline[i] = 0;
-    }
+    reset(0);
 }
 
 template <class T>
@@ -35,6 +33,14 @@ TimeDelayed<T>::~TimeDelayed()
 {
     assert(pipeline != NULL);
     delete pipeline;
+}
+
+template <class T>
+void TimeDelayed<T>::reset(T value)
+{
+    for (unsigned i = 0; i < delay + 1; i++) {
+        pipeline[i] = value;
+    }
 }
 
 template <class T>
@@ -73,3 +79,41 @@ void TimeDelayed<T>::debug()
         printf("readWithDelay(%d) = %d\n", i, readWithDelay(i));
     }
 }
+
+
+
+template <class T>
+size_t TimeDelayed<T>::stateSize()
+{
+    return sizeof(uint64_t) * (delay + 1) + sizeof(timeStamp) + sizeof(delay);
+}
+
+template <class T>
+void TimeDelayed<T>::loadFromBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    
+    for (unsigned i = 0; i < delay + 1; i++) {
+        pipeline[i] = (T)read64(buffer);
+    }
+    timeStamp = read64(buffer);
+    delay = read8(buffer);
+ 
+    assert(old - *buffer == stateSize());
+}
+
+template <class T>
+void TimeDelayed<T>::saveToBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    
+    for (unsigned i = 0; i < delay + 1; i++) {
+        write64(buffer, (uint64_t)pipeline[i]);
+    }
+    write64(timeStamp);
+    write8(delay);
+    
+    assert(old - *buffer == stateSize());
+}
+
+

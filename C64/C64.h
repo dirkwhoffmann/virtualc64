@@ -21,7 +21,7 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 2.6
 //
-// VirtualC64 now uses the Colores color palette (Thanks, Pepto).
+// VirtualC64 uses Pepto's Colodore color palette from now on.
 // Three new sliders have been added to the emulator preferences. They allow the
 // user to adjust brightness, contrast, and saturation of the used color palette.
 //
@@ -30,8 +30,13 @@
 //
 // TODOs for the next release:
 //
+// Add loading and saving support for timeDelayed stuff.
+// Can sub components initialized without registerSubcomponents function?
+// Add timedDelay variables to CPU class, run side by side with old variables
+// Debug lightpen stuff
+// Gradually get rid of VICII pipelines (color registers first)
 // Map right Mac shift key to right Commodore key
-// Implement template based class TimeDelayed()
+//
 //
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead

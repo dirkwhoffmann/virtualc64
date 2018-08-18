@@ -30,6 +30,7 @@ class C64;
 /*! @details  Use READ8_DELAYED and WRITE8_DELAYED to read and write a value.
  *            All written values show up one cycle after they were written.
  *  @note     Time delayed variables are speed optimized for read accesses.
+ *  @deprecated
  */
 typedef struct {
     uint64_t timeStamp; // Cycle when the new value shows up
@@ -199,6 +200,8 @@ public:
     virtual void saveToBuffer(uint8_t **buffer);
     
     
+#if 0
+    
     //
     //! @functiongroup Saving single snapshot items
     //
@@ -307,23 +310,27 @@ public:
     void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
         for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
 
+#endif
     
-    //
     //! @functiongroup  Time delayed variables
-    //
+    //! @deprecated      Use TimeDelayed class instead
     
     //! @brief    Reads a time delayed variable.
+    //! @deprecated
     #define read8_delayed(var, cycle) \
         ((cycle >= var.timeStamp) ? var.value : var.prevValue)
 
     //! @brief    Writes to a time delayed variable.
+    //! @deprecated
     void write8_delayed(uint8_delayed &var,
                         uint8_t value, uint64_t cycle, uint64_t delay = 1);
 
     //! @brief    Initializes a time delayed variable.
+    //! @deprecated
     void init8_delayed(uint8_delayed &var, uint8_t value);
 
     //! @brief    Initializes a time delayed variable with 0.
+    //! @deprecated
     void clear8_delayed(uint8_delayed &var) { init8_delayed(var, 0); }
 
 };

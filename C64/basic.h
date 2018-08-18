@@ -114,6 +114,76 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @brief Returns true if bit n is falling when switching from x to y
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
+
+//
+//! @functiongroup Handling buffers
+//
+
+//! @brief    Writes a byte value into a buffer.
+inline void write8(uint8_t **ptr, uint8_t value) { *((*ptr)++) = value; }
+
+//! @brief    Writes a word value into a buffer in big endian format.
+inline void write16(uint8_t **ptr, uint16_t value) {
+    write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
+
+//! @brief    Writes a double byte value into a buffer in big endian format.
+inline void write32(uint8_t **ptr, uint32_t value) {
+    write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
+
+//! @brief    Writes a quad word value into a buffer in big endian format.
+inline void write64(uint8_t **ptr, uint64_t value) {
+    write32(ptr, (uint32_t)(value >> 32)); write32(ptr, (uint32_t)value); }
+
+//! @brief    Writes a memory block into a buffer in big endian format.
+inline void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) {
+    memcpy(*ptr, values, length); *ptr += length; }
+
+//! @brief    Writes a word memory block into a buffer in big endian format.
+inline void writeBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(uint16_t); i++) write16(ptr, values[i]); }
+
+//! @brief    Writes a double word memory block into a buffer in big endian format.
+inline void writeBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(uint32_t); i++) write32(ptr, values[i]); }
+
+//! @brief    Writes a quad word memory block into a buffer in big endian format.
+inline void writeBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(uint64_t); i++) write64(ptr, values[i]); }
+
+
+//! @brief    Reads a byte value from a buffer.
+inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*((*ptr)++)); }
+
+//! @brief    Reads a word value from a buffer in big endian format.
+inline uint16_t read16(uint8_t **ptr) {
+    return ((uint16_t)read8(ptr) << 8) | (uint16_t)read8(ptr); }
+
+//! @brief    Reads a double word value from a buffer in big endian format.
+inline uint32_t read32(uint8_t **ptr) {
+    return ((uint32_t)read16(ptr) << 16) | (uint32_t)read16(ptr); }
+
+//! @brief    Reads a quad word value from a buffer in big endian format.
+inline uint64_t read64(uint8_t **ptr) {
+    return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
+
+//! @brief    Reads a memory block from a buffer.
+inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) {
+    memcpy(values, *ptr, length); *ptr += length; }
+
+//! @brief    Reads a word block from a buffer in big endian format.
+inline void readBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(uint16_t); i++) values[i] = read16(ptr); }
+
+//! @brief    Reads a double word block from a buffer in big endian format.
+inline void readBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(uint32_t); i++) values[i] = read32(ptr); }
+
+//! @brief    Reads a quad word block from a buffer in big endian format.
+inline void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
+    for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
+
+
+
 //
 //! @functiongroup Pretty printing
 //
@@ -177,14 +247,7 @@ void sprint16x(char *s, uint16_t value);
 
 //! @brief    Writes an uint16_t value into a string in binary format
 void sprint16b(char *s, uint16_t value);
-/*
-//! @brief    Writes the ASCII representation of 8 bit value to a string.
-void binary8_to_string(uint8_t value, char *s);
 
-//! @brief    Writes the ASCII representation of 32 bit value to a string.
-void binary32_to_string(uint32_t value, char *s);
-*/
- 
 //! @brief    Converts a BCD number to a binary value.
 inline uint8_t BCDToBinary(uint8_t value) { return (10 * (value >> 4)) + (value & 0x0F); }
 
@@ -194,6 +257,7 @@ inline uint8_t BinaryToBCD(uint8_t value) { return ((value / 10) << 4) + (value 
 //! @brief    Increments a BCD number by one.
 inline uint8_t incBCD(uint8_t value) {
     return ((value & 0x0F) == 0x09) ? (value & 0xF0) + 0x10 : (value & 0xF0) + ((value + 0x01) & 0x0F); }
+
 
 //
 //! Handling file and path names
@@ -274,10 +338,7 @@ void sleepMicrosec(unsigned usec);
 int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup);
 
 
-//
-//
-//! @functiongroup Debugging
-//
+
 
 #endif
 

@@ -35,7 +35,7 @@ template <class T> class TimeDelayed {
     uint64_t timeStamp;
     
     //! @brief   Cycles to elapse until a written value shows up.
-    long delay;
+    uint8_t delay;
     
     //! @brief   Reference clock for this variable
     uint64_t& clock;
@@ -43,10 +43,13 @@ template <class T> class TimeDelayed {
 public:
     
     //! @brief   Constructor
-    TimeDelayed(long delay, uint64_t& clock);
+    TimeDelayed(uint8_t delay, uint64_t& clock);
     
     //! @brief   Destructor
     ~TimeDelayed();
+    
+    //! @brief   Reset with a default value
+    void reset(T value);
     
     //! @brief   Write a value into the pipeline
     void write(T value);
@@ -56,6 +59,10 @@ public:
     
     //! @brief   Reads a value from the pipeline with the specified delay.
     T readWithDelay(long delay);
+    
+    size_t stateSize();
+    void loadFromBuffer(uint8_t **buffer);
+    void saveToBuffer(uint8_t **buffer);
     
     void debug();
 };
