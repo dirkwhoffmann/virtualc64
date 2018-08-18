@@ -532,7 +532,6 @@ VIC::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr < 0x40);
 	
-    // TODO
     lastPokeCycle = c64->cpu.cycle;
     lastPokeAddr = addr;
     lastPokeValue = value;
@@ -671,6 +670,57 @@ VIC::poke(uint16_t addr, uint8_t value)
 			// Writing has no effect
 			return;
             
+        case 0x20: // Color registers
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x2E:
+            
+            pokeColorReg(addr, value);
+            return;
+    }
+	
+	// Default action
+	iomem[addr] = value;
+}
+
+void
+VIC::pokeColorReg(uint16_t addr, uint8_t value)
+{
+    assert(addr >= 0x20 && addr <= 0x2E);
+    /*
+    uint64_t pattern[16] = {
+        0x0000000000000000,
+        0x0101010101010101,
+        0x0202020202020202,
+        0x0303030303030303,
+        0x0404040404040404,
+        0x0505050505050505,
+        0x0606060606060606,
+        0x0707070707070707,
+        0x0808080808080808,
+        0x0909090909090909,
+        0x0A0A0A0A0A0A0A0A,
+        0x0B0B0B0B0B0B0B0B,
+        0x0C0C0C0C0C0C0C0C,
+        0x0D0D0D0D0D0D0D0D,
+        0x0E0E0E0E0E0E0E0E,
+        0x0F0F0F0F0F0F0F0F
+    };
+    */
+    
+    switch(addr) {
+            
         case 0x20: // Border color
             p.borderColor = value & 0x0F;
             return;
@@ -700,10 +750,10 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2E: // Sprite color 8
             spriteColor[addr - 0x27] = value & 0x0F;
             return;
+            
+        default:
+            assert(false);
     }
-	
-	// Default action
-	iomem[addr] = value;
 }
 
 bool

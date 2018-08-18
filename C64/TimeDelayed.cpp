@@ -59,7 +59,7 @@ template void TimeDelayed<uint64_t>::reset(uint64_t value);
 
 
 template <class T>
-void TimeDelayed<T>::write(T value)
+void TimeDelayed<T>::writeWithClock(T value, uint64_t clock)
 {
     // Shift pipeline
     int64_t diff = (int64_t)(clock - timeStamp);

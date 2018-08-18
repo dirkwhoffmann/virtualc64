@@ -30,7 +30,10 @@
 //
 // TODOs for the next release:
 //
-// Add loading and saving support for timeDelayed stuff.
+// Use TimedDelayed variables for futures.
+//     Add write(T value, uint64_t clock)
+//     For gray dot stuff: write(0x020202...02020F, clock + 1);
+//                         write(0x020202...020202, clock + 2); 
 // Can sub components initialized without registerSubcomponents function?
 // Add timedDelay variables to CPU class, run side by side with old variables
 // Debug lightpen stuff

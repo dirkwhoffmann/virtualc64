@@ -50,16 +50,19 @@ public:
     
     //! @brief   Reset with a default value
     void reset(T value);
-    
-    //! @brief   Write a value into the pipeline
-    void write(T value);
 
+    //! @brief   Write a value into the pipeline.
+    void write(T value) { writeWithClock(value, clock); }
+
+    //! @brief   Work horse for write().
+    void writeWithClock(T value, uint64_t clock);
+    
     //! @brief   Reads a value from the pipeline with the standard delay.
     T read() { return readWithDelay(delay); }
-    
-    //! @brief   Reads a value from the pipeline with the specified delay.
+
+    //! @brief   Work horse for read().
     T readWithDelay(uint8_t delay);
-    
+
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);

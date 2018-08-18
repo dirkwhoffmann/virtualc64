@@ -281,6 +281,8 @@ public:
      */
 	uint8_t iomem[64]; 
 
+    //! @brief    The 15 color registers (VIC register range $D020 - $D02E)
+     
 private:
 
     /*! @brief    Start address of the currently selected memory bank
@@ -630,8 +632,13 @@ private:
     
     //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
+ 
+    //! @brief    Special poke function for the 15 color registers
+    void pokeColorReg(uint16_t addr, uint8_t value);
     
     //! @brief    Checks if a register is currently written to
+    /*! @deprecated Remove when color registers are modelled with TimeDelayed class.
+     */
     bool isCurrentlyWrittenTo(uint16_t addr);
     
     //! @brief    Simulates a memory access via the address and data bus.
