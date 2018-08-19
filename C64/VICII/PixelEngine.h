@@ -184,10 +184,10 @@ public:
     
 private:
     
-    /*! @brief    All sixteen C64 colors in RGBA format
+    /*! @brief    Currently used RGBA values for all sixteen C64 colors
      *  @see      updatePalette()
      */
-    uint32_t colors[16];
+    uint32_t rgbaTable[16];
     
     /*! @brief    First screen buffer
      *  @details  The VIC chip writes its output into this buffer. The contents
@@ -470,7 +470,7 @@ public:
     //! @brief    Reads a color register and returns the result in RGBA format
     int readColorRegisterRGBA(uint16_t addr) {
         assert(is_uint4_t(readColorRegister(addr)));
-        return colors[readColorRegister(addr)];
+        return rgbaTable[readColorRegister(addr)];
     }
      
     /*! @brief    Reads a color register
@@ -485,7 +485,7 @@ public:
     //! @brief    Reads a color register and returns the result in RGBA format
     int readColorRegisterRGBA(uint16_t addr, unsigned pixelNr) {
         assert(is_uint4_t(readColorRegister(addr, pixelNr)));
-        return colors[readColorRegister(addr, pixelNr)];
+        return rgbaTable[readColorRegister(addr, pixelNr)];
     }
     
     /*! @brief    Checks if a color register is affected by the gray dot bug.
