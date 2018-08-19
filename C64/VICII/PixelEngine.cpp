@@ -271,24 +271,12 @@ PixelEngine::drawOutsideBorder()
 }
 
 void
-PixelEngine::drawBorder(unsigned lastPixel)
+PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
-        // Determine color for pixel 0
-        uint64_t oldRegValue = vic->borderColor.read();
-        int oldrgba0 = rgbaTable[oldRegValue & 0x0F];
-        int rgba0 = rgbaForPixel(0, vic->borderColor.read());
-        assert(oldrgba0 == rgba0);
-        
-        // After the first pixel has been drawn, a color register change show up
-        uint64_t newRegValue = vic->borderColor.readWithDelay(0);
-        int oldrgba = rgbaTable[(newRegValue >> 8) & 0x0F];
-        int rgba = rgbaForPixel(1, vic->borderColor.readWithDelay(0));
-        assert(oldrgba == rgba);
-        
-        drawFramePixel(0, rgba0);
-        drawFramePixels(1, lastPixel, rgba);
+        drawFramePixel(0, vic->borderColor.read());
+        drawFramePixels(1, 7, vic->borderColor.readWithDelay(0));
     }
 }
 
@@ -298,7 +286,8 @@ PixelEngine::drawBorder17()
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode (only pixels 0...6 are drawn)
-        drawBorder(6);
+        drawFramePixel(0, vic->borderColor.read());
+        drawFramePixels(1, 6, vic->borderColor.readWithDelay(0));
         
     } else {
 
@@ -313,7 +302,7 @@ PixelEngine::drawBorder55()
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
         // 38 column mode (border starts at pixel 7)
-        drawFramePixel(7, rgbaForPixel(7, vic->borderColor.read()));
+        drawFramePixel(7, vic->borderColor.read());
   
     } else {
         
@@ -722,13 +711,14 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int color, int nr)
 //
 
 void
-PixelEngine::drawFramePixels(unsigned first, unsigned last, int rgba)
+PixelEngine::drawFramePixels(unsigned first, unsigned last, uint64_t color)
 {
     assert(bufferoffset + last < NTSC_PIXELS);
     
-    for (unsigned pixelNr = first; pixelNr <= last; pixelNr++) {
+    color >>= (8 * first);
+    for (unsigned pixelNr = first; pixelNr <= last; pixelNr++, color >>= 8) {
         
-        pixelBuffer[bufferoffset + pixelNr] = rgba;
+        pixelBuffer[bufferoffset + pixelNr] = rgbaTable[color & 0xF];
         zBuffer[pixelNr] = BORDER_LAYER_DEPTH;
 
         // Disable sprite/foreground collision detection in border

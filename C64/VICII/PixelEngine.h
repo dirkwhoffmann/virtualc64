@@ -533,7 +533,7 @@ private:
     /*! @brief    Draws a part of the border
      *  @details  Invoked inside draw()
      */
-    void drawBorder(unsigned lastPixel = 7);
+    void drawBorder();
     
     /*! @brief    Draws a part of the border
      *  @details  Invoked inside draw17() 
@@ -667,13 +667,13 @@ public:
 public:
 
     //! @brief    Draws the frame pixels for a certain range
-    void drawFramePixels(unsigned first, unsigned last, int rgba);
+    void drawFramePixels(unsigned first, unsigned last, uint64_t color);
 
     //! @brief    Draws a single frame pixel
-    void drawFramePixel(unsigned nr, int rgba) { drawFramePixels(nr, nr, rgba); }
+    void drawFramePixel(unsigned nr, uint64_t color) { drawFramePixels(nr, nr, color); }
 
     //! @brief    Draws all eight frame pixels of a single cycle
-    void drawFramePixels(int rgba) { drawFramePixels(0, 7, rgba); }
+    void drawFramePixels(uint64_t color) { drawFramePixels(0, 7, color); }
 
     //! @brief    Draw a single foreground pixel
     void setForegroundPixel(unsigned pixelnr, int rgba);

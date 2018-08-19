@@ -55,9 +55,6 @@ public:
     
     //! @brief   Sets the reference clock
     void setClock(uint64_t *clock) { this->clock = (int64_t *)clock; }
-
-    //! @brief   Overwrites a single pipeline entry.
-    // void overwrite(unsigned nr, T value) { assert(nr <= delay); pipeline[nr] = value; }
     
     //! @brief   Overwrites all pipeline entries with a reset value.
     void reset(T value) {
@@ -77,9 +74,12 @@ public:
     //! @brief   Reads a value from the pipeline with the standard delay.
     T read() { return readWithDelay(delay); }
 
+    //! @brief   Reads the most recent value from the pipeline.
+    // T readMostRecent() { return readWithDelay(0); }
+
     //! @brief   Work horse for read(T).
     T readWithDelay(uint8_t delay);
-    
+
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
