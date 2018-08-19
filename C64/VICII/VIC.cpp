@@ -113,7 +113,7 @@ VIC::VIC()
         { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
         
         // Canvas color pipe
-        { cp.backgroundColor,           sizeof(cp.backgroundColor),             CLEAR_ON_RESET | BYTE_FORMAT},
+        // { cp.backgroundColor,           sizeof(cp.backgroundColor),             CLEAR_ON_RESET | BYTE_FORMAT},
  
         { NULL,                         0,                                      0 }};
 
@@ -147,7 +147,7 @@ VIC::reset()
     
     // Preset some video parameters to show a blank blue sreen on power up
     // p.borderColor = VICII_LIGHT_BLUE;
-    cp.backgroundColor[0] = VICII_BLUE;
+    // cp.backgroundColor[0] = VICII_BLUE;
     borderColor.reset(0xE0E0E0E0E0E0E0E); // Light blue
     bgColor0.reset(0x606060606060606); // Blue
     bgColor1.reset(0);
@@ -287,10 +287,10 @@ VIC::getInfo()
     info.ba = (BAlow == 0);
     info.displayMode = getDisplayMode();
     info.borderColor = borderColor.current();
-    info.backgroundColor0 = cp.backgroundColor[0];
-    info.backgroundColor1 = cp.backgroundColor[1];
-    info.backgroundColor2 = cp.backgroundColor[2];
-    info.backgroundColor3 = cp.backgroundColor[3];
+    info.backgroundColor0 = bgColor0.current();
+    info.backgroundColor1 = bgColor1.current();
+    info.backgroundColor2 = bgColor2.current();
+    info.backgroundColor3 = bgColor3.current();
     info.screenGeometry = getScreenGeometry();
     info.dx = getHorizontalRasterScroll();
     info.dy = getVerticalRasterScroll();
@@ -547,11 +547,17 @@ VIC::peek(uint16_t addr)
             // return p.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
             return (borderColor.current() & 0x0F) | 0xF0;
             
-        case 0x21: // Backgrund color
-        case 0x22: // Extended background color 1
-        case 0x23: // Extended background color 2
+        case 0x21: // Backgrund color 0
+            return (bgColor0.current() & 0x0F) | 0xF0;
+            
+        case 0x22: // Background color 1
+            return (bgColor1.current() & 0x0F) | 0xF0;
+            
+        case 0x23: // Background color 2
+            return (bgColor2.current() & 0x0F) | 0xF0;
+            
         case 0x24: // Extended background color 3
-            return cp.backgroundColor[addr - 0x21] | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            return (bgColor3.current() & 0x0F) | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             return spriteExtraColor1 | 0xF0;
@@ -784,28 +790,28 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
             
         case 0x21: // Background color 0
             
-            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
             bgColor0.write(pattern[value]);
             bgColor0.pipeline[1] |= grayDot;
             return;
             
         case 0x22: // Background color 1
 
-            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
             bgColor1.write(pattern[value]);
             bgColor1.pipeline[1] |= grayDot;
             return;
 
         case 0x23: // Background color 2
             
-            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
             bgColor2.write(pattern[value]);
             bgColor2.pipeline[1] |= grayDot;
             return;
 
         case 0x24: // Background color 3
             
-            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
             bgColor3.write(pattern[value]);
             bgColor3.pipeline[1] |= grayDot;
             return;

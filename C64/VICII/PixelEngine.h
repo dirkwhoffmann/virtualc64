@@ -132,13 +132,6 @@ typedef struct {
     
 } PixelEnginePipe;
 
-//! @brief    Colors for drawing canvas pixels
-typedef struct {
-    
-    uint8_t backgroundColor[4];
-    
-} CanvasColorPipe;
-
 
 //! @class   PixelEngine
 /*! @details This component is part of the virtual VICII chip and encapulates
@@ -312,9 +305,6 @@ public:
     //! @brief    VIC register pipe
     PixelEnginePipe pipe;
     
-    //! @brief    Canvas color pipe
-    // CanvasColorPipe cpipe;
-
     /*! @brief    Latched VIC state
      *  @details  To draw pixels right, it is important to gather the necessary
      *            information at the right time. Some VIC and memory registers

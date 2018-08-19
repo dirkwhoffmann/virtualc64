@@ -71,9 +71,6 @@ private:
     
     //! @brief    Main pixel engine pipe
     PixelEnginePipe p;
-
-    //! @brief    Canvas color pipe
-    CanvasColorPipe cp;
     
     //! @brief    Selected chip model
     VICChipModel chipModel;
@@ -782,7 +779,7 @@ public:
     void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
     
 	//! @brief    Returns the background color.
-    uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
+    // uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
 	
 	//! Returns extra background color (for multicolor modes).
     // uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }

@@ -44,9 +44,7 @@ PixelEngine::PixelEngine()
         { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
         { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
-        
-        // { &pipe.borderColor,        sizeof(pipe.borderColor),       CLEAR_ON_RESET },
-        // { cpipe.backgroundColor,    sizeof(cpipe.backgroundColor),  CLEAR_ON_RESET | BYTE_FORMAT },
+
         { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
@@ -156,23 +154,6 @@ PixelEngine::readColorRegister(uint16_t addr)
 {
     switch (addr) {
           
-        /*
-        case REG_BORDER_COL:
-             return pipe.borderColor;
-            
-        case REG_BG_COL:
-            return cpipe.backgroundColor[0];
-            
-        case REG_EXT1_COL:
-            return cpipe.backgroundColor[1];
-            
-        case REG_EXT2_COL:
-            return cpipe.backgroundColor[2];
-            
-        case REG_EXT3_COL:
-            return cpipe.backgroundColor[3];
-        */
-            
         case REG_SPR_MC1_COL:
             return vic->spriteExtraColor1;
             
@@ -329,10 +310,6 @@ PixelEngine::drawCanvas()
         uint8_t D016 = vic->p.registerCTRL2 & 0x10; // ---x ----
         
         drawCanvasPixel(0);
-        
-        // After the first pixel has been drawn, color register changes show up
-        // cpipe = vic->cp;
-        
         drawCanvasPixel(1);
         drawCanvasPixel(2);
         drawCanvasPixel(3);
@@ -364,9 +341,9 @@ PixelEngine::drawCanvas()
     } else {
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
-        int col = rgbaTable[vic->getBackgroundColor()];
-        // The following fix (which was done for border-bm-idle is wrong)
-        // int col = col_rgba[0];
+        // TODO: Check if border-bm-idle test passes
+        // TODO: Change setBackgroundPixel to use color pattern
+        int col = rgbaTable[vic->bgColor0.current() & 0xF];
         setEightBackgroundPixels(col);
     }
 }
