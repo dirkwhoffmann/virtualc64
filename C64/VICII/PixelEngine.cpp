@@ -45,7 +45,7 @@ PixelEngine::PixelEngine()
         { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
         
-        { &pipe.borderColor,        sizeof(pipe.borderColor),       CLEAR_ON_RESET },
+        // { &pipe.borderColor,        sizeof(pipe.borderColor),       CLEAR_ON_RESET },
         { cpipe.backgroundColor,    sizeof(cpipe.backgroundColor),  CLEAR_ON_RESET | BYTE_FORMAT },
         { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
@@ -154,8 +154,8 @@ PixelEngine::readColorRegister(uint16_t addr)
 {
     switch (addr) {
             
-        case REG_BORDER_COL:
-            return pipe.borderColor;
+        // case REG_BORDER_COL:
+        //     return pipe.borderColor;
             
         case REG_BG_COL:
             return cpipe.backgroundColor[0];
@@ -275,8 +275,8 @@ PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
-        drawFramePixel(0, vic->borderColor.read());
-        drawFramePixels(1, 7, vic->borderColor.readWithDelay(0));
+        drawFramePixel(0, vic->borderColor.delayed());
+        drawFramePixels(1, 7, vic->borderColor.current());
     }
 }
 
@@ -286,8 +286,8 @@ PixelEngine::drawBorder17()
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode (only pixels 0...6 are drawn)
-        drawFramePixel(0, vic->borderColor.read());
-        drawFramePixels(1, 6, vic->borderColor.readWithDelay(0));
+        drawFramePixel(0, vic->borderColor.delayed());
+        drawFramePixels(1, 6, vic->borderColor.current());
         
     } else {
 
@@ -302,7 +302,7 @@ PixelEngine::drawBorder55()
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
         // 38 column mode (border starts at pixel 7)
-        drawFramePixel(7, vic->borderColor.read());
+        drawFramePixel(7, vic->borderColor.delayed());
   
     } else {
         

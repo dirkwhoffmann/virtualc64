@@ -108,7 +108,7 @@ VIC::VIC()
         { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
-        { &p.borderColor,               sizeof(p.borderColor),                  CLEAR_ON_RESET },
+        // { &p.borderColor,               sizeof(p.borderColor),                  CLEAR_ON_RESET },
         { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
         { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
         
@@ -143,7 +143,7 @@ VIC::reset()
     yCounter = PAL_HEIGHT;
     
     // Preset some video parameters to show a blank blue sreen on power up
-    p.borderColor = VICII_LIGHT_BLUE;
+    // p.borderColor = VICII_LIGHT_BLUE;
     cp.backgroundColor[0] = VICII_BLUE;
     borderColor.reset(0xE0E0E0E0E0E0E0E);
     bgColor.reset(0x606060606060606);
@@ -271,7 +271,7 @@ VIC::getInfo()
     info.badLine = badLineCondition;
     info.ba = (BAlow == 0);
     info.displayMode = getDisplayMode();
-    info.borderColor = p.borderColor;
+    info.borderColor = borderColor.current();
     info.backgroundColor0 = cp.backgroundColor[0];
     info.backgroundColor1 = cp.backgroundColor[1];
     info.backgroundColor2 = cp.backgroundColor[2];
@@ -519,7 +519,8 @@ VIC::peek(uint16_t addr)
 			return result;
 
         case 0x20:
-            return p.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            // return p.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            return (borderColor.current() & 0x0F) | 0xF0;
             
         case 0x21: // Backgrund color
         case 0x22: // Extended background color 1
@@ -771,7 +772,7 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
             
         case 0x20: // Border color
             
-            p.borderColor = value & 0x0F;
+            // p.borderColor = value & 0x0F;
             borderColor.write(pattern[value]);
             borderColor.pipeline[1] |= grayDot;
             return;

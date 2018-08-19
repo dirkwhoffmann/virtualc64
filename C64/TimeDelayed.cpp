@@ -104,7 +104,7 @@ void TimeDelayed<T>::debug()
     }
     printf("\n");
     
-    printf("read() = %llX\n", (uint64_t)read());
+    printf("delayed() = %llX\n", (uint64_t)delayed());
     for (int i = 0; i <= delay; i++) {
         printf("readWithDelay(%d) = %llX\n", i, (uint64_t)readWithDelay(i));
     }

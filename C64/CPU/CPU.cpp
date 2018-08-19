@@ -113,10 +113,10 @@ CPU::dumpState()
         instr.command);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
     msg("      Nmi line : %02X\n", nmiLine);
-    msg(" Edge detector : %02X\n", edgeDetector.read());
+    msg(" Edge detector : %02X\n", edgeDetector.current());
     msg("         doNmi : %s\n", doNmi ? "yes" : "no");
     msg("      Irq line : %02X\n", irqLine);
-    msg("Level detector : %02X\n", levelDetector.read());
+    msg("Level detector : %02X\n", levelDetector.current());
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
 	msg("   IRQ routine : %02X%02X\n", mem->spypeek(0xFFFF), mem->spypeek(0xFFFE));
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));

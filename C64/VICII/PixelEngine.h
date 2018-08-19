@@ -102,7 +102,7 @@ typedef struct {
     uint8_t g_color;
     
     //! @brief    Color for drawing border pixels
-    uint8_t borderColor;
+    // uint8_t borderColor;
     
     //! @brief    Main frame flipflop
     uint8_t mainFrameFF;

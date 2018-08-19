@@ -68,16 +68,16 @@ public:
     //! @brief   Write a value into the pipeline.
     void write(T value) { writeWithDelay(value, 0); }
 
-    //! @brief   Work horse for write(T).
+    //! @brief   Work horse for writing a value.
     void writeWithDelay(T value, uint8_t waitCycles);
     
     //! @brief   Reads a value from the pipeline with the standard delay.
-    T read() { return readWithDelay(delay); }
+    T delayed() { return readWithDelay(delay); }
 
-    //! @brief   Reads the most recent value from the pipeline.
-    // T readMostRecent() { return readWithDelay(0); }
+    //! @brief   Reads the value as there was no delay.
+    T current() { return readWithDelay(0); }
 
-    //! @brief   Work horse for read(T).
+    //! @brief   Work horse for reading a value.
     T readWithDelay(uint8_t delay);
 
     size_t stateSize();
