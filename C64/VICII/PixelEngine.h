@@ -637,17 +637,17 @@ private:
      *            [3] : color for '11' pixels in multicolor mode 
      */
     uint64_t col[4];
-    int col_rgba[4]; // DEPRECATED
+    // int col_rgba[4]; // DEPRECATED
 
     /*! @brief    Same as col_rgba[4], but for pixel 0
      *  @details  Nedded to emulate the gray dot bug.
      */
-    int col_rgba0[4]; // DEPRECATED
+    // int col_rgba0[4]; // DEPRECATED
     
 public:
     
     //! @brief    Determines pixel colors accordig to the provided display mode
-    void loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace);
+    void loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace);
     
     /*! @brief    Draws single canvas pixel in single-color mode
      *  @details  1s are drawn with setForegroundPixel, 0s are drawn with
