@@ -57,9 +57,6 @@ VIC::VIC()
         { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
-        { &lastPokeCycle,               sizeof(lastPokeCycle),                  CLEAR_ON_RESET },
-        { &lastPokeAddr,                sizeof(lastPokeAddr),                   CLEAR_ON_RESET },
-        { &lastPokeValue,               sizeof(lastPokeValue),                  CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
@@ -615,10 +612,6 @@ void
 VIC::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr < 0x40);
-	
-    lastPokeCycle = c64->cpu.cycle;
-    lastPokeAddr = addr;
-    lastPokeValue = value;
     
 	switch(addr) {		
         case 0x00: // SPRITE_0_X
@@ -831,12 +824,6 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         default:
             assert(false);
     }
-}
-
-bool
-VIC::isCurrentlyWrittenTo(uint16_t addr)
-{
-    return (addr == lastPokeAddr && c64->cpu.cycle == lastPokeCycle + 1);
 }
 
 

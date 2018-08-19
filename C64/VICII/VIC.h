@@ -99,21 +99,6 @@ public:
      */
     uint8_t dataBus;
     
-    /*! @brief    Remembers the cycle of the most recent call to poke
-     *  @see      registerIsInUse()
-     */
-    uint64_t lastPokeCycle;
-
-    /*! @brief    Remembers the target address in the most recent call to poke
-     *  @see      registerIsInUse()
-     */
-    uint16_t lastPokeAddr;
-
-    /*! @brief    Remembers the most recent value that was written in poke
-     *  @see      registerIsInUse()
-     */
-    uint8_t lastPokeValue;
-    
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
 
@@ -668,11 +653,6 @@ private:
  
     //! @brief    Special poke function for the 15 color registers
     void pokeColorReg(uint16_t addr, uint8_t value);
-    
-    //! @brief    Checks if a register is currently written to
-    /*! @deprecated Remove when color registers are modelled with TimeDelayed class.
-     */
-    bool isCurrentlyWrittenTo(uint16_t addr);
     
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
