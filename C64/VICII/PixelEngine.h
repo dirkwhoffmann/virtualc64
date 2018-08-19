@@ -631,14 +631,6 @@ public:
      */
     void drawSpritePixel(unsigned pixelnr, uint64_t color, int nr);
     
-    /*! @brief    Draws a single sprite pixel
-     *  @details  This function is invoked by setSingleColorSpritePixel() and
-     *            setMultiColorSpritePixel(). It takes care of collison and invokes
-     *            setSpritePixel(4) to actually render the pixel.
-     *  @deprecated
-     */
-    void setSpritePixel(unsigned pixelnr, int color, int nr);
-
     
     //
     // Low level drawing (pixel buffer access)

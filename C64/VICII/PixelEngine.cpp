@@ -564,34 +564,32 @@ void
 PixelEngine::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t bit)
 {
     if (bit) {
+        /*
         int rgba = rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)];
         setSpritePixel(pixelNr, rgba, spriteNr);
+        */
+        drawSpritePixel(pixelNr, sprCol[spriteNr], spriteNr);
     }
 }
 
 void
 PixelEngine::setMultiColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t two_bits)
 {
-    int rgba;
-   
     switch (two_bits) {
             
         case 0x01:
            
-            rgba = rgbaTable[GET_BYTE(sprExtraCol1, pixelNr)];
-            setSpritePixel(pixelNr, rgba, spriteNr);
+            drawSpritePixel(pixelNr, sprExtraCol1, spriteNr);
             break;
             
         case 0x02:
             
-            rgba = rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)];
-            setSpritePixel(pixelNr, rgba, spriteNr);
+            drawSpritePixel(pixelNr, sprCol[spriteNr], spriteNr);
             break;
             
         case 0x03:
             
-            rgba = rgbaTable[GET_BYTE(sprExtraCol2, pixelNr)];
-            setSpritePixel(pixelNr, rgba, spriteNr);
+            drawSpritePixel(pixelNr, sprExtraCol2, spriteNr);
             break;
     }
 }
@@ -617,29 +615,6 @@ PixelEngine::drawSpritePixel(unsigned pixelNr, uint64_t color, int nr)
         mask = 0;
     
     putSpritePixel(pixelNr, color, vic->spriteDepth(nr), mask);
-}
-
-void
-PixelEngine::setSpritePixel(unsigned pixelNr, int color, int nr)
-{
-    uint8_t mask = (1 << nr);
-    
-    // Check sprite/sprite collision
-    if ((pixelSource[pixelNr] & 0x7F) && vic->spriteSpriteCollisionEnabled) {
-        vic->iomem[0x1E] |= ((pixelSource[pixelNr] & 0x7F) | mask);
-        vic->triggerIRQ(4);
-    }
-        
-    // Check sprite/background collision
-    if ((pixelSource[pixelNr] & 0x80) && vic->spriteBackgroundCollisionEnabled) {
-        vic->iomem[0x1F] |= mask;
-        vic->triggerIRQ(2);
-    }
-        
-    if (nr == 7)
-        mask = 0;
-        
-    setSpritePixel(pixelNr, color, vic->spriteDepth(nr), mask);
 }
 
 
@@ -674,23 +649,6 @@ PixelEngine::drawForegroundPixel(unsigned pixelNr, uint64_t color)
     pixelSource[pixelNr] = 0x80;
 }
 
-/*
-void
-PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
-{
-    unsigned offset = bufferoffset + pixelnr;
-    assert(offset < NTSC_PIXELS);
-
-    // The zBuffer check is not necessary as the canvas pixels are the first to draw
-    // if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset])
-    {
-        pixelBuffer[offset] = rgba;
-        zBuffer[pixelnr] = FOREGROUND_LAYER_DEPTH;
-        pixelSource[pixelnr] = 0x80;
-    }
-}
-*/
-
 void
 PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint64_t color)
 {
@@ -701,19 +659,6 @@ PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint64_t color)
     zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x00;
 }
-
-/*
-void
-PixelEngine::setBackgroundPixel(unsigned pixelnr, int rgba)
-{
-    unsigned offset = bufferoffset + pixelnr;
-    assert(offset < NTSC_PIXELS);
-    
-    pixelBuffer[offset] = rgba;
-    zBuffer[pixelnr] = BACKGROUD_LAYER_DEPTH;
-    pixelSource[pixelnr] = 0x00;
-}
-*/
 
 void
 PixelEngine::putSpritePixel(unsigned pixelNr, uint64_t color, int depth, int source)
