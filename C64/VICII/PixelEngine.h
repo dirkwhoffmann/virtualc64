@@ -459,11 +459,18 @@ public:
     // Accessing colors
     //
     
+    /*! @brief    Extracts the color for a certain pixel from a color pattern
+     *            and returns the color in RGBA format.
+     */
+    int rgbaForPixel(unsigned nr, uint64_t colPattern) {
+        return rgbaTable[(colPattern >> (nr * 8)) & 0xF]; }
+    
     /*! @brief    Reads a color register
      *  @details  This function returns the value of a color register as the
      *            pixel engine sees it. It takes into accout that a certain
      *            amount of cycles need to elapse until a written value shows
      *            up.
+     *  @deprecated Use TimeDelayed variables instead
      */
     uint8_t readColorRegister(uint16_t addr);
 
@@ -523,17 +530,17 @@ public:
     
 private:
     
-    /*! @brief    Draws 8 border pixels
-     *  @details  Invoked inside draw() 
+    /*! @brief    Draws a part of the border
+     *  @details  Invoked inside draw()
      */
-    void drawBorder();
+    void drawBorder(unsigned lastPixel = 7);
     
-    /*! @brief    Draws 8 border pixels
+    /*! @brief    Draws a part of the border
      *  @details  Invoked inside draw17() 
      */
     void drawBorder17();
     
-    /*! @brief    Draws 8 border pixels
+    /*! @brief    Draws a part of the border
      *  @details  Invoked inside draw55()
      */
     void drawBorder55();

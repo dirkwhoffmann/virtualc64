@@ -271,20 +271,24 @@ PixelEngine::drawOutsideBorder()
 }
 
 void
-PixelEngine::drawBorder()
+PixelEngine::drawBorder(unsigned lastPixel)
 {
     if (pipe.mainFrameFF) {
         
-        // Determine color for pixel 0 (old register value is taken)
+        // Determine color for pixel 0
         uint64_t oldRegValue = vic->borderColor.read();
-        int rgb0 = rgbaTable[oldRegValue & 0x0F];
+        int oldrgba0 = rgbaTable[oldRegValue & 0x0F];
+        int rgba0 = rgbaForPixel(0, vic->borderColor.read());
+        assert(oldrgba0 == rgba0);
         
-        // Determine color for pixels 1 to 7 (new register value shows up)
+        // After the first pixel has been drawn, a color register change show up
         uint64_t newRegValue = vic->borderColor.readWithDelay(0);
-        int rgba1234567 = rgbaTable[(newRegValue >> 8) & 0x0F];
+        int oldrgba = rgbaTable[(newRegValue >> 8) & 0x0F];
+        int rgba = rgbaForPixel(1, vic->borderColor.readWithDelay(0));
+        assert(oldrgba == rgba);
         
-        drawFramePixel(0, rgb0);
-        drawFramePixels(1, 7, rgba1234567);
+        drawFramePixel(0, rgba0);
+        drawFramePixels(1, lastPixel, rgba);
     }
 }
 
@@ -293,28 +297,12 @@ PixelEngine::drawBorder17()
 {
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
-        // 38 column mode
-        int rgba = rgbaTable[pipe.borderColor];
-        // setFramePixel(0, rgba);
-        drawFramePixel(0, rgba);
-        
-        // After the first pixel has been drawn, color register changes show up
-        rgba = rgbaTable[vic->p.borderColor];
-        
-        /*
-        setFramePixel(1, rgba);
-        setFramePixel(2, rgba);
-        setFramePixel(3, rgba);
-        setFramePixel(4, rgba);
-        setFramePixel(5, rgba);
-        setFramePixel(6, rgba);
-        */
-        drawFramePixels(1, 6, rgba);
-        // That's all, we only draw 7 pixels here
+        // 38 column mode (only pixels 0...6 are drawn)
+        drawBorder(6);
         
     } else {
 
-        // 40 column mode
+        // 40 column mode (all eight pixels are drawn)
         drawBorder();
     }
 }
@@ -324,15 +312,11 @@ PixelEngine::drawBorder55()
 {
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
-        // 38 column mode
-        int rgba = readColorRegisterRGBA(REG_BORDER_COL);
-        assert(rgba == rgbaTable[pipe.borderColor]);
-        // setFramePixel(7, rgba);
-        drawFramePixel(7, rgba);
-        
+        // 38 column mode (border starts at pixel 7)
+        drawFramePixel(7, rgbaForPixel(7, vic->borderColor.read()));
+  
     } else {
         
-        // 40 column mode
         drawBorder();
     }
 }

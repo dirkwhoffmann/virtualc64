@@ -57,10 +57,13 @@ public:
     void setClock(uint64_t *clock) { this->clock = (int64_t *)clock; }
 
     //! @brief   Overwrites a single pipeline entry.
-    void overwrite(unsigned nr, T value) { assert(nr <= delay); pipeline[nr] = value; }
+    // void overwrite(unsigned nr, T value) { assert(nr <= delay); pipeline[nr] = value; }
     
     //! @brief   Overwrites all pipeline entries with a reset value.
-    void reset(T value) { for (unsigned i = 0; i <= delay; i++) overwrite(i, value); }
+    void reset(T value) {
+        for (unsigned i = 0; i <= delay; i++) pipeline[i] = value;
+        timeStamp = 0;
+    }
     
     //! @brief   Zeroes out all pipeline entries.
     void clear() { reset((T)0); }
