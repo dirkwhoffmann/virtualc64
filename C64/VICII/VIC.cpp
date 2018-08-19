@@ -90,9 +90,6 @@ VIC::VIC()
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
-        { spriteColor,                  sizeof(spriteColor),                    CLEAR_ON_RESET | BYTE_FORMAT},
-        { &spriteExtraColor1,           sizeof(spriteExtraColor1),              CLEAR_ON_RESET },
-        { &spriteExtraColor2,           sizeof(spriteExtraColor2),              CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
 
@@ -295,11 +292,11 @@ VIC::getInfo()
     info.badLine = badLineCondition;
     info.ba = (BAlow == 0);
     info.displayMode = getDisplayMode();
-    info.borderColor = borderColor.current();
-    info.backgroundColor0 = bgColor[0].current();
-    info.backgroundColor1 = bgColor[1].current();
-    info.backgroundColor2 = bgColor[2].current();
-    info.backgroundColor3 = bgColor[3].current();
+    info.borderColor = borderColor.current() & 0xF;
+    info.backgroundColor0 = bgColor[0].current() & 0xF;
+    info.backgroundColor1 = bgColor[1].current() & 0xF;
+    info.backgroundColor2 = bgColor[2].current() & 0xF;
+    info.backgroundColor3 = bgColor[3].current() & 0xF;
     info.screenGeometry = getScreenGeometry();
     info.dx = getHorizontalRasterScroll();
     info.dy = getVerticalRasterScroll();
@@ -327,10 +324,10 @@ VIC::getSpriteInfo(unsigned i)
     info.enabled = spriteEnabled(i);
     info.x = getSpriteX(i);
     info.y = getSpriteY(i);
-    info.color = getSpriteColor(i);
+    info.color = sprColor[i].current() & 0xF;
     info.multicolor = spriteIsMulticolor(i);
-    info.extraColor1 = getSpriteExtraColor1();
-    info.extraColor2 = getSpriteExtraColor2();
+    info.extraColor1 = sprExtraColor1.current() & 0xF;
+    info.extraColor2 = sprExtraColor2.current() & 0xF;
     info.expandX = spriteWidthIsDoubled(i);
     info.expandY = spriteHeightIsDoubled(i);
     info.priority = spritePriority(i);
@@ -553,7 +550,6 @@ VIC::peek(uint16_t addr)
 			return result;
 
         case 0x20:
-            // return p.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
             return (borderColor.current() & 0x0F) | 0xF0;
             
         case 0x21: // Background color 0
@@ -564,10 +560,10 @@ VIC::peek(uint16_t addr)
             return (bgColor[addr - 0x21].current() & 0x0F) | 0xF0;
       
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            return spriteExtraColor1 | 0xF0;
+            return (sprExtraColor1.current() & 0x0F) | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            return spriteExtraColor2 | 0xF0;
+            return (sprExtraColor2.current() & 0x0F) | 0xF0;
             
         case 0x27: // Sprite color 1
         case 0x28: // Sprite color 2
@@ -577,8 +573,7 @@ VIC::peek(uint16_t addr)
         case 0x2C: // Sprite color 6
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
-            return spriteColor[addr - 0x27] | 0xF0;
-
+            return (sprColor[addr - 0x27].current() & 0x0F) | 0xF0;
     }
 		
 	if (addr >= 0x2F && addr <= 0x3F) {
@@ -797,13 +792,13 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
             return;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            spriteExtraColor1 = value & 0x0F;
+            
             sprExtraColor1.write(pattern[value]);
             sprExtraColor1.pipeline[1] |= grayDot;
             return;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            spriteExtraColor2 = value & 0x0F;
+
             sprExtraColor2.write(pattern[value]);
             sprExtraColor2.pipeline[1] |= grayDot;
             return;
@@ -816,7 +811,7 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x2C: // Sprite color 6
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
-            spriteColor[addr - 0x27] = value & 0x0F;
+
             sprColor[addr - 0x27].write(pattern[value]);
             sprColor[addr - 0x27].pipeline[1] |= grayDot;
             return;
@@ -1369,10 +1364,19 @@ VIC::toggleExpansionFlipflop()
     expansionFF ^= iomem[0x17];
 }
 
+void
+VIC::setSpriteColor(uint8_t nr, uint8_t color)
+{
+    assert(nr < 8);
+    c64->suspend();
+    sprColor[nr].write(pattern[color]);
+    c64->resume();
+}
 
-// -----------------------------------------------------------------------------------------------
-//                                      Frame flipflops
-// -----------------------------------------------------------------------------------------------
+
+//
+// Frame flipflops
+//
 
 void
 VIC::checkVerticalFrameFF()

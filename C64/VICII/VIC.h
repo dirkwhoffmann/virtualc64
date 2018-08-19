@@ -388,15 +388,15 @@ private:
     
     //! Sprite colors (same for all sprites)
     //! @deprecated
-    uint8_t spriteColor[8];
+    // uint8_t spriteColor[8];
 
     //! Sprite extra color 1 (same for all sprites)
     //! @deprecated
-    uint8_t spriteExtraColor1;
+    // uint8_t spriteExtraColor1;
 
     //! Sprite extra color 2 (same for all sprites)
     //! @deprecated
-    uint8_t spriteExtraColor2;
+    // uint8_t spriteExtraColor2;
     
     
 	//
@@ -938,16 +938,16 @@ private:
 public: 
 	
 	//! @brief    Returns color code of multicolor sprites (extra color 1).
-    uint8_t getSpriteExtraColor1() { return spriteExtraColor1; }
+    // uint8_t getSpriteExtraColor1() { return spriteExtraColor1; }
 	
 	//! @brief    Returns color code of multicolor sprites (extra color 2).
-    uint8_t getSpriteExtraColor2() { return spriteExtraColor2; }
+    // uint8_t getSpriteExtraColor2() { return spriteExtraColor2; }
 	
 	//! @brief    Returns the color of a sprite.
-    uint8_t getSpriteColor(uint8_t nr) { return spriteColor[nr]; }
+    // uint8_t getSpriteColor(uint8_t nr) { return spriteColor[nr]; }
 
 	//! @brief    Sets the color of a sprite.
-    void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); spriteColor[nr] = color; }
+    void setSpriteColor(uint8_t nr, uint8_t color);
 		
 	//! @brief    Returns the X coordinate of a sprite.
     uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }
