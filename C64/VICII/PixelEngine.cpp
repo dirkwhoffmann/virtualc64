@@ -149,6 +149,7 @@ PixelEngine::updateSpriteOnOff()
     dc.spriteOnOffPipe = vic->spriteOnOff;
 }
 
+/*
 uint8_t
 PixelEngine::readColorRegister(uint16_t addr)
 {
@@ -188,13 +189,16 @@ PixelEngine::readColorRegister(uint16_t addr)
             assert(false);
     }
 }
+*/
 
+/*
 uint8_t
 PixelEngine::readColorRegister(uint16_t addr, unsigned pixelNr)
 {
     assert(pixelNr < 8);
     return (pixelNr == 0 && grayDot(addr)) ? VICII_LIGHT_GREY : readColorRegister(addr);
 }
+*/
 
 bool
 PixelEngine::grayDot(uint16_t addr)
@@ -622,50 +626,33 @@ void
 PixelEngine::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t bit)
 {
     if (bit) {
-        int oldrgba = rgbaTable[vic->spriteColor[spriteNr]];
-        int rgba = readColorRegisterRGBA(REG_SPR1_COL + spriteNr, pixelNr);
-        assert(oldrgba == rgba);
-        assert(rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)] == rgba);
-        
-        int newrgba = rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)];
-        setSpritePixel(pixelNr, newrgba, spriteNr);
+        int rgba = rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)];
+        setSpritePixel(pixelNr, rgba, spriteNr);
     }
 }
 
 void
 PixelEngine::setMultiColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t two_bits)
 {
-    int rgba, oldrgba, newrgba;
+    int rgba;
    
     switch (two_bits) {
             
         case 0x01:
-            oldrgba = rgbaTable[vic->spriteExtraColor1];
-            rgba = readColorRegisterRGBA(REG_SPR_MC1_COL);
-            assert(oldrgba == rgba);
-            
-            newrgba = rgbaTable[GET_BYTE(sprExtraCol1, pixelNr)];
-            assert(newrgba == rgba);
+           
+            rgba = rgbaTable[GET_BYTE(sprExtraCol1, pixelNr)];
             setSpritePixel(pixelNr, rgba, spriteNr);
             break;
             
         case 0x02:
-            oldrgba = rgbaTable[vic->spriteColor[spriteNr]];
-            rgba = readColorRegisterRGBA(REG_SPR1_COL + spriteNr, pixelNr);
-            assert(oldrgba == rgba);
             
-            newrgba = rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)];
-            assert(newrgba == rgba);
+            rgba = rgbaTable[GET_BYTE(sprCol[spriteNr], pixelNr)];
             setSpritePixel(pixelNr, rgba, spriteNr);
             break;
             
         case 0x03:
-            oldrgba = rgbaTable[vic->spriteExtraColor2];
-            rgba = readColorRegisterRGBA(REG_SPR_MC2_COL);
-            assert(oldrgba == rgba);
             
-            newrgba = rgbaTable[GET_BYTE(sprExtraCol2, pixelNr)];
-            assert(newrgba == rgba);
+            rgba = rgbaTable[GET_BYTE(sprExtraCol2, pixelNr)];
             setSpritePixel(pixelNr, rgba, spriteNr);
             break;
     }

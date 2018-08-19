@@ -482,14 +482,16 @@ public:
      *            up.
      *  @deprecated Use TimeDelayed variables instead
      */
-    uint8_t readColorRegister(uint16_t addr);
+    // uint8_t readColorRegister(uint16_t addr);
 
     //! @brief    Reads a color register and returns the result in RGBA format
+    /*
     int readColorRegisterRGBA(uint16_t addr) {
         assert(is_uint4_t(readColorRegister(addr)));
         return rgbaTable[readColorRegister(addr)];
     }
-     
+    */
+    
     /*! @brief    Reads a color register
      *  @details  This function returns the value of a color register as the
      *            pixel engine sees it and additionally emulates the gray code
@@ -497,13 +499,15 @@ public:
      *            are drawn in one cycle and therefore takes the cycle number
      *            (0...7) as an additional parameter.
      */
-    uint8_t readColorRegister(uint16_t addr, unsigned pixelNr);
+    // uint8_t readColorRegister(uint16_t addr, unsigned pixelNr);
     
     //! @brief    Reads a color register and returns the result in RGBA format
+    /*
     int readColorRegisterRGBA(uint16_t addr, unsigned pixelNr) {
         assert(is_uint4_t(readColorRegister(addr, pixelNr)));
         return rgbaTable[readColorRegister(addr, pixelNr)];
     }
+    */
     
     /*! @brief    Checks if a color register is affected by the gray dot bug.
      * @details   A color register is affected, if a write access happens at
