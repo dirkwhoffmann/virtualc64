@@ -51,6 +51,26 @@ class VIC;
 #define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
 #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
 
+// Color patterns
+const uint64_t pattern[16] = {
+    0x0000000000000000,
+    0x0101010101010101,
+    0x0202020202020202,
+    0x0303030303030303,
+    0x0404040404040404,
+    0x0505050505050505,
+    0x0606060606060606,
+    0x0707070707070707,
+    0x0808080808080808,
+    0x0909090909090909,
+    0x0A0A0A0A0A0A0A0A,
+    0x0B0B0B0B0B0B0B0B,
+    0x0C0C0C0C0C0C0C0C,
+    0x0D0D0D0D0D0D0D0D,
+    0x0E0E0E0E0E0E0E0E,
+    0x0F0F0F0F0F0F0F0F
+};
+
 
 // -----------------------------------------------------------------------------------------------
 //                                     VIC state pipes
@@ -616,12 +636,13 @@ private:
      *            [2] : color for '10' pixels in multicolor mode
      *            [3] : color for '11' pixels in multicolor mode 
      */
-    int col_rgba[4];
+    uint64_t col[4];
+    int col_rgba[4]; // DEPRECATED
 
     /*! @brief    Same as col_rgba[4], but for pixel 0
      *  @details  Nedded to emulate the gray dot bug.
      */
-    int col_rgba0[4];
+    int col_rgba0[4]; // DEPRECATED
     
 public:
     

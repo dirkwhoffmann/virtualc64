@@ -148,8 +148,11 @@ VIC::reset()
     // Preset some video parameters to show a blank blue sreen on power up
     // p.borderColor = VICII_LIGHT_BLUE;
     cp.backgroundColor[0] = VICII_BLUE;
-    borderColor.reset(0xE0E0E0E0E0E0E0E);
-    bgColor0.reset(0x606060606060606);
+    borderColor.reset(0xE0E0E0E0E0E0E0E); // Light blue
+    bgColor0.reset(0x606060606060606); // Blue
+    bgColor1.reset(0);
+    bgColor2.reset(0);
+    bgColor3.reset(0);
     setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
 	p.registerCTRL1 = 0x10;
@@ -453,6 +456,16 @@ VIC::setMemoryBankAddr(uint16_t addr)
 	
 	bankAddr = addr;
 }
+
+void
+VIC::setDisplayMode(DisplayMode m) {
+    
+    c64->suspend();
+    p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
+    p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10);
+    c64->resume();
+}
+
 
 uint16_t
 VIC::getScreenMemoryAddr()
@@ -758,25 +771,6 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
     assert(addr >= 0x20 && addr <= 0x2E);
     assert(is_uint4_t(value));
     
-    uint64_t pattern[16] = {
-        0x0000000000000000,
-        0x0101010101010101,
-        0x0202020202020202,
-        0x0303030303030303,
-        0x0404040404040404,
-        0x0505050505050505,
-        0x0606060606060606,
-        0x0707070707070707,
-        0x0808080808080808,
-        0x0909090909090909,
-        0x0A0A0A0A0A0A0A0A,
-        0x0B0B0B0B0B0B0B0B,
-        0x0C0C0C0C0C0C0C0C,
-        0x0D0D0D0D0D0D0D0D,
-        0x0E0E0E0E0E0E0E0E,
-        0x0F0F0F0F0F0F0F0F
-    };
-    
     // Setup the color mask for the gray dot bug
     uint64_t grayDot = (hasGrayDotBug() && emulateGrayDotBug) ? 0xF : 0x0;
   
@@ -812,8 +806,8 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x24: // Background color 3
             
             cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            bgColor2.write(pattern[value]);
-            bgColor2.pipeline[1] |= grayDot;
+            bgColor3.write(pattern[value]);
+            bgColor3.pipeline[1] |= grayDot;
             return;
      
         case 0x25: // Sprite extra color 1 (for multicolor sprites)

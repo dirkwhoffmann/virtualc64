@@ -745,9 +745,7 @@ public:
 	{ return (DisplayMode)((p.registerCTRL1 & 0x60) | (p.registerCTRL2 & 0x10)); }
 	
 	//! @brief    Sets the display mode.
-    void setDisplayMode(DisplayMode m) {
-        p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
-        p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10); }
+    void setDisplayMode(DisplayMode m);
 	
 	//! @brief    Returns the current screen geometry.
 	ScreenGeometry getScreenGeometry(void);
