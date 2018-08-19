@@ -664,9 +664,17 @@ public:
     void setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t two_bits);
 
     /*! @brief    Draws a single sprite pixel
-     *  @details  This function is invoked by setSingleColorPixel() and
-     *            setMultiColorPixel(). It takes care of collison and invokes
+     *  @details  This function is invoked by setSingleColorSpritePixel() and
+     *            setMultiColorSpritePixel(). It takes care of collison and invokes
      *            setSpritePixel(4) to actually render the pixel.
+     */
+    void drawSpritePixel(unsigned pixelnr, uint64_t color, int nr);
+    
+    /*! @brief    Draws a single sprite pixel
+     *  @details  This function is invoked by setSingleColorSpritePixel() and
+     *            setMultiColorSpritePixel(). It takes care of collison and invokes
+     *            setSpritePixel(4) to actually render the pixel.
+     *  @deprecated
      */
     void setSpritePixel(unsigned pixelnr, int color, int nr);
 
@@ -712,6 +720,11 @@ public:
     */
     
     //! @brief    Draw a single sprite pixel
+    //! @deprecated
+    void putSpritePixel(unsigned pixelnr, uint64_t color, int depth, int source);
+    
+    //! @brief    Draw a single sprite pixel
+    //! @deprecated
     void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
 
     /*! @brief    Extend border to the left and right to look nice.

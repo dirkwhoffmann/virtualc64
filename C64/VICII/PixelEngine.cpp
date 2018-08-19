@@ -666,18 +666,41 @@ PixelEngine::setMultiColorSpritePixel(unsigned spritenr, unsigned pixelNr, uint8
 }
 
 void
+PixelEngine::drawSpritePixel(unsigned pixelNr, uint64_t color, int nr)
+{
+    uint8_t mask = (1 << nr);
+    
+    // Check sprite/sprite collision
+    if ((pixelSource[pixelNr] & 0x7F) && vic->spriteSpriteCollisionEnabled) {
+        vic->iomem[0x1E] |= ((pixelSource[pixelNr] & 0x7F) | mask);
+        vic->triggerIRQ(4);
+    }
+    
+    // Check sprite/background collision
+    if ((pixelSource[pixelNr] & 0x80) && vic->spriteBackgroundCollisionEnabled) {
+        vic->iomem[0x1F] |= mask;
+        vic->triggerIRQ(2);
+    }
+    
+    if (nr == 7)
+        mask = 0;
+    
+    putSpritePixel(pixelNr, color, vic->spriteDepth(nr), mask);
+}
+
+void
 PixelEngine::setSpritePixel(unsigned pixelNr, int color, int nr)
 {
     uint8_t mask = (1 << nr);
     
     // Check sprite/sprite collision
-    if (vic->spriteSpriteCollisionEnabled && (pixelSource[pixelNr] & 0x7F)) {
+    if ((pixelSource[pixelNr] & 0x7F) && vic->spriteSpriteCollisionEnabled) {
         vic->iomem[0x1E] |= ((pixelSource[pixelNr] & 0x7F) | mask);
         vic->triggerIRQ(4);
     }
         
     // Check sprite/background collision
-    if (vic->spriteBackgroundCollisionEnabled && (pixelSource[pixelNr] & 0x80)) {
+    if ((pixelSource[pixelNr] & 0x80) && vic->spriteBackgroundCollisionEnabled) {
         vic->iomem[0x1F] |= mask;
         vic->triggerIRQ(2);
     }
@@ -762,6 +785,19 @@ PixelEngine::setBackgroundPixel(unsigned pixelnr, int rgba)
 */
 
 void
+PixelEngine::putSpritePixel(unsigned pixelNr, uint64_t color, int depth, int source)
+{
+    unsigned offset = bufferoffset + pixelNr;
+    assert(offset < NTSC_PIXELS);
+    
+    if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
+        pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+        zBuffer[pixelNr] = depth;
+    }
+    pixelSource[pixelNr] |= source;
+}
+
+void
 PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
 {
     unsigned offset = bufferoffset + pixelnr;
@@ -772,7 +808,6 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
         zBuffer[pixelnr] = depth;
     }
     pixelSource[pixelnr] |= source;
-
 }
 
 void
