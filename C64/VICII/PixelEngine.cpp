@@ -275,23 +275,6 @@ PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
-        // OLD STUFF
-        
-        int oldRgba = colors[pipe.borderColor];
-        int rgba = readColorRegisterRGBA(REG_BORDER_COL);
-        assert(oldRgba == rgba);
-        
-        int firstPixelRgba = grayDot(REG_BORDER_COL) ? colors[VICII_LIGHT_GREY] : rgba;
-        
-        uint64_t newcol = (vic->borderColor.read());
-        int rgba0 = colors[newcol & 0xF];
-        int rgba1 = colors[(newcol >> 8) & 0xF];
-        if (rgba0 != firstPixelRgba) {
-            debug("delayed: %llx pipe: %d grayDot: %d\n", newcol, pipe.borderColor, grayDot(REG_BORDER_COL));
-        }
-        assert(rgba0 == firstPixelRgba);
-        assert(rgba1 = rgba);
-        
         // Determine color for pixel 0 (old register value applies)
         uint64_t oldRegValue = vic->borderColor.read();
         int rgb0 = colors[oldRegValue & 0x0F];
@@ -300,17 +283,8 @@ PixelEngine::drawBorder()
         uint64_t newRegValue = vic->borderColor.readWithDelay(0);
         int rgba1234567 = colors[(newRegValue >> 8) & 0x0F];
         
-        // TODO: Use setFramePixels(uint64_t color);
-        
-        assert(rgb0 == firstPixelRgba);
-        // setFramePixel(0, firstPixelRgba);
-        drawFramePixel(0, firstPixelRgba);
-        
-        // After the first pixel has been drawn, color register changes show up
-        rgba = colors[vic->p.borderColor];
-        assert(rgba1234567 == rgba);
-        
-        drawFramePixels(1, 7, rgba);
+        drawFramePixel(0, rgb0);
+        drawFramePixels(1, 7, rgba1234567);
     }
 }
 
