@@ -659,9 +659,15 @@ public:
     
 public:
 
-    //! @brief    Draw a single frame pixel
-    void setFramePixel(unsigned pixelnr, int rgba);
-    
+    //! @brief    Draws the frame pixels for a certain range
+    void drawFramePixels(unsigned first, unsigned last, int rgba);
+
+    //! @brief    Draws a single frame pixel
+    void drawFramePixel(unsigned nr, int rgba) { drawFramePixels(nr, nr, rgba); }
+
+    //! @brief    Draws all eight frame pixels of a single cycle
+    void drawFramePixels(int rgba) { drawFramePixels(0, 7, rgba); }
+
     //! @brief    Draw a single foreground pixel
     void setForegroundPixel(unsigned pixelnr, int rgba);
     

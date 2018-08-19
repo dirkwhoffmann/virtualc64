@@ -50,6 +50,8 @@
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
 // Call CA1 action in VIA class only if the pin value really has changed.
 // Get rid of timer in DriveInspector. Do it message based
+// Right now, pixels are written directly into the pixelBuffer. This might cause caching
+// problems. Better: Write a line locally and copy it over when after the line has finished. 
 
 // Loading and saving:
 //

@@ -275,6 +275,8 @@ PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
+        // OLD STUFF
+        
         int oldRgba = colors[pipe.borderColor];
         int rgba = readColorRegisterRGBA(REG_BORDER_COL);
         assert(oldRgba == rgba);
@@ -290,18 +292,25 @@ PixelEngine::drawBorder()
         assert(rgba0 == firstPixelRgba);
         assert(rgba1 = rgba);
         
-        setFramePixel(0, firstPixelRgba);
+        // Determine color for pixel 0 (old register value applies)
+        uint64_t oldRegValue = vic->borderColor.read();
+        int rgb0 = colors[oldRegValue & 0x0F];
+        
+        // Determine color for pixels 1 to 7 (new register value applies)
+        uint64_t newRegValue = vic->borderColor.readWithDelay(0);
+        int rgba1234567 = colors[(newRegValue >> 8) & 0x0F];
+        
+        // TODO: Use setFramePixels(uint64_t color);
+        
+        assert(rgb0 == firstPixelRgba);
+        // setFramePixel(0, firstPixelRgba);
+        drawFramePixel(0, firstPixelRgba);
         
         // After the first pixel has been drawn, color register changes show up
         rgba = colors[vic->p.borderColor];
+        assert(rgba1234567 == rgba);
         
-        setFramePixel(1, rgba);
-        setFramePixel(2, rgba);
-        setFramePixel(3, rgba);
-        setFramePixel(4, rgba);
-        setFramePixel(5, rgba);
-        setFramePixel(6, rgba);
-        setFramePixel(7, rgba);
+        drawFramePixels(1, 7, rgba);
     }
 }
 
@@ -312,17 +321,21 @@ PixelEngine::drawBorder17()
         
         // 38 column mode
         int rgba = colors[pipe.borderColor];
-        setFramePixel(0, rgba);
+        // setFramePixel(0, rgba);
+        drawFramePixel(0, rgba);
         
         // After the first pixel has been drawn, color register changes show up
         rgba = colors[vic->p.borderColor];
         
+        /*
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);
         setFramePixel(3, rgba);
         setFramePixel(4, rgba);
         setFramePixel(5, rgba);
         setFramePixel(6, rgba);
+        */
+        drawFramePixels(1, 6, rgba);
         // That's all, we only draw 7 pixels here
         
     } else {
@@ -340,8 +353,8 @@ PixelEngine::drawBorder55()
         // 38 column mode
         int rgba = readColorRegisterRGBA(REG_BORDER_COL);
         assert(rgba == colors[pipe.borderColor]);
-        // setFramePixel(7, colors[pipe.borderColor]);
-        setFramePixel(7, rgba);
+        // setFramePixel(7, rgba);
+        drawFramePixel(7, rgba);
         
     } else {
         
@@ -746,10 +759,26 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int color, int nr)
 }
 
 
-// -----------------------------------------------------------------------------------------------
-//                        Low level drawing (pixel buffer access)
-// -----------------------------------------------------------------------------------------------
+//
+// Low level drawing (pixel buffer access)
+//
 
+void
+PixelEngine::drawFramePixels(unsigned first, unsigned last, int rgba)
+{
+    assert(bufferoffset + last < NTSC_PIXELS);
+    
+    for (unsigned pixelNr = first; pixelNr <= last; pixelNr++) {
+        
+        pixelBuffer[bufferoffset + pixelNr] = rgba;
+        zBuffer[pixelNr] = BORDER_LAYER_DEPTH;
+
+        // Disable sprite/foreground collision detection in border
+        pixelSource[pixelNr] &= (~0x80);
+    }
+}
+
+/*
 void
 PixelEngine::setFramePixel(unsigned pixelnr, int rgba)
 {
@@ -760,6 +789,7 @@ PixelEngine::setFramePixel(unsigned pixelnr, int rgba)
     zBuffer[pixelnr] = BORDER_LAYER_DEPTH;
     pixelSource[pixelnr] &= (~0x80); // disable sprite/foreground collision detection in border
 }
+*/
 
 void
 PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
