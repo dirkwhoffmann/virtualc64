@@ -157,6 +157,7 @@ public:
     //
     
     //! @brief    VIC colors
+    /*
     enum Color {
         BLACK   = 0x00,
         WHITE   = 0x01,
@@ -175,6 +176,7 @@ public:
         LTBLUE  = 0x0E,
         GREY3   = 0x0F
     };
+    */
     
     //
     // Pixel buffers and colors

@@ -129,9 +129,9 @@ VIC::setC64(C64 *c64)
 {
     VirtualComponent::setC64(c64);
 
-    // Assign reference clock for all time delayed variables
-    borderColor.setClock(c64->cpu.cycle);
-    bgColor.setClock(c64->cpu.cycle);
+    // Assign reference clock to all time delayed variables
+    borderColor.setClock(&c64->cpu.cycle);
+    bgColor.setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -143,8 +143,10 @@ VIC::reset()
     yCounter = PAL_HEIGHT;
     
     // Preset some video parameters to show a blank blue sreen on power up
-    p.borderColor = PixelEngine::LTBLUE;
-    cp.backgroundColor[0] = PixelEngine::BLUE;
+    p.borderColor = VICII_LIGHT_BLUE;
+    cp.backgroundColor[0] = VICII_BLUE;
+    borderColor.reset(0xE0E0E0E0E0E0E0E);
+    bgColor.reset(0x606060606060606);
     setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
 	p.registerCTRL1 = 0x10;
@@ -729,7 +731,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2D:
         case 0x2E:
             
-            pokeColorReg(addr, value);
+            pokeColorReg(addr, value & 0x0F);
             return;
     }
 	
@@ -741,7 +743,8 @@ void
 VIC::pokeColorReg(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0x20 && addr <= 0x2E);
-    /*
+    assert(is_uint4_t(value));
+    
     uint64_t pattern[16] = {
         0x0000000000000000,
         0x0101010101010101,
@@ -760,15 +763,25 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         0x0E0E0E0E0E0E0E0E,
         0x0F0F0F0F0F0F0F0F
     };
-    */
     
+    // Check for gray dot bug (damages the color value of the first pixel)
+    uint64_t grayDot = (hasGrayDotBug() && emulateGrayDotBug) ? 0xF : 0x0;
+  
     switch(addr) {
             
         case 0x20: // Border color
+            
             p.borderColor = value & 0x0F;
+            borderColor.write(pattern[value]);
+            borderColor.pipeline[1] |= grayDot;
             return;
             
-        case 0x21: // Backgrund color
+        case 0x21: // Background color
+            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            bgColor.write(pattern[value]);
+            bgColor.pipeline[1] |= grayDot;
+            return;
+            
         case 0x22: // Extended background color 1
         case 0x23: // Extended background color 2
         case 0x24: // Extended background color 3
@@ -1473,9 +1486,9 @@ VIC::endRasterline()
     
     // Draw debug markers
     if (markIRQLines && yCounter == rasterInterruptLine())
-        pixelEngine.markLine(PixelEngine::WHITE);
+        pixelEngine.markLine(VICII_WHITE);
     if (markDMALines && badLineCondition)
-        pixelEngine.markLine(PixelEngine::RED);
+        pixelEngine.markLine(VICII_RED);
 
     /*
     if (c64->rasterline == 51 && !vblank) {

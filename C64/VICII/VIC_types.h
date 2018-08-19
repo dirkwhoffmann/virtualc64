@@ -22,6 +22,29 @@
 #ifndef _VIC_TYPES_INC
 #define _VIC_TYPES_INC
 
+//
+// VICII colors
+//
+
+//! @brief    VIC colors
+enum VICIIColors {
+    VICII_BLACK       = 0x0,
+    VICII_WHITE       = 0x1,
+    VICII_RED         = 0x2,
+    VICII_CYAN        = 0x3,
+    VICII_PURPLE      = 0x4,
+    VICII_GREEN       = 0x5,
+    VICII_BLUE        = 0x6,
+    VICII_YELLOW      = 0x7,
+    VICII_ORANGE      = 0x8,
+    VICII_BROWN       = 0x9,
+    VICII_LIGHT_RED   = 0xA,
+    VICII_DARK_GREY   = 0xB,
+    VICII_GREY        = 0xC,
+    VICII_LIGHT_GREEN = 0xD,
+    VICII_LIGHT_BLUE  = 0xE,
+    VICII_LIGHT_GREY  = 0xF
+};
 
 //
 // NTSC constants

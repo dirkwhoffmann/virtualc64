@@ -284,10 +284,10 @@ public:
 	uint8_t iomem[64]; 
 
     //! @brief    Border color register ($D020)
-    TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(1);
+    TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(2);
     
     //! @brief    Background color register ($D021)
-    TimeDelayed<uint64_t> bgColor = TimeDelayed<uint64_t>(1);
+    TimeDelayed<uint64_t> bgColor = TimeDelayed<uint64_t>(2);
     
 private:
 

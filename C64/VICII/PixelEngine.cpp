@@ -68,6 +68,7 @@ PixelEngine::reset()
     
     memset(&sr, 0, sizeof(sr));
     memset(&sprite_sr, 0, sizeof(sprite_sr));
+    memset(&pipe, 0, sizeof(pipe));
 }
 
 void
@@ -207,7 +208,7 @@ uint8_t
 PixelEngine::readColorRegister(uint16_t addr, unsigned pixelNr)
 {
     assert(pixelNr < 8);
-    return (pixelNr == 0 && grayDot(addr)) ? GREY3 : readColorRegister(addr);
+    return (pixelNr == 0 && grayDot(addr)) ? VICII_LIGHT_GREY : readColorRegister(addr);
 }
 
 bool
@@ -278,7 +279,18 @@ PixelEngine::drawBorder()
         int rgba = readColorRegisterRGBA(REG_BORDER_COL);
         assert(oldRgba == rgba);
         
-        setFramePixel(0, grayDot(REG_BORDER_COL) ? colors[GREY3] : rgba);
+        int firstPixelRgba = grayDot(REG_BORDER_COL) ? colors[VICII_LIGHT_GREY] : rgba;
+        
+        uint64_t newcol = (vic->borderColor.read());
+        int rgba0 = colors[newcol & 0xF];
+        int rgba1 = colors[(newcol >> 8) & 0xF];
+        if (rgba0 != firstPixelRgba) {
+            debug("delayed: %llx pipe: %d grayDot: %d\n", newcol, pipe.borderColor, grayDot(REG_BORDER_COL));
+        }
+        assert(rgba0 == firstPixelRgba);
+        assert(rgba1 = rgba);
+        
+        setFramePixel(0, firstPixelRgba);
         
         // After the first pixel has been drawn, color register changes show up
         rgba = colors[vic->p.borderColor];
@@ -624,22 +636,22 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             break;
             
         case INVALID_TEXT:
-            col_rgba[0] = colors[PixelEngine::BLACK];
-            col_rgba[1] = colors[PixelEngine::BLACK];
-            col_rgba[2] = colors[PixelEngine::BLACK];
-            col_rgba[3] = colors[PixelEngine::BLACK];
+            col_rgba[0] = colors[VICII_BLACK];
+            col_rgba[1] = colors[VICII_BLACK];
+            col_rgba[2] = colors[VICII_BLACK];
+            col_rgba[3] = colors[VICII_BLACK];
             break;
             
         case INVALID_STANDARD_BITMAP:
-            col_rgba[0] = colors[PixelEngine::BLACK];
-            col_rgba[1] = colors[PixelEngine::BLACK];
+            col_rgba[0] = colors[VICII_BLACK];
+            col_rgba[1] = colors[VICII_BLACK];
             break;
             
         case INVALID_MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[PixelEngine::BLACK];
-            col_rgba[1] = colors[PixelEngine::BLACK];
-            col_rgba[2] = colors[PixelEngine::BLACK];
-            col_rgba[3] = colors[PixelEngine::BLACK];
+            col_rgba[0] = colors[VICII_BLACK];
+            col_rgba[1] = colors[VICII_BLACK];
+            col_rgba[2] = colors[VICII_BLACK];
+            col_rgba[3] = colors[VICII_BLACK];
             break;
             
         default:

@@ -24,6 +24,8 @@
 
 template <class T> class TimeDelayed {
     
+public:
+    
     /*! @brief    Value pipeline (history buffer)
      *  @details  Semantics:
      *            pipeline[0]: Value that was written at time timeStamp
@@ -31,42 +33,50 @@ template <class T> class TimeDelayed {
      */
     T *pipeline = NULL;
     
+private:
+    
     //! @brief  Remembers the time of the most recent call to write()
-    uint64_t timeStamp;
+    int64_t timeStamp = 0;
     
-    //! @brief   Cycles to elapse until a written value shows up.
-    uint8_t delay;
+    //! @brief   Cycles to elapse until a written value shows up
+    uint8_t delay = 0;
     
-    //! @brief   Reference clock for this variable
-    uint64_t& clock = timeStamp;
+    //! @brief   Pointer to reference clock
+    int64_t *clock = NULL;
     
 public:
     
     //! @brief   Constructors
-    TimeDelayed(uint8_t delay, uint64_t& clock);
     TimeDelayed(uint8_t delay);
+    TimeDelayed(uint8_t delay, uint64_t *clock);
     
     //! @brief   Destructor
     ~TimeDelayed();
     
     //! @brief   Sets the reference clock
-    void setClock(uint64_t& clock) { this->clock = clock; }
+    void setClock(uint64_t *clock) { this->clock = (int64_t *)clock; }
 
-    //! @brief   Zeroes out all stores values
-    void clear();
+    //! @brief   Overwrites a single pipeline entry.
+    void overwrite(unsigned nr, T value) { assert(nr <= delay); pipeline[nr] = value; }
+    
+    //! @brief   Overwrites all pipeline entries with a reset value.
+    void reset(T value) { for (unsigned i = 0; i <= delay; i++) overwrite(i, value); }
+    
+    //! @brief   Zeroes out all pipeline entries.
+    void clear() { reset((T)0); }
 
     //! @brief   Write a value into the pipeline.
-    void write(T value) { writeWithClock(value, clock); }
+    void write(T value) { writeWithDelay(value, 0); }
 
-    //! @brief   Work horse for write().
-    void writeWithClock(T value, uint64_t clock);
+    //! @brief   Work horse for write(T).
+    void writeWithDelay(T value, uint8_t waitCycles);
     
     //! @brief   Reads a value from the pipeline with the standard delay.
     T read() { return readWithDelay(delay); }
 
-    //! @brief   Work horse for read().
+    //! @brief   Work horse for read(T).
     T readWithDelay(uint8_t delay);
-
+    
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);

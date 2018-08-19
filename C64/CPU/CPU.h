@@ -189,7 +189,7 @@ private:
      *             where the edge is detected, and stays high until the NMI has
      *             been handled."
      */
-    TimeDelayed<uint8_t> edgeDetector = TimeDelayed<uint8_t>(1, cycle);
+    TimeDelayed<uint8_t> edgeDetector = TimeDelayed<uint8_t>(1, &cycle);
     uint8_delayed oldEdgeDetector;
     
     /*! @brief    Level detector of IRQ line
@@ -201,7 +201,7 @@ private:
      *             remaining high as long as the IRQ input is low during the
      *             preceding cycle's φ2).
      */
-    TimeDelayed<uint8_t> levelDetector = TimeDelayed<uint8_t>(1, cycle);
+    TimeDelayed<uint8_t> levelDetector = TimeDelayed<uint8_t>(1, &cycle);
     uint8_delayed oldLevelDetector;
     
     //! @brief    Result of the edge detector polling operation

@@ -22,27 +22,30 @@
 #include "TimeDelayed.h"
 
 template <class T>
-TimeDelayed<T>::TimeDelayed(uint8_t delay, uint64_t& clock) : delay(delay), clock(clock)
+TimeDelayed<T>::TimeDelayed(uint8_t delay)
 {
     pipeline = new T[delay + 1];
-    clear();
-}
-template TimeDelayed<bool>::TimeDelayed(uint8_t delay, uint64_t& clock);
-template TimeDelayed<uint8_t>::TimeDelayed(uint8_t delay, uint64_t& clock);
-template TimeDelayed<uint32_t>::TimeDelayed(uint8_t delay, uint64_t& clock);
-template TimeDelayed<uint64_t>::TimeDelayed(uint8_t delay, uint64_t& clock);
-
-
-template <class T>
-TimeDelayed<T>::TimeDelayed(uint8_t delay) : delay(delay)
-{
-    pipeline = new T[delay + 1];
+    this->timeStamp = 0;
+    this->delay = delay;
+    this->clock = NULL;
     clear();
 }
 template TimeDelayed<bool>::TimeDelayed(uint8_t delay);
 template TimeDelayed<uint8_t>::TimeDelayed(uint8_t delay);
 template TimeDelayed<uint32_t>::TimeDelayed(uint8_t delay);
 template TimeDelayed<uint64_t>::TimeDelayed(uint8_t delay);
+
+
+template <class T>
+TimeDelayed<T>::TimeDelayed(uint8_t delay, uint64_t *clock) : TimeDelayed(delay)
+{
+    setClock(clock);
+}
+
+template TimeDelayed<bool>::TimeDelayed(uint8_t delay, uint64_t *clock);
+template TimeDelayed<uint8_t>::TimeDelayed(uint8_t delay, uint64_t *clock);
+template TimeDelayed<uint32_t>::TimeDelayed(uint8_t delay, uint64_t *clock);
+template TimeDelayed<uint64_t>::TimeDelayed(uint8_t delay, uint64_t *clock);
 
 
 template <class T>
@@ -56,45 +59,20 @@ template TimeDelayed<uint8_t>::~TimeDelayed();
 template TimeDelayed<uint32_t>::~TimeDelayed();
 template TimeDelayed<uint64_t>::~TimeDelayed();
 
-/*
-template <class T>
-void TimeDelayed<T>::reset(T value)
-{
-    for (unsigned i = 0; i < delay + 1; i++) {
-        pipeline[i] = value;
-    }
-}
-template void TimeDelayed<bool>::reset(bool value);
-template void TimeDelayed<uint8_t>::reset(uint8_t value);
-template void TimeDelayed<uint32_t>::reset(uint32_t value);
-template void TimeDelayed<uint64_t>::reset(uint64_t value);
-*/
-
 
 template <class T>
-void TimeDelayed<T>::clear()
+void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
 {
-    for (unsigned i = 0; i < delay + 1; i++) {
-        pipeline[i] = (T)0;
-    }
-}
-template void TimeDelayed<bool>::clear();
-template void TimeDelayed<uint8_t>::clear();
-template void TimeDelayed<uint32_t>::clear();
-template void TimeDelayed<uint64_t>::clear();
-
-
-template <class T>
-void TimeDelayed<T>::writeWithClock(T value, uint64_t clock)
-{
+    int64_t referenceTime = *clock + waitCycles;
+    
     // Shift pipeline
-    int64_t diff = (int64_t)(clock - timeStamp);
-    for (int i = delay; i >= 0; i--) {
+    int64_t diff = referenceTime - timeStamp;
+    for (int i = this->delay; i >= 0; i--) {
         pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
     }
     
     // Assign new value
-    timeStamp = clock;
+    timeStamp = referenceTime;
     pipeline[0] = value;
 }
 template void TimeDelayed<bool>::write(bool value);
@@ -107,9 +85,9 @@ template <class T>
 T TimeDelayed<T>::readWithDelay(uint8_t delay)
 {
     assert(delay <= this->delay);
-
+    
     // Determine correct pipeline position by comparing timeStamp with clock
-    int64_t offset = MAX(0, (int64_t)timeStamp - (int64_t)clock + delay);
+    int64_t offset = MAX(0, timeStamp - *clock + delay);
     return pipeline[offset];
 }
 template bool TimeDelayed<bool>::readWithDelay(uint8_t delay);
@@ -122,13 +100,15 @@ template <class T>
 void TimeDelayed<T>::debug()
 {
     for (int i = delay; i >= 0; i--) {
-        printf("%d ", (int)pipeline[i]);
+        printf("%llX ", (uint64_t)pipeline[i]);
     }
     printf("\n");
     
-    for (int i = 0; i < delay; i++) {
-        printf("readWithDelay(%d) = %lld\n", i, (uint64_t)readWithDelay(i));
+    printf("read() = %llX\n", (uint64_t)read());
+    for (int i = 0; i <= delay; i++) {
+        printf("readWithDelay(%d) = %llX\n", i, (uint64_t)readWithDelay(i));
     }
+    printf("timeStamp = %lld clock = %lld delay = %d\n", timeStamp, *clock, delay);
 }
 template void TimeDelayed<bool>::debug();
 template void TimeDelayed<uint8_t>::debug();
