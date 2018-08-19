@@ -393,7 +393,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
     preparePixelEngine(); // Prepare for next cycle (first border column)
     // Update color registers in pixel engine to get the first pixel right
-    pixelEngine.cpipe = cp;
+    // pixelEngine.cpipe = cp;
     
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();

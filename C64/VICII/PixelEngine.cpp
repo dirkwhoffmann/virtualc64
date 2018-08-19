@@ -46,7 +46,7 @@ PixelEngine::PixelEngine()
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
         
         // { &pipe.borderColor,        sizeof(pipe.borderColor),       CLEAR_ON_RESET },
-        { cpipe.backgroundColor,    sizeof(cpipe.backgroundColor),  CLEAR_ON_RESET | BYTE_FORMAT },
+        // { cpipe.backgroundColor,    sizeof(cpipe.backgroundColor),  CLEAR_ON_RESET | BYTE_FORMAT },
         { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
@@ -155,9 +155,10 @@ uint8_t
 PixelEngine::readColorRegister(uint16_t addr)
 {
     switch (addr) {
-            
-        // case REG_BORDER_COL:
-        //     return pipe.borderColor;
+          
+        /*
+        case REG_BORDER_COL:
+             return pipe.borderColor;
             
         case REG_BG_COL:
             return cpipe.backgroundColor[0];
@@ -170,6 +171,7 @@ PixelEngine::readColorRegister(uint16_t addr)
             
         case REG_EXT3_COL:
             return cpipe.backgroundColor[3];
+        */
             
         case REG_SPR_MC1_COL:
             return vic->spriteExtraColor1;
@@ -329,7 +331,7 @@ PixelEngine::drawCanvas()
         drawCanvasPixel(0);
         
         // After the first pixel has been drawn, color register changes show up
-        cpipe = vic->cp;
+        // cpipe = vic->cp;
         
         drawCanvasPixel(1);
         drawCanvasPixel(2);
@@ -540,22 +542,9 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
 void
 PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    /*
-    assert(rgbaTable[cpipe.backgroundColor[0]] == readColorRegisterRGBA(REG_BG_COL));
-    assert(rgbaTable[cpipe.backgroundColor[1]] == readColorRegisterRGBA(REG_EXT1_COL));
-    assert(rgbaTable[cpipe.backgroundColor[2]] == readColorRegisterRGBA(REG_EXT2_COL));
-    assert(rgbaTable[cpipe.backgroundColor[3]] == readColorRegisterRGBA(REG_EXT3_COL));
-    */
-    
     switch (mode) {
 
         case STANDARD_TEXT:
-            
-            /*
-            col_rgba[0] = readColorRegisterRGBA(REG_BG_COL);
-            col_rgba0[0] = readColorRegisterRGBA(REG_BG_COL, 0);
-            col_rgba[1] = col_rgba0[1] = rgbaTable[colorSpace];
-            */
             
             col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
             col[1] = pattern[colorSpace];
@@ -563,53 +552,23 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpac
             
         case MULTICOLOR_TEXT:
             if (colorSpace & 0x8 /* MC flag */) {
-                /*
-                col_rgba[0] = readColorRegisterRGBA(REG_BG_COL);
-                col_rgba0[0] = readColorRegisterRGBA(REG_BG_COL, 0);
-                col_rgba[1] = readColorRegisterRGBA(REG_EXT1_COL);
-                col_rgba0[1] = readColorRegisterRGBA(REG_EXT1_COL, 0);
-                col_rgba[2] = readColorRegisterRGBA(REG_EXT2_COL);
-                col_rgba0[2] = readColorRegisterRGBA(REG_EXT2_COL, 0);
-                col_rgba[3] = col_rgba0[3] = rgbaTable[colorSpace & 0x07];
-                */
-                
                 col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
                 col[1] = (vic->bgColor1.delayed() & 0x0F) | (vic->bgColor1.current() & ~0x0F);
                 col[2] = (vic->bgColor2.delayed() & 0x0F) | (vic->bgColor2.current() & ~0x0F);
                 col[3] = pattern[colorSpace & 0x07];
             } else {
-                /*
-                col_rgba[0] = readColorRegisterRGBA(REG_BG_COL);
-                col_rgba0[0] = readColorRegisterRGBA(REG_BG_COL, 0);
-                col_rgba[1] = col_rgba0[1] = rgbaTable[colorSpace];
-                */
-                
                 col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
                 col[1] = pattern[colorSpace];
-                
             }
             break;
             
         case STANDARD_BITMAP:
-            /*
-            col_rgba0[0] = col_rgba[0] = rgbaTable[characterSpace & 0x0F]; // color of '0' pixels
-            col_rgba0[1] = col_rgba[1] = rgbaTable[characterSpace >> 4]; // color of '1' pixels
-            */
-            
             col[0] = pattern[characterSpace & 0xF];
             col[1] = pattern[characterSpace >> 4];
             
             break;
             
         case MULTICOLOR_BITMAP:
-            /*
-            col_rgba[0] = readColorRegisterRGBA(REG_BG_COL);
-            col_rgba0[0] = readColorRegisterRGBA(REG_BG_COL, 0);
-            col_rgba[1] = col_rgba0[1] = rgbaTable[characterSpace >> 4];
-            col_rgba[2] = col_rgba0[2] = rgbaTable[characterSpace & 0x0F];
-            col_rgba[3] = col_rgba0[3] = rgbaTable[colorSpace];
-            */
-            
             col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
             col[1] = pattern[characterSpace >> 4];
             col[2] = pattern[characterSpace & 0x0F];
@@ -617,11 +576,6 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpac
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            /*
-            col_rgba[0] = readColorRegisterRGBA(REG_BG_COL + (characterSpace >> 6));
-            col_rgba0[0] = readColorRegisterRGBA(REG_BG_COL + (characterSpace >> 6), 0);
-            col_rgba[1] = col_rgba0[1] = rgbaTable[colorSpace];
-            */
             switch(characterSpace >> 6) {
                 case 0:
                     col[0] =
@@ -652,45 +606,16 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpac
         case INVALID_TEXT:
         case INVALID_STANDARD_BITMAP:
         case INVALID_MULTICOLOR_BITMAP:
-            /*
-            col_rgba[0] = col_rgba0[0] = rgbaTable[VICII_BLACK];
-            col_rgba[1] = col_rgba0[1] = rgbaTable[VICII_BLACK];
-            col_rgba[2] = col_rgba0[2] = rgbaTable[VICII_BLACK];
-            col_rgba[3] = col_rgba0[3] = rgbaTable[VICII_BLACK];
-            */
-            
             col[0] = 0;
             col[1] = 0;
             col[2] = 0;
             col[3] = 0;
             break;
             
-        /*
-        case INVALID_STANDARD_BITMAP:
-            col_rgba[0] = rgbaTable[VICII_BLACK];
-            col_rgba[1] = rgbaTable[VICII_BLACK];
-            break;
-            
-        case INVALID_MULTICOLOR_BITMAP:
-            col_rgba[0] = rgbaTable[VICII_BLACK];
-            col_rgba[1] = rgbaTable[VICII_BLACK];
-            col_rgba[2] = rgbaTable[VICII_BLACK];
-            col_rgba[3] = rgbaTable[VICII_BLACK];
-            break;
-        */
-            
         default:
             assert(0);
             break;
     }
-    /*
-    assert(rgbaTable[(col[0] >> (8*pixelNr)) & 0xF] == col_rgba[0]);
-    assert(rgbaTable[(col[1] >> (8*pixelNr)) & 0xF] == col_rgba[1]);
-    if (mode == MULTICOLOR_BITMAP || mode == MULTICOLOR_TEXT) {
-        assert(rgbaTable[(col[2] >> (8*pixelNr)) & 0xF] == col_rgba[2]);
-        assert(rgbaTable[(col[3] >> (8*pixelNr)) & 0xF] == col_rgba[3]);
-    }
-    */
 }
 
 void

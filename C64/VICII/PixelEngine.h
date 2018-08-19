@@ -313,7 +313,7 @@ public:
     PixelEnginePipe pipe;
     
     //! @brief    Canvas color pipe
-    CanvasColorPipe cpipe;
+    // CanvasColorPipe cpipe;
 
     /*! @brief    Latched VIC state
      *  @details  To draw pixels right, it is important to gather the necessary
