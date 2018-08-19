@@ -538,12 +538,12 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
 void
 PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
+    assert(rgbaTable[cpipe.backgroundColor[0]] == readColorRegisterRGBA(REG_BG_COL));
+    assert(rgbaTable[cpipe.backgroundColor[1]] == readColorRegisterRGBA(REG_EXT1_COL));
+    assert(rgbaTable[cpipe.backgroundColor[2]] == readColorRegisterRGBA(REG_EXT2_COL));
+    assert(rgbaTable[cpipe.backgroundColor[3]] == readColorRegisterRGBA(REG_EXT3_COL));
+    
     switch (mode) {
-            
-        assert(rgbaTable[cpipe.backgroundColor[0]] == readColorRegisterRGBA(REG_BG_COL));
-        assert(rgbaTable[cpipe.backgroundColor[1]] == readColorRegisterRGBA(REG_EXT1_COL));
-        assert(rgbaTable[cpipe.backgroundColor[2]] == readColorRegisterRGBA(REG_EXT2_COL));
-        assert(rgbaTable[cpipe.backgroundColor[3]] == readColorRegisterRGBA(REG_EXT3_COL));
 
         case STANDARD_TEXT:
             

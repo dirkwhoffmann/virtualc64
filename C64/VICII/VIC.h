@@ -286,9 +286,12 @@ public:
     //! @brief    Border color register ($D020)
     TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(2);
     
-    //! @brief    Background color register ($D021)
-    TimeDelayed<uint64_t> bgColor = TimeDelayed<uint64_t>(2);
-    
+    //! @brief    Background color registers ($D021 - $D024)
+    TimeDelayed<uint64_t> bgColor0 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint64_t> bgColor1 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint64_t> bgColor2 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint64_t> bgColor3 = TimeDelayed<uint64_t>(2);
+
 private:
 
     /*! @brief    Start address of the currently selected memory bank

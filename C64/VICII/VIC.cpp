@@ -131,7 +131,10 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     borderColor.setClock(&c64->cpu.cycle);
-    bgColor.setClock(&c64->cpu.cycle);
+    bgColor0.setClock(&c64->cpu.cycle);
+    bgColor1.setClock(&c64->cpu.cycle);
+    bgColor2.setClock(&c64->cpu.cycle);
+    bgColor3.setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -146,7 +149,7 @@ VIC::reset()
     // p.borderColor = VICII_LIGHT_BLUE;
     cp.backgroundColor[0] = VICII_BLUE;
     borderColor.reset(0xE0E0E0E0E0E0E0E);
-    bgColor.reset(0x606060606060606);
+    bgColor0.reset(0x606060606060606);
     setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
 	p.registerCTRL1 = 0x10;
@@ -233,7 +236,10 @@ VIC::stateSize()
     return
     VirtualComponent::stateSize() +
     borderColor.stateSize() +
-    bgColor.stateSize();
+    bgColor0.stateSize() +
+    bgColor1.stateSize() +
+    bgColor2.stateSize() +
+    bgColor3.stateSize();
 }
 
 void
@@ -243,8 +249,11 @@ VIC::loadFromBuffer(uint8_t **buffer)
     
     VirtualComponent::loadFromBuffer(buffer);
     borderColor.loadFromBuffer(buffer);
-    bgColor.loadFromBuffer(buffer);
-    
+    bgColor0.loadFromBuffer(buffer);
+    bgColor1.loadFromBuffer(buffer);
+    bgColor2.loadFromBuffer(buffer);
+    bgColor3.loadFromBuffer(buffer);
+
     assert(*buffer - old == stateSize());
 }
 
@@ -255,8 +264,11 @@ VIC::saveToBuffer(uint8_t **buffer)
     
     VirtualComponent::saveToBuffer(buffer);
     borderColor.saveToBuffer(buffer);
-    bgColor.saveToBuffer(buffer);
-    
+    bgColor0.saveToBuffer(buffer);
+    bgColor1.saveToBuffer(buffer);
+    bgColor2.saveToBuffer(buffer);
+    bgColor3.saveToBuffer(buffer);
+
     assert(*buffer - old == stateSize());
 }
 
@@ -765,30 +777,45 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         0x0F0F0F0F0F0F0F0F
     };
     
-    // Check for gray dot bug (damages the color value of the first pixel)
+    // Setup the color mask for the gray dot bug
     uint64_t grayDot = (hasGrayDotBug() && emulateGrayDotBug) ? 0xF : 0x0;
   
     switch(addr) {
             
         case 0x20: // Border color
-            
-            // p.borderColor = value & 0x0F;
+     
             borderColor.write(pattern[value]);
             borderColor.pipeline[1] |= grayDot;
             return;
             
-        case 0x21: // Background color
+        case 0x21: // Background color 0
+            
             cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            bgColor.write(pattern[value]);
-            bgColor.pipeline[1] |= grayDot;
+            bgColor0.write(pattern[value]);
+            bgColor0.pipeline[1] |= grayDot;
             return;
             
-        case 0x22: // Extended background color 1
-        case 0x23: // Extended background color 2
-        case 0x24: // Extended background color 3
+        case 0x22: // Background color 1
+
             cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            bgColor1.write(pattern[value]);
+            bgColor1.pipeline[1] |= grayDot;
             return;
+
+        case 0x23: // Background color 2
             
+            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            bgColor2.write(pattern[value]);
+            bgColor2.pipeline[1] |= grayDot;
+            return;
+
+        case 0x24: // Background color 3
+            
+            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            bgColor2.write(pattern[value]);
+            bgColor2.pipeline[1] |= grayDot;
+            return;
+     
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             spriteExtraColor1 = value & 0x0F;
             return;
