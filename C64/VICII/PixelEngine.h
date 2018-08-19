@@ -627,18 +627,20 @@ private:
      *            [3] : color for '11' pixels in multicolor mode 
      */
     uint64_t col[4];
-    // int col_rgba[4]; // DEPRECATED
 
-    /*! @brief    Same as col_rgba[4], but for pixel 0
-     *  @details  Nedded to emulate the gray dot bug.
-     */
-    // int col_rgba0[4]; // DEPRECATED
-    
+    //! @brief    Sprite colors as loaded by loadSpriteColors()
+    uint64_t sprExtraCol1;
+    uint64_t sprExtraCol2;
+    uint64_t sprCol[8];
+
 public:
     
     //! @brief    Determines pixel colors accordig to the provided display mode
     void loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace);
-    
+
+    //! @brief    Load sprite colors from VIC registers
+    void loadSpriteColors();
+
     /*! @brief    Draws single canvas pixel in single-color mode
      *  @details  1s are drawn with drawForegroundPixel, 0s are drawn with
      *            drawBackgroundPixel. Uses the drawing colors that are setup by

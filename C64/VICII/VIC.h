@@ -290,7 +290,24 @@ public:
         TimeDelayed<uint64_t>(2),
         TimeDelayed<uint64_t>(2)
     };
+    
+    //! @brief    Sprite extra color 1 ($D025)
+    TimeDelayed<uint64_t> sprExtraColor1 = TimeDelayed<uint64_t>(1);
+    
+    //! @brief    Sprite extra color 2 ($D026)
+    TimeDelayed<uint64_t> sprExtraColor2 = TimeDelayed<uint64_t>(1);
   
+    //! @brief    Sprite colors  color registers ($D027 - $D02E)
+    TimeDelayed<uint64_t> sprColor[8] = {
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1)
+    };
 
 private:
 
@@ -385,12 +402,15 @@ private:
     uint8_t cleared_bits_in_d017;
     
     //! Sprite colors (same for all sprites)
+    //! @deprecated
     uint8_t spriteColor[8];
 
     //! Sprite extra color 1 (same for all sprites)
+    //! @deprecated
     uint8_t spriteExtraColor1;
 
     //! Sprite extra color 2 (same for all sprites)
+    //! @deprecated
     uint8_t spriteExtraColor2;
     
     

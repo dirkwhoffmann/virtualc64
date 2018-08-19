@@ -108,13 +108,9 @@ VIC::VIC()
         { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
-        // { &p.borderColor,               sizeof(p.borderColor),                  CLEAR_ON_RESET },
         { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
         { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
         
-        // Canvas color pipe
-        // { cp.backgroundColor,           sizeof(cp.backgroundColor),             CLEAR_ON_RESET | BYTE_FORMAT},
- 
         { NULL,                         0,                                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
@@ -133,6 +129,10 @@ VIC::setC64(C64 *c64)
     borderColor.setClock(&c64->cpu.cycle);
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].setClock(&c64->cpu.cycle);
+    sprExtraColor1.setClock(&c64->cpu.cycle);
+    sprExtraColor2.setClock(&c64->cpu.cycle);
+    for (unsigned i = 0; i < 8; i++)
+        sprColor[i].setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -143,18 +143,22 @@ VIC::reset()
     // Internal state
     yCounter = PAL_HEIGHT;
     
-    // Preset some video parameters to show a blank blue sreen on power up
-    // p.borderColor = VICII_LIGHT_BLUE;
-    // cp.backgroundColor[0] = VICII_BLUE;
-    borderColor.reset(pattern[14]); // Light blue
-    bgColor[0].reset(pattern[6]); // Blue
-    bgColor[1].reset(0);
-    bgColor[2].reset(0);
-    bgColor[3].reset(0);
+    // Preset some video parameters to show a blank sreen on power up
     setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
 	p.registerCTRL1 = 0x10;
 	expansionFF = 0xFF;
+    
+    // Reset timed delay variables
+    borderColor.reset(pattern[14]); // Light blue
+    bgColor[0].reset(pattern[6]);   // Blue
+    bgColor[1].reset(0);
+    bgColor[2].reset(0);
+    bgColor[3].reset(0);
+    sprExtraColor1.reset(0);
+    sprExtraColor2.reset(0);
+    for (unsigned i = 0; i < 8; i++)
+        sprColor[i].reset(0);
     
 	// Disable cheating by default
 	drawSprites = true;
@@ -239,6 +243,10 @@ VIC::stateSize()
     result += borderColor.stateSize();
     for (unsigned i = 0; i < 4; i++)
         result += bgColor[i].stateSize();
+    result += sprExtraColor1.stateSize();
+    result += sprExtraColor2.stateSize();
+    for (unsigned i = 0; i < 8; i++)
+        result += sprColor[i].stateSize();
 
     return result;
 }
@@ -251,10 +259,13 @@ VIC::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
     
     borderColor.loadFromBuffer(buffer);
-
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].loadFromBuffer(buffer);
-
+    sprExtraColor1.loadFromBuffer(buffer);
+    sprExtraColor2.loadFromBuffer(buffer);
+    for (unsigned i = 0; i < 8; i++)
+        sprColor[i].loadFromBuffer(buffer);
+    
     assert(*buffer - old == stateSize());
 }
 
@@ -266,9 +277,12 @@ VIC::saveToBuffer(uint8_t **buffer)
     VirtualComponent::saveToBuffer(buffer);
     
     borderColor.saveToBuffer(buffer);
-    
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].saveToBuffer(buffer);
+    sprExtraColor1.saveToBuffer(buffer);
+    sprExtraColor2.saveToBuffer(buffer);
+    for (unsigned i = 0; i < 8; i++)
+        sprColor[i].saveToBuffer(buffer);
     
     assert(*buffer - old == stateSize());
 }
@@ -703,7 +717,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             // The GUI needs to know when the second bit changes. This bit
             // lets us distinguish between uppercase / lowercase character mode
             if ((oldValue ^ value) & 0x02) {
-                debug("CHARSET CHANGE\n");
                 c64->putMessage(MSG_CHARSET);
             }
 			return;
@@ -792,10 +805,14 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             spriteExtraColor1 = value & 0x0F;
+            sprExtraColor1.write(pattern[value]);
+            sprExtraColor1.pipeline[1] |= grayDot;
             return;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
             spriteExtraColor2 = value & 0x0F;
+            sprExtraColor2.write(pattern[value]);
+            sprExtraColor2.pipeline[1] |= grayDot;
             return;
             
         case 0x27: // Sprite color 1
@@ -807,6 +824,8 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
             spriteColor[addr - 0x27] = value & 0x0F;
+            sprColor[addr - 0x27].write(pattern[value]);
+            sprColor[addr - 0x27].pipeline[1] |= grayDot;
             return;
             
         default:
