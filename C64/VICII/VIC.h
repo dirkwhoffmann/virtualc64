@@ -284,10 +284,13 @@ public:
     TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(2);
     
     //! @brief    Background color registers ($D021 - $D024)
-    TimeDelayed<uint64_t> bgColor0 = TimeDelayed<uint64_t>(2);
-    TimeDelayed<uint64_t> bgColor1 = TimeDelayed<uint64_t>(2);
-    TimeDelayed<uint64_t> bgColor2 = TimeDelayed<uint64_t>(2);
-    TimeDelayed<uint64_t> bgColor3 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint64_t> bgColor[4] = {
+        TimeDelayed<uint64_t>(2),
+        TimeDelayed<uint64_t>(2),
+        TimeDelayed<uint64_t>(2),
+        TimeDelayed<uint64_t>(2)
+    };
+  
 
 private:
 

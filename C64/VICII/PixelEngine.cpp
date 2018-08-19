@@ -342,7 +342,7 @@ PixelEngine::drawCanvas()
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
         // TODO: Check if border-bm-idle test passes
-        drawEightBackgroundPixels(vic->bgColor0.current());
+        drawEightBackgroundPixels(vic->bgColor[0].current());
     }
 }
 
@@ -515,24 +515,27 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
 }
 
 void
-PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
+PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
+                        uint8_t characterSpace, uint8_t colorSpace)
 {
     switch (mode) {
 
+        #define MIX_COLORS(x,y) ((x & 0x0FF) | (y & ~0x0FF))
+            
         case STANDARD_TEXT:
             
-            col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
+            col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
             col[1] = pattern[colorSpace];
             break;
             
         case MULTICOLOR_TEXT:
             if (colorSpace & 0x8 /* MC flag */) {
-                col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
-                col[1] = (vic->bgColor1.delayed() & 0x0F) | (vic->bgColor1.current() & ~0x0F);
-                col[2] = (vic->bgColor2.delayed() & 0x0F) | (vic->bgColor2.current() & ~0x0F);
+                col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
+                col[1] = MIX_COLORS(vic->bgColor[1].delayed(),vic->bgColor[1].current());
+                col[2] = MIX_COLORS(vic->bgColor[2].delayed(),vic->bgColor[2].current());
                 col[3] = pattern[colorSpace & 0x07];
             } else {
-                col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
+                col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
                 col[1] = pattern[colorSpace];
             }
             break;
@@ -544,37 +547,15 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpac
             break;
             
         case MULTICOLOR_BITMAP:
-            col[0] = (vic->bgColor0.delayed() & 0x0F) | (vic->bgColor0.current() & ~0x0F);
+            col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
             col[1] = pattern[characterSpace >> 4];
             col[2] = pattern[characterSpace & 0x0F];
             col[3] = pattern[colorSpace];
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            switch(characterSpace >> 6) {
-                case 0:
-                    col[0] =
-                    (vic->bgColor0.delayed() & 0x0F) |
-                    (vic->bgColor0.current() & ~0x0F);
-                    break;
-                case 1:
-                    col[0] =
-                    (vic->bgColor1.delayed() & 0x0F) |
-                    (vic->bgColor1.current() & ~0x0F);
-                    break;
-                case 2:
-                    col[0] =
-                    (vic->bgColor2.delayed() & 0x0F) |
-                    (vic->bgColor2.current() & ~0x0F);
-                    break;
-                case 3:
-                    col[0] =
-                    (vic->bgColor3.delayed() & 0x0F) |
-                    (vic->bgColor3.current() & ~0x0F);
-                    break;
-                    
-                default: assert(false);
-            }
+            col[0] = MIX_COLORS(vic->bgColor[characterSpace >> 6].delayed(),
+                                vic->bgColor[characterSpace >> 6].current());
             col[1] = pattern[colorSpace];
             break;
             

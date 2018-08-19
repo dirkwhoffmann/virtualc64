@@ -131,10 +131,8 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     borderColor.setClock(&c64->cpu.cycle);
-    bgColor0.setClock(&c64->cpu.cycle);
-    bgColor1.setClock(&c64->cpu.cycle);
-    bgColor2.setClock(&c64->cpu.cycle);
-    bgColor3.setClock(&c64->cpu.cycle);
+    for (unsigned i = 0; i < 4; i++)
+        bgColor[i].setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -148,11 +146,11 @@ VIC::reset()
     // Preset some video parameters to show a blank blue sreen on power up
     // p.borderColor = VICII_LIGHT_BLUE;
     // cp.backgroundColor[0] = VICII_BLUE;
-    borderColor.reset(0xE0E0E0E0E0E0E0E); // Light blue
-    bgColor0.reset(0x606060606060606); // Blue
-    bgColor1.reset(0);
-    bgColor2.reset(0);
-    bgColor3.reset(0);
+    borderColor.reset(pattern[14]); // Light blue
+    bgColor[0].reset(pattern[6]); // Blue
+    bgColor[1].reset(0);
+    bgColor[2].reset(0);
+    bgColor[3].reset(0);
     setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
 	p.registerCTRL1 = 0x10;
@@ -236,13 +234,13 @@ VIC::dumpState()
 size_t
 VIC::stateSize()
 {
-    return
-    VirtualComponent::stateSize() +
-    borderColor.stateSize() +
-    bgColor0.stateSize() +
-    bgColor1.stateSize() +
-    bgColor2.stateSize() +
-    bgColor3.stateSize();
+    size_t result = VirtualComponent::stateSize();
+    
+    result += borderColor.stateSize();
+    for (unsigned i = 0; i < 4; i++)
+        result += bgColor[i].stateSize();
+
+    return result;
 }
 
 void
@@ -251,11 +249,11 @@ VIC::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     VirtualComponent::loadFromBuffer(buffer);
+    
     borderColor.loadFromBuffer(buffer);
-    bgColor0.loadFromBuffer(buffer);
-    bgColor1.loadFromBuffer(buffer);
-    bgColor2.loadFromBuffer(buffer);
-    bgColor3.loadFromBuffer(buffer);
+
+    for (unsigned i = 0; i < 4; i++)
+        bgColor[i].loadFromBuffer(buffer);
 
     assert(*buffer - old == stateSize());
 }
@@ -266,12 +264,12 @@ VIC::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     VirtualComponent::saveToBuffer(buffer);
+    
     borderColor.saveToBuffer(buffer);
-    bgColor0.saveToBuffer(buffer);
-    bgColor1.saveToBuffer(buffer);
-    bgColor2.saveToBuffer(buffer);
-    bgColor3.saveToBuffer(buffer);
-
+    
+    for (unsigned i = 0; i < 4; i++)
+        bgColor[i].saveToBuffer(buffer);
+    
     assert(*buffer - old == stateSize());
 }
 
@@ -287,10 +285,10 @@ VIC::getInfo()
     info.ba = (BAlow == 0);
     info.displayMode = getDisplayMode();
     info.borderColor = borderColor.current();
-    info.backgroundColor0 = bgColor0.current();
-    info.backgroundColor1 = bgColor1.current();
-    info.backgroundColor2 = bgColor2.current();
-    info.backgroundColor3 = bgColor3.current();
+    info.backgroundColor0 = bgColor[0].current();
+    info.backgroundColor1 = bgColor[1].current();
+    info.backgroundColor2 = bgColor[2].current();
+    info.backgroundColor3 = bgColor[3].current();
     info.screenGeometry = getScreenGeometry();
     info.dx = getHorizontalRasterScroll();
     info.dy = getVerticalRasterScroll();
@@ -547,18 +545,13 @@ VIC::peek(uint16_t addr)
             // return p.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
             return (borderColor.current() & 0x0F) | 0xF0;
             
-        case 0x21: // Backgrund color 0
-            return (bgColor0.current() & 0x0F) | 0xF0;
-            
+        case 0x21: // Background color 0
         case 0x22: // Background color 1
-            return (bgColor1.current() & 0x0F) | 0xF0;
-            
         case 0x23: // Background color 2
-            return (bgColor2.current() & 0x0F) | 0xF0;
+        case 0x24: // Background color 3
             
-        case 0x24: // Extended background color 3
-            return (bgColor3.current() & 0x0F) | 0xF0;
-            
+            return (bgColor[addr - 0x21].current() & 0x0F) | 0xF0;
+      
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             return spriteExtraColor1 | 0xF0;
             
@@ -789,33 +782,14 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
             return;
             
         case 0x21: // Background color 0
-            
-            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            bgColor0.write(pattern[value]);
-            bgColor0.pipeline[1] |= grayDot;
-            return;
-            
         case 0x22: // Background color 1
-
-            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            bgColor1.write(pattern[value]);
-            bgColor1.pipeline[1] |= grayDot;
-            return;
-
         case 0x23: // Background color 2
-            
-            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            bgColor2.write(pattern[value]);
-            bgColor2.pipeline[1] |= grayDot;
-            return;
-
         case 0x24: // Background color 3
             
-            // cp.backgroundColor[addr - 0x21] = value & 0x0F;
-            bgColor3.write(pattern[value]);
-            bgColor3.pipeline[1] |= grayDot;
+            bgColor[addr - 0x21].write(pattern[value]);
+            bgColor[addr - 0x21].pipeline[1] |= grayDot;
             return;
-     
+            
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             spriteExtraColor1 = value & 0x0F;
             return;
