@@ -640,15 +640,15 @@ public:
     void loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace);
     
     /*! @brief    Draws single canvas pixel in single-color mode
-     *  @details  1s are drawn with setForegroundPixel, 0s are drawn with
-     *            setBackgroundPixel. Uses the drawing colors that are setup by
+     *  @details  1s are drawn with drawForegroundPixel, 0s are drawn with
+     *            drawBackgroundPixel. Uses the drawing colors that are setup by
      *            loadColors().
      */
     void setSingleColorPixel(unsigned pixelnr, uint8_t bit);
     
     /*! @brief    Draws single canvas pixel in multi-color mode
      *  @details  The left of the two color bits determines whether
-     *            setForegroundPixel or setBackgroundPixel is used.
+     *            drawForegroundPixel or drawBackgroundPixel is used.
      *            Uses the drawing colors that are setup by loadColors(). 
      */
     void setMultiColorPixel(unsigned pixelnr, uint8_t two_bits);
@@ -687,15 +687,30 @@ public:
     void drawFramePixels(uint64_t color) { drawFramePixels(0, 7, color); }
 
     //! @brief    Draw a single foreground pixel
-    void setForegroundPixel(unsigned pixelnr, int rgba);
+    void drawForegroundPixel(unsigned pixelnr, uint64_t color);
     
+    //! @brief    Draw a single foreground pixel
+    //! @deprecated
+    // void setForegroundPixel(unsigned pixelnr, int rgba);
+
     //! @brief    Draw a single background pixel
-    void setBackgroundPixel(unsigned pixelnr, int rgba);
+    void drawBackgroundPixel(unsigned pixelNr, uint64_t color);
+
+    //! @brief    Draw a single background pixel
+    //! @deprecated
+    // void setBackgroundPixel(unsigned pixelnr, int rgba);
 
     //! @brief    Draw eight background pixels in a row
+    void drawEightBackgroundPixels(uint64_t color) {
+        for (unsigned i = 0; i < 8; i++) drawBackgroundPixel(i, color); }
+
+    //! @brief    Draw eight background pixels in a row
+    //! @deprecated
+    /*
     void setEightBackgroundPixels(int rgba) {
         for (unsigned i = 0; i < 8; i++) setBackgroundPixel(i, rgba); }
-
+    */
+    
     //! @brief    Draw a single sprite pixel
     void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
 

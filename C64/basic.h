@@ -102,6 +102,9 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @brief Sets a single bit to 0 (value == 0) or 1 (value != 0)
 #define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
+//! @brief Cuts out a single byte from a bigger integer.
+#define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xF)
+
 //! @brief Returns true if value is rising when switching from x to y
 #define RISING_EDGE(x,y) (!(x) && (y))
 

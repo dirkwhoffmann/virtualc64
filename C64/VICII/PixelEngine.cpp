@@ -342,9 +342,7 @@ PixelEngine::drawCanvas()
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
         // TODO: Check if border-bm-idle test passes
-        // TODO: Change setBackgroundPixel to use color pattern
-        int col = rgbaTable[vic->bgColor0.current() & 0xF];
-        setEightBackgroundPixels(col);
+        drawEightBackgroundPixels(vic->bgColor0.current());
     }
 }
 
@@ -599,26 +597,32 @@ void
 PixelEngine::setSingleColorPixel(unsigned pixelNr, uint8_t bit /* valid: 0, 1 */)
 {
     // int oldrgba = (pixelNr == 0) ? col_rgba0[bit] : col_rgba[bit];
-    int rgba = rgbaTable[(col[bit] >> (pixelNr * 8)) & 0xF];
+    // int rgba = rgbaTable[(col[bit] >> (pixelNr * 8)) & 0xF];
     // assert(rgba == oldrgba);
     
-    if (bit)
-        setForegroundPixel(pixelNr, rgba);
-    else
-        setBackgroundPixel(pixelNr, rgba);
+    if (bit) {
+        // setForegroundPixel(pixelNr, rgba);
+        drawForegroundPixel(pixelNr, col[bit]);
+    } else {
+        // setBackgroundPixel(pixelNr, rgba);
+        drawBackgroundPixel(pixelNr, col[bit]);
+    }
 }
 
 void
 PixelEngine::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
 {
     // int oldrgba = (pixelNr == 0) ? col_rgba0[two_bits] : col_rgba[two_bits];
-    int rgba = rgbaTable[(col[two_bits] >> (pixelNr * 8)) & 0xF];
+    // int rgba = rgbaTable[(col[two_bits] >> (pixelNr * 8)) & 0xF];
     // assert(rgba == oldrgba);
     
-    if (two_bits & 0x02)
-        setForegroundPixel(pixelNr, rgba);
-    else
-        setBackgroundPixel(pixelNr, rgba);
+    if (two_bits & 0x02) {
+        // setForegroundPixel(pixelNr, rgba);
+        drawForegroundPixel(pixelNr, col[two_bits]);
+    } else {
+        // setBackgroundPixel(pixelNr, rgba);
+        drawBackgroundPixel(pixelNr, col[two_bits]);
+    }
 }
 
 void
@@ -705,19 +709,18 @@ PixelEngine::drawFramePixels(unsigned first, unsigned last, uint64_t color)
     }
 }
 
-/*
 void
-PixelEngine::setFramePixel(unsigned pixelnr, int rgba)
+PixelEngine::drawForegroundPixel(unsigned pixelNr, uint64_t color)
 {
-    unsigned offset = bufferoffset + pixelnr;
+    unsigned offset = bufferoffset + pixelNr;
     assert(offset < NTSC_PIXELS);
     
-    pixelBuffer[offset] = rgba;
-    zBuffer[pixelnr] = BORDER_LAYER_DEPTH;
-    pixelSource[pixelnr] &= (~0x80); // disable sprite/foreground collision detection in border
+    pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+    zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
+    pixelSource[pixelNr] = 0x80;
 }
-*/
 
+/*
 void
 PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
 {
@@ -732,22 +735,31 @@ PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
         pixelSource[pixelnr] = 0x80;
     }
 }
+*/
 
+void
+PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint64_t color)
+{
+    unsigned offset = bufferoffset + pixelNr;
+    assert(offset < NTSC_PIXELS);
+    
+    pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+    zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
+    pixelSource[pixelNr] = 0x00;
+}
+
+/*
 void
 PixelEngine::setBackgroundPixel(unsigned pixelnr, int rgba)
 {
     unsigned offset = bufferoffset + pixelnr;
     assert(offset < NTSC_PIXELS);
-
-    // The zBuffer check is not necessary as the canvas pixels are the first to draw
-    // if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset])
-    {
-        pixelBuffer[offset] = rgba;
-        zBuffer[pixelnr] = BACKGROUD_LAYER_DEPTH;
-        pixelSource[pixelnr] = 0x00;
-    }
-
+    
+    pixelBuffer[offset] = rgba;
+    zBuffer[pixelnr] = BACKGROUD_LAYER_DEPTH;
+    pixelSource[pixelnr] = 0x00;
 }
+*/
 
 void
 PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
