@@ -198,33 +198,6 @@ public:
      *  @param    buffer Pointer to next byte to read
      */
     virtual void saveToBuffer(uint8_t **buffer);
-    
-    
-
-    
-    
-    
-    //! @functiongroup  Time delayed variables
-    //! @deprecated      Use TimeDelayed class instead
-    
-    //! @brief    Reads a time delayed variable.
-    //! @deprecated
-    #define read8_delayed(var, cycle) \
-        ((cycle >= var.timeStamp) ? var.value : var.prevValue)
-
-    //! @brief    Writes to a time delayed variable.
-    //! @deprecated
-    void write8_delayed(uint8_delayed &var,
-                        uint8_t value, uint64_t cycle, uint64_t delay = 1);
-
-    //! @brief    Initializes a time delayed variable.
-    //! @deprecated
-    void init8_delayed(uint8_delayed &var, uint8_t value);
-
-    //! @brief    Initializes a time delayed variable with 0.
-    //! @deprecated
-    void clear8_delayed(uint8_delayed &var) { init8_delayed(var, 0); }
-
 };
 
 #endif

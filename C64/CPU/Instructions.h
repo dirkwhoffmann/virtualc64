@@ -383,13 +383,11 @@ mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
 
-#define POLL_IRQ doIrq = (read8_delayed(oldLevelDetector, cycle) && I == 0); \
-    assert(read8_delayed(oldLevelDetector, cycle) == levelDetector.read());
-#define POLL_NMI doNmi = read8_delayed(oldEdgeDetector, cycle); \
-    assert(read8_delayed(oldEdgeDetector, cycle) == edgeDetector.read());
+#define POLL_IRQ doIrq = (levelDetector.read() && I == 0);
+#define POLL_NMI doNmi = edgeDetector.read();
 #define POLL_INT POLL_IRQ POLL_NMI
-#define POLL_INT_AGAIN doIrq |= (read8_delayed(oldLevelDetector, cycle) && I == 0); \
-                       doNmi |= read8_delayed(oldEdgeDetector, cycle);
+#define POLL_INT_AGAIN doIrq |= (levelDetector.read() && I == 0); \
+                       doNmi |= edgeDetector.read();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return true;
 #define DONE     next = fetch; return true;
 

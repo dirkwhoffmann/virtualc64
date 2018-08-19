@@ -113,10 +113,10 @@ CPU::dumpState()
         instr.command);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
     msg("      Nmi line : %02X\n", nmiLine);
-    msg(" Edge detector : %02X\n", read8_delayed(oldEdgeDetector, cycle));
+    msg(" Edge detector : %02X\n", edgeDetector.read());
     msg("         doNmi : %s\n", doNmi ? "yes" : "no");
     msg("      Irq line : %02X\n", irqLine);
-    msg("Level detector : %02X\n", read8_delayed(oldLevelDetector, cycle));
+    msg("Level detector : %02X\n", levelDetector.read());
     msg("         doIrq : %s\n", doIrq ? "yes" : "no");
 	msg("   IRQ routine : %02X%02X\n", mem->spypeek(0xFFFF), mem->spypeek(0xFFFE));
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
@@ -179,7 +179,6 @@ CPU::pullDownNmiLine(InterruptSource bit)
     
     // Check for falling edge on physical line
     if (!nmiLine) {
-        write8_delayed(oldEdgeDetector, 1, cycle);
         edgeDetector.write(1);
     }
     
@@ -198,7 +197,6 @@ CPU::pullDownIrqLine(InterruptSource source)
 	assert(source != 0);
     
 	irqLine |= source;
-    write8_delayed(oldLevelDetector, irqLine, cycle);
     levelDetector.write(irqLine);
 }
 
@@ -206,7 +204,6 @@ void
 CPU::releaseIrqLine(InterruptSource source)
 {
     irqLine &= ~source;
-    write8_delayed(oldLevelDetector, irqLine, cycle);
     levelDetector.write(irqLine);
 }
 
