@@ -149,68 +149,6 @@ PixelEngine::updateSpriteOnOff()
     dc.spriteOnOffPipe = vic->spriteOnOff;
 }
 
-/*
-uint8_t
-PixelEngine::readColorRegister(uint16_t addr)
-{
-    switch (addr) {
-          
-        case REG_SPR_MC1_COL:
-            return vic->spriteExtraColor1;
-            
-        case REG_SPR_MC2_COL:
-            return vic->spriteExtraColor2;
-            
-        case REG_SPR1_COL:
-            return vic->spriteColor[0];
-            
-        case REG_SPR2_COL:
-            return vic->spriteColor[1];
-            
-        case REG_SPR3_COL:
-            return vic->spriteColor[2];
-            
-        case REG_SPR4_COL:
-            return vic->spriteColor[3];
-            
-        case REG_SPR5_COL:
-            return vic->spriteColor[4];
-            
-        case REG_SPR6_COL:
-            return vic->spriteColor[5];
-            
-        case REG_SPR7_COL:
-            return vic->spriteColor[6];
-            
-        case REG_SPR8_COL:
-            return vic->spriteColor[7];
-            
-        default:
-            assert(false);
-    }
-}
-*/
-
-/*
-uint8_t
-PixelEngine::readColorRegister(uint16_t addr, unsigned pixelNr)
-{
-    assert(pixelNr < 8);
-    return (pixelNr == 0 && grayDot(addr)) ? VICII_LIGHT_GREY : readColorRegister(addr);
-}
-*/
-
-bool
-PixelEngine::grayDot(uint16_t addr)
-{
-    assert(addr >= REG_BORDER_COL && addr <= REG_SPR8_COL);
-    
-    return
-    c64->vic.isCurrentlyWrittenTo(addr) &&
-    c64->vic.hasGrayDotBug() &&
-    c64->vic.emulateGrayDotBug;
-}
-    
 void
 PixelEngine::draw()
 {
