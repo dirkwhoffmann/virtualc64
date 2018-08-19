@@ -124,6 +124,16 @@ VIC::~VIC()
 {
 }
 
+void
+VIC::setC64(C64 *c64)
+{
+    VirtualComponent::setC64(c64);
+
+    // Assign reference clock for all time delayed variables
+    borderColor.setClock(c64->cpu.cycle);
+    bgColor.setClock(c64->cpu.cycle);
+}
+
 void 
 VIC::reset()
 {
@@ -213,6 +223,39 @@ VIC::dumpState()
 		msg("\n                    ");
 	}
 	msg("\n");
+}
+
+size_t
+VIC::stateSize()
+{
+    return
+    VirtualComponent::stateSize() +
+    borderColor.stateSize() +
+    bgColor.stateSize();
+}
+
+void
+VIC::loadFromBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    
+    VirtualComponent::loadFromBuffer(buffer);
+    borderColor.loadFromBuffer(buffer);
+    bgColor.loadFromBuffer(buffer);
+    
+    assert(*buffer - old == stateSize());
+}
+
+void
+VIC::saveToBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    
+    VirtualComponent::saveToBuffer(buffer);
+    borderColor.saveToBuffer(buffer);
+    bgColor.saveToBuffer(buffer);
+    
+    assert(*buffer - old == stateSize());
 }
 
 VICInfo

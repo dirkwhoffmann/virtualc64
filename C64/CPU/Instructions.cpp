@@ -470,7 +470,7 @@ CPU::executeOneCycle()
                 // if (tracingEnabled()) debug("NMI (source = %02X)\n", nmiLine);
                 IDLE_FETCH
                 clear8_delayed(oldEdgeDetector);
-                edgeDetector.reset(0);
+                edgeDetector.clear();
                 next = nmi_2;
                 doNmi = false;
                 doIrq = false; // NMI wins
@@ -560,7 +560,7 @@ CPU::executeOneCycle()
                 
                 // ... the processor will jump to the NMI vector instead of the IRQ vector
                 clear8_delayed(oldEdgeDetector);
-                edgeDetector.reset(0);
+                edgeDetector.clear();
                 next = nmi_5;
                 return true;
             }
@@ -1239,7 +1239,7 @@ CPU::executeOneCycle()
             
                 // ... jump to the NMI vector instead of the IRQ vector.
                 clear8_delayed(oldEdgeDetector);
-                edgeDetector.reset(0);
+                edgeDetector.clear();
                 next = BRK_nmi_4;
                 return true;
                 

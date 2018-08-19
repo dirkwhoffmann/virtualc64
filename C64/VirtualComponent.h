@@ -71,7 +71,7 @@ public:
      *  @details  The provided reference is propagated automatically to all
      *            sub components.
      */
-    void setC64(C64 *c64);
+    virtual void setC64(C64 *c64);
 
     /*! @brief    Reset component to its initial state.
      *  @details  By default, each component also resets its sub components.
@@ -200,117 +200,9 @@ public:
     virtual void saveToBuffer(uint8_t **buffer);
     
     
-#if 0
-    
-    //
-    //! @functiongroup Saving single snapshot items
-    //
-    
-    /*! @brief    Saves an 8 bit state item in big endian format
-     */
-    void write8(uint8_t **ptr, uint8_t value) { *((*ptr)++) = value; }
-    
-    /*! @brief    Saves a 16 bit state item in big endian format
-     */
-    void write16(uint8_t **ptr, uint16_t value) {
-        write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
-    
-    /*! @brief    Saves a 32 bit state item in big endian format
-     */
-    void write32(uint8_t **ptr, uint32_t value) {
-        write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
-    
-    /*! @brief    Saves a 64 bit state item in big endian format
-     */
-    void write64(uint8_t **ptr, uint64_t value) {
-        write32(ptr, (uint32_t)(value >> 32)); write32(ptr, (uint32_t)value); }
-    
-    /*! @brief    Saves a byte block of arbitarary size
-     *  @param    ptr    Target buffer
-     *  @param    values Pointer to the beginning of the data blockbt
-     *  @param    length Length of data block in bytes
-     */
-    void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) {
-        memcpy(*ptr, values, length); *ptr += length; }
-    
-    /*! @brief    Saves a word block of arbitarary size in big endian format
-     *  @param    ptr    Target buffer
-     *  @param    values Pointer to the beginning of the data block
-     *  @param    length Length of data block in bytes
-     */
-    void writeBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
-        for (unsigned i = 0; i < length / sizeof(uint16_t); i++) write16(ptr, values[i]); }
-
-    /*! @brief    Saves a double word block of arbitarary size in big endian format
-     *  @param    ptr    Target buffer
-     *  @param    values Pointer to the beginning of the data block
-     *  @param    length Length of data block in bytes
-     */
-    void writeBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
-        for (unsigned i = 0; i < length / sizeof(uint32_t); i++) write32(ptr, values[i]); }
-
-    /*! @brief    Saves a quad word block of arbitarary size in big endian format
-     *  @param    ptr    Target buffer
-     *  @param    values Pointer to the beginning of the data block
-     *  @param    length Length of data block in bytes
-     */
-    void writeBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
-        for (unsigned i = 0; i < length / sizeof(uint64_t); i++) write64(ptr, values[i]); }
 
     
-    //
-    //! @functiongroup Loading single snapshot items
-    //
-
-    /*! @brief    Reads an 8 bit state item in big endian format
-     */
-    uint8_t read8(uint8_t **ptr) { return (uint8_t)(*((*ptr)++)); }
-
-    /*! @brief    Reads a 16 bit state item in big endian format
-     */
-    uint16_t read16(uint8_t **ptr) { return ((uint16_t)read8(ptr) << 8) | (uint16_t)read8(ptr); }
     
-    /*! @brief    Reads a 32 bit state item in big endian format
-     */
-    uint32_t read32(uint8_t **ptr) { return ((uint32_t)read16(ptr) << 16) | (uint32_t)read16(ptr); }
-    
-    /*! @brief    Reads a 64 bit state item in big endian format
-     */
-    uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
-    
-    /*! @brief    Loads a byte block of arbitarary size
-     *  @param    ptr    Source buffer
-     *  @param    values Pointer to the beginning of the data block to write into
-     *  @param    length Number of bytes to load
-     */
-    void readBlock(uint8_t **ptr, uint8_t *values, size_t length) {
-        memcpy(values, *ptr, length); *ptr += length; }
-    
-    /*! @brief    Loads a word block of arbitarary size in big endian format
-     *  @param    ptr    Source buffer
-     *  @param    values Pointer to the beginning of the data block to write into
-     *  @param    length Number of bytes to load
-     */
-    void readBlock16(uint8_t **ptr, uint16_t *values, size_t length) {
-        for (unsigned i = 0; i < length / sizeof(uint16_t); i++) values[i] = read16(ptr); }
-
-    /*! @brief    Loads a double word block of arbitarary size in big endian format
-     *  @param    ptr    Source buffer
-     *  @param    values Pointer to the beginning of the data block to write into
-     *  @param    length Number of bytes to load
-     */
-    void readBlock32(uint8_t **ptr, uint32_t *values, size_t length) {
-        for (unsigned i = 0; i < length / sizeof(uint32_t); i++) values[i] = read32(ptr); }
-
-    /*! @brief    Loads a quad word block of arbitarary size in big endian format
-     *  @param    ptr    Source buffer
-     *  @param    values Pointer to the beginning of the data block to write into
-     *  @param    length Number of bytes to load
-     */
-    void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
-        for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
-
-#endif
     
     //! @functiongroup  Time delayed variables
     //! @deprecated      Use TimeDelayed class instead

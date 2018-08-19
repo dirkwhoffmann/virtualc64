@@ -21,6 +21,7 @@
 
 #include "VirtualComponent.h"
 #include "C64_types.h"
+#include "TimeDelayed.h"
 #include "PixelEngine.h"
 
 #define SPR0 0x01
@@ -278,11 +279,16 @@ public:
 	 *  @details  This array is used to store most of the register values that are poked into
      *            the VIC address space. Note that this does not hold for all register values.
      *            Some of them are directly stored inside the state pipe for speedup purposes.
+     *  @deprecated
      */
 	uint8_t iomem[64]; 
 
-    //! @brief    The 15 color registers (VIC register range $D020 - $D02E)
-     
+    //! @brief    Border color register ($D020)
+    TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(1);
+    
+    //! @brief    Background color register ($D021)
+    TimeDelayed<uint64_t> bgColor = TimeDelayed<uint64_t>(1);
+    
 private:
 
     /*! @brief    Start address of the currently selected memory bank
@@ -477,9 +483,13 @@ public:
 	
 	//! @brief    Methods from VirtualComponent
 	void reset();
+    void setC64(C64 *c64);
     void ping();
 	void dumpState();
-
+    size_t stateSize();
+    void loadFromBuffer(uint8_t **buffer);
+    void saveToBuffer(uint8_t **buffer);
+    
     //! @brief    Gathers debug information.
     VICInfo getInfo();
 

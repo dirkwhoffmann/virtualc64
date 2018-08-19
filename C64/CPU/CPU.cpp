@@ -92,8 +92,8 @@ CPU::reset()
     B = 1;
 	rdyLine = true;
 	next = fetch;
-    levelDetector.reset(0);
-    edgeDetector.reset(0);
+    levelDetector.clear();
+    edgeDetector.clear();
     
     clearTraceBuffer();
 }

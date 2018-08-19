@@ -38,18 +38,22 @@ template <class T> class TimeDelayed {
     uint8_t delay;
     
     //! @brief   Reference clock for this variable
-    uint64_t& clock;
+    uint64_t& clock = timeStamp;
     
 public:
     
-    //! @brief   Constructor
+    //! @brief   Constructors
     TimeDelayed(uint8_t delay, uint64_t& clock);
+    TimeDelayed(uint8_t delay);
     
     //! @brief   Destructor
     ~TimeDelayed();
     
-    //! @brief   Reset with a default value
-    void reset(T value);
+    //! @brief   Sets the reference clock
+    void setClock(uint64_t& clock) { this->clock = clock; }
+
+    //! @brief   Zeroes out all stores values
+    void clear();
 
     //! @brief   Write a value into the pipeline.
     void write(T value) { writeWithClock(value, clock); }
