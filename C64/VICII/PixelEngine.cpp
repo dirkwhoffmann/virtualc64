@@ -43,7 +43,7 @@ PixelEngine::PixelEngine()
         { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
 
-        { &newDisplayMode,          sizeof(newDisplayMode),         CLEAR_ON_RESET },
+        // { &newDisplayMode,          sizeof(newDisplayMode),         CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -249,42 +249,55 @@ PixelEngine::drawCanvas()
          *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
          *  Bit Map Mode and Multi Color Mode) in the registers $d011 and
          *  $d016." [C.B.]
-         */        
-        uint64_t d011 = vic->control1.delayed();
-        uint64_t d016 = vic->control2.delayed();
+         */
         
-        uint64_t oldD011_mode = d011 & 0x6060606060606060; // -xx- ----
-        uint64_t oldD016_mode = d016 & 0x1010101010101010; // ---x ----
-        uint64_t newD011_mode = vic->control1.current() & 0x6060606060606060; // -xx- ----
-        uint64_t newD016_mode = vic->control2.current() & 0x1010101010101010; // ---x ----
+        // Determine the correct values of D011 and D016 for each pixel.
+        uint64_t d011, d016;
         
-        // Timing of a $D011 register change:
-        // The new one bit show up after the first four pixels are drawn.
-        // The new zero bits show up after the first six pixels are drawn.
-        newDisplayMode =
-        (oldD011_mode & 0x0000FFFFFFFFFFFF) |
-        (newD011_mode & 0xFFFFFFFF00000000);
+        // We need to take into account that a register changed it's value.
+        uint64_t oldD011 = vic->control1.delayed();
+        uint64_t newD011 = vic->control1.current();
+        uint64_t oldD016 = vic->control2.delayed();
+        uint64_t newD016 = vic->control2.current();
         
-        // Timing of a $D016 register change:
-        // The new bits show up after the first four pixels are drawn.
-        newDisplayMode |=
-        (oldD016_mode & 0x00000000FFFFFFFF) |
-        (newD016_mode & 0xFFFFFFFF00000000);
+        // Timing behavior of D016
+        d016 =
+        (oldD016 & 0x00000000FFFFFFFF) | // Old values for pixels 0...3
+        (newD016 & 0xFFFFFFFF00000000);  // New values for pixels 4...7
         
-        uint8_t ctrl2 = d016 & 0xFF;
-        drawCanvasPixel(0, GET_BYTE(newDisplayMode, 0), ctrl2);
-        drawCanvasPixel(1, GET_BYTE(newDisplayMode, 1), ctrl2);
-        drawCanvasPixel(2, GET_BYTE(newDisplayMode, 2), ctrl2);
-        drawCanvasPixel(3, GET_BYTE(newDisplayMode, 3), ctrl2);
-        drawCanvasPixel(4, GET_BYTE(newDisplayMode, 4), ctrl2);
-        drawCanvasPixel(5, GET_BYTE(newDisplayMode, 5), ctrl2);
-        drawCanvasPixel(6, GET_BYTE(newDisplayMode, 6), ctrl2);
+        // Timing behavior of D011
+        if (vic->is856x()) {
+            
+            // The easy case. No changes in between pixels.
+            d011 = oldD011;
         
-        if (!(oldD016_mode & 0x10) && (newD016_mode & 0x10)) {
+        } else {
+            
+            // The ugly case.
+            // New one bit show up after the first four pixels are drawn.
+            // New zero bits show up after the first six pixels are drawn.
+            d011 =
+            (oldD011 & 0x0000FFFFFFFFFFFF) |
+            (newD011 & 0xFFFFFFFF00000000);
+        }
+        
+        // Determine the display mode for all pixels by combining D011 and D016.
+        uint64_t displayMode =
+        (d011 & 0x6060606060606060) | // -xx- ----
+        (d016 & 0x1010101010101010);  // ---x ----
+        
+        // Draw first seven pixels
+        for (unsigned i = 0; i < 7; i++) {
+            drawCanvasPixel(i, displayMode & 0xFF, d016 & 0xFF);
+            displayMode >>= 8;
+        }
+      
+        if (!(oldD016 & 0x10) && (newD016 & 0x10)) {
             sr.mc_flop = false;
         }
     
-        drawCanvasPixel(7, GET_BYTE(newDisplayMode, 7), ctrl2);
+        // Draw the last pixel
+        drawCanvasPixel(7, GET_BYTE(displayMode, 7), d016 & 0xFF);
         
     } else {
         
