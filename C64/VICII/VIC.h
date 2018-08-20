@@ -720,22 +720,23 @@ private:
 public:
 		
     //! @brief    Returns the current value of the DEN bit (Display Enabled).
-    bool DENbit() { return GET_BIT(p.registerCTRL1, 4); }
-
-    //! @brief    Returns the value of the DEN bit in the previous cycle.
-    // bool DENbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 4); }
+    // bool DENbit() { return GET_BIT(p.registerCTRL1, 4); }
+    bool DENbit() { return GET_BIT(control1.current(), 4); }
 
     //! @brief    Returns the current value of the BMM bit (Bit Map Mode).
-    bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
+    // bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
+    bool BMMbit() { return GET_BIT(control1.current(), 5); }
 
     //! @brief    Returns the value of the BMM bit in the previous cycle.
-    bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 5); }
-    
+    // bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 5); }
+    bool BMMbitInPreviousCycle() { return GET_BIT(control1.delayed(), 5); }
+
     //! @brief    Returns the current value of the ECM bit (Extended Character Mode).
-    bool ECMbit() { return GET_BIT(p.registerCTRL1, 6); }
+    // bool ECMbit() { return GET_BIT(p.registerCTRL1, 6); }
+    bool ECMbit() { return GET_BIT(control1.current(), 6); }
 
     //! @brief    Returns the value of the ECM bit in the previous cycle.
-    bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 6); }
+    // bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.previousCTRL1, 6); }
 
     //! @brief    Returns the masked CB13 bit (controls memory access).
     uint8_t CB13() { return iomem[0x18] & 0x08; }
@@ -747,18 +748,23 @@ public:
     uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
-    bool isCSEL() { return GET_BIT(p.registerCTRL2, 3); }
-	
-	//! @brief    Returns the state of the RSEL bit.
-    bool isRSEL() { return GET_BIT(p.registerCTRL1, 3); }
+    // bool isCSEL() { return GET_BIT(p.registerCTRL2, 3); }
+	bool isCSEL() { return GET_BIT(control2.current(), 3); }
     
+	//! @brief    Returns the state of the RSEL bit.
+    // bool isRSEL() { return GET_BIT(p.registerCTRL1, 3); }
+    bool isRSEL() { return GET_BIT(control1.current(), 3); }
+
 	/*! @brief    Returns the current display mode.
 	 *  @details  The display mode is determined by bits 5 and 6 of control register 1 and 
      *            bit 4 of control register 2. 
      */
-    DisplayMode getDisplayMode()
-	{ return (DisplayMode)((p.registerCTRL1 & 0x60) | (p.registerCTRL2 & 0x10)); }
-	
+    //DisplayMode getDisplayMode()
+	// { return (DisplayMode)((p.registerCTRL1 & 0x60) | (p.registerCTRL2 & 0x10)); }
+    DisplayMode getDisplayMode() {
+        return (DisplayMode)((control1.current() & 0x60) | (control2.current() & 0x10));
+    }
+    
 	//! @brief    Sets the display mode.
     void setDisplayMode(DisplayMode m);
 	
@@ -769,40 +775,58 @@ public:
 	void setScreenGeometry(ScreenGeometry mode);
 	
 	//! @brief    Returns the number of rows to be drawn (24 or 25).
-    int numberOfRows() { return GET_BIT(p.registerCTRL1, 3) ? 25 : 24; }
+    int numberOfRows() { return GET_BIT(control1.current(), 3) ? 25 : 24; }
 	
 	//! @brief    Sets the number of rows to be drawn (24 or 25).
-    void setNumberOfRows(int rs) { assert(rs == 24 || rs == 25); WRITE_BIT(p.registerCTRL1, 3, rs == 25); }
+    // void setNumberOfRows(int rs) { assert(rs == 24 || rs == 25); WRITE_BIT(p.registerCTRL1, 3, rs == 25); }
+    void setNumberOfRows(int rs) {
+        assert(rs == 24 || rs == 25);
+        uint8_t value = control1.current() & 0xFF;
+        WRITE_BIT(value, 3, rs == 25);
+        control1.write(repeated(value));
+    }
 	
 	//! @brief    Returns the number of columns to be drawn (38 or 40).
-    int numberOfColumns() { return GET_BIT(p.registerCTRL2, 3) ? 40 : 38; }
+    int numberOfColumns() { return GET_BIT(control2.current(), 3) ? 40 : 38; }
 
 	//! @brief    Sets the number of columns to be drawn (38 or 40).
-    void setNumberOfColumns(int cs) { assert(cs == 38 || cs == 40); WRITE_BIT(p.registerCTRL2, 3, cs == 40); }
-		
+    // void setNumberOfColumns(int cs) { assert(cs == 38 || cs == 40); WRITE_BIT(p.registerCTRL2, 3, cs == 40); }
+	void setNumberOfColumns(int cs) {
+        assert(cs == 38 || cs == 40);
+        uint8_t value = control2.current() & 0xFF;
+        WRITE_BIT(value, 3, cs == 40);
+        control2.write(repeated(value));
+    }
+    
 	/*! @brief    Returns the vertical raster scroll offset (0 to 7).
-	 *  @details  The vertical raster offset is usally used by games for smoothly scrolling the screen.
+	 *  @details  The vertical raster offset is usally used by games for
+     *            smoothly scrolling the screen.
      */
-    uint8_t getVerticalRasterScroll() { return p.registerCTRL1 & 0x07; }
+    // uint8_t getVerticalRasterScroll() { return p.registerCTRL1 & 0x07; }
+    uint8_t getVerticalRasterScroll() { return control1.current() & 0x07; }
 	
 	//! @brief    Sets the vertical raster scroll offset (0 to 7).
-    void setVerticalRasterScroll(uint8_t offset) { p.registerCTRL1 = (p.registerCTRL1 & 0xF8) | (offset & 0x07); }
-	
+    void setVerticalRasterScroll(uint8_t offset) {
+        assert(offset < 8);
+        uint8_t value = (control1.current() & 0xF8) | (offset & 0x07);
+        control1.write(repeated(value));
+    }
+    
 	/*! @brief    Returns the horizontal raster scroll offset (0 to 7).
-	 *  @details  The vertical raster offset is usally used by games for smoothly scrolling the screen.
+	 *  @details  The vertical raster offset is usally used by games for
+     *            smoothly scrolling the screen.
      */
-    uint8_t getHorizontalRasterScroll() { return p.registerCTRL2 & 0x07; }
+    uint8_t getHorizontalRasterScroll() { return control2.current() & 0x07; }
 	
 	//! @brief    Sets the horizontan raster scroll offset (0 to 7).
-    void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
+    void setHorizontalRasterScroll(uint8_t offset) {
+        assert(offset < 8);
+        uint8_t value = (control2.current() & 0xF8) | (offset & 0x07);
+        control2.write(repeated(value));
+   }
     
-	//! @brief    Returns the background color.
-    // uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
-	
-	//! Returns extra background color (for multicolor modes).
-    // uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
-	
-	
+
+
 	//
 	// DMA lines, BA signal and IRQs
 	//
@@ -857,12 +881,23 @@ public:
      *  @details  In line 0, the interrupt is triggered in cycle 2. In all other lines,
      *            it is triggered in cycle 1.
      */
-    uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 0x80) << 1) | iomem[0x12]; }
-
+    // uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 0x80) << 1) | iomem[0x12]; }
+    uint16_t rasterInterruptLine() { return ((control1.current() & 0x80) << 1) | iomem[0x12]; }
+    
 	//! @brief    Set interrupt rasterline
+    /*
     void setRasterInterruptLine(uint16_t line) {
         iomem[0x12] = line & 0xFF; if (line > 0xFF) p.registerCTRL1 |= 0x80; else p.registerCTRL1 &= 0x7F; }
-	
+    */
+    void setRasterInterruptLine(uint16_t line) {
+        iomem[0x12] = line & 0xFF;
+        if (line > 0xFF) {
+            control1.write(control1.current() | 0x80);
+        } else {
+            control1.write(control1.current() & 0x7F);
+        }
+    }
+
 	//! @brief    Returns true, iff rasterline interrupts are enabled
     bool rasterInterruptEnabled() { return GET_BIT(imr, 1); }
 
@@ -1085,11 +1120,7 @@ public:
 	void endFrame();
 	
     //! @brief    Pushes portions of the VIC state into the pixel engine.
-    void preparePixelEngine() {
-        uint8_t ctrl1 = pixelEngine.pipe.registerCTRL1;
-        pixelEngine.pipe = p;
-        pixelEngine.pipe.previousCTRL1 = ctrl1;
-    }
+    void preparePixelEngine();
     
     //! @brief    Processes all time delayed actions.
     /*! @details  This function is called at the beginning of each VIC cycle.

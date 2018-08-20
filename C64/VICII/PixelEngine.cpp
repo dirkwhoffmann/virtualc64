@@ -306,8 +306,8 @@ PixelEngine::drawCanvas()
         }
         
         // After pixel 7, D016 changes fully show up
-        pipe.registerCTRL2 |= D016;
-        pipe.registerCTRL2 &= D016 | 0xEF;
+        // pipe.registerCTRL2 |= D016;
+        // pipe.registerCTRL2 &= D016 | 0xEF;
         
         drawCanvasPixel(7, GET_BYTE(newDisplayMode, 7), ctrl2);
         

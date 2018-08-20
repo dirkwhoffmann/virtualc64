@@ -477,11 +477,12 @@ void
 VIC::setDisplayMode(DisplayMode m) {
     
     c64->suspend();
+    
     control1.write((control1.current() & ~0x60) | (m & 0x60));
     control2.write((control2.current() & ~0x10) | (m & 0x10));
                    
-    p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
-    p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10);
+    // p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
+    // p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10);
     c64->resume();
 }
 
@@ -1472,6 +1473,14 @@ VIC::endFrame()
     pixelEngine.endFrame();
 }
 
+void
+VIC::preparePixelEngine() {
+    
+    // uint8_t ctrl1 = pixelEngine.pipe.registerCTRL1;
+    uint8_t ctrl1 = control1.delayed() & 0xFF;
+    pixelEngine.pipe = p;
+    pixelEngine.pipe.previousCTRL1 = ctrl1;
+}
 
 void 
 VIC::beginRasterline(uint16_t line)
