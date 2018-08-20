@@ -46,6 +46,7 @@ PixelEngine::PixelEngine()
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
 
         { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
+        { &newDisplayMode,          sizeof(newDisplayMode),         CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -240,35 +241,83 @@ PixelEngine::drawBorder55()
 void
 PixelEngine::drawCanvas()
 {
-    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
-     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
-     Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen überdeckt)." [C.B.] */
+    /* "The sequencer outputs the graphics data in every raster line in the area
+     *  of the display column as long as the vertical border flip-flop is reset
+     *  (see section 3.9.). Outside of the display column and if the flip-flop
+     *  is set, the last current background color is displayed (this area is
+     *  normally covered by the border)." [C.B.]
+     */
     
     if (!pipe.verticalFrameFF) {
+        
+        /* "The graphics data sequencer is capable of 8 different graphics modes
+         *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
+         *  Bit Map Mode and Multi Color Mode) in the registers $d011 and
+         *  $d016." [C.B.]
+         */
+
+        // TODO: Is the displayMode preserved outside the canvas area?
+        // If yes, the following code seems correct:
+        uint64_t oldD011 = repeated((newDisplayMode >> 56) & 0x60); // -xx- ----
+        uint64_t oldD016 = repeated((newDisplayMode >> 56) & 0x10); // ---x ----
+        // If no, the code should look like:
+        // uint64_t oldD011 = vic->control1.delayed() & 0x6060606060606060; // -xx- ----
+        // uint64_t oldD016 = vic->control2.delayed() & 0x1010101010101010; // ---x ----
+        uint64_t newD011 = vic->control1.current() & 0x6060606060606060; // -xx- ----
+        uint64_t newD016 = vic->control2.current() & 0x1010101010101010; // ---x ----
+        
+        // Timing of a $D011 register change:
+        // The new one bit show up after the first four pixels are drawn.
+        // The new zero bits show up after the first six pixels are drawn.
+        newDisplayMode =
+        (oldD011 & 0x0000FFFFFFFFFFFF) |
+        (newD011 & 0xFFFFFFFF00000000);
+        
+        // Timing of a $D016 register change:
+        // The new bits show up after the first four pixels are drawn.
+        newDisplayMode |=
+        (oldD016 & 0x00000000FFFFFFFF) |
+        (newD016 & 0xFFFFFFFF00000000);
         
         uint8_t D011 = vic->p.registerCTRL1 & 0x60; // -xx- ----
         uint8_t D016 = vic->p.registerCTRL2 & 0x10; // ---x ----
         
+        if (displayMode != GET_BYTE(newDisplayMode, 0)) {
+            debug("displayMode = %02X\n", displayMode);
+            debug("newmode = %llx BYTE = %X\n", newDisplayMode, GET_BYTE(newDisplayMode, 0));
+            debug("oldD011 = %X newD011 = %X\n", oldD011, newD011);
+            debug("oldD016 = %X newD016 = %X\n", oldD016, newD016);
+        }
+        assert(displayMode == GET_BYTE(newDisplayMode, 0));
         drawCanvasPixel(0);
+        assert(displayMode == GET_BYTE(newDisplayMode, 1));
         drawCanvasPixel(1);
+        assert(displayMode == GET_BYTE(newDisplayMode, 2));
         drawCanvasPixel(2);
+        assert(displayMode == GET_BYTE(newDisplayMode, 3));
         drawCanvasPixel(3);
         
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
+        uint8_t tmp = displayMode;
         displayMode |= D016;        // latch 1s of D016
         displayMode &= D016 | 0xEF; // latch 0s of D016
         displayMode |= D011;        // latch 1s of D011
         
+        if (displayMode != GET_BYTE(newDisplayMode, 4)) {
+            debug("tmp = %2X, displayMode = %02X\n", tmp, displayMode);
+            debug("newmode = %llx BYTE = %X\n", newDisplayMode, GET_BYTE(newDisplayMode, 4));
+        }
+        assert(displayMode == GET_BYTE(newDisplayMode, 4));
         drawCanvasPixel(4);
+        assert(displayMode == GET_BYTE(newDisplayMode, 5));
         drawCanvasPixel(5);
         
         // After pixel 6, the zero bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
         displayMode &= D011 | 0x9F; // latch 0s of D011
 
+        assert(displayMode == GET_BYTE(newDisplayMode, 6));
         drawCanvasPixel(6);
         
         if (!(pipe.registerCTRL2 & 0x10) && (vic->p.registerCTRL2 & 0x10)) {
@@ -278,6 +327,7 @@ PixelEngine::drawCanvas()
         pipe.registerCTRL2 |= D016;
         pipe.registerCTRL2 &= D016 | 0xEF;
 
+        assert(displayMode == GET_BYTE(newDisplayMode, 7));
         drawCanvasPixel(7);
         
     } else {
@@ -293,7 +343,13 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 {
     assert(pixelnr < 8);
     
-    if (pixelnr == (pipe.registerCTRL2 & 0x07) /* horizontal raster scroll */ && sr.canLoad) {
+    /* "The heart of the sequencer is an 8 bit shift register that is shifted by
+     *  1 bit every pixel and reloaded with new graphics data after every
+     *  g-access. With XSCROLL from register $d016 the reloading can be delayed
+     *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
+     */
+    
+    if (pixelnr == (pipe.registerCTRL2 & 0x07) /* XSCROLL */ && sr.canLoad) {
         
         // Load shift register
         sr.data = pipe.g_data;

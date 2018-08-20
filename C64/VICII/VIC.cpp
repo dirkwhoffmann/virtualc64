@@ -120,6 +120,8 @@ VIC::setC64(C64 *c64)
     VirtualComponent::setC64(c64);
 
     // Assign reference clock to all time delayed variables
+    control1.setClock(&c64->cpu.cycle);
+    control2.setClock(&c64->cpu.cycle);
     borderColor.setClock(&c64->cpu.cycle);
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].setClock(&c64->cpu.cycle);
@@ -144,6 +146,8 @@ VIC::reset()
 	expansionFF = 0xFF;
     
     // Reset timed delay variables
+    control1.reset(0);
+    control2.reset(0);
     borderColor.reset(pattern[14]); // Light blue
     bgColor[0].reset(pattern[6]);   // Blue
     bgColor[1].reset(0);
@@ -233,7 +237,9 @@ size_t
 VIC::stateSize()
 {
     size_t result = VirtualComponent::stateSize();
-    
+
+    result += control1.stateSize();
+    result += control2.stateSize();
     result += borderColor.stateSize();
     for (unsigned i = 0; i < 4; i++)
         result += bgColor[i].stateSize();
@@ -251,7 +257,9 @@ VIC::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     VirtualComponent::loadFromBuffer(buffer);
-    
+
+    control1.loadFromBuffer(buffer);
+    control2.loadFromBuffer(buffer);
     borderColor.loadFromBuffer(buffer);
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].loadFromBuffer(buffer);
@@ -270,6 +278,8 @@ VIC::saveToBuffer(uint8_t **buffer)
     
     VirtualComponent::saveToBuffer(buffer);
     
+    control1.saveToBuffer(buffer);
+    control2.saveToBuffer(buffer);
     borderColor.saveToBuffer(buffer);
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].saveToBuffer(buffer);
@@ -513,6 +523,7 @@ VIC::peek(uint16_t addr)
 	
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
+            assert(p.registerCTRL1 == (control1.current() & 0xFF));
 			return (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
             
 		case 0x12: // VIC_RASTER_READ_WRITE
@@ -525,6 +536,7 @@ VIC::peek(uint16_t addr)
 			return iomem[addr];
             
         case 0x16:
+            assert(p.registerCTRL2 == (control2.current() & 0xFF));
             return p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
             
    		case 0x18:
@@ -662,6 +674,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             } else {
                 p.registerCTRL1 = value;
             }
+            control1.write(repeated(value));
             
             // Check the DEN bit if we're in rasterline 30
             // If it's set at some point in that line, bad line conditions can occur
@@ -685,6 +698,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x16: // CONTROL_REGISTER_2
 
             p.registerCTRL2 = value;
+            control2.write(repeated(value));
             return;
             
 		case 0x17: // SPRITE Y EXPANSION

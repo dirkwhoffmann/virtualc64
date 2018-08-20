@@ -99,6 +99,48 @@ public:
      */
     uint8_t dataBus;
     
+    //
+    // Registers
+    //
+    
+    //! @brief    Control register 1 ($D011)
+    TimeDelayed<uint64_t> control1 = TimeDelayed<uint64_t>(2);
+    
+    //! @brief    Control register 2 ($D016)
+    TimeDelayed<uint64_t> control2 = TimeDelayed<uint64_t>(2);
+    
+    //! @brief    Border color register ($D020)
+    TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(2);
+    
+    //! @brief    Background color registers ($D021 - $D024)
+    TimeDelayed<uint64_t> bgColor[4] = {
+        TimeDelayed<uint64_t>(2),
+        TimeDelayed<uint64_t>(2),
+        TimeDelayed<uint64_t>(2),
+        TimeDelayed<uint64_t>(2)
+    };
+    
+    //! @brief    Sprite extra color 1 ($D025)
+    TimeDelayed<uint64_t> sprExtraColor1 = TimeDelayed<uint64_t>(1);
+    
+    //! @brief    Sprite extra color 2 ($D026)
+    TimeDelayed<uint64_t> sprExtraColor2 = TimeDelayed<uint64_t>(1);
+    
+    //! @brief    Sprite colors  color registers ($D027 - $D02E)
+    TimeDelayed<uint64_t> sprColor[8] = {
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1),
+        TimeDelayed<uint64_t>(1)
+    };
+    
+    
+    
+    
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
 
@@ -265,34 +307,7 @@ public:
      */
 	uint8_t iomem[64]; 
 
-    //! @brief    Border color register ($D020)
-    TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(2);
-    
-    //! @brief    Background color registers ($D021 - $D024)
-    TimeDelayed<uint64_t> bgColor[4] = {
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2)
-    };
-    
-    //! @brief    Sprite extra color 1 ($D025)
-    TimeDelayed<uint64_t> sprExtraColor1 = TimeDelayed<uint64_t>(1);
-    
-    //! @brief    Sprite extra color 2 ($D026)
-    TimeDelayed<uint64_t> sprExtraColor2 = TimeDelayed<uint64_t>(1);
-  
-    //! @brief    Sprite colors  color registers ($D027 - $D02E)
-    TimeDelayed<uint64_t> sprColor[8] = {
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1),
-        TimeDelayed<uint64_t>(1)
-    };
+
 
 private:
 
@@ -937,15 +952,6 @@ private:
 	
 public: 
 	
-	//! @brief    Returns color code of multicolor sprites (extra color 1).
-    // uint8_t getSpriteExtraColor1() { return spriteExtraColor1; }
-	
-	//! @brief    Returns color code of multicolor sprites (extra color 2).
-    // uint8_t getSpriteExtraColor2() { return spriteExtraColor2; }
-	
-	//! @brief    Returns the color of a sprite.
-    // uint8_t getSpriteColor(uint8_t nr) { return spriteColor[nr]; }
-
 	//! @brief    Sets the color of a sprite.
     void setSpriteColor(uint8_t nr, uint8_t color);
 		

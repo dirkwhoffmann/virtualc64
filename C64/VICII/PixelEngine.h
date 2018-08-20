@@ -331,7 +331,8 @@ public:
      *            after certain pixels have been draw. 
      */
     uint8_t displayMode;
-
+    uint64_t newDisplayMode;
+    
     /*! @brief    Latches the sprite enable bits
      *  @details  This method is called in drawSprites()
      */

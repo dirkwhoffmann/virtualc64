@@ -66,57 +66,65 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @functiongroup Handling low level data objects
 //
 
-//! @brief Evaluates to the high byte of x. x is expected to be of type uint16_t.
+//! @brief    Evaluates to the high byte of x. x is expected to be of type uint16_t.
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
 
-//! @brief Evaluates to the low byte of x. x is expected to be of type uint16_t.
+//! @brief    Evaluates to the low byte of x. x is expected to be of type uint16_t.
 #define LO_BYTE(x) (uint8_t)((x) & 0xff)
 
-//! @brief Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
+//! @brief    Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
 
-//! @brief Evaluates to the 32 bit value specified by x, y, z, and w in little endian order (lowest, low, high, highest).
+//! @brief    Evaluates to the 32 bit value specified by x, y, z, and w in little endian order (lowest, low, high, highest).
 #define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
-//! @brief Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
+//! @brief    Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
 #define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
 
-//! @brief Evaluates to the 32 bit value specified by x, y, z, and w in big endian order (highest, high, low, lowest).
+/*! @brief    Evaluates to the 32 bit value specified by x, y, z, and w in
+ *            big endian order (highest, high, low, lowest).
+ */
 #define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
-//! @brief Returns true iff bit n is set in x.
+//! @brief    Returns true iff bit n is set in x.
 #define GET_BIT(x,nr) ((x) & (1 << (nr)))
 
-//! @brief Sets a single bit.
+//! @brief    Sets a single bit.
 #define SET_BIT(x,nr) ((x) |= (1 << (nr)))
 
-//! @brief Clears a single bit.
+//! @brief    Clears a single bit.
 #define CLR_BIT(x,nr) ((x) &= ~(1 << (nr)))
 
-//! @brief Toggles a single bit.
+//! @brief    Toggles a single bit.
 #define TOGGLE_BIT(x,nr) ((x) ^= (1 << (nr)))
 
-//! @brief Copies a single bit from x to y.
+//! @brief    Copies a single bit from x to y.
 #define COPY_BIT(x,y,nr) ((y) = ((y) & ~(1 << (nr)) | ((x) & (1 << (nr)))))
 
-//! @brief Sets a single bit to 0 (value == 0) or 1 (value != 0)
+//! @brief    Sets a single bit to 0 (value == 0) or 1 (value != 0)
 #define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
-//! @brief Cuts out a single byte from a bigger integer.
-#define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xF)
+//! @brief    Cuts out a single byte from a bigger integer.
+#define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xFF)
 
-//! @brief Returns true if value is rising when switching from x to y
+//! @brief    Returns true if value is rising when switching from x to y
 #define RISING_EDGE(x,y) (!(x) && (y))
 
-//! @brief Returns true if bit n is rising when switching from x to y
+//! @brief    Returns true if bit n is rising when switching from x to y
 #define RISING_EDGE_BIT(x,y,n) (!((x) & (1 << (n))) && ((y) & (1 << (n))))
 
-//! @brief Returns true if value is falling when switching from x to y
+//! @brief    Returns true if value is falling when switching from x to y
 #define FALLING_EDGE(x,y) ((x) && !(y))
 
-//! @brief Returns true if bit n is falling when switching from x to y
+//! @brief    Returns true if bit n is falling when switching from x to y
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
+//! @brief    Returns eight copies of a single byte
+inline uint64_t repeated(uint8_t value) {
+    uint64_t result = value;
+    for (unsigned i = 0; i < 7; i++) { result = (result << 8) | value; }
+    return result;
+}
 
 //
 //! @functiongroup Handling buffers
