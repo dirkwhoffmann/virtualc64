@@ -36,7 +36,7 @@ PixelEngine::PixelEngine()
         // VIC state latching
         { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
         { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
-        { &pipe.registerCTRL1,      sizeof(pipe.registerCTRL1),     CLEAR_ON_RESET },
+        // { &pipe.registerCTRL1,      sizeof(pipe.registerCTRL1),     CLEAR_ON_RESET },
         { &pipe.previousCTRL1,      sizeof(pipe.previousCTRL1),     CLEAR_ON_RESET },
         { &pipe.registerCTRL2,      sizeof(pipe.registerCTRL2),     CLEAR_ON_RESET },
         { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
@@ -254,15 +254,13 @@ PixelEngine::drawCanvas()
          *  $d016." [C.B.]
          */
 
+        /*
         if ((vic->control1.current() & 0xFF) != vic->p.registerCTRL1) {
             debug("vic->p.registerCTRL1 = %02X\n", vic->p.registerCTRL1);
             vic->control1.debug();
         }
-        assert((vic->control1.current() & 0xFF) == vic->p.registerCTRL1);
-        assert((vic->control1.delayed() & 0xFF) == pipe.registerCTRL1);
-        assert((vic->control2.current() & 0xFF) == vic->p.registerCTRL2);
-        assert((vic->control2.delayed() & 0xFF) == pipe.registerCTRL2);
-
+         */
+        
         uint64_t d011 = vic->control1.delayed();
         uint64_t d016 = vic->control2.delayed();
         
@@ -284,10 +282,7 @@ PixelEngine::drawCanvas()
         (oldD016_mode & 0x00000000FFFFFFFF) |
         (newD016_mode & 0xFFFFFFFF00000000);
         
-        // uint8_t D011 = vic->p.registerCTRL1 & 0x60; // -xx- ----
-        uint8_t D016 = vic->p.registerCTRL2 & 0x10; // ---x ----
         uint8_t ctrl2 = d016 & 0xFF;
-        assert(ctrl2 == pipe.registerCTRL2);
         drawCanvasPixel(0, GET_BYTE(newDisplayMode, 0), ctrl2);
         drawCanvasPixel(1, GET_BYTE(newDisplayMode, 1), ctrl2);
         drawCanvasPixel(2, GET_BYTE(newDisplayMode, 2), ctrl2);
@@ -296,19 +291,10 @@ PixelEngine::drawCanvas()
         drawCanvasPixel(5, GET_BYTE(newDisplayMode, 5), ctrl2);
         drawCanvasPixel(6, GET_BYTE(newDisplayMode, 6), ctrl2);
         
-        /*
-        if (!(pipe.registerCTRL2 & 0x10) && (vic->p.registerCTRL2 & 0x10)) {
-            sr.mc_flop = false;
-        }
-        */
         if (!(oldD016_mode & 0x10) && (newD016_mode & 0x10)) {
             sr.mc_flop = false;
         }
-        
-        // After pixel 7, D016 changes fully show up
-        // pipe.registerCTRL2 |= D016;
-        // pipe.registerCTRL2 &= D016 | 0xEF;
-        
+    
         drawCanvasPixel(7, GET_BYTE(newDisplayMode, 7), ctrl2);
         
     } else {

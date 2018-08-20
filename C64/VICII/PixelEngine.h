@@ -104,7 +104,7 @@ typedef struct {
     uint8_t spriteXexpand;
     
     //! @brief    Internal VIC-II register D011, control register 1
-    uint8_t registerCTRL1;
+    // uint8_t registerCTRL1;
     
     //! @brief    Value of registerCTRL1 one cycle earlier
     uint8_t previousCTRL1;
