@@ -330,7 +330,7 @@ public:
      *            simultanously. They are latched in method drawCanvas() after
      *            after certain pixels have been draw. 
      */
-    uint8_t displayMode;
+    // uint8_t displayMode;
     uint64_t newDisplayMode;
     
     /*! @brief    Latches the sprite enable bits
@@ -523,7 +523,7 @@ private:
     /*! @brief    Draws a single canvas pixel
      *  @param    pixelnr is the pixel number and must be in the range 0 to 7 
      */
-    void drawCanvasPixel(uint8_t pixelnr);
+    void drawCanvasPixel(uint8_t pixelnr, DisplayMode displayMode);
     
     /*! @brief    Draws 8 sprite pixels
      *  @details  Invoked inside draw() 
