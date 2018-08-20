@@ -96,9 +96,7 @@ VIC::VIC()
         // Pixel engine pipe
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
         { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
-        // { &p.registerCTRL1,             sizeof(p.registerCTRL1),                CLEAR_ON_RESET },
         { &p.previousCTRL1,             sizeof(p.previousCTRL1),                CLEAR_ON_RESET },
-        { &p.registerCTRL2,             sizeof(p.registerCTRL2),                CLEAR_ON_RESET },
         { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
@@ -142,7 +140,6 @@ VIC::reset()
     // Preset some video parameters to show a blank sreen on power up
     setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
-	//p.registerCTRL1 = 0x10;
 	expansionFF = 0xFF;
     
     // Reset timed delay variables
@@ -482,9 +479,7 @@ VIC::setDisplayMode(DisplayMode m) {
     uint8_t newCntrl2 = (control2.current() & ~0x10) | (m & 0x10);
     control1.write(repeated(newCntrl1));
     control2.write(repeated(newCntrl2));
-                   
-    // p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
-    // p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10);
+
     c64->resume();
 }
 
@@ -529,8 +524,6 @@ VIC::peek(uint16_t addr)
 	
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
-            // assert(p.registerCTRL1 == (control1.current() & 0xFF));
-			// return (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
             return (control1.current() & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
             
 		case 0x12: // VIC_RASTER_READ_WRITE
@@ -543,9 +536,6 @@ VIC::peek(uint16_t addr)
 			return iomem[addr];
             
         case 0x16:
-            assert(p.registerCTRL2 == (control2.current() & 0xFF));
-            // return p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
-            
             // The two upper bits always read back as '1'
             return (control2.current() & 0xFF) | 0xC0;
 
@@ -676,18 +666,14 @@ VIC::poke(uint16_t addr, uint8_t value)
 
         case 0x11: // CONTROL_REGISTER_1
 
-            // if ((p.registerCTRL1 & 0x80) != (value & 0x80)) {
             if ((control1.current() & 0x80) != (value & 0x80)) {
                 // Value changed: Check if we need to trigger an interrupt immediately
-                // p.registerCTRL1 = value;
                 control1.write(repeated(value));
                 if (yCounter == rasterInterruptLine())
                     triggerDelayedIRQ(1);
             } else {
-                // p.registerCTRL1 = value;
                 control1.write(repeated(value));
             }
-            // debug("poke D011 = %0X\n", value);
             
             // Check the DEN bit if we're in rasterline 30
             // If it's set at some point in that line, bad line conditions can occur
@@ -710,8 +696,6 @@ VIC::poke(uint16_t addr, uint8_t value)
 
         case 0x16: // CONTROL_REGISTER_2
 
-            p.registerCTRL2 = value;
-            // debug("poke D016 = %0X\n", value);
             control2.write(repeated(value));
             return;
             
@@ -1480,7 +1464,6 @@ VIC::endFrame()
 void
 VIC::preparePixelEngine() {
     
-    // uint8_t ctrl1 = pixelEngine.pipe.registerCTRL1;
     uint8_t ctrl1 = control1.delayed() & 0xFF;
     pixelEngine.pipe = p;
     pixelEngine.pipe.previousCTRL1 = ctrl1;

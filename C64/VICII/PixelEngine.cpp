@@ -36,16 +36,13 @@ PixelEngine::PixelEngine()
         // VIC state latching
         { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
         { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
-        // { &pipe.registerCTRL1,      sizeof(pipe.registerCTRL1),     CLEAR_ON_RESET },
         { &pipe.previousCTRL1,      sizeof(pipe.previousCTRL1),     CLEAR_ON_RESET },
-        { &pipe.registerCTRL2,      sizeof(pipe.registerCTRL2),     CLEAR_ON_RESET },
         { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
         { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
         { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
         { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
 
-        // { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
         { &newDisplayMode,          sizeof(newDisplayMode),         CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
@@ -252,15 +249,7 @@ PixelEngine::drawCanvas()
          *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
          *  Bit Map Mode and Multi Color Mode) in the registers $d011 and
          *  $d016." [C.B.]
-         */
-
-        /*
-        if ((vic->control1.current() & 0xFF) != vic->p.registerCTRL1) {
-            debug("vic->p.registerCTRL1 = %02X\n", vic->p.registerCTRL1);
-            vic->control1.debug();
-        }
-         */
-        
+         */        
         uint64_t d011 = vic->control1.delayed();
         uint64_t d016 = vic->control2.delayed();
         

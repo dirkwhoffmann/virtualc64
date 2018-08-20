@@ -72,9 +72,9 @@ const uint64_t pattern[16] = {
 };
 
 
-// -----------------------------------------------------------------------------------------------
-//                                     VIC state pipes
-// -----------------------------------------------------------------------------------------------
+//
+// VIC state pipes
+//
 
 /*! @brief    A certain portion of VICs internal state
  *  @details  This structure comprises all state variables that need to be delayed to get
@@ -93,25 +93,20 @@ const uint64_t pattern[16] = {
 typedef struct {
     
     /*! @brief    Sprite X coordinates
-     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored
-     *            in a seperate IO register, while the uppermost bits are packed in a single
-     *            register (0xD010). The sprites X coordinate is updated whenever one the
-     *            corresponding IO register changes its value.
+     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower
+     *            8 bits are stored in a seperate IO register, while the
+     *            uppermost bits are packed in a single register (0xD010). The
+     *            sprites X coordinate is updated whenever one the corresponding
+     *            IO register changes its value.
      */
     uint16_t spriteX[8];
     
     //! @brief    Sprite X expansion bits
     uint8_t spriteXexpand;
-    
-    //! @brief    Internal VIC-II register D011, control register 1
-    // uint8_t registerCTRL1;
-    
+        
     //! @brief    Value of registerCTRL1 one cycle earlier
     uint8_t previousCTRL1;
-    
-    //! @brief    Internal VIC-II register D016, control register 2
-    uint8_t registerCTRL2;
-    
+        
     //! @brief    Data value grabbed in gAccess()
     uint8_t g_data;
     
@@ -120,10 +115,7 @@ typedef struct {
     
     //! @brief    Color value grabbed in gAccess()
     uint8_t g_color;
-    
-    //! @brief    Color for drawing border pixels
-    // uint8_t borderColor;
-    
+        
     //! @brief    Main frame flipflop
     uint8_t mainFrameFF;
     
