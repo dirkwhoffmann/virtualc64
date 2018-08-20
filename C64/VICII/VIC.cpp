@@ -146,7 +146,7 @@ VIC::reset()
 	expansionFF = 0xFF;
     
     // Reset timed delay variables
-    control1.reset(0);
+    control1.reset(0x10);
     control2.reset(0);
     borderColor.reset(pattern[14]); // Light blue
     bgColor[0].reset(pattern[6]);   // Blue
@@ -477,6 +477,9 @@ void
 VIC::setDisplayMode(DisplayMode m) {
     
     c64->suspend();
+    control1.write((control1.current() & ~0x60) | (m & 0x60));
+    control2.write((control2.current() & ~0x10) | (m & 0x10));
+                   
     p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
     p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10);
     c64->resume();
@@ -524,7 +527,8 @@ VIC::peek(uint16_t addr)
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
             assert(p.registerCTRL1 == (control1.current() & 0xFF));
-			return (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
+			// return (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
+            return (control1.current() & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
             
 		case 0x12: // VIC_RASTER_READ_WRITE
 			return yCounter & 0xff;
@@ -537,8 +541,11 @@ VIC::peek(uint16_t addr)
             
         case 0x16:
             assert(p.registerCTRL2 == (control2.current() & 0xFF));
-            return p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
+            // return p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
             
+            // The two upper bits always read back as '1'
+            return (control2.current() & 0xFF) | 0xC0;
+
    		case 0x18:
             return iomem[addr] | 0x01; // Bit 1 is unused (always 1)
             
@@ -674,6 +681,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             } else {
                 p.registerCTRL1 = value;
             }
+            // debug("poke D011 = %0X\n", value);
             control1.write(repeated(value));
             
             // Check the DEN bit if we're in rasterline 30
@@ -698,6 +706,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x16: // CONTROL_REGISTER_2
 
             p.registerCTRL2 = value;
+            // debug("poke D016 = %0X\n", value);
             control2.write(repeated(value));
             return;
             

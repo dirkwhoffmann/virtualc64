@@ -254,48 +254,62 @@ PixelEngine::drawCanvas()
          *  $d016." [C.B.]
          */
 
-        // TODO: Is the displayMode preserved outside the canvas area?
-        // If yes, the following code seems correct:
-        uint64_t oldD011 = repeated((newDisplayMode >> 56) & 0x60); // -xx- ----
-        uint64_t oldD016 = repeated((newDisplayMode >> 56) & 0x10); // ---x ----
-        // If no, the code should look like:
-        // uint64_t oldD011 = vic->control1.delayed() & 0x6060606060606060; // -xx- ----
-        // uint64_t oldD016 = vic->control2.delayed() & 0x1010101010101010; // ---x ----
-        uint64_t newD011 = vic->control1.current() & 0x6060606060606060; // -xx- ----
-        uint64_t newD016 = vic->control2.current() & 0x1010101010101010; // ---x ----
+        if ((vic->control1.current() & 0xFF) != vic->p.registerCTRL1) {
+            debug("vic->p.registerCTRL1 = %02X\n", vic->p.registerCTRL1);
+            vic->control1.debug();
+        }
+        assert((vic->control1.current() & 0xFF) == vic->p.registerCTRL1);
+        assert((vic->control1.delayed() & 0xFF) == pipe.registerCTRL1);
+        assert((vic->control2.current() & 0xFF) == vic->p.registerCTRL2);
+        assert((vic->control2.delayed() & 0xFF) == pipe.registerCTRL2);
+
+        uint64_t d011 = vic->control1.delayed();
+        uint64_t d016 = vic->control2.delayed();
+        
+        uint64_t oldD011_mode = d011 & 0x6060606060606060; // -xx- ----
+        uint64_t oldD016_mode = d016 & 0x1010101010101010; // ---x ----
+        uint64_t newD011_mode = vic->control1.current() & 0x6060606060606060; // -xx- ----
+        uint64_t newD016_mode = vic->control2.current() & 0x1010101010101010; // ---x ----
         
         // Timing of a $D011 register change:
         // The new one bit show up after the first four pixels are drawn.
         // The new zero bits show up after the first six pixels are drawn.
         newDisplayMode =
-        (oldD011 & 0x0000FFFFFFFFFFFF) |
-        (newD011 & 0xFFFFFFFF00000000);
+        (oldD011_mode & 0x0000FFFFFFFFFFFF) |
+        (newD011_mode & 0xFFFFFFFF00000000);
         
         // Timing of a $D016 register change:
         // The new bits show up after the first four pixels are drawn.
         newDisplayMode |=
-        (oldD016 & 0x00000000FFFFFFFF) |
-        (newD016 & 0xFFFFFFFF00000000);
+        (oldD016_mode & 0x00000000FFFFFFFF) |
+        (newD016_mode & 0xFFFFFFFF00000000);
         
         // uint8_t D011 = vic->p.registerCTRL1 & 0x60; // -xx- ----
         uint8_t D016 = vic->p.registerCTRL2 & 0x10; // ---x ----
+        uint8_t ctrl2 = d016 & 0xFF;
+        assert(ctrl2 == pipe.registerCTRL2);
+        drawCanvasPixel(0, GET_BYTE(newDisplayMode, 0), ctrl2);
+        drawCanvasPixel(1, GET_BYTE(newDisplayMode, 1), ctrl2);
+        drawCanvasPixel(2, GET_BYTE(newDisplayMode, 2), ctrl2);
+        drawCanvasPixel(3, GET_BYTE(newDisplayMode, 3), ctrl2);
+        drawCanvasPixel(4, GET_BYTE(newDisplayMode, 4), ctrl2);
+        drawCanvasPixel(5, GET_BYTE(newDisplayMode, 5), ctrl2);
+        drawCanvasPixel(6, GET_BYTE(newDisplayMode, 6), ctrl2);
         
-        drawCanvasPixel(0, (DisplayMode)GET_BYTE(newDisplayMode, 0));
-        drawCanvasPixel(1, (DisplayMode)GET_BYTE(newDisplayMode, 1));
-        drawCanvasPixel(2, (DisplayMode)GET_BYTE(newDisplayMode, 2));
-        drawCanvasPixel(3, (DisplayMode)GET_BYTE(newDisplayMode, 3));
-        drawCanvasPixel(4, (DisplayMode)GET_BYTE(newDisplayMode, 4));
-        drawCanvasPixel(5, (DisplayMode)GET_BYTE(newDisplayMode, 5));
-        drawCanvasPixel(6, (DisplayMode)GET_BYTE(newDisplayMode, 6));
-        
+        /*
         if (!(pipe.registerCTRL2 & 0x10) && (vic->p.registerCTRL2 & 0x10)) {
             sr.mc_flop = false;
         }
+        */
+        if (!(oldD016_mode & 0x10) && (newD016_mode & 0x10)) {
+            sr.mc_flop = false;
+        }
+        
         // After pixel 7, D016 changes fully show up
         pipe.registerCTRL2 |= D016;
         pipe.registerCTRL2 &= D016 | 0xEF;
-
-        drawCanvasPixel(7, (DisplayMode)GET_BYTE(newDisplayMode, 7));
+        
+        drawCanvasPixel(7, GET_BYTE(newDisplayMode, 7), ctrl2);
         
     } else {
         
@@ -309,7 +323,7 @@ PixelEngine::drawCanvas()
 }
 
 void
-PixelEngine::drawCanvasPixel(uint8_t pixelNr, DisplayMode displayMode)
+PixelEngine::drawCanvasPixel(uint8_t pixelNr, uint8_t displayMode, uint8_t regCtrl2)
 {
     assert(pixelNr < 8);
     
@@ -318,8 +332,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr, DisplayMode displayMode)
      *  g-access. With XSCROLL from register $d016 the reloading can be delayed
      *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
      */
-    
-    if (pixelNr == (pipe.registerCTRL2 & 0x07) /* XSCROLL */ && sr.canLoad) {
+    if (pixelNr == (regCtrl2 & 0x07) /* XSCROLL */ && sr.canLoad) {
         
         // Load shift register
         sr.data = pipe.g_data;
@@ -343,11 +356,14 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr, DisplayMode displayMode)
     
     // Load colors
     // loadColors(pixelnr, (DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
-    loadColors(pixelNr, displayMode, sr.latchedCharacter, sr.latchedColor);
+    loadColors(pixelNr, (DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
     
     // Render pixel
-    bool multicolorDisplayMode = (displayMode & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
-    bool generateMulticolorPixel = (pipe.registerCTRL2 & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
+    bool multicolorDisplayMode =
+    (displayMode & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
+    bool generateMulticolorPixel =
+    (regCtrl2 & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
+    
     // During pixels 5-7 of a D016 trasition, the VIC seems to behave in a mixed
     // state, where the pixel is displayed as the new mode, but is generated in
     // the old way (shifted to the expected number of bits for the display mode)

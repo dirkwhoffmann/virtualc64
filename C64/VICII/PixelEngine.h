@@ -523,7 +523,7 @@ private:
     /*! @brief    Draws a single canvas pixel
      *  @param    pixelnr is the pixel number and must be in the range 0 to 7 
      */
-    void drawCanvasPixel(uint8_t pixelnr, DisplayMode displayMode);
+    void drawCanvasPixel(uint8_t pixelnr, uint8_t displayMode, uint8_t regCtrl2);
     
     /*! @brief    Draws 8 sprite pixels
      *  @details  Invoked inside draw() 
