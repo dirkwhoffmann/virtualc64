@@ -287,8 +287,15 @@ PixelEngine::drawCanvas()
         (d016 & 0x1010101010101010);  // ---x ----
         
         // Draw first seven pixels
+        bool colorsNeedUpdate = true;
+        
         for (unsigned i = 0; i < 7; i++) {
-            drawCanvasPixel(i, displayMode & 0xFF, d016 & 0xFF);
+            drawCanvasPixel(i,
+                            displayMode & 0xFF,
+                            d016 & 0xFF,
+                            colorsNeedUpdate,
+                            (d016 & 0x07) == i);
+            colorsNeedUpdate = (displayMode >> 8) != (displayMode & 0xFF);
             displayMode >>= 8;
         }
       
@@ -297,7 +304,11 @@ PixelEngine::drawCanvas()
         }
     
         // Draw the last pixel
-        drawCanvasPixel(7, GET_BYTE(displayMode, 7), d016 & 0xFF);
+        drawCanvasPixel(7,
+                        displayMode & 0xFF,
+                        d016 & 0xFF,
+                        colorsNeedUpdate,
+                        (d016 & 0x07) == 7);
         
     } else {
         
@@ -311,7 +322,11 @@ PixelEngine::drawCanvas()
 }
 
 void
-PixelEngine::drawCanvasPixel(uint8_t pixelNr, uint8_t displayMode, uint8_t regCtrl2)
+PixelEngine::drawCanvasPixel(uint8_t pixelNr,
+                             uint8_t displayMode,
+                             uint8_t regCtrl2,
+                             bool colorsNeedUpdate,
+                             bool shiftRegNeedsUpdate)
 {
     assert(pixelNr < 8);
     
@@ -320,6 +335,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr, uint8_t displayMode, uint8_t regCt
      *  g-access. With XSCROLL from register $d016 the reloading can be delayed
      *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
      */
+    assert((pixelNr == (regCtrl2 & 0x07)) == shiftRegNeedsUpdate);
     if (pixelNr == (regCtrl2 & 0x07) /* XSCROLL */ && sr.canLoad) {
         
         // Load shift register
@@ -332,6 +348,9 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr, uint8_t displayMode, uint8_t regCt
         // Reset the multicolor synchronization flipflop
         sr.mc_flop = true;
         
+        // Make sure that colors get updated
+        colorsNeedUpdate = true;
+        
         sr.remaining_bits = 8;
     }
     
@@ -343,8 +362,9 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr, uint8_t displayMode, uint8_t regCt
     }
     
     // Load colors
-    // loadColors(pixelnr, (DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
-    loadColors(pixelNr, (DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
+    if (colorsNeedUpdate) {
+        loadColors(pixelNr, (DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
+    }
     
     // Render pixel
     bool multicolorDisplayMode =
