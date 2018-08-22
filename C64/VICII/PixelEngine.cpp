@@ -362,6 +362,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
     }
     
     // Load colors
+    colorsNeedUpdate = true; 
     if (colorsNeedUpdate) {
         loadColors(pixelNr, (DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
     }
@@ -514,44 +515,73 @@ void
 PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
                         uint8_t characterSpace, uint8_t colorSpace)
 {
+    uint64_t bgColor[4];
+    if (pixelNr == 0) {
+        bgColor[0] = vic->bgColor[0].delayed();
+        bgColor[1] = vic->bgColor[1].delayed();
+        bgColor[2] = vic->bgColor[2].delayed();
+        bgColor[3] = vic->bgColor[3].delayed();
+    } else {
+        bgColor[0] = vic->bgColor[0].current();
+        bgColor[1] = vic->bgColor[1].current();
+        bgColor[2] = vic->bgColor[2].current();
+        bgColor[3] = vic->bgColor[3].current();
+    }
+    
     switch (mode) {
 
         #define MIX_COLORS(x,y) ((x & 0x0FF) | (y & ~0x0FF))
             
         case STANDARD_TEXT:
             
-            col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
+            // col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
+            col[0] = bgColor[0];
             col[1] = pattern[colorSpace];
+            assert(GET_BYTE(col[0], pixelNr) == (bgColor[0] & 0xFF));
             break;
             
         case MULTICOLOR_TEXT:
             if (colorSpace & 0x8 /* MC flag */) {
+                /*
                 col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
                 col[1] = MIX_COLORS(vic->bgColor[1].delayed(),vic->bgColor[1].current());
                 col[2] = MIX_COLORS(vic->bgColor[2].delayed(),vic->bgColor[2].current());
+                */
+                col[0] = bgColor[0];
+                col[1] = bgColor[1];
+                col[2] = bgColor[2];
                 col[3] = pattern[colorSpace & 0x07];
+
             } else {
+                /*
                 col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
+                 */
+                col[0] = bgColor[0];
                 col[1] = pattern[colorSpace];
+                assert(GET_BYTE(col[0], pixelNr) == (bgColor[0] & 0xFF));
             }
             break;
             
         case STANDARD_BITMAP:
             col[0] = pattern[characterSpace & 0xF];
             col[1] = pattern[characterSpace >> 4];
-            
             break;
             
         case MULTICOLOR_BITMAP:
-            col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
+            // col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
+            col[0] = bgColor[0];
             col[1] = pattern[characterSpace >> 4];
             col[2] = pattern[characterSpace & 0x0F];
             col[3] = pattern[colorSpace];
+            assert(GET_BYTE(col[0], pixelNr) == (bgColor[0] & 0xFF));
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
+            /*
             col[0] = MIX_COLORS(vic->bgColor[characterSpace >> 6].delayed(),
                                 vic->bgColor[characterSpace >> 6].current());
+             */
+            col[0] = bgColor[characterSpace >> 6];
             col[1] = pattern[colorSpace];
             break;
             
@@ -702,6 +732,7 @@ PixelEngine::drawForegroundPixel(unsigned pixelNr, uint64_t color)
     assert(offset < NTSC_PIXELS);
     
     pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+    assert(GET_BYTE(color, pixelNr) == GET_BYTE(color, 0));
     zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x80;
 }
@@ -713,6 +744,7 @@ PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint64_t color)
     assert(offset < NTSC_PIXELS);
     
     pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+    // assert(GET_BYTE(color, pixelNr) == GET_BYTE(color, 0));
     zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x00;
 }
@@ -725,11 +757,7 @@ PixelEngine::putSpritePixel(unsigned pixelNr, uint64_t color, int depth, int sou
     
     if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
         pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
-        /*
-        if (pixelNr == 0) {
-            pixelBuffer[offset] = rgbaTable[VICII_CYAN];
-        }
-        */
+        // assert(GET_BYTE(color, pixelNr) == GET_BYTE(color, 0));
         zBuffer[pixelNr] = depth;
     }
     pixelSource[pixelNr] |= source;
