@@ -535,7 +535,7 @@ private:
      */
     uint8_t col[4];
 
-    //! @brief    Sprite colors as loaded by loadSpriteColors()
+    //! @brief    Sprite colors
     uint64_t sprExtraCol1;
     uint64_t sprExtraCol2;
     uint64_t sprCol[8];
@@ -545,9 +545,6 @@ public:
     //! @brief    Determines pixel colors accordig to the provided display mode
     void loadColors(uint8_t pixelNr, uint8_t mode,
                     uint8_t characterSpace, uint8_t colorSpace);
-
-    //! @brief    Load sprite colors from VIC registers
-    void loadSpriteColors();
 
     /*! @brief    Draws single canvas pixel in single-color mode
      *  @details  1s are drawn with drawForegroundPixel, 0s are drawn with

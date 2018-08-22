@@ -384,24 +384,74 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
 void
 PixelEngine::drawSprites()
 {
+    uint8_t oldSpriteOnOff = vic->spriteOnOff.delayed();
+    uint8_t newSpriteOnOff = vic->spriteOnOff.readWithDelay(2);
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
-    uint8_t spriteOnOff = vic->spriteOnOff.delayed();
-    uint8_t newSpriteOnOff = vic->spriteOnOff.readWithDelay(2);
-    
-    // assert(dc.spriteOnOff == spriteOnOff);
-    // assert(dc.spriteOnOffPipe == newSpriteOnOff);
 
-    // Check for a quick exit
-    if (!spriteOnOff && !newSpriteOnOff && !firstDMA && !secondDMA)
+    // Quick exit
+    if (!oldSpriteOnOff && !newSpriteOnOff && !firstDMA && !secondDMA)
         return;
     
+    // Get color values (values may change after the first pixel has been drawn)
+    uint8_t oldExtraColor1 = vic->sprExtraColor1.delayed();
+    uint8_t oldExtraColor2 = vic->sprExtraColor2.delayed();
+    uint8_t newExtraColor1 = vic->sprExtraColor1.current();
+    uint8_t newExtraColor2 = vic->sprExtraColor2.current();
+
+    // For all sprites ...
+    for (unsigned i = 0; i < 8; i++) {
+        
+        bool oldOnOff = GET_BIT(oldSpriteOnOff, i);
+        bool newOnOff = GET_BIT(newSpriteOnOff, i);
+        if (!oldOnOff && !newOnOff)
+            continue;
+        
+        bool firstDMAi = GET_BIT(firstDMA, i);
+        bool secondDMAi = GET_BIT(secondDMA, i);
+        
+        // Load colors for the first pixel
+        sprExtraCol1 = oldExtraColor1;
+        sprExtraCol2 = oldExtraColor2;
+        sprCol[i] = vic->sprColor[i].delayed();
+        
+        // Draw first pixel
+        if (oldOnOff) {
+            drawSpritePixel(i, 0, secondDMAi, 0, 0);
+        }
+        
+        // Load colors for the other pixel
+        sprExtraCol1 = newExtraColor1;
+        sprExtraCol2 = newExtraColor2;
+        sprCol[i] = vic->sprColor[i].current();
+        
+        // Draw the next three pixels
+        if (oldOnOff) {
+            drawSpritePixel(i, 1, secondDMAi,             0,          0);
+            drawSpritePixel(i, 2, secondDMAi,             secondDMAi, 0);
+            drawSpritePixel(i, 3, firstDMAi | secondDMAi, 0,          0);
+        }
+        
+        // Draw the remaining four pixels
+        if (newOnOff) {
+            drawSpritePixel(i, 4, firstDMAi | secondDMAi, 0, secondDMAi);
+            drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
+            
+            // If spriteXexpand has changed, it shows up at this point in time.
+            COPY_BIT(vic->p.spriteXexpand, pipe.spriteXexpand, i);
+            
+            drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
+            drawSpritePixel(i, 7, firstDMAi,              0, 0);
+        }
+    }
+    
+#if 0
+    }
     // Load colors
     sprExtraCol1 = vic->sprExtraColor1.delayed();
     sprExtraCol2 = vic->sprExtraColor2.delayed();
     for (unsigned i = 0; i < 8; i++)
         sprCol[i] = vic->sprColor[i].delayed();
-    // loadSpriteColors();
     
     // Draw first pixel for each sprite
     for (unsigned i = 0; i < 8; i++) {
@@ -419,9 +469,7 @@ PixelEngine::drawSprites()
     sprExtraCol2 = vic->sprExtraColor2.current();
     for (unsigned i = 0; i < 8; i++)
         sprCol[i] = vic->sprColor[i].current();
-    // loadSpriteColors();
 
-    
     // Draw next three pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(spriteOnOff, i)) {
@@ -429,7 +477,6 @@ PixelEngine::drawSprites()
             bool firstDMAi = GET_BIT(firstDMA, i);
             bool secondDMAi = GET_BIT(secondDMA, i);
             
-            // drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
             drawSpritePixel(i, 1, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
             drawSpritePixel(i, 2, secondDMAi             /* freeze */, secondDMAi /* halt */, 0         /* load */);
             drawSpritePixel(i, 3, firstDMAi | secondDMAi /* freeze */, 0          /* halt */, 0         /* load */);
@@ -456,6 +503,7 @@ PixelEngine::drawSprites()
             drawSpritePixel(i, 7, firstDMAi              /* freeze */, 0         /* halt */, 0          /* load */);
         }
     }
+#endif
 }
 
 
@@ -592,21 +640,6 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
             assert(0);
             break;
     }
-}
-
-void
-PixelEngine::loadSpriteColors()
-{
-    sprExtraCol1 =
-    (vic->sprExtraColor1.delayed() & 0xFF) |
-    (vic->sprExtraColor1.current() & (~0xFF));
-    sprExtraCol2 =
-    (vic->sprExtraColor2.delayed() & 0xFF) |
-    (vic->sprExtraColor2.current() & (~0xFF));
-    for (unsigned i = 0; i < 8; i++)
-        sprCol[i] =
-        (vic->sprColor[i].delayed() & 0xFF) |
-        (vic->sprColor[i].current() & (~0xFF));
 }
 
 void
