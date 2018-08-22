@@ -209,10 +209,7 @@ VIC::dumpState()
 	msg("      MainFrameFF : %d\n", p.mainFrameFF);
 	msg("  VerticalFrameFF : %d\n", p.verticalFrameFF);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
-	msg("         SpriteOn : %02X ( ", oldSpriteOnOff);
-	for (int i = 0; i < 8; i++) 
-        msg("%d ", (spriteOnOff.current() >> i) != 0);
-	msg(")\n");
+	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 
 		msg("%d ", (spriteDmaOnOff & (1 << i)) != 0 );

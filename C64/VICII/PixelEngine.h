@@ -276,45 +276,14 @@ public:
     //! @brief    VIC register pipe
     PixelEnginePipe pipe;
     
-    /*! @brief    Latched VIC state
-     *  @details  To draw pixels right, it is important to gather the necessary
-     *            information at the right time. Some VIC and memory registers
-     *            need to be looked up one cycle before drawing, others need to
-     *            be looked up at the same cycle or even in the middle of
-     *            drawing an 8 pixel chunk. To make this process transparent,
-     *            all gatheres information is stored in this structure.
-     */
-
-    // DEPRECATED
-    struct {
-        uint8_t spriteOnOffPipe;
-        uint8_t spriteOnOff;
-
-    } dc;
-    
-    /*! @brief    Current display mode
-     *  @details  The display mode is determined by three bits (one in register
-     *            0xD016 and two in register 0xD011). These bits don't show up
-     *            simultanously. They are latched in method drawCanvas() after
-     *            after certain pixels have been draw. 
-     */
-    // uint8_t displayMode;
-    // uint64_t newDisplayMode;
-    
-    /*! @brief    Latches the sprite enable bits
-     *  @details  This method is called in drawSprites()
-     */
-    void updateSpriteOnOff();
-    
-    
+ 
     //
     // Shift register logic for canvas pixels (handled in drawCanvasPixel)
     //
     
-    //! @brief    Main shift register
-    /*! @details  An eight bit shift register used to synthesize the canvas pixels.
+    /*! @brief    Main shift register
+     *  @details  Eight bit shift register to synthesize canvas pixels.
      */
-    
     struct {
         
         //! @brief    Shift register data

@@ -140,12 +140,14 @@ PixelEngine::endFrame()
     pixelBuffer = currentScreenBuffer;    
 }
 
+/*
 void
 PixelEngine::updateSpriteOnOff()
 {
     dc.spriteOnOff = dc.spriteOnOffPipe;
     dc.spriteOnOffPipe = vic->oldSpriteOnOff;
 }
+*/
 
 void
 PixelEngine::draw()
@@ -384,13 +386,14 @@ PixelEngine::drawSprites()
 {
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
+    uint8_t spriteOnOff = vic->spriteOnOff.delayed();
+    uint8_t newSpriteOnOff = vic->spriteOnOff.readWithDelay(2);
     
-    uint8_t spriteEnabled = vic->spriteOnOff.delayed();
-    uint8_t newSpriteEnabled = vic->spriteOnOff.readWithDelay(2);
-    assert(dc.spriteOnOff == spriteEnabled);
-    assert(dc.spriteOnOffPipe == newSpriteEnabled);
+    // assert(dc.spriteOnOff == spriteOnOff);
+    // assert(dc.spriteOnOffPipe == newSpriteOnOff);
 
-    if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
+    // Check for a quick exit
+    if (!spriteOnOff && !newSpriteOnOff && !firstDMA && !secondDMA)
         return;
     
     // Load colors
@@ -402,7 +405,7 @@ PixelEngine::drawSprites()
     
     // Draw first pixel for each sprite
     for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(dc.spriteOnOff, i)) {
+        if (GET_BIT(spriteOnOff, i)) {
             
             // bool firstDMAi = GET_BIT(firstDMA, i);
             bool secondDMAi = GET_BIT(secondDMA, i);
@@ -421,7 +424,7 @@ PixelEngine::drawSprites()
     
     // Draw next three pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(dc.spriteOnOff, i)) {
+        if (GET_BIT(spriteOnOff, i)) {
 
             bool firstDMAi = GET_BIT(firstDMA, i);
             bool secondDMAi = GET_BIT(secondDMA, i);
@@ -433,11 +436,12 @@ PixelEngine::drawSprites()
         }
     }
 
-    updateSpriteOnOff();
+    // updateSpriteOnOff();
+    // assert(dc.spriteOnOff == newSpriteOnOff);
     
     // Draw last four pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(dc.spriteOnOff, i)) {
+        if (GET_BIT(newSpriteOnOff, i)) {
 
             bool firstDMAi = GET_BIT(firstDMA, i);
             bool secondDMAi = GET_BIT(secondDMA, i);

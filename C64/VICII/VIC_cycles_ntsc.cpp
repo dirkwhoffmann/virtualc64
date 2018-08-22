@@ -383,14 +383,12 @@ VIC::cycle58ntsc()
         mc[i] = mcbase[i];
     
     // Turn display on for all sprites with a matching y coordinate
-    // Sprite display remains off if sprite DMA is off or sprite is disabled (register 0x15)
-    oldSpriteOnOff |= spriteDmaOnOff & iomem[0x15] & compareSpriteY((uint8_t)yCounter);
-    spriteOnOff.write(spriteOnOff.current() |
-                        (spriteDmaOnOff & iomem[0x15] &
-                         compareSpriteY((uint8_t)yCounter)));
+    // Sprite display remains off if sprite DMA is off or sprite is disabled
+    // (register D015)
+    uint8_t matchY = compareSpriteY((uint8_t)yCounter);
+    spriteOnOff.write(spriteOnOff.current() | (iomem[0x15] & matchY));
     
     // Turn display off for all sprites that lost DMA.
-    oldSpriteOnOff &= spriteDmaOnOff;
     spriteOnOff.write(spriteOnOff.current() & spriteDmaOnOff);
     
     // Phi2.3 VC/RC logic
