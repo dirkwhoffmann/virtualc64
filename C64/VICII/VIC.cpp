@@ -474,12 +474,8 @@ void
 VIC::setDisplayMode(DisplayMode m) {
     
     c64->suspend();
-    
-    uint8_t newCntrl1 = (control1.current() & ~0x60) | (m & 0x60);
-    uint8_t newCntrl2 = (control2.current() & ~0x10) | (m & 0x10);
-    control1.write(repeated(newCntrl1));
-    control2.write(repeated(newCntrl2));
-
+    control1.write((control1.current() & ~0x60) | (m & 0x60));
+    control2.write((control2.current() & ~0x10) | (m & 0x10));
     c64->resume();
 }
 
@@ -668,11 +664,11 @@ VIC::poke(uint16_t addr, uint8_t value)
 
             if ((control1.current() & 0x80) != (value & 0x80)) {
                 // Value changed: Check if we need to trigger an interrupt immediately
-                control1.write(repeated(value));
+                control1.write(value);
                 if (yCounter == rasterInterruptLine())
                     triggerDelayedIRQ(1);
             } else {
-                control1.write(repeated(value));
+                control1.write(value);
             }
             
             // Check the DEN bit if we're in rasterline 30
@@ -696,7 +692,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 
         case 0x16: // CONTROL_REGISTER_2
 
-            control2.write(repeated(value));
+            control2.write(value);
             return;
             
 		case 0x17: // SPRITE Y EXPANSION

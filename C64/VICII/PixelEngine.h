@@ -496,7 +496,7 @@ private:
      *  @param    load indicates if the shift register needs to be reloaded
      */
     void drawCanvasPixel(uint8_t pixelnr,
-                         uint8_t displayMode,
+                         uint8_t mode,
                          uint8_t d016,
                          bool load);
     
@@ -571,7 +571,8 @@ private:
 public:
     
     //! @brief    Determines pixel colors accordig to the provided display mode
-    void loadColors(uint8_t pixelNr, DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace);
+    void loadColors(uint8_t pixelNr, uint8_t mode,
+                    uint8_t characterSpace, uint8_t colorSpace);
 
     //! @brief    Load sprite colors from VIC registers
     void loadSpriteColors();

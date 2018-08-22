@@ -104,10 +104,10 @@ public:
     //
     
     //! @brief    Control register 1 ($D011)
-    TimeDelayed<uint64_t> control1 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
     
     //! @brief    Control register 2 ($D016)
-    TimeDelayed<uint64_t> control2 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint8_t> control2 = TimeDelayed<uint8_t>(2);
     
     //! @brief    Border color register ($D020)
     TimeDelayed<uint8_t> borderColor = TimeDelayed<uint8_t>(2);
@@ -778,7 +778,7 @@ public:
         assert(rs == 24 || rs == 25);
         uint8_t value = control1.current() & 0xFF;
         WRITE_BIT(value, 3, rs == 25);
-        control1.write(repeated(value));
+        control1.write(value);
     }
 	
 	//! @brief    Returns the number of columns to be drawn (38 or 40).
@@ -789,7 +789,7 @@ public:
         assert(cs == 38 || cs == 40);
         uint8_t value = control2.current() & 0xFF;
         WRITE_BIT(value, 3, cs == 40);
-        control2.write(repeated(value));
+        control2.write(value);
     }
     
 	/*! @brief    Returns the vertical raster scroll offset (0 to 7).
@@ -802,7 +802,7 @@ public:
     void setVerticalRasterScroll(uint8_t offset) {
         assert(offset < 8);
         uint8_t value = (control1.current() & 0xF8) | (offset & 0x07);
-        control1.write(repeated(value));
+        control1.write(value);
     }
     
 	/*! @brief    Returns the horizontal raster scroll offset (0 to 7).
@@ -815,7 +815,7 @@ public:
     void setHorizontalRasterScroll(uint8_t offset) {
         assert(offset < 8);
         uint8_t value = (control2.current() & 0xF8) | (offset & 0x07);
-        control2.write(repeated(value));
+        control2.write(value);
    }
     
 

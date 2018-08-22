@@ -262,15 +262,15 @@ PixelEngine::drawCanvas()
      *  $d016." [C.B.]
      */
     
-    d011 = vic->control1.delayed() & 0xFF;
-    d016 = oldD016 = vic->control2.delayed() & 0xFF;
+    d011 = vic->control1.delayed();
+    d016 = oldD016 = vic->control2.delayed();
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
-    drawCanvasPixel(0, mode, oldD016, (oldD016 & 7) == 0);
-    drawCanvasPixel(1, mode, oldD016, (oldD016 & 7) == 1);
-    drawCanvasPixel(2, mode, oldD016, (oldD016 & 7) == 2);
-    drawCanvasPixel(3, mode, oldD016, (oldD016 & 7) == 3);
+    drawCanvasPixel(0, mode, oldD016, xscroll == 0);
+    drawCanvasPixel(1, mode, oldD016, xscroll == 1);
+    drawCanvasPixel(2, mode, oldD016, xscroll == 2);
+    drawCanvasPixel(3, mode, oldD016, xscroll == 3);
 
     // After pixel 4, the new value of D016 show up.
     d016 = vic->control2.current();
@@ -303,7 +303,7 @@ PixelEngine::drawCanvas()
 
 void
 PixelEngine::drawCanvasPixel(uint8_t pixelNr,
-                             uint8_t displayMode,
+                             uint8_t mode,
                              uint8_t d016,
                              bool load)
 {
@@ -343,33 +343,28 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
     // Update colors if necessary
     if (updateColors) {
         loadColors(pixelNr,
-                   (DisplayMode)displayMode,
+                   (DisplayMode)mode,
                    sr.latchedCharacter,
                    sr.latchedColor);
     }
     
     // Render pixel
     bool multicolorDisplayMode =
-    (displayMode & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
-    bool generateMulticolorPixel =
-    (d016 & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
+    (mode & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
     
-    // During pixels 5-7 of a D016 trasition, the VIC seems to behave in a mixed
-    // state, where the pixel is displayed as the new mode, but is generated in
-    // the old way (shifted to the expected number of bits for the display mode)
+    bool generateMulticolorPixel =
+    (d016 & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
+    
+    // Generate pixel
     if (generateMulticolorPixel) {
         if (sr.mc_flop) {
-            sr.colorbits = (sr.data >> 6);
-            if (!multicolorDisplayMode) {
-                sr.colorbits >>= 1;
-            }
+            sr.colorbits = (sr.data >> 6) >> !multicolorDisplayMode;
         }
     } else {
-        sr.colorbits = sr.data >> 7;
-        if (multicolorDisplayMode) {
-            sr.colorbits <<= 1;
-        }
+        sr.colorbits = (sr.data >> 7) << multicolorDisplayMode;
     }
+    
+    // Draw pixel
     if (multicolorDisplayMode) {
         setMultiColorPixel(pixelNr, sr.colorbits);
     } else {
@@ -516,7 +511,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
 }
 
 void
-PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
+PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
                         uint8_t characterSpace, uint8_t colorSpace)
 {
     bool old = (pixelNr == 0);
