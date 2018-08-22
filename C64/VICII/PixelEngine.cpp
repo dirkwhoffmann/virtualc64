@@ -396,10 +396,10 @@ PixelEngine::drawCanvas()
     d016 = oldD016 = vic->control2.delayed() & 0xFF;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
-    drawCanvasPixel(0, mode, oldD016);
-    drawCanvasPixel(1, mode, oldD016);
-    drawCanvasPixel(2, mode, oldD016);
-    drawCanvasPixel(3, mode, oldD016);
+    drawCanvasPixel(0, mode, oldD016, (oldD016 & 7) == 0);
+    drawCanvasPixel(1, mode, oldD016, (oldD016 & 7) == 1);
+    drawCanvasPixel(2, mode, oldD016, (oldD016 & 7) == 2);
+    drawCanvasPixel(3, mode, oldD016, (oldD016 & 7) == 3);
 
     // After pixel 4, the new value of D016 show up.
     d016 = vic->control2.current();
@@ -410,8 +410,8 @@ PixelEngine::drawCanvas()
     }
     mode = (d011 & 0x60) | (d016 & 0x10);
     
-    drawCanvasPixel(4, mode, oldD016);
-    drawCanvasPixel(5, mode, oldD016);
+    drawCanvasPixel(4, mode, oldD016, (oldD016 & 7) == 4);
+    drawCanvasPixel(5, mode, oldD016, (oldD016 & 7) == 5);
     
     // In newer VICIIs, the zero bits of d011 show up here.
     if (!vic->is856x()) {
@@ -419,21 +419,22 @@ PixelEngine::drawCanvas()
         mode = (d011 & 0x60) | (d016 & 0x10);
     }
 
-    drawCanvasPixel(6, mode, oldD016);
+    drawCanvasPixel(6, mode, oldD016, (oldD016 & 7) == 6);
     
     // This is from VICE... can this be simplified?
     if (!(oldD016 & 0x10) && (d016 & 0x10)) {
         sr.mc_flop = false;
     }
     
-    drawCanvasPixel(7, mode, oldD016);
+    drawCanvasPixel(7, mode, oldD016, (oldD016 & 7) == 7);
 }
 
 
 void
 PixelEngine::drawCanvasPixel(uint8_t pixelNr,
                              uint8_t displayMode,
-                             uint8_t d016)
+                             uint8_t d016,
+                             bool load)
 {
     assert(pixelNr < 8);
     bool updateColors = true;
@@ -443,7 +444,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
      *  g-access. With XSCROLL from register $d016 the reloading can be delayed
      *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
      */
-    if (pixelNr == (d016 & 0x07) /* XSCROLL */ && sr.canLoad) {
+    if (load && sr.canLoad) {
         
         // Load shift register
         sr.data = pipe.g_data;
