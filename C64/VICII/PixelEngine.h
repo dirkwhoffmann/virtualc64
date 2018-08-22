@@ -493,12 +493,16 @@ private:
     
     /*! @brief    Draws a single canvas pixel
      *  @param    pixelnr is the pixel number and must be in the range 0 to 7
-     *  @param    load indicates if the shift register needs to be reloaded
+     *  @param    loadShiftReg is set to true if the shift register needs to be
+     *            reloaded
+     *  @param    updateColors is set to true if the four selectable colors
+     *            might have changed.
      */
     void drawCanvasPixel(uint8_t pixelnr,
                          uint8_t mode,
                          uint8_t d016,
-                         bool load);
+                         bool loadShiftReg,
+                         bool updateColors);
     
     /*! @brief    Draws 8 sprite pixels
      *  @details  Invoked inside draw() 

@@ -238,7 +238,7 @@ PixelEngine::drawBorder55()
 void
 PixelEngine::drawCanvas()
 {
-    uint8_t d011, oldD016, d016, mode, xscroll;
+    uint8_t d011, d016, newD016, mode, oldMode, xscroll;
     
     /* "The sequencer outputs the graphics data in every raster line in the area
      *  of the display column as long as the vertical border flip-flop is reset
@@ -267,30 +267,32 @@ PixelEngine::drawCanvas()
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
-    drawCanvasPixel(0, mode, d016, xscroll == 0);
-    drawCanvasPixel(1, mode, d016, xscroll == 1);
-    drawCanvasPixel(2, mode, d016, xscroll == 2);
-    drawCanvasPixel(3, mode, d016, xscroll == 3);
+    drawCanvasPixel(0, mode, d016, xscroll == 0, true);
+    drawCanvasPixel(1, mode, d016, xscroll == 1, true);
+    drawCanvasPixel(2, mode, d016, xscroll == 2, false);
+    drawCanvasPixel(3, mode, d016, xscroll == 3, false);
 
     // After pixel 4, a change in D016 affects the display mode.
-    uint8_t newD016 = vic->control2.current();
+    newD016 = vic->control2.current();
 
-    // In newer VICIIs, the one bits of d011 show up, too.
+    // In newer VICIIs, the one bits of D011 show up, too.
     if (!vic->is856x()) {
         d011 |= vic->control1.current();
     }
+    oldMode = mode;
     mode = (d011 & 0x60) | (newD016 & 0x10);
     
-    drawCanvasPixel(4, mode, d016, xscroll == 4);
-    drawCanvasPixel(5, mode, d016, xscroll == 5);
+    drawCanvasPixel(4, mode, d016, xscroll == 4, oldMode != mode);
+    drawCanvasPixel(5, mode, d016, xscroll == 5, false);
     
-    // In newer VICIIs, the zero bits of d011 show up here.
+    // In newer VICIIs, the zero bits of D011 show up here.
     if (!vic->is856x()) {
         d011 = vic->control1.current();
+        oldMode = mode;
         mode = (d011 & 0x60) | (newD016 & 0x10);
     }
 
-    drawCanvasPixel(6, mode, d016, xscroll == 6);
+    drawCanvasPixel(6, mode, d016, xscroll == 6, oldMode != mode);
     
     // Before the last pixel is drawn, a change is D016 is fully detected.
     // If the multicolor bit get set, the mc flip flop is also reset.
@@ -300,7 +302,7 @@ PixelEngine::drawCanvas()
         d016 = newD016;
     }
  
-    drawCanvasPixel(7, mode, d016, xscroll == 7);
+    drawCanvasPixel(7, mode, d016, xscroll == 7, false);
 }
 
 
@@ -308,17 +310,17 @@ void
 PixelEngine::drawCanvasPixel(uint8_t pixelNr,
                              uint8_t mode,
                              uint8_t d016,
-                             bool load)
+                             bool loadShiftReg,
+                             bool updateColors)
 {
     assert(pixelNr < 8);
-    bool updateColors = true;
     
     /* "The heart of the sequencer is an 8 bit shift register that is shifted by
      *  1 bit every pixel and reloaded with new graphics data after every
      *  g-access. With XSCROLL from register $d016 the reloading can be delayed
      *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
      */
-    if (load && sr.canLoad) {
+    if (loadShiftReg && sr.canLoad) {
         
         // Load shift register
         sr.data = pipe.g_data;
@@ -344,12 +346,8 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
     }
     
     // Update colors if necessary
-    if (updateColors) {
-        loadColors(pixelNr,
-                   (DisplayMode)mode,
-                   sr.latchedCharacter,
-                   sr.latchedColor);
-    }
+    if (updateColors)
+        loadColors(pixelNr, mode, sr.latchedCharacter, sr.latchedColor);
     
     // Render pixel
     bool multicolorDisplayMode =
