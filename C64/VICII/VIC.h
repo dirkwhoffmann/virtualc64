@@ -384,7 +384,6 @@ private:
      *            Each bit represents a single sprite.
      *  @deprecated Use TimeDelayed register instead
      */
-	uint8_t oldSpriteOnOff;
     TimeDelayed<uint8_t> spriteOnOff = TimeDelayed<uint8_t>(3);
     
 	/*! @brief    Sprite DMA on off register

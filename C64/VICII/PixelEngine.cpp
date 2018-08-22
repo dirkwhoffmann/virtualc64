@@ -444,74 +444,14 @@ PixelEngine::drawSprites()
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
         }
     }
-    
-#if 0
-    }
-    // Load colors
-    sprExtraCol1 = vic->sprExtraColor1.delayed();
-    sprExtraCol2 = vic->sprExtraColor2.delayed();
-    for (unsigned i = 0; i < 8; i++)
-        sprCol[i] = vic->sprColor[i].delayed();
-    
-    // Draw first pixel for each sprite
-    for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(spriteOnOff, i)) {
-            
-            // bool firstDMAi = GET_BIT(firstDMA, i);
-            bool secondDMAi = GET_BIT(secondDMA, i);
-            
-            drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
-        }
-    }
-    
-    // Update colors
-    sprExtraCol1 = vic->sprExtraColor1.current();
-    sprExtraCol2 = vic->sprExtraColor2.current();
-    for (unsigned i = 0; i < 8; i++)
-        sprCol[i] = vic->sprColor[i].current();
-
-    // Draw next three pixels for each sprite
-    for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(spriteOnOff, i)) {
-
-            bool firstDMAi = GET_BIT(firstDMA, i);
-            bool secondDMAi = GET_BIT(secondDMA, i);
-            
-            drawSpritePixel(i, 1, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
-            drawSpritePixel(i, 2, secondDMAi             /* freeze */, secondDMAi /* halt */, 0         /* load */);
-            drawSpritePixel(i, 3, firstDMAi | secondDMAi /* freeze */, 0          /* halt */, 0         /* load */);
-        }
-    }
-
-    // updateSpriteOnOff();
-    // assert(dc.spriteOnOff == newSpriteOnOff);
-    
-    // Draw last four pixels for each sprite
-    for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(newSpriteOnOff, i)) {
-
-            bool firstDMAi = GET_BIT(firstDMA, i);
-            bool secondDMAi = GET_BIT(secondDMA, i);
-
-            drawSpritePixel(i, 4, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, secondDMAi /* load */);
-            drawSpritePixel(i, 5, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, 0          /* load */);
-            
-            // If spriteXexpand has changed, it shows up at this point in time.
-            COPY_BIT(vic->p.spriteXexpand, pipe.spriteXexpand, i);
-            
-            drawSpritePixel(i, 6, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, 0          /* load */);
-            drawSpritePixel(i, 7, firstDMAi              /* freeze */, 0         /* halt */, 0          /* load */);
-        }
-    }
-#endif
 }
 
-
-
-
-    
 void
-PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, bool halt, bool load)
+PixelEngine::drawSpritePixel(unsigned spritenr,
+                             unsigned pixelnr,
+                             bool freeze,
+                             bool halt,
+                             bool load)
 {
     assert(spritenr < 8);
     assert(sprite_sr[spritenr].remaining_bits >= -1);
