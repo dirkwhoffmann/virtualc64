@@ -800,19 +800,19 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x24: // Background color 3
             
             bgColor[addr - 0x21].write(value);
-            bgColor[addr - 0x21].pipeline[1] = grayDot;
+            bgColor[addr - 0x21].pipeline[1] |= grayDot;
             return;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             
             sprExtraColor1.write(value);
-            sprExtraColor1.pipeline[1] = grayDot;
+            sprExtraColor1.pipeline[1] |= grayDot;
             return;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
 
             sprExtraColor2.write(value);
-            sprExtraColor2.pipeline[1] = grayDot;
+            sprExtraColor2.pipeline[1] |= grayDot;
             return;
             
         case 0x27: // Sprite color 1
@@ -825,7 +825,7 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x2E: // Sprite color 8
 
             sprColor[addr - 0x27].write(value);
-            sprColor[addr - 0x27].pipeline[1] = grayDot;
+            sprColor[addr - 0x27].pipeline[1] |= grayDot;
             return;
             
         default:

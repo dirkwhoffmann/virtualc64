@@ -496,9 +496,7 @@ private:
      */
     void drawCanvasPixel(uint8_t pixelnr,
                          uint8_t displayMode,
-                         uint8_t regCtrl2,
-                         bool colorsNeedUpdate,
-                         bool shiftRegNeedsUpdate);
+                         uint8_t d016);
     
     /*! @brief    Draws 8 sprite pixels
      *  @details  Invoked inside draw() 
@@ -561,7 +559,7 @@ private:
      *            [2] : color for '10' pixels in multicolor mode
      *            [3] : color for '11' pixels in multicolor mode 
      */
-    uint64_t col[4];
+    uint8_t col[4];
 
     //! @brief    Sprite colors as loaded by loadSpriteColors()
     uint64_t sprExtraCol1;
@@ -605,7 +603,7 @@ public:
      *            setMultiColorSpritePixel(). It takes care of collison and invokes
      *            setSpritePixel(4) to actually render the pixel.
      */
-    void drawSpritePixel(unsigned pixelnr, uint64_t color, int nr);
+    void drawSpritePixel(unsigned pixelnr, uint8_t color, int nr);
     
     
     //
@@ -618,10 +616,10 @@ public:
     void drawFramePixels(unsigned first, unsigned last, uint8_t color);
 
     //! @brief    Draws a single frame pixel
-    void drawFramePixel(unsigned nr, uint64_t color) { drawFramePixels(nr, nr, color); }
+    void drawFramePixel(unsigned nr, uint8_t color) { drawFramePixels(nr, nr, color); }
 
     //! @brief    Draws all eight frame pixels of a single cycle
-    void drawFramePixels(uint64_t color) { drawFramePixels(0, 7, color); }
+    void drawFramePixels(uint8_t color) { drawFramePixels(0, 7, color); }
 
     //! @brief    Draw a single foreground pixel
     void drawForegroundPixel(unsigned pixelnr, uint8_t color);
@@ -638,7 +636,7 @@ public:
     // void setBackgroundPixel(unsigned pixelnr, int rgba);
 
     //! @brief    Draw eight background pixels in a row
-    void drawEightBackgroundPixels(uint64_t color) {
+    void drawEightBackgroundPixels(uint8_t color) {
         for (unsigned i = 0; i < 8; i++) drawBackgroundPixel(i, color); }
 
     //! @brief    Draw eight background pixels in a row
