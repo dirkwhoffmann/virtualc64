@@ -345,12 +345,13 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
 uint8_t
 VIC::memAccess(uint16_t addr)
 {
-    // VIC has only 14 address lines. To be able to access the complete 64KB main memory,
-    // it inverts bit 0 and bit 1 of the CIA2 portA register and uses these values as the
-    // upper two address bits.
+    /* VIC has only 14 address lines. To be able to access the complete 64KB
+     * main memory, it inverts bit 0 and bit 1 of the CIA2 portA register and
+     * uses these values as the upper two address bits.
+     */
     
-    assert((addr & 0xC000) == 0); /* 14 bit address */
-    assert((bankAddr & 0x3FFF) == 0); /* multiple of 16 KB */
+    assert((addr & 0xC000) == 0); // 14 bit address
+    assert((bankAddr & 0x3FFF) == 0); // multiple of 16 KB
     
     addrBus = bankAddr | addr;
     
@@ -395,7 +396,6 @@ VIC::memAccess(uint16_t addr)
             case 0x7:
             case 0x3:
                 dataBus = c64->expansionport.peek(addrBus | 0xF000);
-                // dataBus = c64->expansionport.peekRomH(addrBus | 0xF000);
                 break;
             case 0xE:
             case 0xD:
@@ -415,6 +415,12 @@ VIC::memAccess(uint16_t addr)
 uint8_t
 VIC::memIdleAccess()
 {
+    /* "As described, the VIC accesses in every first clock phase although there
+     *  are some cycles in which no other of the above mentioned accesses is
+     *  pending. In this case, the VIC does an idle access; a read access to
+     *  video address $3fff (i.e. to $3fff, $7fff, $bfff or $ffff depending on
+     *  the VIC bank) of which the result is discarded." [C.B.]
+     */
     return memAccess(0x3FFF);
 }
 
@@ -469,25 +475,39 @@ VIC::gAccess()
     
     if (displayState) {
         
-        // "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
-        //  besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
-        //  immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
-        //  entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
-        //  aus" [C.B.]
+        /* "The address generator for the text/bitmap accesses (c- and
+         *  g-accesses) has basically 3 modes for the g-accesses (the c-accesses
+         *  always follow the same address scheme). In display state, the BMM
+         *  bit selects either character generator accesses (BMM=0) or bitmap
+         *  accesses (BMM=1). In idle state, the g-accesses are always done at
+         *  video address $3fff. If the ECM bit is set, the address generator
+         *  always holds the address lines 9 and 10 low without any other
+         *  changes to the addressing scheme (e.g. the g-accesses in idle state
+         *  then occur at address $39ff)." [C.B.]
+         */
         
-        //  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
-        //  BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
+        //  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|
+        //  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
         
-        if (BMMbitInPreviousCycle() | BMMbit()) {
-            addr = (CB13() << 10) | (registerVC << 3) | registerRC;
+        // Determine value of BMM bit
+        uint8_t bmm = GET_BIT(control1.delayed(), 5);
+        if (!is856x()) {
+            bmm |= GET_BIT(control1.current(), 5);
+        }
+            
+        if (BMMbit()) {
+            addr = (CB13() << 10) |
+            (registerVC << 3) | registerRC;
         } else {
-            addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
+            addr = (CB13CB12CB11() << 10) |
+            (characterSpace[registerVMLI] << 3) | registerRC;
         }
         
-        // "Bei gesetztem ECM-Bit schaltet der Adressgenerator bei den g-Zugriffen die
-        //  Adressleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
-        //  (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.]
-        
+        /* "If the ECM bit is set, the address generator always holds the
+         *  address lines 9 and 10 low without any other changes to the
+         *  addressing scheme (e.g. the g-accesses in idle state then occur at
+         *  address $39ff)." [C.B.]
+         */
         if (ECMbit())
             addr &= 0xF9FF;
         
@@ -496,7 +516,7 @@ VIC::gAccess()
         p.g_character = characterSpace[registerVMLI];
         p.g_color = colorSpace[registerVMLI];
         
-        // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.]
+        // "VC and VMLI are incremented after each g-access in display state."
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
         registerVMLI++;
@@ -504,7 +524,7 @@ VIC::gAccess()
         
     } else {
         
-        // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
+        // In idle state, a g-access reads from memory location 0x3FFF
         addr = ECMbit() ? 0x39FF : 0x3FFF;
         
         // Prepare graphic sequencer

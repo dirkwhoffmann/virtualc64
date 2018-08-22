@@ -666,60 +666,54 @@ public:
 
 public:
     
-    //! @brief    Same as peek, but without side affects
+    //! @brief    Peeks a value from a VIC register without causing side effects.
     uint8_t spypeek(uint16_t addr);
     
 private:
-    
-	//! @brief    Peek fallthrough
+
+    //! @brief    Peeks a value from a VIC register.
 	uint8_t peek(uint16_t addr);
     
-    //! @brief    Poke fallthrough
+    //! @brief    Pokes a value into a VIC register.
 	void poke(uint16_t addr, uint8_t value);
  
-    //! @brief    Special poke function for the 15 color registers
+    //! @brief    POkes a value into one of the 15 color registers.
     void pokeColorReg(uint16_t addr, uint8_t value);
     
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
     
-    /*! @brief    Simulates an idle memory access.
-     *  @details  An idle memory access is an access of memory location 0x3fff.
-     */
+    //! @brief    Simulates an idle memory access.
     uint8_t memIdleAccess();
     
-    /*! @brief    Performs a character access (cAccess)
-     *  @details  During a cAccess, VIC accesses the video matrix
+    /*! @brief    Performs a character access (cAccess).
+     *  @details  During a cAccess, the video matrix is read.
      */
     void cAccess();
     
-    /*! @brief    Performs a graphics access (gAccess)
-     *  @details  During a gAccess, VIC reads graphics data (character or bitmap patterns)
-     *            The result of the gAccess is stored in variables prefixed with 'g_', i.e.,
-     *            g_data, g_character, g_color, g_mode
+    /*! @brief    Performs a graphics access (gAccess).
+     *  @details  During a gAccess, graphics data (character or bitmap patterns)
+     *            is reads. The result of the gAccess is stored in variables
+     *            prefixed with 'g_', i.e., g_data, g_character, g_color, and
+     *            g_mode.
      */
     void gAccess();
     
-    //! @brief    Performs a sprite pointer access (sAccess)
+    //! @brief    Performs a sprite pointer access (pAccess).
     void pAccess(unsigned sprite);
     
-    /*! @brief    First sprite data access
-     *  @result   true iff sprite data was fetched (a memory access has occurred)
-     */
+    //! @brief    Performs the first sprite data access.
     void sFirstAccess(unsigned sprite);
     
-    /*! @brief    Second sprite data access
-     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
-     */
+    //! @brief    Performs the second sprite data access.
     void sSecondAccess(unsigned sprite);
     
-    /*! @brief    Third sprite data access
-     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
-     */
+    //! @brief    Performs the third sprite data access.
     void sThirdAccess(unsigned sprite);
     
     /*! @brief    Finalizes the sprite data access
-     *  @details  This method is invoked one cycle after the second and third sprite DMA
+     *  @details  This method is invoked one cycle after the second and third
+     *            sprite DMA has occured.
      */
     void sFinalize(unsigned sprite);
     
@@ -734,13 +728,21 @@ public:
     bool DENbit() { return GET_BIT(control1.current(), 4); }
 
     //! @brief    Returns the current value of the BMM bit (Bit Map Mode).
-    bool BMMbit() { return GET_BIT(control1.current(), 5); }
-
+    bool BMMbit() {
+        return is856x() ?
+        GET_BIT(control1.delayed(), 5) :
+        GET_BIT(control1.delayed(), 5) | GET_BIT(control1.current(), 5);
+    }
+    
     //! @brief    Returns the value of the BMM bit in the previous cycle.
     bool BMMbitInPreviousCycle() { return GET_BIT(control1.delayed(), 5); }
 
     //! @brief    Returns the current value of the ECM bit (Extended Character Mode).
-    bool ECMbit() { return GET_BIT(control1.current(), 6); }
+    bool ECMbit() {
+        return is856x() ?
+        GET_BIT(control1.delayed(), 6) :
+        GET_BIT(control1.current(), 6);
+    }
 
     //! @brief    Returns the masked CB13 bit (controls memory access).
     uint8_t CB13() { return iomem[0x18] & 0x08; }
@@ -758,8 +760,9 @@ public:
     bool isRSEL() { return GET_BIT(control1.current(), 3); }
 
 	/*! @brief    Returns the current display mode.
-	 *  @details  The display mode is determined by bits 5 and 6 of control register 1 and 
-     *            bit 4 of control register 2. 
+	 *  @details  The display mode is determined by bits 5 and 6 of control
+     *            register 1 and bit 4 of control register 2.
+     *  @todo     Move to debug section
      */
     DisplayMode getDisplayMode() {
         return (DisplayMode)((control1.current() & 0x60) | (control2.current() & 0x10));
@@ -945,13 +948,15 @@ public:
 private:
 
     /*! @brief    Turns off sprite dma if conditions are met.
-     *  @details  In cycle 16, the mcbase pointer is advanced three bytes for all dma enabled sprites. 
-     *            Advancing three bytes means that mcbase will then point to the next sprite line. 
-     *            When mcbase reached 63, all 21 sprite lines have been drawn and sprite dma is 
-     *            switched off. The whole operation is skipped when the y expansion flipflop is 0. 
-     *            This never happens for normal sprites (there is no skipping then), but happens every 
-     *            other cycle for vertically expanded sprites. Thus, mcbase advances for those sprites 
-     *            at half speed which actually causes the expansion. 
+     *  @details  In cycle 16, the mcbase pointer is advanced three bytes for
+     *            all dma enabled sprites. Advancing three bytes means that
+     *            mcbase will then point to the next sprite line. When mcbase
+     *            reached 63, all 21 sprite lines have been drawn and sprite dma
+     *            is switched off. The whole operation is skipped when the y
+     *            expansion flipflop is 0. This never happens for normal sprites
+     *            (there is no skipping then), but happens every other cycle for
+     *            vertically expanded sprites. Thus, mcbase advances for those
+     *            sprites at half speed which actually causes the expansion.
      */
     void turnSpriteDmaOff();
 
@@ -972,7 +977,8 @@ private:
     void toggleExpansionFlipflop();
     
 	/*! @brief    Gets depth of a sprite.
-	 *  @details  The value is written to the z buffer to resolve overlapping pixels.
+	 *  @details  The value is written to the z buffer to resolve overlapping
+     *            pixels.
      */
     uint8_t spriteDepth(uint8_t nr) {
         return spritePriority(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
@@ -1013,16 +1019,15 @@ public:
         ((iomem[15] == y) << 7);
     }
     
-	//! @brief    Returns true, if sprite is enabled (drawn on the screen).
-    // bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
-
 	//! @brief    Enables or disables a sprite.
     void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
 
 	//! @brief    Enables or disables a sprite.
     void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
 	    
-	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
+	/*! @brief    Returns true, iff an interrupt will be triggered when a
+     *            sprite/background collision occurs.
+     */
     bool irqOnSpriteBackgroundCollision() { return GET_BIT(imr, 1); }
 
     //! @brief    Enables or disables IRQs on sprite/background collision
@@ -1031,7 +1036,9 @@ public:
     //! @brief    Enables or disables IRQs on sprite/background collision
     void toggleIrqOnSpriteBackgroundCollision() { TOGGLE_BIT(imr, 1); }
     
-	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
+	/*! @brief    Returns true, iff an interrupt will be triggered when a
+     *            sprite/sprite collision occurs.
+     */
     bool irqOnSpriteSpriteCollision() { return GET_BIT(imr, 2); }
 
     //! @brief    Enables or disables IRQs on sprite/sprite collision
@@ -1172,47 +1179,46 @@ private:
 
     
 	//
-	// Debugging
+	//! @functiongroup Debugging VICII
 	//
 
 public: 
 	
-	//! @brief    Returns true iff IRQ lines are colorized
+	//! @brief    Returns true if IRQ lines are colorized.
 	bool showIrqLines() { return markIRQLines; }
 
-	//! @brief    Shows or hides IRQ lines
+	//! @brief    Shows or hides IRQ lines.
 	void setShowIrqLines(bool show) { markIRQLines = show; }
 
-	//! @brief    Returns true iff DMA lines are colorized
+	//! @brief    Returns true if DMA lines are colorized.
 	bool showDmaLines() { return markDMALines; }
 	
-	//! @brief    Shows or hides DMA lines
+	//! @brief    Shows or hides DMA lines.
 	void setShowDmaLines(bool show) { markDMALines = show; }
 
-	//! @brief    Returns true iff sprites are hidden
+	//! @brief    Returns true if sprites are hidden.
 	bool hideSprites() { return !drawSprites; }
 
-	//! @brief    Hides or shows sprites
+	//! @brief    Hides or shows sprites.
 	void setHideSprites(bool hide) { drawSprites = !hide; }
 	
-	//! @brief    Returns true iff sprite-sprite collision detection is enabled
+	//! @brief    Returns true if sprite-sprite collision detection is enabled.
 	bool getSpriteSpriteCollisionFlag() { return spriteSpriteCollisionEnabled; }
 
-	//! @brief    Enables or disable sprite-sprite collision detection
+	//! @brief    Enables or disables sprite-sprite collision detection.
     void setSpriteSpriteCollisionFlag(bool b) { spriteSpriteCollisionEnabled = b; };
 
-	//! @brief    Enables or disable sprite-sprite collision detection
+	//! @brief    Toggles sprite-sprite collision detection.
     void toggleSpriteSpriteCollisionFlag() { spriteSpriteCollisionEnabled = !spriteSpriteCollisionEnabled; }
 	
-	//! @brief    Returns true iff sprite-background collision detection is enabled
+	//! @brief    Returns true if sprite-background collision detection is enabled.
 	bool getSpriteBackgroundCollisionFlag() { return spriteBackgroundCollisionEnabled; }
 
-	//! @brief    Enables or disable sprite-background collision detection
+	//! @brief    Enables or disable sprite-background collision detection.
     void setSpriteBackgroundCollisionFlag(bool b) { spriteBackgroundCollisionEnabled = b; }
 
-	//! @brief    Enables or disable sprite-background collision detection
-    void toggleSpriteBackgroundCollisionFlag() {
-        spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled; }
+	//! @brief    Toggles sprite-background collision detection.
+    void toggleSpriteBackgroundCollisionFlag() { spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled; }
 };
 
 #endif
