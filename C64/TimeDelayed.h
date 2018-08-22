@@ -35,10 +35,13 @@ public:
     
 private:
     
+    //! @brief   Number of elements hold in pipeline
+    uint8_t capacity = 0;
+
     //! @brief  Remembers the time of the most recent call to write()
     int64_t timeStamp = 0;
     
-    //! @brief   Cycles to elapse until a written value shows up
+    //! @brief  Number of cycles to elapse until a written value shows up
     uint8_t delay = 0;
     
     //! @brief   Pointer to reference clock
@@ -47,8 +50,10 @@ private:
 public:
     
     //! @brief   Constructors
-    TimeDelayed(uint8_t delay);
-    TimeDelayed(uint8_t delay, uint64_t *clock);
+    TimeDelayed(uint8_t delay, uint8_t capacity, uint64_t *clock);
+    TimeDelayed(uint8_t delay, uint8_t capacity) : TimeDelayed(delay, capacity, NULL) { };
+    TimeDelayed(uint8_t delay, uint64_t *clock) : TimeDelayed(delay, delay + 1, clock) { };
+    TimeDelayed(uint8_t delay) : TimeDelayed(delay, delay + 1, NULL) { };
     
     //! @brief   Destructor
     ~TimeDelayed();
@@ -58,7 +63,7 @@ public:
     
     //! @brief   Overwrites all pipeline entries with a reset value.
     void reset(T value) {
-        for (unsigned i = 0; i <= delay; i++) pipeline[i] = value;
+        for (unsigned i = 0; i < capacity; i++) pipeline[i] = value;
         timeStamp = 0;
     }
     
@@ -71,16 +76,18 @@ public:
     //! @brief   Work horse for writing a value.
     void writeWithDelay(T value, uint8_t waitCycles);
     
+    //! @brief   Reads the most recent pipeline element.
+    T current() { return pipeline[0]; }
+    
     //! @brief   Reads a value from the pipeline with the standard delay.
-    T delayed() { return readWithDelay(delay); }
+    T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
 
-    //! @brief   Reads the value as there was no delay.
-    T current() { return readWithDelay(0); }
-    // T current() { return pipeline[0]; }
-
-    //! @brief   Work horse for reading a value.
-    T readWithDelay(uint8_t delay);
-
+    //! @brief   Reads a value from the pipeline with a custom delay.
+    T readWithDelay(uint8_t delay) {
+        assert(delay <= this->capacity);
+        return pipeline[MAX(0, timeStamp - *clock + delay)];
+    }
+ 
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);

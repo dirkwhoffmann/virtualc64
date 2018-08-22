@@ -43,7 +43,6 @@ PixelEngine::PixelEngine()
         { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
 
-        // { &newDisplayMode,          sizeof(newDisplayMode),         CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
