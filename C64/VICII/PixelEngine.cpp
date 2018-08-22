@@ -422,7 +422,7 @@ PixelEngine::drawSprites()
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
             
-            bool firstDMAi = GET_BIT(firstDMA, i);
+            // bool firstDMAi = GET_BIT(firstDMA, i);
             bool secondDMAi = GET_BIT(secondDMA, i);
             
             drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
@@ -545,7 +545,7 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
         case STANDARD_TEXT:
             
             col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-            col[1] = pattern[colorSpace];
+            col[1] = colorSpace;
             break;
             
         case MULTICOLOR_TEXT:
@@ -555,28 +555,28 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
                 col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
                 col[1] = old ? vic->bgColor[1].delayed() : vic->bgColor[1].current();
                 col[2] = old ? vic->bgColor[2].delayed() : vic->bgColor[2].current();
-                col[3] = pattern[colorSpace & 0x07];
+                col[3] = colorSpace & 0x07;
 
             } else {
 
                 col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-                col[1] = pattern[colorSpace];
+                col[1] = colorSpace;
 
             }
             break;
             
         case STANDARD_BITMAP:
             
-            col[0] = pattern[characterSpace & 0xF];
-            col[1] = pattern[characterSpace >> 4];
+            col[0] = characterSpace & 0xF;
+            col[1] = characterSpace >> 4;
             break;
             
         case MULTICOLOR_BITMAP:
             
             col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-            col[1] = pattern[characterSpace >> 4];
-            col[2] = pattern[characterSpace & 0x0F];
-            col[3] = pattern[colorSpace];
+            col[1] = characterSpace >> 4;
+            col[2] = characterSpace & 0x0F;
+            col[3] = colorSpace;
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
@@ -584,7 +584,7 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
             col[0] = old ?
             vic->bgColor[characterSpace >> 6].delayed() :
             vic->bgColor[characterSpace >> 6].current();
-            col[1] = pattern[colorSpace];
+            col[1] = colorSpace;
             break;
             
         case INVALID_TEXT:
@@ -714,12 +714,11 @@ PixelEngine::drawSpritePixel(unsigned pixelNr, uint64_t color, int nr)
 //
 
 void
-PixelEngine::drawFramePixels(unsigned first, unsigned last, uint64_t color)
+PixelEngine::drawFramePixels(unsigned first, unsigned last, uint8_t color)
 {
     assert(bufferoffset + last < NTSC_PIXELS);
     
-    color >>= (8 * first);
-    for (unsigned pixelNr = first; pixelNr <= last; pixelNr++, color >>= 8) {
+    for (unsigned pixelNr = first; pixelNr <= last; pixelNr++) {
         
         pixelBuffer[bufferoffset + pixelNr] = rgbaTable[color & 0xF];
         zBuffer[pixelNr] = BORDER_LAYER_DEPTH;
@@ -752,13 +751,13 @@ PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 }
 
 void
-PixelEngine::putSpritePixel(unsigned pixelNr, uint64_t color, int depth, int source)
+PixelEngine::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
 {
     unsigned offset = bufferoffset + pixelNr;
     assert(offset < NTSC_PIXELS);
     
     if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
-        pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+        pixelBuffer[offset] = rgbaTable[color];
         zBuffer[pixelNr] = depth;
     }
     pixelSource[pixelNr] |= source;

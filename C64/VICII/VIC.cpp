@@ -145,8 +145,8 @@ VIC::reset()
     // Reset timed delay variables
     control1.reset(0x10);
     control2.reset(0);
-    borderColor.reset(pattern[14]); // Light blue
-    bgColor[0].reset(pattern[6]);   // Blue
+    borderColor.reset(VICII_LIGHT_BLUE);
+    bgColor[0].reset(VICII_BLUE);
     bgColor[1].reset(0);
     bgColor[2].reset(0);
     bgColor[3].reset(0);
@@ -790,7 +790,7 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
             
         case 0x20: // Border color
      
-            borderColor.write(pattern[value]);
+            borderColor.write(value);
             borderColor.pipeline[1] |= grayDot;
             return;
             
@@ -799,20 +799,20 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x23: // Background color 2
         case 0x24: // Background color 3
             
-            bgColor[addr - 0x21].write(pattern[value]);
-            bgColor[addr - 0x21].pipeline[1] |= grayDot;
+            bgColor[addr - 0x21].write(value);
+            bgColor[addr - 0x21].pipeline[1] = grayDot;
             return;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             
-            sprExtraColor1.write(pattern[value]);
-            sprExtraColor1.pipeline[1] |= grayDot;
+            sprExtraColor1.write(value);
+            sprExtraColor1.pipeline[1] = grayDot;
             return;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
 
-            sprExtraColor2.write(pattern[value]);
-            sprExtraColor2.pipeline[1] |= grayDot;
+            sprExtraColor2.write(value);
+            sprExtraColor2.pipeline[1] = grayDot;
             return;
             
         case 0x27: // Sprite color 1
@@ -824,8 +824,7 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
 
-            sprColor[addr - 0x27].write(pattern[value]);
-            // sprColor[addr - 0x27].write(pattern[VICII_CYAN]);
+            sprColor[addr - 0x27].write(value);
             sprColor[addr - 0x27].pipeline[1] = grayDot;
             return;
             
@@ -1382,7 +1381,7 @@ VIC::setSpriteColor(uint8_t nr, uint8_t color)
 {
     assert(nr < 8);
     c64->suspend();
-    sprColor[nr].write(pattern[color]);
+    sprColor[nr].write(color);
     c64->resume();
 }
 

@@ -105,7 +105,7 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 #define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
 //! @brief    Cuts out a single byte from a bigger integer.
-#define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xFF)
+// #define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xFF)
 
 //! @brief    Returns true if value is rising when switching from x to y
 #define RISING_EDGE(x,y) (!(x) && (y))
@@ -120,11 +120,13 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
 //! @brief    Returns eight copies of a single byte
+
 inline uint64_t repeated(uint8_t value) {
     uint64_t result = value;
     for (unsigned i = 0; i < 7; i++) { result = (result << 8) | value; }
     return result;
 }
+
 
 //
 //! @functiongroup Handling buffers
