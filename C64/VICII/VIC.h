@@ -110,32 +110,32 @@ public:
     TimeDelayed<uint64_t> control2 = TimeDelayed<uint64_t>(2);
     
     //! @brief    Border color register ($D020)
-    TimeDelayed<uint64_t> borderColor = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint8_t> borderColor = TimeDelayed<uint8_t>(2);
     
     //! @brief    Background color registers ($D021 - $D024)
-    TimeDelayed<uint64_t> bgColor[4] = {
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2)
+    TimeDelayed<uint8_t> bgColor[4] = {
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2)
     };
     
     //! @brief    Sprite extra color 1 ($D025)
-    TimeDelayed<uint64_t> sprExtraColor1 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint8_t> sprExtraColor1 = TimeDelayed<uint8_t>(2);
     
     //! @brief    Sprite extra color 2 ($D026)
-    TimeDelayed<uint64_t> sprExtraColor2 = TimeDelayed<uint64_t>(2);
+    TimeDelayed<uint8_t> sprExtraColor2 = TimeDelayed<uint8_t>(2);
     
     //! @brief    Sprite colors  color registers ($D027 - $D02E)
-    TimeDelayed<uint64_t> sprColor[8] = {
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2),
-        TimeDelayed<uint64_t>(2)
+    TimeDelayed<uint8_t> sprColor[8] = {
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2)
     };
     
     
