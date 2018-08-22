@@ -263,40 +263,43 @@ PixelEngine::drawCanvas()
      */
     
     d011 = vic->control1.delayed();
-    d016 = oldD016 = vic->control2.delayed();
+    d016 = vic->control2.delayed();
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
-    drawCanvasPixel(0, mode, oldD016, xscroll == 0);
-    drawCanvasPixel(1, mode, oldD016, xscroll == 1);
-    drawCanvasPixel(2, mode, oldD016, xscroll == 2);
-    drawCanvasPixel(3, mode, oldD016, xscroll == 3);
+    drawCanvasPixel(0, mode, d016, xscroll == 0);
+    drawCanvasPixel(1, mode, d016, xscroll == 1);
+    drawCanvasPixel(2, mode, d016, xscroll == 2);
+    drawCanvasPixel(3, mode, d016, xscroll == 3);
 
-    // After pixel 4, the new value of D016 show up.
-    d016 = vic->control2.current();
+    // After pixel 4, a change in D016 affects the display mode.
+    uint8_t newD016 = vic->control2.current();
 
     // In newer VICIIs, the one bits of d011 show up, too.
     if (!vic->is856x()) {
         d011 |= vic->control1.current();
     }
-    mode = (d011 & 0x60) | (d016 & 0x10);
+    mode = (d011 & 0x60) | (newD016 & 0x10);
     
-    drawCanvasPixel(4, mode, oldD016, xscroll == 4);
-    drawCanvasPixel(5, mode, oldD016, xscroll == 5);
+    drawCanvasPixel(4, mode, d016, xscroll == 4);
+    drawCanvasPixel(5, mode, d016, xscroll == 5);
     
     // In newer VICIIs, the zero bits of d011 show up here.
     if (!vic->is856x()) {
         d011 = vic->control1.current();
-        mode = (d011 & 0x60) | (d016 & 0x10);
+        mode = (d011 & 0x60) | (newD016 & 0x10);
     }
 
-    drawCanvasPixel(6, mode, oldD016, xscroll == 6);
+    drawCanvasPixel(6, mode, d016, xscroll == 6);
     
-    // This is from VICE... can this be simplified?
-    if (!(oldD016 & 0x10) && (d016 & 0x10)) {
-        sr.mc_flop = false;
+    // Before the last pixel is drawn, a change is D016 is fully detected.
+    // If the multicolor bit get set, the mc flip flop is also reset.
+    if (d016 != newD016) {
+        if (RISING_EDGE(d016 & 0x10, newD016 & 0x10))
+            sr.mc_flop = false;
+        d016 = newD016;
     }
-    
+ 
     drawCanvasPixel(7, mode, d016, xscroll == 7);
 }
 
