@@ -144,7 +144,7 @@ void
 PixelEngine::updateSpriteOnOff()
 {
     dc.spriteOnOff = dc.spriteOnOffPipe;
-    dc.spriteOnOffPipe = vic->spriteOnOff;
+    dc.spriteOnOffPipe = vic->oldSpriteOnOff;
 }
 
 void
@@ -385,6 +385,11 @@ PixelEngine::drawSprites()
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
     
+    uint8_t spriteEnabled = vic->spriteOnOff.delayed();
+    uint8_t newSpriteEnabled = vic->spriteOnOff.readWithDelay(2);
+    assert(dc.spriteOnOff == spriteEnabled);
+    assert(dc.spriteOnOffPipe == newSpriteEnabled);
+
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
     
@@ -449,6 +454,10 @@ PixelEngine::drawSprites()
     }
 }
 
+
+
+
+    
 void
 PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, bool halt, bool load)
 {

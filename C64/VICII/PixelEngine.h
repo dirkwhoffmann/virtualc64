@@ -285,10 +285,7 @@ public:
      *            all gatheres information is stored in this structure.
      */
 
-    // TODO:
-    // Rename dc to spriteOnOffPipe
-    // Rename spriteOnOffPipe to spriteOnOff1
-    // Rename spriteOnOff to spriteOnOff2
+    // DEPRECATED
     struct {
         uint8_t spriteOnOffPipe;
         uint8_t spriteOnOff;
@@ -518,11 +515,13 @@ private:
      *  @param    load     If the i-th bit is set to 1, the i-th shift register
      *                     will grab new data bits
      */
+    /*
     void drawSpritePixel(unsigned pixelnr,
                          uint8_t freeze,
                          uint8_t halt,
                          uint8_t load);
-
+     */
+    
     /*! @brief    Draws a single sprite pixel for a single sprite
      *  @param    spritenr Sprite number (0 to 7)
      *  @param    pixelnr  Pixel number (0 to 7)

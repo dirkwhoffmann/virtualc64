@@ -103,16 +103,16 @@ public:
     // Registers
     //
     
-    //! @brief    Control register 1 ($D011)
+    //! @brief    Control register 1 (D011)
     TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
     
-    //! @brief    Control register 2 ($D016)
+    //! @brief    Control register 2 (D016)
     TimeDelayed<uint8_t> control2 = TimeDelayed<uint8_t>(2);
     
-    //! @brief    Border color register ($D020)
+    //! @brief    Border color register (D020)
     TimeDelayed<uint8_t> borderColor = TimeDelayed<uint8_t>(2);
     
-    //! @brief    Background color registers ($D021 - $D024)
+    //! @brief    Background color registers (D021 - D024)
     TimeDelayed<uint8_t> bgColor[4] = {
         TimeDelayed<uint8_t>(2),
         TimeDelayed<uint8_t>(2),
@@ -381,9 +381,11 @@ private:
 
 	/*! @brief    Sprite on off register
 	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
-     *            Each bit represents a single sprite. 
+     *            Each bit represents a single sprite.
+     *  @deprecated Use TimeDelayed register instead
      */
-	uint8_t spriteOnOff;
+	uint8_t oldSpriteOnOff;
+    TimeDelayed<uint8_t> spriteOnOff = TimeDelayed<uint8_t>(3);
     
 	/*! @brief    Sprite DMA on off register
 	 *  @details  Determines  if sprite dma access is enabled or disabled. 
@@ -997,13 +999,20 @@ public:
     void setSpriteY(uint8_t nr, uint8_t y) { iomem[1+2*nr] = y; }
 	
     //! @brief    Compares the Y coordinates of all sprites with an eight bit value.
-    uint8_t compareSpriteY(uint8_t y) { return
-        ((iomem[1] == y) << 0) | ((iomem[3] == y) << 1) | ((iomem[5] == y) << 2) | ((iomem[7] == y) << 3) |
-        ((iomem[9] == y) << 4) | ((iomem[11] == y) << 5) | ((iomem[13] == y) << 6) | ((iomem[15] == y) << 7);
+    uint8_t compareSpriteY(uint8_t y) {
+        return
+        (iomem[1] == y) |
+        ((iomem[3] == y) << 1) |
+        ((iomem[5] == y) << 2) |
+        ((iomem[7] == y) << 3) |
+        ((iomem[9] == y) << 4) |
+        ((iomem[11] == y) << 5) |
+        ((iomem[13] == y) << 6) |
+        ((iomem[15] == y) << 7);
     }
     
 	//! @brief    Returns true, if sprite is enabled (drawn on the screen).
-    bool spriteEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
+    // bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
 
 	//! @brief    Enables or disables a sprite.
     void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }

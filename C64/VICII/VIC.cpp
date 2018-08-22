@@ -86,7 +86,7 @@ VIC::VIC()
         { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
         { spritePtr,                    sizeof(spritePtr),                      CLEAR_ON_RESET | WORD_FORMAT },
-        { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
+        { &oldSpriteOnOff,                 sizeof(oldSpriteOnOff),                    CLEAR_ON_RESET },
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
@@ -119,6 +119,7 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     control1.setClock(&c64->cpu.cycle);
+    spriteOnOff.setClock(&c64->cpu.cycle);
     control2.setClock(&c64->cpu.cycle);
     borderColor.setClock(&c64->cpu.cycle);
     for (unsigned i = 0; i < 4; i++)
@@ -144,6 +145,7 @@ VIC::reset()
     
     // Reset timed delay variables
     control1.reset(0x10);
+    spriteOnOff.reset(0);
     control2.reset(0);
     borderColor.reset(VICII_LIGHT_BLUE);
     bgColor[0].reset(VICII_BLUE);
@@ -207,9 +209,9 @@ VIC::dumpState()
 	msg("      MainFrameFF : %d\n", p.mainFrameFF);
 	msg("  VerticalFrameFF : %d\n", p.verticalFrameFF);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
-	msg("         SpriteOn : %02X ( ", spriteOnOff);
+	msg("         SpriteOn : %02X ( ", oldSpriteOnOff);
 	for (int i = 0; i < 8; i++) 
-		msg("%d ", (spriteOnOff & (1 << i)) != 0);
+        msg("%d ", (spriteOnOff.current() >> i) != 0);
 	msg(")\n");
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 
@@ -236,6 +238,7 @@ VIC::stateSize()
     size_t result = VirtualComponent::stateSize();
 
     result += control1.stateSize();
+    result += spriteOnOff.stateSize();
     result += control2.stateSize();
     result += borderColor.stateSize();
     for (unsigned i = 0; i < 4; i++)
@@ -256,6 +259,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 
     control1.loadFromBuffer(buffer);
+    spriteOnOff.loadFromBuffer(buffer);
     control2.loadFromBuffer(buffer);
     borderColor.loadFromBuffer(buffer);
     for (unsigned i = 0; i < 4; i++)
@@ -276,6 +280,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     VirtualComponent::saveToBuffer(buffer);
     
     control1.saveToBuffer(buffer);
+    spriteOnOff.saveToBuffer(buffer);
     control2.saveToBuffer(buffer);
     borderColor.saveToBuffer(buffer);
     for (unsigned i = 0; i < 4; i++)
@@ -328,7 +333,7 @@ VIC::getSpriteInfo(unsigned i)
 {
     SpriteInfo info;
     
-    info.enabled = spriteEnabled(i);
+    info.enabled = GET_BIT(spriteOnOff.current(), i);
     info.x = getSpriteX(i);
     info.y = getSpriteY(i);
     info.color = sprColor[i].current() & 0xF;
@@ -690,6 +695,11 @@ VIC::poke(uint16_t addr, uint8_t value)
 			}
 			return;
 
+        case 0x15: // SPRITE_ENABLED
+            
+            iomem[addr] = value;
+            return;
+            
         case 0x16: // CONTROL_REGISTER_2
 
             control2.write(value);
