@@ -159,6 +159,7 @@
 		50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FB74A1203322C900E05051 /* DiskInspectorController.swift */; };
 		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
 		50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B372039B3C5006CE7C7 /* C64Key.swift */; };
+		50FE726A212DE8F600E99755 /* VIC_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FE7269212DE8F600E99755 /* VIC_memory.cpp */; };
 		50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FF16FB205D17F5000A729A /* ProcessorPort.cpp */; };
 		50FF818F1F88D9100004548A /* GamePad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF818E1F88D9100004548A /* GamePad.swift */; };
 		50FFF52320AB495B00758683 /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FFF52220AB495B00758683 /* Mouse.cpp */; };
@@ -420,6 +421,7 @@
 		50FB74A1203322C900E05051 /* DiskInspectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspectorController.swift; sourceTree = "<group>"; };
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
+		50FE7269212DE8F600E99755 /* VIC_memory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_memory.cpp; sourceTree = "<group>"; };
 		50FF16FB205D17F5000A729A /* ProcessorPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorPort.cpp; sourceTree = "<group>"; };
 		50FF16FC205D17F5000A729A /* ProcessorPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorPort.h; sourceTree = "<group>"; };
 		50FF818E1F88D9100004548A /* GamePad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePad.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
+				50FE7269212DE8F600E99755 /* VIC_memory.cpp */,
 			);
 			path = VICII;
 			sourceTree = "<group>";
@@ -1107,6 +1110,7 @@
 				501DE30D20C9C41B00707130 /* voice.cc in Sources */,
 				50265F57202D00940041C315 /* TapeMountController.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
+				50FE726A212DE8F600E99755 /* VIC_memory.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
