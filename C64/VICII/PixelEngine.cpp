@@ -515,79 +515,59 @@ void
 PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
                         uint8_t characterSpace, uint8_t colorSpace)
 {
-    uint64_t bgColor[4];
-    if (pixelNr == 0) {
-        bgColor[0] = vic->bgColor[0].delayed();
-        bgColor[1] = vic->bgColor[1].delayed();
-        bgColor[2] = vic->bgColor[2].delayed();
-        bgColor[3] = vic->bgColor[3].delayed();
-    } else {
-        bgColor[0] = vic->bgColor[0].current();
-        bgColor[1] = vic->bgColor[1].current();
-        bgColor[2] = vic->bgColor[2].current();
-        bgColor[3] = vic->bgColor[3].current();
-    }
+    bool old = (pixelNr == 0);
     
     switch (mode) {
-
-        #define MIX_COLORS(x,y) ((x & 0x0FF) | (y & ~0x0FF))
             
         case STANDARD_TEXT:
             
-            // col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
-            col[0] = bgColor[0];
+            col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
             col[1] = pattern[colorSpace];
-            assert(GET_BYTE(col[0], pixelNr) == (bgColor[0] & 0xFF));
             break;
             
         case MULTICOLOR_TEXT:
+            
             if (colorSpace & 0x8 /* MC flag */) {
-                /*
-                col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
-                col[1] = MIX_COLORS(vic->bgColor[1].delayed(),vic->bgColor[1].current());
-                col[2] = MIX_COLORS(vic->bgColor[2].delayed(),vic->bgColor[2].current());
-                */
-                col[0] = bgColor[0];
-                col[1] = bgColor[1];
-                col[2] = bgColor[2];
+                
+                col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
+                col[1] = old ? vic->bgColor[1].delayed() : vic->bgColor[1].current();
+                col[2] = old ? vic->bgColor[2].delayed() : vic->bgColor[2].current();
                 col[3] = pattern[colorSpace & 0x07];
 
             } else {
-                /*
-                col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
-                 */
-                col[0] = bgColor[0];
+
+                col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
                 col[1] = pattern[colorSpace];
-                assert(GET_BYTE(col[0], pixelNr) == (bgColor[0] & 0xFF));
+
             }
             break;
             
         case STANDARD_BITMAP:
+            
             col[0] = pattern[characterSpace & 0xF];
             col[1] = pattern[characterSpace >> 4];
             break;
             
         case MULTICOLOR_BITMAP:
-            // col[0] = MIX_COLORS(vic->bgColor[0].delayed(),vic->bgColor[0].current());
-            col[0] = bgColor[0];
+            
+            col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
             col[1] = pattern[characterSpace >> 4];
             col[2] = pattern[characterSpace & 0x0F];
             col[3] = pattern[colorSpace];
-            assert(GET_BYTE(col[0], pixelNr) == (bgColor[0] & 0xFF));
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            /*
-            col[0] = MIX_COLORS(vic->bgColor[characterSpace >> 6].delayed(),
-                                vic->bgColor[characterSpace >> 6].current());
-             */
-            col[0] = bgColor[characterSpace >> 6];
+            
+            col[0] = old ?
+            vic->bgColor[characterSpace >> 6].delayed() :
+            vic->bgColor[characterSpace >> 6].current();
             col[1] = pattern[colorSpace];
             break;
             
         case INVALID_TEXT:
         case INVALID_STANDARD_BITMAP:
         case INVALID_MULTICOLOR_BITMAP:
+            
             col[0] = 0;
             col[1] = 0;
             col[2] = 0;
@@ -595,6 +575,7 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
             break;
             
         default:
+            
             assert(0);
             break;
     }
