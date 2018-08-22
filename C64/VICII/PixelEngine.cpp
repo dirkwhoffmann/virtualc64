@@ -235,140 +235,10 @@ PixelEngine::drawBorder55()
     }
 }
 
-#if 0
 void
 PixelEngine::drawCanvas()
 {
-    /* "The sequencer outputs the graphics data in every raster line in the area
-     *  of the display column as long as the vertical border flip-flop is reset
-     *  (see section 3.9.)." [C.B.]
-     */
-    
-    if (pipe.verticalFrameFF) {
-        
-        /* "Outside of the display column and if the flip-flop is set, the last
-         *  current background color is displayed (this area is normally covered
-         *  by the border)." [C.B.]
-         */
-        // TODO: This is wrong, border-bm-idle test fails
-        drawEightBackgroundPixels(vic->bgColor[0].current());
-        return;
-    }
-    
-    /* "The graphics data sequencer is capable of 8 different graphics modes
-     *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
-     *  Bit Map Mode and Multi Color Mode) in the registers $d011 and
-     *  $d016." [C.B.]
-     */
-    
-    uint8_t _d011, _oldD016, _d016, _mode;
-    
-    _d011 = vic->control1.delayed() & 0xFF;
-    _d016 = _oldD016 = vic->control2.delayed() & 0xFF;
-    _mode = (_d011 & 0x60) | (_d016 & 0x10); // -xxx ----
-    
-    
-    // Determine the correct values of D011 and D016 for each pixel.
-    uint64_t d011, d016;
-    
-    // We need to take into account that a register changed it's value.
-    uint64_t oldD011 = vic->control1.delayed();
-    uint64_t newD011 = vic->control1.current();
-    uint64_t oldD016 = vic->control2.delayed();
-    uint64_t newD016 = vic->control2.current();
-    
-    // Timing behavior of D016
-    d016 =
-    (oldD016 & 0x00000000FFFFFFFF) | // Old values for pixels 0...3
-    (newD016 & 0xFFFFFFFF00000000);  // New values for pixels 4...7
-    
-    // Timing behavior of D011
-    if (vic->is856x()) {
-        
-        // The easy case. No changes in between pixels.
-        d011 = oldD011;
-        
-    } else {
-        
-        // The ugly case.
-        // New one bit show up after the first four pixels are drawn.
-        // New zero bits show up after the first six pixels are drawn.
-        d011 =
-        (oldD011 & 0x0000FFFFFFFFFFFF) |
-        (newD011 & 0xFFFFFFFF00000000);
-    }
-    
-    // Determine the display mode for all pixels by combining D011 and D016.
-    uint64_t displayMode =
-    (d011 & 0x6060606060606060) | // -xx- ----
-    (d016 & 0x1010101010101010);  // ---x ----
-    
-    assert(_mode == (displayMode & 0xFF));
-    assert(_mode == ((displayMode >> 8) & 0xFF));
-    assert(_mode == ((displayMode >> 16) & 0xFF));
-    assert(_mode == ((displayMode >> 24) & 0xFF));
-
-    // Draw first seven pixels
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(0, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(1, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(2, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(3, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    
-    _d016 = vic->control2.current();
-    
-    // In newer VICIIs, the one bits of d011 show up, too.
-    if (!vic->is856x()) {
-        _d011 |= vic->control1.current();
-    }
-    _mode = (_d011 & 0x60) | (_d016 & 0x10);
-    
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(4, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    drawCanvasPixel(5, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    
-    // In newer VICIIs, the zero bits of d011 show up here.
-    if (!vic->is856x()) {
-        _d011 = vic->control1.current();
-        _mode = (_d011 & 0x60) | (_d016 & 0x10);
-    }
-    
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(6, displayMode & 0xFF, d016 & 0xFF);
-    displayMode >>= 8;
-    
-    if (!(oldD016 & 0x10) && (newD016 & 0x10)) {
-        sr.mc_flop = false;
-    }
-    assert((!(_oldD016 & 0x10) && (_d016 & 0x10)) == (!(oldD016 & 0x10) && (newD016 & 0x10)));
-  
-    // Draw the last pixel
-    assert(_mode == (displayMode & 0xFF));
-    assert(_oldD016 == (d016 & 0xFF));
-    drawCanvasPixel(7, displayMode & 0xFF, d016 & 0xFF);
-}
-#endif
-
-
-void
-PixelEngine::drawCanvas()
-{
-    uint8_t d011, oldD016, d016, mode;
+    uint8_t d011, oldD016, d016, mode, xscroll;
     
     /* "The sequencer outputs the graphics data in every raster line in the area
      *  of the display column as long as the vertical border flip-flop is reset
@@ -394,6 +264,7 @@ PixelEngine::drawCanvas()
     
     d011 = vic->control1.delayed() & 0xFF;
     d016 = oldD016 = vic->control2.delayed() & 0xFF;
+    xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
     drawCanvasPixel(0, mode, oldD016, (oldD016 & 7) == 0);
@@ -410,8 +281,8 @@ PixelEngine::drawCanvas()
     }
     mode = (d011 & 0x60) | (d016 & 0x10);
     
-    drawCanvasPixel(4, mode, oldD016, (oldD016 & 7) == 4);
-    drawCanvasPixel(5, mode, oldD016, (oldD016 & 7) == 5);
+    drawCanvasPixel(4, mode, oldD016, xscroll == 4);
+    drawCanvasPixel(5, mode, oldD016, xscroll == 5);
     
     // In newer VICIIs, the zero bits of d011 show up here.
     if (!vic->is856x()) {
@@ -419,14 +290,14 @@ PixelEngine::drawCanvas()
         mode = (d011 & 0x60) | (d016 & 0x10);
     }
 
-    drawCanvasPixel(6, mode, oldD016, (oldD016 & 7) == 6);
+    drawCanvasPixel(6, mode, oldD016, xscroll == 6);
     
     // This is from VICE... can this be simplified?
     if (!(oldD016 & 0x10) && (d016 & 0x10)) {
         sr.mc_flop = false;
     }
     
-    drawCanvasPixel(7, mode, oldD016, (oldD016 & 7) == 7);
+    drawCanvasPixel(7, mode, d016, xscroll == 7);
 }
 
 
