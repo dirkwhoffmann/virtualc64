@@ -825,7 +825,8 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x2E: // Sprite color 8
 
             sprColor[addr - 0x27].write(pattern[value]);
-            sprColor[addr - 0x27].pipeline[1] |= grayDot;
+            // sprColor[addr - 0x27].write(pattern[VICII_CYAN]);
+            sprColor[addr - 0x27].pipeline[1] = grayDot;
             return;
             
         default:

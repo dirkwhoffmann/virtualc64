@@ -68,6 +68,7 @@ void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
     // Shift pipeline
     int64_t diff = referenceTime - timeStamp;
     for (int i = this->delay; i >= 0; i--) {
+        assert((i - diff <= 0) || (i - diff <= this->delay));
         pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
     }
     

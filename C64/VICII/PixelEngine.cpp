@@ -573,10 +573,16 @@ PixelEngine::loadColors(uint8_t pixelNr, DisplayMode mode,
 void
 PixelEngine::loadSpriteColors()
 {
-    sprExtraCol1 = vic->sprExtraColor1.delayed();
-    sprExtraCol2 = vic->sprExtraColor2.delayed();
+    sprExtraCol1 =
+    (vic->sprExtraColor1.delayed() & 0xFF) |
+    (vic->sprExtraColor1.current() & (~0xFF));
+    sprExtraCol2 =
+    (vic->sprExtraColor2.delayed() & 0xFF) |
+    (vic->sprExtraColor2.current() & (~0xFF));
     for (unsigned i = 0; i < 8; i++)
-        sprCol[i] = vic->sprColor[i].delayed();
+        sprCol[i] =
+        (vic->sprColor[i].delayed() & 0xFF) |
+        (vic->sprColor[i].current() & (~0xFF));
 }
 
 void
@@ -719,6 +725,11 @@ PixelEngine::putSpritePixel(unsigned pixelNr, uint64_t color, int depth, int sou
     
     if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
         pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
+        /*
+        if (pixelNr == 0) {
+            pixelBuffer[offset] = rgbaTable[VICII_CYAN];
+        }
+        */
         zBuffer[pixelNr] = depth;
     }
     pixelSource[pixelNr] |= source;

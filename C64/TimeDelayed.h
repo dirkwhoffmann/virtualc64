@@ -75,8 +75,8 @@ public:
     T delayed() { return readWithDelay(delay); }
 
     //! @brief   Reads the value as there was no delay.
-    // T current() { return readWithDelay(0); }
-    T current() { return pipeline[0]; }
+    T current() { return readWithDelay(0); }
+    // T current() { return pipeline[0]; }
 
     //! @brief   Work horse for reading a value.
     T readWithDelay(uint8_t delay);
