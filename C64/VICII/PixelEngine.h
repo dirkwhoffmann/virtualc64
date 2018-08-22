@@ -645,14 +645,14 @@ public:
     void drawFramePixels(uint64_t color) { drawFramePixels(0, 7, color); }
 
     //! @brief    Draw a single foreground pixel
-    void drawForegroundPixel(unsigned pixelnr, uint64_t color);
+    void drawForegroundPixel(unsigned pixelnr, uint8_t color);
     
     //! @brief    Draw a single foreground pixel
     //! @deprecated
     // void setForegroundPixel(unsigned pixelnr, int rgba);
 
     //! @brief    Draw a single background pixel
-    void drawBackgroundPixel(unsigned pixelNr, uint64_t color);
+    void drawBackgroundPixel(unsigned pixelNr, uint8_t color);
 
     //! @brief    Draw a single background pixel
     //! @deprecated

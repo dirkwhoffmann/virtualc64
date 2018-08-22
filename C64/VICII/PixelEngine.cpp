@@ -411,17 +411,40 @@ PixelEngine::drawSprites()
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
     
-    // Load colors from VIC registers
-    loadSpriteColors();
+    // Load colors
+    sprExtraCol1 = vic->sprExtraColor1.delayed();
+    sprExtraCol2 = vic->sprExtraColor2.delayed();
+    for (unsigned i = 0; i < 8; i++)
+        sprCol[i] = vic->sprColor[i].delayed();
+    // loadSpriteColors();
     
-    // Draw first four pixels for each sprite
+    // Draw first pixel for each sprite
+    for (unsigned i = 0; i < 8; i++) {
+        if (GET_BIT(dc.spriteOnOff, i)) {
+            
+            bool firstDMAi = GET_BIT(firstDMA, i);
+            bool secondDMAi = GET_BIT(secondDMA, i);
+            
+            drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
+        }
+    }
+    
+    // Update colors
+    sprExtraCol1 = vic->sprExtraColor1.current();
+    sprExtraCol2 = vic->sprExtraColor2.current();
+    for (unsigned i = 0; i < 8; i++)
+        sprCol[i] = vic->sprColor[i].current();
+    // loadSpriteColors();
+
+    
+    // Draw next three pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
 
             bool firstDMAi = GET_BIT(firstDMA, i);
             bool secondDMAi = GET_BIT(secondDMA, i);
             
-            drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
+            // drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
             drawSpritePixel(i, 1, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
             drawSpritePixel(i, 2, secondDMAi             /* freeze */, secondDMAi /* halt */, 0         /* load */);
             drawSpritePixel(i, 3, firstDMAi | secondDMAi /* freeze */, 0          /* halt */, 0         /* load */);
@@ -707,25 +730,23 @@ PixelEngine::drawFramePixels(unsigned first, unsigned last, uint64_t color)
 }
 
 void
-PixelEngine::drawForegroundPixel(unsigned pixelNr, uint64_t color)
+PixelEngine::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 {
     unsigned offset = bufferoffset + pixelNr;
     assert(offset < NTSC_PIXELS);
     
-    pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
-    assert(GET_BYTE(color, pixelNr) == GET_BYTE(color, 0));
+    pixelBuffer[offset] = rgbaTable[color];
     zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x80;
 }
 
 void
-PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint64_t color)
+PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 {
     unsigned offset = bufferoffset + pixelNr;
     assert(offset < NTSC_PIXELS);
     
-    pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
-    // assert(GET_BYTE(color, pixelNr) == GET_BYTE(color, 0));
+    pixelBuffer[offset] = rgbaTable[color];
     zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x00;
 }
@@ -738,7 +759,6 @@ PixelEngine::putSpritePixel(unsigned pixelNr, uint64_t color, int depth, int sou
     
     if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
         pixelBuffer[offset] = rgbaTable[GET_BYTE(color, pixelNr)];
-        // assert(GET_BYTE(color, pixelNr) == GET_BYTE(color, 0));
         zBuffer[pixelNr] = depth;
     }
     pixelSource[pixelNr] |= source;
