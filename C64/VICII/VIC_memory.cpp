@@ -184,8 +184,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             if (yCounter == 0x30 && (value & 0x10) != 0)
                 DENwasSetInRasterline30 = true;
             
-            // Bits 0 - 3 determine the vertical scroll offset.
-            // Changing these bits directly affects the badline line condition the middle of a rasterline
+            // Bits 0 to 3 are the vertical scroll offset. If they change in
+            // the middle of the rasterline, the bad line condition might change
+            // as well.
             updateBadLineCondition();
             return;
             

@@ -24,25 +24,28 @@ VIC::getInfo()
 {
     VICInfo info;
     
+    uint8_t ctrl1 = control1.current();
+    uint8_t ctrl2 = control2.current();
+
     info.rasterline = c64->rasterline;
     info.cycle = c64->rasterlineCycle;
     info.xCounter = xCounter;
     info.badLine = badLineCondition;
     info.ba = (BAlow == 0);
-    info.displayMode = getDisplayMode();
+    info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
     info.borderColor = borderColor.current() & 0xF;
     info.backgroundColor0 = bgColor[0].current() & 0xF;
     info.backgroundColor1 = bgColor[1].current() & 0xF;
     info.backgroundColor2 = bgColor[2].current() & 0xF;
     info.backgroundColor3 = bgColor[3].current() & 0xF;
     info.screenGeometry = getScreenGeometry();
-    info.dx = getHorizontalRasterScroll();
-    info.dy = getVerticalRasterScroll();
+    info.dx = control2.current() & 0x07;
+    info.dy = control1.current() & 0x07;
     info.verticalFrameFlipflop = p.verticalFrameFF;
     info.horizontalFrameFlipflop = p.mainFrameFF;
     info.memoryBankAddr = bankAddr;
-    info.screenMemoryAddr = getScreenMemoryAddr();
-    info.characterMemoryAddr = getCharacterMemoryAddr();
+    info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
+    info.characterMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
     info.imr = imr;
     info.irr = irr;
     info.spriteCollisionIrqEnabled =  GET_BIT(imr, 2);
@@ -86,6 +89,103 @@ VIC::setMemoryBankAddr(uint16_t addr)
 }
 
 void
+VIC::setScreenMemoryAddr(uint16_t addr)
+{
+    assert((addr & ~0x3C00) == 0);
+    
+    c64->suspend();
+    addr >>= 6;
+    iomem[0x18] = (iomem[0x18] & ~0xF0) | (addr & 0xF0);
+    c64->resume();
+}
+
+void
+VIC::setCharacterMemoryAddr(uint16_t addr)
+{
+    assert((addr & ~0x3800) == 0);
+    
+    c64->suspend();
+    addr >>= 10;
+    iomem[0x18] = (iomem[0x18] & ~0x0E) | (addr & 0x0E);
+    c64->resume();
+}
+
+void
+VIC::setDisplayMode(DisplayMode m)
+{
+    c64->suspend();
+    control1.write((control1.current() & ~0x60) | (m & 0x60));
+    control2.write((control2.current() & ~0x10) | (m & 0x10));
+    c64->resume();
+}
+
+void
+VIC::setNumberOfRows(unsigned rs)
+{
+    assert(rs == 24 || rs == 25);
+    
+    c64->suspend();
+    uint8_t value = control1.current();
+    WRITE_BIT(value, 3, rs == 25);
+    control1.write(value);
+    c64->resume();
+}
+
+void
+VIC::setNumberOfColumns(unsigned cs)
+{
+    assert(cs == 38 || cs == 40);
+    
+    c64->suspend();
+    uint8_t value = control2.current();
+    WRITE_BIT(value, 3, cs == 40);
+    control2.write(value);
+    c64->resume();
+}
+
+ScreenGeometry
+VIC::getScreenGeometry(void)
+{
+    unsigned rows = GET_BIT(control1.current(), 3) ? 25 : 24;
+    unsigned cols = GET_BIT(control2.current(), 3) ? 40 : 38;
+    
+    if (cols == 40) {
+        return rows == 25 ? COL_40_ROW_25 : COL_40_ROW_24;
+    } else {
+        return rows == 25 ? COL_38_ROW_25 : COL_38_ROW_24;
+    }
+}
+
+void
+VIC::setScreenGeometry(ScreenGeometry mode)
+{
+    c64->suspend();
+    setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
+    setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
+    c64->resume();
+}
+
+void
+VIC::setVerticalRasterScroll(uint8_t offset)
+{
+    assert(offset < 8);
+    
+    c64->suspend();
+    control1.write((control1.current() & 0xF8) | (offset & 0x07));
+    c64->resume();
+}
+
+void
+VIC::setHorizontalRasterScroll(uint8_t offset)
+{
+    assert(offset < 8);
+    
+    c64->suspend();
+    control2.write((control2.current() & 0xF8) | (offset & 0x07));
+    c64->resume();
+}
+
+void
 VIC::setRasterInterruptLine(uint16_t line)
 {
     c64->suspend();
@@ -113,17 +213,6 @@ VIC::toggleRasterInterruptFlag()
     TOGGLE_BIT(imr, 1);
     c64->resume();
 }
-
-void
-VIC::setDisplayMode(DisplayMode m) {
-    
-    c64->suspend();
-    control1.write((control1.current() & ~0x60) | (m & 0x60));
-    control2.write((control2.current() & ~0x10) | (m & 0x10));
-    c64->resume();
-}
-
-
 
 
 //

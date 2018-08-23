@@ -230,6 +230,14 @@ public:
     //! @brief    Remember at which cycle BA line has been pulled down
     uint64_t BAwentLowAtCycle;
     
+    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
+     *  @details  Variable is needed to determine if a rasterline should be
+     *            issued in cycle 1 or 2.
+     *  @deprecated Will be replaced by rasterlineMatchesIrqLine
+     */
+    bool yCounterEqualsIrqRasterline;
+    
+    
     //! @brief    Increases the X counter by 8
     void countX() { xCounter += 8; }
     
@@ -629,29 +637,9 @@ public:
     
     
 
-    
-	
 
-			
-	/*! @brief    Returns the screen memory address
-     *  @deprecated Use getInfo() instead
-     */
-	uint16_t getScreenMemoryAddr();
 	
-    /*! @brief    Sets the screen memory address
-     *  @note     This function is not needed internally and only invoked by the GUI debug panel
-     */
-	void setScreenMemoryAddr(uint16_t addr);
-		
-    /*! @brief    Returns the character memory address
-     *  @deprecated Use getInfo() instead
-     */
-	uint16_t getCharacterMemoryAddr();
-	
-    /*! @brief    Sets the character memory address
-     *  @note     This function is not needed internally and only invoked by the GUI debug panel
-     */
-	void setCharacterMemoryAddr(uint16_t addr);
+ 
     
     
     //
@@ -763,93 +751,34 @@ public:
      *            register 1 and bit 4 of control register 2.
      *  @todo     Move to debug section
      */
+    /*
     DisplayMode getDisplayMode() {
         return (DisplayMode)((control1.current() & 0x60) | (control2.current() & 0x10));
     }
+    */
     
-	//! @brief    Sets the display mode.
-    void setDisplayMode(DisplayMode m);
-	
-	//! @brief    Returns the current screen geometry.
-	ScreenGeometry getScreenGeometry(void);
-	
-	//! @brief    Sets the current screen geometry.
-	void setScreenGeometry(ScreenGeometry mode);
-	
-	//! @brief    Returns the number of rows to be drawn (24 or 25).
-    int numberOfRows() { return GET_BIT(control1.current(), 3) ? 25 : 24; }
-	
-	//! @brief    Sets the number of rows to be drawn (24 or 25).
-    void setNumberOfRows(int rs) {
-        assert(rs == 24 || rs == 25);
-        uint8_t value = control1.current() & 0xFF;
-        WRITE_BIT(value, 3, rs == 25);
-        control1.write(value);
-    }
-	
-	//! @brief    Returns the number of columns to be drawn (38 or 40).
-    int numberOfColumns() { return GET_BIT(control2.current(), 3) ? 40 : 38; }
-
-	//! @brief    Sets the number of columns to be drawn (38 or 40).
-	void setNumberOfColumns(int cs) {
-        assert(cs == 38 || cs == 40);
-        uint8_t value = control2.current() & 0xFF;
-        WRITE_BIT(value, 3, cs == 40);
-        control2.write(value);
-    }
-    
-	/*! @brief    Returns the vertical raster scroll offset (0 to 7).
-	 *  @details  The vertical raster offset is usally used by games for
-     *            smoothly scrolling the screen.
-     */
-    uint8_t getVerticalRasterScroll() { return control1.current() & 0x07; }
-	
-	//! @brief    Sets the vertical raster scroll offset (0 to 7).
-    void setVerticalRasterScroll(uint8_t offset) {
-        assert(offset < 8);
-        uint8_t value = (control1.current() & 0xF8) | (offset & 0x07);
-        control1.write(value);
-    }
-    
-	/*! @brief    Returns the horizontal raster scroll offset (0 to 7).
-	 *  @details  The vertical raster offset is usally used by games for
-     *            smoothly scrolling the screen.
-     */
-    uint8_t getHorizontalRasterScroll() { return control2.current() & 0x07; }
-	
-	//! @brief    Sets the horizontan raster scroll offset (0 to 7).
-    void setHorizontalRasterScroll(uint8_t offset) {
-        assert(offset < 8);
-        uint8_t value = (control2.current() & 0xF8) | (offset & 0x07);
-        control2.write(value);
-   }
     
 
+	
 
-	//
-	// DMA lines, BA signal and IRQs
-	//
+    //
+    //! @functiongroup Handling DMA lines and the display state
+    //
 
 private:
     
-    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
-     *  @details  Variable is needed to determine if a rasterline should be
-     *            issued in cycle 1 or 2.
-     *  @deprecates Will be replaced by rasterlineMatchesIrqLine
-     */
-    bool yCounterEqualsIrqRasterline;
-    
     /*! @brief    Update bad line condition
-     *  @details  "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
-     *             negativen Flanke von ¯0 zu Beginn des
-     *             [1] Zyklus RASTER >= $30 und RASTER <= $f7 und
-     *             [2] die unteren drei Bits von RASTER mit YSCROLL übereinstimmen
-     *             [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." [C.B.] 
+     *  @details  "A Bad Line Condition is given at any arbitrary clock cycle,
+     *             if at the negative edge of ø0 at the beginning of the cycle
+     *             [1] RASTER >= $30 and RASTER <= $f7 and
+     *             [2] the lower three bits of RASTER are equal to YSCROLL and
+     *             [3] if the DEN bit was set during an arbitrary cycle of
+     *                 raster line $30." [C.B.]
      */
     void updateBadLineCondition() {
         badLineCondition =
             yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
-            (yCounter & 0x07) == getVerticalRasterScroll() /* [2] */ &&
+            (yCounter & 0x07) == (control1.current() & 0x07) /* [2] */ &&
             DENwasSetInRasterline30 /* [3] */;
     }
     
@@ -859,15 +788,24 @@ private:
     // void updateDisplayState() { if (badLineCondition) displayState = true; }
     void updateDisplayState() { displayState = displayState || badLineCondition; }
     
-    //! @brief    Set BA line
+    
+    //
+    //! @functiongroup Interacting with the C64's CPU
+    //
+    
+private:
+    
+    /*! @brief    Sets the value of the BA line
+     * @details  The BA line is connected (invertedly) to the CPU's RDY pin.
+     */
     void setBAlow(uint8_t value);
 	
 	/*! @brief    Triggers a VIC interrupt
-	 *  @param    source Interrupt source (1, 2, or 4)
-     *            1 : Rasterline interrupt
-     *            2 : Collision of a sprite with background pixels
-     *            4 : Collision between two sprites.
-     *            8 : Lightpen interrupt
+     *  @param    source is the interrupt source
+     *                   1 : Rasterline interrupt
+     *                   2 : Collision of a sprite with background pixels
+     *                   4 : Collision between two sprites.
+     *                   8 : Lightpen interrupt
      *            cycleDelay lets you postpone the interrupt by up to 1 cycle.
      */
 	void triggerIRQ(uint8_t source, unsigned cycleDelay = 0);
@@ -875,8 +813,20 @@ private:
     //! @brief    Triggers a VIC interrupt delayed by one cycle
     void triggerDelayedIRQ(uint8_t source) { triggerIRQ(source, 1); }
     
-public: 
     
+    //
+    //! @functiongroup Handling lightpen events
+    //
+    
+public:
+    
+    /*! @brief    Sets the value of the LP pin
+     *  @details  The LP pin is connected to bit 4 of control port A.
+     *  @seealso  triggerLightpenInterrupt()
+     */
+    void setLP(bool value);
+    
+private:
 
     //! @brief    Method from Hoxs64
     //! @details  Used to determine X coordinate when a lightpen interrupt takes place
@@ -891,12 +841,6 @@ public:
     
     //! @brief    Returns the Y coordinate of a light pen event.
     uint16_t lightpenY();
-    
-	/*! @brief    Sets the value of the LP pin
-	 *  @details  The LP pin is connected to bit 4 of control port A.
-     *  @seealso  triggerLightpenInterrupt()
-     */
-	void setLP(bool value);
     
     /*! @brief    Trigger lightpen interrupt if conditions are met.
      *  @details  This function is called on each negative transition of the
@@ -965,9 +909,8 @@ private:
     uint8_t spriteDepth(uint8_t nr);
 	
 
-	
 	//
-    //!  @functiongroup Running the device (see VIC.cpp and VIC_cycles_xxx.cpp)
+    //!  @functiongroup Running the device (VIC.cpp and VIC_cycles_xxx.cpp)
 	//
 
 public:
@@ -1061,6 +1004,32 @@ public:
     //! @brief    Sets the memory bank start address
     void setMemoryBankAddr(uint16_t addr);
     
+    //! @brief    Sets the screen memory address.
+    void setScreenMemoryAddr(uint16_t addr);
+    
+    //! @brief    Sets the character memory address.
+    void setCharacterMemoryAddr(uint16_t addr);
+    
+    //! @brief    Sets the display mode.
+    void setDisplayMode(DisplayMode m);
+    
+    //! @brief    Sets the number of canvas rows.
+    void setNumberOfRows(unsigned rs);
+    
+    //! @brief    Sets the number of canvas columns.
+    void setNumberOfColumns(unsigned cs);
+    
+    //! @brief    Returns the current screen geometry.
+    ScreenGeometry getScreenGeometry(void);
+    
+    //! @brief    Sets the current screen geometry.
+    void setScreenGeometry(ScreenGeometry mode);
+    
+    //! @brief    Sets the vertical raster scroll offset.
+    void setVerticalRasterScroll(uint8_t offset);
+    
+    //! @brief    Sets the horizontan raster scroll offset.
+    void setHorizontalRasterScroll(uint8_t offset);
     
     //! @brief    Set interrupt rasterline
     void setRasterInterruptLine(uint16_t line);

@@ -138,7 +138,8 @@ VIC::reset()
     yCounter = PAL_HEIGHT;
     
     // Preset some video parameters to show a blank sreen on power up
-    setScreenMemoryAddr(0x400);
+    iomem[0x18] = 0x10;
+    // setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
 	expansionFF = 0xFF;
     
@@ -172,6 +173,12 @@ VIC::ping()
 void 
 VIC::dumpState()
 {
+    uint8_t ctrl1 = control1.current();
+    uint8_t ctrl2 = control2.current();
+    int yscroll = ctrl1 & 0x07;
+    int xscroll = ctrl2 & 0x07;
+    DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
+    
 	msg("VIC\n");
 	msg("---\n\n");
     msg("       Chip model : %d\n", chipModel);
@@ -180,12 +187,11 @@ VIC::dumpState()
     msg("     Gray dot bug : %s\n", hasGrayDotBug() ? "yes" : "no");
     msg("   is656x, is856x : %d %d\n", is656x(), is856x());
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
-    msg("    Screen memory : %04X\n", getScreenMemoryAddr());
-	msg(" Character memory : %04X\n", getCharacterMemoryAddr());
-	msg("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
-	msg("X/Y raster scroll : %d / %d\n", getHorizontalRasterScroll(), getVerticalRasterScroll());
+    msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
+	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
+	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
 	msg("     Display mode : ");
-	switch (getDisplayMode()) {
+	switch (mode) {
 		case STANDARD_TEXT: 
 			msg("Standard character mode\n");
 			break;
@@ -417,36 +423,7 @@ VIC::isVBlankLine(unsigned rasterline)
 
 
 
-uint16_t
-VIC::getScreenMemoryAddr()
-{
-    return VM13VM12VM11VM10() << 6;
-}
 
-void
-VIC::setScreenMemoryAddr(uint16_t addr)
-{
-    assert((addr & ~0x3C00) == 0);
-    
-    addr >>= 6;
-    iomem[0x18] = (iomem[0x18] & ~0xF0) | (addr & 0xF0);
-}
-
-uint16_t
-VIC::getCharacterMemoryAddr()
-{
-    return (CB13CB12CB11() << 10) % 0x4000;
-}
-
-
-void 
-VIC::setCharacterMemoryAddr(uint16_t addr)
-{
-    assert((addr & ~0x3800) == 0);
-	
-    addr >>= 10;
-    iomem[0x18] = (iomem[0x18] & ~0x0E) | (addr & 0x0E);
-}
 
 
 
@@ -455,28 +432,9 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
 // Properties
 //
 
-void 
-VIC::setScreenGeometry(ScreenGeometry mode)
-{
-	setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
-	setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
-}
 
-ScreenGeometry 
-VIC::getScreenGeometry()
-{
-	if (numberOfColumns() == 40) {
-		if (numberOfRows() == 25)
-			return COL_40_ROW_25;
-		else
-			return COL_40_ROW_24;
-	} else {
-		if (numberOfRows() == 25)
-			return COL_38_ROW_25;
-		else
-			return COL_38_ROW_24;
-	}
-}
+
+
 
 
 //
