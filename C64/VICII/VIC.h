@@ -103,6 +103,20 @@ private:
      */
     uint8_t dataBus;
     
+    /*! @brief    Current value of the BA line
+     *  @details  Remember: Each CPU cycle is split into two phases:
+     *            First phase (LOW):   VIC gets access to the bus
+     *            Second phase (HIGH): CPU gets access to the bus
+     *            In rare cases, VIC needs access in the HIGH phase, too.
+     *            To block the CPU, the BA line is pulled down.
+     *  @note     BA can be pulled down by multiple sources (wired AND).
+     */
+    uint16_t BAlow;
+    
+    //! @brief    Remember at which cycle BA line has been pulled down
+    uint64_t BAwentLowAtCycle;
+    
+    
     
     
     
@@ -130,6 +144,25 @@ private:
      */
     uint32_t yCounter;
     
+    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
+     *  @details  Variable is needed to determine if a rasterline should be
+     *            issued in cycle 1 or 2.
+     *  @deprecated Will be replaced by rasterlineMatchesIrqLine
+     */
+    bool yCounterEqualsIrqRasterline;
+    
+    //! @brief    True if the current rasterline belongs to the VBLANK area.
+    bool vblank;
+    
+    /*! @brief    DRAM refresh counter
+     *  @details  "The VIC does five read accesses in every raster line for the
+     *             refresh of the dynamic RAM. An 8 bit refresh counter (REF)
+     *             is used to generate 256 DRAM row addresses. The counter is
+     *             reset to $ff in raster line 0 and decremented by 1 after each
+     *             refresh access." [C.B.]
+     */
+    uint8_t refreshCounter;
+    
     /*! @brief    Vertical frame flipflop set condition
      *  @details  Indicates whether the vertical frame flipflop needs to be set
      *            in the current rasterline.
@@ -142,12 +175,6 @@ private:
      */
     bool verticalFrameFFclearCond;
     
-    
-    
-    
-    //! @brief    True if the current rasterline belongs to the VBLANK area.
-    bool vblank;
-    
     //! @brief    Internal VIC register, 10 bit video counter
     uint16_t registerVC;
     
@@ -159,17 +186,6 @@ private:
     
     //! @brief    Internal VIC-II register, 6 bit video matrix line index
     uint8_t registerVMLI;
-    
- 
-    
- 
-    
-    /*! @brief    DRAM refresh counter
-     *  @details  "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
-     *             dynamischen RAM durch. Es wird ein 8-Bit Refreshzähler (REF) zur Erzeugung
-     *             von 256 DRAM-Zeilenadressen benutzt." [C.B.]
-     */
-    uint8_t refreshCounter;
     
     //! @brief    Display mode in latest gAccess
     uint8_t gAccessDisplayMode;
@@ -195,25 +211,9 @@ private:
      */
     bool displayState;
     
-    /*! @brief    Current value of the BA line
-     *  @details  Remember: Each CPU cycle is split into two phases:
-     *            First phase (LOW):   VIC gets access to the bus
-     *            Second phase (HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too.
-     *            To block the CPU, the BA line is pulled down.
-     *  @note     BA can be pulled down by multiple sources (wired AND).
-     */
-    uint16_t BAlow;
+
     
-    //! @brief    Remember at which cycle BA line has been pulled down
-    uint64_t BAwentLowAtCycle;
-    
-    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
-     *  @details  Variable is needed to determine if a rasterline should be
-     *            issued in cycle 1 or 2.
-     *  @deprecated Will be replaced by rasterlineMatchesIrqLine
-     */
-    bool yCounterEqualsIrqRasterline;
+ 
     
     
     
