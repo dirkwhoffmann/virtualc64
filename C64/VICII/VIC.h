@@ -266,17 +266,8 @@ private:
 
  
     
-    
- 
- 
-    
 
-    
-	//
-	// I/O memory handling and RAM access
-	//
-
-public:
+private:
 	
 	/*! @brief    I/O Memory
 	 *  @details  This array is used to store most of the register values that are poked into
@@ -321,12 +312,7 @@ private:
      */
     uint8_t colorSpace[40];
     
-    //! @brief    Bit i is set to 1 iff sprite i performs its first DMA in the current cycle
-    uint8_t isFirstDMAcycle;
-
-    //! @brief    Bit i is set to 1 iff sprite i performs its second and third DMA in the current cycle
-    uint8_t isSecondDMAcycle;
-
+ 
     
     //
     // Memory refresh accesses (rAccess)
@@ -354,6 +340,18 @@ private:
      */
 	uint16_t spritePtr[8];
 
+    /*! @brief    Flags the first DMA access for each sprite.
+     *  @details  Bit n corresponds to sprite n.
+     */
+    uint8_t isFirstDMAcycle;
+    uint8_t sprFirstDMA;
+    
+    /*! @brief    Flags the second or third DMA access for each sprite.
+     *  @details  Bit n corresponds to sprite n.
+     */
+    uint8_t isSecondDMAcycle;
+    uint8_t sprSecondDMA;
+    
 	/*! @brief    Sprite on off register
 	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
      *            Each bit represents a single sprite.

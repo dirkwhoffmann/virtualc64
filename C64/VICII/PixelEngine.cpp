@@ -388,7 +388,11 @@ PixelEngine::drawSprites()
     uint8_t secondDMA = vic->isSecondDMAcycle;
 
     // Quick exit
+    /*
     if (!oldSpriteOnOff && !newSpriteOnOff && !firstDMA && !secondDMA)
+        return;
+    */
+    if (!oldSpriteOnOff && !newSpriteOnOff)
         return;
     
     // Get color values (values may change after the first pixel has been drawn)
