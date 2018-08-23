@@ -113,14 +113,9 @@ private:
      *            this variable indicates which sources are holding the line
      *            low.
      */
-    uint16_t BAlow;
     TimeDelayed<uint16_t>baLine = TimeDelayed<uint16_t>(3);
     
-    //! @brief    Remember at which cycle BA line has been pulled down
-    uint64_t BAwentLowAtCycle;
-    
-    
-    
+ 
     
     
     /*! @brief    Event pipeline
@@ -821,16 +816,16 @@ private:
     
 private:
     
-    /*! @brief    Sets the value of the BA line
+    /*! @brief   Sets the value of the BA line
      * @details  The BA line is connected to the CPU's RDY pin.
      */
-    void setBAlow(uint8_t value);
-	
+    void updateBA(uint8_t value);
+    
     /*! @brief    Indicates if a c-access can occur.
      *  @details  A c-access can only be performed if the BA line is down for
      *            more than 2 cycles.
      */
-    bool BApulledDownForAtLeastThreeCycles();
+    bool BApulledDownForAtLeastThreeCycles() { return baLine.delayed(); }
     
 	/*! @brief    Triggers a VIC interrupt
      *  @param    source is the interrupt source
@@ -1011,6 +1006,11 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
+    #define PROCESS_DELAYED_ACTIONS \
+    if (unlikely(delay != 0)) { processDelayedActions(); }
+    
+    #define BA_LINE(x) \
+    if ((x) != baLine.current()) { updateBA(x); }
     
 	//
 	// The following functions are used by the GUI debugger, only

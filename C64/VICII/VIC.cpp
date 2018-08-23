@@ -75,8 +75,6 @@ VIC::VIC()
         { &badLineCondition,            sizeof(badLineCondition),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
         { &displayState,                sizeof(displayState),                   CLEAR_ON_RESET },
-        { &BAlow,                       sizeof(BAlow),                          CLEAR_ON_RESET },
-        { &BAwentLowAtCycle,            sizeof(BAwentLowAtCycle),               CLEAR_ON_RESET },
         { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
         { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
         { &characterSpace,              sizeof(characterSpace),                 CLEAR_ON_RESET },
@@ -217,7 +215,7 @@ VIC::dumpState()
 	msg("           VCBASE : %02X\n", registerVCBASE);
 	msg("               RC : %02X\n", registerRC);
 	msg("             VMLI : %02X\n", registerVMLI);
-	msg("          BA line : %s\n", BAlow ? "low" : "high");
+	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
 	msg("      MainFrameFF : %d\n", p.mainFrameFF);
 	msg("  VerticalFrameFF : %d\n", p.verticalFrameFF);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
@@ -494,7 +492,7 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 //
 
 void
-VIC::setBAlow(uint8_t value)
+VIC::updateBA(uint8_t value)
 {
     if (value) {
         baLine.write(value);
@@ -502,23 +500,7 @@ VIC::setBAlow(uint8_t value)
         baLine.clear();
     }
     
-    if (!BAlow && value)
-        BAwentLowAtCycle = c64->currentCycle();
-    
-    BAlow = value;
-    assert((value == 0) == (baLine.current() == 0));
     c64->cpu.setRDY(value == 0);
-}
-
-bool
-VIC::BApulledDownForAtLeastThreeCycles()
-{
-    bool oldResult = BAlow && (c64->currentCycle() - BAwentLowAtCycle > 2);
-    bool newResult = baLine.delayed();
-
-    assert((oldResult == 0) == (newResult == 0));
-
-    return BAlow && (c64->currentCycle() - BAwentLowAtCycle > 2);
 }
 
 void 

@@ -47,9 +47,6 @@ VIC::processDelayedActions()
     delay = (delay << 1) & VICClearanceMask;
 }
 
-#define PROCESS_DELAYED_ACTIONS \
-if (unlikely(delay != 0)) { processDelayedActions(); }
-
 void
 VIC::cycle1pal()
 {
@@ -74,7 +71,7 @@ VIC::cycle1pal()
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
+    BA_LINE(spriteDmaOnOff & (SPR3 | SPR4));
     
     // Phi2.5 Fetch
     sFirstAccess(3);
@@ -106,7 +103,7 @@ VIC::cycle2pal()
         triggerIRQ(1);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
+    BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     
     // Phi2.5 Fetch
     sThirdAccess(3);
@@ -130,7 +127,7 @@ VIC::cycle3pal()
     pAccess(4);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
+    BA_LINE(spriteDmaOnOff & (SPR4 | SPR5));
     
     // Phi2.5 Fetch
     sFirstAccess(4);
@@ -152,7 +149,7 @@ VIC::cycle4pal()
     sSecondAccess(4);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
+    BA_LINE(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     
     // Phi2.5 Fetch
     sThirdAccess(4);
@@ -177,7 +174,7 @@ VIC::cycle5pal()
     pAccess(5);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
+    BA_LINE(spriteDmaOnOff & (SPR5 | SPR6));
     
     // Phi2.5 Fetch
     sFirstAccess(5);
@@ -199,7 +196,7 @@ VIC::cycle6pal()
     sSecondAccess(5);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
+    BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
     
     // Phi2.5 Fetch
     sThirdAccess(5);
@@ -223,7 +220,7 @@ VIC::cycle7pal()
     pAccess(6);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
     
     // Phi2.5 Fetch
     sFirstAccess(6);
@@ -245,7 +242,7 @@ VIC::cycle8pal()
     sSecondAccess(6);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
     
     // Phi2.5 Fetch
     sThirdAccess(6);
@@ -269,7 +266,7 @@ VIC::cycle9pal()
     pAccess(7);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & SPR7);
+    BA_LINE(spriteDmaOnOff & SPR7);
     
     // Phi2.5 Fetch
     sFirstAccess(7);
@@ -294,7 +291,7 @@ VIC::cycle10pal()
     sSecondAccess(7);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & SPR7);
+    BA_LINE(spriteDmaOnOff & SPR7);
     
     // Phi2.5 Fetch
     sThirdAccess(7);
@@ -322,7 +319,7 @@ VIC::cycle11pal()
     rAccess();
     
     // Phi2.4 BA logic
-    setBAlow(false);
+    BA_LINE(false);
     
     // Finalize
     updateDisplayState();
@@ -354,7 +351,7 @@ VIC::cycle12()
      werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
      wieder intern gelesen." [C.B.] */
     
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     // Finalize
@@ -378,7 +375,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     rAccess();
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Finalize
     updateDisplayState();
@@ -413,7 +410,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
         registerRC = 0;
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     // Finalize
@@ -437,7 +434,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     rAccess();
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     cAccess();
@@ -467,7 +464,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     turnSpriteDmaOff();
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     cAccess();
@@ -494,7 +491,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     gAccess();
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     cAccess();
@@ -522,7 +519,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     gAccess();
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     cAccess();
@@ -548,7 +545,7 @@ VIC::cycle19to54()
     gAccess();
     
     // Phi2.4 BA logic
-    setBAlow(badLineCondition);
+    BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
     cAccess();
@@ -577,7 +574,7 @@ VIC::cycle55pal()
     turnSpriteDmaOn();
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & SPR0);
+    BA_LINE(spriteDmaOnOff & SPR0);
     
     // Finalize
     updateDisplayState();
@@ -605,7 +602,7 @@ VIC::cycle56()
     toggleExpansionFlipflop();
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & SPR0);
+    BA_LINE(spriteDmaOnOff & SPR0);
     
     // Finalize
     updateDisplayState();
@@ -630,7 +627,7 @@ VIC::cycle57pal()
     rIdleAccess();
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
+    BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Finalize
     updateDisplayState();
@@ -676,7 +673,7 @@ VIC::cycle58pal()
     }
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
+    BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Phi2.5 Fetch
     sFirstAccess(0);
@@ -702,7 +699,7 @@ VIC::cycle59pal()
     sSecondAccess(0);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+    BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
     
     // Phi2.5 Fetch
     sThirdAccess(0);
@@ -729,7 +726,7 @@ VIC::cycle60pal()
     pAccess(1);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
+    BA_LINE(spriteDmaOnOff & (SPR1 | SPR2));
     
     // Phi2.5 Fetch
     sFirstAccess(1);
@@ -755,7 +752,7 @@ VIC::cycle61pal()
     sSecondAccess(1);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
+    BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
     
     // Phi2.5 Fetch
     sThirdAccess(1);
@@ -779,7 +776,7 @@ VIC::cycle62pal()
     pAccess(2);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
+    BA_LINE(spriteDmaOnOff & (SPR2 | SPR3));
     
     // Phi2.5 Fetch
     sFirstAccess(2);
@@ -802,7 +799,7 @@ VIC::cycle63pal()
     sSecondAccess(2);
     
     // Phi2.4 BA logic
-    setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
+    BA_LINE(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
     
     // Phi2.5 Fetch
     sThirdAccess(2);

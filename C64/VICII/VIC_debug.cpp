@@ -31,7 +31,7 @@ VIC::getInfo()
     info.cycle = c64->rasterlineCycle;
     info.xCounter = xCounter;
     info.badLine = badLineCondition;
-    info.ba = (BAlow == 0);
+    info.ba = (baLine.current() == 0);
     info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
     info.borderColor = borderColor.current() & 0xF;
     info.backgroundColor0 = bgColor[0].current() & 0xF;
