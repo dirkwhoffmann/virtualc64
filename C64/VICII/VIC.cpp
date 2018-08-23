@@ -157,7 +157,7 @@ VIC::reset()
         sprColor[i].reset(0);
     
 	// Disable cheating by default
-	drawSprites = true;
+	hideSprites = false;
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
 }
@@ -294,61 +294,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     assert(*buffer - old == stateSize());
 }
 
-VICInfo
-VIC::getInfo()
-{
-    VICInfo info;
-    
-    info.rasterline = c64->rasterline;
-    info.cycle = c64->rasterlineCycle;
-    info.xCounter = xCounter;
-    info.badLine = badLineCondition;
-    info.ba = (BAlow == 0);
-    info.displayMode = getDisplayMode();
-    info.borderColor = borderColor.current() & 0xF;
-    info.backgroundColor0 = bgColor[0].current() & 0xF;
-    info.backgroundColor1 = bgColor[1].current() & 0xF;
-    info.backgroundColor2 = bgColor[2].current() & 0xF;
-    info.backgroundColor3 = bgColor[3].current() & 0xF;
-    info.screenGeometry = getScreenGeometry();
-    info.dx = getHorizontalRasterScroll();
-    info.dy = getVerticalRasterScroll();
-    info.verticalFrameFlipflop = p.verticalFrameFF;
-    info.horizontalFrameFlipflop = p.mainFrameFF;
-    info.memoryBankAddr = bankAddr;
-    info.screenMemoryAddr = getScreenMemoryAddr();
-    info.characterMemoryAddr = getCharacterMemoryAddr();
-    info.imr = imr;
-    info.irr = irr;
-    info.spriteCollisionIrqEnabled = irqOnSpriteSpriteCollision();
-    info.backgroundCollisionIrqEnabled = irqOnSpriteBackgroundCollision();
-    info.rasterIrqEnabled = rasterInterruptEnabled();
-    info.irqRasterline = rasterInterruptLine();
-    info.irqLine = (imr & irr) != 0;
-    
-    return info;
-}
-
-SpriteInfo
-VIC::getSpriteInfo(unsigned i)
-{
-    SpriteInfo info;
-    
-    info.enabled = GET_BIT(spriteOnOff.current(), i);
-    info.x = p.spriteX[i];
-    info.y = iomem[1 + 2*i];
-    info.color = sprColor[i].current() & 0xF;
-    info.multicolor = spriteIsMulticolor(i);
-    info.extraColor1 = sprExtraColor1.current() & 0xF;
-    info.extraColor2 = sprExtraColor2.current() & 0xF;
-    info.expandX = spriteWidthIsDoubled(i);
-    info.expandY = spriteHeightIsDoubled(i);
-    info.priority = spritePriority(i);
-    info.collidesWithSprite = spriteCollidesWithSprite(i);
-    info.collidesWithBackground = spriteCollidesWithBackground(i);
-    
-    return info;
-}
 
 void
 VIC::setChipModel(VICChipModel model)
@@ -739,6 +684,17 @@ VIC::retriggerLightpenInterrupt()
 // Sprites
 //
 
+uint8_t
+VIC::compareSpriteY()
+{
+    uint8_t result = 0;
+    
+    for (unsigned i = 0; i < 8; i++)
+        result |= (iomem[2*i+1] == yCounter) << i;
+    
+    return result;
+}
+
 void
 VIC::turnSpriteDmaOff()
 {
@@ -809,11 +765,21 @@ VIC::turnSpritesOnOrOff()
 }
 
 
+/*
 void
 VIC::toggleExpansionFlipflop()
 {
-    // A '1' in D017 means that the sprite is vertically stretched
     expansionFF ^= iomem[0x17];
+}
+*/
+
+uint8_t
+VIC::spriteDepth(uint8_t nr)
+{
+    return
+    GET_BIT(iomem[0x1B], nr) ?
+    (SPRITE_LAYER_BG_DEPTH | nr) :
+    (SPRITE_LAYER_FG_DEPTH | nr);
 }
 
 //
@@ -868,16 +834,18 @@ VIC::beginFrame()
     
 	lightpenIRQhasOccured = false;
 
-    /* "Der [Refresh-]ZŠhler wird in Rasterzeile 0 mit
-        $ff gelšscht und nach jedem Refresh-Zugriff um 1 verringert.
-        Der VIC greift also in Zeile 0 auf die Adressen $3fff, $3ffe, $3ffd, $3ffc
-        und $3ffb zu, in Zeile 1 auf $3ffa, $3ff9, $3ff8, $3ff7 und $3ff6 usw." [C.B.] */
+    /* "The VIC does five read accesses in every raster line for the refresh of
+     *  the dynamic RAM. An 8 bit refresh counter (REF) is used to generate 256
+     *  DRAM row addresses. The counter is reset to $ff in raster line 0 and
+     *  decremented by 1 after each refresh access." [C.B.]
+     */
     refreshCounter = 0xFF;
 
-    /* "1. Irgendwo einmal außerhalb des Bereiches der Rasterzeilen $30-$f7 (also
-           au§erhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
-           Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
-           nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
+    /* "Once somewhere outside of the range of raster lines $30-$f7 (i.e.
+     *  outside of the Bad Line range), VCBASE is reset to zero. This is
+     *  presumably done in raster line 0, the exact moment cannot be determined
+     *  and is irrelevant." [C.B.]
+     */
     registerVCBASE = 0;
     
     // Retrigger lightpen interrupt if lp line is still pulled down

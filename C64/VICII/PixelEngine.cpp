@@ -456,7 +456,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr,
     assert(sprite_sr[spritenr].remaining_bits >= -1);
     assert(sprite_sr[spritenr].remaining_bits <= 26);
     
-    bool multicol = vic->spriteIsMulticolor(spritenr);
+    bool multicol = GET_BIT(vic->iomem[0x1C], spritenr);
 
     // Load shift register if applicable
     if (load) {
@@ -503,7 +503,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr,
     }
     
     // Draw pixel
-    if (visibleColumn && vic->drawSprites) {
+    if (visibleColumn && !vic->hideSprites) {
         if (multicol)
             setMultiColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x03);
         else

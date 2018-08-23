@@ -270,11 +270,11 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) toggleRasterInterruptFlag {
     wrapper->vic->toggleRasterInterruptFlag(); }
 
-- (BOOL) hideSprites { return wrapper->vic->hideSprites(); }
+- (BOOL) hideSprites { return wrapper->vic->hideSprites; }
 - (void) setHideSprites:(BOOL)b { wrapper->vic->setHideSprites(b); }
-- (BOOL) showIrqLines { return wrapper->vic->showIrqLines(); }
+- (BOOL) showIrqLines { return wrapper->vic->markIRQLines; }
 - (void) setShowIrqLines:(BOOL)b { wrapper->vic->setShowIrqLines(b); }
-- (BOOL) showDmaLines { return wrapper->vic->showDmaLines(); }
+- (BOOL) showDmaLines { return wrapper->vic->markDMALines; }
 - (void) setShowDmaLines:(BOOL)b { wrapper->vic->setShowDmaLines(b); }
 
 @end

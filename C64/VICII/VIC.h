@@ -450,15 +450,17 @@ private:
 
     
 	//
-	// Debugging
+	// Debugging and cheating
 	//
 	
+public:
+    
 	/*! @brief    Determines whether sprites are drawn or not
-	 *  @details  During normal emulation, the value is always true. For
-     *            debugging purposes, the value can be set to false. In this
+	 *  @details  During normal emulation, the value is always false. For
+     *            debugging purposes, the value can be set to true. In this
      *            case, sprites are no longer drawn.
 	 */
-	bool drawSprites;
+	bool hideSprites;
 	
 	/*! @brief    Enables sprite-sprite collision
 	 *  @details  If set to true, the virtual VIC chips checks for sprite-sprite
@@ -516,12 +518,7 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     
-    //! @brief    Gathers debug information.
-    VICInfo getInfo();
-
-    //! @brief    Gathers debug information about a certain sprite.
-    SpriteInfo getSpriteInfo(unsigned i);
-
+ 
     
     //
     //! @functiongroup Accessing chip model related properties
@@ -716,7 +713,7 @@ private:
     
     
 	//
-	// Properties
+	//! @functiongroup Querying the VICII registers
 	//
 	
 public:
@@ -729,6 +726,11 @@ public:
         return is856x() ?
         GET_BIT(control1.delayed(), 5) :
         GET_BIT(control1.delayed(), 5) | GET_BIT(control1.current(), 5);
+    }
+    
+    //! @brief    Number of the next interrupt rasterline
+    uint16_t rasterInterruptLine() {
+        return ((control1.current() & 0x80) << 1) | iomem[0x12];
     }
     
     //! @brief    Returns the value of the BMM bit in the previous cycle.
@@ -874,32 +876,8 @@ private:
     void triggerDelayedIRQ(uint8_t source) { triggerIRQ(source, 1); }
     
 public: 
-	
-	/*! @brief    Returns next interrupt rasterline
-     *  @details  In line 0, the interrupt is triggered in cycle 2. In all other lines,
-     *            it is triggered in cycle 1.
-     */
-    uint16_t rasterInterruptLine() { return ((control1.current() & 0x80) << 1) | iomem[0x12]; }
     
-	//! @brief    Set interrupt rasterline
-    void setRasterInterruptLine(uint16_t line) {
-        iomem[0x12] = line & 0xFF;
-        if (line > 0xFF) {
-            control1.write(control1.current() | 0x80);
-        } else {
-            control1.write(control1.current() & 0x7F);
-        }
-    }
 
-	//! @brief    Returns true, iff rasterline interrupts are enabled
-    bool rasterInterruptEnabled() { return GET_BIT(imr, 1); }
-
-	//! @brief    Enable or disable rasterline interrupts
-    void setRasterInterruptEnable(bool b) { WRITE_BIT(imr, 1, b); }
-	
-	//! @brief    Enable or disable rasterline interrupts
-    void toggleRasterInterruptFlag() { TOGGLE_BIT(imr, 1); }
-	
     //! @brief    Method from Hoxs64
     //! @details  Used to determine X coordinate when a lightpen interrupt takes place
     //! @deprecated Use lightpenX(), lightpenY()
@@ -947,25 +925,7 @@ private:
 
     //! @brief    Compares the Y coordinates of all sprites with the yCounter
     //! @return   A bit pattern storing the result for each sprite.
-    uint8_t compareSpriteY() {
-        
-        uint8_t result = 0;
-        for (unsigned i = 0; i < 8; i++)
-            result |= (iomem[2*i+1] == yCounter) << i;
-        
-        assert(result ==
-               ((iomem[1] == yCounter) |
-               ((iomem[3] == yCounter) << 1) |
-               ((iomem[5] == yCounter) << 2) |
-               ((iomem[7] == yCounter) << 3) |
-               ((iomem[9] == yCounter) << 4) |
-               ((iomem[11] == yCounter) << 5) |
-               ((iomem[13] == yCounter) << 6) |
-               ((iomem[15] == yCounter) << 7))
-               );
-        
-        return result;
-    }
+    uint8_t compareSpriteY();
     
     /*! @brief    Turns off sprite dma if conditions are met.
      *  @details  In cycle 16, the mcbase pointer is advanced three bytes for
@@ -997,99 +957,13 @@ private:
      *            effect in the next rasterline. This causes each sprite line
      *            to be drawn twice.
      */
-    void toggleExpansionFlipflop();
+    void toggleExpansionFlipflop() { expansionFF ^= iomem[0x17]; }
     
-	/*! @brief    Gets depth of a sprite.
-	 *  @details  The value is written to the z buffer to resolve overlapping
-     *            pixels.
+	/*! @brief    Gets the depth of a sprite.
+	 *  @return   depth value that can be written into the z buffer.
      */
-    uint8_t spriteDepth(uint8_t nr) {
-        return spritePriority(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
+    uint8_t spriteDepth(uint8_t nr);
 	
-
-	
-
-
-public:
-    
-	//! @brief    Enables or disables a sprite.
-    void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
-
-	//! @brief    Enables or disables a sprite.
-    void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
-	    
-	/*! @brief    Returns true, iff an interrupt will be triggered when a
-     *            sprite/background collision occurs.
-     */
-    bool irqOnSpriteBackgroundCollision() { return GET_BIT(imr, 1); }
-
-    //! @brief    Enables or disables IRQs on sprite/background collision
-    void setIrqOnSpriteBackgroundCollision(bool b) { WRITE_BIT(imr, 1, b); }
-
-    //! @brief    Enables or disables IRQs on sprite/background collision
-    void toggleIrqOnSpriteBackgroundCollision() { TOGGLE_BIT(imr, 1); }
-    
-	/*! @brief    Returns true, iff an interrupt will be triggered when a
-     *            sprite/sprite collision occurs.
-     */
-    bool irqOnSpriteSpriteCollision() { return GET_BIT(imr, 2); }
-
-    //! @brief    Enables or disables IRQs on sprite/sprite collision
-    void setIrqOnSpriteSpriteCollision(bool b) { WRITE_BIT(imr, 2, b); }
-    
-    //! @brief    Enables or disables IRQs on sprite/sprite collision
-    void toggleIrqOnSpriteSpriteCollision() { TOGGLE_BIT(imr, 2); }
-    
-	//! @brief    Returns true, iff a rasterline interrupt has occurred.
-    bool rasterInterruptOccurred() { return GET_BIT(irr, 0); }
-
-	//! @brief    Returns true, iff a sprite/background interrupt has occurred.
-    bool spriteBackgroundInterruptOccurred() { return GET_BIT(irr, 1); }
-
-	//! @brief    Returns true, iff a sprite/sprite interrupt has occurred.
-    bool spriteSpriteInterruptOccurred() { return GET_BIT(irr, 2); }
-
-	//! @brief    Returns true, iff sprites are drawn behind the scenary.
-    bool spritePriority(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
-
-	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void setSpritePriority(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
-
-	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
-    void toggleSpritePriority(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
-	
-	//! @brief    Returns true, iff sprite is a multicolor sprite.
-    bool spriteIsMulticolor(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1C], nr); }
-
-	//! @brief    Sets single color or multi color mode for sprite.
-    void setSpriteMulticolor(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1C], nr, b); }
-
-	//! @brief    Switches between single color or multi color mode.
-    void toggleMulticolorFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1C], nr); }
-		
-	//! @brief    Returns true, iff the sprite is vertically stretched.
-    bool spriteHeightIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x17], nr); }
-
-	//! @brief    Stretches or shrinks a sprite vertically.
-    void setSpriteStretchY(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x17], nr, b); }
-
-	//! @brief    Stretches or shrinks a sprite vertically.
-    void spriteToggleStretchYFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x17], nr); }
-
-	//! @brief    Returns true, iff the sprite is horizontally stretched.
-    bool spriteWidthIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(p.spriteXexpand, nr); }
-
-	//! @brief    Stretches or shrinks sprite horizontally.
-    void setSpriteStretchX(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(p.spriteXexpand, nr, b); }
-
-	//! @brief    Stretches or shrinks sprite horizontally.
-    void spriteToggleStretchXFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(p.spriteXexpand, nr); }
-
-	//! @brief    Returns true, iff sprite collides with another sprite.
-    bool spriteCollidesWithSprite(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1E], nr); }
-
-	//! @brief    Returns true, iff sprite collides with background.
-    bool spriteCollidesWithBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1F], nr); }
 
 	
 	//
@@ -1164,17 +1038,39 @@ public:
 	
     
 	//
-	//! @functiongroup Debugging VICII (see VIC_debug.cpp)
+	// The following functions are used by the GUI debugger, only
 	//
 
 public: 
 
     //
-    //! @functiongroup Modifying VICII internals (thread safe)
+    //! @functiongroup Querying information (VIC_debug.cpp)
+    //
+
+    //! @brief    Gathers debug information.
+    VICInfo getInfo();
+    
+    //! @brief    Gathers debug information about a certain sprite.
+    SpriteInfo getSpriteInfo(unsigned i);
+
+    
+    //
+    //! @functiongroup Thread-safe manipulation of the VICII state (VIC_debug.cpp)
     //
 
     //! @brief    Sets the memory bank start address
     void setMemoryBankAddr(uint16_t addr);
+    
+    
+    //! @brief    Set interrupt rasterline
+    void setRasterInterruptLine(uint16_t line);
+    
+    //! @brief    Enable or disable rasterline interrupts
+    void setRasterInterruptEnable(bool b);
+    
+    //! @brief    Enable or disable rasterline interrupts
+    void toggleRasterInterruptFlag();
+    
     
     //! @brief    Sets the color of a sprite.
     void setSpriteColor(unsigned nr, uint8_t color);
@@ -1185,50 +1081,73 @@ public:
     //! @brief    Sets the Y coordinate of sprite.
     void setSpriteY(unsigned nr, uint8_t y);
     
+    //! @brief    Enables or disables a sprite.
+    void setSpriteEnabled(uint8_t nr, bool b);
     
+    //! @brief    Enables or disables a sprite.
+    void toggleSpriteEnabled(uint8_t nr);
     
+    //! @brief    Enables or disables IRQs on sprite/background collision
+    void setIrqOnSpriteBackgroundCollision(bool b);
     
+    //! @brief    Enables or disables IRQs on sprite/background collision
+    void toggleIrqOnSpriteBackgroundCollision();
     
+    //! @brief    Enables or disables IRQs on sprite/sprite collision
+    void setIrqOnSpriteSpriteCollision(bool b);
     
-    //
-    //! @functiongroup Enabling and disabling some VICII features
-    //
+    //! @brief    Enables or disables IRQs on sprite/sprite collision
+    void toggleIrqOnSpriteSpriteCollision();
+    
+    //! @brief    Determines whether a sprite is drawn before or behind the scenary.
+    void setSpritePriority(unsigned nr, bool b);
+    
+    //! @brief    Determines whether a sprite is drawn before or behind the scenary.
+    void toggleSpritePriority(unsigned nr);
+    
+    //! @brief    Sets single color or multi color mode for sprite.
+    void setSpriteMulticolor(unsigned nr, bool b);
+    
+    //! @brief    Switches between single color or multi color mode.
+    void toggleMulticolorFlag(unsigned nr);
+    
+    //! @brief    Stretches or shrinks a sprite vertically.
+    void setSpriteStretchY(unsigned nr, bool b);
+    
+    //! @brief    Stretches or shrinks a sprite vertically.
+    void spriteToggleStretchYFlag(unsigned nr);
+    
+    //! @brief    Stretches or shrinks sprite horizontally.
+    void setSpriteStretchX(unsigned nr, bool b);
+    
+    //! @brief    Stretches or shrinks sprite horizontally.
+    void spriteToggleStretchXFlag(unsigned nr);
 
-    //! @brief    Returns true if IRQ lines are colorized.
-	bool showIrqLines() { return markIRQLines; }
+    
+    //
+    //! @functiongroup Debugging and cheating (VIC_debug.cpp)
+    //
 
 	//! @brief    Shows or hides IRQ lines.
-	void setShowIrqLines(bool show) { markIRQLines = show; }
-
-	//! @brief    Returns true if DMA lines are colorized.
-	bool showDmaLines() { return markDMALines; }
+    void setShowIrqLines(bool show);
 	
 	//! @brief    Shows or hides DMA lines.
-	void setShowDmaLines(bool show) { markDMALines = show; }
-
-	//! @brief    Returns true if sprites are hidden.
-	bool hideSprites() { return !drawSprites; }
+    void setShowDmaLines(bool show);
 
 	//! @brief    Hides or shows sprites.
-	void setHideSprites(bool hide) { drawSprites = !hide; }
+    void setHideSprites(bool hide);
 	
-	//! @brief    Returns true if sprite-sprite collision detection is enabled.
-	bool getSpriteSpriteCollisionFlag() { return spriteSpriteCollisionEnabled; }
-
 	//! @brief    Enables or disables sprite-sprite collision detection.
-    void setSpriteSpriteCollisionFlag(bool b) { spriteSpriteCollisionEnabled = b; };
+    void setSpriteSpriteCollisionFlag(bool b);
 
 	//! @brief    Toggles sprite-sprite collision detection.
-    void toggleSpriteSpriteCollisionFlag() { spriteSpriteCollisionEnabled = !spriteSpriteCollisionEnabled; }
+    void toggleSpriteSpriteCollisionFlag();
 	
-	//! @brief    Returns true if sprite-background collision detection is enabled.
-	bool getSpriteBackgroundCollisionFlag() { return spriteBackgroundCollisionEnabled; }
-
 	//! @brief    Enables or disable sprite-background collision detection.
-    void setSpriteBackgroundCollisionFlag(bool b) { spriteBackgroundCollisionEnabled = b; }
+    void setSpriteBackgroundCollisionFlag(bool b);
 
 	//! @brief    Toggles sprite-background collision detection.
-    void toggleSpriteBackgroundCollisionFlag() { spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled; }
+    void toggleSpriteBackgroundCollisionFlag();
 };
 
 #endif
