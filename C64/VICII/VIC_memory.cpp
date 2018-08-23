@@ -181,7 +181,8 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             // Check the DEN bit if we're in rasterline 30
             // If it's set at some point in that line, bad line conditions can occur
-            if (yCounter == 0x30 && (value & 0x10) != 0)
+            // if (yCounter == 0x30 && (value & 0x10) != 0)
+            if (c64->rasterline == 0x30 && (value & 0x10) != 0)
                 DENwasSetInRasterline30 = true;
             
             // Bits 0 to 3 are the vertical scroll offset. If they change in

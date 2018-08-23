@@ -85,7 +85,7 @@ ProcessorPort::write(uint8_t value)
     }
     
     // When writing to the port register, the last VIC byte appears in 0x0001
-    c64->mem.ram[0x0001] = c64->vic.dataBus;
+    c64->mem.ram[0x0001] = c64->vic.getDataBus();
     
     // Switch memory banks
     c64->mem.updatePeekPokeLookupTables();
@@ -112,7 +112,7 @@ ProcessorPort::writeDirection(uint8_t value)
     direction = value;
     
     // When writing to the direction register, the last VIC byte appears in 0x0000
-    c64->mem.ram[0x0000] = c64->vic.dataBus;
+    c64->mem.ram[0x0000] = c64->vic.getDataBus();
     
     // Switch memory banks
     c64->mem.updatePeekPokeLookupTables();

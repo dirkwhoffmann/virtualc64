@@ -300,7 +300,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     assert(*buffer - old == stateSize());
 }
 
-
 void
 VIC::setChipModel(VICChipModel model)
 {
@@ -413,10 +412,58 @@ VIC::isVBlankLine(unsigned rasterline)
     }
 }
 
+uint16_t
+VIC::rasterline()
+{
+    return c64->rasterline;
+}
+
 
 //
-// Getter and setter
+// Frame flipflops
 //
+
+void
+VIC::checkVerticalFrameFF()
+{
+    // Check for upper border
+    if (yCounter == upperComparisonValue() && DENbit()) {
+        verticalFrameFFclearCond = true;
+    }
+    // Trigger immediately (similar to VICE)
+    if (verticalFrameFFclearCond) {
+        p.verticalFrameFF = false;
+    }
+    
+    // Check for lower border
+    if (yCounter == lowerComparisonValue()) {
+        verticalFrameFFsetCond = true;
+    }
+    // Trigger in cycle 1 (similar to VICE)
+}
+
+void
+VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
+{
+    /* "6. If the X coordinate reaches the left comparison value and the
+     *     vertical border flip flop is not set, the main flip flop is reset."
+     */
+    if (comparisonValue == leftComparisonValue()) {
+        clearMainFrameFF();
+    }
+}
+
+void
+VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
+{
+    /* "1. If the X coordinate reaches the right comparison value, the main
+     *     border flip flop is set." [C.B.]
+     */
+    if (comparisonValue == rightComparisonValue()) {
+        p.mainFrameFF = true;
+    }
+}
+
 
 
 
@@ -740,50 +787,6 @@ VIC::spriteDepth(uint8_t nr)
     (SPRITE_LAYER_FG_DEPTH | nr);
 }
 
-//
-// Frame flipflops
-//
-
-void
-VIC::checkVerticalFrameFF()
-{
-    // Check for upper border
-    if (yCounter == upperComparisonValue() && DENbit()) {
-        verticalFrameFFclearCond = true;
-    }
-    // Trigger immediately (similar to VICE)
-    if (verticalFrameFFclearCond) {
-        p.verticalFrameFF = false;
-    }
-    
-    // Check for lower border
-    if (yCounter == lowerComparisonValue()) {
-        verticalFrameFFsetCond = true;
-    }
-    // Trigger in cycle 1 (similar to VICE)
-}
-
-void
-VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
-{
-    // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-    //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
-
-    if (comparisonValue == leftComparisonValue()) {
-        clearMainFrameFF();
-    }
-}
-
-void
-VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
-{
-    // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
-    //     Haupt-Rahmenflipflop gesetzt." [C.B.]
-    
-    if (comparisonValue == rightComparisonValue()) {
-        p.mainFrameFF = true;
-    }
-}
 
 void 
 VIC::beginFrame()
@@ -830,34 +833,19 @@ VIC::beginRasterline(uint16_t line)
 {
     verticalFrameFFsetCond = verticalFrameFFclearCond = false;
 
-    // Determine if we're currently processing a VBLANK line (nothing is drawn in this area)
+    // Determine if we're inside the VBLANK area (nothing is drawn there).
     vblank = isVBlankLine(line);
-    /*
-    if (isPAL()) {
-        vblank = line < PAL_UPPER_VBLANK || line >= PAL_UPPER_VBLANK + PAL_RASTERLINES;
-    } else {
-        vblank = line < NTSC_UPPER_VBLANK || line >= NTSC_UPPER_VBLANK + NTSC_RASTERLINES;
-    }
-    */
+ 
+    // Increase yCounter. The overflow case is handled in cycle 2.
+    if (!yCounterOverflow()) yCounter++;
     
-    /* OLD CODE
-    if (line != 0) {
-        //assert(yCounter == c64->getRasterline());
-        yCounter = line; // Overflow case is handled in cycle 2
-    }
-    */
-    // Increase yCounter. The overflow case is handled in cycle 2
-    if (!yCounterOverflow())
-        yCounter++;
-    
-    // Check for the DEN bit if we're processing rasterline 30
-    // The initial value can change in the middle of a rasterline.
-    if (line == 0x30)
-        DENwasSetInRasterline30 = DENbit();
+    // Check the DEN bit in rasterline 30.
+    // Note: The value might change later if control register 1 is written to.
+    if (line == 0x30) DENwasSetInRasterline30 = DENbit();
 
-    // Check, if we are currently processing a DMA line. The result is stored
-    // in variable badLineCondition. The initial value can change in the middle
-    // of a rasterline.
+    // Check, if we are currently processing a DMA line and store the result in
+    // variable badLineCondition.
+    // Note: The value might change later if control register 1 is written to.
     updateBadLineCondition();
     
     pixelEngine.beginRasterline();
@@ -886,16 +874,17 @@ VIC::endRasterline()
     pixelEngine.endRasterline();
 }
 
+#if 0
 bool
 VIC::yCounterOverflow()
 {
-    /* PAL machines reset the yCounter in cycle 2 in the first rasterline.
-     * NTSC machines reset the yCounter in cycle 2 in the middle of the lower
+    /* PAL models reset the yCounter in cycle 2 in the first rasterline wheras
+     * NTSC models reset the yCounter in cycle 2 in the middle of the lower
      * border area.
      */
-    return c64->getRasterline() == (c64->vic.isPAL() ? 0 : 238);
+    return c64->rasterline == (c64->vic.isPAL() ? 0 : 238);
 }
-
+#endif
 
 //
 // Execution functions

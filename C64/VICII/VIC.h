@@ -64,31 +64,33 @@ private:
      */
     PixelEngine pixelEngine;
 
-    /*! @brief    Event pipeline
-     *  @details  If a time delayed event needs to be performed, a flag is set
-     *            inside this variable and executed at the beginning of the next
-     *            cycle.
-     *  @see      processDelayedActions()
-     */
-    uint64_t delay;
-    
     //! @brief    Main pixel engine pipe
+    //! @deprecated
     PixelEnginePipe p;
-    
- 
 
+    //
+    // Configuration options
+    //
+    
 public:
     
-    //! @brief    Indicates if the gray dot bug should be emulated
-    /*! @note     The gray mode bug only affects the newer VICII models 856x
+    /*! @brief    Indicates if the gray dot bug should be emulated
+     *  @note     The gray mode bug only affects the newer VICII models 856x
      */
     bool emulateGrayDotBug;
+    
+    
+    //
+    // Chip outsides
+    //
+    
+private:
     
     /*! @brief    Current value of the LP pin
      *  @details  A negative transition on this pin triggers a lightpen interrupt.
      */
-     bool lp;
-     
+    bool lp;
+    
     /*! @brief    Address bus
      *  @details  Whenever VIC performs a memory read, the generated memory
      *            address is stored in this variable.
@@ -101,8 +103,124 @@ public:
      */
     uint8_t dataBus;
     
+    
+    
+    
+    /*! @brief    Event pipeline
+     *  @details  If a time delayed event needs to be performed, a flag is set
+     *            inside this variable and executed at the beginning of the next
+     *            cycle.
+     *  @see      processDelayedActions()
+     */
+    uint64_t delay;
+    
+    
     //
-    // Registers
+    // Internal registers, counters, and flags
+    //
+    
+    
+    //! @brief    Internal x counter of the sequencer (sprite coordinate system)
+    uint16_t xCounter;
+    
+    /*! @brief    Rasterline counter
+     *  @details  The rasterline counter is usually incremented in cycle 1. The
+     *            only exception is the overflow condition which is handled in
+     *            cycle 2.
+     */
+    uint32_t yCounter;
+    
+    /*! @brief    Vertical frame flipflop set condition
+     *  @details  Indicates whether the vertical frame flipflop needs to be set
+     *            in the current rasterline.
+     */
+    bool verticalFrameFFsetCond;
+    
+    /*! @brief    Vertical frame flipflop clear condition
+     *  @details  Indicates whether the vertical frame ff needs to be cleared in
+     *            the current rasterline.
+     */
+    bool verticalFrameFFclearCond;
+    
+    
+    
+    
+    //! @brief    True if the current rasterline belongs to the VBLANK area.
+    bool vblank;
+    
+    //! @brief    Internal VIC register, 10 bit video counter
+    uint16_t registerVC;
+    
+    //! @brief    Internal VIC-II register, 10 bit video counter base
+    uint16_t registerVCBASE;
+    
+    //! @brief    Internal VIC-II register, 3 bit row counter
+    uint8_t registerRC;
+    
+    //! @brief    Internal VIC-II register, 6 bit video matrix line index
+    uint8_t registerVMLI;
+    
+ 
+    
+ 
+    
+    /*! @brief    DRAM refresh counter
+     *  @details  "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
+     *             dynamischen RAM durch. Es wird ein 8-Bit Refreshzähler (REF) zur Erzeugung
+     *             von 256 DRAM-Zeilenadressen benutzt." [C.B.]
+     */
+    uint8_t refreshCounter;
+    
+    //! @brief    Display mode in latest gAccess
+    uint8_t gAccessDisplayMode;
+    
+    //! @brief    Foreground color fetched in latest gAccess
+    uint8_t gAccessfgColor;
+    
+    //! @brief    Background color fetched in latest gAccess
+    uint8_t gAccessbgColor;
+    
+    //! @brief    True if we are currently processing a DMA line (bad line)
+    bool badLineCondition;
+    
+    /*! @brief    True, if DMA lines can occurr within the current frame.
+     *  @details  Bad lines can occur only if the DEN bit was set during an
+     *            arbitary cycle in rasterline 30. The DEN bit is located in
+     *            control register 1 (0x11).
+     */
+    bool DENwasSetInRasterline30;
+    
+    /*! @brief    Display State
+     *  @details  The VIC is either in idle or display state
+     */
+    bool displayState;
+    
+    /*! @brief    Current value of the BA line
+     *  @details  Remember: Each CPU cycle is split into two phases:
+     *            First phase (LOW):   VIC gets access to the bus
+     *            Second phase (HIGH): CPU gets access to the bus
+     *            In rare cases, VIC needs access in the HIGH phase, too.
+     *            To block the CPU, the BA line is pulled down.
+     *  @note     BA can be pulled down by multiple sources (wired AND).
+     */
+    uint16_t BAlow;
+    
+    //! @brief    Remember at which cycle BA line has been pulled down
+    uint64_t BAwentLowAtCycle;
+    
+    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
+     *  @details  Variable is needed to determine if a rasterline should be
+     *            issued in cycle 1 or 2.
+     *  @deprecated Will be replaced by rasterlineMatchesIrqLine
+     */
+    bool yCounterEqualsIrqRasterline;
+    
+    
+    
+    
+    
+    //
+    // Registers (CPU accessible)
     //
     
     //! @brief    Control register 1 (D011)
@@ -140,168 +258,21 @@ public:
         TimeDelayed<uint8_t>(2)
     };
     
-    
-    
-    
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
 
     //! @brief    Interrupt Mask Register ($D01A)
     uint8_t imr;
 
-    //! @brief    True if the current rasterline belongs to the VBLANK area.
-    bool vblank;
-    
-	//! @brief    Internal VIC register, 10 bit video counter
-	uint16_t registerVC;
-	
-	//! @brief    Internal VIC-II register, 10 bit video counter base
-	uint16_t registerVCBASE; 
-	
-	//! @brief    Internal VIC-II register, 3 bit row counter
-	uint8_t registerRC;
-	
-	//! @brief    Internal VIC-II register, 6 bit video matrix line index
-	uint8_t registerVMLI; 
+ 
 
-    //! @brief    Internal x counter of the sequencer (sprite coordinate system)
-    uint16_t xCounter;
+ 
     
-    /*! @brief    Rasterline counter
-     *  @details  The rasterline counter is usually incremented in cycle 1. The
-     *            only exception is the overflow condition which is handled in
-     *            cycle 2.
-     */
-    uint32_t yCounter;
     
-    /*! @brief    Vertical frame flipflop set condition
-     *  @details  Indicates whether the vertical frame flipflop needs to be set
-     *            in the current rasterline.
-     */
-    bool verticalFrameFFsetCond;
+ 
+ 
     
-    /*! @brief    Vertical frame flipflop clear condition
-     *  @details  Indicates whether the vertical frame ff needs to be cleared in
-     *            the current rasterline.
-     */
-    bool verticalFrameFFclearCond;
 
-    /*! @brief    DRAM refresh counter
-     *  @details  "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
-     *             dynamischen RAM durch. Es wird ein 8-Bit Refreshzähler (REF) zur Erzeugung
-     *             von 256 DRAM-Zeilenadressen benutzt." [C.B.] 
-     */
-    uint8_t refreshCounter;
-    
-    //! @brief    Display mode in latest gAccess
-    uint8_t gAccessDisplayMode;
-    
-    //! @brief    Foreground color fetched in latest gAccess
-    uint8_t gAccessfgColor;
-
-    //! @brief    Background color fetched in latest gAccess
-    uint8_t gAccessbgColor;
-
-	//! @brief    True if we are currently processing a DMA line (bad line)
-	bool badLineCondition;
-	
-	/*! @brief    True, if DMA lines can occurr within the current frame.
-     *  @details  Bad lines can occur only if the DEN bit was set during an
-     *            arbitary cycle in rasterline 30. The DEN bit is located in
-     *            control register 1 (0x11).
-     */
-    bool DENwasSetInRasterline30;
-
-	/*! @brief    Display State
-	 *  @details  The VIC is either in idle or display state
-     */
-	bool displayState;
-
-	/*! @brief    Current value of the BA line
-	 *  @details  Remember: Each CPU cycle is split into two phases:
-     *            First phase (LOW):   VIC gets access to the bus
-     *            Second phase (HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too.
-     *            To block the CPU, the BA line is pulled down.
-     *  @note     BA can be pulled down by multiple sources (wired AND).
-     */
-    uint16_t BAlow;
-	
-    //! @brief    Remember at which cycle BA line has been pulled down
-    uint64_t BAwentLowAtCycle;
-    
-    /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
-     *  @details  Variable is needed to determine if a rasterline should be
-     *            issued in cycle 1 or 2.
-     *  @deprecated Will be replaced by rasterlineMatchesIrqLine
-     */
-    bool yCounterEqualsIrqRasterline;
-    
-    
-    //! @brief    Increases the X counter by 8
-    void countX() { xCounter += 8; }
-    
-    //! @brief    True if yCounter needs to be reset to 0 in this rasterline.
-    bool yCounterOverflow();
-
-    /*! @brief    True if a cAccess can occur.
-     *  @note     A cAccess can only be performed is BA line is down for more
-     *            than 2 cycles.
-     */
-    bool BApulledDownForAtLeastThreeCycles();
-    
-    /* "Der VIC benutzt zwei Flipflops, um den Rahmen um das Anzeigefenster
-        herum zu erzeugen: Ein Haupt-Rahmenflipflop und ein vertikales
-        Rahmenflipflop. [...]
-
-        Die Flipflops werden nach den folgenden Regeln geschaltet:
-     
-        1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
-           Haupt-Rahmenflipflop gesetzt.
-        2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
-           das vertikale Rahmenflipflop gesetzt.
-        3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
-           ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
-           Rahmenflipflop gelöscht.
-        4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-           den unteren, wird das vertikale Rahmenflipflop gesetzt.
-        5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-           den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
-           vertikale Rahmenflipflop gelöscht.
-        6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-           vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht." [C.B.]
-     */
-
-    /*! @brief    Takes care of the vertical frame flipflop value.
-     *  @details  Invoked in each VIC II cycle 
-     */
-    void checkVerticalFrameFF();
-    
-    //! @brief    Checks frame fliplops at left border
-    void checkFrameFlipflopsLeft(uint16_t comparisonValue);
-
-    //! @brief    Checks frame fliplops at right border
-    void checkFrameFlipflopsRight(uint16_t comparisonValue);
-
-    //! @brief    Returns in which cycle the frame flipflop is checked for the left border
-    uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
-
-    //! @brief    Returns in which cycle the frame flipflop is checked for the right border
-    uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
-
-    //! @brief    Returns in which cycle the frame flipflop is checked for the upper border
-    uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
-    
-    //! @brief    Returns in which cycle the frame flipflop is checked for the lower border
-    uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
-    
-	/*! @brief    Clear main frame flipflop
-     *  @details  "Das vertikale Rahmenflipflop dient zur Unterstützung bei der Darstellung
-     *             des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
-     *             nicht gelöscht werden." [C.B.] 
-     */
-    void clearMainFrameFF() { if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false; }
-     
     
 	//
 	// I/O memory handling and RAM access
@@ -363,11 +334,7 @@ private:
     // Memory refresh accesses (rAccess)
     //
     
-    //! @brief    Performs a DRAM refresh
-    void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
-    
-    //! @brief    Performs a DRAM idle access
-    void rIdleAccess() { (void)memIdleAccess(); }
+
     
 
 	//
@@ -411,18 +378,6 @@ private:
      *  @details  This value is set in pokeIO and cycle 15 and read in cycle 16 
      */
     uint8_t cleared_bits_in_d017;
-    
-    //! Sprite colors (same for all sprites)
-    //! @deprecated
-    // uint8_t spriteColor[8];
-
-    //! Sprite extra color 1 (same for all sprites)
-    //! @deprecated
-    // uint8_t spriteExtraColor1;
-
-    //! Sprite extra color 2 (same for all sprites)
-    //! @deprecated
-    // uint8_t spriteExtraColor2;
     
     
 	//
@@ -526,8 +481,7 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     
- 
-    
+
     //
     //! @functiongroup Accessing chip model related properties
     //
@@ -628,28 +582,18 @@ private:
      */
     void updatePalette();
     
-
-	//
-	//! @functiongroup Getter and setter
-	//
-
-public:
-    
-    
-
-
-	
- 
-    
     
     //
-    //! @functiongroup Accessing memory
+    //! @functiongroup Accessing memory (VIC_memory.cpp)
     //
 
 public:
     
-    //! @brief    Peeks a value from a VIC register without causing side effects.
+    //! @brief    Peeks a value from a VIC register without side effects.
     uint8_t spypeek(uint16_t addr);
+    
+    //! @brief    Returns the current value of the VICII's data bus.
+    uint8_t getDataBus() { return dataBus; }
     
 private:
 
@@ -668,12 +612,18 @@ private:
     //! @brief    Simulates an idle memory access.
     uint8_t memIdleAccess();
     
-    /*! @brief    Performs a character access (cAccess).
+    //! @brief    Performs a DRAM refresh
+    void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
+    
+    //! @brief    Performs a DRAM idle access
+    void rIdleAccess() { (void)memIdleAccess(); }
+    
+    /*! @brief    Performs a character access (c-access).
      *  @details  During a cAccess, the video matrix is read.
      */
     void cAccess();
     
-    /*! @brief    Performs a graphics access (gAccess).
+    /*! @brief    Performs a graphics access (g-access).
      *  @details  During a gAccess, graphics data (character or bitmap patterns)
      *            is reads. The result of the gAccess is stored in variables
      *            prefixed with 'g_', i.e., g_data, g_character, g_color, and
@@ -681,7 +631,7 @@ private:
      */
     void gAccess();
     
-    //! @brief    Performs a sprite pointer access (pAccess).
+    //! @brief    Performs a sprite pointer access (p-access).
     void pAccess(unsigned sprite);
     
     //! @brief    Performs the first sprite data access.
@@ -699,6 +649,93 @@ private:
      */
     void sFinalize(unsigned sprite);
     
+
+    //
+    //! @functiongroup Handling the x and y counters
+    //
+    
+    /*! @brief    Returns the current rasterline
+     *  @note     This value is not always identical to the yCounter, because
+     *            the yCounter is incremented with a little delay.
+     */
+    uint16_t rasterline();
+    
+    /*! @brief    Increases the X counter by 8
+     *  @details  This functions is called at the end of each cycle.
+     */
+    void countX() { xCounter += 8; }
+    
+    /*! @brief    Indicates if yCounter needs to be reset in this rasterline.
+     *  @details  PAL models reset the yCounter in cycle 2 in the first
+     *            rasterline wheras NTSC models reset the yCounter in cycle 2
+     *            in the middle of the lower border area.
+     */
+    bool yCounterOverflow() { return rasterline() == (isPAL() ? 0 : 238); }
+
+    //
+    //! @functiongroup Handling the border flip flops
+    //
+    
+    /* "Der VIC benutzt zwei Flipflops, um den Rahmen um das Anzeigefenster
+     *  herum zu erzeugen: Ein Haupt-Rahmenflipflop und ein vertikales
+     *  Rahmenflipflop. [...]
+     *
+     *  The flip flops are switched according to the following rules:
+     *
+     *  1. If the X coordinate reaches the right comparison value, the main
+     *     border flip flop is set.
+     *  2. If the Y coordinate reaches the bottom comparison value in cycle 63,
+     *     the vertical border flip flop is set.
+     *  3. If the Y coordinate reaches the top comparison value in cycle 63 and
+     *     the DEN bit in register $d011 is set, the vertical border flip flop
+     *     is reset.
+     *  4. If the X coordinate reaches the left comparison value and the Y
+     *     coordinate reaches the bottom one, the vertical border flip flop is
+     *     set.
+     *  5. If the X coordinate reaches the left comparison value and the Y
+     *     coordinate reaches the top one and the DEN bit in register $d011 is
+     *     set, the vertical border flip flop is reset.
+     *  6. If the X coordinate reaches the left comparison value and the
+     *     vertical border flip flop is not set, the main flip flop is reset."
+     * [C.B.]
+     */
+    
+    /*! @brief    Takes care of the vertical frame flipflop value.
+     *  @details  Invoked in each VIC II cycle
+     */
+    void checkVerticalFrameFF();
+    
+    //! @brief    Checks frame fliplops at left border
+    void checkFrameFlipflopsLeft(uint16_t comparisonValue);
+    
+    //! @brief    Checks frame fliplops at right border
+    void checkFrameFlipflopsRight(uint16_t comparisonValue);
+    
+    //! @brief    Returns where the frame flipflop is checked for the left border.
+    uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
+    
+    //! @brief    Returns where the frame flipflop is checked for the right border.
+    uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
+    
+    //! @brief    Returns where the frame flipflop is checked for the upper border.
+    uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
+    
+    //! @brief    Returns where the frame flipflop is checked for the lower border.
+    uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
+    
+    /*! @brief    Clears the main frame flipflop
+     *  @details  Note that the main frame flipflop can not be cleared when
+     *            the vertical border flipflop is set.
+     */
+    void clearMainFrameFF() {
+        if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false;
+    }
+    
+    
+ 
+    
+    
+    
     
 	//
 	//! @functiongroup Querying the VICII registers
@@ -706,38 +743,38 @@ private:
 	
 public:
 		
-    //! @brief    Returns the current value of the DEN bit (Display Enabled).
+    /*! @brief    Returns the current value of the DEN (Display ENabled) bit.
+     */
     bool DENbit() { return GET_BIT(control1.current(), 4); }
 
-    //! @brief    Returns the current value of the BMM bit (Bit Map Mode).
+    /*! @brief    Returns the value of the BMM (Bit Map Mode) bit.
+     *  @details  The value is returned as it is seen during a g-access.
+     */
     bool BMMbit() {
         return is856x() ?
         GET_BIT(control1.delayed(), 5) :
         GET_BIT(control1.delayed(), 5) | GET_BIT(control1.current(), 5);
     }
     
-    //! @brief    Number of the next interrupt rasterline
+    //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
         return ((control1.current() & 0x80) << 1) | iomem[0x12];
     }
     
-    //! @brief    Returns the value of the BMM bit in the previous cycle.
-    bool BMMbitInPreviousCycle() { return GET_BIT(control1.delayed(), 5); }
-
-    //! @brief    Returns the current value of the ECM bit (Extended Character Mode).
+    //! @brief    Returns the current value of the ECM bit.
     bool ECMbit() {
         return is856x() ?
         GET_BIT(control1.delayed(), 6) :
         GET_BIT(control1.current(), 6);
     }
 
-    //! @brief    Returns the masked CB13 bit (controls memory access).
+    //! @brief    Returns the masked CB13 bit.
     uint8_t CB13() { return iomem[0x18] & 0x08; }
 
-    //! @brief    Returns the masked CB13/CB12/CB11 bits (controls memory access).
+    //! @brief    Returns the masked CB13/CB12/CB11 bits.
     uint8_t CB13CB12CB11() { return iomem[0x18] & 0x0E; }
 
-    //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits (controls memory access).
+    //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits.
     uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
@@ -746,20 +783,6 @@ public:
 	//! @brief    Returns the state of the RSEL bit.
     bool isRSEL() { return GET_BIT(control1.current(), 3); }
 
-	/*! @brief    Returns the current display mode.
-	 *  @details  The display mode is determined by bits 5 and 6 of control
-     *            register 1 and bit 4 of control register 2.
-     *  @todo     Move to debug section
-     */
-    /*
-    DisplayMode getDisplayMode() {
-        return (DisplayMode)((control1.current() & 0x60) | (control2.current() & 0x10));
-    }
-    */
-    
-    
-
-	
 
     //
     //! @functiongroup Handling DMA lines and the display state
@@ -800,6 +823,12 @@ private:
      */
     void setBAlow(uint8_t value);
 	
+    /*! @brief    INdicates if a c-access can occur.
+     *  @details  A c-access can only be performed if the BA line is down for
+     *            more than 2 cycles.
+     */
+    bool BApulledDownForAtLeastThreeCycles();
+    
 	/*! @brief    Triggers a VIC interrupt
      *  @param    source is the interrupt source
      *                   1 : Rasterline interrupt
