@@ -446,22 +446,22 @@ VIC::cAccess()
     // VIC has no access, yet
     else {
         
-        /* "Trotzdem greift der VIC auf die Videomatrix zu, oder versucht es zumindest,
-         denn solange AEC in der zweiten Taktphase noch High ist, sind die
-         Adressbustreiber und Datenbustreiber D0-D7 des VIC im Tri-State und der VIC
-         liest statt der Daten aus der Videomatrix in den ersten drei Zyklen den
-         Wert $ff an D0-D7. Die Datenleitungen D8-D13 des VIC haben allerdings
-         keinen Tri-State-Treiber und sind immer auf Eingang geschaltet. Allerdings
-         bekommt der VIC auch dort keine g¸ltigen Farb-RAM-Daten, denn da AEC High
-         ist, kontrolliert offiziell der 6510 noch den Bus und sofern dieser nicht
-         zufällig gerade den nächsten Opcode vom Farb-RAM lesen will, ist der
-         Chip-Select-Eingang des Farb-RAMs nicht aktiv.
-         
-         Lange Rede, kurzer Sinn: Der VIC liest in den ersten drei
-         Zyklen, nachdem BA auf Low gegangen ist als Zeichenzeiger $ff und als
-         Farbinformation die untersten 4 Bit des Opcodes nach dem Zugriff auf $d011.
-         Erst danach werden wieder reguläre Videomatrixdaten gelesen." [C.B.] */
-        
+        /* "Nevertheless, the VIC accesses the video matrix, or at least it
+         *  tries, because as long as AEC is still high in the second clock
+         *  phase, the address and data bus drivers D0-D7 of the VIC are in
+         *  tri-state and the VIC reads the value $ff from D0-D7 instead of the
+         *  data from the video matrix in the first three cycles. The data lines
+         *  D8-D13 of the VIC however don't have tri-state drivers and are
+         *  always set to input. But the VIC doesn't get valid Color RAM data
+         *  from there either, because as AEC is high, the 6510 is still
+         *  considered the bus master and unless it doesn't by chance want to
+         *  read the next opcode from the Color RAM, the chip select input of
+         *  the Color RAM is not active. [...]
+         *  To make a long story short: In the first three cycles after BA went
+         *  low, the VIC reads $ff as character pointers and as color
+         *  information the lower 4 bits of the opcode after the access to
+         *  $d011. Not until then, regular video matrix data is read." [C.B.]
+         */
         characterSpace[registerVMLI] = 0xFF;
         colorSpace[registerVMLI] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
     }
@@ -557,8 +557,9 @@ VIC::sFirstAccess(unsigned sprite)
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
-        if (BApulledDownForAtLeastThreeCycles())
-            data = memAccess(spritePtr[sprite] | mc[sprite]);
+        assert(BApulledDownForAtLeastThreeCycles());
+        // if (BApulledDownForAtLeastThreeCycles())
+        data = memAccess(spritePtr[sprite] | mc[sprite]);
         
         mc[sprite]++;
         mc[sprite] &= 0x3F; // 6 bit overflow
@@ -580,7 +581,9 @@ VIC::sSecondAccess(unsigned sprite)
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
-        if (BApulledDownForAtLeastThreeCycles()) {
+        assert(BApulledDownForAtLeastThreeCycles());
+        // if (BApulledDownForAtLeastThreeCycles())
+        {
             data = memAccess(spritePtr[sprite] | mc[sprite]);
             memAccessed = true;
         }
@@ -606,7 +609,8 @@ VIC::sThirdAccess(unsigned sprite)
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
-        if (BApulledDownForAtLeastThreeCycles())
+        assert(BApulledDownForAtLeastThreeCycles());
+        // if (BApulledDownForAtLeastThreeCycles())
             data = memAccess(spritePtr[sprite] | mc[sprite]);
         
         mc[sprite]++;
