@@ -40,7 +40,6 @@
 //
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
-// Get rid of VIC::debug_cycle
 //
 // OPTIMIZATION:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary

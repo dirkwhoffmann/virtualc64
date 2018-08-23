@@ -315,7 +315,7 @@ VIC::getInfo()
     info.dy = getVerticalRasterScroll();
     info.verticalFrameFlipflop = p.verticalFrameFF;
     info.horizontalFrameFlipflop = p.mainFrameFF;
-    info.memoryBankAddr = getMemoryBankAddr();
+    info.memoryBankAddr = bankAddr;
     info.screenMemoryAddr = getScreenMemoryAddr();
     info.characterMemoryAddr = getCharacterMemoryAddr();
     info.imr = imr;
@@ -467,28 +467,9 @@ VIC::isVBlankLine(unsigned rasterline)
 // Getter and setter
 //
 
-uint16_t 
-VIC::getMemoryBankAddr()
-{
-	return bankAddr;
-}
 
-void 
-VIC::setMemoryBankAddr(uint16_t addr)
-{
-	assert(addr % 0x4000 == 0);
-	
-	bankAddr = addr;
-}
 
-void
-VIC::setDisplayMode(DisplayMode m) {
-    
-    c64->suspend();
-    control1.write((control1.current() & ~0x60) | (m & 0x60));
-    control2.write((control2.current() & ~0x10) | (m & 0x10));
-    c64->resume();
-}
+
 
 
 uint16_t
@@ -643,7 +624,7 @@ VIC::lightpenX()
 uint16_t
 VIC::lightpenY()
 {
-    return getRasterline();
+    return yCounter;
 }
 
 void

@@ -25,7 +25,6 @@ if (unlikely(delay != 0)) { processDelayedActions(); }
 void
 VIC::cycle1ntsc()
 {
-    debug_cycle(1);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -58,7 +57,6 @@ VIC::cycle1ntsc()
 void
 VIC::cycle2ntsc()
 {
-    debug_cycle(2);
     PROCESS_DELAYED_ACTIONS
     
     // Check for yCounter overflows
@@ -93,7 +91,6 @@ VIC::cycle2ntsc()
 void
 VIC::cycle3ntsc()
 {
-    debug_cycle(3);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -116,7 +113,6 @@ VIC::cycle3ntsc()
 void
 VIC::cycle4ntsc()
 {
-    debug_cycle(4);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -141,7 +137,6 @@ VIC::cycle4ntsc()
 void
 VIC::cycle5ntsc()
 {
-    debug_cycle(5);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -164,7 +159,6 @@ VIC::cycle5ntsc()
 void
 VIC::cycle6ntsc()
 {
-    debug_cycle(6);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -189,7 +183,6 @@ VIC::cycle6ntsc()
 void
 VIC::cycle7ntsc()
 {
-    debug_cycle(7);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -212,7 +205,6 @@ VIC::cycle7ntsc()
 void
 VIC::cycle8ntsc()
 {
-    debug_cycle(8);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -237,7 +229,6 @@ VIC::cycle8ntsc()
 void
 VIC::cycle9ntsc()
 {
-    debug_cycle(9);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -260,7 +251,6 @@ VIC::cycle9ntsc()
 void
 VIC::cycle10ntsc()
 {
-    debug_cycle(10);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -285,7 +275,6 @@ VIC::cycle10ntsc()
 void
 VIC::cycle11ntsc()
 {
-    debug_cycle(11);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -310,7 +299,6 @@ VIC::cycle11ntsc()
 void
 VIC::cycle55ntsc()
 {
-    debug_cycle(55);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -337,7 +325,6 @@ VIC::cycle55ntsc()
 void
 VIC::cycle57ntsc()
 {
-    debug_cycle(57);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -363,7 +350,6 @@ VIC::cycle57ntsc()
 void
 VIC::cycle58ntsc()
 {
-    debug_cycle(58);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -425,7 +411,6 @@ VIC::cycle58ntsc()
 void
 VIC::cycle59ntsc()
 {
-    debug_cycle(59);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -452,7 +437,6 @@ VIC::cycle59ntsc()
 void
 VIC::cycle60ntsc()
 {
-    debug_cycle(60);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -479,7 +463,6 @@ VIC::cycle60ntsc()
 void
 VIC::cycle61ntsc()
 {
-    debug_cycle(61);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -507,7 +490,6 @@ VIC::cycle61ntsc()
 void
 VIC::cycle62ntsc()
 {
-    debug_cycle(62);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -530,7 +512,6 @@ VIC::cycle62ntsc()
 void
 VIC::cycle63ntsc()
 {
-    debug_cycle(63);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -555,7 +536,6 @@ VIC::cycle63ntsc()
 void
 VIC::cycle64ntsc()
 {
-    debug_cycle(64);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic
@@ -583,7 +563,6 @@ VIC::cycle64ntsc()
 void
 VIC::cycle65ntsc()
 {
-    debug_cycle(65);
     PROCESS_DELAYED_ACTIONS
     
     // Phi1.1 Frame logic

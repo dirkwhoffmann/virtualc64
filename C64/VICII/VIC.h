@@ -551,63 +551,21 @@ public:
     //! @brief    Returns true if light pen interrupts are triggered with a delay.
     bool delayedLightPenIrqs() { return chipModel & (PAL_6569_R1 | NTSC_6567_R56A); }
 
-
-    //
-    //! @functiongroup Accessing the screen buffer and display properties
-    //
-    
-    //! @brief    Returns the currently stabel screen buffer.
-    void *screenBuffer() { return pixelEngine.screenBuffer(); }
-
-    
-
-public:
-
-
-    
-    /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
-     *  @seealso  updateColors
-     */
-    uint32_t getColor(unsigned nr);
-
-    /*! @brief    Updates the RGBA values for all sixteen C64 colors.
-     *! @details  The base palette is determined by the selected VICII model.
-     */
-    void updatePalette();
-
-    //! @brief    Returns the brightness monitor parameter
-    double getBrightness() { return brightness; }
-
-    //! @brief    Sets the brightness monitor parameter
-    void setBrightness(double value);
-
-    //! @brief    Returns the contrast monitor parameter
-    double getContrast() { return contrast; }
-
-    //! @brief    Sets the contrast monitor parameter
-    void setContrast(double value);
-
-    //! @brief    Returns the saturation monitor parameter
-    double getSaturation() { return saturation; }
-
-    //! @brief    Sets the saturation monitor parameter
-    void setSaturation(double value);
-
     //! @brief    Returns the clock frequencay of the selected VICII model.
     unsigned getClockFrequency();
-
+    
     //! @brief    Returns the number of CPU cycles performed per rasterline.
     unsigned getCyclesPerRasterline();
     
     //! @brief    Returns true if the end of the rasterline has been reached.
     bool isLastCycleInRasterline(unsigned cycle);
-
+    
     //! @brief    Returns the number of rasterlines drawn per frame.
     unsigned getRasterlinesPerFrame();
-
+    
     //! @brief    Returns true if rasterline belongs to the VBLANK area.
     bool isVBlankLine(unsigned rasterline);
-
+    
     //! @brief    Returns the number of CPU cycles executed in one frame.
     unsigned getCyclesPerFrame() {
         return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
@@ -621,30 +579,62 @@ public:
     double getFramesPerSecond() {
         return (double)getClockFrequency() / (double)getCyclesPerFrame();
     }
-
+    
     //! @brief    Returns the time interval between two frames in nanoseconds.
     uint64_t getFrameDelay() {
         return 1000000000.0 / (uint64_t)getFramesPerSecond();
     }
+    
+    
+    //
+    //! @functiongroup Accessing the screen buffer and display properties
+    //
+    
+    //! @brief    Returns the currently stabel screen buffer.
+    void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
+    /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
+     *  @seealso  updateColors
+     */
+    uint32_t getColor(unsigned nr);
+    
+    //! @brief    Returns the brightness monitor parameter
+    double getBrightness() { return brightness; }
+    
+    //! @brief    Sets the brightness monitor parameter
+    void setBrightness(double value);
+    
+    //! @brief    Returns the contrast monitor parameter
+    double getContrast() { return contrast; }
+    
+    //! @brief    Sets the contrast monitor parameter
+    void setContrast(double value);
+    
+    //! @brief    Returns the saturation monitor parameter
+    double getSaturation() { return saturation; }
+    
+    //! @brief    Sets the saturation monitor parameter
+    void setSaturation(double value);
+    
+private:
+    
+    /*! @brief    Updates the RGBA values for all sixteen C64 colors.
+     *! @details  The base palette is determined by the selected VICII model.
+     */
+    void updatePalette();
+    
 
 	//
-	// Getter and setter
+	//! @functiongroup Getter and setter
 	//
 
 public:
-	
-	//! @brief    Returns the current rasterline
-    uint16_t getRasterline() { return yCounter; }
-			
-	//! @brief    Sets the rasterline
-    void setRasterline(uint16_t line) { yCounter = line; }
+    
+    
 
-	//! @brief    Returns the memory bank start address
-	uint16_t getMemoryBankAddr();
+    
 	
-	//! @brief    Sets the memory bank start address
-	void setMemoryBankAddr(uint16_t addr);
+
 			
 	/*! @brief    Returns the screen memory address
      *  @deprecated Use getInfo() instead
@@ -1176,22 +1166,27 @@ public:
     void cycle65ntsc();
 	
     
-private:
-    
-    /*! @brief    Implements a debug entry point for each rasterline cycle.
-     *  @details  As this function is invoked in each cycle, it should be empty
-     *            in the relase version.
-     */
-    void debug_cycle(unsigned cycle);
-
     
 	//
-	//! @functiongroup Debugging VICII
+	//! @functiongroup Debugging VICII (VIC_debug.cpp)
 	//
 
 public: 
-	
-	//! @brief    Returns true if IRQ lines are colorized.
+
+    //
+    //! @functiongroup Modifying VICII internals
+    //
+
+    //! @brief    Sets the memory bank start address
+    void setMemoryBankAddr(uint16_t addr);
+    
+    
+    
+    //
+    //! @functiongroup Enabling and disabling some VICII features
+    //
+
+    //! @brief    Returns true if IRQ lines are colorized.
 	bool showIrqLines() { return markIRQLines; }
 
 	//! @brief    Shows or hides IRQ lines.

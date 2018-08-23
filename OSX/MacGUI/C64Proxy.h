@@ -194,7 +194,6 @@ struct ContainerWrapper;
 - (void) setIrqOnSpriteBackgroundCollision:(BOOL)value;
 - (void) toggleIrqOnSpriteBackgroundCollision;
 
-- (void) setRasterline:(uint16_t)line;
 - (void) setRasterInterruptLine:(uint16_t)line;
 - (void) setRasterInterruptEnabled:(BOOL)b;
 - (void) toggleRasterInterruptFlag;

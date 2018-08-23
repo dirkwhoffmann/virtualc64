@@ -138,6 +138,7 @@
 		50DBB44B2025CE5700489271 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Basics.swift */; };
 		50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC89C720B2EB53005E0557 /* CpuTableView.swift */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
+		50E542A5212E988A00026EEF /* VIC_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E542A4212E988A00026EEF /* VIC_debug.cpp */; };
 		50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E8366820DC4A090017A5BB /* FastSID.cpp */; };
 		50E8366E20DC4A090017A5BB /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E8366B20DC4A090017A5BB /* FastVoice.cpp */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
@@ -393,6 +394,7 @@
 		50DBB44A2025CE5700489271 /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
 		50DC89C720B2EB53005E0557 /* CpuTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CpuTableView.swift; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
+		50E542A4212E988A00026EEF /* VIC_debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_debug.cpp; sourceTree = "<group>"; };
 		50E8366820DC4A090017A5BB /* FastSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSID.cpp; sourceTree = "<group>"; };
 		50E8366920DC4A090017A5BB /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
 		50E8366A20DC4A090017A5BB /* FastSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSID.h; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
 				50FE7269212DE8F600E99755 /* VIC_memory.cpp */,
+				50E542A4212E988A00026EEF /* VIC_debug.cpp */,
 			);
 			path = VICII;
 			sourceTree = "<group>";
@@ -1163,6 +1166,7 @@
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
+				50E542A5212E988A00026EEF /* VIC_debug.cpp in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */,

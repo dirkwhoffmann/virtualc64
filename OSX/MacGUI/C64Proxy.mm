@@ -248,7 +248,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setIrqOnSpriteBackgroundCollision:(BOOL)value { wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
 - (void) toggleIrqOnSpriteBackgroundCollision { wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
 
-- (void) setRasterline:(uint16_t)line { wrapper->vic->setRasterline(line); }
 - (void) setRasterInterruptLine:(uint16_t)line { wrapper->vic->setRasterInterruptLine(line); }
 - (void) setRasterInterruptEnabled:(BOOL)b { wrapper->vic->setRasterInterruptEnable(b); }
 - (void) toggleRasterInterruptFlag { wrapper->vic->toggleRasterInterruptFlag(); }
