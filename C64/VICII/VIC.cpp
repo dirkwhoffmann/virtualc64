@@ -350,6 +350,11 @@ VIC::setChipModel(VICChipModel model)
 {
     debug(2, "VIC::setChipModel(%d)\n", model);
     
+    if (!isVICChhipModel(model)) {
+        warn("Unknown VICII chip model (%d). Using MOS8565 instead.\n", model);
+        model = PAL_8565;
+    }
+    
     c64->suspend();
     
     chipModel = model;
@@ -372,9 +377,6 @@ VIC::setChipModel(VICChipModel model)
             c64->setClockFrequency(NTSC_CLOCK_FREQUENCY);
             c64->putMessage(MSG_NTSC);
             break;
-            
-        default:
-            assert(false);
     }
     
     c64->resume();

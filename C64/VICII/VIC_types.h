@@ -208,13 +208,23 @@ static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 //! @brief    VIC II chip model
 typedef enum {
-    PAL_6569_R1 = 0,
-    PAL_6569_R3,
-    PAL_8565,
-    NTSC_6567,
-    NTSC_6567_R56A,
-    NTSC_8562
+    PAL_6569_R1 = 1,
+    PAL_6569_R3 = 2,
+    PAL_8565 = 4,
+    NTSC_6567 = 8,
+    NTSC_6567_R56A =16,
+    NTSC_8562 = 32
 } VICChipModel;
+
+inline bool isVICChhipModel(VICChipModel model) {
+    return
+    (model == PAL_6569_R1) ||
+    (model == PAL_6569_R3) ||
+    (model == PAL_8565) ||
+    (model == NTSC_6567) ||
+    (model == NTSC_6567_R56A) ||
+    (model == NTSC_8562);
+}
 
 //! @brief    Screen geometries
 typedef enum {

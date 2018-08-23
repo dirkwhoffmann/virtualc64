@@ -56,6 +56,9 @@ class VIC : public VirtualComponent {
     
 private:
     
+    //! @brief    Selected chip model
+    VICChipModel chipModel;
+    
     /*! @brief    Reference to the attached pixel engine (PE). 
      *  @details  The PE encapsulates all drawing related routines.
      */
@@ -72,8 +75,7 @@ private:
     //! @brief    Main pixel engine pipe
     PixelEnginePipe p;
     
-    //! @brief    Selected chip model
-    VICChipModel chipModel;
+ 
 
 public:
     
@@ -517,46 +519,48 @@ public:
     //! @brief    Gathers debug information.
     VICInfo getInfo();
 
-    //! @brief    Gathers debug information for a certain sprite.
+    //! @brief    Gathers debug information about a certain sprite.
     SpriteInfo getSpriteInfo(unsigned i);
 
+    
+    //
+    //! @functiongroup Accessing chip model related properties
+    //
+    
+    //! @brief    Returns the currently plugged in chip model.
+    VICChipModel getChipModel() { return chipModel; }
+    
+    //! @brief    Sets the chip model.
+    void setChipModel(VICChipModel model);
+    
+    //! @brief    Returns true if a PAL chip is plugged in.
+    bool isPAL() { return chipModel & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
+    
+    //! @brief    Returns true if a NTSC chip is plugged in.
+    bool isNTSC() { return chipModel & (NTSC_6567 | NTSC_6567_R56A | NTSC_8562); }
+
+    //! @brief    Returns true if a newer MOS 856x chip is plugged in.
+    bool is856x() { return chipModel & (PAL_8565 | NTSC_8562); }
+    
+    //! @brief    Returns true if an older MOS 656x chip is plugged in.
+    bool is656x() { return chipModel & ~(PAL_8565 | NTSC_8562); }
+
+    //! @brief    Returns true if the emulated chip model has the gray dot bug.
+    bool hasGrayDotBug() { return is856x(); }
+
+
+    //
+    //! @functiongroup Accessing the screen buffer and display properties
+    //
+    
     //! @brief    Returns the currently stabel screen buffer.
     void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
     
-	//
-	// Configuring
-	//
-	
+
 public:
 
-	//! @brief    Returns the currently plugged in chip model.
-    VICChipModel getChipModel() { return chipModel; }
 
-    //! @brief    Sets the chip model.
-    void setChipModel(VICChipModel model);
-
-    //! @brief    Returns true if a PAL chip is plugged in.
-    bool isPAL() { return
-        chipModel == PAL_6569_R1 ||
-        chipModel == PAL_6569_R3 ||
-        chipModel == PAL_8565; }
-    
-    //! @brief    Returns true if a NTSC chip is plugged in.
-    bool isNTSC() { return
-        chipModel == NTSC_6567 ||
-        chipModel == NTSC_6567_R56A ||
-        chipModel == NTSC_8562; }
-    
-    //! @brief    Returns true if a MOS 856x chip is plugged in.
-    bool is856x() {
-        return
-        chipModel == PAL_8565 ||
-        chipModel == NTSC_8562;
-    }
-    
-    //! @brief    Returns true if the emulated chip model has the gray dot bug.
-    bool hasGrayDotBug() { return chipModel == PAL_8565 || chipModel == NTSC_8562; }
     
     /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
      *  @seealso  updateColors

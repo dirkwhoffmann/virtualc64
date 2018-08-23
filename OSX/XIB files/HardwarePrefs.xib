@@ -100,39 +100,39 @@
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-gN-9Pm" userLabel="System">
                         <rect key="frame" x="330" y="434" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="MOS 6569 R1" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="3yq-uc-t4g" id="QMf-Na-uEG" userLabel="System">
+                        <popUpButtonCell key="cell" type="push" title="MOS 6569 R1" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="3yq-uc-t4g" id="QMf-Na-uEG" userLabel="System">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="jXT-NZ-tt7">
                                 <items>
-                                    <menuItem title="MOS 6569 R1" state="on" id="3yq-uc-t4g">
+                                    <menuItem title="MOS 6569 R1" state="on" tag="1" id="3yq-uc-t4g">
                                         <attributedString key="attributedTitle"/>
                                         <connections>
                                             <action selector="vicChipModelAction:" target="-1" id="YHg-BZ-aq7"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="MOS 6569 R3" tag="1" id="HtY-nm-bzz">
+                                    <menuItem title="MOS 6569 R3" tag="2" id="HtY-nm-bzz">
                                         <connections>
                                             <action selector="vicChipModelAction:" target="-1" id="xPM-ce-XWF"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="MOS 8565" tag="2" id="ZHs-4u-S5T">
+                                    <menuItem title="MOS 8565" tag="4" id="ZHs-4u-S5T">
                                         <connections>
                                             <action selector="vicChipModelAction:" target="-1" id="ngK-dw-Van"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem isSeparatorItem="YES" id="x7i-Pg-PC9"/>
-                                    <menuItem title="MOS 6567 " tag="3" id="pat-Nb-6iC">
+                                    <menuItem title="MOS 6567 " tag="8" id="pat-Nb-6iC">
                                         <connections>
                                             <action selector="vicChipModelAction:" target="-1" id="0Ty-DQ-0ed"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="MOS 6567 R56A" tag="4" id="qeg-PP-BVR">
+                                    <menuItem title="MOS 6567 R56A" tag="16" id="qeg-PP-BVR">
                                         <connections>
                                             <action selector="vicChipModelAction:" target="-1" id="3u2-I6-ZgL"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="MOS 8562" tag="5" id="bUy-ba-S81">
+                                    <menuItem title="MOS 8562" tag="32" id="bUy-ba-S81">
                                         <connections>
                                             <action selector="vicChipModelAction:" target="-1" id="fwc-3e-a5b"/>
                                         </connections>
