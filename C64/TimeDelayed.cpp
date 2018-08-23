@@ -69,11 +69,11 @@ void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
     timeStamp = referenceTime;
     pipeline[0] = value;
 }
-template void TimeDelayed<bool>::write(bool);
-template void TimeDelayed<uint8_t>::write(uint8_t);
-template void TimeDelayed<uint16_t>::write(uint16_t);
-template void TimeDelayed<uint32_t>::write(uint32_t);
-template void TimeDelayed<uint64_t>::write(uint64_t);
+template void TimeDelayed<bool>::writeWithDelay(bool, uint8_t);
+template void TimeDelayed<uint8_t>::writeWithDelay(uint8_t, uint8_t);
+template void TimeDelayed<uint16_t>::writeWithDelay(uint16_t, uint8_t);
+template void TimeDelayed<uint32_t>::writeWithDelay(uint32_t, uint8_t);
+template void TimeDelayed<uint64_t>::writeWithDelay(uint64_t, uint8_t);
 
 template <class T>
 void TimeDelayed<T>::debug()

@@ -1009,8 +1009,8 @@ public:
     #define PROCESS_DELAYED_ACTIONS \
     if (unlikely(delay != 0)) { processDelayedActions(); }
     
-    #define BA_LINE(x) \
-    if ((x) != baLine.current()) { updateBA(x); }
+    // #define BA_LINE(x) if ((x) != baLine.current()) { updateBA(x); }
+    #define BA_LINE(x) updateBA(x);
     
 	//
 	// The following functions are used by the GUI debugger, only

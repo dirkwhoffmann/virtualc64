@@ -277,7 +277,9 @@ VIC::loadFromBuffer(uint8_t **buffer)
     for (unsigned i = 0; i < 8; i++)
         sprColor[i].loadFromBuffer(buffer);
     
-    assert(*buffer - old == stateSize());
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
 }
 
 void
@@ -299,7 +301,9 @@ VIC::saveToBuffer(uint8_t **buffer)
     for (unsigned i = 0; i < 8; i++)
         sprColor[i].saveToBuffer(buffer);
     
-    assert(*buffer - old == stateSize());
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
 }
 
 void
@@ -493,13 +497,16 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void
 VIC::updateBA(uint8_t value)
 {
-    if (value) {
-        baLine.write(value);
-    } else {
-        baLine.clear();
+    if (value != baLine.current()) {
+       
+        if (value) {
+            baLine.write(value);
+        } else {
+            baLine.clear();
+        }
+        
+        c64->cpu.setRDY(value == 0);
     }
-    
-    c64->cpu.setRDY(value == 0);
 }
 
 void 
