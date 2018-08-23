@@ -945,6 +945,28 @@ public:
 
 private:
 
+    //! @brief    Compares the Y coordinates of all sprites with the yCounter
+    //! @return   A bit pattern storing the result for each sprite.
+    uint8_t compareSpriteY() {
+        
+        uint8_t result = 0;
+        for (unsigned i = 0; i < 8; i++)
+            result |= (iomem[2*i+1] == yCounter) << i;
+        
+        assert(result ==
+               ((iomem[1] == yCounter) |
+               ((iomem[3] == yCounter) << 1) |
+               ((iomem[5] == yCounter) << 2) |
+               ((iomem[7] == yCounter) << 3) |
+               ((iomem[9] == yCounter) << 4) |
+               ((iomem[11] == yCounter) << 5) |
+               ((iomem[13] == yCounter) << 6) |
+               ((iomem[15] == yCounter) << 7))
+               );
+        
+        return result;
+    }
+    
     /*! @brief    Turns off sprite dma if conditions are met.
      *  @details  In cycle 16, the mcbase pointer is advanced three bytes for
      *            all dma enabled sprites. Advancing three bytes means that
@@ -984,22 +1006,11 @@ private:
     uint8_t spriteDepth(uint8_t nr) {
         return spritePriority(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
 	
-public: 
+
 	
 
-    
-    //! @brief    Compares the Y coordinates of all sprites with an eight bit value.
-    uint8_t compareSpriteY(uint8_t y) {
-        return
-        (iomem[1] == y) |
-        ((iomem[3] == y) << 1) |
-        ((iomem[5] == y) << 2) |
-        ((iomem[7] == y) << 3) |
-        ((iomem[9] == y) << 4) |
-        ((iomem[11] == y) << 5) |
-        ((iomem[13] == y) << 6) |
-        ((iomem[15] == y) << 7);
-    }
+
+public:
     
 	//! @brief    Enables or disables a sprite.
     void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }

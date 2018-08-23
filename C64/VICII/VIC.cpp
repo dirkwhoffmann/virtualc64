@@ -742,46 +742,51 @@ VIC::retriggerLightpenInterrupt()
 void
 VIC::turnSpriteDmaOff()
 {
-    // "7. In the first phase of cycle 16, [1] it is checked if the expansion flip flop
-    //     is set. If so, [2] MCBASE load from MC (MC->MCBASE), [3] unless the CPU cleared
-    //     the Y expansion bit in $d017 in the second phase of cycle 15, in which case
-    //     [4] MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
-    //     After the MCBASE update, [5] the VIC checks if MCBASE is equal to 63 and [6] turns
-    //     off the DMA of the sprite if it is." [VIC Addendum]
-    
+    /* "7. In the first phase of cycle 16, [1] it is checked if the expansion
+     *     flip flop is set. If so, [2] MCBASE load from MC (MC->MCBASE), [3]
+     *     unless the CPU cleared the Y expansion bit in $d017 in the second
+     *     phase of cycle 15, in which case [4] MCBASE is set to
+     *
+     *         X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
+     *
+     *     After the MCBASE update, [5] the VIC checks if MCBASE is equal to 63
+     *     and [6] turns off the DMA of the sprite if it is." [VIC Addendum]
+     */
     for (unsigned i = 0; i < 8; i++) {
+        
         if (GET_BIT(expansionFF,i)) { /* [1] */
             if (GET_BIT(cleared_bits_in_d017,i)) { /* [3] */
-                uint8_t b101010 = 0x2A;
-                uint8_t b010101 = 0x15;
-                mcbase[i] = (b101010 & (mcbase[i] & mc[i])) | (b010101 & (mcbase[i] | mc[i])); /* [4] */
+                mcbase[i] =
+                (0b101010 & (mcbase[i] & mc[i])) |
+                (0b010101 & (mcbase[i] | mc[i])); /* [4] */
             } else {
                 mcbase[i] = mc[i]; /* [2] */
             }
-            
             if (mcbase[i] == 63) { /* [5] */
                 CLR_BIT(spriteDmaOnOff,i); /* [6] */
             }
         }
     }
-
 }
 
 void
 VIC::turnSpriteDmaOn()
 {
-    // "3. In den ersten Phasen von Zyklus 55 und 56 wird fŸr jedes Sprite geprŸft,
-    //     ob [1] das entsprechende MxE-Bit in Register $d015 gesetzt und [2] die
-    //     Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
-    //     unteren 8 Bits von RASTER ist. Ist dies der Fall und [3] der DMA fŸr das
-    //     Sprite noch ausgeschaltet, wird [4] der DMA angeschaltet, [5] MCBASE gelšscht[.]" [C.B.]
-    uint8_t risingEdges = ~spriteDmaOnOff & (iomem[0x15] & compareSpriteY(yCounter));
-    for (unsigned i = 0; i < 8; i++)
+    /* "In the first phases of cycle 55 and 56, the VIC checks for every sprite
+     *  if the corresponding MxE bit in register $d015 is set and the Y
+     *  coordinate of the sprite (odd registers $d001-$d00f) match the lower 8
+     *  bits of RASTER. If this is the case and the DMA for the sprite is still
+     *  off, the DMA is switched on, MCBASE is cleared, and if the MxYE bit is
+     *  set the expansion flip flip is reset." [C.B.]
+     */
+    uint8_t risingEdges = ~spriteDmaOnOff & (iomem[0x15] & compareSpriteY());
+    
+    for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(risingEdges,i))
             mcbase[i] = 0;
-    
-    expansionFF |= risingEdges;
+    }
     spriteDmaOnOff |= risingEdges;
+    expansionFF |= risingEdges;
 }
 
 void
@@ -793,14 +798,12 @@ VIC::turnSpritesOnOrOff()
      *  the lower 8 bits of RASTER. If this is the case, the display of the
      *  sprite is turned on."
      */
-    uint8_t matchY = 0;
     for (unsigned i = 0; i < 8; i++) {
         mc[i] = mcbase[i];
-        matchY |= (iomem[2*i+1] == (uint8_t)yCounter) << i;
     }
     
     uint8_t onOff = spriteOnOff.current();
-    onOff |= iomem[0x15] & matchY;
+    onOff |= iomem[0x15] & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
 }
