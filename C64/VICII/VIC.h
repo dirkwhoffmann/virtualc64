@@ -548,6 +548,9 @@ public:
     //! @brief    Returns true if the emulated chip model has the gray dot bug.
     bool hasGrayDotBug() { return is856x(); }
 
+    //! @brief    Returns true if light pen interrupts are triggered with a delay.
+    bool delayedLightPenIrqs() { return chipModel & (PAL_6569_R1 | NTSC_6567_R56A); }
+
 
     //
     //! @functiongroup Accessing the screen buffer and display properties

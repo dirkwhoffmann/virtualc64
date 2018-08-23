@@ -690,9 +690,13 @@ VIC::cycle58pal()
     /* Turn display on for all sprites with a matching y coordinate
      * Sprite display remains off if sprite DMA is off or sprite is disabled.
      */
+    /*
     spriteOnOff.write(spriteOnOff.current() |
                         (spriteDmaOnOff & iomem[0x15] &
                          compareSpriteY((uint8_t)yCounter)));
+    */
+    uint8_t matchY = compareSpriteY((uint8_t)yCounter);
+    spriteOnOff.write(spriteOnOff.current() | (iomem[0x15] & matchY));
     
     // Turn display off for all sprites that lost DMA.
     spriteOnOff.write(spriteOnOff.current() & spriteDmaOnOff);

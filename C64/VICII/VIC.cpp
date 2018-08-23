@@ -174,6 +174,11 @@ VIC::dumpState()
 {
 	msg("VIC\n");
 	msg("---\n\n");
+    msg("       Chip model : %d\n", chipModel);
+    msg("              PAL : %s\n", isPAL() ? "yes" : "no");
+    msg("             NTSC : %s\n", isNTSC() ? "yes" : "no");
+    msg("     Gray dot bug : %s\n", hasGrayDotBug() ? "yes" : "no");
+    msg("   is656x, is856x : %d %d\n", is656x(), is856x());
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
     msg("    Screen memory : %04X\n", getScreenMemoryAddr());
 	msg(" Character memory : %04X\n", getCharacterMemoryAddr());
@@ -377,6 +382,9 @@ VIC::setChipModel(VICChipModel model)
             c64->setClockFrequency(NTSC_CLOCK_FREQUENCY);
             c64->putMessage(MSG_NTSC);
             break;
+            
+        default:
+            assert(false);
     }
     
     c64->resume();
@@ -669,10 +677,9 @@ VIC::triggerLightpenInterrupt()
     iomem[0x13] = lightpenX() / 2;
     iomem[0x14] = lightpenY();
     debug("Lightpen x = %d\n", lightpenX());
+    
     // Newer VIC models trigger an interrupt immediately
-    if (chipModel != PAL_6569_R1 && chipModel != NTSC_6567_R56A) {
-        triggerIRQ(8);
-    }
+    if (!delayedLightPenIrqs()) triggerIRQ(8);
     
     // Lightpen interrupts can only occur once per frame
     lightpenIRQhasOccured = true;
