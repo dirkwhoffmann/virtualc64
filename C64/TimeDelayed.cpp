@@ -36,6 +36,7 @@ TimeDelayed<T>::TimeDelayed(uint8_t delay, uint8_t capacity, uint64_t *clock)
 
 template TimeDelayed<bool>::TimeDelayed(uint8_t, uint8_t, uint64_t *);
 template TimeDelayed<uint8_t>::TimeDelayed(uint8_t, uint8_t, uint64_t *);
+template TimeDelayed<uint16_t>::TimeDelayed(uint8_t, uint8_t, uint64_t *);
 template TimeDelayed<uint32_t>::TimeDelayed(uint8_t, uint8_t, uint64_t *);
 template TimeDelayed<uint64_t>::TimeDelayed(uint8_t, uint8_t, uint64_t *);
 
@@ -47,6 +48,7 @@ TimeDelayed<T>::~TimeDelayed()
 }
 template TimeDelayed<bool>::~TimeDelayed();
 template TimeDelayed<uint8_t>::~TimeDelayed();
+template TimeDelayed<uint16_t>::~TimeDelayed();
 template TimeDelayed<uint32_t>::~TimeDelayed();
 template TimeDelayed<uint64_t>::~TimeDelayed();
 
@@ -69,6 +71,7 @@ void TimeDelayed<T>::writeWithDelay(T value, uint8_t waitCycles)
 }
 template void TimeDelayed<bool>::write(bool);
 template void TimeDelayed<uint8_t>::write(uint8_t);
+template void TimeDelayed<uint16_t>::write(uint16_t);
 template void TimeDelayed<uint32_t>::write(uint32_t);
 template void TimeDelayed<uint64_t>::write(uint64_t);
 
@@ -88,6 +91,7 @@ void TimeDelayed<T>::debug()
 }
 template void TimeDelayed<bool>::debug();
 template void TimeDelayed<uint8_t>::debug();
+template void TimeDelayed<uint16_t>::debug();
 template void TimeDelayed<uint32_t>::debug();
 template void TimeDelayed<uint64_t>::debug();
 
@@ -99,6 +103,7 @@ size_t TimeDelayed<T>::stateSize()
 }
 template size_t TimeDelayed<bool>::stateSize();
 template size_t TimeDelayed<uint8_t>::stateSize();
+template size_t TimeDelayed<uint16_t>::stateSize();
 template size_t TimeDelayed<uint32_t>::stateSize();
 template size_t TimeDelayed<uint64_t>::stateSize();
 
@@ -117,6 +122,7 @@ void TimeDelayed<T>::loadFromBuffer(uint8_t **buffer)
 }
 template void TimeDelayed<bool>::loadFromBuffer(uint8_t **);
 template void TimeDelayed<uint8_t>::loadFromBuffer(uint8_t **);
+template void TimeDelayed<uint16_t>::loadFromBuffer(uint8_t **);
 template void TimeDelayed<uint32_t>::loadFromBuffer(uint8_t **);
 template void TimeDelayed<uint64_t>::loadFromBuffer(uint8_t **);
 
@@ -135,5 +141,6 @@ void TimeDelayed<T>::saveToBuffer(uint8_t **buffer)
 }
 template void TimeDelayed<bool>::saveToBuffer(uint8_t **);
 template void TimeDelayed<uint8_t>::saveToBuffer(uint8_t **);
+template void TimeDelayed<uint16_t>::saveToBuffer(uint8_t **);
 template void TimeDelayed<uint32_t>::saveToBuffer(uint8_t **);
 template void TimeDelayed<uint64_t>::saveToBuffer(uint8_t **);

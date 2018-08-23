@@ -117,6 +117,7 @@ VIC::setC64(C64 *c64)
     VirtualComponent::setC64(c64);
 
     // Assign reference clock to all time delayed variables
+    baLine.setClock(&c64->cpu.cycle);
     control1.setClock(&c64->cpu.cycle);
     spriteOnOff.setClock(&c64->cpu.cycle);
     control2.setClock(&c64->cpu.cycle);
@@ -144,6 +145,7 @@ VIC::reset()
 	expansionFF = 0xFF;
     
     // Reset timed delay variables
+    baLine.reset(0);
     control1.reset(0x10);
     spriteOnOff.reset(0);
     control2.reset(0);
@@ -244,6 +246,7 @@ VIC::stateSize()
 {
     size_t result = VirtualComponent::stateSize();
 
+    result += baLine.stateSize();
     result += control1.stateSize();
     result += spriteOnOff.stateSize();
     result += control2.stateSize();
@@ -265,6 +268,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     
     VirtualComponent::loadFromBuffer(buffer);
 
+    baLine.loadFromBuffer(buffer);
     control1.loadFromBuffer(buffer);
     spriteOnOff.loadFromBuffer(buffer);
     control2.loadFromBuffer(buffer);
@@ -286,6 +290,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     
     VirtualComponent::saveToBuffer(buffer);
     
+    baLine.saveToBuffer(buffer);
     control1.saveToBuffer(buffer);
     spriteOnOff.saveToBuffer(buffer);
     control2.saveToBuffer(buffer);
@@ -491,16 +496,28 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void
 VIC::setBAlow(uint8_t value)
 {
+    if (value) {
+        baLine.write(value);
+    } else {
+        baLine.clear();
+    }
+    
     if (!BAlow && value)
         BAwentLowAtCycle = c64->currentCycle();
     
     BAlow = value;
+    assert((value == 0) == (baLine.current() == 0));
     c64->cpu.setRDY(value == 0);
 }
 
 bool
 VIC::BApulledDownForAtLeastThreeCycles()
 {
+    bool oldResult = BAlow && (c64->currentCycle() - BAwentLowAtCycle > 2);
+    bool newResult = baLine.delayed();
+
+    assert((oldResult == 0) == (newResult == 0));
+
     return BAlow && (c64->currentCycle() - BAwentLowAtCycle > 2);
 }
 

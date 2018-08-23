@@ -107,11 +107,14 @@ private:
      *  @details  Remember: Each CPU cycle is split into two phases:
      *            First phase (LOW):   VIC gets access to the bus
      *            Second phase (HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too.
-     *            To block the CPU, the BA line is pulled down.
-     *  @note     BA can be pulled down by multiple sources (wired AND).
+     *            In rare cases, VIC needs access in the HIGH phase, too. To
+     *            block the CPU, the BA line is pulled down.
+     *  @note     BA can be pulled down by multiple sources (wired AND) and
+     *            this variable indicates which sources are holding the line
+     *            low.
      */
     uint16_t BAlow;
+    TimeDelayed<uint16_t>baLine = TimeDelayed<uint16_t>(3);
     
     //! @brief    Remember at which cycle BA line has been pulled down
     uint64_t BAwentLowAtCycle;
@@ -819,11 +822,11 @@ private:
 private:
     
     /*! @brief    Sets the value of the BA line
-     * @details  The BA line is connected (invertedly) to the CPU's RDY pin.
+     * @details  The BA line is connected to the CPU's RDY pin.
      */
     void setBAlow(uint8_t value);
 	
-    /*! @brief    INdicates if a c-access can occur.
+    /*! @brief    Indicates if a c-access can occur.
      *  @details  A c-access can only be performed if the BA line is down for
      *            more than 2 cycles.
      */
