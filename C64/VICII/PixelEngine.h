@@ -82,10 +82,7 @@ typedef struct {
     
     //! @brief    Sprite X expansion bits
     uint8_t spriteXexpand;
-        
-    //! @brief    Value of registerCTRL1 one cycle earlier
-    uint8_t previousCTRL1;
-        
+                
     //! @brief    Data value grabbed in gAccess()
     uint8_t g_data;
     
@@ -418,7 +415,7 @@ public:
      *  @details  This is the main entry point and is invoked in each VIC
      *            drawing cycle, except cycle 17 and cycle 55 which are handles
      *            seperately for speedup purposes. To get the correct output,
-     *            preparePixelEngineForCycle() must be called one cycle before.
+     *            preparePixelEngine() must be called one cycle before.
      */
     void draw();
 

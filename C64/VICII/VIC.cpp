@@ -93,7 +93,6 @@ VIC::VIC()
         // Pixel engine pipe
         { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
         { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
-        { &p.previousCTRL1,             sizeof(p.previousCTRL1),                CLEAR_ON_RESET },
         { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
@@ -822,9 +821,7 @@ VIC::endFrame()
 void
 VIC::preparePixelEngine() {
     
-    uint8_t ctrl1 = control1.delayed() & 0xFF;
     pixelEngine.pipe = p;
-    pixelEngine.pipe.previousCTRL1 = ctrl1;
 }
 
 void 

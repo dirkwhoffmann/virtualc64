@@ -36,7 +36,6 @@ PixelEngine::PixelEngine()
         // VIC state latching
         { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
         { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
-        { &pipe.previousCTRL1,      sizeof(pipe.previousCTRL1),     CLEAR_ON_RESET },
         { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
         { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
         { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
