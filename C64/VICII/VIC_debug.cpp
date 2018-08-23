@@ -19,6 +19,11 @@
 
 #include "C64.h"
 
+/* All functions in this file are meant to be called by the debugger, only.
+ * As the debugger is running in another thread, all code that modifies the
+ * the VICII internals is wrapped inside a suspend()/resume() block.
+ */
+
 void
 VIC::setMemoryBankAddr(uint16_t addr)
 {
@@ -37,3 +42,47 @@ VIC::setDisplayMode(DisplayMode m) {
     control2.write((control2.current() & ~0x10) | (m & 0x10));
     c64->resume();
 }
+
+
+
+
+//
+// Sprites
+//
+
+void
+VIC::setSpriteX(unsigned nr, uint16_t x)
+{
+    assert(nr < 8);
+    
+    x = MIN(x, 511);
+    
+    c64->suspend();
+    p.spriteX[nr] = x;
+    iomem[2*nr] = x & 0xFF;
+    if (x & 0x100) SET_BIT(iomem[0x10],nr); else CLR_BIT(iomem[0x10],nr);
+    c64->resume();
+}
+
+void
+VIC::setSpriteY(unsigned nr, uint8_t y)
+{
+    assert(nr < 8);
+    
+    c64->suspend();
+    iomem[1+2*nr] = y;
+    c64->resume();
+}
+
+void
+VIC::setSpriteColor(unsigned nr, uint8_t color)
+{
+    assert(nr < 8);
+    
+    c64->suspend();
+    sprColor[nr].write(color);
+    c64->resume();
+}
+
+
+

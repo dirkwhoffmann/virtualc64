@@ -335,8 +335,8 @@ VIC::getSpriteInfo(unsigned i)
     SpriteInfo info;
     
     info.enabled = GET_BIT(spriteOnOff.current(), i);
-    info.x = getSpriteX(i);
-    info.y = getSpriteY(i);
+    info.x = p.spriteX[i];
+    info.y = iomem[1 + 2*i];
     info.color = sprColor[i].current() & 0xF;
     info.multicolor = spriteIsMulticolor(i);
     info.extraColor1 = sprExtraColor1.current() & 0xF;
@@ -785,21 +785,33 @@ VIC::turnSpriteDmaOn()
 }
 
 void
+VIC::turnSpritesOnOrOff()
+{
+    /* "In the first phase of cycle 58, the MC of every sprite is loaded from
+     *  its belonging MCBASE (MCBASE->MC) and it is checked [1] if the DMA for
+     *  the sprite is turned on and [2] the Y coordinate of the sprite matches
+     *  the lower 8 bits of RASTER. If this is the case, the display of the
+     *  sprite is turned on."
+     */
+    uint8_t matchY = 0;
+    for (unsigned i = 0; i < 8; i++) {
+        mc[i] = mcbase[i];
+        matchY |= (iomem[2*i+1] == (uint8_t)yCounter) << i;
+    }
+    
+    uint8_t onOff = spriteOnOff.current();
+    onOff |= iomem[0x15] & matchY;
+    onOff &= spriteDmaOnOff;
+    spriteOnOff.write(onOff);
+}
+
+
+void
 VIC::toggleExpansionFlipflop()
 {
     // A '1' in D017 means that the sprite is vertically stretched
     expansionFF ^= iomem[0x17];
 }
-
-void
-VIC::setSpriteColor(uint8_t nr, uint8_t color)
-{
-    assert(nr < 8);
-    c64->suspend();
-    sprColor[nr].write(color);
-    c64->resume();
-}
-
 
 //
 // Frame flipflops

@@ -363,40 +363,25 @@ VIC::cycle58ntsc()
     rIdleAccess();
     
     // Phi2.2 Sprite logic
-    
-    // Reset mc with mcbase for all sprites
-    for (unsigned i = 0; i < 8; i++)
-        mc[i] = mcbase[i];
-    
-    // Turn display on for all sprites with a matching y coordinate
-    // Sprite display remains off if sprite DMA is off or sprite is disabled
-    // (register D015)
-    uint8_t matchY = compareSpriteY((uint8_t)yCounter);
-    spriteOnOff.write(spriteOnOff.current() | (iomem[0x15] & matchY));
-    
-    // Turn display off for all sprites that lost DMA.
-    spriteOnOff.write(spriteOnOff.current() & spriteDmaOnOff);
+    turnSpritesOnOrOff();
     
     // Phi2.3 VC/RC logic
     
-    // "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
-    //     geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
-    //     (VC->VCBASE)." [C.B.]
-    
-    // "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
-    //  wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
-    
-    
+    /* "In the first phase of cycle 58, the VIC checks if RC=7. If so, the video
+     *  logic goes to idle state and VCBASE is loaded from VC (VC->VCBASE)."
+     *  [C.B.]
+     */
     if (registerRC == 7) {
+        displayState = false;
         registerVCBASE = registerVC;
-        if (!badLineCondition)
-            displayState = false;
     }
     
     updateDisplayState();
     
+    /* "If the video logic is in display state afterwards (this is always the
+     *  case if there is a Bad Line Condition), RC is incremented." [C.B.]
+     */
     if (displayState) {
-        // 3 bit overflow register
         registerRC = (registerRC + 1) & 0x07;
     }
     

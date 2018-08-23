@@ -304,7 +304,7 @@ extension MyController {
                 me in me._spriteXAction(value)
             }
             undoManager?.setActionName("Set Sprite X Coordinate")
-            c64.vic.setSpriteX(sprite, value: Int32(newValue))
+            c64.vic.setSpriteX(sprite, value: Int(newValue))
             refreshVIC()
         }
     }
@@ -327,7 +327,7 @@ extension MyController {
                 me in me._spriteYAction(value)
             }
             undoManager?.setActionName("Set Sprite Y Coordinate")
-            c64.vic.setSpriteY(sprite, value: Int32(newValue))
+            c64.vic.setSpriteY(sprite, value: Int(newValue))
             refreshVIC()
         }
     }

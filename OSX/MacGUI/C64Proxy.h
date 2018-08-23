@@ -177,8 +177,8 @@ struct ContainerWrapper;
 
 - (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteEnabled:(NSInteger)nr;
-- (void) setSpriteX:(NSInteger)nr value:(int)x;
-- (void) setSpriteY:(NSInteger)nr value:(int)y;
+- (void) setSpriteX:(NSInteger)nr value:(NSInteger)x;
+- (void) setSpriteY:(NSInteger)nr value:(NSInteger)y;
 - (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag;
 - (void) toggleSpriteStretchX:(NSInteger)nr;
 - (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag;

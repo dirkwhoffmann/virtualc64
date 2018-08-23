@@ -231,26 +231,44 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
 - (void) toggleSpriteEnabled:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
-- (void) setSpriteX:(NSInteger)nr value:(int)x { wrapper->vic->setSpriteX(nr, x); }
-- (void) setSpriteY:(NSInteger)nr value:(int)y { wrapper->vic->setSpriteY(nr, y); }
-- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
-- (void) toggleSpriteStretchX:(NSInteger)nr { wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
-- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag { return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
-- (void) toggleSpriteStretchY:(NSInteger)nr { wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
-- (void) setSpriteColor:(NSInteger)nr value:(int)c { wrapper->vic->setSpriteColor(nr, c); }
-- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpritePriority((unsigned)nr, flag); }
-- (void) toggleSpritePriority:(NSInteger)nr { wrapper->vic->toggleSpritePriority((unsigned)nr); }
-- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
-- (void) toggleSpriteMulticolor:(NSInteger)nr { wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
+- (void) setSpriteX:(NSInteger)nr value:(NSInteger)x {
+    wrapper->vic->setSpriteX((unsigned)nr, (uint16_t)x); }
+- (void) setSpriteY:(NSInteger)nr value:(NSInteger)y {
+    wrapper->vic->setSpriteY((unsigned)nr, (uint8_t)y); }
+- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag {
+    wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
+- (void) toggleSpriteStretchX:(NSInteger)nr {
+    wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
+- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag {
+    return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
+- (void) toggleSpriteStretchY:(NSInteger)nr {
+    wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
+- (void) setSpriteColor:(NSInteger)nr value:(int)c {
+    wrapper->vic->setSpriteColor((unsigned)nr, c); }
+- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag {
+    wrapper->vic->setSpritePriority((unsigned)nr, flag); }
+- (void) toggleSpritePriority:(NSInteger)nr {
+    wrapper->vic->toggleSpritePriority((unsigned)nr); }
+- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag {
+    wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
+- (void) toggleSpriteMulticolor:(NSInteger)nr {
+    wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
 
-- (void) setIrqOnSpriteSpriteCollision:(BOOL)value { wrapper->vic->setIrqOnSpriteSpriteCollision(value); }
-- (void) toggleIrqOnSpriteSpriteCollision { wrapper->vic-> toggleIrqOnSpriteSpriteCollision(); }
-- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value { wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
-- (void) toggleIrqOnSpriteBackgroundCollision { wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
+- (void) setIrqOnSpriteSpriteCollision:(BOOL)value {
+    wrapper->vic->setIrqOnSpriteSpriteCollision(value); }
+- (void) toggleIrqOnSpriteSpriteCollision {
+    wrapper->vic-> toggleIrqOnSpriteSpriteCollision(); }
+- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value {
+    wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
+- (void) toggleIrqOnSpriteBackgroundCollision {
+    wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
 
-- (void) setRasterInterruptLine:(uint16_t)line { wrapper->vic->setRasterInterruptLine(line); }
-- (void) setRasterInterruptEnabled:(BOOL)b { wrapper->vic->setRasterInterruptEnable(b); }
-- (void) toggleRasterInterruptFlag { wrapper->vic->toggleRasterInterruptFlag(); }
+- (void) setRasterInterruptLine:(uint16_t)line {
+    wrapper->vic->setRasterInterruptLine(line); }
+- (void) setRasterInterruptEnabled:(BOOL)b {
+    wrapper->vic->setRasterInterruptEnable(b); }
+- (void) toggleRasterInterruptFlag {
+    wrapper->vic->toggleRasterInterruptFlag(); }
 
 - (BOOL) hideSprites { return wrapper->vic->hideSprites(); }
 - (void) setHideSprites:(BOOL)b { wrapper->vic->setHideSprites(b); }

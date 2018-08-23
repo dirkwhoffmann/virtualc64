@@ -854,7 +854,8 @@ private:
     /*! @brief    Update display state
      *  @details  Invoked at the end of each VIC cycle
      */
-    void updateDisplayState() { if (badLineCondition) displayState = true; }
+    // void updateDisplayState() { if (badLineCondition) displayState = true; }
+    void updateDisplayState() { displayState = displayState || badLineCondition; }
     
     //! @brief    Set BA line
     void setBAlow(uint8_t value);
@@ -957,13 +958,16 @@ private:
      */
     void turnSpriteDmaOff();
 
-    /*! @brief    Turns on sprite dma accesses if drawing conditions are met.
-     *  @details  Sprite dma is turned on either in cycle 55 or cycle 56.
-     *            Dma is turned on iff it's currently turned off and the
-     *            sprite y positon equals the lower 8 bits of yCounter.
+    /*! @brief    Turns on sprite dma accesses if conditions are met.
+     *  @details  This function is called in cycle 55 and cycle 56.
      */
     void turnSpriteDmaOn();
 
+    /*! @brief    Turns sprite display on or off.
+     *  @details  This function is called in cycle 58.
+     */
+    void turnSpritesOnOrOff();
+         
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
      *  @details  In cycle 56, register D017 is read and the flipflop gets
      *            inverted for all sprites with vertical stretching enabled.
@@ -982,27 +986,8 @@ private:
 	
 public: 
 	
-	//! @brief    Sets the color of a sprite.
-    void setSpriteColor(uint8_t nr, uint8_t color);
-		
-	//! @brief    Returns the X coordinate of a sprite.
-    uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }
 
-	//! @brief    Set the X coordinate of a sprite.
-    void setSpriteX(uint8_t nr, uint16_t x) {
-        if (x < 512) {
-            p.spriteX[nr] = x;
-            iomem[2*nr] = x & 0xFF;
-            if (x & 0x100) SET_BIT(iomem[0x10],nr); else CLR_BIT(iomem[0x10],nr);
-        }
-    }
     
-	//! @brief    Returns the Y coordinate of a sprite.
-    uint8_t getSpriteY(uint8_t nr) { assert(nr < 8); return iomem[1+2*nr]; }
-
-	//! @brief    Sets the Y coordinate of sprite.
-    void setSpriteY(uint8_t nr, uint8_t y) { iomem[1+2*nr] = y; }
-	
     //! @brief    Compares the Y coordinates of all sprites with an eight bit value.
     uint8_t compareSpriteY(uint8_t y) {
         return
@@ -1097,18 +1082,18 @@ public:
 
 	
 	//
-	//  Execution functions
+    //!  @functiongroup Running the device (see VIC.cpp and VIC_cycles_xxx.cpp)
 	//
 
 public:
 	
-	/*! @brief    Prepares VIC for drawing a new frame.
-	 *  @details  This function is called prior to cycle 1 of rasterline 0.
+	/*! @brief    Prepares VICII for drawing a new frame.
+	 *  @details  This function is called prior to the first cycle of each frame.
      */
 	void beginFrame();
 	
-	/*! @brief    Prepares VIC for drawing a new rasterline.
-	 *  @details  This function is called prior to cycle 1 at the beginning of each rasterline.
+	/*! @brief    Prepares VICII for drawing a new rasterline.
+	 *  @details  This function is called prior to the first cycle of each rasterline.
      */
 	void beginRasterline(uint16_t rasterline);
 
@@ -1118,11 +1103,12 @@ public:
 	void endRasterline();
 	
 	/*! @brief    Finishes up a frame.
-	 *  @details  This function is called after the last cycle of the last rasterline .
+	 *  @details  This function is called after the last cycle of each frame.
      */
 	void endFrame();
 	
     //! @brief    Pushes portions of the VIC state into the pixel engine.
+    //! @deprecated Remove when all variables are of type TimeDelayed<>
     void preparePixelEngine();
     
     //! @brief    Processes all time delayed actions.
@@ -1166,19 +1152,30 @@ public:
     void cycle65ntsc();
 	
     
-    
 	//
-	//! @functiongroup Debugging VICII (VIC_debug.cpp)
+	//! @functiongroup Debugging VICII (see VIC_debug.cpp)
 	//
 
 public: 
 
     //
-    //! @functiongroup Modifying VICII internals
+    //! @functiongroup Modifying VICII internals (thread safe)
     //
 
     //! @brief    Sets the memory bank start address
     void setMemoryBankAddr(uint16_t addr);
+    
+    //! @brief    Sets the color of a sprite.
+    void setSpriteColor(unsigned nr, uint8_t color);
+    
+    //! @brief    Set the X coordinate of a sprite.
+    void setSpriteX(unsigned nr, uint16_t x);
+    
+    //! @brief    Sets the Y coordinate of sprite.
+    void setSpriteY(unsigned nr, uint8_t y);
+    
+    
+    
     
     
     
