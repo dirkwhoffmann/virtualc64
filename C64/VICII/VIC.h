@@ -344,13 +344,11 @@ private:
      *  @details  Bit n corresponds to sprite n.
      */
     uint8_t isFirstDMAcycle;
-    uint8_t sprFirstDMA;
     
     /*! @brief    Flags the second or third DMA access for each sprite.
      *  @details  Bit n corresponds to sprite n.
      */
     uint8_t isSecondDMAcycle;
-    uint8_t sprSecondDMA;
     
 	/*! @brief    Sprite on off register
 	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
