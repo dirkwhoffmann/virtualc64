@@ -238,6 +238,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             // the middle of the rasterline, the bad line condition might change
             // as well.
             updateBadLineCondition();
+            
+            upperComparisonVal = upperComparisonValue();
+            lowerComparisonVal = lowerComparisonValue();
             return;
             
         case 0x12: // RASTER_COUNTER
@@ -257,6 +260,8 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x16: // CONTROL_REGISTER_2
             
             control2.write(value);
+            leftComparisonVal = leftComparisonValue();
+            rightComparisonVal = rightComparisonValue(); 
             return;
             
         case 0x17: // SPRITE Y EXPANSION

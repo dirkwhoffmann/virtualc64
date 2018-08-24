@@ -143,11 +143,32 @@ private:
      */
     bool verticalFrameFFsetCond;
     
+    /*! @brief    Coordinate where the frame flipflop is checked for the left border.
+     *  @details  Either 24 or 31, dependend on the CSEL bit.
+     */
+    uint16_t leftComparisonVal;
+    
+    /*! @brief    Coordinate where the frame flipflop is checked for the right border.
+     *  @details  Either 344 or 335, dependend on the CSEL bit.
+     */
+    uint16_t rightComparisonVal;
+    
+    /*! @brief    Coordinate where the frame flipflop is checked for the upper border.
+     *  @details  Either 51 or 55, dependend on the RSEL bit.
+     */
+    uint16_t upperComparisonVal;
+    
+    /*! @brief    Coordinate where the frame flipflop is checked for the lower border.
+     *  @details  Either 251 or 247, dependend on the RSEL bit.
+     */
+    uint16_t lowerComparisonVal;
+    
+     
     /*! @brief    Vertical frame flipflop clear condition
      *  @details  Indicates whether the vertical frame ff needs to be cleared in
      *            the current rasterline.
      */
-    bool verticalFrameFFclearCond;
+    // bool verticalFrameFFclearCond;
     
     
     //

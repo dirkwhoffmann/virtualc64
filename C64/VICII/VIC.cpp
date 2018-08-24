@@ -67,7 +67,11 @@ VIC::VIC()
         { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
         { &verticalFrameFFsetCond,      sizeof(verticalFrameFFsetCond),         CLEAR_ON_RESET },
-        { &verticalFrameFFclearCond,    sizeof(verticalFrameFFclearCond),       CLEAR_ON_RESET },
+        // { &verticalFrameFFclearCond,    sizeof(verticalFrameFFclearCond),       CLEAR_ON_RESET },
+        { &leftComparisonVal,           sizeof(leftComparisonVal),              CLEAR_ON_RESET },
+        { &rightComparisonVal,          sizeof(rightComparisonVal),             CLEAR_ON_RESET },
+        { &upperComparisonVal,          sizeof(upperComparisonVal),             CLEAR_ON_RESET },
+        { &lowerComparisonVal,          sizeof(lowerComparisonVal),             CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &badLineCondition,            sizeof(badLineCondition),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
@@ -167,6 +171,12 @@ VIC::reset()
     sprExtraColor2.reset(0);
     for (unsigned i = 0; i < 8; i++)
         sprColor[i].reset(0);
+    
+    leftComparisonVal = leftComparisonValue();
+    rightComparisonVal = rightComparisonValue();
+    upperComparisonVal = upperComparisonValue();
+    lowerComparisonVal = lowerComparisonValue();
+    
     
 	// Disable cheating by default
 	hideSprites = false;
@@ -459,21 +469,24 @@ VIC::rasterline()
 void
 VIC::checkVerticalFrameFF()
 {
+    assert (upperComparisonVal == upperComparisonValue());
+    assert (lowerComparisonVal == lowerComparisonValue());
+    assert (leftComparisonVal == leftComparisonValue());
+    assert (rightComparisonVal == rightComparisonValue());
+
     // Check for upper border
-    if (yCounter == upperComparisonValue() && DENbit()) {
-        verticalFrameFFclearCond = true;
+    if (yCounter == upperComparisonValue()) {
+        
+        if (DENbit()) {
+            p.verticalFrameFF = false;
+            verticalFrameFF.write(false);
+        }
+        
+    } else if (yCounter == lowerComparisonValue()) {
+        
+            // Set later, in cycle 1
+            verticalFrameFFsetCond = true;
     }
-    // Trigger immediately (similar to VICE)
-    if (verticalFrameFFclearCond) {
-        p.verticalFrameFF = false;
-        verticalFrameFF.write(false);
-    }
-    
-    // Check for lower border
-    if (yCounter == lowerComparisonValue()) {
-        verticalFrameFFsetCond = true;
-    }
-    // Trigger in cycle 1 (similar to VICE)
 }
 
 void
@@ -863,7 +876,8 @@ VIC::preparePixelEngine() {
 void 
 VIC::beginRasterline(uint16_t line)
 {
-    verticalFrameFFsetCond = verticalFrameFFclearCond = false;
+    verticalFrameFFsetCond = false;
+    // verticalFrameFFclearCond = false;
 
     // Determine if we're inside the VBLANK area (nothing is drawn there).
     vblank = isVBlankLine(line);
