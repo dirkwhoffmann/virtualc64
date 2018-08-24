@@ -115,14 +115,21 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&c64->cpu.cycle);
+
+    for (unsigned i = 0; i < 8; i++)
+        sprXCoord[i].setClock(&c64->cpu.cycle);
+
     control1.setClock(&c64->cpu.cycle);
     spriteOnOff.setClock(&c64->cpu.cycle);
     control2.setClock(&c64->cpu.cycle);
     borderColor.setClock(&c64->cpu.cycle);
+    
     for (unsigned i = 0; i < 4; i++)
         bgColor[i].setClock(&c64->cpu.cycle);
+    
     sprExtraColor1.setClock(&c64->cpu.cycle);
     sprExtraColor2.setClock(&c64->cpu.cycle);
+    
     for (unsigned i = 0; i < 8; i++)
         sprColor[i].setClock(&c64->cpu.cycle);
 }
@@ -143,6 +150,8 @@ VIC::reset()
     
     // Reset timed delay variables
     baLine.reset(0);
+    for (unsigned i = 0; i < 8; i++)
+        sprXCoord[i].reset(0);
     control1.reset(0x10);
     spriteOnOff.reset(0);
     control2.reset(0);
@@ -244,6 +253,8 @@ VIC::stateSize()
     size_t result = VirtualComponent::stateSize();
 
     result += baLine.stateSize();
+    for (unsigned i = 0; i < 8; i++)
+        result += sprXCoord[i].stateSize();
     result += control1.stateSize();
     result += spriteOnOff.stateSize();
     result += control2.stateSize();
@@ -266,6 +277,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 
     baLine.loadFromBuffer(buffer);
+    for (unsigned i = 0; i < 8; i++)
+        sprXCoord[i].loadFromBuffer(buffer);
     control1.loadFromBuffer(buffer);
     spriteOnOff.loadFromBuffer(buffer);
     control2.loadFromBuffer(buffer);
@@ -290,6 +303,8 @@ VIC::saveToBuffer(uint8_t **buffer)
     VirtualComponent::saveToBuffer(buffer);
     
     baLine.saveToBuffer(buffer);
+    for (unsigned i = 0; i < 8; i++)
+        sprXCoord[i].saveToBuffer(buffer);
     control1.saveToBuffer(buffer);
     spriteOnOff.saveToBuffer(buffer);
     control2.saveToBuffer(buffer);

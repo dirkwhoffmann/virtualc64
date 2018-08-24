@@ -221,6 +221,21 @@ private:
     // Registers (CPU accessible)
     //
     
+    // All values that are read by the PixelEngine are stored as timed delay
+    // variables.
+    
+    //! @brief    X coordinate for all sprites (D011)
+    TimeDelayed<uint16_t> sprXCoord[8] = {
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+    };
+    
     //! @brief    Control register 1 (D011)
     TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
     

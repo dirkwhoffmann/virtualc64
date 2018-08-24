@@ -26,24 +26,6 @@
 // Forward declarations
 class VIC;
 
-// Symbolic names for all color registers
-/*
-#define REG_BORDER_COL 0x20
-#define REG_BG_COL 0x21
-#define REG_EXT1_COL 0x22
-#define REG_EXT2_COL 0x23
-#define REG_EXT3_COL 0x24
-#define REG_SPR_MC1_COL 0x25
-#define REG_SPR_MC2_COL 0x26
-#define REG_SPR1_COL 0x27
-#define REG_SPR2_COL 0x28
-#define REG_SPR3_COL 0x29
-#define REG_SPR4_COL 0x2A
-#define REG_SPR5_COL 0x2B
-#define REG_SPR6_COL 0x2C
-#define REG_SPR7_COL 0x2D
-#define REG_SPR8_COL 0x2E
-*/
 
 // Depth of different drawing layers
 #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
@@ -259,6 +241,15 @@ public:
     // VIC state latching
     //
 
+    //! @brief    X expansion flip flop value of the currently drawn sprite
+    bool spriteXExpansion;
+
+    //! @brief    X coordinate of the currently drawn sprite
+    uint16_t spriteXCoord;
+
+    
+    
+    
     //! @brief    VIC register pipe
     //! @deprecated
     PixelEnginePipe pipe;
