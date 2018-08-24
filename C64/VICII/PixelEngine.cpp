@@ -380,13 +380,22 @@ PixelEngine::drawSprites()
     uint8_t newExtraColor1 = vic->sprExtraColor1.current();
     uint8_t newExtraColor2 = vic->sprExtraColor2.current();
 
+    // uint8_t oldSprXExpansion = vic->sprXExpansion.delayed();
+    // uint8_t newSprXExpansion = vic->sprXExpansion.current();
+    
     // For all sprites ...
     for (unsigned i = 0; i < 8; i++) {
         
+  
+        
         bool oldOnOff = GET_BIT(oldSpriteOnOff, i);
         bool newOnOff = GET_BIT(newSpriteOnOff, i);
+        
         if (!oldOnOff && !newOnOff)
             continue;
+        
+        spriteXCoord = vic->sprXCoord[i].delayed();
+        // spriteXExpansion = GET_BIT(oldSprXExpansion, i);
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
@@ -428,58 +437,58 @@ PixelEngine::drawSprites()
 }
 
 void
-PixelEngine::drawSpritePixel(unsigned spritenr,
-                             unsigned pixelnr,
+PixelEngine::drawSpritePixel(unsigned spriteNr,
+                             unsigned pixelNr,
                              bool freeze,
                              bool halt,
                              bool load)
 {
-    assert(spritenr < 8);
-    assert(sprite_sr[spritenr].remaining_bits >= -1);
-    assert(sprite_sr[spritenr].remaining_bits <= 26);
+    assert(spriteNr < 8);
+    assert(sprite_sr[spriteNr].remaining_bits >= -1);
+    assert(sprite_sr[spriteNr].remaining_bits <= 26);
     
-    bool multicol = GET_BIT(vic->iomem[0x1C], spritenr);
+    bool multicol = GET_BIT(vic->iomem[0x1C], spriteNr);
 
     // Load shift register if applicable
     if (load) {
-        loadShiftRegister(spritenr);
+        loadShiftRegister(spriteNr);
     }
     
     // Stop shift register if applicable
     if (halt) {
-        sprite_sr[spritenr].remaining_bits = -1;
-        sprite_sr[spritenr].col_bits = 0;
+        sprite_sr[spriteNr].remaining_bits = -1;
+        sprite_sr[spriteNr].col_bits = 0;
     }
     
     // Run shift register if applicable
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (vic->xCounter + pixelnr == pipe.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
-            sprite_sr[spritenr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
-            sprite_sr[spritenr].exp_flop = true;
-            sprite_sr[spritenr].mc_flop = true;
+        if (vic->xCounter + pixelNr == spriteXCoord && sprite_sr[spriteNr].remaining_bits == -1) {
+            sprite_sr[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
+            sprite_sr[spriteNr].exp_flop = true;
+            sprite_sr[spriteNr].mc_flop = true;
         }
 
         // Run shift register if there are remaining pixels to draw
-        if (sprite_sr[spritenr].remaining_bits > 0) {
+        if (sprite_sr[spriteNr].remaining_bits > 0) {
 
             // Determine render mode (single color /multi color) and colors
             // TODO: Latch multicolor value at proper cycles. Add dc. multicol
             // sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr);
-            sprite_sr[spritenr].col_bits = sprite_sr[spritenr].data >> (multicol && sprite_sr[spritenr].mc_flop ? 22 : 23);
+            sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> (multicol && sprite_sr[spriteNr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (GET_BIT(pipe.spriteXexpand, spritenr))
-                sprite_sr[spritenr].exp_flop = !sprite_sr[spritenr].exp_flop;
+            if (GET_BIT(pipe.spriteXexpand, spriteNr))
+                sprite_sr[spriteNr].exp_flop = !sprite_sr[spriteNr].exp_flop;
             else
-                sprite_sr[spritenr].exp_flop = true;
+                sprite_sr[spriteNr].exp_flop = true;
 
             // Run shift register and toggle multicolor flipflop
-            if (sprite_sr[spritenr].exp_flop) {
-                sprite_sr[spritenr].data <<= 1;
-                sprite_sr[spritenr].mc_flop = !sprite_sr[spritenr].mc_flop;
-                sprite_sr[spritenr].remaining_bits--;
+            if (sprite_sr[spriteNr].exp_flop) {
+                sprite_sr[spriteNr].data <<= 1;
+                sprite_sr[spriteNr].mc_flop = !sprite_sr[spriteNr].mc_flop;
+                sprite_sr[spriteNr].remaining_bits--;
             }
         }
     }
@@ -487,9 +496,9 @@ PixelEngine::drawSpritePixel(unsigned spritenr,
     // Draw pixel
     if (visibleColumn && !vic->hideSprites) {
         if (multicol)
-            setMultiColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x03);
+            setMultiColorSpritePixel(spriteNr, pixelNr, sprite_sr[spriteNr].col_bits & 0x03);
         else
-            setSingleColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x01);
+            setSingleColorSpritePixel(spriteNr, pixelNr, sprite_sr[spriteNr].col_bits & 0x01);
     }
 }
 

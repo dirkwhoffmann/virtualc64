@@ -63,7 +63,7 @@ typedef struct {
      *            sprites X coordinate is updated whenever one the corresponding
      *            IO register changes its value.
      */
-    uint16_t spriteX[8];
+    // uint16_t spriteX[8];
     
     //! @brief    Sprite X expansion bits
     uint8_t spriteXexpand;

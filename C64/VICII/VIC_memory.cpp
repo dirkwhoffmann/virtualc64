@@ -154,66 +154,41 @@ VIC::poke(uint16_t addr, uint8_t value)
     
     switch(addr) {
         case 0x00: // SPRITE_0_X
-            p.spriteX[0] = value | ((iomem[0x10] & 0x01) << 8);
             sprXCoord[0].write((sprXCoord[0].current() & 0x100) | value);
-            assert(p.spriteX[0] == sprXCoord[0].current());
             break;
             
         case 0x02: // SPRITE_1_X
-            p.spriteX[1] = value | ((iomem[0x10] & 0x02) << 7);
             sprXCoord[1].write((sprXCoord[1].current() & 0x100) | value);
-            assert(p.spriteX[1] == sprXCoord[1].current());
             break;
             
         case 0x04: // SPRITE_2_X
-            p.spriteX[2] = value | ((iomem[0x10] & 0x04) << 6);
             sprXCoord[2].write((sprXCoord[2].current() & 0x100) | value);
-            assert(p.spriteX[2] == sprXCoord[2].current());
             break;
             
         case 0x06: // SPRITE_3_X
-            p.spriteX[3] = value | ((iomem[0x10] & 0x08) << 5);
             sprXCoord[3].write((sprXCoord[3].current() & 0x100) | value);
-            assert(p.spriteX[3] == sprXCoord[3].current());
             break;
             
         case 0x08: // SPRITE_4_X
-            p.spriteX[4] = value | ((iomem[0x10] & 0x10) << 4);
             sprXCoord[4].write((sprXCoord[4].current() & 0x100) | value);
-            assert(p.spriteX[4] == sprXCoord[4].current());
             break;
             
         case 0x0A: // SPRITE_5_X
-            p.spriteX[5] = value | ((iomem[0x10] & 0x20) << 3);
             sprXCoord[5].write((sprXCoord[5].current() & 0x100) | value);
-            assert(p.spriteX[5] == sprXCoord[5].current());
             break;
             
         case 0x0C: // SPRITE_6_X
-            p.spriteX[6] = value | ((iomem[0x10] & 0x40) << 2);
             sprXCoord[6].write((sprXCoord[6].current() & 0x100) | value);
-            assert(p.spriteX[6] == sprXCoord[6].current());
             break;
             
         case 0x0E: // SPRITE_7_X
-            p.spriteX[7] = value | ((iomem[0x10] & 0x80) << 1);
             sprXCoord[7].write((sprXCoord[7].current() & 0x100) | value);
-            assert(p.spriteX[7] == sprXCoord[7].current());
             break;
             
         case 0x10: // SPRITE_X_UPPER_BITS
-            p.spriteX[0] = (p.spriteX[0] & 0xFF) | ((value & 0x01) << 8);
-            p.spriteX[1] = (p.spriteX[1] & 0xFF) | ((value & 0x02) << 7);
-            p.spriteX[2] = (p.spriteX[2] & 0xFF) | ((value & 0x04) << 6);
-            p.spriteX[3] = (p.spriteX[3] & 0xFF) | ((value & 0x08) << 5);
-            p.spriteX[4] = (p.spriteX[4] & 0xFF) | ((value & 0x10) << 4);
-            p.spriteX[5] = (p.spriteX[5] & 0xFF) | ((value & 0x20) << 3);
-            p.spriteX[6] = (p.spriteX[6] & 0xFF) | ((value & 0x40) << 2);
-            p.spriteX[7] = (p.spriteX[7] & 0xFF) | ((value & 0x80) << 1);
             for (unsigned i = 0; i < 8; i++) {
                 uint16_t upperBit = GET_BIT(value, i) ? 0x100 : 0;
                 sprXCoord[i].write(upperBit | (sprXCoord[i].current() & 0xFF));
-                assert(sprXCoord[i].current() == p.spriteX[i]); 
             }
             break;
             
@@ -581,7 +556,7 @@ VIC::gAccess()
         registerVMLI &= 0x3F; // 6 bit overflow
         */
         registerVC = (registerVC + 1) % 1024;
-        registerVMLI = (registerVC + 1) % 64;
+        registerVMLI = (registerVMLI + 1) % 64;
         
     } else {
         

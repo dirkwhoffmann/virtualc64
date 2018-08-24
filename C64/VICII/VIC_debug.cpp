@@ -63,7 +63,7 @@ VIC::getSpriteInfo(unsigned i)
     SpriteInfo info;
     
     info.enabled = GET_BIT(spriteOnOff.current(), i);
-    info.x = p.spriteX[i];
+    info.x = sprXCoord[i].current();
     info.y = iomem[1 + 2*i];
     info.color = sprColor[i].current() & 0xF;
     info.multicolor = GET_BIT(iomem[0x1C], i);
@@ -226,9 +226,7 @@ VIC::setSpriteX(unsigned nr, uint16_t x)
     x = MIN(x, 511);
     
     c64->suspend();
-    p.spriteX[nr] = x;
-    iomem[2*nr] = x & 0xFF;
-    if (x & 0x100) SET_BIT(iomem[0x10],nr); else CLR_BIT(iomem[0x10],nr);
+    sprXCoord[nr].write(x);
     c64->resume();
 }
 
