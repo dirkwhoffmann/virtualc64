@@ -25,26 +25,6 @@ PixelEngine::PixelEngine()
     setDescription("PixelEngine");
     
     debug(3, "  Creating PixelEngine at address %p...\n", this);
-    
-    currentScreenBuffer = screenBuffer1;
-    pixelBuffer = currentScreenBuffer;
-    bufferoffset = 0;
-
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        // VIC state latching
-        // { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
-        // { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
-        // { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
-        // { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
-        // { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
-        // { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
-        // { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
-
-        { NULL,                     0,                              0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
 }
 
 PixelEngine::~PixelEngine()
@@ -59,6 +39,10 @@ PixelEngine::reset()
     
     // Establish bindings
     vic = &c64->vic;
+    
+    currentScreenBuffer = screenBuffer1;
+    pixelBuffer = currentScreenBuffer;
+    bufferoffset = 0;
     
     memset(&sr, 0, sizeof(sr));
     memset(&sprite_sr, 0, sizeof(sprite_sr));
