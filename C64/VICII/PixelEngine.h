@@ -35,56 +35,6 @@ class VIC;
 #define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
 #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
 
-//
-// VIC state pipes
-//
-
-/*! @brief    A certain portion of VICs internal state
- *  @details  This structure comprises all state variables that need to be delayed to get
- *            the timing right.
- *  @note     A general note about state pipes:
- *            Each pipe comprises a certain portion of the VICs internal state. I.e., they
- *            comprise those state variables that are accessed by the pixel engine and need to
- *            be delayed by a certain amount to get the timing right. Most state variables need
- *            to be delayed by one cycle. An exception are the color registers that usually
- *            exhibit a value change somewhere in the middle of an pixel chunk. To implement the
- *            delay, both VIC and PixelEngine hold a pipe variable of their own, and the contents
- *            of the VICs variable is copied over the contents of the PixelEngines variable at
- *            the right time. Putting the state variables in seperate structures allows the
- *            compiler to optize the copy process.
- * @deprecated Will use TimeDelayed<> instead
- */
-typedef struct {
-    
-    /*! @brief    Sprite X coordinates
-     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower
-     *            8 bits are stored in a seperate IO register, while the
-     *            uppermost bits are packed in a single register (0xD010). The
-     *            sprites X coordinate is updated whenever one the corresponding
-     *            IO register changes its value.
-     */
-    // uint16_t spriteX[8];
-    
-    //! @brief    Sprite X expansion bits
-    // uint8_t spriteXexpand;
-                
-    //! @brief    Data value grabbed in gAccess()
-    // uint8_t g_data;
-    
-    //! @brief    Character value grabbed in gAccess()
-    // uint8_t g_character;
-    
-    //! @brief    Color value grabbed in gAccess()
-    // uint8_t g_color;
-        
-    //! @brief    Main frame flipflop
-    // uint8_t mainFrameFF;
-    
-    //! @brief    Vertical frame Flipflop
-    // uint8_t verticalFrameFF;
-    
-} PixelEnginePipe;
-
 
 //! @class   PixelEngine
 /*! @details This component is part of the virtual VICII chip and encapulates
@@ -249,12 +199,7 @@ public:
 
     
     
-    
-    //! @brief    VIC register pipe
-    //! @deprecated
-    PixelEnginePipe pipe;
-    
- 
+
     //
     // Shift register logic for canvas pixels (handled in drawCanvasPixel)
     //

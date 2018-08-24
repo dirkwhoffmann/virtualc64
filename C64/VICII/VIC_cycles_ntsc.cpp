@@ -253,9 +253,6 @@ VIC::cycle10ntsc()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw
-    preparePixelEngine();
-    
     // Phi1.3 Fetch
     sFinalize(7);
     pixelEngine.loadShiftRegister(7);
@@ -279,7 +276,6 @@ VIC::cycle11ntsc()
     
     // Phi1.2 Draw
     pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
-    preparePixelEngine();
     
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     rAccess();
@@ -304,7 +300,6 @@ VIC::cycle55ntsc()
     // Phi1.2 Draw
     // pixelEngine.draw(); // Draw previous cycle (canvas column)
     DRAW
-    preparePixelEngine(); // Prepare for next cycle (canvas column)
     
     // Phi1.3 Fetch
     gAccess();
@@ -332,7 +327,6 @@ VIC::cycle57ntsc()
     // Phi1.2 Draw (border starts here)
     // pixelEngine.draw(); // Draw previous cycle (last canvas column)
     DRAW
-    preparePixelEngine(); // Prepare for next cycle (first column of right border)
     pixelEngine.sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
@@ -357,7 +351,6 @@ VIC::cycle58ntsc()
     // Phi1.2 Draw
     // pixelEngine.draw(); // Draw previous cycle (first column of right border)
     DRAW
-    preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -404,7 +397,6 @@ VIC::cycle59ntsc()
     // Phi1.2 Draw
     // pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
     DRAW
-    preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
     pAccess(0);
@@ -431,7 +423,6 @@ VIC::cycle60ntsc()
     // Phi1.2 Draw (last visible cycle)
     // pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
     DRAW
-    preparePixelEngine(); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
     sSecondAccess(0);

@@ -62,9 +62,6 @@ PixelEngine::reset()
     
     memset(&sr, 0, sizeof(sr));
     memset(&sprite_sr, 0, sizeof(sprite_sr));
-    memset(&pipe, 0, sizeof(pipe));
-    // col_rgba[0] = col_rgba[1] = col_rgba[2] = col_rgba[3] = rgbaTable[0];
-    // col_rgba0[0] = col_rgba0[1] = col_rgba0[2] = col_rgba0[3] = 0;
 }
 
 void

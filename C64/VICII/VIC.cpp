@@ -868,12 +868,6 @@ VIC::endFrame()
     pixelEngine.endFrame();
 }
 
-void
-VIC::preparePixelEngine() {
-    
-    pixelEngine.pipe = p;
-}
-
 void 
 VIC::beginRasterline(uint16_t line)
 {

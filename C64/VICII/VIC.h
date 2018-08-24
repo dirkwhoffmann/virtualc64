@@ -64,9 +64,6 @@ private:
      */
     PixelEngine pixelEngine;
 
-    //! @brief    Main pixel engine pipe
-    //! @deprecated
-    PixelEnginePipe p;
 
     //
     // Configuration options
@@ -1012,11 +1009,7 @@ public:
 	 *  @details  This function is called after the last cycle of each frame.
      */
 	void endFrame();
-	
-    //! @brief    Pushes portions of the VIC state into the pixel engine.
-    //! @deprecated Remove when all variables are of type TimeDelayed<>
-    void preparePixelEngine();
-    
+	    
     //! @brief    Processes all time delayed actions.
     /*! @details  This function is called at the beginning of each VIC cycle.
      */
