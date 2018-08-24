@@ -887,10 +887,13 @@ void
 VIC::endRasterline()
 {
     // Set vertical flipflop if condition was hit
+    // DONE IN CYCLE 1
+    /*
     if (verticalFrameFFsetCond) {
         p.verticalFrameFF = true;
         verticalFrameFF.write(true);
     }
+    */
     
     // Draw debug markers
     if (markIRQLines && yCounter == rasterInterruptLine())
