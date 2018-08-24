@@ -39,8 +39,8 @@ PixelEngine::PixelEngine()
         { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
         { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
         { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
-        { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
-        { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
+        // { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
+        // { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
 
         { NULL,                     0,                              0 }};
     
@@ -175,8 +175,7 @@ PixelEngine::drawOutsideBorder()
 void
 PixelEngine::drawBorder()
 {
-    assert(pipe.mainFrameFF == vic->mainFrameFF.delayed());
-    if (pipe.mainFrameFF) {
+    if (vic->mainFrameFF.delayed()) {
         
         drawFramePixel(0, vic->borderColor.delayed());
         drawFramePixels(1, 7, vic->borderColor.current());
@@ -186,9 +185,7 @@ PixelEngine::drawBorder()
 void
 PixelEngine::drawBorder17()
 {
-    assert(pipe.mainFrameFF == vic->mainFrameFF.delayed());
-    assert(vic->p.mainFrameFF == vic->mainFrameFF.current());
-    if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
+    if (vic->mainFrameFF.delayed() && !vic->mainFrameFF.current()) {
         
         // 38 column mode (only pixels 0...6 are drawn)
         drawFramePixel(0, vic->borderColor.delayed());
@@ -204,9 +201,7 @@ PixelEngine::drawBorder17()
 void
 PixelEngine::drawBorder55()
 {
-    assert(pipe.mainFrameFF == vic->mainFrameFF.delayed());
-    assert(vic->p.mainFrameFF == vic->mainFrameFF.current());
-    if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
+    if (!vic->mainFrameFF.delayed() && vic->mainFrameFF.current()) {
         
         // 38 column mode (border starts at pixel 7)
         drawFramePixel(7, vic->borderColor.delayed());
@@ -227,8 +222,7 @@ PixelEngine::drawCanvas()
      *  (see section 3.9.)." [C.B.]
      */
     
-    assert(pipe.verticalFrameFF == vic->verticalFrameFF.delayed());
-    if (pipe.verticalFrameFF) {
+    if (vic->verticalFrameFF.delayed()) {
         
         /* "Outside of the display column and if the flip-flop is set, the last
          *  current background color is displayed (this area is normally covered

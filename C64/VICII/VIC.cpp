@@ -97,8 +97,8 @@ VIC::VIC()
         { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
-        { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
-        { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
+        // { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
+        // { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
         
         { NULL,                         0,                                      0 }};
 
@@ -474,7 +474,8 @@ VIC::checkVerticalFrameFF()
     if (yCounter == upperComparisonVal) {
         
         if (DENbit()) {
-            p.verticalFrameFF = false;
+            
+            // Clear immediately
             verticalFrameFF.write(false);
         }
         
@@ -503,7 +504,6 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
      *     border flip flop is set." [C.B.]
      */
     if (comparisonValue == rightComparisonVal) {
-        p.mainFrameFF = true;
         mainFrameFF.write(true);
     }
 }
@@ -898,7 +898,6 @@ VIC::endRasterline()
 {
     // Set vertical flipflop if condition was hit
     if (verticalFrameFFsetCond) {
-        p.verticalFrameFF = true;
         verticalFrameFF.write(true);
     }
     

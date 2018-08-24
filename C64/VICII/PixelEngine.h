@@ -78,10 +78,10 @@ typedef struct {
     uint8_t g_color;
         
     //! @brief    Main frame flipflop
-    uint8_t mainFrameFF;
+    // uint8_t mainFrameFF;
     
     //! @brief    Vertical frame Flipflop
-    uint8_t verticalFrameFF;
+    // uint8_t verticalFrameFF;
     
 } PixelEnginePipe;
 

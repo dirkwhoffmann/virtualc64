@@ -772,9 +772,7 @@ private:
      *            the vertical border flipflop is set.
      */
     void clearMainFrameFF() {
-        assert(p.verticalFrameFF == verticalFrameFF.current());
-        if (!p.verticalFrameFF && !verticalFrameFFsetCond) {
-            p.mainFrameFF = false;
+        if (!verticalFrameFF.current() && !verticalFrameFFsetCond) {
             mainFrameFF.write(false);
         }
     }
