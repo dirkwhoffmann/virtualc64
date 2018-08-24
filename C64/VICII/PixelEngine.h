@@ -27,6 +27,7 @@
 class VIC;
 
 // Symbolic names for all color registers
+/*
 #define REG_BORDER_COL 0x20
 #define REG_BG_COL 0x21
 #define REG_EXT1_COL 0x22
@@ -42,6 +43,7 @@ class VIC;
 #define REG_SPR6_COL 0x2C
 #define REG_SPR7_COL 0x2D
 #define REG_SPR8_COL 0x2E
+*/
 
 // Depth of different drawing layers
 #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
@@ -171,16 +173,23 @@ private:
      *            rasterline.
      */
     int *pixelBuffer;
-        
-    /*! @brief    Z buffer
-     *  @details  Virtual VICII uses depth buffering to determine pixel
-     *            priority. In the various render routines, a pixel is only
-     *            written to the screen buffer, if it is closer to the view
-     *            point. The depth of the closest pixel is kept in the z buffer.
-     *            The lower the value of the z buffer, the closer it is to the
-     *            viewer.
+    
+    /*! @brief    Synthesized pixel colors
+     *  @details  The colors for the eight pixels of a single VICII cycle are
+     *            stored temporaraily in this array. At the end of the cycle,
+     *            they are translated into RGBA color values and copied into
+     *            the screen buffer.
      */
-    int zBuffer[8];
+    uint8_t colBuffer[8];
+    
+    /*! @brief    Z buffer
+     *  @details  Depth buffering is used to determine pixel priority. In the
+     *            various render routines, a color value is only retained, if it
+     *            is closer to the view point. The depth of the closest pixel is
+     *            kept in the z buffer. The lower the value, the closer it is to
+     *            the viewer.
+     */
+    uint8_t zBuffer[8];
     
     /*! @brief    Indicates the source of a drawn pixel
      *  @details  Whenever a foreground pixel or sprite pixel is drawn, a
@@ -188,7 +197,7 @@ private:
      *            is needed to detect sprite-sprite and sprite-background
      *            collisions.
      */
-    int pixelSource[8];
+    uint8_t pixelSource[8];
     
     /*! @brief    Offset into pixelBuffer
      *  @details  Variable points to the first pixel of the currently drawn 8
@@ -385,7 +394,7 @@ public:
     
     
     //
-    // High level drawing (canvas, sprites, border)
+    // External drawing routines (called inside the VICII::cycle functions)
     //
 
 public:
@@ -410,6 +419,11 @@ public:
      *            visibleColumn set to false.
      */
     void drawOutsideBorder();
+    
+    
+    //
+    // Internal drawing routines (called by the external ones)
+    //
     
 private:
     
@@ -599,8 +613,18 @@ public:
     
     //! @brief    Draw a single sprite pixel
     //! @deprecated
-    void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
+    // void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
 
+    //! @brief    Copies eight synthesized pixels into to the pixel buffer
+    void copyPixels() {
+        
+        assert(bufferoffset  + 7 < NTSC_PIXELS);
+        
+        for (unsigned i = 0; i < 8; i++) {
+            pixelBuffer[bufferoffset + i] = rgbaTable[colBuffer[i]];
+        }
+    }
+    
     /*! @brief    Extend border to the left and right to look nice.
      *  @details  This functions replicates the color of the leftmost and
      *            rightmost pixel

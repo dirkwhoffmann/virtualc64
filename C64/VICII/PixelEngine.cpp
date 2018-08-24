@@ -111,21 +111,13 @@ PixelEngine::endRasterline()
 {
     if (!vic->vblank) {
         
-        // Make the border look nice
+        // Make the border look nice (evetually, we should get rid of this)
         expandBorders();
         
         // Advance pixelBuffer
         uint16_t nextline = c64->getRasterline() - PAL_UPPER_VBLANK + 1;
         if (nextline < PAL_RASTERLINES) {
-                        
-            // Old code
-            // pixelBuffer += NTSC_PIXELS;
-            // pxbuf += NTSC_PIXELS;
-            
-            // New code (slightly slower, but foolproof. Can't get outside the screen buffer)
             pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
-            // pxbuf = pixelBuffer + bufshift;
-            
         }
         
     }
@@ -156,6 +148,7 @@ PixelEngine::draw()
     drawCanvas();
     drawBorder();
     drawSprites();
+    copyPixels();
     
     bufferoffset += 8;
 }
@@ -169,6 +162,7 @@ PixelEngine::draw17()
     drawCanvas();
     drawBorder17();
     drawSprites();
+    copyPixels();
     
     bufferoffset += 8;
 }
@@ -182,7 +176,7 @@ PixelEngine::draw55()
     drawCanvas();
     drawBorder55();
     drawSprites();
-    
+    copyPixels();
     bufferoffset += 8;
 }
 
@@ -685,7 +679,8 @@ PixelEngine::drawFramePixels(unsigned first, unsigned last, uint8_t color)
     
     for (unsigned pixelNr = first; pixelNr <= last; pixelNr++) {
         
-        pixelBuffer[bufferoffset + pixelNr] = rgbaTable[color & 0xF];
+        // pixelBuffer[bufferoffset + pixelNr] = rgbaTable[color & 0xF];
+        colBuffer[pixelNr] = color;
         zBuffer[pixelNr] = BORDER_LAYER_DEPTH;
 
         // Disable sprite/foreground collision detection in border
@@ -696,10 +691,11 @@ PixelEngine::drawFramePixels(unsigned first, unsigned last, uint8_t color)
 void
 PixelEngine::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 {
-    unsigned offset = bufferoffset + pixelNr;
-    assert(offset < NTSC_PIXELS);
+    // unsigned offset = bufferoffset + pixelNr;
+    // assert(offset < NTSC_PIXELS);
     
-    pixelBuffer[offset] = rgbaTable[color];
+    // pixelBuffer[offset] = rgbaTable[color];
+    colBuffer[pixelNr] = color;
     zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x80;
 }
@@ -707,10 +703,11 @@ PixelEngine::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 void
 PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 {
-    unsigned offset = bufferoffset + pixelNr;
-    assert(offset < NTSC_PIXELS);
+    // unsigned offset = bufferoffset + pixelNr;
+    // assert(offset < NTSC_PIXELS);
     
-    pixelBuffer[offset] = rgbaTable[color];
+    // pixelBuffer[offset] = rgbaTable[color];
+    colBuffer[pixelNr] = color;
     zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x00;
 }
@@ -718,16 +715,18 @@ PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 void
 PixelEngine::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
 {
-    unsigned offset = bufferoffset + pixelNr;
-    assert(offset < NTSC_PIXELS);
+    // unsigned offset = bufferoffset + pixelNr;
+    // assert(offset < NTSC_PIXELS);
     
     if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
-        pixelBuffer[offset] = rgbaTable[color];
+        // pixelBuffer[offset] = rgbaTable[color];
+        colBuffer[pixelNr] = color;
         zBuffer[pixelNr] = depth;
     }
     pixelSource[pixelNr] |= source;
 }
 
+/*
 void
 PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
 {
@@ -740,6 +739,7 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
     }
     pixelSource[pixelnr] |= source;
 }
+*/
 
 void
 PixelEngine::expandBorders()
