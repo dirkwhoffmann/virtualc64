@@ -68,6 +68,7 @@ class VIC;
  *            of the VICs variable is copied over the contents of the PixelEngines variable at
  *            the right time. Putting the state variables in seperate structures allows the
  *            compiler to optize the copy process.
+ * @deprecated Will use TimeDelayed<> instead
  */
 typedef struct {
     
@@ -123,7 +124,7 @@ public:
     //! @brief    Destructor
     ~PixelEngine();
     
-    //! @brief    Restores the initial state
+    //! @brief    Method from VirtualComponent
     void reset();
 
     //! @brief    Initializes both screenBuffers
@@ -132,32 +133,6 @@ public:
      */
     void resetScreenBuffers();
 
-    
-    //
-    // Constant definitions
-    //
-    
-    //! @brief    VIC colors
-    /*
-    enum Color {
-        BLACK   = 0x00,
-        WHITE   = 0x01,
-        RED     = 0x02,
-        CYAN    = 0x03,
-        PURPLE  = 0x04,
-        GREEN   = 0x05,
-        BLUE    = 0x06,
-        YELLOW  = 0x07,
-        LTBROWN = 0x08,
-        BROWN   = 0x09,
-        LTRED   = 0x0A,
-        GREY1   = 0x0B,
-        GREY2   = 0x0C,
-        LTGREEN = 0x0D,
-        LTBLUE  = 0x0E,
-        GREY3   = 0x0F
-    };
-    */
     
     //
     // Pixel buffers and colors
@@ -253,16 +228,16 @@ private:
 
 public:
     
-    //! @brief    Prepares for a new frame
+    //! @brief    Prepares for a new frame.
     void beginFrame();
     
-    //! @brief    Prepares for a new rasterline
+    //! @brief    Prepares for a new rasterline.
     void beginRasterline();
     
-    //! @brief    Finishes up a rasterline
+    //! @brief    Finishes a rasterline.
     void endRasterline();
     
-    //! @brief    Finishes up a frame
+    //! @brief    Finishes a frame.
     void endFrame();
 
     
@@ -271,6 +246,7 @@ public:
     //
 
     //! @brief    VIC register pipe
+    //! @deprecated
     PixelEnginePipe pipe;
     
  
@@ -321,7 +297,7 @@ public:
         uint8_t colorbits;
         
         /*! @brief    Remaining bits to be pumped out
-         *  @details  Make sure no more than 8 pixels are outputted.
+         *  @details  Makes sure no more than 8 pixels are outputted.
          */
         int remaining_bits;
 
@@ -396,7 +372,10 @@ public:
      *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
-        sprite_sr[nr].data = (sprite_sr[nr].chunk1 << 16) | (sprite_sr[nr].chunk2 << 8) | sprite_sr[nr].chunk3;
+        sprite_sr[nr].data =
+        (sprite_sr[nr].chunk1 << 16) |
+        (sprite_sr[nr].chunk2 << 8) |
+        (sprite_sr[nr].chunk3);
     }
     
     
