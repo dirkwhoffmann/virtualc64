@@ -1002,6 +1002,10 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
+    #define DRAW if (!vblank) { pixelEngine.draw(); }
+    #define DRAW17 if (!vblank) { pixelEngine.draw17(); }
+    #define DRAW55 if (!vblank) { pixelEngine.draw55(); }
+
     #define PROCESS_DELAYED_ACTIONS \
     if (unlikely(delay != 0)) { processDelayedActions(); }
     

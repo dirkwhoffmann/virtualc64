@@ -130,54 +130,37 @@ PixelEngine::endFrame()
     pixelBuffer = currentScreenBuffer;    
 }
 
-/*
-void
-PixelEngine::updateSpriteOnOff()
-{
-    dc.spriteOnOff = dc.spriteOnOffPipe;
-    dc.spriteOnOffPipe = vic->oldSpriteOnOff;
-}
-*/
-
 void
 PixelEngine::draw()
 {
-    if (vic->vblank)
-        return;
+    // if (vic->vblank) return;
         
     drawCanvas();
     drawBorder();
     drawSprites();
     copyPixels();
-    
-    bufferoffset += 8;
 }
 
 void
 PixelEngine::draw17()
 {
-    if (vic->vblank)
-        return;
+    // if (vic->vblank) return;
     
     drawCanvas();
-    drawBorder17();
     drawSprites();
+    drawBorder17();
     copyPixels();
-    
-    bufferoffset += 8;
 }
 
 void
 PixelEngine::draw55()
 {
-    if (vic->vblank)
-        return;
+    // if (vic->vblank) return;
     
     drawCanvas();
-    drawBorder55();
     drawSprites();
+    drawBorder55();
     copyPixels();
-    bufferoffset += 8;
 }
 
 void
@@ -718,10 +701,18 @@ PixelEngine::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int sour
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);
     
-    if (depth <= zBuffer[pixelNr] && !(pixelSource[pixelNr] & 0x7F)) {
-        // pixelBuffer[offset] = rgbaTable[color];
-        colBuffer[pixelNr] = color;
-        zBuffer[pixelNr] = depth;
+    if (depth <= zBuffer[pixelNr]) {
+        
+        /* "the interesting case is when eg sprite 1 and sprite 0 overlap, and
+         *  sprite 0 has the priority bit set (and sprite 1 has not). in this
+         *  case 10/11 background bits show in front of whole sprite 0."
+         * Test program: VICII/spritePriorities
+         */
+        if (!(pixelSource[pixelNr] & 0x7F)) {
+            // pixelBuffer[offset] = rgbaTable[color];
+            colBuffer[pixelNr] = color;
+            zBuffer[pixelNr] = depth;
+        }
     }
     pixelSource[pixelNr] |= source;
 }

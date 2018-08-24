@@ -207,12 +207,17 @@ private:
     
 public:
     
-    /*! @brief    Get screen buffer that is currently stable
+    /*! @brief    Returns the currently stable screen buffer
      *  @details  This method is called by the GPU code at the beginning of each
      *            frame.
      */
     void *screenBuffer() {
-        return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
+        
+        if (currentScreenBuffer == screenBuffer1) {
+            return screenBuffer2;
+        } else {
+            return screenBuffer1;
+        }
     }
 
     
@@ -618,10 +623,10 @@ public:
     //! @brief    Copies eight synthesized pixels into to the pixel buffer
     void copyPixels() {
         
-        assert(bufferoffset  + 7 < NTSC_PIXELS);
+        assert(bufferoffset + 7 < NTSC_PIXELS);
         
         for (unsigned i = 0; i < 8; i++) {
-            pixelBuffer[bufferoffset + i] = rgbaTable[colBuffer[i]];
+            pixelBuffer[bufferoffset++] = rgbaTable[colBuffer[i]];
         }
     }
     

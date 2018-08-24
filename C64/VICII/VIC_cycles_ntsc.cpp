@@ -302,7 +302,8 @@ VIC::cycle55ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.draw(); // Draw previous cycle (canvas column)
+    // pixelEngine.draw(); // Draw previous cycle (canvas column)
+    DRAW
     preparePixelEngine(); // Prepare for next cycle (canvas column)
     
     // Phi1.3 Fetch
@@ -329,7 +330,8 @@ VIC::cycle57ntsc()
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
-    pixelEngine.draw(); // Draw previous cycle (last canvas column)
+    // pixelEngine.draw(); // Draw previous cycle (last canvas column)
+    DRAW
     preparePixelEngine(); // Prepare for next cycle (first column of right border)
     pixelEngine.sr.canLoad = false; // Leaving canvas area
     
@@ -353,7 +355,8 @@ VIC::cycle58ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.draw(); // Draw previous cycle (first column of right border)
+    // pixelEngine.draw(); // Draw previous cycle (first column of right border)
+    DRAW
     preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
@@ -399,7 +402,8 @@ VIC::cycle59ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
+    // pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
+    DRAW
     preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
@@ -425,7 +429,8 @@ VIC::cycle60ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw (last visible cycle)
-    pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
+    // pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
+    DRAW
     preparePixelEngine(); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
@@ -451,7 +456,8 @@ VIC::cycle61ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.draw(); // Draw previous cycle (last column of right border)
+    // pixelEngine.draw(); // Draw previous cycle (last column of right border)
+    DRAW
     pixelEngine.visibleColumn = false; // This was the last visible column
     
     // Phi1.3 Fetch
