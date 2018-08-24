@@ -242,7 +242,7 @@ public:
     //
 
     //! @brief    X expansion flip flop value of the currently drawn sprite
-    bool spriteXExpansion;
+    bool spriteXExpand;
 
     //! @brief    X coordinate of the currently drawn sprite
     uint16_t spriteXCoord;

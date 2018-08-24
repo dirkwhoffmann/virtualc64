@@ -363,16 +363,18 @@ PixelEngine::drawSprites()
 {
     uint8_t oldSpriteOnOff = vic->spriteOnOff.delayed();
     uint8_t newSpriteOnOff = vic->spriteOnOff.readWithDelay(2);
-    uint8_t firstDMA = vic->isFirstDMAcycle;
-    uint8_t secondDMA = vic->isSecondDMAcycle;
+
 
     // Quick exit
-    /*
-    if (!oldSpriteOnOff && !newSpriteOnOff && !firstDMA && !secondDMA)
-        return;
-    */
     if (!oldSpriteOnOff && !newSpriteOnOff)
         return;
+    
+    uint8_t firstDMA = vic->isFirstDMAcycle;
+    uint8_t secondDMA = vic->isSecondDMAcycle;
+    
+    // Get sprite expansion bits
+    uint8_t oldSprXExpand = vic->sprXExpand.delayed();
+    uint8_t newSprXExpand = vic->sprXExpand.current();
     
     // Get color values (values may change after the first pixel has been drawn)
     uint8_t oldExtraColor1 = vic->sprExtraColor1.delayed();
@@ -386,8 +388,6 @@ PixelEngine::drawSprites()
     // For all sprites ...
     for (unsigned i = 0; i < 8; i++) {
         
-  
-        
         bool oldOnOff = GET_BIT(oldSpriteOnOff, i);
         bool newOnOff = GET_BIT(newSpriteOnOff, i);
         
@@ -395,7 +395,8 @@ PixelEngine::drawSprites()
             continue;
         
         spriteXCoord = vic->sprXCoord[i].delayed();
-        // spriteXExpansion = GET_BIT(oldSprXExpansion, i);
+        spriteXExpand = GET_BIT(oldSprXExpand, i);
+        assert((GET_BIT(pipe.spriteXexpand, i) != 0) == spriteXExpand);
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
@@ -429,6 +430,8 @@ PixelEngine::drawSprites()
             
             // If spriteXexpand has changed, it shows up at this point in time.
             COPY_BIT(vic->p.spriteXexpand, pipe.spriteXexpand, i);
+            spriteXExpand = GET_BIT(newSprXExpand, i);
+            assert((GET_BIT(pipe.spriteXexpand, i) != 0) == spriteXExpand);
             
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
@@ -479,6 +482,7 @@ PixelEngine::drawSpritePixel(unsigned spriteNr,
             sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> (multicol && sprite_sr[spriteNr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
+            assert(spriteXExpand == (GET_BIT(pipe.spriteXexpand, spriteNr) != 0));
             if (GET_BIT(pipe.spriteXexpand, spriteNr))
                 sprite_sr[spriteNr].exp_flop = !sprite_sr[spriteNr].exp_flop;
             else
