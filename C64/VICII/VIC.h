@@ -594,7 +594,7 @@ public:
     //
     
     //! @brief    Returns the currently stabel screen buffer.
-    void *screenBuffer() { return pixelEngine.screenBuffer(); }
+    void *screenBuffer();
 
     /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
      *  @seealso  updateColors

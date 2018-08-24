@@ -460,6 +460,15 @@ VIC::isVBlankLine(unsigned rasterline)
     }
 }
 
+void *
+VIC::screenBuffer() {
+    if (pixelEngine.currentScreenBuffer == pixelEngine.screenBuffer1) {
+        return pixelEngine.screenBuffer2;
+    } else {
+        return pixelEngine.screenBuffer1;
+    }
+}
+
 uint16_t
 VIC::rasterline()
 {

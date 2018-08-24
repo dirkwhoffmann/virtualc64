@@ -137,21 +137,6 @@ private:
      */
     short bufferoffset;
     
-public:
-    
-    /*! @brief    Returns the currently stable screen buffer
-     *  @details  This method is called by the GPU code at the beginning of each
-     *            frame.
-     */
-    void *screenBuffer() {
-        
-        if (currentScreenBuffer == screenBuffer1) {
-            return screenBuffer2;
-        } else {
-            return screenBuffer1;
-        }
-    }
-
     
     //
     // Rastercycle information
