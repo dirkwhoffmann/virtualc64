@@ -261,7 +261,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             control2.write(value);
             leftComparisonVal = leftComparisonValue();
-            rightComparisonVal = rightComparisonValue(); 
+            rightComparisonVal = rightComparisonValue();
             return;
             
         case 0x17: // SPRITE Y EXPANSION
@@ -568,20 +568,20 @@ VIC::gAccess()
             addr &= 0xF9FF;
         
         // Prepare graphic sequencer
-        p.g_data = memAccess(addr);
-        p.g_character = characterSpace[registerVMLI];
-        p.g_color = colorSpace[registerVMLI];
-        
         gAccessResult.write((characterSpace[registerVMLI] << 16) | // Character
                             (colorSpace[registerVMLI] << 8) |      // Color
                             memAccess(addr));                      // Data
         
         
         // "VC and VMLI are incremented after each g-access in display state."
+        /*
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
         registerVMLI++;
         registerVMLI &= 0x3F; // 6 bit overflow
+        */
+        registerVC = (registerVC + 1) % 1024;
+        registerVMLI = (registerVC + 1) % 64;
         
     } else {
         
@@ -589,10 +589,6 @@ VIC::gAccess()
         addr = ECMbit() ? 0x39FF : 0x3FFF;
         
         // Prepare graphic sequencer
-        p.g_data = memAccess(addr);
-        p.g_character = 0;
-        p.g_color = 0;
-        
         gAccessResult.write(memAccess(addr));
     }
 }

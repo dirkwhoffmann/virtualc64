@@ -69,13 +69,13 @@ typedef struct {
     uint8_t spriteXexpand;
                 
     //! @brief    Data value grabbed in gAccess()
-    uint8_t g_data;
+    // uint8_t g_data;
     
     //! @brief    Character value grabbed in gAccess()
-    uint8_t g_character;
+    // uint8_t g_character;
     
     //! @brief    Color value grabbed in gAccess()
-    uint8_t g_color;
+    // uint8_t g_color;
         
     //! @brief    Main frame flipflop
     // uint8_t mainFrameFF;

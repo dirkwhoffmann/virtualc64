@@ -34,11 +34,11 @@ PixelEngine::PixelEngine()
     SnapshotItem items[] = {
         
         // VIC state latching
-        { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
+        // { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
         { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
-        { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
-        { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
-        { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
+        // { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
+        // { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
+        // { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
         // { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         // { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
 
@@ -302,17 +302,11 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
         uint32_t result = vic->gAccessResult.delayed();
         
         // Load shift register
-        sr.data = pipe.g_data;
-        if (pipe.g_data != (result & 0xFF)) {
-            debug("pipe.g_data = %02X result %06X\n", pipe.g_data, result);
-        }
-        assert(pipe.g_data == (result & 0xFF));
+        sr.data = result & 0xFF;
         
         // Remember how to synthesize pixels
-        assert(pipe.g_character == ((result >> 16) & 0xFF));
-        assert(pipe.g_color == ((result >> 8) & 0xFF));
-        sr.latchedCharacter = pipe.g_character;
-        sr.latchedColor = pipe.g_color;
+        sr.latchedCharacter = (result >> 16) & 0xFF;
+        sr.latchedColor = (result >> 8) & 0xFF;
         
         // Reset the multicolor synchronization flipflop
         sr.mc_flop = true;
