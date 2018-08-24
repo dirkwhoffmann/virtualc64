@@ -554,8 +554,7 @@ CPU::executeOneCycle()
             PUSH_PCL
             // Check for interrupt hijacking
             // If there is a positive edge on the NMI line ...
-            assert(oldEdgeDetector.value == edgeDetector.readWithDelay(0));
-            if (oldEdgeDetector.value) {
+            if (edgeDetector.current()) {
                 
                 // ... the processor will jump to the NMI vector instead of the IRQ vector
                 edgeDetector.clear();
@@ -1232,8 +1231,7 @@ CPU::executeOneCycle()
             
             // Check for interrupt hijacking
             // If there is a positive edge on the NMI line, ...
-            assert(oldEdgeDetector.value == edgeDetector.readWithDelay(0));
-            if (oldEdgeDetector.value) {
+            if (edgeDetector.current()) {
             
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();

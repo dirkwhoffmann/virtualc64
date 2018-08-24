@@ -198,8 +198,6 @@ public:
     uint16_t spriteXCoord;
 
     
-    
-
     //
     // Shift register logic for canvas pixels (handled in drawCanvasPixel)
     //

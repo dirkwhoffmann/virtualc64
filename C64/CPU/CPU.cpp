@@ -69,8 +69,6 @@ CPU::CPU()
         { &rdyLineDown,             sizeof(rdyLineDown),            CLEAR_ON_RESET },
         { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
-        { &oldEdgeDetector,            sizeof(oldEdgeDetector),           CLEAR_ON_RESET },
-        { &oldLevelDetector,           sizeof(oldLevelDetector),          CLEAR_ON_RESET },
         { &doNmi,                   sizeof(doNmi),                  CLEAR_ON_RESET },
         { &doIrq,                   sizeof(doIrq),                  CLEAR_ON_RESET },
         { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },

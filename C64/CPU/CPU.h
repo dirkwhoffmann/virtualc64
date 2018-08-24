@@ -202,7 +202,6 @@ private:
      *             preceding cycle's φ2).
      */
     TimeDelayed<uint8_t> levelDetector = TimeDelayed<uint8_t>(1, &cycle);
-    uint8_delayed oldLevelDetector;
     
     //! @brief    Result of the edge detector polling operation
     /*! @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
