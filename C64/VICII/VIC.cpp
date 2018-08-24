@@ -469,20 +469,16 @@ VIC::rasterline()
 void
 VIC::checkVerticalFrameFF()
 {
-    assert (upperComparisonVal == upperComparisonValue());
-    assert (lowerComparisonVal == lowerComparisonValue());
-    assert (leftComparisonVal == leftComparisonValue());
-    assert (rightComparisonVal == rightComparisonValue());
 
     // Check for upper border
-    if (yCounter == upperComparisonValue()) {
+    if (yCounter == upperComparisonVal) {
         
         if (DENbit()) {
             p.verticalFrameFF = false;
             verticalFrameFF.write(false);
         }
         
-    } else if (yCounter == lowerComparisonValue()) {
+    } else if (yCounter == lowerComparisonVal) {
         
             // Set later, in cycle 1
             verticalFrameFFsetCond = true;
@@ -495,7 +491,7 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
     /* "6. If the X coordinate reaches the left comparison value and the
      *     vertical border flip flop is not set, the main flip flop is reset."
      */
-    if (comparisonValue == leftComparisonValue()) {
+    if (comparisonValue == leftComparisonVal) {
         clearMainFrameFF();
     }
 }
@@ -506,7 +502,7 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
     /* "1. If the X coordinate reaches the right comparison value, the main
      *     border flip flop is set." [C.B.]
      */
-    if (comparisonValue == rightComparisonValue()) {
+    if (comparisonValue == rightComparisonVal) {
         p.mainFrameFF = true;
         mainFrameFF.write(true);
     }
