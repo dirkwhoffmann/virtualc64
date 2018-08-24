@@ -733,6 +733,16 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
 */
 
 void
+PixelEngine::copyPixels() {
+    
+    assert(bufferoffset + 7 < NTSC_PIXELS);
+    
+    for (unsigned i = 0; i < 8; i++) {
+        pixelBuffer[bufferoffset++] = rgbaTable[colBuffer[i]];
+    }
+}
+
+void
 PixelEngine::expandBorders()
 {
     int color, lastX;

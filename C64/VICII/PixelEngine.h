@@ -620,15 +620,11 @@ public:
     //! @deprecated
     // void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
 
-    //! @brief    Copies eight synthesized pixels into to the pixel buffer
-    void copyPixels() {
-        
-        assert(bufferoffset + 7 < NTSC_PIXELS);
-        
-        for (unsigned i = 0; i < 8; i++) {
-            pixelBuffer[bufferoffset++] = rgbaTable[colBuffer[i]];
-        }
-    }
+    /*! @brief    Copies eight synthesized pixels into to the pixel buffer.
+     *  @details  Each pixel is first translated to the corresponding RGBA value
+     *            and then copied over.
+     */
+    void copyPixels();
     
     /*! @brief    Extend border to the left and right to look nice.
      *  @details  This functions replicates the color of the leftmost and
