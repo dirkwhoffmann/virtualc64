@@ -112,6 +112,8 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&c64->cpu.cycle);
+    mainFrameFF.setClock(&c64->cpu.cycle);
+    verticalFrameFF.setClock(&c64->cpu.cycle);
     gAccessResult.setClock(&c64->cpu.cycle);
     
     for (unsigned i = 0; i < 8; i++)
@@ -148,6 +150,8 @@ VIC::reset()
     
     // Reset timed delay variables
     baLine.reset(0);
+    mainFrameFF.reset(0);
+    verticalFrameFF.reset(0);
     gAccessResult.reset(0);
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].reset(0);
@@ -223,8 +227,8 @@ VIC::dumpState()
 	msg("               RC : %02X\n", registerRC);
 	msg("             VMLI : %02X\n", registerVMLI);
 	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
-	msg("      MainFrameFF : %d\n", p.mainFrameFF);
-	msg("  VerticalFrameFF : %d\n", p.verticalFrameFF);
+	msg("      MainFrameFF : %d\n", mainFrameFF.current());
+	msg("  VerticalFrameFF : %d\n", verticalFrameFF.current());
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
@@ -252,6 +256,8 @@ VIC::stateSize()
     size_t result = VirtualComponent::stateSize();
 
     result += baLine.stateSize();
+    result += mainFrameFF.stateSize();
+    result += verticalFrameFF.stateSize();
     result += gAccessResult.stateSize();
     for (unsigned i = 0; i < 8; i++)
         result += sprXCoord[i].stateSize();
@@ -277,6 +283,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 
     baLine.loadFromBuffer(buffer);
+    mainFrameFF.loadFromBuffer(buffer);
+    verticalFrameFF.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].loadFromBuffer(buffer);
@@ -304,6 +312,8 @@ VIC::saveToBuffer(uint8_t **buffer)
     VirtualComponent::saveToBuffer(buffer);
     
     baLine.saveToBuffer(buffer);
+    mainFrameFF.saveToBuffer(buffer);
+    verticalFrameFF.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].saveToBuffer(buffer);
@@ -456,6 +466,7 @@ VIC::checkVerticalFrameFF()
     // Trigger immediately (similar to VICE)
     if (verticalFrameFFclearCond) {
         p.verticalFrameFF = false;
+        verticalFrameFF.write(false);
     }
     
     // Check for lower border
@@ -484,6 +495,7 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
      */
     if (comparisonValue == rightComparisonValue()) {
         p.mainFrameFF = true;
+        mainFrameFF.write(true);
     }
 }
 
@@ -877,6 +889,7 @@ VIC::endRasterline()
     // Set vertical flipflop if condition was hit
     if (verticalFrameFFsetCond) {
         p.verticalFrameFF = true;
+        verticalFrameFF.write(true);
     }
     
     // Draw debug markers

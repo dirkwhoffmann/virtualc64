@@ -175,6 +175,7 @@ PixelEngine::drawOutsideBorder()
 void
 PixelEngine::drawBorder()
 {
+    assert(pipe.mainFrameFF == vic->mainFrameFF.delayed());
     if (pipe.mainFrameFF) {
         
         drawFramePixel(0, vic->borderColor.delayed());
@@ -185,6 +186,8 @@ PixelEngine::drawBorder()
 void
 PixelEngine::drawBorder17()
 {
+    assert(pipe.mainFrameFF == vic->mainFrameFF.delayed());
+    assert(vic->p.mainFrameFF == vic->mainFrameFF.current());
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode (only pixels 0...6 are drawn)
@@ -201,6 +204,8 @@ PixelEngine::drawBorder17()
 void
 PixelEngine::drawBorder55()
 {
+    assert(pipe.mainFrameFF == vic->mainFrameFF.delayed());
+    assert(vic->p.mainFrameFF == vic->mainFrameFF.current());
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
         // 38 column mode (border starts at pixel 7)
@@ -222,6 +227,7 @@ PixelEngine::drawCanvas()
      *  (see section 3.9.)." [C.B.]
      */
     
+    assert(pipe.verticalFrameFF == vic->verticalFrameFF.delayed());
     if (pipe.verticalFrameFF) {
         
         /* "Outside of the display column and if the flip-flop is set, the last

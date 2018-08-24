@@ -56,6 +56,7 @@ VIC::cycle1pal()
     checkVerticalFrameFF();
     if (verticalFrameFFsetCond) {
         p.verticalFrameFF = true;
+        verticalFrameFF.write(true);
     }
     
     // Phi1.3 Fetch

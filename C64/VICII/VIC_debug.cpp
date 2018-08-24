@@ -41,8 +41,8 @@ VIC::getInfo()
     info.screenGeometry = getScreenGeometry();
     info.dx = control2.current() & 0x07;
     info.dy = control1.current() & 0x07;
-    info.verticalFrameFlipflop = p.verticalFrameFF;
-    info.horizontalFrameFlipflop = p.mainFrameFF;
+    info.verticalFrameFlipflop = verticalFrameFF.current();
+    info.horizontalFrameFlipflop = mainFrameFF.current();
     info.memoryBankAddr = bankAddr;
     info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
     info.characterMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;

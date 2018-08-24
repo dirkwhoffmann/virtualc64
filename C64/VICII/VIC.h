@@ -128,6 +128,29 @@ private:
     
     
     //
+    // Border flipflops
+    //
+    
+    //! @brief    Main frame flipflop
+    TimeDelayed<bool> mainFrameFF = TimeDelayed<bool>(1);
+    
+    //! @brief    Vertical frame flipflop
+    TimeDelayed<bool> verticalFrameFF = TimeDelayed<bool>(1);
+    
+    /*! @brief    Vertical frame flipflop set condition
+     *  @details  Indicates whether the vertical frame flipflop needs to be set
+     *            in the current rasterline.
+     */
+    bool verticalFrameFFsetCond;
+    
+    /*! @brief    Vertical frame flipflop clear condition
+     *  @details  Indicates whether the vertical frame ff needs to be cleared in
+     *            the current rasterline.
+     */
+    bool verticalFrameFFclearCond;
+    
+    
+    //
     // Internal registers, counters, and flags
     //
     
@@ -160,18 +183,6 @@ private:
      *             refresh access." [C.B.]
      */
     uint8_t refreshCounter;
-    
-    /*! @brief    Vertical frame flipflop set condition
-     *  @details  Indicates whether the vertical frame flipflop needs to be set
-     *            in the current rasterline.
-     */
-    bool verticalFrameFFsetCond;
-    
-    /*! @brief    Vertical frame flipflop clear condition
-     *  @details  Indicates whether the vertical frame ff needs to be cleared in
-     *            the current rasterline.
-     */
-    bool verticalFrameFFclearCond;
     
     //! @brief    Internal VIC register, 10 bit video counter
     uint16_t registerVC;
@@ -740,7 +751,11 @@ private:
      *            the vertical border flipflop is set.
      */
     void clearMainFrameFF() {
-        if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false;
+        assert(p.verticalFrameFF == verticalFrameFF.current());
+        if (!p.verticalFrameFF && !verticalFrameFFsetCond) {
+            p.mainFrameFF = false;
+            mainFrameFF.write(false);
+        }
     }
     
     
