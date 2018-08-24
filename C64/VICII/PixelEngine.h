@@ -152,13 +152,13 @@ private:
      *            of the array is later copied into to texture RAM of your
      *            graphic card by the drawRect method in the GPU related code.
      */
-    int screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS];
+    int *screenBuffer1 = new int[PAL_RASTERLINES * NTSC_PIXELS];
     
     /*! @brief    Second screen buffer
      *  @details  The VIC chip uses double buffering. Once a frame is drawn, the
      *            VIC chip writes the next frame to the second buffer.
      */
-    int screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS];
+    int *screenBuffer2 = new int [PAL_RASTERLINES * NTSC_PIXELS];
     
     /*! @brief    Target screen buffer for all rendering methods
      *  @details  The variable points either to screenBuffer1 or screenBuffer2 
@@ -212,7 +212,7 @@ public:
      *            frame.
      */
     void *screenBuffer() {
-        return (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0];
+        return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
     }
 
     

@@ -26,7 +26,7 @@ PixelEngine::PixelEngine()
     
     debug(3, "  Creating PixelEngine at address %p...\n", this);
     
-    currentScreenBuffer = screenBuffer1[0];
+    currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;
     bufferoffset = 0;
 
@@ -72,7 +72,7 @@ PixelEngine::resetScreenBuffers()
 {
     for (unsigned line = 0; line < PAL_RASTERLINES; line++) {
         for (unsigned i = 0; i < NTSC_PIXELS; i++) {
-            screenBuffer1[line][i] = screenBuffer2[line][i] = (line % 2) ? rgbaTable[8] : rgbaTable[9];
+            screenBuffer1[line * NTSC_PIXELS + i] = screenBuffer2[line * NTSC_PIXELS + i] = (line % 2) ? rgbaTable[8] : rgbaTable[9];
         }
     }
 }
@@ -126,7 +126,7 @@ void
 PixelEngine::endFrame()
 {
     // Switch active screen buffer
-    currentScreenBuffer = (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0];
+    currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
     pixelBuffer = currentScreenBuffer;    
 }
 
