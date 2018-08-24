@@ -20,8 +20,6 @@
 #ifndef _TIME_DELAYED_INC
 #define _TIME_DELAYED_INC
 
-#include <stdint.h>
-
 template <class T> class TimeDelayed {
     
 public:
@@ -80,8 +78,16 @@ public:
     T current() { return pipeline[0]; }
     
     //! @brief   Reads a value from the pipeline with the standard delay.
-    T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
+    // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
+    T delayed() {
+        int64_t offset = timeStamp - *clock + delay;
+        if (__builtin_expect(offset <= 0, 1))
+            return pipeline[0];
+        else
+            return pipeline[offset];
+    }
 
+    
     //! @brief   Reads a value from the pipeline with a custom delay.
     T readWithDelay(uint8_t delay) {
         assert(delay <= this->capacity);
