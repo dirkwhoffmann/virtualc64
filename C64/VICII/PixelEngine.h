@@ -66,7 +66,7 @@ typedef struct {
     // uint16_t spriteX[8];
     
     //! @brief    Sprite X expansion bits
-    uint8_t spriteXexpand;
+    // uint8_t spriteXexpand;
                 
     //! @brief    Data value grabbed in gAccess()
     // uint8_t g_data;

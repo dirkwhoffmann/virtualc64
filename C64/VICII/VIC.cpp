@@ -93,7 +93,7 @@ VIC::VIC()
 
         // Pixel engine pipe
         // { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
-        { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
+        // { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
         // { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
         // { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
         // { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },

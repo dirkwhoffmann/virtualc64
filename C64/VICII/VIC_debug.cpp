@@ -69,7 +69,7 @@ VIC::getSpriteInfo(unsigned i)
     info.multicolor = GET_BIT(iomem[0x1C], i);
     info.extraColor1 = sprExtraColor1.current() & 0xF;
     info.extraColor2 = sprExtraColor2.current() & 0xF;
-    info.expandX = GET_BIT(p.spriteXexpand, i);
+    info.expandX = GET_BIT(sprXExpand.current(), i);
     info.expandY = GET_BIT(iomem[0x17], i);
     info.priority = GET_BIT(iomem[0x1B], i);
     info.collidesWithSprite = GET_BIT(iomem[0x1E], i);
@@ -364,7 +364,9 @@ VIC::setSpriteStretchX(unsigned nr, bool b)
     assert(nr < 8);
     
     c64->suspend();
-    WRITE_BIT(p.spriteXexpand, nr, b);
+    uint8_t value = sprXExpand.current();
+    WRITE_BIT(value, nr, b);
+    sprXExpand.write(value);
     c64->resume();
 }
 
@@ -374,7 +376,9 @@ VIC::spriteToggleStretchXFlag(unsigned nr)
     assert(nr < 8);
 
     c64->suspend();
-    TOGGLE_BIT(p.spriteXexpand, nr);
+    uint8_t value = sprXExpand.current();
+    TOGGLE_BIT(value, nr);
+    sprXExpand.write(value);
     c64->resume();
 }
 

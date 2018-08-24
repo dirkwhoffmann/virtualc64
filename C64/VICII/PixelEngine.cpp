@@ -35,7 +35,7 @@ PixelEngine::PixelEngine()
         
         // VIC state latching
         // { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
-        { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
+        // { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
         // { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
         // { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
         // { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
@@ -396,7 +396,6 @@ PixelEngine::drawSprites()
         
         spriteXCoord = vic->sprXCoord[i].delayed();
         spriteXExpand = GET_BIT(oldSprXExpand, i);
-        assert((GET_BIT(pipe.spriteXexpand, i) != 0) == spriteXExpand);
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
@@ -429,9 +428,7 @@ PixelEngine::drawSprites()
             drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
             
             // If spriteXexpand has changed, it shows up at this point in time.
-            COPY_BIT(vic->p.spriteXexpand, pipe.spriteXexpand, i);
             spriteXExpand = GET_BIT(newSprXExpand, i);
-            assert((GET_BIT(pipe.spriteXexpand, i) != 0) == spriteXExpand);
             
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
@@ -482,8 +479,7 @@ PixelEngine::drawSpritePixel(unsigned spriteNr,
             sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> (multicol && sprite_sr[spriteNr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
-            assert(spriteXExpand == (GET_BIT(pipe.spriteXexpand, spriteNr) != 0));
-            if (GET_BIT(pipe.spriteXexpand, spriteNr))
+            if (spriteXExpand)
                 sprite_sr[spriteNr].exp_flop = !sprite_sr[spriteNr].exp_flop;
             else
                 sprite_sr[spriteNr].exp_flop = true;

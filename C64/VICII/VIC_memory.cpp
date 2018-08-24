@@ -81,8 +81,7 @@ VIC::peek(uint16_t addr)
             return imr | 0xF0;
             
         case 0x1D: // SPRITE_X_EXPAND
-            assert(p.spriteXexpand == sprXExpand.current());
-            return p.spriteXexpand;
+            return sprXExpand.current();
             
         case 0x1E: // Sprite-to-sprite collision
             result = iomem[addr];
@@ -286,7 +285,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             return;
             
         case 0x1D: // SPRITE_X_EXPAND
-            p.spriteXexpand = value;
             sprXExpand.write(value);
             return;
             
