@@ -185,14 +185,17 @@ private:
     //! @brief    Internal VIC-II register, 6 bit video matrix line index
     uint8_t registerVMLI;
     
+    //! @brief    Result of the lastest g-access
+    TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
+    
     //! @brief    Display mode in latest gAccess
-    uint8_t gAccessDisplayMode;
+    // uint8_t gAccessDisplayMode;
     
     //! @brief    Foreground color fetched in latest gAccess
-    uint8_t gAccessfgColor;
+    // uint8_t gAccessfgColor;
     
     //! @brief    Background color fetched in latest gAccess
-    uint8_t gAccessbgColor;
+    // uint8_t gAccessbgColor;
     
     //! @brief    True if we are currently processing a DMA line (bad line)
     bool badLineCondition;

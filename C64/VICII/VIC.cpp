@@ -69,9 +69,6 @@ VIC::VIC()
         { &verticalFrameFFsetCond,      sizeof(verticalFrameFFsetCond),         CLEAR_ON_RESET },
         { &verticalFrameFFclearCond,    sizeof(verticalFrameFFclearCond),       CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
-        { &gAccessDisplayMode,          sizeof(gAccessDisplayMode),             CLEAR_ON_RESET },
-        { &gAccessfgColor,              sizeof(gAccessfgColor),                 CLEAR_ON_RESET },
-        { &gAccessbgColor,              sizeof(gAccessbgColor),                 CLEAR_ON_RESET },
         { &badLineCondition,            sizeof(badLineCondition),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
         { &displayState,                sizeof(displayState),                   CLEAR_ON_RESET },
@@ -115,7 +112,8 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&c64->cpu.cycle);
-
+    gAccessResult.setClock(&c64->cpu.cycle);
+    
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].setClock(&c64->cpu.cycle);
 
@@ -150,6 +148,7 @@ VIC::reset()
     
     // Reset timed delay variables
     baLine.reset(0);
+    gAccessResult.reset(0);
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].reset(0);
     control1.reset(0x10);
@@ -253,6 +252,7 @@ VIC::stateSize()
     size_t result = VirtualComponent::stateSize();
 
     result += baLine.stateSize();
+    result += gAccessResult.stateSize();
     for (unsigned i = 0; i < 8; i++)
         result += sprXCoord[i].stateSize();
     result += control1.stateSize();
@@ -277,6 +277,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 
     baLine.loadFromBuffer(buffer);
+    gAccessResult.loadFromBuffer(buffer);
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].loadFromBuffer(buffer);
     control1.loadFromBuffer(buffer);
@@ -303,6 +304,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     VirtualComponent::saveToBuffer(buffer);
     
     baLine.saveToBuffer(buffer);
+    gAccessResult.saveToBuffer(buffer);
     for (unsigned i = 0; i < 8; i++)
         sprXCoord[i].saveToBuffer(buffer);
     control1.saveToBuffer(buffer);

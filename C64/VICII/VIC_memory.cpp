@@ -567,6 +567,11 @@ VIC::gAccess()
         p.g_character = characterSpace[registerVMLI];
         p.g_color = colorSpace[registerVMLI];
         
+        gAccessResult.write((characterSpace[registerVMLI] << 16) | // Character
+                            (colorSpace[registerVMLI] << 8) |      // Color
+                            memAccess(addr));                      // Data
+        
+        
         // "VC and VMLI are incremented after each g-access in display state."
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
@@ -582,6 +587,8 @@ VIC::gAccess()
         p.g_data = memAccess(addr);
         p.g_character = 0;
         p.g_color = 0;
+        
+        gAccessResult.write(memAccess(addr));
     }
 }
 

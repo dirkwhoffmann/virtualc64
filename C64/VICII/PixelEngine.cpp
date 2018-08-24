@@ -299,10 +299,18 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
      */
     if (loadShiftReg && sr.canLoad) {
         
+        uint32_t result = vic->gAccessResult.delayed();
+        
         // Load shift register
         sr.data = pipe.g_data;
+        if (pipe.g_data != (result & 0xFF)) {
+            debug("pipe.g_data = %02X result %06X\n", pipe.g_data, result);
+        }
+        assert(pipe.g_data == (result & 0xFF));
         
         // Remember how to synthesize pixels
+        assert(pipe.g_character == ((result >> 16) & 0xFF));
+        assert(pipe.g_color == ((result >> 8) & 0xFF));
         sr.latchedCharacter = pipe.g_character;
         sr.latchedColor = pipe.g_color;
         
