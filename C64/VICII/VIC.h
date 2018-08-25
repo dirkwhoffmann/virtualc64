@@ -33,16 +33,15 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-#define VICTriggerIrq0      (1ULL << 0) // Sets the IRQ line
-#define VICTriggerIrq1      (1ULL << 1)
-#define VICReleaseIrq0      (1ULL << 2) // Clears the IRQ line
-#define VICReleaseIrq1      (1ULL << 3)
-#define VICLpTransition0    (1ULL << 4) // Triggers a lightpen event
-#define VICUpdateFlipflops0 (1ULL << 5) // Updates the flipflop value pipeline
-#define VICUpdateRegisters0 (1ULL << 6) // Updates the register value pipeline
-#define VICSetDisplayState0 (1ULL << 7) // Updates the register value pipeline
+#define VICTriggerIrq          (1ULL << 0) // Sets the IRQ line
+#define VICReleaseIrq          (1ULL << 1) // Clears the IRQ line
+#define VICLpTransition        (1ULL << 2) // Triggers a lightpen event
+#define VICUpdateFlipflops     (1ULL << 3) // Updates the flipflop value pipeline
+#define VICUpdateRegisters     (1ULL << 4) // Updates the register value pipeline
+#define VICUpdateGAccessResult (1ULL << 5) // Updates the register value pipeline
+#define VICSetDisplayState     (1ULL << 6) // Updates the register value pipeline
 
-#define VICClearanceMask ~((1ULL << 8) | VICTriggerIrq0 | VICReleaseIrq0 | VICLpTransition0 | VICUpdateFlipflops0 | VICUpdateRegisters0 | VICSetDisplayState0);
+#define VICClearanceMask ~((1ULL << 7) | VICTriggerIrq | VICReleaseIrq | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateGAccessResult | VICSetDisplayState);
 
 // Forward declarations
 class C64Memory;
@@ -1036,11 +1035,6 @@ public:
 	 *  @details  This function is called after the last cycle of each frame.
      */
 	void endFrame();
-    
-    /*! @brief    Finishes up a cycle.
-     *  @details  This function is called at the end of each cycle.
-     */
-    void endCycle();
     
     //! @brief    Processes all time delayed actions.
     /*! @details  This function is called at the beginning of each VIC cycle.

@@ -546,7 +546,7 @@ VIC::setVerticalFrameFF(bool value)
 {
     if (value != flipflops.vertical) {
         newFlipflops.vertical = value;
-        delay |= VICUpdateFlipflops0;
+        delay |= VICUpdateFlipflops;
     }
 }
 
@@ -555,7 +555,7 @@ VIC::setMainFrameFF(bool value)
 {
     if (value != flipflops.main) {
         newFlipflops.main = value;
-        delay |= VICUpdateFlipflops0;
+        delay |= VICUpdateFlipflops;
     }
 }
 
@@ -602,7 +602,7 @@ VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
                 c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
                 return;
             case 1:
-                delay |= VICTriggerIrq1;
+                delay |= VICTriggerIrq;
                 return;
             default:
                 assert(false);
@@ -668,7 +668,7 @@ VIC::setLP(bool value)
 {
     // A negative transition on LP triggers a lightpen event.
     if (FALLING_EDGE(lp, value)) {
-        delay |= VICLpTransition0;
+        delay |= VICLpTransition;
     }
     
     lp = value;
@@ -945,37 +945,6 @@ VIC::endRasterline()
     pixelEngine.endRasterlinePixelEngine();
 }
 
-void
-VIC::endCycle()
-{
-    // Update display state
-    oldDisplayState = oldDisplayState || badLine;
-  
-    // Increase X counter
-    xCounter += 8;
-    
-    // Process delayed actions
-    if (unlikely(delay)) {
-        
-        if (delay & VICTriggerIrq1) {
-            c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
-        }
-        if (delay & VICReleaseIrq1) {
-            c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
-        }
-        if (delay & VICLpTransition0) {
-            triggerLightpenInterrupt();
-        }
-        if (delay & VICUpdateFlipflops0) {
-            flipflops = newFlipflops;
-        }
-        if (delay & VICUpdateRegisters0) {
-            reg.delayed = reg.current;
-        }
-        
-        delay = (delay << 1) & VICClearanceMask;
-    }
-}
 
 
 

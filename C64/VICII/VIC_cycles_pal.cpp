@@ -34,22 +34,22 @@
 void
 VIC::processDelayedActions()
 {
-    if (delay & VICTriggerIrq1) {
+    if (delay & VICTriggerIrq) {
         c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
     }
-    if (delay & VICReleaseIrq1) {
+    if (delay & VICReleaseIrq) {
         c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
     }
-    if (delay & VICLpTransition0) {
+    if (delay & VICLpTransition) {
         triggerLightpenInterrupt();
     }
-    if (delay & VICUpdateFlipflops0) {
+    if (delay & VICUpdateFlipflops) {
         flipflops = newFlipflops;
     }
-    if (delay & VICUpdateRegisters0) {
+    if (delay & VICUpdateRegisters) {
         reg.delayed = reg.current; 
     }
-    if (delay & VICSetDisplayState0) {
+    if (delay & VICSetDisplayState) {
         displayState = true;
     }
 

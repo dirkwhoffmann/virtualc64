@@ -282,12 +282,12 @@ VIC::poke(uint16_t addr, uint8_t value)
                 DENwasSetInRasterline30 = true;
             
             if ((badLine = badLineCondition()))
-                delay |= VICSetDisplayState0;
+                delay |= VICSetDisplayState;
             
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
             
-            delay |= VICUpdateRegisters0; // TODO: Replace by break later
+            delay |= VICUpdateRegisters; // TODO: Replace by break later
             return;
             
         case 0x12: // RASTER_COUNTER
@@ -322,7 +322,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
             
-            delay |= VICUpdateRegisters0; // TODO: Replace by break later
+            delay |= VICUpdateRegisters; // TODO: Replace by break later
             return;
             
         case 0x17: // SPRITE Y EXPANSION
@@ -348,7 +348,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             if ((oldValue ^ value) & 0x02) {
                 c64->putMessage(MSG_CHARSET);
             }
-            delay |= VICUpdateRegisters0; // TODO: Replace by break later
+            delay |= VICUpdateRegisters; // TODO: Replace by break later
             return;
         }
         case 0x19: // Interrupt Request Register (IRR)
@@ -357,7 +357,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             irr &= (~value) & 0x0F;
             
             if (!(irr & imr)) {
-                delay |= VICReleaseIrq1;
+                delay |= VICReleaseIrq;
             }
             return;
             
@@ -368,7 +368,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             if (irr & imr) {
                 triggerDelayedIRQ(1);
             } else {
-                delay |= VICReleaseIrq1;
+                delay |= VICReleaseIrq;
             }
             return;
             
@@ -385,7 +385,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x1D: // SPRITE_X_EXPAND
             sprXExpand.write(value);
             reg.current.sprExpandX = value;
-            delay |= VICUpdateRegisters0; // TODO: Replace by break later
+            delay |= VICUpdateRegisters; // TODO: Replace by break later
             return;
             
         case 0x1E:
@@ -420,11 +420,11 @@ VIC::poke(uint16_t addr, uint8_t value)
             // DEPRECATED CALL:
             pokeColorReg(addr, value & 0x0F);
             
-            delay |= VICUpdateRegisters0; // TODO: Replace by break later
+            delay |= VICUpdateRegisters; // TODO: Replace by break later
             return;
     }
     
-    delay |= VICUpdateRegisters0;
+    delay |= VICUpdateRegisters;
     
     // DEPRECATED default action
     iomem[addr] = value;
