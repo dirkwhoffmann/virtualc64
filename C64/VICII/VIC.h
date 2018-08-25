@@ -40,8 +40,9 @@
 #define VICLpTransition0    (1ULL << 4) // Triggers a lightpen event
 #define VICUpdateFlipflops0 (1ULL << 5) // Updates the flipflop value pipeline
 #define VICUpdateRegisters0 (1ULL << 6) // Updates the register value pipeline
+#define VICSetDisplayState0 (1ULL << 7) // Updates the register value pipeline
 
-#define VICClearanceMask ~((1ULL << 7) | VICTriggerIrq0 | VICReleaseIrq0 | VICLpTransition0 | VICUpdateFlipflops0 | VICUpdateRegisters0);
+#define VICClearanceMask ~((1ULL << 8) | VICTriggerIrq0 | VICReleaseIrq0 | VICLpTransition0 | VICUpdateFlipflops0 | VICUpdateRegisters0 | VICSetDisplayState0);
 
 // Forward declarations
 class C64Memory;
@@ -239,13 +240,13 @@ private:
     //! @brief    Result of the lastest g-access
     TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
     
-    //! @brief    Display mode in latest gAccess
+    //! @brief    Display mode in latest g-access
     // uint8_t gAccessDisplayMode;
     
-    //! @brief    Foreground color fetched in latest gAccess
+    //! @brief    Foreground color fetched in latest g-access
     // uint8_t gAccessfgColor;
     
-    //! @brief    Background color fetched in latest gAccess
+    //! @brief    Background color fetched in latest g-access
     // uint8_t gAccessbgColor;
     
     //! @brief    True if we are currently processing a DMA line (bad line)
@@ -259,10 +260,18 @@ private:
     bool DENwasSetInRasterline30;
     
     /*! @brief    Display State
-     *  @details  The VIC is either in idle or display state
+     *  @details  "The text/bitmap display logic in the VIC is in one of two
+     *             states at any time: The idle state and the display state.
+     *
+     *              - In display state, c- and g-accesses take place, the
+     *                addresses and interpretation of the data depend on the
+     *                selected display mode.
+     *
+     *              - In idle state, only g-accesses occur. The VIC is either in
+     *                idle or display state" [C.B.]
      */
+    bool oldDisplayState;
     bool displayState;
-    
 
     
  
@@ -702,8 +711,8 @@ private:
     void cAccess();
     
     /*! @brief    Performs a graphics access (g-access).
-     *  @details  During a gAccess, graphics data (character or bitmap patterns)
-     *            is reads. The result of the gAccess is stored in variables
+     *  @details  During a g-access, graphics data (character or bitmap patterns)
+     *            is reads. The result of the g-access is stored in variables
      *            prefixed with 'g_', i.e., g_data, g_character, g_color, and
      *            g_mode.
      */
@@ -885,7 +894,7 @@ private:
      *  @details  Invoked at the end of each VIC cycle
      */
     // void updateDisplayState() { if (badLineCondition) displayState = true; }
-    void updateDisplayState() { displayState = displayState || badLineCondition; }
+    void updateDisplayState() { oldDisplayState = oldDisplayState || badLineCondition; }
     
     
     //

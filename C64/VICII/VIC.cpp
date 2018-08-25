@@ -85,7 +85,8 @@ VIC::VIC()
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &badLineCondition,            sizeof(badLineCondition),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
-        { &displayState,                sizeof(displayState),                   CLEAR_ON_RESET },
+        { &oldDisplayState,                sizeof(oldDisplayState),                   CLEAR_ON_RESET },
+        { &displayState,               sizeof(displayState),                  CLEAR_ON_RESET },
         { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
         { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
         { &characterSpace,              sizeof(characterSpace),                 CLEAR_ON_RESET },
@@ -254,7 +255,7 @@ VIC::dumpState()
 	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
 	msg("      MainFrameFF : %d\n", flipflops.main);
     msg("  VerticalFrameFF : %d\n", flipflops.vertical);
-	msg("     DisplayState : %s\n", displayState ? "on" : "off");
+	msg("     DisplayState : %s\n", oldDisplayState ? "on" : "off");
 	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 
@@ -923,6 +924,7 @@ VIC::beginRasterline(uint16_t line)
     // variable badLineCondition.
     // Note: The value might change later if control register 1 is written to.
     updateBadLineCondition();
+    displayState |= badLineCondition;
     
     pixelEngine.beginRasterlinePixelEngine();
 }
@@ -950,7 +952,7 @@ void
 VIC::endCycle()
 {
     // Update display state
-    displayState = displayState || badLineCondition;
+    oldDisplayState = oldDisplayState || badLineCondition;
   
     // Increase X counter
     xCounter += 8;

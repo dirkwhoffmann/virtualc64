@@ -49,6 +49,9 @@ VIC::processDelayedActions()
     if (delay & VICUpdateRegisters0) {
         reg.delayed = reg.current; 
     }
+    if (delay & VICSetDisplayState0) {
+        displayState = true;
+    }
 
     
     delay = (delay << 1) & VICClearanceMask;
@@ -649,7 +652,15 @@ VIC::cycle58pal()
      *  [C.B.]
      */
     if (registerRC == 7) {
-        displayState = false;
+
+        if (!badLineCondition) {
+            displayState = false;
+        } else {
+            assert(displayState);
+        }
+        
+        oldDisplayState = false;
+
         registerVCBASE = registerVC;
     }
     
@@ -658,7 +669,8 @@ VIC::cycle58pal()
     /* "If the video logic is in display state afterwards (this is always the
      *  case if there is a Bad Line Condition), RC is incremented." [C.B.]
      */
-    if (displayState) {
+    assert(oldDisplayState == displayState);
+    if (oldDisplayState) {
         registerRC = (registerRC + 1) & 0x07;
     }
     

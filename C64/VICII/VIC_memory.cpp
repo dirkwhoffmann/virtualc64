@@ -282,7 +282,9 @@ VIC::poke(uint16_t addr, uint8_t value)
                 DENwasSetInRasterline30 = true;
             }
             updateBadLineCondition();
-            
+            if (badLineCondition) {
+                delay |= VICSetDisplayState0;
+            }
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
             
@@ -616,7 +618,8 @@ VIC::gAccess()
     assert ((registerVC & 0xFC00) == 0); // 10 bit register
     assert ((registerRC & 0xF8) == 0);   // 3 bit register
     
-    if (displayState) {
+    assert(oldDisplayState == displayState); 
+    if (oldDisplayState) {
         
         /* "The address generator for the text/bitmap accesses (c- and
          *  g-accesses) has basically 3 modes for the g-accesses (the c-accesses
