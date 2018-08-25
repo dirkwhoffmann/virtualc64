@@ -309,6 +309,16 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2D:
         case 0x2E:
             
+            // Schedule the new color to show up in the next cycle
+            newRegisters.colors[addr - 0x20] = value;
+            delay |= VICUpdateRegisters0;
+            
+            // Emulate the gray dot bug
+            if (hasGrayDotBug() && emulateGrayDotBug) {
+                registers.colors[addr - 0x20] = 0xF;
+            }
+            
+            // DEPRECATED CALL:
             pokeColorReg(addr, value & 0x0F);
             return;
     }

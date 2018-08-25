@@ -33,13 +33,15 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-#define VICTriggerIrq0     (1ULL << 0) // Sets the IRQ line
-#define VICTriggerIrq1     (1ULL << 1)
-#define VICReleaseIrq0     (1ULL << 2) // Clears the IRQ line
-#define VICReleaseIrq1     (1ULL << 3)
-#define VICLpTransition0   (1ULL << 4) // Triggers a lightpen event
+#define VICTriggerIrq0      (1ULL << 0) // Sets the IRQ line
+#define VICTriggerIrq1      (1ULL << 1)
+#define VICReleaseIrq0      (1ULL << 2) // Clears the IRQ line
+#define VICReleaseIrq1      (1ULL << 3)
+#define VICLpTransition0    (1ULL << 4) // Triggers a lightpen event
+#define VICUpdateFlipflops0 (1ULL << 5) // Updates the flipflop value pipeline
+#define VICUpdateRegisters0 (1ULL << 6) // Updates the register value pipeline
 
-#define VICClearanceMask ~((1ULL << 5) | VICTriggerIrq0 | VICReleaseIrq0 | VICLpTransition0)
+#define VICClearanceMask ~((1ULL << 7) | VICTriggerIrq0 | VICReleaseIrq0 | VICLpTransition0 | VICUpdateFlipflops0 | VICUpdateRegisters0);
 
 // Forward declarations
 class C64Memory;
@@ -78,7 +80,7 @@ public:
     
     
     //
-    // Chip outsides
+    // Chip exterior
     //
     
 private:
@@ -128,6 +130,26 @@ private:
     // Border flipflops
     //
     
+    //! @brief    Current values of the two frame flip flops
+    FrameFlipflops flipflops;
+    
+    /*! @brief    New flipflop values
+     *  @details  The values are copied over to variable 'flipflops' if a flag
+     *            in variable 'delay' is set.
+     *  @see      processDelayedActions()
+     */
+    FrameFlipflops newFlipflops;
+    
+    //! @brief    Current values of the VICII registers
+    VICIIRegisters registers;
+    
+    /*! @brief    New register values
+     *  @details  The values are copied over to variable 'flipflops' if a flag
+     *            in variable 'delay' is set.
+     *  @see      processDelayedActions()
+     */
+    VICIIRegisters newRegisters;
+    
     //! @brief    Main frame flipflop
     TimeDelayed<bool> mainFrameFF = TimeDelayed<bool>(1);
     
@@ -159,13 +181,6 @@ private:
      *  @details  Either 251 or 247, dependend on the RSEL bit.
      */
     uint16_t lowerComparisonVal;
-    
-     
-    /*! @brief    Vertical frame flipflop clear condition
-     *  @details  Indicates whether the vertical frame ff needs to be cleared in
-     *            the current rasterline.
-     */
-    // bool verticalFrameFFclearCond;
     
     
     //
@@ -772,6 +787,14 @@ private:
      *            the vertical border flipflop is set.
      */
     void clearMainFrameFF() {
+
+        assert(flipflops.vertical == verticalFrameFF.current());
+        
+        if (!flipflops.vertical && !verticalFrameFFsetCond) {
+            newFlipflops.main = false;
+            delay |= VICUpdateFlipflops0;
+        }
+        
         if (!verticalFrameFF.current() && !verticalFrameFFsetCond) {
             mainFrameFF.write(false);
         }

@@ -203,6 +203,7 @@ PixelEngine::drawCanvas()
      *  (see section 3.9.)." [C.B.]
      */
     
+    assert(vic->verticalFrameFF.delayed() == vic->flipflops.vertical);
     if (vic->verticalFrameFF.delayed()) {
         
         /* "Outside of the display column and if the flip-flop is set, the last

@@ -57,6 +57,11 @@ VIC::VIC()
         { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
+        { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
+        { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
+        { &registers,                   sizeof(registers),                      CLEAR_ON_RESET },
+        { &newRegisters,                sizeof(newRegisters),                   CLEAR_ON_RESET },
+
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
@@ -90,15 +95,6 @@ VIC::VIC()
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
-
-        // Pixel engine pipe
-        // { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
-        // { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
-        // { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
-        // { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
-        // { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
-        // { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
-        // { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
         
         { NULL,                         0,                                      0 }};
 
@@ -239,8 +235,8 @@ VIC::dumpState()
 	msg("               RC : %02X\n", registerRC);
 	msg("             VMLI : %02X\n", registerVMLI);
 	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
-	msg("      MainFrameFF : %d\n", mainFrameFF.current());
-	msg("  VerticalFrameFF : %d\n", verticalFrameFF.current());
+	msg("      MainFrameFF : %d\n", flipflops.main);
+    msg("  VerticalFrameFF : %d\n", flipflops.vertical);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
@@ -491,6 +487,8 @@ VIC::checkVerticalFrameFF()
             
             // Clear immediately
             verticalFrameFF.write(false);
+            newFlipflops.vertical = false;
+            delay |= VICUpdateFlipflops0;
         }
         
     } else if (yCounter == lowerComparisonVal) {
@@ -649,7 +647,7 @@ void
 VIC::triggerLightpenInterrupt()
 {
     uint8_t vicCycle = c64->getRasterlineCycle();
-    debug("Negative LP transition at rastercycle %d\n", vicCycle);
+    // debug("Negative LP transition at rastercycle %d\n", vicCycle);
 
     // An interrupt is suppressed if ...
     
@@ -881,7 +879,6 @@ void
 VIC::beginRasterline(uint16_t line)
 {
     verticalFrameFFsetCond = false;
-    // verticalFrameFFclearCond = false;
 
     // Determine if we're inside the VBLANK area (nothing is drawn there).
     vblank = isVBlankLine(line);
@@ -905,8 +902,12 @@ void
 VIC::endRasterline()
 {
     // Set vertical flipflop if condition was hit
+    // Do we need to do this here? It is handled in cycle 1 as well.
     if (verticalFrameFFsetCond) {
         verticalFrameFF.write(true);
+        newFlipflops.vertical = true;
+        delay |= VICUpdateFlipflops0;
+        
     }
     
     // Draw debug markers
@@ -914,32 +915,9 @@ VIC::endRasterline()
         pixelEngine.markLine(VICII_WHITE);
     if (markDMALines && badLineCondition)
         pixelEngine.markLine(VICII_RED);
-
-    /*
-    if (c64->rasterline == 51 && !vblank) {
-        pixelEngine.markLine(4);
-    }
-    */
     
     pixelEngine.endRasterline();
 }
-
-#if 0
-bool
-VIC::yCounterOverflow()
-{
-    /* PAL models reset the yCounter in cycle 2 in the first rasterline wheras
-     * NTSC models reset the yCounter in cycle 2 in the middle of the lower
-     * border area.
-     */
-    return c64->rasterline == (c64->vic.isPAL() ? 0 : 238);
-}
-#endif
-
-//
-// Execution functions
-//
-
 
 
 

@@ -26,6 +26,19 @@
 // Forward declarations
 class VIC;
 
+//@ brief    Values of the two frame flipflops
+typedef struct {
+    
+    bool vertical;
+    bool main;
+    
+} FrameFlipflops;
+
+typedef struct {
+    
+    uint8_t colors[15]; // D020 - D02E
+} VICIIRegisters;
+
 
 // Depth of different drawing layers
 #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */

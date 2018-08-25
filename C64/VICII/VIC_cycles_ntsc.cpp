@@ -22,12 +22,12 @@
 void
 VIC::cycle1ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     if (verticalFrameFFsetCond) {
         verticalFrameFF.write(true);
+        newFlipflops.vertical = true;
+        delay |= VICUpdateFlipflops0;
     }
     
     // Phi1.3 Fetch
@@ -49,13 +49,13 @@ VIC::cycle1ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle2ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Check for yCounter overflows
     if (yCounterOverflow())
         yCounter = 0;
@@ -83,13 +83,13 @@ VIC::cycle2ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle3ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -105,13 +105,13 @@ VIC::cycle3ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle4ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -129,13 +129,13 @@ VIC::cycle4ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle5ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -151,13 +151,13 @@ VIC::cycle5ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle6ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -175,13 +175,13 @@ VIC::cycle6ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle7ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -197,13 +197,13 @@ VIC::cycle7ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle8ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -221,13 +221,13 @@ VIC::cycle8ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle9ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -243,13 +243,13 @@ VIC::cycle9ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle10ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -264,13 +264,13 @@ VIC::cycle10ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle11ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -287,13 +287,13 @@ VIC::cycle11ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle55ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -313,13 +313,13 @@ VIC::cycle55ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle57ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     checkFrameFlipflopsRight(344);
@@ -338,13 +338,13 @@ VIC::cycle57ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle58ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -384,13 +384,13 @@ VIC::cycle58ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle59ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -410,13 +410,13 @@ VIC::cycle59ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle60ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -436,13 +436,13 @@ VIC::cycle60ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle61ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -464,13 +464,13 @@ VIC::cycle61ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle62ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -486,13 +486,13 @@ VIC::cycle62ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle63ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -510,13 +510,13 @@ VIC::cycle63ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle64ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
@@ -537,13 +537,13 @@ VIC::cycle64ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 void
 VIC::cycle65ntsc()
 {
-    PROCESS_DELAYED_ACTIONS
-    
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
@@ -565,6 +565,8 @@ VIC::cycle65ntsc()
     // Finalize
     updateDisplayState();
     countX();
+    
+    PROCESS_DELAYED_ACTIONS
 }
 
 
