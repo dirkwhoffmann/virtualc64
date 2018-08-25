@@ -355,7 +355,7 @@ VIC::cycle12()
      werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
      wieder intern gelesen." [C.B.] */
     
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     // Finalize
@@ -378,7 +378,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     rAccess();
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Finalize
     updateDisplayState();
@@ -408,11 +408,11 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     
     registerVC = registerVCBASE;
     registerVMLI = 0;
-    if (badLineCondition)
+    if (badLine)
         registerRC = 0;
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     // Finalize
@@ -435,7 +435,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     rAccess();
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     C_ACCESS
@@ -464,7 +464,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     turnSpriteDmaOff();
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     C_ACCESS
@@ -490,7 +490,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     gAccess();
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     C_ACCESS
@@ -517,7 +517,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     gAccess();
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     C_ACCESS
@@ -542,7 +542,7 @@ VIC::cycle19to54()
     gAccess();
     
     // Phi2.4 BA logic
-    BA_LINE(badLineCondition);
+    BA_LINE(badLine);
     
     // Phi2.5 Fetch
     C_ACCESS
@@ -653,7 +653,7 @@ VIC::cycle58pal()
      */
     if (registerRC == 7) {
 
-        if (!badLineCondition) {
+        if (!badLine) {
             displayState = false;
         } else {
             assert(displayState);

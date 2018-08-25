@@ -83,7 +83,7 @@ VIC::VIC()
         { &upperComparisonVal,          sizeof(upperComparisonVal),             CLEAR_ON_RESET },
         { &lowerComparisonVal,          sizeof(lowerComparisonVal),             CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
-        { &badLineCondition,            sizeof(badLineCondition),               CLEAR_ON_RESET },
+        { &badLine,            sizeof(badLine),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
         { &oldDisplayState,                sizeof(oldDisplayState),                   CLEAR_ON_RESET },
         { &displayState,               sizeof(displayState),                  CLEAR_ON_RESET },
@@ -247,7 +247,7 @@ VIC::dumpState()
 		default:
 			msg("Invalid\n");
 	}
-	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
+	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLine ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
 	msg("               VC : %02X\n", registerVC);
 	msg("           VCBASE : %02X\n", registerVCBASE);
 	msg("               RC : %02X\n", registerRC);
@@ -924,7 +924,7 @@ VIC::beginRasterline(uint16_t line)
     // variable badLineCondition.
     // Note: The value might change later if control register 1 is written to.
     updateBadLineCondition();
-    displayState |= badLineCondition;
+    displayState |= badLine;
     
     pixelEngine.beginRasterlinePixelEngine();
 }
@@ -942,7 +942,7 @@ VIC::endRasterline()
     // Draw debug markers
     if (markIRQLines && yCounter == rasterInterruptLine())
         pixelEngine.markLine(VICII_WHITE);
-    if (markDMALines && badLineCondition)
+    if (markDMALines && badLine)
         pixelEngine.markLine(VICII_RED);
     
     pixelEngine.endRasterlinePixelEngine();
@@ -952,7 +952,7 @@ void
 VIC::endCycle()
 {
     // Update display state
-    oldDisplayState = oldDisplayState || badLineCondition;
+    oldDisplayState = oldDisplayState || badLine;
   
     // Increase X counter
     xCounter += 8;

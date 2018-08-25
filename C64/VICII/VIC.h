@@ -249,8 +249,8 @@ private:
     //! @brief    Background color fetched in latest g-access
     // uint8_t gAccessbgColor;
     
-    //! @brief    True if we are currently processing a DMA line (bad line)
-    bool badLineCondition;
+    //! @brief    Indicates if the current rasterline is a DMA line (bad line).
+    bool badLine;
     
     /*! @brief    True, if DMA lines can occurr within the current frame.
      *  @details  Bad lines can occur only if the DEN bit was set during an
@@ -875,7 +875,7 @@ public:
 
 private:
     
-    /*! @brief    Update bad line condition
+    /*! @brief    Returns true if the bad line condition holds.
      *  @details  "A Bad Line Condition is given at any arbitrary clock cycle,
      *             if at the negative edge of ø0 at the beginning of the cycle
      *             [1] RASTER >= $30 and RASTER <= $f7 and
@@ -884,7 +884,7 @@ private:
      *                 raster line $30." [C.B.]
      */
     void updateBadLineCondition() {
-        badLineCondition =
+        badLine =
             yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
             (yCounter & 0x07) == (control1.current() & 0x07) /* [2] */ &&
             DENwasSetInRasterline30 /* [3] */;
@@ -894,7 +894,7 @@ private:
      *  @details  Invoked at the end of each VIC cycle
      */
     // void updateDisplayState() { if (badLineCondition) displayState = true; }
-    void updateDisplayState() { oldDisplayState = oldDisplayState || badLineCondition; }
+    void updateDisplayState() { oldDisplayState = oldDisplayState || badLine; }
     
     
     //
@@ -1098,7 +1098,7 @@ public:
     #define DRAW17 if (!vblank) { pixelEngine.draw17(); }
     #define DRAW55 if (!vblank) { pixelEngine.draw55(); }
 
-    #define C_ACCESS if (badLineCondition) cAccess();
+    #define C_ACCESS if (badLine) cAccess();
     
     #define END_CYCLE \
     if (unlikely(delay != 0)) { processDelayedActions(); }

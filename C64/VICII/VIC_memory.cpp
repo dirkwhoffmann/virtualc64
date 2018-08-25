@@ -282,7 +282,7 @@ VIC::poke(uint16_t addr, uint8_t value)
                 DENwasSetInRasterline30 = true;
             }
             updateBadLineCondition();
-            if (badLineCondition) {
+            if (badLine) {
                 delay |= VICSetDisplayState0;
             }
             upperComparisonVal = upperComparisonValue();
