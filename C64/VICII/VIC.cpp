@@ -225,8 +225,8 @@ VIC::dumpState()
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
 	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
 	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
-    msg("    Control reg 1 : %02X\n", registers.ctrl1);
-    msg("    Control reg 2 : %02X\n", registers.ctrl2);
+    msg("    Control reg 1 : %02X\n", newRegisters.ctrl1);
+    msg("    Control reg 2 : %02X\n", newRegisters.ctrl2);
 	msg("     Display mode : ");
 	switch (mode) {
 		case STANDARD_TEXT: 

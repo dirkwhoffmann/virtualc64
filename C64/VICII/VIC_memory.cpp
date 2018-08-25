@@ -27,7 +27,7 @@ VIC::peek(uint16_t addr)
     assert(addr <= 0x3F);
     
     switch(addr) {
-        case 0x00: // Sprite X
+        case 0x00: // Sprite X (lower 8 bits)
         case 0x02:
         case 0x04:
         case 0x06:
@@ -52,7 +52,9 @@ VIC::peek(uint16_t addr)
             assert(iomem[addr] == newRegisters.sprY[addr >> 1]);
             return newRegisters.sprY[addr >> 1];
             
-        case 0x10: { uint8_t result;
+        case 0x10: // Sprite X (upper bits)
+            {
+            uint8_t result;
             
             result =
             ((sprXCoord[0].current() & 0x100) ? 0b00000001 : 0) |
@@ -64,21 +66,21 @@ VIC::peek(uint16_t addr)
             ((sprXCoord[6].current() & 0x100) ? 0b01000000 : 0) |
             ((sprXCoord[7].current() & 0x100) ? 0b10000000 : 0);
 
-            assert(((registers.sprX[0] & 0x100) ? 0b00000001 : 0) |
-                   ((registers.sprX[1] & 0x100) ? 0b00000010 : 0) |
-                   ((registers.sprX[2] & 0x100) ? 0b00000100 : 0) |
-                   ((registers.sprX[3] & 0x100) ? 0b00001000 : 0) |
-                   ((registers.sprX[4] & 0x100) ? 0b00010000 : 0) |
-                   ((registers.sprX[5] & 0x100) ? 0b00100000 : 0) |
-                   ((registers.sprX[6] & 0x100) ? 0b01000000 : 0) |
-                   ((registers.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
+            assert(((newRegisters.sprX[0] & 0x100) ? 0b00000001 : 0) |
+                   ((newRegisters.sprX[1] & 0x100) ? 0b00000010 : 0) |
+                   ((newRegisters.sprX[2] & 0x100) ? 0b00000100 : 0) |
+                   ((newRegisters.sprX[3] & 0x100) ? 0b00001000 : 0) |
+                   ((newRegisters.sprX[4] & 0x100) ? 0b00010000 : 0) |
+                   ((newRegisters.sprX[5] & 0x100) ? 0b00100000 : 0) |
+                   ((newRegisters.sprX[6] & 0x100) ? 0b01000000 : 0) |
+                   ((newRegisters.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
                    
             assert(result == iomem[0x10]);
             return result;
         }
                    
         case 0x11: // SCREEN CONTROL REGISTER #1
-            assert(control1.current() == registers.ctrl1);
+            assert(control1.current() == newRegisters.ctrl1);
             return (control1.current() & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
             
         case 0x12: // VIC_RASTER_READ_WRITE
@@ -98,7 +100,7 @@ VIC::peek(uint16_t addr)
             
         case 0x16:
             // The two upper bits always read back as '1'
-            assert(control2.current() == registers.ctrl2);
+            assert(control2.current() == newRegisters.ctrl2);
             return (control2.current() & 0xFF) | 0xC0;
             
         case 0x17:
@@ -124,7 +126,7 @@ VIC::peek(uint16_t addr)
             return newRegisters.sprMC;
             
         case 0x1D: // SPRITE_X_EXPAND
-            assert(registers.sprExpandX == sprXExpand.current());
+            assert(newRegisters.sprExpandX == sprXExpand.current());
             return sprXExpand.current();
             
         case 0x1E: // Sprite-to-sprite collision
@@ -142,8 +144,8 @@ VIC::peek(uint16_t addr)
             return result;
             
         case 0x20:
-            assert(registers.colors[COLREG_BORDER] == borderColor.current());
-            assert(((borderColor.current() & 0x0F) | 0xF0) == (registers.colors[COLREG_BORDER] | 0xF0));
+            assert(newRegisters.colors[COLREG_BORDER] == borderColor.current());
+            assert(((borderColor.current() & 0x0F) | 0xF0) == (newRegisters.colors[COLREG_BORDER] | 0xF0));
             return (borderColor.current() & 0x0F) | 0xF0;
             
         case 0x21: // Background color 0
@@ -151,17 +153,17 @@ VIC::peek(uint16_t addr)
         case 0x23: // Background color 2
         case 0x24: // Background color 3
             
-            assert(bgColor[addr - 0x21].current() == registers.colors[COLREG_BG0 + (addr - 0x21)]);
+            assert(bgColor[addr - 0x21].current() == newRegisters.colors[COLREG_BG0 + (addr - 0x21)]);
             return (bgColor[addr - 0x21].current() & 0x0F) | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             
-            assert(sprExtraColor1.current() == registers.colors[COLREG_SPR_EX1]);
+            assert(sprExtraColor1.current() == newRegisters.colors[COLREG_SPR_EX1]);
             return (sprExtraColor1.current() & 0x0F) | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
             
-            assert(sprExtraColor2.current() == registers.colors[COLREG_SPR_EX2]);
+            assert(sprExtraColor2.current() == newRegisters.colors[COLREG_SPR_EX2]);
             return (sprExtraColor2.current() & 0x0F) | 0xF0;
             
         case 0x27: // Sprite color 1
@@ -173,7 +175,7 @@ VIC::peek(uint16_t addr)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
             
-            assert(sprColor[addr - 0x27].current() == registers.colors[COLREG_SPR0 + (addr - 0x27)]);
+            assert(sprColor[addr - 0x27].current() == newRegisters.colors[COLREG_SPR0 + (addr - 0x27)]);
             return (sprColor[addr - 0x27].current() & 0x0F) | 0xF0;
     }
     
