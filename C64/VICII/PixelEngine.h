@@ -36,7 +36,20 @@ typedef struct {
 
 typedef struct {
     
-    uint8_t colors[15]; // D020 - D02E
+    uint16_t sprX[8];     // D000, D002, ..., D00E, upper bits from D010
+    uint8_t  sprY[8];     // D001, D003, ..., D00F
+    uint8_t  ctrl1;       // D011
+    uint8_t  sprEnable;   // D015
+    uint8_t  ctrl2;       // D016
+    uint8_t  sprExpandY;  // D017
+    uint8_t  memSelect;   // D018
+    uint8_t  sprPriority; // D01B
+    uint8_t  sprMC;       // D01C
+    uint8_t  sprExpandX;  // D01D
+    uint8_t  sprSprColl;  // D01E
+    uint8_t  sprBgColL;   // D01F
+    uint8_t  colors[15];  // D020 - D02E
+    
 } VICIIRegisters;
 
 

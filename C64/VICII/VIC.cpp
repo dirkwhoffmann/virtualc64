@@ -62,6 +62,7 @@ VIC::VIC()
         { &registers,                   sizeof(registers),                      CLEAR_ON_RESET },
         { &newRegisters,                sizeof(newRegisters),                   CLEAR_ON_RESET },
 
+        { &rasterIrqLine,               sizeof(rasterIrqLine),                  CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
@@ -166,13 +167,20 @@ VIC::reset()
     
     // Preset some video parameters to show a blank sreen on power up
     iomem[0x18] = 0x10;
+    
     // setScreenMemoryAddr(0x400);
     memset(&c64->mem.ram[0x400], 32, 40*25);
     expansionFF = 0xFF;
+    registers.ctrl1 = newRegisters.ctrl1 = 0x10; 
+    registers.memSelect = newRegisters.memSelect = 0x10;
     registers.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
     newRegisters.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
     registers.colors[COLREG_BG0] = VICII_BLUE;
     newRegisters.colors[COLREG_BG0] = VICII_BLUE;
+    
+    // Later: Change to
+    // newRegisters. ... =
+    // delays |= VICUpdateRegisters0;
     
     leftComparisonVal = leftComparisonValue();
     rightComparisonVal = rightComparisonValue();

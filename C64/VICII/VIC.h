@@ -321,6 +321,9 @@ private:
         TimeDelayed<uint8_t>(2)
     };
     
+    //! @brief    Raster interrupt line ($D012)
+    uint8_t rasterIrqLine;
+    
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
 
@@ -827,6 +830,8 @@ public:
     
     //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
+        assert(control1.current() == newRegisters.ctrl1);
+        assert(iomem[0x12] == rasterIrqLine);
         return ((control1.current() & 0x80) << 1) | iomem[0x12];
     }
     

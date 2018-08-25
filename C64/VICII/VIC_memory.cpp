@@ -153,75 +153,91 @@ VIC::poke(uint16_t addr, uint8_t value)
     assert(addr < 0x40);
     
     switch(addr) {
-        case 0x00: // SPRITE_0_X
-            sprXCoord[0].write((sprXCoord[0].current() & 0x100) | value);
+        case 0x00: // Sprite X (lower 8 bits)
+        case 0x02:
+        case 0x04:
+        case 0x06:
+        case 0x08:
+        case 0x0A:
+        case 0x0C:
+        case 0x0E:
+            
+            newRegisters.sprX[addr >> 1] &= 0x100;
+            newRegisters.sprX[addr >> 1] |= value;
+            sprXCoord[addr >> 1].write((sprXCoord[addr >> 1].current() & 0x100) | value);
+            assert(newRegisters.sprX[addr >> 1] == sprXCoord[addr >> 1].current());
+            break;
+        
+        case 0x01: // Sprite Y
+        case 0x03:
+        case 0x05:
+        case 0x07:
+        case 0x09:
+        case 0x0B:
+        case 0x0D:
+        case 0x0F:
+            
+            newRegisters.sprY[addr >> 1] = value;
             break;
             
-        case 0x02: // SPRITE_1_X
-            sprXCoord[1].write((sprXCoord[1].current() & 0x100) | value);
-            break;
+        case 0x10: // Sprite X (upper bit)
             
-        case 0x04: // SPRITE_2_X
-            sprXCoord[2].write((sprXCoord[2].current() & 0x100) | value);
-            break;
+            for (unsigned i = 0; i < 8; i++) {
+                newRegisters.sprX[i] &= 0xFF;
+                newRegisters.sprX[i] |= GET_BIT(value, i) ? 0x100 : 0;
+            }
             
-        case 0x06: // SPRITE_3_X
-            sprXCoord[3].write((sprXCoord[3].current() & 0x100) | value);
-            break;
-            
-        case 0x08: // SPRITE_4_X
-            sprXCoord[4].write((sprXCoord[4].current() & 0x100) | value);
-            break;
-            
-        case 0x0A: // SPRITE_5_X
-            sprXCoord[5].write((sprXCoord[5].current() & 0x100) | value);
-            break;
-            
-        case 0x0C: // SPRITE_6_X
-            sprXCoord[6].write((sprXCoord[6].current() & 0x100) | value);
-            break;
-            
-        case 0x0E: // SPRITE_7_X
-            sprXCoord[7].write((sprXCoord[7].current() & 0x100) | value);
-            break;
-            
-        case 0x10: // SPRITE_X_UPPER_BITS
             for (unsigned i = 0; i < 8; i++) {
                 uint16_t upperBit = GET_BIT(value, i) ? 0x100 : 0;
                 sprXCoord[i].write(upperBit | (sprXCoord[i].current() & 0xFF));
             }
+
+            for (unsigned i = 0; i < 8; i++) {
+                assert(newRegisters.sprX[i] == sprXCoord[i].current());
+            }
             break;
             
-        case 0x11: // CONTROL_REGISTER_1
+        case 0x11: // Control register 1
             
+            assert(registers.ctrl1 == control1.current());
             if ((control1.current() & 0x80) != (value & 0x80)) {
-                // Value changed: Check if we need to trigger an interrupt immediately
+                
+                newRegisters.ctrl1 = value;
                 control1.write(value);
+                
+                // Check if we need to trigger a rasterline interrupt
                 if (yCounter == rasterInterruptLine())
                     triggerDelayedIRQ(1);
+                
             } else {
+                
+                newRegisters.ctrl1 = value;
                 control1.write(value);
             }
             
-            // Check the DEN bit if we're in rasterline 30
-            // If it's set at some point in that line, bad line conditions can occur
-            // if (yCounter == 0x30 && (value & 0x10) != 0)
-            if (c64->rasterline == 0x30 && (value & 0x10) != 0)
+            // Check the DEN bit. If it gets set somehwere in line 30, a bad
+            // line conditions occurs.
+            if (c64->rasterline == 0x30 && (value & 0x10) != 0) {
                 DENwasSetInRasterline30 = true;
-            
-            // Bits 0 to 3 are the vertical scroll offset. If they change in
-            // the middle of the rasterline, the bad line condition might change
-            // as well.
+            }
             updateBadLineCondition();
             
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
+            
+            delay |= VICUpdateRegisters0; // TODO: Replace by break later
             return;
             
         case 0x12: // RASTER_COUNTER
+            
+            assert(iomem[addr] == rasterIrqLine);
+            
             if (iomem[addr] != value) {
-                // Value changed: Check if we need to trigger an interrupt immediately
+                
                 iomem[addr] = value;
+                rasterIrqLine = value;
+                
+                // Check if we need to trigger a rasterline interrupt
                 if (yCounter == rasterInterruptLine())
                     triggerDelayedIRQ(1);
             }
@@ -229,36 +245,43 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x15: // SPRITE_ENABLED
             
-            iomem[addr] = value;
-            return;
+            newRegisters.sprEnable = value;
+            break;
             
         case 0x16: // CONTROL_REGISTER_2
             
             control2.write(value);
+            newRegisters.ctrl2 = value;
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
+            
+            delay |= VICUpdateRegisters0; // TODO: Replace by break later
             return;
             
         case 0x17: // SPRITE Y EXPANSION
-            iomem[addr] = value;
+           
+            newRegisters.sprExpandY = value;
             cleared_bits_in_d017 = (~value) & (~expansionFF);
             
-            /* "1. Das Expansions-Flipflop ist gesetzt, solange das zum jeweiligen Sprite
-             gehörende Bit MxYE in Register $d017 gelöscht ist." [C.B.] */
-            
+            /* "The expansion flip flip is set as long as the bit in MxYE in
+             *  register $d017 corresponding to the sprite is cleared." [C.B.]
+             */
             expansionFF |= ~value;
-            return;
+            break;
             
         case 0x18: { // MEMORY_SETUP_REGISTER
             
             uint8_t oldValue = iomem[addr];
             iomem[addr] = value;
+            newRegisters.memSelect = value;
+            assert(oldValue == registers.memSelect);
             
             // The GUI needs to know when the second bit changes. This bit
             // lets us distinguish between uppercase / lowercase character mode
             if ((oldValue ^ value) & 0x02) {
                 c64->putMessage(MSG_CHARSET);
             }
+            delay |= VICUpdateRegisters0; // TODO: Replace by break later
             return;
         }
         case 0x19: // Interrupt Request Register (IRR)
@@ -277,15 +300,15 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             if (irr & imr) {
                 triggerDelayedIRQ(1);
-                // c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
             } else {
                 delay |= VICReleaseIrq1;
-                // c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
             }
             return;
             
         case 0x1D: // SPRITE_X_EXPAND
             sprXExpand.write(value);
+            newRegisters.sprExpandX = value; 
+            delay |= VICUpdateRegisters0; // TODO: Replace by break later
             return;
             
         case 0x1E:
@@ -311,7 +334,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             // Schedule the new color to show up in the next cycle
             newRegisters.colors[addr - 0x20] = value & 0xF;
-            delay |= VICUpdateRegisters0;
             
             // Emulate the gray dot bug
             if (hasGrayDotBug() && emulateGrayDotBug) {
@@ -320,10 +342,14 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             // DEPRECATED CALL:
             pokeColorReg(addr, value & 0x0F);
+            
+            delay |= VICUpdateRegisters0; // TODO: Replace by break later
             return;
     }
     
-    // Default action
+    delay |= VICUpdateRegisters0;
+    
+    // DEPRECATED default action
     iomem[addr] = value;
 }
 

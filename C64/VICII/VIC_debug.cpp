@@ -190,11 +190,15 @@ VIC::setRasterInterruptLine(uint16_t line)
 {
     c64->suspend();
     iomem[0x12] = line & 0xFF;
+    rasterIrqLine = line & 0xFF;
     if (line > 0xFF) {
         control1.write(control1.current() | 0x80);
+        newRegisters.ctrl1 = registers.ctrl1 | 0x80;
     } else {
         control1.write(control1.current() & 0x7F);
+        newRegisters.ctrl1 = registers.ctrl1 & 0x80;
     }
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
