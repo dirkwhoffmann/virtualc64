@@ -86,7 +86,7 @@ VIC::cycle1pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -118,7 +118,7 @@ VIC::cycle2pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -142,7 +142,7 @@ VIC::cycle3pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -164,7 +164,7 @@ VIC::cycle4pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 
@@ -189,7 +189,7 @@ VIC::cycle5pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -211,7 +211,7 @@ VIC::cycle6pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -235,7 +235,7 @@ VIC::cycle7pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -257,7 +257,7 @@ VIC::cycle8pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -281,7 +281,7 @@ VIC::cycle9pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -303,7 +303,7 @@ VIC::cycle10pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -327,7 +327,7 @@ VIC::cycle11pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -359,7 +359,7 @@ VIC::cycle12()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -381,7 +381,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -392,7 +392,6 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     
     // Phi1.2 Draw
     pixelEngine.visibleColumn = true; // We have reach the first visible column
-    // pixelEngine.draw(); // Draw previous cycle (first border column)
     DRAW
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -417,7 +416,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     updateDisplayState();
     xCounter = 0;
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -427,7 +426,6 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (border column 2)
     DRAW
     
     // Phi1.3 Fetch (last DRAM refresh)
@@ -437,14 +435,14 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
-    cAccess();
+    C_ACCESS
     
     // Finalize
     cleared_bits_in_d017 = 0;
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -454,7 +452,6 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (border column 3)
     DRAW
   
     // Phi1.3 Fetch
@@ -467,13 +464,13 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
-    cAccess();
+    C_ACCESS
     
     // Finalize
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -484,7 +481,6 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (border column 4)
     DRAW
     
     // Phi1.3 Fetch
@@ -494,13 +490,13 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
-    cAccess();
+    C_ACCESS
     
     // Finalize
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -512,7 +508,6 @@ VIC::cycle18() // SpriteX: 32 - 39
     
     // Phi1.2 Draw
     pixelEngine.sr.canLoad = true; // Entering canvas area
-    // pixelEngine.draw17(); // Draw previous cycle (first canvas column)
     DRAW17
   
     // Phi1.3 Fetch
@@ -522,13 +517,13 @@ VIC::cycle18() // SpriteX: 32 - 39
     BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
-    cAccess();
+    C_ACCESS
     
     // Finalize
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -538,7 +533,6 @@ VIC::cycle19to54()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle
     DRAW
     
     // Phi1.3 Fetch
@@ -548,13 +542,13 @@ VIC::cycle19to54()
     BA_LINE(badLineCondition);
     
     // Phi2.5 Fetch
-    cAccess();
+    C_ACCESS
     
     // Finalize
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -564,7 +558,6 @@ VIC::cycle55pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (canvas column)
     DRAW
   
     // Phi1.3 Fetch
@@ -580,7 +573,7 @@ VIC::cycle55pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -591,7 +584,6 @@ VIC::cycle56()
     checkFrameFlipflopsRight(335);
     
     // Phi1.2 Draw
-    // pixelEngine.draw55(); // Draw previous cycle (canvas column)
     DRAW55
     
     // Phi1.3 Fetch
@@ -608,7 +600,7 @@ VIC::cycle56()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -619,7 +611,6 @@ VIC::cycle57pal()
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
-    // pixelEngine.draw(); // Draw previous cycle (last canvas column)
     DRAW
     pixelEngine.sr.canLoad = false; // Leaving canvas area
     
@@ -633,7 +624,7 @@ VIC::cycle57pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -643,7 +634,6 @@ VIC::cycle58pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (first column of right border)
     DRAW
     
     // Phi1.3 Fetch
@@ -682,7 +672,7 @@ VIC::cycle58pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -692,7 +682,6 @@ VIC::cycle59pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
     DRAW
     
     // Phi1.3 Fetch
@@ -708,7 +697,7 @@ VIC::cycle59pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -718,7 +707,6 @@ VIC::cycle60pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw (last visible cycle)
-    // pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
     DRAW
     
     // Phi1.3 Fetch
@@ -735,7 +723,7 @@ VIC::cycle60pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -745,7 +733,6 @@ VIC::cycle61pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (last column of right border)
     DRAW
     pixelEngine.visibleColumn = false; // This was the last visible column
     
@@ -762,7 +749,7 @@ VIC::cycle61pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -786,7 +773,7 @@ VIC::cycle62pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -809,5 +796,5 @@ VIC::cycle63pal()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }

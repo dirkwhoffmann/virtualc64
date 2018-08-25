@@ -571,8 +571,8 @@ void
 VIC::cAccess()
 {
     // Only proceed if the BA line is pulled down
-    if (!badLineCondition)
-        return;
+    // if (!badLineCondition)
+    //     return;
     
     // If BA is pulled down for at least three cycles, perform memory access
     if (BApulledDownForAtLeastThreeCycles()) {

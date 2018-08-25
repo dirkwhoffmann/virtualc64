@@ -697,7 +697,7 @@ private:
     void rIdleAccess() { (void)memIdleAccess(); }
     
     /*! @brief    Performs a character access (c-access).
-     *  @details  During a cAccess, the video matrix is read.
+     *  @details  During a c-access, the video matrix is read.
      */
     void cAccess();
     
@@ -1089,7 +1089,9 @@ public:
     #define DRAW17 if (!vblank) { pixelEngine.draw17(); }
     #define DRAW55 if (!vblank) { pixelEngine.draw55(); }
 
-    #define PROCESS_DELAYED_ACTIONS \
+    #define C_ACCESS if (badLineCondition) cAccess();
+    
+    #define END_CYCLE \
     if (unlikely(delay != 0)) { processDelayedActions(); }
     
     // #define BA_LINE(x) if ((x) != baLine.current()) { updateBA(x); }

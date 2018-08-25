@@ -49,7 +49,7 @@ VIC::cycle1ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -83,7 +83,7 @@ VIC::cycle2ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -105,7 +105,7 @@ VIC::cycle3ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -129,7 +129,7 @@ VIC::cycle4ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -151,7 +151,7 @@ VIC::cycle5ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -175,7 +175,7 @@ VIC::cycle6ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -197,7 +197,7 @@ VIC::cycle7ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -221,7 +221,7 @@ VIC::cycle8ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -243,7 +243,7 @@ VIC::cycle9ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -264,7 +264,7 @@ VIC::cycle10ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -287,7 +287,7 @@ VIC::cycle11ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -297,7 +297,6 @@ VIC::cycle55ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (canvas column)
     DRAW
     
     // Phi1.3 Fetch
@@ -313,7 +312,7 @@ VIC::cycle55ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -324,7 +323,6 @@ VIC::cycle57ntsc()
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
-    // pixelEngine.draw(); // Draw previous cycle (last canvas column)
     DRAW
     pixelEngine.sr.canLoad = false; // Leaving canvas area
     
@@ -338,7 +336,7 @@ VIC::cycle57ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -348,7 +346,6 @@ VIC::cycle58ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (first column of right border)
     DRAW
     
     // Phi1.3 Fetch
@@ -384,7 +381,7 @@ VIC::cycle58ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -394,7 +391,6 @@ VIC::cycle59ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
     DRAW
     
     // Phi1.3 Fetch
@@ -410,7 +406,7 @@ VIC::cycle59ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -420,7 +416,6 @@ VIC::cycle60ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw (last visible cycle)
-    // pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
     DRAW
     
     // Phi1.3 Fetch
@@ -436,7 +431,7 @@ VIC::cycle60ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -446,7 +441,6 @@ VIC::cycle61ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.draw(); // Draw previous cycle (last column of right border)
     DRAW
     pixelEngine.visibleColumn = false; // This was the last visible column
     
@@ -464,7 +458,7 @@ VIC::cycle61ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -486,7 +480,7 @@ VIC::cycle62ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -510,7 +504,7 @@ VIC::cycle63ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -537,7 +531,7 @@ VIC::cycle64ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 void
@@ -565,7 +559,7 @@ VIC::cycle65ntsc()
     updateDisplayState();
     countX();
     
-    PROCESS_DELAYED_ACTIONS
+    END_CYCLE
 }
 
 
