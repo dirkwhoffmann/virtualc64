@@ -53,7 +53,6 @@ VIC::processDelayedActions()
         displayState = true;
     }
 
-    
     delay = (delay << 1) & VICClearanceMask;
 }
 
@@ -85,9 +84,6 @@ VIC::cycle1pal()
     // Phi2.5 Fetch
     sFirstAccess(3);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -116,9 +112,6 @@ VIC::cycle2pal()
     // Phi2.5 Fetch
     sThirdAccess(3);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -139,9 +132,6 @@ VIC::cycle3pal()
     // Phi2.5 Fetch
     sFirstAccess(4);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -159,9 +149,6 @@ VIC::cycle4pal()
     
     // Phi2.5 Fetch
     sThirdAccess(4);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -184,9 +171,6 @@ VIC::cycle5pal()
     // Phi2.5 Fetch
     sFirstAccess(5);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -204,9 +188,6 @@ VIC::cycle6pal()
     
     // Phi2.5 Fetch
     sThirdAccess(5);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -228,9 +209,6 @@ VIC::cycle7pal()
     // Phi2.5 Fetch
     sFirstAccess(6);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -248,9 +226,6 @@ VIC::cycle8pal()
     
     // Phi2.5 Fetch
     sThirdAccess(6);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -272,9 +247,6 @@ VIC::cycle9pal()
     // Phi2.5 Fetch
     sFirstAccess(7);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -292,9 +264,6 @@ VIC::cycle10pal()
     
     // Phi2.5 Fetch
     sThirdAccess(7);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -315,9 +284,6 @@ VIC::cycle11pal()
     
     // Phi2.4 BA logic
     BA_LINE(false);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -346,10 +312,6 @@ VIC::cycle12()
     
     BA_LINE(badLine);
     
-    // Phi2.5 Fetch
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -367,9 +329,6 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     
     // Phi2.4 BA logic
     BA_LINE(badLine);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -401,10 +360,6 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     // Phi2.4 BA logic
     BA_LINE(badLine);
     
-    // Phi2.5 Fetch
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
     xCounter = 0;
 }
@@ -427,10 +382,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     // Phi2.5 Fetch
     C_ACCESS
     
-    // Finalize
     cleared_bits_in_d017 = 0;
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -455,9 +407,6 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     // Phi2.5 Fetch
     C_ACCESS
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -479,9 +428,6 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     
     // Phi2.5 Fetch
     C_ACCESS
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -506,9 +452,6 @@ VIC::cycle18() // SpriteX: 32 - 39
     // Phi2.5 Fetch
     C_ACCESS
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -530,9 +473,6 @@ VIC::cycle19to54()
     // Phi2.5 Fetch
     C_ACCESS
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -553,9 +493,6 @@ VIC::cycle55pal()
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -580,9 +517,6 @@ VIC::cycle56()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -602,9 +536,6 @@ VIC::cycle57pal()
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -631,20 +562,9 @@ VIC::cycle58pal()
      *  [C.B.]
      */
     if (registerRC == 7) {
-
         displayState = badLine;
-        /*
-        if (!badLine) {
-            displayState = false;
-        } else {
-            assert(displayState);
-        }
-        oldDisplayState = false;
-        */
         registerVCBASE = registerVC;
     }
-    
-    updateDisplayState();
     
     /* "If the video logic is in display state afterwards (this is always the
      *  case if there is a Bad Line Condition), RC is incremented." [C.B.]
@@ -658,9 +578,6 @@ VIC::cycle58pal()
     
     // Phi2.5 Fetch
     sFirstAccess(0);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -682,9 +599,6 @@ VIC::cycle59pal()
     
     // Phi2.5 Fetch
     sThirdAccess(0);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -708,9 +622,6 @@ VIC::cycle60pal()
     // Phi2.5 Fetch
     sFirstAccess(1);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -733,9 +644,6 @@ VIC::cycle61pal()
     // Phi2.5 Fetch
     sThirdAccess(1);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -756,9 +664,6 @@ VIC::cycle62pal()
     // Phi2.5 Fetch
     sFirstAccess(2);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -777,9 +682,6 @@ VIC::cycle63pal()
     
     // Phi2.5 Fetch
     sThirdAccess(2);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }

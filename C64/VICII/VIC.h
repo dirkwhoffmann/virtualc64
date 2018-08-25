@@ -872,12 +872,6 @@ private:
     //! @brief    Returns true if the bad line condition holds.
     bool badLineCondition();
     
-    /*! @brief    Update display state
-     *  @details  Invoked at the end of each VIC cycle
-     */
-    // void updateDisplayState() { if (badLineCondition) displayState = true; }
-    void updateDisplayState() { }; // { oldDisplayState = oldDisplayState || badLine; }
-    
     
     //
     //! @functiongroup Interacting with the C64's CPU

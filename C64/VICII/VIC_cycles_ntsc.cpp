@@ -45,9 +45,6 @@ VIC::cycle1ntsc()
     // Phi2.5 Fetch
     sThirdAccess(3);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -78,9 +75,6 @@ VIC::cycle2ntsc()
     // Phi2.5 Fetch
     sFirstAccess(4);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -98,9 +92,6 @@ VIC::cycle3ntsc()
     
     // Phi2.5 Fetch
     sThirdAccess(4);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -122,9 +113,6 @@ VIC::cycle4ntsc()
     // Phi2.5 Fetch
     sFirstAccess(5);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -142,9 +130,6 @@ VIC::cycle5ntsc()
     
     // Phi2.5 Fetch
     sThirdAccess(5);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -166,9 +151,6 @@ VIC::cycle6ntsc()
     // Phi2.5 Fetch
     sFirstAccess(6);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -186,9 +168,6 @@ VIC::cycle7ntsc()
     
     // Phi2.5 Fetch
     sThirdAccess(6);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -210,9 +189,6 @@ VIC::cycle8ntsc()
     // Phi2.5 Fetch
     sFirstAccess(7);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -231,9 +207,6 @@ VIC::cycle9ntsc()
     // Phi2.5 Fetch
     sThirdAccess(7);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -250,9 +223,6 @@ VIC::cycle10ntsc()
     
     // Phi2.4 BA logic
     BA_LINE(false);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -271,10 +241,6 @@ VIC::cycle11ntsc()
     
     // Phi2.4 BA logic
     BA_LINE(false);
-    
-    // Phi2.5 Fetch
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -297,9 +263,6 @@ VIC::cycle55ntsc()
     // Phi2.4 BA logic
     BA_LINE(false);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -319,9 +282,6 @@ VIC::cycle57ntsc()
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -362,9 +322,6 @@ VIC::cycle58ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -386,9 +343,6 @@ VIC::cycle59ntsc()
     // Phi2.5 Fetch
     sFirstAccess(0);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -409,9 +363,6 @@ VIC::cycle60ntsc()
     
     // Phi2.5 Fetch
     sThirdAccess(0);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -436,9 +387,6 @@ VIC::cycle61ntsc()
     // Phi2.5 Fetch
     sFirstAccess(1);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -456,9 +404,6 @@ VIC::cycle62ntsc()
     
     // Phi2.5 Fetch
     sThirdAccess(1);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -479,9 +424,6 @@ VIC::cycle63ntsc()
     
     // Phi2.5 Fetch
     sFirstAccess(2);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
@@ -506,9 +448,6 @@ VIC::cycle64ntsc()
     // Phi2.5 Fetch
     sThirdAccess(2);
     
-    // Finalize
-    updateDisplayState();
-    
     END_CYCLE
 }
 
@@ -532,9 +471,6 @@ VIC::cycle65ntsc()
     
     // Phi2.5 Fetch
     sFirstAccess(3);
-    
-    // Finalize
-    updateDisplayState();
     
     END_CYCLE
 }
