@@ -59,7 +59,7 @@ VIC::VIC()
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
         { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
         { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
-        { &regValue,                    sizeof(regValue),                       CLEAR_ON_RESET },
+        { &reg,                    sizeof(reg),                       CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
         { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
 
@@ -175,12 +175,12 @@ VIC::reset()
     iomem[0x18] = 0x10;
     memSelect = 0x10;
     memset(&c64->mem.ram[0x400], 32, 40*25);
-    regValue.delayed.ctrl1 = 0x10;
-    regValue.current.ctrl1 = 0x10;
-    regValue.delayed.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
-    regValue.current.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
-    regValue.delayed.colors[COLREG_BG0] = VICII_BLUE;
-    regValue.current.colors[COLREG_BG0] = VICII_BLUE;
+    reg.delayed.ctrl1 = 0x10;
+    reg.current.ctrl1 = 0x10;
+    reg.delayed.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
+    reg.current.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
+    reg.delayed.colors[COLREG_BG0] = VICII_BLUE;
+    reg.current.colors[COLREG_BG0] = VICII_BLUE;
     
     // Later: Change to
     // newRegisters. ... =
@@ -224,8 +224,8 @@ VIC::dumpState()
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
 	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
 	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
-    msg("    Control reg 1 : %02X\n", regValue.current.ctrl1);
-    msg("    Control reg 2 : %02X\n", regValue.current.ctrl2);
+    msg("    Control reg 1 : %02X\n", reg.current.ctrl1);
+    msg("    Control reg 2 : %02X\n", reg.current.ctrl2);
 	msg("     Display mode : ");
 	switch (mode) {
 		case STANDARD_TEXT: 
@@ -782,8 +782,8 @@ VIC::compareSpriteY()
     uint8_t result = 0;
     
     for (unsigned i = 0; i < 8; i++) {
-        assert(iomem[2*i+1] == regValue.current.sprY[i]);
-        result |= (regValue.current.sprY[i] == yCounter) << i;
+        assert(iomem[2*i+1] == reg.current.sprY[i]);
+        result |= (reg.current.sprY[i] == yCounter) << i;
     }
     
     return result;
@@ -829,8 +829,8 @@ VIC::turnSpriteDmaOn()
      *  off, the DMA is switched on, MCBASE is cleared, and if the MxYE bit is
      *  set the expansion flip flip is reset." [C.B.]
      */
-    assert(regValue.current.sprEnable == iomem[0x15]);
-    uint8_t risingEdges = ~spriteDmaOnOff & (regValue.current.sprEnable & compareSpriteY());
+    assert(reg.current.sprEnable == iomem[0x15]);
+    uint8_t risingEdges = ~spriteDmaOnOff & (reg.current.sprEnable & compareSpriteY());
     
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(risingEdges,i))
@@ -854,7 +854,7 @@ VIC::turnSpritesOnOrOff()
     }
     
     uint8_t onOff = spriteOnOff.current();
-    assert(iomem[0x15] == regValue.current.sprEnable);
+    assert(iomem[0x15] == reg.current.sprEnable);
     onOff |= iomem[0x15] & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
@@ -863,7 +863,7 @@ VIC::turnSpritesOnOrOff()
 uint8_t
 VIC::spriteDepth(uint8_t nr)
 {
-    assert(iomem[0x1B] == regValue.current.sprPriority);
+    assert(iomem[0x1B] == reg.current.sprPriority);
     
     return
     GET_BIT(iomem[0x1B], nr) ?
@@ -875,7 +875,7 @@ VIC::spriteDepth(uint8_t nr)
 void 
 VIC::beginFrame()
 {
-    pixelEngine.beginFrame();
+    pixelEngine.beginFramePixelEngine();
     
 	lightpenIRQhasOccured = false;
 
@@ -901,7 +901,7 @@ VIC::beginFrame()
 void
 VIC::endFrame()
 {
-    pixelEngine.endFrame();
+    pixelEngine.endFramePixelEngine();
 }
 
 void 
@@ -924,7 +924,7 @@ VIC::beginRasterline(uint16_t line)
     // Note: The value might change later if control register 1 is written to.
     updateBadLineCondition();
     
-    pixelEngine.beginRasterline();
+    pixelEngine.beginRasterlinePixelEngine();
 }
 
 void 
@@ -943,10 +943,40 @@ VIC::endRasterline()
     if (markDMALines && badLineCondition)
         pixelEngine.markLine(VICII_RED);
     
-    pixelEngine.endRasterline();
+    pixelEngine.endRasterlinePixelEngine();
 }
 
-
+void
+VIC::endCycle()
+{
+    // Update display state
+    displayState = displayState || badLineCondition;
+  
+    // Increase X counter
+    xCounter += 8;
+    
+    // Process delayed actions
+    if (unlikely(delay)) {
+        
+        if (delay & VICTriggerIrq1) {
+            c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+        }
+        if (delay & VICReleaseIrq1) {
+            c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+        }
+        if (delay & VICLpTransition0) {
+            triggerLightpenInterrupt();
+        }
+        if (delay & VICUpdateFlipflops0) {
+            flipflops = newFlipflops;
+        }
+        if (delay & VICUpdateRegisters0) {
+            reg.delayed = reg.current;
+        }
+        
+        delay = (delay << 1) & VICClearanceMask;
+    }
+}
 
 
 

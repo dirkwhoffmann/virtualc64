@@ -149,7 +149,7 @@ private:
     struct {
         VICIIRegisters current;
         VICIIRegisters delayed;
-    } regValue;
+    } reg;
     
     //! @brief    Sprite-sprite collision register
     uint8_t  spriteSpriteCollision;
@@ -831,10 +831,10 @@ public:
     
     //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
-        assert(control1.current() == regValue.current.ctrl1);
+        assert(control1.current() == reg.current.ctrl1);
         assert(iomem[0x12] == rasterIrqLine);
         // return ((control1.current() & 0x80) << 1) | iomem[0x12];
-        return ((regValue.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
+        return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
     //! @brief    Returns the current value of the ECM bit.
@@ -1006,7 +1006,7 @@ private:
      *            effect in the next rasterline. This causes each sprite line
      *            to be drawn twice.
      */
-    void toggleExpansionFlipflop() { assert(iomem[0x17] == regValue.current.sprExpandY); expansionFF ^= regValue.current.sprExpandY; }
+    void toggleExpansionFlipflop() { assert(iomem[0x17] == reg.current.sprExpandY); expansionFF ^= reg.current.sprExpandY; }
     
 	/*! @brief    Gets the depth of a sprite.
 	 *  @return   depth value that can be written into the z buffer.
@@ -1039,7 +1039,12 @@ public:
 	 *  @details  This function is called after the last cycle of each frame.
      */
 	void endFrame();
-	    
+    
+    /*! @brief    Finishes up a cycle.
+     *  @details  This function is called at the end of each cycle.
+     */
+    void endCycle();
+    
     //! @brief    Processes all time delayed actions.
     /*! @details  This function is called at the beginning of each VIC cycle.
      */

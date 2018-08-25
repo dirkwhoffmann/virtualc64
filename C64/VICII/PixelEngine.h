@@ -183,16 +183,16 @@ private:
 public:
     
     //! @brief    Prepares for a new frame.
-    void beginFrame();
+    void beginFramePixelEngine();
     
     //! @brief    Prepares for a new rasterline.
-    void beginRasterline();
+    void beginRasterlinePixelEngine();
     
     //! @brief    Finishes a rasterline.
-    void endRasterline();
+    void endRasterlinePixelEngine();
     
     //! @brief    Finishes a frame.
-    void endFrame();
+    void endFramePixelEngine();
 
     
     //

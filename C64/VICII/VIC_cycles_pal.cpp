@@ -47,7 +47,7 @@ VIC::processDelayedActions()
         flipflops = newFlipflops;
     }
     if (delay & VICUpdateRegisters0) {
-        regValue.delayed = regValue.current; 
+        reg.delayed = reg.current; 
     }
 
     
