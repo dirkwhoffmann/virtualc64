@@ -140,7 +140,17 @@ private:
      */
     FrameFlipflops newFlipflops;
     
-    //! @brief    Current values of the VICII registers
+    /*! @brief    Piped I/O register values.
+     *  @details  When an I/O register is written to, the corresponding value
+     *            in variable current is changed and a flag is set in variable
+     *            delay. Function processDelayedActions() reads the flag and if
+     *            set to true, updates the delayed values with the current ones.
+     */
+    struct {
+        VICIIRegisters current;
+        VICIIRegisters delayed;
+    } regValue;
+    
     VICIIRegisters registers;
     
     /*! @brief    New register values

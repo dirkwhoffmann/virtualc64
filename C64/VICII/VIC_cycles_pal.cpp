@@ -48,6 +48,8 @@ VIC::processDelayedActions()
     }
     if (delay & VICUpdateRegisters0) {
         registers = newRegisters;
+        
+        regValue.delayed = regValue.current; 
     }
 
     

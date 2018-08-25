@@ -59,6 +59,7 @@ VIC::VIC()
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
         { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
         { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
+        { &regValue,                    sizeof(regValue),                       CLEAR_ON_RESET },
         { &registers,                   sizeof(registers),                      CLEAR_ON_RESET },
         { &newRegisters,                sizeof(newRegisters),                   CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
