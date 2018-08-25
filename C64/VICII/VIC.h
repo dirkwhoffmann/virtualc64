@@ -324,6 +324,12 @@ private:
     //! @brief    Raster interrupt line ($D012)
     uint8_t rasterIrqLine;
     
+    //! @brief    Latched lightpen X coordinate ($D013)
+    uint8_t latchedLightPenX;
+
+    //! @brief    Latched lightpen Y coordinate ($D014)
+    uint8_t latchedLightPenY;
+
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
 
@@ -773,6 +779,12 @@ private:
     //! @brief    Checks frame fliplops at right border
     void checkFrameFlipflopsRight(uint16_t comparisonValue);
     
+    //! @brief    Sets the vertical frame flipflop with a delay of one cycle.
+    void setVerticalFrameFF(bool value);
+    
+    //! @brief    Sets the main frame flipflop with a delay of one cycle.
+    void setMainFrameFF(bool value);
+    
     //! @brief    Returns where the frame flipflop is checked for the left border.
     uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
     
@@ -785,28 +797,7 @@ private:
     //! @brief    Returns where the frame flipflop is checked for the lower border.
     uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
     
-    /*! @brief    Clears the main frame flipflop
-     *  @details  Note that the main frame flipflop can not be cleared when
-     *            the vertical border flipflop is set.
-     */
-    void clearMainFrameFF() {
-
-        assert(flipflops.vertical == verticalFrameFF.current());
-        
-        if (!flipflops.vertical && !verticalFrameFFsetCond) {
-            newFlipflops.main = false;
-            delay |= VICUpdateFlipflops0;
-        }
-        
-        if (!verticalFrameFF.current() && !verticalFrameFFsetCond) {
-            mainFrameFF.write(false);
-        }
-    }
-    
-    
- 
-    
-    
+  
     
     
 	//
@@ -843,13 +834,13 @@ public:
     }
 
     //! @brief    Returns the masked CB13 bit.
-    uint8_t CB13() { return iomem[0x18] & 0x08; }
+    uint8_t CB13() { assert(iomem[0x18] == newRegisters.memSelect); return iomem[0x18] & 0x08; }
 
     //! @brief    Returns the masked CB13/CB12/CB11 bits.
-    uint8_t CB13CB12CB11() { return iomem[0x18] & 0x0E; }
+    uint8_t CB13CB12CB11() { assert(iomem[0x18] == newRegisters.memSelect); return iomem[0x18] & 0x0E; }
 
     //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits.
-    uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
+    uint8_t VM13VM12VM11VM10() { assert(iomem[0x18] == newRegisters.memSelect); return iomem[0x18] & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
 	bool isCSEL() { return GET_BIT(control2.current(), 3); }
@@ -1004,7 +995,7 @@ private:
      *            effect in the next rasterline. This causes each sprite line
      *            to be drawn twice.
      */
-    void toggleExpansionFlipflop() { expansionFF ^= iomem[0x17]; }
+    void toggleExpansionFlipflop() { assert(iomem[0x17] == newRegisters.sprExpandY); expansionFF ^= iomem[0x17]; }
     
 	/*! @brief    Gets the depth of a sprite.
 	 *  @return   depth value that can be written into the z buffer.

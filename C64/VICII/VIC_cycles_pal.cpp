@@ -61,8 +61,7 @@ VIC::cycle1pal()
     checkVerticalFrameFF();
     if (verticalFrameFFsetCond) {
         verticalFrameFF.write(true);
-        newFlipflops.vertical = true;
-        delay |= VICUpdateFlipflops0;
+        setVerticalFrameFF(true);
     }
     
     // Phi1.3 Fetch

@@ -63,6 +63,9 @@ VIC::VIC()
         { &newRegisters,                sizeof(newRegisters),                   CLEAR_ON_RESET },
 
         { &rasterIrqLine,               sizeof(rasterIrqLine),                  CLEAR_ON_RESET },
+        { &latchedLightPenX,           sizeof(latchedLightPenX),                CLEAR_ON_RESET },
+        { &latchedLightPenY,           sizeof(latchedLightPenY),                CLEAR_ON_RESET },
+        { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
@@ -165,14 +168,13 @@ VIC::reset()
     for (unsigned i = 0; i < 8; i++)
         sprColor[i].reset(0);
     
-    // Preset some video parameters to show a blank sreen on power up
-    iomem[0x18] = 0x10;
-    
-    // setScreenMemoryAddr(0x400);
-    memset(&c64->mem.ram[0x400], 32, 40*25);
     expansionFF = 0xFF;
-    registers.ctrl1 = newRegisters.ctrl1 = 0x10; 
+    
+    // Preset some video parameters to show a blank blue sreen on power up
+    iomem[0x18] = 0x10;
     registers.memSelect = newRegisters.memSelect = 0x10;
+    memset(&c64->mem.ram[0x400], 32, 40*25);
+    registers.ctrl1 = newRegisters.ctrl1 = 0x10;
     registers.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
     newRegisters.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
     registers.colors[COLREG_BG0] = VICII_BLUE;
@@ -258,15 +260,6 @@ VIC::dumpState()
 	for (int i = 0; i < 8; i++) 
 		msg("%d ", (expansionFF & (1 << i)) != 0);
 	msg(")\n");
-	
-	msg("        IO memory : ");
-	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
-		for (unsigned j = 0; j < 16; j ++) {
-			msg("%02X ", iomem[i + j]);
-		}
-		msg("\n                    ");
-	}
-	msg("\n");
 }
 
 size_t
@@ -498,8 +491,7 @@ VIC::checkVerticalFrameFF()
             
             // Clear immediately
             verticalFrameFF.write(false);
-            newFlipflops.vertical = false;
-            delay |= VICUpdateFlipflops0;
+            setVerticalFrameFF(false);
         }
         
     } else if (yCounter == lowerComparisonVal) {
@@ -516,7 +508,19 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
      *     vertical border flip flop is not set, the main flip flop is reset."
      */
     if (comparisonValue == leftComparisonVal) {
-        clearMainFrameFF();
+        
+        // Note that the main frame flipflop can not be cleared when the
+        // vertical border flipflop is set.
+        
+        assert(flipflops.vertical == verticalFrameFF.current());
+        
+        if (!flipflops.vertical && !verticalFrameFFsetCond) {
+            setMainFrameFF(false);
+        }
+        
+        if (!verticalFrameFF.current() && !verticalFrameFFsetCond) {
+            mainFrameFF.write(false);
+        }
     }
 }
 
@@ -528,16 +532,27 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
      */
     if (comparisonValue == rightComparisonVal) {
         mainFrameFF.write(true);
-        newFlipflops.main = true;
+        setMainFrameFF(true);
+    }
+}
+
+void
+VIC::setVerticalFrameFF(bool value)
+{
+    if (value != flipflops.vertical) {
+        newFlipflops.vertical = value;
         delay |= VICUpdateFlipflops0;
     }
 }
 
-
-
-
-
-
+void
+VIC::setMainFrameFF(bool value)
+{
+    if (value != flipflops.main) {
+        newFlipflops.main = value;
+        delay |= VICUpdateFlipflops0;
+    }
+}
 
 
 
@@ -673,8 +688,8 @@ VIC::triggerLightpenInterrupt()
         return;
     
     // Latch coordinates
-    iomem[0x13] = lightpenX() / 2;
-    iomem[0x14] = lightpenY();
+    latchedLightPenX = iomem[0x13] = lightpenX() / 2;
+    latchedLightPenY = iomem[0x14] = lightpenY();
     debug("Lightpen x = %d\n", lightpenX());
     
     // Newer VIC models trigger an interrupt immediately
@@ -745,8 +760,8 @@ VIC::retriggerLightpenInterrupt()
     }
     
     // Latch coordinates
-    // iomem[0x13] = x / 2;
-    // iomem[0x14] = y;
+    // latchedLightPenX = iomem[0x13] = x / 2;
+    // latchedLightPenY = iomem[0x14] = y;
 
     // Lightpen interrupts can only occur once per frame
     lightpenIRQhasOccured = true;
@@ -762,8 +777,10 @@ VIC::compareSpriteY()
 {
     uint8_t result = 0;
     
-    for (unsigned i = 0; i < 8; i++)
+    for (unsigned i = 0; i < 8; i++) {
+        assert(iomem[2*i+1] == newRegisters.sprY[i]);
         result |= (iomem[2*i+1] == yCounter) << i;
+    }
     
     return result;
 }
@@ -808,6 +825,7 @@ VIC::turnSpriteDmaOn()
      *  off, the DMA is switched on, MCBASE is cleared, and if the MxYE bit is
      *  set the expansion flip flip is reset." [C.B.]
      */
+    assert(newRegisters.sprEnable == iomem[0x15]);
     uint8_t risingEdges = ~spriteDmaOnOff & (iomem[0x15] & compareSpriteY());
     
     for (unsigned i = 0; i < 8; i++) {
@@ -918,9 +936,7 @@ VIC::endRasterline()
     // Do we need to do this here? It is handled in cycle 1 as well.
     if (verticalFrameFFsetCond) {
         verticalFrameFF.write(true);
-        newFlipflops.vertical = true;
-        delay |= VICUpdateFlipflops0;
-        
+        setVerticalFrameFF(true);
     }
     
     // Draw debug markers
