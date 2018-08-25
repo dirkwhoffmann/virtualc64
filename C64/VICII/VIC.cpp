@@ -85,7 +85,6 @@ VIC::VIC()
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &badLine,            sizeof(badLine),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
-        { &oldDisplayState,                sizeof(oldDisplayState),                   CLEAR_ON_RESET },
         { &displayState,               sizeof(displayState),                  CLEAR_ON_RESET },
         { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
         { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
@@ -255,7 +254,7 @@ VIC::dumpState()
 	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
 	msg("      MainFrameFF : %d\n", flipflops.main);
     msg("  VerticalFrameFF : %d\n", flipflops.vertical);
-	msg("     DisplayState : %s\n", oldDisplayState ? "on" : "off");
+	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 

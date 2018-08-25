@@ -348,16 +348,14 @@ VIC::cycle58ntsc()
      *  [C.B.]
      */
     if (registerRC == 7) {
-        oldDisplayState = false;
+        displayState = badLine;
         registerVCBASE = registerVC;
     }
-    
-    updateDisplayState();
     
     /* "If the video logic is in display state afterwards (this is always the
      *  case if there is a Bad Line Condition), RC is incremented." [C.B.]
      */
-    if (oldDisplayState) {
+    if (displayState) {
         registerRC = (registerRC + 1) & 0x07;
     }
     

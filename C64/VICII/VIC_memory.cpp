@@ -613,12 +613,8 @@ void
 VIC::gAccess()
 {
     uint16_t addr;
-    
-    assert ((registerVC & 0xFC00) == 0); // 10 bit register
-    assert ((registerRC & 0xF8) == 0);   // 3 bit register
-    
-    assert(oldDisplayState == displayState); 
-    if (oldDisplayState) {
+        
+    if (displayState) {
         
         /* "The address generator for the text/bitmap accesses (c- and
          *  g-accesses) has basically 3 modes for the g-accesses (the c-accesses

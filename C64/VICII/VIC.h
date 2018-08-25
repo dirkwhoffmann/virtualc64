@@ -269,7 +269,7 @@ private:
      *              - In idle state, only g-accesses occur. The VIC is either in
      *                idle or display state" [C.B.]
      */
-    bool oldDisplayState;
+    // bool oldDisplayState;
     bool displayState;
 
     
@@ -876,7 +876,7 @@ private:
      *  @details  Invoked at the end of each VIC cycle
      */
     // void updateDisplayState() { if (badLineCondition) displayState = true; }
-    void updateDisplayState() { oldDisplayState = oldDisplayState || badLine; }
+    void updateDisplayState() { }; // { oldDisplayState = oldDisplayState || badLine; }
     
     
     //
