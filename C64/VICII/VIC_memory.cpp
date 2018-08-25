@@ -269,12 +269,12 @@ VIC::poke(uint16_t addr, uint8_t value)
             expansionFF |= ~value;
             break;
             
-        case 0x18: { // MEMORY_SETUP_REGISTER
+        case 0x18: { // Memory address pointers
             
+            assert(iomem[addr] == memSelect);
             uint8_t oldValue = iomem[addr];
             iomem[addr] = value;
-            newRegisters.memSelect = value;
-            assert(oldValue == registers.memSelect);
+            memSelect = value;
             
             // The GUI needs to know when the second bit changes. This bit
             // lets us distinguish between uppercase / lowercase character mode

@@ -96,6 +96,7 @@ VIC::setScreenMemoryAddr(uint16_t addr)
     c64->suspend();
     addr >>= 6;
     iomem[0x18] = (iomem[0x18] & ~0xF0) | (addr & 0xF0);
+    memSelect = (memSelect & ~0xF0) | (addr & 0xF0);
     c64->resume();
 }
 
@@ -107,6 +108,7 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
     c64->suspend();
     addr >>= 10;
     iomem[0x18] = (iomem[0x18] & ~0x0E) | (addr & 0x0E);
+    memSelect = (memSelect & ~0x0E) | (addr & 0x0E);
     c64->resume();
 }
 
@@ -116,6 +118,9 @@ VIC::setDisplayMode(DisplayMode m)
     c64->suspend();
     control1.write((control1.current() & ~0x60) | (m & 0x60));
     control2.write((control2.current() & ~0x10) | (m & 0x10));
+    newRegisters.ctrl1 = (newRegisters.ctrl1 & ~0x60) | (m & 0x60);
+    newRegisters.ctrl2 = (newRegisters.ctrl2 & ~0x10) | (m & 0x10);
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -128,6 +133,8 @@ VIC::setNumberOfRows(unsigned rs)
     uint8_t value = control1.current();
     WRITE_BIT(value, 3, rs == 25);
     control1.write(value);
+    WRITE_BIT(newRegisters.ctrl1, 3, rs == 25);
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -140,14 +147,18 @@ VIC::setNumberOfColumns(unsigned cs)
     uint8_t value = control2.current();
     WRITE_BIT(value, 3, cs == 40);
     control2.write(value);
+    WRITE_BIT(newRegisters.ctrl2, 3, cs == 40);
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
 ScreenGeometry
 VIC::getScreenGeometry(void)
 {
-    unsigned rows = GET_BIT(control1.current(), 3) ? 25 : 24;
-    unsigned cols = GET_BIT(control2.current(), 3) ? 40 : 38;
+    // unsigned rows = GET_BIT(control1.current(), 3) ? 25 : 24;
+    // unsigned cols = GET_BIT(control2.current(), 3) ? 40 : 38;
+    unsigned rows = GET_BIT(registers.ctrl1, 3) ? 25 : 24;
+    unsigned cols = GET_BIT(registers.ctrl2, 3) ? 40 : 38;
     
     if (cols == 40) {
         return rows == 25 ? COL_40_ROW_25 : COL_40_ROW_24;
@@ -172,6 +183,8 @@ VIC::setVerticalRasterScroll(uint8_t offset)
     
     c64->suspend();
     control1.write((control1.current() & 0xF8) | (offset & 0x07));
+    newRegisters.ctrl1 = (registers.ctrl1 & 0xF8) | (offset & 0x07);
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -182,6 +195,8 @@ VIC::setHorizontalRasterScroll(uint8_t offset)
     
     c64->suspend();
     control2.write((control2.current() & 0xF8) | (offset & 0x07));
+    newRegisters.ctrl2 = (registers.ctrl2 & 0xF8) | (offset & 0x07);
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -193,12 +208,12 @@ VIC::setRasterInterruptLine(uint16_t line)
     rasterIrqLine = line & 0xFF;
     if (line > 0xFF) {
         control1.write(control1.current() | 0x80);
-        newRegisters.ctrl1 = registers.ctrl1 | 0x80;
     } else {
         control1.write(control1.current() & 0x7F);
-        newRegisters.ctrl1 = registers.ctrl1 & 0x80;
     }
-    delay |= VICUpdateRegisters0;
+    WRITE_BIT(registers.ctrl1, 7, line > 0xFF);
+    WRITE_BIT(newRegisters.ctrl1, 7, line > 0xFF);
+    
     c64->resume();
 }
 
@@ -231,6 +246,8 @@ VIC::setSpriteX(unsigned nr, uint16_t x)
     
     c64->suspend();
     sprXCoord[nr].write(x);
+    newRegisters.sprX[nr] = x;
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -241,6 +258,8 @@ VIC::setSpriteY(unsigned nr, uint8_t y)
     
     c64->suspend();
     iomem[1+2*nr] = y;
+    newRegisters.sprY[nr] = y;
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -251,6 +270,8 @@ VIC::setSpriteColor(unsigned nr, uint8_t color)
     
     c64->suspend();
     sprColor[nr].write(color);
+    newRegisters.colors[COLREG_SPR0 + nr] = color;
+    delay |= VICUpdateRegisters0;
     c64->resume();
 }
 
@@ -373,7 +394,7 @@ VIC::spriteToggleStretchYFlag(unsigned nr)
     
     c64->suspend();
     TOGGLE_BIT(iomem[0x17], nr);
-    TOGGLE_BIT(newRegisters.sprPriority, nr);
+    TOGGLE_BIT(newRegisters.sprExpandY, nr);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }

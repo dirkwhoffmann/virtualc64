@@ -172,7 +172,7 @@ VIC::reset()
     
     // Preset some video parameters to show a blank blue sreen on power up
     iomem[0x18] = 0x10;
-    registers.memSelect = newRegisters.memSelect = 0x10;
+    memSelect = 0x10;
     memset(&c64->mem.ram[0x400], 32, 40*25);
     registers.ctrl1 = newRegisters.ctrl1 = 0x10;
     registers.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;

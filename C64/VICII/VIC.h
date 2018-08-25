@@ -330,6 +330,9 @@ private:
     //! @brief    Latched lightpen Y coordinate ($D014)
     uint8_t latchedLightPenY;
 
+    //! @brief    Memory address register ($D018)
+    uint8_t memSelect;
+    
     //! @brief    Interrupt Request Register ($D019)
     uint8_t irr;
 
@@ -834,13 +837,13 @@ public:
     }
 
     //! @brief    Returns the masked CB13 bit.
-    uint8_t CB13() { assert(iomem[0x18] == newRegisters.memSelect); return iomem[0x18] & 0x08; }
+    uint8_t CB13() { assert(iomem[0x18] == memSelect); return memSelect & 0x08; }
 
     //! @brief    Returns the masked CB13/CB12/CB11 bits.
-    uint8_t CB13CB12CB11() { assert(iomem[0x18] == newRegisters.memSelect); return iomem[0x18] & 0x0E; }
+    uint8_t CB13CB12CB11() { assert(iomem[0x18] == memSelect); return memSelect & 0x0E; }
 
     //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits.
-    uint8_t VM13VM12VM11VM10() { assert(iomem[0x18] == newRegisters.memSelect); return iomem[0x18] & 0xF0; }
+    uint8_t VM13VM12VM11VM10() { assert(iomem[0x18] == memSelect); return memSelect & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
 	bool isCSEL() { return GET_BIT(control2.current(), 3); }

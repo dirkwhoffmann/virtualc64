@@ -42,7 +42,6 @@ typedef struct {
     uint8_t  sprEnable;   // D015
     uint8_t  ctrl2;       // D016
     uint8_t  sprExpandY;  // D017
-    uint8_t  memSelect;   // D018
     uint8_t  sprPriority; // D01B
     uint8_t  sprMC;       // D01C
     uint8_t  sprExpandX;  // D01D
