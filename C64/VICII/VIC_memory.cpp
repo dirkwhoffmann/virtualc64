@@ -27,7 +27,7 @@ VIC::peek(uint16_t addr)
     assert(addr <= 0x3F);
     
     switch(addr) {
-        case 0x00:
+        case 0x00: // Sprite X
         case 0x02:
         case 0x04:
         case 0x06:
@@ -37,7 +37,20 @@ VIC::peek(uint16_t addr)
         case 0x0E:
             
             assert(iomem[addr] == (sprXCoord[addr >> 1].current() & 0xFF));
-            return iomem[addr];
+            assert(iomem[addr] == newRegisters.sprX[addr >> 1]);
+            return newRegisters.sprX[addr >> 1];
+            
+        case 0x01: // Sprite Y
+        case 0x03:
+        case 0x05:
+        case 0x07:
+        case 0x09:
+        case 0x0B:
+        case 0x0D:
+        case 0x0F:
+            
+            assert(iomem[addr] == newRegisters.sprY[addr >> 1]);
+            return newRegisters.sprY[addr >> 1];
             
         case 0x10: { uint8_t result;
             
@@ -79,10 +92,18 @@ VIC::peek(uint16_t addr)
             assert(latchedLightPenY == iomem[addr]);
             return iomem[addr];
             
+        case 0x15:
+            assert(iomem[addr] == newRegisters.sprEnable);
+            return newRegisters.sprEnable;
+            
         case 0x16:
             // The two upper bits always read back as '1'
             assert(control2.current() == registers.ctrl2);
             return (control2.current() & 0xFF) | 0xC0;
+            
+        case 0x17:
+            assert(iomem[addr] == newRegisters.sprExpandY);
+            return newRegisters.sprExpandY;
             
         case 0x18:
             assert(memSelect == iomem[addr]);
@@ -93,6 +114,14 @@ VIC::peek(uint16_t addr)
             
         case 0x1A: // Interrupt Mask Register (IMR)
             return imr | 0xF0;
+            
+        case 0x1B:
+            assert(iomem[addr] == newRegisters.sprPriority);
+            return newRegisters.sprPriority;
+            
+        case 0x1C:
+            assert(iomem[addr] == newRegisters.sprMC);
+            return newRegisters.sprMC;
             
         case 0x1D: // SPRITE_X_EXPAND
             assert(registers.sprExpandX == sprXExpand.current());
@@ -152,6 +181,8 @@ VIC::peek(uint16_t addr)
         // Unusable register area
         return 0xFF;
     }
+    
+    assert(false);
     
     // Default action
     return iomem[addr];
@@ -271,6 +302,11 @@ VIC::poke(uint16_t addr, uint8_t value)
             }
             return;
             
+        case 0x13: // Lightpen X
+        case 0x14: // Lightpen Y
+            
+            return;
+            
         case 0x15: // SPRITE_ENABLED
             
             newRegisters.sprEnable = value;
@@ -332,6 +368,16 @@ VIC::poke(uint16_t addr, uint8_t value)
                 delay |= VICReleaseIrq1;
             }
             return;
+            
+        case 0x1B: // Sprite priority
+            
+            newRegisters.sprPriority = value;
+            break;
+            
+        case 0x1C: // Sprite multicolor
+            
+            newRegisters.sprMC = value;
+            break;
             
         case 0x1D: // SPRITE_X_EXPAND
             sprXExpand.write(value);

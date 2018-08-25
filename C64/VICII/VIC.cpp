@@ -783,7 +783,7 @@ VIC::compareSpriteY()
     
     for (unsigned i = 0; i < 8; i++) {
         assert(iomem[2*i+1] == newRegisters.sprY[i]);
-        result |= (iomem[2*i+1] == yCounter) << i;
+        result |= (newRegisters.sprY[i] == yCounter) << i;
     }
     
     return result;
@@ -830,7 +830,7 @@ VIC::turnSpriteDmaOn()
      *  set the expansion flip flip is reset." [C.B.]
      */
     assert(newRegisters.sprEnable == iomem[0x15]);
-    uint8_t risingEdges = ~spriteDmaOnOff & (iomem[0x15] & compareSpriteY());
+    uint8_t risingEdges = ~spriteDmaOnOff & (newRegisters.sprEnable & compareSpriteY());
     
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(risingEdges,i))
@@ -854,23 +854,17 @@ VIC::turnSpritesOnOrOff()
     }
     
     uint8_t onOff = spriteOnOff.current();
+    assert(iomem[0x15] == newRegisters.sprEnable);
     onOff |= iomem[0x15] & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
 }
 
-
-/*
-void
-VIC::toggleExpansionFlipflop()
-{
-    expansionFF ^= iomem[0x17];
-}
-*/
-
 uint8_t
 VIC::spriteDepth(uint8_t nr)
 {
+    assert(iomem[0x1B] == newRegisters.sprPriority);
+    
     return
     GET_BIT(iomem[0x1B], nr) ?
     (SPRITE_LAYER_BG_DEPTH | nr) :

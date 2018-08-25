@@ -458,6 +458,7 @@ PixelEngine::drawSpritePixel(unsigned spriteNr,
     assert(sprite_sr[spriteNr].remaining_bits >= -1);
     assert(sprite_sr[spriteNr].remaining_bits <= 26);
     
+    assert(vic->iomem[0x1C] == vic->newRegisters.sprMC);
     bool multicol = GET_BIT(vic->iomem[0x1C], spriteNr);
 
     // Load shift register if applicable
@@ -666,6 +667,7 @@ PixelEngine::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
             
             vic->spriteSpriteCollision |= ((pixelSource[pixelNr] & 0x7F) | mask);
             vic->iomem[0x1E] |= ((pixelSource[pixelNr] & 0x7F) | mask);
+            assert(vic->iomem[0x1E] == vic->spriteSpriteCollision);
             vic->triggerIRQ(4);
         }
         
@@ -674,6 +676,7 @@ PixelEngine::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
             
             vic->spriteBackgroundColllision |= mask;
             vic->iomem[0x1F] |= mask;
+            assert(vic->iomem[0x1F] == vic->spriteBackgroundColllision);
             vic->triggerIRQ(2);
         }
     }

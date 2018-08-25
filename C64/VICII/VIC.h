@@ -832,7 +832,8 @@ public:
     uint16_t rasterInterruptLine() {
         assert(control1.current() == newRegisters.ctrl1);
         assert(iomem[0x12] == rasterIrqLine);
-        return ((control1.current() & 0x80) << 1) | iomem[0x12];
+        // return ((control1.current() & 0x80) << 1) | iomem[0x12];
+        return ((newRegisters.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
     //! @brief    Returns the current value of the ECM bit.
@@ -1004,7 +1005,7 @@ private:
      *            effect in the next rasterline. This causes each sprite line
      *            to be drawn twice.
      */
-    void toggleExpansionFlipflop() { assert(iomem[0x17] == newRegisters.sprExpandY); expansionFF ^= iomem[0x17]; }
+    void toggleExpansionFlipflop() { assert(iomem[0x17] == newRegisters.sprExpandY); expansionFF ^= newRegisters.sprExpandY; }
     
 	/*! @brief    Gets the depth of a sprite.
 	 *  @return   depth value that can be written into the z buffer.
