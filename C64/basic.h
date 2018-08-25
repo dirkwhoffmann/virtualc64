@@ -102,7 +102,8 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 #define COPY_BIT(x,y,nr) ((y) = ((y) & ~(1 << (nr)) | ((x) & (1 << (nr)))))
 
 //! @brief    Sets a single bit to 0 (value == 0) or 1 (value != 0)
-#define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
+// #define WRITE_BIT(x,nr,value) ((x) = (((x) & ~(1 << (nr))) | ((!!(value)) << (nr))))
+#define WRITE_BIT(x,nr,value) ((value) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
 
 //! @brief    Cuts out a single byte from a bigger integer.
 // #define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xFF)

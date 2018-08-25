@@ -663,12 +663,16 @@ PixelEngine::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
         
         // Is it a sprite/sprite collision?
         if ((pixelSource[pixelNr] & 0x7F) && vic->spriteSpriteCollisionEnabled) {
+            
+            vic->spriteSpriteCollision |= ((pixelSource[pixelNr] & 0x7F) | mask);
             vic->iomem[0x1E] |= ((pixelSource[pixelNr] & 0x7F) | mask);
             vic->triggerIRQ(4);
         }
         
         // Is it a sprite/background collision?
         if ((pixelSource[pixelNr] & 0x80) && vic->spriteBackgroundCollisionEnabled) {
+            
+            vic->spriteBackgroundColllision |= mask;
             vic->iomem[0x1F] |= mask;
             vic->triggerIRQ(2);
         }

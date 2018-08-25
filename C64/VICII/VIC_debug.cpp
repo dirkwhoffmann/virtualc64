@@ -129,12 +129,16 @@ VIC::setNumberOfRows(unsigned rs)
 {
     assert(rs == 24 || rs == 25);
     
+    debug("Setting rows to %d\n", rs);
+    
     c64->suspend();
-    uint8_t value = control1.current();
-    WRITE_BIT(value, 3, rs == 25);
-    control1.write(value);
-    WRITE_BIT(newRegisters.ctrl1, 3, rs == 25);
-    delay |= VICUpdateRegisters0;
+    // uint8_t value = control1.current();
+    // WRITE_BIT(value, 3, rs == 25);
+    // control1.write(value);
+
+    uint8_t cntrl = newRegisters.ctrl1;
+    WRITE_BIT(cntrl, 3, rs == 25);
+    poke(0x11, cntrl);
     c64->resume();
 }
 
@@ -143,12 +147,16 @@ VIC::setNumberOfColumns(unsigned cs)
 {
     assert(cs == 38 || cs == 40);
     
+    debug("Setting cols to %d\n", cs);
+
     c64->suspend();
-    uint8_t value = control2.current();
-    WRITE_BIT(value, 3, cs == 40);
-    control2.write(value);
-    WRITE_BIT(newRegisters.ctrl2, 3, cs == 40);
-    delay |= VICUpdateRegisters0;
+    // uint8_t value = control2.current();
+    // WRITE_BIT(value, 3, cs == 40);
+    // control2.write(value);
+    
+    uint8_t cntrl = newRegisters.ctrl2;
+    WRITE_BIT(cntrl, 3, cs == 40);
+    poke(0x16, cntrl);
     c64->resume();
 }
 

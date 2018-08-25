@@ -150,6 +150,12 @@ private:
      */
     VICIIRegisters newRegisters;
     
+    //! @brief    Sprite-sprite collision register
+    uint8_t  spriteSpriteCollision;
+
+    //! @brief    Sprite-background collision register
+    uint8_t  spriteBackgroundColllision;
+    
     //! @brief    Main frame flipflop
     TimeDelayed<bool> mainFrameFF = TimeDelayed<bool>(1);
     

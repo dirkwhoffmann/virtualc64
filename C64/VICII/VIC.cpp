@@ -61,10 +61,12 @@ VIC::VIC()
         { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
         { &registers,                   sizeof(registers),                      CLEAR_ON_RESET },
         { &newRegisters,                sizeof(newRegisters),                   CLEAR_ON_RESET },
+        { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
+        { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
 
         { &rasterIrqLine,               sizeof(rasterIrqLine),                  CLEAR_ON_RESET },
-        { &latchedLightPenX,           sizeof(latchedLightPenX),                CLEAR_ON_RESET },
-        { &latchedLightPenY,           sizeof(latchedLightPenY),                CLEAR_ON_RESET },
+        { &latchedLightPenX,            sizeof(latchedLightPenX),               CLEAR_ON_RESET },
+        { &latchedLightPenY,            sizeof(latchedLightPenY),               CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
@@ -222,6 +224,8 @@ VIC::dumpState()
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
 	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
 	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
+    msg("    Control reg 1 : %02X\n", registers.ctrl1);
+    msg("    Control reg 2 : %02X\n", registers.ctrl2);
 	msg("     Display mode : ");
 	switch (mode) {
 		case STANDARD_TEXT: 
