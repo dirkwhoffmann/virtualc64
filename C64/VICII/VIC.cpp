@@ -60,8 +60,6 @@ VIC::VIC()
         { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
         { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
         { &regValue,                    sizeof(regValue),                       CLEAR_ON_RESET },
-        { &registers,                   sizeof(registers),                      CLEAR_ON_RESET },
-        { &newRegisters,                sizeof(newRegisters),                   CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
         { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
 
@@ -177,11 +175,12 @@ VIC::reset()
     iomem[0x18] = 0x10;
     memSelect = 0x10;
     memset(&c64->mem.ram[0x400], 32, 40*25);
-    registers.ctrl1 = newRegisters.ctrl1 = 0x10;
-    registers.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
-    newRegisters.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
-    registers.colors[COLREG_BG0] = VICII_BLUE;
-    newRegisters.colors[COLREG_BG0] = VICII_BLUE;
+    regValue.delayed.ctrl1 = 0x10;
+    regValue.current.ctrl1 = 0x10;
+    regValue.delayed.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
+    regValue.current.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
+    regValue.delayed.colors[COLREG_BG0] = VICII_BLUE;
+    regValue.current.colors[COLREG_BG0] = VICII_BLUE;
     
     // Later: Change to
     // newRegisters. ... =
@@ -225,8 +224,8 @@ VIC::dumpState()
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
 	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
 	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
-    msg("    Control reg 1 : %02X\n", newRegisters.ctrl1);
-    msg("    Control reg 2 : %02X\n", newRegisters.ctrl2);
+    msg("    Control reg 1 : %02X\n", regValue.current.ctrl1);
+    msg("    Control reg 2 : %02X\n", regValue.current.ctrl2);
 	msg("     Display mode : ");
 	switch (mode) {
 		case STANDARD_TEXT: 
@@ -783,8 +782,8 @@ VIC::compareSpriteY()
     uint8_t result = 0;
     
     for (unsigned i = 0; i < 8; i++) {
-        assert(iomem[2*i+1] == newRegisters.sprY[i]);
-        result |= (newRegisters.sprY[i] == yCounter) << i;
+        assert(iomem[2*i+1] == regValue.current.sprY[i]);
+        result |= (regValue.current.sprY[i] == yCounter) << i;
     }
     
     return result;
@@ -830,8 +829,8 @@ VIC::turnSpriteDmaOn()
      *  off, the DMA is switched on, MCBASE is cleared, and if the MxYE bit is
      *  set the expansion flip flip is reset." [C.B.]
      */
-    assert(newRegisters.sprEnable == iomem[0x15]);
-    uint8_t risingEdges = ~spriteDmaOnOff & (newRegisters.sprEnable & compareSpriteY());
+    assert(regValue.current.sprEnable == iomem[0x15]);
+    uint8_t risingEdges = ~spriteDmaOnOff & (regValue.current.sprEnable & compareSpriteY());
     
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(risingEdges,i))
@@ -855,7 +854,7 @@ VIC::turnSpritesOnOrOff()
     }
     
     uint8_t onOff = spriteOnOff.current();
-    assert(iomem[0x15] == newRegisters.sprEnable);
+    assert(iomem[0x15] == regValue.current.sprEnable);
     onOff |= iomem[0x15] & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
@@ -864,7 +863,7 @@ VIC::turnSpritesOnOrOff()
 uint8_t
 VIC::spriteDepth(uint8_t nr)
 {
-    assert(iomem[0x1B] == newRegisters.sprPriority);
+    assert(iomem[0x1B] == regValue.current.sprPriority);
     
     return
     GET_BIT(iomem[0x1B], nr) ?

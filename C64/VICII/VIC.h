@@ -151,15 +151,6 @@ private:
         VICIIRegisters delayed;
     } regValue;
     
-    VICIIRegisters registers;
-    
-    /*! @brief    New register values
-     *  @details  The values are copied over to variable 'flipflops' if a flag
-     *            in variable 'delay' is set.
-     *  @see      processDelayedActions()
-     */
-    VICIIRegisters newRegisters;
-    
     //! @brief    Sprite-sprite collision register
     uint8_t  spriteSpriteCollision;
 
@@ -840,10 +831,10 @@ public:
     
     //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
-        assert(control1.current() == newRegisters.ctrl1);
+        assert(control1.current() == regValue.current.ctrl1);
         assert(iomem[0x12] == rasterIrqLine);
         // return ((control1.current() & 0x80) << 1) | iomem[0x12];
-        return ((newRegisters.ctrl1 & 0x80) << 1) | rasterIrqLine;
+        return ((regValue.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
     //! @brief    Returns the current value of the ECM bit.
@@ -1015,7 +1006,7 @@ private:
      *            effect in the next rasterline. This causes each sprite line
      *            to be drawn twice.
      */
-    void toggleExpansionFlipflop() { assert(iomem[0x17] == newRegisters.sprExpandY); expansionFF ^= newRegisters.sprExpandY; }
+    void toggleExpansionFlipflop() { assert(iomem[0x17] == regValue.current.sprExpandY); expansionFF ^= regValue.current.sprExpandY; }
     
 	/*! @brief    Gets the depth of a sprite.
 	 *  @return   depth value that can be written into the z buffer.

@@ -118,8 +118,8 @@ VIC::setDisplayMode(DisplayMode m)
     c64->suspend();
     control1.write((control1.current() & ~0x60) | (m & 0x60));
     control2.write((control2.current() & ~0x10) | (m & 0x10));
-    newRegisters.ctrl1 = (newRegisters.ctrl1 & ~0x60) | (m & 0x60);
-    newRegisters.ctrl2 = (newRegisters.ctrl2 & ~0x10) | (m & 0x10);
+    regValue.current.ctrl1 = (regValue.current.ctrl1 & ~0x60) | (m & 0x60);
+    regValue.current.ctrl2 = (regValue.current.ctrl2 & ~0x10) | (m & 0x10);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -136,7 +136,7 @@ VIC::setNumberOfRows(unsigned rs)
     // WRITE_BIT(value, 3, rs == 25);
     // control1.write(value);
 
-    uint8_t cntrl = newRegisters.ctrl1;
+    uint8_t cntrl = regValue.current.ctrl1;
     WRITE_BIT(cntrl, 3, rs == 25);
     poke(0x11, cntrl);
     c64->resume();
@@ -154,7 +154,7 @@ VIC::setNumberOfColumns(unsigned cs)
     // WRITE_BIT(value, 3, cs == 40);
     // control2.write(value);
     
-    uint8_t cntrl = newRegisters.ctrl2;
+    uint8_t cntrl = regValue.current.ctrl2;
     WRITE_BIT(cntrl, 3, cs == 40);
     poke(0x16, cntrl);
     c64->resume();
@@ -165,8 +165,8 @@ VIC::getScreenGeometry(void)
 {
     // unsigned rows = GET_BIT(control1.current(), 3) ? 25 : 24;
     // unsigned cols = GET_BIT(control2.current(), 3) ? 40 : 38;
-    unsigned rows = GET_BIT(registers.ctrl1, 3) ? 25 : 24;
-    unsigned cols = GET_BIT(registers.ctrl2, 3) ? 40 : 38;
+    unsigned rows = GET_BIT(regValue.current.ctrl1, 3) ? 25 : 24;
+    unsigned cols = GET_BIT(regValue.current.ctrl2, 3) ? 40 : 38;
     
     if (cols == 40) {
         return rows == 25 ? COL_40_ROW_25 : COL_40_ROW_24;
@@ -191,7 +191,7 @@ VIC::setVerticalRasterScroll(uint8_t offset)
     
     c64->suspend();
     control1.write((control1.current() & 0xF8) | (offset & 0x07));
-    newRegisters.ctrl1 = (registers.ctrl1 & 0xF8) | (offset & 0x07);
+    regValue.current.ctrl1 = (regValue.current.ctrl1 & 0xF8) | (offset & 0x07);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -203,7 +203,7 @@ VIC::setHorizontalRasterScroll(uint8_t offset)
     
     c64->suspend();
     control2.write((control2.current() & 0xF8) | (offset & 0x07));
-    newRegisters.ctrl2 = (registers.ctrl2 & 0xF8) | (offset & 0x07);
+    regValue.current.ctrl2 = (regValue.current.ctrl2 & 0xF8) | (offset & 0x07);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -219,8 +219,8 @@ VIC::setRasterInterruptLine(uint16_t line)
     } else {
         control1.write(control1.current() & 0x7F);
     }
-    WRITE_BIT(registers.ctrl1, 7, line > 0xFF);
-    WRITE_BIT(newRegisters.ctrl1, 7, line > 0xFF);
+    WRITE_BIT(regValue.delayed.ctrl1, 7, line > 0xFF);
+    WRITE_BIT(regValue.current.ctrl1, 7, line > 0xFF);
     
     c64->resume();
 }
@@ -254,7 +254,7 @@ VIC::setSpriteX(unsigned nr, uint16_t x)
     
     c64->suspend();
     sprXCoord[nr].write(x);
-    newRegisters.sprX[nr] = x;
+    regValue.current.sprX[nr] = x;
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -266,7 +266,7 @@ VIC::setSpriteY(unsigned nr, uint8_t y)
     
     c64->suspend();
     iomem[1+2*nr] = y;
-    newRegisters.sprY[nr] = y;
+    regValue.current.sprY[nr] = y;
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -278,7 +278,7 @@ VIC::setSpriteColor(unsigned nr, uint8_t color)
     
     c64->suspend();
     sprColor[nr].write(color);
-    newRegisters.colors[COLREG_SPR0 + nr] = color;
+    regValue.current.colors[COLREG_SPR0 + nr] = color;
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -288,7 +288,7 @@ VIC::setSpriteEnabled(uint8_t nr, bool b)
 {
     c64->suspend();
     WRITE_BIT(iomem[0x15], nr, b);
-    WRITE_BIT(newRegisters.sprEnable, nr, b);
+    WRITE_BIT(regValue.current.sprEnable, nr, b);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -298,7 +298,7 @@ VIC::toggleSpriteEnabled(uint8_t nr)
 {
     c64->suspend();
     TOGGLE_BIT(iomem[0x15], nr);
-    TOGGLE_BIT(newRegisters.sprEnable, nr);
+    TOGGLE_BIT(regValue.current.sprEnable, nr);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -342,7 +342,7 @@ VIC::setSpritePriority(unsigned nr, bool b)
     
     c64->suspend();
     WRITE_BIT(iomem[0x1B], nr, b);
-    WRITE_BIT(newRegisters.sprPriority, nr, b);
+    WRITE_BIT(regValue.current.sprPriority, nr, b);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -354,7 +354,7 @@ VIC::toggleSpritePriority(unsigned nr)
     
     c64->suspend();
     TOGGLE_BIT(iomem[0x1B], nr);
-    TOGGLE_BIT(newRegisters.sprPriority, nr);
+    TOGGLE_BIT(regValue.current.sprPriority, nr);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -366,7 +366,7 @@ VIC::setSpriteMulticolor(unsigned nr, bool b)
     
     c64->suspend();
     WRITE_BIT(iomem[0x1C], nr, b);
-    WRITE_BIT(newRegisters.sprMC, nr, b);
+    WRITE_BIT(regValue.current.sprMC, nr, b);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -378,7 +378,7 @@ VIC::toggleMulticolorFlag(unsigned nr)
     
     c64->suspend();
     TOGGLE_BIT(iomem[0x1C], nr);
-    TOGGLE_BIT(newRegisters.sprMC, nr);
+    TOGGLE_BIT(regValue.current.sprMC, nr);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -390,7 +390,7 @@ VIC::setSpriteStretchY(unsigned nr, bool b)
     
     c64->suspend();
     WRITE_BIT(iomem[0x17], nr, b);
-    WRITE_BIT(newRegisters.sprExpandY, nr, b);
+    WRITE_BIT(regValue.current.sprExpandY, nr, b);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -402,7 +402,7 @@ VIC::spriteToggleStretchYFlag(unsigned nr)
     
     c64->suspend();
     TOGGLE_BIT(iomem[0x17], nr);
-    TOGGLE_BIT(newRegisters.sprExpandY, nr);
+    TOGGLE_BIT(regValue.current.sprExpandY, nr);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -416,7 +416,7 @@ VIC::setSpriteStretchX(unsigned nr, bool b)
     uint8_t value = sprXExpand.current();
     WRITE_BIT(value, nr, b);
     sprXExpand.write(value);
-    WRITE_BIT(newRegisters.sprExpandX, nr, b);
+    WRITE_BIT(regValue.current.sprExpandX, nr, b);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }
@@ -430,7 +430,7 @@ VIC::spriteToggleStretchXFlag(unsigned nr)
     uint8_t value = sprXExpand.current();
     TOGGLE_BIT(value, nr);
     sprXExpand.write(value);
-    TOGGLE_BIT(newRegisters.sprExpandX, nr);
+    TOGGLE_BIT(regValue.current.sprExpandX, nr);
     delay |= VICUpdateRegisters0;
     c64->resume();
 }

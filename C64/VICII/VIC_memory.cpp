@@ -37,8 +37,8 @@ VIC::peek(uint16_t addr)
         case 0x0E:
             
             assert(iomem[addr] == (sprXCoord[addr >> 1].current() & 0xFF));
-            assert(iomem[addr] == newRegisters.sprX[addr >> 1]);
-            return newRegisters.sprX[addr >> 1];
+            assert(iomem[addr] == regValue.current.sprX[addr >> 1]);
+            return regValue.current.sprX[addr >> 1];
             
         case 0x01: // Sprite Y
         case 0x03:
@@ -49,8 +49,8 @@ VIC::peek(uint16_t addr)
         case 0x0D:
         case 0x0F:
             
-            assert(iomem[addr] == newRegisters.sprY[addr >> 1]);
-            return newRegisters.sprY[addr >> 1];
+            assert(iomem[addr] == regValue.current.sprY[addr >> 1]);
+            return regValue.current.sprY[addr >> 1];
             
         case 0x10: // Sprite X (upper bits)
             {
@@ -66,21 +66,21 @@ VIC::peek(uint16_t addr)
             ((sprXCoord[6].current() & 0x100) ? 0b01000000 : 0) |
             ((sprXCoord[7].current() & 0x100) ? 0b10000000 : 0);
 
-            assert(((newRegisters.sprX[0] & 0x100) ? 0b00000001 : 0) |
-                   ((newRegisters.sprX[1] & 0x100) ? 0b00000010 : 0) |
-                   ((newRegisters.sprX[2] & 0x100) ? 0b00000100 : 0) |
-                   ((newRegisters.sprX[3] & 0x100) ? 0b00001000 : 0) |
-                   ((newRegisters.sprX[4] & 0x100) ? 0b00010000 : 0) |
-                   ((newRegisters.sprX[5] & 0x100) ? 0b00100000 : 0) |
-                   ((newRegisters.sprX[6] & 0x100) ? 0b01000000 : 0) |
-                   ((newRegisters.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
+            assert(((regValue.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
+                   ((regValue.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
+                   ((regValue.current.sprX[2] & 0x100) ? 0b00000100 : 0) |
+                   ((regValue.current.sprX[3] & 0x100) ? 0b00001000 : 0) |
+                   ((regValue.current.sprX[4] & 0x100) ? 0b00010000 : 0) |
+                   ((regValue.current.sprX[5] & 0x100) ? 0b00100000 : 0) |
+                   ((regValue.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
+                   ((regValue.current.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
                    
             assert(result == iomem[0x10]);
             return result;
         }
                    
         case 0x11: // SCREEN CONTROL REGISTER #1
-            assert(control1.current() == newRegisters.ctrl1);
+            assert(control1.current() == regValue.current.ctrl1);
             return (control1.current() & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
             
         case 0x12: // VIC_RASTER_READ_WRITE
@@ -95,17 +95,17 @@ VIC::peek(uint16_t addr)
             return iomem[addr];
             
         case 0x15:
-            assert(iomem[addr] == newRegisters.sprEnable);
-            return newRegisters.sprEnable;
+            assert(iomem[addr] == regValue.current.sprEnable);
+            return regValue.current.sprEnable;
             
         case 0x16:
             // The two upper bits always read back as '1'
-            assert(control2.current() == newRegisters.ctrl2);
+            assert(control2.current() == regValue.current.ctrl2);
             return (control2.current() & 0xFF) | 0xC0;
             
         case 0x17:
-            assert(iomem[addr] == newRegisters.sprExpandY);
-            return newRegisters.sprExpandY;
+            assert(iomem[addr] == regValue.current.sprExpandY);
+            return regValue.current.sprExpandY;
             
         case 0x18:
             assert(memSelect == iomem[addr]);
@@ -118,15 +118,15 @@ VIC::peek(uint16_t addr)
             return imr | 0xF0;
             
         case 0x1B:
-            assert(iomem[addr] == newRegisters.sprPriority);
-            return newRegisters.sprPriority;
+            assert(iomem[addr] == regValue.current.sprPriority);
+            return regValue.current.sprPriority;
             
         case 0x1C:
-            assert(iomem[addr] == newRegisters.sprMC);
-            return newRegisters.sprMC;
+            assert(iomem[addr] == regValue.current.sprMC);
+            return regValue.current.sprMC;
             
         case 0x1D: // SPRITE_X_EXPAND
-            assert(newRegisters.sprExpandX == sprXExpand.current());
+            assert(regValue.current.sprExpandX == sprXExpand.current());
             return sprXExpand.current();
             
         case 0x1E: // Sprite-to-sprite collision
@@ -144,8 +144,8 @@ VIC::peek(uint16_t addr)
             return result;
             
         case 0x20:
-            assert(newRegisters.colors[COLREG_BORDER] == borderColor.current());
-            assert(((borderColor.current() & 0x0F) | 0xF0) == (newRegisters.colors[COLREG_BORDER] | 0xF0));
+            assert(regValue.current.colors[COLREG_BORDER] == borderColor.current());
+            assert(((borderColor.current() & 0x0F) | 0xF0) == (regValue.current.colors[COLREG_BORDER] | 0xF0));
             return (borderColor.current() & 0x0F) | 0xF0;
             
         case 0x21: // Background color 0
@@ -153,17 +153,17 @@ VIC::peek(uint16_t addr)
         case 0x23: // Background color 2
         case 0x24: // Background color 3
             
-            assert(bgColor[addr - 0x21].current() == newRegisters.colors[COLREG_BG0 + (addr - 0x21)]);
+            assert(bgColor[addr - 0x21].current() == regValue.current.colors[COLREG_BG0 + (addr - 0x21)]);
             return (bgColor[addr - 0x21].current() & 0x0F) | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             
-            assert(sprExtraColor1.current() == newRegisters.colors[COLREG_SPR_EX1]);
+            assert(sprExtraColor1.current() == regValue.current.colors[COLREG_SPR_EX1]);
             return (sprExtraColor1.current() & 0x0F) | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
             
-            assert(sprExtraColor2.current() == newRegisters.colors[COLREG_SPR_EX2]);
+            assert(sprExtraColor2.current() == regValue.current.colors[COLREG_SPR_EX2]);
             return (sprExtraColor2.current() & 0x0F) | 0xF0;
             
         case 0x27: // Sprite color 1
@@ -175,7 +175,7 @@ VIC::peek(uint16_t addr)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
             
-            assert(sprColor[addr - 0x27].current() == newRegisters.colors[COLREG_SPR0 + (addr - 0x27)]);
+            assert(sprColor[addr - 0x27].current() == regValue.current.colors[COLREG_SPR0 + (addr - 0x27)]);
             return (sprColor[addr - 0x27].current() & 0x0F) | 0xF0;
     }
     
@@ -223,10 +223,10 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x0C:
         case 0x0E:
             
-            newRegisters.sprX[addr >> 1] &= 0x100;
-            newRegisters.sprX[addr >> 1] |= value;
+            regValue.current.sprX[addr >> 1] &= 0x100;
+            regValue.current.sprX[addr >> 1] |= value;
             sprXCoord[addr >> 1].write((sprXCoord[addr >> 1].current() & 0x100) | value);
-            assert(newRegisters.sprX[addr >> 1] == sprXCoord[addr >> 1].current());
+            assert(regValue.current.sprX[addr >> 1] == sprXCoord[addr >> 1].current());
             break;
         
         case 0x01: // Sprite Y
@@ -238,14 +238,14 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x0D:
         case 0x0F:
             
-            newRegisters.sprY[addr >> 1] = value;
+            regValue.current.sprY[addr >> 1] = value;
             break;
             
         case 0x10: // Sprite X (upper bit)
             
             for (unsigned i = 0; i < 8; i++) {
-                newRegisters.sprX[i] &= 0xFF;
-                newRegisters.sprX[i] |= GET_BIT(value, i) ? 0x100 : 0;
+                regValue.current.sprX[i] &= 0xFF;
+                regValue.current.sprX[i] |= GET_BIT(value, i) ? 0x100 : 0;
             }
             
             for (unsigned i = 0; i < 8; i++) {
@@ -254,16 +254,16 @@ VIC::poke(uint16_t addr, uint8_t value)
             }
 
             for (unsigned i = 0; i < 8; i++) {
-                assert(newRegisters.sprX[i] == sprXCoord[i].current());
+                assert(regValue.current.sprX[i] == sprXCoord[i].current());
             }
             break;
             
         case 0x11: // Control register 1
             
-            assert(registers.ctrl1 == control1.current());
+            assert(regValue.delayed.ctrl1 == control1.current());
             if ((control1.current() & 0x80) != (value & 0x80)) {
                 
-                newRegisters.ctrl1 = value;
+                regValue.current.ctrl1 = value;
                 control1.write(value);
                 
                 // Check if we need to trigger a rasterline interrupt
@@ -272,7 +272,7 @@ VIC::poke(uint16_t addr, uint8_t value)
                 
             } else {
                 
-                newRegisters.ctrl1 = value;
+                regValue.current.ctrl1 = value;
                 control1.write(value);
             }
             
@@ -311,13 +311,13 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x15: // SPRITE_ENABLED
             
-            newRegisters.sprEnable = value;
+            regValue.current.sprEnable = value;
             break;
             
         case 0x16: // CONTROL_REGISTER_2
             
             control2.write(value);
-            newRegisters.ctrl2 = value;
+            regValue.current.ctrl2 = value;
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
             
@@ -326,7 +326,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x17: // SPRITE Y EXPANSION
            
-            newRegisters.sprExpandY = value;
+            regValue.current.sprExpandY = value;
             cleared_bits_in_d017 = (~value) & (~expansionFF);
             
             /* "The expansion flip flip is set as long as the bit in MxYE in
@@ -373,17 +373,17 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x1B: // Sprite priority
             
-            newRegisters.sprPriority = value;
+            regValue.current.sprPriority = value;
             break;
             
         case 0x1C: // Sprite multicolor
             
-            newRegisters.sprMC = value;
+            regValue.current.sprMC = value;
             break;
             
         case 0x1D: // SPRITE_X_EXPAND
             sprXExpand.write(value);
-            newRegisters.sprExpandX = value; 
+            regValue.current.sprExpandX = value;
             delay |= VICUpdateRegisters0; // TODO: Replace by break later
             return;
             
@@ -409,11 +409,11 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2E:
             
             // Schedule the new color to show up in the next cycle
-            newRegisters.colors[addr - 0x20] = value & 0xF;
+            regValue.current.colors[addr - 0x20] = value & 0xF;
             
             // Emulate the gray dot bug
             if (hasGrayDotBug() && emulateGrayDotBug) {
-                registers.colors[addr - 0x20] = 0xF;
+                regValue.delayed.colors[addr - 0x20] = 0xF;
             }
             
             // DEPRECATED CALL:

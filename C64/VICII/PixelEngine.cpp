@@ -160,8 +160,8 @@ PixelEngine::drawBorder()
     
     if (vic->mainFrameFF.delayed()) {
         
-        assert(vic->borderColor.delayed() == vic->registers.colors[COLREG_BORDER]);
-        assert(vic->borderColor.current() == vic->newRegisters.colors[COLREG_BORDER]);
+        assert(vic->borderColor.delayed() == vic->regValue.delayed.colors[COLREG_BORDER]);
+        assert(vic->borderColor.current() == vic->regValue.current.colors[COLREG_BORDER]);
         drawFramePixel(0, vic->borderColor.delayed());
         drawFramePixels(1, 7, vic->borderColor.current());
     }
@@ -171,8 +171,8 @@ void
 PixelEngine::drawBorder17()
 {
     
-    assert(vic->borderColor.delayed() == vic->registers.colors[COLREG_BORDER]);
-    assert(vic->borderColor.current() == vic->newRegisters.colors[COLREG_BORDER]);
+    assert(vic->borderColor.delayed() == vic->regValue.delayed.colors[COLREG_BORDER]);
+    assert(vic->borderColor.current() == vic->regValue.current.colors[COLREG_BORDER]);
     assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
     assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
 
@@ -242,10 +242,10 @@ PixelEngine::drawCanvas()
     drawCanvasPixel(0, mode, d016, xscroll == 0, true);
     
     // After the first pixel, color register changes show up
-    vic->registers.colors[COLREG_BG0] = vic->newRegisters.colors[COLREG_BG0];
-    vic->registers.colors[COLREG_BG1] = vic->newRegisters.colors[COLREG_BG1];
-    vic->registers.colors[COLREG_BG2] = vic->newRegisters.colors[COLREG_BG2];
-    vic->registers.colors[COLREG_BG3] = vic->newRegisters.colors[COLREG_BG3];
+    vic->regValue.delayed.colors[COLREG_BG0] = vic->regValue.current.colors[COLREG_BG0];
+    vic->regValue.delayed.colors[COLREG_BG1] = vic->regValue.current.colors[COLREG_BG1];
+    vic->regValue.delayed.colors[COLREG_BG2] = vic->regValue.current.colors[COLREG_BG2];
+    vic->regValue.delayed.colors[COLREG_BG3] = vic->regValue.current.colors[COLREG_BG3];
 
     drawCanvasPixel(1, mode, d016, xscroll == 1, true);
     drawCanvasPixel(2, mode, d016, xscroll == 2, false);
@@ -397,20 +397,20 @@ PixelEngine::drawSprites()
             continue;
         
         spriteXCoord = vic->sprXCoord[i].delayed(); // GET RID OF THIS VAR
-        assert(spriteXCoord == vic->registers.sprX[i]);
+        assert(spriteXCoord == vic->regValue.delayed.sprX[i]);
         spriteXExpand = GET_BIT(oldSprXExpand, i);
-        assert(oldSprXExpand == vic->registers.sprExpandX);
+        assert(oldSprXExpand == vic->regValue.delayed.sprExpandX);
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
         
         // Load colors for the first pixel
-        assert(oldExtraColor1 == vic->registers.colors[COLREG_SPR_EX1]);
-        assert(oldExtraColor2 == vic->registers.colors[COLREG_SPR_EX2]);
+        assert(oldExtraColor1 == vic->regValue.delayed.colors[COLREG_SPR_EX1]);
+        assert(oldExtraColor2 == vic->regValue.delayed.colors[COLREG_SPR_EX2]);
         sprExtraCol1 = oldExtraColor1;
         sprExtraCol2 = oldExtraColor2;
         sprCol[i] = vic->sprColor[i].delayed();
-        assert(sprCol[i] == vic->registers.colors[COLREG_SPR0 + i]);
+        assert(sprCol[i] == vic->regValue.delayed.colors[COLREG_SPR0 + i]);
         
         // Draw first pixel
         if (oldOnOff) {
@@ -418,12 +418,12 @@ PixelEngine::drawSprites()
         }
         
         // Load colors for the other pixel
-        assert(newExtraColor1 == vic->newRegisters.colors[COLREG_SPR_EX1]);
-        assert(newExtraColor2 == vic->newRegisters.colors[COLREG_SPR_EX2]);
+        assert(newExtraColor1 == vic->regValue.current.colors[COLREG_SPR_EX1]);
+        assert(newExtraColor2 == vic->regValue.current.colors[COLREG_SPR_EX2]);
         sprExtraCol1 = newExtraColor1;
         sprExtraCol2 = newExtraColor2;
         sprCol[i] = vic->sprColor[i].current();
-        assert(sprCol[i] == vic->newRegisters.colors[COLREG_SPR0 + i]);
+        assert(sprCol[i] == vic->regValue.current.colors[COLREG_SPR0 + i]);
         
         // Draw the next three pixels
         if (oldOnOff) {
@@ -439,7 +439,7 @@ PixelEngine::drawSprites()
             
             // If spriteXexpand has changed, it shows up at this point in time.
             spriteXExpand = GET_BIT(newSprXExpand, i);
-            assert(newSprXExpand == vic->newRegisters.sprExpandX);
+            assert(newSprXExpand == vic->regValue.current.sprExpandX);
 
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
@@ -458,7 +458,7 @@ PixelEngine::drawSpritePixel(unsigned spriteNr,
     assert(sprite_sr[spriteNr].remaining_bits >= -1);
     assert(sprite_sr[spriteNr].remaining_bits <= 26);
     
-    assert(vic->iomem[0x1C] == vic->newRegisters.sprMC);
+    assert(vic->iomem[0x1C] == vic->regValue.current.sprMC);
     bool multicol = GET_BIT(vic->iomem[0x1C], spriteNr);
 
     // Load shift register if applicable
@@ -525,7 +525,7 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
         case STANDARD_TEXT:
             
             col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-            assert(col[0] == vic->registers.colors[COLREG_BG0]);
+            assert(col[0] == vic->regValue.delayed.colors[COLREG_BG0]);
             col[1] = colorSpace;
             break;
             
@@ -538,14 +538,14 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
                 col[2] = old ? vic->bgColor[2].delayed() : vic->bgColor[2].current();
                 col[3] = colorSpace & 0x07;
 
-                assert(col[0] == vic->registers.colors[COLREG_BG0]);
-                assert(col[1] == vic->registers.colors[COLREG_BG1]);
-                assert(col[2] == vic->registers.colors[COLREG_BG2]);
+                assert(col[0] == vic->regValue.delayed.colors[COLREG_BG0]);
+                assert(col[1] == vic->regValue.delayed.colors[COLREG_BG1]);
+                assert(col[2] == vic->regValue.delayed.colors[COLREG_BG2]);
 
             } else {
                 
                 col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-                assert(col[0] == vic->registers.colors[COLREG_BG0]);
+                assert(col[0] == vic->regValue.delayed.colors[COLREG_BG0]);
                 col[1] = colorSpace;
 
             }
@@ -560,7 +560,7 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
         case MULTICOLOR_BITMAP:
             
             col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-            assert(col[0] == vic->registers.colors[COLREG_BG0]);
+            assert(col[0] == vic->regValue.delayed.colors[COLREG_BG0]);
             col[1] = characterSpace >> 4;
             col[2] = characterSpace & 0x0F;
             col[3] = colorSpace;
@@ -571,7 +571,7 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
             col[0] = old ?
             vic->bgColor[characterSpace >> 6].delayed() :
             vic->bgColor[characterSpace >> 6].current();
-            assert(col[0] == vic->registers.colors[COLREG_BG0 + (characterSpace >> 6)]);
+            assert(col[0] == vic->regValue.delayed.colors[COLREG_BG0 + (characterSpace >> 6)]);
             col[1] = colorSpace;
             break;
             
