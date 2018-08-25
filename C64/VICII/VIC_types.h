@@ -46,6 +46,26 @@ enum VICIIColors {
     VICII_LIGHT_GREY  = 0xF
 };
 
+//! @brief    VIC color registers (D020 - D02E)
+enum VICIIColorRegs {
+    COLREG_BORDER     = 0x0,
+    COLREG_BG0        = 0x1,
+    COLREG_BG1        = 0x2,
+    COLREG_BG2        = 0x3,
+    COLREG_BG3        = 0x4,
+    COLREG_SPR_EX1    = 0x5,
+    COLREG_SPR_EX2    = 0x6,
+    COLREG_SPR0       = 0x7,
+    COLREG_SPR1       = 0x8,
+    COLREG_SPR2       = 0x9,
+    COLREG_SPR3       = 0xA,
+    COLREG_SPR4       = 0xB,
+    COLREG_SPR5       = 0xC,
+    COLREG_SPR6       = 0xD,
+    COLREG_SPR7       = 0xE
+};
+
+
 //
 // NTSC constants
 //

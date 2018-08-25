@@ -156,8 +156,12 @@ PixelEngine::drawOutsideBorder()
 void
 PixelEngine::drawBorder()
 {
+    assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
+    
     if (vic->mainFrameFF.delayed()) {
         
+        assert(vic->borderColor.delayed() == vic->registers.colors[COLREG_BORDER]);
+        assert(vic->borderColor.current() == vic->newRegisters.colors[COLREG_BORDER]);
         drawFramePixel(0, vic->borderColor.delayed());
         drawFramePixels(1, 7, vic->borderColor.current());
     }
@@ -166,6 +170,12 @@ PixelEngine::drawBorder()
 void
 PixelEngine::drawBorder17()
 {
+    
+    assert(vic->borderColor.delayed() == vic->registers.colors[COLREG_BORDER]);
+    assert(vic->borderColor.current() == vic->newRegisters.colors[COLREG_BORDER]);
+    assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
+    assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
+
     if (vic->mainFrameFF.delayed() && !vic->mainFrameFF.current()) {
         
         // 38 column mode (only pixels 0...6 are drawn)
@@ -182,6 +192,9 @@ PixelEngine::drawBorder17()
 void
 PixelEngine::drawBorder55()
 {
+    assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
+    assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
+    
     if (!vic->mainFrameFF.delayed() && vic->mainFrameFF.current()) {
         
         // 38 column mode (border starts at pixel 7)

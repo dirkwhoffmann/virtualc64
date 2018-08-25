@@ -310,7 +310,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2E:
             
             // Schedule the new color to show up in the next cycle
-            newRegisters.colors[addr - 0x20] = value;
+            newRegisters.colors[addr - 0x20] = value & 0xF;
             delay |= VICUpdateRegisters0;
             
             // Emulate the gray dot bug

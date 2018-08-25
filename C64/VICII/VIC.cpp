@@ -143,12 +143,6 @@ VIC::reset()
     // Internal state
     yCounter = PAL_HEIGHT;
     
-    // Preset some video parameters to show a blank sreen on power up
-    iomem[0x18] = 0x10;
-    // setScreenMemoryAddr(0x400);
-    memset(&c64->mem.ram[0x400], 32, 40*25);
-	expansionFF = 0xFF;
-    
     // Reset timed delay variables
     baLine.reset(0);
     mainFrameFF.reset(0);
@@ -170,11 +164,20 @@ VIC::reset()
     for (unsigned i = 0; i < 8; i++)
         sprColor[i].reset(0);
     
+    // Preset some video parameters to show a blank sreen on power up
+    iomem[0x18] = 0x10;
+    // setScreenMemoryAddr(0x400);
+    memset(&c64->mem.ram[0x400], 32, 40*25);
+    expansionFF = 0xFF;
+    registers.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
+    newRegisters.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
+    registers.colors[COLREG_BG0] = VICII_BLUE;
+    newRegisters.colors[COLREG_BG0] = VICII_BLUE;
+    
     leftComparisonVal = leftComparisonValue();
     rightComparisonVal = rightComparisonValue();
     upperComparisonVal = upperComparisonValue();
     lowerComparisonVal = lowerComparisonValue();
-    
     
 	// Disable cheating by default
 	hideSprites = false;
@@ -517,6 +520,8 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
      */
     if (comparisonValue == rightComparisonVal) {
         mainFrameFF.write(true);
+        newFlipflops.main = true;
+        delay |= VICUpdateFlipflops0;
     }
 }
 
