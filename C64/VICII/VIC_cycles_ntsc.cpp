@@ -47,7 +47,6 @@ VIC::cycle1ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -81,7 +80,6 @@ VIC::cycle2ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -103,7 +101,6 @@ VIC::cycle3ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -127,7 +124,6 @@ VIC::cycle4ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -149,7 +145,6 @@ VIC::cycle5ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -173,7 +168,6 @@ VIC::cycle6ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -195,7 +189,6 @@ VIC::cycle7ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -219,7 +212,6 @@ VIC::cycle8ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -241,7 +233,6 @@ VIC::cycle9ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -262,7 +253,6 @@ VIC::cycle10ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -285,7 +275,6 @@ VIC::cycle11ntsc()
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -310,7 +299,6 @@ VIC::cycle55ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -334,7 +322,6 @@ VIC::cycle57ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -379,7 +366,6 @@ VIC::cycle58ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -404,7 +390,6 @@ VIC::cycle59ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -429,7 +414,6 @@ VIC::cycle60ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -456,7 +440,6 @@ VIC::cycle61ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -478,7 +461,6 @@ VIC::cycle62ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -502,7 +484,6 @@ VIC::cycle63ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -529,7 +510,6 @@ VIC::cycle64ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -557,7 +537,6 @@ VIC::cycle65ntsc()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }

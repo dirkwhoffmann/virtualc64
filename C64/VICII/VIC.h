@@ -745,12 +745,7 @@ private:
      *            the yCounter is incremented with a little delay.
      */
     uint16_t rasterline();
-    
-    /*! @brief    Increases the X counter by 8
-     *  @details  This functions is called at the end of each cycle.
-     */
-    void countX() { xCounter += 8; }
-    
+        
     /*! @brief    Indicates if yCounter needs to be reset in this rasterline.
      *  @details  PAL models reset the yCounter in cycle 2 in the first
      *            rasterline wheras NTSC models reset the yCounter in cycle 2
@@ -1083,6 +1078,7 @@ public:
     #define C_ACCESS if (badLine) cAccess();
     
     #define END_CYCLE \
+    xCounter += 8; \
     if (unlikely(delay != 0)) { processDelayedActions(); }
     
     // #define BA_LINE(x) if ((x) != baLine.current()) { updateBA(x); }

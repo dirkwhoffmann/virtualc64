@@ -87,7 +87,6 @@ VIC::cycle1pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -119,7 +118,6 @@ VIC::cycle2pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -143,7 +141,6 @@ VIC::cycle3pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -165,7 +162,6 @@ VIC::cycle4pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -190,7 +186,6 @@ VIC::cycle5pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -212,7 +207,6 @@ VIC::cycle6pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -236,7 +230,6 @@ VIC::cycle7pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -258,7 +251,6 @@ VIC::cycle8pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -282,7 +274,6 @@ VIC::cycle9pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -304,7 +295,6 @@ VIC::cycle10pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -328,7 +318,6 @@ VIC::cycle11pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -360,7 +349,6 @@ VIC::cycle12()
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -382,7 +370,6 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -417,9 +404,9 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    xCounter = 0;
     
     END_CYCLE
+    xCounter = 0;
 }
 
 void
@@ -443,7 +430,6 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     // Finalize
     cleared_bits_in_d017 = 0;
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -471,7 +457,6 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -497,7 +482,6 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -524,7 +508,6 @@ VIC::cycle18() // SpriteX: 32 - 39
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -549,7 +532,6 @@ VIC::cycle19to54()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -574,7 +556,6 @@ VIC::cycle55pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -601,7 +582,6 @@ VIC::cycle56()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -625,7 +605,6 @@ VIC::cycle57pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -682,7 +661,6 @@ VIC::cycle58pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -707,7 +685,6 @@ VIC::cycle59pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -733,7 +710,6 @@ VIC::cycle60pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -759,7 +735,6 @@ VIC::cycle61pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -783,7 +758,6 @@ VIC::cycle62pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
@@ -806,7 +780,6 @@ VIC::cycle63pal()
     
     // Finalize
     updateDisplayState();
-    countX();
     
     END_CYCLE
 }
