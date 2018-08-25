@@ -278,13 +278,12 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             // Check the DEN bit. If it gets set somehwere in line 30, a bad
             // line conditions occurs.
-            if (c64->rasterline == 0x30 && (value & 0x10) != 0) {
+            if (c64->rasterline == 0x30 && (value & 0x10))
                 DENwasSetInRasterline30 = true;
-            }
-            updateBadLineCondition();
-            if (badLine) {
+            
+            if ((badLine = badLineCondition()))
                 delay |= VICSetDisplayState0;
-            }
+            
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
             

@@ -875,20 +875,8 @@ public:
 
 private:
     
-    /*! @brief    Returns true if the bad line condition holds.
-     *  @details  "A Bad Line Condition is given at any arbitrary clock cycle,
-     *             if at the negative edge of ø0 at the beginning of the cycle
-     *             [1] RASTER >= $30 and RASTER <= $f7 and
-     *             [2] the lower three bits of RASTER are equal to YSCROLL and
-     *             [3] if the DEN bit was set during an arbitrary cycle of
-     *                 raster line $30." [C.B.]
-     */
-    void updateBadLineCondition() {
-        badLine =
-            yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
-            (yCounter & 0x07) == (control1.current() & 0x07) /* [2] */ &&
-            DENwasSetInRasterline30 /* [3] */;
-    }
+    //! @brief    Returns true if the bad line condition holds.
+    bool badLineCondition();
     
     /*! @brief    Update display state
      *  @details  Invoked at the end of each VIC cycle
