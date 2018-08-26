@@ -63,17 +63,17 @@ VIC::getSpriteInfo(unsigned i)
     SpriteInfo info;
     
     info.enabled = GET_BIT(spriteOnOff.current(), i);
-    info.x = sprXCoord[i].current();
-    info.y = iomem[1 + 2*i];
-    info.color = sprColor[i].current() & 0xF;
-    info.multicolor = GET_BIT(iomem[0x1C], i);
-    info.extraColor1 = sprExtraColor1.current() & 0xF;
-    info.extraColor2 = sprExtraColor2.current() & 0xF;
-    info.expandX = GET_BIT(sprXExpand.current(), i);
-    info.expandY = GET_BIT(iomem[0x17], i);
-    info.priority = GET_BIT(iomem[0x1B], i);
-    info.collidesWithSprite = GET_BIT(iomem[0x1E], i);
-    info.collidesWithBackground = GET_BIT(iomem[0x1F], i);
+    info.x = reg.current.sprX[i];
+    info.y = reg.current.sprY[i];
+    info.color = reg.current.colors[COLREG_SPR0 + i];
+    info.extraColor1 = reg.current.colors[COLREG_SPR_EX1];
+    info.extraColor2 = reg.current.colors[COLREG_SPR_EX2];
+    info.multicolor = GET_BIT(reg.current.sprMC, i);
+    info.expandX = GET_BIT(reg.current.sprExpandX, i);
+    info.expandY = GET_BIT(reg.current.sprExpandY, i);
+    info.priority = GET_BIT(reg.current.sprPriority, i);
+    info.collidesWithSprite = GET_BIT(spriteSpriteCollision, i);
+    info.collidesWithBackground = GET_BIT(spriteBackgroundColllision, i);
     
     return info;
 }

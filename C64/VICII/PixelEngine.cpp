@@ -459,7 +459,7 @@ PixelEngine::drawSpritePixel(unsigned spriteNr,
     assert(sprite_sr[spriteNr].remaining_bits <= 26);
     
     assert(vic->iomem[0x1C] == vic->reg.current.sprMC);
-    bool multicol = GET_BIT(vic->iomem[0x1C], spriteNr);
+    bool multicol = GET_BIT(vic->reg.current.sprMC, spriteNr);
 
     // Load shift register if applicable
     if (load) {

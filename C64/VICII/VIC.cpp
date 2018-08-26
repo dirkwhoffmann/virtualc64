@@ -853,7 +853,7 @@ VIC::turnSpritesOnOrOff()
     
     uint8_t onOff = spriteOnOff.current();
     assert(iomem[0x15] == reg.current.sprEnable);
-    onOff |= iomem[0x15] & compareSpriteY();
+    onOff |= reg.current.sprEnable & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
 }
