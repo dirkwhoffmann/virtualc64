@@ -818,12 +818,16 @@ public:
 		
     /*! @brief    Returns the current value of the DEN (Display ENabled) bit.
      */
-    bool DENbit() { return GET_BIT(control1.current(), 4); }
+    bool DENbit() {
+        assert(control1.current() == reg.current.ctrl1);
+        return GET_BIT(control1.current(), 4); }
 
     /*! @brief    Returns the value of the BMM (Bit Map Mode) bit.
      *  @details  The value is returned as it is seen during a g-access.
      */
     bool BMMbit() {
+        assert(control1.delayed() == reg.delayed.ctrl1);
+        assert(control1.current() == reg.current.ctrl1);
         return is856x() ?
         GET_BIT(control1.delayed(), 5) :
         GET_BIT(control1.delayed(), 5) | GET_BIT(control1.current(), 5);
@@ -837,6 +841,8 @@ public:
     
     //! @brief    Returns the current value of the ECM bit.
     bool ECMbit() {
+        assert(control1.delayed() == reg.delayed.ctrl1);
+        assert(control1.current() == reg.current.ctrl1);
         return is856x() ?
         GET_BIT(control1.delayed(), 6) :
         GET_BIT(control1.current(), 6);

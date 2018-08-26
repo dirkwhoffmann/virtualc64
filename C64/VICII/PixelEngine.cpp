@@ -229,6 +229,8 @@ PixelEngine::drawCanvas()
      *  $d016." [C.B.]
      */
     
+    assert(vic->control1.delayed() == vic->reg.delayed.ctrl1);
+    assert(vic->control2.delayed() == vic->reg.delayed.ctrl2);
     d011 = vic->control1.delayed();
     d016 = vic->control2.delayed();
     xscroll = d016 & 0x07;
@@ -250,6 +252,7 @@ PixelEngine::drawCanvas()
     newD016 = vic->control2.current();
 
     // In newer VICIIs, the one bits of D011 show up, too.
+    assert(vic->control1.current() == vic->reg.current.ctrl1);
     if (!vic->is856x()) {
         d011 |= vic->control1.current();
     }
@@ -260,6 +263,7 @@ PixelEngine::drawCanvas()
     drawCanvasPixel(5, mode, d016, xscroll == 5, false);
     
     // In newer VICIIs, the zero bits of D011 show up here.
+    assert(vic->control1.current() == vic->reg.current.ctrl1);
     if (!vic->is856x()) {
         d011 = vic->control1.current();
         oldMode = mode;

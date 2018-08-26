@@ -240,9 +240,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
-            
-            delay |= VICUpdateRegisters; // TODO: Replace by break later
-            return;
+            break;
             
         case 0x12: // RASTER_COUNTER
             
@@ -272,9 +270,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             reg.current.ctrl2 = value;
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
-            
-            delay |= VICUpdateRegisters; // TODO: Replace by break later
-            return;
+            break;
             
         case 0x17: // SPRITE Y EXPANSION
            
@@ -512,6 +508,7 @@ VIC::gAccess()
         //  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
         
         // Determine value of BMM bit
+        assert(control1.delayed() == reg.delayed.ctrl1);
         uint8_t bmm = GET_BIT(control1.delayed(), 5);
         if (!is856x()) {
             bmm |= GET_BIT(control1.current(), 5);

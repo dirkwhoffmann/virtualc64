@@ -179,8 +179,8 @@ VIC::ping()
 void 
 VIC::dumpState()
 {
-    uint8_t ctrl1 = control1.current();
-    uint8_t ctrl2 = control2.current();
+    uint8_t ctrl1 = reg.current.ctrl1;
+    uint8_t ctrl2 = reg.current.ctrl2; 
     int yscroll = ctrl1 & 0x07;
     int xscroll = ctrl2 & 0x07;
     DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
@@ -510,6 +510,7 @@ VIC::badLineCondition() {
      * [3] if the DEN bit was set during an arbitrary cycle of
      *     raster line $30." [C.B.]
      */
+    assert(control1.current() == reg.current.ctrl1);
     return
     yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
     (yCounter & 0x07) == (control1.current() & 0x07) /* [2] */ &&
