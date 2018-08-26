@@ -118,8 +118,9 @@ private:
     //! @brief    Interrupt Mask Register ($D01A)
     uint8_t imr;
 
+    
     //
-    // Chip interior
+    // Chip internals
     //
     
     // IRQ <---------------------------------+
@@ -211,17 +212,17 @@ private:
      */
     uint8_t rc;
     
-    /*! @brief    cAcess color storage (7)
-     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and
-     *            fills the array with color information.
-     */
-    uint8_t colorSpace[40];
-    
-    /*! @brief    cAcess character storage (6)
-     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and
+    /*! @brief    Video matrix (6)
+     *  @details  Every 8th rasterline, the VIC chips performs a c-access and
      *            fills this array with character information.
      */
-    uint8_t characterSpace[40];
+    uint8_t videoMatrix[40];
+    
+    /*! @brief    Color line (7)
+     *  @details  Every 8th rasterline, the VIC chips performs a c-access and
+     *            fills the array with color information.
+     */
+    uint8_t colorLine[40];
     
     /*! @brief    Video matrix line index
      *  @details  "Besides this, there is a 6 bit counter with reset input that
