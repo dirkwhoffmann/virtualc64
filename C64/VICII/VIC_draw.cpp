@@ -57,8 +57,10 @@ void
 VIC::drawBorder()
 {
     if (flipflops.delayed.main) {
-        drawFramePixel(0, reg.delayed.colors[COLREG_BORDER]);
-        drawFramePixels(1, 7, reg.current.colors[COLREG_BORDER]);
+        SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
+        for (unsigned pixel = 1; pixel <= 7; pixel++) {
+            SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
+        }
     }
 }
 
@@ -68,8 +70,10 @@ VIC::drawBorder17()
     if (flipflops.delayed.main && !flipflops.current.main) {
         
         // 38 column mode (only pixels 0...6 are drawn)
-        drawFramePixel(0, reg.delayed.colors[COLREG_BORDER]);
-        drawFramePixels(1, 6, reg.current.colors[COLREG_BORDER]);
+        SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
+        for (unsigned pixel = 1; pixel <= 6; pixel++) {
+            SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
+        }
         
     } else {
 
@@ -84,7 +88,7 @@ VIC::drawBorder55()
     if (!flipflops.delayed.main && flipflops.current.main) {
         
         // 38 column mode (border starts at pixel 7)
-        drawFramePixel(7, reg.delayed.colors[COLREG_BORDER]);
+        SET_FRAME_PIXEL(7, reg.delayed.colors[COLREG_BORDER]);
   
     } else {
         
@@ -109,7 +113,9 @@ VIC::drawCanvas()
          *  by the border)." [C.B.]
          */
         // TODO: This is wrong, border-bm-idle test fails
-        setEightBackgroundPixels(reg.current.colors[COLREG_BG0]);
+        for (unsigned pixel = 0; pixel < 8; pixel++) {
+            SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BG0]);
+        }
         return;
     }
     
@@ -523,41 +529,30 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
 // Low level drawing (pixel buffer access)
 //
 
+/*
 void
-VIC::drawFramePixels(unsigned first, unsigned last, uint8_t color)
+VIC::setFramePixels(unsigned first, unsigned last, uint8_t color)
 {
     assert(bufferoffset + last < NTSC_PIXELS);
     
     for (unsigned pixelNr = first; pixelNr <= last; pixelNr++) {
-        
-        // pixelBuffer[bufferoffset + pixelNr] = rgbaTable[color & 0xF];
-        colBuffer[pixelNr] = color;
-        zBuffer[pixelNr] = BORDER_LAYER_DEPTH;
-
-        // Disable sprite/foreground collision detection in border
-        pixelSource[pixelNr] &= (~0x80);
+        SET_FRAME_PIXEL(pixelNr, color);
     }
 }
-
+*/
+    
 /*
 void
-VIC::drawForegroundPixel(unsigned pixelNr, uint8_t color)
+VIC::setFramePixels(uint8_t color)
 {
-    colBuffer[pixelNr] = color;
-    zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
-    pixelSource[pixelNr] = 0x80;
+    assert(bufferoffset + last < NTSC_PIXELS);
+    
+    for (unsigned pixelNr = 0; pixelNr < 8; pixelNr++) {
+        SET_FRAME_PIXEL(pixelNr, color);
+    }
 }
 */
-/*
-void
-VIC::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
-{
-    colBuffer[pixelNr] = color;
-    zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
-    pixelSource[pixelNr] = 0x00;
-}
-*/
-
+    
 void
 VIC::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
 {

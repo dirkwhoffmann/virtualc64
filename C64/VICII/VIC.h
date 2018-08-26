@@ -1406,30 +1406,34 @@ private:
     // Low level drawing (pixel buffer access)
     //
     
-    //! @brief    Draws the frame pixels for a certain range
-    void drawFramePixels(unsigned first, unsigned last, uint8_t color);
+    /*! @brief    Sets a single frame pixel
+     *! @note     The upper bit in pixelSource is cleared to prevent
+     *            sprite/foreground collision detection in border area.
+     */
+    #define SET_FRAME_PIXEL(pixelNr,color) { \
+        colBuffer[pixelNr] = color; \
+        zBuffer[pixelNr] = BORDER_LAYER_DEPTH; \
+        pixelSource[pixelNr] &= (~0x80); }
     
-    //! @brief    Draws a single frame pixel
-    void drawFramePixel(unsigned nr, uint8_t color) { drawFramePixels(nr, nr, color); }
+    //! @brief    Draws the frame pixels for a certain range
+    // void setFramePixels(unsigned first, unsigned last, uint8_t color);
     
     //! @brief    Draws all eight frame pixels of a single cycle
-    void drawFramePixels(uint8_t color) { drawFramePixels(0, 7, color); }
+    // void setFramePixels(uint8_t color);
     
-    //! @brief    Draw a single foreground pixel
-    // void drawForegroundPixel(unsigned pixelnr, uint8_t color);
-    #define SET_FOREGROUND_PIXEL(pixelNr,color) \
-    { colBuffer[pixelNr] = color; \
-    zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH; \
-    pixelSource[pixelNr] = 0x80; }
+    //! @brief    Sets a single foreground pixel
+    #define SET_FOREGROUND_PIXEL(pixelNr,color) { \
+        colBuffer[pixelNr] = color; \
+        zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH; \
+        pixelSource[pixelNr] = 0x80; }
  
-    //! @brief    Draw a single background pixel
-    // void drawBackgroundPixel(unsigned pixelNr, uint8_t color);
-    #define SET_BACKGROUND_PIXEL(pixelNr,color) \
-    { colBuffer[pixelNr] = color; \
-    zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH; \
-    pixelSource[pixelNr] = 0x00; }
+    //! @brief    Sets a single background pixel
+    #define SET_BACKGROUND_PIXEL(pixelNr,color) { \
+        colBuffer[pixelNr] = color; \
+        zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH; \
+        pixelSource[pixelNr] = 0x00; }
     
-    //! @brief    Draw eight background pixels in a row
+    //! @brief    Sets eight background pixels in a row
     void setEightBackgroundPixels(uint8_t color) {
         for (unsigned i = 0; i < 8; i++) {
             SET_BACKGROUND_PIXEL(i,color);
