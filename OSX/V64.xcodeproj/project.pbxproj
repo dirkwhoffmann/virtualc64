@@ -88,7 +88,7 @@
 		5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0ED20A77E90008BFA92 /* Mouse1351.cpp */; };
 		5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
-		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
+		506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* VIC_draw.cpp */; };
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
@@ -328,8 +328,7 @@
 		5058F0F120A77EDC008BFA92 /* NeosMouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeosMouse.h; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
-		506004641B78E9C500EBDD93 /* PixelEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelEngine.cpp; sourceTree = "<group>"; };
-		506004651B78E9C500EBDD93 /* PixelEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelEngine.h; sourceTree = "<group>"; };
+		506004641B78E9C500EBDD93 /* VIC_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_draw.cpp; sourceTree = "<group>"; };
 		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506B315020DCDF87007913A8 /* ROMFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ROMFile.cpp; sourceTree = "<group>"; };
@@ -661,12 +660,11 @@
 				501D2C7D1B85C0F700B1AD0F /* VIC_types.h */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
+				50FE7269212DE8F600E99755 /* VIC_memory.cpp */,
 				50340D3F20F63AFE009A53A5 /* VIC_cycles_pal.cpp */,
 				5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */,
 				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
-				506004651B78E9C500EBDD93 /* PixelEngine.h */,
-				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
-				50FE7269212DE8F600E99755 /* VIC_memory.cpp */,
+				506004641B78E9C500EBDD93 /* VIC_draw.cpp */,
 				50E542A4212E988A00026EEF /* VIC_debug.cpp */,
 			);
 			path = VICII;
@@ -1094,7 +1092,7 @@
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
 				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
-				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
+				506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				501DE30F20C9C41B00707130 /* version.cc in Sources */,
 				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
