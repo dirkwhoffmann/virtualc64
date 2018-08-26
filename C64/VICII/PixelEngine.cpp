@@ -37,11 +37,6 @@ VIC::~PixelEngine()
 void
 VIC::resetPixelEngine()
 {
-    // VirtualComponent::reset();
-    
-    // Establish bindings
-    vic = &c64->vic;
-    
     currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;
     bufferoffset = 0;
@@ -85,14 +80,14 @@ VIC::beginRasterlinePixelEngine()
     
     // Clear pixel buffer (has the same size as pixelSource and zBuffer)
     // 0xBB is a randomly chosen debug color
-    if (!vic->vblank)
+    if (!vblank)
         memset(pixelBuffer, 0xBB, sizeof(pixelSource));
 }
 
 void
 VIC::endRasterlinePixelEngine()
 {
-    if (!vic->vblank) {
+    if (!vblank) {
         
         // Make the border look nice (evetually, we should get rid of this)
         expandBorders();
@@ -116,8 +111,6 @@ VIC::endFramePixelEngine()
 void
 VIC::draw()
 {
-    // if (vic->vblank) return;
-        
     drawCanvas();
     drawBorder();
     drawSprites();
@@ -127,8 +120,6 @@ VIC::draw()
 void
 VIC::draw17()
 {
-    // if (vic->vblank) return;
-    
     drawCanvas();
     drawSprites();
     drawBorder17();
@@ -138,8 +129,6 @@ VIC::draw17()
 void
 VIC::draw55()
 {
-    // if (vic->vblank) return;
-    
     drawCanvas();
     drawSprites();
     drawBorder55();
@@ -149,35 +138,32 @@ VIC::draw55()
 void
 VIC::drawOutsideBorder()
 {
-    if (vic->vblank)
-        return;
-    
-    drawSprites();
+    if (!vblank) drawSprites();
 }
 
 void
 VIC::drawBorder()
 {
-    assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
+    assert(oldFlipflops.main == flipflops.delayed.main);
     
-    if (vic->oldFlipflops.main) {
+    if (oldFlipflops.main) {
         
-        drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
-        drawFramePixels(1, 7, vic->reg.current.colors[COLREG_BORDER]);
+        drawFramePixel(0, reg.delayed.colors[COLREG_BORDER]);
+        drawFramePixels(1, 7, reg.current.colors[COLREG_BORDER]);
     }
 }
 
 void
 VIC::drawBorder17()
 {
-    assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
-    assert(vic->newFlipflops.main == vic->flipflops.current.main);
+    assert(oldFlipflops.main == flipflops.delayed.main);
+    assert(newFlipflops.main == flipflops.current.main);
 
-    if (vic->flipflops.delayed.main && !vic->flipflops.current.main) {
+    if (flipflops.delayed.main && !flipflops.current.main) {
         
         // 38 column mode (only pixels 0...6 are drawn)
-        drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
-        drawFramePixels(1, 6, vic->reg.current.colors[COLREG_BORDER]);
+        drawFramePixel(0, reg.delayed.colors[COLREG_BORDER]);
+        drawFramePixels(1, 6, reg.current.colors[COLREG_BORDER]);
         
     } else {
 
@@ -189,13 +175,13 @@ VIC::drawBorder17()
 void
 VIC::drawBorder55()
 {
-    assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
-    assert(vic->newFlipflops.main == vic->flipflops.current.main);
+    assert(oldFlipflops.main == flipflops.delayed.main);
+    assert(newFlipflops.main == flipflops.current.main);
     
-    if (!vic->flipflops.delayed.main && vic->flipflops.current.main) {
+    if (!flipflops.delayed.main && flipflops.current.main) {
         
         // 38 column mode (border starts at pixel 7)
-        drawFramePixel(7, vic->reg.delayed.colors[COLREG_BORDER]);
+        drawFramePixel(7, reg.delayed.colors[COLREG_BORDER]);
   
     } else {
         
@@ -213,14 +199,14 @@ VIC::drawCanvas()
      *  (see section 3.9.)." [C.B.]
      */
     
-    if (vic->flipflops.delayed.vertical) {
+    if (flipflops.delayed.vertical) {
         
         /* "Outside of the display column and if the flip-flop is set, the last
          *  current background color is displayed (this area is normally covered
          *  by the border)." [C.B.]
          */
         // TODO: This is wrong, border-bm-idle test fails
-        drawEightBackgroundPixels(vic->reg.current.colors[COLREG_BG0]);
+        drawEightBackgroundPixels(reg.current.colors[COLREG_BG0]);
         return;
     }
     
@@ -230,29 +216,29 @@ VIC::drawCanvas()
      *  $d016." [C.B.]
      */
     
-    d011 = vic->reg.delayed.ctrl1;
-    d016 = vic->reg.delayed.ctrl2;
+    d011 = reg.delayed.ctrl1;
+    d016 = reg.delayed.ctrl2;
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
     drawCanvasPixel(0, mode, d016, xscroll == 0, true);
     
     // After the first pixel, color register changes show up
-    vic->reg.delayed.colors[COLREG_BG0] = vic->reg.current.colors[COLREG_BG0];
-    vic->reg.delayed.colors[COLREG_BG1] = vic->reg.current.colors[COLREG_BG1];
-    vic->reg.delayed.colors[COLREG_BG2] = vic->reg.current.colors[COLREG_BG2];
-    vic->reg.delayed.colors[COLREG_BG3] = vic->reg.current.colors[COLREG_BG3];
+    reg.delayed.colors[COLREG_BG0] = reg.current.colors[COLREG_BG0];
+    reg.delayed.colors[COLREG_BG1] = reg.current.colors[COLREG_BG1];
+    reg.delayed.colors[COLREG_BG2] = reg.current.colors[COLREG_BG2];
+    reg.delayed.colors[COLREG_BG3] = reg.current.colors[COLREG_BG3];
 
     drawCanvasPixel(1, mode, d016, xscroll == 1, true);
     drawCanvasPixel(2, mode, d016, xscroll == 2, false);
     drawCanvasPixel(3, mode, d016, xscroll == 3, false);
 
     // After pixel 4, a change in D016 affects the display mode.
-    newD016 = vic->reg.current.ctrl2;
+    newD016 = reg.current.ctrl2;
 
     // In newer VICIIs, the one bits of D011 show up, too.
-    if (!vic->is856x()) {
-        d011 |= vic->reg.current.ctrl1;
+    if (!is856x()) {
+        d011 |= reg.current.ctrl1;
     }
     oldMode = mode;
     mode = (d011 & 0x60) | (newD016 & 0x10);
@@ -261,8 +247,8 @@ VIC::drawCanvas()
     drawCanvasPixel(5, mode, d016, xscroll == 5, false);
     
     // In newer VICIIs, the zero bits of D011 show up here.
-    if (!vic->is856x()) {
-        d011 = vic->reg.current.ctrl1;
+    if (!is856x()) {
+        d011 = reg.current.ctrl1;
         oldMode = mode;
         mode = (d011 & 0x60) | (newD016 & 0x10);
     }
@@ -297,7 +283,7 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
      */
     if (loadShiftReg && sr.canLoad) {
         
-        uint32_t result = vic->gAccessResult.delayed();
+        uint32_t result = gAccessResult.delayed();
      
         // Load shift register
         sr.data = BYTE0(result);
@@ -359,16 +345,16 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
 void
 VIC::drawSprites()
 {
-    uint8_t oldSpriteOnOff = vic->spriteOnOff.delayed();
-    uint8_t newSpriteOnOff = vic->spriteOnOff.readWithDelay(2);
+    uint8_t oldSpriteOnOff = spriteOnOff.delayed();
+    uint8_t newSpriteOnOff = spriteOnOff.readWithDelay(2);
 
 
     // Quick exit
     if (!oldSpriteOnOff && !newSpriteOnOff)
         return;
     
-    uint8_t firstDMA = vic->isFirstDMAcycle;
-    uint8_t secondDMA = vic->isSecondDMAcycle;
+    uint8_t firstDMA = isFirstDMAcycle;
+    uint8_t secondDMA = isSecondDMAcycle;
         
     // For all sprites ...
     for (unsigned i = 0; i < 8; i++) {
@@ -379,16 +365,16 @@ VIC::drawSprites()
         if (!oldOnOff && !newOnOff)
             continue;
         
-        spriteXCoord = vic->reg.delayed.sprX[i]; // TODO: GET RID OF spriteXCoord
-        spriteXExpand = GET_BIT(vic->reg.delayed.sprExpandX, i);
+        spriteXCoord = reg.delayed.sprX[i]; // TODO: GET RID OF spriteXCoord
+        spriteXExpand = GET_BIT(reg.delayed.sprExpandX, i);
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
         
         // Load colors for the first pixel
-        sprExtraCol1 = vic->reg.delayed.colors[COLREG_SPR_EX1];
-        sprExtraCol2 = vic->reg.delayed.colors[COLREG_SPR_EX2];
-        sprCol[i] = vic->reg.delayed.colors[COLREG_SPR0 + i];
+        sprExtraCol1 = reg.delayed.colors[COLREG_SPR_EX1];
+        sprExtraCol2 = reg.delayed.colors[COLREG_SPR_EX2];
+        sprCol[i] = reg.delayed.colors[COLREG_SPR0 + i];
         
         // Draw first pixel
         if (oldOnOff) {
@@ -396,9 +382,9 @@ VIC::drawSprites()
         }
         
         // Load colors for the other pixel
-        sprExtraCol1 = vic->reg.current.colors[COLREG_SPR_EX1];
-        sprExtraCol2 = vic->reg.current.colors[COLREG_SPR_EX2];
-        sprCol[i] = vic->reg.current.colors[COLREG_SPR0 + i];
+        sprExtraCol1 = reg.current.colors[COLREG_SPR_EX1];
+        sprExtraCol2 = reg.current.colors[COLREG_SPR_EX2];
+        sprCol[i] = reg.current.colors[COLREG_SPR0 + i];
         
         // Draw the next three pixels
         if (oldOnOff) {
@@ -413,7 +399,7 @@ VIC::drawSprites()
             drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
             
             // If spriteXexpand has changed, it shows up at this point in time.
-            spriteXExpand = GET_BIT(vic->reg.current.sprExpandX, i);
+            spriteXExpand = GET_BIT(reg.current.sprExpandX, i);
 
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
@@ -432,7 +418,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
     assert(sprite_sr[spriteNr].remaining_bits >= -1);
     assert(sprite_sr[spriteNr].remaining_bits <= 26);
     
-    bool multicol = GET_BIT(vic->reg.current.sprMC, spriteNr);
+    bool multicol = GET_BIT(reg.current.sprMC, spriteNr);
 
     // Load shift register if applicable
     if (load) {
@@ -449,7 +435,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (vic->xCounter + pixelNr == spriteXCoord && sprite_sr[spriteNr].remaining_bits == -1) {
+        if (xCounter + pixelNr == spriteXCoord && sprite_sr[spriteNr].remaining_bits == -1) {
             sprite_sr[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[spriteNr].exp_flop = true;
             sprite_sr[spriteNr].mc_flop = true;
@@ -460,7 +446,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
 
             // Determine render mode (single color /multi color) and colors
             // TODO: Latch multicolor value at proper cycles. Add dc. multicol
-            // sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr);
+            // sprite_sr[nr].mcol = spriteIsMulticolor(nr);
             sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> (multicol && sprite_sr[spriteNr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
@@ -479,7 +465,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
     }
     
     // Draw pixel
-    if (visibleColumn && !vic->hideSprites) {
+    if (visibleColumn && !hideSprites) {
         if (multicol)
             setMultiColorSpritePixel(spriteNr, pixelNr, sprite_sr[spriteNr].col_bits & 0x03);
         else
@@ -495,7 +481,7 @@ VIC::loadColors(uint8_t pixelNr, uint8_t mode,
             
         case STANDARD_TEXT:
             
-            col[0] = vic->reg.delayed.colors[COLREG_BG0];
+            col[0] = reg.delayed.colors[COLREG_BG0];
             col[1] = colorSpace;
             break;
             
@@ -503,14 +489,14 @@ VIC::loadColors(uint8_t pixelNr, uint8_t mode,
             
             if (colorSpace & 0x8 /* MC flag */) {
                 
-                col[0] = vic->reg.delayed.colors[COLREG_BG0];
-                col[1] = vic->reg.delayed.colors[COLREG_BG1];
-                col[2] = vic->reg.delayed.colors[COLREG_BG2];
+                col[0] = reg.delayed.colors[COLREG_BG0];
+                col[1] = reg.delayed.colors[COLREG_BG1];
+                col[2] = reg.delayed.colors[COLREG_BG2];
                 col[3] = colorSpace & 0x07;
 
             } else {
                 
-                col[0] = vic->reg.delayed.colors[COLREG_BG0];
+                col[0] = reg.delayed.colors[COLREG_BG0];
                 col[1] = colorSpace;
 
             }
@@ -524,7 +510,7 @@ VIC::loadColors(uint8_t pixelNr, uint8_t mode,
             
         case MULTICOLOR_BITMAP:
             
-            col[0] = vic->reg.delayed.colors[COLREG_BG0];
+            col[0] = reg.delayed.colors[COLREG_BG0];
             col[1] = characterSpace >> 4;
             col[2] = characterSpace & 0x0F;
             col[3] = colorSpace;
@@ -532,7 +518,7 @@ VIC::loadColors(uint8_t pixelNr, uint8_t mode,
             
         case EXTENDED_BACKGROUND_COLOR:
             
-            col[0] = vic->reg.delayed.colors[COLREG_BG0 + (characterSpace >> 6)];
+            col[0] = reg.delayed.colors[COLREG_BG0 + (characterSpace >> 6)];
             col[1] = colorSpace;
             break;
             
@@ -624,24 +610,24 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
     if (pixelSource[pixelNr]) {
         
         // Is it a sprite/sprite collision?
-        if ((pixelSource[pixelNr] & 0x7F) && vic->spriteSpriteCollisionEnabled) {
+        if ((pixelSource[pixelNr] & 0x7F) && spriteSpriteCollisionEnabled) {
             
-            vic->spriteSpriteCollision |= ((pixelSource[pixelNr] & 0x7F) | mask);
-            vic->triggerIRQ(4);
+            spriteSpriteCollision |= ((pixelSource[pixelNr] & 0x7F) | mask);
+            triggerIRQ(4);
         }
         
         // Is it a sprite/background collision?
-        if ((pixelSource[pixelNr] & 0x80) && vic->spriteBackgroundCollisionEnabled) {
+        if ((pixelSource[pixelNr] & 0x80) && spriteBackgroundCollisionEnabled) {
             
-            vic->spriteBackgroundColllision |= mask;
-            vic->triggerIRQ(2);
+            spriteBackgroundColllision |= mask;
+            triggerIRQ(2);
         }
     }
     
     // Bit 7 indicates background as source
     if (nr == 7) mask = 0;
     
-    putSpritePixel(pixelNr, color, vic->spriteDepth(nr), mask);
+    putSpritePixel(pixelNr, color, spriteDepth(nr), mask);
 }
 
 

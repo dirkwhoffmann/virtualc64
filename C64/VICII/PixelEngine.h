@@ -58,27 +58,7 @@ typedef struct {
 #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
 
 
-//! @class   PixelEngine
-/*! @details This component is part of the virtual VICII chip and encapulates
- *           all the functionality that is related to the synthesis of pixels.
- *           Its main entry point are prepareForCycle() and draw() which are
- *           called in every VIC cycle inside the viewable range.
- */
-//class PixelEngine : public VirtualComponent {
-//
-//     friend class VIC;
-    
 public:
-
-    //! @brief    Reference to the connected video interface controller (VIC)
-    //! @deprecated use c64->vic instead
-    VIC *vic;
-    
-    //! @brief    Constructor
-    // PixelEngine();
-    
-    //! @brief    Destructor
-    // ~PixelEngine();
     
     //! @brief    Method from VirtualComponent
     void resetPixelEngine();
