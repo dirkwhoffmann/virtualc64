@@ -404,8 +404,7 @@ PixelEngine::drawSprites()
         assert(oldExtraColor2 == vic->reg.delayed.colors[COLREG_SPR_EX2]);
         sprExtraCol1 = oldExtraColor1;
         sprExtraCol2 = oldExtraColor2;
-        sprCol[i] = vic->sprColor[i].delayed();
-        assert(sprCol[i] == vic->reg.delayed.colors[COLREG_SPR0 + i]);
+        sprCol[i] = vic->reg.delayed.colors[COLREG_SPR0 + i];
         
         // Draw first pixel
         if (oldOnOff) {
@@ -417,8 +416,7 @@ PixelEngine::drawSprites()
         assert(newExtraColor2 == vic->reg.current.colors[COLREG_SPR_EX2]);
         sprExtraCol1 = newExtraColor1;
         sprExtraCol2 = newExtraColor2;
-        sprCol[i] = vic->sprColor[i].current();
-        assert(sprCol[i] == vic->reg.current.colors[COLREG_SPR0 + i]);
+        sprCol[i] = vic->reg.current.colors[COLREG_SPR0 + i];
         
         // Draw the next three pixels
         if (oldOnOff) {

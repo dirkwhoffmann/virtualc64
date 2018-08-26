@@ -170,8 +170,7 @@ VIC::peek(uint16_t addr)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
             
-            assert(sprColor[addr - 0x27].current() == reg.current.colors[COLREG_SPR0 + (addr - 0x27)]);
-            return (sprColor[addr - 0x27].current() & 0x0F) | 0xF0;
+            return reg.current.colors[COLREG_SPR0 + addr - 0x27] | 0xF0;
     }
     
     if (addr >= 0x2F && addr <= 0x3F) {
@@ -456,8 +455,6 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
             
-            sprColor[addr - 0x27].write(value);
-            sprColor[addr - 0x27].pipeline[1] |= grayDot;
             return;
             
         default:

@@ -273,7 +273,6 @@ VIC::setSpriteColor(unsigned nr, uint8_t color)
     assert(nr < 8);
     
     c64->suspend();
-    sprColor[nr].write(color);
     reg.current.colors[COLREG_SPR0 + nr] = color;
     delay |= VICUpdateRegisters;
     c64->resume();

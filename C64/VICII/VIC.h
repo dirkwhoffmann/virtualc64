@@ -551,19 +551,7 @@ public:
     
     //! @brief    Sprite extra color 2 ($D026)
     TimeDelayed<uint8_t> sprExtraColor2 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Sprite colors  color registers ($D027 - $D02E)
-    TimeDelayed<uint8_t> sprColor[8] = {
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2)
-    };
-    
+
 private:
         
     // END DEPRECATED

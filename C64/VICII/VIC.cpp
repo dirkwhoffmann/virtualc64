@@ -129,9 +129,6 @@ VIC::setC64(C64 *c64)
     sprXExpand.setClock(&c64->cpu.cycle);
     sprExtraColor1.setClock(&c64->cpu.cycle);
     sprExtraColor2.setClock(&c64->cpu.cycle);
-    
-    for (unsigned i = 0; i < 8; i++)
-        sprColor[i].setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -155,8 +152,6 @@ VIC::reset()
     sprXExpand.reset(0);
     sprExtraColor1.reset(0);
     sprExtraColor2.reset(0);
-    for (unsigned i = 0; i < 8; i++)
-        sprColor[i].reset(0);
     
     expansionFF = 0xFF;
     
@@ -271,8 +266,6 @@ VIC::stateSize()
     result += sprXExpand.stateSize();
     result += sprExtraColor1.stateSize();
     result += sprExtraColor2.stateSize();
-    for (unsigned i = 0; i < 8; i++)
-        result += sprColor[i].stateSize();
 
     return result;
 }
@@ -296,8 +289,6 @@ VIC::loadFromBuffer(uint8_t **buffer)
     sprXExpand.loadFromBuffer(buffer);
     sprExtraColor1.loadFromBuffer(buffer);
     sprExtraColor2.loadFromBuffer(buffer);
-    for (unsigned i = 0; i < 8; i++)
-        sprColor[i].loadFromBuffer(buffer);
     
     if (*buffer - old != stateSize()) {
         assert(false);
@@ -323,9 +314,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     sprXExpand.saveToBuffer(buffer);
     sprExtraColor1.saveToBuffer(buffer);
     sprExtraColor2.saveToBuffer(buffer);
-    for (unsigned i = 0; i < 8; i++)
-        sprColor[i].saveToBuffer(buffer);
-    
+ 
     if (*buffer - old != stateSize()) {
         assert(false);
     }
