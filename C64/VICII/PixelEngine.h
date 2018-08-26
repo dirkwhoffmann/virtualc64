@@ -49,7 +49,6 @@ typedef struct {
     
 } VICIIRegisters;
 
-
 // Depth of different drawing layers
 #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
 #define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */

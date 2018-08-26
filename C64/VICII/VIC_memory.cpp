@@ -612,8 +612,6 @@ VIC::cAccess()
 void
 VIC::gAccess()
 {
-    uint16_t addr;
-        
     if (displayState) {
         
         /* "The address generator for the text/bitmap accesses (c- and
@@ -635,7 +633,8 @@ VIC::gAccess()
         if (!is856x()) {
             bmm |= GET_BIT(control1.current(), 5);
         }
-            
+        
+        uint16_t addr;
         if (BMMbit()) {
             addr = (CB13() << 10) |
             (registerVC << 3) | registerRC;
@@ -652,28 +651,22 @@ VIC::gAccess()
         if (ECMbit())
             addr &= 0xF9FF;
         
-        // Prepare graphic sequencer
-        gAccessResult.write((characterSpace[registerVMLI] << 16) | // Character
-                            (colorSpace[registerVMLI] << 8) |      // Color
-                            memAccess(addr));                      // Data
+        // Store result
+        gAccessResult.write(LO_LO_HI(memAccess(addr),                // Character
+                                        colorSpace[registerVMLI],       // Color
+                                        characterSpace[registerVMLI])); // Data
         
         
         // "VC and VMLI are incremented after each g-access in display state."
-        /*
-        registerVC++;
-        registerVC &= 0x3FF; // 10 bit overflow
-        registerVMLI++;
-        registerVMLI &= 0x3F; // 6 bit overflow
-        */
-        registerVC = (registerVC + 1) % 1024;
-        registerVMLI = (registerVMLI + 1) % 64;
+        registerVC = (registerVC + 1) & 0x3FF;
+        registerVMLI = (registerVMLI + 1) & 0x3F;
         
     } else {
         
-        // In idle state, a g-access reads from memory location 0x3FFF
-        addr = ECMbit() ? 0x39FF : 0x3FFF;
-        
-        // Prepare graphic sequencer
+        // In idle state, g-accesses read from $3FFF
+        uint16_t addr = ECMbit() ? 0x39FF : 0x3FFF;
+
+        // Store result
         gAccessResult.write(memAccess(addr));
     }
 }

@@ -70,10 +70,13 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
 
 //! @brief    Evaluates to the low byte of x. x is expected to be of type uint16_t.
-#define LO_BYTE(x) (uint8_t)((x) & 0xff)
+#define LO_BYTE(x) (uint8_t)((x) & 0xFF)
 
 //! @brief    Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
+
+//! @brief    Evaluates to the 24 bit value specified by x, y, and z in little endian order (lowest, low, high, highest).
+#define LO_LO_HI(x,y,z) (uint32_t)((z) << 16 | (y) << 8 | (x))
 
 //! @brief    Evaluates to the 32 bit value specified by x, y, z, and w in little endian order (lowest, low, high, highest).
 #define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
@@ -85,6 +88,18 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
  *            big endian order (highest, high, low, lowest).
  */
 #define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
+
+//! @brief    Returns the first byte of a larger integer
+#define BYTE0(x) LO_BYTE(x)
+
+//! @brief    Returns the second byte of a larger integer
+#define BYTE1(x) LO_BYTE((x) >> 8)
+
+//! @brief    Returns the third byte of a larger integer
+#define BYTE2(x) LO_BYTE((x) >> 16)
+
+//! @brief    Returns the fourth byte of a larger integer
+#define BYTE3(x) LO_BYTE((x) >> 24)
 
 //! @brief    Returns true iff bit n is set in x.
 #define GET_BIT(x,nr) ((x) & (1 << (nr)))

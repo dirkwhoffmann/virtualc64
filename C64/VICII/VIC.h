@@ -38,10 +38,9 @@
 #define VICLpTransition        (1ULL << 2) // Triggers a lightpen event
 #define VICUpdateFlipflops     (1ULL << 3) // Updates the flipflop value pipeline
 #define VICUpdateRegisters     (1ULL << 4) // Updates the register value pipeline
-#define VICUpdateGAccessResult (1ULL << 5) // Updates the register value pipeline
-#define VICSetDisplayState     (1ULL << 6) // Updates the register value pipeline
+#define VICSetDisplayState     (1ULL << 5) // Flagged when control reg 1 changes
 
-#define VICClearanceMask ~((1ULL << 7) | VICTriggerIrq | VICReleaseIrq | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateGAccessResult | VICSetDisplayState);
+#define VICClearanceMask ~((1ULL << 6) | VICTriggerIrq | VICReleaseIrq | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICSetDisplayState);
 
 // Forward declarations
 class C64Memory;
@@ -239,15 +238,6 @@ private:
     //! @brief    Result of the lastest g-access
     TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
     
-    //! @brief    Display mode in latest g-access
-    // uint8_t gAccessDisplayMode;
-    
-    //! @brief    Foreground color fetched in latest g-access
-    // uint8_t gAccessfgColor;
-    
-    //! @brief    Background color fetched in latest g-access
-    // uint8_t gAccessbgColor;
-    
     //! @brief    Indicates if the current rasterline is a DMA line (bad line).
     bool badLine;
     
@@ -368,7 +358,6 @@ private:
      *  @deprecated
      */
 	uint8_t iomem[64]; 
-
 
 
 private:

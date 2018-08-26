@@ -302,13 +302,13 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
     if (loadShiftReg && sr.canLoad) {
         
         uint32_t result = vic->gAccessResult.delayed();
-        
+     
         // Load shift register
-        sr.data = result & 0xFF;
+        sr.data = BYTE0(result);
         
         // Remember how to synthesize pixels
-        sr.latchedCharacter = (result >> 16) & 0xFF;
-        sr.latchedColor = (result >> 8) & 0xFF;
+        sr.latchedCharacter = BYTE2(result);
+        sr.latchedColor = BYTE1(result);
         
         // Reset the multicolor synchronization flipflop
         sr.mc_flop = true;
