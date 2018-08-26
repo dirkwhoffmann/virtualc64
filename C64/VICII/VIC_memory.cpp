@@ -53,7 +53,7 @@ VIC::peek(uint16_t addr)
             return reg.current.sprY[addr >> 1];
             
         case 0x10: // Sprite X (upper bits)
-            {
+        {
             uint8_t result;
             
             result =
@@ -65,7 +65,7 @@ VIC::peek(uint16_t addr)
             ((sprXCoord[5].current() & 0x100) ? 0b00100000 : 0) |
             ((sprXCoord[6].current() & 0x100) ? 0b01000000 : 0) |
             ((sprXCoord[7].current() & 0x100) ? 0b10000000 : 0);
-
+            
             assert(((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
                    ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
                    ((reg.current.sprX[2] & 0x100) ? 0b00000100 : 0) |
@@ -74,9 +74,18 @@ VIC::peek(uint16_t addr)
                    ((reg.current.sprX[5] & 0x100) ? 0b00100000 : 0) |
                    ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
                    ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
-                   
+            
             assert(result == iomem[0x10]);
-            return result;
+            
+            return
+            ((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
+            ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
+            ((reg.current.sprX[2] & 0x100) ? 0b00000100 : 0) |
+            ((reg.current.sprX[3] & 0x100) ? 0b00001000 : 0) |
+            ((reg.current.sprX[4] & 0x100) ? 0b00010000 : 0) |
+            ((reg.current.sprX[5] & 0x100) ? 0b00100000 : 0) |
+            ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
+            ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0);
         }
                    
         case 0x11: // SCREEN CONTROL REGISTER #1
@@ -88,11 +97,11 @@ VIC::peek(uint16_t addr)
             
         case 0x13: // LIGHTPEN X
             assert(latchedLightPenX == iomem[addr]);
-            return iomem[addr];
+            return latchedLightPenX;
             
         case 0x14: // LIGHTPEN Y
             assert(latchedLightPenY == iomem[addr]);
-            return iomem[addr];
+            return latchedLightPenY;
             
         case 0x15:
             assert(iomem[addr] == reg.current.sprEnable);
@@ -109,7 +118,7 @@ VIC::peek(uint16_t addr)
             
         case 0x18:
             assert(memSelect == iomem[addr]);
-            return iomem[addr] | 0x01; // Bit 1 is unused (always 1)
+            return memSelect | 0x01; // Bit 1 is unused (always 1)
             
         case 0x19: // Interrupt Request Register (IRR)
             return (irr & imr) ? (irr | 0xF0) : (irr | 0x70);
@@ -131,16 +140,16 @@ VIC::peek(uint16_t addr)
             
         case 0x1E: // Sprite-to-sprite collision
             assert(iomem[addr] == spriteSpriteCollision);
-            result = iomem[addr];
+            result = spriteSpriteCollision;
             iomem[addr] = 0x00;  // Clear on read
-            spriteSpriteCollision = 0;
+            spriteSpriteCollision = 0; // Clear on read
             return result;
             
         case 0x1F: // Sprite-to-background collision
             assert(iomem[addr] == spriteBackgroundColllision);
-            result = iomem[addr];
+            result = spriteBackgroundColllision;
             iomem[addr] = 0x00;  // Clear on read
-            spriteBackgroundColllision = 0;
+            spriteBackgroundColllision = 0; // Clear on read
             return result;
             
         case 0x20:
@@ -294,7 +303,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             assert(iomem[addr] == rasterIrqLine);
             
-            if (iomem[addr] != value) {
+            if (rasterIrqLine != value) {
                 
                 iomem[addr] = value;
                 rasterIrqLine = value;
@@ -339,7 +348,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x18: { // Memory address pointers
             
             assert(iomem[addr] == memSelect);
-            uint8_t oldValue = iomem[addr];
+            uint8_t oldValue = memSelect;
             iomem[addr] = value;
             memSelect = value;
             
