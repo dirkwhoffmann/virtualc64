@@ -1416,29 +1416,25 @@ private:
     void drawFramePixels(uint8_t color) { drawFramePixels(0, 7, color); }
     
     //! @brief    Draw a single foreground pixel
-    void drawForegroundPixel(unsigned pixelnr, uint8_t color);
-    
-    //! @brief    Draw a single foreground pixel
-    //! @deprecated
-    // void setForegroundPixel(unsigned pixelnr, int rgba);
-    
+    // void drawForegroundPixel(unsigned pixelnr, uint8_t color);
+    #define SET_FOREGROUND_PIXEL(pixelNr,color) \
+    { colBuffer[pixelNr] = color; \
+    zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH; \
+    pixelSource[pixelNr] = 0x80; }
+ 
     //! @brief    Draw a single background pixel
-    void drawBackgroundPixel(unsigned pixelNr, uint8_t color);
-    
-    //! @brief    Draw a single background pixel
-    //! @deprecated
-    // void setBackgroundPixel(unsigned pixelnr, int rgba);
+    // void drawBackgroundPixel(unsigned pixelNr, uint8_t color);
+    #define SET_BACKGROUND_PIXEL(pixelNr,color) \
+    { colBuffer[pixelNr] = color; \
+    zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH; \
+    pixelSource[pixelNr] = 0x00; }
     
     //! @brief    Draw eight background pixels in a row
-    void drawEightBackgroundPixels(uint8_t color) {
-        for (unsigned i = 0; i < 8; i++) drawBackgroundPixel(i, color); }
-    
-    //! @brief    Draw eight background pixels in a row
-    //! @deprecated
-    /*
-     void setEightBackgroundPixels(int rgba) {
-     for (unsigned i = 0; i < 8; i++) setBackgroundPixel(i, rgba); }
-     */
+    void setEightBackgroundPixels(uint8_t color) {
+        for (unsigned i = 0; i < 8; i++) {
+            SET_BACKGROUND_PIXEL(i,color);
+        }
+    }
     
     //! @brief    Draw a single sprite pixel
     void putSpritePixel(unsigned pixelnr, uint8_t color, int depth, int source);

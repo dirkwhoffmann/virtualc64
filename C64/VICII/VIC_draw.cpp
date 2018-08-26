@@ -109,7 +109,7 @@ VIC::drawCanvas()
          *  by the border)." [C.B.]
          */
         // TODO: This is wrong, border-bm-idle test fails
-        drawEightBackgroundPixels(reg.current.colors[COLREG_BG0]);
+        setEightBackgroundPixels(reg.current.colors[COLREG_BG0]);
         return;
     }
     
@@ -177,21 +177,6 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
                              bool loadShiftReg,
                              bool updateColors)
 {
-    // Lookup table for pixel color source
-    enum {
-        NONE, BG0, BG1, BG2, BG3, BGx, COL7, COL8, CHARL, CHARH, MCTXT1
-    };
-    static const uint8_t colorSource[8][4] = {
-        { BG0,    COL8,   BG0,    COL8   }, // STANDARD_TEXT
-        { BG0,    MCTXT1, BG2,    COL7   }, // MULTICOLOR_TEXT
-        { CHARL,  CHARH,  CHARL,  CHARH  }, // STANDARD_BITMAP
-        { BG0,    CHARH,  CHARL,  COL8   }, // MULTICOLOR_BITMAP
-        { BGx,    COL8,   BGx,    COL8   }, // EXTENDED_BACKGROUND_COLOR
-        { NONE,   NONE,   NONE,   NONE   }, // INVALID_TEXT
-        { NONE,   NONE,   NONE,   NONE   }, // INVALID_STANDARD_BITMAP
-        { NONE,   NONE,   NONE,   NONE   }  // INVALID_MULTICOLOR_BITMAP
-    };
-    
     assert(pixelNr < 8);
     
     /* "The heart of the sequencer is an 8 bit shift register that is shifted by
@@ -242,62 +227,8 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         sr.colorbits = (sr.data >> 7) << multicolorDisplayMode;
     }
     
-    // Compute color source and color
-    assert((mode >> 4) < 8);
-    assert(sr.colorbits < 4);
-    uint8_t color;
-    switch (colorSource[mode >> 4][sr.colorbits]) {
-            
-        case BG0:
-            color = reg.delayed.colors[COLREG_BG0];
-            break;
-            
-        case BG1:
-            color = reg.delayed.colors[COLREG_BG1];
-            break;
-            
-        case BG2:
-            color = reg.delayed.colors[COLREG_BG2];
-            break;
-            
-        case BG3:
-            color = reg.delayed.colors[COLREG_BG3];
-            break;
-            
-        case BGx:
-            color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
-            break;
-            
-        case COL7:
-            color = sr.latchedColor & 0x07;
-            break;
-            
-        case COL8:
-            color = sr.latchedColor;
-            break;
-            
-        case CHARL:
-            color = sr.latchedCharacter & 0xF;
-            break;
-            
-        case CHARH:
-            color = sr.latchedCharacter >> 4;
-            break;
-            
-        case MCTXT1: {
-            bool mcflag = sr.latchedColor & 0x8;
-            color = mcflag ? reg.delayed.colors[COLREG_BG1] : sr.latchedColor;
-            break;
-        }
-        
-        default:
-            assert(colorSource[mode >> 4][sr.colorbits] == NONE);
-            color = 0;
-    }
-    
-    // Compute colors
-    loadColors(mode);
-    assert(color == col[sr.colorbits]);
+    // Load colors
+    if (updateColors) loadColors(mode);
     
     // Draw pixel
     if (multicolorDisplayMode) {
@@ -305,9 +236,9 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         // Set multi-color pixel
         assert(sr.colorbits < 4);
         if (sr.colorbits & 0x02) {
-            drawForegroundPixel(pixelNr, col[sr.colorbits]);
+            SET_FOREGROUND_PIXEL(pixelNr, col[sr.colorbits]);
         } else {
-            drawBackgroundPixel(pixelNr, col[sr.colorbits]);
+            SET_BACKGROUND_PIXEL(pixelNr, col[sr.colorbits]);
         }
         
     } else {
@@ -315,9 +246,9 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         // Set single-color pixel
         assert(sr.colorbits < 2);
         if (sr.colorbits) {
-            drawForegroundPixel(pixelNr, col[sr.colorbits]);
+            SET_FOREGROUND_PIXEL(pixelNr, col[sr.colorbits]);
         } else {
-            drawBackgroundPixel(pixelNr, col[sr.colorbits]);
+            SET_BACKGROUND_PIXEL(pixelNr, col[sr.colorbits]);
         }
     }
     
@@ -528,30 +459,6 @@ VIC::loadColors(uint8_t mode)
     }
 }
 
-/*
-void
-VIC::setSingleColorPixel(unsigned pixelNr, uint8_t bit)
-{
-    if (bit) {
-        drawForegroundPixel(pixelNr, col[bit]);
-    } else {
-        drawBackgroundPixel(pixelNr, col[bit]);
-    }
-}
-*/
-
-/*
-void
-VIC::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits)
-{
-    if (two_bits & 0x02) {
-        drawForegroundPixel(pixelNr, col[two_bits]);
-    } else {
-        drawBackgroundPixel(pixelNr, col[two_bits]);
-    }
-}
-*/
-
 void
 VIC::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t bit)
 {
@@ -632,6 +539,7 @@ VIC::drawFramePixels(unsigned first, unsigned last, uint8_t color)
     }
 }
 
+/*
 void
 VIC::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 {
@@ -639,7 +547,8 @@ VIC::drawForegroundPixel(unsigned pixelNr, uint8_t color)
     zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x80;
 }
-
+*/
+/*
 void
 VIC::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 {
@@ -647,6 +556,7 @@ VIC::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
     zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x00;
 }
+*/
 
 void
 VIC::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
