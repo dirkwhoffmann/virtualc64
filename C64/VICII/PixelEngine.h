@@ -17,46 +17,6 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _PIXELENGINGE_INC
-#define _PIXELENGINGE_INC
-
-// #include "VirtualComponent.h"
-// #include "C64_types.h"
-
-// Forward declarations
-// class VIC;
-
-//@ brief    Values of the two frame flipflops
-typedef struct {
-    
-    bool vertical;
-    bool main;
-    
-} FrameFlipflops;
-
-typedef struct {
-    
-    uint16_t sprX[8];     // D000, D002, ..., D00E, upper bits from D010
-    uint8_t  sprY[8];     // D001, D003, ..., D00F
-    uint8_t  ctrl1;       // D011
-    uint8_t  sprEnable;   // D015
-    uint8_t  ctrl2;       // D016
-    uint8_t  sprExpandY;  // D017
-    uint8_t  sprPriority; // D01B
-    uint8_t  sprMC;       // D01C
-    uint8_t  sprExpandX;  // D01D
-    uint8_t  colors[15];  // D020 - D02E
-    
-} VICIIRegisters;
-
-// Depth of different drawing layers
-#define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
-#define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */
-#define FOREGROUND_LAYER_DEPTH 0x30     /* behind sprite 1 layer  */
-#define SPRITE_LAYER_BG_DEPTH 0x40      /* behind foreground */
-#define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
-#define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
-
 
 public:
     
@@ -70,74 +30,7 @@ public:
     void resetScreenBuffers();
 
     
-    //
-    // Pixel buffers and colors
-    //
-    
-private:
-    
-    /*! @brief    Currently used RGBA values for all sixteen C64 colors
-     *  @see      updatePalette()
-     */
-    uint32_t rgbaTable[16];
-    
-    /*! @brief    First screen buffer
-     *  @details  The VIC chip writes its output into this buffer. The contents
-     *            of the array is later copied into to texture RAM of your
-     *            graphic card by the drawRect method in the GPU related code.
-     */
-    int *screenBuffer1 = new int[PAL_RASTERLINES * NTSC_PIXELS];
-    
-    /*! @brief    Second screen buffer
-     *  @details  The VIC chip uses double buffering. Once a frame is drawn, the
-     *            VIC chip writes the next frame to the second buffer.
-     */
-    int *screenBuffer2 = new int [PAL_RASTERLINES * NTSC_PIXELS];
-    
-    /*! @brief    Target screen buffer for all rendering methods
-     *  @details  The variable points either to screenBuffer1 or screenBuffer2 
-     */
-    int *currentScreenBuffer;
-    
-    /*! @brief    Pointer to the beginning of the current rasterline
-     *  @details  This pointer is used by all rendering methods to write pixels.
-     *            It always points to the beginning of a rasterline, either in
-     *            screenBuffer1 or screenBuffer2. It is reset at the beginning
-     *            of each frame and incremented at the beginning of each
-     *            rasterline.
-     */
-    int *pixelBuffer;
-    
-    /*! @brief    Synthesized pixel colors
-     *  @details  The colors for the eight pixels of a single VICII cycle are
-     *            stored temporaraily in this array. At the end of the cycle,
-     *            they are translated into RGBA color values and copied into
-     *            the screen buffer.
-     */
-    uint8_t colBuffer[8];
-    
-    /*! @brief    Z buffer
-     *  @details  Depth buffering is used to determine pixel priority. In the
-     *            various render routines, a color value is only retained, if it
-     *            is closer to the view point. The depth of the closest pixel is
-     *            kept in the z buffer. The lower the value, the closer it is to
-     *            the viewer.
-     */
-    uint8_t zBuffer[8];
-    
-    /*! @brief    Indicates the source of a drawn pixel
-     *  @details  Whenever a foreground pixel or sprite pixel is drawn, a
-     *            distinct bit in the pixelSource array is set. The information
-     *            is needed to detect sprite-sprite and sprite-background
-     *            collisions.
-     */
-    uint8_t pixelSource[8];
-    
-    /*! @brief    Offset into pixelBuffer
-     *  @details  Variable points to the first pixel of the currently drawn 8
-     *            pixel chunk.
-     */
-    short bufferoffset;
+
     
     
     //
@@ -146,13 +39,7 @@ private:
 
 private:
     
-    /*! @brief    Indicates wether we are in a visible display column or not
-     *  @details  The visible columns comprise canvas columns and border
-     *            columns. The first visible column is drawn in cycle 14 (first
-     *            left border column) and the last in cycle ?? (fourth right
-     *            border column).
-     */
-    bool visibleColumn;
+
     
     
     //
@@ -173,18 +60,7 @@ public:
     //! @brief    Finishes a frame.
     void endFramePixelEngine();
 
-    
-    //
-    // VIC state latching
-    //
-
-    //! @brief    X expansion flip flop value of the currently drawn sprite
-    bool spriteXExpand;
-
-    //! @brief    X coordinate of the currently drawn sprite
-    uint16_t spriteXCoord;
-
-    
+   
     //
     // Shift register logic for canvas pixels (handled in drawCanvasPixel)
     //
@@ -557,7 +433,4 @@ public:
      *  @details  This method is utilized for debugging purposes, only.
      */
     void markLine(uint8_t color, unsigned start = 0, unsigned end = NTSC_PIXELS);
-    
-// };
 
-#endif

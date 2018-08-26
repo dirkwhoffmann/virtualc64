@@ -356,9 +356,6 @@ VIC::drawSprites()
         if (!oldOnOff && !newOnOff)
             continue;
         
-        spriteXCoord = reg.delayed.sprX[i]; // TODO: GET RID OF spriteXCoord
-        spriteXExpand = GET_BIT(reg.delayed.sprExpandX, i);
-        
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
         
@@ -390,8 +387,8 @@ VIC::drawSprites()
             drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
             
             // If spriteXexpand has changed, it shows up at this point in time.
-            spriteXExpand = GET_BIT(reg.current.sprExpandX, i);
-
+            reg.delayed.sprExpandX = reg.current.sprExpandX;
+            
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
         }
@@ -426,22 +423,26 @@ VIC::drawSpritePixel(unsigned spriteNr,
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (xCounter + pixelNr == spriteXCoord && sprite_sr[spriteNr].remaining_bits == -1) {
-            sprite_sr[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
-            sprite_sr[spriteNr].exp_flop = true;
-            sprite_sr[spriteNr].mc_flop = true;
+        if (xCounter + pixelNr == reg.delayed.sprX[spriteNr]) {
+            if (sprite_sr[spriteNr].remaining_bits == -1) {
+                sprite_sr[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
+                sprite_sr[spriteNr].exp_flop = true;
+                sprite_sr[spriteNr].mc_flop = true;
+            }
         }
 
         // Run shift register if there are remaining pixels to draw
         if (sprite_sr[spriteNr].remaining_bits > 0) {
 
             // Determine render mode (single color /multi color) and colors
-            // TODO: Latch multicolor value at proper cycles. Add dc. multicol
-            // sprite_sr[nr].mcol = spriteIsMulticolor(nr);
-            sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> (multicol && sprite_sr[spriteNr].mc_flop ? 22 : 23);
-                        
+            
+            // Get color bits by shifting sr data by 22 bits if a multi color
+            // is rendered or by 23, if single color mode is used.
+            unsigned shift = 22 + (!multicol || !sprite_sr[spriteNr].mc_flop);
+            sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> shift;
+      
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (spriteXExpand)
+            if (GET_BIT(reg.delayed.sprExpandX, spriteNr))
                 sprite_sr[spriteNr].exp_flop = !sprite_sr[spriteNr].exp_flop;
             else
                 sprite_sr[spriteNr].exp_flop = true;
