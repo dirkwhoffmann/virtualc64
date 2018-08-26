@@ -95,7 +95,6 @@ VIC::setScreenMemoryAddr(uint16_t addr)
     
     c64->suspend();
     addr >>= 6;
-    iomem[0x18] = (iomem[0x18] & ~0xF0) | (addr & 0xF0);
     memSelect = (memSelect & ~0xF0) | (addr & 0xF0);
     c64->resume();
 }
@@ -107,7 +106,6 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
     
     c64->suspend();
     addr >>= 10;
-    iomem[0x18] = (iomem[0x18] & ~0x0E) | (addr & 0x0E);
     memSelect = (memSelect & ~0x0E) | (addr & 0x0E);
     c64->resume();
 }
@@ -212,7 +210,6 @@ void
 VIC::setRasterInterruptLine(uint16_t line)
 {
     c64->suspend();
-    iomem[0x12] = line & 0xFF;
     rasterIrqLine = line & 0xFF;
     if (line > 0xFF) {
         control1.write(control1.current() | 0x80);
@@ -265,7 +262,6 @@ VIC::setSpriteY(unsigned nr, uint8_t y)
     assert(nr < 8);
     
     c64->suspend();
-    iomem[1+2*nr] = y;
     reg.current.sprY[nr] = y;
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -287,7 +283,6 @@ void
 VIC::setSpriteEnabled(uint8_t nr, bool b)
 {
     c64->suspend();
-    WRITE_BIT(iomem[0x15], nr, b);
     WRITE_BIT(reg.current.sprEnable, nr, b);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -297,7 +292,6 @@ void
 VIC::toggleSpriteEnabled(uint8_t nr)
 {
     c64->suspend();
-    TOGGLE_BIT(iomem[0x15], nr);
     TOGGLE_BIT(reg.current.sprEnable, nr);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -341,7 +335,6 @@ VIC::setSpritePriority(unsigned nr, bool b)
     assert(nr < 8);
     
     c64->suspend();
-    WRITE_BIT(iomem[0x1B], nr, b);
     WRITE_BIT(reg.current.sprPriority, nr, b);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -353,7 +346,6 @@ VIC::toggleSpritePriority(unsigned nr)
     assert(nr < 8);
     
     c64->suspend();
-    TOGGLE_BIT(iomem[0x1B], nr);
     TOGGLE_BIT(reg.current.sprPriority, nr);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -365,7 +357,6 @@ VIC::setSpriteMulticolor(unsigned nr, bool b)
     assert(nr < 8);
     
     c64->suspend();
-    WRITE_BIT(iomem[0x1C], nr, b);
     WRITE_BIT(reg.current.sprMC, nr, b);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -377,7 +368,6 @@ VIC::toggleMulticolorFlag(unsigned nr)
     assert(nr < 8);
     
     c64->suspend();
-    TOGGLE_BIT(iomem[0x1C], nr);
     TOGGLE_BIT(reg.current.sprMC, nr);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -389,7 +379,6 @@ VIC::setSpriteStretchY(unsigned nr, bool b)
     assert(nr < 8);
     
     c64->suspend();
-    WRITE_BIT(iomem[0x17], nr, b);
     WRITE_BIT(reg.current.sprExpandY, nr, b);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -401,7 +390,6 @@ VIC::spriteToggleStretchYFlag(unsigned nr)
     assert(nr < 8);
     
     c64->suspend();
-    TOGGLE_BIT(iomem[0x17], nr);
     TOGGLE_BIT(reg.current.sprExpandY, nr);
     delay |= VICUpdateRegisters;
     c64->resume();

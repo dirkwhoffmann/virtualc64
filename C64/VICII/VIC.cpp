@@ -86,7 +86,6 @@ VIC::VIC()
         { &badLine,            sizeof(badLine),               CLEAR_ON_RESET },
         { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
         { &displayState,               sizeof(displayState),                  CLEAR_ON_RESET },
-        { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
         { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
         { &characterSpace,              sizeof(characterSpace),                 CLEAR_ON_RESET },
         { &colorSpace,                  sizeof(colorSpace),                     CLEAR_ON_RESET },
@@ -172,7 +171,6 @@ VIC::reset()
     expansionFF = 0xFF;
     
     // Preset some video parameters to show a blank blue sreen on power up
-    iomem[0x18] = 0x10;
     memSelect = 0x10;
     memset(&c64->mem.ram[0x400], 32, 40*25);
     reg.delayed.ctrl1 = 0x10;
@@ -690,8 +688,8 @@ VIC::triggerLightpenInterrupt()
         return;
     
     // Latch coordinates
-    latchedLightPenX = iomem[0x13] = lightpenX() / 2;
-    latchedLightPenY = iomem[0x14] = lightpenY();
+    latchedLightPenX = lightpenX() / 2;
+    latchedLightPenY = lightpenY();
     debug("Lightpen x = %d\n", lightpenX());
     
     // Newer VIC models trigger an interrupt immediately
@@ -762,8 +760,8 @@ VIC::retriggerLightpenInterrupt()
     }
     
     // Latch coordinates
-    // latchedLightPenX = iomem[0x13] = x / 2;
-    // latchedLightPenY = iomem[0x14] = y;
+    // latchedLightPenX = x / 2;
+    // latchedLightPenY = y;
 
     // Lightpen interrupts can only occur once per frame
     lightpenIRQhasOccured = true;
@@ -780,7 +778,6 @@ VIC::compareSpriteY()
     uint8_t result = 0;
     
     for (unsigned i = 0; i < 8; i++) {
-        assert(iomem[2*i+1] == reg.current.sprY[i]);
         result |= (reg.current.sprY[i] == yCounter) << i;
     }
     
@@ -827,7 +824,6 @@ VIC::turnSpriteDmaOn()
      *  off, the DMA is switched on, MCBASE is cleared, and if the MxYE bit is
      *  set the expansion flip flip is reset." [C.B.]
      */
-    assert(reg.current.sprEnable == iomem[0x15]);
     uint8_t risingEdges = ~spriteDmaOnOff & (reg.current.sprEnable & compareSpriteY());
     
     for (unsigned i = 0; i < 8; i++) {
@@ -852,7 +848,6 @@ VIC::turnSpritesOnOrOff()
     }
     
     uint8_t onOff = spriteOnOff.current();
-    assert(iomem[0x15] == reg.current.sprEnable);
     onOff |= reg.current.sprEnable & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
@@ -861,10 +856,8 @@ VIC::turnSpritesOnOrOff()
 uint8_t
 VIC::spriteDepth(uint8_t nr)
 {
-    assert(iomem[0x1B] == reg.current.sprPriority);
-    
     return
-    GET_BIT(iomem[0x1B], nr) ?
+    GET_BIT(reg.current.sprPriority, nr) ?
     (SPRITE_LAYER_BG_DEPTH | nr) :
     (SPRITE_LAYER_FG_DEPTH | nr);
 }

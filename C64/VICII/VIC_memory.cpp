@@ -36,8 +36,6 @@ VIC::peek(uint16_t addr)
         case 0x0C:
         case 0x0E:
             
-            assert(iomem[addr] == (sprXCoord[addr >> 1].current() & 0xFF));
-            assert(iomem[addr] == reg.current.sprX[addr >> 1]);
             return reg.current.sprX[addr >> 1];
             
         case 0x01: // Sprite Y
@@ -49,7 +47,6 @@ VIC::peek(uint16_t addr)
         case 0x0D:
         case 0x0F:
             
-            assert(iomem[addr] == reg.current.sprY[addr >> 1]);
             return reg.current.sprY[addr >> 1];
             
         case 0x10: // Sprite X (upper bits)
@@ -75,8 +72,6 @@ VIC::peek(uint16_t addr)
                    ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
                    ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
             
-            assert(result == iomem[0x10]);
-            
             return
             ((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
             ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
@@ -96,15 +91,12 @@ VIC::peek(uint16_t addr)
             return yCounter & 0xff;
             
         case 0x13: // LIGHTPEN X
-            assert(latchedLightPenX == iomem[addr]);
             return latchedLightPenX;
             
         case 0x14: // LIGHTPEN Y
-            assert(latchedLightPenY == iomem[addr]);
             return latchedLightPenY;
             
         case 0x15:
-            assert(iomem[addr] == reg.current.sprEnable);
             return reg.current.sprEnable;
             
         case 0x16:
@@ -113,11 +105,9 @@ VIC::peek(uint16_t addr)
             return (control2.current() & 0xFF) | 0xC0;
             
         case 0x17:
-            assert(iomem[addr] == reg.current.sprExpandY);
             return reg.current.sprExpandY;
             
         case 0x18:
-            assert(memSelect == iomem[addr]);
             return memSelect | 0x01; // Bit 1 is unused (always 1)
             
         case 0x19: // Interrupt Request Register (IRR)
@@ -127,11 +117,9 @@ VIC::peek(uint16_t addr)
             return imr | 0xF0;
             
         case 0x1B:
-            assert(iomem[addr] == reg.current.sprPriority);
             return reg.current.sprPriority;
             
         case 0x1C:
-            assert(iomem[addr] == reg.current.sprMC);
             return reg.current.sprMC;
             
         case 0x1D: // SPRITE_X_EXPAND
@@ -139,16 +127,12 @@ VIC::peek(uint16_t addr)
             return sprXExpand.current();
             
         case 0x1E: // Sprite-to-sprite collision
-            assert(iomem[addr] == spriteSpriteCollision);
             result = spriteSpriteCollision;
-            iomem[addr] = 0x00;  // Clear on read
             spriteSpriteCollision = 0; // Clear on read
             return result;
             
         case 0x1F: // Sprite-to-background collision
-            assert(iomem[addr] == spriteBackgroundColllision);
             result = spriteBackgroundColllision;
-            iomem[addr] = 0x00;  // Clear on read
             spriteBackgroundColllision = 0; // Clear on read
             return result;
             
@@ -194,9 +178,6 @@ VIC::peek(uint16_t addr)
     }
     
     assert(false);
-    
-    // Default action
-    return iomem[addr];
 }
 
 uint8_t
@@ -301,11 +282,8 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x12: // RASTER_COUNTER
             
-            assert(iomem[addr] == rasterIrqLine);
-            
             if (rasterIrqLine != value) {
                 
-                iomem[addr] = value;
                 rasterIrqLine = value;
                 
                 // Check if we need to trigger a rasterline interrupt
@@ -347,9 +325,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x18: { // Memory address pointers
             
-            assert(iomem[addr] == memSelect);
             uint8_t oldValue = memSelect;
-            iomem[addr] = value;
             memSelect = value;
             
             // The GUI needs to know when the second bit changes. This bit
@@ -434,9 +410,6 @@ VIC::poke(uint16_t addr, uint8_t value)
     }
     
     delay |= VICUpdateRegisters;
-    
-    // DEPRECATED default action
-    iomem[addr] = value;
 }
 
 void

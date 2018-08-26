@@ -576,15 +576,7 @@ public:
     };
     
 private:
-    
-    /*! @brief    I/O Memory
-     *  @details  This array is used to store most of the register values that are poked into
-     *            the VIC address space. Note that this does not hold for all register values.
-     *            Some of them are directly stored inside the state pipe for speedup purposes.
-     *  @deprecated
-     */
-    uint8_t iomem[64];
-    
+        
     // END DEPRECATED
     
     
@@ -886,8 +878,6 @@ public:
     //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
         assert(control1.current() == reg.current.ctrl1);
-        assert(iomem[0x12] == rasterIrqLine);
-        // return ((control1.current() & 0x80) << 1) | iomem[0x12];
         return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
@@ -899,13 +889,13 @@ public:
     }
 
     //! @brief    Returns the masked CB13 bit.
-    uint8_t CB13() { assert(iomem[0x18] == memSelect); return memSelect & 0x08; }
+    uint8_t CB13() { return memSelect & 0x08; }
 
     //! @brief    Returns the masked CB13/CB12/CB11 bits.
-    uint8_t CB13CB12CB11() { assert(iomem[0x18] == memSelect); return memSelect & 0x0E; }
+    uint8_t CB13CB12CB11() { return memSelect & 0x0E; }
 
     //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits.
-    uint8_t VM13VM12VM11VM10() { assert(iomem[0x18] == memSelect); return memSelect & 0xF0; }
+    uint8_t VM13VM12VM11VM10() { return memSelect & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
 	bool isCSEL() { return GET_BIT(control2.current(), 3); }
@@ -1042,7 +1032,7 @@ private:
      *            effect in the next rasterline. This causes each sprite line
      *            to be drawn twice.
      */
-    void toggleExpansionFlipflop() { assert(iomem[0x17] == reg.current.sprExpandY); expansionFF ^= reg.current.sprExpandY; }
+    void toggleExpansionFlipflop() { expansionFF ^= reg.current.sprExpandY; }
     
 	/*! @brief    Gets the depth of a sprite.
 	 *  @return   depth value that can be written into the z buffer.
