@@ -1368,22 +1368,21 @@ private:
     //
     
     //! @brief    Determines pixel colors accordig to the provided display mode
-    void loadColors(uint8_t pixelNr, uint8_t mode,
-                    uint8_t characterSpace, uint8_t colorSpace);
+    void loadColors(uint8_t mode);
     
     /*! @brief    Draws single canvas pixel in single-color mode
      *  @details  1s are drawn with drawForegroundPixel, 0s are drawn with
      *            drawBackgroundPixel. Uses the drawing colors that are setup by
      *            loadColors().
      */
-    void setSingleColorPixel(unsigned pixelnr, uint8_t bit);
+    // void setSingleColorPixel(unsigned pixelnr, uint8_t bit);
     
     /*! @brief    Draws single canvas pixel in multi-color mode
      *  @details  The left of the two color bits determines whether
      *            drawForegroundPixel or drawBackgroundPixel is used.
      *            Uses the drawing colors that are setup by loadColors().
      */
-    void setMultiColorPixel(unsigned pixelnr, uint8_t two_bits);
+    // void setMultiColorPixel(unsigned pixelnr, uint8_t two_bits);
     
     /*! @brief    Draws single sprite pixel in single-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors

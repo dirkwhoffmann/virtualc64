@@ -177,6 +177,21 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
                              bool loadShiftReg,
                              bool updateColors)
 {
+    // Lookup table for pixel color source
+    enum {
+        NONE, BG0, BG1, BG2, BG3, BGx, COL7, COL8, CHARL, CHARH, MCTXT1
+    };
+    static const uint8_t colorSource[8][4] = {
+        { BG0,    COL8,   BG0,    COL8   }, // STANDARD_TEXT
+        { BG0,    MCTXT1, BG2,    COL7   }, // MULTICOLOR_TEXT
+        { CHARL,  CHARH,  CHARL,  CHARH  }, // STANDARD_BITMAP
+        { BG0,    CHARH,  CHARL,  COL8   }, // MULTICOLOR_BITMAP
+        { BGx,    COL8,   BGx,    COL8   }, // EXTENDED_BACKGROUND_COLOR
+        { NONE,   NONE,   NONE,   NONE   }, // INVALID_TEXT
+        { NONE,   NONE,   NONE,   NONE   }, // INVALID_STANDARD_BITMAP
+        { NONE,   NONE,   NONE,   NONE   }  // INVALID_MULTICOLOR_BITMAP
+    };
+    
     assert(pixelNr < 8);
     
     /* "The heart of the sequencer is an 8 bit shift register that is shifted by
@@ -211,18 +226,14 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         sr.colorbits = 0;
     }
     
-    // Update colors if necessary
-    if (updateColors)
-        loadColors(pixelNr, mode, sr.latchedCharacter, sr.latchedColor);
-    
-    // Render pixel
+    // Determine the render mode and the drawing mode for this pixel
     bool multicolorDisplayMode =
     (mode & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
     
     bool generateMulticolorPixel =
     (d016 & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
     
-    // Generate pixel
+    // Determine the colorbits
     if (generateMulticolorPixel) {
         if (sr.mcFlop) {
             sr.colorbits = (sr.data >> 6) >> !multicolorDisplayMode;
@@ -231,11 +242,83 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         sr.colorbits = (sr.data >> 7) << multicolorDisplayMode;
     }
     
+    // Compute color source and color
+    assert((mode >> 4) < 8);
+    assert(sr.colorbits < 4);
+    uint8_t color;
+    switch (colorSource[mode >> 4][sr.colorbits]) {
+            
+        case BG0:
+            color = reg.delayed.colors[COLREG_BG0];
+            break;
+            
+        case BG1:
+            color = reg.delayed.colors[COLREG_BG1];
+            break;
+            
+        case BG2:
+            color = reg.delayed.colors[COLREG_BG2];
+            break;
+            
+        case BG3:
+            color = reg.delayed.colors[COLREG_BG3];
+            break;
+            
+        case BGx:
+            color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
+            break;
+            
+        case COL7:
+            color = sr.latchedColor & 0x07;
+            break;
+            
+        case COL8:
+            color = sr.latchedColor;
+            break;
+            
+        case CHARL:
+            color = sr.latchedCharacter & 0xF;
+            break;
+            
+        case CHARH:
+            color = sr.latchedCharacter >> 4;
+            break;
+            
+        case MCTXT1: {
+            bool mcflag = sr.latchedColor & 0x8;
+            color = mcflag ? reg.delayed.colors[COLREG_BG1] : sr.latchedColor;
+            break;
+        }
+        
+        default:
+            assert(colorSource[mode >> 4][sr.colorbits] == NONE);
+            color = 0;
+    }
+    
+    // Compute colors
+    loadColors(mode);
+    assert(color == col[sr.colorbits]);
+    
     // Draw pixel
     if (multicolorDisplayMode) {
-        setMultiColorPixel(pixelNr, sr.colorbits);
+        
+        // Set multi-color pixel
+        assert(sr.colorbits < 4);
+        if (sr.colorbits & 0x02) {
+            drawForegroundPixel(pixelNr, col[sr.colorbits]);
+        } else {
+            drawBackgroundPixel(pixelNr, col[sr.colorbits]);
+        }
+        
     } else {
-        setSingleColorPixel(pixelNr, sr.colorbits);
+        
+        // Set single-color pixel
+        assert(sr.colorbits < 2);
+        if (sr.colorbits) {
+            drawForegroundPixel(pixelNr, col[sr.colorbits]);
+        } else {
+            drawBackgroundPixel(pixelNr, col[sr.colorbits]);
+        }
     }
     
     // Shift register and toggle multicolor flipflop
@@ -378,52 +461,54 @@ VIC::drawSpritePixel(unsigned spriteNr,
 }
 
 void
-VIC::loadColors(uint8_t pixelNr, uint8_t mode,
-                        uint8_t characterSpace, uint8_t colorSpace)
+VIC::loadColors(uint8_t mode)
 {
+    uint8_t character = sr.latchedCharacter;
+    uint8_t color = sr.latchedColor;
+    
     switch (mode) {
             
         case STANDARD_TEXT:
             
             col[0] = reg.delayed.colors[COLREG_BG0];
-            col[1] = colorSpace;
+            col[1] = color;
             break;
             
         case MULTICOLOR_TEXT:
             
-            if (colorSpace & 0x8 /* MC flag */) {
+            if (color & 0x8 /* MC flag */) {
                 
                 col[0] = reg.delayed.colors[COLREG_BG0];
                 col[1] = reg.delayed.colors[COLREG_BG1];
                 col[2] = reg.delayed.colors[COLREG_BG2];
-                col[3] = colorSpace & 0x07;
+                col[3] = color & 0x07;
 
             } else {
                 
                 col[0] = reg.delayed.colors[COLREG_BG0];
-                col[1] = colorSpace;
+                col[1] = color;
 
             }
             break;
             
         case STANDARD_BITMAP:
             
-            col[0] = characterSpace & 0xF;
-            col[1] = characterSpace >> 4;
+            col[0] = character & 0xF;
+            col[1] = character >> 4;
             break;
             
         case MULTICOLOR_BITMAP:
             
             col[0] = reg.delayed.colors[COLREG_BG0];
-            col[1] = characterSpace >> 4;
-            col[2] = characterSpace & 0x0F;
-            col[3] = colorSpace;
+            col[1] = character >> 4;
+            col[2] = character & 0x0F;
+            col[3] = color;
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
             
-            col[0] = reg.delayed.colors[COLREG_BG0 + (characterSpace >> 6)];
-            col[1] = colorSpace;
+            col[0] = reg.delayed.colors[COLREG_BG0 + (character >> 6)];
+            col[1] = color;
             break;
             
         case INVALID_TEXT:
@@ -443,37 +528,29 @@ VIC::loadColors(uint8_t pixelNr, uint8_t mode,
     }
 }
 
+/*
 void
-VIC::setSingleColorPixel(unsigned pixelNr, uint8_t bit /* valid: 0, 1 */)
+VIC::setSingleColorPixel(unsigned pixelNr, uint8_t bit)
 {
-    // int oldrgba = (pixelNr == 0) ? col_rgba0[bit] : col_rgba[bit];
-    // int rgba = rgbaTable[(col[bit] >> (pixelNr * 8)) & 0xF];
-    // assert(rgba == oldrgba);
-    
     if (bit) {
-        // setForegroundPixel(pixelNr, rgba);
         drawForegroundPixel(pixelNr, col[bit]);
     } else {
-        // setBackgroundPixel(pixelNr, rgba);
         drawBackgroundPixel(pixelNr, col[bit]);
     }
 }
+*/
 
+/*
 void
-VIC::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
+VIC::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits)
 {
-    // int oldrgba = (pixelNr == 0) ? col_rgba0[two_bits] : col_rgba[two_bits];
-    // int rgba = rgbaTable[(col[two_bits] >> (pixelNr * 8)) & 0xF];
-    // assert(rgba == oldrgba);
-    
     if (two_bits & 0x02) {
-        // setForegroundPixel(pixelNr, rgba);
         drawForegroundPixel(pixelNr, col[two_bits]);
     } else {
-        // setBackgroundPixel(pixelNr, rgba);
         drawBackgroundPixel(pixelNr, col[two_bits]);
     }
 }
+*/
 
 void
 VIC::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t bit)
@@ -558,10 +635,6 @@ VIC::drawFramePixels(unsigned first, unsigned last, uint8_t color)
 void
 VIC::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 {
-    // unsigned offset = bufferoffset + pixelNr;
-    // assert(offset < NTSC_PIXELS);
-    
-    // pixelBuffer[offset] = rgbaTable[color];
     colBuffer[pixelNr] = color;
     zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x80;
@@ -570,10 +643,6 @@ VIC::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 void
 VIC::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 {
-    // unsigned offset = bufferoffset + pixelNr;
-    // assert(offset < NTSC_PIXELS);
-    
-    // pixelBuffer[offset] = rgbaTable[color];
     colBuffer[pixelNr] = color;
     zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH;
     pixelSource[pixelNr] = 0x00;
