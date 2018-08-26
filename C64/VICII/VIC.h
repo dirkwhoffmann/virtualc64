@@ -150,7 +150,7 @@ private:
     //         |a|   |t|<----+ |   | |  data buffers  |         ||             |
     //  AEC <--|c|   |o| |   | v   | +----------------+         ||             |
     //         |e|   |r| | +-----+ |         ||                 ||             |
-    //         +-+   +-+ | |MC0-7| |         \/                 \/             |
+    //         +-+   +-+ | |MC0-7| |  (10)   \/          (11)   \/             |
     //                   | +-----+ |  +--------------+   +--------------+      |
     //                   |     (9) |  | Sprite data  |   |Graphics data |      |
     //         +---------------+   |  |  sequencer   |   |  sequencer   |      |
@@ -161,9 +161,9 @@ private:
     //                 ^           |       |          MUX          |           |
     //                 |           |       | Sprite priorities and |-----------+
     //  øIN -----------+           |       |  collision detection  |
-    //                             |       +-----------------------+
+    //                             |       +-----------------------+ (12)
     //    VC: Video Matrix Counter |                   |
-    //                             |                   v
+    //                             |            (13)   v
     //    RC: Row Counter          |            +-------------+
     //                             +----------->| Border unit |
     //    MC: MOB Data Counter     |            +-------------+
@@ -238,12 +238,122 @@ private:
      */
     uint8_t vmli;
     
+ 
+    /*! @brief    Graphics data sequencer (10)
+     *  @details  An 8 bit shift register to synthesize canvas pixels.
+     */
+    struct {
+        
+        //! @brief    Shift register data
+        uint8_t data;
+        
+        /*! @brief    Indicates whether the shift register can load data
+         *  @details  If true, the register is loaded when the current x scroll
+         *            offset matches the current pixel number.
+         */
+        bool canLoad;
+        
+        /*! @brief    Multi-color synchronization flipflop
+         *  @details  Whenever the shift register is loaded, the synchronization
+         *            flipflop is also set. It is toggled with each pixel and
+         *            used to synchronize the synthesis of multi-color pixels.
+         */
+        bool mc_flop;
+        
+        /*! @brief    Latched character info
+         *  @details  Whenever the shift register is loaded, the current
+         *            character value (which was once read during a gAccess) is
+         *            latched. This value is used until the shift register loads
+         *            again.
+         */
+        uint8_t latchedCharacter;
+        
+        /*! @brief    Latched color info
+         *  @details  Whenever the shift register is loaded, the current color
+         *            value (which was once read during a gAccess) is latched.
+         *            This value is used until the shift register loads again.
+         */
+        uint8_t latchedColor;
+        
+        /*! @brief    Color bits
+         *  @details  Every second pixel (as synchronized with mc_flop), the
+         *            multi-color bits are remembered.
+         */
+        uint8_t colorbits;
+        
+        /*! @brief    Remaining bits to be pumped out
+         *  @details  Makes sure no more than 8 pixels are outputted.
+         */
+        int remaining_bits;
+        
+    } sr;
+    
+
+    /*! @brief    Sprite data sequencer (11)
+     *  @details  The VIC chip has a 24 bit (3 byte) shift register for each
+     *            sprite. It stores the sprite for one rasterline. If a sprite
+     *            is a display candidate in the current rasterline, its shift
+     *            register is activated when the raster X coordinate matches
+     *            the sprites X coordinate. The comparison is done in method
+     *            drawSprite(). Once a shift register is activated, it remains
+     *            activated until the beginning of the next rasterline. However,
+     *            after an activated shift register has dumped out its 24 pixels,
+     *            it can't draw anything else than transparent pixels (which is
+     *            the same as not to draw anything). An exception is during DMA
+     *            cycles. When a shift register is activated during such a cycle,
+     *            it freezes a short period of time in which it repeats the
+     *            previous drawn pixel.
+     */
+    struct {
+        
+        //! @brief    Shift register data (24 bit)
+        uint32_t data;
+        
+        //! @brief    The shift register data is read in three chunks
+        uint8_t chunk1, chunk2, chunk3;
+        
+        /*! @brief    Remaining bits to be pumped out
+         *  @details  At the beginning of each rasterline, this value is
+         *            initialized with -1 and set to 26 when the horizontal
+         *            trigger condition is met (sprite X trigger coord reaches
+         *            xCounter). When all bits are drawn, this value reaches 0.
+         */
+        int remaining_bits;
+        
+        /*! @brief    Multi-color synchronization flipflop
+         *  @details  Whenever the shift register is loaded, the synchronization
+         *            flipflop is also set. It is toggled with each pixel and
+         *            used to synchronize the synthesis of multi-color pixels.
+         */
+        bool mc_flop;
+        
+        //! @brief    x expansion synchronization flipflop
+        bool exp_flop;
+        
+        /*! @brief    Color bits of the currently processed pixel
+         *  @details  In single-color mode, these bits are updated every cycle
+         *            In multi-color mode, these bits are updated every second
+         *            cycle (synchronized with mc_flop).
+         */
+        uint8_t col_bits;
+        
+        //! @brief    Sprite color
+        uint8_t spriteColor;
+        
+    } sprite_sr[8];
+    
+    //! @brief    Sprite-sprite collision register (12)
+    uint8_t  spriteSpriteCollision;
+    
+    //! @brief    Sprite-background collision register (12)
+    uint8_t  spriteBackgroundColllision;
+    
     
     //
     // Border flipflops
     //
     
-    /*! @brief    Piped frame flipflops state.
+    /*! @brief    Piped frame flipflops state (13)
      *  @details  When a flipflop toggles, the corresponding value
      *            in variable current is changed and a flag is set in variable
      *            delay. Function processDelayedActions() reads the flag and if
@@ -255,12 +365,6 @@ private:
         FrameFlipflops delayed;
     } flipflops;
     
-    //! @brief    Sprite-sprite collision register
-    uint8_t  spriteSpriteCollision;
-
-    //! @brief    Sprite-background collision register
-    uint8_t  spriteBackgroundColllision;
-        
     /*! @brief    Vertical frame flipflop set condition
      *  @details  Indicates whether the vertical frame flipflop needs to be set
      *            in the current rasterline.
