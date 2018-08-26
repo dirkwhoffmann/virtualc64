@@ -399,6 +399,18 @@ VIC::screenBuffer() {
     }
 }
 
+void
+VIC::resetScreenBuffers()
+{
+    for (unsigned line = 0; line < PAL_RASTERLINES; line++) {
+        for (unsigned i = 0; i < NTSC_PIXELS; i++) {
+            screenBuffer1[line * NTSC_PIXELS + i] =
+            screenBuffer2[line * NTSC_PIXELS + i] =
+            (line % 2) ? rgbaTable[8] : rgbaTable[9];
+        }
+    }
+}
+
 uint16_t
 VIC::rasterline()
 {
@@ -692,6 +704,15 @@ VIC::retriggerLightpenInterrupt()
 //
 
 uint8_t
+VIC::spriteDepth(uint8_t nr)
+{
+    return
+    GET_BIT(reg.current.sprPriority, nr) ?
+    (SPRITE_LAYER_BG_DEPTH | nr) :
+    (SPRITE_LAYER_FG_DEPTH | nr);
+}
+
+uint8_t
 VIC::compareSpriteY()
 {
     uint8_t result = 0;
@@ -772,21 +793,13 @@ VIC::turnSpritesOnOrOff()
     spriteOnOff.write(onOff);
 }
 
-uint8_t
-VIC::spriteDepth(uint8_t nr)
-{
-    return
-    GET_BIT(reg.current.sprPriority, nr) ?
-    (SPRITE_LAYER_BG_DEPTH | nr) :
-    (SPRITE_LAYER_FG_DEPTH | nr);
-}
+
 
 
 void 
 VIC::beginFrame()
 {
-    beginFramePixelEngine();
-    
+    visibleColumn = false;
 	lightpenIRQhasOccured = false;
 
     /* "The VIC does five read accesses in every raster line for the refresh of
@@ -811,7 +824,10 @@ VIC::beginFrame()
 void
 VIC::endFrame()
 {
-    endFramePixelEngine();
+    // Switch active screen buffer
+    bool first = (currentScreenBuffer == screenBuffer1);
+    currentScreenBuffer = first ? screenBuffer2 : screenBuffer1;
+    pixelBuffer = currentScreenBuffer;
 }
 
 void 
@@ -834,7 +850,19 @@ VIC::beginRasterline(uint16_t line)
     badLine = badLineCondition();
     displayState |= badLine;
     
-    beginRasterlinePixelEngine();
+    // Prepare sprite pixel shift register
+    for (unsigned i = 0; i < 8; i++) {
+        sprite_sr[i].remaining_bits = -1;
+        sprite_sr[i].col_bits = 0;
+    }
+    
+    // We adjust the position of the first pixel in the pixel buffer to make
+    // sure that the screen always appears centered.
+    if (c64->vic.isPAL()) {
+        bufferoffset = PAL_LEFT_BORDER_WIDTH - 32;
+    } else {
+        bufferoffset = NTSC_LEFT_BORDER_WIDTH - 32;
+    }
 }
 
 void 
@@ -852,7 +880,17 @@ VIC::endRasterline()
     if (markDMALines && badLine)
         markLine(VICII_RED);
     
-    endRasterlinePixelEngine();
+    if (!vblank) {
+        
+        // Make the border look nice (evetually, we should get rid of this)
+        expandBorders();
+        
+        // Advance pixelBuffer
+        uint16_t nextline = c64->getRasterline() - PAL_UPPER_VBLANK + 1;
+        if (nextline < PAL_RASTERLINES) {
+            pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
+        }
+    }
 }
 
 

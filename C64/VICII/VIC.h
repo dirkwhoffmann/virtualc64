@@ -809,6 +809,12 @@ public:
     //! @brief    Returns the currently stabel screen buffer.
     void *screenBuffer();
 
+    //! @brief    Initializes both screenBuffers
+    /*! @details  This function is needed for debugging, only. It write some
+     *            recognizable pattern into both buffers.
+     */
+    void resetScreenBuffers();
+
     /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
      *  @seealso  updateColors
      */
@@ -1122,8 +1128,14 @@ private:
 
 private:
 
-    //! @brief    Compares the Y coordinates of all sprites with the yCounter
-    //! @return   A bit pattern storing the result for each sprite.
+    /*! @brief    Gets the depth of a sprite.
+     *  @return   depth value that can be written into the z buffer.
+     */
+    uint8_t spriteDepth(uint8_t nr);
+    
+    /*! @brief    Compares the Y coordinates of all sprites with the yCounter
+     *  @return   A bit pattern storing the result for each sprite.
+     */
     uint8_t compareSpriteY();
     
     /*! @brief    Turns off sprite dma if conditions are met.
@@ -1148,7 +1160,17 @@ private:
      *  @details  This function is called in cycle 58.
      */
     void turnSpritesOnOrOff();
-         
+    
+    /*! @brief    Loads the sprite shift register.
+     *  @details  The shift register is loaded with the three data bytes fetched
+     *            in the previous sAccesses.
+     */
+    void loadShiftRegister(unsigned nr) {
+        sprite_sr[nr].data = LO_LO_HI(sprite_sr[nr].chunk3,
+                                      sprite_sr[nr].chunk2,
+                                      sprite_sr[nr].chunk1);
+    }
+    
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
      *  @details  In cycle 56, register D017 is read and the flipflop gets
      *            inverted for all sprites with vertical stretching enabled.
@@ -1158,12 +1180,7 @@ private:
      */
     void toggleExpansionFlipflop() { expansionFF ^= reg.current.sprExpandY; }
     
-	/*! @brief    Gets the depth of a sprite.
-	 *  @return   depth value that can be written into the z buffer.
-     */
-    uint8_t spriteDepth(uint8_t nr);
-	
-
+    
 	//
     //!  @functiongroup Running the device (VIC.cpp and VIC_cycles_xxx.cpp)
 	//

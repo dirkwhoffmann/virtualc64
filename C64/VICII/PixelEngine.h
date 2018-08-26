@@ -19,16 +19,8 @@
 
 
 public:
-    
-    //! @brief    Method from VirtualComponent
-    // void resetPixelEngine();
 
-    //! @brief    Initializes both screenBuffers
-    /*! @details  This function is needed for debugging, only. It write some
-     *            recognizable pattern into both buffers.
-     */
-    void resetScreenBuffers();
-
+ 
     
 
     
@@ -47,29 +39,6 @@ private:
     //
 
 public:
-    
-    //! @brief    Prepares for a new frame.
-    void beginFramePixelEngine();
-    
-    //! @brief    Prepares for a new rasterline.
-    void beginRasterlinePixelEngine();
-    
-    //! @brief    Finishes a rasterline.
-    void endRasterlinePixelEngine();
-    
-    //! @brief    Finishes a frame.
-    void endFramePixelEngine();
-
-    /*! @brief    Loads the sprite shift register.
-     *  @details  The shift register is loaded with the three data bytes fetched
-     *            in the previous sAccesses.
-     */
-    void loadShiftRegister(unsigned nr) {
-        sprite_sr[nr].data = LO_LO_HI(sprite_sr[nr].chunk3,
-                                      sprite_sr[nr].chunk2,
-                                      sprite_sr[nr].chunk1);
-    }
-    
 
     
     
