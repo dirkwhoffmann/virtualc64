@@ -152,14 +152,10 @@ VIC::peek(uint16_t addr)
             return reg.current.colors[COLREG_BG3] | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            
-            assert(sprExtraColor1.current() == reg.current.colors[COLREG_SPR_EX1]);
-            return (sprExtraColor1.current() & 0x0F) | 0xF0;
+            return reg.current.colors[COLREG_SPR_EX1] | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            
-            assert(sprExtraColor2.current() == reg.current.colors[COLREG_SPR_EX2]);
-            return (sprExtraColor2.current() & 0x0F) | 0xF0;
+            return reg.current.colors[COLREG_SPR_EX2] | 0xF0;
             
         case 0x27: // Sprite color 1
         case 0x28: // Sprite color 2

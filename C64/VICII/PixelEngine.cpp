@@ -368,20 +368,7 @@ PixelEngine::drawSprites()
     
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
-    
-    // Get sprite expansion bits
-    uint8_t oldSprXExpand = vic->sprXExpand.delayed();
-    uint8_t newSprXExpand = vic->sprXExpand.current();
-    
-    // Get color values (values may change after the first pixel has been drawn)
-    uint8_t oldExtraColor1 = vic->sprExtraColor1.delayed();
-    uint8_t oldExtraColor2 = vic->sprExtraColor2.delayed();
-    uint8_t newExtraColor1 = vic->sprExtraColor1.current();
-    uint8_t newExtraColor2 = vic->sprExtraColor2.current();
-
-    // uint8_t oldSprXExpansion = vic->sprXExpansion.delayed();
-    // uint8_t newSprXExpansion = vic->sprXExpansion.current();
-    
+        
     // For all sprites ...
     for (unsigned i = 0; i < 8; i++) {
         
@@ -391,19 +378,15 @@ PixelEngine::drawSprites()
         if (!oldOnOff && !newOnOff)
             continue;
         
-        spriteXCoord = vic->sprXCoord[i].delayed(); // GET RID OF THIS VAR
-        assert(spriteXCoord == vic->reg.delayed.sprX[i]);
-        spriteXExpand = GET_BIT(oldSprXExpand, i);
-        assert(oldSprXExpand == vic->reg.delayed.sprExpandX);
+        spriteXCoord = vic->reg.delayed.sprX[i]; // TODO: GET RID OF spriteXCoord
+        spriteXExpand = GET_BIT(vic->reg.delayed.sprExpandX, i);
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
         
         // Load colors for the first pixel
-        assert(oldExtraColor1 == vic->reg.delayed.colors[COLREG_SPR_EX1]);
-        assert(oldExtraColor2 == vic->reg.delayed.colors[COLREG_SPR_EX2]);
-        sprExtraCol1 = oldExtraColor1;
-        sprExtraCol2 = oldExtraColor2;
+        sprExtraCol1 = vic->reg.delayed.colors[COLREG_SPR_EX1];
+        sprExtraCol2 = vic->reg.delayed.colors[COLREG_SPR_EX2];
         sprCol[i] = vic->reg.delayed.colors[COLREG_SPR0 + i];
         
         // Draw first pixel
@@ -412,10 +395,8 @@ PixelEngine::drawSprites()
         }
         
         // Load colors for the other pixel
-        assert(newExtraColor1 == vic->reg.current.colors[COLREG_SPR_EX1]);
-        assert(newExtraColor2 == vic->reg.current.colors[COLREG_SPR_EX2]);
-        sprExtraCol1 = newExtraColor1;
-        sprExtraCol2 = newExtraColor2;
+        sprExtraCol1 = vic->reg.current.colors[COLREG_SPR_EX1];
+        sprExtraCol2 = vic->reg.current.colors[COLREG_SPR_EX2];
         sprCol[i] = vic->reg.current.colors[COLREG_SPR0 + i];
         
         // Draw the next three pixels
@@ -431,8 +412,7 @@ PixelEngine::drawSprites()
             drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
             
             // If spriteXexpand has changed, it shows up at this point in time.
-            spriteXExpand = GET_BIT(newSprXExpand, i);
-            assert(newSprXExpand == vic->reg.current.sprExpandX);
+            spriteXExpand = GET_BIT(vic->reg.current.sprExpandX, i);
 
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
