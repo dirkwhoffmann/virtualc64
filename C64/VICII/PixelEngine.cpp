@@ -162,8 +162,8 @@ PixelEngine::drawBorder()
         
         assert(vic->borderColor.delayed() == vic->reg.delayed.colors[COLREG_BORDER]);
         assert(vic->borderColor.current() == vic->reg.current.colors[COLREG_BORDER]);
-        drawFramePixel(0, vic->borderColor.delayed());
-        drawFramePixels(1, 7, vic->borderColor.current());
+        drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
+        drawFramePixels(1, 7, vic->reg.current.colors[COLREG_BORDER]);
     }
 }
 
@@ -179,8 +179,8 @@ PixelEngine::drawBorder17()
     if (vic->mainFrameFF.delayed() && !vic->mainFrameFF.current()) {
         
         // 38 column mode (only pixels 0...6 are drawn)
-        drawFramePixel(0, vic->borderColor.delayed());
-        drawFramePixels(1, 6, vic->borderColor.current());
+        drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
+        drawFramePixels(1, 6, vic->reg.current.colors[COLREG_BORDER]);
         
     } else {
 
@@ -198,7 +198,7 @@ PixelEngine::drawBorder55()
     if (!vic->mainFrameFF.delayed() && vic->mainFrameFF.current()) {
         
         // 38 column mode (border starts at pixel 7)
-        drawFramePixel(7, vic->borderColor.delayed());
+        drawFramePixel(7, vic->reg.delayed.colors[COLREG_BORDER]);
   
     } else {
         

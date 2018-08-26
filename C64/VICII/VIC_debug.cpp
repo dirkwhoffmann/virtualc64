@@ -33,7 +33,7 @@ VIC::getInfo()
     info.badLine = badLine;
     info.ba = (baLine.current() == 0);
     info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
-    info.borderColor = borderColor.current() & 0xF;
+    info.borderColor = reg.current.colors[COLREG_BORDER];
     info.backgroundColor0 = bgColor[0].current() & 0xF;
     info.backgroundColor1 = bgColor[1].current() & 0xF;
     info.backgroundColor2 = bgColor[2].current() & 0xF;
