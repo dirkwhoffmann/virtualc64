@@ -219,7 +219,7 @@ PixelEngine::drawCanvas()
          *  by the border)." [C.B.]
          */
         // TODO: This is wrong, border-bm-idle test fails
-        drawEightBackgroundPixels(vic->bgColor[0].current());
+        drawEightBackgroundPixels(vic->reg.current.colors[COLREG_BG0]);
         return;
     }
     
@@ -512,14 +512,11 @@ void
 PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
                         uint8_t characterSpace, uint8_t colorSpace)
 {
-    bool old = (pixelNr == 0);
-    
     switch (mode) {
             
         case STANDARD_TEXT:
             
-            col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-            assert(col[0] == vic->reg.delayed.colors[COLREG_BG0]);
+            col[0] = vic->reg.delayed.colors[COLREG_BG0];
             col[1] = colorSpace;
             break;
             
@@ -527,19 +524,14 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
             
             if (colorSpace & 0x8 /* MC flag */) {
                 
-                col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-                col[1] = old ? vic->bgColor[1].delayed() : vic->bgColor[1].current();
-                col[2] = old ? vic->bgColor[2].delayed() : vic->bgColor[2].current();
+                col[0] = vic->reg.delayed.colors[COLREG_BG0];
+                col[1] = vic->reg.delayed.colors[COLREG_BG1];
+                col[2] = vic->reg.delayed.colors[COLREG_BG2];
                 col[3] = colorSpace & 0x07;
-
-                assert(col[0] == vic->reg.delayed.colors[COLREG_BG0]);
-                assert(col[1] == vic->reg.delayed.colors[COLREG_BG1]);
-                assert(col[2] == vic->reg.delayed.colors[COLREG_BG2]);
 
             } else {
                 
-                col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-                assert(col[0] == vic->reg.delayed.colors[COLREG_BG0]);
+                col[0] = vic->reg.delayed.colors[COLREG_BG0];
                 col[1] = colorSpace;
 
             }
@@ -553,8 +545,7 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
             
         case MULTICOLOR_BITMAP:
             
-            col[0] = old ? vic->bgColor[0].delayed() : vic->bgColor[0].current();
-            assert(col[0] == vic->reg.delayed.colors[COLREG_BG0]);
+            col[0] = vic->reg.delayed.colors[COLREG_BG0];
             col[1] = characterSpace >> 4;
             col[2] = characterSpace & 0x0F;
             col[3] = colorSpace;
@@ -562,10 +553,7 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
             
         case EXTENDED_BACKGROUND_COLOR:
             
-            col[0] = old ?
-            vic->bgColor[characterSpace >> 6].delayed() :
-            vic->bgColor[characterSpace >> 6].current();
-            assert(col[0] == vic->reg.delayed.colors[COLREG_BG0 + (characterSpace >> 6)]);
+            col[0] = vic->reg.delayed.colors[COLREG_BG0 + (characterSpace >> 6)];
             col[1] = colorSpace;
             break;
             

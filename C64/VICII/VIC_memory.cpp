@@ -136,16 +136,20 @@ VIC::peek(uint16_t addr)
             spriteBackgroundColllision = 0; // Clear on read
             return result;
             
-        case 0x20:
+        case 0x20: // Border color
             return reg.current.colors[COLREG_BORDER] | 0xF0;
             
         case 0x21: // Background color 0
-        case 0x22: // Background color 1
-        case 0x23: // Background color 2
-        case 0x24: // Background color 3
+            return reg.current.colors[COLREG_BG0] | 0xF0;
             
-            assert(bgColor[addr - 0x21].current() == reg.current.colors[COLREG_BG0 + (addr - 0x21)]);
-            return (bgColor[addr - 0x21].current() & 0x0F) | 0xF0;
+        case 0x22: // Background color 1
+            return reg.current.colors[COLREG_BG1] | 0xF0;
+
+        case 0x23: // Background color 2
+            return reg.current.colors[COLREG_BG2] | 0xF0;
+
+        case 0x24: // Background color 3
+            return reg.current.colors[COLREG_BG3] | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             

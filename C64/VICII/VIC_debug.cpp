@@ -34,10 +34,10 @@ VIC::getInfo()
     info.ba = (baLine.current() == 0);
     info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
     info.borderColor = reg.current.colors[COLREG_BORDER];
-    info.backgroundColor0 = bgColor[0].current() & 0xF;
-    info.backgroundColor1 = bgColor[1].current() & 0xF;
-    info.backgroundColor2 = bgColor[2].current() & 0xF;
-    info.backgroundColor3 = bgColor[3].current() & 0xF;
+    info.backgroundColor0 = reg.current.colors[COLREG_BG0];
+    info.backgroundColor1 = reg.current.colors[COLREG_BG1];
+    info.backgroundColor2 = reg.current.colors[COLREG_BG2];
+    info.backgroundColor3 = reg.current.colors[COLREG_BG3];
     info.screenGeometry = getScreenGeometry();
     info.dx = control2.current() & 0x07;
     info.dy = control1.current() & 0x07;
