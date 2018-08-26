@@ -58,6 +58,7 @@ VIC::VIC()
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
         { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
+        { &oldFlipflops,                   sizeof(oldFlipflops),                      CLEAR_ON_RESET },
         { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
         { &reg,                    sizeof(reg),                       CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
@@ -219,8 +220,8 @@ VIC::dumpState()
 	msg("               RC : %02X\n", rc);
 	msg("             VMLI : %02X\n", vmli);
 	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
-	msg("      MainFrameFF : %d\n", flipflops.main);
-    msg("  VerticalFrameFF : %d\n", flipflops.vertical);
+    msg("      MainFrameFF : %d\n", flipflops.current.main);
+    msg("  VerticalFrameFF : %d\n", flipflops.current.vertical);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
@@ -447,9 +448,10 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
         // Note that the main frame flipflop can not be cleared when the
         // vertical border flipflop is set.
         
-        assert(flipflops.vertical == verticalFrameFF.current());
+        assert(newFlipflops.vertical == verticalFrameFF.current());
         
-        if (!flipflops.vertical && !verticalFrameFFsetCond) {
+        assert(newFlipflops.vertical == flipflops.current.vertical);
+        if (!newFlipflops.vertical && !verticalFrameFFsetCond) {
             setMainFrameFF(false);
         }
         
@@ -474,7 +476,9 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void
 VIC::setVerticalFrameFF(bool value)
 {
-    if (value != flipflops.vertical) {
+    assert(oldFlipflops.vertical == flipflops.delayed.vertical);
+    if (value != oldFlipflops.vertical) {
+        flipflops.current.vertical = value;
         newFlipflops.vertical = value;
         delay |= VICUpdateFlipflops;
     }
@@ -483,7 +487,9 @@ VIC::setVerticalFrameFF(bool value)
 void
 VIC::setMainFrameFF(bool value)
 {
-    if (value != flipflops.main) {
+    assert(oldFlipflops.main == flipflops.delayed.main);
+    if (value != oldFlipflops.main) {
+        flipflops.current.main = value;
         newFlipflops.main = value;
         delay |= VICUpdateFlipflops;
     }

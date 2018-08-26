@@ -44,7 +44,8 @@ VIC::processDelayedActions()
         triggerLightpenInterrupt();
     }
     if (delay & VICUpdateFlipflops) {
-        flipflops = newFlipflops;
+        flipflops.delayed = flipflops.current;
+        oldFlipflops = newFlipflops;
     }
     if (delay & VICUpdateRegisters) {
         reg.delayed = reg.current; 

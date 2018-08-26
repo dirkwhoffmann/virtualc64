@@ -156,9 +156,10 @@ PixelEngine::drawOutsideBorder()
 void
 PixelEngine::drawBorder()
 {
-    assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
+    assert(vic->mainFrameFF.delayed() == vic->oldFlipflops.main);
+    assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     
-    if (vic->mainFrameFF.delayed()) {
+    if (vic->oldFlipflops.main) {
         
         drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
         drawFramePixels(1, 7, vic->reg.current.colors[COLREG_BORDER]);
@@ -168,8 +169,10 @@ PixelEngine::drawBorder()
 void
 PixelEngine::drawBorder17()
 {    
-    assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
+    assert(vic->mainFrameFF.delayed() == vic->oldFlipflops.main);
     assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
+    assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
+    assert(vic->newFlipflops.main == vic->flipflops.current.main);
 
     if (vic->mainFrameFF.delayed() && !vic->mainFrameFF.current()) {
         
@@ -187,8 +190,10 @@ PixelEngine::drawBorder17()
 void
 PixelEngine::drawBorder55()
 {
-    assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
+    assert(vic->mainFrameFF.delayed() == vic->oldFlipflops.main);
     assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
+    assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
+    assert(vic->newFlipflops.main == vic->flipflops.current.main);
     
     if (!vic->mainFrameFF.delayed() && vic->mainFrameFF.current()) {
         
@@ -211,7 +216,8 @@ PixelEngine::drawCanvas()
      *  (see section 3.9.)." [C.B.]
      */
     
-    assert(vic->verticalFrameFF.delayed() == vic->flipflops.vertical);
+    assert(vic->verticalFrameFF.delayed() == vic->oldFlipflops.vertical);
+    assert(vic->verticalFrameFF.delayed() == vic->flipflops.delayed.vertical);
     if (vic->verticalFrameFF.delayed()) {
         
         /* "Outside of the display column and if the flip-flop is set, the last

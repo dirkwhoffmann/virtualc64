@@ -84,7 +84,7 @@ public:
     
 private:
     
-    /*! @brief    Piped I/O register values.
+    /*! @brief    Piped I/O register state.
      *  @details  When an I/O register is written to, the corresponding value
      *            in variable current is changed and a flag is set in variable
      *            delay. Function processDelayedActions() reads the flag and if
@@ -232,8 +232,14 @@ private:
     // Border flipflops
     //
     
+    //! @brief    Piped frame flipflops state.
+    struct {
+        FrameFlipflops current;
+        FrameFlipflops delayed;
+    } flipflops;
+    
     //! @brief    Current values of the two frame flip flops
-    FrameFlipflops flipflops;
+    FrameFlipflops oldFlipflops;
     
     /*! @brief    New flipflop values
      *  @details  The values are copied over to variable 'flipflops' if a flag

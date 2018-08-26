@@ -41,8 +41,8 @@ VIC::getInfo()
     info.screenGeometry = getScreenGeometry();
     info.dx = ctrl2 & 0x07;
     info.dy = ctrl1 & 0x07;
-    info.verticalFrameFlipflop = flipflops.vertical;
-    info.horizontalFrameFlipflop = flipflops.main;
+    info.verticalFrameFlipflop = flipflops.current.vertical;
+    info.horizontalFrameFlipflop = flipflops.current.main;
     info.memoryBankAddr = bankAddr;
     info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
     info.characterMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
