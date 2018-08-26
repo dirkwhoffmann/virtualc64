@@ -229,10 +229,8 @@ PixelEngine::drawCanvas()
      *  $d016." [C.B.]
      */
     
-    assert(vic->control1.delayed() == vic->reg.delayed.ctrl1);
-    assert(vic->control2.delayed() == vic->reg.delayed.ctrl2);
-    d011 = vic->control1.delayed();
-    d016 = vic->control2.delayed();
+    d011 = vic->reg.delayed.ctrl1;
+    d016 = vic->reg.delayed.ctrl2;
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
@@ -249,12 +247,11 @@ PixelEngine::drawCanvas()
     drawCanvasPixel(3, mode, d016, xscroll == 3, false);
 
     // After pixel 4, a change in D016 affects the display mode.
-    newD016 = vic->control2.current();
+    newD016 = vic->reg.current.ctrl2;
 
     // In newer VICIIs, the one bits of D011 show up, too.
-    assert(vic->control1.current() == vic->reg.current.ctrl1);
     if (!vic->is856x()) {
-        d011 |= vic->control1.current();
+        d011 |= vic->reg.current.ctrl1;
     }
     oldMode = mode;
     mode = (d011 & 0x60) | (newD016 & 0x10);
@@ -263,9 +260,8 @@ PixelEngine::drawCanvas()
     drawCanvasPixel(5, mode, d016, xscroll == 5, false);
     
     // In newer VICIIs, the zero bits of D011 show up here.
-    assert(vic->control1.current() == vic->reg.current.ctrl1);
     if (!vic->is856x()) {
-        d011 = vic->control1.current();
+        d011 = vic->reg.current.ctrl1;
         oldMode = mode;
         mode = (d011 & 0x60) | (newD016 & 0x10);
     }

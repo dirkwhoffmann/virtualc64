@@ -63,8 +63,7 @@ VIC::peek(uint16_t addr)
         }
                    
         case 0x11: // SCREEN CONTROL REGISTER #1
-            assert(control1.current() == reg.current.ctrl1);
-            return (control1.current() & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
+            return (reg.current.ctrl1 & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
             
         case 0x12: // VIC_RASTER_READ_WRITE
             return yCounter & 0xff;
@@ -80,8 +79,7 @@ VIC::peek(uint16_t addr)
             
         case 0x16:
             // The two upper bits always read back as '1'
-            assert(control2.current() == reg.current.ctrl2);
-            return (control2.current() & 0xFF) | 0xC0;
+            return (reg.current.ctrl2 & 0xFF) | 0xC0;
             
         case 0x17:
             return reg.current.sprExpandY;
@@ -214,20 +212,15 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x11: // Control register 1
             
-            assert(reg.delayed.ctrl1 == control1.current());
-            if ((control1.current() & 0x80) != (value & 0x80)) {
+            if ((reg.delayed.ctrl1 & 0x80) != (value & 0x80)) {
                 
                 reg.current.ctrl1 = value;
-                control1.write(value);
-                
                 // Check if we need to trigger a rasterline interrupt
                 if (yCounter == rasterInterruptLine())
                     triggerDelayedIRQ(1);
                 
             } else {
-                
                 reg.current.ctrl1 = value;
-                control1.write(value);
             }
             
             // Check the DEN bit. If it gets set somehwere in line 30, a bad
@@ -266,7 +259,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x16: // CONTROL_REGISTER_2
             
-            control2.write(value);
             reg.current.ctrl2 = value;
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
@@ -508,10 +500,9 @@ VIC::gAccess()
         //  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
         
         // Determine value of BMM bit
-        assert(control1.delayed() == reg.delayed.ctrl1);
-        uint8_t bmm = GET_BIT(control1.delayed(), 5);
+        uint8_t bmm = GET_BIT(reg.delayed.ctrl1, 5);
         if (!is856x()) {
-            bmm |= GET_BIT(control1.current(), 5);
+            bmm |= GET_BIT(reg.current.ctrl1, 5);
         }
         
         uint16_t addr;

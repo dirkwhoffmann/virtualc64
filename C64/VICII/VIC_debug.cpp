@@ -24,8 +24,8 @@ VIC::getInfo()
 {
     VICInfo info;
     
-    uint8_t ctrl1 = control1.current();
-    uint8_t ctrl2 = control2.current();
+    uint8_t ctrl1 = reg.current.ctrl1;
+    uint8_t ctrl2 = reg.current.ctrl2;
 
     info.rasterline = c64->rasterline;
     info.cycle = c64->rasterlineCycle;
@@ -39,8 +39,8 @@ VIC::getInfo()
     info.backgroundColor2 = reg.current.colors[COLREG_BG2];
     info.backgroundColor3 = reg.current.colors[COLREG_BG3];
     info.screenGeometry = getScreenGeometry();
-    info.dx = control2.current() & 0x07;
-    info.dy = control1.current() & 0x07;
+    info.dx = ctrl2 & 0x07;
+    info.dy = ctrl1 & 0x07;
     info.verticalFrameFlipflop = flipflops.vertical;
     info.horizontalFrameFlipflop = flipflops.main;
     info.memoryBankAddr = bankAddr;
@@ -114,8 +114,6 @@ void
 VIC::setDisplayMode(DisplayMode m)
 {
     c64->suspend();
-    control1.write((control1.current() & ~0x60) | (m & 0x60));
-    control2.write((control2.current() & ~0x10) | (m & 0x10));
     reg.current.ctrl1 = (reg.current.ctrl1 & ~0x60) | (m & 0x60);
     reg.current.ctrl2 = (reg.current.ctrl2 & ~0x10) | (m & 0x10);
     delay |= VICUpdateRegisters;
@@ -127,13 +125,7 @@ VIC::setNumberOfRows(unsigned rs)
 {
     assert(rs == 24 || rs == 25);
     
-    debug("Setting rows to %d\n", rs);
-    
     c64->suspend();
-    // uint8_t value = control1.current();
-    // WRITE_BIT(value, 3, rs == 25);
-    // control1.write(value);
-
     uint8_t cntrl = reg.current.ctrl1;
     WRITE_BIT(cntrl, 3, rs == 25);
     poke(0x11, cntrl);
@@ -144,14 +136,8 @@ void
 VIC::setNumberOfColumns(unsigned cs)
 {
     assert(cs == 38 || cs == 40);
-    
-    debug("Setting cols to %d\n", cs);
 
     c64->suspend();
-    // uint8_t value = control2.current();
-    // WRITE_BIT(value, 3, cs == 40);
-    // control2.write(value);
-    
     uint8_t cntrl = reg.current.ctrl2;
     WRITE_BIT(cntrl, 3, cs == 40);
     poke(0x16, cntrl);
@@ -161,8 +147,6 @@ VIC::setNumberOfColumns(unsigned cs)
 ScreenGeometry
 VIC::getScreenGeometry(void)
 {
-    // unsigned rows = GET_BIT(control1.current(), 3) ? 25 : 24;
-    // unsigned cols = GET_BIT(control2.current(), 3) ? 40 : 38;
     unsigned rows = GET_BIT(reg.current.ctrl1, 3) ? 25 : 24;
     unsigned cols = GET_BIT(reg.current.ctrl2, 3) ? 40 : 38;
     
@@ -188,7 +172,6 @@ VIC::setVerticalRasterScroll(uint8_t offset)
     assert(offset < 8);
     
     c64->suspend();
-    control1.write((control1.current() & 0xF8) | (offset & 0x07));
     reg.current.ctrl1 = (reg.current.ctrl1 & 0xF8) | (offset & 0x07);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -200,7 +183,6 @@ VIC::setHorizontalRasterScroll(uint8_t offset)
     assert(offset < 8);
     
     c64->suspend();
-    control2.write((control2.current() & 0xF8) | (offset & 0x07));
     reg.current.ctrl2 = (reg.current.ctrl2 & 0xF8) | (offset & 0x07);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -211,14 +193,8 @@ VIC::setRasterInterruptLine(uint16_t line)
 {
     c64->suspend();
     rasterIrqLine = line & 0xFF;
-    if (line > 0xFF) {
-        control1.write(control1.current() | 0x80);
-    } else {
-        control1.write(control1.current() & 0x7F);
-    }
     WRITE_BIT(reg.delayed.ctrl1, 7, line > 0xFF);
     WRITE_BIT(reg.current.ctrl1, 7, line > 0xFF);
-    
     c64->resume();
 }
 

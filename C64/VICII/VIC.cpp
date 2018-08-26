@@ -119,10 +119,7 @@ VIC::setC64(C64 *c64)
     mainFrameFF.setClock(&c64->cpu.cycle);
     verticalFrameFF.setClock(&c64->cpu.cycle);
     gAccessResult.setClock(&c64->cpu.cycle);
-
-    control1.setClock(&c64->cpu.cycle);
     spriteOnOff.setClock(&c64->cpu.cycle);
-    control2.setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -138,9 +135,7 @@ VIC::reset()
     mainFrameFF.reset(0);
     verticalFrameFF.reset(0);
     gAccessResult.reset(0);
-    control1.reset(0x10);
     spriteOnOff.reset(0);
-    control2.reset(0);
     
     expansionFF = 0xFF;
     
@@ -247,9 +242,7 @@ VIC::stateSize()
     result += mainFrameFF.stateSize();
     result += verticalFrameFF.stateSize();
     result += gAccessResult.stateSize();
-    result += control1.stateSize();
     result += spriteOnOff.stateSize();
-    result += control2.stateSize();
 
     return result;
 }
@@ -265,9 +258,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     mainFrameFF.loadFromBuffer(buffer);
     verticalFrameFF.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
-    control1.loadFromBuffer(buffer);
     spriteOnOff.loadFromBuffer(buffer);
-    control2.loadFromBuffer(buffer);
     
     if (*buffer - old != stateSize()) {
         assert(false);
@@ -285,9 +276,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     mainFrameFF.saveToBuffer(buffer);
     verticalFrameFF.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
-    control1.saveToBuffer(buffer);
     spriteOnOff.saveToBuffer(buffer);
-    control2.saveToBuffer(buffer);
  
     if (*buffer - old != stateSize()) {
         assert(false);
@@ -510,11 +499,10 @@ VIC::badLineCondition() {
      * [3] if the DEN bit was set during an arbitrary cycle of
      *     raster line $30." [C.B.]
      */
-    assert(control1.current() == reg.current.ctrl1);
     return
-    yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
-    (yCounter & 0x07) == (control1.current() & 0x07) /* [2] */ &&
-    DENwasSetInRasterline30 /* [3] */;
+    (yCounter >= 0x30 && yCounter <= 0xf7) && /* [1] */
+    (yCounter & 0x07) == (reg.current.ctrl1 & 0x07) && /* [2] */
+    DENwasSetInRasterline30; /* [3] */
 }
 
 void

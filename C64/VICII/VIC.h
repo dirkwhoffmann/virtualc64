@@ -515,28 +515,8 @@ public:
      */
 	bool markDMALines;
 
-	
-    
-    
-    
-    // DEPRECATED:
-    //
-    // Registers (CPU accessible)
-    //
-    
-    
-    
-    //! @brief    Control register 1 (D011)
-    TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Control register 2 (D016)
-    TimeDelayed<uint8_t> control2 = TimeDelayed<uint8_t>(2);
     
 private:
-        
-    // END DEPRECATED
-    
-    
     
     /*! @brief    Event pipeline
      *  @details  If a time delayed event needs to be performed, a flag is set
@@ -818,34 +798,27 @@ public:
 		
     /*! @brief    Returns the current value of the DEN (Display ENabled) bit.
      */
-    bool DENbit() {
-        assert(control1.current() == reg.current.ctrl1);
-        return GET_BIT(control1.current(), 4); }
+    bool DENbit() { return GET_BIT(reg.current.ctrl1, 4); }
 
     /*! @brief    Returns the value of the BMM (Bit Map Mode) bit.
      *  @details  The value is returned as it is seen during a g-access.
      */
     bool BMMbit() {
-        assert(control1.delayed() == reg.delayed.ctrl1);
-        assert(control1.current() == reg.current.ctrl1);
         return is856x() ?
-        GET_BIT(control1.delayed(), 5) :
-        GET_BIT(control1.delayed(), 5) | GET_BIT(control1.current(), 5);
+        GET_BIT(reg.delayed.ctrl1, 5) :
+        GET_BIT(reg.delayed.ctrl1, 5) | GET_BIT(reg.current.ctrl1, 5);
     }
     
     //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
-        assert(control1.current() == reg.current.ctrl1);
         return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
     
     //! @brief    Returns the current value of the ECM bit.
     bool ECMbit() {
-        assert(control1.delayed() == reg.delayed.ctrl1);
-        assert(control1.current() == reg.current.ctrl1);
         return is856x() ?
-        GET_BIT(control1.delayed(), 6) :
-        GET_BIT(control1.current(), 6);
+        GET_BIT(reg.delayed.ctrl1, 6) :
+        GET_BIT(reg.current.ctrl1, 6);
     }
 
     //! @brief    Returns the masked CB13 bit.
@@ -858,10 +831,10 @@ public:
     uint8_t VM13VM12VM11VM10() { return memSelect & 0xF0; }
 
 	//! @brief    Returns the state of the CSEL bit.
-	bool isCSEL() { return GET_BIT(control2.current(), 3); }
+	bool isCSEL() { return GET_BIT(reg.current.ctrl2, 3); }
     
 	//! @brief    Returns the state of the RSEL bit.
-    bool isRSEL() { return GET_BIT(control1.current(), 3); }
+    bool isRSEL() { return GET_BIT(reg.current.ctrl1, 3); }
 
 
     //
