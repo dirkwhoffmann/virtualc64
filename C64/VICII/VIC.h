@@ -532,9 +532,6 @@ public:
     //! @brief    Control register 2 (D016)
     TimeDelayed<uint8_t> control2 = TimeDelayed<uint8_t>(2);
     
-    //! @brief    Control register 1 (D01D)
-    TimeDelayed<uint8_t> sprXExpand = TimeDelayed<uint8_t>(2);
-            
 private:
         
     // END DEPRECATED

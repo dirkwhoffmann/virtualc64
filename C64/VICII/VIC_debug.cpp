@@ -399,9 +399,6 @@ VIC::setSpriteStretchX(unsigned nr, bool b)
     assert(nr < 8);
     
     c64->suspend();
-    uint8_t value = sprXExpand.current();
-    WRITE_BIT(value, nr, b);
-    sprXExpand.write(value);
     WRITE_BIT(reg.current.sprExpandX, nr, b);
     delay |= VICUpdateRegisters;
     c64->resume();
@@ -413,9 +410,6 @@ VIC::spriteToggleStretchXFlag(unsigned nr)
     assert(nr < 8);
 
     c64->suspend();
-    uint8_t value = sprXExpand.current();
-    TOGGLE_BIT(value, nr);
-    sprXExpand.write(value);
     TOGGLE_BIT(reg.current.sprExpandX, nr);
     delay |= VICUpdateRegisters;
     c64->resume();

@@ -102,8 +102,7 @@ VIC::peek(uint16_t addr)
             return reg.current.sprMC;
             
         case 0x1D: // SPRITE_X_EXPAND
-            assert(reg.current.sprExpandX == sprXExpand.current());
-            return sprXExpand.current();
+            return reg.current.sprExpandX;
             
         case 0x1E: // Sprite-to-sprite collision
             result = spriteSpriteCollision;
@@ -333,7 +332,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             break;
             
         case 0x1D: // SPRITE_X_EXPAND
-            sprXExpand.write(value);
             reg.current.sprExpandX = value;
             break;
             
