@@ -127,10 +127,6 @@ VIC::setC64(C64 *c64)
     spriteOnOff.setClock(&c64->cpu.cycle);
     control2.setClock(&c64->cpu.cycle);
     sprXExpand.setClock(&c64->cpu.cycle);
-    
-    for (unsigned i = 0; i < 4; i++)
-        bgColor[i].setClock(&c64->cpu.cycle);
-    
     sprExtraColor1.setClock(&c64->cpu.cycle);
     sprExtraColor2.setClock(&c64->cpu.cycle);
     
@@ -157,10 +153,6 @@ VIC::reset()
     spriteOnOff.reset(0);
     control2.reset(0);
     sprXExpand.reset(0);
-    bgColor[0].reset(VICII_BLUE);
-    bgColor[1].reset(0);
-    bgColor[2].reset(0);
-    bgColor[3].reset(0);
     sprExtraColor1.reset(0);
     sprExtraColor2.reset(0);
     for (unsigned i = 0; i < 8; i++)
@@ -277,8 +269,6 @@ VIC::stateSize()
     result += spriteOnOff.stateSize();
     result += control2.stateSize();
     result += sprXExpand.stateSize();
-    for (unsigned i = 0; i < 4; i++)
-        result += bgColor[i].stateSize();
     result += sprExtraColor1.stateSize();
     result += sprExtraColor2.stateSize();
     for (unsigned i = 0; i < 8; i++)
@@ -304,8 +294,6 @@ VIC::loadFromBuffer(uint8_t **buffer)
     spriteOnOff.loadFromBuffer(buffer);
     control2.loadFromBuffer(buffer);
     sprXExpand.loadFromBuffer(buffer);
-    for (unsigned i = 0; i < 4; i++)
-        bgColor[i].loadFromBuffer(buffer);
     sprExtraColor1.loadFromBuffer(buffer);
     sprExtraColor2.loadFromBuffer(buffer);
     for (unsigned i = 0; i < 8; i++)
@@ -333,8 +321,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     spriteOnOff.saveToBuffer(buffer);
     control2.saveToBuffer(buffer);
     sprXExpand.saveToBuffer(buffer);
-    for (unsigned i = 0; i < 4; i++)
-        bgColor[i].saveToBuffer(buffer);
     sprExtraColor1.saveToBuffer(buffer);
     sprExtraColor2.saveToBuffer(buffer);
     for (unsigned i = 0; i < 8; i++)

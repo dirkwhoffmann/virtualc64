@@ -545,15 +545,7 @@ public:
     
     //! @brief    Control register 1 (D01D)
     TimeDelayed<uint8_t> sprXExpand = TimeDelayed<uint8_t>(2);
-        
-    //! @brief    Background color registers (D021 - D024)
-    TimeDelayed<uint8_t> bgColor[4] = {
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2)
-    };
-    
+            
     //! @brief    Sprite extra color 1 ($D025)
     TimeDelayed<uint8_t> sprExtraColor1 = TimeDelayed<uint8_t>(2);
     

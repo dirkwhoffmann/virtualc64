@@ -433,8 +433,6 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
         case 0x23: // Background color 2
         case 0x24: // Background color 3
             
-            bgColor[addr - 0x21].write(value);
-            bgColor[addr - 0x21].pipeline[1] |= grayDot;
             return;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
