@@ -545,10 +545,7 @@ public:
     
     //! @brief    Control register 1 (D01D)
     TimeDelayed<uint8_t> sprXExpand = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Border color register (D020)
-    TimeDelayed<uint8_t> borderColor = TimeDelayed<uint8_t>(2);
-    
+        
     //! @brief    Background color registers (D021 - D024)
     TimeDelayed<uint8_t> bgColor[4] = {
         TimeDelayed<uint8_t>(2),

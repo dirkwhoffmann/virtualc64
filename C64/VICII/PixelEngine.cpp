@@ -160,8 +160,6 @@ PixelEngine::drawBorder()
     
     if (vic->mainFrameFF.delayed()) {
         
-        assert(vic->borderColor.delayed() == vic->reg.delayed.colors[COLREG_BORDER]);
-        assert(vic->borderColor.current() == vic->reg.current.colors[COLREG_BORDER]);
         drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
         drawFramePixels(1, 7, vic->reg.current.colors[COLREG_BORDER]);
     }
@@ -169,10 +167,7 @@ PixelEngine::drawBorder()
 
 void
 PixelEngine::drawBorder17()
-{
-    
-    assert(vic->borderColor.delayed() == vic->reg.delayed.colors[COLREG_BORDER]);
-    assert(vic->borderColor.current() == vic->reg.current.colors[COLREG_BORDER]);
+{    
     assert(vic->mainFrameFF.delayed() == vic->flipflops.main);
     assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
 

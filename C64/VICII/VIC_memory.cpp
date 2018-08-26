@@ -137,9 +137,7 @@ VIC::peek(uint16_t addr)
             return result;
             
         case 0x20:
-            assert(reg.current.colors[COLREG_BORDER] == borderColor.current());
-            assert(((borderColor.current() & 0x0F) | 0xF0) == (reg.current.colors[COLREG_BORDER] | 0xF0));
-            return (reg.current.colors[COLREG_BORDER] & 0x0F) | 0xF0;
+            return reg.current.colors[COLREG_BORDER] | 0xF0;
             
         case 0x21: // Background color 0
         case 0x22: // Background color 1
@@ -424,9 +422,6 @@ VIC::pokeColorReg(uint16_t addr, uint8_t value)
     switch(addr) {
             
         case 0x20: // Border color
-            
-            borderColor.write(value);
-            borderColor.pipeline[1] |= grayDot;
             return;
             
         case 0x21: // Background color 0
