@@ -318,8 +318,7 @@ private:
      */
     bool displayState;
 
-    //! @brief    Result of the lastest g-access
-    TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
+
     
   
 	//
@@ -445,7 +444,10 @@ private:
      */
     uint16_t bankAddr;
     
-
+    //! @brief    Result of the lastest g-access
+    TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
+    
+    
     //
     // Color management (TODO: MOVE TO PIXEL ENGINE)
     //
@@ -522,20 +524,7 @@ public:
     // Registers (CPU accessible)
     //
     
-    // All values that are read by the PixelEngine are stored as timed delay
-    // variables.
     
-    //! @brief    X coordinate for all sprites (D011)
-    TimeDelayed<uint16_t> sprXCoord[8] = {
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-    };
     
     //! @brief    Control register 1 (D011)
     TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
@@ -702,7 +691,7 @@ private:
     
     //! @brief    Pokes a value into a VIC register.
 	void poke(uint16_t addr, uint8_t value);
-     
+    
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
     

@@ -51,27 +51,6 @@ VIC::peek(uint16_t addr)
             
         case 0x10: // Sprite X (upper bits)
         {
-            uint8_t result;
-            
-            result =
-            ((sprXCoord[0].current() & 0x100) ? 0b00000001 : 0) |
-            ((sprXCoord[1].current() & 0x100) ? 0b00000010 : 0) |
-            ((sprXCoord[2].current() & 0x100) ? 0b00000100 : 0) |
-            ((sprXCoord[3].current() & 0x100) ? 0b00001000 : 0) |
-            ((sprXCoord[4].current() & 0x100) ? 0b00010000 : 0) |
-            ((sprXCoord[5].current() & 0x100) ? 0b00100000 : 0) |
-            ((sprXCoord[6].current() & 0x100) ? 0b01000000 : 0) |
-            ((sprXCoord[7].current() & 0x100) ? 0b10000000 : 0);
-            
-            assert(((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
-                   ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
-                   ((reg.current.sprX[2] & 0x100) ? 0b00000100 : 0) |
-                   ((reg.current.sprX[3] & 0x100) ? 0b00001000 : 0) |
-                   ((reg.current.sprX[4] & 0x100) ? 0b00010000 : 0) |
-                   ((reg.current.sprX[5] & 0x100) ? 0b00100000 : 0) |
-                   ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
-                   ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0) == result);
-            
             return
             ((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
             ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
@@ -212,8 +191,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             reg.current.sprX[addr >> 1] &= 0x100;
             reg.current.sprX[addr >> 1] |= value;
-            sprXCoord[addr >> 1].write((sprXCoord[addr >> 1].current() & 0x100) | value);
-            assert(reg.current.sprX[addr >> 1] == sprXCoord[addr >> 1].current());
             break;
         
         case 0x01: // Sprite Y
@@ -233,15 +210,6 @@ VIC::poke(uint16_t addr, uint8_t value)
             for (unsigned i = 0; i < 8; i++) {
                 reg.current.sprX[i] &= 0xFF;
                 reg.current.sprX[i] |= GET_BIT(value, i) ? 0x100 : 0;
-            }
-            
-            for (unsigned i = 0; i < 8; i++) {
-                uint16_t upperBit = GET_BIT(value, i) ? 0x100 : 0;
-                sprXCoord[i].write(upperBit | (sprXCoord[i].current() & 0xFF));
-            }
-
-            for (unsigned i = 0; i < 8; i++) {
-                assert(reg.current.sprX[i] == sprXCoord[i].current());
             }
             break;
             
@@ -320,19 +288,19 @@ VIC::poke(uint16_t addr, uint8_t value)
             expansionFF |= ~value;
             break;
             
-        case 0x18: { // Memory address pointers
+        case 0x18: // Memory address pointers
             
-            uint8_t oldValue = memSelect;
-            memSelect = value;
-            
-            // The GUI needs to know when the second bit changes. This bit
-            // lets us distinguish between uppercase / lowercase character mode
-            if ((oldValue ^ value) & 0x02) {
+            // Inform the GUI if the second bit changes. It switches between
+            // upper case or lower case mode.
+            if ((value & 0x02) != (memSelect & 0x02)) {
+                memSelect = value;
                 c64->putMessage(MSG_CHARSET);
+                return;
             }
-            delay |= VICUpdateRegisters; // TODO: Replace by break later
+            
+            memSelect = value;
             return;
-        }
+    
         case 0x19: // Interrupt Request Register (IRR)
             
             // Bits are cleared by writing '1'
@@ -367,8 +335,7 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x1D: // SPRITE_X_EXPAND
             sprXExpand.write(value);
             reg.current.sprExpandX = value;
-            delay |= VICUpdateRegisters; // TODO: Replace by break later
-            return;
+            break;
             
         case 0x1E:
         case 0x1F:
@@ -398,9 +365,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             if (hasGrayDotBug() && emulateGrayDotBug) {
                 reg.delayed.colors[addr - 0x20] = 0xF;
             }
-            
-            delay |= VICUpdateRegisters; // TODO: Replace by break later
-            return;
+            break;
     }
     
     delay |= VICUpdateRegisters;

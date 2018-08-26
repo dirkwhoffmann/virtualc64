@@ -119,9 +119,6 @@ VIC::setC64(C64 *c64)
     mainFrameFF.setClock(&c64->cpu.cycle);
     verticalFrameFF.setClock(&c64->cpu.cycle);
     gAccessResult.setClock(&c64->cpu.cycle);
-    
-    for (unsigned i = 0; i < 8; i++)
-        sprXCoord[i].setClock(&c64->cpu.cycle);
 
     control1.setClock(&c64->cpu.cycle);
     spriteOnOff.setClock(&c64->cpu.cycle);
@@ -142,8 +139,6 @@ VIC::reset()
     mainFrameFF.reset(0);
     verticalFrameFF.reset(0);
     gAccessResult.reset(0);
-    for (unsigned i = 0; i < 8; i++)
-        sprXCoord[i].reset(0);
     control1.reset(0x10);
     spriteOnOff.reset(0);
     control2.reset(0);
@@ -254,8 +249,6 @@ VIC::stateSize()
     result += mainFrameFF.stateSize();
     result += verticalFrameFF.stateSize();
     result += gAccessResult.stateSize();
-    for (unsigned i = 0; i < 8; i++)
-        result += sprXCoord[i].stateSize();
     result += control1.stateSize();
     result += spriteOnOff.stateSize();
     result += control2.stateSize();
@@ -275,8 +268,6 @@ VIC::loadFromBuffer(uint8_t **buffer)
     mainFrameFF.loadFromBuffer(buffer);
     verticalFrameFF.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
-    for (unsigned i = 0; i < 8; i++)
-        sprXCoord[i].loadFromBuffer(buffer);
     control1.loadFromBuffer(buffer);
     spriteOnOff.loadFromBuffer(buffer);
     control2.loadFromBuffer(buffer);
@@ -298,8 +289,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     mainFrameFF.saveToBuffer(buffer);
     verticalFrameFF.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
-    for (unsigned i = 0; i < 8; i++)
-        sprXCoord[i].saveToBuffer(buffer);
     control1.saveToBuffer(buffer);
     spriteOnOff.saveToBuffer(buffer);
     control2.saveToBuffer(buffer);

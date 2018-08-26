@@ -250,7 +250,6 @@ VIC::setSpriteX(unsigned nr, uint16_t x)
     x = MIN(x, 511);
     
     c64->suspend();
-    sprXCoord[nr].write(x);
     reg.current.sprX[nr] = x;
     delay |= VICUpdateRegisters;
     c64->resume();
