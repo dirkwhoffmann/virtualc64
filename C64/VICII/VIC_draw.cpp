@@ -521,7 +521,7 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
     // Bit 7 indicates background as source
     if (nr == 7) mask = 0;
     
-    putSpritePixel(pixelNr, color, spriteDepth(nr), mask);
+    setSpritePixel(pixelNr, color, spriteDepth(nr), mask);
 }
 
 
@@ -554,7 +554,7 @@ VIC::setFramePixels(uint8_t color)
 */
     
 void
-VIC::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
+VIC::setSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
 {
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);

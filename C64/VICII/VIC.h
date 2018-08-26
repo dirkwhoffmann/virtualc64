@@ -1415,12 +1415,6 @@ private:
         zBuffer[pixelNr] = BORDER_LAYER_DEPTH; \
         pixelSource[pixelNr] &= (~0x80); }
     
-    //! @brief    Draws the frame pixels for a certain range
-    // void setFramePixels(unsigned first, unsigned last, uint8_t color);
-    
-    //! @brief    Draws all eight frame pixels of a single cycle
-    // void setFramePixels(uint8_t color);
-    
     //! @brief    Sets a single foreground pixel
     #define SET_FOREGROUND_PIXEL(pixelNr,color) { \
         colBuffer[pixelNr] = color; \
@@ -1433,19 +1427,8 @@ private:
         zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH; \
         pixelSource[pixelNr] = 0x00; }
     
-    //! @brief    Sets eight background pixels in a row
-    void setEightBackgroundPixels(uint8_t color) {
-        for (unsigned i = 0; i < 8; i++) {
-            SET_BACKGROUND_PIXEL(i,color);
-        }
-    }
-    
     //! @brief    Draw a single sprite pixel
-    void putSpritePixel(unsigned pixelnr, uint8_t color, int depth, int source);
-    
-    //! @brief    Draw a single sprite pixel
-    //! @deprecated
-    // void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
+    void setSpritePixel(unsigned pixelnr, uint8_t color, int depth, int source);
     
     /*! @brief    Copies eight synthesized pixels into to the pixel buffer.
      *  @details  Each pixel is first translated to the corresponding RGBA value
