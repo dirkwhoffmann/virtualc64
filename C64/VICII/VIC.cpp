@@ -127,8 +127,6 @@ VIC::setC64(C64 *c64)
     spriteOnOff.setClock(&c64->cpu.cycle);
     control2.setClock(&c64->cpu.cycle);
     sprXExpand.setClock(&c64->cpu.cycle);
-    sprExtraColor1.setClock(&c64->cpu.cycle);
-    sprExtraColor2.setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -150,8 +148,6 @@ VIC::reset()
     spriteOnOff.reset(0);
     control2.reset(0);
     sprXExpand.reset(0);
-    sprExtraColor1.reset(0);
-    sprExtraColor2.reset(0);
     
     expansionFF = 0xFF;
     
@@ -264,8 +260,6 @@ VIC::stateSize()
     result += spriteOnOff.stateSize();
     result += control2.stateSize();
     result += sprXExpand.stateSize();
-    result += sprExtraColor1.stateSize();
-    result += sprExtraColor2.stateSize();
 
     return result;
 }
@@ -287,8 +281,6 @@ VIC::loadFromBuffer(uint8_t **buffer)
     spriteOnOff.loadFromBuffer(buffer);
     control2.loadFromBuffer(buffer);
     sprXExpand.loadFromBuffer(buffer);
-    sprExtraColor1.loadFromBuffer(buffer);
-    sprExtraColor2.loadFromBuffer(buffer);
     
     if (*buffer - old != stateSize()) {
         assert(false);
@@ -312,8 +304,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     spriteOnOff.saveToBuffer(buffer);
     control2.saveToBuffer(buffer);
     sprXExpand.saveToBuffer(buffer);
-    sprExtraColor1.saveToBuffer(buffer);
-    sprExtraColor2.saveToBuffer(buffer);
  
     if (*buffer - old != stateSize()) {
         assert(false);

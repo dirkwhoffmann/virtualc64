@@ -399,63 +399,11 @@ VIC::poke(uint16_t addr, uint8_t value)
                 reg.delayed.colors[addr - 0x20] = 0xF;
             }
             
-            // DEPRECATED CALL:
-            pokeColorReg(addr, value & 0x0F);
-            
             delay |= VICUpdateRegisters; // TODO: Replace by break later
             return;
     }
     
     delay |= VICUpdateRegisters;
-}
-
-void
-VIC::pokeColorReg(uint16_t addr, uint8_t value)
-{
-    assert(addr >= 0x20 && addr <= 0x2E);
-    assert(is_uint4_t(value));
-    
-    // Setup the color mask for the gray dot bug
-    uint64_t grayDot = (hasGrayDotBug() && emulateGrayDotBug) ? 0xF : 0x0;
-    
-    switch(addr) {
-            
-        case 0x20: // Border color
-            return;
-            
-        case 0x21: // Background color 0
-        case 0x22: // Background color 1
-        case 0x23: // Background color 2
-        case 0x24: // Background color 3
-            
-            return;
-            
-        case 0x25: // Sprite extra color 1 (for multicolor sprites)
-            
-            sprExtraColor1.write(value);
-            sprExtraColor1.pipeline[1] |= grayDot;
-            return;
-            
-        case 0x26: // Sprite extra color 2 (for multicolor sprites)
-            
-            sprExtraColor2.write(value);
-            sprExtraColor2.pipeline[1] |= grayDot;
-            return;
-            
-        case 0x27: // Sprite color 1
-        case 0x28: // Sprite color 2
-        case 0x29: // Sprite color 3
-        case 0x2A: // Sprite color 4
-        case 0x2B: // Sprite color 5
-        case 0x2C: // Sprite color 6
-        case 0x2D: // Sprite color 7
-        case 0x2E: // Sprite color 8
-            
-            return;
-            
-        default:
-            assert(false);
-    }
 }
 
 uint8_t

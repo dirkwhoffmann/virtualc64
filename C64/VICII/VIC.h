@@ -546,12 +546,6 @@ public:
     //! @brief    Control register 1 (D01D)
     TimeDelayed<uint8_t> sprXExpand = TimeDelayed<uint8_t>(2);
             
-    //! @brief    Sprite extra color 1 ($D025)
-    TimeDelayed<uint8_t> sprExtraColor1 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Sprite extra color 2 ($D026)
-    TimeDelayed<uint8_t> sprExtraColor2 = TimeDelayed<uint8_t>(2);
-
 private:
         
     // END DEPRECATED
@@ -708,10 +702,7 @@ private:
     
     //! @brief    Pokes a value into a VIC register.
 	void poke(uint16_t addr, uint8_t value);
- 
-    //! @brief    POkes a value into one of the 15 color registers.
-    void pokeColorReg(uint16_t addr, uint8_t value);
-    
+     
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
     
