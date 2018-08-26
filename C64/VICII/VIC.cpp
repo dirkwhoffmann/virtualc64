@@ -60,9 +60,7 @@ VIC::VIC()
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
         { &flipflops,                   sizeof(flipflops),                      CLEAR_ON_RESET },
-        { &oldFlipflops,                   sizeof(oldFlipflops),                      CLEAR_ON_RESET },
-        { &newFlipflops,                sizeof(newFlipflops),                   CLEAR_ON_RESET },
-        { &reg,                    sizeof(reg),                       CLEAR_ON_RESET },
+        { &reg,                         sizeof(reg),                            CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
         { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
 
@@ -460,10 +458,8 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void
 VIC::setVerticalFrameFF(bool value)
 {
-    assert(oldFlipflops.vertical == flipflops.delayed.vertical);
-    if (value != oldFlipflops.vertical) {
+    if (value != flipflops.delayed.vertical) {
         flipflops.current.vertical = value;
-        newFlipflops.vertical = value;
         delay |= VICUpdateFlipflops;
     }
 }
@@ -471,10 +467,8 @@ VIC::setVerticalFrameFF(bool value)
 void
 VIC::setMainFrameFF(bool value)
 {
-    assert(oldFlipflops.main == flipflops.delayed.main);
-    if (value != oldFlipflops.main) {
+    if (value != flipflops.delayed.main) {
         flipflops.current.main = value;
-        newFlipflops.main = value;
         delay |= VICUpdateFlipflops;
     }
 }

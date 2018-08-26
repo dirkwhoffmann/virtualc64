@@ -144,10 +144,7 @@ VIC::drawOutsideBorder()
 void
 VIC::drawBorder()
 {
-    assert(oldFlipflops.main == flipflops.delayed.main);
-    
-    if (oldFlipflops.main) {
-        
+    if (flipflops.delayed.main) {
         drawFramePixel(0, reg.delayed.colors[COLREG_BORDER]);
         drawFramePixels(1, 7, reg.current.colors[COLREG_BORDER]);
     }
@@ -156,9 +153,6 @@ VIC::drawBorder()
 void
 VIC::drawBorder17()
 {
-    assert(oldFlipflops.main == flipflops.delayed.main);
-    assert(newFlipflops.main == flipflops.current.main);
-
     if (flipflops.delayed.main && !flipflops.current.main) {
         
         // 38 column mode (only pixels 0...6 are drawn)
@@ -175,9 +169,6 @@ VIC::drawBorder17()
 void
 VIC::drawBorder55()
 {
-    assert(oldFlipflops.main == flipflops.delayed.main);
-    assert(newFlipflops.main == flipflops.current.main);
-    
     if (!flipflops.delayed.main && flipflops.current.main) {
         
         // 38 column mode (border starts at pixel 7)

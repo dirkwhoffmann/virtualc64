@@ -89,6 +89,7 @@ private:
      *            in variable current is changed and a flag is set in variable
      *            delay. Function processDelayedActions() reads the flag and if
      *            set to true, updates the delayed values with the current ones.
+     *  @see      processDelayedActions()
      */
     struct {
         VICIIRegisters current;
@@ -232,21 +233,17 @@ private:
     // Border flipflops
     //
     
-    //! @brief    Piped frame flipflops state.
+    /*! @brief    Piped frame flipflops state.
+     *  @details  When a flipflop toggles, the corresponding value
+     *            in variable current is changed and a flag is set in variable
+     *            delay. Function processDelayedActions() reads the flag and if
+     *            set to true, updates the delayed values with the current ones.
+     *  @see      processDelayedActions()
+     */
     struct {
         FrameFlipflops current;
         FrameFlipflops delayed;
     } flipflops;
-    
-    //! @brief    Current values of the two frame flip flops
-    FrameFlipflops oldFlipflops;
-    
-    /*! @brief    New flipflop values
-     *  @details  The values are copied over to variable 'flipflops' if a flag
-     *            in variable 'delay' is set.
-     *  @see      processDelayedActions()
-     */
-    FrameFlipflops newFlipflops;
     
     //! @brief    Sprite-sprite collision register
     uint8_t  spriteSpriteCollision;
