@@ -21,7 +21,7 @@
 public:
     
     //! @brief    Method from VirtualComponent
-    void resetPixelEngine();
+    // void resetPixelEngine();
 
     //! @brief    Initializes both screenBuffers
     /*! @details  This function is needed for debugging, only. It write some
@@ -60,30 +60,17 @@ public:
     //! @brief    Finishes a frame.
     void endFramePixelEngine();
 
-   
-
-
-    //! Sprite extra color 1 (same for all sprites)
-    uint8_t spriteExtraColor1;
-    
-    //! Sprite extra color 2 (same for all sprites)
-    uint8_t spriteExtraColor2;
-
     /*! @brief    Loads the sprite shift register.
      *  @details  The shift register is loaded with the three data bytes fetched
      *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
-        sprite_sr[nr].data =
-        (sprite_sr[nr].chunk1 << 16) |
-        (sprite_sr[nr].chunk2 << 8) |
-        (sprite_sr[nr].chunk3);
+        sprite_sr[nr].data = LO_LO_HI(sprite_sr[nr].chunk3,
+                                      sprite_sr[nr].chunk2,
+                                      sprite_sr[nr].chunk1);
     }
     
-    
-    //
-    // Accessing colors
-    //
+
     
     
     //

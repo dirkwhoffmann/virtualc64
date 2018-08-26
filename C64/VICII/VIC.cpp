@@ -63,6 +63,8 @@ VIC::VIC()
         { &reg,                         sizeof(reg),                            CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
         { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
+        { &sr,                          sizeof(sr),                             CLEAR_ON_RESET },
+        { &sprite_sr,                   sizeof(sprite_sr),                      CLEAR_ON_RESET },
 
         { &rasterIrqLine,               sizeof(rasterIrqLine),                  CLEAR_ON_RESET },
         { &latchedLightPenX,            sizeof(latchedLightPenX),               CLEAR_ON_RESET },
@@ -100,7 +102,9 @@ VIC::VIC()
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
-        
+
+        { &bufferoffset,                sizeof(bufferoffset),                   CLEAR_ON_RESET },
+
         { NULL,                         0,                                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
@@ -125,10 +129,7 @@ void
 VIC::reset()
 {
     VirtualComponent::reset();
-
-    resetPixelEngine();
     
-    // Internal state
     yCounter = PAL_HEIGHT;
     
     // Reset timed delay variables
@@ -148,10 +149,7 @@ VIC::reset()
     reg.delayed.colors[COLREG_BG0] = VICII_BLUE;
     reg.current.colors[COLREG_BG0] = VICII_BLUE;
     
-    // Later: Change to
-    // newRegisters. ... =
-    // delays |= VICUpdateRegisters0;
-    
+    // Frame flipflops
     leftComparisonVal = leftComparisonValue();
     rightComparisonVal = rightComparisonValue();
     upperComparisonVal = upperComparisonValue();
@@ -161,6 +159,10 @@ VIC::reset()
 	hideSprites = false;
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
+    
+    // Screen buffer
+    currentScreenBuffer = screenBuffer1;
+    pixelBuffer = currentScreenBuffer;
 }
 
 void

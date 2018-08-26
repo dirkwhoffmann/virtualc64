@@ -32,7 +32,6 @@ VIC::~PixelEngine()
 {
     debug(3, "  Releasing PixelEngine...\n");
 }
-*/
 
 void
 VIC::resetPixelEngine()
@@ -44,6 +43,7 @@ VIC::resetPixelEngine()
     memset(&sr, 0, sizeof(sr));
     memset(&sprite_sr, 0, sizeof(sprite_sr));
 }
+*/
 
 void
 VIC::resetScreenBuffers()
