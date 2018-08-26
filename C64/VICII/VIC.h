@@ -22,7 +22,7 @@
 #include "VirtualComponent.h"
 #include "C64_types.h"
 #include "TimeDelayed.h"
-#include "PixelEngine.h"
+// #include "PixelEngine.h"
 
 #define SPR0 0x01
 #define SPR1 0x02
@@ -63,8 +63,8 @@ private:
     /*! @brief    Reference to the attached pixel engine (PE). 
      *  @details  The PE encapsulates all drawing related routines.
      */
-    PixelEngine pixelEngine;
-
+    // PixelEngine pixelEngine;
+#include "PixelEngine.h"
 
     //
     // Configuration options
@@ -1039,9 +1039,9 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-    #define DRAW if (!vblank) { pixelEngine.draw(); }
-    #define DRAW17 if (!vblank) { pixelEngine.draw17(); }
-    #define DRAW55 if (!vblank) { pixelEngine.draw55(); }
+    #define DRAW if (!vblank) { draw(); }
+    #define DRAW17 if (!vblank) { draw17(); }
+    #define DRAW55 if (!vblank) { draw55(); }
 
     #define C_ACCESS if (badLine) cAccess();
     

@@ -42,9 +42,11 @@ VIC::VIC()
     emulateGrayDotBug = true;
     
     // Register sub components
+    /*
     VirtualComponent *subcomponents[] = { &pixelEngine, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
-
+     */
+    
     // Register snapshot items
     SnapshotItem items[] = {
 
@@ -125,6 +127,8 @@ void
 VIC::reset()
 {
     VirtualComponent::reset();
+
+    resetPixelEngine();
     
     // Internal state
     yCounter = PAL_HEIGHT;
@@ -288,7 +292,7 @@ VIC::setChipModel(VICChipModel model)
     
     chipModel = model;
     updatePalette();
-    pixelEngine.resetScreenBuffers();
+    resetScreenBuffers();
     c64->updateVicFunctionTable();
     
     switch(chipModel) {
@@ -388,10 +392,10 @@ VIC::isVBlankLine(unsigned rasterline)
 
 void *
 VIC::screenBuffer() {
-    if (pixelEngine.currentScreenBuffer == pixelEngine.screenBuffer1) {
-        return pixelEngine.screenBuffer2;
+    if (currentScreenBuffer == screenBuffer1) {
+        return screenBuffer2;
     } else {
-        return pixelEngine.screenBuffer1;
+        return screenBuffer1;
     }
 }
 
@@ -785,7 +789,7 @@ VIC::spriteDepth(uint8_t nr)
 void 
 VIC::beginFrame()
 {
-    pixelEngine.beginFramePixelEngine();
+    beginFramePixelEngine();
     
 	lightpenIRQhasOccured = false;
 
@@ -811,7 +815,7 @@ VIC::beginFrame()
 void
 VIC::endFrame()
 {
-    pixelEngine.endFramePixelEngine();
+    endFramePixelEngine();
 }
 
 void 
@@ -834,7 +838,7 @@ VIC::beginRasterline(uint16_t line)
     badLine = badLineCondition();
     displayState |= badLine;
     
-    pixelEngine.beginRasterlinePixelEngine();
+    beginRasterlinePixelEngine();
 }
 
 void 
@@ -848,11 +852,11 @@ VIC::endRasterline()
     
     // Draw debug markers
     if (markIRQLines && yCounter == rasterInterruptLine())
-        pixelEngine.markLine(VICII_WHITE);
+        markLine(VICII_WHITE);
     if (markDMALines && badLine)
-        pixelEngine.markLine(VICII_RED);
+        markLine(VICII_RED);
     
-    pixelEngine.endRasterlinePixelEngine();
+    endRasterlinePixelEngine();
 }
 
 

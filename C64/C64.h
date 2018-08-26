@@ -115,7 +115,7 @@
 #include "C64Memory.h"
 #include "VC1541Memory.h"
 #include "VIC.h"
-#include "PixelEngine.h"
+// #include "PixelEngine.h"
 #include "SIDBridge.h"
 #include "TOD.h"
 #include "CIA.h"

@@ -20,11 +20,11 @@
 #ifndef _PIXELENGINGE_INC
 #define _PIXELENGINGE_INC
 
-#include "VirtualComponent.h"
-#include "C64_types.h"
+// #include "VirtualComponent.h"
+// #include "C64_types.h"
 
 // Forward declarations
-class VIC;
+// class VIC;
 
 //@ brief    Values of the two frame flipflops
 typedef struct {
@@ -64,9 +64,9 @@ typedef struct {
  *           Its main entry point are prepareForCycle() and draw() which are
  *           called in every VIC cycle inside the viewable range.
  */
-class PixelEngine : public VirtualComponent {
-    
-    friend class VIC;
+//class PixelEngine : public VirtualComponent {
+//
+//     friend class VIC;
     
 public:
 
@@ -75,13 +75,13 @@ public:
     VIC *vic;
     
     //! @brief    Constructor
-    PixelEngine();
+    // PixelEngine();
     
     //! @brief    Destructor
-    ~PixelEngine();
+    // ~PixelEngine();
     
     //! @brief    Method from VirtualComponent
-    void reset();
+    void resetPixelEngine();
 
     //! @brief    Initializes both screenBuffers
     /*! @details  This function is needed for debugging, only. It write some
@@ -578,6 +578,6 @@ public:
      */
     void markLine(uint8_t color, unsigned start = 0, unsigned end = NTSC_PIXELS);
     
-};
+// };
 
 #endif

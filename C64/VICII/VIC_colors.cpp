@@ -40,7 +40,7 @@ uint32_t
 VIC::getColor(unsigned nr)
 {
     assert(nr < 16);
-    return pixelEngine.rgbaTable[nr];
+    return rgbaTable[nr];
 }
 
 void
@@ -233,7 +233,7 @@ VIC::updatePalette()
         
         // Store result
         uint32_t rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
-        pixelEngine.rgbaTable[i] = rgba;
+        rgbaTable[i] = rgba;
     }
 }
 

@@ -68,7 +68,7 @@ VIC::cycle1pal()
     
     // Phi1.3 Fetch
     sFinalize(2);
-    pixelEngine.loadShiftRegister(2);
+    loadShiftRegister(2);
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
@@ -123,7 +123,7 @@ VIC::cycle3pal()
     
     // Phi1.3 Fetch
     sFinalize(3);
-    pixelEngine.loadShiftRegister(3);
+    loadShiftRegister(3);
     pAccess(4);
     
     // Phi2.4 BA logic
@@ -162,7 +162,7 @@ VIC::cycle5pal()
     
     // Phi1.3 Fetch
     sFinalize(4);
-    pixelEngine.loadShiftRegister(4);
+    loadShiftRegister(4);
     pAccess(5);
     
     // Phi2.4 BA logic
@@ -200,7 +200,7 @@ VIC::cycle7pal()
     
     // Phi1.3 Fetch
     sFinalize(5);
-    pixelEngine.loadShiftRegister(5);
+    loadShiftRegister(5);
     pAccess(6);
     
     // Phi2.4 BA logic
@@ -238,7 +238,7 @@ VIC::cycle9pal()
     
     // Phi1.3 Fetch
     sFinalize(6);
-    pixelEngine.loadShiftRegister(6);
+    loadShiftRegister(6);
     pAccess(7);
     
     // Phi2.4 BA logic
@@ -275,11 +275,11 @@ VIC::cycle11pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
+    drawOutsideBorder(); // Runs the sprite sequencer, only
     
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     sFinalize(7);
-    pixelEngine.loadShiftRegister(7);
+    loadShiftRegister(7);
     rAccess();
     
     // Phi2.4 BA logic
@@ -295,7 +295,7 @@ VIC::cycle12()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, onl
+    drawOutsideBorder(); // Runs the sprite sequencer, onl
     
     // Phi1.3 Fetch (second out of five DRAM refreshs)
     rAccess();
@@ -322,7 +322,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
+    drawOutsideBorder(); // Runs the sprite sequencer, only
     
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();
@@ -340,7 +340,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.visibleColumn = true; // We have reach the first visible column
+    visibleColumn = true; // We have reach the first visible column
     DRAW
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -440,7 +440,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
-    pixelEngine.sr.canLoad = true; // Entering canvas area
+    sr.canLoad = true; // Entering canvas area
     DRAW17
   
     // Phi1.3 Fetch
@@ -529,7 +529,7 @@ VIC::cycle57pal()
     
     // Phi1.2 Draw (border starts here)
     DRAW
-    pixelEngine.sr.canLoad = false; // Leaving canvas area
+    sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -633,7 +633,7 @@ VIC::cycle61pal()
     
     // Phi1.2 Draw
     DRAW
-    pixelEngine.visibleColumn = false; // This was the last visible column
+    visibleColumn = false; // This was the last visible column
     
     // Phi1.3 Fetch
     sSecondAccess(1);
@@ -655,7 +655,7 @@ VIC::cycle62pal()
     
     // Phi1.3 Fetch
     sFinalize(1);
-    pixelEngine.loadShiftRegister(1);
+    loadShiftRegister(1);
     pAccess(2);
     
     // Phi2.4 BA logic

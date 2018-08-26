@@ -20,22 +20,24 @@
 
 #include "C64.h"
 
-PixelEngine::PixelEngine()
+/*
+VIC::PixelEngine()
 {
     setDescription("PixelEngine");
     
     debug(3, "  Creating PixelEngine at address %p...\n", this);
 }
 
-PixelEngine::~PixelEngine()
+VIC::~PixelEngine()
 {
     debug(3, "  Releasing PixelEngine...\n");
 }
+*/
 
 void
-PixelEngine::reset()
+VIC::resetPixelEngine()
 {
-    VirtualComponent::reset();
+    // VirtualComponent::reset();
     
     // Establish bindings
     vic = &c64->vic;
@@ -49,7 +51,7 @@ PixelEngine::reset()
 }
 
 void
-PixelEngine::resetScreenBuffers()
+VIC::resetScreenBuffers()
 {
     for (unsigned line = 0; line < PAL_RASTERLINES; line++) {
         for (unsigned i = 0; i < NTSC_PIXELS; i++) {
@@ -59,13 +61,13 @@ PixelEngine::resetScreenBuffers()
 }
 
 void
-PixelEngine::beginFramePixelEngine()
+VIC::beginFramePixelEngine()
 {
     visibleColumn = false;
 }
 
 void
-PixelEngine::beginRasterlinePixelEngine()
+VIC::beginRasterlinePixelEngine()
 {
     // We adjust the position of the first pixel in the pixel buffer to make
     // sure that the screen always appears centered.
@@ -88,7 +90,7 @@ PixelEngine::beginRasterlinePixelEngine()
 }
 
 void
-PixelEngine::endRasterlinePixelEngine()
+VIC::endRasterlinePixelEngine()
 {
     if (!vic->vblank) {
         
@@ -104,7 +106,7 @@ PixelEngine::endRasterlinePixelEngine()
     }
 }
 void
-PixelEngine::endFramePixelEngine()
+VIC::endFramePixelEngine()
 {
     // Switch active screen buffer
     currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
@@ -112,7 +114,7 @@ PixelEngine::endFramePixelEngine()
 }
 
 void
-PixelEngine::draw()
+VIC::draw()
 {
     // if (vic->vblank) return;
         
@@ -123,7 +125,7 @@ PixelEngine::draw()
 }
 
 void
-PixelEngine::draw17()
+VIC::draw17()
 {
     // if (vic->vblank) return;
     
@@ -134,7 +136,7 @@ PixelEngine::draw17()
 }
 
 void
-PixelEngine::draw55()
+VIC::draw55()
 {
     // if (vic->vblank) return;
     
@@ -145,7 +147,7 @@ PixelEngine::draw55()
 }
 
 void
-PixelEngine::drawOutsideBorder()
+VIC::drawOutsideBorder()
 {
     if (vic->vblank)
         return;
@@ -154,7 +156,7 @@ PixelEngine::drawOutsideBorder()
 }
 
 void
-PixelEngine::drawBorder()
+VIC::drawBorder()
 {
     assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     
@@ -166,7 +168,7 @@ PixelEngine::drawBorder()
 }
 
 void
-PixelEngine::drawBorder17()
+VIC::drawBorder17()
 {
     assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     assert(vic->newFlipflops.main == vic->flipflops.current.main);
@@ -185,7 +187,7 @@ PixelEngine::drawBorder17()
 }
 
 void
-PixelEngine::drawBorder55()
+VIC::drawBorder55()
 {
     assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     assert(vic->newFlipflops.main == vic->flipflops.current.main);
@@ -202,7 +204,7 @@ PixelEngine::drawBorder55()
 }
 
 void
-PixelEngine::drawCanvas()
+VIC::drawCanvas()
 {
     uint8_t d011, d016, newD016, mode, oldMode, xscroll;
     
@@ -280,7 +282,7 @@ PixelEngine::drawCanvas()
 
 
 void
-PixelEngine::drawCanvasPixel(uint8_t pixelNr,
+VIC::drawCanvasPixel(uint8_t pixelNr,
                              uint8_t mode,
                              uint8_t d016,
                              bool loadShiftReg,
@@ -355,7 +357,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelNr,
 
 
 void
-PixelEngine::drawSprites()
+VIC::drawSprites()
 {
     uint8_t oldSpriteOnOff = vic->spriteOnOff.delayed();
     uint8_t newSpriteOnOff = vic->spriteOnOff.readWithDelay(2);
@@ -420,7 +422,7 @@ PixelEngine::drawSprites()
 }
 
 void
-PixelEngine::drawSpritePixel(unsigned spriteNr,
+VIC::drawSpritePixel(unsigned spriteNr,
                              unsigned pixelNr,
                              bool freeze,
                              bool halt,
@@ -486,7 +488,7 @@ PixelEngine::drawSpritePixel(unsigned spriteNr,
 }
 
 void
-PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
+VIC::loadColors(uint8_t pixelNr, uint8_t mode,
                         uint8_t characterSpace, uint8_t colorSpace)
 {
     switch (mode) {
@@ -552,7 +554,7 @@ PixelEngine::loadColors(uint8_t pixelNr, uint8_t mode,
 }
 
 void
-PixelEngine::setSingleColorPixel(unsigned pixelNr, uint8_t bit /* valid: 0, 1 */)
+VIC::setSingleColorPixel(unsigned pixelNr, uint8_t bit /* valid: 0, 1 */)
 {
     // int oldrgba = (pixelNr == 0) ? col_rgba0[bit] : col_rgba[bit];
     // int rgba = rgbaTable[(col[bit] >> (pixelNr * 8)) & 0xF];
@@ -568,7 +570,7 @@ PixelEngine::setSingleColorPixel(unsigned pixelNr, uint8_t bit /* valid: 0, 1 */
 }
 
 void
-PixelEngine::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
+VIC::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
 {
     // int oldrgba = (pixelNr == 0) ? col_rgba0[two_bits] : col_rgba[two_bits];
     // int rgba = rgbaTable[(col[two_bits] >> (pixelNr * 8)) & 0xF];
@@ -584,7 +586,7 @@ PixelEngine::setMultiColorPixel(unsigned pixelNr, uint8_t two_bits /* valid: 00,
 }
 
 void
-PixelEngine::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t bit)
+VIC::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t bit)
 {
     if (bit) {
         drawSpritePixel(pixelNr, sprCol[spriteNr], spriteNr);
@@ -592,7 +594,7 @@ PixelEngine::setSingleColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint
 }
 
 void
-PixelEngine::setMultiColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t two_bits)
+VIC::setMultiColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8_t two_bits)
 {
     switch (two_bits) {
             
@@ -614,7 +616,7 @@ PixelEngine::setMultiColorSpritePixel(unsigned spriteNr, unsigned pixelNr, uint8
 }
 
 void
-PixelEngine::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
+VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
 {
     uint8_t mask = (1 << nr);
     
@@ -648,7 +650,7 @@ PixelEngine::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
 //
 
 void
-PixelEngine::drawFramePixels(unsigned first, unsigned last, uint8_t color)
+VIC::drawFramePixels(unsigned first, unsigned last, uint8_t color)
 {
     assert(bufferoffset + last < NTSC_PIXELS);
     
@@ -664,7 +666,7 @@ PixelEngine::drawFramePixels(unsigned first, unsigned last, uint8_t color)
 }
 
 void
-PixelEngine::drawForegroundPixel(unsigned pixelNr, uint8_t color)
+VIC::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 {
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);
@@ -676,7 +678,7 @@ PixelEngine::drawForegroundPixel(unsigned pixelNr, uint8_t color)
 }
 
 void
-PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
+VIC::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 {
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);
@@ -688,7 +690,7 @@ PixelEngine::drawBackgroundPixel(unsigned pixelNr, uint8_t color)
 }
 
 void
-PixelEngine::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
+VIC::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
 {
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);
@@ -711,7 +713,7 @@ PixelEngine::putSpritePixel(unsigned pixelNr, uint8_t color, int depth, int sour
 
 /*
 void
-PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
+VIC::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
 {
     unsigned offset = bufferoffset + pixelnr;
     assert(offset < NTSC_PIXELS);
@@ -725,7 +727,7 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
 */
 
 void
-PixelEngine::copyPixels() {
+VIC::copyPixels() {
     
     assert(bufferoffset + 7 < NTSC_PIXELS);
     
@@ -735,7 +737,7 @@ PixelEngine::copyPixels() {
 }
 
 void
-PixelEngine::expandBorders()
+VIC::expandBorders()
 {
     int color, lastX;
     unsigned leftPixelPos;
@@ -774,7 +776,7 @@ PixelEngine::expandBorders()
 }
 
 void
-PixelEngine::markLine(uint8_t color, unsigned start, unsigned end)
+VIC::markLine(uint8_t color, unsigned start, unsigned end)
 {
     assert (end <= NTSC_PIXELS);
     

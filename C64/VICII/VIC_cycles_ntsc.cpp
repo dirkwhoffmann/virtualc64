@@ -59,7 +59,7 @@ VIC::cycle2ntsc()
     
     // Phi1.3 Fetch
     sFinalize(3);
-    pixelEngine.loadShiftRegister(3);
+    loadShiftRegister(3);
     pAccess(4);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
@@ -103,7 +103,7 @@ VIC::cycle4ntsc()
     
     // Phi1.3 Fetch
     sFinalize(4);
-    pixelEngine.loadShiftRegister(4);
+    loadShiftRegister(4);
     pAccess(5);
     
     // Phi2.4 BA logic
@@ -141,7 +141,7 @@ VIC::cycle6ntsc()
     
     // Phi1.3 Fetch
     sFinalize(5);
-    pixelEngine.loadShiftRegister(5);
+    loadShiftRegister(5);
     pAccess(6);
     
     // Phi2.4 BA logic
@@ -179,7 +179,7 @@ VIC::cycle8ntsc()
     
     // Phi1.3 Fetch
     sFinalize(6);
-    pixelEngine.loadShiftRegister(6);
+    loadShiftRegister(6);
     pAccess(7);
     
     // Phi2.4 BA logic
@@ -217,7 +217,7 @@ VIC::cycle10ntsc()
     
     // Phi1.3 Fetch
     sFinalize(7);
-    pixelEngine.loadShiftRegister(7);
+    loadShiftRegister(7);
     rIdleAccess();
     
     // Phi2.4 BA logic
@@ -233,7 +233,7 @@ VIC::cycle11ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
+    drawOutsideBorder(); // Runs the sprite sequencer, only
     
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     rAccess();
@@ -274,7 +274,7 @@ VIC::cycle57ntsc()
     
     // Phi1.2 Draw (border starts here)
     DRAW
-    pixelEngine.sr.canLoad = false; // Leaving canvas area
+    sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -374,7 +374,7 @@ VIC::cycle61ntsc()
     
     // Phi1.2 Draw
     DRAW
-    pixelEngine.visibleColumn = false; // This was the last visible column
+    visibleColumn = false; // This was the last visible column
     
     // Phi1.3 Fetch
     sFinalize(0);
@@ -415,7 +415,7 @@ VIC::cycle63ntsc()
     
     // Phi1.3 Fetch
     sFinalize(1);
-    pixelEngine.loadShiftRegister(1);
+    loadShiftRegister(1);
     pAccess(2);
     
     // Phi2.4 BA logic
@@ -459,7 +459,7 @@ VIC::cycle65ntsc()
     
     // Phi1.3 Fetch
     sFinalize(2);
-    pixelEngine.loadShiftRegister(2);
+    loadShiftRegister(2);
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt
