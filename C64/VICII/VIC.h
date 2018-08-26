@@ -253,7 +253,7 @@ private:
          *            flipflop is also set. It is toggled with each pixel and
          *            used to synchronize the synthesis of multi-color pixels.
          */
-        bool mc_flop;
+        bool mcFlop;
         
         /*! @brief    Latched character info
          *  @details  Whenever the shift register is loaded, the current
@@ -271,7 +271,7 @@ private:
         uint8_t latchedColor;
         
         /*! @brief    Color bits
-         *  @details  Every second pixel (as synchronized with mc_flop), the
+         *  @details  Every second pixel (as synchronized with mcFlop), the
          *            multi-color bits are remembered.
          */
         uint8_t colorbits;
@@ -279,7 +279,7 @@ private:
         /*! @brief    Remaining bits to be pumped out
          *  @details  Makes sure no more than 8 pixels are outputted.
          */
-        int remaining_bits;
+        int remainingBits;
         
     } sr;
     
@@ -320,22 +320,22 @@ private:
          *            flipflop is also set. It is toggled with each pixel and
          *            used to synchronize the synthesis of multi-color pixels.
          */
-        bool mc_flop;
+        bool mcFlop;
         
         //! @brief    x expansion synchronization flipflop
-        bool exp_flop;
+        bool expFlop;
         
         /*! @brief    Color bits of the currently processed pixel
          *  @details  In single-color mode, these bits are updated every cycle
          *            In multi-color mode, these bits are updated every second
-         *            cycle (synchronized with mc_flop).
+         *            cycle (synchronized with mcFlop).
          */
-        uint8_t col_bits;
+        uint8_t colBits;
         
         //! @brief    Sprite color
         uint8_t spriteColor;
         
-    } sprite_sr[8];
+    } spriteSr[8];
     
     //! @brief    Sprite-sprite collision register (12)
     uint8_t  spriteSpriteCollision;
@@ -1171,9 +1171,9 @@ private:
      *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
-        sprite_sr[nr].data = LO_LO_HI(sprite_sr[nr].chunk3,
-                                      sprite_sr[nr].chunk2,
-                                      sprite_sr[nr].chunk1);
+        spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
+                                      spriteSr[nr].chunk2,
+                                      spriteSr[nr].chunk1);
     }
     
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.

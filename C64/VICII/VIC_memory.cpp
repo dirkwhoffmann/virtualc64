@@ -571,7 +571,7 @@ VIC::sFirstAccess(unsigned sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    sprite_sr[sprite].chunk1 = data;
+    spriteSr[sprite].chunk1 = data;
 }
 
 void
@@ -603,7 +603,7 @@ VIC::sSecondAccess(unsigned sprite)
     if (!memAccessed)
         memIdleAccess();
     
-    sprite_sr[sprite].chunk2 = data;
+    spriteSr[sprite].chunk2 = data;
 }
 
 void
@@ -623,7 +623,7 @@ VIC::sThirdAccess(unsigned sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    sprite_sr[sprite].chunk3 = data;
+    spriteSr[sprite].chunk3 = data;
 }
 
 void VIC::sFinalize(unsigned sprite)

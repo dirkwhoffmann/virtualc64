@@ -162,7 +162,7 @@ VIC::drawCanvas()
     // If the multicolor bit get set, the mc flip flop is also reset.
     if (d016 != newD016) {
         if (RISING_EDGE(d016 & 0x10, newD016 & 0x10))
-            sr.mc_flop = false;
+            sr.mcFlop = false;
         d016 = newD016;
     }
  
@@ -196,18 +196,18 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         sr.latchedColor = BYTE1(result);
         
         // Reset the multicolor synchronization flipflop
-        sr.mc_flop = true;
+        sr.mcFlop = true;
         
         // Make sure that colors get updated
         updateColors = true;
         
-        sr.remaining_bits = 8;
+        sr.remainingBits = 8;
     }
     
     // Clear any outstanding multicolor bit that shouldn't actually be drawn
     // TODO: VICE doesn't use a counter for this, but doesn't have the same issue,
     // figure out what magic they are doing
-    if (!sr.remaining_bits) {
+    if (!sr.remainingBits) {
         sr.colorbits = 0;
     }
     
@@ -224,7 +224,7 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
     
     // Generate pixel
     if (generateMulticolorPixel) {
-        if (sr.mc_flop) {
+        if (sr.mcFlop) {
             sr.colorbits = (sr.data >> 6) >> !multicolorDisplayMode;
         }
     } else {
@@ -240,8 +240,8 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
     
     // Shift register and toggle multicolor flipflop
     sr.data <<= 1;
-    sr.mc_flop = !sr.mc_flop;
-    sr.remaining_bits -= 1;
+    sr.mcFlop = !sr.mcFlop;
+    sr.remainingBits -= 1;
 }
 
 
@@ -315,8 +315,8 @@ VIC::drawSpritePixel(unsigned spriteNr,
                              bool load)
 {
     assert(spriteNr < 8);
-    assert(sprite_sr[spriteNr].remaining_bits >= -1);
-    assert(sprite_sr[spriteNr].remaining_bits <= 26);
+    assert(spriteSr[spriteNr].remaining_bits >= -1);
+    assert(spriteSr[spriteNr].remaining_bits <= 26);
     
     bool multicol = GET_BIT(reg.current.sprMC, spriteNr);
 
@@ -327,8 +327,8 @@ VIC::drawSpritePixel(unsigned spriteNr,
     
     // Stop shift register if applicable
     if (halt) {
-        sprite_sr[spriteNr].remaining_bits = -1;
-        sprite_sr[spriteNr].col_bits = 0;
+        spriteSr[spriteNr].remaining_bits = -1;
+        spriteSr[spriteNr].colBits = 0;
     }
     
     // Run shift register if applicable
@@ -336,34 +336,34 @@ VIC::drawSpritePixel(unsigned spriteNr,
         
         // Check for horizontal trigger condition
         if (xCounter + pixelNr == reg.delayed.sprX[spriteNr]) {
-            if (sprite_sr[spriteNr].remaining_bits == -1) {
-                sprite_sr[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
-                sprite_sr[spriteNr].exp_flop = true;
-                sprite_sr[spriteNr].mc_flop = true;
+            if (spriteSr[spriteNr].remaining_bits == -1) {
+                spriteSr[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
+                spriteSr[spriteNr].expFlop = true;
+                spriteSr[spriteNr].mcFlop = true;
             }
         }
 
         // Run shift register if there are remaining pixels to draw
-        if (sprite_sr[spriteNr].remaining_bits > 0) {
+        if (spriteSr[spriteNr].remaining_bits > 0) {
 
             // Determine render mode (single color /multi color) and colors
             
             // Get color bits by shifting sr data by 22 bits if a multi color
             // is rendered or by 23, if single color mode is used.
-            unsigned shift = 22 + (!multicol || !sprite_sr[spriteNr].mc_flop);
-            sprite_sr[spriteNr].col_bits = sprite_sr[spriteNr].data >> shift;
+            unsigned shift = 22 + (!multicol || !spriteSr[spriteNr].mcFlop);
+            spriteSr[spriteNr].colBits = spriteSr[spriteNr].data >> shift;
       
             // Toggle horizontal expansion flipflop for stretched sprites
             if (GET_BIT(reg.delayed.sprExpandX, spriteNr))
-                sprite_sr[spriteNr].exp_flop = !sprite_sr[spriteNr].exp_flop;
+                spriteSr[spriteNr].expFlop = !spriteSr[spriteNr].expFlop;
             else
-                sprite_sr[spriteNr].exp_flop = true;
+                spriteSr[spriteNr].expFlop = true;
 
             // Run shift register and toggle multicolor flipflop
-            if (sprite_sr[spriteNr].exp_flop) {
-                sprite_sr[spriteNr].data <<= 1;
-                sprite_sr[spriteNr].mc_flop = !sprite_sr[spriteNr].mc_flop;
-                sprite_sr[spriteNr].remaining_bits--;
+            if (spriteSr[spriteNr].expFlop) {
+                spriteSr[spriteNr].data <<= 1;
+                spriteSr[spriteNr].mcFlop = !spriteSr[spriteNr].mcFlop;
+                spriteSr[spriteNr].remaining_bits--;
             }
         }
     }
@@ -371,9 +371,9 @@ VIC::drawSpritePixel(unsigned spriteNr,
     // Draw pixel
     if (visibleColumn && !hideSprites) {
         if (multicol)
-            setMultiColorSpritePixel(spriteNr, pixelNr, sprite_sr[spriteNr].col_bits & 0x03);
+            setMultiColorSpritePixel(spriteNr, pixelNr, spriteSr[spriteNr].colBits & 0x03);
         else
-            setSingleColorSpritePixel(spriteNr, pixelNr, sprite_sr[spriteNr].col_bits & 0x01);
+            setSingleColorSpritePixel(spriteNr, pixelNr, spriteSr[spriteNr].colBits & 0x01);
     }
 }
 
