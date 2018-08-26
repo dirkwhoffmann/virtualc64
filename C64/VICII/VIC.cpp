@@ -117,8 +117,6 @@ VIC::setC64(C64 *c64)
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&c64->cpu.cycle);
-    mainFrameFF.setClock(&c64->cpu.cycle);
-    verticalFrameFF.setClock(&c64->cpu.cycle);
     gAccessResult.setClock(&c64->cpu.cycle);
     spriteOnOff.setClock(&c64->cpu.cycle);
 }
@@ -133,8 +131,6 @@ VIC::reset()
     
     // Reset timed delay variables
     baLine.reset(0);
-    mainFrameFF.reset(0);
-    verticalFrameFF.reset(0);
     gAccessResult.reset(0);
     spriteOnOff.reset(0);
     
@@ -240,8 +236,6 @@ VIC::stateSize()
     size_t result = VirtualComponent::stateSize();
 
     result += baLine.stateSize();
-    result += mainFrameFF.stateSize();
-    result += verticalFrameFF.stateSize();
     result += gAccessResult.stateSize();
     result += spriteOnOff.stateSize();
 
@@ -256,8 +250,6 @@ VIC::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 
     baLine.loadFromBuffer(buffer);
-    mainFrameFF.loadFromBuffer(buffer);
-    verticalFrameFF.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
     spriteOnOff.loadFromBuffer(buffer);
     
@@ -274,8 +266,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     VirtualComponent::saveToBuffer(buffer);
     
     baLine.saveToBuffer(buffer);
-    mainFrameFF.saveToBuffer(buffer);
-    verticalFrameFF.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
     spriteOnOff.saveToBuffer(buffer);
  
@@ -426,7 +416,6 @@ VIC::checkVerticalFrameFF()
         if (DENbit()) {
             
             // Clear immediately
-            verticalFrameFF.write(false);
             setVerticalFrameFF(false);
         }
         
@@ -447,17 +436,9 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
         
         // Note that the main frame flipflop can not be cleared when the
         // vertical border flipflop is set.
-        
-        assert(newFlipflops.vertical == verticalFrameFF.current());
-        
-        assert(newFlipflops.vertical == flipflops.current.vertical);
-        if (!newFlipflops.vertical && !verticalFrameFFsetCond) {
+        if (!flipflops.current.vertical && !verticalFrameFFsetCond) {
             setMainFrameFF(false);
-        }
-        
-        if (!verticalFrameFF.current() && !verticalFrameFFsetCond) {
-            mainFrameFF.write(false);
-        }
+        }        
     }
 }
 
@@ -468,7 +449,6 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
      *     border flip flop is set." [C.B.]
      */
     if (comparisonValue == rightComparisonVal) {
-        mainFrameFF.write(true);
         setMainFrameFF(true);
     }
 }
@@ -863,7 +843,6 @@ VIC::endRasterline()
     // Set vertical flipflop if condition was hit
     // Do we need to do this here? It is handled in cycle 1 as well.
     if (verticalFrameFFsetCond) {
-        verticalFrameFF.write(true);
         setVerticalFrameFF(true);
     }
     

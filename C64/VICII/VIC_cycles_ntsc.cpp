@@ -25,7 +25,6 @@ VIC::cycle1ntsc()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     if (verticalFrameFFsetCond) {
-        verticalFrameFF.write(true);
         setVerticalFrameFF(true);
     }
     

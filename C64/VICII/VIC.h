@@ -253,13 +253,7 @@ private:
 
     //! @brief    Sprite-background collision register
     uint8_t  spriteBackgroundColllision;
-    
-    //! @brief    Main frame flipflop
-    TimeDelayed<bool> mainFrameFF = TimeDelayed<bool>(1);
-    
-    //! @brief    Vertical frame flipflop
-    TimeDelayed<bool> verticalFrameFF = TimeDelayed<bool>(1);
-    
+        
     /*! @brief    Vertical frame flipflop set condition
      *  @details  Indicates whether the vertical frame flipflop needs to be set
      *            in the current rasterline.

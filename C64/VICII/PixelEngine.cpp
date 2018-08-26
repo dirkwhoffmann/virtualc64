@@ -156,7 +156,6 @@ PixelEngine::drawOutsideBorder()
 void
 PixelEngine::drawBorder()
 {
-    assert(vic->mainFrameFF.delayed() == vic->oldFlipflops.main);
     assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     
     if (vic->oldFlipflops.main) {
@@ -168,13 +167,11 @@ PixelEngine::drawBorder()
 
 void
 PixelEngine::drawBorder17()
-{    
-    assert(vic->mainFrameFF.delayed() == vic->oldFlipflops.main);
-    assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
+{
     assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     assert(vic->newFlipflops.main == vic->flipflops.current.main);
 
-    if (vic->mainFrameFF.delayed() && !vic->mainFrameFF.current()) {
+    if (vic->flipflops.delayed.main && !vic->flipflops.current.main) {
         
         // 38 column mode (only pixels 0...6 are drawn)
         drawFramePixel(0, vic->reg.delayed.colors[COLREG_BORDER]);
@@ -190,12 +187,10 @@ PixelEngine::drawBorder17()
 void
 PixelEngine::drawBorder55()
 {
-    assert(vic->mainFrameFF.delayed() == vic->oldFlipflops.main);
-    assert(vic->mainFrameFF.current() == vic->newFlipflops.main);
     assert(vic->oldFlipflops.main == vic->flipflops.delayed.main);
     assert(vic->newFlipflops.main == vic->flipflops.current.main);
     
-    if (!vic->mainFrameFF.delayed() && vic->mainFrameFF.current()) {
+    if (!vic->flipflops.delayed.main && vic->flipflops.current.main) {
         
         // 38 column mode (border starts at pixel 7)
         drawFramePixel(7, vic->reg.delayed.colors[COLREG_BORDER]);
@@ -216,9 +211,7 @@ PixelEngine::drawCanvas()
      *  (see section 3.9.)." [C.B.]
      */
     
-    assert(vic->verticalFrameFF.delayed() == vic->oldFlipflops.vertical);
-    assert(vic->verticalFrameFF.delayed() == vic->flipflops.delayed.vertical);
-    if (vic->verticalFrameFF.delayed()) {
+    if (vic->flipflops.delayed.vertical) {
         
         /* "Outside of the display column and if the flip-flop is set, the last
          *  current background color is displayed (this area is normally covered
