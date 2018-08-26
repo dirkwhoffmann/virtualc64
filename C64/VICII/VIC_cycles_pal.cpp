@@ -352,10 +352,10 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     //     (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
     //     Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt." [C.B.]
     
-    registerVC = registerVCBASE;
-    registerVMLI = 0;
+    vc = vcBase;
+    vmli = 0;
     if (badLine)
-        registerRC = 0;
+        rc = 0;
     
     // Phi2.4 BA logic
     BA_LINE(badLine);
@@ -561,16 +561,16 @@ VIC::cycle58pal()
      *  logic goes to idle state and VCBASE is loaded from VC (VC->VCBASE)."
      *  [C.B.]
      */
-    if (registerRC == 7) {
+    if (rc == 7) {
         displayState = badLine;
-        registerVCBASE = registerVC;
+        vcBase = vc;
     }
     
     /* "If the video logic is in display state afterwards (this is always the
      *  case if there is a Bad Line Condition), RC is incremented." [C.B.]
      */
     if (displayState) {
-        registerRC = (registerRC + 1) & 0x07;
+        rc = (rc + 1) & 0x07;
     }
     
     // Phi2.4 BA logic

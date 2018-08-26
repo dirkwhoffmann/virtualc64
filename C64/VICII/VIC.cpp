@@ -70,10 +70,10 @@ VIC::VIC()
         { &irr,                         sizeof(irr),                            CLEAR_ON_RESET },
         { &imr,                         sizeof(imr),                            CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
-        { &registerVC,                  sizeof(registerVC),                     CLEAR_ON_RESET },
-        { &registerVCBASE,              sizeof(registerVCBASE),                 CLEAR_ON_RESET },
-        { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
-        { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
+        { &vc,                  sizeof(vc),                     CLEAR_ON_RESET },
+        { &vcBase,              sizeof(vcBase),                 CLEAR_ON_RESET },
+        { &rc,                  sizeof(rc),                     CLEAR_ON_RESET },
+        { &vmli,                sizeof(vmli),                   CLEAR_ON_RESET },
         { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
         { &verticalFrameFFsetCond,      sizeof(verticalFrameFFsetCond),         CLEAR_ON_RESET },
@@ -247,10 +247,10 @@ VIC::dumpState()
 			msg("Invalid\n");
 	}
 	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLine ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
-	msg("               VC : %02X\n", registerVC);
-	msg("           VCBASE : %02X\n", registerVCBASE);
-	msg("               RC : %02X\n", registerRC);
-	msg("             VMLI : %02X\n", registerVMLI);
+	msg("               VC : %02X\n", vc);
+	msg("           VCBASE : %02X\n", vcBase);
+	msg("               RC : %02X\n", rc);
+	msg("             VMLI : %02X\n", vmli);
 	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
 	msg("      MainFrameFF : %d\n", flipflops.main);
     msg("  VerticalFrameFF : %d\n", flipflops.vertical);
@@ -889,7 +889,7 @@ VIC::beginFrame()
      *  presumably done in raster line 0, the exact moment cannot be determined
      *  and is irrelevant." [C.B.]
      */
-    registerVCBASE = 0;
+    vcBase = 0;
     
     // Retrigger lightpen interrupt if lp line is still pulled down
     if (!lp)

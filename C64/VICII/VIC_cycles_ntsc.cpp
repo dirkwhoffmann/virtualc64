@@ -307,16 +307,16 @@ VIC::cycle58ntsc()
      *  logic goes to idle state and VCBASE is loaded from VC (VC->VCBASE)."
      *  [C.B.]
      */
-    if (registerRC == 7) {
+    if (rc == 7) {
         displayState = badLine;
-        registerVCBASE = registerVC;
+        vcBase = vc;
     }
     
     /* "If the video logic is in display state afterwards (this is always the
      *  case if there is a Bad Line Condition), RC is incremented." [C.B.]
      */
     if (displayState) {
-        registerRC = (registerRC + 1) & 0x07;
+        rc = (rc + 1) & 0x07;
     }
     
     // Phi2.4 BA logic

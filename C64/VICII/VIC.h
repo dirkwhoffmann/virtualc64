@@ -79,50 +79,153 @@ public:
     
     
     //
-    // Chip exterior
+    // I/O space (CPU accessible)
     //
     
 private:
     
-    /*! @brief    Current value of the LP pin
-     *  @details  A negative transition on this pin triggers a lightpen interrupt.
+    /*! @brief    Piped I/O register values.
+     *  @details  When an I/O register is written to, the corresponding value
+     *            in variable current is changed and a flag is set in variable
+     *            delay. Function processDelayedActions() reads the flag and if
+     *            set to true, updates the delayed values with the current ones.
      */
-    bool lp;
+    struct {
+        VICIIRegisters current;
+        VICIIRegisters delayed;
+    } reg;
     
-    /*! @brief    Address bus
-     *  @details  Whenever VIC performs a memory read, the generated memory
-     *            address is stored in this variable.
+    //! @brief    Raster interrupt line ($D012)
+    uint8_t rasterIrqLine;
+    
+    //! @brief    Latched lightpen X coordinate ($D013)
+    uint8_t latchedLightPenX;
+    
+    //! @brief    Latched lightpen Y coordinate ($D014)
+    uint8_t latchedLightPenY;
+    
+    //! @brief    Memory address register ($D018)
+    uint8_t memSelect;
+    
+    //! @brief    Interrupt Request Register ($D019)
+    uint8_t irr;
+    
+    //! @brief    Interrupt Mask Register ($D01A)
+    uint8_t imr;
+
+    //
+    // Chip interior
+    //
+    
+    // IRQ <---------------------------------+
+    //             (1)                       |
+    //             +---------------+ +-----------------+
+    //             |Refresh counter| | Interrupt logic |<----------------------+
+    //             +---------------+ +-----------------+                       |
+    //         +-+    |               ^                                        |
+    //   A     |M|    v     (2),(3)   |       (4),(5)                          |
+    //   d     |e|   +-+    +--------------+  +-------+                        |
+    //   d     |m|   |A|    |Raster counter|->| VC/RC |                        |
+    //   r     |o|   |d| +->|      X/Y     |  +-------+                        |
+    //   . <==>|r|   |d| |  +--------------+      |                            |
+    //  +      |y|   |r| |     | | |              | (6),(7)                    |
+    //   d     | |   |.|<--------+----------------+ +------------------------+ |
+    //   a     |i|   |g|===========================>|40×12 bit video matrix-/| |
+    //   t     |n|<=>|e| |     |   |                |       color line       | |
+    //   a     |t|   |n| |     |   |                +------------------------+ |
+    //         |e|   |e| |     |   | (8)                        ||             |
+    //         |r|   |r| |     |   | +----------------+         ||             |
+    //  BA  <--|f|   |a|============>|8×24 bit sprite |         ||             |
+    //         |a|   |t|<----+ |   | |  data buffers  |         ||             |
+    //  AEC <--|c|   |o| |   | v   | +----------------+         ||             |
+    //         |e|   |r| | +-----+ |         ||                 ||             |
+    //         +-+   +-+ | |MC0-7| |         \/                 \/             |
+    //                   | +-----+ |  +--------------+   +--------------+      |
+    //                   |     (9) |  | Sprite data  |   |Graphics data |      |
+    //         +---------------+   |  |  sequencer   |   |  sequencer   |      |
+    //  RAS <--|               |   |  +--------------+   +--------------+      |
+    //  CAS <--|Clock generator|   |              |         |                  |
+    //  ø0  <--|               |   |              v         v                  |
+    //         +---------------+   |       +-----------------------+           |
+    //                 ^           |       |          MUX          |           |
+    //                 |           |       | Sprite priorities and |-----------+
+    //  øIN -----------+           |       |  collision detection  |
+    //                             |       +-----------------------+
+    //    VC: Video Matrix Counter |                   |
+    //                             |                   v
+    //    RC: Row Counter          |            +-------------+
+    //                             +----------->| Border unit |
+    //    MC: MOB Data Counter     |            +-------------+
+    //                             |                   |
+    //                             v                   v
+    //                     +----------------+  +----------------+
+    //                     |Sync generation |  |Color generation|<------- øCOLOR
+    //                     +----------------+  +----------------+
+    //                                    |      |
+    //                                    v      v
+    //                                  Video output
+    //                                (S/LUM and COLOR)              [C.B.]
+
+    
+    /*! @brief    Refresh counter (1)
+     *  @details  "The VIC does five read accesses in every raster line for the
+     *             refresh of the dynamic RAM. An 8 bit refresh counter (REF)
+     *             is used to generate 256 DRAM row addresses. The counter is
+     *             reset to $ff in raster line 0 and decremented by 1 after each
+     *             refresh access." [C.B.]
+     *  @seealso   rAccess()
      */
-    uint16_t addrBus;
+    uint8_t refreshCounter;
     
-    /*! @brief    Data bus
-     *  @details  Whenever VIC performs a memory read, the result is stored
-     *            in this variable.
+    /*! @brief    Raster counter X (2)
+     *  @details  Defines the sprite coordinate system.
      */
-    uint8_t dataBus;
+    uint16_t xCounter;
     
-    /*! @brief    Current value of the BA line
-     *  @details  Remember: Each CPU cycle is split into two phases:
-     *            First phase (LOW):   VIC gets access to the bus
-     *            Second phase (HIGH): CPU gets access to the bus
-     *            In rare cases, VIC needs access in the HIGH phase, too. To
-     *            block the CPU, the BA line is pulled down.
-     *  @note     BA can be pulled down by multiple sources (wired AND) and
-     *            this variable indicates which sources are holding the line
-     *            low.
+    /*! @brief    Y raster counter (3)
+     *  @details  The rasterline counter is usually incremented in cycle 1. The
+     *            only exception is the overflow condition which is handled in
+     *            cycle 2.
      */
-    TimeDelayed<uint16_t>baLine = TimeDelayed<uint16_t>(3);
+    uint32_t yCounter;
     
- 
-    
-    
-    /*! @brief    Event pipeline
-     *  @details  If a time delayed event needs to be performed, a flag is set
-     *            inside this variable and executed at the beginning of the next
-     *            cycle.
-     *  @see      processDelayedActions()
+    /*! @brief    Video counter
+     *  @details  A 10 bit counter that can be loaded with the value from
+     *            vcBase.
      */
-    uint64_t delay;
+    uint16_t vc;
+    
+    /*! @brief    Video counter base
+     *  @details  A 10 bit data register with reset input that can be loaded
+     *            with the value from vc.
+     */
+    uint16_t vcBase;
+    
+    /*! @brief    Row counter
+     *  @details  A 3 bit counter with reset input.
+     */
+    uint8_t rc;
+    
+    /*! @brief    cAcess color storage (7)
+     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and
+     *            fills the array with color information.
+     */
+    uint8_t colorSpace[40];
+    
+    /*! @brief    cAcess character storage (6)
+     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and
+     *            fills this array with character information.
+     */
+    uint8_t characterSpace[40];
+    
+    /*! @brief    Video matrix line index
+     *  @details  "Besides this, there is a 6 bit counter with reset input that
+     *             keeps track of the position within the internal 40×12 bit
+     *             video matrix/color line where read character pointers are
+     *             stored resp. read again. I will call this 'VMLI' (video
+     *             matrix line index) here.
+     */
+    uint8_t vmli;
     
     
     //
@@ -138,17 +241,6 @@ private:
      *  @see      processDelayedActions()
      */
     FrameFlipflops newFlipflops;
-    
-    /*! @brief    Piped I/O register values.
-     *  @details  When an I/O register is written to, the corresponding value
-     *            in variable current is changed and a flag is set in variable
-     *            delay. Function processDelayedActions() reads the flag and if
-     *            set to true, updates the delayed values with the current ones.
-     */
-    struct {
-        VICIIRegisters current;
-        VICIIRegisters delayed;
-    } reg;
     
     //! @brief    Sprite-sprite collision register
     uint8_t  spriteSpriteCollision;
@@ -168,41 +260,30 @@ private:
      */
     bool verticalFrameFFsetCond;
     
-    /*! @brief    Coordinate where the frame flipflop is checked for the left border.
+    /*! @brief    First coordinate where the main frame flipflop is checked.
      *  @details  Either 24 or 31, dependend on the CSEL bit.
      */
     uint16_t leftComparisonVal;
     
-    /*! @brief    Coordinate where the frame flipflop is checked for the right border.
+    /*! @brief    Second coordinate where the main frame flipflop is checked.
      *  @details  Either 344 or 335, dependend on the CSEL bit.
      */
     uint16_t rightComparisonVal;
     
-    /*! @brief    Coordinate where the frame flipflop is checked for the upper border.
+    /*! @brief    First coordinate where the vertical frame flipflop is checked.
      *  @details  Either 51 or 55, dependend on the RSEL bit.
      */
     uint16_t upperComparisonVal;
     
-    /*! @brief    Coordinate where the frame flipflop is checked for the lower border.
+    /*! @brief    Second coordinate where the vertical frame flipflop is checked.
      *  @details  Either 251 or 247, dependend on the RSEL bit.
      */
     uint16_t lowerComparisonVal;
     
     
     //
-    // Internal registers, counters, and flags
+    // Housekeeping information
     //
-    
-    
-    //! @brief    Internal x counter of the sequencer (sprite coordinate system)
-    uint16_t xCounter;
-    
-    /*! @brief    Rasterline counter
-     *  @details  The rasterline counter is usually incremented in cycle 1. The
-     *            only exception is the overflow condition which is handled in
-     *            cycle 2.
-     */
-    uint32_t yCounter;
     
     /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
      *  @details  Variable is needed to determine if a rasterline should be
@@ -213,30 +294,6 @@ private:
     
     //! @brief    True if the current rasterline belongs to the VBLANK area.
     bool vblank;
-    
-    /*! @brief    DRAM refresh counter
-     *  @details  "The VIC does five read accesses in every raster line for the
-     *             refresh of the dynamic RAM. An 8 bit refresh counter (REF)
-     *             is used to generate 256 DRAM row addresses. The counter is
-     *             reset to $ff in raster line 0 and decremented by 1 after each
-     *             refresh access." [C.B.]
-     */
-    uint8_t refreshCounter;
-    
-    //! @brief    Internal VIC register, 10 bit video counter
-    uint16_t registerVC;
-    
-    //! @brief    Internal VIC-II register, 10 bit video counter base
-    uint16_t registerVCBASE;
-    
-    //! @brief    Internal VIC-II register, 3 bit row counter
-    uint8_t registerRC;
-    
-    //! @brief    Internal VIC-II register, 6 bit video matrix line index
-    uint8_t registerVMLI;
-    
-    //! @brief    Result of the lastest g-access
-    TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
     
     //! @brief    Indicates if the current rasterline is a DMA line (bad line).
     bool badLine;
@@ -259,152 +316,17 @@ private:
      *              - In idle state, only g-accesses occur. The VIC is either in
      *                idle or display state" [C.B.]
      */
-    // bool oldDisplayState;
     bool displayState;
 
+    //! @brief    Result of the lastest g-access
+    TimeDelayed<uint32_t>gAccessResult = TimeDelayed<uint32_t>(2);
     
- 
-    
-    
-    
-    
-    
-    //
-    // Registers (CPU accessible)
-    //
-    
-    // All values that are read by the PixelEngine are stored as timed delay
-    // variables.
-    
-    //! @brief    X coordinate for all sprites (D011)
-    TimeDelayed<uint16_t> sprXCoord[8] = {
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-        TimeDelayed<uint16_t>(2),
-    };
-    
-    //! @brief    Control register 1 (D011)
-    TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Control register 2 (D016)
-    TimeDelayed<uint8_t> control2 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Control register 1 (D01D)
-    TimeDelayed<uint8_t> sprXExpand = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Border color register (D020)
-    TimeDelayed<uint8_t> borderColor = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Background color registers (D021 - D024)
-    TimeDelayed<uint8_t> bgColor[4] = {
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2)
-    };
-    
-    //! @brief    Sprite extra color 1 ($D025)
-    TimeDelayed<uint8_t> sprExtraColor1 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Sprite extra color 2 ($D026)
-    TimeDelayed<uint8_t> sprExtraColor2 = TimeDelayed<uint8_t>(2);
-    
-    //! @brief    Sprite colors  color registers ($D027 - $D02E)
-    TimeDelayed<uint8_t> sprColor[8] = {
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2),
-        TimeDelayed<uint8_t>(2)
-    };
-    
-    //! @brief    Raster interrupt line ($D012)
-    uint8_t rasterIrqLine;
-    
-    //! @brief    Latched lightpen X coordinate ($D013)
-    uint8_t latchedLightPenX;
-
-    //! @brief    Latched lightpen Y coordinate ($D014)
-    uint8_t latchedLightPenY;
-
-    //! @brief    Memory address register ($D018)
-    uint8_t memSelect;
-    
-    //! @brief    Interrupt Request Register ($D019)
-    uint8_t irr;
-
-    //! @brief    Interrupt Mask Register ($D01A)
-    uint8_t imr;
-
- 
-
- 
-    
-
-private:
-	
-	/*! @brief    I/O Memory
-	 *  @details  This array is used to store most of the register values that are poked into
-     *            the VIC address space. Note that this does not hold for all register values.
-     *            Some of them are directly stored inside the state pipe for speedup purposes.
-     *  @deprecated
-     */
-	uint8_t iomem[64]; 
-
-
-private:
-
-    /*! @brief    Start address of the currently selected memory bank
-     *  @details  There are four banks in total since the VIC chip can only "see" 16 KB
-     *            of memory at the same time. Two bank select bits in the CIA I/O space
-     *            determine which quarter of memory is currently seen.
-     *
-     */
-    /*
-     *            +-------+------+-------+----------+-------------------------------------+
-     *            | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE                  |
-     *            |  OF A |      |       | LOCATION |                                     |
-     *            +-------+------+-------+----------+-------------------------------------+
-     *            |   0   |  00  |   3   |   49152  | ($C000-$FFFF)                       |
-     *            |   1   |  01  |   2   |   32768  | ($8000-$BFFF)                       |
-     *            |   2   |  10  |   1   |   16384  | ($4000-$7FFF)                       |
-     *            |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT VALUE)       |
-     *            +-------+------+-------+----------+-------------------------------------+
-     */
-    uint16_t bankAddr;
-    
-    /*! @brief    cAcess character storage
-     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills this
-     *            array with character information.
-     */
-    uint8_t characterSpace[40];
-    
-    /*! @brief    cAcess color storage
-     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills
-     *            the array with color information.
-     */
-    uint8_t colorSpace[40];
-    
- 
-    
-    //
-    // Memory refresh accesses (rAccess)
-    //
-    
-
-    
-
+  
 	//
 	// Sprites
 	//
+
+private:
 
 	/*! @brief    MOB data counter.
 	 *  @details  A 6 bit counter, one for each sprite.
@@ -459,6 +381,12 @@ private:
 	// Lightpen
 	//
 	
+    /*! @brief    Current value of the LP pin
+     *  @details  A negative transition on this pin triggers a lightpen
+     *            interrupt.
+     */
+    bool lp;
+    
 	/*! @brief    Indicates whether the lightpen has triggered
 	 *  @details  This variable indicates whether a lightpen interrupt has
      *            occurred within the current frame. The variable is needed,
@@ -468,7 +396,58 @@ private:
 	
     
     //
-    // Color management
+    // CPU control and memory access
+    //
+    
+private:
+    
+    /*! @brief    Current value of the BA line
+     *  @details  Remember: Each CPU cycle is split into two phases:
+     *            First phase (LOW):   VIC gets access to the bus
+     *            Second phase (HIGH): CPU gets access to the bus
+     *            In rare cases, VIC needs access in the HIGH phase, too. To
+     *            block the CPU, the BA line is pulled down.
+     *  @note     BA can be pulled down by multiple sources (wired AND) and
+     *            this variable indicates which sources are holding the line
+     *            low.
+     */
+    TimeDelayed<uint16_t>baLine = TimeDelayed<uint16_t>(3);
+    
+    /*! @brief    Address bus
+     *  @details  Whenever VIC performs a memory read, the generated memory
+     *            address is stored in this variable.
+     */
+    uint16_t addrBus;
+    
+    /*! @brief    Data bus
+     *  @details  Whenever VIC performs a memory read, the result is stored
+     *            in this variable.
+     */
+    uint8_t dataBus;
+    
+    
+    /*! @brief    Start address of the currently selected memory bank
+     *  @details  There are four banks in total since the VIC chip can only
+     *            'see' 16 KB of memory at the same time. Two bank select bits
+     *            in the CIA I/O space determine which quarter of memory is
+     *            currently seen.
+     */
+    /*
+     *            +-------+------+-------+----------+-------------------------+
+     *            | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE      |
+     *            |  OF A |      |       | LOCATION |                         |
+     *            +-------+------+-------+----------+-------------------------+
+     *            |   0   |  00  |   3   |   49152  | ($C000-$FFFF)           |
+     *            |   1   |  01  |   2   |   32768  | ($8000-$BFFF)           |
+     *            |   2   |  10  |   1   |   16384  | ($4000-$7FFF)           |
+     *            |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT) |
+     *            +-------+------+-------+----------+-------------------------+
+     */
+    uint16_t bankAddr;
+    
+
+    //
+    // Color management (TODO: MOVE TO PIXEL ENGINE)
     //
     
     //! @brief    User adjustable brightness value used in palette computation
@@ -535,6 +514,89 @@ public:
 	bool markDMALines;
 
 	
+    
+    
+    
+    // DEPRECATED:
+    //
+    // Registers (CPU accessible)
+    //
+    
+    // All values that are read by the PixelEngine are stored as timed delay
+    // variables.
+    
+    //! @brief    X coordinate for all sprites (D011)
+    TimeDelayed<uint16_t> sprXCoord[8] = {
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+        TimeDelayed<uint16_t>(2),
+    };
+    
+    //! @brief    Control register 1 (D011)
+    TimeDelayed<uint8_t> control1 = TimeDelayed<uint8_t>(2);
+    
+    //! @brief    Control register 2 (D016)
+    TimeDelayed<uint8_t> control2 = TimeDelayed<uint8_t>(2);
+    
+    //! @brief    Control register 1 (D01D)
+    TimeDelayed<uint8_t> sprXExpand = TimeDelayed<uint8_t>(2);
+    
+    //! @brief    Border color register (D020)
+    TimeDelayed<uint8_t> borderColor = TimeDelayed<uint8_t>(2);
+    
+    //! @brief    Background color registers (D021 - D024)
+    TimeDelayed<uint8_t> bgColor[4] = {
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2)
+    };
+    
+    //! @brief    Sprite extra color 1 ($D025)
+    TimeDelayed<uint8_t> sprExtraColor1 = TimeDelayed<uint8_t>(2);
+    
+    //! @brief    Sprite extra color 2 ($D026)
+    TimeDelayed<uint8_t> sprExtraColor2 = TimeDelayed<uint8_t>(2);
+    
+    //! @brief    Sprite colors  color registers ($D027 - $D02E)
+    TimeDelayed<uint8_t> sprColor[8] = {
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2),
+        TimeDelayed<uint8_t>(2)
+    };
+    
+private:
+    
+    /*! @brief    I/O Memory
+     *  @details  This array is used to store most of the register values that are poked into
+     *            the VIC address space. Note that this does not hold for all register values.
+     *            Some of them are directly stored inside the state pipe for speedup purposes.
+     *  @deprecated
+     */
+    uint8_t iomem[64];
+    
+    // END DEPRECATED
+    
+    
+    
+    /*! @brief    Event pipeline
+     *  @details  If a time delayed event needs to be performed, a flag is set
+     *            inside this variable and executed at the beginning of the next
+     *            cycle.
+     *  @see      processDelayedActions()
+     */
+    uint64_t delay;
+    
 	//
 	// Methods
 	//

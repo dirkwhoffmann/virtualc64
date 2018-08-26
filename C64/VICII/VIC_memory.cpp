@@ -579,10 +579,10 @@ VIC::cAccess()
     if (BApulledDownForAtLeastThreeCycles()) {
         
         // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
-        uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
+        uint16_t addr = (VM13VM12VM11VM10() << 6) | vc;
         
-        characterSpace[registerVMLI] = memAccess(addr);
-        colorSpace[registerVMLI] = c64->mem.colorRam[registerVC] & 0x0F;
+        characterSpace[vmli] = memAccess(addr);
+        colorSpace[vmli] = c64->mem.colorRam[vc] & 0x0F;
     }
     
     // VIC has no access, yet
@@ -604,8 +604,8 @@ VIC::cAccess()
          *  information the lower 4 bits of the opcode after the access to
          *  $d011. Not until then, regular video matrix data is read." [C.B.]
          */
-        characterSpace[registerVMLI] = 0xFF;
-        colorSpace[registerVMLI] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
+        characterSpace[vmli] = 0xFF;
+        colorSpace[vmli] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
     }
 }
 
@@ -637,10 +637,10 @@ VIC::gAccess()
         uint16_t addr;
         if (BMMbit()) {
             addr = (CB13() << 10) |
-            (registerVC << 3) | registerRC;
+            (vc << 3) | rc;
         } else {
             addr = (CB13CB12CB11() << 10) |
-            (characterSpace[registerVMLI] << 3) | registerRC;
+            (characterSpace[vmli] << 3) | rc;
         }
         
         /* "If the ECM bit is set, the address generator always holds the
@@ -653,13 +653,13 @@ VIC::gAccess()
         
         // Store result
         gAccessResult.write(LO_LO_HI(memAccess(addr),                // Character
-                                        colorSpace[registerVMLI],       // Color
-                                        characterSpace[registerVMLI])); // Data
+                                        colorSpace[vmli],       // Color
+                                        characterSpace[vmli])); // Data
         
         
         // "VC and VMLI are incremented after each g-access in display state."
-        registerVC = (registerVC + 1) & 0x3FF;
-        registerVMLI = (registerVMLI + 1) & 0x3F;
+        vc = (vc + 1) & 0x3FF;
+        vmli = (vmli + 1) & 0x3F;
         
     } else {
         
