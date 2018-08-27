@@ -37,7 +37,7 @@
 // (the old VirtualC64 approach). If disabled, pixels are written in chunks
 // after each cycle as VICE does it (see copyPixels()). The old direct approach
 // seems faster, so we better keep it enabled.
-#define WRITE_THROUGH 1
+// #define WRITE_THROUGH 1
 
 #endif 
 
