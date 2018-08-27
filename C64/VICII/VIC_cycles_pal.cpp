@@ -34,6 +34,14 @@
 void
 VIC::processDelayedActions()
 {
+    if (delay & VICUpdateIrqLine) {
+        if (irr & imr) {
+            c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
+        } else {
+            c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
+        }
+    }
+    /*
     if (delay & VICTriggerIrq) {
          if (irr & imr)
              c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
@@ -42,6 +50,7 @@ VIC::processDelayedActions()
         if (!(irr & imr))
             c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
     }
+    */
     if (delay & VICLpTransition) {
         checkForLightpenIrq();
     }

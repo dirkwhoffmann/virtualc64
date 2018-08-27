@@ -529,6 +529,8 @@ VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
     assert(source == 1 || source == 2 || source == 4 || source == 8);
     
     irr |= source;
+    delay |= VICUpdateIrqLine;
+    /*
     if (imr & source) {
         switch (cycleDelay) {
             case 0:
@@ -541,6 +543,7 @@ VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
                 assert(false);
         }
     }
+    */
 }
 
 uint16_t

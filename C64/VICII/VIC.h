@@ -42,14 +42,15 @@
 #define BEIND_BACKGROUND_DEPTH 0x60     // Behind background
 
 // Event flags
-#define VICTriggerIrq       (1ULL << 0) // Sets the IRQ line
-#define VICReleaseIrq       (1ULL << 1) // Clears the IRQ line
-#define VICLpTransition     (1ULL << 2) // Triggers a lightpen event
-#define VICUpdateFlipflops  (1ULL << 3) // Updates the flipflop value pipeline
-#define VICUpdateRegisters  (1ULL << 4) // Updates the register value pipeline
-#define VICSetDisplayState  (1ULL << 5) // Flagged when control reg 1 changes
+#define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line
+#define VICTriggerIrq       (1ULL << 1) // Sets the IRQ line (deprecated)
+#define VICReleaseIrq       (1ULL << 2) // Clears the IRQ line (deprecated)
+#define VICLpTransition     (1ULL << 3) // Triggers a lightpen event
+#define VICUpdateFlipflops  (1ULL << 4) // Updates the flipflop value pipeline
+#define VICUpdateRegisters  (1ULL << 5) // Updates the register value pipeline
+#define VICSetDisplayState  (1ULL << 6) // Flagged when control reg 1 changes
 
-#define VICClearanceMask ~((1ULL << 6) | VICTriggerIrq | VICReleaseIrq | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICSetDisplayState);
+#define VICClearanceMask ~((1ULL << 7) | VICUpdateIrqLine | VICTriggerIrq | VICReleaseIrq | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICSetDisplayState);
 
 
 
