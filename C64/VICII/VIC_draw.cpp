@@ -113,7 +113,8 @@ VIC::drawCanvas()
          *  by the border)." [C.B.]
          */
         // TODO: This is wrong, border-bm-idle test fails
-        for (unsigned pixel = 0; pixel < 8; pixel++) {
+        SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BG0]);
+        for (unsigned pixel = 1; pixel < 8; pixel++) {
             SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BG0]);
         }
         return;
