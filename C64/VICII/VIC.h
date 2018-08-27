@@ -43,14 +43,12 @@
 
 // Event flags
 #define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line
-#define VICTriggerIrq       (1ULL << 1) // Sets the IRQ line (deprecated)
-#define VICReleaseIrq       (1ULL << 2) // Clears the IRQ line (deprecated)
-#define VICLpTransition     (1ULL << 3) // Triggers a lightpen event
-#define VICUpdateFlipflops  (1ULL << 4) // Updates the flipflop value pipeline
-#define VICUpdateRegisters  (1ULL << 5) // Updates the register value pipeline
-#define VICSetDisplayState  (1ULL << 6) // Flagged when control reg 1 changes
+#define VICLpTransition     (1ULL << 1) // Triggers a lightpen event
+#define VICUpdateFlipflops  (1ULL << 2) // Updates the flipflop value pipeline
+#define VICUpdateRegisters  (1ULL << 3) // Updates the register value pipeline
+#define VICSetDisplayState  (1ULL << 4) // Flagged when control reg 1 changes
 
-#define VICClearanceMask ~((1ULL << 7) | VICUpdateIrqLine | VICTriggerIrq | VICReleaseIrq | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICSetDisplayState);
+#define VICClearanceMask ~((1ULL << 5) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICSetDisplayState);
 
 
 
@@ -1067,20 +1065,13 @@ private:
     
 	/*! @brief    Triggers a VIC interrupt
      *  @param    source is the interrupt source
-     *                   1 : Rasterline interrupt
-     *                   2 : Collision of a sprite with background pixels
-     *                   4 : Collision between two sprites.
-     *                   8 : Lightpen interrupt
-     *            cycleDelay lets you postpone the interrupt by up to 1 cycle.
+     *            1 : Rasterline interrupt
+     *            2 : Collision of a sprite with background pixels
+     *            4 : Collision between two sprites.
+     *            8 : Lightpen interrupt
      */
-	void triggerIRQ(uint8_t source, unsigned cycleDelay = 0);
+	void triggerIrq(uint8_t source);
 	
-    //! @brief    Triggers a VIC interrupt delayed by one cycle
-    void triggerDelayedIRQ(uint8_t source) { triggerIRQ(source, 1); }
-
-    //! @brief    Releases the interrupt line delayed by one cycle
-    void releaseDelayedIRQ() { delay |= VICReleaseIrq; }
-
     
     //
     //! @functiongroup Handling lightpen events

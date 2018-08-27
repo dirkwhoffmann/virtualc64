@@ -524,26 +524,12 @@ VIC::updateBA(uint8_t value)
 }
 
 void 
-VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
+VIC::triggerIrq(uint8_t source)
 {
     assert(source == 1 || source == 2 || source == 4 || source == 8);
     
     irr |= source;
     delay |= VICUpdateIrqLine;
-    /*
-    if (imr & source) {
-        switch (cycleDelay) {
-            case 0:
-                c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
-                return;
-            case 1:
-                delay |= VICTriggerIrq;
-                return;
-            default:
-                assert(false);
-        }
-    }
-    */
 }
 
 uint16_t
@@ -616,7 +602,7 @@ VIC::checkForLightpenIrq()
     debug("Lightpen x / y = %d %d\n", lightpenX() / 2, lightpenY());
     
     // Newer VIC models trigger an interrupt immediately
-    if (!delayedLightPenIrqs()) triggerIRQ(8);
+    if (!delayedLightPenIrqs()) triggerIrq(8);
     
     // Lightpen interrupts can only occur once per frame
     lightpenIRQhasOccured = true;
@@ -637,7 +623,7 @@ VIC::checkForLightpenIrqAtStartOfFrame()
     }
     
     // Trigger interrupt
-    triggerIRQ(8);
+    triggerIrq(8);
 
     // Lightpen interrupts can only occur once per frame
     lightpenIRQhasOccured = true;

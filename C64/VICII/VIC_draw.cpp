@@ -508,14 +508,14 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
         if ((pixelSource[pixelNr] & 0x7F) && spriteSpriteCollisionEnabled) {
             
             spriteSpriteCollision |= ((pixelSource[pixelNr] & 0x7F) | mask);
-            triggerIRQ(4);
+            triggerIrq(4);
         }
         
         // Is it a sprite/background collision?
         if ((pixelSource[pixelNr] & 0x80) && spriteBackgroundCollisionEnabled) {
             
             spriteBackgroundColllision |= mask;
-            triggerIRQ(2);
+            triggerIrq(2);
         }
     }
     

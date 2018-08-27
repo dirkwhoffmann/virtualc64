@@ -213,7 +213,7 @@ VIC::poke(uint16_t addr, uint8_t value)
                 reg.current.ctrl1 = value;
                 // Check if we need to trigger a rasterline interrupt
                 if (yCounter == rasterInterruptLine())
-                    triggerDelayedIRQ(1);
+                    triggerIrq(1);
                 
             } else {
                 reg.current.ctrl1 = value;
@@ -239,7 +239,7 @@ VIC::poke(uint16_t addr, uint8_t value)
                 
                 // Check if we need to trigger a rasterline interrupt
                 if (yCounter == rasterInterruptLine())
-                    triggerDelayedIRQ(1);
+                    triggerIrq(1);
             }
             return;
             
@@ -288,21 +288,25 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             // Bits are cleared by writing '1'
             irr &= (~value) & 0x0F;
-            
+            delay |= VICUpdateIrqLine;
+            /*
             if (!(irr & imr)) {
                 releaseDelayedIRQ();
             }
+            */
             return;
             
         case 0x1A: // Interrupt Mask Register (IMR)
             
             imr = value & 0x0F;
-            
+            delay |= VICUpdateIrqLine;
+            /*
             if (irr & imr) {
                 triggerDelayedIRQ(1);
             } else {
                 releaseDelayedIRQ();
             }
+            */
             return;
             
         case 0x1B: // Sprite priority

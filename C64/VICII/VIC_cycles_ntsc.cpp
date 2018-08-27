@@ -35,7 +35,7 @@ VIC::cycle1ntsc()
     bool edgeOnYCounter = (c64->getRasterline() != 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)
-        triggerIRQ(1);
+        triggerIrq(1);
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi2.4 BA logic
@@ -66,7 +66,7 @@ VIC::cycle2ntsc()
     bool edgeOnYCounter = (yCounter == 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)
-        triggerIRQ(1);
+        triggerIrq(1);
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR4 | SPR5));
