@@ -432,8 +432,6 @@ private:
      */
     bool displayState;
 
-
-    
   
 	//
 	// Sprites
