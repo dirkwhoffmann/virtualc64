@@ -496,7 +496,7 @@ private:
      *  @details  A negative transition on this pin triggers a lightpen
      *            interrupt.
      */
-    bool lp;
+    bool lpLine;
     
 	/*! @brief    Indicates whether the lightpen has triggered
 	 *  @details  This variable indicates whether a lightpen interrupt has
@@ -1086,17 +1086,12 @@ public:
     
     /*! @brief    Sets the value of the LP pin
      *  @details  The LP pin is connected to bit 4 of control port A.
-     *  @seealso  triggerLightpenInterrupt()
+     *  @seealso  checkForLightpenIrq()
      */
     void setLP(bool value);
     
 private:
 
-    //! @brief    Method from Hoxs64
-    //! @details  Used to determine X coordinate when a lightpen interrupt takes place
-    //! @deprecated Use lightpenX(), lightpenY()
-    uint16_t vicXPosFromCycle(uint8_t cycle, uint16_t offset);
-    
     //! @brief    Returns the X coordinate of a light pen event.
     /*! @details  The coordinate depends on the current rasterline cycle and
      *            differes slightly between the supported VICII chip models.
@@ -1112,9 +1107,9 @@ private:
      *            triggers an interrupt if a newer VICII model is emulated.
      *            Older models trigger the interrupt later, at the beginning of
      *            a new frame.
-     *  @seealso  retriggerLightpenInterrupt()
+     *  @seealso  checkForLightpenIrqAtStartOfFrame()
      */
-    void triggerLightpenInterrupt();
+    void checkForLightpenIrq();
 
     /*! @brief    Retriggers a lightpen interrupt if conditions are met.
      *  @details  This function is called at the beginning of each frame.
@@ -1122,7 +1117,7 @@ private:
      *            interrupt is retriggered. Note that older VICII models trigger
      *            interrupts only at this point in time.
      */
-    void retriggerLightpenInterrupt();
+    void checkForLightpenIrqAtStartOfFrame();
     
     
 	//

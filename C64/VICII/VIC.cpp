@@ -100,7 +100,7 @@ VIC::VIC()
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
 
-        { &lp,                          sizeof(lp),                             CLEAR_ON_RESET },
+        { &lpLine,                      sizeof(lpLine),                         CLEAR_ON_RESET },
         { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
 
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
@@ -544,23 +544,6 @@ VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
 }
 
 uint16_t
-VIC::vicXPosFromCycle(uint8_t cycle, uint16_t offset)
-{
-    // uint16_t x = (cycle < 14) ? (cycle * 8 + 0x18C) : ((cycle - 14) * 8 + 4);
-    // uint16_t result = (x + offset + 0x1f8) % 0x1f8;
-    uint16_t x = (cycle < 14) ? (cycle * 8 + 396) : ((cycle - 14) * 8 + 4);
-    uint16_t result = (x + offset + 504) % 504;
-    // cycle 1: 404  VICE: 404
-    // cycle 2:
-    
-    if (result != xCounter) {
-        // debug("result = %d xCounter = %d", result, xCounter);
-    }
-
-    return result;
-}
-
-uint16_t
 VIC::lightpenX()
 {
     uint8_t cycle = c64->getRasterlineCycle();
@@ -600,15 +583,15 @@ void
 VIC::setLP(bool value)
 {
     // A negative transition on LP triggers a lightpen event.
-    if (FALLING_EDGE(lp, value)) {
+    if (FALLING_EDGE(lpLine, value)) {
         delay |= VICLpTransition;
     }
     
-    lp = value;
+    lpLine = value;
 }
 
 void
-VIC::triggerLightpenInterrupt()
+VIC::checkForLightpenIrq()
 {
     uint8_t vicCycle = c64->getRasterlineCycle();
     // debug("Negative LP transition at rastercycle %d\n", vicCycle);
@@ -626,7 +609,8 @@ VIC::triggerLightpenInterrupt()
     // Latch coordinates
     latchedLightPenX = lightpenX() / 2;
     latchedLightPenY = lightpenY();
-    debug("Lightpen x = %d\n", lightpenX());
+    debug("Frame %lld Rasterline %d cycle = %d\n", c64->frame, rasterline(), c64->rasterlineCycle);
+    debug("Lightpen x / y = %d %d\n", lightpenX() / 2, lightpenY());
     
     // Newer VIC models trigger an interrupt immediately
     if (!delayedLightPenIrqs()) triggerIRQ(8);
@@ -636,68 +620,21 @@ VIC::triggerLightpenInterrupt()
 }
 
 void
-VIC::retriggerLightpenInterrupt()
+VIC::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
     assert(c64->getRasterline() == 0);
     assert(c64->getRasterlineCycle() == 1);
     assert(lightpenIRQhasOccured == false);
  
-    // Determine lightpen coordinates and trigger an interrupt if an old VICII
-    // model is emulated. 
-    uint16_t x, y;
-
-    switch (chipModel) {
-            
-        case PAL_6569_R1:
-            
-            x = 0xD1;vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-            y = yCounter;
-            triggerIRQ(8);
-            break;
-            
-        case PAL_6569_R3:
-            
-            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-            y = yCounter;
-            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
-            break;
-            
-        case PAL_8565:
-            
-            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-            y = yCounter;
-            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
-            break;
-            
-        case NTSC_6567:
-            
-            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-            y = yCounter;
-            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
-            break;
-            
-        case NTSC_6567_R56A:
-            
-            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-            y = yCounter;
-            triggerIRQ(8);
-            break;
-            
-        case NTSC_8562:
-            
-            x = vicXPosFromCycle(c64->getRasterlineCycle(), 6 /* Hoxs64 */);
-            y = yCounter;
-            if (x + 2 >= 0x194 && (x + 2 - 6) < 0x194) y++; /* Hoxs64 */
-            break;
-            
-        default:
-            assert(false);
+    // Do we latch a new coordinate here? 
+    if (!delayedLightPenIrqs()) {
+        latchedLightPenX = lightpenX() / 2;
+        latchedLightPenY = lightpenY();
     }
     
-    // Latch coordinates
-    // latchedLightPenX = x / 2;
-    // latchedLightPenY = y;
+    // Trigger interrupt
+    triggerIRQ(8);
 
     // Lightpen interrupts can only occur once per frame
     lightpenIRQhasOccured = true;
@@ -821,9 +758,9 @@ VIC::beginFrame()
      */
     vcBase = 0;
     
-    // Retrigger lightpen interrupt if lp line is still pulled down
-    if (!lp)
-        retriggerLightpenInterrupt();
+    // Trigger lightpen interrupt if lp line is down
+    if (!lpLine)
+        checkForLightpenIrqAtStartOfFrame();
 }
 
 void

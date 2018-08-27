@@ -41,7 +41,7 @@ VIC::processDelayedActions()
         c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
     }
     if (delay & VICLpTransition) {
-        triggerLightpenInterrupt();
+        checkForLightpenIrq();
     }
     if (delay & VICUpdateFlipflops) {
         flipflops.delayed = flipflops.current;
