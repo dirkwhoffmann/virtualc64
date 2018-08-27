@@ -554,42 +554,33 @@ VIC::setFramePixels(uint8_t color)
 */
     
 void
-VIC::setSpritePixel(unsigned pixelNr, uint8_t color, int depth, int source)
+VIC::setSpritePixel(unsigned pixel, uint8_t color, int depth, int source)
 {
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);
     
-    if (depth <= zBuffer[pixelNr]) {
+    if (depth <= zBuffer[pixel]) {
         
         /* "the interesting case is when eg sprite 1 and sprite 0 overlap, and
          *  sprite 0 has the priority bit set (and sprite 1 has not). in this
          *  case 10/11 background bits show in front of whole sprite 0."
          * Test program: VICII/spritePriorities
          */
-        if (!(pixelSource[pixelNr] & 0x7F)) {
-            // pixelBuffer[offset] = rgbaTable[color];
-            colBuffer[pixelNr] = color;
-            zBuffer[pixelNr] = depth;
+        if (!(pixelSource[pixel] & 0x7F)) {
+            COLORIZE(pixel, color);
+            zBuffer[pixel] = depth;
         }
     }
-    pixelSource[pixelNr] |= source;
+    pixelSource[pixel] |= source;
 }
 
-/*
+#ifdef WRITE_THROUGH
 void
-VIC::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
+VIC::copyPixels()
 {
-    unsigned offset = bufferoffset + pixelnr;
-    assert(offset < NTSC_PIXELS);
-    
-    if (depth <= zBuffer[pixelnr] && !(pixelSource[pixelnr] & 0x7F)) {
-        pixelBuffer[offset] = rgba;
-        zBuffer[pixelnr] = depth;
-    }
-    pixelSource[pixelnr] |= source;
+    bufferoffset += 8;
 }
-*/
-
+#else
 void
 VIC::copyPixels() {
     
@@ -599,6 +590,7 @@ VIC::copyPixels() {
         pixelBuffer[bufferoffset++] = rgbaTable[colBuffer[i]];
     }
 }
+#endif
 
 void
 VIC::expandBorders()

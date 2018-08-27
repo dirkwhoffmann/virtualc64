@@ -280,6 +280,7 @@
 		501E427B20D975AD000BB48D /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconV64.icns; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
+		502107DA2133CF9F003D133D /* Configure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Configure.h; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
 		50265F56202D00940041C315 /* TapeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapeMountController.swift; sourceTree = "<group>"; };
 		5027F9DA20C5449E0041AD37 /* Disk_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk_types.h; sourceTree = "<group>"; };
@@ -551,7 +552,6 @@
 		5000473C12DCEC060098D890 /* Computer */ = {
 			isa = PBXGroup;
 			children = (
-				5062EE1320A4AD0400F77BA4 /* SID */,
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50D43B5B1EE5701A009D163C /* C64_types.h */,
 				50176C510A6F72F3009E80BD /* C64.cpp */,
@@ -561,6 +561,7 @@
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
 				5006087B21256D8100C7C6C5 /* CIA */,
 				5006087A21256D6800C7C6C5 /* VICII */,
+				5062EE1320A4AD0400F77BA4 /* SID */,
 				5006087C21256DA300C7C6C5 /* CPU */,
 				50FF16FC205D17F5000A729A /* ProcessorPort.h */,
 				50FF16FB205D17F5000A729A /* ProcessorPort.cpp */,
@@ -698,6 +699,7 @@
 		50176C4E0A6F72F3009E80BD /* C64 */ = {
 			isa = PBXGroup;
 			children = (
+				502107DA2133CF9F003D133D /* Configure.h */,
 				5000473E12DCEC7D0098D890 /* General */,
 				5000473C12DCEC060098D890 /* Computer */,
 				504B39910C45192700286F18 /* Peripherals */,

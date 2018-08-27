@@ -145,12 +145,8 @@ VIC::peek(uint16_t addr)
             return reg.current.colors[COLREG_SPR0 + addr - 0x27] | 0xF0;
     }
     
-    if (addr >= 0x2F && addr <= 0x3F) {
-        // Unusable register area
-        return 0xFF;
-    }
-    
-    assert(false);
+    assert(addr >= 0x2F && addr <= 0x3F);
+    return 0xFF;
 }
 
 uint8_t

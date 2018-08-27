@@ -1318,13 +1318,13 @@ private:
     void drawCanvas();
     
     /*! @brief    Draws a single canvas pixel
-     *  @param    pixelnr is the pixel number and must be in the range 0 to 7
+     *  @param    pixel is the pixel number and must be in the range 0 to 7
      *  @param    loadShiftReg is set to true if the shift register needs to be
      *            reloaded
      *  @param    updateColors is set to true if the four selectable colors
      *            might have changed.
      */
-    void drawCanvasPixel(uint8_t pixelnr,
+    void drawCanvasPixel(uint8_t pixel,
                          uint8_t mode,
                          uint8_t d016,
                          bool loadShiftReg,
@@ -1337,7 +1337,7 @@ private:
     
     /*! @brief    Draws a single sprite pixel for a single sprite
      *  @param    spritenr Sprite number (0 to 7)
-     *  @param    pixelnr  Pixel number (0 to 7)
+     *  @param    pixel    Pixel number (0 to 7)
      *  @param    freeze   If set to true, the sprites shift register will
      *                     freeze temporarily
      *  @param    halt     If set to true, the sprites shift shift register will
@@ -1346,7 +1346,7 @@ private:
      *                     grab new data bits
      */
     void drawSpritePixel(unsigned spritenr,
-                         unsigned pixelnr,
+                         unsigned pixel,
                          bool freeze,
                          bool halt,
                          bool load);
@@ -1370,65 +1370,61 @@ private:
     //! @brief    Determines pixel colors accordig to the provided display mode
     void loadColors(uint8_t mode);
     
-    /*! @brief    Draws single canvas pixel in single-color mode
-     *  @details  1s are drawn with drawForegroundPixel, 0s are drawn with
-     *            drawBackgroundPixel. Uses the drawing colors that are setup by
-     *            loadColors().
-     */
-    // void setSingleColorPixel(unsigned pixelnr, uint8_t bit);
-    
-    /*! @brief    Draws single canvas pixel in multi-color mode
-     *  @details  The left of the two color bits determines whether
-     *            drawForegroundPixel or drawBackgroundPixel is used.
-     *            Uses the drawing colors that are setup by loadColors().
-     */
-    // void setMultiColorPixel(unsigned pixelnr, uint8_t two_bits);
-    
     /*! @brief    Draws single sprite pixel in single-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors
      */
-    void setSingleColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t bit);
+    void setSingleColorSpritePixel(unsigned spritenr, unsigned pixel, uint8_t bit);
     
     /*! @brief    Draws single sprite pixel in multi-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors
      */
-    void setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t two_bits);
+    void setMultiColorSpritePixel(unsigned spritenr, unsigned pixel, uint8_t two_bits);
     
     /*! @brief    Draws a single sprite pixel
      *  @details  This function is invoked by setSingleColorSpritePixel() and
      *            setMultiColorSpritePixel(). It takes care of collison and invokes
      *            setSpritePixel(4) to actually render the pixel.
      */
-    void drawSpritePixel(unsigned pixelnr, uint8_t color, int nr);
+    void drawSpritePixel(unsigned pixel, uint8_t color, int nr);
     
     
     //
     // Low level drawing (pixel buffer access)
     //
     
+    //! @brief    Writes a single color value into the screenbuffer
+    #ifdef WRITE_THROUGH
+        #define COLORIZE(pixel,color) \
+            assert(bufferoffset + pixel < NTSC_PIXELS); \
+            pixelBuffer[bufferoffset + pixel] = rgbaTable[color];
+    #else
+        #define COLORIZE(pixel,color) \
+            colBuffer[pixel] = color;
+    #endif
+    
     /*! @brief    Sets a single frame pixel
      *! @note     The upper bit in pixelSource is cleared to prevent
      *            sprite/foreground collision detection in border area.
      */
-    #define SET_FRAME_PIXEL(pixelNr,color) { \
-        colBuffer[pixelNr] = color; \
-        zBuffer[pixelNr] = BORDER_LAYER_DEPTH; \
-        pixelSource[pixelNr] &= (~0x80); }
+    #define SET_FRAME_PIXEL(pixel,color) { \
+        COLORIZE(pixel,color) \
+        zBuffer[pixel] = BORDER_LAYER_DEPTH; \
+        pixelSource[pixel] &= (~0x80); }
     
     //! @brief    Sets a single foreground pixel
-    #define SET_FOREGROUND_PIXEL(pixelNr,color) { \
-        colBuffer[pixelNr] = color; \
-        zBuffer[pixelNr] = FOREGROUND_LAYER_DEPTH; \
-        pixelSource[pixelNr] = 0x80; }
- 
+    #define SET_FOREGROUND_PIXEL(pixel,color) { \
+        COLORIZE(pixel,color) \
+        zBuffer[pixel] = FOREGROUND_LAYER_DEPTH; \
+        pixelSource[pixel] = 0x80; }
+
     //! @brief    Sets a single background pixel
-    #define SET_BACKGROUND_PIXEL(pixelNr,color) { \
-        colBuffer[pixelNr] = color; \
-        zBuffer[pixelNr] = BACKGROUD_LAYER_DEPTH; \
-        pixelSource[pixelNr] = 0x00; }
+    #define SET_BACKGROUND_PIXEL(pixel,color) { \
+        COLORIZE(pixel,color) \
+        zBuffer[pixel] = BACKGROUD_LAYER_DEPTH; \
+        pixelSource[pixel] = 0x00; }
     
     //! @brief    Draw a single sprite pixel
-    void setSpritePixel(unsigned pixelnr, uint8_t color, int depth, int source);
+    void setSpritePixel(unsigned pixel, uint8_t color, int depth, int source);
     
     /*! @brief    Copies eight synthesized pixels into to the pixel buffer.
      *  @details  Each pixel is first translated to the corresponding RGBA value
