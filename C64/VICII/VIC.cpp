@@ -529,7 +529,7 @@ VIC::triggerIRQ(uint8_t source, unsigned cycleDelay)
     assert(source == 1 || source == 2 || source == 4 || source == 8);
     
     irr |= source;
-    if (irr & imr) {
+    if (imr & source) {
         switch (cycleDelay) {
             case 0:
                 c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);

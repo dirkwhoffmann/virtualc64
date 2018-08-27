@@ -290,7 +290,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             irr &= (~value) & 0x0F;
             
             if (!(irr & imr)) {
-                delay |= VICReleaseIrq;
+                releaseDelayedIRQ();
             }
             return;
             
@@ -301,7 +301,7 @@ VIC::poke(uint16_t addr, uint8_t value)
             if (irr & imr) {
                 triggerDelayedIRQ(1);
             } else {
-                delay |= VICReleaseIrq;
+                releaseDelayedIRQ();
             }
             return;
             

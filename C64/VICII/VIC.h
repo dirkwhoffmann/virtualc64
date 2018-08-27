@@ -1076,7 +1076,10 @@ private:
 	
     //! @brief    Triggers a VIC interrupt delayed by one cycle
     void triggerDelayedIRQ(uint8_t source) { triggerIRQ(source, 1); }
-    
+
+    //! @brief    Releases the interrupt line delayed by one cycle
+    void releaseDelayedIRQ() { delay |= VICReleaseIrq; }
+
     
     //
     //! @functiongroup Handling lightpen events
