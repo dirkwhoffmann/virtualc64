@@ -52,6 +52,7 @@ VIC::VIC()
 
         // Configuration items
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
+        { &glueLogic,                   sizeof(glueLogic),                      KEEP_ON_RESET },
         { &emulateGrayDotBug,           sizeof(emulateGrayDotBug),              KEEP_ON_RESET },
 
         // Internal state
@@ -191,6 +192,7 @@ VIC::dumpState()
     msg("       Chip model : %d\n", chipModel);
     msg("              PAL : %s\n", isPAL() ? "yes" : "no");
     msg("             NTSC : %s\n", isNTSC() ? "yes" : "no");
+    msg("       Glue logic : %d\n", glueLogic);
     msg("     Gray dot bug : %s\n", hasGrayDotBug() ? "yes" : "no");
     msg("   is656x, is856x : %d %d\n", is656x(), is856x());
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
@@ -289,7 +291,7 @@ VIC::setChipModel(VICChipModel model)
     debug(2, "VIC::setChipModel(%d)\n", model);
     
     if (!isVICChhipModel(model)) {
-        warn("Unknown VICII chip model (%d). Using MOS8565 instead.\n", model);
+        warn("Unknown VICII chip model (%d). Assuming a MOS8565.\n", model);
         model = PAL_8565;
     }
     
@@ -320,6 +322,21 @@ VIC::setChipModel(VICChipModel model)
             assert(false);
     }
     
+    c64->resume();
+}
+
+void
+VIC::setGlueLogic(GlueLogic type)
+{
+    debug(2, "VIC::setGlueLogic(%d)\n", type);
+    
+    if (!isGlueLogic(type)) {
+        warn("Unknown glue logic type (%d). Assuming discrete logic.\n", type);
+        type = GLUE_DISCRETE;
+    }
+    
+    c64->suspend();
+    glueLogic = type;
     c64->resume();
 }
 

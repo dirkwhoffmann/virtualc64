@@ -46,9 +46,10 @@
 #define VICLpTransition     (1ULL << 1) // Triggers a lightpen event
 #define VICUpdateFlipflops  (1ULL << 2) // Updates the flipflop value pipeline
 #define VICUpdateRegisters  (1ULL << 3) // Updates the register value pipeline
-#define VICSetDisplayState  (1ULL << 4) // Flagged when control reg 1 changes
+#define VICUpdateBankAddr   (1ULL << 4) // Updates the bank address
+#define VICSetDisplayState  (1ULL << 5) // Flagged when control reg 1 changes
 
-#define VICClearanceMask ~((1ULL << 5) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICSetDisplayState);
+#define VICClearanceMask ~((1ULL << 6) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateBankAddr | VICSetDisplayState);
 
 
 
@@ -72,7 +73,10 @@ private:
     
     //! @brief    Selected chip model
     VICChipModel chipModel;
-    
+
+    //! @brief    Glue logic type
+    GlueLogic glueLogic;
+
 public:
     
     /*! @brief    Indicates if the gray dot bug should be emulated
@@ -750,7 +754,13 @@ public:
     
     //! @brief    Sets the chip model.
     void setChipModel(VICChipModel model);
-    
+
+    //! @brief    Returns the emulated glue logic type.
+    GlueLogic getGlueLogic() { return glueLogic; }
+
+    //! @brief    Sets the glue logic type.
+    void setGlueLogic(GlueLogic type);
+
     //! @brief    Returns true if a PAL chip is plugged in.
     bool isPAL() { return chipModel & (PAL_6569_R1 | PAL_6569_R3 | PAL_8565); }
     
@@ -859,6 +869,9 @@ public:
     
     //! @brief    Returns the current value of the VICII's data bus.
     uint8_t getDataBus() { return dataBus; }
+    
+    //! @brief    Updates the bank address in the next cycle.
+    void updateBankAddr();
     
 private:
 

@@ -41,16 +41,6 @@ VIC::processDelayedActions()
             c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
         }
     }
-    /*
-    if (delay & VICTriggerIrq) {
-         if (irr & imr)
-             c64->cpu.pullDownIrqLine(CPU::INTSRC_VIC);
-    }
-    if (delay & VICReleaseIrq) {
-        if (!(irr & imr))
-            c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
-    }
-    */
     if (delay & VICLpTransition) {
         checkForLightpenIrq();
     }
@@ -59,6 +49,9 @@ VIC::processDelayedActions()
     }
     if (delay & VICUpdateRegisters) {
         reg.delayed = reg.current; 
+    }
+    if (delay & VICUpdateBankAddr) {
+        bankAddr = (~c64->cia2.getPA() & 0x03) << 14;
     }
     if (delay & VICSetDisplayState) {
         displayState = true;

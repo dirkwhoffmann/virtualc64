@@ -1264,7 +1264,7 @@ CIA2::updatePA()
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by the VIC
-    c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
+    c64->vic.updateBankAddr();
     
     // Mark IEC bus as dirty
     c64->iec.setNeedsUpdateC64Side();

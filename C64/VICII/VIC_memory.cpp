@@ -19,6 +19,29 @@
 
 #include "C64.h"
 
+void
+VIC::updateBankAddr() {
+
+    if (glueLogic == GLUE_CUSTOM_IC) {
+        
+        // When the bank switches from 01 to 10 or vice versa, the one bits
+        // show up first. Hence, VICII will see bank 3 (11) for one cycle.
+        uint8_t oldBits = bankAddr >> 14;
+        uint8_t newBits = (~c64->cia2.getPA()) & 0x03;
+        if (oldBits != newBits) {
+            debug("Switching from %d to %d\n", oldBits, newBits);
+        }
+        if ((oldBits == 0b01 && newBits == 0b10) ||
+            (oldBits == 0b10 && newBits == 0b01)) {
+            debug("Setting bank addr to 0xC000\n");
+            bankAddr = 0xC000;
+        }
+    }
+    
+    // Schedule bankAddr to be updated in the next cycle
+    delay |= VICUpdateBankAddr;
+}
+
 uint8_t
 VIC::peek(uint16_t addr)
 {

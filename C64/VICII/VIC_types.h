@@ -270,6 +270,18 @@ inline bool isVICChhipModel(VICChipModel model) {
     (model == NTSC_8562);
 }
 
+//! @brief    Glue logic type
+typedef enum {
+    GLUE_DISCRETE = 0,
+    GLUE_CUSTOM_IC = 1
+} GlueLogic;
+
+inline bool isGlueLogic(GlueLogic type) {
+    return
+    (type == GLUE_DISCRETE) ||
+    (type == GLUE_CUSTOM_IC);
+}
+
 //! @brief    Screen geometries
 typedef enum {
     COL_40_ROW_25 = 0x01,
