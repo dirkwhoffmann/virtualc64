@@ -11,17 +11,22 @@ extension MyController : NSWindowDelegate {
         
     public func windowDidBecomeMain(_ notification: Notification) {
         
-        // track()
         c64.enableAudio()
         
+        // Start emulator if it was only paused while in background
+        if pauseInBackgroundSavedState { c64.run() }
+
         // Register for mouse move events
         window?.acceptsMouseMovedEvents = true
     }
     
     public func windowDidResignMain(_ notification: Notification) {
         
-        // track()
         c64.disableAudio()
+        
+        // Stop emulator if it is configured to pause in background
+        pauseInBackgroundSavedState = c64.isRunning()
+        if pauseInBackground { c64.halt() }
     }
     
     public func windowWillClose(_ notification: Notification) {

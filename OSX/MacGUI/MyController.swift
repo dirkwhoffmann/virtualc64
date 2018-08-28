@@ -64,7 +64,14 @@ class MyController : NSWindowController {
     
     /// Default image for USB devices
     var genericDeviceImage: NSImage?
-    
+
+    /// Indicates if the emulator should pause when it looses focus.
+    var pauseInBackground = false
+
+    /// Remembers if the emulator was running or paused when it lose focus.
+    /// Needed to implement the pauseInBackground feature.
+    var pauseInBackgroundSavedState = true
+
     /// Indicates if the user dialog should be skipped when opening archives.
     var autoMount = false
     

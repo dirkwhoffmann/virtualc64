@@ -98,9 +98,10 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var disconnectKeys: NSButton!
     
     // Misc
-    @IBOutlet weak var autoMount: NSButton!
+    @IBOutlet weak var pauseInBackground: NSButton!
     @IBOutlet weak var autoSnapshots: NSButton!
     @IBOutlet weak var snapshotInterval: NSTextField!
+    @IBOutlet weak var autoMount: NSButton!
 
     override func awakeFromNib() {
         
@@ -164,10 +165,11 @@ class EmulatorPrefsController : UserDialogController {
         disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
         
         // Documents
-        autoMount.state = parent.autoMount ? .on : .off
+        pauseInBackground.state = parent.pauseInBackground ? .on : .off
         autoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
         snapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
         snapshotInterval.isEnabled = (c64.snapshotInterval() > 0)
+        autoMount.state = parent.autoMount ? .on : .off
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
@@ -235,17 +237,15 @@ class EmulatorPrefsController : UserDialogController {
     // Action methods (Video settings)
     //
     
-    @IBAction func setUpscalerAction(_ sender: Any!) {
+    @IBAction func setUpscalerAction(_ sender: NSPopUpButton!) {
     
-        let sender = sender as! NSPopUpButton
         parent.metalScreen.videoUpscaler = sender.selectedTag()
         update()
     }
     
-    @IBAction func setFilterAction(_ sender: Any!) {
+    @IBAction func setFilterAction(_ sender: NSPopUpButton!) {
     
         track()
-        let sender = sender as! NSPopUpButton
         parent.metalScreen.videoFilter = sender.selectedTag()
         update()
     }
@@ -292,9 +292,8 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func setFullscreenAspectRatio(_ sender: Any!) {
+    @IBAction func setFullscreenAspectRatio(_ sender: NSButton!) {
     
-        let sender = sender as! NSButton
         parent.metalScreen.fullscreenKeepAspectRatio = (sender.state == .on)
         update()
     }
@@ -303,9 +302,9 @@ class EmulatorPrefsController : UserDialogController {
     // Action methods (Joystick emulation settings)
     //
     
-    @IBAction func recordKeyAction(_ sender: Any!) {
+    @IBAction func recordKeyAction(_ sender: NSButton!) {
 
-        let tag = UInt32((sender as! NSButton).tag)
+        let tag = UInt32(sender.tag)
         
         if tag >= 0 && tag <= 4 {
             recordKey1 = JoystickDirection(rawValue: tag)
@@ -320,23 +319,20 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func disconnectKeysAction(_ sender: Any!) {
+    @IBAction func disconnectKeysAction(_ sender: NSButton!) {
     
-        let sender = sender as! NSButton
         parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
         update()
     }
     
-    @IBAction func autoMountAction(_ sender: Any!) {
+    @IBAction func pauseInBackgroundAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
-        parent.autoMount =  (sender.state == .on)
+        parent.pauseInBackground =  (sender.state == .on)
         update()
     }
 
-    @IBAction func autoSnapshotAction(_ sender: Any!) {
+    @IBAction func autoSnapshotAction(_ sender: NSButton!) {
         
-        let sender = sender as! NSButton
         if sender.state == .on {
             c64.enableAutoSnapshots()
         } else {
@@ -345,12 +341,15 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
 
-    @IBAction func snapshotIntervalAction(_ sender: Any!) {
+    @IBAction func snapshotIntervalAction(_ sender: NSTextField!) {
         
-        let sender = sender as! NSTextField
-        let value = sender.integerValue
-
-        c64.setSnapshotInterval(value)
+        c64.setSnapshotInterval(sender.integerValue)
+        update()
+    }
+    
+    @IBAction func autoMountAction(_ sender: NSButton!) {
+        
+        parent.autoMount = (sender.state == .on)
         update()
     }
     
@@ -390,9 +389,10 @@ class EmulatorPrefsController : UserDialogController {
         parent.keyboardcontroller.disconnectEmulationKeys = true
         
         // Misc
-        parent.autoMount = false
+        parent.pauseInBackground = false
         c64.setSnapshotInterval(3);
-        
+        parent.autoMount = false
+
         update()
     }
     
