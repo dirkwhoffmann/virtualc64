@@ -146,6 +146,8 @@ struct ContainerWrapper;
 
 - (NSInteger) chipModel;
 - (void) setChipModel:(NSInteger)value;
+- (NSInteger) glueLogic;
+- (void) setGlueLogic:(NSInteger)value;
 - (BOOL) hasGrayDotBug;
 - (BOOL) emulateGrayDotBug;
 - (void) setEmulateGrayDotBug:(BOOL)value;

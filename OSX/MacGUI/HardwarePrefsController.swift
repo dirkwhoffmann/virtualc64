@@ -15,6 +15,7 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var systemText: NSTextField!
     @IBOutlet weak var systemText2: NSTextField!
     @IBOutlet weak var systemText3: NSTextField!
+    @IBOutlet weak var glueLogic: NSPopUpButton!
     @IBOutlet weak var grayDotBug: NSButton!
 
     // Audio
@@ -68,6 +69,7 @@ class HardwarePrefsController : UserDialogController {
         default:
             assert(false)
         }
+        glueLogic.selectItem(withTag: c64.vic.glueLogic())
         grayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
         grayDotBug.isEnabled = c64.vic.hasGrayDotBug()
         
@@ -97,6 +99,12 @@ class HardwarePrefsController : UserDialogController {
         update()
     }
  
+    @IBAction func vicGlueLogicAction(_ sender: NSMenuItem!) {
+        
+        c64.vic.setGlueLogic(sender.tag)
+        update()
+    }
+    
     @IBAction func vicGrayDotBugAction(_ sender: NSButton!) {
         
         c64.vic.setEmulateGrayDotBug(sender.state == .on)
