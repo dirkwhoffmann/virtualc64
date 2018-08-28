@@ -191,13 +191,13 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N7p-t3-f0a">
                         <rect key="frame" x="268" y="20" width="80" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Drive 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="wmx-IQ-5lE" id="rUO-wF-FAg">
+                        <popUpButtonCell key="cell" type="push" title="Drive 8" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="wmx-IQ-5lE" id="rUO-wF-FAg">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="GA8-5j-ZBD">
                                 <items>
-                                    <menuItem title="Drive 1" state="on" tag="1" id="wmx-IQ-5lE"/>
-                                    <menuItem title="Drive 2" tag="2" id="O4b-a1-ppR"/>
+                                    <menuItem title="Drive 8" state="on" tag="1" id="wmx-IQ-5lE"/>
+                                    <menuItem title="Drive 9" tag="2" id="O4b-a1-ppR"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>

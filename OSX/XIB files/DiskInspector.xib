@@ -364,9 +364,9 @@ Gw
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="fzj-gP-pPT">
-                        <rect key="frame" x="84" y="421" width="28" height="18"/>
+                        <rect key="frame" x="84" y="421" width="31" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="1" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="57d-lY-A7d">
+                        <buttonCell key="cell" type="radio" title="8" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="57d-lY-A7d">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -384,9 +384,9 @@ Gw
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="q3D-NJ-rZe">
-                        <rect key="frame" x="115" y="421" width="30" height="18"/>
+                        <rect key="frame" x="115" y="421" width="31" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="2" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="H1v-0p-UTV">
+                        <buttonCell key="cell" type="radio" title="9" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="H1v-0p-UTV">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>

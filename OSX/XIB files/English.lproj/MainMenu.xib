@@ -549,8 +549,8 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Drive 1" id="XQm-ka-Db5">
-                    <menu key="submenu" title="Drive 1" id="Mqn-f5-oGB">
+                <menuItem title="Drive 8" id="XQm-ka-Db5">
+                    <menu key="submenu" title="Drive 8" id="Mqn-f5-oGB">
                         <items>
                             <menuItem title="New Disk" tag="1" id="e0B-5D-eZ0">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -682,8 +682,8 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Drive 2" id="zmi-bv-6va">
-                    <menu key="submenu" title="Drive 2" id="bhi-Ac-069">
+                <menuItem title="Drive 9" id="zmi-bv-6va">
+                    <menu key="submenu" title="Drive 9" id="bhi-Ac-069">
                         <items>
                             <menuItem title="New Disk" tag="2" id="RSJ-02-iGl">
                                 <modifierMask key="keyEquivalentModifierMask"/>
