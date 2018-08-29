@@ -8,7 +8,32 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="JoystickPrefsController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
+                <outlet property="autofire1" destination="sjA-xP-5SH" id="66J-HJ-5il"/>
+                <outlet property="autofire1button" destination="gDJ-0h-fob" id="T0E-ZD-J7k"/>
+                <outlet property="autofire2" destination="5Ug-hQ-kAe" id="jAF-pp-a2X"/>
+                <outlet property="autofire2button" destination="1Zg-w1-LU9" id="ip0-wL-Jcu"/>
+                <outlet property="autofireFrequency" destination="wha-zH-c1j" id="Rpb-HH-BSW"/>
                 <outlet property="disconnectKeys" destination="6SX-dL-CDf" id="gyE-aM-7dc"/>
+                <outlet property="down1" destination="RaT-3k-e45" id="V2j-03-g8L"/>
+                <outlet property="down1button" destination="gAi-k9-hRf" id="lfG-xE-1WT"/>
+                <outlet property="down2" destination="zZu-d1-twf" id="4V3-Ty-oGh"/>
+                <outlet property="down2button" destination="Nih-nW-yj1" id="iuU-8e-hMq"/>
+                <outlet property="fire1" destination="SKQ-l7-pnm" id="ocr-gb-nV4"/>
+                <outlet property="fire1button" destination="cuY-KY-YcK" id="pbB-6O-X0I"/>
+                <outlet property="fire2" destination="pTO-3p-Vf2" id="F78-l0-pUL"/>
+                <outlet property="fire2button" destination="Cx0-t7-pvQ" id="eSw-Ub-nVv"/>
+                <outlet property="left1" destination="1gT-8w-MXt" id="xdw-8L-4ti"/>
+                <outlet property="left1button" destination="L7P-bo-gHh" id="J2y-r7-shD"/>
+                <outlet property="left2" destination="lMV-vM-7SA" id="pi2-fA-sbZ"/>
+                <outlet property="left2button" destination="Uf9-Ak-eC6" id="EEW-kk-naW"/>
+                <outlet property="right1" destination="UXv-cC-KVs" id="1Ds-wN-mJ4"/>
+                <outlet property="right1button" destination="5Y4-Ah-WCf" id="CHv-m3-W4B"/>
+                <outlet property="right2" destination="CNS-Q5-NQn" id="Cjp-wc-2Pd"/>
+                <outlet property="right2button" destination="aK6-ep-bEm" id="U2f-fS-pmw"/>
+                <outlet property="up1" destination="vrO-qU-hcl" id="yQN-50-XuC"/>
+                <outlet property="up1button" destination="DDX-4e-Scj" id="LJ8-6c-yZ4"/>
+                <outlet property="up2" destination="QLc-V4-1S3" id="SL0-aX-FvQ"/>
+                <outlet property="up2button" destination="oEc-ee-snE" id="5Iu-3O-QLm"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="RQi-oO-MRf"/>
             </connections>
         </customObject>
@@ -121,7 +146,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="gDJ-0h-fob">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="gDJ-0h-fob">
                         <rect key="frame" x="193" y="204" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="key" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="axesIndependently" inset="2" id="mu6-mK-dNg">
@@ -147,7 +172,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="joystick2" id="Ktj-s9-Zoa"/>
                     </imageView>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6SX-dL-CDf">
-                        <rect key="frame" x="18" y="104" width="329" height="18"/>
+                        <rect key="frame" x="18" y="98" width="329" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Disconnect emulation keys from the C64 keyboard" bezelStyle="regularSquare" imagePosition="left" refusesFirstResponder="YES" state="on" inset="2" id="Gx4-vT-UC6">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -330,7 +355,7 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="1Zg-w1-LU9">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="1Zg-w1-LU9">
                         <rect key="frame" x="482" y="205" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="squareTextured" title="132" bezelStyle="texturedSquare" image="key" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="axesIndependently" inset="2" id="Ynp-2g-GDX">
@@ -368,34 +393,12 @@ DQ
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0VD-OJ-AoM">
-                        <rect key="frame" x="18" y="132" width="60" height="17"/>
+                        <rect key="frame" x="18" y="129" width="124" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Auto fire " id="IQV-Pd-hRh">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Auto fire frequency:" id="IQV-Pd-hRh">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I2H-up-fZ4">
-                        <rect key="frame" x="109" y="132" width="116" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="bullets per second" id="ZiW-kd-Y62">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aR-w0-faT">
-                        <rect key="frame" x="78" y="129" width="26" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="5" drawsBackground="YES" id="7wT-Cf-1QS">
-                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="WFk-4S-Cq9">
-                                <real key="minimum" value="1"/>
-                                <real key="maximum" value="999"/>
-                            </numberFormatter>
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7M-5d-OeC">
@@ -440,6 +443,32 @@ DQ
                             <action selector="helpAction:" target="-2" id="HCM-3o-DU1"/>
                         </connections>
                     </button>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wha-zH-c1j">
+                        <rect key="frame" x="188" y="127" width="162" height="24"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="4" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="rgY-1r-3aZ"/>
+                        <connections>
+                            <action selector="autofireFrequencyAction:" target="-2" id="fFG-x5-Weh"/>
+                        </connections>
+                    </slider>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J8V-VL-wGA">
+                        <rect key="frame" x="355" y="128" width="33" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="High" id="UDs-UL-HjE">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mkA-SB-rMU">
+                        <rect key="frame" x="158" y="129" width="29" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Low" id="Jc1-w8-Oah">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>

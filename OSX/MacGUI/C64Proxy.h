@@ -316,6 +316,8 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+- (float) autofireFrequency;
+- (void) setAutofireFrequency:(float)interval;
 - (void) trigger:(JoystickEvent)event;
 
 @end

@@ -168,23 +168,27 @@ extension GamePad {
             var events: [JoystickEvent]
             
             switch (JoystickDirection(direction)) {
+                
             case JOYSTICK_UP:
                 events = [PULL_UP]
-                break
+                
             case  JOYSTICK_DOWN:
                 events = [PULL_DOWN]
-                break
+                
             case JOYSTICK_LEFT:
                 events = [PULL_LEFT]
-                break
+                
             case JOYSTICK_RIGHT:
                 events = [PULL_RIGHT]
-                break
+                
             case JOYSTICK_FIRE:
                 events = [PRESS_FIRE]
-            default:
-                assert(JoystickDirection(direction) == JOYSTICK_AUTOFIRE)
+                
+            case JOYSTICK_AUTOFIRE:
                 events = [TOGGLE_AUTOFIRE]
+                
+            default:
+                fatalError()
             }
             
             return manager.joystickEvent(self, events: events)
@@ -207,13 +211,18 @@ extension GamePad {
             switch (JoystickDirection(direction)) {
             case JOYSTICK_UP, JOYSTICK_DOWN:
                 events = [RELEASE_Y]
-                break
+                
             case JOYSTICK_LEFT, JOYSTICK_RIGHT:
                 events = [RELEASE_X]
-                break
-            default:
-                assert(JoystickDirection(direction) == JOYSTICK_FIRE)
+                
+            case JOYSTICK_FIRE:
                 events = [RELEASE_FIRE]
+
+            case JOYSTICK_AUTOFIRE:
+                events = []
+                
+            default:
+                fatalError()
             }
             
             return manager.joystickEvent(self, events: events)

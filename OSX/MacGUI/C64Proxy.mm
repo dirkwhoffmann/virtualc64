@@ -421,6 +421,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (void) dump { wrapper->port->dumpState(); }
+- (float) autofireFrequency { return wrapper->port->getAutofireFrequency(); }
+- (void) setAutofireFrequency:(float)interval { wrapper->port->setAutofireFrequency(interval); }
 - (void) trigger:(JoystickEvent)event { wrapper->port->trigger(event); }
 
 @end

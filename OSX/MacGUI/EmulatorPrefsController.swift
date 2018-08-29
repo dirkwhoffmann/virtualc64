@@ -162,7 +162,6 @@ class EmulatorPrefsController : UserDialogController {
         updateKeyMap(1, direction: JOYSTICK_LEFT, button: left2button, txt: left2)
         updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
         updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
-        disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
         
         // Documents
         pauseInBackground.state = parent.pauseInBackground ? .on : .off
@@ -318,13 +317,7 @@ class EmulatorPrefsController : UserDialogController {
         
         update()
     }
-    
-    @IBAction func disconnectKeysAction(_ sender: NSButton!) {
-    
-        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
-        update()
-    }
-    
+        
     @IBAction func pauseInBackgroundAction(_ sender: NSButton!) {
         
         parent.pauseInBackground =  (sender.state == .on)

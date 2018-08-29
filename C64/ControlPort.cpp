@@ -25,6 +25,8 @@ ControlPort::ControlPort(int portNr)
     assert(portNr == 1 || portNr == 2);
     
     nr = portNr;
+    autofireFrequency = 2.5;
+    
     setDescription("ControlPort");
     debug(3, "    Creating ControlPort %d at address %p...\n", nr, this);
     
@@ -74,9 +76,9 @@ ControlPort::dumpState()
 void
 ControlPort::execute(uint64_t frame)
 {
-    if (autofire) {
+    if (autofire && autofireFrequency != 0.0) {
         double fps = c64->vic.getFramesPerSecond();
-        if (frame % (unsigned)(fps / autofireFrequency) == 0) {
+        if (frame % (unsigned)(fps / (2 * autofireFrequency)) == 0) {
             button = !button;
         }
     }
@@ -129,6 +131,13 @@ ControlPort::setAutofire(bool value)
     if (!(autofire = value)) {
         button = false;
     }
+}
+
+void
+ControlPort::setAutofireFrequency(float value)
+{
+    if (value == 0.0) value = 1;
+    autofireFrequency = value;
 }
 
 uint8_t

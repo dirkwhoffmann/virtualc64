@@ -46,7 +46,7 @@ private:
     
     //! @brief    True, if autofire is enabled.
     bool autofire;
-
+    
     //! @brief    Autofire frequency in Hz
     float autofireFrequency;
 
@@ -68,6 +68,15 @@ public:
     //! @brief    Method from VirtualComponent
     void dumpState();
     
+    //! @brief   Enables or disables autofire.
+    void setAutofire(bool value);
+
+    //! @brief   Returns the autofire frequency.
+    float getAutofireFrequency() { return autofireFrequency; }
+
+    //! @brief   Sets the autofire frequency.
+    void setAutofireFrequency(float value); 
+
     //! @brief    Execution function for this control port
     /*! @details  This method is invoked at the end of each frame. It is needed
      *            needed to implement the autofire functionality, only.
@@ -76,9 +85,6 @@ public:
     
     //! @brief   Triggers a joystick event
     void trigger(JoystickEvent event);
-
-    //! @brief   Enables or disables autofire.
-    void setAutofire(bool value);
     
     /*! @brief   Returns the current joystick movement in form a bit mask
      *  @details The bits are in the same order as they show up in the

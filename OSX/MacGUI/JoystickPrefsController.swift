@@ -58,6 +58,8 @@ class JoystickPrefsController : UserDialogController {
     @IBOutlet weak var down1button: NSButton!
     @IBOutlet weak var fire1: NSTextField!
     @IBOutlet weak var fire1button: NSButton!
+    @IBOutlet weak var autofire1: NSTextField!
+    @IBOutlet weak var autofire1button: NSButton!
     @IBOutlet weak var left2: NSTextField!
     @IBOutlet weak var left2button: NSButton!
     @IBOutlet weak var right2: NSTextField!
@@ -68,10 +70,14 @@ class JoystickPrefsController : UserDialogController {
     @IBOutlet weak var down2button: NSButton!
     @IBOutlet weak var fire2: NSTextField!
     @IBOutlet weak var fire2button: NSButton!
+    @IBOutlet weak var autofire2: NSTextField!
+    @IBOutlet weak var autofire2button: NSButton!
     @IBOutlet weak var disconnectKeys: NSButton!
-    
+    @IBOutlet weak var autofireFrequency: NSSlider!
+
     override func awakeFromNib() {
     
+        update()
     }
     
     func update() {
@@ -82,19 +88,23 @@ class JoystickPrefsController : UserDialogController {
         updateKeyMap(0, direction: JOYSTICK_LEFT, button: left1button, txt: left1)
         updateKeyMap(0, direction: JOYSTICK_RIGHT, button: right1button, txt: right1)
         updateKeyMap(0, direction: JOYSTICK_FIRE, button: fire1button, txt: fire1)
+        updateKeyMap(0, direction: JOYSTICK_AUTOFIRE, button: autofire1button, txt: autofire1)
         updateKeyMap(1, direction: JOYSTICK_UP, button: up2button, txt: up2)
         updateKeyMap(1, direction: JOYSTICK_DOWN, button: down2button, txt: down2)
         updateKeyMap(1, direction: JOYSTICK_LEFT, button: left2button, txt: left2)
         updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
         updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
+        updateKeyMap(1, direction: JOYSTICK_AUTOFIRE, button: autofire2button, txt: autofire2)
         disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
+        autofireFrequency.floatValue = c64.port1.autofireFrequency()
+        assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
         
         precondition(nr == 0 || nr == 1)
         
-        let keyMap = parent.gamePadManager.gamePads[nr]?.keyMap //  ?? [:]
+        let keyMap = parent.gamePadManager.gamePads[nr]?.keyMap
         
         // Which MacKey is assigned to this joystick action?
         var macKey: MacKey?
@@ -159,10 +169,10 @@ class JoystickPrefsController : UserDialogController {
         
         let tag = UInt32(sender.tag)
         
-        if tag >= 0 && tag <= 4 {
+        if tag >= 0 && tag <= 5 {
             recordKey1 = JoystickDirection(rawValue: tag)
             recordKey2 = nil
-        } else if tag >= 10 && tag <= 14 {
+        } else if tag >= 10 && tag <= 15 {
             recordKey1 = nil
             recordKey2 = JoystickDirection(rawValue: (tag - 10))
         } else {
@@ -171,7 +181,16 @@ class JoystickPrefsController : UserDialogController {
         
         update()
     }
-    
+
+    @IBAction func autofireFrequencyAction(_ sender: NSSlider!) {
+        
+        let value = sender.floatValue
+        track("value = \(value)")
+        c64.port1.setAutofireFrequency(value)
+        c64.port2.setAutofireFrequency(value)
+        update()
+    }
+
     @IBAction func disconnectKeysAction(_ sender: NSButton!) {
         
         parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
@@ -195,6 +214,8 @@ class JoystickPrefsController : UserDialogController {
         
         parent.gamePadManager.restoreFactorySettings()
         parent.keyboardcontroller.disconnectEmulationKeys = true
+        c64.port1.setAutofireFrequency(2.5)
+        c64.port2.setAutofireFrequency(2.5)
         update()
     }
     

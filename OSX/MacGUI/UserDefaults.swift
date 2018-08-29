@@ -33,7 +33,8 @@ struct VC64Keys {
     static let joyKeyMap1        = "VC64JoyKeyMap1"
     static let joyKeyMap2        = "VC64JoyKeyMap2"
     static let disconnectKeys    = "VC64DisconnectKeys"
-    
+    static let autofireFrequency = "VC64AutofireFrequency"
+
     static let pauseInBackground = "VC64PauseInBackground"
     static let snapshotInterval  = "VC64SnapshotInterval"
     static let autoMount         = "VC64AutoMount"
@@ -71,6 +72,7 @@ extension MyController {
     static func registerUserDefaults() {
         
         track()
+        registerJoystickUserDefaults()
         registerEmulatorUserDefaults()
         registerHardwareUserDefaults()
         
@@ -89,6 +91,20 @@ extension MyController {
     }
     
     /// Registers the default values for all emulator dialog properties
+    static func registerJoystickUserDefaults() {
+        
+        track()
+        let dictionary : [String:Any] = [
+            
+            VC64Keys.disconnectKeys: true,
+            VC64Keys.autofireFrequency: 2.5
+        ]
+        
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
+    }
+
+    /// Registers the default values for all emulator dialog properties
     static func registerEmulatorUserDefaults() {
         
         track()
@@ -103,12 +119,12 @@ extension MyController {
             VC64Keys.videoUpscaler: 0,
             VC64Keys.videoFilter: 1,
             VC64Keys.aspectRatio: false,
-        
+            
             VC64Keys.disconnectKeys: true,
             VC64Keys.pauseInBackground: false,
             VC64Keys.snapshotInterval: 3,
             VC64Keys.autoMount: false,
-]
+        ]
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
@@ -156,9 +172,20 @@ extension MyController {
         let defaults = UserDefaults.standard
         keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
         
+        loadJoystickUserDefaults()
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
         loadKeyMapUserDefaults()
+    }
+    
+    /// Loads the user defaults for all properties that are set in the joystick dialog
+    func loadJoystickUserDefaults() {
+        
+        track()
+        let defaults = UserDefaults.standard
+        keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
+        c64.port1.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
+        c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -186,7 +213,6 @@ extension MyController {
                 gamePadManager.gamePads[1]?.keyMap = keyMap
             }
         }
-        keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
@@ -241,14 +267,25 @@ extension MyController {
         let defaults = UserDefaults.standard
         defaults.set(keyboardcontroller.mapKeysByPosition, forKey: VC64Keys.mapKeysByPosition)
         
+        saveJoystickUserDefaults()
         saveEmulatorUserDefaults()
         saveHardwareUserDefaults()
         saveKeyMapUserDefaults()
     }
     
+    /// Saves the user defaults for all properties that are set in the joystick dialog
+    func saveJoystickUserDefaults() {
+     
+        track()
+        let defaults = UserDefaults.standard
+        defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
+        assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
+        defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
+    }
+ 
     /// Saves the user defaults for all properties that are set in the hardware dialog
     func saveEmulatorUserDefaults() {
-     
+        
         track()
         let defaults = UserDefaults.standard
         defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
@@ -267,7 +304,6 @@ extension MyController {
         if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keyMap) {
             defaults.set(keyMap, forKey: VC64Keys.joyKeyMap2)
         }
-        defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
         defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
         defaults.set(autoMount, forKey: VC64Keys.autoMount)
