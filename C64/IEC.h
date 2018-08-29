@@ -106,7 +106,7 @@ public:
     void updateIecLinesC64Side();
     void updateIecLinesDriveSide();
 
-	//! @brief    Executin function for observing the bus activity.
+	//! @brief    Execution function for observing the bus activity.
     /*! @details  This method is invoked periodically. It's only purpose is to
      *            determines if data is transmitted on the bus.
      */

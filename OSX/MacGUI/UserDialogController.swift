@@ -10,7 +10,6 @@ import Foundation
 class UserDialogController : NSWindowController
 {
     var parent: MyController!
-    // var mydocument: MyDocument!
     var parentWindow: NSWindow!
     var c64: C64Proxy!
     

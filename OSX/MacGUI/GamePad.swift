@@ -180,9 +180,11 @@ extension GamePad {
             case JOYSTICK_RIGHT:
                 events = [PULL_RIGHT]
                 break
-            default:
-                assert(JoystickDirection(direction) == JOYSTICK_FIRE)
+            case JOYSTICK_FIRE:
                 events = [PRESS_FIRE]
+            default:
+                assert(JoystickDirection(direction) == JOYSTICK_AUTOFIRE)
+                events = [TOGGLE_AUTOFIRE]
             }
             
             return manager.joystickEvent(self, events: events)

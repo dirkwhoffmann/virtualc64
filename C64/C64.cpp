@@ -651,7 +651,9 @@ C64::endOfFrame()
     // Execute other components
     iec.execute();
     expansionport.execute();
-    
+    port1.execute(frame);
+    port2.execute(frame);
+
     // Update mouse coordinates
     if (mousePort != 0) mouse->execute();
     

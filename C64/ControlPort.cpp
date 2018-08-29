@@ -72,6 +72,17 @@ ControlPort::dumpState()
 }
 
 void
+ControlPort::execute(uint64_t frame)
+{
+    if (autofire) {
+        double fps = c64->vic.getFramesPerSecond();
+        if (frame % (unsigned)(fps / autofireFrequency) == 0) {
+            button = !button;
+        }
+    }
+}
+
+void
 ControlPort::trigger(JoystickEvent event)
 {
     switch (event) {
@@ -104,8 +115,19 @@ ControlPort::trigger(JoystickEvent event)
         case RELEASE_FIRE:
             button = false;
             break;
+        case TOGGLE_AUTOFIRE:
+            setAutofire(!autofire);
+            break;
         default:
             assert(0);
+    }
+}
+
+void
+ControlPort::setAutofire(bool value)
+{
+    if (!(autofire = value)) {
+        button = false;
     }
 }
 

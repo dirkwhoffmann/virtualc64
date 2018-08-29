@@ -28,21 +28,28 @@ class ControlPort : public VirtualComponent {
 
 private:
     
-    //! @brief    Indicates whether this object represents control port 1 or control port 2
-    /*! @details  Value must be either 1 or 2
-     */
+    //! @brief    Represented control port (1 or 2)
     int nr;
     
-    //! @brief    True, if button is pressed
+    //! @brief    True, if button is pressed.
     bool button;
 
-    //! @brief    Horizontal joystick position
-    //@ @details  Valid valued are -1 (LEFT), 1 (RIGHT), or 0 (RELEASED)
+    /*! @brief    Horizontal joystick position
+     *  @details  Valid valued are -1 (LEFT), 1 (RIGHT), or 0 (RELEASED)
+     */
     int axisX;
 
-    //! @brief    Vertical joystick position
-    //@ details   Valid valued are -1 (UP), 1 (DOWN), or 0 (RELEASED)
+    /*! @brief    Vertical joystick position
+     *  @details   Valid valued are -1 (UP), 1 (DOWN), or 0 (RELEASED)
+     */
     int axisY;
+    
+    //! @brief    True, if autofire is enabled.
+    bool autofire;
+
+    //! @brief    Autofire frequency in Hz
+    float autofireFrequency;
+
     
 public:
     
@@ -61,8 +68,17 @@ public:
     //! @brief    Method from VirtualComponent
     void dumpState();
     
+    //! @brief    Execution function for this control port
+    /*! @details  This method is invoked at the end of each frame. It is needed
+     *            needed to implement the autofire functionality, only.
+     */
+    void execute(uint64_t frame);
+    
     //! @brief   Triggers a joystick event
     void trigger(JoystickEvent event);
+
+    //! @brief   Enables or disables autofire.
+    void setAutofire(bool value);
     
     /*! @brief   Returns the current joystick movement in form a bit mask
      *  @details The bits are in the same order as they show up in the
@@ -75,7 +91,6 @@ public:
 
     //! @brief   Returns the potentiometer Y value (analog mouse)
     uint8_t potY();
-
 };
 
 #endif
