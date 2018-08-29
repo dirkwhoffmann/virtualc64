@@ -24,10 +24,11 @@
 #include "Memory.h"
 
 /*! @brief    This class represents RAM and ROM of the virtual C64
- *  @details  Due to the limited address space, RAM, ROM, and I/O memory are superposed,
- *            wich means that they share the same memory locations. The currently visible
- *            memory is determined by the contents of the processor port (memory location 1)
- *            and the current values of the Exrom and Game line.
+ *  @details  Due to the limited address space, RAM, ROM, and I/O memory are
+ *            superposed, wich means that they share the same memory locations.
+ *            The currently visible memory is determined by the contents of the
+ *            processor port (memory address 1) and the current values of the
+ *            Exrom and Game line.
  */
 class C64Memory : public Memory {
 
@@ -99,6 +100,9 @@ public:
      */
     uint8_t rom[65536];
     
+    //! @brief    RAM init pattern type
+    RamInitPattern ramInitPattern;
+    
 private:
     
     //! @brief    Peek source lookup table
@@ -134,6 +138,12 @@ public:
 	bool kernalRomIsLoaded() { return rom[0xE000] != 0x00; }
     
 public:
+    
+    //! @brief    Returns the currently used RAM init pattern.
+    RamInitPattern getRamInitPattern() { return ramInitPattern; }
+    
+    //! @brief    Sets the RAM init pattern type.
+    void setRamInitPattern(RamInitPattern type) { ramInitPattern = type; }
     
     /*! @brief    Updates the peek and poke lookup tables.
      *  @details  The lookup values depend on three processor port bits

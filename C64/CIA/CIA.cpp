@@ -28,7 +28,10 @@ CIA::CIA()
 
     // Register snapshot items
     SnapshotItem items[] = {
-        
+
+        { &chipModel,       sizeof(chipModel),      KEEP_ON_RESET },
+        { &timerBBug,       sizeof(timerBBug),      KEEP_ON_RESET },
+
         { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
         { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
         { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
@@ -59,7 +62,10 @@ CIA::CIA()
         { NULL,             0,                      0 }};
 
     registerSnapshotItems(items, sizeof(items));
-    tod.cia = this; 
+    tod.cia = this;
+    
+    chipModel = MOS_6526_OLD;
+    timerBBug = true;
 }
 
 CIA::~CIA()
@@ -76,6 +82,21 @@ CIA::reset()
 	
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
+}
+
+void
+CIA::setChipModel(CIAChipModel model)
+{
+    debug(2, "setChipModel(%d)\n", model);
+    
+    if (!isCIAChipModel(model)) {
+        warn("Unknown CIA chip model (%d). Assuming first generation.\n", model);
+        model = MOS_6526_OLD;
+    }
+    
+    c64->suspend();
+    chipModel = model;
+    c64->resume();
 }
 
 void

@@ -38,4 +38,14 @@ typedef enum {
     M_NONE
 } MemoryType;
 
+//! @brief    RAM init pattern type
+typedef enum {
+    INIT_PATTERN_C64 = 0,
+    INIT_PATTERN_C64C = 1
+} RamInitPattern;
+
+inline bool isRamInitPattern(RamInitPattern pattern) {
+    return (pattern == INIT_PATTERN_C64) || (pattern == INIT_PATTERN_C64C);
+}
+
 #endif

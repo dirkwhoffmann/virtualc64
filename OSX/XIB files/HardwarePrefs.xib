@@ -12,16 +12,18 @@
                 <outlet property="driveNoise" destination="c6a-Gx-Xaz" id="FEK-yo-ZGc"/>
                 <outlet property="glueLogic" destination="fp0-RX-u8U" id="ect-1d-sRo"/>
                 <outlet property="grayDotBug" destination="QYA-lY-FI6" id="hVe-nX-YNa"/>
-                <outlet property="machineType" destination="jAz-gN-9Pm" id="kNl-FH-9C6"/>
                 <outlet property="mouseInfo" destination="Swr-mJ-8tR" id="VVd-sI-qjI"/>
                 <outlet property="mouseModel" destination="uHB-0P-N7e" id="isp-1K-4Af"/>
+                <outlet property="ramInitPattern" destination="QOK-lN-vtF" id="Hh9-YT-36S"/>
                 <outlet property="sidChipModel" destination="pHz-Uy-ZhU" id="GLz-VJ-bQB"/>
                 <outlet property="sidEngine" destination="VQD-6p-1N4" id="3yx-AL-DgU"/>
                 <outlet property="sidFilter" destination="ua4-tq-5vG" id="DBP-FF-BOi"/>
                 <outlet property="sidSamplingMethod" destination="KHH-C4-ErA" id="39Q-f2-p1j"/>
                 <outlet property="systemText" destination="DE9-lh-HiG" id="Ces-IG-v0M"/>
-                <outlet property="timerBBug" destination="HPn-bj-HcH" id="vld-HU-dMs"/>
+                <outlet property="timerBBug" destination="a4D-vi-jGH" id="cMZ-Ij-ELM"/>
+                <outlet property="vicDescription" destination="DE9-lh-HiG" id="oQA-eV-a1X"/>
                 <outlet property="vicIcon" destination="wbA-GU-LeU" id="uGk-3l-deU"/>
+                <outlet property="vicModel" destination="jAz-gN-9Pm" id="ufY-1Z-0fz"/>
                 <outlet property="warpLoad" destination="Pdp-iS-ZhE" id="XGM-4L-h4k"/>
                 <outlet property="window" destination="ljc-O3-7Ax" id="AlR-A7-c8b"/>
             </connections>
@@ -39,10 +41,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DE9-lh-HiG">
-                        <rect key="frame" x="86" y="494" width="99" height="19"/>
+                        <rect key="frame" x="86" y="495" width="187" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" placeholderString="" id="ruh-t6-q2X">
-                            <font key="font" metaFont="system"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" placeholderString="" id="ruh-t6-q2X">
+                            <font key="font" metaFont="smallSystem"/>
                             <string key="title">Lorem ipsum
 </string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -148,12 +150,12 @@
                                     <menuItem title="Discrete" state="on" id="Eqj-TQ-Sy6">
                                         <attributedString key="attributedTitle"/>
                                         <connections>
-                                            <action selector="vicGlueLogicAction:" target="-2" id="uoS-ax-ab1"/>
+                                            <action selector="glueLogicAction:" target="-2" id="6gY-LA-rnc"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="Custom IC" tag="1" id="cFI-W8-Aco">
                                         <connections>
-                                            <action selector="vicGlueLogicAction:" target="-2" id="CUS-0p-9iE"/>
+                                            <action selector="glueLogicAction:" target="-2" id="fu0-Or-qPB"/>
                                         </connections>
                                     </menuItem>
                                 </items>
@@ -180,12 +182,12 @@
                                     <menuItem title="C64" state="on" id="D9i-Iy-tdu">
                                         <attributedString key="attributedTitle"/>
                                         <connections>
-                                            <action selector="vicGlueLogicAction:" target="-2" id="fwU-y2-2f1"/>
+                                            <action selector="ramInitPatternAction:" target="-2" id="d1k-8U-M7d"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="C64C" tag="1" id="XKO-M5-Nde">
                                         <connections>
-                                            <action selector="vicGlueLogicAction:" target="-2" id="xAo-MK-lwW"/>
+                                            <action selector="ramInitPatternAction:" target="-2" id="25K-PY-rJf"/>
                                         </connections>
                                     </menuItem>
                                 </items>
@@ -508,18 +510,18 @@ DQ
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HPn-bj-HcH">
                         <rect key="frame" x="331" y="452" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="First generation" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2Gi-gq-ivF" id="huk-Z6-PuX">
+                        <popUpButtonCell key="cell" type="push" title="MOS 6526" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2Gi-gq-ivF" id="huk-Z6-PuX">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="Y3h-aw-3z6">
                                 <items>
-                                    <menuItem title="First generation" state="on" tag="1" id="2Gi-gq-ivF">
+                                    <menuItem title="MOS 6526" state="on" id="2Gi-gq-ivF">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="ciaChipModelAction:" target="-2" id="Lew-1E-vbY"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="Second generation" id="Nb1-cA-67s">
+                                    <menuItem title="MOS 6526 (2nd gen)" tag="1" hidden="YES" enabled="NO" id="Nb1-cA-67s">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="ciaChipModelAction:" target="-2" id="KsN-6x-D0w"/>
@@ -555,7 +557,7 @@ DQ
                     <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jcQ-hm-VSf">
                         <rect key="frame" x="20" y="232" width="55" height="55"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_glue" id="loL-Yk-8Ao"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="pref_logicboard" id="loL-Yk-8Ao"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RGL-Zb-RYu">
                         <rect key="frame" x="86" y="263" width="114" height="17"/>
@@ -570,7 +572,7 @@ DQ
                         <rect key="frame" x="12" y="288" width="501" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a4D-vi-jGH">
+                    <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a4D-vi-jGH">
                         <rect key="frame" x="330" y="431" width="168" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Emulate timer B bug" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hBf-BP-vCa">
@@ -590,7 +592,7 @@ DQ
         <image name="1541" width="384" height="384"/>
         <image name="oxygen_mouse" width="256" height="256"/>
         <image name="pref_cia" width="257" height="257"/>
-        <image name="pref_glue" width="257" height="257"/>
+        <image name="pref_logicboard" width="257" height="257"/>
         <image name="pref_sid" width="257" height="257"/>
         <image name="pref_vicii_pal" width="257" height="258"/>
     </resources>

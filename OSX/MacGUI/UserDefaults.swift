@@ -42,10 +42,16 @@ struct VC64Keys {
     static let vicChip           = "VC64VICChipModelKey"
     static let grayDotBug        = "VC64VICGrayDotBugKey"
 
+    static let ciaChip           = "VC64CIAChipModelKey"
+    static let timerBBug         = "VC64CIATimerBBugKey"
+
     static let reSID             = "VC64SIDReSIDKey"
     static let audioChip         = "VC64SIDChipModelKey"
     static let audioFilter       = "VC64SIDFilterKey"
     static let samplingMethod    = "VC64SIDSamplingMethodKey"
+
+    static let glueLogic         = "VC64GlueLogicKey"
+    static let initPattern       = "VC64InitPatternKey"
 
     static let warpLoad          = "VC64WarpLoadKey"
     static let driveNoise        = "VC64DriveNoiseKey"
@@ -115,11 +121,18 @@ extension MyController {
         let dictionary : [String:Any] = [
         
             VC64Keys.vicChip: PAL_8565.rawValue,
-            
+            VC64Keys.grayDotBug: true,
+
+            VC64Keys.ciaChip: MOS_6526_OLD.rawValue,
+            VC64Keys.timerBBug: true,
+
             VC64Keys.reSID: true,
             VC64Keys.audioChip: MOS_8580.rawValue,
             VC64Keys.audioFilter: false,
             VC64Keys.samplingMethod: 0,
+
+            VC64Keys.glueLogic: GLUE_DISCRETE.rawValue,
+            VC64Keys.initPattern: INIT_PATTERN_C64.rawValue,
 
             VC64Keys.warpLoad: true,
             VC64Keys.driveNoise: true,
@@ -186,10 +199,20 @@ extension MyController {
         let defaults = UserDefaults.standard
         c64.vic.setChipModel(defaults.integer(forKey: VC64Keys.vicChip))
         c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: VC64Keys.grayDotBug))
+
+        c64.cia1.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
+        c64.cia2.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
+        c64.cia1.setTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
+        c64.cia2.setTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
+
         c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
         c64.sid.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
+
+        c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
+        c64.mem.setRamInitPattern(defaults.integer(forKey: VC64Keys.initPattern))
+
         c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
         c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
         c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
@@ -257,10 +280,18 @@ extension MyController {
         let defaults = UserDefaults.standard
         defaults.set(c64.vic.chipModel(), forKey: VC64Keys.vicChip)
         defaults.set(c64.vic.emulateGrayDotBug(), forKey: VC64Keys.grayDotBug)
+
+        defaults.set(c64.cia1.chipModel(), forKey: VC64Keys.ciaChip)
+        defaults.set(c64.cia1.timerBBug(), forKey: VC64Keys.timerBBug)
+
         defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)
         defaults.set(c64.sid.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.sid.samplingMethod(), forKey: VC64Keys.samplingMethod)
+        
+        defaults.set(c64.vic.glueLogic(), forKey: VC64Keys.glueLogic)
+        defaults.set(c64.mem.ramInitPattern(), forKey: VC64Keys.initPattern)
+
         defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
         defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)

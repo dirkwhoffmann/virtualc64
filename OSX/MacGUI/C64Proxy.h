@@ -102,6 +102,9 @@ struct ContainerWrapper;
 
 - (void) dump;
 
+- (NSInteger) ramInitPattern;
+- (void) setRamInitPattern:(NSInteger)type;
+
 - (MemoryType) peekSource:(uint16_t)addr;
 - (MemoryType) pokeTarget:(uint16_t)addr;
 
@@ -126,9 +129,13 @@ struct ContainerWrapper;
 
 - (CIAInfo) getInfo;
 - (void) dump;
-
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
+
+- (NSInteger) chipModel;
+- (void) setChipModel:(NSInteger)value;
+- (BOOL) timerBBug;
+- (void) setTimerBBug:(BOOL)value;
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value;
 

@@ -116,6 +116,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (void) dump { wrapper->mem->dumpState(); }
 
+- (NSInteger) ramInitPattern { return wrapper->mem->getRamInitPattern(); }
+- (void) setRamInitPattern:(NSInteger)type {
+    wrapper->mem->setRamInitPattern((RamInitPattern)type); }
+
 - (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
 - (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
 
@@ -157,9 +161,13 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
 - (void) dump { wrapper->cia->dumpState(); }
-
 - (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
 - (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing(); }
+
+- (NSInteger) chipModel { return (NSInteger)wrapper->cia->getChipModel(); }
+- (void) setChipModel:(NSInteger)value { wrapper->cia->setChipModel((CIAChipModel)value); }
+- (BOOL) timerBBug { return wrapper->cia->getTimerBBug(); }
+- (void) setTimerBBug:(BOOL)value { wrapper->cia->setTimerBBug(value); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
     wrapper->cia->c64->suspend();

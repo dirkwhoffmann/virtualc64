@@ -84,6 +84,12 @@ class Joystick;
  */
 class CIA : public VirtualComponent {
     
+    //! @brief    Selected chip model
+    CIAChipModel chipModel;
+    
+    //! @brief    Indicates if timer B bug should be emulated
+    bool timerBBug;
+    
 protected:
 
 	//! @brief    Timer A counter
@@ -257,6 +263,18 @@ public:
     //
     //! @functiongroup Accessing device properties
     //
+    
+    //! @brief    Returns the currently plugged in chip model.
+    CIAChipModel getChipModel() { return chipModel; }
+    
+    //! @brief    Sets the chip model.
+    void setChipModel(CIAChipModel model);
+    
+    //! @brief    Returns true if the timer B bug is emulated.
+    bool getTimerBBug() { return timerBBug; }
+    
+    //! @brief    Enables or disables emulation of the timer B bug.
+    void setTimerBBug(bool value) { timerBBug = value; }
     
     //! @brief    Getter for peripheral port A
     uint8_t getPA() { return PA; }

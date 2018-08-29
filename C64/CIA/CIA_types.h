@@ -16,6 +16,10 @@ typedef enum {
     MOS_6526_NEW
 } CIAChipModel;
 
+inline bool isCIAChipModel(CIAChipModel model) {
+    return (model == MOS_6526_OLD) || (model == MOS_6526_NEW);
+}
+
 /*! @brief    TOD info
  *  @details  Used by CIA::getInfo() to collect debug information
  */

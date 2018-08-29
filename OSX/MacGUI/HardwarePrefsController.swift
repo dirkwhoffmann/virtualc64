@@ -13,9 +13,6 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var vicModel: NSPopUpButton!
     @IBOutlet weak var vicIcon: NSImageView!
     @IBOutlet weak var vicDescription: NSTextField!
-    @IBOutlet weak var systemText: NSTextField!
-    @IBOutlet weak var systemText2: NSTextField!
-    @IBOutlet weak var systemText3: NSTextField!
     @IBOutlet weak var grayDotBug: NSButton!
 
     // CIA
@@ -28,7 +25,7 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var sidEngine: NSPopUpButton!
     @IBOutlet weak var sidSamplingMethod: NSPopUpButton!
 
-    // Glue logic
+    // Logic board
     @IBOutlet weak var glueLogic: NSPopUpButton!
     @IBOutlet weak var ramInitPattern: NSPopUpButton!
 
@@ -46,43 +43,55 @@ class HardwarePrefsController : UserDialogController {
     
     func update() {
         
-        let vicModel = c64.vic.chipModel()
-        machineType.selectItem(withTag: vicModel)
-        switch (UInt32(vicModel)) {
+        // VIC
+        let vic = c64.vic.chipModel()
+        vicModel.selectItem(withTag: vic)
+        switch (UInt32(vic)) {
             
         case PAL_6569_R1.rawValue,
              PAL_6569_R3.rawValue,
              PAL_8565.rawValue:
             
             vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_pal"))
-            vicDescription.stringValue = "PAL, 0.985 MHz, 65 raster cycles"
+            vicDescription.stringValue = "PAL 0.985 MHz 65 cycles"
+            /*
             systemText.stringValue = "PAL"
             systemText2.stringValue = "0.985 MHz"
             systemText3.stringValue = "65 raster cycles"
-
+             */
+            
         case NTSC_6567_R56A.rawValue:
             
             vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
-            vicDescription.stringValue = "NTSC, 1.023 MHz, 64 raster cycles"
+            vicDescription.stringValue = "NTSC 1.023 MHz 64 cycles"
+            /*
             systemText.stringValue = "NTSC"
             systemText2.stringValue = "1.023 MHz"
             systemText3.stringValue = "64 raster cycles"
+            */
             
         case NTSC_6567.rawValue,
              NTSC_8562.rawValue:
             
             vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
-            vicDescription.stringValue = "NTSC, 1.023 MHz, 63 raster cycles"
+            vicDescription.stringValue = "NTSC 1.023 MHz 63 cycles"
+            /*
             systemText.stringValue = "NTSC "
             systemText2.stringValue = "1.023 MHz"
             systemText3.stringValue = "63 raster cycles"
+            */
             
         default:
             assert(false)
         }
-        glueLogic.selectItem(withTag: c64.vic.glueLogic())
         grayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
         grayDotBug.isEnabled = c64.vic.hasGrayDotBug()
+        
+        // CIA
+        assert(c64.cia1.chipModel() == c64.cia2.chipModel());
+        assert(c64.cia1.timerBBug() == c64.cia2.timerBBug());
+        ciaModel.selectItem(withTag: c64.cia1.chipModel())
+        timerBBug.state = c64.cia1.timerBBug() ? .on : .off
         
         // Audio
         let sidModel = c64.sid.chipModel()
@@ -93,7 +102,11 @@ class HardwarePrefsController : UserDialogController {
         sidSamplingMethod.selectItem(withTag: c64.sid.samplingMethod())
         let sampleFast = sidSamplingMethod.item(at: 0)
         sampleFast?.isHidden = (sidModel == Int(MOS_8580.rawValue))
-            
+        
+        // Logic board
+        glueLogic.selectItem(withTag: c64.vic.glueLogic())
+        ramInitPattern.selectItem(withTag: c64.mem.ramInitPattern())
+        
         // VC1541
         warpLoad.state = c64.warpLoad() ? .on : .off
         driveNoise.state = c64.drive1.sendSoundMessages() ? .on : .off
@@ -118,13 +131,15 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func ciaChipModelAction(_ sender: NSMenuItem!) {
         
-        track("TODO")
+        c64.cia1.setChipModel(sender.tag)
+        c64.cia2.setChipModel(sender.tag)
         update()
     }
     
     @IBAction func ciaTimerBBugAction(_ sender: NSButton!) {
         
-        track("TODO")
+        c64.cia1.setTimerBBug(sender.state == .on)
+        c64.cia2.setTimerBBug(sender.state == .on)
         update()
     }
     
@@ -168,7 +183,7 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func ramInitPatternAction(_ sender: NSMenuItem!) {
         
-        track("TODO")
+        c64.mem.setRamInitPattern(sender.tag)
         update()
     }
     
@@ -206,12 +221,22 @@ class HardwarePrefsController : UserDialogController {
         c64.vic.setChipModel(Int(PAL_8565.rawValue))
         c64.vic.setEmulateGrayDotBug(true)
         
+        // CIA
+        c64.cia1.setChipModel(Int(MOS_6526_OLD.rawValue))
+        c64.cia2.setChipModel(Int(MOS_6526_OLD.rawValue))
+        c64.cia1.setTimerBBug(true);
+        c64.cia2.setTimerBBug(true);
+
         // SID
         c64.sid.setReSID(true)
         c64.sid.setChipModel(0)
         c64.sid.setAudioFilter(true)
         c64.sid.setSamplingMethod(0)
 
+        // Logic board
+        c64.vic.setGlueLogic(Int(GLUE_DISCRETE.rawValue))
+        c64.mem.setRamInitPattern(Int(INIT_PATTERN_C64.rawValue))
+        
         // VC1541
         c64.setWarpLoad(true)
         c64.drive1.setSendSoundMessages(true)

@@ -31,16 +31,19 @@ C64Memory::C64Memory()
     // Register snapshot items
     SnapshotItem items[] = {
 
-        { ram,          sizeof(ram),        KEEP_ON_RESET },
-        { colorRam,     sizeof(colorRam),   KEEP_ON_RESET },
-        { &rom[0xA000], 0x2000,             KEEP_ON_RESET  }, /* Basic ROM */
-        { &rom[0xD000], 0x1000,             KEEP_ON_RESET  }, /* Character ROM */
-        { &rom[0xE000], 0x2000,             KEEP_ON_RESET  }, /* Kernal ROM */
-        { &peekSrc,     sizeof(peekSrc),    KEEP_ON_RESET },
-        { &pokeTarget,  sizeof(pokeTarget), KEEP_ON_RESET },
-        { NULL,         0,                  0 }};
+        { ram,             sizeof(ram),            KEEP_ON_RESET },
+        { colorRam,        sizeof(colorRam),       KEEP_ON_RESET },
+        { &rom[0xA000],    0x2000,                 KEEP_ON_RESET }, /* Basic ROM */
+        { &rom[0xD000],    0x1000,                 KEEP_ON_RESET }, /* Character ROM */
+        { &rom[0xE000],    0x2000,                 KEEP_ON_RESET }, /* Kernal ROM */
+        { &ramInitPattern, sizeof(ramInitPattern), KEEP_ON_RESET },
+        { &peekSrc,        sizeof(peekSrc),        KEEP_ON_RESET },
+        { &pokeTarget,     sizeof(pokeTarget),     KEEP_ON_RESET },
+        { NULL,            0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
+    
+    ramInitPattern = INIT_PATTERN_C64; 
 }
 
 C64Memory::~C64Memory()
@@ -51,12 +54,10 @@ C64Memory::~C64Memory()
 void
 C64Memory::reset()
 {
-    bool newc64 = false;
-    
     VirtualComponent::reset();
     
-    // Initialize RAM with powerup pattern
-    if (newc64) {
+    // Initialize RAM
+    if (ramInitPattern == INIT_PATTERN_C64C) {
         for (unsigned i = 0; i < sizeof(ram); i++)
             ram[i] = (i & 0x80) ? 0x00 : 0xFF;
     } else {
