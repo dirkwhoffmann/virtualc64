@@ -10,19 +10,27 @@ import Foundation
 class HardwarePrefsController : UserDialogController {
 
     // VIC
-    @IBOutlet weak var machineType: NSPopUpButton!
-    @IBOutlet weak var flag: NSImageView!
+    @IBOutlet weak var vicModel: NSPopUpButton!
+    @IBOutlet weak var vicIcon: NSImageView!
+    @IBOutlet weak var vicDescription: NSTextField!
     @IBOutlet weak var systemText: NSTextField!
     @IBOutlet weak var systemText2: NSTextField!
     @IBOutlet weak var systemText3: NSTextField!
-    @IBOutlet weak var glueLogic: NSPopUpButton!
     @IBOutlet weak var grayDotBug: NSButton!
 
-    // Audio
+    // CIA
+    @IBOutlet weak var ciaModel: NSPopUpButton!
+    @IBOutlet weak var timerBBug: NSButton!
+    
+    // SID
     @IBOutlet weak var sidChipModel: NSPopUpButton!
     @IBOutlet weak var sidFilter: NSButton!
     @IBOutlet weak var sidEngine: NSPopUpButton!
     @IBOutlet weak var sidSamplingMethod: NSPopUpButton!
+
+    // Glue logic
+    @IBOutlet weak var glueLogic: NSPopUpButton!
+    @IBOutlet weak var ramInitPattern: NSPopUpButton!
 
     // VC1541
     @IBOutlet weak var warpLoad: NSButton!
@@ -46,14 +54,16 @@ class HardwarePrefsController : UserDialogController {
              PAL_6569_R3.rawValue,
              PAL_8565.rawValue:
             
-            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_eu"))
+            vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_pal"))
+            vicDescription.stringValue = "PAL, 0.985 MHz, 65 raster cycles"
             systemText.stringValue = "PAL"
             systemText2.stringValue = "0.985 MHz"
             systemText3.stringValue = "65 raster cycles"
 
         case NTSC_6567_R56A.rawValue:
             
-            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa"))
+            vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
+            vicDescription.stringValue = "NTSC, 1.023 MHz, 64 raster cycles"
             systemText.stringValue = "NTSC"
             systemText2.stringValue = "1.023 MHz"
             systemText3.stringValue = "64 raster cycles"
@@ -61,7 +71,8 @@ class HardwarePrefsController : UserDialogController {
         case NTSC_6567.rawValue,
              NTSC_8562.rawValue:
             
-            flag.image = NSImage(named: NSImage.Name(rawValue: "flag_usa"))
+            vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
+            vicDescription.stringValue = "NTSC, 1.023 MHz, 63 raster cycles"
             systemText.stringValue = "NTSC "
             systemText2.stringValue = "1.023 MHz"
             systemText3.stringValue = "63 raster cycles"
@@ -98,16 +109,22 @@ class HardwarePrefsController : UserDialogController {
         c64.vic.setChipModel(sender.tag)
         update()
     }
- 
-    @IBAction func vicGlueLogicAction(_ sender: NSMenuItem!) {
-        
-        c64.vic.setGlueLogic(sender.tag)
-        update()
-    }
     
     @IBAction func vicGrayDotBugAction(_ sender: NSButton!) {
         
         c64.vic.setEmulateGrayDotBug(sender.state == .on)
+        update()
+    }
+    
+    @IBAction func ciaChipModelAction(_ sender: NSMenuItem!) {
+        
+        track("TODO")
+        update()
+    }
+    
+    @IBAction func ciaTimerBBugAction(_ sender: NSButton!) {
+        
+        track("TODO")
         update()
     }
     
@@ -140,6 +157,18 @@ class HardwarePrefsController : UserDialogController {
             c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
         }
         c64.sid.setChipModel(sender.selectedTag())
+        update()
+    }
+    
+    @IBAction func glueLogicAction(_ sender: NSMenuItem!) {
+        
+        c64.vic.setGlueLogic(sender.tag)
+        update()
+    }
+    
+    @IBAction func ramInitPatternAction(_ sender: NSMenuItem!) {
+        
+        track("TODO")
         update()
     }
     
