@@ -74,28 +74,9 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var colorWell15: NSColorWell!
     @IBOutlet weak var aspectRatioButton: NSButton!
     
-    // Joystick
-    @IBOutlet weak var left1: NSTextField!
-    @IBOutlet weak var left1button: NSButton!
-    @IBOutlet weak var right1: NSTextField!
-    @IBOutlet weak var right1button: NSButton!
-    @IBOutlet weak var up1: NSTextField!
-    @IBOutlet weak var up1button: NSButton!
-    @IBOutlet weak var down1: NSTextField!
-    @IBOutlet weak var down1button: NSButton!
-    @IBOutlet weak var fire1: NSTextField!
-    @IBOutlet weak var fire1button: NSButton!
-    @IBOutlet weak var left2: NSTextField!
-    @IBOutlet weak var left2button: NSButton!
-    @IBOutlet weak var right2: NSTextField!
-    @IBOutlet weak var right2button: NSButton!
-    @IBOutlet weak var up2: NSTextField!
-    @IBOutlet weak var up2button: NSButton!
-    @IBOutlet weak var down2: NSTextField!
-    @IBOutlet weak var down2button: NSButton!
-    @IBOutlet weak var fire2: NSTextField!
-    @IBOutlet weak var fire2button: NSButton!
-    @IBOutlet weak var disconnectKeys: NSButton!
+    // VC1541
+    @IBOutlet weak var warpLoad: NSButton!
+    @IBOutlet weak var driveNoise: NSButton!
     
     // Misc
     @IBOutlet weak var pauseInBackground: NSButton!
@@ -151,19 +132,11 @@ class EmulatorPrefsController : UserDialogController {
         colorWell14.color = c64.vic.color(14)
         colorWell15.color = c64.vic.color(15)
         
-        // Joystick emulation keys
-        updateKeyMap(0, direction: JOYSTICK_UP, button: up1button, txt: up1)
-        updateKeyMap(0, direction: JOYSTICK_DOWN, button: down1button, txt: down1)
-        updateKeyMap(0, direction: JOYSTICK_LEFT, button: left1button, txt: left1)
-        updateKeyMap(0, direction: JOYSTICK_RIGHT, button: right1button, txt: right1)
-        updateKeyMap(0, direction: JOYSTICK_FIRE, button: fire1button, txt: fire1)
-        updateKeyMap(1, direction: JOYSTICK_UP, button: up2button, txt: up2)
-        updateKeyMap(1, direction: JOYSTICK_DOWN, button: down2button, txt: down2)
-        updateKeyMap(1, direction: JOYSTICK_LEFT, button: left2button, txt: left2)
-        updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
-        updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
+        // VC1541
+        warpLoad.state = c64.warpLoad() ? .on : .off
+        driveNoise.state = c64.drive1.sendSoundMessages() ? .on : .off
         
-        // Documents
+        // Miscellanious
         pauseInBackground.state = parent.pauseInBackground ? .on : .off
         autoSnapshots.state = (c64.snapshotInterval() > 0) ? .on : .off
         snapshotInterval.integerValue = Int(c64.snapshotInterval().magnitude)
@@ -297,27 +270,24 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
+    
     //
-    // Action methods (Joystick emulation settings)
+    // Action methods (VC1541)
     //
     
-    @IBAction func recordKeyAction(_ sender: NSButton!) {
-
-        let tag = UInt32(sender.tag)
+    @IBAction func warpLoadAction(_ sender: NSButton!) {
         
-        if tag >= 0 && tag <= 4 {
-            recordKey1 = JoystickDirection(rawValue: tag)
-            recordKey2 = nil
-        } else if tag >= 10 && tag <= 14 {
-            recordKey1 = nil
-            recordKey2 = JoystickDirection(rawValue: (tag - 10))
-        } else {
-            assert(false);
-        }
-        
+        c64.setWarpLoad(sender.state == .on)
         update()
     }
+    
+    @IBAction func driveNoiseAction(_ sender: NSButton!) {
         
+        c64.drive1.setSendSoundMessages(sender.state == .on)
+        c64.drive2.setSendSoundMessages(sender.state == .on)
+        update()
+    }
+    
     @IBAction func pauseInBackgroundAction(_ sender: NSButton!) {
         
         parent.pauseInBackground =  (sender.state == .on)
@@ -376,7 +346,12 @@ class EmulatorPrefsController : UserDialogController {
         c64.vic.setContrast(100.0)
         c64.vic.setSaturation(50.0)
         parent.metalScreen.fullscreenKeepAspectRatio = false
-                
+        
+        // VC1541
+        c64.setWarpLoad(true)
+        c64.drive1.setSendSoundMessages(true)
+        c64.drive2.setSendSoundMessages(true)
+        
         // Misc
         parent.pauseInBackground = false
         c64.setSnapshotInterval(3);

@@ -212,6 +212,8 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+
+        // Video
         metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
         metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
         metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
@@ -222,6 +224,12 @@ extension MyController {
         metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
         
+        // Drive
+        c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
+        c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        
+        // Misc
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
@@ -232,25 +240,28 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+        
+        // VICII
         c64.vic.setChipModel(defaults.integer(forKey: VC64Keys.vicChip))
         c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: VC64Keys.grayDotBug))
 
+        // CIA
         c64.cia1.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
         c64.cia2.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
         c64.cia1.setTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
         c64.cia2.setTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
 
+        // SID
         c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
         c64.sid.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
 
+        // Board
         c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
         c64.mem.setRamInitPattern(defaults.integer(forKey: VC64Keys.initPattern))
 
-        c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
-        c64.drive1.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
-        c64.drive2.setSendSoundMessages(defaults.bool(forKey: VC64Keys.driveNoise))
+        // Mouse
         c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
     }
     
@@ -319,6 +330,8 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+        
+        // Video
         defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
         defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
         defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
@@ -329,6 +342,12 @@ extension MyController {
         defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
         defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)
         
+        // Drive
+        defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
+        defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
+        defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
+        
+        // Misc
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
         defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
         defaults.set(autoMount, forKey: VC64Keys.autoMount)
@@ -339,23 +358,26 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+        
+        // VICII
         defaults.set(c64.vic.chipModel(), forKey: VC64Keys.vicChip)
         defaults.set(c64.vic.emulateGrayDotBug(), forKey: VC64Keys.grayDotBug)
 
+        // CIA
         defaults.set(c64.cia1.chipModel(), forKey: VC64Keys.ciaChip)
         defaults.set(c64.cia1.timerBBug(), forKey: VC64Keys.timerBBug)
 
+        // SID
         defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)
         defaults.set(c64.sid.chipModel(), forKey: VC64Keys.audioChip)
         defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.sid.samplingMethod(), forKey: VC64Keys.samplingMethod)
         
+        // Board
         defaults.set(c64.vic.glueLogic(), forKey: VC64Keys.glueLogic)
         defaults.set(c64.mem.ramInitPattern(), forKey: VC64Keys.initPattern)
 
-        defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)
-        defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
-        defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
+        // Mouse
         defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
 }

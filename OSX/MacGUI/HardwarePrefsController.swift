@@ -29,10 +29,6 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var glueLogic: NSPopUpButton!
     @IBOutlet weak var ramInitPattern: NSPopUpButton!
 
-    // VC1541
-    @IBOutlet weak var warpLoad: NSButton!
-    @IBOutlet weak var driveNoise: NSButton!
-    
     // Mouse
     @IBOutlet weak var mouseModel: NSPopUpButton!
     @IBOutlet weak var mouseInfo: NSTextField!
@@ -106,10 +102,6 @@ class HardwarePrefsController : UserDialogController {
         // Logic board
         glueLogic.selectItem(withTag: c64.vic.glueLogic())
         ramInitPattern.selectItem(withTag: c64.mem.ramInitPattern())
-        
-        // VC1541
-        warpLoad.state = c64.warpLoad() ? .on : .off
-        driveNoise.state = c64.drive1.sendSoundMessages() ? .on : .off
         
         // Mouse
         let model = c64.mouseModel()
@@ -186,20 +178,7 @@ class HardwarePrefsController : UserDialogController {
         c64.mem.setRamInitPattern(sender.tag)
         update()
     }
-    
-    @IBAction func warpLoadAction(_ sender: NSButton!) {
         
-        c64.setWarpLoad(sender.state == .on)
-        update()
-    }
-    
-    @IBAction func driveNoiseAction(_ sender: NSButton!) {
-        
-        c64.drive1.setSendSoundMessages(sender.state == .on)
-        c64.drive2.setSendSoundMessages(sender.state == .on)
-        update()
-    }
-    
     @IBAction func mouseModelAction(_ sender: NSPopUpButton!) {
         
         c64.setMouseModel(sender.selectedTag())
@@ -217,7 +196,7 @@ class HardwarePrefsController : UserDialogController {
         
         c64.suspend()
 
-        // VIC
+        // VICII
         c64.vic.setChipModel(Int(PAL_8565.rawValue))
         c64.vic.setEmulateGrayDotBug(true)
         
@@ -236,12 +215,7 @@ class HardwarePrefsController : UserDialogController {
         // Logic board
         c64.vic.setGlueLogic(Int(GLUE_DISCRETE.rawValue))
         c64.mem.setRamInitPattern(Int(INIT_PATTERN_C64.rawValue))
-        
-        // VC1541
-        c64.setWarpLoad(true)
-        c64.drive1.setSendSoundMessages(true)
-        c64.drive2.setSendSoundMessages(true)
-
+    
         // Mouse
         c64.setMouseModel(0)
 
