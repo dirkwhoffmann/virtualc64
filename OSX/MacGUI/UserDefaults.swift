@@ -19,6 +19,17 @@ struct VC64Keys {
     static let mapKeysByPosition = "VC64MapKeysByPosition"
     static let keyMap            = "VC64KeyMap"
     
+    // Devices preferences dialog
+    static let joyKeyMap1        = "VC64JoyKeyMap1"
+    static let joyKeyMap2        = "VC64JoyKeyMap2"
+    static let disconnectKeys    = "VC64DisconnectKeys"
+    
+    static let autofire          = "VC64Autofire"
+    static let autofireBullets   = "VC64AutofireBullets"
+    static let autofireFrequency = "VC64AutofireFrequency"
+    
+    static let mouseModel        = "VC64MouseModelKey"
+    
     // Emulator preferences dialog
     static let eyeX              = "VC64EyeX"
     static let eyeY              = "VC64EyeY"
@@ -29,14 +40,10 @@ struct VC64Keys {
     static let videoUpscaler     = "VC64UpscalerKey"
     static let videoFilter       = "VC64FilterKey"
     static let aspectRatio       = "VC64FullscreenKeepAspectRatioKey"
-
-    static let joyKeyMap1        = "VC64JoyKeyMap1"
-    static let joyKeyMap2        = "VC64JoyKeyMap2"
-    static let disconnectKeys    = "VC64DisconnectKeys"
-    static let autofire          = "VC64Autofire"
-    static let autofireBullets   = "VC64AutofireBullets"
-    static let autofireFrequency = "VC64AutofireFrequency"
-
+    
+    static let warpLoad          = "VC64WarpLoadKey"
+    static let driveNoise        = "VC64DriveNoiseKey"
+    
     static let pauseInBackground = "VC64PauseInBackground"
     static let snapshotInterval  = "VC64SnapshotInterval"
     static let autoMount         = "VC64AutoMount"
@@ -55,11 +62,6 @@ struct VC64Keys {
 
     static let glueLogic         = "VC64GlueLogicKey"
     static let initPattern       = "VC64InitPatternKey"
-
-    static let warpLoad          = "VC64WarpLoadKey"
-    static let driveNoise        = "VC64DriveNoiseKey"
-
-    static let mouseModel        = "VC64MouseModelKey"
 }
 
 /// This class extension handles the UserDefaults management
@@ -101,7 +103,9 @@ extension MyController {
             VC64Keys.disconnectKeys: true,
             VC64Keys.autofire: false,
             VC64Keys.autofireBullets: -3,
-            VC64Keys.autofireFrequency: 2.5
+            VC64Keys.autofireFrequency: 2.5,
+            
+            VC64Keys.mouseModel: 0
         ]
         
         let defaults = UserDefaults.standard
@@ -127,7 +131,7 @@ extension MyController {
             VC64Keys.disconnectKeys: true,
             VC64Keys.pauseInBackground: false,
             VC64Keys.snapshotInterval: 3,
-            VC64Keys.autoMount: false,
+            VC64Keys.autoMount: false
         ]
         
         let defaults = UserDefaults.standard
@@ -155,9 +159,7 @@ extension MyController {
             VC64Keys.initPattern: INIT_PATTERN_C64.rawValue,
 
             VC64Keys.warpLoad: true,
-            VC64Keys.driveNoise: true,
-
-            VC64Keys.mouseModel: 0
+            VC64Keys.driveNoise: true
         ]
         
         let defaults = UserDefaults.standard
@@ -187,6 +189,8 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+        
+        // Joystick emulation keys
         if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
             if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
                 gamePadManager.gamePads[0]?.keyMap = keyMap
@@ -199,12 +203,16 @@ extension MyController {
         }
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
         
+        // Joystick buttons
         c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port1.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
         c64.port2.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
         c64.port1.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
         c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
+        
+        // Mouse
+        c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -260,9 +268,6 @@ extension MyController {
         // Board
         c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
         c64.mem.setRamInitPattern(defaults.integer(forKey: VC64Keys.initPattern))
-
-        // Mouse
-        c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
     }
     
     func loadKeyMapUserDefaults() {
@@ -301,6 +306,7 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         
+        // Joystick emulation keys
         if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
             defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)
         }
@@ -309,12 +315,16 @@ extension MyController {
         }
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
         
+        // Joystick buttons
         assert(c64.port1.autofire() == c64.port2.autofire())
         assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
         assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
         defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
         defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
+        
+        // Mouse
+        defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
  
     func saveKeyMapUserDefaults() {
@@ -376,8 +386,5 @@ extension MyController {
         // Board
         defaults.set(c64.vic.glueLogic(), forKey: VC64Keys.glueLogic)
         defaults.set(c64.mem.ramInitPattern(), forKey: VC64Keys.initPattern)
-
-        // Mouse
-        defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
     }
 }

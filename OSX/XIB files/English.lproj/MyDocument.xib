@@ -301,7 +301,7 @@
                             <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="AF87F0E4-FEF9-47E9-81FE-F928D9FFAEBD" label="Joysticks" paletteLabel="Joysticks" toolTip="Show the hardware preference window" tag="-1" image="setup_joy" id="0QS-4l-nII" userLabel="Joystick Setup">
+                    <toolbarItem implicitItemIdentifier="AF87F0E4-FEF9-47E9-81FE-F928D9FFAEBD" label="Devices" paletteLabel="Devices" toolTip="Show the hardware preference window" tag="-1" image="setup_joy" id="0QS-4l-nII" userLabel="Joystick Setup">
                         <connections>
                             <action selector="joysticksAction:" target="-2" id="Dro-bE-nap"/>
                         </connections>

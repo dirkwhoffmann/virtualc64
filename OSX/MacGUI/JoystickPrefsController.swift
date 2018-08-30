@@ -47,7 +47,7 @@ class JoystickPrefsController : UserDialogController {
     /// Indicates if a keycode should be recorded for keyset 1
     var recordKey2: JoystickDirection?
     
-    /// Joystick directions
+    /// Joystick emulation keys
     @IBOutlet weak var left1: NSTextField!
     @IBOutlet weak var left1button: NSButton!
     @IBOutlet weak var right1: NSTextField!
@@ -69,11 +69,19 @@ class JoystickPrefsController : UserDialogController {
     @IBOutlet weak var fire2: NSTextField!
     @IBOutlet weak var fire2button: NSButton!
     @IBOutlet weak var disconnectKeys: NSButton!
+    
+    // Joystick buttons
     @IBOutlet weak var autofire: NSButton!
     @IBOutlet weak var autofireCease: NSButton!
+    @IBOutlet weak var autofireCeaseText: NSTextField!
     @IBOutlet weak var autofireBullets: NSTextField!
     @IBOutlet weak var autofireFrequency: NSSlider!
 
+    // Mouse
+    @IBOutlet weak var mouseModel: NSPopUpButton!
+    @IBOutlet weak var mouseInfo: NSTextField!
+
+    
     override func awakeFromNib() {
     
         update()
@@ -98,13 +106,20 @@ class JoystickPrefsController : UserDialogController {
         assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
         assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
 
+        // Joystick buttons
         autofire.state = c64.port1.autofire() ? .on : .off
         autofireCease.state = c64.port1.autofireBullets() > 0 ? .on : .off
         autofireBullets.integerValue = Int(c64.port1.autofireBullets().magnitude)
         autofireFrequency.floatValue = c64.port1.autofireFrequency()
         autofireCease.isEnabled = autofire.state == .on
-        autofireBullets.isEnabled = autofire.state == .on && autofireCease.state == .on
+        autofireCeaseText.textColor = autofire.state == .on ? NSColor.controlTextColor : NSColor.disabledControlTextColor
+        autofireBullets.isEnabled = autofire.state == .on 
         autofireFrequency.isEnabled = autofire.state == .on
+        
+        // Mouse
+        let model = c64.mouseModel()
+        mouseModel.selectItem(withTag: model)
+        mouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
@@ -189,6 +204,12 @@ class JoystickPrefsController : UserDialogController {
         update()
     }
 
+    @IBAction func disconnectKeysAction(_ sender: NSButton!) {
+        
+        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
+        update()
+    }
+    
     @IBAction func autofireAction(_ sender: NSButton!) {
         
         let value = sender.state
@@ -228,10 +249,10 @@ class JoystickPrefsController : UserDialogController {
         c64.port2.setAutofireFrequency(value)
         update()
     }
-
-    @IBAction func disconnectKeysAction(_ sender: NSButton!) {
+    
+    @IBAction func mouseModelAction(_ sender: NSPopUpButton!) {
         
-        parent.keyboardcontroller.disconnectEmulationKeys = (sender.state == .on)
+        c64.setMouseModel(sender.selectedTag())
         update()
     }
     
@@ -250,14 +271,21 @@ class JoystickPrefsController : UserDialogController {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
+        // Joystick emulation keys
         parent.gamePadManager.restoreFactorySettings()
         parent.keyboardcontroller.disconnectEmulationKeys = true
+
+        // Joystick buttons
         c64.port1.setAutofire(false)
         c64.port2.setAutofire(false)
         c64.port1.setAutofireBullets(-3)
         c64.port2.setAutofireBullets(-3)
         c64.port1.setAutofireFrequency(2.5)
         c64.port2.setAutofireFrequency(2.5)
+        
+        // Mouse
+        c64.setMouseModel(0)
+        
         update()
     }
     

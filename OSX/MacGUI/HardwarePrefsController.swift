@@ -25,13 +25,9 @@ class HardwarePrefsController : UserDialogController {
     @IBOutlet weak var sidEngine: NSPopUpButton!
     @IBOutlet weak var sidSamplingMethod: NSPopUpButton!
 
-    // Logic board
+    // Board logic
     @IBOutlet weak var glueLogic: NSPopUpButton!
     @IBOutlet weak var ramInitPattern: NSPopUpButton!
-
-    // Mouse
-    @IBOutlet weak var mouseModel: NSPopUpButton!
-    @IBOutlet weak var mouseInfo: NSTextField!
 
     override func awakeFromNib() {
         update()
@@ -50,21 +46,11 @@ class HardwarePrefsController : UserDialogController {
             
             vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_pal"))
             vicDescription.stringValue = "PAL 0.985 MHz 65 cycles"
-            /*
-            systemText.stringValue = "PAL"
-            systemText2.stringValue = "0.985 MHz"
-            systemText3.stringValue = "65 raster cycles"
-             */
             
         case NTSC_6567_R56A.rawValue:
             
             vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
             vicDescription.stringValue = "NTSC 1.023 MHz 64 cycles"
-            /*
-            systemText.stringValue = "NTSC"
-            systemText2.stringValue = "1.023 MHz"
-            systemText3.stringValue = "64 raster cycles"
-            */
             
         case NTSC_6567.rawValue,
              NTSC_8562.rawValue:
@@ -102,11 +88,6 @@ class HardwarePrefsController : UserDialogController {
         // Logic board
         glueLogic.selectItem(withTag: c64.vic.glueLogic())
         ramInitPattern.selectItem(withTag: c64.mem.ramInitPattern())
-        
-        // Mouse
-        let model = c64.mouseModel()
-        mouseModel.selectItem(withTag: model)
-        mouseInfo.isHidden = (model == Int(MOUSE1350.rawValue))
     }
     
     @IBAction func vicChipModelAction(_ sender: NSMenuItem!) {
@@ -178,13 +159,7 @@ class HardwarePrefsController : UserDialogController {
         c64.mem.setRamInitPattern(sender.tag)
         update()
     }
-        
-    @IBAction func mouseModelAction(_ sender: NSPopUpButton!) {
-        
-        c64.setMouseModel(sender.selectedTag())
-        update()
-    }
-    
+            
     @IBAction override func cancelAction(_ sender: Any!) {
         
         track()
@@ -215,9 +190,6 @@ class HardwarePrefsController : UserDialogController {
         // Logic board
         c64.vic.setGlueLogic(Int(GLUE_DISCRETE.rawValue))
         c64.mem.setRamInitPattern(Int(INIT_PATTERN_C64.rawValue))
-    
-        // Mouse
-        c64.setMouseModel(0)
 
         c64.resume()
         update()
