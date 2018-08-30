@@ -244,7 +244,7 @@ class JoystickPrefsController : UserDialogController {
     
     @IBAction override func cancelAction(_ sender: Any!) {
         
-        parent.loadEmulatorUserDefaults()
+        parent.loadJoystickUserDefaults()
         hideSheet()
     }
     
@@ -252,6 +252,10 @@ class JoystickPrefsController : UserDialogController {
         
         parent.gamePadManager.restoreFactorySettings()
         parent.keyboardcontroller.disconnectEmulationKeys = true
+        c64.port1.setAutofire(false)
+        c64.port2.setAutofire(false)
+        c64.port1.setAutofireBullets(-3)
+        c64.port2.setAutofireBullets(-3)
         c64.port1.setAutofireFrequency(2.5)
         c64.port2.setAutofireFrequency(2.5)
         update()
@@ -259,7 +263,7 @@ class JoystickPrefsController : UserDialogController {
     
     @IBAction func okAction(_ sender: Any!) {
         
-        parent.saveEmulatorUserDefaults()
+        parent.saveJoystickUserDefaults()
         hideSheet()
     }
 }

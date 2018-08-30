@@ -53,7 +53,12 @@ private:
     //! @brief    Autofire frequency in Hz
     float autofireFrequency;
 
-    
+    //! @brief    Bullet counter used in multi-fire mode
+    uint64_t bulletCounter; 
+
+    //! @brief    Next frame to auto-press or auto-release the fire button
+    uint64_t nextAutofireFrame;
+
 public:
     
     //! @brief    Constructor
@@ -85,7 +90,7 @@ public:
     /*! @brief   Sets the number of bullets per gun volley.
      *  @details A negative value represents infinity.
      */
-    void setAutofireBullets(int value) { autofireBullets = value; }
+    void setAutofireBullets(int value);
 
     //! @brief   Returns the autofire frequency.
     float getAutofireFrequency() { return autofireFrequency; }
@@ -93,11 +98,14 @@ public:
     //! @brief   Sets the autofire frequency.
     void setAutofireFrequency(float value) { autofireFrequency = value; }
 
+    //! @brief   Updates variable nextAutofireFrame
+    void scheduleNextShot();
+    
     //! @brief    Execution function for this control port
     /*! @details  This method is invoked at the end of each frame. It is needed
      *            needed to implement the autofire functionality, only.
      */
-    void execute(uint64_t frame);
+    void execute();
     
     //! @brief   Triggers a joystick event
     void trigger(JoystickEvent event);

@@ -376,11 +376,7 @@ class EmulatorPrefsController : UserDialogController {
         c64.vic.setContrast(100.0)
         c64.vic.setSaturation(50.0)
         parent.metalScreen.fullscreenKeepAspectRatio = false
-        
-        // Joystick emulation
-        parent.gamePadManager.restoreFactorySettings()
-        parent.keyboardcontroller.disconnectEmulationKeys = true
-        
+                
         // Misc
         parent.pauseInBackground = false
         c64.setSnapshotInterval(3);

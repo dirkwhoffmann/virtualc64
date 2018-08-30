@@ -187,7 +187,18 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
+            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
+                gamePadManager.gamePads[0]?.keyMap = keyMap
+            }
+        }
+        if let data = defaults.data(forKey: VC64Keys.joyKeyMap2) {
+            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
+                gamePadManager.gamePads[1]?.keyMap = keyMap
+            }
+        }
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
+        
         c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
         c64.port1.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
@@ -211,16 +222,6 @@ extension MyController {
         metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
         
-        if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
-            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
-               gamePadManager.gamePads[0]?.keyMap = keyMap
-            }
-        }
-        if let data = defaults.data(forKey: VC64Keys.joyKeyMap2) {
-            if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
-                gamePadManager.gamePads[1]?.keyMap = keyMap
-            }
-        }
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
@@ -269,6 +270,7 @@ extension MyController {
     //
 
     /// Saves all user defaults from database
+    /*
     func saveUserDefaults() {
         
         track()
@@ -280,13 +282,22 @@ extension MyController {
         saveHardwareUserDefaults()
         saveKeyMapUserDefaults()
     }
+    */
     
     /// Saves the user defaults for all properties that are set in the joystick dialog
     func saveJoystickUserDefaults() {
      
         track()
         let defaults = UserDefaults.standard
+        
+        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
+            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)
+        }
+        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keyMap) {
+            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap2)
+        }
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
+        
         assert(c64.port1.autofire() == c64.port2.autofire())
         assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
         assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
@@ -295,6 +306,14 @@ extension MyController {
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
     }
  
+    func saveKeyMapUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        if let keyMap = try? JSONEncoder().encode(keyboardcontroller.keyMap) {
+            defaults.set(keyMap, forKey: VC64Keys.keyMap)
+        }
+    }
+    
     /// Saves the user defaults for all properties that are set in the hardware dialog
     func saveEmulatorUserDefaults() {
         
@@ -310,12 +329,6 @@ extension MyController {
         defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
         defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)
         
-        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[0]?.keyMap) {
-            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap1)
-        }
-        if let keyMap = try? JSONEncoder().encode(gamePadManager.gamePads[1]?.keyMap) {
-            defaults.set(keyMap, forKey: VC64Keys.joyKeyMap2)
-        }
         defaults.set(pauseInBackground, forKey: VC64Keys.pauseInBackground)
         defaults.set(c64.snapshotInterval(), forKey: VC64Keys.snapshotInterval)
         defaults.set(autoMount, forKey: VC64Keys.autoMount)
@@ -344,13 +357,5 @@ extension MyController {
         defaults.set(c64.drive1.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.drive2.sendSoundMessages(), forKey: VC64Keys.driveNoise)
         defaults.set(c64.mouseModel(), forKey: VC64Keys.mouseModel)
-    }
-    
-    func saveKeyMapUserDefaults() {
-        
-        let defaults = UserDefaults.standard
-        if let keyMap = try? JSONEncoder().encode(keyboardcontroller.keyMap) {
-            defaults.set(keyMap, forKey: VC64Keys.keyMap)
-        }
     }
 }

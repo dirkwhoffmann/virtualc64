@@ -16,8 +16,7 @@ typedef enum {
     JOYSTICK_DOWN,
     JOYSTICK_LEFT,
     JOYSTICK_RIGHT,
-    JOYSTICK_FIRE,
-    JOYSTICK_AUTOFIRE
+    JOYSTICK_FIRE
     
 } JoystickDirection;
 
@@ -33,8 +32,7 @@ typedef enum {
     RELEASE_X,
     RELEASE_Y,
     RELEASE_XY,
-    RELEASE_FIRE,
-    TOGGLE_AUTOFIRE
+    RELEASE_FIRE
     
 } JoystickEvent;
 

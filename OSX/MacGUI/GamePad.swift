@@ -183,10 +183,7 @@ extension GamePad {
                 
             case JOYSTICK_FIRE:
                 events = [PRESS_FIRE]
-                
-            case JOYSTICK_AUTOFIRE:
-                events = [TOGGLE_AUTOFIRE]
-                
+
             default:
                 fatalError()
             }
@@ -217,9 +214,6 @@ extension GamePad {
                 
             case JOYSTICK_FIRE:
                 events = [RELEASE_FIRE]
-
-            case JOYSTICK_AUTOFIRE:
-                events = []
                 
             default:
                 fatalError()

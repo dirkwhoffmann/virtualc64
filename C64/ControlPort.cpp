@@ -28,6 +28,8 @@ ControlPort::ControlPort(int portNr)
     autofire = false;
     autofireBullets = -3;
     autofireFrequency = 2.5;
+    bulletCounter = 0;
+    nextAutofireFrame = 0;
     
     setDescription("ControlPort");
     debug(3, "    Creating ControlPort %d at address %p...\n", nr, this);
@@ -76,13 +78,31 @@ ControlPort::dumpState()
 }
 
 void
-ControlPort::execute(uint64_t frame)
+ControlPort::scheduleNextShot()
 {
-    if (autofire && autofireFrequency != 0.0) {
-        double fps = c64->vic.getFramesPerSecond();
-        if (frame % (unsigned)(fps / (2 * autofireFrequency)) == 0) {
-            button = !button;
+    nextAutofireFrame = c64->getFrame() +
+    (int)(c64->vic.getFramesPerSecond() / (2 * autofireFrequency));
+}
+
+void
+ControlPort::execute()
+{
+    if (!autofire || autofireFrequency <= 0.0)
+        return;
+  
+    // Wait until it's time to push or release fire
+    if (c64->getFrame() != nextAutofireFrame)
+        return;
+    
+    // Are there any bullets left?
+    if (bulletCounter) {
+        if (button) {
+            button = false;
+            bulletCounter--;
+        } else {
+            button = true;
         }
+        scheduleNextShot();
     }
 }
 
@@ -104,7 +124,21 @@ ControlPort::trigger(JoystickEvent event)
             axisX = 1;
             break;
         case PRESS_FIRE:
-            button = true;
+            
+            if (autofire) {
+                if (bulletCounter) {
+                    // Cease fire
+                    bulletCounter = 0;
+                    button = false;
+                } else {
+                    // Load magazine
+                    bulletCounter = (autofireBullets < 0) ? UINT64_MAX : autofireBullets;
+                    button = true;
+                    scheduleNextShot();
+                }
+            } else {
+                button = true;
+            }
             break;
         case RELEASE_X:
             axisX = 0;
@@ -117,11 +151,10 @@ ControlPort::trigger(JoystickEvent event)
             axisY = 0;
             break;
         case RELEASE_FIRE:
-            button = false;
+            if (!autofire)
+                button = false;
             break;
-        case TOGGLE_AUTOFIRE:
-            setAutofire(!autofire);
-            break;
+  
         default:
             assert(0);
     }
@@ -132,6 +165,15 @@ ControlPort::setAutofire(bool value)
 {
     if (!(autofire = value)) {
         button = false;
+    }
+}
+
+void
+ControlPort::setAutofireBullets(int value)
+{
+    autofireBullets = value;
+    if (bulletCounter > 0) {
+        bulletCounter = (autofireBullets < 0) ? UINT64_MAX : autofireBullets;
     }
 }
 
@@ -149,11 +191,6 @@ ControlPort::bitmask() {
     uint8_t mouseBits = c64->mouseBits(nr);
     result &= mouseBits;
     
-    /*
-    if (mouseBits == 0xE0) {
-        debug("******* Mouse bits = %02X\n", mouseBits);
-    }
-    */
     return result;
 }
 
