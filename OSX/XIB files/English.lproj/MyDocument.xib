@@ -296,12 +296,17 @@
                             <action selector="resetAction:" target="-2" id="1869"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="hardware" id="2033" userLabel="Hardware Setup">
+                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="setup_hw" id="2033" userLabel="Hardware Setup">
                         <connections>
                             <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator" paletteLabel="Emulator" toolTip="Show the emulator preference window" tag="-1" image="tb_setup" id="2226" userLabel="Emulator Setup">
+                    <toolbarItem implicitItemIdentifier="AF87F0E4-FEF9-47E9-81FE-F928D9FFAEBD" label="Joysticks" paletteLabel="Joysticks" toolTip="Show the hardware preference window" tag="-1" image="setup_joy" id="0QS-4l-nII" userLabel="Joystick Setup">
+                        <connections>
+                            <action selector="joysticksAction:" target="-2" id="Dro-bE-nap"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator" paletteLabel="Emulator" toolTip="Show the emulator preference window" tag="-1" image="setup_emu" id="2226" userLabel="Emulator Setup">
                         <connections>
                             <action selector="propertiesAction:" target="-2" id="4xt-Za-auc"/>
                         </connections>
@@ -380,14 +385,6 @@
                                         <menuItem title="USB Joystick 2" tag="4" id="7sJ-UA-Pfj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="DA9-2d-1Fc"/>
-                                        <menuItem title="Auto fire" id="zDC-sC-G6k">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="4dL-ya-lpD"/>
-                                        <menuItem title="Configure ..." id="zsR-2e-fSq">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
@@ -445,6 +442,7 @@
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="RdU-o8-emV"/>
                     <toolbarItem reference="1851"/>
+                    <toolbarItem reference="0QS-4l-nII"/>
                     <toolbarItem reference="2226"/>
                     <toolbarItem reference="2033"/>
                     <toolbarItem reference="1851"/>
@@ -2860,11 +2858,13 @@
         <image name="debug" width="129" height="129"/>
         <image name="disk_saved" width="97" height="97"/>
         <image name="fast" width="128" height="128"/>
-        <image name="hardware" width="129" height="129"/>
         <image name="inspect_disk" width="129" height="128"/>
         <image name="keypress" width="97" height="96"/>
         <image name="pause32" width="32" height="32"/>
         <image name="restart32" width="128" height="128"/>
+        <image name="setup_emu" width="128" height="129"/>
+        <image name="setup_hw" width="129" height="129"/>
+        <image name="setup_joy" width="129" height="129"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOver32" width="32" height="32"/>
         <image name="tape" width="256" height="256"/>
@@ -2872,6 +2872,5 @@
         <image name="tb_freeze" width="129" height="129"/>
         <image name="tb_revert" width="129" height="129"/>
         <image name="tb_rewind" width="129" height="129"/>
-        <image name="tb_setup" width="129" height="129"/>
     </resources>
 </document>

@@ -371,7 +371,7 @@ extension MyController {
         controlPort2.item(at: 3)?.image = mouse
         controlPort2.item(at: 4)?.image = gamepad
         controlPort2.item(at: 5)?.image = gamepad
-        
+
         validateJoystickToolbarItems()
     }
     
