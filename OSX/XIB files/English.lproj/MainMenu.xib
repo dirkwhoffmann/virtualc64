@@ -1020,9 +1020,9 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="6wW-eK-Rtw"/>
-                            <menuItem title="Attach GeoRAM" id="ZWy-ig-b3R">
+                            <menuItem title="Attach GEO/NEO Ram" id="ZWy-ig-b3R">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Attach GeoRAM" id="7j5-aX-oSo">
+                                <menu key="submenu" title="Attach GEO/NEO Ram" id="7j5-aX-oSo">
                                     <items>
                                         <menuItem title="64 KB" tag="64" id="UjY-4P-9Du">
                                             <modifierMask key="keyEquivalentModifierMask"/>
