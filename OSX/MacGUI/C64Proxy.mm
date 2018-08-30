@@ -421,8 +421,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (void) dump { wrapper->port->dumpState(); }
+- (BOOL) autofire { return wrapper->port->getAutofire(); }
+- (void) setAutofire:(BOOL)value { return wrapper->port->setAutofire(value); }
+- (NSInteger) autofireBullets { return (NSInteger)wrapper->port->getAutofireBullets(); }
+- (void) setAutofireBullets:(NSInteger)value { wrapper->port->setAutofireBullets((int)value); }
 - (float) autofireFrequency { return wrapper->port->getAutofireFrequency(); }
-- (void) setAutofireFrequency:(float)interval { wrapper->port->setAutofireFrequency(interval); }
+- (void) setAutofireFrequency:(float)value { wrapper->port->setAutofireFrequency(value); }
 - (void) trigger:(JoystickEvent)event { wrapper->port->trigger(event); }
 
 @end

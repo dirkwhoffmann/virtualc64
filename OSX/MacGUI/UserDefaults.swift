@@ -33,6 +33,8 @@ struct VC64Keys {
     static let joyKeyMap1        = "VC64JoyKeyMap1"
     static let joyKeyMap2        = "VC64JoyKeyMap2"
     static let disconnectKeys    = "VC64DisconnectKeys"
+    static let autofire          = "VC64Autofire"
+    static let autofireBullets   = "VC64AutofireBullets"
     static let autofireFrequency = "VC64AutofireFrequency"
 
     static let pauseInBackground = "VC64PauseInBackground"
@@ -97,6 +99,8 @@ extension MyController {
         let dictionary : [String:Any] = [
             
             VC64Keys.disconnectKeys: true,
+            VC64Keys.autofire: false,
+            VC64Keys.autofireBullets: -3,
             VC64Keys.autofireFrequency: 2.5
         ]
         
@@ -184,6 +188,10 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         keyboardcontroller.disconnectEmulationKeys = defaults.bool(forKey: VC64Keys.disconnectKeys)
+        c64.port1.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
+        c64.port2.setAutofire(defaults.bool(forKey: VC64Keys.autofire))
+        c64.port1.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
+        c64.port2.setAutofireBullets(defaults.integer(forKey: VC64Keys.autofireBullets))
         c64.port1.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
         c64.port2.setAutofireFrequency(defaults.float(forKey: VC64Keys.autofireFrequency))
     }
@@ -279,7 +287,11 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         defaults.set(keyboardcontroller.disconnectEmulationKeys, forKey: VC64Keys.disconnectKeys)
+        assert(c64.port1.autofire() == c64.port2.autofire())
+        assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
         assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
+        defaults.set(c64.port1.autofire(), forKey: VC64Keys.autofire)
+        defaults.set(c64.port1.autofireBullets(), forKey: VC64Keys.autofireBullets)
         defaults.set(c64.port1.autofireFrequency(), forKey: VC64Keys.autofireFrequency)
     }
  

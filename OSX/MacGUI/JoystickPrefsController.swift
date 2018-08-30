@@ -58,8 +58,6 @@ class JoystickPrefsController : UserDialogController {
     @IBOutlet weak var down1button: NSButton!
     @IBOutlet weak var fire1: NSTextField!
     @IBOutlet weak var fire1button: NSButton!
-    @IBOutlet weak var autofire1: NSTextField!
-    @IBOutlet weak var autofire1button: NSButton!
     @IBOutlet weak var left2: NSTextField!
     @IBOutlet weak var left2button: NSButton!
     @IBOutlet weak var right2: NSTextField!
@@ -70,9 +68,10 @@ class JoystickPrefsController : UserDialogController {
     @IBOutlet weak var down2button: NSButton!
     @IBOutlet weak var fire2: NSTextField!
     @IBOutlet weak var fire2button: NSButton!
-    @IBOutlet weak var autofire2: NSTextField!
-    @IBOutlet weak var autofire2button: NSButton!
     @IBOutlet weak var disconnectKeys: NSButton!
+    @IBOutlet weak var autofire: NSButton!
+    @IBOutlet weak var autofireCease: NSButton!
+    @IBOutlet weak var autofireBullets: NSTextField!
     @IBOutlet weak var autofireFrequency: NSSlider!
 
     override func awakeFromNib() {
@@ -88,16 +87,24 @@ class JoystickPrefsController : UserDialogController {
         updateKeyMap(0, direction: JOYSTICK_LEFT, button: left1button, txt: left1)
         updateKeyMap(0, direction: JOYSTICK_RIGHT, button: right1button, txt: right1)
         updateKeyMap(0, direction: JOYSTICK_FIRE, button: fire1button, txt: fire1)
-        updateKeyMap(0, direction: JOYSTICK_AUTOFIRE, button: autofire1button, txt: autofire1)
         updateKeyMap(1, direction: JOYSTICK_UP, button: up2button, txt: up2)
         updateKeyMap(1, direction: JOYSTICK_DOWN, button: down2button, txt: down2)
         updateKeyMap(1, direction: JOYSTICK_LEFT, button: left2button, txt: left2)
         updateKeyMap(1, direction: JOYSTICK_RIGHT, button: right2button, txt: right2)
         updateKeyMap(1, direction: JOYSTICK_FIRE, button: fire2button, txt: fire2)
-        updateKeyMap(1, direction: JOYSTICK_AUTOFIRE, button: autofire2button, txt: autofire2)
         disconnectKeys.state = parent.keyboardcontroller.disconnectEmulationKeys ? .on : .off
-        autofireFrequency.floatValue = c64.port1.autofireFrequency()
+
+        assert(c64.port1.autofire() == c64.port2.autofire())
+        assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
         assert(c64.port1.autofireFrequency() == c64.port2.autofireFrequency())
+
+        autofire.state = c64.port1.autofire() ? .on : .off
+        autofireCease.state = c64.port1.autofireBullets() > 0 ? .on : .off
+        autofireBullets.integerValue = Int(c64.port1.autofireBullets().magnitude)
+        autofireFrequency.floatValue = c64.port1.autofireFrequency()
+        autofireCease.isEnabled = autofire.state == .on
+        autofireBullets.isEnabled = autofire.state == .on && autofireCease.state == .on
+        autofireFrequency.isEnabled = autofire.state == .on
     }
     
     func updateKeyMap(_ nr: Int, direction: JoystickDirection, button: NSButton, txt: NSTextField) {
@@ -182,6 +189,37 @@ class JoystickPrefsController : UserDialogController {
         update()
     }
 
+    @IBAction func autofireAction(_ sender: NSButton!) {
+        
+        let value = sender.state
+        track("value = \(value)")
+        c64.port1.setAutofire(sender.state == .on)
+        c64.port2.setAutofire(sender.state == .on)
+        update()
+    }
+    
+    @IBAction func autofireCeaseAction(_ sender: NSButton!) {
+        
+        let value = sender.state
+        track("value = \(value)")
+        
+        assert(c64.port1.autofireBullets() == c64.port2.autofireBullets())
+        let bullets = Int(c64.port1.autofireBullets().magnitude)
+        let sign = sender.state == .on ? 1 : -1;
+        c64.port1.setAutofireBullets(bullets * sign)
+        c64.port2.setAutofireBullets(bullets * sign)
+        update()
+    }
+    
+    @IBAction func autofireBulletsAction(_ sender: NSTextField!) {
+        
+        let value = sender.integerValue
+        track("value = \(value)")
+        c64.port1.setAutofireBullets(value)
+        c64.port2.setAutofireBullets(value)
+        update()
+    }
+    
     @IBAction func autofireFrequencyAction(_ sender: NSSlider!) {
         
         let value = sender.floatValue

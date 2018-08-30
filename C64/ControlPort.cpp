@@ -25,6 +25,8 @@ ControlPort::ControlPort(int portNr)
     assert(portNr == 1 || portNr == 2);
     
     nr = portNr;
+    autofire = false;
+    autofireBullets = -3;
     autofireFrequency = 2.5;
     
     setDescription("ControlPort");
@@ -131,13 +133,6 @@ ControlPort::setAutofire(bool value)
     if (!(autofire = value)) {
         button = false;
     }
-}
-
-void
-ControlPort::setAutofireFrequency(float value)
-{
-    if (value == 0.0) value = 1;
-    autofireFrequency = value;
 }
 
 uint8_t

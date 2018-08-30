@@ -316,8 +316,13 @@ struct ContainerWrapper;
 }
 
 - (void) dump;
+- (BOOL) autofire;
+- (void) setAutofire:(BOOL)value;
+- (NSInteger) autofireBullets;
+- (void) setAutofireBullets:(NSInteger)value;
 - (float) autofireFrequency;
-- (void) setAutofireFrequency:(float)interval;
+- (void) setAutofireFrequency:(float)value;
+
 - (void) trigger:(JoystickEvent)event;
 
 @end

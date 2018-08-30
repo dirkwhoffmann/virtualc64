@@ -44,9 +44,12 @@ private:
      */
     int axisY;
     
-    //! @brief    True, if autofire is enabled.
+    //! @brief    True if multi-shot mode in enabled
     bool autofire;
-    
+
+    //! @brief    Number of bullets per gun volley
+    int autofireBullets;
+
     //! @brief    Autofire frequency in Hz
     float autofireFrequency;
 
@@ -68,14 +71,27 @@ public:
     //! @brief    Method from VirtualComponent
     void dumpState();
     
+    //! @brief   Returns true if auto-fire mode is enabled.
+    float getAutofire() { return autofire; }
+
     //! @brief   Enables or disables autofire.
     void setAutofire(bool value);
+
+    /*! @brief   Returns the number of bullets per gun volley.
+     *  @details A negative value represents infinity.
+     */
+    int getAutofireBullets() { return autofireBullets; }
+
+    /*! @brief   Sets the number of bullets per gun volley.
+     *  @details A negative value represents infinity.
+     */
+    void setAutofireBullets(int value) { autofireBullets = value; }
 
     //! @brief   Returns the autofire frequency.
     float getAutofireFrequency() { return autofireFrequency; }
 
     //! @brief   Sets the autofire frequency.
-    void setAutofireFrequency(float value); 
+    void setAutofireFrequency(float value) { autofireFrequency = value; }
 
     //! @brief    Execution function for this control port
     /*! @details  This method is invoked at the end of each frame. It is needed

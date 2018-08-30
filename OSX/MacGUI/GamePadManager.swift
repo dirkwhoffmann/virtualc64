@@ -324,7 +324,6 @@ class GamePadManager: NSObject {
             MacKey.curUp: JOYSTICK_UP.rawValue,
             MacKey.curDown: JOYSTICK_DOWN.rawValue,
             MacKey.space: JOYSTICK_FIRE.rawValue,
-            MacKey.tab: JOYSTICK_AUTOFIRE.rawValue
         ]
         
         gamePads[1]!.keyMap = [
@@ -333,7 +332,6 @@ class GamePadManager: NSObject {
             MacKey.ansi.e: JOYSTICK_UP.rawValue,
             MacKey.ansi.x: JOYSTICK_DOWN.rawValue,
             MacKey.ansi.c: JOYSTICK_FIRE.rawValue,
-            MacKey.ansi.y: JOYSTICK_AUTOFIRE.rawValue
         ]
     }
 }

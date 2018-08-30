@@ -380,6 +380,14 @@
                                         <menuItem title="USB Joystick 2" tag="4" id="7sJ-UA-Pfj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="DA9-2d-1Fc"/>
+                                        <menuItem title="Auto fire" id="zDC-sC-G6k">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="4dL-ya-lpD"/>
+                                        <menuItem title="Configure ..." id="zsR-2e-fSq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
