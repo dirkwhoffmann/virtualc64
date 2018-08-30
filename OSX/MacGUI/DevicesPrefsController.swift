@@ -1,5 +1,5 @@
 //
-//  JoystickPrefsController.swift
+//  DevicesPrefsController.swift
 //  VirtualC64
 //
 //  Created by Dirk Hoffmann on 29.08.18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class JoystickPrefsWindow : NSWindow {
+class DevicesPrefsWindow : NSWindow {
     
     func respondToEvents() {
         DispatchQueue.main.async {
@@ -22,13 +22,13 @@ class JoystickPrefsWindow : NSWindow {
     
     override func keyDown(with event: NSEvent) {
         
-        let controller = delegate as! JoystickPrefsController
+        let controller = delegate as! DevicesPrefsController
         controller.keyDown(with: MacKey.init(with: event))
     }
     
     override func flagsChanged(with event: NSEvent) {
         
-        let controller = delegate as! JoystickPrefsController
+        let controller = delegate as! DevicesPrefsController
         if event.modifierFlags.contains(.shift) {
             controller.keyDown(with: MacKey.shift)
         } else if event.modifierFlags.contains(.control) {
@@ -39,7 +39,7 @@ class JoystickPrefsWindow : NSWindow {
     }
 }
 
-class JoystickPrefsController : UserDialogController {
+class DevicesPrefsController : UserDialogController {
     
     /// Indicates if a keycode should be recorded for keyset 1
     var recordKey1: JoystickDirection?

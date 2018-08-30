@@ -331,13 +331,7 @@ extension MyController {
         
     }
     
-    @IBAction func joystickKeysAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name(rawValue: "JoystickPrefs")
-        let controller = JoystickPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
+ 
     // -----------------------------------------------------------------
     @IBAction func runstopAction(_ sender: Any!) {
         keyboardcontroller.typeOnKeyboard(key: C64Key.runStop)

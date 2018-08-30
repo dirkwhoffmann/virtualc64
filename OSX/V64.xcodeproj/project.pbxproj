@@ -81,8 +81,8 @@
 		5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */; };
 		5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */; };
 		5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */; };
-		5052CD5F2136ADFA0000E890 /* JoystickPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052CD5E2136ADFA0000E890 /* JoystickPrefsController.swift */; };
-		5052CD612136AF690000E890 /* JoystickPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052CD602136AF690000E890 /* JoystickPrefs.xib */; };
+		5052CD5F2136ADFA0000E890 /* DevicesPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */; };
+		5052CD612136AF690000E890 /* DevicesPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052CD602136AF690000E890 /* DevicesPrefs.xib */; };
 		5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054BF0F20133BA2003D86D4 /* Cartridge.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505739E31C01FC5700B80646 /* NIBArchive.cpp */; };
@@ -318,8 +318,8 @@
 		5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeMountDialog.xib; sourceTree = "<group>"; };
 		5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapeMountDialog.xib; sourceTree = "<group>"; };
 		5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeMountController.swift; sourceTree = "<group>"; };
-		5052CD5E2136ADFA0000E890 /* JoystickPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickPrefsController.swift; sourceTree = "<group>"; };
-		5052CD602136AF690000E890 /* JoystickPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoystickPrefs.xib; sourceTree = "<group>"; };
+		5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefsController.swift; sourceTree = "<group>"; };
+		5052CD602136AF690000E890 /* DevicesPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesPrefs.xib; sourceTree = "<group>"; };
 		5054BF0F20133BA2003D86D4 /* Cartridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		5054BF1020133BA2003D86D4 /* Cartridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -818,9 +818,9 @@
 				50763276202989D300575110 /* UserDialogController.swift */,
 				506D54C720321C830026D8B4 /* RomDialogController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
+				5052CD5E2136ADFA0000E890 /* DevicesPrefsController.swift */,
 				50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */,
 				500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */,
-				5052CD5E2136ADFA0000E890 /* JoystickPrefsController.swift */,
 				50F99558203AB3B9004C4856 /* KeyboardDialog.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
@@ -884,9 +884,9 @@
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				506D54C920321EDF0026D8B4 /* RomDialog.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
+				5052CD602136AF690000E890 /* DevicesPrefs.xib */,
 				50F97E02203D8D570005E19C /* EmulatorPrefs.xib */,
 				500EF688203EB0210043F4FC /* HardwarePrefs.xib */,
-				5052CD602136AF690000E890 /* JoystickPrefs.xib */,
 				50F99556203AB2A9004C4856 /* KeyboardDialog.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
@@ -1059,7 +1059,7 @@
 				501E428020D975AD000BB48D /* IconV64.icns in Resources */,
 				50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */,
 				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
-				5052CD612136AF690000E890 /* JoystickPrefs.xib in Resources */,
+				5052CD612136AF690000E890 /* DevicesPrefs.xib in Resources */,
 				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
@@ -1122,7 +1122,7 @@
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50FE726A212DE8F600E99755 /* VIC_memory.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
-				5052CD5F2136ADFA0000E890 /* JoystickPrefsController.swift in Sources */,
+				5052CD5F2136ADFA0000E890 /* DevicesPrefsController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Basics.swift in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
 				50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */,

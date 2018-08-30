@@ -453,13 +453,6 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Syt-wZ-ivH"/>
-                            <menuItem title="Customize Joystick Keys ..." id="6eS-eH-5fh">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="joystickKeysAction:" target="-1" id="Ped-76-vAq"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="349"/>
                             <menuItem title="Press" id="rVt-Hc-gQG" userLabel="Press">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Press" id="Xvx-By-SBS">

@@ -138,10 +138,10 @@ extension MyController {
         controller.showSheet(withParent: self)
     }
     
-    @IBAction func joysticksAction(_ sender: Any!) {
+    @IBAction func devicesAction(_ sender: Any!) {
         
-        let nibName = NSNib.Name(rawValue: "JoystickPrefs")
-        let controller = JoystickPrefsController.init(windowNibName: nibName)
+        let nibName = NSNib.Name(rawValue: "DevicesPrefs")
+        let controller = DevicesPrefsController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
     
