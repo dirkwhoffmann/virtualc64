@@ -311,10 +311,10 @@ Gw
                                     <menuItem title="Desaturation" tag="3" id="Ugv-Bg-Bol">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Grayscale" tag="4" id="hQ4-i7-pto">
+                                    <menuItem title="Sepia" tag="4" id="hQ4-i7-pto">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Sepia" tag="5" id="37m-Cf-i7g">
+                                    <menuItem title="Grayscale" tag="5" id="37m-Cf-i7g">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="CRT" tag="6" id="rtm-MV-mOE">
