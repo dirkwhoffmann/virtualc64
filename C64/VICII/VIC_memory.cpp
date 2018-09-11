@@ -127,12 +127,14 @@ VIC::peek(uint16_t addr)
             
         case 0x1E: // Sprite-to-sprite collision
             result = spriteSpriteCollision;
-            spriteSpriteCollision = 0; // Clear on read
+            // spriteSpriteCollision = 0; // Clear on read
+            delay |= VICClrSprSprCollReg;
             return result;
             
         case 0x1F: // Sprite-to-background collision
             result = spriteBackgroundColllision;
-            spriteBackgroundColllision = 0; // Clear on read
+            // spriteBackgroundColllision = 0; // Clear on read
+            delay |= VICClrSprBgCollReg;
             return result;
             
         case 0x20: // Border color

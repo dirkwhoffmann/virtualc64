@@ -23,34 +23,47 @@
 void
 VIC::draw()
 {
-    drawCanvas();
-    drawBorder();
-    drawSprites();
-    copyPixels();
+    if (vblank) {
+        drawSprites();
+    } else {
+        drawCanvas();
+        drawBorder();
+        drawSprites();
+        copyPixels();
+    }
 }
 
 void
 VIC::draw17()
 {
-    drawCanvas();
-    drawSprites();
-    drawBorder17();
-    copyPixels();
+    if (vblank) {
+        drawSprites();
+    } else {
+        drawCanvas();
+        drawSprites();
+        drawBorder17();
+        copyPixels();
+    }
 }
 
 void
 VIC::draw55()
 {
-    drawCanvas();
-    drawSprites();
-    drawBorder55();
-    copyPixels();
+    if (vblank) {
+        drawSprites();
+    } else {
+        drawCanvas();
+        drawSprites();
+        drawBorder55();
+        copyPixels();
+    }
 }
 
 void
 VIC::drawOutsideBorder()
 {
-    if (!vblank) drawSprites();
+    // if (!vblank) drawSprites();
+    drawSprites();
 }
 
 void

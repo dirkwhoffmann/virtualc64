@@ -48,8 +48,10 @@
 #define VICUpdateRegisters  (1ULL << 3) // Updates the register value pipeline
 #define VICUpdateBankAddr   (1ULL << 4) // Updates the bank address
 #define VICSetDisplayState  (1ULL << 5) // Flagged when control reg 1 changes
+#define VICClrSprSprCollReg (1ULL << 6) // Resets the sprite-sprite coll reg
+#define VICClrSprBgCollReg  (1ULL << 7) // Resets the sprite-background coll reg
 
-#define VICClearanceMask ~((1ULL << 6) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateBankAddr | VICSetDisplayState);
+#define VICClearanceMask ~((1ULL << 8) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateBankAddr | VICSetDisplayState | VICClrSprSprCollReg | VICClrSprBgCollReg);
 
 
 
@@ -1253,9 +1255,9 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-    #define DRAW if (!vblank) { draw(); }
-    #define DRAW17 if (!vblank) { draw17(); }
-    #define DRAW55 if (!vblank) { draw55(); }
+    #define DRAW { draw(); }
+    #define DRAW17 { draw17(); }
+    #define DRAW55 { draw55(); }
 
     #define C_ACCESS if (badLine) cAccess();
     

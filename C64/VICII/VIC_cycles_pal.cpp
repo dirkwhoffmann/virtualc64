@@ -56,7 +56,13 @@ VIC::processDelayedActions()
     if (delay & VICSetDisplayState) {
         displayState = true;
     }
-
+    if (delay & VICClrSprSprCollReg) {
+        spriteSpriteCollision = 0;
+    }
+    if (delay & VICClrSprBgCollReg) {
+        spriteBackgroundColllision = 0;
+    }
+    
     delay = (delay << 1) & VICClearanceMask;
 }
 
