@@ -45,6 +45,8 @@ VIC::updateBankAddr() {
 uint8_t
 VIC::peek(uint16_t addr)
 {
+    static int dirkcnt = 0;
+    
     uint8_t result;
     
     assert(addr <= 0x3F);
@@ -129,6 +131,15 @@ VIC::peek(uint16_t addr)
             result = spriteSpriteCollision;
             // spriteSpriteCollision = 0; // Clear on read
             delay |= VICClrSprSprCollReg;
+            debug("%d: Read sprite-sprite coll %02X rastercycle %02X rasterline: %02X\n",
+                       dirkcnt, result, c64->rasterlineCycle, c64->rasterline);
+            if (dirkcnt == 244) {
+                c64->cpu.startTracing();
+            }
+            if (dirkcnt == 248) {
+                c64->cpu.stopTracing();
+            }
+            dirkcnt++;
             return result;
             
         case 0x1F: // Sprite-to-background collision

@@ -414,6 +414,7 @@ private:
     //! @brief    True if the current rasterline belongs to the VBLANK area.
     bool vblank;
     
+public: // REMOVE 
     //! @brief    Indicates if the current rasterline is a DMA line (bad line).
     bool badLine;
     
@@ -480,6 +481,7 @@ private:
 	 *  @details  Determines  if sprite dma access is enabled or disabled. 
      *            Each bit represents a single sprite. 
      */
+public: // REMOVE
 	uint8_t spriteDmaOnOff;
     
 	/*! @brief    Expansion flipflop

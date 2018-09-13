@@ -1,6 +1,6 @@
 /*
  * (C) 2006 - 2018 Dirk W. Hoffmann. All rights reserved.
- *
+ *x
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -455,12 +455,13 @@ CPU::executeOneCycle()
             
         case fetch:
             
-            /* DEBUG
-            if (PC == 0x0B46) {
-                debug("irq_ack_test1\n");
+            /* DEBUG */
+            if (PC == 0x08EB) {
+                uint8_t reg = c64->vic.spypeek(0x1E);
+                debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", c64->cpu.A, reg, c64->rasterline, c64->vic.spypeek(0x01));
                 // startTracing();
             }
-            */
+            
             
             PC_at_cycle_0 = PC;
             
@@ -493,18 +494,25 @@ CPU::executeOneCycle()
   
                 recordInstruction();
             
-                /*
+                
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
-                msg("%s %s: %s %s %s   %s %s %s %s %s %s\n",
+                if (PC_at_cycle_0 == 0x08D6) {
+                    debug("badLine = %d sprEnable: %02X spry: %d %d DMA: %02X\n",
+                          c64->vic.badLine, c64->vic.spypeek(0x15),
+                          c64->vic.spypeek(0x01), c64->vic.spypeek(0x03),c64->vic.spriteDmaOnOff);
+                }
+                msg("%s %s: %d %d %s %s %s   %s %s %s %s %s %s\n",
                     (this == &c64->drive1.cpu) ? " " : "",
                         instr.pc,
+                        c64->rasterline,
+                        c64->rasterlineCycle,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                */
+                
             }
             
             // Check breakpoint tag
