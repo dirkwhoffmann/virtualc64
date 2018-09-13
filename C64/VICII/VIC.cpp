@@ -666,7 +666,7 @@ VIC::compareSpriteY()
     uint8_t result = 0;
     
     for (unsigned i = 0; i < 8; i++) {
-        result |= (reg.current.sprY[i] == yCounter) << i;
+        result |= (reg.current.sprY[i] == (yCounter & 0xFF)) << i;
     }
     
     return result;
