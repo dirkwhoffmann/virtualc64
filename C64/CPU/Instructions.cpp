@@ -456,12 +456,13 @@ CPU::executeOneCycle()
         case fetch:
             
             /* DEBUG */
+            /*
             if (PC == 0x08EB) {
                 uint8_t reg = c64->vic.spypeek(0x1E);
                 debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", c64->cpu.A, reg, c64->rasterline, c64->vic.spypeek(0x01));
                 // startTracing();
             }
-            
+            */
             
             PC_at_cycle_0 = PC;
             
@@ -494,7 +495,7 @@ CPU::executeOneCycle()
   
                 recordInstruction();
             
-                
+                /*
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
@@ -512,7 +513,7 @@ CPU::executeOneCycle()
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                
+                */
             }
             
             // Check breakpoint tag
