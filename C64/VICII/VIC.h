@@ -340,6 +340,12 @@ private:
         //! @brief    Sprite color
         uint8_t spriteColor;
         
+        //! @brief    X expansion bit
+        bool exp;
+        
+        //! @brief    Multicolor bit
+        bool mc;
+        
     } spriteSr[8];
     
     //! @brief    Sprite-sprite collision register (12)

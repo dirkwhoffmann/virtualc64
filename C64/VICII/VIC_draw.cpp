@@ -310,6 +310,10 @@ VIC::drawSprites()
         sprExtraCol2 = reg.delayed.colors[COLREG_SPR_EX2];
         sprCol[i] = reg.delayed.colors[COLREG_SPR0 + i];
         
+        // Prepare sequencer
+        spriteSr[i].exp = GET_BIT(reg.delayed.sprExpandX, i);
+        spriteSr[i].mc = GET_BIT(reg.delayed.sprMC, i);
+        
         // Draw first pixel
         if (oldOnOff) {
             drawSpritePixel(i, 0, secondDMAi, 0, 0);
@@ -332,10 +336,29 @@ VIC::drawSprites()
             drawSpritePixel(i, 4, firstDMAi | secondDMAi, 0, secondDMAi);
             drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
             
-            // If spriteXexpand has changed, it shows up at this point in time.
-            reg.delayed.sprExpandX = reg.current.sprExpandX;
+            // Update X expansion bit
+            spriteSr[i].exp = GET_BIT(reg.current.sprExpandX, i);
+            
+            // Update multicolor bit (new VICIIs)
+            if (is856x()) {
+                bool newMC = GET_BIT(reg.current.sprMC, i);
+                if (spriteSr[i].mc != newMC) {
+                    spriteSr[i].mc = newMC;
+                    spriteSr[i].mcFlop ^= ~spriteSr[i].expFlop;
+                }
+            }
             
             drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
+
+            // Update multicolor bit (old VICIIs)
+            if (is656x()) {
+                bool newMC = GET_BIT(reg.current.sprMC, i);
+                if (spriteSr[i].mc != newMC) {
+                    spriteSr[i].mc = newMC;
+                    spriteSr[i].mcFlop = 0;
+                }
+            }
+
             drawSpritePixel(i, 7, firstDMAi,              0, 0);
         }
     }
@@ -352,7 +375,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
     assert(spriteSr[spriteNr].remaining_bits >= -1);
     assert(spriteSr[spriteNr].remaining_bits <= 26);
     
-    bool multicol = GET_BIT(reg.current.sprMC, spriteNr);
+    bool multicol = spriteSr[spriteNr].mc; 
 
     // Load shift register if applicable
     if (load) {
@@ -388,7 +411,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
             spriteSr[spriteNr].colBits = spriteSr[spriteNr].data >> shift;
       
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (GET_BIT(reg.delayed.sprExpandX, spriteNr))
+            if (spriteSr[spriteNr].exp)
                 spriteSr[spriteNr].expFlop = !spriteSr[spriteNr].expFlop;
             else
                 spriteSr[spriteNr].expFlop = true;
