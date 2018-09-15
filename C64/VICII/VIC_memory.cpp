@@ -22,6 +22,15 @@
 void
 VIC::updateBankAddr() {
 
+    /* "The glue logic on a C64C will generate a glitch during 10 <-> 01
+     *  generating 00 (in other words, bank 3) for one cycle.
+     *
+     *  When using the data direction register to change a single bit 0->1
+     *  (in other words, decreasing the video bank number by 1 or 2),
+     *  the bank change is delayed by one cycle. This effect is unstable."
+     * [VIC-Addendum, VICE teamn]
+     */
+        
     if (glueLogic == GLUE_CUSTOM_IC) {
         
         // When the bank switches from 01 to 10 or vice versa, the one bits

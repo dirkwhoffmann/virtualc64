@@ -678,5 +678,5 @@ VIC::markLine(uint8_t color, unsigned start, unsigned end)
     int rgba = rgbaTable[color];
     for (unsigned i = start; i < end; i++) {
         pixelBuffer[start + i] = rgba;
-    }	
+    }
 }
