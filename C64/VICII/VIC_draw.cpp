@@ -251,10 +251,10 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
     if (updateColors) loadColors(mode);
     
     // Draw pixel
+    assert(sr.colorbits < 4);
     if (multicolorDisplayMode) {
         
         // Set multi-color pixel
-        assert(sr.colorbits < 4);
         if (sr.colorbits & 0x02) {
             SET_FOREGROUND_PIXEL(pixelNr, col[sr.colorbits]);
         } else {
@@ -264,7 +264,6 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
     } else {
         
         // Set single-color pixel
-        assert(sr.colorbits < 2);
         if (sr.colorbits) {
             SET_FOREGROUND_PIXEL(pixelNr, col[sr.colorbits]);
         } else {
