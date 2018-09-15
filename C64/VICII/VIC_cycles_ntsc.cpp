@@ -218,7 +218,7 @@ VIC::cycle10ntsc()
     // Phi1.3 Fetch
     sFinalize(7);
     loadShiftRegister(7);
-    rIdleAccess();
+    iAccess();
     
     // Phi2.4 BA logic
     BA_LINE(false);
@@ -277,7 +277,7 @@ VIC::cycle57ntsc()
     sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
-    rIdleAccess();
+    iAccess();
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
@@ -295,7 +295,7 @@ VIC::cycle58ntsc()
     DRAW
     
     // Phi1.3 Fetch
-    rIdleAccess();
+    iAccess();
     
     // Phi2.2 Sprite logic
     turnSpritesOnOrOff();

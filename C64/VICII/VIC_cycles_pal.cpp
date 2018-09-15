@@ -517,7 +517,7 @@ VIC::cycle56()
     DRAW55
     
     // Phi1.3 Fetch
-    rIdleAccess();
+    iAccess();
     
     // Phi2.2 Sprite logic
     turnSpriteDmaOn();
@@ -541,7 +541,7 @@ VIC::cycle57pal()
     sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
-    rIdleAccess();
+    iAccess();
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));

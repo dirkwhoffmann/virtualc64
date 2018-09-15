@@ -901,15 +901,19 @@ private:
     
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
+        
+    /*! @brief    Performs a DRAM refresh (r-access).
+     *  @details  r-accesses are performed in cycles 11 - 15 during phi1.
+     */
+    void rAccess() { dataBusPhi1 = memAccess(0x3F00 | refreshCounter--); }
     
-    //! @brief    Simulates an idle memory access.
-    uint8_t memIdleAccess();
-    
-    //! @brief    Performs a DRAM refresh
-    void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
-    
-    //! @brief    Performs a DRAM idle access
-    void rIdleAccess() { (void)memIdleAccess(); }
+    /*! @brief    Performs an idle access (i-access).
+     *  @details  Idle accesses are performed during phi1 if VICII needs no
+     *            data.
+     *            During an idle access, VICII reads from $3FFF, $7FFF, $BFFF,
+     *            or $FFFF, depending on the selected memory bank.
+     */
+    void iAccess() { dataBusPhi1 = memAccess(0x3FFF); }
     
     /*! @brief    Performs a character access (c-access).
      *  @details  During a c-access, the video matrix is read.
@@ -1278,6 +1282,7 @@ public:
     #define C_ACCESS if (badLine) cAccess();
     
     #define END_CYCLE \
+    dataBusPhi2 = 0xFF; \
     xCounter += 8; \
     if (unlikely(delay != 0)) { processDelayedActions(); }
     

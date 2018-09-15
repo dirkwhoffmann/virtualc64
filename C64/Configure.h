@@ -28,7 +28,7 @@
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
@@ -51,7 +51,7 @@
 // The VICII implementation has been refined. Now, the user can choose between six
 // different chip models. The PAL models 6569_R1, 6569_R3,8565, and the NTSC models
 // 6567, 6567_R56A, 8562 are supported.
-//
+// VirtualC64 now passes VICE tests sprite-enable2.prg, spritey.prg, and sprite-sprite.prg
 //
 // TODOs for the next release:
 //

@@ -59,6 +59,184 @@ VIC::peek(uint16_t addr)
         case 0x0C:
         case 0x0E:
             
+            result = reg.current.sprX[addr >> 1];
+            break;
+            
+        case 0x01: // Sprite Y
+        case 0x03:
+        case 0x05:
+        case 0x07:
+        case 0x09:
+        case 0x0B:
+        case 0x0D:
+        case 0x0F:
+            
+            result = reg.current.sprY[addr >> 1];
+            break;
+            
+        case 0x10: // Sprite X (upper bits)
+        
+            result =
+            ((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
+            ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
+            ((reg.current.sprX[2] & 0x100) ? 0b00000100 : 0) |
+            ((reg.current.sprX[3] & 0x100) ? 0b00001000 : 0) |
+            ((reg.current.sprX[4] & 0x100) ? 0b00010000 : 0) |
+            ((reg.current.sprX[5] & 0x100) ? 0b00100000 : 0) |
+            ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
+            ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0);
+            break;
+                   
+        case 0x11: // SCREEN CONTROL REGISTER #1
+            
+            result = (reg.current.ctrl1 & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
+            break;
+            
+        case 0x12: // VIC_RASTER_READ_WRITE
+            
+            result = yCounter & 0xff;
+            break;
+            
+        case 0x13: // LIGHTPEN X
+            
+            result = latchedLightPenX;
+            break;
+            
+        case 0x14: // LIGHTPEN Y
+            
+            result = latchedLightPenY;
+            break;
+            
+        case 0x15:
+            
+            result = reg.current.sprEnable;
+            break;
+            
+        case 0x16:
+            
+            // The two upper bits always read back as '1'
+            result = (reg.current.ctrl2 & 0xFF) | 0xC0;
+            break;
+            
+        case 0x17:
+            
+            result = reg.current.sprExpandY;
+            break;
+            
+        case 0x18:
+            
+            result = memSelect | 0x01; // Bit 1 is unused (always 1)
+            break;
+            
+        case 0x19: // Interrupt Request Register (IRR)
+            
+            result = (irr & imr) ? (irr | 0xF0) : (irr | 0x70);
+            break;
+            
+        case 0x1A: // Interrupt Mask Register (IMR)
+            
+            result = imr | 0xF0;
+            break;
+            
+        case 0x1B:
+            
+            result = reg.current.sprPriority;
+            break;
+            
+        case 0x1C:
+            
+            result = reg.current.sprMC;
+            break;
+            
+        case 0x1D: // SPRITE_X_EXPAND
+            
+            result = reg.current.sprExpandX;
+            break;
+            
+        case 0x1E: // Sprite-to-sprite collision
+            
+            result = spriteSpriteCollision;
+            delay |= VICClrSprSprCollReg;
+            break;
+            
+        case 0x1F: // Sprite-to-background collision
+            
+            result = spriteBackgroundColllision;
+            delay |= VICClrSprBgCollReg;
+            break;
+            
+        case 0x20: // Border color
+            
+            result = reg.current.colors[COLREG_BORDER] | 0xF0;
+            break;
+            
+        case 0x21: // Background color 0
+            
+            result = reg.current.colors[COLREG_BG0] | 0xF0;
+            break;
+            
+        case 0x22: // Background color 1
+            
+            result = reg.current.colors[COLREG_BG1] | 0xF0;
+            break;
+            
+        case 0x23: // Background color 2
+            
+            result = reg.current.colors[COLREG_BG2] | 0xF0;
+            break;
+            
+        case 0x24: // Background color 3
+            
+            result = reg.current.colors[COLREG_BG3] | 0xF0;
+            break;
+            
+        case 0x25: // Sprite extra color 1 (for multicolor sprites)
+            
+            result = reg.current.colors[COLREG_SPR_EX1] | 0xF0;
+            break;
+            
+        case 0x26: // Sprite extra color 2 (for multicolor sprites)
+            
+            result = reg.current.colors[COLREG_SPR_EX2] | 0xF0;
+            break;
+            
+        case 0x27: // Sprite color 1
+        case 0x28: // Sprite color 2
+        case 0x29: // Sprite color 3
+        case 0x2A: // Sprite color 4
+        case 0x2B: // Sprite color 5
+        case 0x2C: // Sprite color 6
+        case 0x2D: // Sprite color 7
+        case 0x2E: // Sprite color 8
+
+            result = reg.current.colors[COLREG_SPR0 + addr - 0x27] | 0xF0;
+            break;
+            
+        default:
+
+            assert(addr >= 0x2F && addr <= 0x3F);
+            result = 0xFF;
+    }
+    
+    dataBusPhi2 = result;
+    return result;
+}
+
+uint8_t
+VIC::spypeek(uint16_t addr)
+{
+    assert(addr <= 0x3F);
+    
+    switch(addr) {
+        case 0x00: // Sprite X (lower 8 bits)
+        case 0x02:
+        case 0x04:
+        case 0x06:
+        case 0x08:
+        case 0x0A:
+        case 0x0C:
+        case 0x0E:
+            
             return reg.current.sprX[addr >> 1];
             
         case 0x01: // Sprite Y
@@ -73,7 +251,7 @@ VIC::peek(uint16_t addr)
             return reg.current.sprY[addr >> 1];
             
         case 0x10: // Sprite X (upper bits)
-        {
+            
             return
             ((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
             ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
@@ -83,79 +261,94 @@ VIC::peek(uint16_t addr)
             ((reg.current.sprX[5] & 0x100) ? 0b00100000 : 0) |
             ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
             ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0);
-        }
-                   
+            
         case 0x11: // SCREEN CONTROL REGISTER #1
+            
             return (reg.current.ctrl1 & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
             
         case 0x12: // VIC_RASTER_READ_WRITE
+            
             return yCounter & 0xff;
             
         case 0x13: // LIGHTPEN X
+            
             return latchedLightPenX;
             
         case 0x14: // LIGHTPEN Y
+            
             return latchedLightPenY;
             
         case 0x15:
+            
             return reg.current.sprEnable;
             
         case 0x16:
+            
             // The two upper bits always read back as '1'
             return (reg.current.ctrl2 & 0xFF) | 0xC0;
             
         case 0x17:
+            
             return reg.current.sprExpandY;
             
         case 0x18:
+            
             return memSelect | 0x01; // Bit 1 is unused (always 1)
             
         case 0x19: // Interrupt Request Register (IRR)
+            
             return (irr & imr) ? (irr | 0xF0) : (irr | 0x70);
             
         case 0x1A: // Interrupt Mask Register (IMR)
+            
             return imr | 0xF0;
             
         case 0x1B:
+            
             return reg.current.sprPriority;
             
         case 0x1C:
+            
             return reg.current.sprMC;
             
         case 0x1D: // SPRITE_X_EXPAND
+            
             return reg.current.sprExpandX;
             
         case 0x1E: // Sprite-to-sprite collision
-            result = spriteSpriteCollision;
-            // spriteSpriteCollision = 0; // Clear on read
-            delay |= VICClrSprSprCollReg;
-            return result;
+            
+            return spriteSpriteCollision;
             
         case 0x1F: // Sprite-to-background collision
-            result = spriteBackgroundColllision;
-            // spriteBackgroundColllision = 0; // Clear on read
-            delay |= VICClrSprBgCollReg;
-            return result;
+            
+            return spriteBackgroundColllision;
             
         case 0x20: // Border color
+            
             return reg.current.colors[COLREG_BORDER] | 0xF0;
             
         case 0x21: // Background color 0
+            
             return reg.current.colors[COLREG_BG0] | 0xF0;
             
         case 0x22: // Background color 1
+            
             return reg.current.colors[COLREG_BG1] | 0xF0;
-
+            
         case 0x23: // Background color 2
+            
             return reg.current.colors[COLREG_BG2] | 0xF0;
-
+            
         case 0x24: // Background color 3
+            
             return reg.current.colors[COLREG_BG3] | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
+            
             return reg.current.colors[COLREG_SPR_EX1] | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
+            
             return reg.current.colors[COLREG_SPR_EX2] | 0xF0;
             
         case 0x27: // Sprite color 1
@@ -168,27 +361,11 @@ VIC::peek(uint16_t addr)
         case 0x2E: // Sprite color 8
             
             return reg.current.colors[COLREG_SPR0 + addr - 0x27] | 0xF0;
-    }
-    
-    assert(addr >= 0x2F && addr <= 0x3F);
-    return 0xFF;
-}
-
-uint8_t
-VIC::spypeek(uint16_t addr)
-{
-    assert(addr <= 0x003F);
-    
-    switch(addr) {
-            
-        case 0x1E:
-            return spriteSpriteCollision;
-            
-        case 0x1F:
-            return spriteBackgroundColllision;
             
         default:
-            return peek(addr);
+            
+            assert(addr >= 0x2F && addr <= 0x3F);
+            return 0xFF;
     }
 }
 
@@ -196,6 +373,8 @@ void
 VIC::poke(uint16_t addr, uint8_t value)
 {
     assert(addr < 0x40);
+ 
+    dataBusPhi2 = value;
     
     switch(addr) {
         case 0x00: // Sprite X (lower 8 bits)
@@ -385,6 +564,8 @@ VIC::poke(uint16_t addr, uint8_t value)
 uint8_t
 VIC::memAccess(uint16_t addr)
 {
+    uint8_t result;
+    
     /* VIC has only 14 address lines. To be able to access the complete 64KB
      * main memory, it inverts bit 0 and bit 1 of the CIA2 portA register and
      * uses these values as the upper two address bits.
@@ -424,10 +605,10 @@ VIC::memAccess(uint16_t addr)
         switch (addrBus >> 12) {
             case 0x9:
             case 0x1:
-                dataBus = c64->mem.rom[0xC000 + addr];
+                result = c64->mem.rom[0xC000 + addr];
                 break;
             default:
-                dataBus = c64->mem.ram[addrBus];
+                result = c64->mem.ram[addrBus];
         }
     } else {
         switch (addrBus >> 12) {
@@ -435,49 +616,35 @@ VIC::memAccess(uint16_t addr)
             case 0xB:
             case 0x7:
             case 0x3:
-                dataBus = c64->expansionport.peek(addrBus | 0xF000);
+                result = c64->expansionport.peek(addrBus | 0xF000);
                 break;
             case 0xE:
             case 0xD:
             case 0x9:
             case 0x8:
             case 0x0:
-                dataBus = c64->mem.ram[addrBus];
+                result = c64->mem.ram[addrBus];
                 break;
             default:
-                dataBus = c64->mem.ram[addrBus];
+                result = c64->mem.ram[addrBus];
         }
     }
     
-    return dataBus;
-}
-
-uint8_t
-VIC::memIdleAccess()
-{
-    /* "As described, the VIC accesses in every first clock phase although there
-     *  are some cycles in which no other of the above mentioned accesses is
-     *  pending. In this case, the VIC does an idle access; a read access to
-     *  video address $3fff (i.e. to $3fff, $7fff, $bfff or $ffff depending on
-     *  the VIC bank) of which the result is discarded." [C.B.]
-     */
-    return memAccess(0x3FFF);
+    dataBus = result;
+    return result;
 }
 
 void
 VIC::cAccess()
 {
-    // Only proceed if the BA line is pulled down
-    // if (!badLineCondition)
-    //     return;
-    
     // If BA is pulled down for at least three cycles, perform memory access
     if (BApulledDownForAtLeastThreeCycles()) {
         
         // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
         uint16_t addr = (VM13VM12VM11VM10() << 6) | vc;
         
-        videoMatrix[vmli] = memAccess(addr);
+        dataBusPhi2 = memAccess(addr);
+        videoMatrix[vmli] = dataBusPhi2;
         colorLine[vmli] = c64->mem.colorRam[vc] & 0x0F;
     }
     
@@ -500,7 +667,8 @@ VIC::cAccess()
          *  information the lower 4 bits of the opcode after the access to
          *  $d011. Not until then, regular video matrix data is read." [C.B.]
          */
-        videoMatrix[vmli] = 0xFF;
+        dataBusPhi2 = 0xFF;
+        videoMatrix[vmli] = dataBusPhi2;
         colorLine[vmli] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
     }
 }
@@ -548,9 +716,10 @@ VIC::gAccess()
             addr &= 0xF9FF;
         
         // Store result
-        gAccessResult.write(LO_LO_HI(memAccess(addr),                // Character
-                                        colorLine[vmli],       // Color
-                                        videoMatrix[vmli])); // Data
+        dataBusPhi1 = memAccess(addr);
+        gAccessResult.write(LO_LO_HI(dataBusPhi1,         // Character
+                                     colorLine[vmli],     // Color
+                                     videoMatrix[vmli])); // Data
         
         
         // "VC and VMLI are incremented after each g-access in display state."
@@ -563,7 +732,8 @@ VIC::gAccess()
         uint16_t addr = ECMbit() ? 0x39FF : 0x3FFF;
 
         // Store result
-        gAccessResult.write(memAccess(addr));
+        dataBusPhi1 = memAccess(addr);
+        gAccessResult.write(dataBusPhi1);
     }
 }
 
@@ -582,21 +752,21 @@ VIC::sFirstAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
-    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    
     isFirstDMAcycle = (1 << sprite);
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
-        assert(BApulledDownForAtLeastThreeCycles());
-        // if (BApulledDownForAtLeastThreeCycles())
-        data = memAccess(spritePtr[sprite] | mc[sprite]);
+        // THIS ONE SHOULD FAIL IN TEST CASE SPRITE_ENABLE2.PRG, YES, IT DOES
+        // assert(BApulledDownForAtLeastThreeCycles());
         
-        mc[sprite]++;
-        mc[sprite] &= 0x3F; // 6 bit overflow
+        if (BApulledDownForAtLeastThreeCycles()) {
+            dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
+        }
+        
+        mc[sprite] = (mc[sprite] + 1) & 0x3F;
     }
     
-    spriteSr[sprite].chunk1 = data;
+    spriteSr[sprite].chunk1 = dataBusPhi2;
 }
 
 void
@@ -604,31 +774,21 @@ VIC::sSecondAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
-    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    bool memAccessed = false;
-    
     isFirstDMAcycle = 0;
     isSecondDMAcycle = (1 << sprite);
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
         assert(BApulledDownForAtLeastThreeCycles());
-        // if (BApulledDownForAtLeastThreeCycles())
-        {
-            data = memAccess(spritePtr[sprite] | mc[sprite]);
-            memAccessed = true;
-        }
+        dataBusPhi1 = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite] = (mc[sprite] + 1) & 0x3F;
+    
+    } else {
         
-        mc[sprite]++;
-        mc[sprite] &= 0x3F; // 6 bit overflow
+        dataBusPhi1 = memAccess(0x3FFF); // Idle access
     }
     
-    // If no memory access has happened here, we perform an idle access
-    // The obtained data might be overwritten by the third sprite access
-    if (!memAccessed)
-        memIdleAccess();
-    
-    spriteSr[sprite].chunk2 = data;
+    spriteSr[sprite].chunk2 = dataBusPhi1;
 }
 
 void
@@ -636,19 +796,14 @@ VIC::sThirdAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
-    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    
     if (spriteDmaOnOff & (1 << sprite)) {
         
         assert(BApulledDownForAtLeastThreeCycles());
-        // if (BApulledDownForAtLeastThreeCycles())
-            data = memAccess(spritePtr[sprite] | mc[sprite]);
-        
-        mc[sprite]++;
-        mc[sprite] &= 0x3F; // 6 bit overflow
+        dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite] = (mc[sprite] + 1) & 0x3F;
     }
     
-    spriteSr[sprite].chunk3 = data;
+    spriteSr[sprite].chunk3 = dataBusPhi2;
 }
 
 void VIC::sFinalize(unsigned sprite)
