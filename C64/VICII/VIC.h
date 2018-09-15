@@ -517,12 +517,39 @@ public: // REMOVE
     // CPU control and memory access
     //
     
+public:
+    
+    /*! @brief    Value on the data bus during the latest phi1 access
+     *  @note     Only VICII performs a memory access during phi1.
+     */
+    uint8_t dataBusPhi1;
+    
+    /*! @brief    Value on the data bus during the latest phi2 access
+     *  @note     VICII or the CPU can perform a memory access during phi2.
+     *            If none of them does, 0xFF will be on the bus.
+     */
+    uint8_t dataBusPhi2;
+
+    
 private:
+    
+    /*! @brief    Data bus
+     *  @details  Whenever VIC performs a memory read, the result is stored
+     *            in this variable.
+     *  @deprecated Use dataBusPhi1, dataBusPhi2 instead
+     */
+    uint8_t dataBus;
+
+    /*! @brief    Address bus
+     *  @details  Whenever VIC performs a memory read, the generated memory
+     *            address is stored in this variable.
+     */
+    uint16_t addrBus;
     
     /*! @brief    Current value of the BA line
      *  @details  Remember: Each CPU cycle is split into two phases:
-     *            First phase (LOW):   VIC gets access to the bus
-     *            Second phase (HIGH): CPU gets access to the bus
+     *            phi1 (First phase, LOW):   VICII gets access to the bus
+     *            phi2 (Second phase, HIGH): CPU gets access to the bus
      *            In rare cases, VIC needs access in the HIGH phase, too. To
      *            block the CPU, the BA line is pulled down.
      *  @note     BA can be pulled down by multiple sources (wired AND) and
@@ -530,19 +557,6 @@ private:
      *            low.
      */
     TimeDelayed<uint16_t>baLine = TimeDelayed<uint16_t>(3);
-    
-    /*! @brief    Address bus
-     *  @details  Whenever VIC performs a memory read, the generated memory
-     *            address is stored in this variable.
-     */
-    uint16_t addrBus;
-    
-    /*! @brief    Data bus
-     *  @details  Whenever VIC performs a memory read, the result is stored
-     *            in this variable.
-     */
-    uint8_t dataBus;
-    
     
     /*! @brief    Start address of the currently selected memory bank
      *  @details  There are four banks in total since the VIC chip can only
