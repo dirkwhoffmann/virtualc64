@@ -657,7 +657,7 @@ uint8_t
 VIC::spriteDepth(uint8_t nr)
 {
     return
-    GET_BIT(reg.current.sprPriority, nr) ?
+    GET_BIT(reg.delayed.sprPriority, nr) ?
     (SPRITE_LAYER_BG_DEPTH | nr) :
     (SPRITE_LAYER_FG_DEPTH | nr);
 }

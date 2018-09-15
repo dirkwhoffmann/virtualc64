@@ -339,6 +339,9 @@ VIC::drawSprites()
             // Update X expansion bit
             spriteSr[i].exp = GET_BIT(reg.current.sprExpandX, i);
             
+            // Update sprite priority bits
+            COPY_BIT(reg.current.sprPriority, reg.delayed.sprPriority, i);
+            
             // Update multicolor bit (new VICIIs)
             if (is856x()) {
                 bool newMC = GET_BIT(reg.current.sprMC, i);
