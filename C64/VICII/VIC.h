@@ -401,6 +401,13 @@ private:
     //
     // Housekeeping information
     //
+
+    /*! @brief    Column counter
+     *  @details  Counts the drawn visible columns. The counter is 0 outside
+     *            the visible area. Inside the visible area, it is incremented
+     *            by one after a column has been drawn.
+     */
+    int8_t visibleColumnCnt;
     
     /*! @brief    Indicates wether we are in a visible display column or not
      *  @details  The visible columns comprise canvas columns and border
@@ -408,7 +415,7 @@ private:
      *            left border column) and the last in cycle 61 (fourth right
      *            border column).
      */
-    bool visibleColumn;
+    bool isVisibleColumn;
     
     /*! @brief    Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012
      *  @details  Variable is needed to determine if a rasterline should be
@@ -962,13 +969,17 @@ private:
      *            the yCounter is incremented with a little delay.
      */
     uint16_t rasterline();
-        
+
+    //! @brief    Returns the current rasterline cycle
+    uint8_t rastercycle();
+
     /*! @brief    Indicates if yCounter needs to be reset in this rasterline.
      *  @details  PAL models reset the yCounter in cycle 2 in the first
      *            rasterline wheras NTSC models reset the yCounter in cycle 2
      *            in the middle of the lower border area.
      */
     bool yCounterOverflow() { return rasterline() == (isPAL() ? 0 : 238); }
+
 
     //
     //! @functiongroup Handling the border flip flops
@@ -1292,8 +1303,11 @@ public:
     dataBusPhi2 = 0xFF; \
     xCounter += 8; \
     if (unlikely(delay != 0)) { processDelayedActions(); }
+
+    #define END_VISIBLE_CYCLE \
+    visibleColumnCnt++; \
+    END_CYCLE
     
-    // #define BA_LINE(x) if ((x) != baLine.current()) { updateBA(x); }
     #define BA_LINE(x) updateBA(x);
     
     //
@@ -1319,7 +1333,7 @@ private:
     /*! @brief    Draw routine for cycles outside the visible screen region.
      *  @details  The sprite sequencer needs to be run outside the visible area,
      *            although no pixels will be drawn (drawing is omitted by having
-     *            visibleColumn set to false.
+     *            isVisibleColumn set to false.
      *  @deprecated
      */
     void drawOutsideBorder();

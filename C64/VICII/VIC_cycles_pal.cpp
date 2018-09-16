@@ -379,7 +379,8 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw the first visible column
-    visibleColumn = true;
+    isVisibleColumn = true;
+    visibleColumnCnt = -1; 
     DRAW
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -399,7 +400,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     // Phi2.4 BA logic
     BA_LINE(badLine);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
     xCounter = 0;
 }
 
@@ -422,7 +423,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     C_ACCESS
     
     cleared_bits_in_d017 = 0;
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -446,7 +447,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     // Phi2.5 Fetch
     C_ACCESS
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -468,7 +469,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     // Phi2.5 Fetch
     C_ACCESS
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -491,7 +492,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     // Phi2.5 Fetch
     C_ACCESS
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -512,7 +513,7 @@ VIC::cycle19to54()
     // Phi2.5 Fetch
     C_ACCESS
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -533,7 +534,7 @@ VIC::cycle55pal()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -556,7 +557,7 @@ VIC::cycle56()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -576,7 +577,7 @@ VIC::cycle57pal()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -618,7 +619,7 @@ VIC::cycle58pal()
     // Phi2.5 Fetch
     sFirstAccess(0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -639,7 +640,7 @@ VIC::cycle59pal()
     // Phi2.5 Fetch
     sThirdAccess(0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -661,7 +662,7 @@ VIC::cycle60pal()
     // Phi2.5 Fetch
     sFirstAccess(1);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -672,7 +673,6 @@ VIC::cycle61pal()
     
     // Phi1.2 Draw the last visible column
     DRAW
-    visibleColumn = false;
     
     // Phi1.3 Fetch
     sSecondAccess(1);
@@ -683,7 +683,9 @@ VIC::cycle61pal()
     // Phi2.5 Fetch
     sThirdAccess(1);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
+    isVisibleColumn = false;
+    visibleColumnCnt = 0;
 }
 
 void

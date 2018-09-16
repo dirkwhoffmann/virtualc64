@@ -85,7 +85,8 @@ VIC::VIC()
         { &upperComparisonVal,          sizeof(upperComparisonVal),             CLEAR_ON_RESET },
         { &lowerComparisonVal,          sizeof(lowerComparisonVal),             CLEAR_ON_RESET },
 
-        { &visibleColumn,               sizeof(visibleColumn),                  CLEAR_ON_RESET },
+        { &visibleColumnCnt,            sizeof(visibleColumnCnt),               CLEAR_ON_RESET },
+        { &isVisibleColumn,             sizeof(isVisibleColumn),                CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
         { &badLine,                     sizeof(badLine),                        CLEAR_ON_RESET },
@@ -441,6 +442,12 @@ VIC::rasterline()
     return c64->rasterline;
 }
 
+uint8_t
+VIC::rastercycle()
+{
+    return c64->rasterlineCycle;
+}
+
 
 //
 // Frame flipflops
@@ -749,7 +756,7 @@ VIC::turnSpritesOnOrOff()
 void 
 VIC::beginFrame()
 {
-    visibleColumn = false;
+    // isVisibleColumn = false;
 	lightpenIRQhasOccured = false;
 
     /* "The VIC does five read accesses in every raster line for the refresh of

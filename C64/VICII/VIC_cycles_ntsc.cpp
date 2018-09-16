@@ -292,7 +292,7 @@ VIC::cycle55ntsc()
     // Phi2.4 BA logic
     BA_LINE(false);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -312,7 +312,7 @@ VIC::cycle57ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -351,7 +351,7 @@ VIC::cycle58ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1));
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -372,7 +372,7 @@ VIC::cycle59ntsc()
     // Phi2.5 Fetch
     sFirstAccess(0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -393,7 +393,7 @@ VIC::cycle60ntsc()
     // Phi2.5 Fetch
     sThirdAccess(0);
     
-    END_CYCLE
+    END_VISIBLE_CYCLE
 }
 
 void
@@ -404,7 +404,6 @@ VIC::cycle61ntsc()
     
     // Phi1.2 Draw the last visible column
     DRAW
-    visibleColumn = false;
     
     // Phi1.3 Fetch
     sFinalize(0);
@@ -415,8 +414,10 @@ VIC::cycle61ntsc()
     
     // Phi2.5 Fetch
     sFirstAccess(1);
-    
-    END_CYCLE
+ 
+    END_VISIBLE_CYCLE
+    isVisibleColumn = false;
+    visibleColumnCnt = 0;
 }
 
 void

@@ -428,7 +428,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
     }
     
     // Draw pixel
-    if (visibleColumn && !hideSprites) {
+    if (isVisibleColumn && !hideSprites) {
         if (multicol)
             setMultiColorSpritePixel(spriteNr, pixelNr, spriteSr[spriteNr].colBits & 0x03);
         else
