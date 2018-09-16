@@ -75,6 +75,9 @@ VIC::cycle1pal()
         setVerticalFrameFF(true);
     }
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(2);
     loadShiftRegister(2);
@@ -106,6 +109,9 @@ VIC::cycle2pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(3);
     
@@ -130,6 +136,9 @@ VIC::cycle3pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(3);
     loadShiftRegister(3);
@@ -150,6 +159,9 @@ VIC::cycle4pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(4);
     
@@ -169,6 +181,9 @@ VIC::cycle5pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(4);
     loadShiftRegister(4);
@@ -189,6 +204,9 @@ VIC::cycle6pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(5);
     
@@ -207,6 +225,9 @@ VIC::cycle7pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(5);
     loadShiftRegister(5);
@@ -227,6 +248,9 @@ VIC::cycle8pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(6);
     
@@ -245,6 +269,9 @@ VIC::cycle9pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(6);
     loadShiftRegister(6);
@@ -265,6 +292,9 @@ VIC::cycle10pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(7);
     
@@ -283,8 +313,8 @@ VIC::cycle11pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw
-    drawOutsideBorder(); // Runs the sprite sequencer, only
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
     
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     sFinalize(7);
@@ -303,9 +333,9 @@ VIC::cycle12()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw
-    drawOutsideBorder(); // Runs the sprite sequencer, onl
-    
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch (second out of five DRAM refreshs)
     rAccess();
     
@@ -330,9 +360,9 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw
-    drawOutsideBorder(); // Runs the sprite sequencer, only
-    
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();
     
@@ -348,8 +378,8 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw
-    visibleColumn = true; // We have reach the first visible column
+    // Phi1.2 Draw the first visible column
+    visibleColumn = true;
     DRAW
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -618,7 +648,7 @@ VIC::cycle60pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw (last visible cycle)
+    // Phi1.2 Draw
     DRAW
     
     // Phi1.3 Fetch
@@ -640,9 +670,9 @@ VIC::cycle61pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
-    // Phi1.2 Draw
+    // Phi1.2 Draw the last visible column
     DRAW
-    visibleColumn = false; // This was the last visible column
+    visibleColumn = false;
     
     // Phi1.3 Fetch
     sSecondAccess(1);
@@ -662,6 +692,9 @@ VIC::cycle62pal()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(1);
     loadShiftRegister(1);
@@ -683,6 +716,9 @@ VIC::cycle63pal()
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
+    // Phi1.2 Draw sprites (invisible area)
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(2);
     

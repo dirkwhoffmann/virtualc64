@@ -405,7 +405,7 @@ private:
     /*! @brief    Indicates wether we are in a visible display column or not
      *  @details  The visible columns comprise canvas columns and border
      *            columns. The first visible column is drawn in cycle 14 (first
-     *            left border column) and the last in cycle ?? (fourth right
+     *            left border column) and the last in cycle 61 (fourth right
      *            border column).
      */
     bool visibleColumn;
@@ -1284,6 +1284,7 @@ public:
     #define DRAW { draw(); }
     #define DRAW17 { draw17(); }
     #define DRAW55 { draw55(); }
+    #define DRAW_SPRITES { drawSprites(); }
 
     #define C_ACCESS if (badLine) cAccess();
     
@@ -1319,6 +1320,7 @@ private:
      *  @details  The sprite sequencer needs to be run outside the visible area,
      *            although no pixels will be drawn (drawing is omitted by having
      *            visibleColumn set to false.
+     *  @deprecated
      */
     void drawOutsideBorder();
     
