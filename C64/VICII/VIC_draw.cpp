@@ -428,7 +428,7 @@ VIC::drawSpritePixel(unsigned spriteNr,
     }
     
     // Draw pixel
-    if (isVisibleColumn && !hideSprites) {
+    if (!hideSprites) {
         if (multicol)
             setMultiColorSpritePixel(spriteNr, pixelNr, spriteSr[spriteNr].colBits & 0x03);
         else
@@ -606,7 +606,7 @@ VIC::setSpritePixel(unsigned pixel, uint8_t color, int depth, int source)
          * Test program: VICII/spritePriorities
          */
         if (!(pixelSource[pixel] & 0x7F)) {
-            COLORIZE(pixel, color);
+            if (isVisibleColumn) COLORIZE(pixel, color);
             zBuffer[pixel] = depth;
         }
     }
