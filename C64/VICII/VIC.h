@@ -1393,6 +1393,7 @@ private:
      */
     void drawSpritePixel(unsigned spritenr,
                          unsigned pixel,
+                         bool enable,
                          bool freeze,
                          bool halt,
                          bool load);

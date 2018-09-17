@@ -281,13 +281,19 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
 void
 VIC::drawSprites()
 {
+    /*
     uint8_t oldSpriteOnOff = spriteOnOff.delayed();
     uint8_t newSpriteOnOff = spriteOnOff.readWithDelay(2);
+    */
+    uint8_t oldSpriteOnOff = spriteOnOff.readWithDelay(2);
+    uint8_t newSpriteOnOff = spriteOnOff.current();
 
 
     // Quick exit
+    /*
     if (!oldSpriteOnOff && !newSpriteOnOff)
         return;
+    */
     
     uint8_t firstDMA = isFirstDMAcycle;
     uint8_t secondDMA = isSecondDMAcycle;
@@ -298,8 +304,10 @@ VIC::drawSprites()
         bool oldOnOff = GET_BIT(oldSpriteOnOff, i);
         bool newOnOff = GET_BIT(newSpriteOnOff, i);
         
+        /*
         if (!oldOnOff && !newOnOff)
             continue;
+        */
         
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
@@ -314,8 +322,9 @@ VIC::drawSprites()
         spriteSr[i].mc = GET_BIT(reg.delayed.sprMC, i);
         
         // Draw first pixel
-        if (oldOnOff) {
-            drawSpritePixel(i, 0, secondDMAi, 0, 0);
+        // if (oldOnOff)
+        {
+            drawSpritePixel(i, 0, oldOnOff, secondDMAi, 0, 0);
         }
         
         // Load colors for the other pixel
@@ -324,16 +333,18 @@ VIC::drawSprites()
         sprCol[i] = reg.current.colors[COLREG_SPR0 + i];
         
         // Draw the next three pixels
-        if (oldOnOff) {
-            drawSpritePixel(i, 1, secondDMAi,             0,          0);
-            drawSpritePixel(i, 2, secondDMAi,             secondDMAi, 0);
-            drawSpritePixel(i, 3, firstDMAi | secondDMAi, 0,          0);
+        // if (oldOnOff)
+        {
+            drawSpritePixel(i, 1, oldOnOff, secondDMAi,             0,          0);
+            drawSpritePixel(i, 2, oldOnOff, secondDMAi,             secondDMAi, 0);
+            drawSpritePixel(i, 3, oldOnOff, firstDMAi | secondDMAi, 0,          0);
         }
         
         // Draw the remaining four pixels
-        if (newOnOff) {
-            drawSpritePixel(i, 4, firstDMAi | secondDMAi, 0, secondDMAi);
-            drawSpritePixel(i, 5, firstDMAi | secondDMAi, 0, 0);
+        // if (newOnOff)
+        {
+            drawSpritePixel(i, 4, newOnOff, firstDMAi | secondDMAi, 0, secondDMAi);
+            drawSpritePixel(i, 5, newOnOff, firstDMAi | secondDMAi, 0, 0);
             
             // Update X expansion bit
             spriteSr[i].exp = GET_BIT(reg.current.sprExpandX, i);
@@ -350,7 +361,7 @@ VIC::drawSprites()
                 }
             }
             
-            drawSpritePixel(i, 6, firstDMAi | secondDMAi, 0, 0);
+            drawSpritePixel(i, 6, newOnOff, firstDMAi | secondDMAi, 0, 0);
 
             // Update multicolor bit (old VICIIs)
             if (is656x()) {
@@ -361,7 +372,7 @@ VIC::drawSprites()
                 }
             }
 
-            drawSpritePixel(i, 7, firstDMAi,              0, 0);
+            drawSpritePixel(i, 7, newOnOff, firstDMAi,              0, 0);
         }
     }
 }
@@ -369,6 +380,7 @@ VIC::drawSprites()
 void
 VIC::drawSpritePixel(unsigned spriteNr,
                              unsigned pixelNr,
+                             bool enable,
                              bool freeze,
                              bool halt,
                              bool load)
@@ -382,6 +394,10 @@ VIC::drawSpritePixel(unsigned spriteNr,
     // Load shift register if applicable
     if (load) {
         loadShiftRegister(spriteNr);
+    }
+    
+    if (!enable) {
+        return;
     }
     
     // Stop shift register if applicable
