@@ -22,6 +22,9 @@
 void
 VIC::cycle1ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sFirstAccess(3);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     if (verticalFrameFFsetCond) {
@@ -44,15 +47,15 @@ VIC::cycle1ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     
-    // Phi2.5 Fetch
-    sThirdAccess(3);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle2ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sThirdAccess(3);
+
     // Check for yCounter overflows
     if (yCounterOverflow())
         yCounter = 0;
@@ -77,15 +80,15 @@ VIC::cycle2ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR4 | SPR5));
     
-    // Phi2.5 Fetch
-    sFirstAccess(4);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle3ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sFirstAccess(4);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -98,15 +101,15 @@ VIC::cycle3ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     
-    // Phi2.5 Fetch
-    sThirdAccess(4);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle4ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sThirdAccess(4);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -121,15 +124,15 @@ VIC::cycle4ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR5 | SPR6));
     
-    // Phi2.5 Fetch
-    sFirstAccess(5);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle5ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sFirstAccess(5);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -142,15 +145,15 @@ VIC::cycle5ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
     
-    // Phi2.5 Fetch
-    sThirdAccess(5);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle6ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sThirdAccess(5);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -165,15 +168,15 @@ VIC::cycle6ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
     
-    // Phi2.5 Fetch
-    sFirstAccess(6);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle7ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sFirstAccess(6);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -186,15 +189,15 @@ VIC::cycle7ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR6 | SPR7));
     
-    // Phi2.5 Fetch
-    sThirdAccess(6);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle8ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sThirdAccess(6);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -209,15 +212,15 @@ VIC::cycle8ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR7);
     
-    // Phi2.5 Fetch
-    sFirstAccess(7);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle9ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sFirstAccess(7);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -230,15 +233,15 @@ VIC::cycle9ntsc()
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & SPR7);
     
-    // Phi2.5 Fetch
-    sThirdAccess(7);
-    
     END_CYCLE
 }
 
 void
 VIC::cycle10ntsc()
 {
+    // Phi2.5 Fetch (previous cycle)
+    sThirdAccess(7);
+
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -506,9 +509,6 @@ VIC::cycle65ntsc()
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR3 | SPR4));
-    
-    // Phi2.5 Fetch
-    sFirstAccess(3);
     
     END_CYCLE
 }
