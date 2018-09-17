@@ -752,8 +752,8 @@ VIC::pAccess(unsigned sprite)
     assert(sprite < 8);
     
     // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
-    spritePtr[sprite] = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite) << 6;
-    dataBusPhi1 = spritePtr[sprite];
+    dataBusPhi1 = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite);
+    spritePtr[sprite] = dataBusPhi1 << 6;
 }
 
 void
