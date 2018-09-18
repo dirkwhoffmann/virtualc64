@@ -1390,15 +1390,11 @@ private:
      *                     freeze temporarily
      *  @param    haltBits  If set to true, the sprites shift shift register will
      *                     be deactivated
-     *  @param    loadBits  If set to true, the sprites shift shift register will
-     *                     grab new data bits
-     *  @deprecated
      */
     void drawSpritePixel(unsigned pixel,
                          uint8_t enableBits,
                          uint8_t freezeBits,
-                         uint8_t haltBits,
-                         uint8_t loadBits);
+                         uint8_t haltBits);
     
     /*! @brief    Draws all sprites into the pixelbuffer
      *  @details  A sprite is only drawn if it's enabled and if sprite drawing

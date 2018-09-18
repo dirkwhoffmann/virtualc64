@@ -297,7 +297,7 @@ VIC::drawSprites()
     */
     
     // Pixel 0
-    drawSpritePixel(0, oldSpriteOnOff, secondDMA, 0, 0);
+    drawSpritePixel(0, oldSpriteOnOff, secondDMA, 0);
     
     // After the first pixel, color register changes show up
     reg.delayed.colors[COLREG_SPR_EX1] = reg.current.colors[COLREG_SPR_EX1];
@@ -307,13 +307,24 @@ VIC::drawSprites()
     }
     
     // Pixel 1, Pixel 2, Pixel 3
-    drawSpritePixel(1, oldSpriteOnOff, secondDMA,            0,         0);
-    drawSpritePixel(2, oldSpriteOnOff, secondDMA,            secondDMA, 0);
-    drawSpritePixel(3, oldSpriteOnOff, firstDMA | secondDMA, 0,         0);
+    drawSpritePixel(1, oldSpriteOnOff, secondDMA,            0);
+    drawSpritePixel(2, oldSpriteOnOff, secondDMA,            secondDMA);
+    drawSpritePixel(3, oldSpriteOnOff, firstDMA | secondDMA, 0);
     
+    // Load shift register if sprite data has been fetched completely
+    if (secondDMA) {
+        for (unsigned sprite = 0; sprite < 8; sprite++) {
+            if (GET_BIT(secondDMA, sprite)) {
+                spriteSr[sprite].data = LO_LO_HI(spriteSr[sprite].chunk3,
+                                                 spriteSr[sprite].chunk2,
+                                                 spriteSr[sprite].chunk1);
+            }
+        }
+    }
+
     // Pixel 4, Pixel 5
-    drawSpritePixel(4, newSpriteOnOff, firstDMA | secondDMA, 0, secondDMA);
-    drawSpritePixel(5, newSpriteOnOff, firstDMA | secondDMA, 0, 0);
+    drawSpritePixel(4, newSpriteOnOff, firstDMA | secondDMA, 0);
+    drawSpritePixel(5, newSpriteOnOff, firstDMA | secondDMA, 0);
     
     // Changes of the X expansion bits and the priority bits show up here
     reg.delayed.sprExpandX = reg.current.sprExpandX;
@@ -337,7 +348,7 @@ VIC::drawSprites()
     }
     
     // Pixel 6
-    drawSpritePixel(6, newSpriteOnOff, firstDMA | secondDMA, 0, 0);
+    drawSpritePixel(6, newSpriteOnOff, firstDMA | secondDMA, 0);
     
     // Update multicolor bits if an old VICII is emulated
     if (toggle && is656x()) {
@@ -350,7 +361,7 @@ VIC::drawSprites()
     }
     
     // Pixel 7
-    drawSpritePixel(7, newSpriteOnOff, firstDMA,              0, 0);
+    drawSpritePixel(7, newSpriteOnOff, firstDMA,              0);
 }
 
 void
@@ -531,8 +542,7 @@ void
 VIC::drawSpritePixel(unsigned pixel,
                      uint8_t enableBits,
                      uint8_t freezeBits,
-                     uint8_t haltBits,
-                     uint8_t loadBits)
+                     uint8_t haltBits)
 {
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
@@ -540,7 +550,6 @@ VIC::drawSpritePixel(unsigned pixel,
         bool enable = GET_BIT(enableBits, sprite);
         bool freeze = GET_BIT(freezeBits, sprite);
         bool halt = GET_BIT(haltBits, sprite);
-        bool load = GET_BIT(loadBits, sprite);
 
         assert(sprite < 8);
         assert(spriteSr[sprite].remaining_bits >= -1);
@@ -548,11 +557,6 @@ VIC::drawSpritePixel(unsigned pixel,
         
         bool mCol = GET_BIT(reg.delayed.sprMC, sprite);
         bool xExp = GET_BIT(reg.delayed.sprExpandX, sprite);
-        
-        // Load shift register if applicable
-        if (load) {
-            loadShiftRegister(sprite);
-        }
         
         if (!enable) {
             continue;
