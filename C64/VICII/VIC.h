@@ -288,7 +288,9 @@ private:
         
     } sr;
     
-
+    
+    
+    
     /*! @brief    Sprite data sequencer (11)
      *  @details  The VIC chip has a 24 bit (3 byte) shift register for each
      *            sprite. It stores the sprite for one rasterline. If a sprite
@@ -338,7 +340,7 @@ private:
         uint8_t colBits;
         
         //! @brief    Sprite color
-        uint8_t spriteColor;
+        // uint8_t spriteColor;
         
         //! @brief    X expansion bit
         bool exp;
@@ -346,7 +348,7 @@ private:
         //! @brief    Multicolor bit
         bool mc;
         
-    } spriteSr[8];
+    } spriteSrOld[8];
     
     //! @brief    Sprite-sprite collision register (12)
     uint8_t  spriteSpriteCollision;
@@ -486,9 +488,8 @@ private:
 	/*! @brief    Sprite on off register
 	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
      *            Each bit represents a single sprite.
-     *  @deprecated Use TimeDelayed register instead
      */
-    TimeDelayed<uint8_t> spriteOnOff = TimeDelayed<uint8_t>(3);
+    TimeDelayed<uint8_t> spriteOnOff = TimeDelayed<uint8_t>(2);
     
 	/*! @brief    Sprite DMA on off register
 	 *  @details  Determines  if sprite dma access is enabled or disabled. 
@@ -753,10 +754,11 @@ private:
     uint8_t col[4];
     
     //! @brief    Sprite colors
+    /*
     uint64_t sprExtraCol1;
     uint64_t sprExtraCol2;
     uint64_t sprCol[8];
-
+     */
     
 public:
 	
@@ -1211,9 +1213,9 @@ private:
      *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
-        spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
-                                      spriteSr[nr].chunk2,
-                                      spriteSr[nr].chunk1);
+        spriteSrOld[nr].data = LO_LO_HI(spriteSrOld[nr].chunk3,
+                                      spriteSrOld[nr].chunk2,
+                                      spriteSrOld[nr].chunk1);
     }
     
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
@@ -1295,7 +1297,7 @@ public:
     #define DRAW { draw(); }
     #define DRAW17 { draw17(); }
     #define DRAW55 { draw55(); }
-    #define DRAW_SPRITES { drawSprites(); }
+    #define DRAW_SPRITES { drawSpritesOld(); }
 
     #define C_ACCESS if (badLine) cAccess();
     
@@ -1330,15 +1332,7 @@ private:
     
     //! @brief    Special draw routine for cycle 55
     void draw55();
-    
-    /*! @brief    Draw routine for cycles outside the visible screen region.
-     *  @details  The sprite sequencer needs to be run outside the visible area,
-     *            although no pixels will be drawn (drawing is omitted by having
-     *            isVisibleColumn set to false.
-     *  @deprecated
-     */
-    void drawOutsideBorder();
-    
+        
     
     //
     // Internal drawing routines (called by the external ones)
@@ -1378,6 +1372,12 @@ private:
                          bool updateColors);
     
     /*! @brief    Draws 8 sprite pixels
+     *  @details  Invoked inside draw()
+     *  @deprecated
+     */
+    void drawSpritesOld();
+
+    /*! @brief    Draws all eight sprite pixels for the current cycle
      *  @details  Invoked inside draw()
      */
     void drawSprites();

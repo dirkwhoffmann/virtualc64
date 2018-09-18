@@ -74,7 +74,7 @@ VIC::VIC()
         { &colorLine,                   sizeof(colorLine),                      CLEAR_ON_RESET },
         { &vmli,                        sizeof(vmli),                           CLEAR_ON_RESET },
         { &sr,                          sizeof(sr),                             CLEAR_ON_RESET },
-        { &spriteSr,                   sizeof(spriteSr),                        CLEAR_ON_RESET },
+        { &spriteSrOld,                   sizeof(spriteSrOld),                        CLEAR_ON_RESET },
         { &spriteSpriteCollision,       sizeof(spriteSpriteCollision),          CLEAR_ON_RESET },
         { &spriteBackgroundColllision,  sizeof(spriteBackgroundColllision),     CLEAR_ON_RESET },
 
@@ -809,8 +809,8 @@ VIC::beginRasterline(uint16_t line)
     
     // Prepare sprite pixel shift register
     for (unsigned i = 0; i < 8; i++) {
-        spriteSr[i].remaining_bits = -1;
-        spriteSr[i].colBits = 0;
+        spriteSrOld[i].remaining_bits = -1;
+        spriteSrOld[i].colBits = 0;
     }
     
     // We adjust the position of the first pixel in the pixel buffer to make
