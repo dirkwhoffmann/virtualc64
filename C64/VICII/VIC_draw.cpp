@@ -285,17 +285,6 @@ VIC::drawSprites()
     uint8_t firstDMA = isFirstDMAcycle;
     uint8_t secondDMA = isSecondDMAcycle;
     
-    // Load drawing information for the first pixel
-    /*
-    sprExtraCol1 = reg.delayed.colors[COLREG_SPR_EX1];
-    sprExtraCol2 = reg.delayed.colors[COLREG_SPR_EX2];
-    for (unsigned i = 0; i < 8; i++) {
-        sprCol[i] = reg.delayed.colors[COLREG_SPR0 + i];
-        spriteSr[i].exp = GET_BIT(reg.delayed.sprExpandX, i);
-        spriteSr[i].mc = GET_BIT(reg.delayed.sprMC, i);
-    }
-    */
-    
     // Pixel 0
     drawSpritePixel(0, oldSpriteOnOff, secondDMA, 0);
     
@@ -307,8 +296,8 @@ VIC::drawSprites()
     }
     
     // Pixel 1, Pixel 2, Pixel 3
-    drawSpritePixel(1, oldSpriteOnOff, secondDMA,            0);
-    drawSpritePixel(2, oldSpriteOnOff, secondDMA,            secondDMA);
+    drawSpritePixel(1, oldSpriteOnOff, secondDMA, 0);
+    drawSpritePixel(2, oldSpriteOnOff, secondDMA, secondDMA);
     drawSpritePixel(3, oldSpriteOnOff, firstDMA | secondDMA, 0);
     
     // Load shift register if sprite data has been fetched completely
@@ -361,7 +350,7 @@ VIC::drawSprites()
     }
     
     // Pixel 7
-    drawSpritePixel(7, newSpriteOnOff, firstDMA,              0);
+    drawSpritePixel(7, newSpriteOnOff, firstDMA, 0);
 }
 
 void
@@ -464,11 +453,11 @@ VIC::drawSpritesOld()
 
 void
 VIC::drawSpritePixel(unsigned sprite,
-                             unsigned pixel,
-                             bool enable,
-                             bool freeze,
-                             bool halt,
-                             bool load)
+                     unsigned pixel,
+                     bool enable,
+                     bool freeze,
+                     bool halt,
+                     bool load)
 {
     assert(sprite < 8);
     assert(spriteSr[sprite].remaining_bits >= -1);
