@@ -343,10 +343,10 @@ private:
         // uint8_t spriteColor;
         
         //! @brief    X expansion bit
-        bool exp;
+        // bool exp;
         
         //! @brief    Multicolor bit
-        bool mc;
+        // bool mc;
         
     } spriteSrOld[8];
     
@@ -752,14 +752,7 @@ private:
      *            [3] : color for '11' pixels in multicolor mode
      */
     uint8_t col[4];
-    
-    //! @brief    Sprite colors
-    /*
-    uint64_t sprExtraCol1;
-    uint64_t sprExtraCol2;
-    uint64_t sprCol[8];
-     */
-    
+        
 public:
 	
 	//! @brief    Constructor

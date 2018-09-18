@@ -358,103 +358,6 @@ VIC::drawSprites()
 }
 #endif
 
-#if 0
-void
-VIC::drawSpritesOld()
-{
-    uint8_t oldSpriteOnOff = spriteOnOff.delayed();
-    uint8_t newSpriteOnOff = spriteOnOff.current();
-    assert(oldSpriteOnOff == spriteOnOff.readWithDelay(2));
-
-    // Quick exit
-    /*
-    if (!oldSpriteOnOff && !newSpriteOnOff)
-        return;
-    */
-    
-    uint8_t firstDMA = isFirstDMAcycle;
-    uint8_t secondDMA = isSecondDMAcycle;
-        
-    // For all sprites ...
-    for (unsigned i = 0; i < 8; i++) {
-        
-        bool oldOnOff = GET_BIT(oldSpriteOnOff, i);
-        bool newOnOff = GET_BIT(newSpriteOnOff, i);
-        
-        /*
-        if (!oldOnOff && !newOnOff)
-            continue;
-        */
-        
-        bool firstDMAi = GET_BIT(firstDMA, i);
-        bool secondDMAi = GET_BIT(secondDMA, i);
-        
-        // Load colors for the first pixel
-        sprExtraCol1 = reg.delayed.colors[COLREG_SPR_EX1];
-        sprExtraCol2 = reg.delayed.colors[COLREG_SPR_EX2];
-        sprCol[i] = reg.delayed.colors[COLREG_SPR0 + i];
-        
-        // Prepare sequencer
-        spriteSr[i].exp = GET_BIT(reg.delayed.sprExpandX, i);
-        spriteSr[i].mc = GET_BIT(reg.delayed.sprMC, i);
-        
-        // Draw first pixel
-        // if (oldOnOff)
-        {
-            drawSpritePixel(i, 0, oldOnOff, secondDMAi, 0, 0);
-        }
-        
-        // Load colors for the other pixel
-        sprExtraCol1 = reg.current.colors[COLREG_SPR_EX1];
-        sprExtraCol2 = reg.current.colors[COLREG_SPR_EX2];
-        sprCol[i] = reg.current.colors[COLREG_SPR0 + i];
-        
-        // Draw the next three pixels
-        // if (oldOnOff)
-        {
-            drawSpritePixel(i, 1, oldOnOff, secondDMAi,             0,          0);
-            drawSpritePixel(i, 2, oldOnOff, secondDMAi,             secondDMAi, 0);
-            drawSpritePixel(i, 3, oldOnOff, firstDMAi | secondDMAi, 0,          0);
-        }
-        
-        // Draw the remaining four pixels
-        // if (newOnOff)
-        {
-            drawSpritePixel(i, 4, newOnOff, firstDMAi | secondDMAi, 0, secondDMAi);
-            drawSpritePixel(i, 5, newOnOff, firstDMAi | secondDMAi, 0, 0);
-            
-            // Update X expansion bit
-            spriteSr[i].exp = GET_BIT(reg.current.sprExpandX, i);
-            
-            // Update sprite priority bits
-            COPY_BIT(reg.current.sprPriority, reg.delayed.sprPriority, i);
-            
-            // Update multicolor bit (new VICIIs)
-            if (is856x()) {
-                bool newMC = GET_BIT(reg.current.sprMC, i);
-                if (spriteSr[i].mc != newMC) {
-                    spriteSr[i].mc = newMC;
-                    spriteSr[i].mcFlop ^= ~spriteSr[i].expFlop;
-                }
-            }
-            
-            drawSpritePixel(i, 6, newOnOff, firstDMAi | secondDMAi, 0, 0);
-
-            // Update multicolor bit (old VICIIs)
-            if (is656x()) {
-                bool newMC = GET_BIT(reg.current.sprMC, i);
-                if (spriteSr[i].mc != newMC) {
-                    spriteSr[i].mc = newMC;
-                    spriteSr[i].mcFlop = 0;
-                }
-            }
-
-            drawSpritePixel(i, 7, newOnOff, firstDMAi,              0, 0);
-        }
-    }
-}
-#endif
-
 void
 VIC::drawSpritesOld()
 {
@@ -485,16 +388,9 @@ VIC::drawSpritesOld()
         bool firstDMAi = GET_BIT(firstDMA, i);
         bool secondDMAi = GET_BIT(secondDMA, i);
         
-        // Load colors for the first pixel
-        /*
-        sprExtraCol1 = reg.delayed.colors[COLREG_SPR_EX1];
-        sprExtraCol2 = reg.delayed.colors[COLREG_SPR_EX2];
-        sprCol[i] = reg.delayed.colors[COLREG_SPR0 + i];
-        */
-        
         // Prepare sequencer
-        spriteSrOld[i].exp = GET_BIT(reg.delayed.sprExpandX, i);
-        spriteSrOld[i].mc = GET_BIT(reg.delayed.sprMC, i);
+        // spriteSrOld[i].exp = GET_BIT(reg.delayed.sprExpandX, i);
+        // spriteSrOld[i].mc = GET_BIT(reg.delayed.sprMC, i);
         
         // Draw first pixel
         // if (oldOnOff)
@@ -528,17 +424,18 @@ VIC::drawSpritesOld()
             drawSpritePixel(i, 5, newOnOff, firstDMAi | secondDMAi, 0, 0);
             
             // Update X expansion bit
-            spriteSrOld[i].exp = GET_BIT(reg.current.sprExpandX, i);
+            COPY_BIT(reg.current.sprExpandX, reg.delayed.sprExpandX, i);
             
             // Update sprite priority bits
             COPY_BIT(reg.current.sprPriority, reg.delayed.sprPriority, i);
             
             // Update multicolor bit (new VICIIs)
             if (is856x()) {
+                bool oldMC = GET_BIT(reg.delayed.sprMC, i);
                 bool newMC = GET_BIT(reg.current.sprMC, i);
-                if (spriteSrOld[i].mc != newMC) {
-                    spriteSrOld[i].mc = newMC;
-                    spriteSrOld[i].mcFlop ^= ~spriteSrOld[i].expFlop;
+                if (oldMC != newMC) {
+                    COPY_BIT(reg.current.sprMC, reg.delayed.sprMC, i);
+                    spriteSrOld[i].mcFlop ^= !spriteSrOld[i].expFlop;
                 }
             }
             
@@ -546,9 +443,10 @@ VIC::drawSpritesOld()
             
             // Update multicolor bit (old VICIIs)
             if (is656x()) {
+                bool oldMC = GET_BIT(reg.delayed.sprMC, i);
                 bool newMC = GET_BIT(reg.current.sprMC, i);
-                if (spriteSrOld[i].mc != newMC) {
-                    spriteSrOld[i].mc = newMC;
+                if (oldMC != newMC) {
+                    COPY_BIT(reg.current.sprMC, reg.delayed.sprMC, i);
                     spriteSrOld[i].mcFlop = 0;
                 }
             }
@@ -559,22 +457,23 @@ VIC::drawSpritesOld()
 }
 
 void
-VIC::drawSpritePixel(unsigned spriteNr,
-                             unsigned pixelNr,
+VIC::drawSpritePixel(unsigned sprite,
+                             unsigned pixel,
                              bool enable,
                              bool freeze,
                              bool halt,
                              bool load)
 {
-    assert(spriteNr < 8);
-    assert(spriteSrOld[spriteNr].remaining_bits >= -1);
-    assert(spriteSrOld[spriteNr].remaining_bits <= 26);
+    assert(sprite < 8);
+    assert(spriteSrOld[sprite].remaining_bits >= -1);
+    assert(spriteSrOld[sprite].remaining_bits <= 26);
     
-    bool multicol = spriteSrOld[spriteNr].mc; 
+    bool mCol = GET_BIT(reg.delayed.sprMC, sprite);
+    bool xExp = GET_BIT(reg.delayed.sprExpandX, sprite);
 
     // Load shift register if applicable
     if (load) {
-        loadShiftRegister(spriteNr);
+        loadShiftRegister(sprite);
     }
     
     if (!enable) {
@@ -583,53 +482,53 @@ VIC::drawSpritePixel(unsigned spriteNr,
     
     // Stop shift register if applicable
     if (halt) {
-        spriteSrOld[spriteNr].remaining_bits = -1;
-        spriteSrOld[spriteNr].colBits = 0;
+        spriteSrOld[sprite].remaining_bits = -1;
+        spriteSrOld[sprite].colBits = 0;
     }
     
     // Run shift register if applicable
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (xCounter + pixelNr == reg.delayed.sprX[spriteNr]) {
-            if (spriteSrOld[spriteNr].remaining_bits == -1) {
-                spriteSrOld[spriteNr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
-                spriteSrOld[spriteNr].expFlop = true;
-                spriteSrOld[spriteNr].mcFlop = true;
+        if (xCounter + pixel == reg.delayed.sprX[sprite]) {
+            if (spriteSrOld[sprite].remaining_bits == -1) {
+                spriteSrOld[sprite].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
+                spriteSrOld[sprite].expFlop = true;
+                spriteSrOld[sprite].mcFlop = true;
             }
         }
 
         // Run shift register if there are remaining pixels to draw
-        if (spriteSrOld[spriteNr].remaining_bits > 0) {
+        if (spriteSrOld[sprite].remaining_bits > 0) {
 
             // Determine render mode (single color /multi color) and colors
             
             // Get color bits by shifting sr data by 22 bits if a multi color
             // is rendered or by 23, if single color mode is used.
-            unsigned shift = 22 + (!multicol || !spriteSrOld[spriteNr].mcFlop);
-            spriteSrOld[spriteNr].colBits = spriteSrOld[spriteNr].data >> shift;
+            unsigned shift = 22 + (!mCol || !spriteSrOld[sprite].mcFlop);
+            spriteSrOld[sprite].colBits = spriteSrOld[sprite].data >> shift;
       
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (spriteSrOld[spriteNr].exp)
-                spriteSrOld[spriteNr].expFlop = !spriteSrOld[spriteNr].expFlop;
+            if (xExp)
+                spriteSrOld[sprite].expFlop = !spriteSrOld[sprite].expFlop;
             else
-                spriteSrOld[spriteNr].expFlop = true;
+                spriteSrOld[sprite].expFlop = true;
 
             // Run shift register and toggle multicolor flipflop
-            if (spriteSrOld[spriteNr].expFlop) {
-                spriteSrOld[spriteNr].data <<= 1;
-                spriteSrOld[spriteNr].mcFlop = !spriteSrOld[spriteNr].mcFlop;
-                spriteSrOld[spriteNr].remaining_bits--;
+            if (spriteSrOld[sprite].expFlop) {
+                spriteSrOld[sprite].data <<= 1;
+                spriteSrOld[sprite].mcFlop = !spriteSrOld[sprite].mcFlop;
+                spriteSrOld[sprite].remaining_bits--;
             }
         }
     }
     
     // Draw pixel
     if (!hideSprites) {
-        if (multicol)
-            setMultiColorSpritePixel(spriteNr, pixelNr, spriteSrOld[spriteNr].colBits & 0x03);
+        if (mCol)
+            setMultiColorSpritePixel(sprite, pixel, spriteSrOld[sprite].colBits & 0x03);
         else
-            setSingleColorSpritePixel(spriteNr, pixelNr, spriteSrOld[spriteNr].colBits & 0x01);
+            setSingleColorSpritePixel(sprite, pixel, spriteSrOld[sprite].colBits & 0x01);
     }
 }
 
