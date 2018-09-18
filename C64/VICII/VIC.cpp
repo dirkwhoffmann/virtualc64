@@ -750,8 +750,16 @@ VIC::turnSpritesOnOrOff()
     spriteOnOff.write(onOff);
 }
 
-
-
+void
+VIC::updateSpriteShiftRegisters() {
+    if (isSecondDMAcycle) {
+        for (unsigned sprite = 0; sprite < 8; sprite++) {
+            if (GET_BIT(isSecondDMAcycle, sprite)) {
+                loadShiftRegister(sprite);
+            }
+        }
+    }
+}
 
 void 
 VIC::beginFrame()

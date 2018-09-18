@@ -83,6 +83,7 @@ VIC::cycle1pal()
 
     // Phi1.3 Fetch
     sFinalize(2);
+    loadShiftRegister(2);
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
@@ -143,6 +144,7 @@ VIC::cycle3pal()
 
     // Phi1.3 Fetch
     sFinalize(3);
+    loadShiftRegister(3);
     pAccess(4);
     
     // Phi2.4 BA logic
@@ -187,6 +189,7 @@ VIC::cycle5pal()
 
     // Phi1.3 Fetch
     sFinalize(4);
+    loadShiftRegister(4);
     pAccess(5);
     
     // Phi2.4 BA logic
@@ -230,6 +233,7 @@ VIC::cycle7pal()
 
     // Phi1.3 Fetch
     sFinalize(5);
+    loadShiftRegister(5);
     pAccess(6);
     
     // Phi2.4 BA logic
@@ -273,6 +277,7 @@ VIC::cycle9pal()
 
     // Phi1.3 Fetch
     sFinalize(6);
+    loadShiftRegister(6);
     pAccess(7);
     
     // Phi2.4 BA logic
@@ -316,6 +321,7 @@ VIC::cycle11pal()
     
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     sFinalize(7);
+    loadShiftRegister(7);
     rAccess();
     
     // Phi2.4 BA logic
@@ -696,6 +702,7 @@ VIC::cycle62pal()
 
     // Phi1.3 Fetch
     sFinalize(1);
+    loadShiftRegister(1);
     pAccess(2);
     
     // Phi2.4 BA logic

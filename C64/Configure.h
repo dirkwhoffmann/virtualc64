@@ -62,6 +62,7 @@
 //
 //
 // CLEANUP:
+// Store sprite number in firstDMACycle, secondDMACycle int's. Use -1 if no DMA happens
 // Don't use mount() for inserting disks. Use insertDisk instead
 //
 // OPTIMIZATION:

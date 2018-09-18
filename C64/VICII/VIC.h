@@ -1192,15 +1192,21 @@ private:
      */
     void turnSpritesOnOrOff();
     
-    /*! @brief    Loads the sprite shift register.
+    /*! @brief    Loads a sprite shift register.
      *  @details  The shift register is loaded with the three data bytes fetched
      *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
         spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
-                                      spriteSr[nr].chunk2,
-                                      spriteSr[nr].chunk1);
+                                     spriteSr[nr].chunk2,
+                                     spriteSr[nr].chunk1);
     }
+    
+    /*! @brief    Updates the sprite shift registers.
+     *  @details  Checks if a sprite has completed it's last DMA fetch and
+     *            calls loadShiftRegister accordingly.
+     */
+    void updateSpriteShiftRegisters();
     
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
      *  @details  In cycle 56, register D017 is read and the flipflop gets
@@ -1354,30 +1360,6 @@ private:
                          uint8_t d016,
                          bool loadShiftReg,
                          bool updateColors);
-    
-    /*! @brief    Draws 8 sprite pixels
-     *  @details  Invoked inside draw()
-     *  @deprecated
-     */
-    void drawSpritesOld();
-    
-    /*! @brief    Draws a single sprite pixel for a single sprite
-     *  @param    spritenr Sprite number (0 to 7)
-     *  @param    pixel    Pixel number (0 to 7)
-     *  @param    freeze   If set to true, the sprites shift register will
-     *                     freeze temporarily
-     *  @param    halt     If set to true, the sprites shift shift register will
-     *                     be deactivated
-     *  @param    load     If set to true, the sprites shift shift register will
-     *                     grab new data bits
-     *  @deprecated
-     */
-    void drawSpritePixel(unsigned spritenr,
-                         unsigned pixel,
-                         bool enable,
-                         bool freeze,
-                         bool halt,
-                         bool load);
     
     /*! @brief    Draws all eight sprite pixels for the current cycle
      *  @details  Invoked inside draw()
