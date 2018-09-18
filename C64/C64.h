@@ -157,10 +157,10 @@ public:
     //! @brief    Currently drawn rasterline
     uint16_t rasterline;
     
-    /*! @brief    Currently executed rasterline cycle
+    /*! @brief    Currently executed cycle within rasterline
      *  @details  Range: 1 ... 63 on PAL machines, 1 ... 65 on NTSC machines
      */
-    uint8_t rasterlineCycle;
+    uint8_t rasterCycle;
 
     //! @brief    Duration of a CPU cycle in 1/10 nano second
     uint64_t durationOfCycle;
@@ -473,7 +473,7 @@ public:
     uint16_t getRasterline() { return rasterline; }
 
     //! @brief    Returns the currently executed rasterline clock cycle
-    uint8_t getRasterlineCycle() { return rasterlineCycle; }
+    uint8_t getRasterlineCycle() { return rasterCycle; }
 
     
     //

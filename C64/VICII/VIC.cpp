@@ -445,7 +445,7 @@ VIC::rasterline()
 uint8_t
 VIC::rastercycle()
 {
-    return c64->rasterlineCycle;
+    return c64->rasterCycle;
 }
 
 
@@ -624,7 +624,7 @@ VIC::checkForLightpenIrq()
     // Latch coordinates
     latchedLightPenX = lightpenX() / 2;
     latchedLightPenY = lightpenY();
-    debug("Frame %lld Rasterline %d cycle = %d\n", c64->frame, rasterline(), c64->rasterlineCycle);
+    debug("Frame %lld Rasterline %d cycle = %d\n", c64->frame, rasterline(), c64->rasterCycle);
     debug("Lightpen x / y = %d %d\n", lightpenX() / 2, lightpenY());
     
     // Newer VIC models trigger an interrupt immediately

@@ -28,7 +28,7 @@ VIC::getInfo()
     uint8_t ctrl2 = reg.current.ctrl2;
 
     info.rasterline = c64->rasterline;
-    info.cycle = c64->rasterlineCycle;
+    info.cycle = c64->rasterCycle;
     info.xCounter = xCounter;
     info.badLine = badLine;
     info.ba = (baLine.current() == 0);

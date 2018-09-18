@@ -125,7 +125,7 @@ C64::C64()
         { &durationOfCycle, sizeof(durationOfCycle), KEEP_ON_RESET },
         { &frame,           sizeof(frame),           CLEAR_ON_RESET },
         { &rasterline,      sizeof(rasterline),      CLEAR_ON_RESET },
-        { &rasterlineCycle, sizeof(rasterlineCycle), CLEAR_ON_RESET },
+        { &rasterCycle, sizeof(rasterCycle), CLEAR_ON_RESET },
         { &ultimax,         sizeof(ultimax),         CLEAR_ON_RESET },
         { NULL,             0,                       0 }};
     
@@ -186,7 +186,7 @@ C64::reset()
     bool takeFromRom = mem.getPeekSource(0xFFFC) == M_ROM;
     cpu.setPC(takeFromRom ? 0xFCE2 : LO_HI(mem.spypeek(0xFFFC), mem.spypeek(0xFFFD)));
     
-    rasterlineCycle = 1;
+    rasterCycle = 1;
     nanoTargetTime = 0UL;
     ping();
 }
@@ -220,7 +220,7 @@ C64::dumpState() {
     msg("             Current cycle : %llu\n", cpu.cycle);
     msg("             Current frame : %d\n", frame);
     msg("        Current rasterline : %d\n", rasterline);
-    msg("  Current rasterline cycle : %d\n", rasterlineCycle);
+    msg("  Current rasterline cycle : %d\n", rasterCycle);
     msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");
     
     msg("warp, warpLoad, alwaysWarp : %d %d %d\n", warp, warpLoad, alwaysWarp);
@@ -533,8 +533,8 @@ C64::stepOver()
 bool
 C64::executeOneCycle()
 {
-    bool isFirstCycle = rasterlineCycle == 1;
-    bool isLastCycle = vic.isLastCycleInRasterline(rasterlineCycle);
+    bool isFirstCycle = rasterCycle == 1;
+    bool isLastCycle = vic.isLastCycleInRasterline(rasterCycle);
     
     if (isFirstCycle) beginOfRasterline();
     bool result = _executeOneCycle();
@@ -568,7 +568,7 @@ C64::_executeOneCycle()
     // '-------------------------------------|-------------------|--'
     
     // First clock phase (o2 low)
-    (vic.*vicfunc[rasterlineCycle])();
+    (vic.*vicfunc[rasterCycle])();
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle(); else cia1.idleCounter++;
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle(); else cia2.idleCounter++;
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
@@ -580,18 +580,18 @@ C64::_executeOneCycle()
     // if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
     datasette.execute();
     
-    rasterlineCycle++;
+    rasterCycle++;
     return result;
 }
 
 bool
 C64::executeOneLine()
 {
-    if (rasterlineCycle == 1)
+    if (rasterCycle == 1)
         beginOfRasterline();
 
     int lastCycle = vic.getCyclesPerRasterline();
-    for (unsigned i = rasterlineCycle; i <= lastCycle; i++) {
+    for (unsigned i = rasterCycle; i <= lastCycle; i++) {
         if (!_executeOneCycle()) {
             if (i == lastCycle)
                 endOfRasterline();
@@ -626,7 +626,7 @@ void
 C64::endOfRasterline()
 {
     vic.endRasterline();
-    rasterlineCycle = 1;
+    rasterCycle = 1;
     rasterline++;
     
     if (rasterline >= vic.getRasterlinesPerFrame()) {
