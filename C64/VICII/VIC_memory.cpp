@@ -775,7 +775,7 @@ VIC::sFirstAccess(unsigned sprite)
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
     }
     
-    spriteSrOld[sprite].chunk1 = dataBusPhi2;
+    spriteSr[sprite].chunk1 = dataBusPhi2;
 }
 
 void
@@ -797,7 +797,7 @@ VIC::sSecondAccess(unsigned sprite)
         dataBusPhi1 = memAccess(0x3FFF); // Idle access
     }
     
-    spriteSrOld[sprite].chunk2 = dataBusPhi1;
+    spriteSr[sprite].chunk2 = dataBusPhi1;
 }
 
 void
@@ -812,7 +812,7 @@ VIC::sThirdAccess(unsigned sprite)
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
     }
     
-    spriteSrOld[sprite].chunk3 = dataBusPhi2;
+    spriteSr[sprite].chunk3 = dataBusPhi2;
 }
 
 void VIC::sFinalize(unsigned sprite)

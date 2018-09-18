@@ -338,17 +338,8 @@ private:
          *            cycle (synchronized with mcFlop).
          */
         uint8_t colBits;
-        
-        //! @brief    Sprite color
-        // uint8_t spriteColor;
-        
-        //! @brief    X expansion bit
-        // bool exp;
-        
-        //! @brief    Multicolor bit
-        // bool mc;
-        
-    } spriteSrOld[8];
+                
+    } spriteSr[8];
     
     //! @brief    Sprite-sprite collision register (12)
     uint8_t  spriteSpriteCollision;
@@ -1206,9 +1197,9 @@ private:
      *            in the previous sAccesses.
      */
     void loadShiftRegister(unsigned nr) {
-        spriteSrOld[nr].data = LO_LO_HI(spriteSrOld[nr].chunk3,
-                                      spriteSrOld[nr].chunk2,
-                                      spriteSrOld[nr].chunk1);
+        spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
+                                      spriteSr[nr].chunk2,
+                                      spriteSr[nr].chunk1);
     }
     
     /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
@@ -1290,7 +1281,7 @@ public:
     #define DRAW { draw(); }
     #define DRAW17 { draw17(); }
     #define DRAW55 { draw55(); }
-    #define DRAW_SPRITES { drawSpritesOld(); }
+    #define DRAW_SPRITES { drawSprites(); }
 
     #define C_ACCESS if (badLine) cAccess();
     
@@ -1369,11 +1360,6 @@ private:
      *  @deprecated
      */
     void drawSpritesOld();
-
-    /*! @brief    Draws all eight sprite pixels for the current cycle
-     *  @details  Invoked inside draw()
-     */
-    void drawSprites();
     
     /*! @brief    Draws a single sprite pixel for a single sprite
      *  @param    spritenr Sprite number (0 to 7)
@@ -1384,6 +1370,7 @@ private:
      *                     be deactivated
      *  @param    load     If set to true, the sprites shift shift register will
      *                     grab new data bits
+     *  @deprecated
      */
     void drawSpritePixel(unsigned spritenr,
                          unsigned pixel,
@@ -1392,11 +1379,32 @@ private:
                          bool halt,
                          bool load);
     
+    /*! @brief    Draws all eight sprite pixels for the current cycle
+     *  @details  Invoked inside draw()
+     */
+    void drawSprites();
+    
+    /*! @brief    Draws a single sprite pixel for all sprites
+     *  @param    pixel    Pixel number (0 to 7)
+     *  @param    freezeBits If set to true, the sprites shift register will
+     *                     freeze temporarily
+     *  @param    haltBits  If set to true, the sprites shift shift register will
+     *                     be deactivated
+     *  @param    loadBits  If set to true, the sprites shift shift register will
+     *                     grab new data bits
+     *  @deprecated
+     */
+    void drawSpritePixel(unsigned pixel,
+                         uint8_t enableBits,
+                         uint8_t freezeBits,
+                         uint8_t haltBits,
+                         uint8_t loadBits);
+    
     /*! @brief    Draws all sprites into the pixelbuffer
      *  @details  A sprite is only drawn if it's enabled and if sprite drawing
      *            is not switched off for debugging
      */
-    void drawAllSprites();
+    // void drawAllSprites();
     
     /*! @brief    Draw single sprite into pixel buffer
      *  @details  Helper function for drawSprites
