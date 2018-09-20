@@ -43,7 +43,7 @@ public extension MetalView {
         precondition(device != nil, "Metal device must not be nil")
     
         // Metal layer
-        metalLayer = self.layer as! CAMetalLayer
+        metalLayer = self.layer as? CAMetalLayer
         precondition(metalLayer != nil, "Metal layer must not be nil")
         
         metalLayer.device = device

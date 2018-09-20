@@ -23,7 +23,7 @@ class CartridgeMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        cartridge = controller.mydocument.attachment as! CRTProxy
+        cartridge = controller.mydocument.attachment as? CRTProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
         

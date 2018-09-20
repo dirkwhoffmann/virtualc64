@@ -28,7 +28,7 @@ class ArchiveMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        archive = controller.mydocument.attachment as! ArchiveProxy
+        archive = controller.mydocument.attachment as? ArchiveProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     

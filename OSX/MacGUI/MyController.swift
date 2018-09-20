@@ -833,7 +833,7 @@ extension MyController {
             if disk != nil {
                 drive.prepareToInsert()
                 usleep(300000)
-                drive.insertDisk(disk as! ArchiveProxy)
+                drive.insertDisk(disk as? ArchiveProxy)
             }
         }
     }
