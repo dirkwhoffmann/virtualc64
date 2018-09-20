@@ -617,7 +617,6 @@ struct ContainerWrapper;
 - (void) setWarpLoad:(BOOL)b;
 
 - (UInt64) cycles;
-- (UInt64) frames;
 
 // Snapshot storage
 - (void) disableAutoSnapshots;

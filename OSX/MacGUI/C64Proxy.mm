@@ -814,7 +814,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
 
 - (UInt64) cycles { return wrapper->c64->currentCycle(); }
-- (UInt64) frames { return wrapper->c64->getFrame(); }
 
 // Snapshot storage
 - (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }

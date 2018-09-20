@@ -155,7 +155,7 @@ public:
     uint64_t frame;
     
     //! @brief    Currently drawn rasterline
-    uint16_t rasterline;
+    uint16_t rasterLine;
     
     /*! @brief    Currently executed cycle within rasterline
      *  @details  Range: 1 ... 63 on PAL machines, 1 ... 65 on NTSC machines
@@ -406,17 +406,14 @@ private:
     //! @brief    Work horse for executeOneCycle()
     bool _executeOneCycle();
 
-    //! @brief    Work horse for executeOneCycle()
-    // bool executeCommons();
-
     //! @brief    Invoked before executing the first cycle of rasterline
-    void beginOfRasterline();
+    void beginRasterLine();
     
     //! @brief    Invoked after executing the last cycle of rasterline
-    void endOfRasterline();
+    void endRasterLine();
 
     //! @brief    Invoked after executing the last rasterline of a frame
-    void endOfFrame();
+    void endFrame();
 
     
     //
@@ -467,13 +464,13 @@ public:
     uint64_t currentCycle() { return cpu.cycle; }
     
     //! @brief    Returns the number of the currently drawn frame.
-    uint64_t getFrame() { return frame; }
+    // uint64_t getFrame() { return frame; }
     
     //! @brief    Returns the number of the currently drawn rasterline.
-    uint16_t getRasterline() { return rasterline; }
+    // uint16_t getRasterline() { return rasterLine; }
 
     //! @brief    Returns the currently executed rasterline clock cycle
-    uint8_t getRasterlineCycle() { return rasterCycle; }
+    // uint8_t getRasterlineCycle() { return rasterCycle; }
 
     
     //

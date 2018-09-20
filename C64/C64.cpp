@@ -124,7 +124,7 @@ C64::C64()
         { &warpLoad,        sizeof(warpLoad),        KEEP_ON_RESET },
         { &durationOfCycle, sizeof(durationOfCycle), KEEP_ON_RESET },
         { &frame,           sizeof(frame),           CLEAR_ON_RESET },
-        { &rasterline,      sizeof(rasterline),      CLEAR_ON_RESET },
+        { &rasterLine,      sizeof(rasterLine),      CLEAR_ON_RESET },
         { &rasterCycle, sizeof(rasterCycle), CLEAR_ON_RESET },
         { &ultimax,         sizeof(ultimax),         CLEAR_ON_RESET },
         { NULL,             0,                       0 }};
@@ -219,7 +219,7 @@ C64::dumpState() {
     msg("     Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
     msg("             Current cycle : %llu\n", cpu.cycle);
     msg("             Current frame : %d\n", frame);
-    msg("        Current rasterline : %d\n", rasterline);
+    msg("        Current rasterline : %d\n", rasterLine);
     msg("  Current rasterline cycle : %d\n", rasterCycle);
     msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");
     
@@ -536,9 +536,9 @@ C64::executeOneCycle()
     bool isFirstCycle = rasterCycle == 1;
     bool isLastCycle = vic.isLastCycleInRasterline(rasterCycle);
     
-    if (isFirstCycle) beginOfRasterline();
+    if (isFirstCycle) beginRasterLine();
     bool result = _executeOneCycle();
-    if (isLastCycle) endOfRasterline();
+    if (isLastCycle) endRasterLine();
     
     return result;
 }
@@ -588,17 +588,17 @@ bool
 C64::executeOneLine()
 {
     if (rasterCycle == 1)
-        beginOfRasterline();
+        beginRasterLine();
 
     int lastCycle = vic.getCyclesPerRasterline();
     for (unsigned i = rasterCycle; i <= lastCycle; i++) {
         if (!_executeOneCycle()) {
             if (i == lastCycle)
-                endOfRasterline();
+                endRasterLine();
             return false;
         }
     }
-    endOfRasterline();
+    endRasterLine();
     return true;
 }
 
@@ -608,35 +608,35 @@ C64::executeOneFrame()
     do {
         if (!executeOneLine())
             return false;
-    } while (rasterline != 0);
+    } while (rasterLine != 0);
     return true;
 }
 
 void
-C64::beginOfRasterline()
+C64::beginRasterLine()
 {
     // First cycle of rasterline
-    if (rasterline == 0) {
+    if (rasterLine == 0) {
         vic.beginFrame();
     }
-    vic.beginRasterline(rasterline);
+    vic.beginRasterline(rasterLine);
 }
 
 void
-C64::endOfRasterline()
+C64::endRasterLine()
 {
     vic.endRasterline();
     rasterCycle = 1;
-    rasterline++;
+    rasterLine++;
     
-    if (rasterline >= vic.getRasterlinesPerFrame()) {
-        rasterline = 0;
-        endOfFrame();
+    if (rasterLine >= vic.getRasterlinesPerFrame()) {
+        rasterLine = 0;
+        endFrame();
     }
 }
 
 void
-C64::endOfFrame()
+C64::endFrame()
 {
     frame++;
     vic.endFrame();

@@ -80,7 +80,7 @@ ControlPort::dumpState()
 void
 ControlPort::scheduleNextShot()
 {
-    nextAutofireFrame = c64->getFrame() +
+    nextAutofireFrame = c64->frame +
     (int)(c64->vic.getFramesPerSecond() / (2 * autofireFrequency));
 }
 
@@ -91,7 +91,7 @@ ControlPort::execute()
         return;
   
     // Wait until it's time to push or release fire
-    if (c64->getFrame() != nextAutofireFrame)
+    if (c64->frame != nextAutofireFrame)
         return;
     
     // Are there any bullets left?

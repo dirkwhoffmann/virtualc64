@@ -87,7 +87,7 @@ VIC::cycle1pal()
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (c64->getRasterline() != 0);
+    bool edgeOnYCounter = (c64->rasterLine != 0);
     bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
     if (edgeOnYCounter && edgeOnIrqCond)
         triggerIrq(1);

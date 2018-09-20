@@ -439,7 +439,7 @@ VIC::resetScreenBuffers()
 uint16_t
 VIC::rasterline()
 {
-    return c64->rasterline;
+    return c64->rasterLine;
 }
 
 uint8_t
@@ -561,7 +561,7 @@ VIC::triggerIrq(uint8_t source)
 uint16_t
 VIC::lightpenX()
 {
-    uint8_t cycle = c64->getRasterlineCycle();
+    uint8_t cycle = c64->rasterCycle; 
     
     switch (chipModel) {
             
@@ -608,7 +608,7 @@ VIC::setLP(bool value)
 void
 VIC::checkForLightpenIrq()
 {
-    uint8_t vicCycle = c64->getRasterlineCycle();
+    uint8_t vicCycle = c64->rasterCycle;
     // debug("Negative LP transition at rastercycle %d\n", vicCycle);
 
     // An interrupt is suppressed if ...
@@ -638,8 +638,8 @@ void
 VIC::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
-    assert(c64->getRasterline() == 0);
-    assert(c64->getRasterlineCycle() == 1);
+    assert(c64->rasterLine == 0);
+    assert(c64->rasterCycle == 1);
     assert(lightpenIRQhasOccured == false);
  
     // Do we latch a new coordinate here? 
@@ -851,7 +851,7 @@ VIC::endRasterline()
         expandBorders();
         
         // Advance pixelBuffer
-        uint16_t nextline = c64->getRasterline() - PAL_UPPER_VBLANK + 1;
+        uint16_t nextline = c64->rasterLine - PAL_UPPER_VBLANK + 1;
         if (nextline < PAL_RASTERLINES) {
             pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
         }
