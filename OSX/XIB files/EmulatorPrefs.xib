@@ -295,12 +295,12 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GFQ-XE-Kwn">
                         <rect key="frame" x="386" y="382" width="139" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="zdp-3P-PHa" id="GuN-E2-8kC">
+                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="zdp-3P-PHa" id="GuN-E2-8kC">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" autoenablesItems="NO" id="ZHY-Jf-Mks">
                                 <items>
-                                    <menuItem title="None" id="zdp-3P-PHa">
+                                    <menuItem title="None" state="on" id="zdp-3P-PHa">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="Smooth" tag="1" id="kWS-uo-eBS">
@@ -366,13 +366,16 @@ Gw
                                     <menuItem title="Black and White" tag="1" id="BTr-uV-iMG">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Green" tag="2" id="lOv-20-0CR">
+                                    <menuItem title="Paper White" tag="2" id="fdj-JM-CfA">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Amber" tag="3" id="2va-GC-cU1">
+                                    <menuItem title="Green" tag="3" id="lOv-20-0CR">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Sepia" tag="4" id="yfC-lp-QRZ">
+                                    <menuItem title="Amber" tag="4" id="2va-GC-cU1">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Sepia" tag="5" id="yfC-lp-QRZ">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>

@@ -276,6 +276,7 @@ inline bool isVICChhipModel(VICChipModel model) {
 typedef enum {
     COLOR_PALETTE = 0,
     BLACK_WHITE_PALETTE,
+    PAPER_WHITE_PALETTE,
     GREEN_PALETTE,
     AMBER_PALETTE,
     SEPIA_PALETTE

@@ -222,7 +222,12 @@ VIC::updatePalette()
                 u[i] = 0.0;
                 v[i] = 0.0;
                 break;
-                
+
+            case PAPER_WHITE_PALETTE:
+                u[i] = -128.0 + 120.0;
+                v[i] = -128.0 + 133.0;
+                break;
+
             case GREEN_PALETTE:
                 u[i] = -128.0 + 29.0;
                 v[i] = -128.0 + 64.0;
