@@ -234,37 +234,6 @@ class BlurFilter : ComputeKernel {
     }
 }
 
-
-class SaturationFilter : ComputeKernel {
-
-    var uniformBuffer : MTLBuffer!
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary, factor: Float) {
-        
-        self.init(name: "saturation", device: device, library: library)
-        
-        // Setup uniform buffer
-        let floatSize = MemoryLayout<Float>.size
-        let uniformsStructSize = floatSize
-        uniformBuffer = device.makeBuffer(length: uniformsStructSize)
-        let bufferPointer = uniformBuffer?.contents()
-        var value = factor
-        memcpy(bufferPointer, &value, floatSize)
-    }
-    
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
-        
-        encoder.setBuffer(uniformBuffer, offset: 0, index: 0)
-    }
-}
-
-class SepiaFilter : ComputeKernel {
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "sepia", device: device, library: library)
-    }
-}
-
 class CrtFilter : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {

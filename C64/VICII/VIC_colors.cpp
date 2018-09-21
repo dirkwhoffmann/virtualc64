@@ -265,48 +265,6 @@ VIC::updatePalette()
         uint32_t rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
         rgbaTable[i] = rgba;
     }
-    
-    // Translate palette for monochrome monitors
-    /* EXPERIMENTAL
-    uint32_t blackWhiteDark = LO_LO_HI_HI(0, 0, 0, 255);
-    uint32_t blackWhiteLight = LO_LO_HI_HI(255, 255, 255, 255);
-    
-    uint32_t greenDark = LO_LO_HI_HI(0, 0, 0, 255);
-    uint32_t greenLight = LO_LO_HI_HI(175, 251, 180, 255);
-    
-    uint32_t sepiaDark = LO_LO_HI_HI(51, 13, 0, 255);
-    uint32_t sepiaLight = LO_LO_HI_HI(255, 230, 128, 255);
-    
-    // uint32_t sepiaDark = LO_LO_HI_HI(0, 51, 13, 255);
-    // uint32_t sepiaLight = LO_LO_HI_HI(128, 230, 155, 255);
-    
-    makePaletteMonochrome(sepiaLight, sepiaDark);
-    makePaletteMonochrome(greenLight, greenDark);
-    makePaletteMonochrome(blackWhiteLight, blackWhiteDark);
-    */
 }
 
-void
-VIC::makePaletteMonochrome(uint32_t lightRgba, uint32_t darkRgba)
-{
-    uint8_t col[3];
-
-    for (unsigned i = 0; i < 16; i++) {
-
-        double r = BYTE0(rgbaTable[i]) / 255.0;
-        double g = BYTE1(rgbaTable[i]) / 255.0;
-        double b = BYTE2(rgbaTable[i]) / 255.0;
-        debug("r = %f g = %f b = %f\n", r, g, b);
-        double brightness = r * 0.299 + g * 0.587 + b * 0.114;
-
-        for (unsigned j = 0; j < 3; j++) {
-            uint8_t l = (lightRgba >> (j * 8)) & 0xFF;
-            uint8_t d = (darkRgba >> (j * 8)) & 0xFF;
-            col[j] = (uint8_t)(d + (l - d) * brightness);
-            debug("col[%d] = %d\n", j, col[j]);
-        }
-        debug("%d: brightness = %f (%d, %d, %d)\n", i, brightness, col[0], col[1], col[2]);
-        rgbaTable[i] = LO_LO_HI_HI(col[0], col[1], col[2], 0xFF);
-    }
-}
 

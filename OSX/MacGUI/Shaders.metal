@@ -30,10 +30,6 @@ struct ProjectedVertex {
     float  alpha;
 };
 
-
-//vertex ProjectedVertex vertex_main(constant InVertex *vertices [[buffer(0)]],
-//                                   constant Uniforms &uniforms [[buffer(1)]],
-//                                   ushort vid [[vertex_id]])
 vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
                                    constant Uniforms &uniforms [[buffer(1)]],
                                    ushort vid [[vertex_id]])
@@ -54,9 +50,9 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 
-// --------------------------------------------------------------------------------------------
-//                      Texture upscalers (first post-processing stage)
-// --------------------------------------------------------------------------------------------
+//
+// Texture upscalers (first post-processing stage)
+//
 
 kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                            texture2d<half, access::write> outTexture  [[ texture(1) ]],
@@ -240,9 +236,9 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
 }
 
 
-// --------------------------------------------------------------------------------------------
-//                      Texture filter (second post-processing stage)
-// --------------------------------------------------------------------------------------------
+//
+// Texture filter (second post-processing stage)
+//
 
 //
 // Bypass filter
@@ -256,32 +252,6 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     outTexture.write(result, gid);
 }
 
-//
-// Saturation filter
-//
-
-struct SaturationFilterUniforms
-{
-    float saturationFactor;
-};
-
-// LUMA values for grayscale image conversion
-constant half3 luma = half3(0.2126, 0.7152, 0.0722);
-// constant half3 luma = half3(0.299, 0.587, 0.114);
-
-kernel void saturation(texture2d<half, access::read>  inTexture    [[ texture(0) ]],
-                       texture2d<half, access::write> outTexture   [[ texture(1) ]],
-                       constant SaturationFilterUniforms &uniforms [[buffer(0)]],
-                       uint2                          gid          [[ thread_position_in_grid ]])
-{
-    half  factor   = uniforms.saturationFactor;
-    half4 inColor  = inTexture.read(gid);
-    half  gray     = dot(inColor.rgb, luma);
-    half4 grayColor(gray, gray, gray, 1.0);
-    half4 outColor = mix(grayColor, inColor, factor);
-        
-    outTexture.write(outColor, gid);
-}
 
 //
 // Gaussian blur filter
@@ -310,25 +280,6 @@ kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
     outTexture.write(float4(accumColor.rgb, 1), gid);
 }
 
-//
-// Sepia filter
-//
-
-constant half4 darkColor = half4(0.2, 0.05, 0.0, 1.0);
-constant half4 lightColor = half4(1.0, 0.9, 0.5, 1.0);
-
-kernel void sepia(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
-                  texture2d<half, access::write> outTexture  [[ texture(1) ]],
-                  uint2                          gid         [[ thread_position_in_grid ]])
-{
-    half4 inColor = inTexture.read(gid);
-    half  brightness = dot(inColor.rgb, half3(0.299, 0.587, 0.114));
-    half4 muted = mix(inColor, half4(brightness,brightness,brightness,1.0), half(0.5));
-    half4 sepia = mix(darkColor, lightColor, brightness);
-    half4 result = mix(muted, sepia, half(1.0));
-        
-    outTexture.write(result, gid);
-}
 
 //
 // Simple CRT filter
@@ -356,5 +307,3 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     
     outTexture.write(result, gid);
 }
-
-

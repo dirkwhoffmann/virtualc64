@@ -80,7 +80,7 @@ public class MetalView: MTKView {
     var upscalers = [ComputeKernel?](repeating: nil, count: 3)
  
     /// Array holding all available filters
-    var filters = [ComputeKernel?](repeating: nil, count: 7)
+    var filters = [ComputeKernel?](repeating: nil, count: 4)
     
     // Animation parameters
     var currentXAngle = Float(0.0)

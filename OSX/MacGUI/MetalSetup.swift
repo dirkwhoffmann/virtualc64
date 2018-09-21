@@ -113,12 +113,8 @@ public extension MetalView {
         
         // Build filters
         filters[0] = BypassFilter.init(device: device!, library: library)
-        filters[1] = SaturationFilter.init(device: device!, library: library, factor: 1.0)
         filters[2] = BlurFilter.init(device: device!, library: library, radius: 3.0)
-        filters[3] = SaturationFilter.init(device: device!, library: library, factor: 0.5)
-        filters[4] = SepiaFilter.init(device: device!, library: library)
-        filters[5] = SaturationFilter.init(device: device!, library: library, factor: 0.0)
-        filters[6] = CrtFilter.init(device: device!, library: library)
+        filters[3] = CrtFilter.init(device: device!, library: library)
     }
     
     func buildBuffers() {

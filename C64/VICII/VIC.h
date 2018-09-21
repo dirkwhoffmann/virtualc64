@@ -883,12 +883,6 @@ private:
      */
     void updatePalette();
 
-    /*! @brief    Makes the current color palette monochrome.
-     *! @details  This method is called inside updatePalette to emulate
-     *            monochrome monitors.
-     */
-    void makePaletteMonochrome(uint32_t lightRgba, uint32_t darkRgba);
-
     
     //
     //! @functiongroup Accessing memory (VIC_memory.cpp)
