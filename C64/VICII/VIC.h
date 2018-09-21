@@ -1443,7 +1443,7 @@ private:
      *            sprite/foreground collision detection in border area.
      */
     #define SET_FRAME_PIXEL(pixel,color) { \
-        COLORIZE(pixel,color) \
+        COLORIZE(pixel, color); \
         zBuffer[pixel] = BORDER_LAYER_DEPTH; \
         pixelSource[pixel] &= (~0x80); }
     

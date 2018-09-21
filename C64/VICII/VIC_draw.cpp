@@ -118,10 +118,9 @@ VIC::drawCanvas()
          *  current background color is displayed (this area is normally covered
          *  by the border)." [C.B.]
          */
-        // TODO: This is wrong, border-bm-idle test fails
-        SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BG0]);
+        SET_BACKGROUND_PIXEL(0, col[0]);
         for (unsigned pixel = 1; pixel < 8; pixel++) {
-            SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BG0]);
+            SET_BACKGROUND_PIXEL(pixel, col[0]);
         }
         return;
     }
