@@ -153,6 +153,8 @@ struct ContainerWrapper;
 
 - (NSInteger) chipModel;
 - (void) setChipModel:(NSInteger)value;
+- (NSInteger) videoPalette;
+- (void) setVideoPalette:(NSInteger)value;
 - (NSInteger) glueLogic;
 - (void) setGlueLogic:(NSInteger)value;
 - (BOOL) hasGrayDotBug;
@@ -163,7 +165,6 @@ struct ContainerWrapper;
 
 - (void *) screenBuffer;
 - (NSColor *) color:(NSInteger)nr;
-// - (void) updatePalette:(double)b contrast:(double)c saturation:(double)s;
 - (double)brightness;
 - (void)setBrightness:(double)value;
 - (double)contrast;

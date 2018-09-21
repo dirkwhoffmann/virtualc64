@@ -67,6 +67,8 @@ VIC::setSaturation(double value)
 void
 VIC::updatePalette()
 {
+    double y[16], u[16], v[16];
+    
     // LUMA levels (varies between VICII models)
     #define LUMA_VICE(x,y,z) ((double)(x - y) * 256)/((double)(z - y))
     #define LUMA_COLORES(x) (x * 7.96875)
@@ -197,23 +199,56 @@ VIC::updatePalette()
     // Compute all sixteen colors
     for (unsigned i = 0; i < 16; i++) {
         
-        // Compute YUV values
+        // Compute Y, U, and V
         double ang = angle[i];
-        double y = luma[i];
-        double u = isnan(ang) ? 0 : cos(ang) * saturation;
-        double v = isnan(ang) ? 0 : sin(ang) * saturation;
+        y[i] = luma[i];
+        u[i] = isnan(ang) ? 0 : cos(ang) * saturation;
+        v[i] = isnan(ang) ? 0 : sin(ang) * saturation;
         
         // Apply brightness and contrast
-        y *= contrast;
-        u *= contrast;
-        v *= contrast;
-        y += brightness;
+        y[i] *= contrast;
+        u[i] *= contrast;
+        v[i] *= contrast;
+        y[i] += brightness;
         // debug("%d: angle = %f y = %f u = %f v = %f\n", i, angle[i], y, u, v);
+    }
+    
+    // Translate to monochrome if applicable
+    for (unsigned i = 0; i < 16; i++) {
 
-        // Convert YUV to RGB
-        double r = y             + 1.140 * v;
-        double g = y - 0.396 * u - 0.581 * v;
-        double b = y + 2.029 * u;
+        switch(palette) {
+
+            case BLACK_WHITE_PALETTE:
+                u[i] = 0.0;
+                v[i] = 0.0;
+                break;
+                
+            case GREEN_PALETTE:
+                u[i] = -128.0 + 29.0;
+                v[i] = -128.0 + 64.0;
+                break;
+                
+            case AMBER_PALETTE:
+                u[i] = -128.0 + 24.0;
+                v[i] = -128.0 + 178.0;
+                break;
+                
+            case SEPIA_PALETTE:
+                u[i] = -128.0 + 97.0;
+                v[i] = -128.0 + 154.0;
+                break;
+                
+            default:
+                assert(palette == COLOR_PALETTE);
+        }
+    }
+    
+    // Convert YUV values to RGB
+    for (unsigned i = 0; i < 16; i++) {
+    
+        double r = y[i]                + 1.140 * v[i];
+        double g = y[i] - 0.396 * u[i] - 0.581 * v[i];
+        double b = y[i] + 2.029 * u[i];
         r = MAX(MIN(r, 255), 0);
         g = MAX(MIN(g, 255), 0);
         b = MAX(MIN(b, 255), 0);
@@ -226,14 +261,52 @@ VIC::updatePalette()
             b = gammaCorrect(b, 2.8, 2.2);
         }
         
-        // Clamp values to avoid jumping colors
-        
-        // debug("%d: r = %f g = %f b = %f\n", i, r, g, b);
-        // debug("%d: R = %d G = %d B = %d\n", i, (int)r, (int)g, (int)b);
-        
         // Store result
         uint32_t rgba = LO_LO_HI_HI((uint8_t)r, (uint8_t)g, (uint8_t)b, 0xFF);
         rgbaTable[i] = rgba;
+    }
+    
+    // Translate palette for monochrome monitors
+    /* EXPERIMENTAL
+    uint32_t blackWhiteDark = LO_LO_HI_HI(0, 0, 0, 255);
+    uint32_t blackWhiteLight = LO_LO_HI_HI(255, 255, 255, 255);
+    
+    uint32_t greenDark = LO_LO_HI_HI(0, 0, 0, 255);
+    uint32_t greenLight = LO_LO_HI_HI(175, 251, 180, 255);
+    
+    uint32_t sepiaDark = LO_LO_HI_HI(51, 13, 0, 255);
+    uint32_t sepiaLight = LO_LO_HI_HI(255, 230, 128, 255);
+    
+    // uint32_t sepiaDark = LO_LO_HI_HI(0, 51, 13, 255);
+    // uint32_t sepiaLight = LO_LO_HI_HI(128, 230, 155, 255);
+    
+    makePaletteMonochrome(sepiaLight, sepiaDark);
+    makePaletteMonochrome(greenLight, greenDark);
+    makePaletteMonochrome(blackWhiteLight, blackWhiteDark);
+    */
+}
+
+void
+VIC::makePaletteMonochrome(uint32_t lightRgba, uint32_t darkRgba)
+{
+    uint8_t col[3];
+
+    for (unsigned i = 0; i < 16; i++) {
+
+        double r = BYTE0(rgbaTable[i]) / 255.0;
+        double g = BYTE1(rgbaTable[i]) / 255.0;
+        double b = BYTE2(rgbaTable[i]) / 255.0;
+        debug("r = %f g = %f b = %f\n", r, g, b);
+        double brightness = r * 0.299 + g * 0.587 + b * 0.114;
+
+        for (unsigned j = 0; j < 3; j++) {
+            uint8_t l = (lightRgba >> (j * 8)) & 0xFF;
+            uint8_t d = (darkRgba >> (j * 8)) & 0xFF;
+            col[j] = (uint8_t)(d + (l - d) * brightness);
+            debug("col[%d] = %d\n", j, col[j]);
+        }
+        debug("%d: brightness = %f (%d, %d, %d)\n", i, brightness, col[0], col[1], col[2]);
+        rgbaTable[i] = LO_LO_HI_HI(col[0], col[1], col[2], 0xFF);
     }
 }
 

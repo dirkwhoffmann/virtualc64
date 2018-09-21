@@ -329,6 +329,18 @@ VIC::setChipModel(VICChipModel model)
 }
 
 void
+VIC::setVideoPalette(VICPalette type)
+{
+    if (!isVICPalette(type)) {
+        warn("Unknown palette type (%d). Assuming color palette.\n", type);
+        type = COLOR_PALETTE;
+    }
+    
+    palette = type;
+    updatePalette();
+}
+
+void
 VIC::setGlueLogic(GlueLogic type)
 {
     debug(2, "VIC::setGlueLogic(%d)\n", type);

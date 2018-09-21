@@ -37,6 +37,7 @@ struct VC64Keys {
     static let brightness        = "VC64BrightnessKey"
     static let contrast          = "VC64ContrastKey"
     static let saturation        = "VC64SaturationKey"
+    static let videoPalette      = "VC64PaletteKey"
     static let videoUpscaler     = "VC64UpscalerKey"
     static let videoFilter       = "VC64FilterKey"
     static let aspectRatio       = "VC64FullscreenKeepAspectRatioKey"
@@ -124,6 +125,7 @@ extension MyController {
             VC64Keys.brightness: 50.0,
             VC64Keys.contrast: 100.0,
             VC64Keys.saturation: 50.0,
+            VC64Keys.videoPalette: COLOR_PALETTE.rawValue,
             VC64Keys.videoUpscaler: 0,
             VC64Keys.videoFilter: 1,
             VC64Keys.aspectRatio: false,
@@ -228,6 +230,7 @@ extension MyController {
         c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
         c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
+        c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.videoPalette))
         metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
         metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
@@ -348,6 +351,7 @@ extension MyController {
         defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
         defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
+        defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.videoPalette)
         defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
         defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
         defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)

@@ -270,6 +270,21 @@ inline bool isVICChhipModel(VICChipModel model) {
     (model == NTSC_8562);
 }
 
+//! @brief    Color palette type
+/*! @details  Used to emulate monochrome displays
+ */
+typedef enum {
+    COLOR_PALETTE = 0,
+    BLACK_WHITE_PALETTE,
+    GREEN_PALETTE,
+    AMBER_PALETTE,
+    SEPIA_PALETTE
+} VICPalette;
+
+inline bool isVICPalette(VICPalette model) {
+    return model >= COLOR_PALETTE && model <= SEPIA_PALETTE;
+}
+
 //! @brief    Glue logic type
 typedef enum {
     GLUE_DISCRETE = 0,

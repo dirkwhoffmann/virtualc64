@@ -36,9 +36,10 @@ class HardwarePrefsController : UserDialogController {
     func update() {
         
         // VIC
-        let vic = c64.vic.chipModel()
-        vicModel.selectItem(withTag: vic)
-        switch (UInt32(vic)) {
+        let model = c64.vic.chipModel()
+        vicModel.selectItem(withTag: model)
+        
+        switch (UInt32(model)) {
             
         case PAL_6569_R1.rawValue,
              PAL_6569_R3.rawValue,

@@ -76,6 +76,9 @@ private:
     //! @brief    Selected chip model
     VICChipModel chipModel;
 
+    //! @brief    Color palette type
+    VICPalette palette;
+
     //! @brief    Glue logic type
     GlueLogic glueLogic;
 
@@ -772,6 +775,12 @@ public:
     //! @brief    Sets the chip model.
     void setChipModel(VICChipModel model);
 
+    //! @brief    Returns the currently used palette type.
+    VICPalette videoPalette() { return palette; }
+    
+    //! @brief    Sets the palette type.
+    void setVideoPalette(VICPalette type);
+
     //! @brief    Returns the emulated glue logic type.
     GlueLogic getGlueLogic() { return glueLogic; }
 
@@ -873,7 +882,13 @@ private:
      *! @details  The base palette is determined by the selected VICII model.
      */
     void updatePalette();
-    
+
+    /*! @brief    Makes the current color palette monochrome.
+     *! @details  This method is called inside updatePalette to emulate
+     *            monochrome monitors.
+     */
+    void makePaletteMonochrome(uint32_t lightRgba, uint32_t darkRgba);
+
     
     //
     //! @functiongroup Accessing memory (VIC_memory.cpp)

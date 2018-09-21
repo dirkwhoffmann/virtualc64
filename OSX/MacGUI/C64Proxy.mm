@@ -195,6 +195,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSInteger) chipModel { return (NSInteger)wrapper->vic->getChipModel(); }
 - (void) setChipModel:(NSInteger)value { wrapper->vic->setChipModel((VICChipModel)value); }
+- (NSInteger) videoPalette { return (NSInteger)wrapper->vic->videoPalette(); }
+- (void) setVideoPalette:(NSInteger)value { wrapper->vic->setVideoPalette((VICPalette)value); }
 - (NSInteger) glueLogic { return (NSInteger)wrapper->vic->getGlueLogic(); }
 - (void) setGlueLogic:(NSInteger)value { wrapper->vic->setGlueLogic((GlueLogic)value); }
 - (BOOL) hasGrayDotBug { return wrapper->vic->hasGrayDotBug(); }

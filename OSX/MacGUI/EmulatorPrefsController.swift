@@ -54,6 +54,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var brightnessSlider: NSSlider!
     @IBOutlet weak var contrastSlider: NSSlider!
     @IBOutlet weak var saturationSlider: NSSlider!
+    @IBOutlet weak var palette: NSPopUpButton!
     @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var filter: NSPopUpButton!
     @IBOutlet weak var colorWell0: NSColorWell!
@@ -112,6 +113,7 @@ class EmulatorPrefsController : UserDialogController {
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
+        palette.selectItem(withTag: document.c64.vic.videoPalette())
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         filter.selectItem(withTag: parent.metalScreen.videoFilter)
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
@@ -208,7 +210,14 @@ class EmulatorPrefsController : UserDialogController {
     //
     // Action methods (Video settings)
     //
-    
+
+    @IBAction func setPaletteAction(_ sender: NSPopUpButton!) {
+        
+        let document = parent.document as! MyDocument
+        document.c64.vic.setVideoPalette(sender.selectedTag())
+        update()
+    }
+
     @IBAction func setUpscalerAction(_ sender: NSPopUpButton!) {
     
         parent.metalScreen.videoUpscaler = sender.selectedTag()
@@ -340,6 +349,7 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.setEyeX(0.0)
         parent.metalScreen.setEyeY(0.0)
         parent.metalScreen.setEyeZ(0.0)
+        c64.vic.setVideoPalette(Int(COLOR_PALETTE.rawValue))
         parent.metalScreen.videoUpscaler = 0
         parent.metalScreen.videoFilter = 1
         c64.vic.setBrightness(50.0)
