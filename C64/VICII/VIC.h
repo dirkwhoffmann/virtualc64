@@ -1423,9 +1423,10 @@ private:
     /*! @brief    Draws a single sprite pixel
      *  @details  This function is invoked by setSingleColorSpritePixel() and
      *            setMultiColorSpritePixel(). It takes care of collison and invokes
-     *            setSpritePixel(4) to actually render the pixel.
+     *            setSpritePixel to actually render the pixel.
+     * @deprecated Call setSpritePixel directly
      */
-    void drawSpritePixel(unsigned pixel, uint8_t color, int nr);
+    // void drawSpritePixel(unsigned pixel, uint8_t color, int nr);
     
     
     //
@@ -1464,7 +1465,7 @@ private:
         pixelSource[pixel] = 0x00; }
     
     //! @brief    Draw a single sprite pixel
-    void setSpritePixel(unsigned pixel, uint8_t color, int depth, int source);
+    void setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color);
     
     /*! @brief    Copies eight synthesized pixels into to the pixel buffer.
      *  @details  Each pixel is first translated to the corresponding RGBA value

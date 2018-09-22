@@ -489,7 +489,7 @@ void
 VIC::setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit)
 {
     if (bit) {
-        drawSpritePixel(pixel, reg.delayed.colors[COLREG_SPR0 + sprite], sprite);
+        setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
     }
 }
 
@@ -500,26 +500,19 @@ VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
             
         case 0x01:
            
-            drawSpritePixel(pixel, reg.delayed.colors[COLREG_SPR_EX1], sprite);
+            setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX1]);
             break;
             
         case 0x02:
             
-            drawSpritePixel(pixel, reg.delayed.colors[COLREG_SPR0 + sprite], sprite);
+            setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
             break;
             
         case 0x03:
             
-            drawSpritePixel(pixel, reg.delayed.colors[COLREG_SPR_EX2], sprite);
+            setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX2]);
             break;
     }
-}
-
-void
-VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
-{
-    uint8_t mask = (1 << nr);
-    setSpritePixel(pixelNr, color, spriteDepth(nr), mask);
 }
 
 
@@ -527,35 +520,14 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
 // Low level drawing (pixel buffer access)
 //
 
-/*
 void
-VIC::setFramePixels(unsigned first, unsigned last, uint8_t color)
-{
-    assert(bufferoffset + last < NTSC_PIXELS);
-    
-    for (unsigned pixelNr = first; pixelNr <= last; pixelNr++) {
-        SET_FRAME_PIXEL(pixelNr, color);
-    }
-}
-*/
-    
-/*
-void
-VIC::setFramePixels(uint8_t color)
-{
-    assert(bufferoffset + last < NTSC_PIXELS);
-    
-    for (unsigned pixelNr = 0; pixelNr < 8; pixelNr++) {
-        SET_FRAME_PIXEL(pixelNr, color);
-    }
-}
-*/
-    
-void
-VIC::setSpritePixel(unsigned pixel, uint8_t color, int depth, int source)
+VIC::setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color)
 {
     // unsigned offset = bufferoffset + pixelNr;
     // assert(offset < NTSC_PIXELS);
+    
+    uint8_t depth = spriteDepth(sprite);
+    uint8_t source = (1 << sprite);
     
     if (depth <= zBuffer[pixel]) {
         
