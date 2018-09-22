@@ -388,7 +388,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     
     // Phi1.2 Draw the first visible column
     isVisibleColumn = true;
-    visibleColumnCnt = 0;
+    // visibleColumnCnt = 0;
     DRAW
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -694,7 +694,7 @@ VIC::cycle61pal()
     
     END_VISIBLE_CYCLE
     isVisibleColumn = false;
-    visibleColumnCnt = 0;
+    // visibleColumnCnt = 0;
 }
 
 void

@@ -557,7 +557,6 @@ VIC::poke(uint16_t addr, uint8_t value)
         case 0x2D:
         case 0x2E:
             
-            // Schedule the new color to show up in the next cycle
             reg.current.colors[addr - 0x20] = value & 0xF;
             
             // Emulate the gray dot bug

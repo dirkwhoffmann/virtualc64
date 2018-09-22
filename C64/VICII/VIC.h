@@ -403,7 +403,7 @@ private:
      *            the visible area. Inside the visible area, it is incremented
      *            by one after a column has been drawn.
      */
-    int8_t visibleColumnCnt;
+    // int8_t visibleColumnCnt;
     
     /*! @brief    Indicates wether we are in a visible display column or not
      *  @details  The visible columns comprise canvas columns and border
@@ -1307,8 +1307,13 @@ public:
     if (unlikely(delay != 0)) { processDelayedActions(); }
 
     #define END_VISIBLE_CYCLE \
-    visibleColumnCnt++; \
     END_CYCLE
+
+    /*
+    #define END_VISIBLE_CYCLE \
+    // visibleColumnCnt++; \
+    END_CYCLE
+    */
     
     #define BA_LINE(x) updateBA(x);
     

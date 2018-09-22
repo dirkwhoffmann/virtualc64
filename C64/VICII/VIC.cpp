@@ -85,7 +85,7 @@ VIC::VIC()
         { &upperComparisonVal,          sizeof(upperComparisonVal),             CLEAR_ON_RESET },
         { &lowerComparisonVal,          sizeof(lowerComparisonVal),             CLEAR_ON_RESET },
 
-        { &visibleColumnCnt,            sizeof(visibleColumnCnt),               CLEAR_ON_RESET },
+        // { &visibleColumnCnt,            sizeof(visibleColumnCnt),               CLEAR_ON_RESET },
         { &isVisibleColumn,             sizeof(isVisibleColumn),                CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },

@@ -424,7 +424,7 @@ VIC::cycle61ntsc()
  
     END_VISIBLE_CYCLE
     isVisibleColumn = false;
-    visibleColumnCnt = 0;
+    // visibleColumnCnt = 0;
 }
 
 void
