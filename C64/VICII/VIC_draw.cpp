@@ -254,11 +254,6 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
 void
 VIC::drawSprites()
 {
-    // Quick exit
-    if (!spriteDisplayDelayed && !spriteDisplay) {
-        return;
-    }
-    
     uint8_t firstDMA = isFirstDMAcycle;
     uint8_t secondDMA = isSecondDMAcycle;
     

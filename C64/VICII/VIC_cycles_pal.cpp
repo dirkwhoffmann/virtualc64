@@ -41,26 +41,31 @@ VIC::processDelayedActions()
             c64->cpu.releaseIrqLine(CPU::INTSRC_VIC);
         }
     }
-    if (delay & VICLpTransition) {
-        checkForLightpenIrq();
-    }
     if (delay & VICUpdateFlipflops) {
         flipflops.delayed = flipflops.current;
-    }
-    if (delay & VICUpdateRegisters) {
-        reg.delayed = reg.current; 
-    }
-    if (delay & VICUpdateBankAddr) {
-        bankAddr = (~c64->cia2.getPA() & 0x03) << 14;
     }
     if (delay & VICSetDisplayState) {
         displayState = true;
     }
-    if (delay & VICClrSprSprCollReg) {
-        spriteSpriteCollision = 0;
+    if (delay & VICUpdateRegisters) {
+        reg.delayed = reg.current;
     }
-    if (delay & VICClrSprBgCollReg) {
-        spriteBackgroundColllision = 0;
+
+    // Less frequent actions
+    if (delay & (VICLpTransition | VICUpdateBankAddr | VICClrSprSprCollReg | VICClrSprBgCollReg)) {
+        
+        if (delay & VICLpTransition) {
+            checkForLightpenIrq();
+        }
+        if (delay & VICUpdateBankAddr) {
+            bankAddr = (~c64->cia2.getPA() & 0x03) << 14;
+        }
+        if (delay & VICClrSprSprCollReg) {
+            spriteSpriteCollision = 0;
+        }
+        if (delay & VICClrSprBgCollReg) {
+            spriteBackgroundColllision = 0;
+        }
     }
     
     delay = (delay << 1) & VICClearanceMask;
