@@ -39,7 +39,7 @@
 #define FOREGROUND_LAYER_DEPTH 0x30     // Behind sprite 1 layer
 #define SPRITE_LAYER_BG_DEPTH 0x40      // Behind foreground
 #define BACKGROUD_LAYER_DEPTH 0x50      // Behind sprite 2 layer
-#define BEIND_BACKGROUND_DEPTH 0x60     // Behind background
+#define BEHIND_BACKGROUND_DEPTH 0x60    // Behind background
 
 // Event flags
 #define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line

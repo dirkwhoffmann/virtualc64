@@ -411,7 +411,7 @@ void
 VIC::setHideSprites(bool hide)
 {
     c64->suspend();
-    hideSprites = !hide;
+    hideSprites = hide;
     c64->resume();
 }
 
