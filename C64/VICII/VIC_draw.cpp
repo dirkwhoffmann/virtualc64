@@ -23,40 +23,22 @@
 void
 VIC::draw()
 {
-    if (vblank) {
-        drawSprites();
-    } else {
-        drawCanvas();
-        drawBorder();
-        drawSprites();
-        copyPixels();
-    }
+    drawCanvas();
+    drawBorder();
 }
 
 void
 VIC::draw17()
 {
-    if (vblank) {
-        drawSprites();
-    } else {
-        drawCanvas();
-        drawBorder17();
-        drawSprites();
-        copyPixels();
-    }
+    drawCanvas();
+    drawBorder17();
 }
 
 void
 VIC::draw55()
 {
-    if (vblank) {
-        drawSprites();
-    } else {
-        drawCanvas();
-        drawBorder55();
-        drawSprites();
-        copyPixels();
-    }
+    drawCanvas();
+    drawBorder55();
 }
 
 void

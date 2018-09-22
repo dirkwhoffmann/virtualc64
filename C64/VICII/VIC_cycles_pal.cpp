@@ -633,7 +633,7 @@ VIC::cycle59pal()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    DRAW
+    DRAW59
     
     // Phi1.3 Fetch
     sSecondAccess(0);

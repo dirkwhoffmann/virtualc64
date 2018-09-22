@@ -1295,10 +1295,12 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-    #define DRAW { draw(); }
-    #define DRAW17 { draw17(); }
-    #define DRAW55 { draw55(); }
-    #define DRAW_SPRITES { if (spriteDisplayDelayed || spriteDisplay) drawSprites(); }
+    #define DRAW_SPRITES if (spriteDisplay) drawSprites();
+    #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay) drawSprites();
+    #define DRAW if (!vblank) draw(); DRAW_SPRITES; copyPixels();
+    #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; copyPixels();
+    #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; copyPixels();
+    #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; copyPixels();
 
     #define C_ACCESS if (badLine) cAccess();
     
