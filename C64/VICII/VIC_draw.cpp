@@ -320,6 +320,31 @@ VIC::drawSprites()
     
     // Pixel 7
     drawSpritePixel(7, spriteDisplay, firstDMA, 0);
+    
+    // Check for collisions
+    for (unsigned i = 0; i < 8; i++) {
+        
+        // Check if two or more bits are set in pixelSource
+        if (pixelSource[i] & (pixelSource[i] - 1)) {
+            
+            // Is it a sprite/sprite collision?
+            if ((pixelSource[i] & 0xFF) & ((pixelSource[i] & 0xFF) - 1)) {
+                
+                newSpriteSpriteCollision |= (pixelSource[i] & 0xFF);
+                triggerIrq(4);
+            }
+            
+            // Is it a sprite/background collision?
+            if ((pixelSource[i] & 0x100) && spriteBackgroundCollisionEnabled) {
+                
+                newSpriteBackgroundColllision |= (pixelSource[i] & 0xFF);
+                triggerIrq(2);
+            }
+        }
+    }
+
+    assert(newSpriteSpriteCollision == spriteSpriteCollision);
+    assert(newSpriteBackgroundColllision == spriteBackgroundColllision);
 }
 
 void
@@ -502,14 +527,14 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
     if (pixelSource[pixelNr]) {
         
         // Is it a sprite/sprite collision?
-        if ((pixelSource[pixelNr] & 0x7F) && spriteSpriteCollisionEnabled) {
+        if ((pixelSource[pixelNr] & 0xFF) && spriteSpriteCollisionEnabled) {
             
-            spriteSpriteCollision |= ((pixelSource[pixelNr] & 0x7F) | mask);
+            spriteSpriteCollision |= ((pixelSource[pixelNr] & 0xFF) | mask);
             triggerIrq(4);
         }
         
         // Is it a sprite/background collision?
-        if ((pixelSource[pixelNr] & 0x80) && spriteBackgroundCollisionEnabled) {
+        if ((pixelSource[pixelNr] & 0x100) && spriteBackgroundCollisionEnabled) {
             
             spriteBackgroundColllision |= mask;
             triggerIrq(2);
@@ -517,7 +542,7 @@ VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
     }
     
     // Bit 7 indicates background as source
-    if (nr == 7) mask = 0;
+    // if (nr == 7) mask = 0;
     
     setSpritePixel(pixelNr, color, spriteDepth(nr), mask);
 }
@@ -564,7 +589,7 @@ VIC::setSpritePixel(unsigned pixel, uint8_t color, int depth, int source)
          *  case 10/11 background bits show in front of whole sprite 0."
          * Test program: VICII/spritePriorities
          */
-        if (!(pixelSource[pixel] & 0x7F)) {
+        if (!(pixelSource[pixel] & 0xFF)) {
             if (isVisibleColumn) COLORIZE(pixel, color);
             zBuffer[pixel] = depth;
         }

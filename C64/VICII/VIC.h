@@ -346,10 +346,12 @@ private:
     
     //! @brief    Sprite-sprite collision register (12)
     uint8_t  spriteSpriteCollision;
-    
+    uint8_t  newSpriteSpriteCollision;
+
     //! @brief    Sprite-background collision register (12)
     uint8_t  spriteBackgroundColllision;
-    
+    uint8_t  newSpriteBackgroundColllision;
+
     
     //
     // Border flipflops
@@ -731,7 +733,7 @@ private:
      *            is needed to detect sprite-sprite and sprite-background
      *            collisions.
      */
-    uint8_t pixelSource[8];
+    uint16_t pixelSource[8];
     
     /*! @brief    Offset into pixelBuffer
      *  @details  Variable points to the first pixel of the currently drawn 8
@@ -1449,13 +1451,13 @@ private:
     #define SET_FRAME_PIXEL(pixel,color) { \
         COLORIZE(pixel, color); \
         zBuffer[pixel] = BORDER_LAYER_DEPTH; \
-        pixelSource[pixel] &= (~0x80); }
+        pixelSource[pixel] &= (~0x100); }
     
     //! @brief    Sets a single foreground pixel
     #define SET_FOREGROUND_PIXEL(pixel,color) { \
         COLORIZE(pixel,color) \
         zBuffer[pixel] = FOREGROUND_LAYER_DEPTH; \
-        pixelSource[pixel] = 0x80; }
+        pixelSource[pixel] = 0x100; }
 
     //! @brief    Sets a single background pixel
     #define SET_BACKGROUND_PIXEL(pixel,color) { \
