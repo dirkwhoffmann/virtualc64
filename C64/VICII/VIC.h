@@ -527,7 +527,7 @@ private:
     // CPU control and memory access
     //
     
-public:
+private:
     
     /*! @brief    Value on the data bus during the latest phi1 access
      *  @note     Only VICII performs a memory access during phi1.
@@ -539,16 +539,13 @@ public:
      *            If none of them does, 0xFF will be on the bus.
      */
     uint8_t dataBusPhi2;
-
-    
-private:
     
     /*! @brief    Data bus
      *  @details  Whenever VIC performs a memory read, the result is stored
      *            in this variable.
      *  @deprecated Use dataBusPhi1, dataBusPhi2 instead
      */
-    uint8_t dataBus;
+    // uint8_t dataBus;
 
     /*! @brief    Address bus
      *  @details  Whenever VIC performs a memory read, the generated memory
@@ -895,9 +892,14 @@ public:
     //! @brief    Peeks a value from a VIC register without side effects.
     uint8_t spypeek(uint16_t addr);
     
-    //! @brief    Returns the current value of the VICII's data bus.
-    uint8_t getDataBus() { return dataBus; }
-    
+    // uint8_t getDataBus() { return dataBus; }
+
+    //! @brief    Returns the latest value of the VICII's data bus during phi1.
+    uint8_t getDataBusPhi1() { return dataBusPhi1; }
+
+    //! @brief    Returns the latest value of the VICII's data bus during phi2.
+    uint8_t getDataBusPhi2() { return dataBusPhi2; }
+
     //! @brief    Updates the bank address in the next cycle.
     void updateBankAddr();
     
@@ -1297,17 +1299,20 @@ public:
 	
     #define DRAW_SPRITES if (spriteDisplay) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay) drawSprites();
+
     #define DRAW if (!vblank) draw(); DRAW_SPRITES; copyPixels();
     #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; copyPixels();
     #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; copyPixels();
     #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; copyPixels();
-
+    #define DRAW_IDLE \
+    for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
+    DRAW_SPRITES;
+    
     #define C_ACCESS if (badLine) cAccess();
     
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
     xCounter += 8; \
-    for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
     if (unlikely(delay != 0)) { processDelayedActions(); }
 
     #define END_VISIBLE_CYCLE \

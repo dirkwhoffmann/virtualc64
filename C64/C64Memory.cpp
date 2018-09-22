@@ -271,7 +271,9 @@ C64Memory::peekIO(uint16_t addr)
         case 0xA: // Color RAM
         case 0xB: // Color RAM
  
-            return (colorRam[addr - 0xD800] & 0x0F) | (c64->vic.dataBus & 0xF0);
+            return
+            (colorRam[addr - 0xD800] & 0x0F) |
+            (c64->vic.getDataBusPhi1() & 0xF0);
 
         case 0xC: // CIA 1
  

@@ -32,7 +32,7 @@ VIC::cycle1ntsc()
     }
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(3);
@@ -64,7 +64,7 @@ VIC::cycle2ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(3);
@@ -93,7 +93,7 @@ VIC::cycle3ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(4);
@@ -114,7 +114,7 @@ VIC::cycle4ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(4);
@@ -137,7 +137,7 @@ VIC::cycle5ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(5);
@@ -158,7 +158,7 @@ VIC::cycle6ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(5);
@@ -181,7 +181,7 @@ VIC::cycle7ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(6);
@@ -202,7 +202,7 @@ VIC::cycle8ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(6);
@@ -225,7 +225,7 @@ VIC::cycle9ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(7);
@@ -246,7 +246,7 @@ VIC::cycle10ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(7);
@@ -266,7 +266,7 @@ VIC::cycle11ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     rAccess();
@@ -434,7 +434,7 @@ VIC::cycle62ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(1);
@@ -455,7 +455,7 @@ VIC::cycle63ntsc()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(1);
@@ -479,7 +479,7 @@ VIC::cycle64ntsc()
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sSecondAccess(2);
@@ -501,7 +501,7 @@ VIC::cycle65ntsc()
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_SPRITES
+    DRAW_IDLE
 
     // Phi1.3 Fetch
     sFinalize(2);
