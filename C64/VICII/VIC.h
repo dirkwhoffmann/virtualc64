@@ -478,14 +478,7 @@ private:
      *  @details  Bit n corresponds to sprite n.
      */
     uint8_t isSecondDMAcycle;
-    
-	/*! @brief    Sprite on off register
-	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
-     *            Each bit represents a single sprite.
-     *  @deprecated Will be replaced by spriteDisplay, spriteDisplayDelayed;
-     */
-    TimeDelayed<uint8_t> spriteOnOff = TimeDelayed<uint8_t>(2);
-    
+        
     /*! @details  Sprite display
      *  @details  Determines if a sprite needs to be drawn in the current rasterline.
      *            Each bit represents a single sprite.

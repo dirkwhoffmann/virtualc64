@@ -133,7 +133,6 @@ VIC::setC64(C64 *c64)
     // Assign reference clock to all time delayed variables
     baLine.setClock(&c64->cpu.cycle);
     gAccessResult.setClock(&c64->cpu.cycle);
-    spriteOnOff.setClock(&c64->cpu.cycle);
 }
 
 void 
@@ -146,7 +145,6 @@ VIC::reset()
     // Reset timed delay variables
     baLine.reset(0);
     gAccessResult.reset(0);
-    spriteOnOff.reset(0);
     
     expansionFF = 0xFF;
     
@@ -235,7 +233,6 @@ VIC::dumpState()
     msg("      MainFrameFF : %d\n", flipflops.current.main);
     msg("  VerticalFrameFF : %d\n", flipflops.current.vertical);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
-	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
     msg("    SpriteDisplay : %02X (%02X)\n", spriteDisplay, spriteDisplayDelayed);
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 
@@ -254,7 +251,6 @@ VIC::stateSize()
 
     result += baLine.stateSize();
     result += gAccessResult.stateSize();
-    result += spriteOnOff.stateSize();
 
     return result;
 }
@@ -268,7 +264,6 @@ VIC::loadFromBuffer(uint8_t **buffer)
 
     baLine.loadFromBuffer(buffer);
     gAccessResult.loadFromBuffer(buffer);
-    spriteOnOff.loadFromBuffer(buffer);
     
     if (*buffer - old != stateSize()) {
         assert(false);
@@ -284,7 +279,6 @@ VIC::saveToBuffer(uint8_t **buffer)
     
     baLine.saveToBuffer(buffer);
     gAccessResult.saveToBuffer(buffer);
-    spriteOnOff.saveToBuffer(buffer);
  
     if (*buffer - old != stateSize()) {
         assert(false);
@@ -759,12 +753,8 @@ VIC::turnSpritesOnOrOff()
         mc[i] = mcbase[i];
     }
     
-    uint8_t onOff = spriteOnOff.current();
-    assert(onOff == spriteDisplay);
-    onOff |= reg.current.sprEnable & compareSpriteY();
-    onOff &= spriteDmaOnOff;
-    spriteOnOff.write(onOff);
-    spriteDisplay = onOff;
+    spriteDisplay |= reg.current.sprEnable & compareSpriteY();
+    spriteDisplay &= spriteDmaOnOff;
 }
 
 void

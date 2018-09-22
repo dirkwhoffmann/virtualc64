@@ -62,7 +62,7 @@ VIC::getSpriteInfo(unsigned i)
 {
     SpriteInfo info;
     
-    info.enabled = GET_BIT(spriteOnOff.current(), i);
+    info.enabled = GET_BIT(spriteDisplay, i);
     info.x = reg.current.sprX[i];
     info.y = reg.current.sprY[i];
     info.color = reg.current.colors[COLREG_SPR0 + i];

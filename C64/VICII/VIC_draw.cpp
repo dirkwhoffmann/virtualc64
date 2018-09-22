@@ -272,13 +272,8 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
 void
 VIC::drawSprites()
 {
-    uint8_t oldSpriteOnOff = spriteOnOff.delayed();
-    uint8_t newSpriteOnOff = spriteOnOff.current();
-    assert(oldSpriteOnOff == spriteDisplayDelayed);
-    assert(newSpriteOnOff == spriteDisplay);
-
     // Quick exit
-    if (!oldSpriteOnOff && !newSpriteOnOff) {
+    if (!spriteDisplayDelayed && !spriteDisplay) {
         return;
     }
     
@@ -286,7 +281,7 @@ VIC::drawSprites()
     uint8_t secondDMA = isSecondDMAcycle;
     
     // Pixel 0
-    drawSpritePixel(0, oldSpriteOnOff, secondDMA, 0);
+    drawSpritePixel(0, spriteDisplayDelayed, secondDMA, 0);
     
     // After the first pixel, color register changes show up
     reg.delayed.colors[COLREG_SPR_EX1] = reg.current.colors[COLREG_SPR_EX1];
@@ -296,16 +291,16 @@ VIC::drawSprites()
     }
     
     // Pixel 1, Pixel 2, Pixel 3
-    drawSpritePixel(1, oldSpriteOnOff, secondDMA, 0);
-    drawSpritePixel(2, oldSpriteOnOff, secondDMA, secondDMA);
-    drawSpritePixel(3, oldSpriteOnOff, firstDMA | secondDMA, 0);
+    drawSpritePixel(1, spriteDisplayDelayed, secondDMA, 0);
+    drawSpritePixel(2, spriteDisplayDelayed, secondDMA, secondDMA);
+    drawSpritePixel(3, spriteDisplayDelayed, firstDMA | secondDMA, 0);
     
     // If a shift register is loaded, the new data appears here.
     updateSpriteShiftRegisters();
 
     // Pixel 4, Pixel 5
-    drawSpritePixel(4, newSpriteOnOff, firstDMA | secondDMA, 0);
-    drawSpritePixel(5, newSpriteOnOff, firstDMA | secondDMA, 0);
+    drawSpritePixel(4, spriteDisplay, firstDMA | secondDMA, 0);
+    drawSpritePixel(5, spriteDisplay, firstDMA | secondDMA, 0);
     
     // Changes of the X expansion bits and the priority bits show up here
     reg.delayed.sprExpandX = reg.current.sprExpandX;
@@ -329,7 +324,7 @@ VIC::drawSprites()
     }
     
     // Pixel 6
-    drawSpritePixel(6, newSpriteOnOff, firstDMA | secondDMA, 0);
+    drawSpritePixel(6, spriteDisplay, firstDMA | secondDMA, 0);
     
     // Update multicolor bits if an old VICII is emulated
     if (toggle && is656x()) {
@@ -342,7 +337,7 @@ VIC::drawSprites()
     }
     
     // Pixel 7
-    drawSpritePixel(7, newSpriteOnOff, firstDMA, 0);
+    drawSpritePixel(7, spriteDisplay, firstDMA, 0);
 }
 
 void
