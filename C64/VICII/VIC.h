@@ -346,11 +346,9 @@ private:
     
     //! @brief    Sprite-sprite collision register (12)
     uint8_t  spriteSpriteCollision;
-    uint8_t  newSpriteSpriteCollision;
 
     //! @brief    Sprite-background collision register (12)
     uint8_t  spriteBackgroundColllision;
-    uint8_t  newSpriteBackgroundColllision;
 
     
     //

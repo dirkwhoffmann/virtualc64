@@ -165,14 +165,12 @@ VIC::peek(uint16_t addr)
         case 0x1E: // Sprite-to-sprite collision
             
             result = spriteSpriteCollision;
-            assert(spriteSpriteCollision == newSpriteSpriteCollision);
             delay |= VICClrSprSprCollReg;
             break;
             
         case 0x1F: // Sprite-to-background collision
             
             result = spriteBackgroundColllision;
-            assert(spriteBackgroundColllision == newSpriteBackgroundColllision);
             delay |= VICClrSprBgCollReg;
             break;
             

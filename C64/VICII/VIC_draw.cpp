@@ -330,21 +330,18 @@ VIC::drawSprites()
             // Is it a sprite/sprite collision?
             if ((pixelSource[i] & 0xFF) & ((pixelSource[i] & 0xFF) - 1)) {
                 
-                newSpriteSpriteCollision |= (pixelSource[i] & 0xFF);
+                spriteSpriteCollision |= (pixelSource[i] & 0xFF);
                 triggerIrq(4);
             }
             
             // Is it a sprite/background collision?
             if ((pixelSource[i] & 0x100) && spriteBackgroundCollisionEnabled) {
                 
-                newSpriteBackgroundColllision |= (pixelSource[i] & 0xFF);
+                spriteBackgroundColllision |= (pixelSource[i] & 0xFF);
                 triggerIrq(2);
             }
         }
     }
-
-    assert(newSpriteSpriteCollision == spriteSpriteCollision);
-    assert(newSpriteBackgroundColllision == spriteBackgroundColllision);
 }
 
 void
@@ -522,28 +519,6 @@ void
 VIC::drawSpritePixel(unsigned pixelNr, uint8_t color, int nr)
 {
     uint8_t mask = (1 << nr);
-    
-    // Check for collision
-    if (pixelSource[pixelNr]) {
-        
-        // Is it a sprite/sprite collision?
-        if ((pixelSource[pixelNr] & 0xFF) && spriteSpriteCollisionEnabled) {
-            
-            spriteSpriteCollision |= ((pixelSource[pixelNr] & 0xFF) | mask);
-            triggerIrq(4);
-        }
-        
-        // Is it a sprite/background collision?
-        if ((pixelSource[pixelNr] & 0x100) && spriteBackgroundCollisionEnabled) {
-            
-            spriteBackgroundColllision |= mask;
-            triggerIrq(2);
-        }
-    }
-    
-    // Bit 7 indicates background as source
-    // if (nr == 7) mask = 0;
-    
     setSpritePixel(pixelNr, color, spriteDepth(nr), mask);
 }
 
