@@ -639,7 +639,6 @@ VIC::memAccess(uint16_t addr)
         }
     }
     
-    // dataBus = result;
     return result;
 }
 

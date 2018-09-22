@@ -540,13 +540,6 @@ private:
      */
     uint8_t dataBusPhi2;
     
-    /*! @brief    Data bus
-     *  @details  Whenever VIC performs a memory read, the result is stored
-     *            in this variable.
-     *  @deprecated Use dataBusPhi1, dataBusPhi2 instead
-     */
-    // uint8_t dataBus;
-
     /*! @brief    Address bus
      *  @details  Whenever VIC performs a memory read, the generated memory
      *            address is stored in this variable.
@@ -892,8 +885,6 @@ public:
     //! @brief    Peeks a value from a VIC register without side effects.
     uint8_t spypeek(uint16_t addr);
     
-    // uint8_t getDataBus() { return dataBus; }
-
     //! @brief    Returns the latest value of the VICII's data bus during phi1.
     uint8_t getDataBusPhi1() { return dataBusPhi1; }
 
