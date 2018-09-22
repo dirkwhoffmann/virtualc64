@@ -24,11 +24,11 @@ void
 VIC::draw()
 {
     if (vblank) {
-        // drawSprites();
+        drawSprites();
     } else {
         drawCanvas();
         drawBorder();
-        // drawSprites();
+        drawSprites();
         copyPixels();
     }
 }
@@ -37,11 +37,11 @@ void
 VIC::draw17()
 {
     if (vblank) {
-        // drawSprites();
+        drawSprites();
     } else {
         drawCanvas();
         drawBorder17();
-        // drawSprites();
+        drawSprites();
         copyPixels();
     }
 }
@@ -50,11 +50,11 @@ void
 VIC::draw55()
 {
     if (vblank) {
-        // drawSprites();
+        drawSprites();
     } else {
         drawCanvas();
         drawBorder55();
-        // drawSprites();
+        drawSprites();
         copyPixels();
     }
 }
@@ -273,11 +273,9 @@ void
 VIC::drawSprites()
 {
     // Quick exit
-    /*
     if (!spriteDisplayDelayed && !spriteDisplay) {
         return;
     }
-    */
     
     uint8_t firstDMA = isFirstDMAcycle;
     uint8_t secondDMA = isSecondDMAcycle;
