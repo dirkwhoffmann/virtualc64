@@ -274,7 +274,9 @@ VIC::drawSprites()
 {
     uint8_t oldSpriteOnOff = spriteOnOff.delayed();
     uint8_t newSpriteOnOff = spriteOnOff.current();
-    
+    assert(oldSpriteOnOff == spriteDisplayDelayed);
+    assert(newSpriteOnOff == spriteDisplay);
+
     // Quick exit
     if (!oldSpriteOnOff && !newSpriteOnOff) {
         return;

@@ -596,6 +596,7 @@ VIC::cycle58pal()
     pAccess(0);
     
     // Phi2.2 Sprite logic
+    spriteDisplayDelayed = spriteDisplay;
     turnSpritesOnOrOff();
     
     // Phi2.3 VC/RC logic
@@ -636,6 +637,9 @@ VIC::cycle59pal()
     
     // Phi1.3 Fetch
     sSecondAccess(0);
+    
+    // Phi2.2 Sprite logic
+    spriteDisplayDelayed = spriteDisplay;
     
     // Phi2.4 BA logic
     BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));

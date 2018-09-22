@@ -482,18 +482,27 @@ private:
 	/*! @brief    Sprite on off register
 	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
      *            Each bit represents a single sprite.
+     *  @deprecated Will be replaced by spriteDisplay, spriteDisplayDelayed;
      */
     TimeDelayed<uint8_t> spriteOnOff = TimeDelayed<uint8_t>(2);
     
+    /*! @details  Sprite display
+     *  @details  Determines if a sprite needs to be drawn in the current rasterline.
+     *            Each bit represents a single sprite.
+     */
+    uint8_t spriteDisplay;
+
+    //! @details  Value of spriteDisplay, delayed by one cycle
+    uint8_t spriteDisplayDelayed;
+
 	/*! @brief    Sprite DMA on off register
 	 *  @details  Determines  if sprite dma access is enabled or disabled. 
-     *            Each bit represents a single sprite. 
+     *            Each bit represents a single sprite.
      */
-public: // REMOVE
 	uint8_t spriteDmaOnOff;
     
 	/*! @brief    Expansion flipflop
-	 *  @details  Used to handle Y sprite stretching, one bit for each sprite 
+	 *  @details  Used to handle Y sprite stretching, one bit for each sprite
      */
 	uint8_t expansionFF;
 

@@ -98,6 +98,8 @@ VIC::VIC()
         { spritePtr,                    sizeof(spritePtr),                      CLEAR_ON_RESET },
         { &isFirstDMAcycle,             sizeof(isFirstDMAcycle),                CLEAR_ON_RESET },
         { &isSecondDMAcycle,            sizeof(isSecondDMAcycle),               CLEAR_ON_RESET },
+        { &spriteDisplay,               sizeof(spriteDisplay),                  CLEAR_ON_RESET },
+        { &spriteDisplayDelayed,        sizeof(spriteDisplayDelayed),           CLEAR_ON_RESET },
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
@@ -234,6 +236,7 @@ VIC::dumpState()
     msg("  VerticalFrameFF : %d\n", flipflops.current.vertical);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("      SpriteOnOff : %02X\n", spriteOnOff.current());
+    msg("    SpriteDisplay : %02X (%02X)\n", spriteDisplay, spriteDisplayDelayed);
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 
 		msg("%d ", (spriteDmaOnOff & (1 << i)) != 0 );
@@ -757,9 +760,11 @@ VIC::turnSpritesOnOrOff()
     }
     
     uint8_t onOff = spriteOnOff.current();
+    assert(onOff == spriteDisplay);
     onOff |= reg.current.sprEnable & compareSpriteY();
     onOff &= spriteDmaOnOff;
     spriteOnOff.write(onOff);
+    spriteDisplay = onOff;
 }
 
 void
