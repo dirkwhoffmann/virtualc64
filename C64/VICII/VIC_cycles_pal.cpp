@@ -385,6 +385,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     isVisibleColumn = true;
     visibleColumnCnt = 0;
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess();
@@ -415,6 +416,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     
     // Phi1.2 Draw
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess();
@@ -437,7 +439,8 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     
     // Phi1.2 Draw
     DRAW
-  
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     gAccess();
     
@@ -462,7 +465,8 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     gAccess();
     
@@ -485,7 +489,8 @@ VIC::cycle18() // SpriteX: 32 - 39
     // Phi1.2 Draw
     sr.canLoad = true; // Entering canvas area
     DRAW17
-  
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     gAccess();
     
@@ -506,7 +511,8 @@ VIC::cycle19to54()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     gAccess();
     
@@ -527,7 +533,8 @@ VIC::cycle55pal()
     
     // Phi1.2 Draw
     DRAW
-  
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     gAccess();
     
@@ -549,7 +556,8 @@ VIC::cycle56()
     
     // Phi1.2 Draw
     DRAW55
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     iAccess();
     
@@ -572,6 +580,7 @@ VIC::cycle57pal()
     
     // Phi1.2 Draw (border starts here)
     DRAW
+    DRAW_SPRITES
     sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
@@ -591,7 +600,8 @@ VIC::cycle58pal()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     pAccess(0);
     
@@ -634,7 +644,8 @@ VIC::cycle59pal()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(0);
     
@@ -658,7 +669,8 @@ VIC::cycle60pal()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(0);
     pAccess(1);
@@ -680,7 +692,8 @@ VIC::cycle61pal()
     
     // Phi1.2 Draw the last visible column
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(1);
     

@@ -285,7 +285,8 @@ VIC::cycle55ntsc()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     gAccess();
     
@@ -307,6 +308,7 @@ VIC::cycle57ntsc()
     
     // Phi1.2 Draw (border starts here)
     DRAW
+    DRAW_SPRITES
     sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
@@ -326,7 +328,8 @@ VIC::cycle58ntsc()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     iAccess();
     
@@ -366,7 +369,8 @@ VIC::cycle59ntsc()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     pAccess(0);
     
@@ -390,7 +394,8 @@ VIC::cycle60ntsc()
     
     // Phi1.2 Draw
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sSecondAccess(0);
     
@@ -411,7 +416,8 @@ VIC::cycle61ntsc()
     
     // Phi1.2 Draw the last visible column
     DRAW
-    
+    DRAW_SPRITES
+
     // Phi1.3 Fetch
     sFinalize(0);
     pAccess(1);

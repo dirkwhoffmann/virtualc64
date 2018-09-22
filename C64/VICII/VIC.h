@@ -1298,7 +1298,7 @@ public:
     #define DRAW { draw(); }
     #define DRAW17 { draw17(); }
     #define DRAW55 { draw55(); }
-    #define DRAW_SPRITES { drawSprites(); }
+    #define DRAW_SPRITES { if (spriteDisplayDelayed || spriteDisplay) drawSprites(); }
 
     #define C_ACCESS if (badLine) cAccess();
     
