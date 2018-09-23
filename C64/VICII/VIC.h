@@ -694,14 +694,6 @@ private:
      */
     int *pixelBuffer;
     
-    /*! @brief    Synthesized pixel colors
-     *  @details  The colors for the eight pixels of a single VICII cycle are
-     *            stored temporaraily in this array. At the end of the cycle,
-     *            they are translated into RGBA color values and copied into
-     *            the screen buffer.
-     */
-    uint8_t colBuffer[8];
-    
     /*! @brief    Z buffer
      *  @details  Depth buffering is used to determine pixel priority. In the
      *            various render routines, a color value is only retained, if it
@@ -1287,10 +1279,10 @@ public:
     #define DRAW_SPRITES if (spriteDisplay) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay) drawSprites();
 
-    #define DRAW if (!vblank) draw(); DRAW_SPRITES; copyPixels();
-    #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; copyPixels();
-    #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; copyPixels();
-    #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; copyPixels();
+    #define DRAW if (!vblank) draw(); DRAW_SPRITES; bufferoffset += 8;
+    #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; bufferoffset += 8;
+    #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES; bufferoffset += 8;
+    #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59; bufferoffset += 8;
     #define DRAW_IDLE \
     for (unsigned i = 0; i < 8; i++) { zBuffer[i] = pixelSource[i] = 0; } \
     DRAW_SPRITES;
@@ -1416,14 +1408,9 @@ private:
     //
     
     //! @brief    Writes a single color value into the screenbuffer
-    #ifdef WRITE_THROUGH
-        #define COLORIZE(pixel,color) \
-            assert(bufferoffset + pixel < NTSC_PIXELS); \
-            pixelBuffer[bufferoffset + pixel] = rgbaTable[color];
-    #else
-        #define COLORIZE(pixel,color) \
-            colBuffer[pixel] = color;
-    #endif
+    #define COLORIZE(pixel,color) \
+        assert(bufferoffset + pixel < NTSC_PIXELS); \
+        pixelBuffer[bufferoffset + pixel] = rgbaTable[color];
     
     /*! @brief    Sets a single frame pixel
      *! @note     The upper bit in pixelSource is cleared to prevent
@@ -1448,12 +1435,6 @@ private:
     
     //! @brief    Draw a single sprite pixel
     void setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color);
-    
-    /*! @brief    Copies eight synthesized pixels into to the pixel buffer.
-     *  @details  Each pixel is first translated to the corresponding RGBA value
-     *            and then copied over.
-     */
-    void copyPixels();
     
     /*! @brief    Extend border to the left and right to look nice.
      *  @details  This functions replicates the color of the leftmost and

@@ -33,12 +33,6 @@
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
 
-// If enabled, synthesized pixels are directly written into the screen buffer
-// (the old VirtualC64 approach). If disabled, pixels are written in chunks
-// after each cycle as VICE does it (see copyPixels()). The old direct approach
-// seems faster, so we better keep it enabled.
-// #define WRITE_THROUGH 1
-
 #endif 
 
 

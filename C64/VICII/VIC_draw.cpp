@@ -517,7 +517,7 @@ VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
 
 void
 VIC::setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color)
-{    
+{
     uint8_t depth = spriteDepth(sprite);
     uint8_t source = (1 << sprite);
     
@@ -535,24 +535,6 @@ VIC::setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color)
     }
     pixelSource[pixel] |= source;
 }
-
-#ifdef WRITE_THROUGH
-void
-VIC::copyPixels()
-{
-    bufferoffset += 8;
-}
-#else
-void
-VIC::copyPixels() {
-    
-    assert(bufferoffset + 7 < NTSC_PIXELS);
-    
-    for (unsigned i = 0; i < 8; i++) {
-        pixelBuffer[bufferoffset++] = rgbaTable[colBuffer[i]];
-    }
-}
-#endif
 
 void
 VIC::expandBorders()
