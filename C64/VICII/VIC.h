@@ -1323,11 +1323,10 @@ public:
     
 private:
     
-    /*! @brief    Synthesize 8 pixels according the the current drawing context.
-     *  @details  This is the main entry point and is invoked in each VIC
-     *            drawing cycle, except cycle 17 and cycle 55 which are handles
-     *            seperately for speedup purposes. To get the correct output,
-     *            preparePixelEngine() must be called one cycle before.
+    /*! @brief    Draws 8 pixels
+     *  @details  This is the main entry point to the VICII code and invoked in
+     *            each drawing cycle. An exception are cycle 17 and cycle 55
+     *            which are handled seperately for speedup reasons.
      */
     void draw();
     
@@ -1339,35 +1338,38 @@ private:
         
     
     //
-    // Internal drawing routines (called by the external ones)
+    // Internal drawing routines (called by draw(), draw17(), and drae55())
     //
     
-    /*! @brief    Draws a part of the border
+    /*! @brief    Draws 8 border pixels
      *  @details  Invoked inside draw()
      */
     void drawBorder();
     
-    /*! @brief    Draws a part of the border
-     *  @details  Invoked inside draw17()
+    /*! @brief    Draws the border pixels in cycle 17
+     *  @seealso draw17()
      */
     void drawBorder17();
     
-    /*! @brief    Draws a part of the border
-     *  @details  Invoked inside draw55()
+    /*! @brief    Draws the border pixels in cycle 55
+     *  @seealso  draw55()
      */
     void drawBorder55();
     
     /*! @brief    Draws 8 canvas pixels
-     *  @details  Invoked inside draw()
+     *  @seealso  draw()
      */
     void drawCanvas();
     
     /*! @brief    Draws a single canvas pixel
      *  @param    pixel is the pixel number and must be in the range 0 to 7
-     *  @param    loadShiftReg is set to true if the shift register needs to be
+     *  @param    mode is the display mode for this pixel
+     *  @param    d016 is the current value of register D016
+     *  @param    loadShiftReg is true when the shift register needs to be
      *            reloaded
-     *  @param    updateColors is set to true if the four selectable colors
-     *            might have changed.
+     *  @param    updateColors is true when the four selectable colors
+     *            need to be reloaded.
+     *  @seealso  drawCanvas()
      */
     void drawCanvasPixel(uint8_t pixel,
                          uint8_t mode,
@@ -1375,33 +1377,24 @@ private:
                          bool loadShiftReg,
                          bool updateColors);
     
-    /*! @brief    Draws all eight sprite pixels for the current cycle
-     *  @details  Invoked inside draw()
+    /*! @brief    Draws 8 sprite pixels
+     *  @seealso  draw()
      */
     void drawSprites();
     
     /*! @brief    Draws a single sprite pixel for all sprites
      *  @param    pixel    Pixel number (0 to 7)
+     *  @param    enableBits are the spriteDisplay bits
      *  @param    freezeBits If set to true, the sprites shift register will
      *                     freeze temporarily
      *  @param    haltBits  If set to true, the sprites shift shift register will
      *                     be deactivated
+     *  @seealso  drawSprites()
      */
     void drawSpritePixel(unsigned pixel,
                          uint8_t enableBits,
                          uint8_t freezeBits,
                          uint8_t haltBits);
-    
-    /*! @brief    Draws all sprites into the pixelbuffer
-     *  @details  A sprite is only drawn if it's enabled and if sprite drawing
-     *            is not switched off for debugging
-     */
-    // void drawAllSprites();
-    
-    /*! @brief    Draw single sprite into pixel buffer
-     *  @details  Helper function for drawSprites
-     */
-    void drawSprite(uint8_t nr);
     
     
     //
@@ -1414,22 +1407,14 @@ private:
     /*! @brief    Draws single sprite pixel in single-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors
      */
-    void setSingleColorSpritePixel(unsigned spritenr, unsigned pixel, uint8_t bit);
+    void setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit);
     
     /*! @brief    Draws single sprite pixel in multi-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors
      */
-    void setMultiColorSpritePixel(unsigned spritenr, unsigned pixel, uint8_t two_bits);
+    void setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits);
     
-    /*! @brief    Draws a single sprite pixel
-     *  @details  This function is invoked by setSingleColorSpritePixel() and
-     *            setMultiColorSpritePixel(). It takes care of collison and invokes
-     *            setSpritePixel to actually render the pixel.
-     * @deprecated Call setSpritePixel directly
-     */
-    // void drawSpritePixel(unsigned pixel, uint8_t color, int nr);
-    
-    
+
     //
     // Low level drawing (pixel buffer access)
     //
@@ -1545,7 +1530,6 @@ public:
     
     //! @brief    Enable or disable rasterline interrupts
     void toggleRasterInterruptFlag();
-    
     
     //! @brief    Sets the color of a sprite.
     void setSpriteColor(unsigned nr, uint8_t color);
