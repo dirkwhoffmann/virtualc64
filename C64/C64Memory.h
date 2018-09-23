@@ -136,7 +136,7 @@ public:
 
     //! @brief    Returns true, iff the Kernal ROM is alrady loaded
 	bool kernalRomIsLoaded() { return rom[0xE000] != 0x00; }
-    
+        
 public:
     
     //! @brief    Returns the currently used RAM init pattern.

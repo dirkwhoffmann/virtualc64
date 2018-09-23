@@ -609,16 +609,8 @@ VIC::memAccess(uint16_t addr)
     // 0x1000:   BLANK     CHAR
     // 0x0000:   RAM       RAM
     
-    if (!c64->getUltimax()) {
-        switch (addrBus >> 12) {
-            case 0x9:
-            case 0x1:
-                result = c64->mem.rom[0xC000 + addr];
-                break;
-            default:
-                result = c64->mem.ram[addrBus];
-        }
-    } else {
+    if (c64->getUltimax()) {
+        
         switch (addrBus >> 12) {
             case 0xF:
             case 0xB:
@@ -636,9 +628,35 @@ VIC::memAccess(uint16_t addr)
             default:
                 result = c64->mem.ram[addrBus];
         }
+        
+    } else {
+        
+        if (isCharRomAddr(addr)) {
+            result = c64->mem.rom[0xC000 + addr];
+        } else {
+            result = c64->mem.ram[addrBus];
+        }
+            
+        /*
+        switch (addrBus >> 12) {
+            case 0x9:
+            case 0x1:
+                result = c64->mem.rom[0xC000 + addr];
+                break;
+            default:
+                result = c64->mem.ram[addrBus];
+        }
+        */
     }
     
     return result;
+}
+
+bool
+VIC::isCharRomAddr(uint16_t addr)
+{
+    addr = (addr | bankAddr) >> 12;
+    return addr == 1 || addr == 9;
 }
 
 void
@@ -721,7 +739,8 @@ VIC::gAccess()
         if (is856x()) {
             assert(addr == gAccessAddr85x());
         } else {
-            assert(addr == gAccessAddr65x());
+            // assert(addr == gAccessAddr65x());
+            addr = gAccessAddr65x();
         }
         
         // Store result
@@ -763,6 +782,21 @@ VIC::gAccessAddr65x()
     uint8_t newEcm = GET_BIT(reg.current.ctrl1, 6);
     
     uint16_t result = gAccessAddr(oldBmm | newBmm, newEcm);
+
+    // Check if BMM bit has just changed
+    if (oldBmm != newBmm) {
+        
+        uint8_t oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
+        uint16_t oldAddr = gAccessAddr(oldBmm, oldEcm);
+        uint16_t newAddr = gAccessAddr(newBmm, newEcm);
+
+        // Check if address changes to char ROM. In this case, the result
+        // is a mixture of oldAddr and newAddr (seen in VICE)
+        // Test case: VICII/split-tests/modesplit.prg
+        if (isCharRomAddr(newAddr) && !isCharRomAddr(oldAddr)) {
+            result = (newAddr & 0x3F00) | (oldAddr & 0x00FF);
+        }
+    }
 
     return result;
 }
@@ -810,9 +844,6 @@ VIC::sFirstAccess(unsigned sprite)
     isFirstDMAcycle = (1 << sprite);
     
     if (spriteDmaOnOff & (1 << sprite)) {
-        
-        // THIS ONE SHOULD FAIL IN TEST CASE SPRITE_ENABLE2.PRG, YES, IT DOES
-        // assert(BApulledDownForAtLeastThreeCycles());
         
         if (BApulledDownForAtLeastThreeCycles()) {
             dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);

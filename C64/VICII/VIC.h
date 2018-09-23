@@ -892,7 +892,10 @@ private:
     
     //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
-        
+
+    //! @brief    Returns true if memAccess will read from Character ROM
+    bool isCharRomAddr(uint16_t addr);
+
     /*! @brief    Performs a DRAM refresh (r-access).
      *  @details  r-accesses are performed in cycles 11 - 15 during phi1.
      */
