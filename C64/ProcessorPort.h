@@ -24,11 +24,12 @@
 #include "VirtualComponent.h"
 
 /*! @brief    Processor port
- *  @details  The C64 contains a processor port register and a data direction register that
- *            indicates if a processor bit is configured as input or output. The register
- *            serves multiple pursposes. Firstly, it is used for bank switching, i.e. it
- *            decided for certain memory regions if ROM or RAM is avaible. Secondly, it
- *            it used to communicate with the datasette.
+ *  @details  The C64 contains a processor port register and a data direction
+ *            register that indicates if a processor bit is configured as input
+ *            or output. The register serves multiple pursposes. Firstly, it is
+ *            used for bank switching, i.e. it decided for certain memory
+ *            regions if ROM or RAM is avaible. Secondly, it is used to
+ *            communicate with the datasette.
  */
 class ProcessorPort : public VirtualComponent {
    
@@ -40,13 +41,17 @@ class ProcessorPort : public VirtualComponent {
 
     //! @brief    Clock cycle when floating bit values reach zero
     /*! @details  Bit 3, 6, and 7 of the processor need our special attention.
-     *            When these bits are changed from being outputs to being inputs, there is no
-     *            external signal driving them. They get into a floating state and act as an
-     *            capacitor. As a result, they will discharge slowly and eventually reach zero.
-     *            These variables are used to indicate when the zero level is reached.
-     *            All three variables are queried in readPort() and have the following semantics:
-     *            dischargeCycleBit3 > current cycle => bit reads as 1 (if configured as input)
-     *            otherwise                          => bit reads as 0 (if configured as input)
+     *            When the direction of these bits is changed from output to
+     *            input, there will be no external signal driving them. As a
+     *            result, the bits will be in a floating state and act as an
+     *            capacitor. They will discharge slowly and eventually reach
+     *            zero. These variables are used to indicate when the zero level
+     *            is reached. All three variables are queried in readPort() and
+     *            have the following semantics:
+     *            dischargeCycleBit > current cycle => bit reads as 1
+     *                                                 (if configured as input)
+     *            otherwise                         => bit reads as 0
+     *                                                 (if configured as input)
      */
     uint64_t dischargeCycleBit3;
     uint64_t dischargeCycleBit6;
@@ -59,22 +64,19 @@ public:
     //! @brief    Destructor
     ~ProcessorPort();
     
-    //! @brief    Restores the initial state.
-    // void reset();
-    
-    //! @brief    Prints debug information.
+    //! @brief    Method from VirtualComponent
     void dumpState();
 
-    //! @brief    Reads from the processor port register
+    //! @brief    Reads the processor port register
     uint8_t read();
 
-    //! @brief    Reads from the processor port direction register
+    //! @brief    Reads the processor port direction register
     uint8_t readDirection();
 
-    //! @brief    Writes to the processor port register
+    //! @brief    Writes the processor port register
     void write(uint8_t value);
     
-    //! @brief    Writes to the processor port direction register
+    //! @brief    Writes the processor port direction register
     void writeDirection(uint8_t value);
 };
 

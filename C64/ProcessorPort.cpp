@@ -44,27 +44,29 @@ ProcessorPort::dumpState()
 uint8_t
 ProcessorPort::read()
 {
-    // If the port bits are configured as inputs and no datasette is attached, the
-    // following values are returned:
+    // If the port bits are configured as inputs and no datasette is attached,
+    // the following values are returned:
     //
     //     Bit 0:  1 (bit is driven by a pull-up resistor)
     //     Bit 1:  1 (bit is driven by a pull-up resistor)
     //     Bit 2:  1 (bit is driven by a pull-up resistor)
-    //     Bit 3:  Eventually 0 (acts a a capacitor)
+    //     ??? Bit 3:  Eventually 0 (acts a a capacitor)
+    //     Bit 3:  0 (bit is driven by a pull-down resistor)
     //     Bit 4:  1 (bit is driven by a pull-up resistor)
     //     Bit 5:  0 (bit is driven by a pull-down resistor)
     //     Bit 6:  Eventually 0 (acts a a capacitor)
     //     Bit 7:  Eventually 0 (acts a a capacitor)
     //
-    //     In reality, discharging times for bits 3, 6, and 7 depend on both CPU temperature
-    //     and how long the output was 1 befor the bit became an input.
+    //     In reality, discharging times for bits 3, 6, and 7 depend on both
+    //     CPU temperature and how long the output was 1 befor the bit became
+    //     an input.
     
-    uint8_t bit3 = (dischargeCycleBit3 > c64->currentCycle()) ? 0x08 : 0x00;
-    uint8_t bit6 = (dischargeCycleBit6 > c64->currentCycle()) ? 0x40 : 0x00;
-    uint8_t bit7 = (dischargeCycleBit7 > c64->currentCycle()) ? 0x80 : 0x00;
+    uint8_t bit3 = (dischargeCycleBit3 > c64->cpu.cycle) ? 0x08 : 0x00;
+    uint8_t bit6 = (dischargeCycleBit6 > c64->cpu.cycle) ? 0x40 : 0x00;
+    uint8_t bit7 = (dischargeCycleBit7 > c64->cpu.cycle) ? 0x80 : 0x00;
     uint8_t bit4 = c64->datasette.getPlayKey() ? 0x00 : 0x10;
     uint8_t bits = bit7 | bit6 | bit4 | bit3 | 0x07;
-    
+
     return (port & direction) | (bits & ~direction);
 }
 
@@ -94,6 +96,9 @@ ProcessorPort::write(uint8_t value)
 void
 ProcessorPort::writeDirection(uint8_t value)
 {
+    uint64_t dischargeCycles = 350000; // VICE value
+    // uint64_t dischargeCycles = 246312; // Hoxs64 value
+
     // Check floating status of bits 3, 6, and 7.
     
     // 1) If bits 3, 6, and 7 are configured as outputs, they are not floating
@@ -103,11 +108,11 @@ ProcessorPort::writeDirection(uint8_t value)
 
     // 2) If bits 3, 6, and 7 change from output to input, they become floating
     if (FALLING_EDGE_BIT(direction, value, 3) && GET_BIT(port, 3) != 0)
-        dischargeCycleBit3 = c64->currentCycle() + PAL_CYCLES_PER_SECOND;
+        dischargeCycleBit3 = UINT64_MAX; // c64->cpu.cycle + PAL_CYCLES_PER_SECOND;
     if (FALLING_EDGE_BIT(direction, value, 6) && GET_BIT(port, 6) != 0)
-        dischargeCycleBit6 = c64->currentCycle() + 360000;
+        dischargeCycleBit6 = c64->cpu.cycle + dischargeCycles;
     if (FALLING_EDGE_BIT(direction, value, 7) && GET_BIT(port, 7) != 0)
-        dischargeCycleBit7 = c64->currentCycle() + 360000;
+        dischargeCycleBit7 = c64->cpu.cycle + dischargeCycles;
     
     direction = value;
     
