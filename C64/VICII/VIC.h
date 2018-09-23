@@ -912,12 +912,21 @@ private:
     void cAccess();
     
     /*! @brief    Performs a graphics access (g-access).
-     *  @details  During a g-access, graphics data (character or bitmap patterns)
-     *            is reads. The result of the g-access is stored in variables
-     *            prefixed with 'g_', i.e., g_data, g_character, g_color, and
-     *            g_mode.
+     *  @details  During a g-access, graphics data (character or bitmap
+     *            patterns) is read.
      */
     void gAccess();
+
+    //! @brief    Computes the g-access fetch address for newer VICIIs
+    uint16_t gAccessAddr85x();
+
+    //! @brief    Computes the g-access fetch address for older VICIIs
+    uint16_t gAccessAddr65x();
+
+    /*! @brief    Computes the g-access fetch address
+     *  @details  The fetch address is influences by both the BMM and ECM bit.
+     */
+    uint16_t gAccessAddr(bool bmm, bool ecm);
     
     //! @brief    Performs a sprite pointer access (p-access).
     void pAccess(unsigned sprite);

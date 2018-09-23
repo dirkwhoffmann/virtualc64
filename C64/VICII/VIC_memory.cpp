@@ -698,15 +698,6 @@ VIC::gAccess()
         
         //  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|
         //  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
-        
-        // Determine value of BMM bit
-        /*
-        uint8_t bmm = GET_BIT(reg.delayed.ctrl1, 5);
-        if (!is856x()) {
-            bmm |= GET_BIT(reg.current.ctrl1, 5);
-        }
-        */
-        
         uint16_t addr;
         if (BMMbit()) {
             addr = (CB13() << 10) |
@@ -723,6 +714,15 @@ VIC::gAccess()
          */
         if (ECMbit())
             addr &= 0xF9FF;
+        
+        uint16_t addr_check = gAccessAddr(BMMbit(), ECMbit());
+        assert(addr == addr_check);
+        
+        if (is856x()) {
+            assert(addr == gAccessAddr85x());
+        } else {
+            assert(addr == gAccessAddr65x());
+        }
         
         // Store result
         dataBusPhi1 = memAccess(addr);
@@ -744,6 +744,52 @@ VIC::gAccess()
         dataBusPhi1 = memAccess(addr);
         gAccessResult.write(dataBusPhi1);
     }
+}
+
+uint16_t
+VIC::gAccessAddr85x()
+{
+    uint8_t oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
+    uint8_t oldEcm = GET_BIT(reg.delayed.ctrl1, 6);
+    
+    return gAccessAddr(oldBmm, oldEcm);
+}
+
+uint16_t
+VIC::gAccessAddr65x()
+{
+    uint8_t oldBmm = GET_BIT(reg.delayed.ctrl1, 5);
+    uint8_t newBmm = GET_BIT(reg.current.ctrl1, 5);
+    uint8_t newEcm = GET_BIT(reg.current.ctrl1, 6);
+    
+    uint16_t result = gAccessAddr(oldBmm | newBmm, newEcm);
+
+    return result;
+}
+
+uint16_t
+VIC::gAccessAddr(bool bmm, bool ecm)
+{
+    uint16_t addr;
+
+    /*  Address source:
+     *  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|
+     *  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
+     */
+     if (bmm) {
+        addr = (CB13() << 10) | (vc << 3) | rc;
+    } else {
+        addr = (CB13CB12CB11() << 10) | (videoMatrix[vmli] << 3) | rc;
+    }
+    
+    /* "If the ECM bit is set, the address generator always holds the
+     *  address lines 9 and 10 low without any other changes to the
+     *  addressing scheme (e.g. the g-accesses in idle state then occur at
+     *  address $39ff)." [C.B.]
+     */
+    if (ecm) addr &= 0xF9FF;
+
+    return addr;
 }
 
 void
