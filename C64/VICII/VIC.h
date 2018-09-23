@@ -1040,31 +1040,11 @@ public:
     /*! @brief    Returns the current value of the DEN (Display ENabled) bit.
      */
     bool DENbit() { return GET_BIT(reg.current.ctrl1, 4); }
-
-    /*! @brief    Returns the value of the BMM (Bit Map Mode) bit.
-     *  @details  The value is returned as it is seen during a g-access.
-     */
-    /*
-    bool BMMbit() {
-        return is856x() ?
-        GET_BIT(reg.delayed.ctrl1, 5) :
-        GET_BIT(reg.delayed.ctrl1, 5) | GET_BIT(reg.current.ctrl1, 5);
-    }
-    */
     
     //! @brief    Returns the number of the next interrupt rasterline.
     uint16_t rasterInterruptLine() {
         return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
     }
-    
-    //! @brief    Returns the current value of the ECM bit.
-    /*
-    bool ECMbit() {
-        return is856x() ?
-        GET_BIT(reg.delayed.ctrl1, 6) :
-        GET_BIT(reg.current.ctrl1, 6);
-    }
-    */
     
     //! @brief    Returns the masked CB13 bit.
     uint8_t CB13() { return memSelect & 0x08; }
