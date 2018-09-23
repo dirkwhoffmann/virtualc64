@@ -165,13 +165,13 @@ VIC::drawCanvas()
 
 
 void
-VIC::drawCanvasPixel(uint8_t pixelNr,
+VIC::drawCanvasPixel(uint8_t pixel,
                              uint8_t mode,
                              uint8_t d016,
                              bool loadShiftReg,
                              bool updateColors)
 {
-    assert(pixelNr < 8);
+    assert(pixel < 8);
     
     /* "The heart of the sequencer is an 8 bit shift register that is shifted by
      *  1 bit every pixel and reloaded with new graphics data after every
@@ -230,18 +230,18 @@ VIC::drawCanvasPixel(uint8_t pixelNr,
         
         // Set multi-color pixel
         if (sr.colorbits & 0x02) {
-            SET_FOREGROUND_PIXEL(pixelNr, col[sr.colorbits]);
+            SET_FOREGROUND_PIXEL(pixel, col[sr.colorbits]);
         } else {
-            SET_BACKGROUND_PIXEL(pixelNr, col[sr.colorbits]);
+            SET_BACKGROUND_PIXEL(pixel, col[sr.colorbits]);
         }
         
     } else {
         
         // Set single-color pixel
         if (sr.colorbits) {
-            SET_FOREGROUND_PIXEL(pixelNr, col[sr.colorbits]);
+            SET_FOREGROUND_PIXEL(pixel, col[sr.colorbits]);
         } else {
-            SET_BACKGROUND_PIXEL(pixelNr, col[sr.colorbits]);
+            SET_BACKGROUND_PIXEL(pixel, col[sr.colorbits]);
         }
     }
     
@@ -517,10 +517,7 @@ VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
 
 void
 VIC::setSpritePixel(unsigned sprite, unsigned pixel, uint8_t color)
-{
-    // unsigned offset = bufferoffset + pixelNr;
-    // assert(offset < NTSC_PIXELS);
-    
+{    
     uint8_t depth = spriteDepth(sprite);
     uint8_t source = (1 << sprite);
     

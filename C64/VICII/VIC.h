@@ -54,15 +54,11 @@
 #define VICClearanceMask ~((1ULL << 8) | VICUpdateIrqLine | VICLpTransition | VICUpdateFlipflops | VICUpdateRegisters | VICUpdateBankAddr | VICSetDisplayState | VICClrSprSprCollReg | VICClrSprBgCollReg);
 
 
-
 // Forward declarations
 class C64Memory;
 
 
-/*! @brief    Virtual Video Controller (VICII)
- *  @details  VICII is the video controller chip of the Commodore 64.
- *            It occupies the memory mapped I/O space from address 0xD000 to 0xD02E. 
- */
+//! @brief    Virtual Video Controller (VICII)
 class VIC : public VirtualComponent {
 
     friend C64Memory;
@@ -99,8 +95,8 @@ private:
     /*! @brief    Piped I/O register state.
      *  @details  When an I/O register is written to, the corresponding value
      *            in variable current is changed and a flag is set in variable
-     *            delay. Function processDelayedActions() reads the flag and if
-     *            set to true, updates the delayed values with the current ones.
+     *            delay. Function processDelayedActions() reads the flag and, if
+     *            set to true, updates the delayed values.
      *  @see      processDelayedActions()
      */
     struct {
@@ -166,11 +162,11 @@ private:
     //  øIN -----------+           |       |  collision detection  |
     //                             |       +-----------------------+ (12)
     //    VC: Video Matrix Counter |                   |
-    //                             |            (13)   v
+    //        (14)                 |            (13)   v
     //    RC: Row Counter          |            +-------------+
-    //                             +----------->| Border unit |
+    //        (15)                 +----------->| Border unit |
     //    MC: MOB Data Counter     |            +-------------+
-    //                             |                   |
+    //        (16)                 |                   |
     //                             v                   v
     //                     +----------------+  +----------------+
     //                     |Sync generation |  |Color generation|<------- øCOLOR
@@ -203,7 +199,7 @@ private:
      */
     uint32_t yCounter;
     
-    /*! @brief    Video counter
+    /*! @brief    Video counter (14)
      *  @details  A 10 bit counter that can be loaded with the value from
      *            vcBase.
      */
@@ -215,7 +211,7 @@ private:
      */
     uint16_t vcBase;
     
-    /*! @brief    Row counter
+    /*! @brief    Row counter (15)
      *  @details  A 3 bit counter with reset input.
      */
     uint8_t rc;
@@ -454,7 +450,7 @@ public: // REMOVE
 
 private:
 
-	/*! @brief    MOB data counter.
+	/*! @brief    MOB data counter (16).
 	 *  @details  A 6 bit counter, one for each sprite.
      */
 	uint8_t mc[8];
