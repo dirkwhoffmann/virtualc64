@@ -701,6 +701,8 @@ VIC::cAccess()
 void
 VIC::gAccess()
 {
+    uint16_t addr;
+    
     if (displayState) {
         
         /* "The address generator for the text/bitmap accesses (c- and
@@ -713,38 +715,14 @@ VIC::gAccess()
          *  changes to the addressing scheme (e.g. the g-accesses in idle state
          *  then occur at address $39ff)." [C.B.]
          */
+ 
+        // Get address
+        addr = is856x() ? gAccessAddr85x() : gAccessAddr65x();
         
-        //  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|
-        //  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
-        uint16_t addr;
-        if (BMMbit()) {
-            addr = (CB13() << 10) |
-            (vc << 3) | rc;
-        } else {
-            addr = (CB13CB12CB11() << 10) |
-            (videoMatrix[vmli] << 3) | rc;
-        }
-        
-        /* "If the ECM bit is set, the address generator always holds the
-         *  address lines 9 and 10 low without any other changes to the
-         *  addressing scheme (e.g. the g-accesses in idle state then occur at
-         *  address $39ff)." [C.B.]
-         */
-        if (ECMbit())
-            addr &= 0xF9FF;
-        
-        uint16_t addr_check = gAccessAddr(BMMbit(), ECMbit());
-        assert(addr == addr_check);
-        
-        if (is856x()) {
-            assert(addr == gAccessAddr85x());
-        } else {
-            // assert(addr == gAccessAddr65x());
-            addr = gAccessAddr65x();
-        }
+        // Fetch
+        dataBusPhi1 = memAccess(addr);
         
         // Store result
-        dataBusPhi1 = memAccess(addr);
         gAccessResult.write(LO_LO_HI(dataBusPhi1,         // Character
                                      colorLine[vmli],     // Color
                                      videoMatrix[vmli])); // Data
@@ -756,11 +734,18 @@ VIC::gAccess()
         
     } else {
         
-        // In idle state, g-accesses read from $3FFF
-        uint16_t addr = ECMbit() ? 0x39FF : 0x3FFF;
+        // Get address. In idle state, g-accesses read from $39FF or $3FFF,
+        // depending on the ECM bit.
+        if (is856x()) {
+            addr = GET_BIT(reg.delayed.ctrl1, 6) ? 0x39FF : 0x3FFF;
+        } else {
+            addr = GET_BIT(reg.current.ctrl1, 6) ? 0x39FF : 0x3FFF;
+        }
+        
+        // Fetch
+        dataBusPhi1 = memAccess(addr);
 
         // Store result
-        dataBusPhi1 = memAccess(addr);
         gAccessResult.write(dataBusPhi1);
     }
 }
