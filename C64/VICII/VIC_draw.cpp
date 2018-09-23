@@ -133,8 +133,8 @@ VIC::drawCanvas()
     // After pixel 4, a change in D016 affects the display mode.
     newD016 = reg.current.ctrl2;
 
-    // In newer VICIIs, the one bits of D011 show up, too.
-    if (!is856x()) {
+    // In older VICIIs, the one bits of D011 show up, too.
+    if (is656x()) {
         d011 |= reg.current.ctrl1;
     }
     oldMode = mode;
@@ -143,8 +143,8 @@ VIC::drawCanvas()
     drawCanvasPixel(4, mode, d016, xscroll == 4, oldMode != mode);
     drawCanvasPixel(5, mode, d016, xscroll == 5, false);
     
-    // In newer VICIIs, the zero bits of D011 show up here.
-    if (!is856x()) {
+    // In older VICIIs, the zero bits of D011 show up here.
+    if (is656x()) {
         d011 = reg.current.ctrl1;
         oldMode = mode;
         mode = (d011 & 0x60) | (newD016 & 0x10);

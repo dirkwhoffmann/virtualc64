@@ -700,10 +700,12 @@ VIC::gAccess()
         //  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
         
         // Determine value of BMM bit
+        /*
         uint8_t bmm = GET_BIT(reg.delayed.ctrl1, 5);
         if (!is856x()) {
             bmm |= GET_BIT(reg.current.ctrl1, 5);
         }
+        */
         
         uint16_t addr;
         if (BMMbit()) {
