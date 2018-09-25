@@ -125,7 +125,7 @@ extension ArchiveMountController : NSTableViewDelegate {
         let c = cell as! NSTextFieldCell
         
         c.font = cbmfont
-        c.textColor = archive.type(ofItem: row) == "PRG" ? .black : .gray
+        c.textColor = archive.type(ofItem: row) == "PRG" ? .textColor : .gray
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {

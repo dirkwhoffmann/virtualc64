@@ -79,7 +79,7 @@ extension CartridgeMountController : NSTableViewDelegate {
         let c = cell as! NSTextFieldCell
         
         c.font = cbmfont
-        c.textColor = archive.getTypeOfItem(row) == "PRG" ? .black : .gray
+        c.textColor = archive.getTypeOfItem(row) == "PRG" ? .textColor : .gray
     }
  */
     

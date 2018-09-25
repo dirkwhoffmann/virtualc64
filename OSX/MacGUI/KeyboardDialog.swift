@@ -114,7 +114,7 @@ class KeyboardDialog : UserDialogController {
         for row in 0...7 {
             for col in 0...7 {
                 if keyImage[row][col] == nil {
-                    keyImage[row][col] = C64Key.init( (row,col) ).image()
+                    keyImage[row][col] = C64Key.init( (row,col) ).image(keyCode: "")
                 }
             }
         }

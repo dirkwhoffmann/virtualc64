@@ -171,6 +171,7 @@ class DiskInspectorController : UserDialogController {
         
         let textStorage = NSTextStorage.init(string: gcr)
         textStorage.font = NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .medium)
+        textStorage.foregroundColor = .textColor
         let documentView = gcrView.documentView as? NSTextView
         documentView?.layoutManager?.replaceTextStorage(textStorage)
     }
@@ -475,7 +476,7 @@ extension DiskInspectorController : NSTableViewDelegate {
         let cell = cell as! NSTextFieldCell
         
         if tableView == errorView {
-            cell.textColor = (row == 0) ? NSColor.black : NSColor.red
+            cell.textColor = (row == 0) ? .textColor : .red
         }
     }
 }
