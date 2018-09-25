@@ -188,7 +188,7 @@ extension MemTableView : NSTableViewDelegate {
             cell.font = NSFont.systemFont(ofSize: 9)
             cell.textColor = .gray
         } else {
-            cell.textColor = .black
+            cell.textColor = NSColor.textColor
         }
         
         if (tableColumn?.identifier.rawValue == "ascii") {
