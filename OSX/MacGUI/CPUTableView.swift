@@ -135,9 +135,9 @@ extension CpuTableView : NSTableViewDelegate {
         if  let instr = instructionAtRow[row] {
             
             if (c?.c64.cpu.breakpoint(instr.addr))! {
-                cell.textColor = NSColor.red
+                cell.textColor = NSColor.systemRed
             } else {
-                cell.textColor = NSColor.black
+                cell.textColor = NSColor.textColor
             }
         }
     }
