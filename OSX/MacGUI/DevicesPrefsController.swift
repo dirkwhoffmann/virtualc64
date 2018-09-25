@@ -130,12 +130,15 @@ class DevicesPrefsController : UserDialogController {
         
         // Which MacKey is assigned to this joystick action?
         var macKey: MacKey?
-        var macKeyCode: String = ""
+        var macKeyCode: NSAttributedString = NSAttributedString.init()
         var macKeyDesc: String = ""
         for (key, dir) in keyMap! {
             if dir == direction.rawValue {
+                 let attr = [NSAttributedStringKey.foregroundColor: NSColor.black]
                 macKey = key
-                macKeyCode = NSString(format: "%02X", macKey!.keyCode) as String
+                // macKeyCode = NSString(format: "%02X", macKey!.keyCode) as String
+                let myStr = NSString(format: "%02X", macKey!.keyCode) as String
+                macKeyCode = NSAttributedString(string: myStr, attributes: attr)
                 macKeyDesc = macKey?.description?.uppercased() ?? ""
                 break
             }
@@ -151,7 +154,7 @@ class DevicesPrefsController : UserDialogController {
             button.image = NSImage(named: NSImage.Name(rawValue: "key"))
             button.imageScaling = .scaleAxesIndependently
         }
-        button.title = macKeyCode
+        button.attributedTitle = macKeyCode
         txt.stringValue = macKeyDesc
     }
     
