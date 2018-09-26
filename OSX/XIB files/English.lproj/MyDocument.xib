@@ -295,7 +295,7 @@
                             <action selector="resetAction:" target="-2" id="1869"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="setup_hw3" id="2033" userLabel="Hardware Setup">
+                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="setup_hw3" autovalidates="NO" id="2033" userLabel="Hardware Setup">
                         <connections>
                             <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
@@ -345,23 +345,6 @@
                             <action selector="keyboardAction:" target="-2" id="V4w-Gw-jK8"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="D88C46BA-2484-4508-88A3-BD022DF84B51" label="Pause" paletteLabel="Pause" tag="1" image="pause32" id="1856">
-                        <connections>
-                            <action selector="stopAndGoAction:" target="-2" id="1870"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="36308A35-4E1B-47E9-B29F-3E786CA66F25" label="Step into" paletteLabel="Step into" tag="2" image="stepInto32" id="1857">
-                        <nil key="toolTip"/>
-                        <connections>
-                            <action selector="stepIntoAction:" target="-2" id="1864"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F0905B6B-C07D-45C1-B277-16ACCA3274BA" label="Step over" paletteLabel="Step over" tag="4" image="stepOver32" id="1859">
-                        <nil key="toolTip"/>
-                        <connections>
-                            <action selector="stepOverAction:" target="-2" id="1865"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port 1" paletteLabel="Port 1" tag="10" image="devNoneTemplate" id="kR6-IR-lNs">
                         <nil key="toolTip"/>
                         <size key="minSize" width="42" height="23"/>
@@ -369,7 +352,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -426,12 +409,11 @@
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="1848"/>
-                    <toolbarItem implicitItemIdentifier="FB8CEB02-B2D2-4B9F-9469-2B1818B90BF5" label="Toolbar Item" paletteLabel="Toolbar Item" tag="-1" id="ZNl-Lj-9Ee"/>
-                    <toolbarItem implicitItemIdentifier="5190E195-C4BB-4179-96BC-374164EFC806" label="Reset" paletteLabel="Reset" image="powerTemplate" id="wVB-PW-axj">
+                    <toolbarItem implicitItemIdentifier="5190E195-C4BB-4179-96BC-374164EFC806" label="Reset" paletteLabel="Reset" tag="30" image="powerTemplate" id="wVB-PW-axj">
                         <nil key="toolTip"/>
                         <size key="minSize" width="38" height="25"/>
                         <size key="maxSize" width="38" height="38"/>
-                        <button key="view" verticalHuggingPriority="750" id="tu0-4o-Osa">
+                        <button key="view" verticalHuggingPriority="750" tag="30" id="tu0-4o-Osa">
                             <rect key="frame" x="0.0" y="14" width="38" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="powerTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="22E-O0-WFm">
@@ -439,6 +421,9 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
+                        <connections>
+                            <action selector="resetAction:" target="-2" id="4wq-lt-kbz"/>
+                        </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="173C7588-F1F5-45F4-9A0F-C42BA4D023EB" label="Keyboard" paletteLabel="Keyboard" image="keyboardTemplate" id="Ckl-d3-vFW">
                         <nil key="toolTip"/>
@@ -452,18 +437,24 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
+                        <connections>
+                            <action selector="keyboardAction:" target="-2" id="eA2-HY-f3N"/>
+                        </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="BD9DC05E-B39D-4D15-9AAB-EC3069C43801" label="Pause" paletteLabel="Pause" image="pauseTemplate" id="dOU-Sh-aV4">
+                    <toolbarItem implicitItemIdentifier="BD9DC05E-B39D-4D15-9AAB-EC3069C43801" label="Pause" paletteLabel="Pause" tag="1" image="pauseTemplate" id="dOU-Sh-aV4">
                         <nil key="toolTip"/>
                         <size key="minSize" width="38" height="25"/>
                         <size key="maxSize" width="38" height="38"/>
-                        <button key="view" verticalHuggingPriority="750" id="1d9-Lf-kXX">
+                        <button key="view" verticalHuggingPriority="750" tag="1" id="1d9-Lf-kXX">
                             <rect key="frame" x="1" y="14" width="38" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="pauseTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gr2-ap-6Eo">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="pauseAction:" target="-2" id="81i-0J-7u2"/>
+                            </connections>
                         </button>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="5A13498A-2D77-4A1E-8192-28745F42E387" label="Preferences" paletteLabel="Preferences" sizingBehavior="auto" id="Qe9-To-rxA">
@@ -479,6 +470,9 @@
                                     <segment toolTip="Hardware Preferences" image="prefHwTemplate" width="48"/>
                                 </segments>
                             </segmentedCell>
+                            <connections>
+                                <action selector="preferencesAction:" target="-2" id="lEs-5P-AnR"/>
+                            </connections>
                         </segmentedControl>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="24E37695-F012-4018-9A52-6D5F6A2522D8" label="Snapshots" paletteLabel="Snapshots" sizingBehavior="auto" id="nxb-IG-KLe">
@@ -495,6 +489,9 @@
                                     <segment toolTip="Browse Snapshot Storage" image="ttBrowseTemplate" width="48"/>
                                 </segments>
                             </segmentedCell>
+                            <connections>
+                                <action selector="snapshotAction:" target="-2" id="S6l-w4-GtS"/>
+                            </connections>
                         </segmentedControl>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="2438F473-770C-4D05-A5D1-D9ADE17213B2" label="Inspect" paletteLabel="Inspect" sizingBehavior="auto" id="GsP-C7-APh">
@@ -509,6 +506,9 @@
                                     <segment toolTip="Inspect Disk" image="inspectTemplate" width="48" tag="1"/>
                                 </segments>
                             </segmentedCell>
+                            <connections>
+                                <action selector="inspectAction:" target="-2" id="vdG-iF-FEf"/>
+                            </connections>
                         </segmentedControl>
                     </toolbarItem>
                 </allowedToolbarItems>

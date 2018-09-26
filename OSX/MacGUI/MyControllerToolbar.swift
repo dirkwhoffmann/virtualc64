@@ -30,7 +30,7 @@ extension MyController {
         
         let tag = item.tag
         
-        // NSLog("Validating \(tag)...")
+        track("Validating \(tag)...")
     
         if c64 != nil && c64.isRunning() {
             mydocument.updateChangeCount(.changeDone)
@@ -52,16 +52,11 @@ extension MyController {
                 item.label = "Pause"
             } else {
                 item.image = NSImage.init(named: NSImage.Name(rawValue: "play32"))
-                item.label = "Run"
+                item.label = "Continue"
             }
             return true
         }
     
-        // Step into, Step out, Step over
-        if (tag >= 2 && tag <= 4) {
-            return !c64.isRunning() && c64.isRunnable()
-        }
-        
         // All other items
         return true
     }
@@ -74,8 +69,6 @@ extension MyController {
         let item4 = menu?.item(withTag: InputDevice.joystick2)
         
         // USB joysticks
-        item3?.image = gamePadManager.gamePads[3]?.image ?? genericDeviceImage
-        item4?.image = gamePadManager.gamePads[4]?.image ?? genericDeviceImage
         item3?.title = gamePadManager.gamePads[3]?.name ?? "USB Device 1"
         item4?.title = gamePadManager.gamePads[4]?.name ?? "USB Device 2"
         item3?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick1)
@@ -123,44 +116,23 @@ extension MyController {
         validateJoystickToolbarItems();
     }
     
-    @IBAction func keyboardAction(_ sender: Any!) {
-        
-        // Open the virtual keyboard as a sheet
-        let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
-        virtualKeyboardSheet = VirtualKeyboardController.init(windowNibName: nibName)
-        virtualKeyboardSheet?.showSheet(withParent: self)
-    }
-    
-    @IBAction func propertiesAction(_ sender: Any!) {
-    
-        let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
-        let controller = EmulatorPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
-    @IBAction func devicesAction(_ sender: Any!) {
-        
-        let nibName = NSNib.Name(rawValue: "DevicesPrefs")
-        let controller = DevicesPrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
-    @IBAction func hardwareAction(_ sender: Any!) {
-    
-        let nibName = NSNib.Name(rawValue: "HardwarePrefs")
-        let controller = HardwarePrefsController.init(windowNibName: nibName)
-        controller.showSheet(withParent: self)
-    }
-    
+    /*
     @IBAction func mediaAction(_ sender: Any!) {
-    
+        
         let nibName = NSNib.Name(rawValue: "DiskInspector")
         let controller = DiskInspectorController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)
     }
-    
+    */
+    @IBAction func diskInspectorAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "DiskInspector")
+        let controller = DiskInspectorController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+
     public func debugOpenAction(_ sender: Any!) {
-    
+        
         let state = debugger.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
             c64.cpu.setTracing(true)
@@ -169,7 +141,7 @@ extension MyController {
     }
     
     public func debugCloseAction(_ sender: Any!) {
-    
+        
         let state = debugger.state
         if state == NSDrawerState.open || state == NSDrawerState.opening {
             c64.cpu.setTracing(false)
@@ -178,17 +150,125 @@ extension MyController {
     }
     
     @IBAction func debugAction(_ sender: Any!) {
-    
+        
         let state = debugger.state
         if state == NSDrawerState.closed || state == NSDrawerState.closing {
             debugOpenAction(self)
         } else {
             debugCloseAction(self)
         }
-   
+        
         refresh()
     }
     
+    @IBAction func inspectAction(_ sender: NSSegmentedControl) {
+        
+        switch(sender.selectedSegment) {
+            
+        case 0: // Debugger
+            
+            track("Debugger")
+            debugAction(sender)
+            
+        case 1: // Disk Inspector
+
+            track("Disk Inspector")
+            diskInspectorAction(sender)
+            
+        default:
+            assert(false)
+        }
+    }
+ 
+    @IBAction func devicesAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "DevicesPrefs")
+        let controller = DevicesPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
+    @IBAction func propertiesAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "EmulatorPrefs")
+        let controller = EmulatorPrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
+    @IBAction func hardwareAction(_ sender: Any!) {
+        
+        let nibName = NSNib.Name(rawValue: "HardwarePrefs")
+        let controller = HardwarePrefsController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
+    @IBAction func preferencesAction(_ sender: NSSegmentedControl) {
+        
+        switch(sender.selectedSegment) {
+            
+        case 0: // Devices
+            
+            devicesAction(sender)
+            
+        case 1: // Emulator
+            
+            propertiesAction(sender)
+            
+        case 2: // Hardware
+
+            hardwareAction(sender)
+            
+        default:
+            assert(false)
+        }
+    }
+ 
+    @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
+        
+        switch(sender.selectedSegment) {
+        
+        case 0: // Rewind
+
+            track("Rewind")
+            if (c64.restoreLatestAutoSnapshot()) {
+                metalScreen.snapToFront()
+            }
+        
+        case 1: // Take
+
+            track("Snap")
+            if (c64.takeUserSnapshot()) {
+                metalScreen.snapToFront()
+            } else {
+                userSnapshotStorageFull()
+            }
+            
+        case 2: // Restore
+            
+            track("Restore")
+            if (c64.restoreLatestUserSnapshot()) {
+                metalScreen.snapToFront()
+            }
+
+        case 3: // Browse
+            
+            track("Browse")
+            let nibName = NSNib.Name(rawValue: "SnapshotDialog")
+            let controller = SnapshotDialog.init(windowNibName: nibName)
+            controller.showSheet(withParent: self)
+
+        default:
+            assert(false)
+        }
+    }
+    
+    @IBAction func keyboardAction(_ sender: Any!) {
+        
+        // Open the virtual keyboard as a sheet
+        let nibName = NSNib.Name(rawValue: "VirtualKeyboard")
+        virtualKeyboardSheet = VirtualKeyboardController.init(windowNibName: nibName)
+        virtualKeyboardSheet?.showSheet(withParent: self)
+    }
+
     @IBAction func snapshotsAction(_ sender: Any!) {
         
         let nibName = NSNib.Name(rawValue: "SnapshotDialog")
