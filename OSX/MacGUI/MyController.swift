@@ -103,7 +103,7 @@ class MyController : NSWindowController {
     // Toolbar
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
-    
+
     // Menu
     // @IBOutlet weak var recentDisksMenu: NSMenu!
     
@@ -350,13 +350,14 @@ extension MyController {
         none = none?.resizeImage(width: 32, height: 32, cutout: cutout)
         var keyset = NSImage(named: NSImage.Name(rawValue: "oxygen_keys"))
         keyset = keyset?.resizeImage(width: 32, height: 32, cutout: cutout)
-        var mouse = NSImage(named: NSImage.Name(rawValue: "oxygen_mouse"))
+        var mouse = NSImage(named: NSImage.Name(rawValue: "devMouseTemplate"))
         mouse = mouse?.resizeImage(width: 32, height: 32, cutout: cutout)
         var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad"))
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
         genericDeviceImage = gamepad
         
         // Assign images
+        /*
         controlPort1.item(at: 0)?.image = none
         controlPort1.item(at: 1)?.image = keyset
         controlPort1.item(at: 2)?.image = keyset
@@ -371,7 +372,8 @@ extension MyController {
         controlPort2.item(at: 3)?.image = mouse
         controlPort2.item(at: 4)?.image = gamepad
         controlPort2.item(at: 5)?.image = gamepad
-
+        */
+        
         validateJoystickToolbarItems()
     }
     

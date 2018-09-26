@@ -362,26 +362,26 @@
                             <action selector="stepOverAction:" target="-2" id="1865"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port 1" paletteLabel="Port 1" tag="10" id="kR6-IR-lNs">
+                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port 1" paletteLabel="Port 1" tag="10" image="devNoneTemplate" id="kR6-IR-lNs">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="38" height="36"/>
-                        <size key="maxSize" width="38" height="38"/>
+                        <size key="minSize" width="42" height="23"/>
+                        <size key="maxSize" width="64" height="38"/>
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
-                            <rect key="frame" x="0.0" y="14" width="38" height="38"/>
+                            <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
+                                <font key="font" metaFont="system"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
-                                        <menuItem title="None" state="on" tag="-1" id="VD3-Wr-Ufe"/>
-                                        <menuItem title="Keyset 1" id="L2h-xt-iO6"/>
-                                        <menuItem title="Keyset 2" tag="1" id="Ohe-Pi-c1S"/>
-                                        <menuItem title="Mouse" tag="2" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 1" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
+                                        <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="VD3-Wr-Ufe"/>
+                                        <menuItem title="Keyset 1" image="devKeyboardTemplate" id="L2h-xt-iO6"/>
+                                        <menuItem title="Keyset 2" image="devKeyboardTemplate" tag="1" id="Ohe-Pi-c1S"/>
+                                        <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 1" image="devGamepadTemplate" tag="3" id="1PP-xx-NoT" userLabel="USB Joystick 1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" tag="4" id="7sJ-UA-Pfj">
+                                        <menuItem title="USB Joystick 2" image="devGamepadTemplate" tag="4" id="7sJ-UA-Pfj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -392,26 +392,26 @@
                             </connections>
                         </popUpButton>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port 2" paletteLabel="Port 2" tag="11" id="Klt-YL-0mv" userLabel="Port 2">
+                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port 2" paletteLabel="Port 2" tag="11" image="devNoneTemplate" id="Klt-YL-0mv" userLabel="Port 2">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="10" height="36"/>
-                        <size key="maxSize" width="56" height="38"/>
+                        <size key="minSize" width="42" height="23"/>
+                        <size key="maxSize" width="64" height="38"/>
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
-                            <rect key="frame" x="1" y="14" width="38" height="38"/>
+                            <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="None" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
+                                <font key="font" metaFont="system"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
-                                        <menuItem title="None" state="on" tag="-1" id="xyt-eC-0im"/>
-                                        <menuItem title="Keyset 1" id="PAa-za-K8O"/>
-                                        <menuItem title="Keyset 2" tag="1" id="1M8-Dz-dop"/>
-                                        <menuItem title="Mouse" tag="2" id="JM3-8Y-xZU"/>
-                                        <menuItem title="USB Joystick 1" tag="3" id="Ahc-WA-2jp">
+                                        <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="xyt-eC-0im"/>
+                                        <menuItem title="Keyset 1" image="devKeyboardTemplate" id="PAa-za-K8O"/>
+                                        <menuItem title="Keyset 2" image="devKeyboardTemplate" tag="1" id="1M8-Dz-dop"/>
+                                        <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="USB Joystick 1" image="devJoystickTemplate" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 2" tag="4" id="L3T-8p-gOj">
+                                        <menuItem title="USB Joystick 2" image="devJoystickTemplate" tag="4" id="L3T-8p-gOj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
@@ -471,11 +471,11 @@
                         <segmentedControl key="view" verticalHuggingPriority="750" id="LAq-0H-kvY">
                             <rect key="frame" x="0.0" y="14" width="152" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="W70-WS-d3m">
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="W70-WS-d3m">
                                 <font key="font" metaFont="system"/>
                                 <segments>
                                     <segment image="prefDevicesTemplate" width="48"/>
-                                    <segment image="prefEmuTemplate" width="48" selected="YES" tag="1"/>
+                                    <segment image="prefEmuTemplate" width="48" tag="1"/>
                                     <segment image="prefHwTemplate" width="48"/>
                                 </segments>
                             </segmentedCell>
@@ -486,11 +486,11 @@
                         <segmentedControl key="view" verticalHuggingPriority="750" id="AHD-MB-nXC">
                             <rect key="frame" x="0.0" y="14" width="201" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="yaX-4D-cAY">
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="yaX-4D-cAY">
                                 <font key="font" metaFont="system"/>
                                 <segments>
                                     <segment image="ttRewindTemplate" width="48"/>
-                                    <segment image="ttStoreTemplate" width="48" selected="YES" tag="1"/>
+                                    <segment image="ttStoreTemplate" width="48" tag="1"/>
                                     <segment image="ttRestoreTemplate" width="48"/>
                                     <segment image="ttBrowseTemplate" width="48"/>
                                 </segments>
@@ -511,23 +511,6 @@
                             </segmentedCell>
                         </segmentedControl>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="7996D217-0EEF-4A7B-AE7F-787EEC0E7D49" label="Port 1" paletteLabel="Port 1" sizingBehavior="auto" id="gH5-fb-CFP">
-                        <nil key="toolTip"/>
-                        <comboBox key="view" verticalHuggingPriority="750" id="BVa-IN-tUV">
-                            <rect key="frame" x="0.0" y="14" width="99" height="26"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="exO-nU-hnu">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <objectValues>
-                                    <string>Item 1</string>
-                                    <string>Item 2</string>
-                                    <string>Item 3</string>
-                                </objectValues>
-                            </comboBoxCell>
-                        </comboBox>
-                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="GsP-C7-APh"/>
@@ -535,6 +518,7 @@
                     <toolbarItem reference="nxb-IG-KLe"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="kR6-IR-lNs"/>
+                    <toolbarItem reference="Klt-YL-0mv"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="Ckl-d3-vFW"/>
                     <toolbarItem reference="1851"/>
@@ -2952,11 +2936,16 @@
         <image name="cartridge" width="128" height="128"/>
         <image name="debug" width="129" height="129"/>
         <image name="debugTemplate" width="240" height="241"/>
+        <image name="devGamepadTemplate" width="24" height="24"/>
+        <image name="devJoystickTemplate" width="24" height="24"/>
+        <image name="devKeyboardTemplate" width="24" height="24"/>
+        <image name="devMouseTemplate" width="24" height="24"/>
+        <image name="devNoneTemplate" width="24" height="24"/>
         <image name="disk_saved" width="97" height="97"/>
         <image name="fast" width="128" height="128"/>
         <image name="inspectTemplate" width="241" height="240"/>
         <image name="inspect_disk" width="129" height="128"/>
-        <image name="keyboardTemplate" width="241" height="240"/>
+        <image name="keyboardTemplate" width="24" height="24"/>
         <image name="keypress" width="97" height="96"/>
         <image name="pause32" width="32" height="32"/>
         <image name="pauseTemplate" width="241" height="240"/>
