@@ -556,11 +556,14 @@ extension MyController {
              MSG_ALWAYS_WARP_OFF:
 
             if c64.alwaysWarp() {
-                warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "pin_red"))
+                let name = NSImage.Name(rawValue: "hourglass3Template") //  "pin_red"
+                warpIcon.image = NSImage.init(named: name)
             } else if (c64.warp()) {
-                warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "clock_red"))
+                let name = NSImage.Name(rawValue: "hourglass2Template") //  "clock_red"
+                warpIcon.image = NSImage.init(named: name)
             } else {
-                warpIcon.image = NSImage.init(named: NSImage.Name(rawValue: "clock_green"))
+                let name = NSImage.Name(rawValue: "hourglass1Template") //  "clock_green"
+                warpIcon.image = NSImage.init(named: name)
             }
     
         case MSG_PAL,
