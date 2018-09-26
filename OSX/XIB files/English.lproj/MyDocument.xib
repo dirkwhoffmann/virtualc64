@@ -223,7 +223,7 @@
                     <button hidden="YES" id="NlM-JA-g9p">
                         <rect key="frame" x="211" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="tape" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaTapeTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -231,7 +231,7 @@
                     <button hidden="YES" tag="1" id="1045">
                         <rect key="frame" x="48" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="disk_saved" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaDiskSavedTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -239,7 +239,7 @@
                     <button hidden="YES" id="2003">
                         <rect key="frame" x="185" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaCrtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -274,7 +274,7 @@
                     <button hidden="YES" tag="1" id="D1i-Ep-fTN">
                         <rect key="frame" x="140" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="disk_saved" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="dWc-LE-E52">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="mediaDiskSavedTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="dWc-LE-E52">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -2933,7 +2933,6 @@
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
-        <image name="cartridge" width="128" height="128"/>
         <image name="debug" width="129" height="129"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepadTemplate" width="24" height="24"/>
@@ -2941,14 +2940,16 @@
         <image name="devKeyboardTemplate" width="24" height="24"/>
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
-        <image name="disk_saved" width="97" height="97"/>
         <image name="fast" width="128" height="128"/>
         <image name="inspectTemplate" width="241" height="240"/>
         <image name="inspect_disk" width="129" height="128"/>
         <image name="keyboardTemplate" width="24" height="24"/>
         <image name="keypress" width="97" height="96"/>
+        <image name="mediaCrtTemplate" width="241" height="241"/>
+        <image name="mediaDiskSavedTemplate" width="241" height="241"/>
+        <image name="mediaTapeTemplate" width="241" height="240"/>
         <image name="pause32" width="32" height="32"/>
-        <image name="pauseTemplate" width="241" height="240"/>
+        <image name="pauseTemplate" width="240" height="241"/>
         <image name="powerTemplate" width="241" height="240"/>
         <image name="prefDevicesTemplate" width="241" height="241"/>
         <image name="prefEmuTemplate" width="241" height="241"/>
@@ -2959,7 +2960,6 @@
         <image name="setup_joy3" width="129" height="129"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOver32" width="32" height="32"/>
-        <image name="tape" width="256" height="256"/>
         <image name="tb_browse" width="129" height="129"/>
         <image name="tb_freeze" width="129" height="129"/>
         <image name="tb_revert" width="129" height="129"/>

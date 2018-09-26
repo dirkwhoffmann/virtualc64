@@ -653,7 +653,7 @@ extension MyController {
             
         case MSG_DISK_SAVED:
             
-            let image = NSImage.init(named: NSImage.Name(rawValue: "disk_saved"))
+            let image = NSImage.init(named: NSImage.Name(rawValue: "mediaDiskSavedTemplate"))
             if firstDrive() {
                 diskIcon1.image = image
             } else {
@@ -663,7 +663,7 @@ extension MyController {
         case MSG_DISK_UNSAVED:
             
             track("Disk is unsaved")
-            let image = NSImage.init(named: NSImage.Name(rawValue: "disk_unsaved"))
+            let image = NSImage.init(named: NSImage.Name(rawValue: "mediaDiskUnsavedTemplate"))
             if firstDrive() {
                 diskIcon1.image = image
             } else {
