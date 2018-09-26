@@ -193,7 +193,7 @@
                     <button toolTip="Warp mode" id="1052">
                         <rect key="frame" x="700" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="fast" imagePosition="above" alignment="center" imageScaling="proportionallyDown" id="1707">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="above" alignment="center" imageScaling="proportionallyDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -201,13 +201,6 @@
                             <action selector="alwaysWarpAction:" target="-2" id="qwQ-Ql-wzH"/>
                         </connections>
                     </button>
-                    <customView id="DD4-5B-w9h" customClass="MetalView" customModule="VirtualC64" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="24" width="804" height="621"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <connections>
-                            <outlet property="controller" destination="-2" id="DoA-Vt-vqv"/>
-                        </connections>
-                    </customView>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
                         <rect key="frame" x="74" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -279,6 +272,13 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
+                    <customView id="DD4-5B-w9h" customClass="MetalView" customModule="VirtualC64" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="24" width="804" height="621"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <connections>
+                            <outlet property="controller" destination="-2" id="DoA-Vt-vqv"/>
+                        </connections>
+                    </customView>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845">
@@ -369,9 +369,9 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="VD3-Wr-Ufe"/>
@@ -401,7 +401,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="xyt-eC-0im"/>
@@ -474,9 +474,9 @@
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="W70-WS-d3m">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment image="prefDevicesTemplate" width="48"/>
-                                    <segment image="prefEmuTemplate" width="48" tag="1"/>
-                                    <segment image="prefHwTemplate" width="48"/>
+                                    <segment toolTip="Devices Preferences" image="prefDevicesTemplate" width="48"/>
+                                    <segment toolTip="Emulator Preferences" image="prefEmuTemplate" width="48" tag="1"/>
+                                    <segment toolTip="Hardware Preferences" image="prefHwTemplate" width="48"/>
                                 </segments>
                             </segmentedCell>
                         </segmentedControl>
@@ -489,10 +489,10 @@
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="yaX-4D-cAY">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment image="ttRewindTemplate" width="48"/>
-                                    <segment image="ttStoreTemplate" width="48" tag="1"/>
-                                    <segment image="ttRestoreTemplate" width="48"/>
-                                    <segment image="ttBrowseTemplate" width="48"/>
+                                    <segment toolTip="Rewind" image="ttRewindTemplate" width="48"/>
+                                    <segment toolTip="Take Snapshot" image="ttStoreTemplate" width="48" tag="1"/>
+                                    <segment toolTip="Revert To Most Recent Snapshot" image="ttRestoreTemplate" width="48"/>
+                                    <segment toolTip="Browse Snapshot Storage" image="ttBrowseTemplate" width="48"/>
                                 </segments>
                             </segmentedCell>
                         </segmentedControl>
@@ -505,8 +505,8 @@
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="5sp-Ns-Coi">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment image="debugTemplate" width="48"/>
-                                    <segment image="inspectTemplate" width="48" tag="1"/>
+                                    <segment toolTip="Inspect C64 Hardware" image="debugTemplate" width="48"/>
+                                    <segment toolTip="Inspect Disk" image="inspectTemplate" width="48" tag="1"/>
                                 </segments>
                             </segmentedCell>
                         </segmentedControl>
@@ -2940,7 +2940,7 @@
         <image name="devKeyboardTemplate" width="24" height="24"/>
         <image name="devMouseTemplate" width="24" height="24"/>
         <image name="devNoneTemplate" width="24" height="24"/>
-        <image name="fast" width="128" height="128"/>
+        <image name="hourglass1Template" width="241" height="241"/>
         <image name="inspectTemplate" width="241" height="240"/>
         <image name="inspect_disk" width="129" height="128"/>
         <image name="keyboardTemplate" width="24" height="24"/>
