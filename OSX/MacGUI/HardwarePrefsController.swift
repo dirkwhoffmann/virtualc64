@@ -58,11 +58,6 @@ class HardwarePrefsController : UserDialogController {
             
             vicIcon.image = NSImage(named: NSImage.Name(rawValue: "pref_vicii_ntsc"))
             vicDescription.stringValue = "NTSC 1.023 MHz 63 cycles"
-            /*
-            systemText.stringValue = "NTSC "
-            systemText2.stringValue = "1.023 MHz"
-            systemText3.stringValue = "63 raster cycles"
-            */
             
         default:
             assert(false)
