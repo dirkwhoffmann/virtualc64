@@ -36,6 +36,7 @@
 		5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* UserDefaults.swift */; };
 		5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* AnyC64File.cpp */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
+		501B9753215D856F000CFB1D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B9752215D856F000CFB1D /* Sparkle.framework */; };
 		501DE30A20C9C41B00707130 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F220C9C41800707130 /* pot.cc */; };
 		501DE30B20C9C41B00707130 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F520C9C41800707130 /* dac.cc */; };
 		501DE30C20C9C41B00707130 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F720C9C41800707130 /* sid.cc */; };
@@ -90,8 +91,6 @@
 		5058F0F220A77EDC008BFA92 /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* VIC_draw.cpp */; };
-		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
-		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506B315220DCDF87007913A8 /* ROMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315020DCDF87007913A8 /* ROMFile.cpp */; };
 		506B315420DD0AEB007913A8 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315320DD0AEB007913A8 /* VC1541Memory.cpp */; };
@@ -176,7 +175,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +241,7 @@
 		5018E47F12240F7100F0820E /* AnyC64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyC64File.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* AnyC64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyC64File.cpp; sourceTree = "<group>"; };
 		50195C2920B007A1003844FB /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		501B9752215D856F000CFB1D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_types.h; sourceTree = "<group>"; };
 		501DE2EE20C9C41700707130 /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
 		501DE2EF20C9C41800707130 /* sid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sid.h; sourceTree = "<group>"; };
@@ -331,7 +330,6 @@
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506004641B78E9C500EBDD93 /* VIC_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_draw.cpp; sourceTree = "<group>"; };
-		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506B315020DCDF87007913A8 /* ROMFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ROMFile.cpp; sourceTree = "<group>"; };
 		506B315120DCDF87007913A8 /* ROMFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ROMFile.h; sourceTree = "<group>"; };
@@ -443,8 +441,8 @@
 				50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */,
 				50A0E0250A8F332A0067714C /* System.framework in Frameworks */,
 				025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */,
-				5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */,
 				50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */,
+				501B9753215D856F000CFB1D /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,7 +452,7 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				506449991EF428970043BE7B /* Sparkle.framework */,
+				501B9752215D856F000CFB1D /* Sparkle.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
