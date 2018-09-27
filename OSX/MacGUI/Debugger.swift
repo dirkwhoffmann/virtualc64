@@ -220,7 +220,6 @@ extension MyController {
             c64.run()
         } else {
             c64.halt()
-            debugger.open()
         }
         refresh()
     }

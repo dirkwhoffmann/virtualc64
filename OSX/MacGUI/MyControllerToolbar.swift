@@ -26,12 +26,14 @@ extension MyController {
         static let closing = 3
     }
 
+    /*
     open override func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         
         let tag = item.tag
         
         track("Validating \(tag)...")
-    
+        assert(false)
+        
         if c64 != nil && c64.isRunning() {
             mydocument.updateChangeCount(.changeDone)
         }
@@ -60,7 +62,21 @@ extension MyController {
         // All other items
         return true
     }
-   
+    */
+    
+    func validateToolbarItems() {
+        let button = pauseTbItem.view as! NSButton
+        if c64.isRunning() {
+            button.image = NSImage.init(named: NSImage.Name(rawValue: "pauseTemplate"))
+            pauseTbItem.label = "Pause"
+        } else {
+            button.image = NSImage.init(named: NSImage.Name(rawValue: "continueTemplate"))
+            pauseTbItem.label = "Run"
+        }
+        // snapshotSegCtrl.setEnabled(c64.numUserSnapshots() != 0, forSegment: 2)
+        
+    }
+    
     func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: ControlPortProxy!) {
         
         let menu =  popup.menu
@@ -247,6 +263,8 @@ extension MyController {
             track("Restore")
             if (c64.restoreLatestUserSnapshot()) {
                 metalScreen.snapToFront()
+            } else {
+                NSSound.beep()
             }
 
         case 3: // Browse

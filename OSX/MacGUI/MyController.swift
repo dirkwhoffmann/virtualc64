@@ -103,6 +103,8 @@ class MyController : NSWindowController {
     // Toolbar
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
+    @IBOutlet weak var pauseTbItem: NSToolbarItem!
+    @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
 
     // Menu
     // @IBOutlet weak var recentDisksMenu: NSMenu!
@@ -516,13 +518,15 @@ extension MyController {
     
         case MSG_RUN:
             
-            disableUserEditing()
             document?.updateChangeCount(.changeDone)
+            disableUserEditing()
+            validateToolbarItems()
             refresh()
     
         case MSG_HALT:
             
             enableUserEditing()
+            validateToolbarItems()
             refresh()
     
         case MSG_BASIC_ROM_LOADED,

@@ -75,6 +75,7 @@
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="metalScreen" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
                 <outlet property="nflag" destination="45" id="r0Q-mN-Hht"/>
+                <outlet property="pauseTbItem" destination="dOU-Sh-aV4" id="Nx0-Io-Xiy"/>
                 <outlet property="pc" destination="47" id="163"/>
                 <outlet property="potX" destination="3YT-QQ-S7K" id="1yu-aO-gLC"/>
                 <outlet property="potY" destination="gEF-Sx-fBJ" id="nBd-zm-heN"/>
@@ -86,6 +87,7 @@
                 <outlet property="redLED2" destination="iKN-RM-vsV" id="jl7-Pu-DM1"/>
                 <outlet property="releaseRate" destination="NEG-EB-tbc" id="wxu-tJ-Edy"/>
                 <outlet property="ringBit" destination="9lM-DR-BPP" id="sb1-4n-3vQ"/>
+                <outlet property="snapshotSegCtrl" destination="AHD-MB-nXC" id="Cva-Bh-qUl"/>
                 <outlet property="sp" destination="158" id="164"/>
                 <outlet property="spriteBackgroundIrqEnabled" destination="8eZ-Yr-qql" id="yYJ-Hn-IuX"/>
                 <outlet property="spriteCollidesWithBackground" destination="1WO-Gc-kIf" id="Cbb-cn-ap0"/>
@@ -283,68 +285,8 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="1849">
-                        <connections>
-                            <action selector="printDocument:" target="-2" id="dc4-4V-nWJ"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
-                    <toolbarItem implicitItemIdentifier="944C7CF2-507D-458E-A37A-DA6E3FC68049" label="Power" paletteLabel="Power" toolTip="Perform a hard reset" tag="30" image="restart32" id="1853">
-                        <connections>
-                            <action selector="resetAction:" target="-2" id="1869"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" toolTip="Show the hardware preference window" tag="20" image="setup_hw3" autovalidates="NO" id="2033" userLabel="Hardware Setup">
-                        <connections>
-                            <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="AF87F0E4-FEF9-47E9-81FE-F928D9FFAEBD" label="Devices" paletteLabel="Devices" toolTip="Show the hardware preference window" tag="-1" image="setup_joy3" id="0QS-4l-nII" userLabel="Joystick Setup">
-                        <connections>
-                            <action selector="devicesAction:" target="-2" id="D8D-mx-mAk"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator" paletteLabel="Emulator" toolTip="Show the emulator preference window" tag="-1" image="setup_emu3" id="2226" userLabel="Emulator Setup">
-                        <connections>
-                            <action selector="propertiesAction:" target="-2" id="4xt-Za-auc"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="44750A76-96CA-4180-AA7E-CFBA12DE3318" label="Inspect" paletteLabel="Inspect" tag="-1" image="inspect_disk" id="f2e-mw-dVA">
-                        <connections>
-                            <action selector="mediaAction:" target="-2" id="cHt-Hg-iuV"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="01470A57-6F87-4EF5-B929-A4A98406EEDB" label="Rewind" paletteLabel="Rewind" toolTip="Revert to the latest auto-saved snapshot" tag="5" image="tb_rewind" id="pm3-ae-4ou">
-                        <connections>
-                            <action selector="restoreLatestAutoSnapshotAction:" target="-2" id="OZ0-hO-b08"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Snap" paletteLabel="Snap" toolTip="Open the snapshot library" tag="21" image="tb_freeze" id="4tn-YG-78O">
-                        <connections>
-                            <action selector="takeSnapshot:" target="-2" id="zdR-QX-k1K"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="D2701C6D-2021-42B8-86B2-E10171F9EA0A" label="Revert" paletteLabel="Revert" toolTip="Revert to the latest user-saved snapshot" tag="6" image="tb_revert" id="dJi-AI-nsT">
-                        <connections>
-                            <action selector="restoreLatestUserSnapshotAction:" target="-2" id="lhM-tV-FEY"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F02115A4-0B89-41FB-93DD-05613564C510" label="Browse" paletteLabel="Browse" toolTip="Open the snapshot library" tag="21" image="tb_browse" id="KDU-9f-cYw">
-                        <connections>
-                            <action selector="snapshotsAction:" target="-2" id="sMO-yF-dnB"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Monitor" paletteLabel="Monitor" toolTip="Open the debugger" tag="31" image="debug" id="1855">
-                        <connections>
-                            <action selector="debugAction:" target="-2" id="h8p-Nc-0xz"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="D593D53D-4525-4947-A21A-5A07BB678458" label="Keyboard" paletteLabel="Keyboard" toolTip="Open the debugger" tag="-1" image="keypress" id="RdU-o8-emV">
-                        <connections>
-                            <action selector="keyboardAction:" target="-2" id="V4w-Gw-jK8"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port 1" paletteLabel="Port 1" tag="10" image="devNoneTemplate" id="kR6-IR-lNs">
                         <nil key="toolTip"/>
                         <size key="minSize" width="42" height="23"/>
@@ -456,6 +398,9 @@
                                 <action selector="pauseAction:" target="-2" id="81i-0J-7u2"/>
                             </connections>
                         </button>
+                        <connections>
+                            <action selector="stopAndGoAction:" target="-2" id="nYX-eP-iZh"/>
+                        </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="5A13498A-2D77-4A1E-8192-28745F42E387" label="Preferences" paletteLabel="Preferences" sizingBehavior="auto" id="Qe9-To-rxA">
                         <nil key="toolTip"/>
@@ -2933,7 +2878,6 @@
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
-        <image name="debug" width="129" height="129"/>
         <image name="debugTemplate" width="240" height="241"/>
         <image name="devGamepadTemplate" width="24" height="24"/>
         <image name="devJoystickTemplate" width="24" height="24"/>
@@ -2942,9 +2886,7 @@
         <image name="devNoneTemplate" width="24" height="24"/>
         <image name="hourglass1Template" width="241" height="241"/>
         <image name="inspectTemplate" width="241" height="240"/>
-        <image name="inspect_disk" width="129" height="128"/>
         <image name="keyboardTemplate" width="24" height="24"/>
-        <image name="keypress" width="97" height="96"/>
         <image name="mediaCrtTemplate" width="241" height="241"/>
         <image name="mediaDiskSavedTemplate" width="241" height="241"/>
         <image name="mediaTapeTemplate" width="241" height="240"/>
@@ -2954,16 +2896,8 @@
         <image name="prefDevicesTemplate" width="241" height="241"/>
         <image name="prefEmuTemplate" width="241" height="241"/>
         <image name="prefHwTemplate" width="240" height="241"/>
-        <image name="restart32" width="128" height="128"/>
-        <image name="setup_emu3" width="129" height="129"/>
-        <image name="setup_hw3" width="129" height="129"/>
-        <image name="setup_joy3" width="129" height="129"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOver32" width="32" height="32"/>
-        <image name="tb_browse" width="129" height="129"/>
-        <image name="tb_freeze" width="129" height="129"/>
-        <image name="tb_revert" width="129" height="129"/>
-        <image name="tb_rewind" width="129" height="129"/>
         <image name="ttBrowseTemplate" width="240" height="240"/>
         <image name="ttRestoreTemplate" width="241" height="240"/>
         <image name="ttRewindTemplate" width="241" height="240"/>

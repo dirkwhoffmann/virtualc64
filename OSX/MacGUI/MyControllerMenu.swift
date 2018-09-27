@@ -10,7 +10,9 @@ import Foundation
 extension MyController {
     
     override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
-  
+
+        track("validateMenuItem")
+        
         func firstDrive() -> Bool {
             precondition(item.tag == 1 || item.tag == 2)
             return item.tag == 1
@@ -168,7 +170,8 @@ extension MyController {
 
         return true
     }
-   
+
+    
     //
     // Action methods (File menu)
     //
