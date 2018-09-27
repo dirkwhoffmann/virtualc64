@@ -35,7 +35,7 @@ class GamePad
     var name: String?
     
     //! @brief    Image of the connected controller
-    var image: NSImage?
+    // var image: NSImage?
     
     //! @brief    Vendor ID of the managed device
     /*! @details  Value is only used for HID devices
@@ -86,43 +86,36 @@ class GamePad
         if (vendorID == 0x40B && productID == 0x6533) {
             
             name = "Competition Pro SL-6602"
-            image = NSImage(named: NSImage.Name(rawValue: "joystick32_speedlink"))
         
         } else if (vendorID == 0x54C && productID == 0x268) {
 
             name = "Sony DualShock 3"
             rThumbXUsageID = kHIDUsage_GD_Z;
             rThumbYUsageID = kHIDUsage_GD_Rz;
-            image = NSImage(named: NSImage.Name(rawValue: "joystick32_sony"))
         
         } else if (vendorID == 0x54C && productID == 0x5C4) {
             
             name = "Sony DualShock 4"
             rThumbXUsageID = kHIDUsage_GD_Z;
             rThumbYUsageID = kHIDUsage_GD_Rz;
-            image = NSImage(named: NSImage.Name(rawValue: "joystick32_sony"))
 
         } else if (vendorID == 0x54C && productID == 0x9CC) {
             
             name = "Sony Dualshock 4 (2nd Gen)"
             rThumbXUsageID = kHIDUsage_GD_Z;
             rThumbYUsageID = kHIDUsage_GD_Rz;
-            image = NSImage(named: NSImage.Name(rawValue: "joystick32_sony"))
         
         } else if (vendorID == 0x483 && productID == 0x9005) {
             
             name = "RetroFun! Joystick Adapter"
-            image = NSImage(named: NSImage.Name(rawValue: "retro_adapter32"))
 
         } else if (vendorID == 0x004 && productID == 0x0001) {
             
             name = "aJoy Retro Adapter"
-            image = NSImage(named: NSImage.Name(rawValue: "retro_adapter32"))
             
         } else {
         
             // name = "Generic Gamepad"
-            // image = NSImage(named: NSImage.Name(rawValue: "joystick32_generic"))
         }
     }
     
