@@ -37,6 +37,7 @@
 		5018E48112240F7100F0820E /* AnyC64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* AnyC64File.cpp */; };
 		50195C2A20B007A1003844FB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50195C2920B007A1003844FB /* Debugger.swift */; };
 		501B9755215D86B7000CFB1D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; };
+		501B9756215D89C6000CFB1D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 501B9754215D86B7000CFB1D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		501DE30A20C9C41B00707130 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F220C9C41800707130 /* pot.cc */; };
 		501DE30B20C9C41B00707130 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F520C9C41800707130 /* dac.cc */; };
 		501DE30C20C9C41B00707130 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 501DE2F720C9C41800707130 /* sid.cc */; };
@@ -174,6 +175,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				501B9756215D89C6000CFB1D /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
