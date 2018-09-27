@@ -64,7 +64,6 @@
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
 		5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9420B6C2AC000D9193 /* VICPanel.swift */; };
 		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
-		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		503E199020C42C6D007E91F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Media.xcassets */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
@@ -293,7 +292,6 @@
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
 		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
 		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
-		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
@@ -516,7 +514,6 @@
 				501E427920D975AD000BB48D /* IconT64.icns */,
 				501E427B20D975AD000BB48D /* IconV64.icns */,
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
-				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
@@ -1063,7 +1060,6 @@
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
-				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
 				500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
