@@ -195,7 +195,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
     uint8_t peekIO2(uint16_t addr);
-    uint8_t readIO2(uint16_t addr);
+    uint8_t spypeekIO2(uint16_t addr);
 };
 
 //! @brief    Type 12 cartridges
@@ -205,7 +205,20 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_REX; }
     uint8_t peekIO2(uint16_t addr);
-    uint8_t readIO2(uint16_t addr);
+    uint8_t spypeekIO2(uint16_t addr);
+};
+
+//! @brief    Type 16 cartridges
+class WarpSpeed : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_WARPSPEED; }
+    void reset();
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
 };
 
 //! @brief    Type 18 cartridges

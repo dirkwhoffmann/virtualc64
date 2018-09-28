@@ -622,10 +622,11 @@ Westermann::peekIO2(uint16_t addr)
 }
 
 uint8_t
-Westermann::readIO2(uint16_t addr)
+Westermann::spypeekIO2(uint16_t addr)
 {
     return 0;
 }
+
 
 //
 // Rex
@@ -650,9 +651,50 @@ Rex::peekIO2(uint16_t addr)
 }
 
 uint8_t
-Rex::readIO2(uint16_t addr)
+Rex::spypeekIO2(uint16_t addr)
 {
     return 0;
+}
+
+
+//
+// WarpSpeed
+//
+
+void
+WarpSpeed::reset()
+{
+    initialGameLine = 0;
+    initialExromLine = 0;
+    Cartridge::reset();
+}
+
+uint8_t
+WarpSpeed::peekIO1(uint16_t addr)
+{
+    return Cartridge::peekRomL(0x1E00 | (addr & 0xFF));
+}
+
+uint8_t
+WarpSpeed::peekIO2(uint16_t addr)
+{
+    return Cartridge::peekRomL(0x1F00 | (addr & 0xFF));
+}
+
+void
+WarpSpeed::pokeIO1(uint16_t addr, uint8_t value)
+{
+    // debug("Enabling ROM at 0x8000\n");
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(0);
+}
+
+void
+WarpSpeed::pokeIO2(uint16_t addr, uint8_t value)
+{
+    // debug("Disabling ROM at 0x8000\n");
+    c64->expansionport.setGameLine(1);
+    c64->expansionport.setExromLine(1);
 }
 
 

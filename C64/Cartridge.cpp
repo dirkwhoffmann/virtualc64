@@ -85,6 +85,8 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_WESTERMANN:
         case CRT_REX:
         
+        case CRT_WARPSPEED:
+            
         case CRT_ZAXXON:
         case CRT_MAGIC_DESK:
 
@@ -128,6 +130,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new Westermann(c64);
         case CRT_REX:
             return new Rex(c64);
+        case CRT_WARPSPEED:
+            return new WarpSpeed(c64);
         case CRT_ZAXXON:
             return new Zaxxon(c64);
         case CRT_MAGIC_DESK:
