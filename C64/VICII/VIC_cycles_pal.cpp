@@ -107,6 +107,10 @@ VIC::cycle1pal()
 void
 VIC::cycle2pal()
 {
+    // Check for lightpen IRQ in first rasterline
+    if (!lpLine && c64->rasterLine == 0)
+        checkForLightpenIrqAtStartOfFrame();
+    
     // Phi2.5 Fetch (previous cycle)
     sFirstAccess(3);
 

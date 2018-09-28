@@ -632,8 +632,6 @@ VIC::checkForLightpenIrq()
     // Latch coordinates
     latchedLightPenX = lightpenX() / 2;
     latchedLightPenY = lightpenY();
-    debug("Frame %lld Rasterline %d cycle = %d\n", c64->frame, rasterline(), c64->rasterCycle);
-    debug("Lightpen x / y = %d %d\n", lightpenX() / 2, lightpenY());
     
     // Newer VIC models trigger an interrupt immediately
     if (!delayedLightPenIrqs()) triggerIrq(8);
@@ -647,13 +645,26 @@ VIC::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
     assert(c64->rasterLine == 0);
-    assert(c64->rasterCycle == 1);
-    assert(lightpenIRQhasOccured == false);
+    assert(c64->rasterCycle == 2);
  
-    // Do we latch a new coordinate here? 
-    if (!delayedLightPenIrqs()) {
-        latchedLightPenX = lightpenX() / 2;
-        latchedLightPenY = lightpenY();
+    // Latch coordinate (values according to VICE 3.1)
+    switch (chipModel) {
+            
+        case PAL_6569_R1:
+        case PAL_6569_R3:
+        case PAL_8565:
+            
+            latchedLightPenX = 209;
+            latchedLightPenY = 0;
+            break;
+            
+        case NTSC_6567:
+        case NTSC_6567_R56A:
+        case NTSC_8562:
+            
+            latchedLightPenX = 213;
+            latchedLightPenY = 0;
+            break;
     }
     
     // Trigger interrupt
@@ -770,7 +781,6 @@ VIC::updateSpriteShiftRegisters() {
 void 
 VIC::beginFrame()
 {
-    // isVisibleColumn = false;
 	lightpenIRQhasOccured = false;
 
     /* "The VIC does five read accesses in every raster line for the refresh of
@@ -788,8 +798,10 @@ VIC::beginFrame()
     vcBase = 0;
     
     // Trigger lightpen interrupt if lp line is down
+    /*
     if (!lpLine)
         checkForLightpenIrqAtStartOfFrame();
+     */
 }
 
 void
