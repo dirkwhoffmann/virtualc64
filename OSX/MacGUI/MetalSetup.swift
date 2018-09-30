@@ -329,10 +329,16 @@ public extension MetalView {
  
     func buildDepthBuffer() {
         
+        // track("buildDepthBuffer")
+
         if device == nil {
             return
         }
         
+        let width = Int(layerWidth)
+        let height = Int(layerHeight)
+        
+        /* OLD CODDE: OPTIMIZATION IS NOT COMPATIBLE WITH macOS MOJAVE
         let width = (layerWidth < 2048) ? 2048 : Int(layerWidth)
         let height = (layerHeight < 2048) ? 2048 : Int(layerHeight)
         
@@ -342,6 +348,7 @@ public extension MetalView {
                 return // Old texture is sufficiently large
             }
         }
+        */
         
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.depth32Float,
