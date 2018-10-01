@@ -322,7 +322,22 @@ private:
      *            one cycle before it continues to count.
      */
     void reloadTimerB() { counterB = latchB; delay &= ~CIACountB2; }
-	
+
+    /*! @brief    Triggers a timer interrupt
+     *  @details  Invoked inside executeOneCycle() if IRQ conditions are met.
+     */
+    void triggerTimerIrq();
+
+    /*! @brief    Triggers a TOD interrupt
+     *  @details  Invoked inside executeOneCycle() if IRQ conditions are met.
+     */
+    void triggerTodIrq();
+
+    /*! @brief    Triggers a serial interrupt
+     *  @details  Invoked inside executeOneCycle() if IRQ conditions are met.
+     */
+    void triggerSerialIrq();
+
 private:
     
     //

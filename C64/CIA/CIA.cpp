@@ -119,6 +119,44 @@ CIA::triggerFallingEdgeOnFlagPin()
     }
 }
 
+void
+CIA::triggerTimerIrq()
+{
+    switch (chipModel) {
+            
+        case MOS_6526_OLD:
+            delay |= CIASetInt0;
+            delay |= CIASetIcr0;
+            return;
+            
+        case MOS_6526_NEW:
+            // Test cases:  (?)
+            // testprogs\interrupts\irqnmi\cia-int-irq-new.prg
+            // testprogs\interrupts\irqnmi\cia-int-nmi-new.prg
+            delay |= (delay & CIAReadIcr0) ? CIASetInt0 : CIASetInt1;
+            delay |= (delay & CIAReadIcr0) ? CIASetIcr0 : CIASetIcr1;
+            // debug("NEW CIA IRQ (%d)\n", (delay & CIAReadIcr0));
+            return;
+            
+        default:
+            assert(false);
+    }
+}
+
+void
+CIA::triggerTodIrq()
+{
+    delay |= CIASetInt0;
+    delay |= CIASetIcr0;
+}
+
+void
+CIA::triggerSerialIrq()
+{
+    delay |= CIASetInt0;
+    delay |= CIASetIcr0;
+}
+
 uint8_t
 CIA::peek(uint16_t addr)
 {
@@ -959,29 +997,29 @@ CIA::executeOneCycle()
 	//                                             Phi2
     
 	if (timerAOutput) { // (9)
-		// On a real C64, there is a race condition here. If ICR is currently read, 
-		// the read access occurs *before* timer A sets bit 1. Hence, bit 1 always shows up.
+		// On a real C64, there is a race condition here. If ICR is currently
+        // read, the read access occurs *before* timer A sets bit 1. Hence,
+        // bit 1 always shows up.
 		ICR |= 0x01;
 	}
 	
 	if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
-		// On a real C64, there is a race condition here. If ICR is currently read, 
-		// the read access occurs *after* timer B sets bit 2. Hence, bit 2 won't show up.
+		// On a real C64, there is a race condition here. If ICR is currently
+        // read, the read access occurs *after* timer B sets bit 2. Hence,
+        // bit 2 won't show up.
 		ICR |= 0x02;
 	}
     
     // Check for timer interrupt
     if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) { // (11)
-		delay |= CIASetInt0;
-        delay |= CIASetIcr0;
+        triggerTimerIrq();
     }
 
     // Check for TOD interrupt
     if (delay & CIATODInt0) {
         ICR |= 0x04;
         if (IMR & 0x04) {
-            delay |= CIASetInt0;
-            delay |= CIASetIcr0;
+            triggerTodIrq();
         }
     }
     
@@ -989,8 +1027,7 @@ CIA::executeOneCycle()
     if (delay & CIASerInt2) {
         ICR |= 0x08;
         if (IMR & 0x08) {
-            delay |= CIASetInt0;
-            delay |= CIASetIcr0;
+            triggerSerialIrq();
         }
     }
     

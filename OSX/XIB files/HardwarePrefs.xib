@@ -387,18 +387,18 @@ DQ
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HPn-bj-HcH">
                         <rect key="frame" x="330" y="310" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="MOS 6526" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2Gi-gq-ivF" id="huk-Z6-PuX">
+                        <popUpButtonCell key="cell" type="push" title="MOS 6526 (NMOS)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2Gi-gq-ivF" id="huk-Z6-PuX">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="Y3h-aw-3z6">
                                 <items>
-                                    <menuItem title="MOS 6526" state="on" id="2Gi-gq-ivF">
+                                    <menuItem title="MOS 6526 (NMOS)" state="on" id="2Gi-gq-ivF">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="ciaChipModelAction:" target="-2" id="Lew-1E-vbY"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="MOS 6526 (2nd gen)" tag="1" hidden="YES" enabled="NO" id="Nb1-cA-67s">
+                                    <menuItem title="MOS 6526 (HMOS-II)" tag="1" enabled="NO" id="Nb1-cA-67s">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="ciaChipModelAction:" target="-2" id="KsN-6x-D0w"/>
