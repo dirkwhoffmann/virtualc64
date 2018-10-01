@@ -462,7 +462,7 @@ CPU::executeOneCycle()
                 debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", c64->cpu.A, reg, c64->rasterline, c64->vic.spypeek(0x01));
                 // startTracing();
             }
-            */
+            
             
             PC_at_cycle_0 = PC;
             
@@ -499,22 +499,22 @@ CPU::executeOneCycle()
                 RecordedInstruction recorded = readRecordedInstruction(0);
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
-                if (PC_at_cycle_0 == 0x08D6) {
-                    debug("badLine = %d sprEnable: %02X spry: %d %d DMA: %02X\n",
-                          c64->vic.badLine, c64->vic.spypeek(0x15),
-                          c64->vic.spypeek(0x01), c64->vic.spypeek(0x03),c64->vic.spriteDmaOnOff);
+                {
+                    c64->cia1.dumpTrace();
+                    // c64->cia2.dumpTrace();
                 }
                 msg("%s %s: %d %d %s %s %s   %s %s %s %s %s %s\n",
                     (this == &c64->drive1.cpu) ? " " : "",
                         instr.pc,
-                        c64->rasterline,
+                        c64->rasterLine,
                         c64->rasterCycle,
                         instr.byte1, instr.byte2, instr.byte3,
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                */
+                
             }
+            */
             
             // Check breakpoint tag
             if (unlikely(breakpoint[PC_at_cycle_0] != NO_BREAKPOINT)) {

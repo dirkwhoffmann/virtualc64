@@ -476,7 +476,11 @@ CIA::poke(uint16_t addr, uint8_t value)
             
 			// Raise an interrupt in the next cycle if conditions match
 			if ((IMR & ICR & 0x1F) && INT) {
-                delay |= (CIASetInt0 | CIASetIcr0);
+                if (chipModel == MOS_6526_NEW) {
+                    delay |= (CIASetInt1 | CIASetIcr1);
+                } else {
+                    delay |= (CIASetInt0 | CIASetIcr0);
+                }
 			}
             
             // Clear pending interrupt if a write has occurred in the previous cycle
@@ -655,11 +659,13 @@ CIA::todInterrupt()
 void
 CIA::dumpTrace()
 {
-	const char *indent = "                                                                      ";
+    const char *indent = "   "; //                                                                      ";
 
+    /*
 	if (!tracingEnabled()) 
 		return;
-	
+	*/
+    
 	debug(1, "%sICR: %02X IMR: %02X ", indent, ICR, IMR);
 	debug(1, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
 			delay & CIACountA0 ? "CntA0 " : "",
