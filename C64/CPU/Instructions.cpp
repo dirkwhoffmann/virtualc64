@@ -462,7 +462,7 @@ CPU::executeOneCycle()
                 debug("Writing result: %02X (%02X), rasterline: %d sprite0.y = %02X\n", c64->cpu.A, reg, c64->rasterline, c64->vic.spypeek(0x01));
                 // startTracing();
             }
-            
+            */
             
             PC_at_cycle_0 = PC;
             
@@ -512,9 +512,9 @@ CPU::executeOneCycle()
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                
+                */
             }
-            */
+            
             
             // Check breakpoint tag
             if (unlikely(breakpoint[PC_at_cycle_0] != NO_BREAKPOINT)) {
