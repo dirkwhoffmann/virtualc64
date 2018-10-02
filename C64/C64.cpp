@@ -227,10 +227,42 @@ C64::dumpState() {
     msg("\n");
 }
 
+C64Model
+C64::getModel()
+{
+    // Determine current configuration
+    C64Configuration config;
+    config.vic = vic.getChipModel();
+    config.grayDotBug = vic.emulateGrayDotBug;
+    config.cia = cia1.getChipModel();
+    config.sid = sid.getChipModel();
+    config.sidFilter = sid.getAudioFilter();
+    config.glue = vic.getGlueLogic();
+    assert(config.cia == cia2.getChipModel());
 
-//
-// Configuring the emulator
-//
+    // Check if this is a known configuration
+    for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64Configuration); i++) {
+        if (memcmp(&configurations[i], &config, sizeof(config)) == 0)
+            return (C64Model)i;
+    }
+    
+    // We've got a custom configuration
+    return C64_CUSTOM; 
+}
+
+void
+C64::setModel(C64Model model)
+{
+    if (model != C64_CUSTOM) {
+        vic.setChipModel(configurations[model].vic);
+        vic.emulateGrayDotBug = configurations[model].grayDotBug;
+        cia1.setChipModel(configurations[model].cia);
+        cia2.setChipModel(configurations[model].cia);
+        sid.setChipModel(configurations[model].sid);
+        sid.setAudioFilter(configurations[model].sidFilter);
+        vic.setGlueLogic(configurations[model].glue);
+    }
+}
 
 void
 C64::updateVicFunctionTable()

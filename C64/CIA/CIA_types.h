@@ -8,9 +8,7 @@
 #ifndef CIA_TYPES_H
 #define CIA_TYPES_H
 
-/*! @brief    CIA chip model
- *  @details  Currently, only the old model is supported.
- */
+//! @brief    CIA model
 typedef enum {
     MOS_6526_OLD,
     MOS_6526_NEW

@@ -147,6 +147,7 @@ public:
      */
     unsigned mousePort;
     
+    
     //
     // Frame, rasterline, and rasterline cycle
     //
@@ -291,7 +292,16 @@ public:
     //
     //! @functiongroup Configuring the emulator
     //
-    
+
+    /*! @brief    Returns the currently emulated C64 model
+     *  @return   C64 model or 0, if a custom configurarion is used that does
+     *            not match any real C64 models.
+     */
+    C64Model getModel();
+
+    //! @brief    Sets the currently emulated C64 model
+    void setModel(C64Model model);
+
     //! @brief    Updates the VIC function table
     /*! @details  This function is called inside VIC::setChipModel().
      */

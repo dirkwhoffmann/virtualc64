@@ -15,6 +15,53 @@
 #include "Disk_types.h"
 #include "Mouse_types.h"
 
+//! @brief    C64 model
+typedef enum {
+    C64_PAL,
+    C64_II_PAL,
+    C64_OLD_PAL,
+    C64_NTSC,
+    C64_II_NTSC,
+    C64_OLD_NTSC,
+    C64_CUSTOM
+} C64Model;
+
+inline bool isC64Model(C64Model model) {
+    return model >= C64_PAL && model <= C64_OLD_NTSC;
+}
+
+//! @brief    C64 configuration
+typedef struct {
+    VICChipModel vic;
+    bool grayDotBug;
+    CIAChipModel cia;
+    SIDChipModel sid;
+    bool sidFilter;
+    GlueLogic glue;
+} C64Configuration;
+
+//! @brief    Configurations of standard C64 models
+static const C64Configuration configurations[] = {
+    
+    // C64 PAL
+    { PAL_6569_R3, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE },
+    
+    // C64_II_PAL
+    { PAL_8565, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC },
+    
+    // C64_OLD_PAL
+    { PAL_6569_R1, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE },
+
+    // C64_NTSC
+    { NTSC_6567, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE },
+
+    // C64_II_NTSC
+    { NTSC_8562, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC },
+    
+    // C64_OLD_NTSC
+    { NTSC_6567_R56A, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE }
+};
+
 /*! @brief    Message types
  *  @details  List of all possible message id's
  */
