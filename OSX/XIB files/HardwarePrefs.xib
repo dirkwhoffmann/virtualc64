@@ -8,6 +8,19 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="HardwarePrefsController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
+                <outlet property="ciaModel" destination="Btr-RC-7Z0" id="312-NS-oq0"/>
+                <outlet property="glueLogic" destination="1B1-NV-ylV" id="kPh-gH-o7i"/>
+                <outlet property="grayDotBug" destination="4SM-kq-3rz" id="aBg-9q-Bv7"/>
+                <outlet property="profile" destination="VzD-St-jng" id="m0p-iW-SIg"/>
+                <outlet property="ramInitPattern" destination="DIR-u7-EiD" id="UKe-eK-dKb"/>
+                <outlet property="sidChipModel" destination="yFu-8o-Koh" id="9vv-pr-p65"/>
+                <outlet property="sidEngine" destination="Viw-Xr-mTq" id="yx1-wh-Ylq"/>
+                <outlet property="sidFilter" destination="ogY-Tp-nUp" id="lnh-dw-kG0"/>
+                <outlet property="sidSamplingMethod" destination="rn8-b2-UWk" id="nsJ-mo-pUH"/>
+                <outlet property="timerBBug" destination="c99-E8-SFj" id="iNB-L9-7OA"/>
+                <outlet property="vicDescription" destination="UP4-Tk-Aas" id="hxD-To-GjJ"/>
+                <outlet property="vicIcon" destination="8Tz-hd-A4m" id="0jc-Sd-7nZ"/>
+                <outlet property="vicModel" destination="XND-rR-F3R" id="ZXn-jN-Ias"/>
                 <outlet property="window" destination="ljc-O3-7Ax" id="AlR-A7-c8b"/>
             </connections>
         </customObject>
@@ -114,12 +127,12 @@ DQ
                                                     </connections>
                                                 </menuItem>
                                                 <menuItem isSeparatorItem="YES" id="tuK-xq-Bn1"/>
-                                                <menuItem title="MOS 6567 " tag="8" id="U2m-qf-ahv">
+                                                <menuItem title="MOS 6567  R56A" tag="8" id="U2m-qf-ahv">
                                                     <connections>
                                                         <action selector="vicChipModelAction:" target="-1" id="pgJ-dS-VZJ"/>
                                                     </connections>
                                                 </menuItem>
-                                                <menuItem title="MOS 6567 R56A" tag="16" id="13q-cB-Sid">
+                                                <menuItem title="MOS 6567" tag="16" id="13q-cB-Sid">
                                                     <connections>
                                                         <action selector="vicChipModelAction:" target="-1" id="yw9-yo-9K2"/>
                                                     </connections>
@@ -389,7 +402,7 @@ DQ
                                                         <action selector="ciaChipModelAction:" target="-2" id="pSg-R1-imO"/>
                                                     </connections>
                                                 </menuItem>
-                                                <menuItem title="MOS 6526 (HMOS-II)" tag="1" enabled="NO" id="Ijk-W7-CGb">
+                                                <menuItem title="MOS 6526 (HMOS II)" tag="1" id="Ijk-W7-CGb">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <connections>
                                                         <action selector="ciaChipModelAction:" target="-2" id="deb-d1-97q"/>
@@ -455,9 +468,9 @@ DQ
                         </view>
                     </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhW-rI-Wak">
-                        <rect key="frame" x="234" y="442" width="115" height="17"/>
+                        <rect key="frame" x="183" y="442" width="166" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hardware Profile:" id="jHq-kX-gfQ">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hardware Configuration:" id="jHq-kX-gfQ">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -474,34 +487,41 @@ DQ
                                     <menuItem title="C64 PAL" state="on" id="V3x-FG-cKg">
                                         <attributedString key="attributedTitle"/>
                                         <connections>
-                                            <action selector="vicChipModelAction:" target="-1" id="b0m-xc-fXv"/>
+                                            <action selector="profileAction:" target="-2" id="oz7-bH-fk6"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="C64C PAL" tag="1" id="UVX-Em-ZPD">
                                         <connections>
-                                            <action selector="vicChipModelAction:" target="-1" id="HHK-zl-0aa"/>
+                                            <action selector="profileAction:" target="-2" id="oe7-Sq-nMJ"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="C64 old PAL" tag="2" id="a5Q-3M-f52">
                                         <connections>
-                                            <action selector="vicChipModelAction:" target="-1" id="O3L-Sa-fcL"/>
+                                            <action selector="profileAction:" target="-2" id="63j-Nm-hpn"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem isSeparatorItem="YES" id="HVW-ks-LRv"/>
+                                    <menuItem isSeparatorItem="YES" tag="-1" id="HVW-ks-LRv"/>
                                     <menuItem title="C64 NTSC" tag="3" id="Esy-Ch-CRp">
                                         <connections>
-                                            <action selector="vicChipModelAction:" target="-1" id="j3z-nK-F5K"/>
+                                            <action selector="profileAction:" target="-2" id="0Y3-ux-wAg"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="C64C NTSC" tag="4" id="PQN-fx-ySz">
                                         <connections>
-                                            <action selector="vicChipModelAction:" target="-1" id="HEY-Vz-HPR"/>
+                                            <action selector="profileAction:" target="-2" id="xKj-ax-oxR"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="C64 old NTSC" tag="5" id="wTC-uQ-5DH">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
-                                            <action selector="vicChipModelAction:" target="-1" id="22g-C2-BBq"/>
+                                            <action selector="profileAction:" target="-2" id="wjS-77-bCj"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem isSeparatorItem="YES" tag="-1" id="dkA-Zm-IDF"/>
+                                    <menuItem title="Custom" tag="6" id="fF7-QX-Jnm">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="profileAction:" target="-2" id="I4D-Ad-Rl3"/>
                                         </connections>
                                     </menuItem>
                                 </items>

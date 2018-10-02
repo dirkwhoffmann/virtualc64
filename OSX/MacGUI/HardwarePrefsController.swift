@@ -9,6 +9,9 @@ import Foundation
 
 class HardwarePrefsController : UserDialogController {
 
+    // C64
+    @IBOutlet weak var profile: NSPopUpButton!
+    
     // VIC
     @IBOutlet weak var vicModel: NSPopUpButton!
     @IBOutlet weak var vicIcon: NSImageView!
@@ -34,6 +37,11 @@ class HardwarePrefsController : UserDialogController {
     }
     
     func update() {
+        
+        // Hardware model
+        let c64model = c64.model()
+        track("Model = \(c64model)")
+        profile.selectItem(withTag: c64model)
         
         // VIC
         let model = c64.vic.chipModel()
@@ -84,6 +92,14 @@ class HardwarePrefsController : UserDialogController {
         // Logic board
         glueLogic.selectItem(withTag: c64.vic.glueLogic())
         ramInitPattern.selectItem(withTag: c64.mem.ramInitPattern())
+    }
+    
+    @IBAction func profileAction(_ sender: NSMenuItem!) {
+        
+        if sender.tag != C64_CUSTOM.rawValue {
+            c64.setModel(sender.tag)
+        }
+        update()
     }
     
     @IBAction func vicChipModelAction(_ sender: NSMenuItem!) {
@@ -165,6 +181,7 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
+        /*
         c64.suspend()
 
         // VICII
@@ -188,6 +205,9 @@ class HardwarePrefsController : UserDialogController {
         c64.mem.setRamInitPattern(Int(INIT_PATTERN_C64.rawValue))
 
         c64.resume()
+        */
+        
+        c64.setModel(Int(C64_PAL.rawValue))
         update()
     }
     

@@ -544,6 +544,10 @@ struct ContainerWrapper;
 - (void) dump;
 - (BOOL) developmentMode;
 
+// Configuration
+- (NSInteger) model;
+- (void) setModel:(NSInteger)value;
+
 // Disk drive
 - (DriveProxy *)drive:(NSInteger)nr;
 
@@ -586,15 +590,6 @@ struct ContainerWrapper;
 
 - (void) step;
 - (void) stepOver;
-
-/*
-- (BOOL) isPAL;
-- (void) setPAL;
-- (void) setPAL:(BOOL)b;
-- (BOOL) isNTSC;
-- (void) setNTSC;
-- (void) setNTSC:(BOOL)b;
-*/
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;

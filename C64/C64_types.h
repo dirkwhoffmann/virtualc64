@@ -38,28 +38,29 @@ typedef struct {
     SIDChipModel sid;
     bool sidFilter;
     GlueLogic glue;
+    RamInitPattern pattern;
 } C64Configuration;
 
 //! @brief    Configurations of standard C64 models
 static const C64Configuration configurations[] = {
     
     // C64 PAL
-    { PAL_6569_R3, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE },
+    { PAL_6569_R3, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
     
     // C64_II_PAL
-    { PAL_8565, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC },
+    { PAL_8565, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { PAL_6569_R1, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE },
+    { PAL_6569_R1, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
 
     // C64_NTSC
-    { NTSC_6567, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE },
+    { NTSC_6567, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
 
     // C64_II_NTSC
-    { NTSC_8562, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC },
+    { NTSC_8562, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { NTSC_6567_R56A, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE }
+    { NTSC_6567_R56A, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 }
 };
 
 /*! @brief    Message types

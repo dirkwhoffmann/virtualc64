@@ -708,6 +708,9 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 
+- (NSInteger) model { return wrapper->c64->getModel(); }
+- (void) setModel:(NSInteger)value { wrapper->c64->setModel((C64Model)value); }
+
 - (DriveProxy *) drive:(NSInteger)num {
     switch (num) {
         case 1:

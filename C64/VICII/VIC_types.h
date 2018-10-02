@@ -255,8 +255,8 @@ typedef enum {
     PAL_6569_R1 = 1,
     PAL_6569_R3 = 2,
     PAL_8565 = 4,
-    NTSC_6567 = 8,
-    NTSC_6567_R56A = 16,
+    NTSC_6567_R56A = 8,
+    NTSC_6567 = 16,
     NTSC_8562 = 32
 } VICChipModel;
 
