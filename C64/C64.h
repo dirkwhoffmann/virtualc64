@@ -178,8 +178,11 @@ public:
     //
     
     //! @brief    A mutex for implementing the suspend / resume mechanism
-    pthread_mutex_t mutex;
+    // pthread_mutex_t mutex;
 
+    //! @brief    An invocation counter for implementing the suspend / resume mechanism
+    unsigned suspendCounter = 0;
+    
     //! @brief    The emulators execution thread
     pthread_t p;
     
@@ -363,8 +366,7 @@ public:
      *            do something with the internal state;
      *            resume();
      *
-     *  @note     The implementation uses a recursive mutex. Hence, multiple
-     *            suspend / resume blocks can be nested.
+     *  @note     Multiple suspend / resume blocks can be nested.
      *  @see      resume
      */
     void suspend();

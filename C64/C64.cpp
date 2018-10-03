@@ -18,9 +18,6 @@
 
 #include "C64.h"
 
-int debugcnt = 0;
-int debugirq = 0;
-
 //
 // Execution thread
 //
@@ -62,9 +59,9 @@ void
     
     while (likely(success)) {
         pthread_testcancel();
-        pthread_mutex_lock(&c64->mutex);
+        // pthread_mutex_lock(&c64->mutex);
         success = c64->executeOneFrame();
-        pthread_mutex_unlock(&c64->mutex);
+        // pthread_mutex_unlock(&c64->mutex);
     }
     
     pthread_cleanup_pop(1);
@@ -82,11 +79,13 @@ C64::C64()
     debug("Creating virtual C64[%p]\n", this);
 
     p = NULL;
+    /*
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
     pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init(&mutex, &attr);
-
+    */
+    
     warp = false;
     alwaysWarp = false;
     warpLoad = false;
@@ -167,7 +166,7 @@ C64::~C64()
     debug(1, "Destroying virtual C64[%p]\n", this);
     
     halt();
-    pthread_mutex_destroy(&mutex);
+    // pthread_mutex_destroy(&mutex);
 }
 
 void
@@ -472,16 +471,44 @@ C64::run()
 void
 C64::suspend()
 {
+    debug(2, "Suspending...(%d)\n", suspendCounter);
+    
+    if (suspendCounter == 0 && isHalted())
+        return;
+    
+    halt();
+    suspendCounter++;
+}
+
+/*
+void
+C64::suspend()
+{
     debug(2, "Suspending...\n");
     pthread_mutex_lock(&mutex);
 }
+*/
 
+void
+C64::resume()
+{
+    debug(2, "Resuming (%d)...\n", suspendCounter);
+    
+    if (suspendCounter == 0)
+        return;
+    
+    if (--suspendCounter == 0)
+        run();
+}
+
+/*
 void
 C64::resume()
 {
     debug(2, "Resuming...\n");
     pthread_mutex_unlock(&mutex);
 }
+*/
 
 void
 C64::threadCleanup()
