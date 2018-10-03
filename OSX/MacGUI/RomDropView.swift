@@ -13,7 +13,6 @@ extension NSDraggingInfo
         let pasteBoard = draggingPasteboard()
         let types = [NSPasteboard.PasteboardType.compatibleFileURL]
         if let _ = pasteBoard.availableType(from: types) {
-            track()
             return NSURL.init(from: pasteBoard) as URL?
         }
         return nil
@@ -26,18 +25,13 @@ class RomDropView : NSImageView
     
     override func awakeFromNib()
     {
-        track()
-        // registerForDraggedTypes([DragType.experimental])
         registerForDraggedTypes([NSPasteboard.PasteboardType.compatibleFileURL])
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation
     {
-        track()
         if let url = sender.url {
-            track()
             if dialogController.c64.isRom(url) {
-                track()
                 image = dialogController.romImageMedium
                 return .copy
             }
@@ -47,20 +41,16 @@ class RomDropView : NSImageView
     
     override func draggingExited(_ sender: NSDraggingInfo?)
     {
-        track()
         dialogController.refresh()
     }
     
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool
     {
-        track()
         return true
     }
 
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool
     {
-        track()
-        
         guard let url = sender.url else {
             return false
         }

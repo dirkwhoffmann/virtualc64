@@ -22,8 +22,6 @@ class RomDialogController : UserDialogController {
     @IBOutlet weak var characterRomText: NSTextField!
     @IBOutlet weak var vc1541Rom: NSImageView!
     @IBOutlet weak var vc1541RomText: NSTextField!
-    // @IBOutlet weak var dragBox: NSBox!
-    // @IBOutlet weak var quitButton: NSButton!
 
     override func awakeFromNib()
     {

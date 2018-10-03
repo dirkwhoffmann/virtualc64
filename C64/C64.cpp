@@ -232,7 +232,6 @@ C64::getModel()
 {
     // Look for known configurations
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64Configuration); i++) {
-        debug("i = %d\n", i);
         if (vic.getChipModel() == configurations[i].vic &&
             vic.emulateGrayDotBug == configurations[i].grayDotBug &&
             cia1.getChipModel() == configurations[i].cia &&

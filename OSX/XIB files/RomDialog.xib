@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RomDialogController" customModule="VirtualC64" customModuleProvider="target">
@@ -23,11 +21,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="FMc-nL-WNC" userLabel="RomDialog" customClass="RomDialog">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="FMc-nL-WNC" userLabel="RomDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="120" y="186" width="480" height="292"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <value key="minSize" type="size" width="480" height="292"/>
             <value key="maxSize" type="size" width="480" height="292"/>
             <view key="contentView" id="RiN-ft-iE3">
@@ -47,11 +45,11 @@
                         <rect key="frame" x="17" y="59" width="446" height="170"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="JJV-IA-8wg">
-                            <rect key="frame" x="1" y="1" width="444" height="154"/>
+                            <rect key="frame" x="3" y="3" width="440" height="152"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBA-Lc-PJo" customClass="RomDropView" customModule="VirtualC64" customModuleProvider="target">
-                                    <rect key="frame" x="5" y="25" width="118" height="118"/>
+                                    <rect key="frame" x="5" y="23" width="118" height="118"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom_light" id="lcJ-mc-D6S"/>
                                     <connections>
@@ -119,7 +117,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J3c-Rt-LWZ">
-                                    <rect key="frame" x="38" y="56" width="53" height="56"/>
+                                    <rect key="frame" x="38" y="54" width="53" height="56"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="TGm-0T-Vjv">
                                         <font key="font" metaFont="systemMedium" size="13"/>
@@ -128,7 +126,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aqJ-lH-UEj">
-                                    <rect key="frame" x="144" y="56" width="53" height="56"/>
+                                    <rect key="frame" x="144" y="54" width="53" height="56"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="cJn-tC-646">
                                         <font key="font" metaFont="systemMedium" size="13"/>
@@ -137,7 +135,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vX9-XL-JTQ">
-                                    <rect key="frame" x="248" y="56" width="53" height="56"/>
+                                    <rect key="frame" x="248" y="54" width="53" height="56"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="W20-VX-NK7">
                                         <font key="font" metaFont="systemMedium" size="13"/>
@@ -146,7 +144,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gLe-GJ-CYr">
-                                    <rect key="frame" x="354" y="56" width="53" height="56"/>
+                                    <rect key="frame" x="354" y="54" width="53" height="56"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drag File Here" id="WP2-gi-a1L">
                                         <font key="font" metaFont="systemMedium" size="13"/>
@@ -207,11 +205,11 @@ DQ
                     </imageView>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="953" y="304"/>
+            <point key="canvasLocation" x="956" y="294"/>
         </window>
     </objects>
     <resources>
-        <image name="NSCaution" width="32" height="32"/>
+        <image name="NSCaution" width="128" height="128"/>
         <image name="rom_light" width="130" height="157"/>
     </resources>
 </document>

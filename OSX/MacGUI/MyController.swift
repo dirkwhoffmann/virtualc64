@@ -27,6 +27,9 @@ class MyController : NSWindowController {
     /// Virtual C64 keyboard (opened as a sheet)
     var virtualKeyboardSheet: VirtualKeyboardController? = nil
 
+    /// Rom Dialog controller
+    var romDialogController: RomDialogController? = nil
+    
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be done
     /// perdiodically (e.g., updating the speedometer and the debug panels)
@@ -502,8 +505,7 @@ extension MyController {
             precondition(msg.data == 1 || msg.data == 2)
             return msg.data == 1;
         }
-        // track("Message \(msg)")
-    
+
         switch (msg.type) {
     
         case MSG_READY_TO_RUN:
@@ -537,10 +539,12 @@ extension MyController {
             
         case MSG_ROM_MISSING:
 
-            track("MSG_ROM_MISSING")
-            let nibName = NSNib.Name(rawValue: "RomDialog")
-            let dialogController = RomDialogController.init(windowNibName: nibName)
-            dialogController.showSheet(withParent: self)
+            if (romDialogController == nil) {
+                track("MSG_ROM_MISSING")
+                let nibName = NSNib.Name(rawValue: "RomDialog")
+                romDialogController = RomDialogController.init(windowNibName: nibName)
+                romDialogController!.showSheet(withParent: self)
+            }
             
         case MSG_SNAPSHOT_TAKEN:
             break
