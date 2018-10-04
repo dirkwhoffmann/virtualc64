@@ -11,6 +11,7 @@
                 <outlet property="ciaModel" destination="Btr-RC-7Z0" id="312-NS-oq0"/>
                 <outlet property="glueLogic" destination="1B1-NV-ylV" id="kPh-gH-o7i"/>
                 <outlet property="grayDotBug" destination="4SM-kq-3rz" id="aBg-9q-Bv7"/>
+                <outlet property="infoText" destination="bhW-rI-Wak" id="FP8-g1-UgV"/>
                 <outlet property="profile" destination="VzD-St-jng" id="m0p-iW-SIg"/>
                 <outlet property="ramInitPattern" destination="DIR-u7-EiD" id="UKe-eK-dKb"/>
                 <outlet property="sidChipModel" destination="yFu-8o-Koh" id="9vv-pr-p65"/>
@@ -29,24 +30,13 @@
         <window title="Hardware" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="ljc-O3-7Ax" userLabel="Hardware Preferences">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="271" y="425" width="564" height="481"/>
+            <rect key="contentRect" x="271" y="425" width="564" height="470"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="Hb2-4t-smn">
-                <rect key="frame" x="0.0" y="0.0" width="564" height="481"/>
+                <rect key="frame" x="0.0" y="0.0" width="564" height="470"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dmm-sM-iA9">
-                        <rect key="frame" x="115" y="13" width="192" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Restore Factory Settings" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iM1-4e-s9t">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="factorySettingsAction:" target="-2" id="d8n-sj-aUF"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TVj-hk-mSJ">
                         <rect key="frame" x="14" y="13" width="81" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -76,7 +66,7 @@ DQ
                         </connections>
                     </button>
                     <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OuF-XU-clS">
-                        <rect key="frame" x="17" y="58" width="530" height="376"/>
+                        <rect key="frame" x="17" y="83" width="530" height="376"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="mSr-Sf-8iW">
                             <rect key="frame" x="3" y="3" width="524" height="358"/>
@@ -467,70 +457,69 @@ DQ
                             </subviews>
                         </view>
                     </box>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhW-rI-Wak">
-                        <rect key="frame" x="183" y="442" width="166" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hardware Configuration:" id="jHq-kX-gfQ">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VzD-St-jng" userLabel="System">
-                        <rect key="frame" x="353" y="436" width="182" height="26"/>
+                        <rect key="frame" x="94" y="17" width="189" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="C64 PAL" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="V3x-FG-cKg" id="MAR-hA-TJk" userLabel="System">
+                        <popUpButtonCell key="cell" type="push" title="Restore Factory Settings" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="MAR-hA-TJk" userLabel="System">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="M6l-W0-d71">
+                            <menu key="menu" title="Restore" id="M6l-W0-d71">
                                 <items>
-                                    <menuItem title="C64 PAL" state="on" id="V3x-FG-cKg">
+                                    <menuItem title="Restore Factory Settings" hidden="YES" id="V3x-FG-cKg">
                                         <attributedString key="attributedTitle"/>
                                         <connections>
                                             <action selector="profileAction:" target="-2" id="oz7-bH-fk6"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="C64C PAL" tag="1" id="UVX-Em-ZPD">
+                                    <menuItem title="C64 (PAL)" id="rkF-ZE-Var">
+                                        <attributedString key="attributedTitle"/>
+                                        <connections>
+                                            <action selector="profileAction:" target="-2" id="6OL-Eb-d2f"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="C64 II (PAL)" tag="1" id="UVX-Em-ZPD">
                                         <connections>
                                             <action selector="profileAction:" target="-2" id="oe7-Sq-nMJ"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="C64 old PAL" tag="2" id="a5Q-3M-f52">
+                                    <menuItem title="Early C64 (PAL)" tag="2" id="a5Q-3M-f52">
                                         <connections>
                                             <action selector="profileAction:" target="-2" id="63j-Nm-hpn"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem isSeparatorItem="YES" tag="-1" id="HVW-ks-LRv"/>
-                                    <menuItem title="C64 NTSC" tag="3" id="Esy-Ch-CRp">
+                                    <menuItem title="C64 (NTSC)" tag="3" id="Esy-Ch-CRp">
                                         <connections>
                                             <action selector="profileAction:" target="-2" id="0Y3-ux-wAg"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="C64C NTSC" tag="4" id="PQN-fx-ySz">
+                                    <menuItem title="C64 II (NTSC)" tag="4" id="PQN-fx-ySz">
                                         <connections>
                                             <action selector="profileAction:" target="-2" id="xKj-ax-oxR"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="C64 old NTSC" tag="5" id="wTC-uQ-5DH">
+                                    <menuItem title="Early C64 (NTSC)" tag="5" id="wTC-uQ-5DH">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="profileAction:" target="-2" id="wjS-77-bCj"/>
-                                        </connections>
-                                    </menuItem>
-                                    <menuItem isSeparatorItem="YES" tag="-1" id="dkA-Zm-IDF"/>
-                                    <menuItem title="Custom" tag="6" id="fF7-QX-Jnm">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <connections>
-                                            <action selector="profileAction:" target="-2" id="I4D-Ad-Rl3"/>
                                         </connections>
                                     </menuItem>
                                 </items>
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhW-rI-Wak">
+                        <rect key="frame" x="18" y="58" width="528" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="The selected configuration matches an old C64 with PAL video output. " id="jHq-kX-gfQ">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="876" y="-290.5"/>
+            <point key="canvasLocation" x="876" y="-296"/>
         </window>
     </objects>
     <resources>

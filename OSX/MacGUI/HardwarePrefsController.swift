@@ -10,7 +10,8 @@ import Foundation
 class HardwarePrefsController : UserDialogController {
 
     // C64
-    @IBOutlet weak var profile: NSPopUpButton!
+    // @IBOutlet weak var profile: NSPopUpButton!
+    @IBOutlet weak var infoText: NSTextField!
     
     // VIC
     @IBOutlet weak var vicModel: NSPopUpButton!
@@ -36,12 +37,39 @@ class HardwarePrefsController : UserDialogController {
         update()
     }
     
+    func updateInfoText() {
+        
+        var descr = "???"
+        
+        switch UInt32(c64.model()) {
+        case C64_PAL.rawValue:
+            descr = "matches a C64 with brown casing (breadbox) and PAL video ouput"
+
+        case C64_II_PAL.rawValue:
+            descr = "matches a C64 II (white casing) with PAL video ouput"
+
+        case C64_OLD_PAL.rawValue:
+            descr = "matches an early C64 with brown casing (breadbox) and PAL video output"
+            
+        case C64_NTSC.rawValue:
+            descr = "matches a C64 with brown casing (breadbox) and NTSC video ouput"
+            
+        case C64_II_NTSC.rawValue:
+            descr = "matches a C64 II (white casing) with NTSC video ouput"
+            
+        case C64_OLD_NTSC.rawValue:
+            descr = "matches an early C64 with brown casing (breadbox) and NTSC video output"
+            
+        default:
+            descr = "is a custom configuration. It matches no known C64 model."
+        }
+        infoText.stringValue = "This configuration \(descr)."
+    }
+    
     func update() {
         
-        // Hardware model
-        let c64model = c64.model()
-        track("Model = \(c64model)")
-        profile.selectItem(withTag: c64model)
+        // Hardware configuration
+        updateInfoText()
         
         // VIC
         let model = c64.vic.chipModel()
