@@ -28,35 +28,33 @@
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
-#define DEBUG_LEVEL 2
+#define DEBUG_LEVEL 1
 
 #endif 
 
 
 
-// RELEASE NOTES (Version 2.6)
+// RELEASE NOTES (Version 3.0)
 //
 // VirtualC64 uses Pepto's Colodore color palette from now on.
 // Three new sliders have been added to the emulator preferences. They allow the
 // user to adjust brightness, contrast, and saturation of the used color palette.
 // The VICII implementation has been refined. Now, the user can choose between six
-// different chip models. The PAL models 6569_R1, 6569_R3,8565, and the NTSC models
-// 6567, 6567_R56A, 8562 are supported.
-// VirtualC64 now passes VICE tests sprite-enable2.prg, spritey.prg, and sprite-sprite.prg
+// different chip models. The PAL models 6569 R1, 6569 R3,8565, and the NTSC models
+// 6567 R56A, 6567, 8562 are supported.
+// Two different CIA model are supported (NMOS, HMOS II)
 //
 // TODOs for the next release:
 //
 //
 // Can sub components initialized without registerSubcomponents function?
-// Debug lightpen stuff
 // Map right Mac shift key to right Commodore key
 //
 //
 // CLEANUP:
-// Store sprite number in firstDMACycle, secondDMACycle int's. Use -1 if no DMA happens
 // Don't use mount() for inserting disks. Use insertDisk instead
 //
 // OPTIMIZATION:

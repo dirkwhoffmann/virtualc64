@@ -241,10 +241,6 @@ CIA::peek(uint16_t addr)
 			// Release interrupt request
 			if (INT == 0) {
                 delay |= CIAClearInt0;
-                /*
-				INT = 1;
-                releaseInterruptLine();
-                */
 			}
 			
 			// Discard pending interrupts
@@ -253,7 +249,7 @@ CIA::peek(uint16_t addr)
 			// Clear all bits except bit 7
 			ICR &= 0x80;
             
-            // Schedule bit 7 to be cleared in the next cycle and remember the read access
+            // Clear bit 7 in the next cycle and remember the read access
             delay |= (CIAClearIcr0 | CIAReadIcr0);
             
 			break;
