@@ -166,8 +166,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSInteger) chipModel { return (NSInteger)wrapper->cia->getChipModel(); }
 - (void) setChipModel:(NSInteger)value { wrapper->cia->setChipModel((CIAChipModel)value); }
-- (BOOL) timerBBug { return wrapper->cia->getTimerBBug(); }
-- (void) setTimerBBug:(BOOL)value { wrapper->cia->setTimerBBug(value); }
+- (BOOL) emulateTimerBBug { return wrapper->cia->getEmulateTimerBBug(); }
+- (void) setEmulateTimerBBug:(BOOL)value { wrapper->cia->setEmulateTimerBBug(value); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
     wrapper->cia->c64->suspend();

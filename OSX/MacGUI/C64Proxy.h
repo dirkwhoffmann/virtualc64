@@ -134,8 +134,8 @@ struct ContainerWrapper;
 
 - (NSInteger) chipModel;
 - (void) setChipModel:(NSInteger)value;
-- (BOOL) timerBBug;
-- (void) setTimerBBug:(BOOL)value;
+- (BOOL) emulateTimerBBug;
+- (void) setEmulateTimerBBug:(BOOL)value;
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value;
 

@@ -88,7 +88,7 @@ class CIA : public VirtualComponent {
     CIAChipModel chipModel;
     
     //! @brief    Indicates if timer B bug should be emulated
-    bool timerBBug;
+    bool emulateTimerBBug;
     
 protected:
 
@@ -270,11 +270,14 @@ public:
     //! @brief    Sets the chip model.
     void setChipModel(CIAChipModel model);
     
-    //! @brief    Returns true if the timer B bug is emulated.
-    bool getTimerBBug() { return timerBBug; }
+    //! @brief    Determines if the emulated model is affected by the timer B bug.
+    bool hasTimerBBug() { return chipModel == MOS_6526_OLD; }
+    
+    //! @brief    Returns true if the timer B bug should be emulated.
+    bool getEmulateTimerBBug() { return emulateTimerBBug; }
     
     //! @brief    Enables or disables emulation of the timer B bug.
-    void setTimerBBug(bool value) { timerBBug = value; }
+    void setEmulateTimerBBug(bool value) { emulateTimerBBug = value; }
     
     //! @brief    Getter for peripheral port A
     uint8_t getPA() { return PA; }

@@ -103,10 +103,11 @@ class HardwarePrefsController : UserDialogController {
         
         // CIA
         assert(c64.cia1.chipModel() == c64.cia2.chipModel());
-        assert(c64.cia1.timerBBug() == c64.cia2.timerBBug());
+        assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug());
         ciaModel.selectItem(withTag: c64.cia1.chipModel())
-        timerBBug.state = c64.cia1.timerBBug() ? .on : .off
-        
+        timerBBug.state = c64.cia1.emulateTimerBBug() ? .on : .off
+        timerBBug.isEnabled = c64.cia1.chipModel() == MOS_6526_OLD.rawValue
+
         // Audio
         let sidModel = c64.sid.chipModel()
         sidChipModel.selectItem(withTag: sidModel)
@@ -151,8 +152,8 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func ciaTimerBBugAction(_ sender: NSButton!) {
         
-        c64.cia1.setTimerBBug(sender.state == .on)
-        c64.cia2.setTimerBBug(sender.state == .on)
+        c64.cia1.setEmulateTimerBBug(sender.state == .on)
+        c64.cia2.setEmulateTimerBBug(sender.state == .on)
         update()
     }
     
@@ -207,37 +208,15 @@ class HardwarePrefsController : UserDialogController {
         hideSheet()
     }
     
+    /*
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
-        /*
         c64.suspend()
-
-        // VICII
-        c64.vic.setChipModel(Int(PAL_8565.rawValue))
-        c64.vic.setEmulateGrayDotBug(true)
-        
-        // CIA
-        c64.cia1.setChipModel(Int(MOS_6526_OLD.rawValue))
-        c64.cia2.setChipModel(Int(MOS_6526_OLD.rawValue))
-        c64.cia1.setTimerBBug(true);
-        c64.cia2.setTimerBBug(true);
-
-        // SID
-        c64.sid.setReSID(true)
-        c64.sid.setChipModel(0)
-        c64.sid.setAudioFilter(true)
-        c64.sid.setSamplingMethod(0)
-
-        // Logic board
-        c64.vic.setGlueLogic(Int(GLUE_DISCRETE.rawValue))
-        c64.mem.setRamInitPattern(Int(INIT_PATTERN_C64.rawValue))
-
-        c64.resume()
-        */
-        
         c64.setModel(Int(C64_PAL.rawValue))
+        c64.resume()
         update()
     }
+    */
     
     @IBAction func okAction(_ sender: Any!) {
         

@@ -259,8 +259,8 @@ extension MyController {
         // CIA
         c64.cia1.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
         c64.cia2.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
-        c64.cia1.setTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
-        c64.cia2.setTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
+        c64.cia1.setEmulateTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
+        c64.cia2.setEmulateTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
 
         // SID
         c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
@@ -379,7 +379,7 @@ extension MyController {
 
         // CIA
         defaults.set(c64.cia1.chipModel(), forKey: VC64Keys.ciaChip)
-        defaults.set(c64.cia1.timerBBug(), forKey: VC64Keys.timerBBug)
+        defaults.set(c64.cia1.emulateTimerBBug(), forKey: VC64Keys.timerBBug)
 
         // SID
         defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)

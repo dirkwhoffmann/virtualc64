@@ -35,6 +35,7 @@ typedef struct {
     VICChipModel vic;
     bool grayDotBug;
     CIAChipModel cia;
+    bool timerBBug;
     SIDChipModel sid;
     bool sidFilter;
     GlueLogic glue;
@@ -45,22 +46,22 @@ typedef struct {
 static const C64Configuration configurations[] = {
     
     // C64 PAL
-    { PAL_6569_R3, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { PAL_6569_R3, false, MOS_6526_OLD, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
     
     // C64_II_PAL
-    { PAL_8565, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
+    { PAL_8565, true, MOS_6526_NEW, false, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
     
     // C64_OLD_PAL
-    { PAL_6569_R1, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { PAL_6569_R1, false, MOS_6526_OLD, true, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
 
     // C64_NTSC
-    { NTSC_6567, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
+    { NTSC_6567, false, MOS_6526_OLD, false, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 },
 
     // C64_II_NTSC
-    { NTSC_8562, true, MOS_6526_NEW, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
+    { NTSC_8562, true, MOS_6526_NEW, true, MOS_8580, true, GLUE_CUSTOM_IC, INIT_PATTERN_C64C },
     
     // C64_OLD_NTSC
-    { NTSC_6567_R56A, false, MOS_6526_OLD, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 }
+    { NTSC_6567_R56A, false, MOS_6526_OLD, false, MOS_6581, true, GLUE_DISCRETE, INIT_PATTERN_C64 }
 };
 
 /*! @brief    Message types

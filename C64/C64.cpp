@@ -234,6 +234,7 @@ C64::getModel()
         if (vic.getChipModel() == configurations[i].vic &&
             vic.emulateGrayDotBug == configurations[i].grayDotBug &&
             cia1.getChipModel() == configurations[i].cia &&
+            cia1.getEmulateTimerBBug() == configurations[i].timerBBug &&
             sid.getChipModel() == configurations[i].sid &&
             sid.getAudioFilter() == configurations[i].sidFilter &&
             vic.getGlueLogic() == configurations[i].glue &&
@@ -256,6 +257,8 @@ C64::setModel(C64Model model)
         vic.emulateGrayDotBug = configurations[model].grayDotBug;
         cia1.setChipModel(configurations[model].cia);
         cia2.setChipModel(configurations[model].cia);
+        cia1.setEmulateTimerBBug(configurations[model].timerBBug);
+        cia2.setEmulateTimerBBug(configurations[model].timerBBug);
         sid.setChipModel(configurations[model].sid);
         sid.setAudioFilter(configurations[model].sidFilter);
         vic.setGlueLogic(configurations[model].glue);

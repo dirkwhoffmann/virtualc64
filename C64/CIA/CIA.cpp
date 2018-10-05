@@ -29,43 +29,43 @@ CIA::CIA()
     // Register snapshot items
     SnapshotItem items[] = {
 
-        { &chipModel,       sizeof(chipModel),      KEEP_ON_RESET },
-        { &timerBBug,       sizeof(timerBBug),      KEEP_ON_RESET },
+        { &chipModel,        sizeof(chipModel),        KEEP_ON_RESET },
+        { &emulateTimerBBug, sizeof(emulateTimerBBug), KEEP_ON_RESET },
 
-        { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
-        { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
-        { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
-        { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
-        { &delay,           sizeof(delay),          CLEAR_ON_RESET },
-        { &feed,            sizeof(feed),           CLEAR_ON_RESET },
-        { &CRA,             sizeof(CRA),            CLEAR_ON_RESET },
-        { &CRB,             sizeof(CRB),            CLEAR_ON_RESET },
-        { &ICR,             sizeof(ICR),            CLEAR_ON_RESET },
-        { &IMR,             sizeof(IMR),            CLEAR_ON_RESET },
-        { &PB67TimerMode,   sizeof(PB67TimerMode),  CLEAR_ON_RESET },
-        { &PB67TimerOut,    sizeof(PB67TimerOut),   CLEAR_ON_RESET },
-        { &PB67Toggle,      sizeof(PB67Toggle),     CLEAR_ON_RESET },
-        { &PRA,             sizeof(PRA),            CLEAR_ON_RESET },
-        { &PRB,             sizeof(PRB),            CLEAR_ON_RESET },
-        { &DDRA,            sizeof(DDRA),           CLEAR_ON_RESET },
-        { &DDRB,            sizeof(DDRB),           CLEAR_ON_RESET },
-        { &PA,              sizeof(PA),             CLEAR_ON_RESET },
-        { &PB,              sizeof(PB),             CLEAR_ON_RESET },
-        { &SDR,             sizeof(SDR),            CLEAR_ON_RESET },
-        { &serClk,          sizeof(serClk),         CLEAR_ON_RESET },
-        { &serCounter,      sizeof(serCounter),     CLEAR_ON_RESET },
-        { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
-        { &INT,             sizeof(INT),            CLEAR_ON_RESET },
-        { &tiredness,       sizeof(tiredness),      CLEAR_ON_RESET },
-        { &wakeUpCycle,     sizeof(wakeUpCycle),    CLEAR_ON_RESET },
-        { &idleCounter,     sizeof(idleCounter),    CLEAR_ON_RESET },
-        { NULL,             0,                      0 }};
+        { &counterA,         sizeof(counterA),         CLEAR_ON_RESET },
+        { &latchA,           sizeof(latchA),           CLEAR_ON_RESET },
+        { &counterB,         sizeof(counterB),         CLEAR_ON_RESET },
+        { &latchB,           sizeof(latchB),           CLEAR_ON_RESET },
+        { &delay,            sizeof(delay),            CLEAR_ON_RESET },
+        { &feed,             sizeof(feed),             CLEAR_ON_RESET },
+        { &CRA,              sizeof(CRA),              CLEAR_ON_RESET },
+        { &CRB,              sizeof(CRB),              CLEAR_ON_RESET },
+        { &ICR,              sizeof(ICR),              CLEAR_ON_RESET },
+        { &IMR,              sizeof(IMR),              CLEAR_ON_RESET },
+        { &PB67TimerMode,    sizeof(PB67TimerMode),    CLEAR_ON_RESET },
+        { &PB67TimerOut,     sizeof(PB67TimerOut),     CLEAR_ON_RESET },
+        { &PB67Toggle,       sizeof(PB67Toggle),       CLEAR_ON_RESET },
+        { &PRA,              sizeof(PRA),              CLEAR_ON_RESET },
+        { &PRB,              sizeof(PRB),              CLEAR_ON_RESET },
+        { &DDRA,             sizeof(DDRA),             CLEAR_ON_RESET },
+        { &DDRB,             sizeof(DDRB),             CLEAR_ON_RESET },
+        { &PA,               sizeof(PA),               CLEAR_ON_RESET },
+        { &PB,               sizeof(PB),               CLEAR_ON_RESET },
+        { &SDR,              sizeof(SDR),              CLEAR_ON_RESET },
+        { &serClk,           sizeof(serClk),           CLEAR_ON_RESET },
+        { &serCounter,       sizeof(serCounter),       CLEAR_ON_RESET },
+        { &CNT,              sizeof(CNT),              CLEAR_ON_RESET },
+        { &INT,              sizeof(INT),              CLEAR_ON_RESET },
+        { &tiredness,        sizeof(tiredness),        CLEAR_ON_RESET },
+        { &wakeUpCycle,      sizeof(wakeUpCycle),      CLEAR_ON_RESET },
+        { &idleCounter,      sizeof(idleCounter),      CLEAR_ON_RESET },
+        { NULL,              0,                        0 }};
 
     registerSnapshotItems(items, sizeof(items));
     tod.cia = this;
     
     chipModel = MOS_6526_OLD;
-    timerBBug = true;
+    emulateTimerBBug = true;
 }
 
 CIA::~CIA()
@@ -1005,11 +1005,15 @@ CIA::executeOneCycle()
 		ICR |= 0x01;
 	}
 	
-	if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
-		// On a real C64, there is a race condition here. If ICR is currently
-        // read, the read access occurs *after* timer B sets bit 2. Hence,
-        // bit 2 won't show up.
-		ICR |= 0x02;
+	// if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
+    if (timerBOutput) { // (10)
+        
+		// The old CIA chips show a race condition here which is known as the
+        // "timer B bug". If ICR is currently read, the read access occurs
+        // *after* timer B sets bit 2. Hence, bit 2 won't show up.
+        if (!(delay & CIAReadIcr0) || !hasTimerBBug() || !emulateTimerBBug) {
+            ICR |= 0x02;
+        }
 	}
     
     // Check for timer interrupt
