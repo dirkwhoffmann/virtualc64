@@ -7,12 +7,16 @@
 
 import Foundation
 
-class MyController : NSWindowController {
+protocol MessageReceiver {
+    func processMessage(_ msg: Message)
+}
+
+class MyController : NSWindowController, MessageReceiver {
 
     /// Proxy object.
-    /// Implements a bridge between the emulator which is written in C++ and the
-    /// GUI which is written in Swift. Because Swift cannot interact with C++ directly,
-    /// the proxy is written in Objective-C.
+    /// Implements a bridge between the emulator written in C++ and the
+    /// GUI written in Swift. Because Swift cannot interact with C++ directly,
+    //  the proxy is written in Objective-C.
     var c64: C64Proxy!
     
     /// Game pad manager
@@ -30,9 +34,12 @@ class MyController : NSWindowController {
     /// Rom Dialog controller
     var romDialogController: RomDialogController? = nil
     
+    /// Optional delegate object for incoming emulator messages
+    var msgDelegate: MessageReceiver? = nil
+    
     /// Loop timer
-    /// The timer fires 60 times a second and executes all tasks that need to be done
-    /// perdiodically (e.g., updating the speedometer and the debug panels)
+    /// The timer fires 60 times a second and executes all tasks that need to be
+    //  done perdiodically (e.g., updating the speedometer and the debug panels)
     var timer: Timer?
     
     // Timer lock
@@ -432,15 +439,6 @@ extension MyController {
         timerLock.lock()
  
         animationCounter += 1
-        
-        // Process all pending messages
-        /*
-        var msg: Message = c64.message()
-        while msg != MSG_NONE {
-            processMessage(msg)
-            msg = c64.message()
-        }
-        */
 
         // Do 12 times a second ...
         if (animationCounter % 1) == 0 {
@@ -744,6 +742,8 @@ extension MyController {
             track("Unknown message: \(msg)")
             assert(false)
         }
+        
+        msgDelegate?.processMessage(msg)
     }
 
     //

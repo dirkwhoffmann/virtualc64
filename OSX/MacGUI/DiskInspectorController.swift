@@ -52,9 +52,6 @@ class DiskInspectorController : UserDialogController {
 
     // Maps table row numbers to sector numbers
     var sectorForRow: [Int:Int] = [:]
-
-    // Refresh timer
-    var timer: Timer!
     
     // Outlets
     @IBOutlet weak var icon: NSImageView!
@@ -73,15 +70,11 @@ class DiskInspectorController : UserDialogController {
         
         driveNr = 1
         drive = c64.drive1
-        
-        refresh()
     
-        // Start refresh timer
-        if #available(OSX 10.12, *) {
-            timer = Timer.scheduledTimer(withTimeInterval: 0.10,
-                                         repeats: true,
-                                         block: { (t) in self.refresh() })
-        }
+        // Start receiving messages
+        parent.msgDelegate = self
+
+        refresh()
     }
 
     /// Updates dirty GUI elements
@@ -400,8 +393,34 @@ class DiskInspectorController : UserDialogController {
     
     override func cancelAction(_ sender: Any!) {
         
-        timer.invalidate()
+        // Stop receiving messages
+        parent.msgDelegate = nil
+        
         super.cancelAction(self)
+    }
+}
+
+extension DiskInspectorController : MessageReceiver {
+
+    func processMessage(_ msg: Message) {
+        
+        switch (msg.type) {
+            
+        case MSG_VC1541_ATTACHED,
+             MSG_VC1541_DETACHED,
+             MSG_VC1541_DISK,
+             MSG_VC1541_NO_DISK,
+             MSG_DISK_SAVED,
+             MSG_DISK_UNSAVED,
+             MSG_VC1541_MOTOR_ON,
+             MSG_VC1541_MOTOR_OFF,
+             MSG_VC1541_HEAD_UP,
+             MSG_VC1541_HEAD_DOWN:
+            refresh()
+            
+        default:
+            return
+        }
     }
 }
 
