@@ -473,7 +473,9 @@ CIA::poke(uint16_t addr, uint8_t value)
 			// Raise an interrupt in the next cycle if conditions match
 			if ((IMR & ICR & 0x1F) && INT) {
                 if (chipModel == MOS_6526_NEW) {
-                    delay |= (CIASetInt1 | CIASetIcr1);
+                    if (!(delay & CIAReadIcr1)) {
+                        delay |= (CIASetInt1 | CIASetIcr1);
+                    }
                 } else {
                     delay |= (CIASetInt0 | CIASetIcr0);
                 }
@@ -481,8 +483,12 @@ CIA::poke(uint16_t addr, uint8_t value)
             
             // Clear pending interrupt if a write has occurred in the previous cycle
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
+            // else if (chipModel == MOS_6526_OLD && (delay & CIAClearIcr2)) {
             else if (delay & CIAClearIcr2) {
-                delay &= ~(CIASetInt1 | CIASetIcr1);
+                 // if (chipModel == MOS_6526_OLD) {
+                {
+                     delay &= ~(CIASetInt1 | CIASetIcr1);
+                 }
             }
             
 			return;
