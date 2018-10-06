@@ -41,6 +41,7 @@ CIA::CIA()
         { &CRA,              sizeof(CRA),              CLEAR_ON_RESET },
         { &CRB,              sizeof(CRB),              CLEAR_ON_RESET },
         { &ICR,              sizeof(ICR),              CLEAR_ON_RESET },
+        { &icr_ack,          sizeof(icr_ack),          CLEAR_ON_RESET },
         { &IMR,              sizeof(IMR),              CLEAR_ON_RESET },
         { &PB67TimerMode,    sizeof(PB67TimerMode),    CLEAR_ON_RESET },
         { &PB67TimerOut,     sizeof(PB67TimerOut),     CLEAR_ON_RESET },
@@ -236,6 +237,70 @@ CIA::peek(uint16_t addr)
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
+            if (chipModel == MOS_6526_NEW) {
+                if ((delay & CIASetInt1) != 0) {
+                    if (ICR & 0x1F) {
+                        ICR |= 0x80;
+                    }
+                }
+                if (ICR & 0x9F) {
+                    icr_ack |= ((ICR & 0x9F) | 0x80);
+                }
+                
+                result = ICR;
+                
+                // Release interrupt request
+                if (INT == 0) {
+                    delay |= CIAClearInt0;
+                }
+                
+                // Discard pending interrupts
+                delay &= ~(CIASetInt0 | CIASetInt1);
+                
+                // Clear bit 7 in the next cycle and remember the read access
+                delay |= (CIAClearIcr0 | CIAReadIcr0);
+                
+                delay &= ~CIASetIcr1;
+                break;
+            }
+            /*
+            if (bEarlyIRQ)
+            {
+                if ((delay & Interrupt1) != 0)
+                {
+                    if ((icr & 0x1f) != 0)
+                    {
+                        icr |= 0x80;
+                    }
+                }
+                
+                if ((icr & 0x9F) != 0)
+                {
+                    icr_ack |= ((icr & 0x9F) | 0x80);
+                }
+                delay |= ClearIcr0;
+                delay &= ~(Interrupt1);
+                delay &= ~(SetIcr1);
+                result = icr;
+            }
+            else
+            {
+                delay |= ClearIcr0;
+                delay &= ~(Interrupt1);
+                result = icr;
+                icr = icr & 0x80;
+            }
+            
+            delay |= ReadIcr0;
+            Interrupt = 0;
+            ClearSystemInterrupt();
+            idle = false;
+            no_change_count = 0;
+            SetWakeUpClock();
+            return result;
+            */
+            
+            assert(chipModel == MOS_6526_OLD);
 			result = ICR;
             
 			// Release interrupt request
@@ -251,7 +316,6 @@ CIA::peek(uint16_t addr)
             
             // Clear bit 7 in the next cycle and remember the read access
             delay |= (CIAClearIcr0 | CIAReadIcr0);
-            
 			break;
 
         case 0x0E: // CIA_CONTROL_REG_A
@@ -485,8 +549,7 @@ CIA::poke(uint16_t addr, uint8_t value)
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
             // else if (chipModel == MOS_6526_OLD && (delay & CIAClearIcr2)) {
             else if (delay & CIAClearIcr2) {
-                 // if (chipModel == MOS_6526_OLD) {
-                {
+                if (chipModel == MOS_6526_OLD) {
                      delay &= ~(CIASetInt1 | CIASetIcr1);
                  }
             }
@@ -764,6 +827,8 @@ CIA::executeOneCycle()
 {
     wakeUp();
     
+    uint8_t newIcr = 0;
+    
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
 
@@ -819,7 +884,9 @@ CIA::executeOneCycle()
 	bool timerAOutput = (counterA == 0 && (delay & CIACountA2)); // (2)
 	
 	if (timerAOutput) {
-		
+        
+		newIcr |= 1;
+        
 		// Stop timer in one shot mode
 		if ((delay | feed) & CIAOneShotA0) { // (3)
 			CRA &= ~0x01;
@@ -852,7 +919,9 @@ CIA::executeOneCycle()
 	bool timerBOutput = (counterB == 0 && (delay & CIACountB2)); // (2)
 	
 	if (timerBOutput) {
-						
+					
+        newIcr |= 2;
+
 		// Stop timer in one shot mode
 		if ((delay | feed) & CIAOneShotB0) { // (3)
 			CRB &= ~0x01;
@@ -1043,10 +1112,20 @@ CIA::executeOneCycle()
         }
     }
     
+    icr_ack = icr_ack & ~newIcr;
+    
     if (delay & (CIAClearIcr1 | CIASetIcr1 | CIASetInt1 | CIAClearInt0)) {
         
         if (delay & CIAClearIcr1) { // (12)
-            ICR &= 0x7F;
+            
+            if (chipModel == MOS_6526_NEW) {
+             
+                ICR &= ~icr_ack;
+                icr_ack = 0;
+                
+            } else {
+                ICR &= 0x7F;
+            }
         }
         if (delay & CIASetIcr1) { // (13)
             ICR |= 0x80;
