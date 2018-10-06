@@ -171,9 +171,16 @@ class BypassFilter : ComputeKernel {
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         
         self.init(name: "bypass", device: device, library: library)
-
-        // Replace default texture sampler
         sampler = samplerNearest
+    }
+}
+
+class SmoothFilter : ComputeKernel {
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        
+        self.init(name: "bypass", device: device, library: library)
+        sampler = samplerLinear
     }
 }
 

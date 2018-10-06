@@ -113,6 +113,7 @@ public extension MetalView {
         
         // Build filters
         filters[0] = BypassFilter.init(device: device!, library: library)
+        filters[1] = SmoothFilter.init(device: device!, library: library)
         filters[2] = BlurFilter.init(device: device!, library: library, radius: 3.0)
         filters[3] = CrtFilter.init(device: device!, library: library)
     }
@@ -338,18 +339,6 @@ public extension MetalView {
         let width = Int(layerWidth)
         let height = Int(layerHeight)
         
-        /* OLD CODDE: OPTIMIZATION IS NOT COMPATIBLE WITH macOS MOJAVE
-        let width = (layerWidth < 2048) ? 2048 : Int(layerWidth)
-        let height = (layerHeight < 2048) ? 2048 : Int(layerHeight)
-        
-        // Check if we need a new texture
-        if depthTexture != nil {
-            if (width < depthTexture.width && height < depthTexture.height) {
-                return // Old texture is sufficiently large
-            }
-        }
-        */
-        
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.depth32Float,
             width: width,
@@ -367,8 +356,6 @@ public extension MetalView {
         track()
         precondition(device != nil)
         precondition(library != nil)
-        
-        // NSError *error = nil;
         
         // Get vertex and fragment shader from library
         let vertexFunc = library.makeFunction(name: "vertex_main")
