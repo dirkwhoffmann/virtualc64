@@ -59,20 +59,22 @@ class Joystick;
 #define CIAClearIcr0   (1ULL << 25) // Clears bit 8 in ICR register
 #define CIAClearIcr1   (1ULL << 26)
 #define CIAClearIcr2   (1ULL << 27)
-#define CIASetIcr0     (1ULL << 28) // Sets bit 8 in ICR register
-#define CIASetIcr1     (1ULL << 29)
-#define CIATODInt0     (1ULL << 30) // Triggers an interrupt with TOD as source
-#define CIASerInt0     (1ULL << 31) // Triggers an interrupt with serial register as source
-#define CIASerInt1     (1ULL << 32)
-#define CIASerInt2     (1ULL << 33)
-#define CIASerLoad0    (1ULL << 34) // Loads the serial shift register
-#define CIASerLoad1    (1ULL << 35)
-#define CIASerClk0     (1ULL << 36) // Clock signal driving the serial register
-#define CIASerClk1     (1ULL << 37)
-#define CIASerClk2     (1ULL << 38)
-#define CIASerClk3     (1ULL << 39)
+#define CIAAckIcr0     (1ULL << 28) // Clears bit 0 - 7 in ICR register
+#define CIAAckIcr1     (1ULL << 29)
+#define CIASetIcr0     (1ULL << 30) // Sets bit 8 in ICR register
+#define CIASetIcr1     (1ULL << 31)
+#define CIATODInt0     (1ULL << 32) // Triggers an interrupt with TOD as source
+#define CIASerInt0     (1ULL << 33) // Triggers an interrupt with serial register as source
+#define CIASerInt1     (1ULL << 34)
+#define CIASerInt2     (1ULL << 35)
+#define CIASerLoad0    (1ULL << 36) // Loads the serial shift register
+#define CIASerLoad1    (1ULL << 37)
+#define CIASerClk0     (1ULL << 38) // Clock signal driving the serial register
+#define CIASerClk1     (1ULL << 39)
+#define CIASerClk2     (1ULL << 40)
+#define CIASerClk3     (1ULL << 41)
 
-#define DelayMask ~((1ULL << 40) | CIACountA0 | CIACountB0 | CIALoadA0 | CIALoadB0 | CIAPB6Low0 | CIAPB7Low0 | CIASetInt0 | CIAClearInt0 | CIAOneShotA0 | CIAOneShotB0 | CIAReadIcr0 | CIAClearIcr0 | CIASetIcr0 | CIATODInt0 | CIASerInt0 | CIASerLoad0 | CIASerClk0)
+#define DelayMask ~((1ULL << 42) | CIACountA0 | CIACountB0 | CIALoadA0 | CIALoadB0 | CIAPB6Low0 | CIAPB7Low0 | CIASetInt0 | CIAClearInt0 | CIAOneShotA0 | CIAOneShotB0 | CIAReadIcr0 | CIAClearIcr0 | CIAAckIcr0 | CIASetIcr0 | CIATODInt0 | CIASerInt0 | CIASerLoad0 | CIASerClk0)
 
 
 /*! @brief    Virtual complex interface adapter (CIA)

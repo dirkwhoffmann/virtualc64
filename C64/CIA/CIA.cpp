@@ -254,6 +254,7 @@ CIA::peek(uint16_t addr)
                 
                 // Clear bit 7 in the next cycle and remember the read access
                 delay |= (CIAClearIcr0 | CIAReadIcr0);
+                delay |= CIAAckIcr0;
                 
                 delay &= ~CIASetIcr1;
                 
@@ -543,7 +544,6 @@ CIA::poke(uint16_t addr, uint8_t value)
             
             // Clear pending interrupt if a write has occurred in the previous cycle
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
-            // else if (chipModel == MOS_6526_OLD && (delay & CIAClearIcr2)) {
             else if (delay & CIAClearIcr2) {
                 if (chipModel == MOS_6526_OLD) {
                      delay &= ~(CIASetInt1 | CIASetIcr1);
@@ -827,8 +827,12 @@ CIA::executeOneCycle()
     
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
-    // uint8_t oldIcr = ICR;
     
+    // if ((delay & CIAClearIcr1) && chipModel == MOS_6526_NEW) {
+    if (delay & CIAAckIcr1) {
+        ICR = 0;
+    }
+            
     //
 	// Layout of timer (A and B)
 	//
@@ -1115,7 +1119,8 @@ CIA::executeOneCycle()
             
             if (chipModel == MOS_6526_NEW) {
              
-                ICR = newIcr;
+                // ICR = newIcr;
+                // ICR = 0;
                 
             } else {
                 
