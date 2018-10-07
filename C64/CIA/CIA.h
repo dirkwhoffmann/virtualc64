@@ -133,10 +133,13 @@ private:
     uint8_t CRB;
     
     //! @brief    Interrupt control register
-	uint8_t ICR;
-    
+	uint8_t icr;
+
+    //! @brief    ICR bits that need to deleted when CIAAckIcr1 hits
+    uint8_t icrAck;
+
     //! @brief    Interrupt mask register
-	uint8_t IMR;
+	uint8_t imr;
 
 protected:
     

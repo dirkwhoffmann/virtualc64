@@ -40,8 +40,9 @@ CIA::CIA()
         { &feed,             sizeof(feed),             CLEAR_ON_RESET },
         { &CRA,              sizeof(CRA),              CLEAR_ON_RESET },
         { &CRB,              sizeof(CRB),              CLEAR_ON_RESET },
-        { &ICR,              sizeof(ICR),              CLEAR_ON_RESET },
-        { &IMR,              sizeof(IMR),              CLEAR_ON_RESET },
+        { &icr,              sizeof(icr),              CLEAR_ON_RESET },
+        { &icrAck,           sizeof(icrAck),           CLEAR_ON_RESET },
+        { &imr,              sizeof(imr),              CLEAR_ON_RESET },
         { &PB67TimerMode,    sizeof(PB67TimerMode),    CLEAR_ON_RESET },
         { &PB67TimerOut,     sizeof(PB67TimerOut),     CLEAR_ON_RESET },
         { &PB67Toggle,       sizeof(PB67Toggle),       CLEAR_ON_RESET },
@@ -109,12 +110,12 @@ void
 CIA::triggerFallingEdgeOnFlagPin()
 {
     // TODO: CLEAN THIS UP (USE CORRECT TIMING Interrupt0 etc.)
-    ICR |= 0x10; // Note: FLAG pin is inverted
+    icr |= 0x10; // Note: FLAG pin is inverted
         
     // Trigger interrupt, if enabled
-    if (IMR & 0x10) {
+    if (imr & 0x10) {
         INT = 0;
-        ICR |= 0x80;
+        icr |= 0x80;
         pullDownInterruptLine();
     }
 }
@@ -236,12 +237,12 @@ CIA::peek(uint16_t addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
             // For new CIAs, set upper bit if an IRQ is being triggered
-            if ((delay & CIASetInt1) && (ICR & 0x1F) && chipModel == MOS_6526_NEW) {
-                ICR |= 0x80;
+            if ((delay & CIASetInt1) && (icr & 0x1F) && chipModel == MOS_6526_NEW) {
+                icr |= 0x80;
             }
             
             // Remember result
-            result = ICR;
+            result = icr;
             
             // Release interrupt request
             if (INT == 0) {
@@ -255,9 +256,10 @@ CIA::peek(uint16_t addr)
             if (chipModel == MOS_6526_NEW) {
                 delay |= CIAClearIcr0; // Uppermost bit
                 delay |= CIAAckIcr0;   // Other bits
+                icrAck = 0xFF;
             } else {
                 delay |= CIAClearIcr0; // Uppermost bit
-                ICR &= 0x80;           // Other bits
+                icr &= 0x80;           // Other bits
             }
 
             // Remember the read access
@@ -335,7 +337,7 @@ CIA::spypeek(uint16_t addr)
             return SDR;
             
         case 0x0D: // CIA_INTERRUPT_CONTROL
-            return ICR;
+            return icr;
             
         case 0x0E: // CIA_CONTROL_REG_A
             return CRA & ~0x10;
@@ -475,13 +477,13 @@ CIA::poke(uint16_t addr, uint8_t value)
 			
 			// Bit 7 means set (1) or clear (0) the other bits
 			if ((value & 0x80) != 0) {
-				IMR |= (value & 0x1F);
+				imr |= (value & 0x1F);
 			} else {
-				IMR &= ~(value & 0x1F);
+				imr &= ~(value & 0x1F);
 			}
             
 			// Raise an interrupt in the next cycle if conditions match
-			if ((IMR & ICR & 0x1F) && INT) {
+			if ((imr & icr & 0x1F) && INT) {
                 if (chipModel == MOS_6526_NEW) {
                     if (!(delay & CIAReadIcr1)) {
                         delay |= (CIASetInt1 | CIASetIcr1);
@@ -676,7 +678,7 @@ CIA::dumpTrace()
 		return;
 	*/
     
-	debug(1, "%sICR: %02X IMR: %02X ", indent, ICR, IMR);
+	debug(1, "%sICR: %02X IMR: %02X ", indent, icr, imr);
 	debug(1, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
 			delay & CIACountA0 ? "CntA0 " : "",
 			delay & CIACountA1 ? "CntA1 " : "",
@@ -757,12 +759,12 @@ CIA::getInfo()
     info.timerB.pbout = CRB & 0x02;
     info.timerB.oneShot = CRB & 0x08;
 
-    info.icr = ICR;
-    info.imr = IMR;
+    info.icr = icr;
+    info.imr = imr;
     info.intLine = INT;
     
     info.tod = tod.getInfo();
-    info.todIntEnable = ICR & 0x04;
+    info.todIntEnable = icr & 0x04;
     
     return info;
 }
@@ -775,10 +777,6 @@ CIA::executeOneCycle()
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
     
-    if (delay & CIAAckIcr1) {
-        ICR &= 0x80;
-    }
-            
     //
 	// Layout of timer (A and B)
 	//
@@ -832,6 +830,8 @@ CIA::executeOneCycle()
 	
 	if (timerAOutput) {
         
+        icrAck &= ~0x01;
+        
 		// Stop timer in one shot mode
 		if ((delay | feed) & CIAOneShotA0) { // (3)
 			CRA &= ~0x01;
@@ -864,7 +864,9 @@ CIA::executeOneCycle()
 	bool timerBOutput = (counterB == 0 && (delay & CIACountB2)); // (2)
 	
 	if (timerBOutput) {
-					
+				
+        icrAck &= ~0x02;
+        
 		// Stop timer in one shot mode
 		if ((delay | feed) & CIAOneShotB0) { // (3)
 			CRB &= ~0x01;
@@ -1020,7 +1022,7 @@ CIA::executeOneCycle()
 		// On a real C64, there is a race condition here. If ICR is currently
         // read, the read access occurs *before* timer A sets bit 1. Hence,
         // bit 1 always shows up.
-		ICR |= 0x01;
+		icr |= 0x01;
 	}
 	
 	// if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
@@ -1030,38 +1032,41 @@ CIA::executeOneCycle()
         // "timer B bug". If ICR is currently read, the read access occurs
         // *after* timer B sets bit 2. Hence, bit 2 won't show up.
         if (!(delay & CIAReadIcr0) || !hasTimerBBug() || !emulateTimerBBug) {
-            ICR |= 0x02;
+            icr |= 0x02;
         }
 	}
     
     // Check for timer interrupt
-    if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) { // (11)
+    if ((timerAOutput && (imr & 0x01)) || (timerBOutput && (imr & 0x02))) { // (11)
         triggerTimerIrq();
     }
 
     // Check for TOD interrupt
     if (delay & CIATODInt0) {
-        ICR |= 0x04;
-        if (IMR & 0x04) {
+        icr |= 0x04;
+        if (imr & 0x04) {
             triggerTodIrq();
         }
     }
     
     // Check for Serial interrupt
     if (delay & CIASerInt2) {
-        ICR |= 0x08;
-        if (IMR & 0x08) {
+        icr |= 0x08;
+        if (imr & 0x08) {
             triggerSerialIrq();
         }
     }
     
-    if (delay & (CIAClearIcr1 | CIASetIcr1 | CIASetInt1 | CIAClearInt0)) {
+    if (delay & (CIAClearIcr1 | CIAAckIcr1 | CIASetIcr1 | CIASetInt1 | CIAClearInt0)) {
         
         if (delay & CIAClearIcr1) { // (12)
-            ICR &= 0x7F;
+            icr &= 0x7F;
+        }
+        if (delay & CIAAckIcr1) {
+            icr &= ~icrAck;
         }
         if (delay & CIASetIcr1) { // (13)
-            ICR |= 0x80;
+            icr |= 0x80;
         }
         if (delay & CIASetInt1) { // (14)
             INT = 0;
