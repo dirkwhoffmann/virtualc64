@@ -823,14 +823,11 @@ CIA::executeOneCycle()
 {
     wakeUp();
     
-    uint8_t newIcr = 0;
-    
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
     
-    // if ((delay & CIAClearIcr1) && chipModel == MOS_6526_NEW) {
     if (delay & CIAAckIcr1) {
-        ICR = 0;
+        ICR &= 0x80;
     }
             
     //
@@ -886,8 +883,6 @@ CIA::executeOneCycle()
 	
 	if (timerAOutput) {
         
-		newIcr |= 1;
-        
 		// Stop timer in one shot mode
 		if ((delay | feed) & CIAOneShotA0) { // (3)
 			CRA &= ~0x01;
@@ -921,8 +916,6 @@ CIA::executeOneCycle()
 	
 	if (timerBOutput) {
 					
-        newIcr |= 2;
-
 		// Stop timer in one shot mode
 		if ((delay | feed) & CIAOneShotB0) { // (3)
 			CRB &= ~0x01;
@@ -1121,6 +1114,7 @@ CIA::executeOneCycle()
              
                 // ICR = newIcr;
                 // ICR = 0;
+                ICR &= 0x7F;
                 
             } else {
                 
