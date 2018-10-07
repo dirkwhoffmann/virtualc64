@@ -325,11 +325,14 @@ extension MyController {
     
         // Load user defaults
         loadUserDefaults()
-        c64.powerUp()
         
         // Enable message processing (register callback)
         setListener()
 
+        // Power up the emulator. If all Roms are in place, the emulator starts
+        // running. Otherwise, it sends a MISSING_ROM message.
+        c64.powerUp()
+        
         // Create speed monitor and get the timer tunning
         createTimer()
     }

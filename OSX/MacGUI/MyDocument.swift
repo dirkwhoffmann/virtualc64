@@ -78,7 +78,7 @@ class MyDocument : NSDocument {
         
         // Try to run. The emulator will either run (if all ROMs were found)
         // or write a MISSING_ROM message into the message queue.
-        c64.run()
+        // c64.run()
     }
  
     override open func makeWindowControllers() {
