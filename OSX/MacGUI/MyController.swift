@@ -325,6 +325,7 @@ extension MyController {
     
         // Load user defaults
         loadUserDefaults()
+        c64.powerUp()
         
         // Enable message processing (register callback)
         setListener()

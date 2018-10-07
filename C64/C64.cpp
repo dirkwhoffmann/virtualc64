@@ -132,12 +132,6 @@ C64::C64()
 
     // Setup references
     cpu.mem = &mem;
-    // drive1.cpu.mem = &c64->drive1.mem;
-    // drive1.mem.iec = &c64->iec;
-    // drive1.mem.drive = &c64->drive1;
-    // drive2.cpu.mem = &c64->drive2.mem;
-    // drive2.mem.iec = &c64->iec;
-    // drive2.mem.drive = &c64->drive2;
 
     // Set initial hardware configuration
     mouse = &mouse1350;

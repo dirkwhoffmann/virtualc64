@@ -117,8 +117,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->mem->dumpState(); }
 
 - (NSInteger) ramInitPattern { return wrapper->mem->getRamInitPattern(); }
-- (void) setRamInitPattern:(NSInteger)type {
-    wrapper->mem->setRamInitPattern((RamInitPattern)type); }
+- (void) setRamInitPattern:(NSInteger)pattern {
+    wrapper->mem->setRamInitPattern((RamInitPattern)pattern); }
+- (void) eraseWithPattern:(NSInteger)pattern {
+    wrapper->mem->eraseWithPattern((RamInitPattern)pattern); }
 
 - (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
 - (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }

@@ -56,18 +56,14 @@ C64Memory::reset()
 {
     VirtualComponent::reset();
     
-    // Initialize RAM
-    if (ramInitPattern == INIT_PATTERN_C64C) {
-        for (unsigned i = 0; i < sizeof(ram); i++)
-            ram[i] = (i & 0x80) ? 0x00 : 0xFF;
-    } else {
-        for (unsigned i = 0; i < sizeof(ram); i++)
-            ram[i] = (i & 0x40) ? 0xFF : 0x00;
-    }
+    // Erase RAM
+    eraseWithPattern(ramInitPattern);
     
     // Clear out initially visible screen memory to make it look nicer on startup
+    /*
     for (unsigned i = 0; i < 1000; i++)
         ram[0x400+i] = 0x00;
+    */
     
     // Initialize color RAM with random numbers
     srand(1000);
@@ -120,6 +116,27 @@ C64Memory::dumpState()
 //
 // Accessing the memory
 //
+
+void
+C64Memory::eraseWithPattern(RamInitPattern pattern)
+{
+    if (!isRamInitPattern(pattern)) {
+        warn("Unknown RAM init pattern. Assuming INIT_PATTERN_C64\n");
+        pattern = INIT_PATTERN_C64;
+    }
+    
+    if (pattern == INIT_PATTERN_C64) {
+        for (unsigned i = 0; i < sizeof(ram); i++)
+            ram[i] = (i & 0x40) ? 0xFF : 0x00;
+    } else {
+        for (unsigned i = 0; i < sizeof(ram); i++)
+            ram[i] = (i & 0x80) ? 0x00 : 0xFF;
+    }
+    
+    // Make the screen look nice on startup
+    memset(&ram[0x400], 32, 40*25); // Screen
+    memset(&ram[0x100], 0, 256);    // Processor stack
+}
 
 void 
 C64Memory::updatePeekPokeLookupTables()

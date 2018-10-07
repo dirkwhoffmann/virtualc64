@@ -104,6 +104,7 @@ struct ContainerWrapper;
 
 - (NSInteger) ramInitPattern;
 - (void) setRamInitPattern:(NSInteger)type;
+- (void) eraseWithPattern:(NSInteger)type;
 
 - (MemoryType) peekSource:(uint16_t)addr;
 - (MemoryType) pokeTarget:(uint16_t)addr;

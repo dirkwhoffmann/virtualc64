@@ -143,7 +143,10 @@ public:
     RamInitPattern getRamInitPattern() { return ramInitPattern; }
     
     //! @brief    Sets the RAM init pattern type.
-    void setRamInitPattern(RamInitPattern type) { ramInitPattern = type; }
+    void setRamInitPattern(RamInitPattern pattern) { ramInitPattern = pattern; }
+
+    //! @brief    Erases the memory with the provided init pattern
+    void eraseWithPattern(RamInitPattern pattern);
     
     /*! @brief    Updates the peek and poke lookup tables.
      *  @details  The lookup values depend on three processor port bits
