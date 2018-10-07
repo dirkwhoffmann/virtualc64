@@ -61,7 +61,7 @@ class HardwarePrefsController : UserDialogController {
             descr = "matches an early C64 with brown casing (breadbox) and NTSC video output"
             
         default:
-            descr = "is a custom configuration. It matches no known C64 model."
+            descr = "is a custom configuration. It matches no known C64 model"
         }
         infoText.stringValue = "This configuration \(descr)."
     }

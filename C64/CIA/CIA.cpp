@@ -235,48 +235,33 @@ CIA::peek(uint16_t addr)
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
-            // For new CIAs, set upper bit if IRQ is being triggered
-            if ((delay & CIASetInt1) != 0 && (ICR & 0x1F) && chipModel == MOS_6526_NEW) {
+            // For new CIAs, set upper bit if an IRQ is being triggered
+            if ((delay & CIASetInt1) && (ICR & 0x1F) && chipModel == MOS_6526_NEW) {
                 ICR |= 0x80;
             }
-            // Assign result
+            
+            // Remember result
             result = ICR;
             
-            if (chipModel == MOS_6526_NEW) {
-                
-                // Release interrupt request
-                if (INT == 0) {
-                    delay |= CIAClearInt0;
-                }
-                
-                // Discard pending interrupts
-                delay &= ~(CIASetInt0 | CIASetInt1);
-                
-                // Clear bit 7 in the next cycle and remember the read access
-                delay |= (CIAClearIcr0 | CIAReadIcr0);
-                delay |= CIAAckIcr0;
-                
-                delay &= ~CIASetIcr1;
-                
-                break;
-            }
-     
-            assert(chipModel == MOS_6526_OLD);
-			// result = ICR;
-            
-			// Release interrupt request
-			if (INT == 0) {
+            // Release interrupt request
+            if (INT == 0) {
                 delay |= CIAClearInt0;
-			}
-			
-			// Discard pending interrupts
-			delay &= ~(CIASetInt0 | CIASetInt1);
-
-			// Clear all bits except bit 7
-			ICR &= 0x80;
+            }
             
-            // Clear bit 7 in the next cycle and remember the read access
-            delay |= (CIAClearIcr0 | CIAReadIcr0);
+            // Discard pending interrupts
+            delay &= ~(CIASetInt0 | CIASetInt1);
+        
+            // Schedule the ICR bits to be cleared
+            if (chipModel == MOS_6526_NEW) {
+                delay |= CIAClearIcr0; // Uppermost bit
+                delay |= CIAAckIcr0;   // Other bits
+            } else {
+                delay |= CIAClearIcr0; // Uppermost bit
+                ICR &= 0x80;           // Other bits
+            }
+
+            // Remember the read access
+            delay |= CIAReadIcr0;
 			break;
 
         case 0x0E: // CIA_CONTROL_REG_A
