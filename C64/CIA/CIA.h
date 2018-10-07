@@ -133,9 +133,6 @@ private:
     //! @brief    Interrupt control register
 	uint8_t ICR;
     
-    //! @brief    Stolen from Hoxs64
-    uint8_t icr_ack;
-    
     //! @brief    Interrupt mask register
 	uint8_t IMR;
 

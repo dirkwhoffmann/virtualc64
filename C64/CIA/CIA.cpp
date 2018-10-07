@@ -41,7 +41,6 @@ CIA::CIA()
         { &CRA,              sizeof(CRA),              CLEAR_ON_RESET },
         { &CRB,              sizeof(CRB),              CLEAR_ON_RESET },
         { &ICR,              sizeof(ICR),              CLEAR_ON_RESET },
-        { &icr_ack,          sizeof(icr_ack),          CLEAR_ON_RESET },
         { &IMR,              sizeof(IMR),              CLEAR_ON_RESET },
         { &PB67TimerMode,    sizeof(PB67TimerMode),    CLEAR_ON_RESET },
         { &PB67TimerOut,     sizeof(PB67TimerOut),     CLEAR_ON_RESET },
@@ -238,15 +237,11 @@ CIA::peek(uint16_t addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
             if (chipModel == MOS_6526_NEW) {
-                if ((delay & CIASetInt1) != 0) {
-                    if (ICR & 0x1F) {
-                        ICR |= 0x80;
-                    }
-                }
-                if (ICR & 0x9F) {
-                    icr_ack |= ((ICR & 0x9F) | 0x80);
-                }
                 
+                // Set upper bit if IRQ is currently triggered
+                if ((delay & CIASetInt1) != 0 && (ICR & 0x1F)) {
+                    ICR |= 0x80;
+                }
                 result = ICR;
                 
                 // Release interrupt request
@@ -261,6 +256,7 @@ CIA::peek(uint16_t addr)
                 delay |= (CIAClearIcr0 | CIAReadIcr0);
                 
                 delay &= ~CIASetIcr1;
+                
                 break;
             }
             /*
@@ -831,7 +827,8 @@ CIA::executeOneCycle()
     
     uint64_t oldDelay = delay;
     uint64_t oldFeed  = feed;
-
+    // uint8_t oldIcr = ICR;
+    
     //
 	// Layout of timer (A and B)
 	//
@@ -1112,18 +1109,16 @@ CIA::executeOneCycle()
         }
     }
     
-    icr_ack = icr_ack & ~newIcr;
-    
     if (delay & (CIAClearIcr1 | CIASetIcr1 | CIASetInt1 | CIAClearInt0)) {
         
         if (delay & CIAClearIcr1) { // (12)
             
             if (chipModel == MOS_6526_NEW) {
              
-                ICR &= ~icr_ack;
-                icr_ack = 0;
+                ICR = newIcr;
                 
             } else {
+                
                 ICR &= 0x7F;
             }
         }
