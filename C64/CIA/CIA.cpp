@@ -135,7 +135,6 @@ CIA::triggerTimerIrq()
             // testprogs\interrupts\irqnmi\cia-int-nmi-new.prg
             delay |= (delay & CIAReadIcr0) ? CIASetInt0 : CIASetInt1;
             delay |= (delay & CIAReadIcr0) ? CIASetIcr0 : CIASetIcr1;
-            // debug("NEW CIA IRQ (%d)\n", (delay & CIAReadIcr0));
             return;
             
         default:
@@ -236,13 +235,14 @@ CIA::peek(uint16_t addr)
 			
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
+            // For new CIAs, set upper bit if IRQ is being triggered
+            if ((delay & CIASetInt1) != 0 && (ICR & 0x1F) && chipModel == MOS_6526_NEW) {
+                ICR |= 0x80;
+            }
+            // Assign result
+            result = ICR;
+            
             if (chipModel == MOS_6526_NEW) {
-                
-                // Set upper bit if IRQ is currently triggered
-                if ((delay & CIASetInt1) != 0 && (ICR & 0x1F)) {
-                    ICR |= 0x80;
-                }
-                result = ICR;
                 
                 // Release interrupt request
                 if (INT == 0) {
@@ -260,45 +260,9 @@ CIA::peek(uint16_t addr)
                 
                 break;
             }
-            /*
-            if (bEarlyIRQ)
-            {
-                if ((delay & Interrupt1) != 0)
-                {
-                    if ((icr & 0x1f) != 0)
-                    {
-                        icr |= 0x80;
-                    }
-                }
-                
-                if ((icr & 0x9F) != 0)
-                {
-                    icr_ack |= ((icr & 0x9F) | 0x80);
-                }
-                delay |= ClearIcr0;
-                delay &= ~(Interrupt1);
-                delay &= ~(SetIcr1);
-                result = icr;
-            }
-            else
-            {
-                delay |= ClearIcr0;
-                delay &= ~(Interrupt1);
-                result = icr;
-                icr = icr & 0x80;
-            }
-            
-            delay |= ReadIcr0;
-            Interrupt = 0;
-            ClearSystemInterrupt();
-            idle = false;
-            no_change_count = 0;
-            SetWakeUpClock();
-            return result;
-            */
-            
+     
             assert(chipModel == MOS_6526_OLD);
-			result = ICR;
+			// result = ICR;
             
 			// Release interrupt request
 			if (INT == 0) {
@@ -1109,17 +1073,7 @@ CIA::executeOneCycle()
     if (delay & (CIAClearIcr1 | CIASetIcr1 | CIASetInt1 | CIAClearInt0)) {
         
         if (delay & CIAClearIcr1) { // (12)
-            
-            if (chipModel == MOS_6526_NEW) {
-             
-                // ICR = newIcr;
-                // ICR = 0;
-                ICR &= 0x7F;
-                
-            } else {
-                
-                ICR &= 0x7F;
-            }
+            ICR &= 0x7F;
         }
         if (delay & CIASetIcr1) { // (13)
             ICR |= 0x80;
