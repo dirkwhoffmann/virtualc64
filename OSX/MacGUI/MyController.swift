@@ -329,8 +329,8 @@ extension MyController {
         // Enable message processing (register callback)
         setListener()
 
-        // Power up the emulator. If all Roms are in place, the emulator starts
-        // running. Otherwise, it sends a MISSING_ROM message.
+        // Power up. If all Roms are in place, the emulator starts running.
+        // Otherwise, it sends a MISSING_ROM message.
         c64.powerUp()
         
         // Create speed monitor and get the timer tunning
@@ -352,9 +352,6 @@ extension MyController {
         
         // Enable fullscreen mode
         window?.collectionBehavior = .fullScreenPrimary
-        
-        // Disable area tracking
-        // trackingArea = nil
     }
     
     func configureToolbar() {
@@ -371,24 +368,6 @@ extension MyController {
         var gamepad = NSImage(named: NSImage.Name(rawValue: "crystal_gamepad"))
         gamepad = gamepad?.resizeImage(width: 32, height: 32, cutout: cutout)
         genericDeviceImage = gamepad
-        
-        // Assign images
-        /*
-        controlPort1.item(at: 0)?.image = none
-        controlPort1.item(at: 1)?.image = keyset
-        controlPort1.item(at: 2)?.image = keyset
-        controlPort1.item(at: 3)?.image = mouse
-        controlPort1.item(at: 4)?.image = gamepad
-        controlPort1.item(at: 5)?.image = gamepad
-
-        // Assign images
-        controlPort2.item(at: 0)?.image = none
-        controlPort2.item(at: 1)?.image = keyset
-        controlPort2.item(at: 2)?.image = keyset
-        controlPort2.item(at: 3)?.image = mouse
-        controlPort2.item(at: 4)?.image = gamepad
-        controlPort2.item(at: 5)?.image = gamepad
-        */
         
         validateJoystickToolbarItems()
     }
@@ -460,9 +439,9 @@ extension MyController {
         if (animationCounter % 2) == 0 {
  
             // Update tape progress icon
-            // Note: The tape progress icon is not switched on or off by a "push" message,
-            // because some games continously switch on and off the datasette motor.
-            // This would quickly overflow the message queue.
+            // Note: The tape progress icon is not switched on or off by push
+            // notification (message), because some games continously switch the
+            // datasette motor on and off.
             if (c64.datasette.motor() && c64.datasette.playKey()) {
                 tapeProgress.startAnimation(self)
             } else {
