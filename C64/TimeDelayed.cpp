@@ -99,7 +99,7 @@ template void TimeDelayed<uint64_t>::debug();
 template <class T>
 size_t TimeDelayed<T>::stateSize()
 {
-    return (delay + 1) * sizeof(uint64_t) + sizeof(timeStamp);
+    return capacity * sizeof(uint64_t) + sizeof(timeStamp);
 }
 template size_t TimeDelayed<bool>::stateSize();
 template size_t TimeDelayed<uint8_t>::stateSize();
@@ -113,7 +113,7 @@ void TimeDelayed<T>::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    for (unsigned i = 0; i < delay + 1; i++) {
+    for (unsigned i = 0; i < capacity; i++) {
         pipeline[i] = (T)read64(buffer);
     }
     timeStamp = read64(buffer);
@@ -132,7 +132,7 @@ void TimeDelayed<T>::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    for (unsigned i = 0; i < delay + 1; i++) {
+    for (unsigned i = 0; i < capacity; i++) {
         write64(buffer, (uint64_t)pipeline[i]);
     }
     write64(buffer, timeStamp);

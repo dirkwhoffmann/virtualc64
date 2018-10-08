@@ -58,13 +58,7 @@ C64Memory::reset()
     
     // Erase RAM
     eraseWithPattern(ramInitPattern);
-    
-    // Clear out initially visible screen memory to make it look nicer on startup
-    /*
-    for (unsigned i = 0; i < 1000; i++)
-        ram[0x400+i] = 0x00;
-    */
-    
+        
     // Initialize color RAM with random numbers
     srand(1000);
     for (unsigned i = 0; i < sizeof(colorRam); i++) {

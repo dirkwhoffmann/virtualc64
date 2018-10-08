@@ -40,12 +40,7 @@ VIC::VIC()
 	markIRQLines = false;
 	markDMALines = false;
     emulateGrayDotBug = true;
-    
-    // Register sub components
-    /*
-    VirtualComponent *subcomponents[] = { &pixelEngine, NULL };
-    registerSubComponents(subcomponents, sizeof(subcomponents));
-     */
+    palette = COLOR_PALETTE;
     
     // Register snapshot items
     SnapshotItem items[] = {

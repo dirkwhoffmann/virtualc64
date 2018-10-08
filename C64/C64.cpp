@@ -59,9 +59,7 @@ void
     
     while (likely(success)) {
         pthread_testcancel();
-        // pthread_mutex_lock(&c64->mutex);
         success = c64->executeOneFrame();
-        // pthread_mutex_unlock(&c64->mutex);
     }
     
     pthread_cleanup_pop(1);
@@ -79,13 +77,6 @@ C64::C64()
     debug("Creating virtual C64[%p]\n", this);
 
     p = NULL;
-    /*
-    pthread_mutexattr_t attr;
-    pthread_mutexattr_init(&attr);
-    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-    pthread_mutex_init(&mutex, &attr);
-    */
-    
     warp = false;
     alwaysWarp = false;
     warpLoad = false;
@@ -124,8 +115,9 @@ C64::C64()
         { &durationOfCycle, sizeof(durationOfCycle), KEEP_ON_RESET },
         { &frame,           sizeof(frame),           CLEAR_ON_RESET },
         { &rasterLine,      sizeof(rasterLine),      CLEAR_ON_RESET },
-        { &rasterCycle, sizeof(rasterCycle), CLEAR_ON_RESET },
+        { &rasterCycle,     sizeof(rasterCycle),     CLEAR_ON_RESET },
         { &ultimax,         sizeof(ultimax),         CLEAR_ON_RESET },
+        
         { NULL,             0,                       0 }};
     
     registerSnapshotItems(items, sizeof(items));

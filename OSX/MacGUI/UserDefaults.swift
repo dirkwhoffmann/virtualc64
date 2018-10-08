@@ -180,10 +180,12 @@ extension MyController {
         let defaults = UserDefaults.standard
         keyboardcontroller.mapKeysByPosition = defaults.bool(forKey: VC64Keys.mapKeysByPosition)
         
+        c64.suspend()
         loadJoystickUserDefaults()
         loadEmulatorUserDefaults()
         loadHardwareUserDefaults()
         loadKeyMapUserDefaults()
+        c64.resume()
     }
     
     /// Loads the user defaults for all properties that are set in the joystick dialog
@@ -192,6 +194,8 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         
+        c64.suspend()
+
         // Joystick emulation keys
         if let data = defaults.data(forKey: VC64Keys.joyKeyMap1) {
             if let keyMap = try? JSONDecoder().decode([MacKey:UInt32].self, from: data) {
@@ -215,6 +219,8 @@ extension MyController {
         
         // Mouse
         c64.setMouseModel(defaults.integer(forKey: VC64Keys.mouseModel))
+        
+        c64.resume()
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -223,6 +229,8 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
 
+        c64.suspend()
+        
         // Video
         metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
         metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
@@ -244,6 +252,8 @@ extension MyController {
         pauseInBackground = defaults.bool(forKey: VC64Keys.pauseInBackground)
         c64.setSnapshotInterval(defaults.integer(forKey: VC64Keys.snapshotInterval))
         autoMount = defaults.bool(forKey: VC64Keys.autoMount)
+        
+        c64.resume()
     }
     
     /// Loads the user defaults for all properties that are set in the hardware dialog
@@ -251,6 +261,8 @@ extension MyController {
         
         track()
         let defaults = UserDefaults.standard
+        
+        c64.suspend()
         
         // VICII
         c64.vic.setChipModel(defaults.integer(forKey: VC64Keys.vicChip))
@@ -271,6 +283,8 @@ extension MyController {
         // Board
         c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
         c64.mem.setRamInitPattern(defaults.integer(forKey: VC64Keys.initPattern))
+        
+        c64.resume()
     }
     
     func loadKeyMapUserDefaults() {
