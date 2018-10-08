@@ -25,10 +25,10 @@
 // Snapshot version number of this release
 #define V_MAJOR 2
 #define V_MINOR 7
-#define V_SUBMINOR 0
+#define V_SUBMINOR 1
 
 // Disable assertion checking (Uncomment in release build)
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
