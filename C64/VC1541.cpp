@@ -48,7 +48,7 @@ VC1541::VC1541(unsigned nr)
         // Life-time items
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         { &durationOfOneCpuCycle,   sizeof(durationOfOneCpuCycle),  KEEP_ON_RESET },
-        // { &deviceNr,                sizeof(deviceNr),               KEEP_ON_RESET },
+        { &poweredOn,               sizeof(poweredOn),              KEEP_ON_RESET },
 
         // Internal state
         { &spinning,                sizeof(spinning),               CLEAR_ON_RESET },
