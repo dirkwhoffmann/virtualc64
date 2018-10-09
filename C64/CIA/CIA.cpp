@@ -1019,22 +1019,23 @@ CIA::executeOneCycle()
 	//                                             Phi2
     
 	if (timerAOutput) { // (9)
-		// On a real C64, there is a race condition here. If ICR is currently
-        // read, the read access occurs *before* timer A sets bit 1. Hence,
-        // bit 1 always shows up.
 		icr |= 0x01;
 	}
 	
 	// if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
     if (timerBOutput) { // (10)
         
-		// The old CIA chips show a race condition here which is known as the
-        // "timer B bug". If ICR is currently read, the read access occurs
-        // *after* timer B sets bit 2. Hence, bit 2 won't show up.
-        if (!(delay & CIAReadIcr0) || !hasTimerBBug() || !emulateTimerBBug) {
+        if ((delay & CIAReadIcr0) && emulateTimerBBug) {
+            
+            // The old CIA chips (NMOS technology) exhibit a race condition here
+            // which is known as the "timer B bug". If ICR is currently read,
+            // the read access occurs *after* timer B sets bit 2. Hence, bit 2
+            // won't show up.
+            
+        } else {
             icr |= 0x02;
         }
-	}
+    }
     
     // Check for timer interrupt
     if ((timerAOutput && (imr & 0x01)) || (timerBOutput && (imr & 0x02))) { // (11)

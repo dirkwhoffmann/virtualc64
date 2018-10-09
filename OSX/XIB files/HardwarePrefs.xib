@@ -160,7 +160,7 @@ DQ
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4SM-kq-3rz">
                                     <rect key="frame" x="333" y="294" width="168" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Emulate gray dot bug" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aJV-PN-C7K">
+                                    <buttonCell key="cell" type="check" title="Emulate grey dot bug" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aJV-PN-C7K">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>

@@ -190,7 +190,7 @@ VIC::dumpState()
     msg("              PAL : %s\n", isPAL() ? "yes" : "no");
     msg("             NTSC : %s\n", isNTSC() ? "yes" : "no");
     msg("       Glue logic : %d\n", glueLogic);
-    msg("     Gray dot bug : %s\n", hasGrayDotBug() ? "yes" : "no");
+    msg("     Gray dot bug : %s\n", emulateGrayDotBug ? "yes" : "no");
     msg("   is656x, is856x : %d %d\n", is656x(), is856x());
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
     msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);

@@ -559,8 +559,8 @@ VIC::poke(uint16_t addr, uint8_t value)
             
             reg.current.colors[addr - 0x20] = value & 0xF;
             
-            // Emulate the gray dot bug
-            if (hasGrayDotBug() && emulateGrayDotBug) {
+            // If enabled, emulate the gray dot bug
+            if (emulateGrayDotBug) {
                 reg.delayed.colors[addr - 0x20] = 0xF;
             }
             break;

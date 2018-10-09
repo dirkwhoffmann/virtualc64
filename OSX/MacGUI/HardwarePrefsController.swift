@@ -99,14 +99,14 @@ class HardwarePrefsController : UserDialogController {
             assert(false)
         }
         grayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
-        grayDotBug.isEnabled = c64.vic.hasGrayDotBug()
+        // grayDotBug.isEnabled = c64.vic.hasGrayDotBug()
         
         // CIA
         assert(c64.cia1.chipModel() == c64.cia2.chipModel());
         assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug());
         ciaModel.selectItem(withTag: c64.cia1.chipModel())
         timerBBug.state = c64.cia1.emulateTimerBBug() ? .on : .off
-        timerBBug.isEnabled = c64.cia1.chipModel() == MOS_6526_OLD.rawValue
+        // timerBBug.isEnabled = c64.cia1.chipModel() == MOS_6526_OLD.rawValue
 
         // Audio
         let sidModel = c64.sid.chipModel()
