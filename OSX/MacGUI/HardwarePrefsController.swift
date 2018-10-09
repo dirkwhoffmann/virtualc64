@@ -99,14 +99,12 @@ class HardwarePrefsController : UserDialogController {
             assert(false)
         }
         grayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
-        // grayDotBug.isEnabled = c64.vic.hasGrayDotBug()
         
         // CIA
         assert(c64.cia1.chipModel() == c64.cia2.chipModel());
         assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug());
         ciaModel.selectItem(withTag: c64.cia1.chipModel())
         timerBBug.state = c64.cia1.emulateTimerBBug() ? .on : .off
-        // timerBBug.isEnabled = c64.cia1.chipModel() == MOS_6526_OLD.rawValue
 
         // Audio
         let sidModel = c64.sid.chipModel()
@@ -115,8 +113,8 @@ class HardwarePrefsController : UserDialogController {
         sidEngine.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
         sidSamplingMethod.isEnabled = c64.sid.reSID()
         sidSamplingMethod.selectItem(withTag: c64.sid.samplingMethod())
-        let sampleFast = sidSamplingMethod.item(at: 0)
-        sampleFast?.isHidden = (sidModel == Int(MOS_8580.rawValue))
+        // let sampleFast = sidSamplingMethod.item(at: 0)
+        // sampleFast?.isHidden = (sidModel == Int(MOS_8580.rawValue))
         
         // Logic board
         glueLogic.selectItem(withTag: c64.vic.glueLogic())
@@ -177,6 +175,7 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func SIDChipModelAction(_ sender: NSPopUpButton!) {
     
+         /*
         let model = UInt32(sender.selectedTag())
         let method = UInt32(c64.sid.samplingMethod())
         
@@ -185,6 +184,8 @@ class HardwarePrefsController : UserDialogController {
             parent.showResidSamplingMethodAlert()
             c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
         }
+        */
+        
         c64.sid.setChipModel(sender.selectedTag())
         update()
     }
