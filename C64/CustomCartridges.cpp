@@ -868,7 +868,6 @@ FreezeFrame::reset()
 uint8_t
 FreezeFrame::peekIO1(uint16_t addr)
 {
-    debug("Reading from IO1: %04X\n", addr);
     // Reading from IO1 switched to 8K game mode
     // if (addr == 0) {
     {
@@ -881,8 +880,6 @@ FreezeFrame::peekIO1(uint16_t addr)
 uint8_t
 FreezeFrame::peekIO2(uint16_t addr)
 {
-    debug("*Reading from IO2: %04X\n", addr);
-
     // Reading from IO2 disables the cartridge
     // if (addr == 0) {
     {
@@ -892,26 +889,9 @@ FreezeFrame::peekIO2(uint16_t addr)
     return 0; 
 }
 
-/*
-uint8_t
-FreezeFrame::peekRomH(uint16_t addr)
-{
-    // When the cartridge switched to ultimax mode, the ROM chip gets visible
-    // in ROMH as well.
-    return peekRomL(addr);
-}
-
-uint8_t
-FreezeFrame::spypeekRomH(uint16_t addr)
-{
-    return spypeekRomL(addr);
-}
-*/
-
 void
 FreezeFrame::pressFreezeButton()
 {
-    debug("FreezeFrame::pressFirstButton()\n");
     // Pressing the freeze button switches to ultimax mode and triggers an NMI
     c64->suspend();
     c64->expansionport.setExromLine(1);
@@ -923,7 +903,6 @@ FreezeFrame::pressFreezeButton()
 void
 FreezeFrame::releaseFreezeButton()
 {
-    debug("FreezeFrame::releaseFirstButton()\n");
     c64->suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     c64->resume();
