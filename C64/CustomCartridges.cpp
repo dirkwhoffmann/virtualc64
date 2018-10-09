@@ -93,7 +93,7 @@ ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 }
 
 void
-ActionReplay::pressFirstButton()
+ActionReplay::pressFreezeButton()
 {
     // Pressing the freeze bottom pulls down both the NMI and the IRQ line
     c64->suspend();
@@ -106,7 +106,7 @@ ActionReplay::pressFirstButton()
 }
 
 void
-ActionReplay::pressSecondButton()
+ActionReplay::pressResetButton()
 {
     // Note: Cartridge requires to keep the RAM
     // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
@@ -199,7 +199,7 @@ ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
 }
 
 void
-ActionReplay3::pressFirstButton()
+ActionReplay3::pressFreezeButton()
 {
     c64->suspend();
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
@@ -213,7 +213,7 @@ ActionReplay3::pressFirstButton()
 }
 
 void
-ActionReplay3::releaseFirstButton()
+ActionReplay3::releaseFreezeButton()
 {
     c64->suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
@@ -222,7 +222,7 @@ ActionReplay3::releaseFirstButton()
 }
 
 void
-ActionReplay3::pressSecondButton()
+ActionReplay3::pressResetButton()
 {
     // Note: Cartridge requires to keep the RAM
     // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
@@ -350,7 +350,7 @@ FinalIII::pokeIO2(uint16_t addr, uint8_t value) {
 }
 
 void
-FinalIII::pressFirstButton() {
+FinalIII::pressFreezeButton() {
     
     // The freezer is enabled by selecting bank 0 in ultimax mode and
     // triggering an NMI
@@ -360,7 +360,7 @@ FinalIII::pressFirstButton() {
 }
 
 void
-FinalIII::pressSecondButton() {
+FinalIII::pressResetButton() {
     
     // Note: Cartridge requires to keep the RAM
     uint8_t ram[0xFFFF];
@@ -909,7 +909,7 @@ FreezeFrame::spypeekRomH(uint16_t addr)
 */
 
 void
-FreezeFrame::pressFirstButton()
+FreezeFrame::pressFreezeButton()
 {
     debug("FreezeFrame::pressFirstButton()\n");
     // Pressing the freeze button switches to ultimax mode and triggers an NMI
@@ -921,7 +921,7 @@ FreezeFrame::pressFirstButton()
 }
 
 void
-FreezeFrame::releaseFirstButton()
+FreezeFrame::releaseFreezeButton()
 {
     debug("FreezeFrame::releaseFirstButton()\n");
     c64->suspend();

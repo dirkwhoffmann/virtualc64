@@ -11,7 +11,7 @@ extension MyController {
     
     override open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        track("validateMenuItem")
+        // track("validateMenuItem")
         
         func firstDrive() -> Bool {
             precondition(item.tag == 1 || item.tag == 2)
@@ -116,15 +116,14 @@ extension MyController {
         if item.action == #selector(MyController.detachCartridgeAction(_:)) {
             return c64.expansionport.cartridgeAttached()
         }
-        if item.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
-            return c64.expansionport.cartridgeType() == CRT_FINAL_III
+        if item.action == #selector(MyController.pressButtonAction(_:)) {
+            return c64.expansionport.hasFreezeButton() || c64.expansionport.hasResetButton()
         }
-        if item.action == #selector(MyController.actionReplayAction(_:)) {
-            return c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY ||
-            c64.expansionport.cartridgeType() == CRT_ACTION_REPLAY3
+        if item.action == #selector(MyController.pressFreezeButtonAction(_:)) {
+            return c64.expansionport.hasFreezeButton()
         }
-        if item.action == #selector(MyController.freezeFrameAction(_:)) {
-            return c64.expansionport.cartridgeType() == CRT_FREEZE_FRAME
+        if item.action == #selector(MyController.pressResetButtonAction(_:)) {
+            return c64.expansionport.hasResetButton()
         }
         if item.action == #selector(MyController.geoRamBatteryAction(_:)) {
             item.state = c64.expansionport.hasBattery() ? .on : .off
@@ -677,34 +676,26 @@ extension MyController {
         c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
     
-    @IBAction func cartridgeFirstButtonAction(_ sender: Any!) {
+    @IBAction func pressFreezeButtonAction(_ sender: Any!) {
         track()
-        c64.expansionport.pressFirstButton()
+        c64.expansionport.pressFreezeButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.expansionport.releaseFirstButton()
+            self.c64.expansionport.releaseFreezeButton()
         }
     }
     
-    @IBAction func cartridgeSecondButtonAction(_ sender: Any!) {
+    @IBAction func pressResetButtonAction(_ sender: Any!) {
         track()
-        c64.expansionport.pressSecondButton()
+        c64.expansionport.pressResetButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.expansionport.releaseSecondButton()
+            self.c64.expansionport.releaseResetButton()
         }
     }
     
-    @IBAction func actionReplayAction(_ sender: Any!) {
+    @IBAction func pressButtonAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
-    
-    @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
-        // Dummy action method to enable menu item validation
-    }
-    
-    @IBAction func freezeFrameAction(_ sender: Any!) {
-        // Dummy action method to enable menu item validation
-    }
-    
+
     
     //
     // Action methods (Debug menu)

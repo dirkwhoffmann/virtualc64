@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -1069,64 +1069,26 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>
-                            <menuItem title="Action Replay" id="4hq-fg-qHb">
+                            <menuItem title="Press Button" id="4hq-fg-qHb">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Action Replay" id="gIs-wR-no0">
+                                <menu key="submenu" title="Press Button" id="gIs-wR-no0">
                                     <items>
                                         <menuItem title="Freeze" id="KqP-hK-eI5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="cartridgeFirstButtonAction:" target="-1" id="pO5-ag-cRi"/>
+                                                <action selector="pressFreezeButtonAction:" target="-1" id="MJk-Vn-Kcv"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Reset" id="2oe-rD-sgA">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="cartridgeSecondButtonAction:" target="-1" id="mro-FJ-TK0"/>
+                                                <action selector="pressResetButtonAction:" target="-1" id="26o-an-OuP"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                                 <connections>
-                                    <action selector="actionReplayAction:" target="-1" id="Sfd-Bp-hsP"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Final Cartridge III" id="ldk-GO-tsE" userLabel="Final Cartridge III">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Final Cartridge III" id="uai-Ed-uEb">
-                                    <items>
-                                        <menuItem title="Freeze" id="Eve-TE-pGi" userLabel="Freeze">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="cartridgeFirstButtonAction:" target="-1" id="2gB-6b-fNf"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Reset" id="d0F-ds-yHj" userLabel="Freeze">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="cartridgeSecondButtonAction:" target="-1" id="LSn-UF-Oj6"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                                <connections>
-                                    <action selector="finalCartridgeIIIaction:" target="-1" id="PmV-Tl-uyw"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Freeze Frame" id="Rfe-1n-KtG">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Freeze Frame" id="YIn-1r-O4K">
-                                    <items>
-                                        <menuItem title="Freeze" id="dcO-z8-v63">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="cartridgeFirstButtonAction:" target="-1" id="Jbb-bc-08W"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                                <connections>
-                                    <action selector="freezeFrameAction:" target="-1" id="NbS-Su-Tjm"/>
+                                    <action selector="pressButtonAction:" target="-1" id="zum-7k-cvA"/>
                                 </connections>
                             </menuItem>
                         </items>

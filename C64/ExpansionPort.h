@@ -147,17 +147,23 @@ public:
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 
+    //! @brief    Returns true if a cartridge with a freeze button is attached
+    bool hasFreezeButton() { return cartridge ? cartridge->hasFreezeButton() : false; }
+    
     //! @brief    Presses the first cartridge button
-    void pressFirstButton() { if (cartridge) cartridge->pressFirstButton(); }
-
-    //! @brief    Presses the second cartridge button
-    void pressSecondButton() { if (cartridge) cartridge->pressSecondButton(); }
+    void pressFreezeButton() { if (cartridge) cartridge->pressFreezeButton(); }
 
     //! @brief    Releases the first cartridge button
-    void releaseFirstButton() { if (cartridge) cartridge->releaseFirstButton(); }
+    void releaseFreezeButton() { if (cartridge) cartridge->releaseFreezeButton(); }
+
+    //! @brief    Returns true if a cartridge with a reset button is attached
+    bool hasResetButton() { return cartridge ? cartridge->hasResetButton() : false; }
+    
+    //! @brief    Presses the second cartridge button
+    void pressResetButton() { if (cartridge) cartridge->pressResetButton(); }
     
     //! @brief    Releases the second cartridge button
-    void releaseSecondButton() { if (cartridge) cartridge->releaseSecondButton(); }
+    void releaseResetButton() { if (cartridge) cartridge->releaseResetButton(); }
     
     //! @brief    Returns true if the attached cartridge has a RAM backing battery.
     bool hasBattery() { return cartridge != NULL && cartridge->persistentRam; }

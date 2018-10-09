@@ -457,10 +457,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) hasBattery { return wrapper->expansionPort->hasBattery(); }
 - (void) setBattery:(BOOL)value { wrapper->expansionPort->setBattery(value); }
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity { return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
-- (void) pressFirstButton { wrapper->expansionPort->pressFirstButton(); }
-- (void) pressSecondButton { wrapper->expansionPort->pressSecondButton(); }
-- (void) releaseFirstButton { wrapper->expansionPort->releaseFirstButton(); }
-- (void) releaseSecondButton { wrapper->expansionPort->releaseSecondButton(); }
+- (BOOL) hasFreezeButton { return wrapper->expansionPort->hasFreezeButton(); }
+- (void) pressFreezeButton { wrapper->expansionPort->pressFreezeButton(); }
+- (void) releaseFreezeButton { wrapper->expansionPort->releaseFreezeButton(); }
+- (BOOL) hasResetButton { return wrapper->expansionPort->hasResetButton(); }
+- (void) pressResetButton { wrapper->expansionPort->pressResetButton(); }
+- (void) releaseResetButton { wrapper->expansionPort->releaseResetButton(); }
 
 @end
 

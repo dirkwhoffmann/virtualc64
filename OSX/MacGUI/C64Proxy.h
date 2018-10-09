@@ -344,10 +344,12 @@ struct ContainerWrapper;
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
-- (void) pressFirstButton;
-- (void) pressSecondButton;
-- (void) releaseFirstButton;
-- (void) releaseSecondButton;
+- (BOOL) hasFreezeButton;
+- (void) pressFreezeButton;
+- (void) releaseFreezeButton;
+- (BOOL) hasResetButton;
+- (void) pressResetButton;
+- (void) releaseResetButton;
 - (BOOL) hasBattery;
 - (void) setBattery:(BOOL)value;
 

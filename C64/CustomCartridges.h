@@ -49,8 +49,10 @@ public:
     void poke(uint16_t addr, uint8_t value);
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
-    void pressFirstButton();
-    void pressSecondButton();
+    bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    bool hasResetButton() { return true; }
+    void pressResetButton();
 
     //! @brief   Sets the cartridge's control register
     /*! @details This function triggers all side effects that take place when
@@ -77,9 +79,11 @@ public:
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
-    void pressFirstButton();
-    void pressSecondButton();
-    void releaseFirstButton();
+    bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    bool hasResetButton() { return true; }
+    void pressResetButton();
+    void releaseFreezeButton();
     
     //! @brief   Sets the cartridge's control register
     /*! @details This function triggers all side effects that take place when
@@ -103,8 +107,10 @@ public:
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO2(uint16_t addr, uint8_t value);
-    void pressFirstButton();
-    void pressSecondButton();
+    void pressFreezeButton();
+    bool hasFreezeButton() { return true; }
+    void pressResetButton();
+    bool hasResetButton() { return true; }
 };
 
 
@@ -265,10 +271,9 @@ public:
     uint8_t spypeekIO1(uint16_t addr) { return 0; }
     uint8_t peekIO2(uint16_t addr);
     uint8_t spypeekIO2(uint16_t addr) { return 0; }
-    // uint8_t peekRomH(uint16_t addr);
-    // uint8_t spypeekRomH(uint16_t addr);
-    void pressFirstButton();
-    void releaseFirstButton(); 
+    bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    void releaseFreezeButton();
 };
 
 //! @brief    GeoRAM cartridge

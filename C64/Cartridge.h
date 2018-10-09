@@ -269,32 +269,36 @@ public:
     //
     // Cartridge buttons
     //
-    
-    //! @brief    Simulates pressing the first cartridge button
-    /*! @details  If present, the first button is usually a freeze button.
-     *  @note     Make sure to call releaseFirstButton() afterwards.
-     *  @seealso  releaseFirstButton
-     */
-    virtual void pressFirstButton() { };
 
-    //! @brief    Simulates releasing the first cartridge button
-    /*! @note     Make sure to call pressFirstButton() first.
-     *  @seealso  pressFirstButton
+    //! @brief    Returns true if the cartridge has a freeze button
+    virtual bool hasFreezeButton() { return false; }
+
+    //! @brief    Simulates pressing the freeze cartridge button (if present)
+    /*! @note     Make sure to call releaseFreezeButton() afterwards.
+     *  @seealso  releaseFreezeButton, hasFreezeButton
      */
-    virtual void releaseFirstButton() { };
-    
-    //! @brief    Simulates pressing the second cartridge button
-    /*! @details  If present, the second button usually a reset button.
-     *  @note     Make sure to call releaseSecondButton() afterwards.
-     *  @seealso  releaseSecondButton
+    virtual void pressFreezeButton() { };
+
+    //! @brief    Simulates releasing the freeze cartridge button (if present)
+    /*! @note     Make sure to call pressFreezeButton() first.
+     *  @seealso  pressFreezeButton, hasFreezeButton
      */
-    virtual void pressSecondButton() { };
+    virtual void releaseFreezeButton() { };
     
-    //! @brief    Simulates releasing the second cartridge button
-    /*! @note     Make sure to call pressSecondButton() first.
+    //! @brief    Returns true if the cartridge has a reset button
+    virtual bool hasResetButton() { return false; }
+    
+    //! @brief    Simulates pressing the reset cartridge button (if present)
+    /*! @note     Make sure to call releaseResetButton() afterwards.
+     *  @seealso  releaseResetButton
+     */
+    virtual void pressResetButton() { };
+    
+    //! @brief    Simulates releasing the reset cartridge button (if present)
+    /*! @note     Make sure to call pressResetButton() first.
      *  @seealso  pressSecondButton
      */
-    virtual void releaseSecondButton() { };
+    virtual void releaseResetButton() { };
 };
 
 #endif 
