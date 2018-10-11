@@ -175,7 +175,6 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func SIDChipModelAction(_ sender: NSPopUpButton!) {
     
-         /*
         let model = UInt32(sender.selectedTag())
         let method = UInt32(c64.sid.samplingMethod())
         
@@ -184,7 +183,6 @@ class HardwarePrefsController : UserDialogController {
             parent.showResidSamplingMethodAlert()
             c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
         }
-        */
         
         c64.sid.setChipModel(sender.selectedTag())
         update()

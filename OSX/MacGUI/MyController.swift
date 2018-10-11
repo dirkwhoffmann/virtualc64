@@ -545,13 +545,13 @@ extension MyController {
              MSG_ALWAYS_WARP_OFF:
 
             if c64.alwaysWarp() {
-                let name = NSImage.Name(rawValue: "hourglass3Template") //  "pin_red"
+                let name = NSImage.Name(rawValue: "hourglass3Template")
                 warpIcon.image = NSImage.init(named: name)
             } else if (c64.warp()) {
-                let name = NSImage.Name(rawValue: "hourglass2Template") //  "clock_red"
+                let name = NSImage.Name(rawValue: "hourglass2Template")
                 warpIcon.image = NSImage.init(named: name)
             } else {
-                let name = NSImage.Name(rawValue: "hourglass1Template") //  "clock_green"
+                let name = NSImage.Name(rawValue: "hourglass1Template") 
                 warpIcon.image = NSImage.init(named: name)
             }
     

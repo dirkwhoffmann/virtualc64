@@ -155,7 +155,6 @@ extension MyController {
         alert.runModal()
     }
     
-    /*
     func showResidSamplingMethodAlert() {
         
         let alert = NSAlert()
@@ -166,7 +165,6 @@ extension MyController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
-    */
     
     func proceedWithUnexportedDisk(drive nr: Int) -> Bool {
         return mydocument.proceedWithUnexportedDisk(drive: nr)

@@ -757,7 +757,6 @@ C64::setAlwaysWarp(bool b)
     if (alwaysWarp != b) {
         
         alwaysWarp = b;
-        // updateWarp();
         putMessage(b ? MSG_ALWAYS_WARP_ON : MSG_ALWAYS_WARP_OFF);
     }
 }

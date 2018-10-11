@@ -391,7 +391,7 @@ DQ
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vu3-m1-w6G">
                         <rect key="frame" x="19" y="233" width="355" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Auto-enable warp mode when transferring data" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="cQb-aL-jlF">
+                        <buttonCell key="cell" type="check" title="Enable warp mode during file transfers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="cQb-aL-jlF">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
