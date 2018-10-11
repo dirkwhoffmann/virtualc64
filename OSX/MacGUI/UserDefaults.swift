@@ -280,6 +280,15 @@ extension MyController {
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
 
+        /*
+        let model = c64.sid.chipModel()
+        let method = c64.sid.samplingMethod()
+        if (model == MOS_8580.rawValue && method == SID_SAMPLE_FAST.rawValue) {
+            showResidSamplingMethodAlert()
+            c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
+        }
+        */
+        
         // Board
         c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
         c64.mem.setRamInitPattern(defaults.integer(forKey: VC64Keys.initPattern))
