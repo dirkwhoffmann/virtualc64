@@ -58,6 +58,11 @@ VIC::switchBankDDRA() {
     switchBankPA();
 }
 
+void
+VIC::updateBankAddr()
+{
+    updateBankAddr(~c64->cia2.getPA() & 0x03);
+}
     
 uint8_t
 VIC::peek(uint16_t addr)

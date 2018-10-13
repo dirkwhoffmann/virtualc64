@@ -58,7 +58,8 @@ VIC::processDelayedActions()
             checkForLightpenIrq();
         }
         if (delay & VICUpdateBankAddr) {
-            bankAddr = (~c64->cia2.getPA() & 0x03) << 14;
+            updateBankAddr();
+            // bankAddr = (~c64->cia2.getPA() & 0x03) << 14;
         }
         if (delay & VICClrSprSprCollReg) {
             spriteSpriteCollision = 0;

@@ -893,6 +893,16 @@ public:
 
 private:
 
+    //! @brief    Updates the VICII bank address
+    /*! @details  The new address is computed from the provided bank number
+     */
+    void updateBankAddr(uint2_t bank) { assert(is_uint2_t(bank)); bankAddr = bank << 14; }
+
+    //! @brief    Updates the VICII bank address
+    /*! @details  The new address is computed from the bits in CIA2::PA.
+     */
+    void updateBankAddr();
+    
     //! @brief    Peeks a value from a VIC register.
 	uint8_t peek(uint16_t addr);
     
