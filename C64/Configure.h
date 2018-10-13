@@ -37,9 +37,9 @@
 
 
 
-// RELEASE NOTES (Version 3.0)
+// RELEASE NOTES (Version 3.1)
 //
-// VirtualC64 uses Pepto's Colodore color palette from now on.
+// VICII bank switching is more accurate now.
 // Three new sliders have been added to the emulator preferences. They allow the
 // user to adjust brightness, contrast, and saturation of the used color palette.
 // The VICII implementation has been refined. Now, the user can choose between six
