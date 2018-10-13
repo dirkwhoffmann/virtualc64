@@ -881,15 +881,15 @@ public:
 
     //! @brief    Schedules the VICII bank to to switched
     /*! @details  This method is called if the bank switch is triggered by a
-     *            change of register CIA2::PA.
+     *            change of register CIA2::PA or register CIA2::DDRA.
      */
-    void switchBankPA();
+    void switchBank(uint16_t addr);
 
     //! @brief    Schedules the VICII bank to to switched
     /*! @details  This method is called if the bank switch is triggered by a
      *            change of register CIA2::DDRA.
      */
-    void switchBankDDRA();
+    // void switchBankDDRA();
 
 private:
 

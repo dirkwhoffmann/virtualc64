@@ -1406,7 +1406,7 @@ CIA2::pokePA(uint8_t value)
     CIA::pokePA(value);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
-    c64->vic.switchBankPA();
+    c64->vic.switchBank(0xDD00);
 }
 
 void
@@ -1415,7 +1415,7 @@ CIA2::pokeDDRA(uint8_t value)
     CIA::pokeDDRA(value);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
-    c64->vic.switchBankDDRA();
+    c64->vic.switchBank(0xDD02);
 
 }
 

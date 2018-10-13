@@ -20,42 +20,54 @@
 #include "C64.h"
 
 void
-VIC::switchBankPA() {
+VIC::switchBank(uint16_t addr) {
 
-    /* "The glue logic on a C64C will generate a glitch during 10 <-> 01
-     *  generating 00 (in other words, bank 3) for one cycle.
-     *
-     *  When using the data direction register to change a single bit 0->1
-     *  (in other words, decreasing the video bank number by 1 or 2),
-     *  the bank change is delayed by one cycle. This effect is unstable."
-     * [VIC-Addendum, VICE teamn]
-     */
-        
-    if (glueLogic == GLUE_CUSTOM_IC) {
-        
-        // When the bank switches from 01 to 10 or vice versa, the one bits
-        // show up first. Hence, VICII will see bank 3 (11) for one cycle.
-        uint8_t oldBits = bankAddr >> 14;
-        uint8_t newBits = (~c64->cia2.getPA()) & 0x03;
-        if (oldBits != newBits) {
-            // debug("Switching from %d to %d\n", oldBits, newBits);
-        }
-        if ((oldBits == 0b01 && newBits == 0b10) ||
-            (oldBits == 0b10 && newBits == 0b01)) {
-            // debug("Setting bank addr to 0xC000\n");
-            bankAddr = 0xC000;
-        }
-    }
+     if (glueLogic == GLUE_DISCRETE) {
+         
+         updateBankAddr(); // Switch immediately
+         return;
+     }
+ 
+    // Switch table for custom IC glue logic and PA / DDRA register changes
+    // The tables have been derived from VICE test case fetchsplit.prg
+    uint2_t switchTablePA[4][4] = {
+        { 0, 1, 2, 3 }, // From bank 0
+        { 0, 1, 3, 3 }, // From bank 1
+        { 0, 3, 2, 3 }, // From bank 2
+        { 0, 1, 2, 3 }  // From bank 3
+    };
+    uint2_t switchTableDDRA[4][4] = {
+        { 0, 1, 2, 3 }, // From bank 0
+        { 1, 1, 3, 3 }, // From bank 1
+        { 2, 3, 2, 3 }, // From bank 2
+        { 0, 3, 3, 3 }  // From bank 3
+    };
+
+    // Determine old and new video bank
+    uint2_t from = bankAddr >> 14;
+    uint2_t to = (~c64->cia2.getPA()) & 0x03;
     
-    // Schedule bankAddr to be updated in the next cycle
+    // Switch to the bank given by the switch table
+    switch (addr) {
+            
+        case 0xDD00:
+            
+            // Change was triggered by writing into CIA2::PA
+            updateBankAddr(switchTablePA[from][to]);
+            break;
+            
+        case 0xDD02:
+            
+            // Change was triggered by writing into CIA2::DDRA
+            updateBankAddr(switchTableDDRA[from][to]);
+            break;
+            
+        default:
+            assert(false);
+    }
+   
+    // Switch to final bank one cycle later
     delay |= VICUpdateBankAddr;
-}
-
-void
-VIC::switchBankDDRA() {
-
-    // TO BE IMPLEMENTED
-    switchBankPA();
 }
 
 void
