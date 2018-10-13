@@ -20,7 +20,7 @@
 #include "C64.h"
 
 void
-VIC::updateBankAddr() {
+VIC::switchBankPA() {
 
     /* "The glue logic on a C64C will generate a glitch during 10 <-> 01
      *  generating 00 (in other words, bank 3) for one cycle.
@@ -51,6 +51,14 @@ VIC::updateBankAddr() {
     delay |= VICUpdateBankAddr;
 }
 
+void
+VIC::switchBankDDRA() {
+
+    // TO BE IMPLEMENTED
+    switchBankPA();
+}
+
+    
 uint8_t
 VIC::peek(uint16_t addr)
 {

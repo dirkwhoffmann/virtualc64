@@ -879,9 +879,18 @@ public:
     //! @brief    Returns the latest value of the VICII's data bus during phi2.
     uint8_t getDataBusPhi2() { return dataBusPhi2; }
 
-    //! @brief    Updates the bank address in the next cycle.
-    void updateBankAddr();
-    
+    //! @brief    Schedules the VICII bank to to switched
+    /*! @details  This method is called if the bank switch is triggered by a
+     *            change of register CIA2::PA.
+     */
+    void switchBankPA();
+
+    //! @brief    Schedules the VICII bank to to switched
+    /*! @details  This method is called if the bank switch is triggered by a
+     *            change of register CIA2::DDRA.
+     */
+    void switchBankDDRA();
+
 private:
 
     //! @brief    Peeks a value from a VIC register.

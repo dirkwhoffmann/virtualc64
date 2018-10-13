@@ -360,8 +360,9 @@ CIA::poke(uint16_t addr, uint8_t value)
 		
         case 0x00: // CIA_DATA_PORT_A
             
-            PRA = value;
-            updatePA();
+            pokePA(value);
+            // PRA = value;
+            // updatePA();
             return;
             
         case 0x01: // CIA_DATA_PORT_B
@@ -372,8 +373,9 @@ CIA::poke(uint16_t addr, uint8_t value)
             
         case 0x02: // CIA_DATA_DIRECTION_A
             
-            DDRA = value;
-            updatePA();
+            pokeDDRA(value);
+            // DDRA = value;
+            // updatePA();
             return;
             
         case 0x03: // CIA_DATA_DIRECTION_B
@@ -1352,7 +1354,7 @@ CIA2::updatePA()
     PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by the VIC
-    c64->vic.updateBankAddr();
+    // c64->vic.updateBankAddr();
     
     // Mark IEC bus as dirty
     c64->iec.setNeedsUpdateC64Side();
@@ -1396,5 +1398,24 @@ void
 CIA2::updatePB()
 {
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
+}
+
+void
+CIA2::pokePA(uint8_t value)
+{
+    CIA::pokePA(value);
+    
+    // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
+    c64->vic.switchBankPA();
+}
+
+void
+CIA2::pokeDDRA(uint8_t value)
+{
+    CIA::pokeDDRA(value);
+    
+    // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
+    c64->vic.switchBankDDRA();
+
 }
 

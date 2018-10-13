@@ -374,6 +374,14 @@ private:
     //! @brief   Computes the values which we currently see at port B
     virtual void updatePB() = 0;
 
+protected:
+    
+    //! @brief   Action method for poking the PA register
+    virtual void pokePA(uint8_t value) { PRA = value; updatePA(); }
+
+    //! @brief   Action method for poking the DDRA register
+    virtual void pokeDDRA(uint8_t value) { DDRA = value; updatePA(); }
+
     
     //
     //! @functiongroup Accessing the I/O address space
@@ -475,7 +483,7 @@ private:
     
     uint8_t portAinternal();
     uint8_t portAexternal();
-
+    
 public:
     
     void updatePA();
@@ -485,6 +493,8 @@ private:
     uint8_t portBinternal();
     uint8_t portBexternal();
     void updatePB();
+    void pokePA(uint8_t value);
+    void pokeDDRA(uint8_t value);
 };
 
 #endif
