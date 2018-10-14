@@ -1291,8 +1291,8 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-    #define DRAW_SPRITES if (spriteDisplay) drawSprites();
-    #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay) drawSprites();
+    #define DRAW_SPRITES if (spriteDisplay || isSecondDMAcycle) drawSprites();
+    #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSprites();
 
     #define DRAW if (!vblank) draw(); DRAW_SPRITES; bufferoffset += 8;
     #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES; bufferoffset += 8;

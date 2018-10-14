@@ -828,12 +828,6 @@ VIC::beginRasterline(uint16_t line)
     badLine = badLineCondition();
     displayState |= badLine;
     
-    // Prepare sprite pixel shift register
-    for (unsigned i = 0; i < 8; i++) {
-        spriteSr[i].remaining_bits = -1;
-        spriteSr[i].colBits = 0;
-    }
-    
     // We adjust the position of the first pixel in the pixel buffer to make
     // sure that the screen always appears centered.
     if (c64->vic.isPAL()) {

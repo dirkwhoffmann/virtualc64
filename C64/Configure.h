@@ -24,11 +24,11 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 3
-#define V_MINOR 0
+#define V_MINOR 1
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-#define NDEBUG
+// #define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
@@ -40,15 +40,10 @@
 // RELEASE NOTES (Version 3.1)
 //
 // VICII bank switching is more accurate now.
-// Three new sliders have been added to the emulator preferences. They allow the
-// user to adjust brightness, contrast, and saturation of the used color palette.
-// The VICII implementation has been refined. Now, the user can choose between six
-// different chip models. The PAL models 6569 R1, 6569 R3,8565, and the NTSC models
-// 6567 R56A, 6567, 8562 are supported.
-// Two different CIA model are supported (NMOS, HMOS II)
+// Now passing VICE test spritescan.prg
 //
 // TODOs for the next release:
-//
+// Speedup: Only run setMultiColorSpritePixel etc. if color bits != 0
 //
 // Can sub components initialized without registerSubcomponents function?
 // Map right Mac shift key to right Commodore key
