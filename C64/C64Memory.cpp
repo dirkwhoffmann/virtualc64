@@ -129,7 +129,7 @@ C64Memory::eraseWithPattern(RamInitPattern pattern)
     
     // Make the screen look nice on startup
     memset(&ram[0x400], 32, 40*25); // Screen
-    memset(&ram[0x100], 0, 256);    // Processor stack
+    // memset(&ram[0x100], 0, 256);    // Processor stack
 }
 
 void 

@@ -538,7 +538,15 @@ Cartridge::bankOut(unsigned nr)
     }
 }
 
-
-
-
-
+void
+Cartridge::pressResetButton()
+{
+    // Reset all components, but keep memory contents
+    uint8_t ram[0xFFFF];
+    
+    c64->suspend();
+    memcpy(ram, c64->mem.ram, 0xFFFF);
+    c64->reset();
+    memcpy(c64->mem.ram, ram, 0xFFFF);
+    c64->resume();
+}

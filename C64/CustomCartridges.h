@@ -52,7 +52,6 @@ public:
     bool hasFreezeButton() { return true; }
     void pressFreezeButton();
     bool hasResetButton() { return true; }
-    void pressResetButton();
 
     //! @brief   Sets the cartridge's control register
     /*! @details This function triggers all side effects that take place when
@@ -81,10 +80,9 @@ public:
     void pokeIO1(uint16_t addr, uint8_t value);
     bool hasFreezeButton() { return true; }
     void pressFreezeButton();
-    bool hasResetButton() { return true; }
-    void pressResetButton();
     void releaseFreezeButton();
-    
+    bool hasResetButton() { return true; }
+
     //! @brief   Sets the cartridge's control register
     /*! @details This function triggers all side effects that take place when
      *           the control register value changes.
@@ -109,7 +107,6 @@ public:
     void pokeIO2(uint16_t addr, uint8_t value);
     void pressFreezeButton();
     bool hasFreezeButton() { return true; }
-    void pressResetButton();
     bool hasResetButton() { return true; }
 };
 
@@ -221,6 +218,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_WARPSPEED; }
     void reset();
+    bool hasResetButton() { return true; }
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);

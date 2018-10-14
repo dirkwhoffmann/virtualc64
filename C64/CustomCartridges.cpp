@@ -105,6 +105,7 @@ ActionReplay::pressFreezeButton()
     c64->resume();
 }
 
+/*
 void
 ActionReplay::pressResetButton()
 {
@@ -118,6 +119,7 @@ ActionReplay::pressResetButton()
      memcpy(c64->mem.ram, ram, 0xFFFF);
      c64->resume();
 }
+*/
 
 void
 ActionReplay::setControlReg(uint8_t value)
@@ -221,6 +223,7 @@ ActionReplay3::releaseFreezeButton()
     c64->resume();
 }
 
+/*
 void
 ActionReplay3::pressResetButton()
 {
@@ -234,6 +237,7 @@ ActionReplay3::pressResetButton()
     memcpy(c64->mem.ram, ram, 0xFFFF);
     c64->resume();
 }
+*/
 
 void
 ActionReplay3::setControlReg(uint8_t value)
@@ -359,6 +363,7 @@ FinalIII::pressFreezeButton() {
     c64->resume();
 }
 
+/*
 void
 FinalIII::pressResetButton() {
     
@@ -371,7 +376,7 @@ FinalIII::pressResetButton() {
     memcpy(c64->mem.ram, ram, 0xFFFF);
     c64->resume();
 }
-
+*/
 
 //
 // Simons Basic

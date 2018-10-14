@@ -292,7 +292,7 @@ public:
     /*! @note     Make sure to call releaseResetButton() afterwards.
      *  @seealso  releaseResetButton
      */
-    virtual void pressResetButton() { };
+    virtual void pressResetButton();
     
     //! @brief    Simulates releasing the reset cartridge button (if present)
     /*! @note     Make sure to call pressResetButton() first.

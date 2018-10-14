@@ -93,7 +93,7 @@ public:
     //! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
     /*! @details  Don't confuse with ContainerType
      */
-    CartridgeType cartridgeType() { return CartridgeType(LO_HI(data[0x17], data[0x16])); }
+    CartridgeType cartridgeType();
 
     //! @brief    Returns the cartridge type in plain text
     static const char *cartridgeTypeName(CartridgeType type);

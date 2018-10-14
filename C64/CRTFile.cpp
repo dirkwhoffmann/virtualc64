@@ -175,6 +175,13 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     return true;	
 }
 
+CartridgeType
+CRTFile::cartridgeType() {
+    
+    uint16_t type = LO_HI(data[0x17], data[0x16]);
+    return CartridgeType(type);
+}
+
 const char *
 CRTFile::cartridgeTypeName(CartridgeType type)
 {
