@@ -24,11 +24,11 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 3
-#define V_MINOR 1
+#define V_MINOR 0
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
@@ -37,13 +37,14 @@
 
 
 
-// RELEASE NOTES (Version 3.1)
+// RELEASE NOTES (Version 3.0.1)
 //
 // VICII bank switching is more accurate now.
-// Now passing VICE test spritescan.prg
+// Now passing VICE tests spritescan.prg, ss-hires-mc-exp.prg, and ss-mc-hires-exp.prg
+// Milestone reached: VirtualC64 passes the Krestage 3 VICII check.
 //
 // TODOs for the next release:
-// Speedup: Only run setMultiColorSpritePixel etc. if color bits != 0
+// Speedup: Inline setMulticolorSpritePixel as setSingleColorSprite pixel is no longer used.
 //
 // Can sub components initialized without registerSubcomponents function?
 // Map right Mac shift key to right Commodore key
