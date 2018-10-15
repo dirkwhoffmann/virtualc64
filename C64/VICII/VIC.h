@@ -1410,10 +1410,13 @@ private:
     /*! @brief    Draws single sprite pixel in single-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors
      */
-    void setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit);
+    // void setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit);
     
     /*! @brief    Draws single sprite pixel in multi-color mode
      *  @details  Uses the drawing colors that are setup by updateSpriteColors
+     *  @note     This method is used for both singel-color and multi-color
+     *            sprites. For single-color sprites, only the values 0 and 2
+     *            are passed in. 
      */
     void setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits);
     

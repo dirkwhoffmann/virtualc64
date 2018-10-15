@@ -852,8 +852,6 @@ VIC::endRasterline()
     if (markDMALines && badLine)
         markLine(VICII_RED);
     
-    if (yCounter == 130) markLine(VICII_RED);
-    
     if (!vblank) {
         
         // Make the border look nice (evetually, we should get rid of this)

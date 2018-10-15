@@ -292,22 +292,12 @@ VIC::drawSprites()
         // BYTE toggled = next_mc_bits ^ sprite_mc_bits;
         // sbuf_mc_flops ^= toggled & (~sbuf_expx_flops);
         // sprite_mc_bits = next_mc_bits;
-        // uint8_t old_mc = reg.delayed.sprMC;
-        // uint8_t old_mcFlop = spriteSr[0].mcFlop;
         
         reg.delayed.sprMC = reg.current.sprMC;
         for (unsigned i = 0; i < 8; i++) {
             if (GET_BIT(toggle,i))
                 spriteSr[i].mcFlop ^= !spriteSr[i].expFlop;
         }
-        
-        /*
-        debug("f: %d l: %d c: %d MC CHANGE SHOWS UP: %02X -> %02X mcFlops: %02X -> %02X expff: %02X\n",
-              c64->frame, c64->rasterLine, c64->rasterCycle - 1,
-              old_mc, reg.delayed.sprMC,
-              old_mcFlop, spriteSr[0].mcFlop,
-              spriteSr[0].expFlop);
-        */
     }
     
     // Pixel 6
@@ -430,27 +420,11 @@ VIC::drawSpritePixel(unsigned pixel,
                     spriteSr[sprite].remaining_bits--;
                 }
                 
-                // Get color bits by shifting sr data by 22 bits if a multi color
-                // is rendered or by 23, if single color mode is used.
-                /*
-                unsigned shift = 22 + (!mCol || !spriteSr[sprite].mcFlop);
-                spriteSr[sprite].colBits = spriteSr[sprite].data >> shift;
-                */
-                
                 // Toggle expansion flipflop for horizontally stretched sprites
                 if (xExp)
                     spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop;
                 else
                     spriteSr[sprite].expFlop = true;
-                
-                // Run shift register and toggle multicolor flipflop
-                /*
-                if (spriteSr[sprite].expFlop) {
-                    spriteSr[sprite].data <<= 1;
-                    spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
-                    spriteSr[sprite].remaining_bits--;
-                }
-                 */
             }
         }
         
@@ -535,6 +509,7 @@ VIC::loadColors(uint8_t mode)
     }
 }
 
+/*
 void
 VIC::setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit)
 {
@@ -542,6 +517,7 @@ VIC::setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit)
         setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
     }
 }
+*/
 
 void
 VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
