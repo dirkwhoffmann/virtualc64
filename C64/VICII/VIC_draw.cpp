@@ -292,12 +292,22 @@ VIC::drawSprites()
         // BYTE toggled = next_mc_bits ^ sprite_mc_bits;
         // sbuf_mc_flops ^= toggled & (~sbuf_expx_flops);
         // sprite_mc_bits = next_mc_bits;
+        // uint8_t old_mc = reg.delayed.sprMC;
+        // uint8_t old_mcFlop = spriteSr[0].mcFlop;
         
         reg.delayed.sprMC = reg.current.sprMC;
         for (unsigned i = 0; i < 8; i++) {
             if (GET_BIT(toggle,i))
                 spriteSr[i].mcFlop ^= !spriteSr[i].expFlop;
         }
+        
+        /*
+        debug("f: %d l: %d c: %d MC CHANGE SHOWS UP: %02X -> %02X mcFlops: %02X -> %02X expff: %02X\n",
+              c64->frame, c64->rasterLine, c64->rasterCycle - 1,
+              old_mc, reg.delayed.sprMC,
+              old_mcFlop, spriteSr[0].mcFlop,
+              spriteSr[0].expFlop);
+        */
     }
     
     // Pixel 6
@@ -374,40 +384,85 @@ VIC::drawSpritePixel(unsigned pixel,
                     spriteSr[sprite].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
                     spriteSr[sprite].expFlop = true;
                     spriteSr[sprite].mcFlop = true;
+                    /*
+                    debug("f: %d l: %d c: %d Sprite %d hits X: %d + %d\n",
+                          c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, xCounter, pixel);
+                    */
                 }
             }
             
             // Run shift register if there are remaining pixels to draw
             if (spriteSr[sprite].remaining_bits > 0) {
                 
-                // Determine render mode (single color /multi color) and colors
+                /*
+                debug("l: %d c: %d s: %d X run shift reg [%04X] mcflops: %02X expffs: %02X\n",
+                          c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].data,spriteSr[sprite].mcFlop, spriteSr[sprite].expFlop);
+                */
+                
+                // Only proceed if the expansion flipflop is set
+                if (spriteSr[sprite].expFlop) {
+                    
+                    // Extract color bits from the shift register
+                    if (mCol) {
+                        
+                        // In multi-color mode, get 2 bits every second pixel
+                        if (spriteSr[sprite].mcFlop) {
+                            spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x03;
+                            /*
+                            debug("f: %d l: %d c: %d Sprite %d loads mc colBits: %02X\n",
+                                  c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].colBits);
+                            */
+                        }
+                        spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
+                    
+                    } else {
+                        
+                        // In single-color mode, get a new bit for each pixel
+                        spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x02;
+                        /*
+                        debug("f: %d l: %d c: %d Sprite %d loads single colBit: %02X\n",
+                              c64->frame, c64->rasterLine, c64->rasterCycle - 1, sprite, spriteSr[sprite].colBits);
+                        */
+                    }
+                
+                    // Perform the shift operation
+                    spriteSr[sprite].data <<= 1;
+                    spriteSr[sprite].remaining_bits--;
+                }
                 
                 // Get color bits by shifting sr data by 22 bits if a multi color
                 // is rendered or by 23, if single color mode is used.
+                /*
                 unsigned shift = 22 + (!mCol || !spriteSr[sprite].mcFlop);
                 spriteSr[sprite].colBits = spriteSr[sprite].data >> shift;
+                */
                 
-                // Toggle horizontal expansion flipflop for stretched sprites
+                // Toggle expansion flipflop for horizontally stretched sprites
                 if (xExp)
                     spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop;
                 else
                     spriteSr[sprite].expFlop = true;
                 
                 // Run shift register and toggle multicolor flipflop
+                /*
                 if (spriteSr[sprite].expFlop) {
                     spriteSr[sprite].data <<= 1;
                     spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
                     spriteSr[sprite].remaining_bits--;
                 }
+                 */
             }
         }
         
         // Draw pixel
         if (!hideSprites) {
+            setMultiColorSpritePixel(sprite, pixel, spriteSr[sprite].colBits);
+            /*
             if (mCol)
                 setMultiColorSpritePixel(sprite, pixel, spriteSr[sprite].colBits & 0x03);
             else
                 setSingleColorSpritePixel(sprite, pixel, spriteSr[sprite].colBits & 0x01);
+            */
         }
     }
 }

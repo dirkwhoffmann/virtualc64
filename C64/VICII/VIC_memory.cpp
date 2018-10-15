@@ -554,6 +554,10 @@ VIC::poke(uint16_t addr, uint8_t value)
             
         case 0x1C: // Sprite multicolor
             
+            /*
+            debug("f: %d l: %d c: %d POKE(MC, %02X)\n",
+                  c64->frame, c64->rasterLine, c64->rasterCycle, value);
+            */
             reg.current.sprMC = value;
             break;
             
