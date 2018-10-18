@@ -500,7 +500,7 @@ CPU::executeOneCycle()
                 DisassembledInstruction instr = disassemble(recorded, true);
                 
                 {
-                    c64->cia1.dumpTrace();
+                    // c64->cia1.dumpTrace();
                     // c64->cia2.dumpTrace();
                 }
                 msg("%s %s: %d %d %s %s %s   %s %s %s %s %s %s\n",
@@ -512,7 +512,7 @@ CPU::executeOneCycle()
                         instr.a, instr.x, instr.y, instr.sp,
                         instr.flags,
                         instr.command);
-                */
+            */
             }
             
             

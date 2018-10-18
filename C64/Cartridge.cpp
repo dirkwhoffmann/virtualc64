@@ -58,9 +58,11 @@ Cartridge::reset()
         memset(externalRam, 0, ramCapacity);
     }
     
-    // Bank in chip 0 on startup
-    // bankIn(0); // Remove
-    bankIn(0);
+    // Bank in visibile chips (chips with low numbers show up first)
+    for (int i = 63; i >= 0; i--) {
+        bankIn(i);
+    }
+    
     cycle = 0;
     regValue = 0;
 }
@@ -72,27 +74,21 @@ Cartridge::isSupportedType(CartridgeType type)
         
         case CRT_NORMAL:
         case CRT_ACTION_REPLAY:
-        case CRT_ACTION_REPLAY3:
-            
+        case CRT_KCS_POWER:
         case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN:
-            
         case CRT_FUNPLAY:
         case CRT_SUPER_GAMES:
-            
         case CRT_EPYX_FASTLOAD:
         case CRT_WESTERMANN:
         case CRT_REX:
-        
         case CRT_WARPSPEED:
-            
         case CRT_ZAXXON:
         case CRT_MAGIC_DESK:
-
         case CRT_COMAL80:
+        case CRT_ACTION_REPLAY3:
         case CRT_FREEZE_FRAME:
-            
         case CRT_GEO_RAM:
             return true;
             
@@ -112,8 +108,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new Cartridge(c64);
         case CRT_ACTION_REPLAY:
             return new ActionReplay(c64);
-        case CRT_ACTION_REPLAY3:
-            return new ActionReplay3(c64);
+        case CRT_KCS_POWER:
+            return new KcsPower(c64); 
         case CRT_FINAL_III:
             return new FinalIII(c64);
         case CRT_SIMONS_BASIC:
@@ -138,6 +134,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new MagicDesk(c64);
         case CRT_COMAL80:
             return new Comal80(c64);
+        case CRT_ACTION_REPLAY3:
+            return new ActionReplay3(c64);
         case CRT_FREEZE_FRAME:
             return new FreezeFrame(c64);
         case CRT_GEO_RAM:
@@ -409,26 +407,6 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     chipSize[nr]         = size;
     memcpy(chip[nr], data, size);
 }
-
-/*
-void
-Cartridge::bankIn(unsigned nr)
-{
-    assert(nr < 64);
-    
-    if (chip[nr] == NULL)
-        return;
-
-    uint16_t start     = chipStartAddress[nr];
-    uint16_t size      = chipSize[nr];
-    uint8_t  firstBank = start / 0x1000;
-    uint8_t  numBanks  = size / 0x1000;
-    assert (firstBank + numBanks <= 16);
-
-    for (unsigned i = 0; i < numBanks; i++)
-        blendedIn[firstBank + i] = nr;
-}
-*/
 
 bool
 Cartridge::mapsToL(unsigned nr) {

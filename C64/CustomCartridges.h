@@ -26,19 +26,6 @@
 //! @brief    Type 1 cartridges
 class ActionReplay : public Cartridge {
     
-    //! @brief    Indicates if the cartridge is disabled
-    /*! @details  The ActionReplay cartridge is controlled by poking into
-     *            I/O space 1 (no matter which register). If the cartridge is
-     *            deactivated, poking into I/O space 1 has no effect.
-     */
-    // bool hide;
-    
-    //! @brief   Decides whether RAM or ROM shows up at $8000-$9FFF.
-    // bool ramShowsUp;
-
-    //! @brief   Currently visible ROM chip (0 ... 3)
-    // uint8_t selectedChip;
-
 public:
     ActionReplay(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
@@ -66,6 +53,25 @@ public:
     bool ramIsEnabled() { return regValue & 0x20; }
     bool resetFreezeMode() { return regValue & 0x40; }
 };
+
+
+//! @brief    Type 2 cartridges
+class KcsPower : public Cartridge {
+    
+public:
+    KcsPower(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_KCS_POWER; }
+    void reset();
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t spypeekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
+    bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    bool hasResetButton() { return false; }
+};
+
 
 //! @brief    Type 35 cartridges
 class ActionReplay3 : public Cartridge {

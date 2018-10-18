@@ -105,22 +105,6 @@ ActionReplay::pressFreezeButton()
     c64->resume();
 }
 
-/*
-void
-ActionReplay::pressResetButton()
-{
-    // Note: Cartridge requires to keep the RAM
-    // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
-     uint8_t ram[0xFFFF];
-     
-     c64->suspend();
-     memcpy(ram, c64->mem.ram, 0xFFFF);
-     c64->reset();
-     memcpy(c64->mem.ram, ram, 0xFFFF);
-     c64->resume();
-}
-*/
-
 void
 ActionReplay::setControlReg(uint8_t value)
 {
@@ -155,6 +139,79 @@ ActionReplay::setControlReg(uint8_t value)
         c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
     }
 }
+
+
+//
+// KCS Power
+//
+
+KcsPower::KcsPower(C64 *c64) : Cartridge(c64)
+{
+    debug("KcsPower constructor\n");
+    
+    // Allocate 128 bytes on-board RAM
+    setRamCapacity(0x80);
+}
+
+void
+KcsPower::reset()
+{
+    Cartridge::reset();
+    memset(externalRam, 0xFF, 0x80);
+}
+
+uint8_t
+KcsPower::peekIO1(uint16_t addr)
+{
+    c64->expansionport.setGameLine(true);
+    c64->expansionport.setExromLine(addr & 0x02 ? true : false);
+    
+    return peekRomL(0x1E00 | (addr & 0xFF));
+}
+
+uint8_t
+KcsPower::spypeekIO1(uint16_t addr)
+{
+    return peekRomL(0x1E00 | (addr & 0xFF));
+}
+
+uint8_t
+KcsPower::peekIO2(uint16_t addr)
+{
+    if (addr & 0x80) {
+        
+        // Open address (used by the cartridge to figure out exrom and game line)
+        uint8_t exrom = c64->expansionport.getExromLine() ? 0x80 : 0x00;
+        uint8_t game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
+        return exrom | game | (c64->vic.getDataBusPhi1() & 0x3F);
+        
+    } else {
+        
+        // Return value from onboard RAM
+        return externalRam[addr & 0x7F];
+    }
+}
+
+void
+KcsPower::pokeIO1(uint16_t addr, uint8_t value)
+{
+    c64->expansionport.setGameLine(false);
+    c64->expansionport.setExromLine(addr & 0x02 ? true : false);
+}
+
+void
+KcsPower::pokeIO2(uint16_t addr, uint8_t value)
+{
+    if (!(addr & 0x80)) {
+        externalRam[addr & 0x7F] = value;
+    }
+}
+
+void
+KcsPower::pressFreezeButton()
+{
+    
+};
 
 
 //
