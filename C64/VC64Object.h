@@ -32,19 +32,11 @@ class VC64Object {
 
 private:
     
-    /*! @brief    Default debug level
-     *  @details  On object creation, this value is used as debug level.
-     */
-    // static unsigned defaultDebugLevel;
-
-    /*! @brief    Debug level
-     *  @details  Debug messages are written either to console or a logfile.
-     *            Set to 0 to omit messages.
-     */
+    //! @brief    Debug level for this component
     unsigned debugLevel;
 
     /*! @brief    Stores how many trace messages are left to be printed
-     *  @details  If positive, this value is decremented in every call to tracingEnabled()
+     *  @details  If positive, this value is decremented in tracingEnabled()
      *  @details  A negative value indicates that tracing should continue forever
      */
      int traceCounter;
@@ -68,9 +60,6 @@ public:
     //! @functiongroup Initializing the component
     //
     
-    //! @brief    Sets the default debug level.
-    // static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }
-
     //! @brief    Changes the debug level for a specific object.
     void setDebugLevel(unsigned level) { debugLevel = level; }
 
@@ -78,7 +67,7 @@ public:
     const char *getDescription() { return description ? description : ""; }
 
     //! @brief    Assigns a textual description.
-    void setDescription(const char *desc) { description = strdup(desc); }
+    void setDescription(const char *str) { description = strdup(str); }
 
     
     //
@@ -99,31 +88,29 @@ public:
     //! @functiongroup Printing messages to console
     //
     
-    //! @brief    Prints message to console or a log file.
+    //! @brief    Prints a message to console.
     void msg(const char *fmt, ...);
     
-    //! @brief    Prints message to console or a log file if debug level is high enough.
+    //! @brief    Prints a message to the console if debug level is high enough.
     void msg(int level, const char *fmt, ...);
     
-    /*! @brief    Prints debug message to console or a log file
+    /*! @brief    Prints a debug message to the console
      *  @details  Debug messages are prefixed by a custom string naming the component.
      */
     void debug(const char *fmt, ...);
     
-    /*! @brief    Prints debug message to console or a log file if debug level is high enogh.
+    /*! @brief    Prints a debug message if debug level is high enough.
      *  @details  Debug messages are prefixed by a custom string naming the component.
      */
     void debug(int level, const char *fmt, ...);
-    
-    /*! @brief    Prints warning message to console or a log file.
+
+    /*! @brief    Prints a warning message to the console.
      *  @details  Warning messages are prefixed by a custom string naming the component.
-     *            Warning messages are printed when something unexpected is encountered.
      */
     void warn(const char *fmt, ...);
     
     /*! @brief    Prints a panic message to console or a log file.
      *  @details  Panic messages are prefixed by a custom string naming the component.
-     *            Panic messages indicate that a code bug is encountered.
      */
     void panic(const char *fmt, ...);    
 };

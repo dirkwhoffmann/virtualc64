@@ -94,7 +94,7 @@ public:
      *            component should override this method and print out some useful
      *            debugging information.
 	 */ 
-	virtual void dumpState();
+    virtual void dumpState() { };
 	
     
     //

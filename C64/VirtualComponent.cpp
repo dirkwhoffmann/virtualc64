@@ -87,11 +87,6 @@ VirtualComponent::setClockFrequency(uint32_t frequency)
             subComponents[i]->setClockFrequency(frequency);
 }
 
-void 
-VirtualComponent::dumpState()
-{
-}
-
 
 //
 // Snapshots
