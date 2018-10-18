@@ -119,8 +119,6 @@ VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned 
     
     unsigned numItems = length / sizeof(VirtualComponent *);
     
-    debug(3, "Registering %d components\n", numItems);
-    
     // Allocate new array on heap and copy array data
     subComponents = new VirtualComponent*[numItems];
     std::copy(components, components + numItems, &subComponents[0]);    
@@ -171,10 +169,10 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
         } else { // Format is specified manually
             
             switch (flags) {
-                case BYTE_FORMAT: readBlock(buffer, (uint8_t *)data, size); break;
-                case WORD_FORMAT: readBlock16(buffer, (uint16_t *)data, size); break;
-                case DOUBLE_WORD_FORMAT: readBlock32(buffer, (uint32_t *)data, size); break;
-                case QUAD_WORD_FORMAT: readBlock64(buffer, (uint64_t *)data, size); break;
+                case BYTE_ARRAY: readBlock(buffer, (uint8_t *)data, size); break;
+                case WORD_ARRAY: readBlock16(buffer, (uint16_t *)data, size); break;
+                case DWORD_ARRAY: readBlock32(buffer, (uint32_t *)data, size); break;
+                case QWORD_ARRAY: readBlock64(buffer, (uint64_t *)data, size); break;
                 default: assert(0);
             }
         }
@@ -220,10 +218,10 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
         } else { // Format is specified manually
             
             switch (flags) {
-                case BYTE_FORMAT: writeBlock(buffer, (uint8_t *)data, size); break;
-                case WORD_FORMAT: writeBlock16(buffer, (uint16_t *)data, size); break;
-                case DOUBLE_WORD_FORMAT: writeBlock32(buffer, (uint32_t *)data, size); break;
-                case QUAD_WORD_FORMAT: writeBlock64(buffer, (uint64_t *)data, size); break;
+                case BYTE_ARRAY: writeBlock(buffer, (uint8_t *)data, size); break;
+                case WORD_ARRAY: writeBlock16(buffer, (uint16_t *)data, size); break;
+                case DWORD_ARRAY: writeBlock32(buffer, (uint32_t *)data, size); break;
+                case QWORD_ARRAY: writeBlock64(buffer, (uint64_t *)data, size); break;
                 default: assert(0);
             }
         }

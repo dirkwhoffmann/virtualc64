@@ -122,12 +122,13 @@ protected:
      *           format to big endian format.
      */
     enum {
-        KEEP_ON_RESET      = 0x00, //! Don't touch item in VirtualComponent::reset()
-        CLEAR_ON_RESET     = 0x10, //! Set item to 0 in VirtualComponent::reset()
-        BYTE_FORMAT        = 0x01, //! Data chunk consists of 8 bit values.
-        WORD_FORMAT        = 0x02, //! Data chunk consists of 16 bit values
-        DOUBLE_WORD_FORMAT = 0x04, //! Data chunk consists of 32 bit values
-        QUAD_WORD_FORMAT   = 0x08  //! Data chunk consists of 64 bit values
+        KEEP_ON_RESET  = 0x00, //! Don't touch item during a reset
+        CLEAR_ON_RESET = 0x10, //! Reset to zero during a reset
+        
+        BYTE_ARRAY     = 0x01, //! Data chunk is an array of bytes
+        WORD_ARRAY     = 0x02, //! Data chunk is an array of words
+        DWORD_ARRAY    = 0x04, //! Data chunk is an array of double words
+        QWORD_ARRAY    = 0x08  //! Data chunk is an array of quad words
     };
 
     /*! @brief Fingerprint of a snapshot item

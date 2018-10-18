@@ -94,7 +94,7 @@ Disk::Disk()
         { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },
         { &modified,        sizeof(modified),       KEEP_ON_RESET },
         { &data,            sizeof(data),           KEEP_ON_RESET },
-        { &length,          sizeof(length),         KEEP_ON_RESET | WORD_FORMAT },
+        { &length,          sizeof(length),         KEEP_ON_RESET | WORD_ARRAY },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));

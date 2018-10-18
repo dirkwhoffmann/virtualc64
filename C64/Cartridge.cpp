@@ -78,17 +78,24 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN:
+            
         case CRT_FUNPLAY:
         case CRT_SUPER_GAMES:
         case CRT_EPYX_FASTLOAD:
         case CRT_WESTERMANN:
         case CRT_REX:
+            
         case CRT_WARPSPEED:
+            
         case CRT_ZAXXON:
         case CRT_MAGIC_DESK:
+            
         case CRT_COMAL80:
+            
         case CRT_ACTION_REPLAY3:
+            
         case CRT_FREEZE_FRAME:
+            
         case CRT_GEO_RAM:
             return true;
             

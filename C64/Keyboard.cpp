@@ -26,8 +26,8 @@ Keyboard::Keyboard()
     // Register snapshot items
     SnapshotItem items[] = {
 
-        { &kbMatrixRow, sizeof(kbMatrixRow), CLEAR_ON_RESET | BYTE_FORMAT },
-        { &kbMatrixCol, sizeof(kbMatrixCol), CLEAR_ON_RESET | BYTE_FORMAT },
+        { &kbMatrixRow, sizeof(kbMatrixRow), CLEAR_ON_RESET | BYTE_ARRAY },
+        { &kbMatrixCol, sizeof(kbMatrixCol), CLEAR_ON_RESET | BYTE_ARRAY },
         { &shiftLock,   sizeof(shiftLock),   CLEAR_ON_RESET },
         { NULL,         0,                   0 }};
     
