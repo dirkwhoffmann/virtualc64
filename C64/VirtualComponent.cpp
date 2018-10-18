@@ -40,6 +40,9 @@ VirtualComponent::~VirtualComponent()
 void
 VirtualComponent::setC64(C64 *c64)
 {
+    assert(this->c64 == NULL);
+    assert(c64 != NULL);
+    
     this->c64 = c64;
     if (subComponents != NULL)
         for (unsigned i = 0; subComponents[i] != NULL; i++)

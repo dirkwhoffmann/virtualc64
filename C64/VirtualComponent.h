@@ -26,34 +26,23 @@
 // Forward declarations
 class C64;
 
-//! @brief    Time delayed uint8_t value
-/*! @details  Use READ8_DELAYED and WRITE8_DELAYED to read and write a value.
- *            All written values show up one cycle after they were written.
- *  @note     Time delayed variables are speed optimized for read accesses.
- *  @deprecated
- */
-typedef struct {
-    uint64_t timeStamp; // Cycle when the new value shows up
-    uint8_t value;
-    uint8_t prevValue;
-} uint8_delayed;
 
-/*! @brief    Common functionality of all virtual computer components.
- *  @details  This class defines the base functionality of all virtual components.
- *            The class comprises functions for resetting, suspending and resuming the component,
- *            as well as functions for loading and saving state (snapshots).
+/*! @brief    Base class for all virtual hardware components
+ *  @details  This class defines the base functionality of all virtual
+ *            components. The class comprises functions for resetting,
+ *            suspending and resuming the component, as well as functions for
+ *            loading and saving snapshots.
  */
 class VirtualComponent : public VC64Object {
 
 public: 
 
     /*! @brief    Reference to the virtual C64 top-level object.
-     *  @details  This reference is setup in the reset method and provides easy
-     *            access to all other components of the same virtual C64.
+     *  @details  This reference is setup for all hardware components in the
+     *            constructor of the C64 class.
      */
-    C64 *c64;
+    C64 *c64 = NULL;
     
-				
 public:
     
 	//! @brief    Constructor

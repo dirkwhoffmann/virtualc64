@@ -190,7 +190,6 @@ private:
      *             been handled."
      */
     TimeDelayed<uint8_t> edgeDetector = TimeDelayed<uint8_t>(1, &cycle);
-    uint8_delayed oldEdgeDetector;
     
     /*! @brief    Level detector of IRQ line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
