@@ -69,6 +69,7 @@ public:
     void pokeIO2(uint16_t addr, uint8_t value);
     bool hasFreezeButton() { return true; }
     void pressFreezeButton();
+    void releaseFreezeButton();
     bool hasResetButton() { return false; }
 };
 

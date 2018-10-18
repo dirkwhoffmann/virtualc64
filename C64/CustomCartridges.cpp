@@ -131,7 +131,7 @@ ActionReplay::setControlReg(uint8_t value)
     bankInROMH(bank(), 0x2000, 0);
     
     if (disabled()) {
-        debug("***** DISABLING AR cart *****\n");
+        debug(2, "***** DISABLING AR cart *****\n");
     }
     
     if (resetFreezeMode() || disabled()) {
@@ -147,8 +147,6 @@ ActionReplay::setControlReg(uint8_t value)
 
 KcsPower::KcsPower(C64 *c64) : Cartridge(c64)
 {
-    debug("KcsPower constructor\n");
-    
     // Allocate 128 bytes on-board RAM
     setRamCapacity(0x80);
 }
@@ -210,7 +208,20 @@ KcsPower::pokeIO2(uint16_t addr, uint8_t value)
 void
 KcsPower::pressFreezeButton()
 {
-    
+    // Pressing the freeze bottom triggers an NMI in ultimax mode
+    c64->suspend();
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(1);
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
+};
+
+void
+KcsPower::releaseFreezeButton()
+{
+    c64->suspend();
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
 };
 
 

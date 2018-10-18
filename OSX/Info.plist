@@ -208,7 +208,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>3.0.1</string>
 	<key>CFBundleVersion</key>
-	<string>3.0.1</string>
+	<string>3.0.1  (KCS support)</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSAppTransportSecurity</key>

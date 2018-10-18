@@ -37,11 +37,9 @@
 
 
 
-// RELEASE NOTES (Version 3.0.1)
+// RELEASE NOTES (Version 3.1)
 //
-// VICII bank switching is more accurate now.
-// Now passing VICE tests spritescan.prg, ss-hires-mc-exp.prg, and ss-mc-hires-exp.prg
-// Milestone reached: VirtualC64 passes the Krestage 3 VICII check.
+// Added support for the KCS power cartridge
 //
 // TODOs for the next release:
 // Speedup: Inline setMulticolorSpritePixel as setSingleColorSprite pixel is no longer used.
