@@ -83,9 +83,9 @@ C64Memory::dumpState()
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");
-	msg("    Basic ROM :%s loaded\n", basicRomIsLoaded() ? "" : " not");
-	msg("Character ROM :%s loaded\n", charRomIsLoaded() ? "" : " not");
-	msg("   Kernal ROM :%s loaded\n", kernalRomIsLoaded() ? "" : " not");
+	msg("    Basic ROM: %s loaded\n", basicRomIsLoaded() ? "" : " not");
+	msg("Character ROM: %s loaded\n", charRomIsLoaded() ? "" : " not");
+    msg("   Kernal ROM: %s loaded\n", kernalRomIsLoaded() ? "" : " not");
 	
     for (uint16_t addr = 0; addr < 0xFFFF; addr++) {
         if (c64->cpu.hardBreakpoint(addr))
@@ -128,8 +128,7 @@ C64Memory::eraseWithPattern(RamInitPattern pattern)
     }
     
     // Make the screen look nice on startup
-    memset(&ram[0x400], 32, 40*25); // Screen
-    // memset(&ram[0x100], 0, 256);    // Processor stack
+    memset(&ram[0x400], 0x01, 40*25);
 }
 
 void 
