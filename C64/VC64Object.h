@@ -33,27 +33,27 @@ class VC64Object {
 private:
     
     //! @brief    Debug level for this component
-    unsigned debugLevel;
+    unsigned debugLevel = DEBUG_LEVEL;
 
     /*! @brief    Stores how many trace messages are left to be printed
      *  @details  If positive, this value is decremented in tracingEnabled()
      *  @details  A negative value indicates that tracing should continue forever
      */
-     int traceCounter;
+    int traceCounter = 0;
 
     /*! @brief    Textual description of this object
      *  @details  Most debug output methods preceed their output with this string.
      *  @note     The default value is NULL. In that case, no prefix is printed.
      */
-    const char *description;
+    const char *description = NULL;
 
 public:
 
     //! Constructor
-    VC64Object();
+    // VC64Object();
     
     //! Destructor
-    virtual ~VC64Object();
+    // virtual ~VC64Object();
 
     
     //

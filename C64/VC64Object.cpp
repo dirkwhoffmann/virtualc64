@@ -18,6 +18,7 @@
 
 #include "C64.h"
 
+/*
 VC64Object::VC64Object()
 {
     debugLevel = DEBUG_LEVEL;
@@ -28,6 +29,7 @@ VC64Object::VC64Object()
 VC64Object::~VC64Object()
 {
 }
+*/
 
 // unsigned VC64Object::defaultDebugLevel = 1;
 

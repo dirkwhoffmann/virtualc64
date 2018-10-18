@@ -19,13 +19,6 @@
 #include "C64.h"
 #include <algorithm>    // std::copy CAN WE GET RID OF THIS?
 
-VirtualComponent::VirtualComponent()
-{
-    snapshotItems = NULL;
-    subComponents = NULL;
-    snapshotSize = 0;
-}
-
 VirtualComponent::~VirtualComponent()
 {
 	debug(3, "Terminated\n");
@@ -87,10 +80,18 @@ VirtualComponent::setClockFrequency(uint32_t frequency)
             subComponents[i]->setClockFrequency(frequency);
 }
 
-
-//
-// Snapshots
-// 
+void
+VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned length) {
+    
+    assert(components != NULL);
+    assert(length % sizeof(VirtualComponent *) == 0);
+    
+    unsigned numItems = length / sizeof(VirtualComponent *);
+    
+    // Allocate new array on heap and copy array data
+    subComponents = new VirtualComponent*[numItems];
+    std::copy(components, components + numItems, &subComponents[0]);
+}
 
 void
 VirtualComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
@@ -107,19 +108,6 @@ VirtualComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
     // Determine size of snapshot on disk
     for (i = snapshotSize = 0; snapshotItems[i].data != NULL; i++)
         snapshotSize += snapshotItems[i].size;
-}
-
-void
-VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned length) {
-    
-    assert(components != NULL);
-    assert(length % sizeof(VirtualComponent *) == 0);
-    
-    unsigned numItems = length / sizeof(VirtualComponent *);
-    
-    // Allocate new array on heap and copy array data
-    subComponents = new VirtualComponent*[numItems];
-    std::copy(components, components + numItems, &subComponents[0]);    
 }
 
 size_t

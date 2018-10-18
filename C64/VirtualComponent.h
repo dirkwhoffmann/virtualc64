@@ -35,6 +35,35 @@ class C64;
  */
 class VirtualComponent : public VC64Object {
 
+protected:
+    
+    /*! @brief   Type and behavior of a snapshot item
+     *  @details The reset flags indicate whether the snapshot item should be
+     *           set to 0 automatically during a reset. The format flags are
+     *           important when big chunks of data are specified. They are
+     *           needed loadBuffer and saveBuffer to correctly converting little
+     *           endian to big endian format.
+     */
+    enum {
+        KEEP_ON_RESET  = 0x00, //! Don't touch item during a reset
+        CLEAR_ON_RESET = 0x10, //! Reset to zero during a reset
+        
+        BYTE_ARRAY     = 0x01, //! Data chunk is an array of bytes
+        WORD_ARRAY     = 0x02, //! Data chunk is an array of words
+        DWORD_ARRAY    = 0x04, //! Data chunk is an array of double words
+        QWORD_ARRAY    = 0x08  //! Data chunk is an array of quad words
+    };
+    
+    /*! @brief Fingerprint of a snapshot item
+     */
+    typedef struct {
+        
+        void *data;
+        size_t size;
+        uint8_t flags;
+        
+    } SnapshotItem;
+    
 public: 
 
     /*! @brief    Reference to the virtual C64 top-level object.
@@ -43,15 +72,23 @@ public:
      */
     C64 *c64 = NULL;
     
-public:
+protected:
     
-	//! @brief    Constructor
-	VirtualComponent();
+    //! @brief    Sub components of this component
+    VirtualComponent **subComponents = NULL;
+    
+    //! @brief    List of snapshot items of this component
+    SnapshotItem *snapshotItems = NULL;
+    
+    //! @brief    Snapshot size on disk (in bytes)
+    unsigned snapshotSize = 0;
+    
+public:
 
 	//! @brief    Destructor
-	virtual ~VirtualComponent();
+	~VirtualComponent();
 
-    
+
     //
     //! @functiongroup Initializing the component
     //
@@ -67,10 +104,10 @@ public:
      */
 	virtual void reset();
 	
-    //! @brief    Triggers the component to send messages about the current state.
+    //! @brief    Asks the component to inform the GUI about its current state.
     /*! @details  The GUI invokes this function to update its visual elements,
      *            e.g., after loading a snapshot file. Only some components
-     *            overwrite this function. Most components stay silent on default.
+     *            overwrite this function.
      */
     virtual void ping();
 
@@ -90,9 +127,9 @@ public:
     //
 
 	//! @brief    Print info about the internal state.
-	/*! @details  This functions is intended for debugging purposes only. Any derived
-     *            component should override this method and print out some useful
-     *            debugging information.
+	/*! @details  This functions is intended for debugging purposes only. Any
+     *            derived component should override this method and print out
+     *            useful debugging information.
 	 */ 
     virtual void dumpState() { };
 	
@@ -101,67 +138,24 @@ public:
     //! @functiongroup Registering snapshot items and sub components
     //
     
-protected:
-    
-    /*! @brief   Type and behavior of a snapshot item
-     *  @details The reset flags indicate whether the snapshot item should be
-     *           set to 0 automatically during a reset. The format flags are
-     *           important when big chunks of data are specified. They are needed
-     *           loadBuffer and saveBuffer to correctly converting little endian
-     *           format to big endian format.
+    /*! @brief    Registers all sub components for this component
+     *  @abstract Sub components are usually registered in the constructor of
+     *            a virtual component.
+     *  @param    items Pointer to the first element of a VirtualComponet* array.
+     *            The end of the array is marked by a NULL pointer.
+     *  @param    legth Size of the subComponent array in bytes.
      */
-    enum {
-        KEEP_ON_RESET  = 0x00, //! Don't touch item during a reset
-        CLEAR_ON_RESET = 0x10, //! Reset to zero during a reset
-        
-        BYTE_ARRAY     = 0x01, //! Data chunk is an array of bytes
-        WORD_ARRAY     = 0x02, //! Data chunk is an array of words
-        DWORD_ARRAY    = 0x04, //! Data chunk is an array of double words
-        QWORD_ARRAY    = 0x08  //! Data chunk is an array of quad words
-    };
-
-    /*! @brief Fingerprint of a snapshot item
-     */
-    typedef struct {
-        
-        void *data;
-        size_t size;
-        uint8_t flags;
-        
-    } SnapshotItem;
-    
-    /*! @brief    List of snapshot items of this component
-     *  @details  Initial value is NULL, indicating that nothing is saved to a snapshot
-     */
-    SnapshotItem *snapshotItems;
-    
-    /*! @brief    Snapshot size on disk (in bytes)
-     */
-    unsigned snapshotSize;
+    void registerSubComponents(VirtualComponent **subComponents, unsigned length);
     
     /*! @brief    Registers all snapshot items for this component
      *  @abstract Snaphshot items are usually registered in the constructor of
      *            a virtual component.
      *  @param    items Pointer to the first element of a SnapshotItem* array.
-     *            The end of the array is marked by a NULL pointer in the data field.
+     *            The end of the array is marked by a NULL pointer.
      *  @param    legth Size of the SnapshotItem array in bytes.
      */
     void registerSnapshotItems(SnapshotItem *items, unsigned length);
     
-    /*! @brief    Sub components of this component
-     *  @details  Initial value is NULL, indicating that no sub components are present
-     */
-    VirtualComponent **subComponents;
-
-    /*! @brief    Registers all sub components for this component
-     *  @abstract Sub components are usually registered in the constructor of
-     *            a virtual component.
-     *  @param    items Pointer to the first element of a VirtualComponet* array.
-     *            The end of the array is marked by a NULL pointer in the data field.
-     *  @param    legth Size of the subComponent array in bytes.
-     */
-    void registerSubComponents(VirtualComponent **subComponents, unsigned length);
-
 
 public:
     
@@ -174,18 +168,18 @@ public:
     virtual size_t stateSize();
     
     /*! @brief    Load internal state from memory buffer
-     *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to
-     *            big endian format.
-     *            Take this into account when loading byte arrays of these sizes.
+     *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
+     *            format automatically. Otherwise, a byte array is assumed.
      *  @param    buffer Pointer to next byte to read
+     *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
      */
     virtual void loadFromBuffer(uint8_t **buffer);
     
     /*! @brief    Save internal state to memory buffer
-     *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to
-     *            big endian format.
-     *            Take this into account when saving byte arrays of these sizes.
+     *  @note     Snapshot items of size 2, 4, or 8 are converted to big endian
+     *            format automatically. Otherwise, a byte array is assumed.
      *  @param    buffer Pointer to next byte to read
+     *  @seealso  WORD_ARRAY, DWORD_ARRAY, QWORD_ARRAY
      */
     virtual void saveToBuffer(uint8_t **buffer);
 };
