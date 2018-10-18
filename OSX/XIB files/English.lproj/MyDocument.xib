@@ -105,7 +105,7 @@
                 <outlet property="spriteX" destination="a9Z-Uq-cmU" id="3q1-FM-Tcm"/>
                 <outlet property="spriteY" destination="Ygz-fc-qXq" id="e6s-Ek-6br"/>
                 <outlet property="stepIntoButton" destination="2098" id="2107"/>
-                <outlet property="stepOverButton" destination="2096" id="2108"/>
+                <outlet property="stepOverButton" destination="PqI-SN-vTw" id="OWX-4e-zno"/>
                 <outlet property="stopAndGoButton" destination="2100" id="2102"/>
                 <outlet property="sustainRate" destination="H1K-GI-GVr" id="2dU-6j-fNm"/>
                 <outlet property="syncBit" destination="4pG-BL-eQ1" id="RaM-EB-mAR"/>
@@ -294,7 +294,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="48" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -493,42 +493,10 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="640"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="367">
-                    <rect key="frame" x="242" y="0.0" width="58" height="45"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="58" height="22"/>
-                    <size key="intercellSpacing" width="0.0" height="1"/>
-                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="1821">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <cells>
-                        <column>
-                            <buttonCell type="radio" title="Hex" imagePosition="left" alignment="left" controlSize="small" lineBreakMode="charWrapping" state="on" inset="2" id="376">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                                <connections>
-                                    <action selector="setHexadecimalAction:" target="-2" id="2015"/>
-                                </connections>
-                            </buttonCell>
-                            <buttonCell type="radio" title="Dec" imagePosition="left" alignment="left" controlSize="small" inset="2" id="2118">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                                <connections>
-                                    <action selector="setDecimalAction:" target="-2" id="2119"/>
-                                </connections>
-                            </buttonCell>
-                        </column>
-                    </cells>
-                    <connections>
-                        <action selector="setHexadecimalAction:" target="-2" id="2013"/>
-                    </connections>
-                </matrix>
-                <button verticalHuggingPriority="750" id="2100">
+                <button toolTip="Run / Pause" verticalHuggingPriority="750" id="2100">
                     <rect key="frame" x="8" y="5" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pause32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2101">
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="2101">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -536,10 +504,10 @@
                         <action selector="stopAndGoAction:" target="-2" id="2103"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" id="2098">
-                    <rect key="frame" x="46" y="5" width="36" height="36"/>
+                <button toolTip="Step Into" verticalHuggingPriority="750" id="2098">
+                    <rect key="frame" x="50" y="5" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepInto32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2099">
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepIntoTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="2099">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -547,15 +515,15 @@
                         <action selector="stepIntoAction:" target="-2" id="2104"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" id="2096">
-                    <rect key="frame" x="84" y="5" width="36" height="36"/>
+                <button toolTip="Step Over" verticalHuggingPriority="750" id="PqI-SN-vTw">
+                    <rect key="frame" x="92" y="5" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOver32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2097">
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOverTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="axesIndependently" inset="2" id="p1T-lM-Wfo">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="stepOverAction:" target="-2" id="2105"/>
+                        <action selector="stepOverAction:" target="-2" id="WGs-g7-9rZ"/>
                     </connections>
                 </button>
                 <tabView id="42">
@@ -2872,6 +2840,40 @@
                         <outlet property="delegate" destination="-2" id="gdy-NN-ItX"/>
                     </connections>
                 </tabView>
+                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="367">
+                    <rect key="frame" x="195" y="13" width="98" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="49" height="22"/>
+                    <size key="intercellSpacing" width="0.0" height="1"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="1821">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="Hex" imagePosition="left" alignment="left" controlSize="small" lineBreakMode="charWrapping" state="on" inset="2" id="376">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                                <connections>
+                                    <action selector="setHexadecimalAction:" target="-2" id="2015"/>
+                                </connections>
+                            </buttonCell>
+                        </column>
+                        <column>
+                            <buttonCell type="radio" title="Dec" imagePosition="left" alignment="left" controlSize="small" inset="2" id="od0-Dh-86V">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                                <connections>
+                                    <action selector="setDecimalAction:" target="-2" id="tSj-Eu-KyC"/>
+                                </connections>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <action selector="setHexadecimalAction:" target="-2" id="2013"/>
+                    </connections>
+                </matrix>
             </subviews>
             <point key="canvasLocation" x="539" y="408"/>
         </customView>
@@ -2889,14 +2891,13 @@
         <image name="mediaCrtTemplate" width="241" height="241"/>
         <image name="mediaDiskSavedTemplate" width="241" height="241"/>
         <image name="mediaTapeTemplate" width="241" height="240"/>
-        <image name="pause32" width="32" height="32"/>
         <image name="pauseTemplate" width="240" height="241"/>
         <image name="powerTemplate" width="241" height="240"/>
         <image name="prefDevicesTemplate" width="241" height="241"/>
         <image name="prefEmuTemplate" width="241" height="241"/>
         <image name="prefHwTemplate" width="240" height="241"/>
-        <image name="stepInto32" width="32" height="32"/>
-        <image name="stepOver32" width="32" height="32"/>
+        <image name="stepIntoTemplate" width="240" height="241"/>
+        <image name="stepOverTemplate" width="241" height="241"/>
         <image name="ttBrowseTemplate" width="240" height="240"/>
         <image name="ttRestoreTemplate" width="241" height="240"/>
         <image name="ttRewindTemplate" width="241" height="240"/>
