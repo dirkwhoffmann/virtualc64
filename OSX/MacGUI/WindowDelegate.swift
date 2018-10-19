@@ -40,8 +40,11 @@ extension MyController : NSWindowDelegate {
         timer?.invalidate()
         timer = nil
         
+        // Quit message queue
+        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+        c64.removeListener(myself)
+  
         // Disconnect emulator
-        c64.addListener(nil, function: nil)
         cpuTableView.dataSource = nil
         cpuTableView.delegate = nil
         cpuTableView.c = nil

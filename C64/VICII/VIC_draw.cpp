@@ -517,39 +517,6 @@ VIC::loadColors(uint8_t mode)
     }
 }
 
-/*
-void
-VIC::setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit)
-{
-    if (bit) {
-        setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
-    }
-}
-*/
-
-/*
-void
-VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
-{
-    switch (two_bits) {
-            
-        case 0x01:
-           
-            setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX1]);
-            break;
-            
-        case 0x02:
-            
-            setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
-            break;
-            
-        case 0x03:
-            
-            setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX2]);
-            break;
-    }
-}
-*/
 
 //
 // Low level drawing (pixel buffer access)

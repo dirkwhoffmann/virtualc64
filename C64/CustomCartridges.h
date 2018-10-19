@@ -67,10 +67,10 @@ public:
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
     void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
-    bool hasResetButton() { return false; }
+    bool hasFreezeButton() { return false; }
+    bool hasResetButton() { return true; }
+    void pressResetButton();
+    void releaseResetButton();
 };
 
 
