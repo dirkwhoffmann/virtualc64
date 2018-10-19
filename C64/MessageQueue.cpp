@@ -37,7 +37,7 @@ MessageQueue::addListener(const void *sender, Callback *func)
     listeners.insert(pair <const void *, Callback *> (sender, func));
     pthread_mutex_unlock(&lock);
     
-    // Process all pending messages
+    // Distribute all pending messages
     Message msg;
     while ((msg = getMessage()).type != MSG_NONE) {
         propagateMessage(&msg);
@@ -92,7 +92,7 @@ MessageQueue::putMessage(MessageType type, uint64_t data)
 		r = (r + 1) % queue_size;
 	}
     
-    // Call listener functions
+    // Serve registered callbacks
     propagateMessage(&msg);
 
 	pthread_mutex_unlock(&lock);

@@ -72,11 +72,33 @@ class DiskInspectorController : UserDialogController {
         drive = c64.drive1
     
         // Start receiving messages
-        parent.msgDelegate = self
+        addListener()
 
         refresh()
     }
 
+    func addListener() {
+        
+        track()
+        
+        // Convert 'self' to a void pointer
+        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+        
+        c64.addListener(myself) { (ptr, type, data) in
+            
+            // Convert void pointer back to 'self'
+            let myself = Unmanaged<DiskInspectorController>.fromOpaque(ptr!).takeUnretainedValue()
+            
+            // Process message in the main thread
+            DispatchQueue.main.async {
+                let mType = MessageType(rawValue: UInt32(type))
+                myself.processMessage(Message(type: mType, data: data))
+            }
+        }
+        
+        track("Listener is in place")
+    }
+    
     /// Updates dirty GUI elements
     func refresh() {
         
@@ -394,7 +416,8 @@ class DiskInspectorController : UserDialogController {
     override func cancelAction(_ sender: Any!) {
         
         // Stop receiving messages
-        parent.msgDelegate = nil
+        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+        parent.c64.removeListener(myself)
         
         super.cancelAction(self)
     }

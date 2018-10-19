@@ -34,9 +34,6 @@ class MyController : NSWindowController, MessageReceiver {
     /// Rom Dialog controller
     var romDialogController: RomDialogController? = nil
     
-    /// Optional delegate object for incoming emulator messages
-    var msgDelegate: MessageReceiver? = nil
-    
     /// Loop timer
     /// The timer fires 60 times a second and executes all tasks that need to be
     //  done perdiodically (e.g., updating the speedometer and the debug panels)
@@ -725,8 +722,6 @@ extension MyController {
             track("Unknown message: \(msg)")
             assert(false)
         }
-        
-        msgDelegate?.processMessage(msg)
     }
 
     //
