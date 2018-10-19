@@ -1418,7 +1418,7 @@ private:
      *            sprites. For single-color sprites, only the values 0 and 2
      *            are passed in. 
      */
-    void setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits);
+    // void setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits);
     
 
     //

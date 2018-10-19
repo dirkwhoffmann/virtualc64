@@ -430,13 +430,21 @@ VIC::drawSpritePixel(unsigned pixel,
         
         // Draw pixel
         if (!hideSprites) {
-            setMultiColorSpritePixel(sprite, pixel, spriteSr[sprite].colBits);
-            /*
-            if (mCol)
-                setMultiColorSpritePixel(sprite, pixel, spriteSr[sprite].colBits & 0x03);
-            else
-                setSingleColorSpritePixel(sprite, pixel, spriteSr[sprite].colBits & 0x01);
-            */
+            
+            switch (spriteSr[sprite].colBits) {
+                    
+                case 0x01:
+                    setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX1]);
+                    break;
+                    
+                case 0x02:
+                    setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
+                    break;
+                    
+                case 0x03:
+                    setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX2]);
+                    break;
+            }
         }
     }
 }
@@ -519,6 +527,7 @@ VIC::setSingleColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t bit)
 }
 */
 
+/*
 void
 VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
 {
@@ -540,7 +549,7 @@ VIC::setMultiColorSpritePixel(unsigned sprite, unsigned pixel, uint8_t two_bits)
             break;
     }
 }
-
+*/
 
 //
 // Low level drawing (pixel buffer access)
