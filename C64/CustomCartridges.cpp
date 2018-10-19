@@ -178,10 +178,11 @@ KcsPower::peekIO2(uint16_t addr)
 {
     if (addr & 0x80) {
         
-        // Open address (used by the cartridge to figure out exrom and game line)
-        uint8_t exrom = c64->expansionport.getExromLine() ? 0x80 : 0x00;
-        uint8_t game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
-        // return exrom | game | (c64->vic.getDataBusPhi1() & 0x3F);
+        /*
+         uint8_t exrom = c64->expansionport.getExromLine() ? 0x80 : 0x00;
+         uint8_t game = c64->expansionport.getGameLine() ? 0x40 : 0x00;
+         return exrom | game | (c64->vic.getDataBusPhi1() & 0x3F);
+         */
         return externalRam[addr & 0x7F];
         
     } else {

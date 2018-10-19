@@ -86,7 +86,7 @@ protected:
 public:
 
 	//! @brief    Destructor
-	~VirtualComponent();
+	virtual ~VirtualComponent();
 
 
     //
