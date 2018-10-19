@@ -1383,34 +1383,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
 //
-// NIBProxy
-//
-
-@implementation NIBProxy
-
-+ (BOOL)isNIBFile:(NSString *)filename
-{
-    return NIBArchive::isNIBFile([filename UTF8String]);
-}
-+ (instancetype) make:(NIBArchive *)archive
-{
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
-}
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    NIBArchive *archive = NIBArchive::makeNIBArchiveWithBuffer((const uint8_t *)buffer, length);
-    return [self make: archive];
-}
-+ (instancetype) makeWithFile:(NSString *)path
-{
-    NIBArchive *archive = NIBArchive::makeNIBArchiveWithFile([path UTF8String]);
-    return [self make: archive];
-}
-@end
-
-
-//
 // FileProxy
 //
 

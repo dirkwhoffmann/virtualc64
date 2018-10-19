@@ -36,7 +36,6 @@
 #include "T64File.h"
 #include "D64File.h"
 #include "G64File.h"
-#include "NIBArchive.h"
 #include "PRGFile.h"
 #include "P00File.h"
 #include "FileArchive.h"

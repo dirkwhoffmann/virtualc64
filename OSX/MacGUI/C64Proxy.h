@@ -805,14 +805,6 @@ struct ContainerWrapper;
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
 @end
 
-@interface NIBProxy : ArchiveProxy
-{
-}
-+ (BOOL) isNIBFile:(NSString *)filename;
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
-+ (instancetype) makeWithFile:(NSString *)filename;
-@end
-
 @interface FileProxy : ArchiveProxy
 {
 }

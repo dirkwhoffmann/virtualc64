@@ -1030,7 +1030,6 @@ C64::mount(AnyC64File *file)
         case PRG_CONTAINER:
         case P00_CONTAINER:
         case G64_CONTAINER:
-        case NIB_CONTAINER:
             result = insertDisk((Archive *)file, 1);
             break;
     

@@ -22,7 +22,6 @@
 #include "PRGFile.h"
 #include "P00File.h"
 #include "G64File.h"
-#include "NIBArchive.h"
 
 Archive::Archive()
 {
@@ -51,9 +50,6 @@ Archive::makeArchiveWithFile(const char *path)
     }
     if (G64Archive::isG64File(path)) {
         return G64Archive::makeG64ArchiveWithFile(path);
-    }
-    if (NIBArchive::isNIBFile(path)) {
-        return NIBArchive::makeNIBArchiveWithFile(path);
     }
     return NULL;
 }

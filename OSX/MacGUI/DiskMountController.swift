@@ -53,11 +53,6 @@ class DiskMountController : UserDialogController {
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "G64 Format"
             break;
-            
-        case NIB_CONTAINER:
-            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
-            header.stringValue = "NIB Format"
-            break;
 
         default:
             assert(false)

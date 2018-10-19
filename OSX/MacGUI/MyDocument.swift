@@ -253,9 +253,6 @@ class MyDocument : NSDocument {
         case "G64":
             attachment = G64Proxy.make(withBuffer: buffer, length: length)
             break
-        case "NIB":
-            attachment = NIBProxy.make(withBuffer: buffer, length: length)
-            break
         default:
             throw NSError.unsupportedFormatError(filename: filename)
         }
@@ -338,7 +335,7 @@ class MyDocument : NSDocument {
             runArchiveMountDialog(parent)
             return
                 
-        case G64_CONTAINER, NIB_CONTAINER:
+        case G64_CONTAINER:
             runDiskMountDialog(parent)
             return
             
@@ -434,7 +431,7 @@ class MyDocument : NSDocument {
         switch type {
         case V64_CONTAINER,
              T64_CONTAINER, D64_CONTAINER,
-             G64_CONTAINER, NIB_CONTAINER:
+             G64_CONTAINER:
             if (!proceedWithUnexportedDisk(drive: 1)) { return false }
         default:
             break;
@@ -470,7 +467,7 @@ class MyDocument : NSDocument {
             runArchiveMountDialog(parent)
             return true
             
-        case G64_CONTAINER, NIB_CONTAINER:
+        case G64_CONTAINER:
             runDiskMountDialog(parent)
             return true
             

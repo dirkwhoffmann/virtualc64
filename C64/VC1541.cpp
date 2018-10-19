@@ -528,11 +528,6 @@ VC1541::insertDisk(Archive *a)
             disk.encodeArchive((G64Archive *)a);
             break;
             
-        case NIB_CONTAINER:
-            disk.clearDisk();
-            disk.encodeArchive((NIBArchive *)a);
-            break;
-            
         default: {
 
             // All other archives cannot be encoded directly.
