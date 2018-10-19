@@ -42,7 +42,6 @@
 // Added support for the KCS power cartridge
 //
 // TODOs for the next release:
-// Speedup: Inline setMulticolorSpritePixel as setSingleColorSprite pixel is no longer used.
 //
 // Can sub components initialized without registerSubcomponents function?
 // Map right Mac shift key to right Commodore key
