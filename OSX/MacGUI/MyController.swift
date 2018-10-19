@@ -327,7 +327,7 @@ extension MyController {
         loadUserDefaults()
         
         // Enable message processing (register callback)
-        setListener()
+        addListener()
 
         // Power up. If all Roms are in place, the emulator starts running.
         // Otherwise, it sends a MISSING_ROM message.
@@ -372,14 +372,14 @@ extension MyController {
         validateJoystickToolbarItems()
     }
     
-    func setListener() {
+    func addListener() {
         
         track()
         
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.setListener(myself) { (ptr, type, data) in
+        c64.addListener(myself) { (ptr, type, data) in
             
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()

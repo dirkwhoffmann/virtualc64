@@ -1,5 +1,5 @@
 /*!
- * @header      Message.h
+ * @header      MessageQueue.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2010 - 2016 Dirk W. Hoffmann
  */
@@ -18,14 +18,17 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _MESSAGE_INC
-#define _MESSAGE_INC
+#ifndef _MESSAGE_QUEUE_INC
+#define _MESSAGE_QUEUE_INC
 
 #include "VC64Object.h"
 #include "C64_types.h"
+#include <map>
+
+using namespace std;
 
 class MessageQueue : public VC64Object {
-	
+    
 private:
     
     //! @brief    Maximum number of queued messages
@@ -35,26 +38,16 @@ private:
 	Message queue[queue_size];
     
 	//! @brief    The ring buffers read pointer
-	int r; 
+	int r = 0;
 	
     //! @brief    The ring buffers read pointer
-	int w;
+	int w = 0;
 		
 	//! @brief    Mutex for streamlining parallel read and write accesses
 	pthread_mutex_t lock;
     
-    //! @brief    Callback function
-    /*! @details  If set, the function is called whenever a message is put into
-     *            the queue. The second argument is the message type and the
-     *            third argument is the message data.
-     */
-    void(*callback)(const void *, int, long);
-
-    //! @brief    Registered listener
-    /*! @details  This value is passed back into the registered callback as
-     *            the first argument.
-     */
-    const void *listener;
+    //! Registered listeners
+    map <const void *, Callback *> listeners;
 
 public:
 	//! @brief    Constructor
@@ -64,18 +57,25 @@ public:
 	~MessageQueue();
 
     //! @brief    Registers a listener callback function
-    void setListener(const void *sender, void(*func)(const void *, int, long));
+    void addListener(const void *sender, Callback *func);
+
+    //! @brief    Removes a listener callback function
+    void removeListener(const void *sender);
     
 	/*! @brief    Returns the next pending message
-     *  @return   Returns NULL, if the queue is empty
+     *  @return   NULL, if the queue is empty
      */
 	Message getMessage();
 
 	//! @brief    Writes new message into the message queue
-    /*! @detals   If a callback function is set, the functions is invoked.
+    /*! @details  If a callback function is set, the functions is invoked.
      */
-	// void putMessage(int id, int i = 0);
     void putMessage(MessageType type, uint64_t data = 0);
+    
+private:
+    
+    //! @brief    Propagates a single message to all registered listeners.
+    void propagateMessage(Message *msg);
 };
 
 #endif

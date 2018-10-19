@@ -764,8 +764,11 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
 - (Message)message { return wrapper->c64->getMessage(); }
-- (void) setListener:(const void *)sender function:(void(*)(const void *, int, long))func {
-    wrapper->c64->setListener(sender, func);
+- (void) addListener:(const void *)sender function:(Callback *)func {
+    wrapper->c64->addListener(sender, func);
+}
+- (void) removeListener:(const void *)sender {
+    wrapper->c64->removeListener(sender);
 }
 
 - (void) powerUp { wrapper->c64->powerUp(); }

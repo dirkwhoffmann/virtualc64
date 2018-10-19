@@ -41,7 +41,7 @@ extension MyController : NSWindowDelegate {
         timer = nil
         
         // Disconnect emulator
-        c64.setListener(nil, function: nil)
+        c64.addListener(nil, function: nil)
         cpuTableView.dataSource = nil
         cpuTableView.delegate = nil
         cpuTableView.c = nil

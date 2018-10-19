@@ -15,7 +15,7 @@
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
-		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
+		500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
 		500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
@@ -203,8 +203,8 @@
 		5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_ntsc.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
-		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		500EC05010E4DCC4005A19A3 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
+		500EC04F10E4DCC4005A19A3 /* MessageQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageQueue.h; sourceTree = "<group>"; };
+		500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
 		500EF688203EB0210043F4FC /* HardwarePrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HardwarePrefs.xib; sourceTree = "<group>"; };
 		500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePrefsController.swift; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
@@ -579,8 +579,8 @@
 				50176C4F0A6F72F3009E80BD /* basic.cpp */,
 				502CD90E2128297E00C5A8F0 /* TimeDelayed.h */,
 				502CD90D2128297E00C5A8F0 /* TimeDelayed.cpp */,
-				500EC04F10E4DCC4005A19A3 /* Message.h */,
-				500EC05010E4DCC4005A19A3 /* Message.cpp */,
+				500EC04F10E4DCC4005A19A3 /* MessageQueue.h */,
+				500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */,
 				5088E6871C3515DB006A80E5 /* VC64Object.h */,
 				5088E6861C3515DB006A80E5 /* VC64Object.cpp */,
 				50DAD6900A736F9B00BB44AC /* VirtualComponent.h */,
@@ -1137,7 +1137,7 @@
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
-				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
+				500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				50414727122188FC00A80E0C /* CRTFile.cpp in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,

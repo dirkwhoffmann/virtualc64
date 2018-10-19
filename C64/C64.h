@@ -29,7 +29,7 @@
 #include "C64_types.h"
 
 // General
-#include "Message.h"
+#include "MessageQueue.h"
 
 // Loading and saving
 #include "Snapshot.h"
@@ -652,9 +652,15 @@ public:
     //
     
     //! @brief    Registers a listener callback function
-    void setListener(const void *sender, void(*func)(const void *, int, long) ) {
-        queue.setListener(sender, func);
+    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
+        queue.addListener(sender, func);
     }
+    
+    //! @brief    Removes a listener callback function
+    void removeListener(const void *sender) {
+        queue.removeListener(sender);
+    }
+
     //! @brief    Gets a notification message from message queue
     Message getMessage() { return queue.getMessage(); }
     

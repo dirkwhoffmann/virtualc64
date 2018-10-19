@@ -147,4 +147,7 @@ typedef struct {
     long data;
 } Message;
 
+//! @brief    Callback function signature
+typedef void Callback(const void *, int, long);
+
 #endif

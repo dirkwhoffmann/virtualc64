@@ -577,7 +577,8 @@ struct ContainerWrapper;
 
 // Using the message queue
 - (Message)message;
-- (void) setListener:(const void *)sender function:(void(*)(const void *, int, long))func;
+- (void) addListener:(const void *)sender function:(Callback *)func;
+- (void) removeListener:(const void *)sender;
 
 // Running the emulator
 - (void) powerUp;
