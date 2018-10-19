@@ -20,7 +20,6 @@
 #include "T64File.h"
 #include "PRGFile.h"
 #include "P00File.h"
-#include "FileArchive.h"
 #include "Disk.h"
 
 typedef struct D64TrackInfo {

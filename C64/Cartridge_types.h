@@ -18,7 +18,6 @@
  *  @constant P00_CONTAINER A program archive containing a single file.
  *  @constant G64_CONTAINER A collection of bit-streams resembling a floppy disk.
  *  @constant TAP_CONTAINER A bit-stream resembling a datasette tape.
- *  @constant FILE_CONTAINER An arbitrary file that is interpreted as raw data.
  */
 typedef enum {
     UNKNOWN_CONTAINER_FORMAT = 0,
@@ -34,7 +33,6 @@ typedef enum {
     CHAR_ROM_FILE,
     KERNAL_ROM_FILE,
     VC1541_ROM_FILE,
-    FILE_CONTAINER
 } ContainerType;
 
 typedef enum {

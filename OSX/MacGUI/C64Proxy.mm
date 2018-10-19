@@ -1380,28 +1380,3 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [self make: archive];
 }
 @end
-
-
-//
-// FileProxy
-//
-
-@implementation FileProxy
-
-+ (instancetype) make:(FileArchive *)archive
-{
-    if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
-}
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
-    FileArchive *archive = FileArchive::makeFileArchiveWithBuffer((const uint8_t *)buffer, length);
-    return [self make: archive];
-}
-+ (instancetype) makeWithFile:(NSString *)path
-{
-    FileArchive *archive = FileArchive::makeFileArchiveWithFile([path UTF8String]);
-    return [self make: archive];
-}
-@end
-

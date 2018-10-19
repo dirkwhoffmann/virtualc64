@@ -149,7 +149,6 @@
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F681E71BEA2927008568E3 /* TAPFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPFile.cpp */; };
 		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
-		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */; };
 		50F97E03203D8D570005E19C /* EmulatorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F97E02203D8D570005E19C /* EmulatorPrefs.xib */; };
 		50F99557203AB2A9004C4856 /* KeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99556203AB2A9004C4856 /* KeyboardDialog.xib */; };
@@ -408,8 +407,6 @@
 		50F681E61BEA2927008568E3 /* TAPFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPFile.cpp; sourceTree = "<group>"; };
 		50F681E81BEA3BE4008568E3 /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		50F681E91BEA3BE4008568E3 /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
-		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
-		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50F97E00203D8D1E0005E19C /* EmulatorPrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorPrefsController.swift; sourceTree = "<group>"; };
 		50F97E02203D8D570005E19C /* EmulatorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmulatorPrefs.xib; sourceTree = "<group>"; };
 		50F99556203AB2A9004C4856 /* KeyboardDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardDialog.xib; sourceTree = "<group>"; };
@@ -847,8 +844,6 @@
 				50A52A180C2FD43700A1377F /* D64File.cpp */,
 				504606331BE4B99100463FD7 /* G64File.h */,
 				504606321BE4B99100463FD7 /* G64File.cpp */,
-				50F93BE612EF309900DD6A8A /* FileArchive.h */,
-				50F93BE512EF309900DD6A8A /* FileArchive.cpp */,
 			);
 			name = "Loading and saving";
 			sourceTree = "<group>";
@@ -1154,7 +1149,6 @@
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				506B315420DD0AEB007913A8 /* VC1541Memory.cpp in Sources */,
 				501DE31220C9C41B00707130 /* filter.cc in Sources */,
-				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,

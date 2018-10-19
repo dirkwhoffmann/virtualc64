@@ -38,7 +38,6 @@
 #include "G64File.h"
 #include "PRGFile.h"
 #include "P00File.h"
-#include "FileArchive.h"
 #include "ROMFile.h"
 #include "TAPFile.h"
 #include "CRTFile.h"
