@@ -19,7 +19,7 @@
 #ifndef _FILEARCHIVE_INC
 #define _FILEARCHIVE_INC
 
-#include "Archive.h"
+#include "AnyArchive.h"
 
 /*! @class    FileArchive
  *  @brief    The FileArchive class declares the programmatic interface for a file that does not match any 

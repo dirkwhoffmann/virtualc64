@@ -33,12 +33,12 @@
 
 // Loading and saving
 #include "Snapshot.h"
-#include "T64Archive.h"
-#include "D64Archive.h"
-#include "G64Archive.h"
+#include "T64File.h"
+#include "D64File.h"
+#include "G64File.h"
 #include "NIBArchive.h"
-#include "PRGArchive.h"
-#include "P00Archive.h"
+#include "PRGFile.h"
+#include "P00File.h"
 #include "FileArchive.h"
 #include "ROMFile.h"
 #include "TAPFile.h"

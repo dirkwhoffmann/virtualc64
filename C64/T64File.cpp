@@ -17,7 +17,7 @@
  */
 
 #include "TAPFile.h"
-#include "T64Archive.h"
+#include "T64File.h"
 
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]

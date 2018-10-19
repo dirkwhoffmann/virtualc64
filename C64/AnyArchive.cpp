@@ -17,11 +17,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "T64Archive.h"
-#include "D64Archive.h"
-#include "PRGArchive.h"
-#include "P00Archive.h"
-#include "G64Archive.h"
+#include "T64File.h"
+#include "D64File.h"
+#include "PRGFile.h"
+#include "P00File.h"
+#include "G64File.h"
 #include "NIBArchive.h"
 
 Archive::Archive()

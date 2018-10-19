@@ -19,7 +19,7 @@
 #ifndef _T64ARCHIVE_INC
 #define _T64ARCHIVE_INC
 
-#include "Archive.h"
+#include "AnyArchive.h"
 
 /*! @class    D64Archive
  *  @brief    The D64Archive class declares the programmatic interface for a file in T64 format.

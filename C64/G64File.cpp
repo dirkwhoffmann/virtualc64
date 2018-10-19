@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "G64Archive.h"
+#include "G64File.h"
 #include "Disk.h"
 
 const uint8_t /* "GCR-1541" */

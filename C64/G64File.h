@@ -20,7 +20,7 @@
 #ifndef _G64ARCHIVE_INC
 #define _G64ARCHIVE_INC
 
-#include "Archive.h"
+#include "AnyArchive.h"
 
 /*! @class    G64Archive
  *  @brief    The G64Archive class declares the programmatic interface for a

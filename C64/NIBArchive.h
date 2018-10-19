@@ -19,7 +19,7 @@
 #ifndef _NIBARCHIVE_INC
 #define _NIBARCHIVE_INC
 
-#include "Archive.h"
+#include "AnyArchive.h"
 
 #define MIN_TRACK_LENGTH 6016
 #define MAX_TRACK_LENGTH 7928

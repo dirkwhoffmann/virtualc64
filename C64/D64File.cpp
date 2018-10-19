@@ -16,10 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "D64Archive.h"
-#include "T64Archive.h"
-#include "PRGArchive.h"
-#include "P00Archive.h"
+#include "D64File.h"
+#include "T64File.h"
+#include "PRGFile.h"
+#include "P00File.h"
 #include "FileArchive.h"
 #include "Disk.h"
 

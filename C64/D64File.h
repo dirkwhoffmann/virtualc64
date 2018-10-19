@@ -22,7 +22,7 @@
 #ifndef _D64ARCHIVE_INC
 #define _D64ARCHIVE_INC
 
-#include "Archive.h"
+#include "AnyArchive.h"
 
 // D64 files come in six different sizes
 #define D64_683_SECTORS 174848

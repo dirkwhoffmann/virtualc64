@@ -19,7 +19,7 @@
 #ifndef _PRGARCHIVE_INC
 #define _PRGARCHIVE_INC
 
-#include "Archive.h"
+#include "AnyArchive.h"
 
 /*! @class  D64Archive
  *  @brief  The D64Archive class declares the programmatic interface for a file in PRG format.
