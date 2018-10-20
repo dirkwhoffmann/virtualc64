@@ -38,12 +38,12 @@ private:
     //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
     ContainerType romtype;
 
-    //! @brief    ROM size in bytes
-    uint16_t size;
+    //! @brief    The raw data of this archive.
+    uint8_t *data;
     
-    //! @brief    ROM data
-    uint8_t data[0x4000];
-    
+    //! @brief    File size
+    size_t size;
+        
 public:
     
     //! @brief    Standard constructor

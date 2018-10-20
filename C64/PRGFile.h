@@ -71,15 +71,7 @@ public:
     //! @brief    Returns true iff the specified file is a PRG file.
     static bool isPRGFile(const char *filename);
 
-    //! @brief    Creates a PRG archive from a PRG file.
-    // static PRGArchive *archiveFromPRGFile(const char *filename);
-
-    //! @brief    Creates a PRG archive from another archive.
-    /*  @result   A PRG archive that contains the first directory item of the other archive.
-     */
-    // static PRGArchive *archiveFromArchive(Archive *otherArchive);
-
-
+    
     //
     // Virtual functions from Container class
     //

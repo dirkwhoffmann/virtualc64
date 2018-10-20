@@ -62,14 +62,22 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
+    //! @brief    The raw data of this archive.
+    uint8_t *data;
+    
+    //! @brief    File size
+    size_t size;
+    
     //! @brief    Capacity
     /*! @details  State size in bytes exluding header information
      *  @note     Number of allocated bytes is capacity + sizeof(SnapshotHeader)
+     *  @deprecated
      */
-    size_t capacity;
+    // size_t capacity;
     
     //! @brief    Internal state data
-    uint8_t *state;
+    //! @deprecated
+    // uint8_t *state;
 	
 public:
 
@@ -127,14 +135,14 @@ public:
     size_t headerSize() { return sizeof(SnapshotHeader); }
 
     //! @brief    Returns pointer to header data
-    SnapshotHeader *header() { return (SnapshotHeader *)state; }
+    SnapshotHeader *header() { return (SnapshotHeader *)data; }
 
     //! @brief    Returns size of core data (without header)
     //! @deprecated
-    size_t getDataSize() { return capacity; }
+    size_t getDataSize() { return size; }
 
     //! @brief    Returns pointer to core data
-	uint8_t *getData() { return state + sizeof(SnapshotHeader); }
+	uint8_t *getData() { return data + sizeof(SnapshotHeader); }
 
 	//! @brief    Returns the timestamp
 	time_t getTimestamp() { return header()->timestamp; }
@@ -143,7 +151,7 @@ public:
 	void setTimestamp(time_t value) { header()->timestamp = value; }
 	
 	//! Returns true, if snapshot does not contain data yet
-	bool isEmpty() { return state == NULL; }
+	bool isEmpty() { return data == NULL; }
 	
 	//! Return screen buffer
 	unsigned char *getImageData() { return (unsigned char *)(header()->screenshot.screen); }

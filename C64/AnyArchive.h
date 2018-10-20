@@ -83,7 +83,7 @@ public:
     virtual size_t getSizeOfItem(unsigned n);
 
     //! @brief    Returns the size of an item in bits
-    virtual size_t getSizeOfItemInBits(unsigned n) { return 8 * getSizeOfItem(n); }
+    // virtual size_t getSizeOfItemInBits(unsigned n) { return 8 * getSizeOfItem(n); }
 
     //! @brief    Returns the size of an item in blocks
     virtual size_t getSizeOfItemInBlocks(unsigned n) { return (getSizeOfItem(n) + 253) / 254; }

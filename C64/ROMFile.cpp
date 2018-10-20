@@ -148,14 +148,18 @@ ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     if (!isRom(buffer, length)) return false;
     
+    if ((data = (uint8_t *)malloc(length)) == NULL)
+        return false;
+    
+    memcpy(data, buffer, length);
+    size = length;
+    
     romtype =
     isBasicRom(buffer, length) ? BASIC_ROM_FILE :
     isCharRom(buffer, length) ? CHAR_ROM_FILE :
     isKernalRom(buffer, length) ? KERNAL_ROM_FILE :
     VC1541_ROM_FILE;
-    
-    size = length;
-    memcpy(data, buffer, length);
+ 
     return true;
 }
 
