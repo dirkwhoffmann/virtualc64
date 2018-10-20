@@ -328,27 +328,6 @@ T64File::selectItem(unsigned n)
 	return;
 }
 
-int 
-T64File::getByte()
-{
-	int result;
-	
-	if (fp < 0)
-		return -1;
-		
-	// get byte
-	result = data[fp++];
-	
-	// check for end of file
-	if (fp == eof || fp == size)
-		fp = -1;
-
-    if (tracingEnabled())
-        msg("%02X%c", result, fp == -1 ? '\n' : ' ');
-    
-	return result;
-}
-
 bool
 T64File::directoryItemIsPresent(int n)
 {

@@ -88,14 +88,5 @@ public:
     bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     
-    
-    //
-    //! @functiongroup Handling ROM data
-    //
-    
-    
-    //! @brief   Flushes the ROM into the emulator
-    //! @details Copies the ROM data to the specified location.
-    void flash(uint8_t *buffer);
 };
 #endif
