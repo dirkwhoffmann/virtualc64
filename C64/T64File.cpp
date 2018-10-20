@@ -168,12 +168,6 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     return archive;
 }
 
-void T64File::dealloc()
-{
-    fp = -1;
-    fp_eof = -1;
-}
-
 bool
 T64File::isT64(const uint8_t *buffer, size_t length)
 {
@@ -321,16 +315,16 @@ T64File::selectItem(unsigned n)
         uint16_t length = endAddrInMemory - startAddrInMemory;
 
         // Compute end address in container
-        fp_eof = fp + length;
+        eof = fp + length;
 
         // Return if offset values are safe
-        if (fp < size && fp_eof <= size)
+        if (fp < size && eof <= size)
             return;
     
         assert(0); // As repair() should have ruled out all inconsistencies, we should never be here!
     }
 
-    fp = fp_eof = -1;
+    fp = eof = -1;
 	return;
 }
 
@@ -346,7 +340,7 @@ T64File::getByte()
 	result = data[fp++];
 	
 	// check for end of file
-	if (fp == fp_eof || fp == size)
+	if (fp == eof || fp == size)
 		fp = -1;
 
     if (tracingEnabled())

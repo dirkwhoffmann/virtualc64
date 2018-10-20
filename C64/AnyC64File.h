@@ -56,12 +56,12 @@ protected:
     /*! @brief    File pointer
      *  @details  An offset into the data array.
      */
-    long fp;
+    long fp = -1;
     
     /*! @brief    End of file position
      *  @details  This value equals the last valid offset plus 1
      */
-    long eof;
+    long eof = -1;
     
     
 protected:

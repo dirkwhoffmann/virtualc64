@@ -27,13 +27,7 @@
  */
 class PRGFile : public AnyArchive {
 
-private:
     
-    /*! @brief   File pointer
-     *  @details An offset into the data array. 
-     */
-    int fp;
-
 public:
 
     //
@@ -86,8 +80,6 @@ public:
     const char *getNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n);
-    
     void selectItem(unsigned n);
-    int getByte();
 };
 #endif

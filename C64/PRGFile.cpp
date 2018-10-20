@@ -165,20 +165,3 @@ PRGFile::selectItem(unsigned n)
 		fp = -1;
 }
 
-int 
-PRGFile::getByte()
-{
-	int result;
-	
-	if (fp < 0)
-		return -1;
-		
-	// get byte
-	result = data[fp++];
-	
-	// check for end of file
-	if (fp == size)
-		fp = -1;
-
-	return result;
-}

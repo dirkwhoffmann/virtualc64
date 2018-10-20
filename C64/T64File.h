@@ -29,17 +29,7 @@ class T64File : public AnyArchive {
     
     //! @brief    Header signature
     static const uint8_t magicBytes[];
-    
-    /*! @brief    File pointer
-        @details  An offset into the data array. 
-     */
-	long fp;
-	
-    /*! @brief    End of file position
-     *  @details  Maximum value for fp. Do we really need this?
-     */
-	long fp_eof;
-   
+       
 public:
     
     //
@@ -60,7 +50,6 @@ public:
      */
     static T64File *makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive);
 
-    void dealloc();
     
     //
     //! @functiongroup Accessing container attributes

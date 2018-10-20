@@ -103,9 +103,6 @@ public:
     //! @brief    Selects an item to read from
     virtual void selectItem(unsigned n) { }
     
-    //! @brief    Reads the next byte from the currently selected item
-    virtual int getByte() { return 0; }
-
     //! @brief    Skip n bytes from the currently selected item
     virtual void skip(unsigned n) { for (unsigned i = 0; i < n; i++) (void)getByte(); }
 

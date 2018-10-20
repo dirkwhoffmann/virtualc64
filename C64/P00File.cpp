@@ -200,25 +200,3 @@ P00File::selectItem(unsigned n)
 	if (fp >= size || n != 0)
 		fp = -1;
 }
-
-int 
-P00File::getByte()
-{
-	int result;
-	
-	if (fp < 0)
-		return -1;
-		
-	// get byte
-	result = data[fp];
-	
-	// check for end of file
-	if (fp == (size-1)) {
-		fp = -1;
-	} else {
-		// advance file pointer
-		fp++;
-	}
-
-	return result;
-}

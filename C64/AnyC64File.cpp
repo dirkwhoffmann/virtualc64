@@ -43,6 +43,8 @@ AnyC64File::dealloc()
     delete[] data;
     data = NULL;
     size = 0;
+    fp = -1;
+    eof = -1;
 }
 
 bool
@@ -116,7 +118,7 @@ AnyC64File::getByte()
     } else {
         fp++;
     }
-    
+
     return result;
 }
 

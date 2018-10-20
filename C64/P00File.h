@@ -32,11 +32,6 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-    /*! @brief    File pointer
-     *  @details  An offset into the data array. 
-     */
-    int fp;
-
 public:
 
     //! @brief    Standard constructor.
@@ -84,6 +79,5 @@ public:
     uint16_t getDestinationAddrOfItem(unsigned n);
     
     void selectItem(unsigned n);
-    int getByte();
 };
 #endif
