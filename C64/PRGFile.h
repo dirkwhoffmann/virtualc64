@@ -21,10 +21,11 @@
 
 #include "AnyArchive.h"
 
-/*! @class  PRGFile
- *  @brief  The PRGFile class declares the programmatic interface for a file in PRG format.
+/*! @class   PRGFile
+ *  @brief   The PRGFile class declares the programmatic interface for a file
+ *           in PRG format.
  */
-class PRGFile : public Archive {
+class PRGFile : public AnyArchive {
 
 private:
     
@@ -51,7 +52,7 @@ public:
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static PRGFile *makePRGArchiveWithAnyArchive(Archive *otherArchive);
+    static PRGFile *makePRGArchiveWithAnyArchive(AnyArchive *otherArchive);
     
     //! @brief    Returns true if buffer contains a PRG file
     /*! @details  PRG files ares mostly determined by their suffix, so this function will
@@ -77,7 +78,7 @@ public:
     
     
     //
-    // Virtual functions from Archive class
+    // Virtual functions from AnyArchive class
     //
     
     int getNumberOfItems();

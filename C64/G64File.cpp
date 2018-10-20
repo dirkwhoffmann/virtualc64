@@ -20,14 +20,14 @@
 #include "Disk.h"
 
 const uint8_t /* "GCR-1541" */
-G64Archive::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00 };
+G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00 };
 
-G64Archive::G64Archive()
+G64File::G64File()
 {
     setDescription("G64Archive");
 }
 
-G64Archive::G64Archive(size_t capacity)
+G64File::G64File(size_t capacity)
 {
     assert(capacity > 0);
     assert(data == NULL);
@@ -36,10 +36,10 @@ G64Archive::G64Archive(size_t capacity)
     data = new uint8_t[capacity];
 }
 
-G64Archive *
-G64Archive::makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+G64File *
+G64File::makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-    G64Archive *archive = new G64Archive();
+    G64File *archive = new G64File();
     
     if (!archive->readFromBuffer(buffer, length)) {
         delete archive;
@@ -49,10 +49,10 @@ G64Archive::makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
     return archive;
 }
 
-G64Archive *
-G64Archive::makeG64ArchiveWithFile(const char *filename)
+G64File *
+G64File::makeG64ArchiveWithFile(const char *filename)
 {
-    G64Archive *archive = new G64Archive();
+    G64File *archive = new G64File();
     
     if (!archive->readFromFile(filename)) {
         delete archive;
@@ -62,8 +62,8 @@ G64Archive::makeG64ArchiveWithFile(const char *filename)
     return archive;
 }
 
-G64Archive *
-G64Archive::makeG64ArchiveWithDisk(Disk *disk)
+G64File *
+G64File::makeG64ArchiveWithDisk(Disk *disk)
 {
     assert(disk != NULL);
     
@@ -91,7 +91,7 @@ G64Archive::makeG64ArchiveWithDisk(Disk *disk)
     
     // Write header, number of tracks, and track length
     pos = 0;
-    memcpy(buffer, G64Archive::magicBytes, 9);
+    memcpy(buffer, G64File::magicBytes, 9);
     buffer[9]  = 84; // 0x54 (Number of tracks)
     buffer[10] = LO_BYTE(maxBytesOnTrack); // 0xF8
     buffer[11] = HI_BYTE(maxBytesOnTrack); // 0x1E
@@ -138,18 +138,18 @@ G64Archive::makeG64ArchiveWithDisk(Disk *disk)
     }
     assert(pos == length);
     
-    return G64Archive::makeG64ArchiveWithBuffer(buffer, length);
+    return G64File::makeG64ArchiveWithBuffer(buffer, length);
 }
 
 bool
-G64Archive::isG64(const uint8_t *buffer, size_t length)
+G64File::isG64(const uint8_t *buffer, size_t length)
 {
     if (length < 0x02AC) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool 
-G64Archive::isG64File(const char *filename)
+G64File::isG64File(const char *filename)
 {
 	assert(filename != NULL);
 	
@@ -165,7 +165,7 @@ G64Archive::isG64File(const char *filename)
 	return true;
 }
 
-void G64Archive::dealloc()
+void G64File::dealloc()
 {
 	if (data) free(data);
 	data = NULL;
@@ -175,13 +175,13 @@ void G64Archive::dealloc()
 }
 
 bool 
-G64Archive::hasSameType(const char *filename)
+G64File::hasSameType(const char *filename)
 {
-	return G64Archive::isG64File(filename);
+	return G64File::isG64File(filename);
 }
 
 size_t
-G64Archive::writeToBuffer(uint8_t *buffer)
+G64File::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
     
@@ -192,19 +192,19 @@ G64Archive::writeToBuffer(uint8_t *buffer)
 }
 
 const char *
-G64Archive::getName()
+G64File::getName()
 {
     return "G64 archive";
 }
 
 int 
-G64Archive::getNumberOfItems()
+G64File::getNumberOfItems()
 {
     return 84;
 }
 
 uint32_t
-G64Archive::getStartOfItem(unsigned n)
+G64File::getStartOfItem(unsigned n)
 {
     if (n >= 84) return -1;
     
@@ -213,14 +213,14 @@ G64Archive::getStartOfItem(unsigned n)
 }
 
 size_t
-G64Archive::getSizeOfItem(unsigned n)
+G64File::getSizeOfItem(unsigned n)
 {
     uint32_t offset = getStartOfItem(n);
     return offset ? (LO_HI(data[offset], data[offset+1])) : 0;
 }
 
 const char *
-G64Archive::getNameOfItem(unsigned n)
+G64File::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
     
@@ -237,13 +237,13 @@ G64Archive::getNameOfItem(unsigned n)
 }
 
 const char *
-G64Archive::getTypeOfItem(unsigned n)
+G64File::getTypeOfItem(unsigned n)
 {
     return ""; // (n % 2 == 0) ? "Full" : "Half";
 }
 
 void 
-G64Archive::selectItem(unsigned n)
+G64File::selectItem(unsigned n)
 {
     fp = getStartOfItem(n);
     fp += 2; // skip length information
@@ -251,7 +251,7 @@ G64Archive::selectItem(unsigned n)
 }
 
 int
-G64Archive::getByte()
+G64File::getByte()
 {
 	int result;
 	

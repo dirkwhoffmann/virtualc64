@@ -50,7 +50,7 @@ PRGFile::makePRGArchiveWithFile(const char *filename)
 }
 
 PRGFile *
-PRGFile::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
+PRGFile::makePRGArchiveWithAnyArchive(AnyArchive *otherArchive) {
     
     int exportItem = 0;
     

@@ -56,7 +56,7 @@ T64File::makeT64ArchiveWithFile(const char *path)
 }
 
 T64File *
-T64File::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
+T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
 {
     if (otherArchive == NULL)
         return NULL;

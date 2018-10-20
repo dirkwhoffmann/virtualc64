@@ -52,8 +52,9 @@ typedef struct {
     
 } SnapshotHeader;
 
-/*! @class    Snapshot
- *  @brief    Represents an emulator snapshot.
+/*! @class   Snapshot
+ *  @brief   The Snapshot class declares the programmatic interface for a file
+ *           in V64 format (VirtualC64 snapshot files).
  */
 class Snapshot : public AnyC64File {
 	

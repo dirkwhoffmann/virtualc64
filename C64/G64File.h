@@ -22,11 +22,11 @@
 
 #include "AnyArchive.h"
 
-/*! @class    G64Archive
- *  @brief    The G64Archive class declares the programmatic interface for a
- *            file in G64 format.
+/*! @class   G64File
+ *  @brief   The G64File class declares the programmatic interface for a file
+ *           in G64 format.
  */
-class G64Archive : public Archive {
+class G64File : public AnyArchive {
 
 public:
 
@@ -52,19 +52,19 @@ public:
     //
     
     //! @brief    Standard constructor
-    G64Archive();
+    G64File();
 
     //! @brief    Creates an empty G64 container with the specified capacity
-    G64Archive(size_t capacity);
+    G64File(size_t capacity);
 
     //! @brief    Factory method
-    static G64Archive *makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static G64File *makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static G64Archive *makeG64ArchiveWithFile(const char *path);
+    static G64File *makeG64ArchiveWithFile(const char *path);
 
     //! @brief    Factory method
-    static G64Archive *makeG64ArchiveWithDisk(Disk *disk);
+    static G64File *makeG64ArchiveWithDisk(Disk *disk);
     
     //! @brief    Returns true iff buffer contains a G64 file
     static bool isG64(const uint8_t *buffer, size_t length);
@@ -88,7 +88,7 @@ public:
     
     
     //
-    // Virtual functions from Archive class
+    // Virtual functions from AnyArchive class
     //
     
     int getNumberOfItems();

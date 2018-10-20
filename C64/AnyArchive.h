@@ -29,10 +29,10 @@
 // Forward declarations
 class Disk;
 
-/*! @class    Archive
+/*! @class    AnyArchive
     @brief    Base class for all loadable objects with multiple files included. */
 
-class Archive : public AnyC64File {
+class AnyArchive : public AnyC64File {
     
 public:
 
@@ -41,17 +41,17 @@ public:
     //
     
     //! @brief    Standard constructor
-    Archive();
+    AnyArchive();
     
     //! @brief    Standard destructor
-    virtual ~Archive();
+    virtual ~AnyArchive();
     
     
     //
     //! Factory methods
     //
     
-    static Archive *makeArchiveWithFile(const char *filename);
+    static AnyArchive *makeArchiveWithFile(const char *filename);
     
     
     //

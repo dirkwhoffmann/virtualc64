@@ -30,8 +30,8 @@
 
 // Forward declarations
 class C64;
-class D64Archive;
-class G64Archive;
+class D64File;
+class G64File;
 
 
 //! @brief    A virtual floppy disk
@@ -485,7 +485,7 @@ private:
 public:
     
     /*! @brief   Converts a G64 archive into a virtual floppy disk. */
-    void encodeArchive(G64Archive *a);
+    void encodeArchive(G64File *a);
         
     /*! @brief   Converts a D64 archive into a floppy disk.
      *  @details The method creates sync marks, GRC encoded header and data
@@ -493,10 +493,10 @@ public:
      *  @param   alignTracks If true, the first sector always starts at the
      *           beginning of a track.
      */
-    void encodeArchive(D64Archive *a, bool alignTracks);
+    void encodeArchive(D64File *a, bool alignTracks);
 
     //! @brief   Converts a D64 archive into a floppy disk.
-    void encodeArchive(D64Archive *a) { encodeArchive(a, false); }
+    void encodeArchive(D64File *a) { encodeArchive(a, false); }
 
 private:
     
@@ -510,7 +510,7 @@ private:
      *           Number of tail bytes follwowing sectors with odd sector numbers.
      *  @return  Number of written bits.
      */
-    size_t encodeTrack(D64Archive *a, Track t, uint8_t tailGap, HeadPosition start);
+    size_t encodeTrack(D64File *a, Track t, uint8_t tailGap, HeadPosition start);
     
     /*! @brief   Encode a single sector
      *  @details This function translates the logical byte sequence of a single sector
@@ -518,7 +518,7 @@ private:
      *           'gap' tail gap bytes.
      *  @return  Number of written bits.
      */
-    size_t encodeSector(D64Archive *a, Track t, Sector sector, HeadPosition start, int gap);
+    size_t encodeSector(D64File *a, Track t, Sector sector, HeadPosition start, int gap);
 };
     
 #endif

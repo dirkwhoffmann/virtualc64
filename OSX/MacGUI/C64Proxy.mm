@@ -38,7 +38,7 @@ struct ContainerWrapper { AnyC64File *container; };
 
 // DEPRECATED
 struct SnapshotWrapper { Snapshot *snapshot; };
-struct ArchiveWrapper { Archive *archive; };
+struct ArchiveWrapper { AnyArchive *archive; };
 struct TAPContainerWrapper { TAPFile *tapcontainer; };
 struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
@@ -580,7 +580,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setModifiedDisk:(BOOL)b { wrapper->drive->setModifiedDisk(b); }
 - (void) prepareToInsert { wrapper->drive->prepareToInsert(); }
 - (void) insertDisk:(ArchiveProxy *)disk {
-    Archive *archive = (Archive *)([disk wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([disk wrapper]->container);
     wrapper->drive->insertDisk(archive);
 }
 - (void) prepareToEject { wrapper->drive->prepareToEject(); }
@@ -801,7 +801,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 /* USE mount INSTEAD
 - (BOOL) insertDisk:(ArchiveProxy *)a {
-    Archive *archive = (Archive *)([a wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([a wrapper]->container);
     return wrapper->c64->insertDisk(archive);
 }
  */
@@ -1136,12 +1136,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
 //
-// Archive
+// AnyArchive
 //
 
 @implementation ArchiveProxy
 
-+ (instancetype) make:(Archive *)archive
++ (instancetype) make:(AnyArchive *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
@@ -1149,59 +1149,59 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (instancetype) make
 {
-    Archive *archive = new Archive();
+    AnyArchive *archive = new AnyArchive();
     return [self make: archive];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    Archive *archive = Archive::makeArchiveWithFile([path UTF8String]);
+    AnyArchive *archive = AnyArchive::makeArchiveWithFile([path UTF8String]);
     return [self make: archive];
 }
 
 - (NSInteger)numberOfItems {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return (NSInteger)archive->getNumberOfItems();
 }
 
 - (NSString *)nameOfItem:(NSInteger)item {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->getNameOfItem((int)item)];
 }
 
 - (NSString *)unicodeNameOfItem:(NSInteger)item {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     const unsigned short *unichars = archive->getUnicodeNameOfItem((int)item);
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 
 - (NSInteger)sizeOfItem:(NSInteger)item
 {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return archive->getSizeOfItem((int)item);
 }
 
 - (NSInteger)sizeOfItemInBlocks:(NSInteger)item
 {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return archive->getSizeOfItemInBlocks((int)item);
 }
 
 - (NSString *)typeOfItem:(NSInteger)item
 {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->getTypeOfItem((int)item)];
 }
 
 - (NSInteger)destinationAddrOfItem:(NSInteger)item
 {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return archive->getDestinationAddrOfItem((int)item);
 }
 
 - (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
 {
-    Archive *archive = (Archive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return [NSString stringWithUTF8String:archive->byteStream((unsigned)n, offset, num)];
 }
 @end
@@ -1234,7 +1234,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    Archive *other = (Archive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
     T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1268,7 +1268,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    Archive *other = (Archive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
     PRGFile *archive = PRGFile::makePRGArchiveWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1283,27 +1283,27 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (BOOL)isP00File:(NSString *)filename
 {
-    return P00Archive::isP00File([filename UTF8String]);
+    return P00File::isP00File([filename UTF8String]);
 }
-+ (instancetype) make:(P00Archive *)archive
++ (instancetype) make:(P00File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    P00Archive *archive = P00Archive::makeP00ArchiveWithBuffer((const uint8_t *)buffer, length);
+    P00File *archive = P00File::makeP00ArchiveWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    P00Archive *archive = P00Archive::makeP00ArchiveWithFile([path UTF8String]);
+    P00File *archive = P00File::makeP00ArchiveWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    Archive *other = (Archive *)([otherArchive wrapper]->container);
-    P00Archive *archive = P00Archive::makeP00ArchiveWithAnyArchive(other);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    P00File *archive = P00File::makeP00ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
 @end
@@ -1317,32 +1317,32 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (BOOL)isD64File:(NSString *)filename
 {
-    return D64Archive::isD64File([filename UTF8String]);
+    return D64File::isD64File([filename UTF8String]);
 }
-+ (instancetype) make:(D64Archive *)archive
++ (instancetype) make:(D64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    D64Archive *archive = D64Archive::makeD64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    D64File *archive = D64File::makeD64ArchiveWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    D64Archive *archive = D64Archive::makeD64ArchiveWithFile([path UTF8String]);
+    D64File *archive = D64File::makeD64ArchiveWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    Archive *other = (Archive *)([otherArchive wrapper]->container);
-    D64Archive *archive = D64Archive::makeD64ArchiveWithAnyArchive(other);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    D64File *archive = D64File::makeD64ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
 + (instancetype) makeWithDrive:(DriveProxy *)drive
 {
-    D64Archive *archive = [drive wrapper]->drive->convertToD64();
+    D64File *archive = [drive wrapper]->drive->convertToD64();
     return [self make: archive];
 }
 @end
@@ -1356,27 +1356,27 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (BOOL)isG64File:(NSString *)filename
 {
-    return G64Archive::isG64File([filename UTF8String]);
+    return G64File::isG64File([filename UTF8String]);
 }
-+ (instancetype) make:(G64Archive *)archive
++ (instancetype) make:(G64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    G64Archive *archive = G64Archive::makeG64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    G64File *archive = G64File::makeG64ArchiveWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    G64Archive *archive = G64Archive::makeG64ArchiveWithFile([path UTF8String]);
+    G64File *archive = G64File::makeG64ArchiveWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy
 {
     Disk *disk = [diskProxy wrapper]->disk;
-    G64Archive *archive = G64Archive::makeG64ArchiveWithDisk(disk);
+    G64File *archive = G64File::makeG64ArchiveWithDisk(disk);
     return [self make: archive];
 }
 @end

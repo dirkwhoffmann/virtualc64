@@ -1030,7 +1030,7 @@ C64::mount(AnyC64File *file)
         case PRG_CONTAINER:
         case P00_CONTAINER:
         case G64_CONTAINER:
-            result = insertDisk((Archive *)file, 1);
+            result = insertDisk((AnyArchive *)file, 1);
             break;
     
         case TAP_CONTAINER:
@@ -1078,7 +1078,7 @@ C64::flash(AnyC64File *file, unsigned item)
         case T64_CONTAINER:
         case PRG_CONTAINER:
         case P00_CONTAINER:
-            ((Archive *)file)->flash(item, mem.ram);
+            ((AnyArchive *)file)->flash(item, mem.ram);
             break;
             
         default:
@@ -1117,7 +1117,7 @@ C64::loadRom(const char *filename)
 }
 
 bool
-C64::insertDisk(Archive *a, unsigned drive)
+C64::insertDisk(AnyArchive *a, unsigned drive)
 {
     assert(a != NULL);
     assert(isValidDriveNr(drive));

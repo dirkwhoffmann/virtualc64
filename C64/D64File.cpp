@@ -80,7 +80,7 @@ static const D64TrackInfo D64Map[] =
 // Creating and destructing D64 archives
 //
 
-D64Archive::D64Archive()
+D64File::D64File()
 {
     setDescription("D64Archive");
     memset(name, 0, sizeof(name));
@@ -90,10 +90,10 @@ D64Archive::D64Archive()
     fp = 0;
 }
 
-D64Archive *
-D64Archive::makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+D64File *
+D64File::makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-    D64Archive *archive = new D64Archive();
+    D64File *archive = new D64File();
     
     if (!archive->readFromBuffer(buffer, length)) {
         delete archive;
@@ -103,10 +103,10 @@ D64Archive::makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
     return archive;
 }
 
-D64Archive *
-D64Archive::makeD64ArchiveWithFile(const char *path)
+D64File *
+D64File::makeD64ArchiveWithFile(const char *path)
 {
-    D64Archive *archive = new D64Archive();
+    D64File *archive = new D64File();
     
     if (!archive->readFromFile(path)) {
         delete archive;
@@ -116,12 +116,12 @@ D64Archive::makeD64ArchiveWithFile(const char *path)
     return archive;
 }
 
-D64Archive *
-D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
+D64File *
+D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
 {
     assert(otherArchive != NULL);
     
-    D64Archive *archive = new D64Archive();
+    D64File *archive = new D64File();
     archive->debug(1, "Creating D64 archive from a %s archive...\n",
                    otherArchive->typeAsString());
     
@@ -171,7 +171,7 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
 }
 
 bool
-D64Archive::isD64(const uint8_t *buffer, size_t length)
+D64File::isD64(const uint8_t *buffer, size_t length)
 {
     // Unfortunaltely, D64 containers do not contain magic bytes.
     // We can only check the buffer size
@@ -186,7 +186,7 @@ D64Archive::isD64(const uint8_t *buffer, size_t length)
 }
 
 bool 
-D64Archive::isD64File(const char *filename)
+D64File::isD64File(const char *filename)
 {
     bool fileOK = false;
     
@@ -214,13 +214,13 @@ D64Archive::isD64File(const char *filename)
 //
 
 bool
-D64Archive::hasSameType(const char *filename)
+D64File::hasSameType(const char *filename)
 {
-    return D64Archive::isD64File(filename);
+    return D64File::isD64File(filename);
 }
 
 bool 
-D64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
+D64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     size_t numberOfErrors = 0;
     
@@ -289,7 +289,7 @@ D64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 size_t
-D64Archive::writeToBuffer(uint8_t *buffer)
+D64File::writeToBuffer(uint8_t *buffer)
 {
     switch (numTracks) {
             
@@ -316,7 +316,7 @@ D64Archive::writeToBuffer(uint8_t *buffer)
 }
 
 const char *
-D64Archive::getName()
+D64File::getName()
 {
     int i, pos = offset(18, 0) + 0x90;
     
@@ -330,7 +330,7 @@ D64Archive::getName()
 }
 
 const unsigned short *
-D64Archive::getUnicodeName()
+D64File::getUnicodeName()
 {
     (void)getName();
     translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
@@ -338,11 +338,11 @@ D64Archive::getUnicodeName()
 }
 
 //
-// Virtual functions from Archive class
+// Virtual functions from AnyArchive class
 //
 
 int
-D64Archive::getNumberOfItems()
+D64File::getNumberOfItems()
 {
     unsigned offsets[144]; // a C64 disk contains at most 144 files
     unsigned noOfFiles;
@@ -353,7 +353,7 @@ D64Archive::getNumberOfItems()
 }
 
 const char *
-D64Archive::getNameOfItem(unsigned n)
+D64File::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
     
@@ -371,7 +371,7 @@ D64Archive::getNameOfItem(unsigned n)
 }
 
 const char *
-D64Archive::getTypeOfItem(unsigned n)
+D64File::getTypeOfItem(unsigned n)
 {
     const char *extension = "";
     int pos = findDirectoryEntry(n);
@@ -383,7 +383,7 @@ D64Archive::getTypeOfItem(unsigned n)
 }
 
 bool
-D64Archive::itemIsVisible(uint8_t typeChar, const char **extension)
+D64File::itemIsVisible(uint8_t typeChar, const char **extension)
 {
     const char *result = NULL;
     
@@ -418,7 +418,7 @@ D64Archive::itemIsVisible(uint8_t typeChar, const char **extension)
 }
 
 size_t
-D64Archive::getSizeOfItemInBlocks(unsigned n)
+D64File::getSizeOfItemInBlocks(unsigned n)
 {
     int pos = findDirectoryEntry(n);
     
@@ -426,7 +426,7 @@ D64Archive::getSizeOfItemInBlocks(unsigned n)
 }
 
 uint16_t
-D64Archive::getDestinationAddrOfItem(unsigned n)
+D64File::getDestinationAddrOfItem(unsigned n)
 {
     int pos;
     int track;
@@ -448,7 +448,7 @@ D64Archive::getDestinationAddrOfItem(unsigned n)
 }
 
 void
-D64Archive::selectItem(unsigned item)
+D64File::selectItem(unsigned item)
 {
     fp = -1;
     
@@ -474,7 +474,7 @@ D64Archive::selectItem(unsigned item)
 }
 
 int 
-D64Archive::getByte()
+D64File::getByte()
 {
     int result;
     
@@ -517,7 +517,7 @@ D64Archive::getByte()
 
 /*
 unsigned
-D64Archive::numberOfSectors(unsigned halftrack)
+D64File::numberOfSectors(unsigned halftrack)
 {
     assert(halftrack >= 1 && halftrack <= 84);
     
@@ -529,14 +529,14 @@ D64Archive::numberOfSectors(unsigned halftrack)
 */
 
 unsigned
-D64Archive::numberOfTracks()
+D64File::numberOfTracks()
 {
     assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
     return numTracks;
 }
 
 void
-D64Archive::setNumberOfTracks(unsigned tracks)
+D64File::setNumberOfTracks(unsigned tracks)
 {
     assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
     numTracks = tracks;
@@ -548,14 +548,14 @@ D64Archive::setNumberOfTracks(unsigned tracks)
 //
 
 uint8_t *
-D64Archive::findSector(Track t, Sector s)
+D64File::findSector(Track t, Sector s)
 {
     assert(isValidTrackSectorPair(t, s));
     return data + offset(t, s);
 }
 
 uint8_t
-D64Archive::errorCode(Track t, Sector s)
+D64File::errorCode(Track t, Sector s)
 {
    assert(isValidTrackSectorPair(t, s));
     
@@ -568,7 +568,7 @@ D64Archive::errorCode(Track t, Sector s)
 
 
 int
-D64Archive::offset(Track track, Sector sector)
+D64File::offset(Track track, Sector sector)
 {
     if (isValidTrackSectorPair(track, sector)) {
         return D64Map[track].offset + (sector * 256);
@@ -578,7 +578,7 @@ D64Archive::offset(Track track, Sector sector)
 }
 
 bool
-D64Archive::nextTrackAndSector(Track track, Sector sector,
+D64File::nextTrackAndSector(Track track, Sector sector,
                                Track *nextTrack, Sector *nextSector,
                                bool skipDirectoryTrack)
 {
@@ -620,7 +620,7 @@ D64Archive::nextTrackAndSector(Track track, Sector sector,
 }
 
 bool
-D64Archive::jumpToNextSector(int *pos)
+D64File::jumpToNextSector(int *pos)
 { 
     int nTrack, nSector, newPos;
     
@@ -638,7 +638,7 @@ D64Archive::jumpToNextSector(int *pos)
 }
 
 bool
-D64Archive::writeByteToSector(uint8_t byte, Track *t, Sector *s)
+D64File::writeByteToSector(uint8_t byte, Track *t, Sector *s)
 {
     Track track = *t;
     Sector sector = *s;
@@ -685,7 +685,7 @@ D64Archive::writeByteToSector(uint8_t byte, Track *t, Sector *s)
 //
 
 void
-D64Archive::markSectorAsUsed(Track track, Sector sector)
+D64File::markSectorAsUsed(Track track, Sector sector)
 {
     // For each track and sector, there exists a single bit in the BAM.
     // 1 = used, 0 = unused
@@ -714,7 +714,7 @@ D64Archive::markSectorAsUsed(Track track, Sector sector)
 }
 
 void
-D64Archive::writeBAM(const char *name)
+D64File::writeBAM(const char *name)
 {
     int pos;
     
@@ -783,7 +783,7 @@ D64Archive::writeBAM(const char *name)
 }
 
 void
-D64Archive::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles)
+D64File::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles)
 {
     // Directory starts on track 18 in sector 1
     int pos = offset(18, 1);
@@ -829,7 +829,7 @@ D64Archive::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvis
 
 
 int
-D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
+D64File::findDirectoryEntry(int item, bool skipInvisibleFiles)
 {
     unsigned offsets[144];
     unsigned noOfFiles;
@@ -841,7 +841,7 @@ D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
 }
 
 bool
-D64Archive::writeDirectoryEntry(unsigned nr, const char *name,
+D64File::writeDirectoryEntry(unsigned nr, const char *name,
                                 Track startTrack, Sector startSector,
                                 size_t filesize)
 {
@@ -912,7 +912,7 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name,
 //
 
 void
-D64Archive::dumpSector(Track track, Sector sector)
+D64File::dumpSector(Track track, Sector sector)
 {
     int pos = offset(track, sector);
     

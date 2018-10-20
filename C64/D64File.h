@@ -1,8 +1,8 @@
 /*!
- * @header      D64Archive.h
+ * @header      D64File.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2008 - 2016 Dirk W. Hoffmann
- * @brief       Declares D64Archive class
+ * @brief       Declares D64File class
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,11 @@
 #define D64_802_SECTORS_ECC 206114
 
 
-/*! @class   D64Archive
- *  @brief   An archive of type D64. 
+/*! @class   D64File
+ *  @brief   The D64File class declares the programmatic interface for a file
+ *           in D64 format.
  */
-class D64Archive : public Archive {
+class D64File : public AnyArchive {
 
 private: 
     
@@ -68,18 +69,18 @@ public:
     //
 
     //! @brief    Standard constructor
-    D64Archive();
+    D64File();
     
     //! @brief    Factory method
-    static D64Archive *makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static D64File *makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static D64Archive *makeD64ArchiveWithFile(const char *path);
+    static D64File *makeD64ArchiveWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static D64Archive *makeD64ArchiveWithAnyArchive(Archive *otherArchive);
+    static D64File *makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive);
         
     
     //

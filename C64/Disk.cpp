@@ -601,7 +601,7 @@ Disk::decodeSector(size_t offset, uint8_t *dest, int *error)
 //
 
 void
-Disk::encodeArchive(G64Archive *a)
+Disk::encodeArchive(G64File *a)
 {
     debug(2, "Encoding G64 archive\n");
     
@@ -638,7 +638,7 @@ Disk::encodeArchive(G64Archive *a)
 }
 
 void
-Disk::encodeArchive(D64Archive *a, bool alignTracks)
+Disk::encodeArchive(D64File *a, bool alignTracks)
 {
     assert(a != NULL);
     
@@ -710,7 +710,7 @@ Disk::encodeArchive(D64Archive *a, bool alignTracks)
 }
 
 size_t
-Disk::encodeTrack(D64Archive *a, Track t, uint8_t tailGap, HeadPosition start)
+Disk::encodeTrack(D64File *a, Track t, uint8_t tailGap, HeadPosition start)
 {
     assert(isTrackNumber(t));
     debug(3, "Encoding track %d\n", t);
@@ -729,7 +729,7 @@ Disk::encodeTrack(D64Archive *a, Track t, uint8_t tailGap, HeadPosition start)
 }
 
 size_t
-Disk::encodeSector(D64Archive *a, Track t, Sector s, HeadPosition start, int tailGap)
+Disk::encodeSector(D64File *a, Track t, Sector s, HeadPosition start, int tailGap)
 {
     uint8_t *source;
     HeadPosition offset = start;

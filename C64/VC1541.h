@@ -328,7 +328,7 @@ public:
      *            After that, all tracks will be GCR-encoded and written to a
      *            new disk.
      */
-    void insertDisk(Archive *a);
+    void insertDisk(AnyArchive *a);
 
     /*! @brief    Returns the current state of the write protection barrier
      *  @details  If the light barrier is blocked, the drive head is unable to
@@ -367,7 +367,7 @@ public:
      *  @result   A D64 archive containing the same files as the currently
      *            inserted disk; NULL if no disk is inserted.
      */
-    D64Archive *convertToD64();
+    D64File *convertToD64();
 
     //! @brief    Exports the currently inserted disk to D64 file.
     bool exportToD64(const char *filename);

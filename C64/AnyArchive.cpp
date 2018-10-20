@@ -23,46 +23,46 @@
 #include "P00File.h"
 #include "G64File.h"
 
-Archive::Archive()
+AnyArchive::AnyArchive()
 {
 }
 
-Archive::~Archive()
+AnyArchive::~AnyArchive()
 {
 }
 
-Archive *
-Archive::makeArchiveWithFile(const char *path)
+AnyArchive *
+AnyArchive::makeArchiveWithFile(const char *path)
 {
     assert(path != NULL);
     
     if (T64File::isT64File(path)) {
         return T64File::makeT64ArchiveWithFile(path);
     }
-    if (D64Archive::isD64File(path)) {
-        return D64Archive::makeD64ArchiveWithFile(path);
+    if (D64File::isD64File(path)) {
+        return D64File::makeD64ArchiveWithFile(path);
     }
     if (PRGFile::isPRGFile(path)) {
         return PRGFile::makePRGArchiveWithFile(path);
     }
-    if (P00Archive::isP00File(path)) {
-        return P00Archive::makeP00ArchiveWithFile(path);
+    if (P00File::isP00File(path)) {
+        return P00File::makeP00ArchiveWithFile(path);
     }
-    if (G64Archive::isG64File(path)) {
-        return G64Archive::makeG64ArchiveWithFile(path);
+    if (G64File::isG64File(path)) {
+        return G64File::makeG64ArchiveWithFile(path);
     }
     return NULL;
 }
 
 const char *
-Archive::getNameOfItem(unsigned n)
+AnyArchive::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
     return "FILE";
 }
 
 const unsigned short *
-Archive::getUnicodeNameOfItem(unsigned n)
+AnyArchive::getUnicodeNameOfItem(unsigned n)
 {
     const char *name = getNameOfItem(n);
     translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
@@ -70,7 +70,7 @@ Archive::getUnicodeNameOfItem(unsigned n)
 }
 
 size_t
-Archive::getSizeOfItem(unsigned n)
+AnyArchive::getSizeOfItem(unsigned n)
 {
     int size = 0;
     
@@ -82,7 +82,7 @@ Archive::getSizeOfItem(unsigned n)
 }
 
 void
-Archive::dumpDirectory()
+AnyArchive::dumpDirectory()
 {
     int numberOfItems = getNumberOfItems();
     
@@ -106,7 +106,7 @@ Archive::dumpDirectory()
 }
 
 void
-Archive::flash(unsigned item, uint8_t *buffer)
+AnyArchive::flash(unsigned item, uint8_t *buffer)
 {
     assert(buffer != NULL);
     
@@ -124,7 +124,7 @@ Archive::flash(unsigned item, uint8_t *buffer)
 }
 
 const char *
-Archive::byteStream(unsigned n, size_t offset, size_t num)
+AnyArchive::byteStream(unsigned n, size_t offset, size_t num)
 {
     if (n >= getNumberOfItems()) {
         return "???";

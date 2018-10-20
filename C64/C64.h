@@ -627,7 +627,7 @@ public:
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @details  Only D64 and G64 archives are supported.
      */
-    bool insertDisk(Archive *a, unsigned drive);
+    bool insertDisk(AnyArchive *a, unsigned drive);
     
     /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.

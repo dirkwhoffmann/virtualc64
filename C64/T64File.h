@@ -21,10 +21,11 @@
 
 #include "AnyArchive.h"
 
-/*! @class    D64Archive
- *  @brief    The D64Archive class declares the programmatic interface for a file in T64 format.
+/*! @class   T64File
+ *  @brief   The T64File class declares the programmatic interface for a file
+ *           in T64 format.
  */
-class T64File : public Archive {
+class T64File : public AnyArchive {
     
     //! @brief    Header signature
     static const uint8_t magicBytes[];
@@ -57,7 +58,7 @@ public:
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static T64File *makeT64ArchiveWithAnyArchive(Archive *otherArchive);
+    static T64File *makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive);
 
     void dealloc();
     
@@ -71,7 +72,7 @@ public:
     const char *getName();
     const unsigned short *getUnicodeName();
     
-    // From Archive class
+    // From AnyArchive class
     int getNumberOfItems();
     const char *getNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);

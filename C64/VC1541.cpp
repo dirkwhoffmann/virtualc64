@@ -507,7 +507,7 @@ VC1541::prepareToInsert()
 }
 
 void
-VC1541::insertDisk(Archive *a)
+VC1541::insertDisk(AnyArchive *a)
 {
 
     c64->suspend();
@@ -520,12 +520,12 @@ VC1541::insertDisk(Archive *a)
             
         case D64_CONTAINER:
             disk.clearDisk();
-            disk.encodeArchive((D64Archive *)a);
+            disk.encodeArchive((D64File *)a);
             break;
             
         case G64_CONTAINER:
             disk.clearDisk();
-            disk.encodeArchive((G64Archive *)a);
+            disk.encodeArchive((G64File *)a);
             break;
             
         default: {
@@ -533,7 +533,7 @@ VC1541::insertDisk(Archive *a)
             // All other archives cannot be encoded directly.
             // We convert them to a D64 archive first.
             
-            D64Archive *converted = D64Archive::makeD64ArchiveWithAnyArchive(a);
+            D64File *converted = D64File::makeD64ArchiveWithAnyArchive(a);
             disk.clearDisk();
             disk.encodeArchive(converted);
             break;
@@ -586,12 +586,12 @@ VC1541::ejectDisk()
     c64->resume();
 }
 
-D64Archive *
+D64File *
 VC1541::convertToD64()
 {
     int error;
     
-    D64Archive *archive = new D64Archive();
+    D64File *archive = new D64File();
     debug(1, "Creating D64 archive from currently inserted diskette ...\n");
     
     // Determine D64 format (35, 40, or 42 track format)
@@ -629,7 +629,7 @@ VC1541::exportToD64(const char *filename)
 {
     assert(filename != NULL);
 
-    D64Archive *archive = convertToD64();
+    D64File *archive = convertToD64();
     
     if (archive == NULL)
         return false;

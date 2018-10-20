@@ -19,17 +19,17 @@
 #include "P00File.h"
 
 const uint8_t
-P00Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00 };
+P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00 };
 
-P00Archive::P00Archive()
+P00File::P00File()
 {
     setDescription("P00Archive");
 }
 
-P00Archive *
-P00Archive::makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+P00File *
+P00File::makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-    P00Archive *archive = new P00Archive();
+    P00File *archive = new P00File();
     
     if (!archive->readFromBuffer(buffer, length)) {
         delete archive;
@@ -39,10 +39,10 @@ P00Archive::makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length)
     return archive;
 }
 
-P00Archive *
-P00Archive::makeP00ArchiveWithFile(const char *filename)
+P00File *
+P00File::makeP00ArchiveWithFile(const char *filename)
 {
-    P00Archive *archive = new P00Archive();
+    P00File *archive = new P00File();
     
     if (!archive->readFromFile(filename)) {
         delete archive;
@@ -52,13 +52,13 @@ P00Archive::makeP00ArchiveWithFile(const char *filename)
     return archive;
 }
 
-P00Archive *
-P00Archive::makeP00ArchiveWithAnyArchive(Archive *otherArchive)
+P00File *
+P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
 {
     if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
         return NULL;
     
-    P00Archive *archive = new P00Archive();
+    P00File *archive = new P00File();
     archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
@@ -97,14 +97,14 @@ P00Archive::makeP00ArchiveWithAnyArchive(Archive *otherArchive)
 }
 
 bool
-P00Archive::isP00(const uint8_t *buffer, size_t length)
+P00File::isP00(const uint8_t *buffer, size_t length)
 {
     if (length < 0x1A) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool 
-P00Archive::isP00File(const char *filename)
+P00File::isP00File(const char *filename)
 {
 	assert (filename != NULL);
 	
@@ -118,7 +118,7 @@ P00Archive::isP00File(const char *filename)
 }
 
 void 
-P00Archive::dealloc()
+P00File::dealloc()
 {
 	if (data) free(data);
 	data = NULL;
@@ -127,7 +127,7 @@ P00Archive::dealloc()
 }
 
 const char *
-P00Archive::getName()
+P00File::getName()
 {
     unsigned i;
     
@@ -139,13 +139,13 @@ P00Archive::getName()
 }
 
 bool
-P00Archive::hasSameType(const char *filename)
+P00File::hasSameType(const char *filename)
 {
 	return isP00File(filename);
 }
 
 size_t
-P00Archive::writeToBuffer(uint8_t *buffer)
+P00File::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
     
@@ -156,13 +156,13 @@ P00Archive::writeToBuffer(uint8_t *buffer)
 }
 
 int 
-P00Archive::getNumberOfItems()
+P00File::getNumberOfItems()
 {
 	return 1;
 }
 
 const char *
-P00Archive::getNameOfItem(unsigned n)
+P00File::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
     
@@ -179,13 +179,13 @@ P00Archive::getNameOfItem(unsigned n)
 }
 
 const char *
-P00Archive::getTypeOfItem(unsigned n)
+P00File::getTypeOfItem(unsigned n)
 {
 	return "PRG";
 }
 
 uint16_t 
-P00Archive::getDestinationAddrOfItem(unsigned n)
+P00File::getDestinationAddrOfItem(unsigned n)
 {
 //	uint16_t result = data[0x1A] + (data[0x1B] << 8);
 //	return result;
@@ -193,7 +193,7 @@ P00Archive::getDestinationAddrOfItem(unsigned n)
 }
 
 void 
-P00Archive::selectItem(unsigned n)
+P00File::selectItem(unsigned n)
 {		
 	fp = 0x1C; // skip header and load address
 
@@ -202,7 +202,7 @@ P00Archive::selectItem(unsigned n)
 }
 
 int 
-P00Archive::getByte()
+P00File::getByte()
 {
 	int result;
 	

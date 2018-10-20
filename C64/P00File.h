@@ -21,10 +21,11 @@
 
 #include "AnyArchive.h"
 
-/*! @class  D64Archive
- *  @brief  The D64Archive class declares the programmatic interface for a file in P00 format.
+/*! @class   P00File
+ *  @brief   The P00File class declares the programmatic interface for a file
+ *           in P00 format.
  */
-class P00Archive : public Archive {
+class P00File : public AnyArchive {
 
 private:
 
@@ -39,18 +40,18 @@ private:
 public:
 
     //! @brief    Standard constructor.
-    P00Archive();
+    P00File();
     
     //! @brief    Factory method
-    static P00Archive *makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static P00File *makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static P00Archive *makeP00ArchiveWithFile(const char *path);
+    static P00File *makeP00ArchiveWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static P00Archive *makeP00ArchiveWithAnyArchive(Archive *otherArchive);
+    static P00File *makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive);
     
     //! @brief    Returns true iff buffer contains a P00 file
     static bool isP00(const uint8_t *buffer, size_t length);
@@ -73,7 +74,7 @@ public:
     
     
     //
-    // Virtual functions from Archive class
+    // Virtual functions from AnyArchive class
     //
     
     int getNumberOfItems();
