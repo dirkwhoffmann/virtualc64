@@ -79,13 +79,14 @@ public:
     //! @brief    Returns true iff filename points to a VC1541 ROM file
     static bool isVC1541RomFile(const char *filename);
     
+    
     //
     // Virtual functions from File class
     //
     
     C64FileType type() { return romtype; }
     const char *typeAsString() { return "ROM"; }
-    bool hasSameType(const char *filename);
+    bool hasSameType(const char *filename) { return isRomFile(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     
 };

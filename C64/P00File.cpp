@@ -129,12 +129,6 @@ P00File::getName()
     return name;
 }
 
-bool
-P00File::hasSameType(const char *filename)
-{
-	return isP00File(filename);
-}
-
 size_t
 P00File::writeToBuffer(uint8_t *buffer)
 {

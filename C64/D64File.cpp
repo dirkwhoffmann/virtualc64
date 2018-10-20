@@ -213,12 +213,6 @@ D64File::isD64File(const char *filename)
 // Virtual functions from Container class
 //
 
-bool
-D64File::hasSameType(const char *filename)
-{
-    return D64File::isD64File(filename);
-}
-
 bool 
 D64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {

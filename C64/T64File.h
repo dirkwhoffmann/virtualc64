@@ -80,7 +80,7 @@ public:
     static bool isT64File(const char *filename);
     
     //! Check file type
-    bool hasSameType(const char *filename) { return T64File::isT64File(filename); }
+    bool hasSameType(const char *filename) { return isT64File(filename); }
     
     //! Read container data from memory buffer
     bool readFromBuffer(const uint8_t *buffer, size_t length);

@@ -231,7 +231,12 @@ exit:
 size_t
 AnyC64File::writeToBuffer(uint8_t *buffer)
 {
-	return 0;
+    assert(data != NULL);
+    
+    if (buffer) {
+        memcpy(buffer, data, size);
+    }
+    return size;
 }
 
 bool 

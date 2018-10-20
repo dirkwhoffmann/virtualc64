@@ -137,17 +137,8 @@ ROMFile::ROMFile()
 }
 
 bool
-ROMFile::hasSameType(const char *filename)
-{
-    return isRomFile(filename);
-}
-
-bool
 ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    if (!isRom(buffer, length))
-        return false;
-    
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
     
@@ -155,7 +146,8 @@ ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
     isBasicRom(buffer, length) ? BASIC_ROM_FILE :
     isCharRom(buffer, length) ? CHAR_ROM_FILE :
     isKernalRom(buffer, length) ? KERNAL_ROM_FILE :
-    VC1541_ROM_FILE;
+    isVC1541Rom(buffer, length) ? VC1541_ROM_FILE :
+    UNKNOWN_FILE_FORMAT;
  
-    return true;
+    return romtype != UNKNOWN_FILE_FORMAT;
 }

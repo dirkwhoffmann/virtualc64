@@ -61,7 +61,7 @@ public:
     const char *getName();
     C64FileType type() { return P00_FILE; }
     const char *typeAsString() { return "P00"; }
-    bool hasSameType(const char *filename);
+    bool hasSameType(const char *filename) { return isP00File(filename); }
     size_t writeToBuffer(uint8_t *buffer);
     
     

@@ -122,8 +122,8 @@ public:
 	// Methods from Container class
 	bool hasSameType(const char *filename);
 	size_t writeToBuffer(uint8_t *buffer);
-    C64FileType type();
-	const char *typeAsString();
+    C64FileType type() { return V64_FILE; }
+    const char *typeAsString() { return "V64"; }
 
     //! @brief    Returns size of header
     size_t headerSize() { return sizeof(SnapshotHeader); }

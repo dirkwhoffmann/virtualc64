@@ -91,7 +91,7 @@ public:
     C64FileType type() { return D64_FILE; }
     const char *typeAsString() { return "D64"; }
 	
-    bool hasSameType(const char *filename);
+    bool hasSameType(const char *filename) { return isD64File(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

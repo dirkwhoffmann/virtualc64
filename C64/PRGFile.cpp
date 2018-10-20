@@ -104,36 +104,6 @@ PRGFile::isPRGFile(const char *filename)
 	return true;
 }
 
-bool 
-PRGFile::hasSameType(const char *filename)
-{
-	return isPRGFile(filename);
-}
-
-size_t
-PRGFile::writeToBuffer(uint8_t *buffer)
-{
-    assert(data != NULL);
-
-    if (buffer) {
-        memcpy(buffer, data, size);
-    }
-    return size;
-}
-
-const char *
-PRGFile::getNameOfItem(unsigned n)
-{
-    assert(n < getNumberOfItems());
-	return "FILE";
-}
-
-const char *
-PRGFile::getTypeOfItem(unsigned n)
-{
-	return "PRG";
-}
-
 uint16_t 
 PRGFile::getDestinationAddrOfItem(unsigned n)
 {

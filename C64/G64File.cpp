@@ -165,12 +165,6 @@ G64File::isG64File(const char *filename)
 	return true;
 }
 
-bool 
-G64File::hasSameType(const char *filename)
-{
-	return G64File::isG64File(filename);
-}
-
 size_t
 G64File::writeToBuffer(uint8_t *buffer)
 {

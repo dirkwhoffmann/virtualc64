@@ -142,18 +142,6 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
     return isSnapshotFile(path) && !isSupportedSnapshotFile(path);
 }
 
-C64FileType
-Snapshot::type()
-{
-    return V64_FILE;
-}
-
-const char *
-Snapshot::typeAsString() 
-{
-	return "V64";
-}
-
 bool 
 Snapshot::hasSameType(const char *filename)
 {
