@@ -124,10 +124,8 @@ CRTFile::isCRTFile(const char *path)
 bool
 CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    if ((data = (uint8_t *)malloc(length)) == NULL) {
+    if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
-    }
-    memcpy(data, buffer, length);
     
     // Scan cartridge header
     if (memcmp("C64 CARTRIDGE   ", data, 16) != 0) {

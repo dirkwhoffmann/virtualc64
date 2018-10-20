@@ -93,8 +93,6 @@ public:
     //! @functiongroup Handling ROM data
     //
     
-    // uint8_t *getData() { return data; }
-    // uint16_t getSize() { return size; }
     
     //! @brief   Flushes the ROM into the emulator
     //! @details Copies the ROM data to the specified location.

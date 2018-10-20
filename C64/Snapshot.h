@@ -62,12 +62,6 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-    //! @brief    The raw data of this archive.
-    uint8_t *data;
-    
-    //! @brief    File size
-    size_t size;
-    
     //! @brief    Capacity
     /*! @details  State size in bytes exluding header information
      *  @note     Number of allocated bytes is capacity + sizeof(SnapshotHeader)
@@ -126,7 +120,6 @@ public:
 
 	// Methods from Container class
 	bool hasSameType(const char *filename);
-	bool readFromBuffer(const uint8_t *buffer, size_t length);
 	size_t writeToBuffer(uint8_t *buffer);
     ContainerType type();
 	const char *typeAsString();

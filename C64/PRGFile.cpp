@@ -119,18 +119,6 @@ PRGArchive::hasSameType(const char *filename)
 	return isPRGFile(filename);
 }
 
-bool 
-PRGArchive::readFromBuffer(const uint8_t *buffer, size_t length)
-{	
-	if ((data = (uint8_t *)malloc(length)) == NULL)
-		return false;
-
-	memcpy(data, buffer, length);
-	size = length;
-	    
-	return true;
-}
-
 size_t
 PRGArchive::writeToBuffer(uint8_t *buffer)
 {

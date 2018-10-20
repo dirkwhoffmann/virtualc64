@@ -145,13 +145,11 @@ ROMFile::hasSameType(const char *filename)
 bool
 ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    if (!isRom(buffer, length)) return false;
-    
-    if ((data = (uint8_t *)malloc(length)) == NULL)
+    if (!isRom(buffer, length))
         return false;
     
-    memcpy(data, buffer, length);
-    size = length;
+    if (!AnyC64File::readFromBuffer(buffer, length))
+        return false;
     
     romtype =
     isBasicRom(buffer, length) ? BASIC_ROM_FILE :

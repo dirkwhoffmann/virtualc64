@@ -42,10 +42,7 @@ private:
     
     //! @brief    Header signature
     static const uint8_t magicBytes[];
-    
-    //! @brief    Raw data of CRT container file
-    uint8_t *data;
-    
+        
     //! @brief    Number of chips contained in cartridge file
     unsigned int numberOfChips = 0;
     

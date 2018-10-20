@@ -180,18 +180,6 @@ G64Archive::hasSameType(const char *filename)
 	return G64Archive::isG64File(filename);
 }
 
-bool 
-G64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
-{	
-	if ((data = (uint8_t *)malloc(length)) == NULL)
-		return false;
-
-	memcpy(data, buffer, length);
-	size = length;
-
-	return true;
-}
-
 size_t
 G64Archive::writeToBuffer(uint8_t *buffer)
 {

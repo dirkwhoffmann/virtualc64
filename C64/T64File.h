@@ -29,12 +29,6 @@ class T64Archive : public Archive {
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-    //! @brief    The raw data of this archive.
-    uint8_t *data;
-
-    //! @brief    File size
-    size_t size;
-
     /*! @brief    File pointer
         @details  An offset into the data array. 
      */

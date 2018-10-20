@@ -20,14 +20,12 @@
 
 AnyC64File::AnyC64File()
 {
-    debug("AnyC64File::Constructor\n");
     const char *defaultName = "HELLO VIRTUALC64";
     memcpy(name, defaultName, strlen(defaultName) + 1);
 }
 
 AnyC64File::~AnyC64File()
 {
-    debug("AnyC64File::Destructor\n");
     dealloc();
 
     if (path)
@@ -37,8 +35,6 @@ AnyC64File::~AnyC64File()
 void
 AnyC64File::dealloc()
 {
-    debug("AnyC64File::dealloc\n");
-   
     if (data == NULL) {
         assert(size == 0);
         return;
@@ -96,14 +92,19 @@ AnyC64File::getUnicodeName()
     return unicode;
 }
 
-/*
-void
-AnyC64File::setName(const char *str)
+bool
+AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    strncpy(name, str, sizeof(name));
-    name[sizeof(name) - 1] = 0;
+    assert (buffer != NULL);
+    
+    dealloc();
+    if ((data = (uint8_t *)malloc(length)) == NULL)
+        return false;
+    
+    memcpy(data, buffer, length);
+    size = length;
+    return true;
 }
-*/
 
 bool
 AnyC64File::readFromFile(const char *filename)
@@ -151,14 +152,11 @@ AnyC64File::readFromFile(const char *filename)
 		goto exit;
 	}
 
-	// Set path
     setPath(filename);
-    // name = ExtractFilenameWithoutSuffix(filename);
-    // setName(name);
-        
+    success = true;
+    
     debug(1, "File %s read successfully\n", path);
-	success = true;
-
+	
 exit:
 	
     if (name)

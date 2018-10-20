@@ -209,14 +209,20 @@ T64Archive::isT64File(const char *path)
 bool 
 T64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
+    /*
     assert(buffer != NULL);
     
-	if ((data = (uint8_t *)malloc(length)) == NULL)
-		return false;
-
-	memcpy(data, buffer, length);
-	size = length;
-
+    if ((data = (uint8_t *)malloc(length)) == NULL)
+        return false;
+    
+    memcpy(data, buffer, length);
+    size = length;
+     */
+    
+    if (!AnyC64File::readFromBuffer(buffer, length))
+        return false;
+     
+    
     // Some T64 archives contain incosistencies. We fix them asap
     (void)repair();
     

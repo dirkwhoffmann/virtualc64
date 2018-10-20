@@ -31,12 +31,6 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-    //! @brief    The raw data of this archive.
-    uint8_t *data;
-		
-    //! @brief    File size
-	size_t size;
-
     /*! @brief    File pointer
      *  @details  An offset into the data array. 
      */
@@ -75,7 +69,6 @@ public:
     const char *typeAsString() { return "P00"; }
     
     bool hasSameType(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     
     

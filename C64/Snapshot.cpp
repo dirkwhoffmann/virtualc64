@@ -180,35 +180,6 @@ Snapshot::hasSameType(const char *filename)
     return Snapshot::isSnapshotFile(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
-bool 
-Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
-{
-    assert(buffer != NULL);
-    assert(length > sizeof(SnapshotHeader));
-
-    // size_t stateSize = length - sizeof(SnapshotHeader);
-    
-    // Allocate memory
-    /*
-    if (!setCapacity(stateSize))
-        return false; 
-    */
-    // if ((data = new uint8_t[length]) == NULL)
-    if ((data = (uint8_t *)malloc(length)) == NULL)
-        return false;
-    
-    memcpy(data, buffer, length);
-    size = length;
-    
-    // Copy header
-    // memcpy((void *)header(), buffer, sizeof(SnapshotHeader));
-    
-    // Copy state data
-    // memcpy(getData(), buffer + sizeof(SnapshotHeader), length - sizeof(SnapshotHeader));
-    
-	return true;
-}
-
 size_t
 Snapshot::writeToBuffer(uint8_t *buffer)
 {

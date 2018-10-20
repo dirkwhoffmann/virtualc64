@@ -110,9 +110,6 @@ public:
      *            which is used, e.g., in the mount dialogs preview panel.
      */
     virtual const unsigned short *getUnicodeName();
-
-    //! @brief    Sets the logical name.
-    // void setName(const char *name);
 	
     
     //
@@ -131,7 +128,7 @@ public:
      *  @param    buffer The address of a binary representation in memory.
      *  @param    length The size of the binary representation.
      */
-    virtual bool readFromBuffer(const uint8_t *buffer, size_t length) { return false; }
+    virtual bool readFromBuffer(const uint8_t *buffer, size_t length);
 	
     /*! @brief    Read container contents from a file.
      *  @details  This function requires no custom implementation. It first reads in the file contents 

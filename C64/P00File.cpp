@@ -144,18 +144,6 @@ P00Archive::hasSameType(const char *filename)
 	return isP00File(filename);
 }
 
-bool 
-P00Archive::readFromBuffer(const uint8_t *buffer, size_t length)
-{
-	if ((data = (uint8_t *)malloc(length)) == NULL)
-		return false;
-		
-	memcpy(data, buffer, length);
-	size = length;
-	
-	return true;
-}
-
 size_t
 P00Archive::writeToBuffer(uint8_t *buffer)
 {

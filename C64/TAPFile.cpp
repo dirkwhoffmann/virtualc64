@@ -106,11 +106,8 @@ TAPFile::hasSameType(const char *filename)
 bool
 TAPFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    if ((data = (uint8_t *)malloc(length)) == NULL)
+    if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
-    
-    memcpy(data, buffer, length);
-    size = length;
     
     int l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
     if (l + 0x14 /* Header */ != size) {
