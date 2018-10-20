@@ -1,8 +1,7 @@
 /*!
  * @header      D64File.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2008 - 2016 Dirk W. Hoffmann
- * @brief       Declares D64File class
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

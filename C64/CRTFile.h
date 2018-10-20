@@ -1,8 +1,7 @@
 /*!
- * @header      CRTContainer.h
- * @author      Written by Dirk Hoffmann
- *              based on the original code by A. Carl Douglas.
- * @copyright   All rights reserved.
+ * @header      CRTFile.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
 /*
  * This program is free software; you can redistribute it and/or modify

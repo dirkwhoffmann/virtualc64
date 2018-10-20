@@ -1,6 +1,7 @@
 /*!
+ * @header      AnyC64File.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, All rights reserved.
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
 /*
  * This program is free software; you can redistribute it and/or modify
