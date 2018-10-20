@@ -35,12 +35,6 @@ protected:
     //! @brief    The physical name (full path) of this file.
     char *path = NULL;
     
-    //! @brief    The raw data of this file.
-    uint8_t *data = NULL;
-    
-    //! @brief    The size of this file in bytes.
-    size_t size = 0;
-    
     /*! @brief    The logical name of the container.
      *  @details  Some archives store a logical name in their header section.
      *            If they don't store a name, the raw filename is used (path
@@ -52,6 +46,23 @@ protected:
      *  @seealso  getUnicodeName
      */
     unsigned short unicode[256];
+    
+    //! @brief    The raw data of this file.
+    uint8_t *data = NULL;
+    
+    //! @brief    The size of this file in bytes.
+    size_t size = 0;
+    
+    /*! @brief    File pointer
+     *  @details  An offset into the data array.
+     */
+    long fp;
+    
+    /*! @brief    End of file position
+     *  @details  This value equals the last valid offset plus 1
+     */
+    long eof;
+    
     
 protected:
     
@@ -113,7 +124,19 @@ public:
 	
     
     //
-    //! @functiongroup Serializing a container
+    //! @functiongroup Retrieving data
+    //
+    
+    //! @brief    Move file pointer to a different location
+    virtual void seek(long offset);
+    
+    /*! @brief    Reads a byte
+     *  @return   EOF (-1) if the end of file has been reached.
+     */
+    virtual int getByte();
+    
+    //
+    //! @functiongroup Serializing data
     //
     
     //! @brief    Required buffer size for this container

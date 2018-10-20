@@ -91,6 +91,36 @@ AnyC64File::getUnicodeName()
     return unicode;
 }
 
+void
+AnyC64File::seek(long offset)
+{
+    fp = (offset < size) ? size : -1;
+}
+
+int
+AnyC64File::getByte()
+{
+    int result;
+    
+    assert(eof <= size);
+    
+    if (fp < 0)
+        return -1;
+    
+    // get byte
+    result = data[fp];
+    
+    // check for end of file
+    if (fp == eof) {
+        fp = -1;
+    } else {
+        fp++;
+    }
+    
+    return result;
+}
+
+
 bool
 AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {
@@ -102,6 +132,8 @@ AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
     
     memcpy(data, buffer, length);
     size = length;
+    eof = length;
+    seek(0);
     return true;
 }
 
