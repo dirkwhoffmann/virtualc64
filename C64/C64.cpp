@@ -1054,20 +1054,22 @@ C64::flash(AnyC64File *file, unsigned item)
     switch (file->type()) {
             
         case BASIC_ROM_FILE:
-            ((ROMFile *)file)->flash(mem.rom + 0xA000);
+            file->flash(mem.rom, 0xA000);
             break;
             
         case CHAR_ROM_FILE:
-            ((ROMFile *)file)->flash(mem.rom + 0xD000);
+            file->flash(mem.rom, 0xD000);
             break;
             
         case KERNAL_ROM_FILE:
-            ((ROMFile *)file)->flash(mem.rom + 0xE000);
+            file->flash(mem.rom, 0xE000);
             break;
             
         case VC1541_ROM_FILE:
-            ((ROMFile *)file)->flash(drive1.mem.rom);
-            ((ROMFile *)file)->flash(drive2.mem.rom);
+            
+            file->flash(drive1.mem.rom);
+            file->seek(0);
+            file->flash(drive2.mem.rom);
             break;
                     
         case V64_CONTAINER:
@@ -1078,7 +1080,7 @@ C64::flash(AnyC64File *file, unsigned item)
         case T64_CONTAINER:
         case PRG_CONTAINER:
         case P00_CONTAINER:
-            ((AnyArchive *)file)->flash(item, mem.ram);
+            ((AnyArchive *)file)->flashItem(item, mem.ram);
             break;
             
         default:

@@ -47,8 +47,9 @@ VirtualComponent::reset()
 {
     // Reset all sub components
     if (subComponents != NULL)
-        for (unsigned i = 0; subComponents[i] != NULL; i++)
+        for (unsigned i = 0; subComponents[i] != NULL; i++) {
             subComponents[i]->reset();
+        }
     
     // Clear snapshot items marked with 'CLEAR_ON_RESET'
     if (snapshotItems != NULL)

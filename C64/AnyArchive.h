@@ -90,7 +90,7 @@ public:
     virtual void selectItem(unsigned n) { }
 
     //! @brief    Copies an item into the specified buffer
-    void flash(unsigned n, uint8_t *buffer);
+    void flashItem(unsigned n, uint8_t *buffer);
     
     //! @brief    Reads multiple bytes in form of string
     const char *hexDump(unsigned n, size_t offset, size_t num);

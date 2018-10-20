@@ -104,7 +104,6 @@ ReSID::~ReSID()
 void
 ReSID::reset()
 {
-    debug("ReSID::reset\n");
     VirtualComponent::reset();
     
     // Create new reSID object

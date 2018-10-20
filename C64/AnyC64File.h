@@ -134,6 +134,11 @@ public:
      */
     virtual int getByte();
 
+    //! @brief    Uses getByte() to copy the file into the C64 memory.
+    /*! @param    buffer must be a pointer to RAM or ROM
+     */
+    void flash(uint8_t *buffer, size_t offset = 0);
+    
     /*! @brief    Returns a textual representation for a sequence of bytes.
      */
     const char *hexDump(size_t offset, size_t num);

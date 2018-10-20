@@ -96,7 +96,7 @@ AnyC64File::getUnicodeName()
 void
 AnyC64File::seek(long offset)
 {
-    fp = (offset < size) ? size : -1;
+    fp = (offset < size) ? offset : -1;
 }
 
 int
@@ -110,16 +110,28 @@ AnyC64File::getByte()
         return -1;
     
     // get byte
-    result = data[fp];
+    result = data[fp++];
     
     // check for end of file
-    if (fp == eof) {
+    if (fp == eof)
         fp = -1;
-    } else {
-        fp++;
-    }
 
     return result;
+}
+
+void
+AnyC64File::flash(uint8_t *buffer, size_t offset)
+{
+    int byte;
+    assert(buffer != NULL);
+    
+    while ((byte = getByte()) != EOF) {
+        if (offset <= 0xFFFF) {
+            buffer[offset++] = (uint8_t)byte;
+        } else {
+            break;
+        }
+    }
 }
 
 const char *

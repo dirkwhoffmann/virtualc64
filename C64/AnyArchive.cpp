@@ -98,21 +98,10 @@ AnyArchive::dumpDirectory()
 }
 
 void
-AnyArchive::flash(unsigned item, uint8_t *buffer)
+AnyArchive::flashItem(unsigned item, uint8_t *buffer)
 {
-    uint16_t addr; int data;
-    
-    assert(buffer != NULL);
-    debug("Flashing item %d\n", item);
-    
     selectItem(item);
-    for (addr = getDestinationAddrOfItem(item); addr <= 0xFFFF; addr++) {
-        if ((data = getByte()) == EOF) {
-            break;
-        } else {
-            buffer[addr] = (uint8_t)data;
-        }
-    }
+    AnyC64File::flash(buffer, getDestinationAddrOfItem(item));
 }
 
 const char *
