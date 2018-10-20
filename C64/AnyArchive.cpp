@@ -23,14 +23,6 @@
 #include "P00File.h"
 #include "G64File.h"
 
-AnyArchive::AnyArchive()
-{
-}
-
-AnyArchive::~AnyArchive()
-{
-}
-
 AnyArchive *
 AnyArchive::makeArchiveWithFile(const char *path)
 {
@@ -108,18 +100,18 @@ AnyArchive::dumpDirectory()
 void
 AnyArchive::flash(unsigned item, uint8_t *buffer)
 {
-    assert(buffer != NULL);
+    uint16_t addr; int data;
     
-    uint16_t addr = getDestinationAddrOfItem(item);
-    debug("Flashing item %d to %p with offset %04X\n", item, buffer, addr);
+    assert(buffer != NULL);
+    debug("Flashing item %d\n", item);
     
     selectItem(item);
-    while (1) {
-        int data = getByte();
-        if (data < 0) break;
-        buffer[addr] = (uint8_t)data;
-        if (addr == 0xFFFF) break;
-        addr++;
+    for (addr = getDestinationAddrOfItem(item); addr <= 0xFFFF; addr++) {
+        if ((data = getByte()) == EOF) {
+            break;
+        } else {
+            buffer[addr] = (uint8_t)data;
+        }
     }
 }
 
@@ -131,7 +123,9 @@ AnyArchive::byteStream(unsigned n, size_t offset, size_t num)
     }
     
     selectItem(n);
-    skip((unsigned)offset);
+    
+    // Skip 'offset' bytes
+    for (unsigned i = 0; i < offset; i++) (void)getByte();
     
     assert(sizeof(name) > 3 * num);
     

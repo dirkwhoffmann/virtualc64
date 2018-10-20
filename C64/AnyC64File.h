@@ -22,7 +22,6 @@
 #define _ANYC64FILE_INC
 
 #include "VC64Object.h"
-#include "C64_types.h"
 
 /*! @class    AnyC64File
  *  @brief    Base class for all supported file types.
@@ -135,6 +134,7 @@ public:
      */
     virtual int getByte();
     
+    
     //
     //! @functiongroup Serializing data
     //
@@ -154,9 +154,10 @@ public:
     virtual bool readFromBuffer(const uint8_t *buffer, size_t length);
 	
     /*! @brief    Read container contents from a file.
-     *  @details  This function requires no custom implementation. It first reads in the file contents 
-     *            in memory and invokes readFromBuffer afterwards. 
-     *  @param    filename The name of a file containing a binary representation.
+     *  @details  This function requires no custom implementation. It first
+     *            reads in the file contents in memory and invokes
+     *            readFromBuffer afterwards.
+     *  @param    filename The name of a file on disk.
      */
 	bool readFromFile(const char *filename);
 

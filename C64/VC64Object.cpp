@@ -18,21 +18,6 @@
 
 #include "C64.h"
 
-/*
-VC64Object::VC64Object()
-{
-    debugLevel = DEBUG_LEVEL;
-    traceCounter = 0;
-    description = NULL;
-}
-
-VC64Object::~VC64Object()
-{
-}
-*/
-
-// unsigned VC64Object::defaultDebugLevel = 1;
-
 
 //
 // Tracing

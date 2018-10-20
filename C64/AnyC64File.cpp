@@ -122,7 +122,6 @@ AnyC64File::getByte()
     return result;
 }
 
-
 bool
 AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {

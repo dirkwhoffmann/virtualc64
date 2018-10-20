@@ -37,17 +37,6 @@ class AnyArchive : public AnyC64File {
 public:
 
     //
-    //! Creating and destructing containers
-    //
-    
-    //! @brief    Standard constructor
-    AnyArchive();
-    
-    //! @brief    Standard destructor
-    virtual ~AnyArchive();
-    
-    
-    //
     //! Factory methods
     //
     
@@ -84,9 +73,6 @@ public:
     //! @brief    Returns the size of an item in bytes
     virtual size_t getSizeOfItem(unsigned n);
 
-    //! @brief    Returns the size of an item in bits
-    // virtual size_t getSizeOfItemInBits(unsigned n) { return 8 * getSizeOfItem(n); }
-
     //! @brief    Returns the size of an item in blocks
     virtual size_t getSizeOfItemInBlocks(unsigned n) { return (getSizeOfItem(n) + 253) / 254; }
         
@@ -102,9 +88,6 @@ public:
 
     //! @brief    Selects an item to read from
     virtual void selectItem(unsigned n) { }
-    
-    //! @brief    Skip n bytes from the currently selected item
-    virtual void skip(unsigned n) { for (unsigned i = 0; i < n; i++) (void)getByte(); }
 
     //! @brief    Copies an item into the specified buffer
     void flash(unsigned n, uint8_t *buffer);

@@ -49,13 +49,6 @@ private:
 
 public:
 
-    //! Constructor
-    // VC64Object();
-    
-    //! Destructor
-    // virtual ~VC64Object();
-
-    
     //
     //! @functiongroup Initializing the component
     //
