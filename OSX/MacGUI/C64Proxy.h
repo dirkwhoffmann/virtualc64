@@ -756,7 +756,7 @@ struct ContainerWrapper;
 - (NSInteger)destinationAddrOfItem:(NSInteger)item;
 
 // Think about a better API for accessing tracks and sectors directly
-- (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;
+- (NSString *)hexDump:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;
 @end
 
 @interface T64Proxy : ArchiveProxy

@@ -122,6 +122,24 @@ AnyC64File::getByte()
     return result;
 }
 
+const char *
+AnyC64File::hexDump(size_t offset, size_t num)
+{
+    // Skip 'offset' bytes
+    for (unsigned i = 0; i < offset; i++) (void)getByte();
+    
+    assert(sizeof(name) > 3 * num);
+    
+    for (unsigned i = 0; i < num; i++) {
+        
+        int byte = getByte();
+        if (byte == -1) break;
+        sprintf(name + (3 * i), "%02X ", byte);
+    }
+    
+    return name;
+}
+
 bool
 AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {

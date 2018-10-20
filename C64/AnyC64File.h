@@ -133,6 +133,10 @@ public:
      *  @return   EOF (-1) if the end of file has been reached.
      */
     virtual int getByte();
+
+    /*! @brief    Returns a textual representation for a sequence of bytes.
+     */
+    const char *hexDump(size_t offset, size_t num);
     
     
     //

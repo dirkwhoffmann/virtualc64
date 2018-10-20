@@ -146,7 +146,7 @@ extension DiskMountController : NSTableViewDataSource {
         
         if (tableColumn?.identifier)!.rawValue == "data" {
             
-            return archive.byteStream(item, offset: (row * bytesPerRow), num: bytesPerRow)
+            return archive.hexDump(item, offset: (row * bytesPerRow), num: bytesPerRow)
         }
         
         return "???"

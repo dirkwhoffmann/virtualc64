@@ -116,26 +116,11 @@ AnyArchive::flash(unsigned item, uint8_t *buffer)
 }
 
 const char *
-AnyArchive::byteStream(unsigned n, size_t offset, size_t num)
+AnyArchive::hexDump(unsigned n, size_t offset, size_t num)
 {
-    if (n >= getNumberOfItems()) {
-        return "???";
-    }
+    if (n >= getNumberOfItems()) return "???";
     
     selectItem(n);
-    
-    // Skip 'offset' bytes
-    for (unsigned i = 0; i < offset; i++) (void)getByte();
-    
-    assert(sizeof(name) > 3 * num);
-    
-    for (unsigned i = 0; i < num; i++) {
-        
-        int byte = getByte();
-        if (byte == -1) break;
-        sprintf(name + (3 * i), "%02X ", byte);
-    }
-    
-    return name;
+    return AnyC64File::hexDump(offset, num);
 }
 

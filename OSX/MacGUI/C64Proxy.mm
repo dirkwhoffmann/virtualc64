@@ -1199,10 +1199,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return archive->getDestinationAddrOfItem((int)item);
 }
 
-- (NSString *)byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
+- (NSString *)hexDump:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
 {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return [NSString stringWithUTF8String:archive->byteStream((unsigned)n, offset, num)];
+    return [NSString stringWithUTF8String:archive->hexDump((unsigned)n, offset, num)];
 }
 @end
 
