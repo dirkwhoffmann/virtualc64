@@ -344,7 +344,7 @@ D64File::getUnicodeName()
 int
 D64File::getNumberOfItems()
 {
-    unsigned offsets[144]; // a C64 disk contains at most 144 files
+    long offsets[144]; // a C64 disk contains at most 144 files
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles);
@@ -357,7 +357,8 @@ D64File::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
     
-    int i, pos = findDirectoryEntry(n);
+    long pos = findDirectoryEntry(n);
+    int i;
     
     if (pos <= 0) return NULL;
     pos += 0x03; // filename begins here
@@ -374,7 +375,7 @@ const char *
 D64File::getTypeOfItem(unsigned n)
 {
     const char *extension = "";
-    int pos = findDirectoryEntry(n);
+    long pos = findDirectoryEntry(n);
     
     if (pos > 0)
         (void)itemIsVisible(data[pos] /* file type byte */, &extension);
@@ -420,7 +421,7 @@ D64File::itemIsVisible(uint8_t typeChar, const char **extension)
 size_t
 D64File::getSizeOfItemInBlocks(unsigned n)
 {
-    int pos = findDirectoryEntry(n);
+    long pos = findDirectoryEntry(n);
     
     return (pos > 0) ? LO_HI(data[pos+0x1C],data[pos+0x1D]) : 0;
 }
@@ -428,13 +429,12 @@ D64File::getSizeOfItemInBlocks(unsigned n)
 uint16_t
 D64File::getDestinationAddrOfItem(unsigned n)
 {
-    int pos;
     int track;
     int sector;
     uint16_t result;
     
     // Search for beginning of file data
-    pos = findDirectoryEntry(n);
+    long pos = findDirectoryEntry(n);
     if (pos <= 0)
         return 0;
     
@@ -620,9 +620,10 @@ D64File::nextTrackAndSector(Track track, Sector sector,
 }
 
 bool
-D64File::jumpToNextSector(int *pos)
+D64File::jumpToNextSector(long *pos)
 { 
-    int nTrack, nSector, newPos;
+    int nTrack, nSector;
+    long newPos;
     
     nTrack = nextTrack(*pos);
     nSector = nextSector(*pos);
@@ -783,10 +784,10 @@ D64File::writeBAM(const char *name)
 }
 
 void
-D64File::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles)
+D64File::scanDirectory(long *offsets, unsigned *noOfFiles, bool skipInvisibleFiles)
 {
     // Directory starts on track 18 in sector 1
-    int pos = offset(18, 1);
+    long pos = offset(18, 1);
     
     // Does the directory continue in another sector?
     bool last_sector = (data[pos] == 0x00);
@@ -828,10 +829,10 @@ D64File::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibl
 }
 
 
-int
+long
 D64File::findDirectoryEntry(int item, bool skipInvisibleFiles)
 {
-    unsigned offsets[144];
+    long offsets[144];
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles, skipInvisibleFiles);

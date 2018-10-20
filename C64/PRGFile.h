@@ -59,27 +59,24 @@ public:
 
     
     //
-    // Virtual functions from Container class
+    // Methods from AnyFile
     //
-    
-    void dealloc();
-    
+
     ContainerType type() { return PRG_CONTAINER; }
     const char *typeAsString() { return "PRG"; }
-    
     bool hasSameType(const char *filename);
     size_t writeToBuffer(uint8_t *buffer);
     
     
     //
-    // Virtual functions from AnyArchive class
+    // Methods from AnyArchive
     //
     
-    int getNumberOfItems();
-    
+    int getNumberOfItems() { return 1; }
     const char *getNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n);
     void selectItem(unsigned n);
+    
 };
 #endif

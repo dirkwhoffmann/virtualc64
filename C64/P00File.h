@@ -55,29 +55,25 @@ public:
     static bool isP00File(const char *filename);
     
     //
-    // Virtual functions from Container class
+    // Methods from AnyFile
     //
-    
-    void dealloc();
     
     const char *getName();
     ContainerType type() { return P00_CONTAINER; }
     const char *typeAsString() { return "P00"; }
-    
     bool hasSameType(const char *filename);
     size_t writeToBuffer(uint8_t *buffer);
     
     
     //
-    // Virtual functions from AnyArchive class
+    // Methods from AnyArchive
     //
     
-    int getNumberOfItems();
-    
+    int getNumberOfItems() { return 1; }
     const char *getNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n);
-    
     void selectItem(unsigned n);
+    
 };
 #endif

@@ -33,19 +33,6 @@ public:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-private:
-    
-    /*! @brief    File pointer
-     *  @details  An offset into the data array. 
-     */
-	long fp;
-	
-    /*! @brief    End of file position
-     *  @details  This value equals the last valid offset plus 1 
-     */
-	long fp_eof;
-	
-public:
 
     //
     //! @functiongroup Creating and destructing G64 archives
@@ -74,21 +61,18 @@ public:
     
     
     //
-    // Virtual functions from Container class
+    // Methods from AnyFile
     //
-    
-    void dealloc();
     
     const char *getName();
     ContainerType type() { return G64_CONTAINER; }
     const char *typeAsString() { return "G64"; }
-    
     bool hasSameType(const char *filename);
     size_t writeToBuffer(uint8_t *buffer);
     
     
     //
-    // Virtual functions from AnyArchive class
+    // Methods from AnyArchive
     //
     
     int getNumberOfItems();
@@ -96,10 +80,7 @@ public:
     const char *getNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
-    
     void selectItem(unsigned n);
-    int getByte();
-
     uint32_t getStartOfItem(unsigned n);
 };
 

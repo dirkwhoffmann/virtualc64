@@ -104,15 +104,6 @@ PRGFile::isPRGFile(const char *filename)
 	return true;
 }
 
-void 
-PRGFile::dealloc()
-{
-	if (data) free(data);
-	data = NULL;
-	size = 0;
-	fp = -1;
-}
-
 bool 
 PRGFile::hasSameType(const char *filename)
 {
@@ -128,12 +119,6 @@ PRGFile::writeToBuffer(uint8_t *buffer)
         memcpy(buffer, data, size);
     }
     return size;
-}
-
-int
-PRGFile::getNumberOfItems()
-{
-	return 1;
 }
 
 const char *

@@ -54,14 +54,7 @@ private:
      */
 	unsigned numTracks; 
 	
-	/*! @brief   File pointer
-        @details An offset into the data array. 
-     */
-	int fp;
-
-    //! @brief    Unicode name representation
-    // unsigned short unicodeName[256];
-
+    
 public:
 
     //
@@ -170,17 +163,17 @@ private:
     int offset(Track track, Sector sector);
     
     //! @brief   Returns true iff offset points to the last byte of a sector.
-    bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }
+    bool isLastByteOfSector(long offset) { return ((offset+1) % 256) == 0; }
     
     //! @brief   Returns the next logical track number following this sector.
     /*! @note    The number is stored in the first byte of the current sector.
      */
-    int nextTrack(int offset) { return data[offset & (~0xFF)]; }
+    int nextTrack(long offset) { return data[offset & (~0xFF)]; }
     
     //! @brief   Returns the next sector number following this sector.
     /*! @note    The number is stored in the second byte of the current sector.
      */
-    int nextSector(int offset) { return data[(offset & (~0xFF)) + 1]; }
+    int nextSector(long offset) { return data[(offset & (~0xFF)) + 1]; }
     
     //! @brief   Returns the next physical track and sector.
     bool nextTrackAndSector(Track track, Sector sector,
@@ -193,7 +186,7 @@ private:
      *           the current sector points to an invalid valid track/sector
      *           combination. In the failure case, pos remains untouched.
      */
-    bool jumpToNextSector(int *pos);
+    bool jumpToNextSector(long *pos);
 
     /*! @brief   Writes a byte to the specified track and sector
      *  @details If the sector overflows, the values of track and sector are
@@ -232,7 +225,7 @@ private:
      *           LOAD "$",8. Otherwise, all files are considered, i.e. those
      *           that are marked as deleted.
      */
-    void scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles = true);
+    void scanDirectory(long *offsets, unsigned *noOfFiles, bool skipInvisibleFiles = true);
     
     /*! @brief   Looks up a directory item by number.
      *  @details This function searches the directory for the requested item. 
@@ -244,7 +237,7 @@ private:
      *  @return  Offset to the first data sector of the requested file. If the
      *           file is not found, -1 is returned.
      */
-    int findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
+    long findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
     
     //! Returns the track number of the first file block
     /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */
@@ -257,7 +250,7 @@ private:
     
     /*! @brief    Returns true iff offset points to the last byte of a file 
      */
-    bool isEndOfFile(int offset) {
+    bool isEndOfFile(long offset) {
         return nextTrack(offset) == 0 && nextSector(offset) == offset % 256; }
 
     /*! @brief    Writes a directory item

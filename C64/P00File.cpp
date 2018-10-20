@@ -117,15 +117,6 @@ P00File::isP00File(const char *filename)
 	return true;
 }
 
-void 
-P00File::dealloc()
-{
-	if (data) free(data);
-	data = NULL;
-	size = 0;
-	fp = -1;
-}
-
 const char *
 P00File::getName()
 {
@@ -153,12 +144,6 @@ P00File::writeToBuffer(uint8_t *buffer)
         memcpy(buffer, data, size);
     }
     return size;
-}
-
-int 
-P00File::getNumberOfItems()
-{
-	return 1;
 }
 
 const char *

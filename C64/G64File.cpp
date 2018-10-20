@@ -165,15 +165,6 @@ G64File::isG64File(const char *filename)
 	return true;
 }
 
-void G64File::dealloc()
-{
-	if (data) free(data);
-	data = NULL;
-	size = 0;
-	fp = -1;
-    fp_eof = -1;
-}
-
 bool 
 G64File::hasSameType(const char *filename)
 {
@@ -247,24 +238,6 @@ G64File::selectItem(unsigned n)
 {
     fp = getStartOfItem(n);
     fp += 2; // skip length information
-    fp_eof = fp + getSizeOfItem(n);
-}
-
-int
-G64File::getByte()
-{
-	int result;
-	
-	if (fp < 0)
-		return -1;
-		
-	// get byte
-	result = data[fp++];
-	
-	// check for end of file
-	if (fp == fp_eof)
-		fp = -1;
-
-	return result;
+    eof = fp + getSizeOfItem(n);
 }
 
