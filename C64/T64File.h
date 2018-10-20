@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _T64ARCHIVE_INC
-#define _T64ARCHIVE_INC
+#ifndef _T64FILE_INC
+#define _T64FILE_INC
 
 #include "AnyArchive.h"
 
 /*! @class    D64Archive
  *  @brief    The D64Archive class declares the programmatic interface for a file in T64 format.
  */
-class T64Archive : public Archive {
+class T64File : public Archive {
     
     //! @brief    Header signature
     static const uint8_t magicBytes[];
@@ -46,18 +46,18 @@ public:
     //
     
     //! @brief    Standard constructor
-    T64Archive();
+    T64File();
     
     //! @brief    Factory method
-    static T64Archive *makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static T64File *makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static T64Archive *makeT64ArchiveWithFile(const char *path);
+    static T64File *makeT64ArchiveWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static T64Archive *makeT64ArchiveWithAnyArchive(Archive *otherArchive);
+    static T64File *makeT64ArchiveWithAnyArchive(Archive *otherArchive);
 
     void dealloc();
     
@@ -91,7 +91,7 @@ public:
     static bool isT64File(const char *filename);
     
     //! Check file type
-    bool hasSameType(const char *filename) { return T64Archive::isT64File(filename); }
+    bool hasSameType(const char *filename) { return T64File::isT64File(filename); }
     
     //! Read container data from memory buffer
     bool readFromBuffer(const uint8_t *buffer, size_t length);

@@ -1215,27 +1215,27 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (BOOL)isT64File:(NSString *)filename
 {
-    return T64Archive::isT64File([filename UTF8String]);
+    return T64File::isT64File([filename UTF8String]);
 }
-+ (instancetype) make:(T64Archive *)archive
++ (instancetype) make:(T64File *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    T64Archive *archive = T64Archive::makeT64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    T64File *archive = T64File::makeT64ArchiveWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    T64Archive *archive = T64Archive::makeT64ArchiveWithFile([path UTF8String]);
+    T64File *archive = T64File::makeT64ArchiveWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = (Archive *)([otherArchive wrapper]->container);
-    T64Archive *archive = T64Archive::makeT64ArchiveWithAnyArchive(other);
+    T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
 @end
@@ -1249,27 +1249,27 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (BOOL)isPRGFile:(NSString *)filename
 {
-    return PRGArchive::isPRGFile([filename UTF8String]);
+    return PRGFile::isPRGFile([filename UTF8String]);
 }
-+ (instancetype) make:(PRGArchive *)archive
++ (instancetype) make:(PRGFile *)archive
 {
     if (archive == NULL) return nil;
     return [[self alloc] initWithContainer:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    PRGArchive *archive = PRGArchive::makePRGArchiveWithBuffer((const uint8_t *)buffer, length);
+    PRGFile *archive = PRGFile::makePRGArchiveWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    PRGArchive *archive = PRGArchive::makePRGArchiveWithFile([path UTF8String]);
+    PRGFile *archive = PRGFile::makePRGArchiveWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = (Archive *)([otherArchive wrapper]->container);
-    PRGArchive *archive = PRGArchive::makePRGArchiveWithAnyArchive(other);
+    PRGFile *archive = PRGFile::makePRGArchiveWithAnyArchive(other);
     return [self make: archive];
 }
 @end

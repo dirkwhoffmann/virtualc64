@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _PRGARCHIVE_INC
-#define _PRGARCHIVE_INC
+#ifndef _PRGFILE_INC
+#define _PRGFILE_INC
 
 #include "AnyArchive.h"
 
-/*! @class  D64Archive
- *  @brief  The D64Archive class declares the programmatic interface for a file in PRG format.
+/*! @class  PRGFile
+ *  @brief  The PRGFile class declares the programmatic interface for a file in PRG format.
  */
-class PRGArchive : public Archive {
+class PRGFile : public Archive {
 
 private:
     
@@ -40,18 +40,18 @@ public:
     //
     
     //! @brief    Standard constructor
-    PRGArchive();
+    PRGFile();
     
     //! @brief    Factory method
-    static PRGArchive *makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static PRGFile *makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static PRGArchive *makePRGArchiveWithFile(const char *path);
+    static PRGFile *makePRGArchiveWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static PRGArchive *makePRGArchiveWithAnyArchive(Archive *otherArchive);
+    static PRGFile *makePRGArchiveWithAnyArchive(Archive *otherArchive);
     
     //! @brief    Returns true if buffer contains a PRG file
     /*! @details  PRG files ares mostly determined by their suffix, so this function will

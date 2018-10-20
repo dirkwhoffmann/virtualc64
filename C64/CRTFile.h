@@ -28,8 +28,8 @@
  * As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-#ifndef _CRTContainer_H
-#define _CRTContainer_H
+#ifndef _CRTFILE_INC
+#define _CRTFILE_INC
 
 #include "AnyC64File.h"
 

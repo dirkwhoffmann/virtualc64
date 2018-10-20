@@ -18,15 +18,15 @@
 
 #include "PRGFile.h"
 
-PRGArchive::PRGArchive()
+PRGFile::PRGFile()
 {
     setDescription("PRGArchive");
 }
 
-PRGArchive *
-PRGArchive::makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length)
+PRGFile *
+PRGFile::makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-    PRGArchive *archive = new PRGArchive();
+    PRGFile *archive = new PRGFile();
     
     if (!archive->readFromBuffer(buffer, length)) {
         delete archive;
@@ -36,10 +36,10 @@ PRGArchive::makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length)
     return archive;
 }
 
-PRGArchive *
-PRGArchive::makePRGArchiveWithFile(const char *filename)
+PRGFile *
+PRGFile::makePRGArchiveWithFile(const char *filename)
 {
-    PRGArchive *archive = new PRGArchive();
+    PRGFile *archive = new PRGFile();
     
     if (!archive->readFromFile(filename)) {
         delete archive;
@@ -49,15 +49,15 @@ PRGArchive::makePRGArchiveWithFile(const char *filename)
     return archive;
 }
 
-PRGArchive *
-PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
+PRGFile *
+PRGFile::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
     
     int exportItem = 0;
     
     if (otherArchive == NULL || otherArchive->getNumberOfItems() <= exportItem)
         return NULL;
     
-    PRGArchive *archive = new PRGArchive();
+    PRGFile *archive = new PRGFile();
     archive->debug(1, "Creating PRG archive from %s archive...\n",
                    otherArchive->typeAsString());
     
@@ -85,13 +85,13 @@ PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
 }
 
 bool
-PRGArchive::isPRG(const uint8_t *buffer, size_t length)
+PRGFile::isPRG(const uint8_t *buffer, size_t length)
 {
     return length >= 2;
 }
 
 bool 
-PRGArchive::isPRGFile(const char *filename)
+PRGFile::isPRGFile(const char *filename)
 {
 	assert(filename != NULL);
 	
@@ -105,7 +105,7 @@ PRGArchive::isPRGFile(const char *filename)
 }
 
 void 
-PRGArchive::dealloc()
+PRGFile::dealloc()
 {
 	if (data) free(data);
 	data = NULL;
@@ -114,13 +114,13 @@ PRGArchive::dealloc()
 }
 
 bool 
-PRGArchive::hasSameType(const char *filename)
+PRGFile::hasSameType(const char *filename)
 {
 	return isPRGFile(filename);
 }
 
 size_t
-PRGArchive::writeToBuffer(uint8_t *buffer)
+PRGFile::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
 
@@ -131,33 +131,33 @@ PRGArchive::writeToBuffer(uint8_t *buffer)
 }
 
 int
-PRGArchive::getNumberOfItems()
+PRGFile::getNumberOfItems()
 {
 	return 1;
 }
 
 const char *
-PRGArchive::getNameOfItem(unsigned n)
+PRGFile::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
 	return "FILE";
 }
 
 const char *
-PRGArchive::getTypeOfItem(unsigned n)
+PRGFile::getTypeOfItem(unsigned n)
 {
 	return "PRG";
 }
 
 uint16_t 
-PRGArchive::getDestinationAddrOfItem(unsigned n)
+PRGFile::getDestinationAddrOfItem(unsigned n)
 {
 	uint16_t result = LO_HI(data[0], data[1]);
 	return result;
 }
 
 void 
-PRGArchive::selectItem(unsigned n)
+PRGFile::selectItem(unsigned n)
 {
 	fp = 2; // skip load address
 
@@ -166,7 +166,7 @@ PRGArchive::selectItem(unsigned n)
 }
 
 int 
-PRGArchive::getByte()
+PRGFile::getByte()
 {
 	int result;
 	

@@ -22,17 +22,17 @@
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
  */
-const uint8_t T64Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
+const uint8_t T64File::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
 
-T64Archive::T64Archive()
+T64File::T64File()
 {
     setDescription("T64Archive");
 }
 
-T64Archive *
-T64Archive::makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+T64File *
+T64File::makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-    T64Archive *archive = new T64Archive();
+    T64File *archive = new T64File();
     
     if (!archive->readFromBuffer(buffer, length)) {
         delete archive;
@@ -42,10 +42,10 @@ T64Archive::makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
     return archive;
 }
 
-T64Archive *
-T64Archive::makeT64ArchiveWithFile(const char *path)
+T64File *
+T64File::makeT64ArchiveWithFile(const char *path)
 {
-    T64Archive *archive = new T64Archive();
+    T64File *archive = new T64File();
     
     if (!archive->readFromFile(path)) {
         delete archive;
@@ -55,13 +55,13 @@ T64Archive::makeT64ArchiveWithFile(const char *path)
     return archive;
 }
 
-T64Archive *
-T64Archive::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
+T64File *
+T64File::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
 {
     if (otherArchive == NULL)
         return NULL;
     
-    T64Archive *archive  = new T64Archive();
+    T64File *archive  = new T64File();
     
     // Determine container size and allocate memory
     unsigned currentFiles = otherArchive->getNumberOfItems();
@@ -168,14 +168,14 @@ T64Archive::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
     return archive;
 }
 
-void T64Archive::dealloc()
+void T64File::dealloc()
 {
     fp = -1;
     fp_eof = -1;
 }
 
 bool
-T64Archive::isT64(const uint8_t *buffer, size_t length)
+T64File::isT64(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40)
         return false;
@@ -187,7 +187,7 @@ T64Archive::isT64(const uint8_t *buffer, size_t length)
 }
 
 bool 
-T64Archive::isT64File(const char *path)
+T64File::isT64File(const char *path)
 {	
 	assert(path != NULL);
 	
@@ -207,7 +207,7 @@ T64Archive::isT64File(const char *path)
 }
 
 bool 
-T64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
+T64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
@@ -220,7 +220,7 @@ T64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 }
 
 size_t
-T64Archive::writeToBuffer(uint8_t *buffer)
+T64File::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
     
@@ -232,7 +232,7 @@ T64Archive::writeToBuffer(uint8_t *buffer)
 
 
 const char *
-T64Archive::getName()
+T64File::getName()
 {
 	int i,j;
 	int first = 0x28;
@@ -247,7 +247,7 @@ T64Archive::getName()
 }
 
 const unsigned short *
-T64Archive::getUnicodeName()
+T64File::getUnicodeName()
 {
     (void)getName();
     translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
@@ -255,13 +255,13 @@ T64Archive::getUnicodeName()
 }
 
 int 
-T64Archive::getNumberOfItems()
+T64File::getNumberOfItems()
 {
     return LO_HI(data[0x24], data[0x25]);
 }
 
 const char *
-T64Archive::getNameOfItem(unsigned n)
+T64File::getNameOfItem(unsigned n)
 {
     assert(n < getNumberOfItems());
     
@@ -282,7 +282,7 @@ T64Archive::getNameOfItem(unsigned n)
 }
 
 const char *
-T64Archive::getTypeOfItem(unsigned n)
+T64File::getTypeOfItem(unsigned n)
 {
 	int i = 0x41 + (n * 0x20);
 	if (data[i] != 00)
@@ -293,7 +293,7 @@ T64Archive::getTypeOfItem(unsigned n)
 }
 
 uint16_t 
-T64Archive::getDestinationAddrOfItem(unsigned n)
+T64File::getDestinationAddrOfItem(unsigned n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t result = LO_HI(data[i], data[i+1]);
@@ -301,7 +301,7 @@ T64Archive::getDestinationAddrOfItem(unsigned n)
 }
 
 void 
-T64Archive::selectItem(unsigned n)
+T64File::selectItem(unsigned n)
 {
     if (n < getNumberOfItems()) {
 
@@ -335,7 +335,7 @@ T64Archive::selectItem(unsigned n)
 }
 
 int 
-T64Archive::getByte()
+T64File::getByte()
 {
 	int result;
 	
@@ -356,7 +356,7 @@ T64Archive::getByte()
 }
 
 bool
-T64Archive::directoryItemIsPresent(int n)
+T64File::directoryItemIsPresent(int n)
 {
     int first = 0x40 + (n * 0x20);
     int last  = 0x60 + (n * 0x20);
@@ -372,7 +372,7 @@ T64Archive::directoryItemIsPresent(int n)
 }
 
 bool
-T64Archive::repair()
+T64File::repair()
 {
     unsigned i, n;
     uint16_t noOfItems = getNumberOfItems();

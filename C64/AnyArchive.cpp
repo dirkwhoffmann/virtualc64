@@ -36,14 +36,14 @@ Archive::makeArchiveWithFile(const char *path)
 {
     assert(path != NULL);
     
-    if (T64Archive::isT64File(path)) {
-        return T64Archive::makeT64ArchiveWithFile(path);
+    if (T64File::isT64File(path)) {
+        return T64File::makeT64ArchiveWithFile(path);
     }
     if (D64Archive::isD64File(path)) {
         return D64Archive::makeD64ArchiveWithFile(path);
     }
-    if (PRGArchive::isPRGFile(path)) {
-        return PRGArchive::makePRGArchiveWithFile(path);
+    if (PRGFile::isPRGFile(path)) {
+        return PRGFile::makePRGArchiveWithFile(path);
     }
     if (P00Archive::isP00File(path)) {
         return P00Archive::makeP00ArchiveWithFile(path);

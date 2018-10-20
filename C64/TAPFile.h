@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _TAPCONTAINER_INC
-#define _TAPCONTAINER_INC
+#ifndef _TAPFILE_INC
+#define _TAPFILE_INC
 
 #include "AnyC64File.h"
 
