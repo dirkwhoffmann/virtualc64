@@ -58,32 +58,12 @@ Snapshot::setCapacity(size_t newCapacity)
     
     if (data != NULL && size == newSize)
         return true;
-
-    /*
-    if (state != NULL && capacity == newCapacity)
-        return true;
-    */
     
     dealloc();
-    // if ((data = new uint8_t[newSize]) == NULL)
-    if ((data = (uint8_t *)malloc(newSize)) == NULL)
+    if ((data = new uint8_t[newSize]) == NULL)
         return false;
     size = newSize;
     
-    /*
-    if ((state = (uint8_t *)malloc(newCapacity + sizeof(SnapshotHeader))) == NULL)
-        return false;
-    
-    capacity = newCapacity;
-    header()->magic[0] = magicBytes[0];
-    header()->magic[1] = magicBytes[1];
-    header()->magic[2] = magicBytes[2];
-    header()->magic[3] = magicBytes[3];
-    header()->major = V_MAJOR;
-    header()->minor = V_MINOR;
-    header()->subminor = V_SUBMINOR;
-    header()->timestamp = (time_t)0;
-    */
     SnapshotHeader *header = (SnapshotHeader *)data;
     header->magic[0] = magicBytes[0];
     header->magic[1] = magicBytes[1];

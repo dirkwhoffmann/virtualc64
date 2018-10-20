@@ -40,8 +40,7 @@ AnyC64File::dealloc()
         return;
     }
     
-    // delete[] data;
-    free(data);
+    delete[] data;
     data = NULL;
     size = 0;
 }
@@ -98,7 +97,7 @@ AnyC64File::readFromBuffer(const uint8_t *buffer, size_t length)
     assert (buffer != NULL);
     
     dealloc();
-    if ((data = (uint8_t *)malloc(length)) == NULL)
+    if ((data = new uint8_t[length]) == NULL)
         return false;
     
     memcpy(data, buffer, length);
@@ -115,7 +114,6 @@ AnyC64File::readFromFile(const char *filename)
 	uint8_t *buffer = NULL;
 	FILE *file = NULL;
 	struct stat fileProperties;
-    char *name = NULL;
 	
 	// Check file type
     if (!hasSameType(filename)) {
@@ -133,7 +131,7 @@ AnyC64File::readFromFile(const char *filename)
 	}
 
 	// Allocate memory
-	if (!(buffer = (uint8_t *)malloc(fileProperties.st_size))) {
+	if (!(buffer = new uint8_t[fileProperties.st_size])) {
 		goto exit;
 	}
 	
@@ -159,12 +157,10 @@ AnyC64File::readFromFile(const char *filename)
 	
 exit:
 	
-    if (name)
-        free(name);
     if (file)
 		fclose(file);
 	if (buffer)
-		free(buffer);
+		delete[] buffer;
 
 	return success;
 }
@@ -195,7 +191,7 @@ AnyC64File::writeToFile(const char *filename)
 	}
 		
 	// Allocate memory
-    if (!(data = (uint8_t *)malloc(filesize))) {
+    if (!(data = new uint8_t[filesize])) {
 		goto exit;
 	}
 	
@@ -216,7 +212,7 @@ exit:
 	if (file)
         fclose(file);
 	if (data)
-        free(data);
+        delete[] data;
 		
 	return success;
 }

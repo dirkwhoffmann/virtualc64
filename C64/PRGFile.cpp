@@ -63,7 +63,7 @@ PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
     
     // Determine container size and allocate memory
     archive->size = 2 + otherArchive->getSizeOfItem(exportItem);
-    if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
+    if ((archive->data = new uint8_t[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;

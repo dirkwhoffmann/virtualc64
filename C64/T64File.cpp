@@ -71,7 +71,7 @@ T64Archive::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
     for (unsigned i = 0; i < currentFiles; i++)
         archive->size += otherArchive->getSizeOfItem(i);
     
-    if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
+    if ((archive->data = new uint8_t[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
@@ -209,19 +209,9 @@ T64Archive::isT64File(const char *path)
 bool 
 T64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    /*
-    assert(buffer != NULL);
-    
-    if ((data = (uint8_t *)malloc(length)) == NULL)
-        return false;
-    
-    memcpy(data, buffer, length);
-    size = length;
-     */
-    
     if (!AnyC64File::readFromBuffer(buffer, length))
         return false;
-     
+    
     
     // Some T64 archives contain incosistencies. We fix them asap
     (void)repair();
