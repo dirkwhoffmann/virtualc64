@@ -60,7 +60,7 @@ public:
     void dealloc();
     
     const char *getName();
-    ContainerType type() { return TAP_CONTAINER; }
+    C64FileType type() { return TAP_FILE; }
     const char *typeAsString() { return "TAP"; }
     
     bool hasSameType(const char *filename);

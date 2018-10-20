@@ -50,25 +50,25 @@ class ArchiveMountController : UserDialogController {
         
         switch archive.type() {
 
-        case T64_CONTAINER:
+        case T64_FILE:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
             header.stringValue = "T64 File Archive"
             insertButton.title = "Insert as Disk"
             break
             
-        case PRG_CONTAINER:
+        case PRG_FILE:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconPRG"))
             header.stringValue = "PRG File Container"
             insertButton.title = "Insert as Disk"
             break
             
-        case P00_CONTAINER:
+        case P00_FILE:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconP00"))
             header.stringValue = "P00 File Container"
             insertButton.title = "Insert as Disk"
             break
             
-        case D64_CONTAINER:
+        case D64_FILE:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "D64 File Archive"
             subheader.stringValue = "This file contains a byte-accurate image of a C64 diskette."

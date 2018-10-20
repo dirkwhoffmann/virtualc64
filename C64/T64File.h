@@ -54,7 +54,7 @@ public:
     // Methods from AnyC64File
     //
     
-    ContainerType type() { return T64_CONTAINER; }
+    C64FileType type() { return T64_FILE; }
     const char *typeAsString() { return "T64"; }
     const char *getName();
     const unsigned short *getUnicodeName();

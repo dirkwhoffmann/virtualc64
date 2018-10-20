@@ -88,7 +88,7 @@ public:
 
     const char *getName();
     const unsigned short *getUnicodeName();
-    ContainerType type() { return D64_CONTAINER; }
+    C64FileType type() { return D64_FILE; }
     const char *typeAsString() { return "D64"; }
 	
     bool hasSameType(const char *filename);

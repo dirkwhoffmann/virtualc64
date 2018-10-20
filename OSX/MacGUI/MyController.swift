@@ -785,8 +785,8 @@ extension MyController {
         
         switch (type) {
             
-        case T64_CONTAINER, D64_CONTAINER,
-             PRG_CONTAINER, P00_CONTAINER:
+        case T64_FILE, D64_FILE,
+             PRG_FILE, P00_FILE:
             // TODO: Use insertDisk for these attachments in future
             changeDisk(item, drive: 1)
             return true

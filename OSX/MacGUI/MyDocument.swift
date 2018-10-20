@@ -310,7 +310,7 @@ class MyDocument : NSDocument {
         if attachment == nil {
             return
         }
-        if attachment!.type() == V64_CONTAINER {
+        if attachment!.type() == V64_FILE {
             c64.flash(attachment!)
             return
         }
@@ -322,20 +322,20 @@ class MyDocument : NSDocument {
         let type = attachment!.type()
         switch type {
     
-        case CRT_CONTAINER:
+        case CRT_FILE:
             runCartridgeMountDialog(parent)
             return
                 
-        case TAP_CONTAINER:
+        case TAP_FILE:
             runTapeMountDialog(parent)
             return
                 
-        case T64_CONTAINER, D64_CONTAINER,
-             PRG_CONTAINER, P00_CONTAINER:
+        case T64_FILE, D64_FILE,
+             PRG_FILE, P00_FILE:
             runArchiveMountDialog(parent)
             return
                 
-        case G64_CONTAINER:
+        case G64_FILE:
             runDiskMountDialog(parent)
             return
             
@@ -379,7 +379,7 @@ class MyDocument : NSDocument {
         
         switch type {
             
-        case TAP_CONTAINER:
+        case TAP_FILE:
             let parent = windowForSheet!.windowController as! MyController
             return parent.mount(attachment!)
             
@@ -403,7 +403,7 @@ class MyDocument : NSDocument {
         
         switch type {
         
-        case CRT_CONTAINER:
+        case CRT_FILE:
             let parent = windowForSheet!.windowController as! MyController
             return parent.mount(attachment!)
             
@@ -429,21 +429,19 @@ class MyDocument : NSDocument {
         // Check if disk data would be lost, if we continue
         let type = attachment!.type()
         switch type {
-        case V64_CONTAINER,
-             T64_CONTAINER, D64_CONTAINER,
-             G64_CONTAINER:
+        case V64_FILE, T64_FILE, D64_FILE, G64_FILE:
             if (!proceedWithUnexportedDisk(drive: 1)) { return false }
         default:
             break;
         }
         
-        if attachment!.type() == V64_CONTAINER {
+        if attachment!.type() == V64_FILE {
             return c64.flash(attachment!)
         }
         
         // Perform default behavior if mount dialogs are disabled
         if parent.autoMount {
-            if type == PRG_CONTAINER || type == P00_CONTAINER {
+            if type == PRG_FILE || type == P00_FILE {
                 flashAttachment(archive: attachment as! ArchiveProxy)
                 return true
             } else {
@@ -454,20 +452,20 @@ class MyDocument : NSDocument {
         // Show mount dialog
         switch type {
             
-        case CRT_CONTAINER:
+        case CRT_FILE:
             runCartridgeMountDialog(parent)
             return true
             
-        case TAP_CONTAINER:
+        case TAP_FILE:
             runTapeMountDialog(parent)
             return true
             
-        case T64_CONTAINER, D64_CONTAINER,
-             PRG_CONTAINER, P00_CONTAINER:
+        case T64_FILE, D64_FILE,
+             PRG_FILE, P00_FILE:
             runArchiveMountDialog(parent)
             return true
             
-        case G64_CONTAINER:
+        case G64_FILE:
             runDiskMountDialog(parent)
             return true
             

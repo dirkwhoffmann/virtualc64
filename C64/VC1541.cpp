@@ -518,12 +518,12 @@ VC1541::insertDisk(AnyArchive *a)
     
     switch (a->type()) {
             
-        case D64_CONTAINER:
+        case D64_FILE:
             disk.clearDisk();
             disk.encodeArchive((D64File *)a);
             break;
             
-        case G64_CONTAINER:
+        case G64_FILE:
             disk.clearDisk();
             disk.encodeArchive((G64File *)a);
             break;

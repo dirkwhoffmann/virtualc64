@@ -59,7 +59,7 @@ public:
     //
     
     const char *getName();
-    ContainerType type() { return P00_CONTAINER; }
+    C64FileType type() { return P00_FILE; }
     const char *typeAsString() { return "P00"; }
     bool hasSameType(const char *filename);
     size_t writeToBuffer(uint8_t *buffer);

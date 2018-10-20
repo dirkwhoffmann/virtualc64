@@ -915,7 +915,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     file->setPath([path UTF8String]);
 }
 - (ContainerWrapper *)wrapper { return wrapper; }
-- (ContainerType)type { return wrapper->container->type(); }
+- (C64FileType)type { return wrapper->container->type(); }
 - (NSString *)name { return [NSString stringWithUTF8String:wrapper->container->getName()]; }
 - (NSInteger) sizeOnDisk { return wrapper->container->sizeOnDisk(); }
 

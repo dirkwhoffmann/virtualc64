@@ -62,7 +62,7 @@ public:
     // Methods from AnyFile
     //
 
-    ContainerType type() { return PRG_CONTAINER; }
+    C64FileType type() { return PRG_FILE; }
     const char *typeAsString() { return "PRG"; }
     bool hasSameType(const char *filename);
     size_t writeToBuffer(uint8_t *buffer);

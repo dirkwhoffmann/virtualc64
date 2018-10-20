@@ -1021,19 +1021,19 @@ C64::mount(AnyC64File *file)
     suspend();
     switch (file->type()) {
        
-        case CRT_CONTAINER:
+        case CRT_FILE:
             result = attachCartridgeAndReset((CRTFile *)file);
             break;
 
-        case D64_CONTAINER:
-        case T64_CONTAINER:
-        case PRG_CONTAINER:
-        case P00_CONTAINER:
-        case G64_CONTAINER:
+        case D64_FILE:
+        case T64_FILE:
+        case PRG_FILE:
+        case P00_FILE:
+        case G64_FILE:
             result = insertDisk((AnyArchive *)file, 1);
             break;
     
-        case TAP_CONTAINER:
+        case TAP_FILE:
             result = insertTape((TAPFile *)file);
             break;
             
@@ -1072,14 +1072,14 @@ C64::flash(AnyC64File *file, unsigned item)
             file->flash(drive2.mem.rom);
             break;
                     
-        case V64_CONTAINER:
+        case V64_FILE:
             loadFromSnapshotUnsafe((Snapshot *)file);
             break;
             
-        case D64_CONTAINER:
-        case T64_CONTAINER:
-        case PRG_CONTAINER:
-        case P00_CONTAINER:
+        case D64_FILE:
+        case T64_FILE:
+        case PRG_FILE:
+        case P00_FILE:
             ((AnyArchive *)file)->flashItem(item, mem.ram);
             break;
             

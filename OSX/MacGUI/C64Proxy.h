@@ -669,7 +669,7 @@ struct ContainerWrapper;
 
 - (struct ContainerWrapper *)wrapper;
 
-- (ContainerType)type; 
+- (C64FileType)type; 
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;

@@ -1,6 +1,6 @@
 /*!
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, All rights reserved
+ * @copyright   Dirk W. Hoffmann, All rights reserved.
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -99,7 +99,7 @@ public:
     //
     
     //! @brief    Returns the type of this container.
-    virtual ContainerType type() { return UNKNOWN_CONTAINER_FORMAT; }
+    virtual C64FileType type() { return UNKNOWN_FILE_FORMAT; }
     
     //! @brief      Returns the string representation of the container's type.
     /*! @details    E.g., a T64 container returns "T64"

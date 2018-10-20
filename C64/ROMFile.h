@@ -36,7 +36,7 @@ private:
     static const uint8_t magicVC1541RomBytes2[];
 
     //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
-    ContainerType romtype;
+    C64FileType romtype;
         
 public:
     
@@ -83,7 +83,7 @@ public:
     // Virtual functions from File class
     //
     
-    ContainerType type() { return romtype; }
+    C64FileType type() { return romtype; }
     const char *typeAsString() { return "ROM"; }
     bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);

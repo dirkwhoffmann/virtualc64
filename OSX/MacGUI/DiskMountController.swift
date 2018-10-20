@@ -49,7 +49,7 @@ class DiskMountController : UserDialogController {
         // Set icon and title
         switch archive.type() {
             
-        case G64_CONTAINER:
+        case G64_FILE:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "G64 Format"
             break;
@@ -67,7 +67,7 @@ class DiskMountController : UserDialogController {
         let halftrack = item + 1
         let track = (item / 2) + 1
         
-        if (archive.type() == G64_CONTAINER) {
+        if (archive.type() == G64_FILE) {
             sizeInBytes = archive.size(ofItem: item)
             sizeInBits = sizeInBytes * 8
             trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)

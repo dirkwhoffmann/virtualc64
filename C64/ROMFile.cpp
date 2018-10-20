@@ -133,7 +133,7 @@ ROMFile::makeRomFileWithFile(const char *filename)
 ROMFile::ROMFile()
 {
     setDescription("ROMFile");
-    romtype = UNKNOWN_CONTAINER_FORMAT;
+    romtype = UNKNOWN_FILE_FORMAT;
 }
 
 bool

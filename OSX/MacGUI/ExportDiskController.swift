@@ -10,7 +10,7 @@ import Foundation
 class ExportDiskController : UserDialogController {
 
     @IBOutlet weak var button: NSPopUpButton!
-    var type: ContainerType = D64_CONTAINER
+    var type: C64FileType = D64_FILE
     var savePanel: NSSavePanel!
     var selectedURL: URL?
     
@@ -46,30 +46,30 @@ class ExportDiskController : UserDialogController {
     @IBAction func selectD64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["d64"]
-        type = D64_CONTAINER
+        type = D64_FILE
     }
 
     @IBAction func selectG64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["g64"]
-        type = G64_CONTAINER
+        type = G64_FILE
     }
     
     @IBAction func selectPRG(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["prg"]
-        type = PRG_CONTAINER
+        type = PRG_FILE
     }
     
     @IBAction func selectP00(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["p00"]
-        type = P00_CONTAINER
+        type = P00_FILE
     }
     
     @IBAction func selectT64(_ sender: Any!) {
         track()
         savePanel.allowedFileTypes = ["t64"]
-        type = T64_CONTAINER
+        type = T64_FILE
     }
 }

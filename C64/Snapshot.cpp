@@ -142,10 +142,10 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
     return isSnapshotFile(path) && !isSupportedSnapshotFile(path);
 }
 
-ContainerType
+C64FileType
 Snapshot::type()
 {
-    return V64_CONTAINER;
+    return V64_FILE;
 }
 
 const char *

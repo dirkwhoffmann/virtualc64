@@ -72,7 +72,7 @@ public:
     //
 
     //! @brief    Returns the container type as numerical index
-    ContainerType type() { return CRT_CONTAINER; }
+    C64FileType type() { return CRT_FILE; }
     
     //! @brief    Returns the container type in plain text
     const char *typeAsString() { return "CRT"; }

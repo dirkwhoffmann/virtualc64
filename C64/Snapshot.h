@@ -122,7 +122,7 @@ public:
 	// Methods from Container class
 	bool hasSameType(const char *filename);
 	size_t writeToBuffer(uint8_t *buffer);
-    ContainerType type();
+    C64FileType type();
 	const char *typeAsString();
 
     //! @brief    Returns size of header

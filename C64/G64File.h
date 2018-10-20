@@ -65,7 +65,7 @@ public:
     //
     
     const char *getName();
-    ContainerType type() { return G64_CONTAINER; }
+    C64FileType type() { return G64_FILE; }
     const char *typeAsString() { return "G64"; }
     bool hasSameType(const char *filename);
     size_t writeToBuffer(uint8_t *buffer);
