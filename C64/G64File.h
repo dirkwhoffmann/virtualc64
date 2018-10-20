@@ -72,17 +72,11 @@ public:
     //! @brief    Factory method
     static G64Archive *makeG64ArchiveWithDisk(Disk *disk);
     
-    //! @brief    Standard destructor
-    ~G64Archive();
-		
     //! @brief    Returns true iff buffer contains a G64 file
     static bool isG64(const uint8_t *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a G64 file
     static bool isG64File(const char *filename);
-
-    //! @brief    Creates a G64 archive from a G64 file located on disk.
-    // static G64Archive *archiveFromG64File(const char *filename);
     
     
     //

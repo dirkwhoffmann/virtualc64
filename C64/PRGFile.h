@@ -59,9 +59,6 @@ public:
      */
     static PRGArchive *makePRGArchiveWithAnyArchive(Archive *otherArchive);
     
-    //! @brief    Standard destructor
-    ~PRGArchive();
-
     //! @brief    Returns true if buffer contains a PRG file
     /*! @details  PRG files ares mostly determined by their suffix, so this function will
      *            return true unless you provide a buffer with less than two bytes.

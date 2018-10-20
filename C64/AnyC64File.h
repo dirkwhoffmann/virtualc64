@@ -32,10 +32,14 @@ class AnyC64File : public VC64Object {
     
 protected:
 	     
-    //! @brief    The physical name (full path) of the container.
-    /*! @note     Might be NULL, if no path is set.
-     */
-    char *path;
+    //! @brief    The physical name (full path) of this file.
+    char *path = NULL;
+    
+    //! @brief    The raw data of this file.
+    uint8_t *data = NULL;
+    
+    //! @brief    The size of this file in bytes.
+    size_t size = 0;
     
     /*! @brief    The logical name of the container.
      *  @details  Some archives store a logical name in their header section.
@@ -77,7 +81,7 @@ public:
     virtual ~AnyC64File();
     
     //! @brief    Frees the memory allocated by this object.
-    virtual void dealloc() { };
+    virtual void dealloc();
 
     
     //

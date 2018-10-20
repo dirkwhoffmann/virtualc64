@@ -22,8 +22,7 @@ const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
 Snapshot::Snapshot()
 {
-    data = NULL;
-    size = 0;
+    setDescription("Snapshot");
 }
 
 Snapshot *
@@ -52,28 +51,6 @@ Snapshot::makeSnapshotWithFile(const char *filename)
     return snapshot;
 }
 
-Snapshot::~Snapshot()
-{
-    dealloc();
-}
-
-void
-Snapshot::dealloc()
-{
-    if (data != NULL) {
-        delete data;
-        data = NULL;
-        size = 0;
-    }
-    /*
-    if (state != NULL) {
-        free(state);
-        state = NULL;
-        capacity = 0;
-    }
-    */
-}
-
 bool
 Snapshot::setCapacity(size_t newCapacity)
 {
@@ -88,7 +65,8 @@ Snapshot::setCapacity(size_t newCapacity)
     */
     
     dealloc();
-    if ((data = new uint8_t[newSize]) == NULL)
+    // if ((data = new uint8_t[newSize]) == NULL)
+    if ((data = (uint8_t *)malloc(newSize)) == NULL)
         return false;
     size = newSize;
     
@@ -215,7 +193,8 @@ Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
     if (!setCapacity(stateSize))
         return false; 
     */
-    if ((data = new uint8_t[length]) == NULL)
+    // if ((data = new uint8_t[length]) == NULL)
+    if ((data = (uint8_t *)malloc(length)) == NULL)
         return false;
     
     memcpy(data, buffer, length);

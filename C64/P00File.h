@@ -58,9 +58,6 @@ public:
      */
     static P00Archive *makeP00ArchiveWithAnyArchive(Archive *otherArchive);
     
-    //! @brief    Standard destructor.
-    ~P00Archive();
-    
     //! @brief    Returns true iff buffer contains a P00 file
     static bool isP00(const uint8_t *buffer, size_t length);
 

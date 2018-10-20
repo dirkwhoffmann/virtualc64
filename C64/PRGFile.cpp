@@ -21,8 +21,6 @@
 PRGArchive::PRGArchive()
 {
     setDescription("PRGArchive");
-	data = NULL;
-	dealloc();
 }
 
 PRGArchive *
@@ -84,11 +82,6 @@ PRGArchive::makePRGArchiveWithAnyArchive(Archive *otherArchive) {
     }
     
     return archive;
-}
-
-PRGArchive::~PRGArchive()
-{
-	dealloc();
 }
 
 bool

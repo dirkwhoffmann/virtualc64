@@ -27,8 +27,6 @@ const uint8_t T64Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
 T64Archive::T64Archive()
 {
     setDescription("T64Archive");
-	data = NULL;
-	dealloc();
 }
 
 T64Archive *
@@ -172,16 +170,8 @@ T64Archive::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
 
 void T64Archive::dealloc()
 {
-    if (data) free(data);
-    data = NULL;
-    size = 0;
     fp = -1;
     fp_eof = -1;
-}
-
-T64Archive::~T64Archive()
-{
-	dealloc();
 }
 
 bool

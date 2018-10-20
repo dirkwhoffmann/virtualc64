@@ -25,8 +25,6 @@ G64Archive::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x0
 G64Archive::G64Archive()
 {
     setDescription("G64Archive");
-	data = NULL;
-	dealloc();
 }
 
 G64Archive::G64Archive(size_t capacity)
@@ -141,11 +139,6 @@ G64Archive::makeG64ArchiveWithDisk(Disk *disk)
     assert(pos == length);
     
     return G64Archive::makeG64ArchiveWithBuffer(buffer, length);
-}
-
-G64Archive::~G64Archive()
-{
-	dealloc();
 }
 
 bool

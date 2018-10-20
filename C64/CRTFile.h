@@ -47,7 +47,7 @@ private:
     uint8_t *data;
     
     //! @brief    Number of chips contained in cartridge file
-    unsigned int numberOfChips;
+    unsigned int numberOfChips = 0;
     
     //! @brief    Indicates where each chip section starts
     uint8_t *chips[64];
@@ -66,9 +66,6 @@ public:
 
     //! @brief    Factory method
     static CRTFile *makeCRTContainerWithFile(const char *filename);
-
-    //! @brief    Destructor
-    ~CRTFile();
     
     //! @brief    Frees the allocated memory.
     void dealloc();

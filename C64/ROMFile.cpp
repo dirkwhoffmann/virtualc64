@@ -134,7 +134,6 @@ ROMFile::ROMFile()
 {
     setDescription("ROMFile");
     romtype = UNKNOWN_CONTAINER_FORMAT;
-    size = 0;
 }
 
 bool

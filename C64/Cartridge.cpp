@@ -16,7 +16,6 @@ Cartridge::Cartridge(C64 *c64)
     
     initialGameLine = 1;
     initialExromLine = 1;
-    // memset(blendedIn, 255, sizeof(blendedIn));
     
     for (unsigned i = 0; i < 64; i++) {
         chip[i] = NULL;

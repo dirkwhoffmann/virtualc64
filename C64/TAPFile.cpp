@@ -54,11 +54,6 @@ TAPFile::makeTAPContainerWithFile(const char *filename)
     return tape;
 }
 
-TAPFile::~TAPFile()
-{
-    dealloc();
-}
-
 bool
 TAPFile::isTAP(const uint8_t *buffer, size_t length)
 {
@@ -87,9 +82,6 @@ TAPFile::isTAPFile(const char *filename)
 void
 TAPFile::dealloc()
 {
-    if (data) free(data);
-    data = NULL;
-    size = 0;
     fp = -1;
 }
 

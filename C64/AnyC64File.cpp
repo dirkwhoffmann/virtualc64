@@ -20,16 +20,34 @@
 
 AnyC64File::AnyC64File()
 {
+    debug("AnyC64File::Constructor\n");
     const char *defaultName = "HELLO VIRTUALC64";
-    
-	path = NULL;
     memcpy(name, defaultName, strlen(defaultName) + 1);
 }
 
 AnyC64File::~AnyC64File()
 {
-	if (path)
+    debug("AnyC64File::Destructor\n");
+    dealloc();
+
+    if (path)
 		free(path);
+}
+
+void
+AnyC64File::dealloc()
+{
+    debug("AnyC64File::dealloc\n");
+   
+    if (data == NULL) {
+        assert(size == 0);
+        return;
+    }
+    
+    // delete[] data;
+    free(data);
+    data = NULL;
+    size = 0;
 }
 
 bool

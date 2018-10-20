@@ -26,8 +26,9 @@ const uint8_t CRTFile::magicBytes[] = {
 
 CRTFile::CRTFile()
 {
-    data = NULL;
-    dealloc();
+    setDescription("CRTFile");
+    for (unsigned i = 0; i < 64; i++)
+        chips[i] = NULL;
 }
 
 CRTFile *
@@ -58,23 +59,16 @@ CRTFile::makeCRTContainerWithFile(const char *filename)
 
 void
 CRTFile::dealloc()
-    {
-        if (data) {
-            free(data);
-            data = NULL;
-        }
-        
-        for (unsigned i = 0; i < 64; i++)
-            chips[i] = NULL;
-        
-        numberOfChips = 0;
-    }
-        
-CRTFile::~CRTFile()
 {
-	dealloc();
+    debug("dealloc\n");
+    AnyC64File::dealloc();
+    
+    for (unsigned i = 0; i < 64; i++)
+        chips[i] = NULL;
+    
+    numberOfChips = 0;
 }
-
+        
 bool
 CRTFile::isCRTBuffer(const uint8_t *buffer, size_t length)
 {
@@ -171,7 +165,7 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
         ptr += chipSize(numberOfChips);
     }
     
-    debug("CRT container imported successfully (%d chips)\n", numberOfChips);
+    debug("CRT file imported successfully (%d chips)\n", numberOfChips);
     return true;	
 }
 

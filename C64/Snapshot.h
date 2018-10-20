@@ -91,10 +91,10 @@ public:
     static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
 
 	//! @brief    Destructor
-	~Snapshot();
+	// ~Snapshot();
 	
     //! @brief    Frees the allocated memory
-    void dealloc();
+    // void dealloc();
     
     //! @brief    Allocates memory for storing internal state
     bool setCapacity(size_t size);

@@ -170,11 +170,6 @@ D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
     return archive;
 }
 
-D64Archive::~D64Archive()
-{
-    dealloc();
-}
-
 bool
 D64Archive::isD64(const uint8_t *buffer, size_t length)
 {

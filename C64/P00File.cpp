@@ -24,8 +24,6 @@ P00Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00 };
 P00Archive::P00Archive()
 {
     setDescription("P00Archive");
-	data = NULL;
-	dealloc(); 
 }
 
 P00Archive *
@@ -96,11 +94,6 @@ P00Archive::makeP00ArchiveWithAnyArchive(Archive *otherArchive)
     }
     
     return archive;
-}
-
-P00Archive::~P00Archive()
-{
-	dealloc();
 }
 
 bool

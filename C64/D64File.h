@@ -80,10 +80,7 @@ public:
      *  @details  otherArchive can be of any archive type
      */
     static D64Archive *makeD64ArchiveWithAnyArchive(Archive *otherArchive);
-    
-    //! @brief    Standard destructor
-    ~D64Archive();
-    
+        
     
     //
     //! @functiongroup Accessing container attributes

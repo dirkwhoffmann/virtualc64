@@ -44,7 +44,7 @@ private:
     
 public:
     
-    //! @brief    Standard constructor
+    //! @brief    Constructor
     TAPFile();
     
     //! @brief    Factory method
@@ -52,9 +52,6 @@ public:
     
     //! @brief    Factory method
     static TAPFile *makeTAPContainerWithFile(const char *filename);
-
-    //! @brief    Standard destructor
-    ~TAPFile();
     
     //! @brief    Returns true iff buffer contains a TAP file
     static bool isTAP(const uint8_t *buffer, size_t length);

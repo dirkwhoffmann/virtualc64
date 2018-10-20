@@ -65,9 +65,6 @@ public:
      */
     static T64Archive *makeT64ArchiveWithAnyArchive(Archive *otherArchive);
 
-    //! @brief    Standard destructor
-    ~T64Archive();
-
     void dealloc();
     
     //

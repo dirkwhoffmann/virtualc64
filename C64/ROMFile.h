@@ -37,12 +37,6 @@ private:
 
     //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
     ContainerType romtype;
-
-    //! @brief    The raw data of this archive.
-    uint8_t *data;
-    
-    //! @brief    File size
-    size_t size;
         
 public:
     
@@ -54,9 +48,6 @@ public:
     
     //! @brief    Factory method
     static ROMFile *makeRomFileWithFile(const char *filename);
-    
-    //! @brief    Standard destructor
-    // ~ROMFile();
     
     //! @brief    Returns true iff buffer contains a ROM image
     static bool isRom(const uint8_t *buffer, size_t length);
