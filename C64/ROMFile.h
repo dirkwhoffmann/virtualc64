@@ -51,10 +51,10 @@ public:
     ROMFile();
     
     //! @brief    Factory method
-    static ROMFile *makeRomFileWithBuffer(const uint8_t *buffer, size_t length);
+    static ROMFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static ROMFile *makeRomFileWithFile(const char *filename);
+    static ROMFile *makeObjectWithFile(const char *filename);
     
     //! @brief    Returns true iff buffer contains a ROM image
     static bool isRom(const uint8_t *buffer, size_t length);

@@ -1097,7 +1097,7 @@ C64::loadRom(const char *filename)
 {
     bool result;
     bool wasRunnable = isRunnable();
-    ROMFile *rom = ROMFile::makeRomFileWithFile(filename);
+    ROMFile *rom = ROMFile::makeObjectWithFile(filename);
     
     if (!rom) {
         warn("Failed to read ROM image file %s\n", filename);

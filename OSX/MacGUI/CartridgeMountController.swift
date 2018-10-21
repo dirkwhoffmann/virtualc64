@@ -44,8 +44,8 @@ class CartridgeMountController : UserDialogController {
         type.stringValue = "Type \(cartType): \(cartTypeName)"
     
         // Set exrom and game line
-        let exromLine = cartridge.exromLine()
-        let gameLine = cartridge.gameLine()
+        let exromLine = cartridge.initialExromLine()
+        let gameLine = cartridge.initialGameLine()
         exrom.stringValue = "Exrom line: \(exromLine)"
         game.stringValue = "Game line: \(gameLine)"
     }

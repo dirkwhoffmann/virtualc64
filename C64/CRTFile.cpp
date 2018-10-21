@@ -34,7 +34,7 @@ CRTFile::CRTFile()
 }
 
 CRTFile *
-CRTFile::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
+CRTFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 {
     CRTFile *cartridge = new CRTFile();
     
@@ -47,7 +47,7 @@ CRTFile::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 CRTFile *
-CRTFile::makeCRTContainerWithFile(const char *filename)
+CRTFile::makeObjectWithFile(const char *filename)
 {
     CRTFile *cartridge = new CRTFile();
     
@@ -142,11 +142,11 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     // Minimum header size is 0x40. Some cartridges show a value of 0x20 which is wrong.
     if (headerSize < 0x40) headerSize = 0x40;
     
-    msg("Cartridge: %s\n", cartridgeName());
+    msg("Cartridge: %s\n", getName());
     msg("   Header: %08X bytes long (normally 0x40)\n", headerSize);
     msg("   Type:   %d\n", cartridgeType());
-    msg("   Game:   %d\n", gameLine());
-    msg("   Exrom:  %d\n", exromLine());
+    msg("   Game:   %d\n", initialGameLine());
+    msg("   Exrom:  %d\n", initialExromLine());
     
     // Load chip packets
     uint8_t *ptr = &data[headerSize];

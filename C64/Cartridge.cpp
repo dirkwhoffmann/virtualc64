@@ -162,8 +162,8 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
     assert(cart != NULL);
     
     // Remember powerup values for game line and exrom line
-    cart->initialGameLine  = container->gameLine();
-    cart->initialExromLine = container->exromLine();
+    cart->initialGameLine  = container->initialGameLine();
+    cart->initialExromLine = container->initialExromLine();
     
     // Load chip packets
     for (unsigned i = 0; i < container->chipCount(); i++) {

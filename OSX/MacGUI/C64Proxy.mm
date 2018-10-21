@@ -1035,20 +1035,20 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    CRTFile *container = CRTFile::makeCRTContainerWithBuffer((const uint8_t *)buffer, length);
+    CRTFile *container = CRTFile::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: container];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    CRTFile *container = CRTFile::makeCRTContainerWithFile([path UTF8String]);
+    CRTFile *container = CRTFile::makeObjectWithFile([path UTF8String]);
     return [self make: container];
 }
 
 - (NSString *)cartridgeName
 {
     CRTFile *c = (CRTFile *)wrapper->container;
-    return [NSString stringWithUTF8String:c->cartridgeName()];
+    return [NSString stringWithUTF8String:c->getName()];
 }
 
 - (CartridgeType)cartridgeType {
@@ -1065,14 +1065,14 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return Cartridge::isSupportedType([self cartridgeType]);
 }
 
-- (NSInteger)exromLine {
+- (NSInteger)initialExromLine {
     CRTFile *c = (CRTFile *)wrapper->container;
-    return c->exromLine();
+    return c->initialExromLine();
 }
 
-- (NSInteger)gameLine {
+- (NSInteger)initialGameLine {
     CRTFile *c = (CRTFile *)wrapper->container;
-    return c->gameLine();
+    return c->initialGameLine();
 }
 
 - (NSInteger)chipCount {

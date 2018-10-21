@@ -58,10 +58,10 @@ public:
     CRTFile();
     
     //! @brief    Factory method
-    static CRTFile *makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length);
+    static CRTFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
 
     //! @brief    Factory method
-    static CRTFile *makeCRTContainerWithFile(const char *filename);
+    static CRTFile *makeObjectWithFile(const char *filename);
     
     //! @brief    Returns true if path points to a CRT file.
     static bool isCRTFile(const char *path);
@@ -71,26 +71,21 @@ public:
     //! @functiongroup Methods from AnyC64File
     //
     
-    //! @brief    Frees the allocated memory.
     void dealloc();
-    
-    
- 
-    
-    //! @brief    Returns the file type as numerical index.
     C64FileType type() { return CRT_FILE; }
-    
-    //! @brief    Returns the file type in plain text.
     const char *typeAsString() { return "CRT"; }
+    const char *getName() { return (char *)&data[0x20]; }
     
-    //! @brief    Returns the name of this cartridge as stored inside the file.
-    char *cartridgeName() { return (char *)&data[0x20]; }
+    
+    //
+    //! @functiongroup Getting cartridge information
+    //
     
     //! @brief    Returns the version number of the cartridge.
     uint16_t cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
     
-    //! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
-    /*! @details  Don't confuse with ContainerType
+    /*! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
+     *  @details  Don't confuse with ContainerType
      */
     CartridgeType cartridgeType();
 
@@ -101,10 +96,15 @@ public:
     const char *cartridgeTypeName();
     
     //! @brief    Returns the initial value of the Exrom line
-    bool exromLine() { return data[0x18] != 0; }
+    bool initialExromLine() { return data[0x18] != 0; }
     
     //! @brief    Returns the initial value of the Game line
-    bool gameLine() { return data[0x19] != 0; }
+    bool initialGameLine() { return data[0x19] != 0; }
+    
+    
+    //
+    //! @functiongroup Getting chip information
+    //
     
     //! @brief    Returns how many chips are contained in this cartridge
     uint8_t chipCount() { return numberOfChips; }
