@@ -42,19 +42,7 @@ public:
     
     static AnyArchive *makeArchiveWithFile(const char *filename);
     
-    
-    //
-    //! @functiongroup Methods from AnyC64File
-    //
-    
-    /*! @brief    Flashes the selected item into memory
-     *  @param    buffer must be a pointer to the C64 RAM
-     *  @seealso  getDestinationAddr() which is used to determine the target
-     *            address in RAM.
-     */
-    void flash(uint8_t *buffer);
-    
-    
+
     //
     //! @functiongroup Accessing items
     //
@@ -89,8 +77,14 @@ public:
     /*! @brief    Returns the proposed memory location of the selected item.
      *  @details  When a file is flashed into memory, the item data is copied
      *            to this location.
+     *  @seealso  flashItem()
      */
     virtual uint16_t getDestinationAddrOfItem() { return 0; }
+    
+    /*! @brief    Flashes the selected item into memory.
+     *  @param    buffer must be a pointer to the C64 RAM
+     */
+    void flashItem(uint8_t *buffer);
     
  
     //

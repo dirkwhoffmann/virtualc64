@@ -1081,7 +1081,7 @@ C64::flash(AnyC64File *file, unsigned item)
         case PRG_FILE:
         case P00_FILE:
             ((AnyArchive *)file)->selectItem(item);
-            ((AnyArchive *)file)->flash(mem.ram);
+            ((AnyArchive *)file)->flashItem(mem.ram);
             break;
             
         default:

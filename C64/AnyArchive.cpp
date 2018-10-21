@@ -74,6 +74,13 @@ AnyArchive::getSizeOfItem()
 }
 
 void
+AnyArchive::flashItem(uint8_t *buffer)
+{
+    uint16_t addr = getDestinationAddrOfItem();
+    flash(buffer, (size_t)addr);
+}
+
+void
 AnyArchive::dumpDirectory()
 {
     int numItems = numberOfItems();
@@ -98,21 +105,3 @@ AnyArchive::dumpDirectory()
         msg("\n");
     }
 }
-
-void
-AnyArchive::flash(uint8_t *buffer)
-{
-    uint16_t addr = getDestinationAddrOfItem();
-    AnyC64File::flash(buffer, (size_t)addr);
-}
-
-/*
-const char *
-AnyArchive::hexDump(unsigned n, size_t offset, size_t num)
-{
-    if (n >= numberOfItems()) return "???";
-    
-    selectItem(n);
-    return AnyC64File::hexDump(offset, num);
-}
-*/
