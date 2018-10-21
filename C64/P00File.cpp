@@ -130,12 +130,20 @@ P00File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
 void
 P00File::selectItem(unsigned n)
 {
+    if (n == 1) {
+        seek(0);
+    } else {
+        fp = -1;
+    }
+
+    /*
     // Skip header and load address
     fp = 0x1C;
     
     // Invalidate file pointer if it is out of range or item does not exist.
     if (fp >= size || n != 0)
         fp = -1;
+    */
 }
 
 const char *
@@ -160,6 +168,15 @@ P00File::getNameOfItem()
     }
     name[i] = 0x00;
     return name;
+}
+
+void
+P00File::seek(long offset)
+{
+    fp = 0x1C + offset;
+    
+    if (fp >= size)
+        fp = -1;
 }
 
 uint16_t 

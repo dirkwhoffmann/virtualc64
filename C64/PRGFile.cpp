@@ -110,6 +110,15 @@ PRGFile::makeObjectWithAnyArchive(AnyArchive *otherArchive) {
     return archive;
 }
 
+void
+PRGFile::seek(long offset)
+{
+    fp = 2 + offset;
+
+    if (fp >= size)
+        fp = -1;
+}
+
 uint16_t 
 PRGFile::getDestinationAddrOfItem()
 {

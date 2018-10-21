@@ -73,6 +73,7 @@ public:
 
     C64FileType type() { return PRG_FILE; }
     const char *typeAsString() { return "PRG"; }
+    void seek(long offset); 
     bool hasSameType(const char *filename) { return isPRGFile(filename); }
     
     
@@ -83,6 +84,7 @@ public:
     int numberOfItems() { return 1; }
     const char *getNameOfItem() { return "FILE"; }
     const char *getTypeOfItem() { return "PRG"; }
+    size_t getSizeOfItem() { return size - 2; }
     uint16_t getDestinationAddrOfItem();
     void selectItem(unsigned n);
     

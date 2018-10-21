@@ -73,6 +73,7 @@ public:
     const char *getName();
     C64FileType type() { return P00_FILE; }
     const char *typeAsString() { return "P00"; }
+    void seek(long offset);
     bool hasSameType(const char *filename) { return isP00File(filename); }
     
     
@@ -84,6 +85,7 @@ public:
     void selectItem(unsigned n);
     const char *getNameOfItem();
     const char *getTypeOfItem() { return "PRG"; }
+    size_t getSizeOfItem() { return size - 0x1C; }
     uint16_t getDestinationAddrOfItem();
     
 };
