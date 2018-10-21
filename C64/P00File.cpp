@@ -57,7 +57,7 @@ P00File::makeP00ArchiveWithFile(const char *filename)
 P00File *
 P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
 {
-    if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
+    if (otherArchive == NULL || otherArchive->numberOfItems() == 0)
         return NULL;
     
     P00File *archive = new P00File();
@@ -145,7 +145,7 @@ P00File::writeToBuffer(uint8_t *buffer)
 const char *
 P00File::getNameOfItem(unsigned n)
 {
-    assert(n < getNumberOfItems());
+    assert(n < numberOfItems());
     
     unsigned i;
     

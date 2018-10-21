@@ -185,7 +185,7 @@ G64File::getName()
 }
 
 int 
-G64File::getNumberOfItems()
+G64File::numberOfItems()
 {
     return 84;
 }
@@ -209,7 +209,7 @@ G64File::getSizeOfItem(unsigned n)
 const char *
 G64File::getNameOfItem(unsigned n)
 {
-    assert(n < getNumberOfItems());
+    assert(n < numberOfItems());
     
     if (n < 84) {
         if (n % 2 == 0) {

@@ -138,7 +138,7 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     archive->writeBAM(otherArchive->getName());
     
     // Loop over all entries in archive
-    int numberOfItems = otherArchive->getNumberOfItems();
+    int numberOfItems = otherArchive->numberOfItems();
     for (unsigned i = 0; i < numberOfItems; i++) {
         
         archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
@@ -338,7 +338,7 @@ D64File::getUnicodeName()
 //
 
 int
-D64File::getNumberOfItems()
+D64File::numberOfItems()
 {
     long offsets[144]; // a C64 disk contains at most 144 files
     unsigned noOfFiles;
@@ -351,7 +351,7 @@ D64File::getNumberOfItems()
 const char *
 D64File::getNameOfItem(unsigned n)
 {
-    assert(n < getNumberOfItems());
+    assert(n < numberOfItems());
     
     long pos = findDirectoryEntry(n);
     int i;
@@ -468,7 +468,7 @@ void
 D64File::selectItem(unsigned item)
 {
     // Invalidate the file pointer if a non-existing item is requested.
-    if (item >= getNumberOfItems()) {
+    if (item >= numberOfItems()) {
         fp = -1;
         return;
     }

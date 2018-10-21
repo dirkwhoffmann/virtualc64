@@ -98,7 +98,7 @@ public:
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     
-    int getNumberOfItems();
+    int numberOfItems();
     
 	const char *getNameOfItem(unsigned n);
 	const char *getTypeOfItem(unsigned n);

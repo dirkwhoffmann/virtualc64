@@ -1161,7 +1161,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSInteger)numberOfItems {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return (NSInteger)archive->getNumberOfItems();
+    return (NSInteger)archive->numberOfItems();
 }
 
 - (NSString *)nameOfItem:(NSInteger)item {

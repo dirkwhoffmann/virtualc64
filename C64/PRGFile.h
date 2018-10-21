@@ -74,7 +74,7 @@ public:
     // Methods from AnyArchive
     //
     
-    int getNumberOfItems() { return 1; }
+    int numberOfItems() { return 1; }
     const char *getNameOfItem(unsigned n) { return "FILE"; }
     const char *getTypeOfItem(unsigned n) { return "PRG"; }
     uint16_t getDestinationAddrOfItem(unsigned n);

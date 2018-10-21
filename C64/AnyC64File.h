@@ -127,7 +127,7 @@ public:
     //! @functiongroup Reading data from the file
     //
     
-    //! @brief    Move file pointer to a different location
+    //! @brief    Move file pointer to the specified location
     virtual void seek(long offset);
     
     /*! @brief    Reads a byte
@@ -135,8 +135,8 @@ public:
      */
     virtual int getByte();
 
-    //! @brief    Uses getByte() to copy the file into the C64 memory.
-    /*! @param    buffer must be a pointer to RAM or ROM
+    /*! @brief    Uses getByte() to copy the file into the C64 memory.
+     *  @param    buffer must be a pointer to RAM or ROM
      */
     virtual void flash(uint8_t *buffer, size_t offset);
     virtual void flash(uint8_t *buffer) { flash(buffer, 0); }

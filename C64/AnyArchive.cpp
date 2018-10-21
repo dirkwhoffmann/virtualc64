@@ -50,7 +50,7 @@ AnyArchive::makeArchiveWithFile(const char *path)
 const char *
 AnyArchive::getNameOfItem(unsigned n)
 {
-    assert(n < getNumberOfItems());
+    assert(n < numberOfItems());
     return "FILE";
 }
 
@@ -77,14 +77,14 @@ AnyArchive::getSizeOfItem(unsigned n)
 void
 AnyArchive::dumpDirectory()
 {
-    int numberOfItems = getNumberOfItems();
+    int numItems = numberOfItems();
     
     msg("Archive:           %s\n", getName());
     msg("-------\n");
     msg("  Path:            %s\n", getPath());
-    msg("  Items:           %d\n", numberOfItems);
+    msg("  Items:           %d\n", numItems);
 
-    for (unsigned i = 0; i < numberOfItems; i++) {
+    for (unsigned i = 0; i < numItems; i++) {
         msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
                 i, getNameOfItem(i), getSizeOfItem(i), getDestinationAddrOfItem(i));
         msg("                 ");
@@ -118,7 +118,7 @@ AnyArchive::flashItem(unsigned item, uint8_t *buffer)
 const char *
 AnyArchive::hexDump(unsigned n, size_t offset, size_t num)
 {
-    if (n >= getNumberOfItems()) return "???";
+    if (n >= numberOfItems()) return "???";
     
     selectItem(n);
     return AnyC64File::hexDump(offset, num);

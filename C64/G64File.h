@@ -23,6 +23,9 @@
 
 #include "AnyArchive.h"
 
+// Forward declarations
+class Disk;
+
 /*! @class   G64File
  *  @brief   The G64File class declares the programmatic interface for a file
  *           in G64 format.
@@ -76,7 +79,7 @@ public:
     // Methods from AnyArchive
     //
     
-    int getNumberOfItems();
+    int numberOfItems();
     size_t getSizeOfItem(unsigned n);
     const char *getNameOfItem(unsigned n);
     const char *getTypeOfItem(unsigned n);

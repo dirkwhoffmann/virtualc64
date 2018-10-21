@@ -27,11 +27,8 @@
 
 #include "AnyC64File.h"
 
-// Forward declarations
-class Disk;
-
 /*! @class    AnyArchive
- *  @brief    Base class for all file types that allow direct access to the
+ *  @brief    Base class for all file types that allow a direct access to all
  *            stored files.
  */
 
@@ -50,6 +47,11 @@ public:
     //! @functiongroup Methods from AnyC64File
     //
     
+    /*! @brief    Flashes the selected item into memory
+     *  @param    buffer must be a pointer to the C64 RAM
+     *  @seealso  getDestinationAddr() which is used to determine the target
+     *            address in RAM.
+     */
     void flash(uint8_t *buffer);
     
     
@@ -58,7 +60,7 @@ public:
     //
 
     //! @brief    Returns the number of items in this archive.
-    virtual int getNumberOfItems() { return 0; }
+    virtual int numberOfItems() { return 0; }
 
     /*! @brief   Returns the name of an item in ASCII format.
      *  @note    Never call this function for nonexisting items.

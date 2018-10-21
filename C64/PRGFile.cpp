@@ -56,7 +56,7 @@ PRGFile::makePRGArchiveWithAnyArchive(AnyArchive *otherArchive) {
     
     int exportItem = 0;
     
-    if (otherArchive == NULL || otherArchive->getNumberOfItems() <= exportItem)
+    if (otherArchive == NULL || otherArchive->numberOfItems() <= exportItem)
         return NULL;
     
     PRGFile *archive = new PRGFile();

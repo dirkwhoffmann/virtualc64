@@ -66,7 +66,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     T64File *archive  = new T64File();
     
     // Determine container size and allocate memory
-    unsigned currentFiles = otherArchive->getNumberOfItems();
+    unsigned currentFiles = otherArchive->numberOfItems();
     unsigned maxFiles = (currentFiles < 30) ? 30 : currentFiles;
     archive->size = 64 /* header */ + maxFiles * 32 /* tape entries */;
     
@@ -251,7 +251,7 @@ T64File::getUnicodeName()
 }
 
 int 
-T64File::getNumberOfItems()
+T64File::numberOfItems()
 {
     return LO_HI(data[0x24], data[0x25]);
 }
@@ -259,7 +259,7 @@ T64File::getNumberOfItems()
 const char *
 T64File::getNameOfItem(unsigned n)
 {
-    assert(n < getNumberOfItems());
+    assert(n < numberOfItems());
     
 	int i,j;
 	int first = 0x50 + (n * 0x20);
@@ -308,7 +308,7 @@ void
 T64File::selectItem(unsigned item)
 {
     // Invalidate the file pointer if a non-existing item is requested.
-    if (item >= getNumberOfItems()) {
+    if (item >= numberOfItems()) {
         fp = -1;
         return;
     }
@@ -361,7 +361,7 @@ bool
 T64File::repair()
 {
     unsigned i, n;
-    uint16_t noOfItems = getNumberOfItems();
+    uint16_t noOfItems = numberOfItems();
 
     //
     // 1. Repair number of items, if this value is zero
@@ -372,7 +372,7 @@ T64File::repair()
         while (directoryItemIsPresent(noOfItems))
             noOfItems++;
 
-        uint16_t noOfItemsStatedInHeader = getNumberOfItems();
+        uint16_t noOfItemsStatedInHeader = numberOfItems();
         if (noOfItems != noOfItemsStatedInHeader) {
         
             debug(1, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n",
@@ -382,7 +382,7 @@ T64File::repair()
             data[0x25] = HI_BYTE(noOfItems);
             
         }
-        assert(noOfItems == getNumberOfItems());
+        assert(noOfItems == numberOfItems());
     }
     
     for (i = 0; i < noOfItems; i++) {
