@@ -53,6 +53,10 @@ private:
      */
 	unsigned numTracks; 
 	
+    /*! @brief    Number of the currently selected item
+     *  @details  -1, if no item is selected
+     */
+    long selectedItem = -1;
     
 public:
 
@@ -100,7 +104,8 @@ public:
 	const char *getTypeOfItem(unsigned n);
     size_t getSizeOfItemInBlocks(unsigned n);
 	uint16_t getDestinationAddrOfItem(unsigned n);
-    
+    uint16_t getDestinationAddr();
+
 	void selectItem(unsigned n);
 	int getByte();
 
@@ -236,7 +241,7 @@ private:
      *  @return  Offset to the first data sector of the requested file. If the
      *           file is not found, -1 is returned.
      */
-    long findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
+    long findDirectoryEntry(long item, bool skipInvisibleFiles = true);
     
     //! Returns the track number of the first file block
     /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */

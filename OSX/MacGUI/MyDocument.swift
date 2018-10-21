@@ -487,7 +487,7 @@ class MyDocument : NSDocument {
     
         // Type RUN or SYS
         if loadAddr == 0x801 {
-            parent.keyboardcontroller.type("RUN")
+            parent.keyboardcontroller.type("RUN\n")
         } else {
             parent.keyboardcontroller.type("SYS \(loadAddr)")
         }

@@ -296,45 +296,56 @@ T64File::getDestinationAddrOfItem(unsigned n)
 	return result;
 }
 
-void 
-T64File::selectItem(unsigned n)
+uint16_t
+T64File::getDestinationAddr()
 {
-    if (n < getNumberOfItems()) {
+    long i = 0x42 + (selectedItem * 0x20);
+    uint16_t result = LO_HI(data[i], data[i+1]);
+    return result;
+}
 
-        // Compute start address in container
-        unsigned i = 0x48 + (n * 0x20);
-        fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
-
-        // Compute start address in memory
-        i = 0x42 + (n * 0x20);
-        uint16_t startAddrInMemory = LO_HI(data[i], data[i+1]);
-        
-        // Compute end address in memory
-        i = 0x44 + (n * 0x20);
-        uint16_t endAddrInMemory = LO_HI(data[i], data[i+1]);
-
-        // Compute size of item
-        uint16_t length = endAddrInMemory - startAddrInMemory;
-
-        // Compute end address in container
-        eof = fp + length;
-
-        // Return if offset values are safe
-        if (fp < size && eof <= size)
-            return;
-    
-        assert(0); // As repair() should have ruled out all inconsistencies, we should never be here!
+void 
+T64File::selectItem(unsigned item)
+{
+    // Invalidate the file pointer if a non-existing item is requested.
+    if (item >= getNumberOfItems()) {
+        fp = -1;
+        return;
     }
-
-    fp = eof = -1;
-	return;
+    
+    // Remember the selection
+    selectedItem = item;
+    
+    // Compute start address in container
+    unsigned i = 0x48 + (item * 0x20);
+    fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
+    
+    // Compute start address in memory
+    i = 0x42 + (item * 0x20);
+    uint16_t startAddrInMemory = LO_HI(data[i], data[i+1]);
+    
+    // Compute end address in memory
+    i = 0x44 + (item * 0x20);
+    uint16_t endAddrInMemory = LO_HI(data[i], data[i+1]);
+    
+    // Compute size of item
+    uint16_t length = endAddrInMemory - startAddrInMemory;
+    
+    // Compute end address in container
+    eof = fp + length;
+    
+    // Check for inconsistent values. As all inconsistencies should have
+    // been ruled out by repair(), the if condition should never hit.
+    if (fp > size || eof > size) {
+        assert(false);
+    }
 }
 
 bool
-T64File::directoryItemIsPresent(int n)
+T64File::directoryItemIsPresent(int item)
 {
-    int first = 0x40 + (n * 0x20);
-    int last  = 0x60 + (n * 0x20);
+    int first = 0x40 + (item * 0x20);
+    int last  = 0x60 + (item * 0x20);
     int i;
     
     // check for zeros...

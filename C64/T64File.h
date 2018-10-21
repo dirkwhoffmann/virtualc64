@@ -31,11 +31,16 @@ class T64File : public AnyArchive {
     
     //! @brief    Header signature
     static const uint8_t magicBytes[];
-       
+    
+    /*! @brief    Number of the currently selected item
+     *  @details  -1, if no item is selected
+     */
+    long selectedItem  = -1;
+    
 public:
     
     //
-    //! @functiongroup Creating and destructing containers
+    //! @functiongroup Creating and deleting objects
     //
     
     //! @brief    Standard constructor
@@ -52,6 +57,7 @@ public:
      */
     static T64File *makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive);
 
+    
     //
     // Methods from AnyC64File
     //
@@ -66,10 +72,11 @@ public:
     //
     
     int getNumberOfItems();
-    const char *getNameOfItem(unsigned n);
-    const char *getTypeOfItem(unsigned n);
-    uint16_t getDestinationAddrOfItem(unsigned n);
-    void selectItem(unsigned n);
+    const char *getNameOfItem(unsigned item);
+    const char *getTypeOfItem(unsigned item);
+    uint16_t getDestinationAddrOfItem(unsigned item);
+    uint16_t getDestinationAddr();
+    void selectItem(unsigned item);
     
     //
     //! @functiongroup Serializing

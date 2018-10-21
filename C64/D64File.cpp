@@ -443,20 +443,44 @@ D64File::getDestinationAddrOfItem(unsigned n)
     return result;
 }
 
+uint16_t
+D64File::getDestinationAddr()
+{
+    int track;
+    int sector;
+    uint16_t result;
+    
+    // Search for beginning of file data
+    long pos = findDirectoryEntry(selectedItem);
+    if (pos <= 0)
+        return 0;
+    
+    track = data[pos + 0x01];
+    sector = data[pos + 0x02];
+    if ((pos = offset(track, sector)) < 0)
+        return 0;
+    
+    result = LO_HI(data[pos+2],data[pos+3]);
+    return result;
+}
+
 void
 D64File::selectItem(unsigned item)
 {
-    fp = -1;
-    
-    // check, if item exists
-    if (item >= getNumberOfItems())
+    // Invalidate the file pointer if a non-existing item is requested.
+    if (item >= getNumberOfItems()) {
+        fp = -1;
         return;
+    }
     
-    // find directory entry
+    // Remember the selection
+    selectedItem = item;
+    
+    // Find directory entry
     if ((fp = findDirectoryEntry(item)) <= 0)
         return;
     
-    // find first data sector
+    // Find first data sector
     if ((fp = offset(data[fp+0x01], data[fp+0x02])) < 0)
         return;
     
@@ -465,8 +489,6 @@ D64File::selectItem(unsigned item)
     
     // Skip destination address
     fp += 2;
-    
-    // We finally reached the first real data byte :-)
 }
 
 int 
@@ -826,7 +848,7 @@ D64File::scanDirectory(long *offsets, unsigned *noOfFiles, bool skipInvisibleFil
 
 
 long
-D64File::findDirectoryEntry(int item, bool skipInvisibleFiles)
+D64File::findDirectoryEntry(long item, bool skipInvisibleFiles)
 {
     long offsets[144];
     unsigned noOfFiles;

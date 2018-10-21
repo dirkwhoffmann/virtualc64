@@ -63,24 +63,30 @@ public:
     //! @brief    Factory method
     static CRTFile *makeCRTContainerWithFile(const char *filename);
     
+    //! @brief    Returns true if path points to a CRT file.
+    static bool isCRTFile(const char *path);
+    
+    
+    //
+    //! @functiongroup Methods from AnyC64File
+    //
+    
     //! @brief    Frees the allocated memory.
     void dealloc();
     
-    //
-    //! @functiongroup Accessing container attributes
-    //
-
-    //! @brief    Returns the container type as numerical index
+    
+ 
+    
+    //! @brief    Returns the file type as numerical index.
     C64FileType type() { return CRT_FILE; }
     
-    //! @brief    Returns the container type in plain text
+    //! @brief    Returns the file type in plain text.
     const char *typeAsString() { return "CRT"; }
     
-    //! Return logical cartridge name
-    //! TODO: Override getName
+    //! @brief    Returns the name of this cartridge as stored inside the file.
     char *cartridgeName() { return (char *)&data[0x20]; }
     
-    //! @brief    Returns the version number of the cartridge
+    //! @brief    Returns the version number of the cartridge.
     uint16_t cartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
     
     //! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
@@ -140,9 +146,7 @@ public:
     //! @brief    Returns true if buffer contains a CRT file of unsupported type.
     static bool isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length);
 
-    //! @brief    Returns true if path points to a CRT file.
-    //! @deprecated
-    static bool isCRTFile(const char *path);
+
 
     //! @brief    Method from Container class
     bool hasSameType(const char *filename) { return CRTFile::isCRTFile(filename); }

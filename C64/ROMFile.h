@@ -43,6 +43,10 @@ private:
         
 public:
     
+    //
+    //! @functiongroup Creating and deleting objects
+    //
+    
     //! @brief    Standard constructor
     ROMFile();
     
@@ -82,9 +86,8 @@ public:
     //! @brief    Returns true iff filename points to a VC1541 ROM file
     static bool isVC1541RomFile(const char *filename);
     
-    
     //
-    // Virtual functions from File class
+    //! @functiongroup Methods from AnyC64File
     //
     
     C64FileType type() { return romtype; }

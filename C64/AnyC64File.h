@@ -35,7 +35,7 @@ protected:
     //! @brief    The physical name (full path) of this file.
     char *path = NULL;
     
-    /*! @brief    The logical name of the container.
+    /*! @brief    The logical name of this file.
      *  @details  Some archives store a logical name in their header section.
      *            If they don't store a name, the raw filename is used (path
      *            and extension stripped off).
@@ -74,17 +74,17 @@ protected:
      *  @param    length    Length of the buffer
      *  @param    header    Expected byte sequence, terminated by EOF
      *  @return   Returns   true iff magic bytes match.
-     *  @seealso  Container::typeOfBuffer
      */
     static bool checkBufferHeader(const uint8_t *buffer, size_t length,
                                   const uint8_t *header);
 
-public:
     
     //
-    //! @functiongroup Creating and destructing containers
+    //! @functiongroup Creating and deleting objects
     //
-
+    
+public:
+    
     //! @brief    Constructor
     AnyC64File();
 
@@ -96,24 +96,24 @@ public:
 
     
     //
-    //! @functiongroup Accessing container attributes
+    //! @functiongroup Accessing file attributes
     //
     
-    //! @brief    Returns the type of this container.
+    //! @brief    Returns the type of this file.
     virtual C64FileType type() { return UNKNOWN_FILE_FORMAT; }
     
-    //! @brief      Returns the string representation of the container's type.
-    /*! @details    E.g., a T64 container returns "T64"
+    //! @brief      Returns a string representation of the file type.
+    /*! @details    E.g., a T64 file returns "T64".
      */
     virtual const char *typeAsString() { return "???"; }
 
-	//! @brief    Returns the physical name of this container.
+	//! @brief    Returns the physical name of this file.
     const char *getPath() { return path ? path : ""; }
 
-    //! @brief    Sets the physical name of this container.
+    //! @brief    Sets the physical name of this file.
     void setPath(const char *path);
 
-    //! @brief    Returns the logical name of this container.
+    //! @brief    Returns the logical name of this file.
     virtual const char *getName();
 
     /*! @brief    Returns the logical name as unicode character array.
@@ -124,7 +124,7 @@ public:
 	
     
     //
-    //! @functiongroup Retrieving data
+    //! @functiongroup Reading data from the file
     //
     
     //! @brief    Move file pointer to a different location
@@ -138,32 +138,33 @@ public:
     //! @brief    Uses getByte() to copy the file into the C64 memory.
     /*! @param    buffer must be a pointer to RAM or ROM
      */
-    void flash(uint8_t *buffer, size_t offset = 0);
-    
+    virtual void flash(uint8_t *buffer, size_t offset);
+    virtual void flash(uint8_t *buffer) { flash(buffer, 0); }
+
     /*! @brief    Returns a textual representation for a sequence of bytes.
      */
     const char *hexDump(size_t offset, size_t num);
     
     
     //
-    //! @functiongroup Serializing data
+    //! @functiongroup Serializing the file contents
     //
     
-    //! @brief    Required buffer size for this container
+    //! @brief    Required buffer size for this file
     size_t sizeOnDisk() { return writeToBuffer(NULL); }
 
-    /*! @brief    Returns true iff this container has the same type as the
-     *            container stored in the specified file.
+    /*! @brief    Returns true iff this file has the same type as the
+     *            file stored in the specified file.
      */
     virtual bool hasSameType(const char *filename) { return false; }
 
-    /*! @brief    Read container contents from a memory buffer.
+    /*! @brief    Reads the file contents from a memory buffer.
      *  @param    buffer The address of a binary representation in memory.
      *  @param    length The size of the binary representation.
      */
     virtual bool readFromBuffer(const uint8_t *buffer, size_t length);
 	
-    /*! @brief    Read container contents from a file.
+    /*! @brief    Reads the file contents from a file.
      *  @details  This function requires no custom implementation. It first
      *            reads in the file contents in memory and invokes
      *            readFromBuffer afterwards.
@@ -171,15 +172,14 @@ public:
      */
 	bool readFromFile(const char *filename);
 
-    /*! @brief    Write container contents into a memory buffer.
-     *  @details  If a NULL pointer is passed in, a test run is performed.
-     *            Test runs are performed to determine the size of the
-     *            container on disk.
+    /*! @brief    Writes the file contents into a memory buffer.
+     *  @details  If a NULL pointer is passed in, a test run is performed. Test
+     *            runs are performed to determine the size of the file on disk.
      *   @param   buffer The address of the buffer in memory.
      */
 	virtual size_t writeToBuffer(uint8_t *buffer);
 
-    /*! @brief    Write container contents to a file.
+    /*! @brief    Writes the file contents to a file.
      *  @details  This function requires no custom implementation. It invokes
      *            writeToBuffer first and writes the data to disk afterwards.
      *  @param    filename The name of a file to be written.

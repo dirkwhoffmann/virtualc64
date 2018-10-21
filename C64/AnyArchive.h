@@ -31,31 +31,35 @@
 class Disk;
 
 /*! @class    AnyArchive
-    @brief    Base class for all loadable objects with multiple files included. */
+ *  @brief    Base class for all file types that allow direct access to the
+ *            stored files.
+ */
 
 class AnyArchive : public AnyC64File {
     
 public:
 
     //
-    //! Factory methods
+    //! @functiongroup Creating and deleting objects
     //
     
     static AnyArchive *makeArchiveWithFile(const char *filename);
     
     
     //
-    //! Accessing archive attributes
+    //! @functiongroup Methods from AnyC64File
+    //
+    
+    void flash(uint8_t *buffer);
+    
+    
+    //
+    //! @functiongroup Accessing archive attributes
     //
 
     //! @brief    Returns the number of items in this archive.
     virtual int getNumberOfItems() { return 0; }
 
-    
-    //
-    //! Accessing item attributes
-    //
-            
     /*! @brief   Returns the name of an item in ASCII format.
      *  @note    Never call this function for nonexisting items.
      */
@@ -78,20 +82,26 @@ public:
     virtual size_t getSizeOfItemInBlocks(unsigned n) { return (getSizeOfItem(n) + 253) / 254; }
         
     /*! @brief    Returns the proposed memory location of an item.
-     *  @details  When a file is flashed into memory, the raw data is copied to this location.
+     *  @details  When a file is flashed into memory, the raw data is copied to
+     *            this location.
      */
     virtual uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
-    
+
+    /*! @brief    Returns the proposed memory location of the selected item.
+     *  @details  When a file is flashed into memory, the item data is copied
+     *            to this location.
+     */
+    virtual uint16_t getDestinationAddr() { return 0; }
     
     //
     //! @functiongroup Reading an item
     //
 
     //! @brief    Selects an item to read from
-    virtual void selectItem(unsigned n) { }
+    virtual void selectItem(unsigned n) { };
 
     //! @brief    Copies an item into the specified buffer
-    void flashItem(unsigned n, uint8_t *buffer);
+    // void flashItem(unsigned n, uint8_t *buffer);
     
     //! @brief    Reads multiple bytes in form of string
     const char *hexDump(unsigned n, size_t offset, size_t num);

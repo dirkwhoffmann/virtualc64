@@ -99,11 +99,21 @@ AnyArchive::dumpDirectory()
 }
 
 void
+AnyArchive::flash(uint8_t *buffer)
+{
+    uint16_t addr = getDestinationAddr();
+    debug("Flashing to %04X\n", addr);
+    AnyC64File::flash(buffer, (size_t)addr);
+}
+
+/*
+void
 AnyArchive::flashItem(unsigned item, uint8_t *buffer)
 {
     selectItem(item);
-    AnyC64File::flash(buffer, getDestinationAddrOfItem(item));
+    flash(buffer, getDestinationAddrOfItem(item));
 }
+*/
 
 const char *
 AnyArchive::hexDump(unsigned n, size_t offset, size_t num)
