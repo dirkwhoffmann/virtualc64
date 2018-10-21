@@ -33,7 +33,7 @@ AnyArchive::makeArchiveWithFile(const char *path)
         return T64File::makeT64ArchiveWithFile(path);
     }
     if (D64File::isD64File(path)) {
-        return D64File::makeD64ArchiveWithFile(path);
+        return D64File::makeObjectWithFile(path);
     }
     if (PRGFile::isPRGFile(path)) {
         return PRGFile::makePRGArchiveWithFile(path);
@@ -105,15 +105,6 @@ AnyArchive::flash(uint8_t *buffer)
     debug("Flashing to %04X\n", addr);
     AnyC64File::flash(buffer, (size_t)addr);
 }
-
-/*
-void
-AnyArchive::flashItem(unsigned item, uint8_t *buffer)
-{
-    selectItem(item);
-    flash(buffer, getDestinationAddrOfItem(item));
-}
-*/
 
 const char *
 AnyArchive::hexDump(unsigned n, size_t offset, size_t num)

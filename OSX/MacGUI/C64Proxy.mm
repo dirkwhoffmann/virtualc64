@@ -1325,12 +1325,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    D64File *archive = D64File::makeD64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    D64File *archive = D64File::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    D64File *archive = D64File::makeD64ArchiveWithFile([path UTF8String]);
+    D64File *archive = D64File::makeObjectWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive

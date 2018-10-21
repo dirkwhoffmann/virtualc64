@@ -59,16 +59,22 @@ public:
 
     
     //
-    // Methods from AnyC64File
+    //! @functiongroup Methods from AnyC64File
     //
     
     C64FileType type() { return T64_FILE; }
     const char *typeAsString() { return "T64"; }
     const char *getName();
-    const unsigned short *getUnicodeName();
+
+    //! @brief    Returns the size of the currently selected item.
+    size_t numBytes();
+    
+    //! @brief    Sets the file pointer relative to the selected item.
+    void seek(long offset);
+    
     
     //
-    // Methods from AnyArchive
+    //! @functiongroup Methods from AnyArchive
     //
     
     int numberOfItems();

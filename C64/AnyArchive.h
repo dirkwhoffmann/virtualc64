@@ -101,12 +101,10 @@ public:
 
     //! @brief    Selects an item to read from
     virtual void selectItem(unsigned n) { };
-
-    //! @brief    Copies an item into the specified buffer
-    // void flashItem(unsigned n, uint8_t *buffer);
     
     //! @brief    Reads multiple bytes in form of string
     const char *hexDump(unsigned n, size_t offset, size_t num);
+    
     
     //
     //! @functiongroup Debugging

@@ -61,45 +61,64 @@ private:
 public:
 
     //
-    //! @functiongroup Creating and destructing D64 archives
+    //! @functiongroup Class methods
+    //
+    
+    //! @brief    Returns true iff buffer contains a D64 file
+    static bool isD64Buffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief   Returns true iff the specified file is a D64 file.
+    static bool isD64File(const char *filename);
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
     //
 
     //! @brief    Standard constructor
     D64File();
     
     //! @brief    Factory method
-    static D64File *makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static D64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static D64File *makeD64ArchiveWithFile(const char *path);
+    static D64File *makeObjectWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
     static D64File *makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive);
-        
+    
     
     //
-    //! @functiongroup Accessing container attributes
+    //! @functiongroup Methods from AnyC64File
     //
     
-    //! @brief    Returns true iff buffer contains a D64 file
-    static bool isD64(const uint8_t *buffer, size_t length);
-    
-    //! @brief   Returns true iff the specified file is a D64 file.
-    static bool isD64File(const char *filename);
-
-    const char *getName();
-    const unsigned short *getUnicodeName();
     C64FileType type() { return D64_FILE; }
     const char *typeAsString() { return "D64"; }
-	
+    const char *getName();
+    size_t numBytes();
+    void seek(long offset);
+    int getByte();
     bool hasSameType(const char *filename) { return isD64File(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     
-    int numberOfItems();
+private:
     
+    /*! @brief    Returns the offset to the first data byte of an item.
+     *  @return   -1, if the item does not exist.
+     */
+    long beginningOfItem(long item);
+    
+    
+    //
+    //! @functiongroup Methods from AnyArchive
+    //
+
+public:
+    
+    int numberOfItems();
 	const char *getNameOfItem(unsigned n);
 	const char *getTypeOfItem(unsigned n);
     size_t getSizeOfItemInBlocks(unsigned n);
@@ -107,7 +126,7 @@ public:
     uint16_t getDestinationAddr();
 
 	void selectItem(unsigned n);
-	int getByte();
+
 
     
     //

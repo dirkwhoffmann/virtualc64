@@ -242,12 +242,31 @@ T64File::getName()
 	return name;
 }
 
-const unsigned short *
-T64File::getUnicodeName()
+size_t
+T64File::numBytes()
 {
-    (void)getName();
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
+    if (selectedItem < 0)
+        return 0;
+    
+    // Compute start and end of the selected item in memory
+    size_t offset = 0x42 + (selectedItem * 0x20);
+    uint16_t startAddrInMemory = LO_HI(data[offset], data[offset + 1]);
+    uint16_t endAddrInMemory = LO_HI(data[offset + 2], data[offset + 3]);
+    
+    return endAddrInMemory - startAddrInMemory;
+}
+
+void
+T64File::seek(long offset)
+{
+    size_t i = 0x48 + (selectedItem * 0x20);
+
+    // Move file pointer the the start of the selected item + offset
+    fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]) + offset;
+
+    // Invalidate file pointer if it is out of range
+    if (fp > size)
+        fp = -1;
 }
 
 int 
@@ -316,23 +335,10 @@ T64File::selectItem(unsigned item)
     // Remember the selection
     selectedItem = item;
     
-    // Compute start address in container
+    // Set file pointer and eof index
     unsigned i = 0x48 + (item * 0x20);
     fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
-    
-    // Compute start address in memory
-    i = 0x42 + (item * 0x20);
-    uint16_t startAddrInMemory = LO_HI(data[i], data[i+1]);
-    
-    // Compute end address in memory
-    i = 0x44 + (item * 0x20);
-    uint16_t endAddrInMemory = LO_HI(data[i], data[i+1]);
-    
-    // Compute size of item
-    uint16_t length = endAddrInMemory - startAddrInMemory;
-    
-    // Compute end address in container
-    eof = fp + length;
+    eof = fp + numBytes();
     
     // Check for inconsistent values. As all inconsistencies should have
     // been ruled out by repair(), the if condition should never hit.

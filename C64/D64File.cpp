@@ -93,7 +93,7 @@ D64File::D64File()
 }
 
 D64File *
-D64File::makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+D64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 {
     D64File *archive = new D64File();
     
@@ -106,7 +106,7 @@ D64File::makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 D64File *
-D64File::makeD64ArchiveWithFile(const char *path)
+D64File::makeObjectWithFile(const char *path)
 {
     D64File *archive = new D64File();
     
@@ -173,7 +173,7 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
 }
 
 bool
-D64File::isD64(const uint8_t *buffer, size_t length)
+D64File::isD64Buffer(const uint8_t *buffer, size_t length)
 {
     // Unfortunaltely, D64 containers do not contain magic bytes.
     // We can only check the buffer size
@@ -311,6 +311,28 @@ D64File::writeToBuffer(uint8_t *buffer)
     return 0;
 }
 
+long
+D64File::beginningOfItem(long item)
+{
+    long p;
+    
+    // Find directory entry
+    if ((p = findDirectoryEntry(item)) <= 0)
+        return -1;
+    
+    // Find first data sector
+    if ((p = offset(data[p+0x01], data[p+0x02])) < 0)
+        return -1;
+    
+    // Skip t/s sequence
+    p += 2;
+    
+    // Skip destination address
+    p += 2;
+    
+    return p;
+}
+
 const char *
 D64File::getName()
 {
@@ -325,17 +347,36 @@ D64File::getName()
     return name;
 }
 
-const unsigned short *
-D64File::getUnicodeName()
+size_t
+D64File::numBytes()
 {
-    (void)getName();
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
-    return unicode;
+    if (selectedItem < 0)
+        return 0;
+    
+    // In a D64 archive, the bytes of a single file item are not ordered
+    // consecutively. Hence, we have to step through the data byte by byte.
+    long oldFp = fp;
+    size_t result = 0;
+    
+    while (getByte() != EOF)
+        result++;
+    
+    fp = oldFp;
+    return result;
 }
 
-//
-// Virtual functions from AnyArchive class
-//
+void
+D64File::seek(long offset)
+{
+    if (selectedItem == -1)
+        return;
+    
+    if ((fp = beginningOfItem(selectedItem)) == -1)
+        return;
+    
+    for (unsigned i = 0; i < offset; i++)
+        (void)getByte();
+}
 
 int
 D64File::numberOfItems()
@@ -467,28 +508,15 @@ D64File::getDestinationAddr()
 void
 D64File::selectItem(unsigned item)
 {
-    // Invalidate the file pointer if a non-existing item is requested.
-    if (item >= numberOfItems()) {
-        fp = -1;
+    // Only proceed of item exists
+    if (item >= numberOfItems())
         return;
-    }
     
     // Remember the selection
     selectedItem = item;
     
-    // Find directory entry
-    if ((fp = findDirectoryEntry(item)) <= 0)
-        return;
-    
-    // Find first data sector
-    if ((fp = offset(data[fp+0x01], data[fp+0x02])) < 0)
-        return;
-    
-    // Skip t/s sequence
-    fp += 2;
-    
-    // Skip destination address
-    fp += 2;
+    // Move file pointer to the first data byte
+    fp = beginningOfItem(item);
 }
 
 int 

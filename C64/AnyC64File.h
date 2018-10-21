@@ -127,6 +127,9 @@ public:
     //! @functiongroup Reading data from the file
     //
     
+    //! @brief    Returns the number of bytes until EOF is reached
+    virtual size_t numBytes() { return size; }
+
     //! @brief    Move file pointer to the specified location
     virtual void seek(long offset);
     
