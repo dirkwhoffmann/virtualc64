@@ -1024,7 +1024,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return CRTFile::isUnsupportedCRTBuffer((uint8_t *)buffer, length); }
 + (BOOL) isCRTFile:(NSString *)path {
     return CRTFile::isCRTFile([path UTF8String]); }
-
 + (instancetype) make:(CRTFile *)container
 {
     if (container == NULL) {
@@ -1118,13 +1117,13 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    TAPFile *container = TAPFile::makeTAPContainerWithBuffer((const uint8_t *)buffer, length);
+    TAPFile *container = TAPFile::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: container];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    TAPFile *container = TAPFile::makeTAPContainerWithFile([path UTF8String]);
+    TAPFile *container = TAPFile::makeObjectWithFile([path UTF8String]);
     return [self make: container];
 }
 

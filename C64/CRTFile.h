@@ -51,7 +51,30 @@ private:
 public:
     
     //
-    //! @functiongroup Creating and destructing containers
+    //! @functiongroup Class methods
+    //
+    
+    //! @brief    Returns true if buffer contains a CRT file.
+    static bool isCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns the cartridge type number stored in the CRT buffer.
+    static CartridgeType typeOfCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns the cartridge type name stored in the CRT buffer.
+    static const char *typeNameOfCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true if buffer contains a supported CRT file.
+    static bool isSupportedCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true if buffer contains a CRT file of unsupported type.
+    static bool isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length);
+
+    //! @brief    Returns true if path points to a CRT file.
+    static bool isCRTFile(const char *path);
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
     //
 
     //! @brief    Constructor
@@ -63,9 +86,6 @@ public:
     //! @brief    Factory method
     static CRTFile *makeObjectWithFile(const char *filename);
     
-    //! @brief    Returns true if path points to a CRT file.
-    static bool isCRTFile(const char *path);
-    
     
     //
     //! @functiongroup Methods from AnyC64File
@@ -75,10 +95,12 @@ public:
     C64FileType type() { return CRT_FILE; }
     const char *typeAsString() { return "CRT"; }
     const char *getName() { return (char *)&data[0x20]; }
+    bool hasSameType(const char *filename) { return CRTFile::isCRTFile(filename); }
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
     
     
     //
-    //! @functiongroup Getting cartridge information
+    //! @functiongroup Retrieving cartridge information
     //
     
     //! @brief    Returns the version number of the cartridge.
@@ -103,7 +125,7 @@ public:
     
     
     //
-    //! @functiongroup Getting chip information
+    //! @functiongroup Retrieving chip information
     //
     
     //! @brief    Returns how many chips are contained in this cartridge
@@ -126,34 +148,6 @@ public:
     //! Returns start of chip rom in address space
     uint16_t chipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
     
-    
-    //
-    //! @functiongroup Serializing
-    //
-    
-    //! @brief    Returns true if buffer contains a CRT file.
-    static bool isCRTBuffer(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Returns the cartridge type number stored in the CRT buffer.
-    static CartridgeType typeOfCRTBuffer(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns the cartridge type name stored in the CRT buffer.
-    static const char *typeNameOfCRTBuffer(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true if buffer contains a supported CRT file.
-    static bool isSupportedCRTBuffer(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Returns true if buffer contains a CRT file of unsupported type.
-    static bool isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length);
-
-
-
-    //! @brief    Method from Container class
-    bool hasSameType(const char *filename) { return CRTFile::isCRTFile(filename); }
-
-    //! @brief    Method from Container class
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
-
 };
 
 #endif

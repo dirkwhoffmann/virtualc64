@@ -723,9 +723,10 @@ struct ContainerWrapper;
 - (NSInteger)sizeOfChip:(NSInteger)nr;
 @end
 
-// --------------------------------------------------------------------------
-//                                  TAPProxy
-// --------------------------------------------------------------------------
+
+//
+// TAPProxy
+//
 
 @interface TAPProxy : ContainerProxy {
 }

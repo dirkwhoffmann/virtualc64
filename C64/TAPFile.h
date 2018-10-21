@@ -40,38 +40,46 @@ private:
     
 public:
     
-    //! @brief    Constructor
-    TAPFile();
-    
-    //! @brief    Factory method
-    static TAPFile *makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Factory method
-    static TAPFile *makeTAPContainerWithFile(const char *filename);
+    //
+    //! @functiongroup Class methods
+    //
     
     //! @brief    Returns true iff buffer contains a TAP file
-    static bool isTAP(const uint8_t *buffer, size_t length);
+    static bool isTAPBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);
     
+    
     //
-    // Virtual functions from Container class
+    //! @functiongroup Creating and destructing objects
+    //
+    
+    //! @brief    Constructor
+    TAPFile();
+    
+    //! @brief    Factory method
+    static TAPFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static TAPFile *makeObjectWithFile(const char *filename);
+    
+    
+    //
+    //! @functiongroup Methods from AnyC64File
     //
     
     void dealloc();
-    
-    const char *getName();
     C64FileType type() { return TAP_FILE; }
     const char *typeAsString() { return "TAP"; }
-    
-    bool hasSameType(const char *filename);
+    const char *getName();
+    bool hasSameType(const char *filename) { return isTAPFile(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     
     
     //
-    // Accessing the container
+    //! @functiongroup Retrieving tape information
     //
     
     uint8_t TAPversion() { return data[0x000C]; }

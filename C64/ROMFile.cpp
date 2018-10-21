@@ -27,38 +27,38 @@ const uint8_t ROMFile::magicVC1541RomBytes1[] = { 0x97, 0xAA, 0xAA, 0x00 };
 const uint8_t ROMFile::magicVC1541RomBytes2[] = { 0x97, 0xE0, 0x43, 0x00 };
 
 bool
-ROMFile::isRom(const uint8_t *buffer, size_t length)
+ROMFile::isRomBuffer(const uint8_t *buffer, size_t length)
 {
     return
-    isBasicRom(buffer, length) ||
-    isCharRom(buffer, length) ||
-    isKernalRom(buffer, length) ||
-    isVC1541Rom(buffer, length);
+    isBasicRomBuffer(buffer, length) ||
+    isCharRomBuffer(buffer, length) ||
+    isKernalRomBuffer(buffer, length) ||
+    isVC1541RomBuffer(buffer, length);
 }
 
 bool
-ROMFile::isBasicRom(const uint8_t *buffer, size_t length)
+ROMFile::isBasicRomBuffer(const uint8_t *buffer, size_t length)
 {
     if (length != 0x2000) return false;
     return checkBufferHeader(buffer, length, magicBasicRomBytes);
 }
 
 bool
-ROMFile::isCharRom(const uint8_t *buffer, size_t length)
+ROMFile::isCharRomBuffer(const uint8_t *buffer, size_t length)
 {
     if (length != 0x1000) return false;
     return checkBufferHeader(buffer, length, magicCharRomBytes);
 }
 
 bool
-ROMFile::isKernalRom(const uint8_t *buffer, size_t length)
+ROMFile::isKernalRomBuffer(const uint8_t *buffer, size_t length)
 {
     if (length != 0x2000) return false;
     return checkBufferHeader(buffer, length, magicKernalRomBytes);
 }
 
 bool
-ROMFile::isVC1541Rom(const uint8_t *buffer, size_t length)
+ROMFile::isVC1541RomBuffer(const uint8_t *buffer, size_t length)
 {
     if (length != 0x4000) return false;
     return
@@ -145,10 +145,10 @@ ROMFile::readFromBuffer(const uint8_t *buffer, size_t length)
         return false;
     
     romtype =
-    isBasicRom(buffer, length) ? BASIC_ROM_FILE :
-    isCharRom(buffer, length) ? CHAR_ROM_FILE :
-    isKernalRom(buffer, length) ? KERNAL_ROM_FILE :
-    isVC1541Rom(buffer, length) ? VC1541_ROM_FILE :
+    isBasicRomBuffer(buffer, length) ? BASIC_ROM_FILE :
+    isCharRomBuffer(buffer, length) ? CHAR_ROM_FILE :
+    isKernalRomBuffer(buffer, length) ? KERNAL_ROM_FILE :
+    isVC1541RomBuffer(buffer, length) ? VC1541_ROM_FILE :
     UNKNOWN_FILE_FORMAT;
  
     return romtype != UNKNOWN_FILE_FORMAT;

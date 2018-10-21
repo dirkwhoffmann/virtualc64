@@ -147,7 +147,7 @@ public:
     
     
     //
-    //! @functiongroup Serializing the file contents
+    //! @functiongroup Serializing
     //
     
     //! @brief    Required buffer size for this file

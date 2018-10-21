@@ -31,7 +31,7 @@ TAPFile::TAPFile()
 }
 
 TAPFile *
-TAPFile::makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length)
+TAPFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 {
     TAPFile *tape = new TAPFile();
     
@@ -44,7 +44,7 @@ TAPFile::makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 TAPFile *
-TAPFile::makeTAPContainerWithFile(const char *filename)
+TAPFile::makeObjectWithFile(const char *filename)
 {
     TAPFile *tape = new TAPFile();
     
@@ -57,7 +57,7 @@ TAPFile::makeTAPContainerWithFile(const char *filename)
 }
 
 bool
-TAPFile::isTAP(const uint8_t *buffer, size_t length)
+TAPFile::isTAPBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x15) return false;
     return checkBufferHeader(buffer, length, magicBytes);
@@ -97,12 +97,6 @@ TAPFile::getName()
     }
     name[i] = 0x00;
     return name;
-}
-
-bool
-TAPFile::hasSameType(const char *filename)
-{
-    return isTAPFile(filename);
 }
 
 bool

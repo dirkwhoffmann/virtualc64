@@ -176,7 +176,7 @@ T64File::isT64(const uint8_t *buffer, size_t length)
     if (length < 0x40)
         return false;
     
-    if (TAPFile::isTAP(buffer, length)) // Note: TAP files have a very similar header
+    if (TAPFile::isTAPBuffer(buffer, length)) // Note: TAP files have a very similar header
         return false;
         
     return checkBufferHeader(buffer, length, magicBytes);

@@ -44,32 +44,23 @@ private:
 public:
     
     //
-    //! @functiongroup Creating and deleting objects
+    //! @functiongroup Class methods
     //
     
-    //! @brief    Standard constructor
-    ROMFile();
-    
-    //! @brief    Factory method
-    static ROMFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Factory method
-    static ROMFile *makeObjectWithFile(const char *filename);
-    
     //! @brief    Returns true iff buffer contains a ROM image
-    static bool isRom(const uint8_t *buffer, size_t length);
-
+    static bool isRomBuffer(const uint8_t *buffer, size_t length);
+    
     //! @brief    Returns true iff buffer contains a Basic ROM image
-    static bool isBasicRom(const uint8_t *buffer, size_t length);
-
+    static bool isBasicRomBuffer(const uint8_t *buffer, size_t length);
+    
     //! @brief    Returns true iff buffer contains a Character ROM image
-    static bool isCharRom(const uint8_t *buffer, size_t length);
-
+    static bool isCharRomBuffer(const uint8_t *buffer, size_t length);
+    
     //! @brief    Returns true iff buffer contains a Kernal ROM image
-    static bool isKernalRom(const uint8_t *buffer, size_t length);
-
+    static bool isKernalRomBuffer(const uint8_t *buffer, size_t length);
+    
     //! @brief    Returns true iff buffer contains a VC1541 ROM image
-    static bool isVC1541Rom(const uint8_t *buffer, size_t length);
+    static bool isVC1541RomBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Returns true iff filename points to a ROM file
     static bool isRomFile(const char *filename);
@@ -85,6 +76,21 @@ public:
     
     //! @brief    Returns true iff filename points to a VC1541 ROM file
     static bool isVC1541RomFile(const char *filename);
+    
+    
+    //
+    //! @functiongroup Creating and deleting objects
+    //
+    
+    //! @brief    Standard constructor
+    ROMFile();
+    
+    //! @brief    Factory method
+    static ROMFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static ROMFile *makeObjectWithFile(const char *filename);
+    
     
     //
     //! @functiongroup Methods from AnyC64File

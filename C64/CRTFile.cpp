@@ -26,51 +26,6 @@
 const uint8_t CRTFile::magicBytes[] = {
     'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ', 0x00 };
 
-CRTFile::CRTFile()
-{
-    setDescription("CRTFile");
-    for (unsigned i = 0; i < 64; i++)
-        chips[i] = NULL;
-}
-
-CRTFile *
-CRTFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
-{
-    CRTFile *cartridge = new CRTFile();
-    
-    if (!cartridge->readFromBuffer(buffer, length)) {
-        delete cartridge;
-        return NULL;
-    }
-    
-    return cartridge;
-}
-
-CRTFile *
-CRTFile::makeObjectWithFile(const char *filename)
-{
-    CRTFile *cartridge = new CRTFile();
-    
-    if (!cartridge->readFromFile(filename)) {
-        delete cartridge;
-        return NULL;
-    }
-    
-    return cartridge;
-}
-
-void
-CRTFile::dealloc()
-{
-    debug("dealloc\n");
-    AnyC64File::dealloc();
-    
-    for (unsigned i = 0; i < 64; i++)
-        chips[i] = NULL;
-    
-    numberOfChips = 0;
-}
-        
 bool
 CRTFile::isCRTBuffer(const uint8_t *buffer, size_t length)
 {
@@ -103,7 +58,7 @@ CRTFile::isSupportedCRTBuffer(const uint8_t *buffer, size_t length)
 bool
 CRTFile::isUnsupportedCRTBuffer(const uint8_t *buffer, size_t length)
 {
-        return isCRTBuffer(buffer, length) && !isSupportedCRTBuffer(buffer, length);
+    return isCRTBuffer(buffer, length) && !isSupportedCRTBuffer(buffer, length);
 }
 
 bool
@@ -123,6 +78,46 @@ CRTFile::isCRTFile(const char *path)
     return true;
 }
 
+CRTFile::CRTFile()
+{
+    setDescription("CRTFile");
+    memset(chips, 0, sizeof(chips));
+}
+
+CRTFile *
+CRTFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+{
+    CRTFile *cartridge = new CRTFile();
+    
+    if (!cartridge->readFromBuffer(buffer, length)) {
+        delete cartridge;
+        return NULL;
+    }
+    
+    return cartridge;
+}
+
+CRTFile *
+CRTFile::makeObjectWithFile(const char *filename)
+{
+    CRTFile *cartridge = new CRTFile();
+    
+    if (!cartridge->readFromFile(filename)) {
+        delete cartridge;
+        return NULL;
+    }
+    
+    return cartridge;
+}
+
+void
+CRTFile::dealloc()
+{
+    AnyC64File::dealloc();
+    memset(chips, 0, sizeof(chips));
+    numberOfChips = 0;
+}
+        
 bool
 CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
 {
