@@ -207,15 +207,15 @@ G64File::getSizeOfItem(unsigned n)
 }
 
 const char *
-G64File::getNameOfItem(unsigned n)
+G64File::getNameOfItem()
 {
-    assert(n < numberOfItems());
+    assert(selectedHalftrack != -1);
     
-    if (n < 84) {
-        if (n % 2 == 0) {
-            sprintf(name, "Track %d", (n / 2) + 1);
+    if (selectedHalftrack < 84) {
+        if (selectedHalftrack % 2 == 0) {
+            sprintf(name, "Track %ld", (selectedHalftrack / 2) + 1);
         } else {
-            sprintf(name, "Track %d.5", (n / 2) + 1);
+            sprintf(name, "Track %ld.5", (selectedHalftrack / 2) + 1);
         }
         return name;
     }
@@ -226,12 +226,14 @@ G64File::getNameOfItem(unsigned n)
 const char *
 G64File::getTypeOfItem(unsigned n)
 {
-    return ""; // (n % 2 == 0) ? "Full" : "Half";
+    return "";
 }
 
 void 
 G64File::selectItem(unsigned n)
 {
+    selectedHalftrack = n;
+    
     fp = getStartOfItem(n);
     fp += 2; // skip length information
     eof = fp + getSizeOfItem(n);

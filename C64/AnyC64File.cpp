@@ -128,7 +128,7 @@ AnyC64File::flash(uint8_t *buffer, size_t offset)
     int byte;
     assert(buffer != NULL);
     
-    fp = 0;
+    seek(0);
 
     while ((byte = getByte()) != EOF) {
         if (offset <= 0xFFFF) {

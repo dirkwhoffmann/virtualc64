@@ -56,23 +56,26 @@ public:
     
     
     //
-    //! @functiongroup Accessing archive attributes
+    //! @functiongroup Accessing the archived items
     //
 
     //! @brief    Returns the number of items in this archive.
     virtual int numberOfItems() { return 0; }
 
-    /*! @brief   Returns the name of an item in ASCII format.
-     *  @note    Never call this function for nonexisting items.
+    /*! @brief    Selects the active item
+     *  @details  All item related methods work on the selected item.
      */
-    virtual const char *getNameOfItem(unsigned n);
+    virtual void selectItem(unsigned n) { };
+    
+    //! @brief   Returns the name of the selected item in ASCII format.
+    virtual const char *getNameOfItem();
 
-    /*! @brief   Returns the name of an item in unichar format.
+    /*! @brief   Returns the name of the selected item in unichar format.
      *  @details The returned unichars are compatible with font C64ProMono
      *           which is used, e.g., in the mount dialogs preview panel.
      *  @note    Never call this function for nonexisting items.
      */
-    virtual const unsigned short *getUnicodeNameOfItem(unsigned n);
+    virtual const unsigned short *getUnicodeNameOfItem();
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
     virtual const char *getTypeOfItem(unsigned n) { return NULL; }
@@ -99,11 +102,9 @@ public:
     //! @functiongroup Reading an item
     //
 
-    //! @brief    Selects an item to read from
-    virtual void selectItem(unsigned n) { };
+
     
-    //! @brief    Reads multiple bytes in form of string
-    // const char *hexDump(unsigned n, size_t offset, size_t num);
+
     
     
     //

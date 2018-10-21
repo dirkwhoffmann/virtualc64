@@ -141,7 +141,9 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     int numberOfItems = otherArchive->numberOfItems();
     for (unsigned i = 0; i < numberOfItems; i++) {
         
-        archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
+        otherArchive->selectItem(i);
+        
+        archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(), track, sector, otherArchive->getSizeOfItem(i));
         
         // Every file is preceded with two bytes containing its load address
         uint16_t loadAddr = otherArchive->getDestinationAddrOfItem(i);
@@ -390,15 +392,18 @@ D64File::numberOfItems()
 }
 
 const char *
-D64File::getNameOfItem(unsigned n)
+D64File::getNameOfItem()
 {
-    assert(n < numberOfItems());
+    assert(selectedItem != -1);
     
-    long pos = findDirectoryEntry(n);
+    long pos;
     int i;
     
-    if (pos <= 0) return NULL;
-    pos += 0x03; // filename begins here
+    // Search the selected item in directory
+    if ((pos = findDirectoryEntry(selectedItem)) <= 0)
+        return NULL;
+    
+    pos += 0x03; // The filename begins here
     for (i = 0; i < 16; i++) {
         if (data[pos+i] == 0xA0)
             break;

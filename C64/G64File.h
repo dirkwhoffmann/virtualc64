@@ -37,6 +37,11 @@ public:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
+    /*! @brief    Number of the currently selected halftrack
+     *  @details  -1, if no halftrack is selected
+     */
+    long selectedHalftrack  = -1;
+    
 
     //
     //! @functiongroup Creating and destructing G64 archives
@@ -81,7 +86,7 @@ public:
     
     int numberOfItems();
     size_t getSizeOfItem(unsigned n);
-    const char *getNameOfItem(unsigned n);
+    const char *getNameOfItem();
     const char *getTypeOfItem(unsigned n);
     uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
     void selectItem(unsigned n);

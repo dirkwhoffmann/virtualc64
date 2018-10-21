@@ -143,14 +143,9 @@ P00File::writeToBuffer(uint8_t *buffer)
 }
 
 const char *
-P00File::getNameOfItem(unsigned n)
+P00File::getNameOfItem()
 {
-    assert(n < numberOfItems());
-    
     unsigned i;
-    
-    if (n != 0)
-        return NULL;
     
     for (i = 0; i < 17; i++) {
         name[i] = data[0x08+i];

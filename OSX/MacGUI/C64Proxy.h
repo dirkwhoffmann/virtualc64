@@ -756,8 +756,8 @@ struct ContainerWrapper;
 
 - (NSInteger)numberOfItems;
 - (void)selectItem:(NSInteger)item;
-- (NSString *)nameOfItem:(NSInteger)item;
-- (NSString *)unicodeNameOfItem:(NSInteger)item;
+- (NSString *)nameOfItem;
+- (NSString *)unicodeNameOfItem;
 - (NSInteger)sizeOfItem:(NSInteger)item;
 - (NSInteger)sizeOfItemInBlocks:(NSInteger)item;
 - (NSString *)typeOfItem:(NSInteger)item;

@@ -48,16 +48,15 @@ AnyArchive::makeArchiveWithFile(const char *path)
 }
 
 const char *
-AnyArchive::getNameOfItem(unsigned n)
+AnyArchive::getNameOfItem()
 {
-    assert(n < numberOfItems());
     return "FILE";
 }
 
 const unsigned short *
-AnyArchive::getUnicodeNameOfItem(unsigned n)
+AnyArchive::getUnicodeNameOfItem()
 {
-    const char *name = getNameOfItem(n);
+    const char *name = getNameOfItem();
     translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
@@ -85,8 +84,10 @@ AnyArchive::dumpDirectory()
     msg("  Items:           %d\n", numItems);
 
     for (unsigned i = 0; i < numItems; i++) {
+        
+        selectItem(i);
         msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
-                i, getNameOfItem(i), getSizeOfItem(i), getDestinationAddrOfItem(i));
+                i, getNameOfItem(), getSizeOfItem(i), getDestinationAddrOfItem(i));
         msg("                 ");
         selectItem(i);
         for (unsigned j = 0; j < 8; j++) {

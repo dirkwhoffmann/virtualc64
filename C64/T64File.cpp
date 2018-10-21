@@ -116,6 +116,8 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
             continue;
         }
         
+        otherArchive->selectItem(n);
+        
         // Entry used (1 byte)
         *ptr++ = 0x01;
         
@@ -146,7 +148,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         ptr += 4;
         
         // File name (16 bytes)
-        strncpy((char *)ptr, (char *)otherArchive->getNameOfItem(n), 16);
+        strncpy((char *)ptr, (char *)otherArchive->getNameOfItem(), 16);
         for (unsigned i = 0; i < 16; i++, ptr++)
             *ptr = ascii2pet(*ptr);
     }
@@ -276,13 +278,13 @@ T64File::numberOfItems()
 }
 
 const char *
-T64File::getNameOfItem(unsigned n)
+T64File::getNameOfItem()
 {
-    assert(n < numberOfItems());
+    assert(selectedItem != -1);
     
-	int i,j;
-	int first = 0x50 + (n * 0x20);
-	int last  = 0x60 + (n * 0x20);
+	long i,j;
+	long first = 0x50 + (selectedItem * 0x20);
+	long last  = 0x60 + (selectedItem * 0x20);
 	
 	if (size < last) {
 		name[0] = 0;

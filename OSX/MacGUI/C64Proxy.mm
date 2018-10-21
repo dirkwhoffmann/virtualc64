@@ -1175,14 +1175,14 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return (NSInteger)archive->numberOfItems();
 }
 
-- (NSString *)nameOfItem:(NSInteger)item {
+- (NSString *)nameOfItem {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return [NSString stringWithUTF8String:archive->getNameOfItem((int)item)];
+    return [NSString stringWithUTF8String:archive->getNameOfItem()];
 }
 
-- (NSString *)unicodeNameOfItem:(NSInteger)item {
+- (NSString *)unicodeNameOfItem {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    const unsigned short *unichars = archive->getUnicodeNameOfItem((int)item);
+    const unsigned short *unichars = archive->getUnicodeNameOfItem();
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 
