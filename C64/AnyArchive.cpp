@@ -106,6 +106,7 @@ AnyArchive::flash(uint8_t *buffer)
     AnyC64File::flash(buffer, (size_t)addr);
 }
 
+/*
 const char *
 AnyArchive::hexDump(unsigned n, size_t offset, size_t num)
 {
@@ -114,4 +115,4 @@ AnyArchive::hexDump(unsigned n, size_t offset, size_t num)
     selectItem(n);
     return AnyC64File::hexDump(offset, num);
 }
-
+*/

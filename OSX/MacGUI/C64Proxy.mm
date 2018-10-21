@@ -918,6 +918,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (C64FileType)type { return wrapper->container->type(); }
 - (NSString *)name { return [NSString stringWithUTF8String:wrapper->container->getName()]; }
 - (NSInteger) sizeOnDisk { return wrapper->container->sizeOnDisk(); }
+- (void)seek:(NSInteger)offset { wrapper->container->seek(offset); }
 
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -927,6 +928,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (NSInteger) writeToBuffer:(void *)buffer
 {
     return wrapper->container->writeToBuffer((uint8_t *)buffer);
+}
+
+- (NSString *)hexDump:(NSInteger)num
+{
+    AnyC64File *file = (AnyC64File *)([self wrapper]->container);
+    return [NSString stringWithUTF8String:file->hexDump(num)];
 }
 
 - (void) dealloc
@@ -1158,6 +1165,11 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [self make: archive];
 }
 
+- (void)selectItem:(NSInteger)item {
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    archive->selectItem((unsigned)item);
+}
+
 - (NSInteger)numberOfItems {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
     return (NSInteger)archive->numberOfItems();
@@ -1198,11 +1210,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return archive->getDestinationAddrOfItem((int)item);
 }
 
-- (NSString *)hexDump:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return [NSString stringWithUTF8String:archive->hexDump((unsigned)n, offset, num)];
-}
 @end
 
 

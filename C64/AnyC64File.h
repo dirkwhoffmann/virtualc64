@@ -138,16 +138,17 @@ public:
      */
     virtual int getByte();
 
+    /*! @brief    Reads multiple bytes in form of a string.
+     *  @param    Number of bytes ranging from 1 to 85.
+     */
+    const char *hexDump(size_t num);
+
     /*! @brief    Uses getByte() to copy the file into the C64 memory.
      *  @param    buffer must be a pointer to RAM or ROM
      */
     virtual void flash(uint8_t *buffer, size_t offset);
     virtual void flash(uint8_t *buffer) { flash(buffer, 0); }
 
-    /*! @brief    Returns a textual representation for a sequence of bytes.
-     */
-    const char *hexDump(size_t offset, size_t num);
-    
     
     //
     //! @functiongroup Serializing

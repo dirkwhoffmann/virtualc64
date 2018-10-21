@@ -103,7 +103,7 @@ public:
     virtual void selectItem(unsigned n) { };
     
     //! @brief    Reads multiple bytes in form of string
-    const char *hexDump(unsigned n, size_t offset, size_t num);
+    // const char *hexDump(unsigned n, size_t offset, size_t num);
     
     
     //

@@ -128,6 +128,8 @@ AnyC64File::flash(uint8_t *buffer, size_t offset)
     int byte;
     assert(buffer != NULL);
     
+    fp = 0;
+
     while ((byte = getByte()) != EOF) {
         if (offset <= 0xFFFF) {
             buffer[offset++] = (uint8_t)byte;
@@ -138,17 +140,14 @@ AnyC64File::flash(uint8_t *buffer, size_t offset)
 }
 
 const char *
-AnyC64File::hexDump(size_t offset, size_t num)
+AnyC64File::hexDump(size_t num)
 {
-    // Skip 'offset' bytes
-    for (unsigned i = 0; i < offset; i++) (void)getByte();
-    
     assert(sizeof(name) > 3 * num);
     
     for (unsigned i = 0; i < num; i++) {
         
         int byte = getByte();
-        if (byte == -1) break;
+        if (byte == EOF) break;
         sprintf(name + (3 * i), "%02X ", byte);
     }
     

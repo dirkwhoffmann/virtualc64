@@ -652,13 +652,13 @@ struct ContainerWrapper;
 @end
 
 
-// --------------------------------------------------------------------------
-//               C O N T A I N E R   P R O X Y   C L A S S E S
-// --------------------------------------------------------------------------
+//
+// C O N T A I N E R   P R O X Y   C L A S S E S
+//
 
-// --------------------------------------------------------------------------
-//                              ContainerProxy
-// --------------------------------------------------------------------------
+//
+// ContainerProxy
+//
 
 @interface ContainerProxy : NSObject {
     
@@ -672,13 +672,17 @@ struct ContainerWrapper;
 - (C64FileType)type; 
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
+- (void)seek:(NSInteger)offset; 
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
+- (NSString *)hexDump:(NSInteger)num;
+
 @end
 
-// --------------------------------------------------------------------------
-//                               SnapshotProxy
-// --------------------------------------------------------------------------
+
+//
+// SnapshotProxy
+//
 
 @interface SnapshotProxy : ContainerProxy {
 }
@@ -696,9 +700,10 @@ struct ContainerWrapper;
 - (unsigned char *)imageData;
 @end
 
-// --------------------------------------------------------------------------
-//                                  CRTProxy
-// --------------------------------------------------------------------------
+
+//
+// CRTProxy
+//
 
 @interface CRTProxy : ContainerProxy {
 }
@@ -738,9 +743,10 @@ struct ContainerWrapper;
 - (NSInteger)TAPversion;
 @end
 
-// --------------------------------------------------------------------------
-//                                ArchiveProxy
-// --------------------------------------------------------------------------
+
+//
+// ArchiveProxy
+//
 
 @interface ArchiveProxy : ContainerProxy {
 }
@@ -749,6 +755,7 @@ struct ContainerWrapper;
 + (instancetype)makeWithFile:(NSString *)path;
 
 - (NSInteger)numberOfItems;
+- (void)selectItem:(NSInteger)item;
 - (NSString *)nameOfItem:(NSInteger)item;
 - (NSString *)unicodeNameOfItem:(NSInteger)item;
 - (NSInteger)sizeOfItem:(NSInteger)item;
@@ -756,8 +763,6 @@ struct ContainerWrapper;
 - (NSString *)typeOfItem:(NSInteger)item;
 - (NSInteger)destinationAddrOfItem:(NSInteger)item;
 
-// Think about a better API for accessing tracks and sectors directly
-- (NSString *)hexDump:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;
 @end
 
 @interface T64Proxy : ArchiveProxy
