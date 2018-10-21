@@ -143,7 +143,10 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         
         otherArchive->selectItem(i);
         
-        archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(), track, sector, otherArchive->getSizeOfItem(i));
+        archive->writeDirectoryEntry(i,
+                                     otherArchive->getNameOfItem(),
+                                     track, sector,
+                                     otherArchive->getSizeOfItem());
         
         // Every file is preceded with two bytes containing its load address
         uint16_t loadAddr = otherArchive->getDestinationAddrOfItem(i);
@@ -154,7 +157,7 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         int byte;
         unsigned num = 0;
         
-        archive->debug(2, "Will write %d bytes\n", otherArchive->getSizeOfItem(i));
+        archive->debug(2, "Will write %d bytes\n", otherArchive->getSizeOfItem());
         
         otherArchive->selectItem(i);
         while ((byte = otherArchive->getByte()) != EOF) {
@@ -167,9 +170,7 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         (void)archive->nextTrackAndSector(track, sector, &track, &sector);
     }
     
-    archive->debug(2, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
-    archive->debug(2, "%s archive created (size of item 0 = %d).\n",
-                   archive->typeAsString(), archive->getSizeOfItem(0));
+    archive->debug(2, "%s archive created.\n", archive->typeAsString());
     
     return archive;
 }
@@ -414,10 +415,12 @@ D64File::getNameOfItem()
 }
 
 const char *
-D64File::getTypeOfItem(unsigned n)
+D64File::getTypeOfItem()
 {
+    assert(selectedItem != -1);
+    
     const char *extension = "";
-    long pos = findDirectoryEntry(n);
+    long pos = findDirectoryEntry(selectedItem);
     
     if (pos > 0)
         (void)itemIsVisible(data[pos] /* file type byte */, &extension);

@@ -76,7 +76,7 @@ public:
     
     int numberOfItems() { return 1; }
     // const char *getNameOfItem(unsigned n) { return "FILE"; }
-    const char *getTypeOfItem(unsigned n) { return "PRG"; }
+    const char *getTypeOfItem() { return "PRG"; }
     uint16_t getDestinationAddrOfItem(unsigned n);
     void selectItem(unsigned n);
     

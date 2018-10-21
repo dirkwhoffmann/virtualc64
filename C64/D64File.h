@@ -120,7 +120,7 @@ public:
     
     int numberOfItems();
 	const char *getNameOfItem();
-	const char *getTypeOfItem(unsigned n);
+	const char *getTypeOfItem();
     size_t getSizeOfItemInBlocks(unsigned n);
 	uint16_t getDestinationAddrOfItem(unsigned n);
     uint16_t getDestinationAddr();

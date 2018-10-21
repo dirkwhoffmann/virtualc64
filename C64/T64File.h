@@ -79,7 +79,7 @@ public:
     
     int numberOfItems();
     const char *getNameOfItem();
-    const char *getTypeOfItem(unsigned item);
+    const char *getTypeOfItem();
     uint16_t getDestinationAddrOfItem(unsigned item);
     uint16_t getDestinationAddr();
     void selectItem(unsigned item);

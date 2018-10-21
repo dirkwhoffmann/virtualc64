@@ -70,9 +70,11 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     unsigned maxFiles = (currentFiles < 30) ? 30 : currentFiles;
     archive->size = 64 /* header */ + maxFiles * 32 /* tape entries */;
     
-    for (unsigned i = 0; i < currentFiles; i++)
-        archive->size += otherArchive->getSizeOfItem(i);
-    
+    for (unsigned i = 0; i < currentFiles; i++) {
+        archive->selectItem(i);
+        archive->size += otherArchive->getSizeOfItem();
+    }
+
     if ((archive->data = new uint8_t[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
@@ -130,7 +132,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         *ptr++ = HI_BYTE(startAddr);
         
         // Start address (2 bytes)
-        uint16_t endAddr = startAddr + otherArchive->getSizeOfItem(n);
+        uint16_t endAddr = startAddr + otherArchive->getSizeOfItem();
         *ptr++ = LO_BYTE(endAddr);
         *ptr++ = HI_BYTE(endAddr);
         
@@ -142,7 +144,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         *ptr++ = LO_BYTE(tapePosition >> 8);
         *ptr++ = LO_BYTE(tapePosition >> 16);
         *ptr++ = LO_BYTE(tapePosition >> 24);
-        tapePosition += otherArchive->getSizeOfItem(n);
+        tapePosition += otherArchive->getSizeOfItem();
         
         // Reserved (4 bytes)
         ptr += 4;
@@ -299,9 +301,11 @@ T64File::getNameOfItem()
 }
 
 const char *
-T64File::getTypeOfItem(unsigned n)
+T64File::getTypeOfItem()
 {
-	int i = 0x41 + (n * 0x20);
+    assert(selectedItem != -1);
+    
+	long i = 0x41 + (selectedItem * 0x20);
 	if (data[i] != 00)
 		return "PRG";
 	if (data[i] == 00 && data[i-1] > 0x00)

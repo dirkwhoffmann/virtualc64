@@ -67,12 +67,13 @@ class DiskMountController : UserDialogController {
         let halftrack = item + 1
         let track = (item / 2) + 1
         
+        archive.selectItem(item)
         if (archive.type() == G64_FILE) {
-            sizeInBytes = archive.size(ofItem: item)
+            sizeInBytes = archive.sizeOfItem()
             sizeInBits = sizeInBytes * 8
             trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)
         } else {
-            sizeInBits = archive.size(ofItem: item)
+            sizeInBits = archive.sizeOfItem()
             sizeInBytes = sizeInBits / 8
             trackSizeinfo.stringValue = String(format: "%d Bits", sizeInBits)
         }

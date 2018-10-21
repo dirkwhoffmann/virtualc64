@@ -124,8 +124,9 @@ extension ArchiveMountController : NSTableViewDelegate {
         
         let c = cell as! NSTextFieldCell
         
+        archive.selectItem(row)
+        c.textColor = archive.typeOfItem() == "PRG" ? .textColor : .gray
         c.font = cbmfont
-        c.textColor = archive.type(ofItem: row) == "PRG" ? .textColor : .gray
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
@@ -144,20 +145,22 @@ extension ArchiveMountController : NSTableViewDataSource {
     func tableView(_ tableView: NSTableView,
                    objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
    
-        if (tableColumn?.identifier)!.rawValue == "filename" {
-    
-            archive.selectItem(row)
-            return archive.unicodeNameOfItem()
-        }
-        if (tableColumn?.identifier)!.rawValue == "filesize" {
+        archive.selectItem(row)
+        
+        switch (tableColumn?.identifier)!.rawValue {
             
-            return archive.sizeOfItem(inBlocks: row)
+            case "filename":
+            return archive.unicodeNameOfItem()
+            
+            case "filesize":
+            return archive.sizeOfItemInBlocks()
+            
+            case "filetype":
+            return archive.typeOfItem()
+            
+            default:
+            return "???"
         }
-        if (tableColumn?.identifier)!.rawValue == "filetype" {
-
-            return archive.type(ofItem: row)
-        }
-    return "???"
     }
 }
 

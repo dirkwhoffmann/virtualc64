@@ -73,7 +73,7 @@ public:
     
     int numberOfItems() { return 1; }
     const char *getNameOfItem();
-    const char *getTypeOfItem(unsigned n);
+    const char *getTypeOfItem() { return "PRG"; }
     uint16_t getDestinationAddrOfItem(unsigned n);
     void selectItem(unsigned n);
     

@@ -63,7 +63,7 @@ public:
     virtual int numberOfItems() { return 0; }
 
     /*! @brief    Selects the active item
-     *  @details  All item related methods work on the selected item.
+     *  @details  All item related methods work on the active item.
      */
     virtual void selectItem(unsigned n) { };
     
@@ -77,14 +77,14 @@ public:
      */
     virtual const unsigned short *getUnicodeNameOfItem();
 
-    //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
-    virtual const char *getTypeOfItem(unsigned n) { return NULL; }
+    //! @brief    Returns the type of the selected in ASCII format (e.g., "PRG")
+    virtual const char *getTypeOfItem() { return ""; }
     
     //! @brief    Returns the size of an item in bytes
-    virtual size_t getSizeOfItem(unsigned n);
+    virtual size_t getSizeOfItem();
 
     //! @brief    Returns the size of an item in blocks
-    virtual size_t getSizeOfItemInBlocks(unsigned n) { return (getSizeOfItem(n) + 253) / 254; }
+    virtual size_t getSizeOfItemInBlocks() { return (getSizeOfItem() + 253) / 254; }
         
     /*! @brief    Returns the proposed memory location of an item.
      *  @details  When a file is flashed into memory, the raw data is copied to

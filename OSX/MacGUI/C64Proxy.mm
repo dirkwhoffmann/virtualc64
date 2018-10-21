@@ -1186,22 +1186,22 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 
-- (NSInteger)sizeOfItem:(NSInteger)item
+- (NSInteger)sizeOfItem
 {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return archive->getSizeOfItem((int)item);
+    return archive->getSizeOfItem();
 }
 
-- (NSInteger)sizeOfItemInBlocks:(NSInteger)item
+- (NSInteger)sizeOfItemInBlocks
 {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return archive->getSizeOfItemInBlocks((int)item);
+    return archive->getSizeOfItemInBlocks();
 }
 
-- (NSString *)typeOfItem:(NSInteger)item
+- (NSString *)typeOfItem
 {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return [NSString stringWithUTF8String:archive->getTypeOfItem((int)item)];
+    return [NSString stringWithUTF8String:archive->getTypeOfItem()];
 }
 
 - (NSInteger)destinationAddrOfItem:(NSInteger)item

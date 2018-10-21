@@ -87,7 +87,7 @@ public:
     int numberOfItems();
     size_t getSizeOfItem(unsigned n);
     const char *getNameOfItem();
-    const char *getTypeOfItem(unsigned n);
+    const char *getTypeOfItem() { return ""; }
     uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
     void selectItem(unsigned n);
     uint32_t getStartOfItem(unsigned n);

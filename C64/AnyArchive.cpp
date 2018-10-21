@@ -62,11 +62,11 @@ AnyArchive::getUnicodeNameOfItem()
 }
 
 size_t
-AnyArchive::getSizeOfItem(unsigned n)
+AnyArchive::getSizeOfItem()
 {
     int size = 0;
     
-    selectItem(n);
+    seek(0);
     while (getByte() != EOF)
         size++;
 
@@ -87,7 +87,7 @@ AnyArchive::dumpDirectory()
         
         selectItem(i);
         msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
-                i, getNameOfItem(), getSizeOfItem(i), getDestinationAddrOfItem(i));
+                i, getNameOfItem(), getSizeOfItem(), getDestinationAddrOfItem(i));
         msg("                 ");
         selectItem(i);
         for (unsigned j = 0; j < 8; j++) {

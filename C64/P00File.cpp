@@ -64,7 +64,8 @@ P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
     archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
-    archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem(0);
+    otherArchive->selectItem(0);
+    archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem();
     if ((archive->data = new uint8_t[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
@@ -154,17 +155,9 @@ P00File::getNameOfItem()
     return name;
 }
 
-const char *
-P00File::getTypeOfItem(unsigned n)
-{
-	return "PRG";
-}
-
 uint16_t 
 P00File::getDestinationAddrOfItem(unsigned n)
 {
-//	uint16_t result = data[0x1A] + (data[0x1B] << 8);
-//	return result;
     return LO_HI(data[0x1A], data[0x1B]);
 }
 

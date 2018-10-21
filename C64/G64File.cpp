@@ -223,12 +223,6 @@ G64File::getNameOfItem()
     return "";
 }
 
-const char *
-G64File::getTypeOfItem(unsigned n)
-{
-    return "";
-}
-
 void 
 G64File::selectItem(unsigned n)
 {
