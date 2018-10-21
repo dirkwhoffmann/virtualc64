@@ -37,10 +37,14 @@ class AnyArchive : public AnyC64File {
 public:
 
     //
-    //! @functiongroup Creating and deleting objects
+    //! @functiongroup Creating and destructing objects
     //
     
-    static AnyArchive *makeArchiveWithFile(const char *filename);
+    /*! @brief    Factory method
+     *  @return   A T64File, D64File, PRGFile, or P00File object, depending
+     *            on the type of the specified file.
+     */
+    static AnyArchive *makeObjectWithFile(const char *filename);
     
 
     //
@@ -56,7 +60,7 @@ public:
     virtual void selectItem(unsigned n) { };
     
     //! @brief   Returns the name of the selected item in ASCII format.
-    virtual const char *getNameOfItem();
+    virtual const char *getNameOfItem() { return ""; }
 
     /*! @brief   Returns the name of the selected item in unichar format.
      *  @details The returned unichars are compatible with font C64ProMono

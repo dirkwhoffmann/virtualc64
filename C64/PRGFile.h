@@ -34,32 +34,38 @@ class PRGFile : public AnyArchive {
 public:
 
     //
-    //! @functiongroup Creating and destructing PRG archives
+    //! @functiongroup Class methods
+    //
+    
+    //! @brief    Returns true if buffer contains a PRG file
+    /*! @details  PRG files can only be determined by their suffix, so this
+     *            function will return true unless you provide a buffer with
+     *            less than two bytes.
+     */
+    static bool isPRGBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true iff the specified file is a PRG file.
+    static bool isPRGFile(const char *filename);
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
     //
     
     //! @brief    Standard constructor
     PRGFile();
     
     //! @brief    Factory method
-    static PRGFile *makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static PRGFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static PRGFile *makePRGArchiveWithFile(const char *path);
+    static PRGFile *makeObjectWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static PRGFile *makePRGArchiveWithAnyArchive(AnyArchive *otherArchive);
+    static PRGFile *makeObjectWithAnyArchive(AnyArchive *otherArchive);
     
-    //! @brief    Returns true if buffer contains a PRG file
-    /*! @details  PRG files ares mostly determined by their suffix, so this function will
-     *            return true unless you provide a buffer with less than two bytes.
-     */
-    static bool isPRG(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true iff the specified file is a PRG file.
-    static bool isPRGFile(const char *filename);
-
     
     //
     // Methods from AnyFile
@@ -75,7 +81,7 @@ public:
     //
     
     int numberOfItems() { return 1; }
-    // const char *getNameOfItem(unsigned n) { return "FILE"; }
+    const char *getNameOfItem() { return "FILE"; }
     const char *getTypeOfItem() { return "PRG"; }
     uint16_t getDestinationAddrOfItem();
     void selectItem(unsigned n);

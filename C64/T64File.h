@@ -40,17 +40,22 @@ class T64File : public AnyArchive {
 public:
     
     //
-    //! @functiongroup Creating and deleting objects
+    //! @functiongroup Class methods
+    //
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
     //
     
     //! @brief    Standard constructor
     T64File();
     
     //! @brief    Factory method
-    static T64File *makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static T64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static T64File *makeT64ArchiveWithFile(const char *path);
+    static T64File *makeObjectWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type

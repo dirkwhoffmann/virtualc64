@@ -20,17 +20,38 @@
 
 #include "PRGFile.h"
 
+bool
+PRGFile::isPRGBuffer(const uint8_t *buffer, size_t length)
+{
+    return length >= 2;
+}
+
+bool
+PRGFile::isPRGFile(const char *filename)
+{
+    assert(filename != NULL);
+    
+    if (!checkFileSuffix(filename, ".PRG") && !checkFileSuffix(filename, ".prg"))
+        return false;
+    
+    if (!checkFileSize(filename, 2, -1))
+        return false;
+    
+    return true;
+}
+
 PRGFile::PRGFile()
 {
     setDescription("PRGArchive");
 }
 
 PRGFile *
-PRGFile::makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length)
+PRGFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 {
     PRGFile *archive = new PRGFile();
     
     if (!archive->readFromBuffer(buffer, length)) {
+        
         delete archive;
         return NULL;
     }
@@ -39,11 +60,12 @@ PRGFile::makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 PRGFile *
-PRGFile::makePRGArchiveWithFile(const char *filename)
+PRGFile::makeObjectWithFile(const char *filename)
 {
     PRGFile *archive = new PRGFile();
     
     if (!archive->readFromFile(filename)) {
+        
         delete archive;
         return NULL;
     }
@@ -52,7 +74,7 @@ PRGFile::makePRGArchiveWithFile(const char *filename)
 }
 
 PRGFile *
-PRGFile::makePRGArchiveWithAnyArchive(AnyArchive *otherArchive) {
+PRGFile::makeObjectWithAnyArchive(AnyArchive *otherArchive) {
     
     int exportItem = 0;
     
@@ -88,26 +110,6 @@ PRGFile::makePRGArchiveWithAnyArchive(AnyArchive *otherArchive) {
     return archive;
 }
 
-bool
-PRGFile::isPRG(const uint8_t *buffer, size_t length)
-{
-    return length >= 2;
-}
-
-bool 
-PRGFile::isPRGFile(const char *filename)
-{
-	assert(filename != NULL);
-	
-	if (!checkFileSuffix(filename, ".PRG") && !checkFileSuffix(filename, ".prg"))
-		return false;
-	
-	if (!checkFileSize(filename, 2, -1))
-		return false;
-	
-	return true;
-}
-
 uint16_t 
 PRGFile::getDestinationAddrOfItem()
 {
@@ -118,9 +120,11 @@ PRGFile::getDestinationAddrOfItem()
 void 
 PRGFile::selectItem(unsigned n)
 {
-	fp = 2; // skip load address
-
-	if (fp >= size)
-		fp = -1;
+    // Skip load address
+    fp = 0x2;
+    
+    // Invalidate file pointer if it is out of range or item does not exist.
+    if (fp >= size || n != 0)
+        fp = -1;
 }
 

@@ -32,7 +32,7 @@ class Disk;
  */
 class G64File : public AnyArchive {
 
-public:
+private:
 
     //! @brief    Header signature
     static const uint8_t magicBytes[];
@@ -42,7 +42,28 @@ public:
      */
     long selectedHalftrack  = -1;
     
-
+public:
+    
+    //
+    //! @functiongroup Class methods
+    //
+    
+    //! @brief    Factory method
+    static G64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static G64File *makeObjectWithFile(const char *path);
+    
+    //! @brief    Factory method
+    static G64File *makeObjectWithDisk(Disk *disk);
+    
+    //! @brief    Returns true iff buffer contains a G64 file
+    static bool isG64Buffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true iff the specified file is a G64 file
+    static bool isG64File(const char *filename);
+    
+    
     //
     //! @functiongroup Creating and destructing G64 archives
     //
@@ -53,20 +74,7 @@ public:
     //! @brief    Creates an empty G64 container with the specified capacity
     G64File(size_t capacity);
 
-    //! @brief    Factory method
-    static G64File *makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Factory method
-    static G64File *makeG64ArchiveWithFile(const char *path);
 
-    //! @brief    Factory method
-    static G64File *makeG64ArchiveWithDisk(Disk *disk);
-    
-    //! @brief    Returns true iff buffer contains a G64 file
-    static bool isG64(const uint8_t *buffer, size_t length);
-    
-    //! @brief    Returns true iff the specified file is a G64 file
-    static bool isG64File(const char *filename);
     
     
     //

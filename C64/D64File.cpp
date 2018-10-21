@@ -36,7 +36,7 @@ static const D64TrackInfo D64Map[] =
     { 21, 0,   0x00000 },
     { 21, 21,  0x01500 },
     { 21, 42,  0x02A00 },
-     { 21, 63,  0x03F00 },
+    { 21, 63,  0x03F00 },
     { 21, 84,  0x05400 },
     { 21, 105, 0x06900 },
     { 21, 126, 0x07E00 },
@@ -78,9 +78,43 @@ static const D64TrackInfo D64Map[] =
     { 17, 785, 0x31100 }
 };
 
-//
-// Creating and destructing D64 archives
-//
+bool
+D64File::isD64Buffer(const uint8_t *buffer, size_t length)
+{
+    // Unfortunaltely, D64 containers do not contain magic bytes.
+    // We can only check the buffer size
+    
+    return
+    length == D64_683_SECTORS ||
+    length == D64_683_SECTORS_ECC ||
+    length == D64_768_SECTORS ||
+    length == D64_768_SECTORS_ECC ||
+    length == D64_802_SECTORS ||
+    length == D64_802_SECTORS_ECC;
+}
+
+bool
+D64File::isD64File(const char *filename)
+{
+    bool fileOK = false;
+    
+    assert (filename != NULL);
+    
+    if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
+        return false;
+    
+    fileOK = checkFileSize(filename, D64_683_SECTORS, D64_683_SECTORS)
+    || checkFileSize(filename, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC)
+    || checkFileSize(filename, D64_768_SECTORS, D64_768_SECTORS)
+    || checkFileSize(filename, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC)
+    || checkFileSize(filename, D64_802_SECTORS, D64_802_SECTORS)
+    || checkFileSize(filename, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
+    
+    // Unfortunaltely, D64 containers do not contain magic bytes,
+    // so we can't check anything further here
+    
+    return fileOK;
+}
 
 D64File::D64File()
 {
@@ -175,43 +209,6 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     return archive;
 }
 
-bool
-D64File::isD64Buffer(const uint8_t *buffer, size_t length)
-{
-    // Unfortunaltely, D64 containers do not contain magic bytes.
-    // We can only check the buffer size
-
-    return
-    length == D64_683_SECTORS ||
-    length == D64_683_SECTORS_ECC ||
-    length == D64_768_SECTORS ||
-    length == D64_768_SECTORS_ECC ||
-    length == D64_802_SECTORS ||
-    length == D64_802_SECTORS_ECC;
-}
-
-bool 
-D64File::isD64File(const char *filename)
-{
-    bool fileOK = false;
-    
-    assert (filename != NULL);
-    
-    if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
-        return false;
-    
-    fileOK = checkFileSize(filename, D64_683_SECTORS, D64_683_SECTORS)
-    || checkFileSize(filename, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC)
-    || checkFileSize(filename, D64_768_SECTORS, D64_768_SECTORS)
-    || checkFileSize(filename, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC)
-    || checkFileSize(filename, D64_802_SECTORS, D64_802_SECTORS)
-    || checkFileSize(filename, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
-    
-    // Unfortunaltely, D64 containers do not contain magic bytes,
-    // so we can't check anything further here
-    
-    return fileOK;
-}
 
 
 //

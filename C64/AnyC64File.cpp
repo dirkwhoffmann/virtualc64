@@ -82,12 +82,6 @@ AnyC64File::setPath(const char *str)
     ascii2petStr(name);
 }
 
-const char *
-AnyC64File::getName()
-{
-    return name;
-}
-
 const unsigned short *
 AnyC64File::getUnicodeName()
 {

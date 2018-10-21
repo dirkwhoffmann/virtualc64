@@ -80,7 +80,7 @@ protected:
 
     
     //
-    //! @functiongroup Creating and deleting objects
+    //! @functiongroup Creating and destructing objects
     //
     
 public:
@@ -105,7 +105,7 @@ public:
     //! @brief      Returns a string representation of the file type.
     /*! @details    E.g., a T64 file returns "T64".
      */
-    virtual const char *typeAsString() { return "???"; }
+    virtual const char *typeAsString() { return ""; }
 
 	//! @brief    Returns the physical name of this file.
     const char *getPath() { return path ? path : ""; }
@@ -114,7 +114,7 @@ public:
     void setPath(const char *path);
 
     //! @brief    Returns the logical name of this file.
-    virtual const char *getName();
+    virtual const char *getName() { return name; }
 
     /*! @brief    Returns the logical name as unicode character array.
      *  @details  The provides unicode format is compatible with font C64ProMono

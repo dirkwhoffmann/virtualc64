@@ -79,7 +79,7 @@ public:
     
     
     //
-    //! @functiongroup Creating and deleting objects
+    //! @functiongroup Creating and destructing objects
     //
     
     //! @brief    Standard constructor

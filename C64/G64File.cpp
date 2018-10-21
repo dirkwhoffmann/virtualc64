@@ -24,6 +24,30 @@
 const uint8_t /* "GCR-1541" */
 G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00 };
 
+bool
+G64File::isG64Buffer(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x02AC) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool
+G64File::isG64File(const char *filename)
+{
+    assert(filename != NULL);
+    
+    if (!checkFileSuffix(filename, ".G64") && !checkFileSuffix(filename, ".g64"))
+        return false;
+    
+    if (!checkFileSize(filename, 0x02AC, -1))
+        return false;
+    
+    if (!checkFileHeader(filename, magicBytes))
+        return false;
+    
+    return true;
+}
+
 G64File::G64File()
 {
     setDescription("G64Archive");
@@ -39,7 +63,7 @@ G64File::G64File(size_t capacity)
 }
 
 G64File *
-G64File::makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+G64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 {
     G64File *archive = new G64File();
     
@@ -52,7 +76,7 @@ G64File::makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 G64File *
-G64File::makeG64ArchiveWithFile(const char *filename)
+G64File::makeObjectWithFile(const char *filename)
 {
     G64File *archive = new G64File();
     
@@ -65,7 +89,7 @@ G64File::makeG64ArchiveWithFile(const char *filename)
 }
 
 G64File *
-G64File::makeG64ArchiveWithDisk(Disk *disk)
+G64File::makeObjectWithDisk(Disk *disk)
 {
     assert(disk != NULL);
     
@@ -140,31 +164,7 @@ G64File::makeG64ArchiveWithDisk(Disk *disk)
     }
     assert(pos == length);
     
-    return G64File::makeG64ArchiveWithBuffer(buffer, length);
-}
-
-bool
-G64File::isG64(const uint8_t *buffer, size_t length)
-{
-    if (length < 0x02AC) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool 
-G64File::isG64File(const char *filename)
-{
-	assert(filename != NULL);
-	
-	if (!checkFileSuffix(filename, ".G64") && !checkFileSuffix(filename, ".g64"))
-		return false;
-	
-	if (!checkFileSize(filename, 0x02AC, -1))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes))
-		return false;
-	
-	return true;
+    return G64File::makeObjectWithBuffer(buffer, length);
 }
 
 size_t

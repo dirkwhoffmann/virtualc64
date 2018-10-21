@@ -25,32 +25,26 @@
 #include "G64File.h"
 
 AnyArchive *
-AnyArchive::makeArchiveWithFile(const char *path)
+AnyArchive::makeObjectWithFile(const char *path)
 {
     assert(path != NULL);
     
     if (T64File::isT64File(path)) {
-        return T64File::makeT64ArchiveWithFile(path);
+        return T64File::makeObjectWithFile(path);
     }
     if (D64File::isD64File(path)) {
         return D64File::makeObjectWithFile(path);
     }
     if (PRGFile::isPRGFile(path)) {
-        return PRGFile::makePRGArchiveWithFile(path);
+        return PRGFile::makeObjectWithFile(path);
     }
     if (P00File::isP00File(path)) {
-        return P00File::makeP00ArchiveWithFile(path);
+        return P00File::makeObjectWithFile(path);
     }
     if (G64File::isG64File(path)) {
-        return G64File::makeG64ArchiveWithFile(path);
+        return G64File::makeObjectWithFile(path);
     }
     return NULL;
-}
-
-const char *
-AnyArchive::getNameOfItem()
-{
-    return "FILE";
 }
 
 const unsigned short *

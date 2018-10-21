@@ -36,25 +36,35 @@ private:
     
 public:
 
-    //! @brief    Standard constructor.
+    //
+    //! @functiongroup Class methods
+    //
+    
+    //! @brief    Returns true iff buffer contains a P00 file.
+    static bool isP00Buffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true iff the specified file is a P00 file.
+    static bool isP00File(const char *filename);
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
+    //
+    
+    //! @brief    Standard constructor
     P00File();
     
     //! @brief    Factory method
-    static P00File *makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    static P00File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static P00File *makeP00ArchiveWithFile(const char *path);
+    static P00File *makeObjectWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static P00File *makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive);
+    static P00File *makeObjectWithAnyArchive(AnyArchive *otherArchive);
     
-    //! @brief    Returns true iff buffer contains a P00 file
-    static bool isP00(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true iff the specified file is a P00 file
-    static bool isP00File(const char *filename);
     
     //
     // Methods from AnyFile
@@ -64,7 +74,6 @@ public:
     C64FileType type() { return P00_FILE; }
     const char *typeAsString() { return "P00"; }
     bool hasSameType(const char *filename) { return isP00File(filename); }
-    size_t writeToBuffer(uint8_t *buffer);
     
     
     //
@@ -72,10 +81,10 @@ public:
     //
     
     int numberOfItems() { return 1; }
+    void selectItem(unsigned n);
     const char *getNameOfItem();
     const char *getTypeOfItem() { return "PRG"; }
     uint16_t getDestinationAddrOfItem();
-    void selectItem(unsigned n);
     
 };
 #endif

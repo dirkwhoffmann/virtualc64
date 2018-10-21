@@ -19,9 +19,31 @@
  */
 
 #include "P00File.h"
+#include <new>
 
 const uint8_t
 P00File::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00 };
+
+bool
+P00File::isP00Buffer(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x1A) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool
+P00File::isP00File(const char *filename)
+{
+    assert (filename != NULL);
+    
+    if (!checkFileSize(filename, 0x1A, -1))
+        return false;
+    
+    if (!checkFileHeader(filename, magicBytes))
+        return false;
+    
+    return true;
+}
 
 P00File::P00File()
 {
@@ -29,7 +51,7 @@ P00File::P00File()
 }
 
 P00File *
-P00File::makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+P00File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 {
     P00File *archive = new P00File();
     
@@ -42,7 +64,7 @@ P00File::makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 P00File *
-P00File::makeP00ArchiveWithFile(const char *filename)
+P00File::makeObjectWithFile(const char *filename)
 {
     P00File *archive = new P00File();
     
@@ -55,7 +77,7 @@ P00File::makeP00ArchiveWithFile(const char *filename)
 }
 
 P00File *
-P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
+P00File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
 {
     if (otherArchive == NULL || otherArchive->numberOfItems() == 0)
         return NULL;
@@ -66,8 +88,13 @@ P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
     archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
-    archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem();
-    if ((archive->data = new uint8_t[archive->size]) == NULL) {
+    try {
+        
+        archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem();
+        archive->data = new uint8_t[archive->size];
+    }
+    catch (std::bad_alloc&) {
+        
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
@@ -100,25 +127,15 @@ P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
     return archive;
 }
 
-bool
-P00File::isP00(const uint8_t *buffer, size_t length)
+void
+P00File::selectItem(unsigned n)
 {
-    if (length < 0x1A) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool 
-P00File::isP00File(const char *filename)
-{
-	assert (filename != NULL);
-	
-	if (!checkFileSize(filename, 0x1A, -1))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes))
-		return false;
-	
-	return true;
+    // Skip header and load address
+    fp = 0x1C;
+    
+    // Invalidate file pointer if it is out of range or item does not exist.
+    if (fp >= size || n != 0)
+        fp = -1;
 }
 
 const char *
@@ -131,17 +148,6 @@ P00File::getName()
     }
     name[i] = 0x00;
     return name;
-}
-
-size_t
-P00File::writeToBuffer(uint8_t *buffer)
-{
-    assert(data != NULL);
-    
-    if (buffer) {
-        memcpy(buffer, data, size);
-    }
-    return size;
 }
 
 const char *
@@ -160,13 +166,4 @@ uint16_t
 P00File::getDestinationAddrOfItem()
 {
     return LO_HI(data[0x1A], data[0x1B]);
-}
-
-void 
-P00File::selectItem(unsigned n)
-{		
-	fp = 0x1C; // skip header and load address
-
-	if (fp >= size || n != 0)
-		fp = -1;
 }

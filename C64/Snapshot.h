@@ -65,19 +65,19 @@ private:
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
-    //! @brief    Capacity
-    /*! @details  State size in bytes exluding header information
-     *  @note     Number of allocated bytes is capacity + sizeof(SnapshotHeader)
-     *  @deprecated
-     */
-    // size_t capacity;
-    
-    //! @brief    Internal state data
-    //! @deprecated
-    // uint8_t *state;
+ 
 	
 public:
 
+    //
+    //! @functiongroup Class methods
+    //
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
+    //
+    
 	//! @brief    Constructor
 	Snapshot();
 

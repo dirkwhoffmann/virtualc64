@@ -1161,7 +1161,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    AnyArchive *archive = AnyArchive::makeArchiveWithFile([path UTF8String]);
+    AnyArchive *archive = AnyArchive::makeObjectWithFile([path UTF8String]);
     return [self make: archive];
 }
 
@@ -1230,12 +1230,12 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    T64File *archive = T64File::makeT64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    T64File *archive = T64File::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    T64File *archive = T64File::makeT64ArchiveWithFile([path UTF8String]);
+    T64File *archive = T64File::makeObjectWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
@@ -1264,18 +1264,18 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    PRGFile *archive = PRGFile::makePRGArchiveWithBuffer((const uint8_t *)buffer, length);
+    PRGFile *archive = PRGFile::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    PRGFile *archive = PRGFile::makePRGArchiveWithFile([path UTF8String]);
+    PRGFile *archive = PRGFile::makeObjectWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
-    PRGFile *archive = PRGFile::makePRGArchiveWithAnyArchive(other);
+    PRGFile *archive = PRGFile::makeObjectWithAnyArchive(other);
     return [self make: archive];
 }
 @end
@@ -1298,18 +1298,18 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    P00File *archive = P00File::makeP00ArchiveWithBuffer((const uint8_t *)buffer, length);
+    P00File *archive = P00File::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    P00File *archive = P00File::makeP00ArchiveWithFile([path UTF8String]);
+    P00File *archive = P00File::makeObjectWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
-    P00File *archive = P00File::makeP00ArchiveWithAnyArchive(other);
+    P00File *archive = P00File::makeObjectWithAnyArchive(other);
     return [self make: archive];
 }
 @end
@@ -1371,18 +1371,18 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    G64File *archive = G64File::makeG64ArchiveWithBuffer((const uint8_t *)buffer, length);
+    G64File *archive = G64File::makeObjectWithBuffer((const uint8_t *)buffer, length);
     return [self make: archive];
 }
 + (instancetype) makeWithFile:(NSString *)path
 {
-    G64File *archive = G64File::makeG64ArchiveWithFile([path UTF8String]);
+    G64File *archive = G64File::makeObjectWithFile([path UTF8String]);
     return [self make: archive];
 }
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy
 {
     Disk *disk = [diskProxy wrapper]->disk;
-    G64File *archive = G64File::makeG64ArchiveWithDisk(disk);
+    G64File *archive = G64File::makeObjectWithDisk(disk);
     return [self make: archive];
 }
 @end
