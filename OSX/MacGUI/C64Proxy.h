@@ -761,7 +761,7 @@ struct ContainerWrapper;
 - (NSInteger)sizeOfItem;
 - (NSInteger)sizeOfItemInBlocks;
 - (NSString *)typeOfItem;
-- (NSInteger)destinationAddrOfItem:(NSInteger)item;
+- (NSInteger)destinationAddrOfItem;
 
 @end
 

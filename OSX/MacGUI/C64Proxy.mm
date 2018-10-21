@@ -1204,10 +1204,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [NSString stringWithUTF8String:archive->getTypeOfItem()];
 }
 
-- (NSInteger)destinationAddrOfItem:(NSInteger)item
+- (NSInteger)destinationAddrOfItem
 {
     AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
-    return archive->getDestinationAddrOfItem((int)item);
+    return archive->getDestinationAddrOfItem();
 }
 
 @end

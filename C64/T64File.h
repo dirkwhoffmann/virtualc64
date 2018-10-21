@@ -80,7 +80,7 @@ public:
     int numberOfItems();
     const char *getNameOfItem();
     const char *getTypeOfItem();
-    uint16_t getDestinationAddrOfItem(unsigned item);
+    uint16_t getDestinationAddrOfItem();
     uint16_t getDestinationAddr();
     void selectItem(unsigned item);
     

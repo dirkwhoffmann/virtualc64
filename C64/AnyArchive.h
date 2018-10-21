@@ -56,7 +56,7 @@ public:
     
     
     //
-    //! @functiongroup Accessing the archived items
+    //! @functiongroup Accessing items
     //
 
     //! @brief    Returns the number of items in this archive.
@@ -86,27 +86,13 @@ public:
     //! @brief    Returns the size of an item in blocks
     virtual size_t getSizeOfItemInBlocks() { return (getSizeOfItem() + 253) / 254; }
         
-    /*! @brief    Returns the proposed memory location of an item.
-     *  @details  When a file is flashed into memory, the raw data is copied to
-     *            this location.
-     */
-    virtual uint16_t getDestinationAddrOfItem(unsigned n) { return 0; }
-
     /*! @brief    Returns the proposed memory location of the selected item.
      *  @details  When a file is flashed into memory, the item data is copied
      *            to this location.
      */
-    virtual uint16_t getDestinationAddr() { return 0; }
+    virtual uint16_t getDestinationAddrOfItem() { return 0; }
     
-    //
-    //! @functiongroup Reading an item
-    //
-
-
-    
-
-    
-    
+ 
     //
     //! @functiongroup Debugging
     //

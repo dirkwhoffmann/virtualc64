@@ -60,11 +60,12 @@ P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
     if (otherArchive == NULL || otherArchive->numberOfItems() == 0)
         return NULL;
     
+    otherArchive->selectItem(0);
+    
     P00File *archive = new P00File();
     archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
-    otherArchive->selectItem(0);
     archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem();
     if ((archive->data = new uint8_t[archive->size]) == NULL) {
         archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
@@ -86,8 +87,8 @@ P00File::makeP00ArchiveWithAnyArchive(AnyArchive *otherArchive)
     *ptr++ = 0;
     
     // Load address (2 bytes)
-    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(0));
-    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(0));
+    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem());
+    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem());
     
     // File data
     int byte;
@@ -156,7 +157,7 @@ P00File::getNameOfItem()
 }
 
 uint16_t 
-P00File::getDestinationAddrOfItem(unsigned n)
+P00File::getDestinationAddrOfItem()
 {
     return LO_HI(data[0x1A], data[0x1B]);
 }

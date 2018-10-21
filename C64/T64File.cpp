@@ -127,7 +127,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         *ptr++ = 0x82;
         
         // Start address (2 bytes)
-        uint16_t startAddr = otherArchive->getDestinationAddrOfItem(n);
+        uint16_t startAddr = otherArchive->getDestinationAddrOfItem();
         *ptr++ = LO_BYTE(startAddr);
         *ptr++ = HI_BYTE(startAddr);
         
@@ -313,16 +313,8 @@ T64File::getTypeOfItem()
 	return "???";
 }
 
-uint16_t 
-T64File::getDestinationAddrOfItem(unsigned n)
-{
-	int i = 0x42 + (n * 0x20);
-	uint16_t result = LO_HI(data[i], data[i+1]);
-	return result;
-}
-
 uint16_t
-T64File::getDestinationAddr()
+T64File::getDestinationAddrOfItem()
 {
     long i = 0x42 + (selectedItem * 0x20);
     uint16_t result = LO_HI(data[i], data[i+1]);

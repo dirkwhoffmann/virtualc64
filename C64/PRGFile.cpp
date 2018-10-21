@@ -75,8 +75,8 @@ PRGFile::makePRGArchiveWithAnyArchive(AnyArchive *otherArchive) {
     
     // Load address
     uint8_t* ptr = archive->data;
-    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(exportItem));
-    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(exportItem));
+    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem());
+    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem());
     
     // File data
     int byte;
@@ -109,7 +109,7 @@ PRGFile::isPRGFile(const char *filename)
 }
 
 uint16_t 
-PRGFile::getDestinationAddrOfItem(unsigned n)
+PRGFile::getDestinationAddrOfItem()
 {
 	uint16_t result = LO_HI(data[0], data[1]);
 	return result;

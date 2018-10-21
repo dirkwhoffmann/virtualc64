@@ -478,18 +478,20 @@ class MyDocument : NSDocument {
     func flashAttachment(archive: ArchiveProxy, item: Int = 0) {
         
         let parent = windowForSheet!.windowController as! MyController
-        
-        // Get load address of the flashed item
-        let loadAddr = (attachment as! ArchiveProxy).destinationAddr(ofItem: item)
+        let archive = attachment as! ArchiveProxy
 
-        // Flash program at it's designated load address
+        // Flash program into memory
         c64.flash(archive, item: item)
-    
-        // Type RUN or SYS
-        if loadAddr == 0x801 {
+
+        // Get load address of the selected item
+        archive.selectItem(item)
+        let loadAddress = archive.destinationAddrOfItem()
+        
+        // Type RUN or SYS, depending of the load address
+        if loadAddress == 0x801 {
             parent.keyboardcontroller.type("RUN\n")
         } else {
-            parent.keyboardcontroller.type("SYS \(loadAddr)")
+            parent.keyboardcontroller.type("SYS \(loadAddress)")
         }
     }
     

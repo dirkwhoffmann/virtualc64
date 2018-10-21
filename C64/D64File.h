@@ -121,8 +121,8 @@ public:
     int numberOfItems();
 	const char *getNameOfItem();
 	const char *getTypeOfItem();
-    size_t getSizeOfItemInBlocks(unsigned n);
-	uint16_t getDestinationAddrOfItem(unsigned n);
+    size_t getSizeOfItemInBlocks();
+	uint16_t getDestinationAddrOfItem();
     uint16_t getDestinationAddr();
 
 	void selectItem(unsigned n);

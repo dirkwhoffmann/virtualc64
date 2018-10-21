@@ -149,7 +149,7 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
                                      otherArchive->getSizeOfItem());
         
         // Every file is preceded with two bytes containing its load address
-        uint16_t loadAddr = otherArchive->getDestinationAddrOfItem(i);
+        uint16_t loadAddr = otherArchive->getDestinationAddrOfItem();
         archive->writeByteToSector(LO_BYTE(loadAddr), &track, &sector);
         archive->writeByteToSector(HI_BYTE(loadAddr), &track, &sector);
         
@@ -464,22 +464,25 @@ D64File::itemIsVisible(uint8_t typeChar, const char **extension)
 }
 
 size_t
-D64File::getSizeOfItemInBlocks(unsigned n)
+D64File::getSizeOfItemInBlocks()
 {
-    long pos = findDirectoryEntry(n);
+    assert(selectedItem != -1);
     
+    long pos = findDirectoryEntry(selectedItem);
     return (pos > 0) ? LO_HI(data[pos+0x1C],data[pos+0x1D]) : 0;
 }
 
 uint16_t
-D64File::getDestinationAddrOfItem(unsigned n)
+D64File::getDestinationAddrOfItem()
 {
     int track;
     int sector;
     uint16_t result;
     
+    assert(selectedItem != -1);
+    
     // Search for beginning of file data
-    long pos = findDirectoryEntry(n);
+    long pos = findDirectoryEntry(selectedItem);
     if (pos <= 0)
         return 0;
     

@@ -87,7 +87,7 @@ AnyArchive::dumpDirectory()
         
         selectItem(i);
         msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
-                i, getNameOfItem(), getSizeOfItem(), getDestinationAddrOfItem(i));
+                i, getNameOfItem(), getSizeOfItem(), getDestinationAddrOfItem());
         msg("                 ");
         selectItem(i);
         for (unsigned j = 0; j < 8; j++) {
@@ -102,8 +102,7 @@ AnyArchive::dumpDirectory()
 void
 AnyArchive::flash(uint8_t *buffer)
 {
-    uint16_t addr = getDestinationAddr();
-    debug("Flashing to %04X\n", addr);
+    uint16_t addr = getDestinationAddrOfItem();
     AnyC64File::flash(buffer, (size_t)addr);
 }
 
