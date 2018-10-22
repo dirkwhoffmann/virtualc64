@@ -610,8 +610,8 @@ Disk::encodeArchive(G64File *a)
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        unsigned item = ht - 1;
-        uint16_t size = a->getSizeOfItem(item);
+        a->selectHalftrack(ht);
+        uint16_t size = a->getSizeOfHalftrack();
         
         if (size == 0) {
             if (ht > 1) {
@@ -627,13 +627,13 @@ Disk::encodeArchive(G64File *a)
         }
         debug(2, "  Encoding halftrack %d (%d bytes)\n", ht, size);
         length.halftrack[ht] = 8 * size;
-        a->selectItem(item);
+        
         for (unsigned i = 0; i < size; i++) {
-            int b = a->readItem();
+            int b = a->readHalftrack();
             assert(b != -1);
             data.halftrack[ht][i] = (uint8_t)b;
         }
-        assert(a->readItem() == -1 /* EOF */);
+        assert(a->readHalftrack() == -1 /* EOF */);
     }
 }
 

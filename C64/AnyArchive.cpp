@@ -96,7 +96,7 @@ AnyArchive::readItemHex(size_t num)
         
         int byte = readItem();
         if (byte == EOF) break;
-        sprintf(name + (3 * i), "%s%02X", (i == 0) ? "" : " ", byte);
+        sprintf(name + (3 * i), "%02X ", byte);
     }
     
     return name;

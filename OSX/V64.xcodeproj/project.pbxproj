@@ -107,6 +107,7 @@
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
+		5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50862969217DD69A00F1C9CD /* AnyDisk.cpp */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 509A26062027AA1100D28827 /* DiskMountDialog.xib */; };
@@ -348,6 +349,8 @@
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		50862969217DD69A00F1C9CD /* AnyDisk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyDisk.cpp; sourceTree = "<group>"; };
+		5086296A217DD69A00F1C9CD /* AnyDisk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyDisk.h; sourceTree = "<group>"; };
 		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
 		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
@@ -826,6 +829,8 @@
 				5018E48012240F7100F0820E /* AnyC64File.cpp */,
 				50D5004B0C2ED1200022CA3A /* AnyArchive.h */,
 				50AFEDBB0C3A7A78007749E7 /* AnyArchive.cpp */,
+				5086296A217DD69A00F1C9CD /* AnyDisk.h */,
+				50862969217DD69A00F1C9CD /* AnyDisk.cpp */,
 				506B315120DCDF87007913A8 /* ROMFile.h */,
 				506B315020DCDF87007913A8 /* ROMFile.cpp */,
 				50414726122188FC00A80E0C /* CRTFile.h */,
@@ -1112,6 +1117,7 @@
 				509AEAFF0C325EFB001FC9FD /* P00File.cpp in Sources */,
 				5058F0EF20A77E90008BFA92 /* Mouse1351.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* AnyArchive.cpp in Sources */,
+				5086296B217DD69A00F1C9CD /* AnyDisk.cpp in Sources */,
 				50B5861D201C673900742DB3 /* CustomCartridges.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,

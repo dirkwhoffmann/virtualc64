@@ -9,12 +9,12 @@ import Foundation
 
 class DiskMountController : UserDialogController {
     
-    var archive: ArchiveProxy!
+    var disk: AnyDiskProxy!
     
     let bytesPerRow = 32
-    var item = 0          // Selected archive item (track) to display
-    var sizeInBytes = 0   // Number of bytes in selected item
-    var sizeInBits = 0    // Number of bits in selected item
+    var halftrack = 35    // Selected halftrack to display
+    var sizeInBytes = 0   // Number of bytes in the selected halftrack
+    var sizeInBits = 0    // Number of bits in the selected halftrack
     
     // Outlets
     @IBOutlet weak var icon: NSImageView!
@@ -31,23 +31,23 @@ class DiskMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        archive = controller.mydocument.attachment as? ArchiveProxy
+        disk = controller.mydocument.attachment as? AnyDiskProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     
     override public func awakeFromNib() {
  
-        let numItems = archive.numberOfItems()
+        let numItems = disk.numberOfHalftracks()
   
-        stepper.minValue = 0
-        stepper.maxValue = Double(numItems) - 1
-        stepper.integerValue = item
+        stepper.minValue = 1
+        stepper.maxValue = Double(numItems)
+        stepper.integerValue = halftrack
         
         // Configure directory window
         // directory.intercellSpacing = NSSize(width: 0, height: 0)
         
         // Set icon and title
-        switch archive.type() {
+        switch disk.type() {
             
         case G64_FILE:
             icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
@@ -64,25 +64,18 @@ class DiskMountController : UserDialogController {
     
     func update() {
     
-        let halftrack = item + 1
-        let track = (item / 2) + 1
+        let t = (halftrack / 2) + 1
         
-        archive.selectItem(item)
-        if (archive.type() == G64_FILE) {
-            sizeInBytes = archive.sizeOfItem()
-            sizeInBits = sizeInBytes * 8
-            trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)
-        } else {
-            sizeInBits = archive.sizeOfItem()
-            sizeInBytes = sizeInBits / 8
-            trackSizeinfo.stringValue = String(format: "%d Bits", sizeInBits)
-        }
+        disk.selectHalftrack(halftrack)
+        sizeInBytes = disk.sizeOfHalftrack()
+        sizeInBits = sizeInBytes * 8
+        trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)
         
         if (halftrack % 2 == 0) {
             let info = String(format: "Contents of halftrack %d:", halftrack)
             trackinfo.stringValue = String(info)
         } else {
-            let info = String(format: "Contents of halftrack %d (track %d):", halftrack, track)
+            let info = String(format: "Contents of halftrack %d (track %d):", halftrack, t)
             trackinfo.stringValue = String(info)
         }
         
@@ -94,7 +87,7 @@ class DiskMountController : UserDialogController {
     @IBAction func stepperAction(_ sender: Any!) {
         
         let sender = sender as! NSStepper
-        item = sender.integerValue
+        halftrack = sender.integerValue
         update()
     }
     
@@ -103,9 +96,9 @@ class DiskMountController : UserDialogController {
         track()
         
         if driveSelector.selectedItem!.tag == 1 {
-            parent.changeDisk(archive, drive: 1)
+            parent.changeDisk(disk, drive: 1)
         } else {
-            parent.changeDisk(archive, drive: 2)
+            parent.changeDisk(disk, drive: 2)
         }
         
         parent.metalScreen.rotateBack()
@@ -147,9 +140,9 @@ extension DiskMountController : NSTableViewDataSource {
         
         if (tableColumn?.identifier)!.rawValue == "data" {
             
-            archive.selectItem(item)
-            archive.seekItem(row * bytesPerRow)
-            return archive.readItemHex(bytesPerRow)
+            disk.selectHalftrack(halftrack)
+            disk.seekHalftrack(row * bytesPerRow)
+            return disk.readHalftrackHex(bytesPerRow)
         }
         
         return "???"

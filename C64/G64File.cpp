@@ -167,69 +167,42 @@ G64File::makeObjectWithDisk(Disk *disk)
     return G64File::makeObjectWithBuffer(buffer, length);
 }
 
+void
+G64File::selectHalftrack(Halftrack ht)
+{
+    assert(isHalftrackNumber(ht));
+    
+    selectedHalftrack = ht;
+    tFp = getStartOfHalftrack(ht) + 2 /* length info */;
+    tEof = tFp + getSizeOfHalftrack();
+}
+
+void
+G64File::seekHalftrack(long offset)
+{
+    assert(isHalftrackNumber(selectedHalftrack));
+    
+    tFp = getStartOfHalftrack(selectedHalftrack) + 2 + offset;
+    
+    if (tFp >= size)
+        tFp = -1;
+}
+
 size_t
-G64File::writeToBuffer(uint8_t *buffer)
+G64File::getSizeOfHalftrack()
 {
-    assert(data != NULL);
+    assert(isHalftrackNumber(selectedHalftrack));
     
-    if (buffer) {
-        memcpy(buffer, data, size);
-    }
-    return size;
+    long offset = getStartOfHalftrack(selectedHalftrack);
+    return offset ? LO_HI(data[offset], data[offset+1]) : 0;
 }
 
-const char *
-G64File::getName()
+long
+G64File::getStartOfHalftrack(Halftrack ht)
 {
-    return "G64 archive";
-}
-
-int 
-G64File::numberOfItems()
-{
-    return 84;
-}
-
-uint32_t
-G64File::getStartOfItem(unsigned n)
-{
-    if (n >= 84) return -1;
+    assert(isHalftrackNumber(ht));
     
-    int offset = 0x00C + (4 * n);
+    int offset = 0x008 + (4 * ht);
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
-}
-
-size_t
-G64File::getSizeOfItem(unsigned n)
-{
-    uint32_t offset = getStartOfItem(n);
-    return offset ? (LO_HI(data[offset], data[offset+1])) : 0;
-}
-
-const char *
-G64File::getNameOfItem()
-{
-    assert(selectedHalftrack != -1);
-    
-    if (selectedHalftrack < 84) {
-        if (selectedHalftrack % 2 == 0) {
-            sprintf(name, "Track %ld", (selectedHalftrack / 2) + 1);
-        } else {
-            sprintf(name, "Track %ld.5", (selectedHalftrack / 2) + 1);
-        }
-        return name;
-    }
-    
-    return "";
-}
-
-void 
-G64File::selectItem(unsigned n)
-{
-    selectedHalftrack = n;
-    
-    fp = getStartOfItem(n);
-    fp += 2; // skip length information
-    eof = fp + getSizeOfItem(n);
 }
 

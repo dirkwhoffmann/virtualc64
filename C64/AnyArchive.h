@@ -22,8 +22,8 @@
  * http://www.infinite-loop.at/Power20/Documentation/Power20-LiesMich/AE-Dateiformate.html
  */
 
-#ifndef _ARCHIVE_INC
-#define _ARCHIVE_INC
+#ifndef _ANYARCHIVE_INC
+#define _ANYARCHIVE_INC
 
 #include "AnyC64File.h"
 
@@ -34,10 +34,7 @@
 class AnyArchive : public AnyC64File {
     
 protected:
-    
-    //! @brief    The size of the selected item.
-    // size_t iSize = 0;
-    
+        
     /*! @brief    File pointer
      *  @details  An offset into the data range of the selected item.
      */
@@ -55,8 +52,8 @@ public:
     //
     
     /*! @brief    Factory method
-     *  @return   A T64File, D64File, PRGFile, or P00File object, depending
-     *            on the type of the specified file.
+     *  @return   A T64File, D64File, PRGFile, P00File, or G64File object,
+     *            depending on the type of the specified file.
      */
     static AnyArchive *makeObjectWithFile(const char *filename);
     

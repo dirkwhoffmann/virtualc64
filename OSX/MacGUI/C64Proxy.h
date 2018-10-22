@@ -794,7 +794,25 @@ struct ContainerWrapper;
 + (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
 @end
 
-@interface D64Proxy : ArchiveProxy
+//
+// AnyDiskProxy
+//
+
+@interface AnyDiskProxy : ArchiveProxy {
+}
+
++ (instancetype)make;
++ (instancetype)makeWithFile:(NSString *)path;
+
+- (NSInteger)numberOfHalftracks;
+- (void)selectHalftrack:(NSInteger)ht;
+- (NSInteger)sizeOfHalftrack;
+- (void)seekHalftrack:(NSInteger)offset;
+- (NSString *)readHalftrackHex:(NSInteger)num;
+
+@end
+
+@interface D64Proxy : AnyDiskProxy
 {
 }
 + (BOOL)isD64File:(NSString *)filename;
@@ -804,7 +822,7 @@ struct ContainerWrapper;
 + (instancetype)makeWithDrive:(DriveProxy *)drive;
 @end
 
-@interface G64Proxy : ArchiveProxy
+@interface G64Proxy : AnyDiskProxy
 {
 }
 + (BOOL)isG64File:(NSString *)filename;

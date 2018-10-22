@@ -18,10 +18,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _D64ARCHIVE_INC
-#define _D64ARCHIVE_INC
+#ifndef _D64FILE_INC
+#define _D64FILE_INC
 
-#include "AnyArchive.h"
+#include "AnyDisk.h"
 
 // D64 files come in six different sizes
 #define D64_683_SECTORS 174848
@@ -36,7 +36,7 @@
  *  @brief   The D64File class declares the programmatic interface for a file
  *           in D64 format.
  */
-class D64File : public AnyArchive {
+class D64File : public AnyDisk {
 
 private: 
     

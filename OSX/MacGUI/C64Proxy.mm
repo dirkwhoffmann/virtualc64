@@ -1328,6 +1328,57 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 @end
 
+//
+// AnyDiskProxy
+//
+
+@implementation AnyDiskProxy
+
++ (instancetype) make:(AnyDisk *)disk
+{
+    if (disk == NULL) return nil;
+    return [[self alloc] initWithContainer:disk];
+}
+
++ (instancetype) make
+{
+    AnyDisk *disk = new AnyDisk();
+    return [self make: disk];
+}
+
++ (instancetype) makeWithFile:(NSString *)path
+{
+    AnyDisk *disk = AnyDisk::makeObjectWithFile([path UTF8String]);
+    return [self make: disk];
+}
+
+- (NSInteger) numberOfHalftracks {
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    return disk->numberOfHalftracks();
+}
+
+- (void) selectHalftrack:(NSInteger)ht {
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    disk->selectHalftrack((unsigned)ht);
+}
+
+- (NSInteger) sizeOfHalftrack {
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    return disk->getSizeOfHalftrack();
+}
+
+- (void)seekHalftrack:(NSInteger)offset {
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    return disk->seekHalftrack(offset);
+}
+
+- (NSString *)readHalftrackHex:(NSInteger)num {
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    return [NSString stringWithUTF8String:disk->readHalftrackHex(num)];
+}
+
+
+@end
 
 //
 // D64Proxy
