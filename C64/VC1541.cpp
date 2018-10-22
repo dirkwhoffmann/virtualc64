@@ -591,14 +591,16 @@ VC1541::convertToD64()
 {
     int error;
     
-    D64File *archive = new D64File();
     debug(1, "Creating D64 archive from currently inserted diskette ...\n");
     
-    // Determine D64 format (35, 40, or 42 track format)
+    // Determine D64 format (35, 40, or 42 tracks)
     Track t = 42;
     while (t > 0 && disk.trackIsEmpty(t)) t--;
     unsigned numTracks = (t <= 35) ? 35 : (t <= 40) ? 40 : 42;
-
+    
+    // Create D64File
+    D64File *archive = new D64File(numTracks, false);
+    
     // Perform test run
     size_t numBytes = disk.decodeDisk(NULL, numTracks, &error);
     if (error) {

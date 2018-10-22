@@ -77,57 +77,6 @@ static const D64TrackInfo D64Map[] =
     { 17, 785 }
 };
 
-
-/*
-static const D64TrackInfo D64Map[] =
-{
-    { 0,  0,   0 }, // Padding
-    { 21, 0,   0x00000 },
-    { 21, 21,  0x01500 },
-    { 21, 42,  0x02A00 },
-    { 21, 63,  0x03F00 },
-    { 21, 84,  0x05400 },
-    { 21, 105, 0x06900 },
-    { 21, 126, 0x07E00 },
-    { 21, 147, 0x09300 },
-    { 21, 168, 0x0A800 },
-    { 21, 189, 0x0BD00 }, 
-    { 21, 210, 0x0D200 },
-    { 21, 231, 0x0E700 },
-    { 21, 252, 0x0FC00 },
-    { 21, 273, 0x11100 },
-    { 21, 294, 0x12600 },
-    { 21, 315, 0x13B00 },
-    { 21, 336, 0x15000 },
-    { 19, 357, 0x16500 }, // Track 18, Directory
-    { 19, 376, 0x17800 },
-    { 19, 395, 0x18B00 },
-    { 19, 414, 0x19E00 },
-    { 19, 433, 0x1B100 },
-    { 19, 452, 0x1C400 },
-    { 19, 471, 0x1D700 },
-    { 18, 490, 0x1EA00 },
-    { 18, 508, 0x1FC00 },
-    { 18, 526, 0x20E00 },
-    { 18, 544, 0x22000 },
-    { 18, 562, 0x23200 },
-    { 18, 580, 0x24400 },
-    { 17, 598, 0x25600 },
-    { 17, 615, 0x26700 },
-    { 17, 632, 0x27800 },
-    { 17, 649, 0x28900 },
-    { 17, 666, 0x29A00 },
-    { 17, 683, 0x2AB00 },
-    { 17, 700, 0x2BC00 },
-    { 17, 717, 0x2CD00 },
-    { 17, 734, 0x2DE00 },
-    { 17, 751, 0x2EF00 },
-    // Unusual, tracks 41 & 42
-    { 17, 768, 0x30000 },
-    { 17, 785, 0x31100 }
-};
-*/
-
 bool
 D64File::isD64Buffer(const uint8_t *buffer, size_t length)
 {
@@ -168,10 +117,37 @@ D64File::isD64File(const char *filename)
 
 D64File::D64File()
 {
+    debug("D64File::D64File()\n");
+    
     setDescription("D64Archive");
-    memset(data, 0, sizeof(data));
     memset(errors, 0x01, sizeof(errors));
     numTracks = 35;
+}
+
+D64File::D64File(unsigned tracks, bool ecc) : D64File()
+{
+    debug("D64File::D64File(%d)\n", tracks);
+    
+    switch(tracks) {
+        case 35:
+            size = ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS;
+            break;
+            
+        case 40:
+            size = ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS;
+            break;
+            
+        case 42:
+            size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS;
+            break;
+            
+        default:
+            assert(false);
+    }
+    
+    data = new uint8_t[size];
+    memset(data, 0, size);
+    numTracks = tracks;
 }
 
 D64File *
@@ -205,7 +181,8 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
 {
     assert(otherArchive != NULL);
     
-    D64File *archive = new D64File();
+    // Create a standard 35 track disk with no error checking codes
+    D64File *archive = new D64File(35, false);
     archive->debug(1, "Creating D64 archive from a %s archive...\n",
                    otherArchive->typeAsString());
     
@@ -274,20 +251,23 @@ D64File::getName()
 bool 
 D64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {
+    unsigned numSectors = 0;
     size_t numberOfErrors = 0;
-    
+ 
     switch (length)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
             
             debug(2, "D64 file contains 35 tracks, no EC bytes\n");
             numTracks = 35;
+            numSectors = 683;
             break;
             
         case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
             
             debug(2, "D64 file contains 35 tracks, 683 EC bytes\n");
             numTracks = 35;
+            numSectors = 683;
             numberOfErrors = 683;
             break;
             
@@ -295,12 +275,14 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
             
             debug(2, "D64 file contains 40 tracks, no EC bytes\n");
             numTracks = 40;
+            numSectors = 768;
             break;
             
         case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
             
             debug(2, "D64 file contains 40 tracks, 768 EC bytes\n");
             numTracks = 40;
+            numSectors = 768;
             numberOfErrors = 768;
             break;
             
@@ -308,12 +290,14 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
             
             debug(2, "D64 file contains 42 tracks, no EC bytes\n");
             numTracks = 42;
+            numSectors = 802;
             break;
             
         case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
             debug(2, "D64 file contains 42 tracks, 802 EC bytes\n");
             numTracks = 42;
+            numSectors = 802;
             numberOfErrors = 802;
             break;
             
@@ -322,49 +306,14 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
             return false;
     }
     
-    // Read tracks
-    uint8_t *source = (uint8_t *)buffer;
-    for(Track t = 1; t <= numTracks; t++) {
-        
-        uint8_t *destination = &data[D64Map[t].sectorsIn * 256];
-        int sectors = D64Map[t].numberOfSectors;
-        memcpy(destination, source, 256 * sectors);
-        source += 256 * sectors;
-    }
+    AnyC64File::readFromBuffer(buffer, length);
     
-    // Read errors
+    // Read error codes (if present)
     if (numberOfErrors > 0) {
-        memcpy(errors, source, numberOfErrors);
-    }
-
-    return true;    
-}
-
-size_t
-D64File::writeToBuffer(uint8_t *buffer)
-{
-    switch (numTracks) {
-            
-        case 35:
-            if (buffer)
-                memcpy(buffer, data, D64_683_SECTORS);
-            return D64_683_SECTORS;
-            
-        case 40:
-            if (buffer)
-                memcpy(buffer, data, D64_768_SECTORS);
-            return D64_768_SECTORS;
-            
-        case 42:
-            if (buffer)
-                memcpy(buffer, data, D64_802_SECTORS);
-            return D64_802_SECTORS;
-            
-        default:
-            assert(0);
+        memcpy(errors, data + (numSectors * 256), numberOfErrors);
     }
     
-    return 0;
+    return true;    
 }
 
 int

@@ -45,10 +45,6 @@ private:
      */
     Halftrack selectedHalftrack  = 0;
     
-	/*! @brief   The raw data of this archive (?).
-     */
-	uint8_t data[D64_802_SECTORS_ECC];
-	
 	/*! @brief   Error information stored in the D64 archive.
      */
 	uint8_t errors[802];
@@ -82,6 +78,9 @@ public:
 
     //! @brief    Standard constructor
     D64File();
+
+    //! @brief    Custom constructor
+    D64File(unsigned tracks, bool ecc);
     
     //! @brief    Factory method
     static D64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
@@ -104,7 +103,6 @@ public:
     const char *getName();
     bool hasSameType(const char *filename) { return isD64File(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
-    size_t writeToBuffer(uint8_t *buffer);
     
     
     //
