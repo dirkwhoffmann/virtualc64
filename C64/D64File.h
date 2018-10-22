@@ -40,7 +40,12 @@ class D64File : public AnyDisk {
 
 private: 
     
-	/*! @brief   The raw data of this archive.
+    /*! @brief    Number of the currently selected halftrack
+     *  @details  0, if no halftrack is selected
+     */
+    Halftrack selectedHalftrack  = 0;
+    
+	/*! @brief   The raw data of this archive (?).
      */
 	uint8_t data[D64_802_SECTORS_ECC];
 	
@@ -125,10 +130,25 @@ private:
     
 public:
     
+    
+    //
+    // Methods from AnyDisk
+    //
+    
+    int numberOfHalftracks();
+    void selectHalftrack(Halftrack ht);
+    size_t getSizeOfHalftrack();
+    void seekHalftrack(long offset);
+    
+    
+    
+    
     //! @brief    Returns a pointer to the raw archive data
+    //! @deprecated
     uint8_t *getData() { return data; }
 
     //! @brief    Returns the number of tracks stored in this image
+    //! @deprecated
     unsigned numberOfTracks();
     
     //! @brief Sets the number of tracks stored in this image

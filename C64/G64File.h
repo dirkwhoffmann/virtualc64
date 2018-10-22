@@ -85,18 +85,17 @@ public:
     
     
     //
-    // Methods from AnyArchive
+    // Methods from AnyArchive (API not supported by G64 format)
     //
     
-    /*
-    int numberOfItems();
-    size_t getSizeOfItem(unsigned n);
-    const char *getNameOfItem();
-    const char *getTypeOfItem() { return ""; }
-    uint16_t getDestinationAddrOfItem() { return 0; }
-    void selectItem(unsigned n);
-    uint32_t getStartOfItem(unsigned n);
-    */
+    int numberOfItems() { assert(false); return 0; };
+    size_t getSizeOfItem(unsigned n) { assert(false); return 0; }
+    const char *getNameOfItem() { assert(false); return ""; }
+    const char *getTypeOfItem() { assert(false); return ""; }
+    uint16_t getDestinationAddrOfItem() { assert(false); return 0; }
+    void selectItem(unsigned n) { assert(false); }
+    uint32_t getStartOfItem(unsigned n) { assert(false); return 0; }
+
     
     //
     // Methods from AnyDisk

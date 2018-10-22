@@ -477,14 +477,6 @@ D64File::getDestinationAddrOfItem()
     return result;
 }
 
-
-
-
-
-
-
-
-
 long
 D64File::beginningOfItem(long item)
 {
@@ -509,11 +501,6 @@ D64File::beginningOfItem(long item)
     
     return p;
 }
-
-
-
-
-
 
 
 bool
@@ -569,6 +556,36 @@ D64File::numberOfSectors(unsigned halftrack)
 }
 */
 
+int
+D64File::numberOfHalftracks()
+{
+    // TODO
+    return 0;
+}
+
+void
+D64File::selectHalftrack(Halftrack ht)
+{
+    assert(isHalftrackNumber(ht));
+    
+    // TODO
+}
+
+size_t
+D64File::getSizeOfHalftrack()
+{
+    // TODO
+    return 0;
+}
+
+void
+D64File::seekHalftrack(long offset)
+{
+    // TODO
+}
+
+
+
 unsigned
 D64File::numberOfTracks()
 {
@@ -606,7 +623,6 @@ D64File::errorCode(Track t, Sector s)
     return errors[index];
     
 }
-
 
 int
 D64File::offset(Track track, Sector sector)
