@@ -24,59 +24,6 @@
 #include "P00File.h"
 #include "Disk.h"
 
-typedef struct D64TrackInfo {
-    int numberOfSectors;
-    int sectorsIn;
-} D64TrackInfo;
-
-static const D64TrackInfo D64Map[] =
-{
-    { 0,  0 }, // Padding
-    { 21, 0 },
-    { 21, 21 },
-    { 21, 42 },
-    { 21, 63 },
-    { 21, 84 },
-    { 21, 105 },
-    { 21, 126 },
-    { 21, 147 },
-    { 21, 168 },
-    { 21, 189 },
-    { 21, 210 },
-    { 21, 231 },
-    { 21, 252 },
-    { 21, 273 },
-    { 21, 294 },
-    { 21, 315 },
-    { 21, 336 },
-    { 19, 357 }, // Track 18, Directory
-    { 19, 376 },
-    { 19, 395 },
-    { 19, 414 },
-    { 19, 433 },
-    { 19, 452 },
-    { 19, 471 },
-    { 18, 490 },
-    { 18, 508 },
-    { 18, 526 },
-    { 18, 544 },
-    { 18, 562 },
-    { 18, 580 },
-    { 17, 598 },
-    { 17, 615 },
-    { 17, 632 },
-    { 17, 649 },
-    { 17, 666 },
-    { 17, 683 },
-    { 17, 700 },
-    { 17, 717 },
-    { 17, 734 },
-    { 17, 751 },
-    // Unusual, tracks 41 & 42
-    { 17, 768 },
-    { 17, 785 }
-};
-
 bool
 D64File::isD64Buffer(const uint8_t *buffer, size_t length)
 {
@@ -542,19 +489,6 @@ D64File::itemIsVisible(uint8_t typeChar, const char **extension)
 // Accessing archive attributes
 //
 
-/*
-unsigned
-D64File::numberOfSectors(unsigned halftrack)
-{
-    assert(halftrack >= 1 && halftrack <= 84);
-    
-    // convert halftrack number to track number
-    unsigned track = (halftrack + 1) / 2;
-    
-    return D64Map[track].numberOfSectors;
-}
-*/
-
 int
 D64File::numberOfHalftracks()
 {
@@ -626,8 +560,17 @@ D64File::errorCode(Track t, Sector s)
 int
 D64File::offset(Track track, Sector sector)
 {
+    // secCnt[track] is the number of the first sector on track 'track'
+    const unsigned secCnt[43] = {  0 /* pad */,
+        0,   21,  42,  63,  84,  105, 126, 147,
+        168, 189, 210, 231, 252, 273, 294, 315,
+        336, 357, 376, 395, 414, 433, 452, 471,
+        490, 508, 526, 544, 562, 580, 598, 615,
+        632, 649, 666, 683, 700, 717, 734, 751,
+        768, 785 };
+    
     if (isValidTrackSectorPair(track, sector)) {
-        return (D64Map[track].sectorsIn * 256) + (sector * 256);
+        return (secCnt[track] + sector) * 256;
     } else {
         return -1;
     }
@@ -795,7 +738,7 @@ D64File::writeBAM(const char *name)
             data[pos++] = 0x00;
             data[pos++] = 0x00;
         } else {
-            int sectors = D64Map[k].numberOfSectors;
+            int sectors = numberOfSectorsInTrack(k);
             data[pos++] = sectors; // Number of free sectors on this track
             data[pos++] = 0xFF;    // Occupation bitmap: 1 = sector is free
             data[pos++] = 0xFF;
