@@ -629,11 +629,11 @@ Disk::encodeArchive(G64File *a)
         length.halftrack[ht] = 8 * size;
         a->selectItem(item);
         for (unsigned i = 0; i < size; i++) {
-            int b = a->getByte();
+            int b = a->readItem();
             assert(b != -1);
             data.halftrack[ht][i] = (uint8_t)b;
         }
-        assert(a->getByte() == -1 /* EOF */);
+        assert(a->readItem() == -1 /* EOF */);
     }
 }
 

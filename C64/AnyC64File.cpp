@@ -24,6 +24,9 @@ AnyC64File::AnyC64File()
 {
     const char *defaultName = "HELLO VIRTUALC64";
     memcpy(name, defaultName, strlen(defaultName) + 1);
+    
+    memset(name, 0, sizeof(name));
+    memset(unicode, 0, sizeof(unicode));
 }
 
 AnyC64File::~AnyC64File()
@@ -74,7 +77,7 @@ AnyC64File::setPath(const char *str)
     if (path) free(path);
     path = strdup(str);
     
-    // Set default name
+    // Set default name (path without suffix)
     memset(name, 0, sizeof(name));
     char *filename = ExtractFilenameWithoutSuffix(path);
     strncpy(name, filename, sizeof(name) - 1);
@@ -85,8 +88,7 @@ AnyC64File::setPath(const char *str)
 const unsigned short *
 AnyC64File::getUnicodeName()
 {
-    (void)getName();
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
+    translateToUnicode(getName(), unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 
@@ -97,7 +99,7 @@ AnyC64File::seek(long offset)
 }
 
 int
-AnyC64File::getByte()
+AnyC64File::read()
 {
     int result;
     
@@ -106,14 +108,29 @@ AnyC64File::getByte()
     if (fp < 0)
         return -1;
     
-    // get byte
+    // Get byte
     result = data[fp++];
     
-    // check for end of file
+    // Check for end of file
     if (fp == eof)
         fp = -1;
 
     return result;
+}
+
+const char *
+AnyC64File::readHex(size_t num)
+{
+    assert(sizeof(name) > 3 * num);
+    
+    for (unsigned i = 0; i < num; i++) {
+        
+        int byte = read();
+        if (byte == EOF) break;
+        sprintf(name + (3 * i), "%s%02X", (i == 0) ? "" : " ", byte);
+    }
+    
+    return name;
 }
 
 void
@@ -124,28 +141,13 @@ AnyC64File::flash(uint8_t *buffer, size_t offset)
     
     seek(0);
 
-    while ((byte = getByte()) != EOF) {
+    while ((byte = read()) != EOF) {
         if (offset <= 0xFFFF) {
             buffer[offset++] = (uint8_t)byte;
         } else {
             break;
         }
     }
-}
-
-const char *
-AnyC64File::hexDump(size_t num)
-{
-    assert(sizeof(name) > 3 * num);
-    
-    for (unsigned i = 0; i < num; i++) {
-        
-        int byte = getByte();
-        if (byte == EOF) break;
-        sprintf(name + (3 * i), "%02X ", byte);
-    }
-    
-    return name;
 }
 
 bool

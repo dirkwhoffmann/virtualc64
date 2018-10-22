@@ -50,8 +50,7 @@ AnyArchive::makeObjectWithFile(const char *path)
 const unsigned short *
 AnyArchive::getUnicodeNameOfItem()
 {
-    const char *name = getNameOfItem();
-    translateToUnicode(name, unicode, 0xE000, sizeof(unicode) / 2);
+    translateToUnicode(getNameOfItem(), unicode, 0xE000, sizeof(unicode) / 2);
     return unicode;
 }
 
@@ -60,18 +59,66 @@ AnyArchive::getSizeOfItem()
 {
     int size = 0;
     
-    seek(0);
-    while (getByte() != EOF)
+    seekItem(0);
+    while (readItem() != EOF)
         size++;
 
+    seekItem(0);
     return size;
+}
+
+int
+AnyArchive::readItem()
+{
+    int result;
+    
+    assert(iEof <= size);
+    
+    if (iFp < 0)
+        return -1;
+    
+    // Get byte
+    result = data[iFp++];
+    
+    // Check for end of file
+    if (iFp == iEof)
+        iFp = -1;
+    
+    return result;
+}
+
+const char *
+AnyArchive::readItemHex(size_t num)
+{
+    assert(sizeof(name) > 3 * num);
+    
+    for (unsigned i = 0; i < num; i++) {
+        
+        int byte = readItem();
+        if (byte == EOF) break;
+        sprintf(name + (3 * i), "%s%02X", (i == 0) ? "" : " ", byte);
+    }
+    
+    return name;
 }
 
 void
 AnyArchive::flashItem(uint8_t *buffer)
 {
-    uint16_t addr = getDestinationAddrOfItem();
-    flash(buffer, (size_t)addr);
+    int byte;
+    assert(buffer != NULL);
+    
+    size_t offset = getDestinationAddrOfItem();
+    
+    seekItem(0);
+    
+    while ((byte = readItem()) != EOF) {
+        if (offset <= 0xFFFF) {
+            buffer[offset++] = (uint8_t)byte;
+        } else {
+            break;
+        }
+    }
 }
 
 void
@@ -92,7 +139,7 @@ AnyArchive::dumpDirectory()
         msg("                 ");
         selectItem(i);
         for (unsigned j = 0; j < 8; j++) {
-            int byte = getByte();
+            int byte = readItem();
             if (byte != -1)
                 msg("%02X ", byte);
         }

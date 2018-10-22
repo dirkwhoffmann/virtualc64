@@ -35,13 +35,19 @@ class T64File : public AnyArchive {
     /*! @brief    Number of the currently selected item
      *  @details  -1, if no item is selected
      */
-    long selectedItem  = -1;
+    long selectedItem = -1;
     
 public:
     
     //
     //! @functiongroup Class methods
     //
+    
+    //! @brief    Returns true iff buffer contains a T64 file
+    static bool isT64Buffer(const uint8_t *buffer, size_t length);
+    
+    //! Returns true of filename points to a valid file of that type
+    static bool isT64File(const char *filename);
     
     
     //
@@ -70,12 +76,8 @@ public:
     C64FileType type() { return T64_FILE; }
     const char *typeAsString() { return "T64"; }
     const char *getName();
-
-    //! @brief    Returns the size of the currently selected item.
-    size_t numBytes();
-    
-    //! @brief    Sets the file pointer relative to the selected item.
-    void seek(long offset);
+    bool hasSameType(const char *filename) { return isT64File(filename); }
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
     
     
     //
@@ -83,34 +85,16 @@ public:
     //
     
     int numberOfItems();
+    void selectItem(unsigned n);
+    const char *getTypeOfItemAsString();
     const char *getNameOfItem();
-    const char *getTypeOfItem();
+    size_t getSizeOfItem();
+    void seekItem(long offset);
     uint16_t getDestinationAddrOfItem();
-    uint16_t getDestinationAddr();
-    void selectItem(unsigned item);
-    
-    //
-    //! @functiongroup Serializing
-    //
-    
-    //! @brief    Returns true iff buffer contains a T64 file
-    static bool isT64(const uint8_t *buffer, size_t length);
-    
-    //! Returns true of filename points to a valid file of that type
-    static bool isT64File(const char *filename);
-    
-    //! Check file type
-    bool hasSameType(const char *filename) { return isT64File(filename); }
-    
-    //! Read container data from memory buffer
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
 
-    //! Write container data to memory buffer
-    size_t writeToBuffer(uint8_t *buffer);
-    
-    
+   
     //
-    // @functiongroup Scanning and repairing an archive
+    // @functiongroup Scanning and repairing a T64 file
     //
     
     //! @brief Check if the file header contains information at the specific location

@@ -26,6 +26,38 @@
  */
 const uint8_t T64File::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
 
+bool
+T64File::isT64Buffer(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x40)
+        return false;
+    
+    if (TAPFile::isTAPBuffer(buffer, length)) // Note: TAP files have a very similar header
+        return false;
+    
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool
+T64File::isT64File(const char *path)
+{
+    assert(path != NULL);
+    
+    if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
+        return false;
+    
+    if (TAPFile::isTAPFile(path)) // Note: TAP files have a very similar header
+        return false;
+    
+    if (!checkFileSize(path, 0x40, -1))
+        return false;
+    
+    if (!checkFileHeader(path, magicBytes))
+        return false;
+    
+    return true;
+}
+
 T64File::T64File()
 {
     setDescription("T64Archive");
@@ -160,7 +192,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         
         int byte;
         otherArchive->selectItem(n);
-        while ((byte = otherArchive->getByte()) != EOF) {
+        while ((byte = otherArchive->readItem()) != EOF) {
             *ptr++ = (uint8_t)byte;
         }
         
@@ -173,63 +205,6 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     
     return archive;
 }
-
-bool
-T64File::isT64(const uint8_t *buffer, size_t length)
-{
-    if (length < 0x40)
-        return false;
-    
-    if (TAPFile::isTAPBuffer(buffer, length)) // Note: TAP files have a very similar header
-        return false;
-        
-    return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool 
-T64File::isT64File(const char *path)
-{	
-	assert(path != NULL);
-	
-	if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
-		return false;
-	
-    if (TAPFile::isTAPFile(path)) // Note: TAP files have a very similar header
-        return false;
-    
-	if (!checkFileSize(path, 0x40, -1))
-		return false;
-	
-    if (!checkFileHeader(path, magicBytes))
-		return false;
-	
-	return true;
-}
-
-bool 
-T64File::readFromBuffer(const uint8_t *buffer, size_t length)
-{
-    if (!AnyC64File::readFromBuffer(buffer, length))
-        return false;
-    
-    
-    // Some T64 archives contain incosistencies. We fix them asap
-    (void)repair();
-    
-	return true;
-}
-
-size_t
-T64File::writeToBuffer(uint8_t *buffer)
-{
-    assert(data != NULL);
-    
-    if (buffer) {
-        memcpy(buffer, data, size);
-    }
-    return size;
-}
-
 
 const char *
 T64File::getName()
@@ -246,8 +221,84 @@ T64File::getName()
 	return name;
 }
 
+bool
+T64File::readFromBuffer(const uint8_t *buffer, size_t length)
+{
+    if (!AnyC64File::readFromBuffer(buffer, length))
+        return false;
+    
+    // Some T64 archives contain incosistencies. We fix them asap
+    (void)repair();
+    
+    return true;
+}
+
+int
+T64File::numberOfItems()
+{
+    return LO_HI(data[0x24], data[0x25]);
+}
+
+void
+T64File::selectItem(unsigned item)
+{
+    // Invalidate the file pointer if a non-existing item is requested.
+    if (item >= numberOfItems()) {
+        iFp = -1;
+        return;
+    }
+    
+    // Remember the selection
+    selectedItem = item;
+    
+    // Set file pointer and end of file index
+    unsigned i = 0x48 + (item * 0x20);
+    iFp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
+    iEof = iFp + getSizeOfItem();
+    
+    // Check for inconsistent values. As all inconsistencies should have
+    // been ruled out by repair(), the if condition should never hit.
+    if (iFp > size || iEof > size) {
+        assert(false);
+    }
+}
+
+const char *
+T64File::getTypeOfItemAsString()
+{
+    assert(selectedItem != -1);
+    
+    long i = 0x41 + (selectedItem * 0x20);
+    if (data[i] != 00)
+        return "PRG";
+    if (data[i] == 00 && data[i-1] > 0x00)
+        return "FRZ";
+    return "???";
+}
+
+const char *
+T64File::getNameOfItem()
+{
+    assert(selectedItem != -1);
+    
+    long i,j;
+    long first = 0x50 + (selectedItem * 0x20);
+    long last  = 0x60 + (selectedItem * 0x20);
+    
+    if (size < last) {
+        name[0] = 0;
+    } else {
+        for (j = 0, i = first; i < last; i++, j++) {
+            name[j] = (data[i] == 0x20 ? ' ' : data[i]);
+            if (j == 255) break;
+        }
+        name[j] = 0x00;
+    }
+    return name;
+}
+
 size_t
-T64File::numBytes()
+T64File::getSizeOfItem()
 {
     if (selectedItem < 0)
         return 0;
@@ -261,57 +312,22 @@ T64File::numBytes()
 }
 
 void
-T64File::seek(long offset)
+T64File::seekItem(long offset)
 {
     size_t i = 0x48 + (selectedItem * 0x20);
 
     // Move file pointer the the start of the selected item + offset
-    fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]) + offset;
+    iFp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]) + offset;
 
     // Invalidate file pointer if it is out of range
-    if (fp > size)
-        fp = -1;
+    if (iFp > size)
+        iFp = -1;
 }
 
-int 
-T64File::numberOfItems()
-{
-    return LO_HI(data[0x24], data[0x25]);
-}
 
-const char *
-T64File::getNameOfItem()
-{
-    assert(selectedItem != -1);
-    
-	long i,j;
-	long first = 0x50 + (selectedItem * 0x20);
-	long last  = 0x60 + (selectedItem * 0x20);
-	
-	if (size < last) {
-		name[0] = 0;
-	} else {
-		for (j = 0, i = first; i < last; i++, j++) {
-			name[j] = (data[i] == 0x20 ? ' ' : data[i]);
-			if (j == 255) break;
-		}
-		name[j] = 0x00;
-	}
-	return name;
-}
 
-const char *
-T64File::getTypeOfItem()
-{
-    assert(selectedItem != -1);
-    
-	long i = 0x41 + (selectedItem * 0x20);
-	if (data[i] != 00)
-		return "PRG";
-	if (data[i] == 00 && data[i-1] > 0x00)
-		return "FRZ";
-	return "???";
-}
+
+
 
 uint16_t
 T64File::getDestinationAddrOfItem()
@@ -321,29 +337,7 @@ T64File::getDestinationAddrOfItem()
     return result;
 }
 
-void 
-T64File::selectItem(unsigned item)
-{
-    // Invalidate the file pointer if a non-existing item is requested.
-    if (item >= numberOfItems()) {
-        fp = -1;
-        return;
-    }
-    
-    // Remember the selection
-    selectedItem = item;
-    
-    // Set file pointer and eof index
-    unsigned i = 0x48 + (item * 0x20);
-    fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
-    eof = fp + numBytes();
-    
-    // Check for inconsistent values. As all inconsistencies should have
-    // been ruled out by repair(), the if condition should never hit.
-    if (fp > size || eof > size) {
-        assert(false);
-    }
-}
+
 
 bool
 T64File::directoryItemIsPresent(int item)

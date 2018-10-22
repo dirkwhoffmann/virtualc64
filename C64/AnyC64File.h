@@ -102,8 +102,8 @@ public:
     //! @brief    Returns the type of this file.
     virtual C64FileType type() { return UNKNOWN_FILE_FORMAT; }
     
-    //! @brief      Returns a string representation of the file type.
-    /*! @details    E.g., a T64 file returns "T64".
+    /*! @brief      Returns a string representation of the file type.
+     *  @details    E.g., a T64 file returns "T64".
      */
     virtual const char *typeAsString() { return ""; }
 
@@ -120,34 +120,37 @@ public:
      *  @details  The provides unicode format is compatible with font C64ProMono
      *            which is used, e.g., in the mount dialogs preview panel.
      */
-    virtual const unsigned short *getUnicodeName();
+    const unsigned short *getUnicodeName();
 	
     
     //
     //! @functiongroup Reading data from the file
     //
     
-    //! @brief    Returns the number of bytes until EOF is reached
-    // virtual size_t numBytes() { return size; }
+    /*! @brief    Returns the number of bytes in this file.
+     *  @details  After getSize() calls to read(), EOF is returned.
+     */
+    virtual size_t getSize() { return size; }
 
-    //! @brief    Move file pointer to the specified location
+    //! @brief    Moves the file pointer to the specified offset.
+    /*! @details  Use seek(0) to return to the beginning of the file.
+     */
     virtual void seek(long offset);
     
-    /*! @brief    Reads a byte
+    /*! @brief    Reads a byte.
      *  @return   EOF (-1) if the end of file has been reached.
      */
-    virtual int getByte();
+    virtual int read();
 
-    /*! @brief    Reads multiple bytes in form of a string.
+    /*! @brief    Reads multiple bytes in form of a hex dump string.
      *  @param    Number of bytes ranging from 1 to 85.
      */
-    const char *hexDump(size_t num);
+    const char *readHex(size_t num = 1);
 
     /*! @brief    Uses getByte() to copy the file into the C64 memory.
      *  @param    buffer must be a pointer to RAM or ROM
      */
-    virtual void flash(uint8_t *buffer, size_t offset);
-    virtual void flash(uint8_t *buffer) { flash(buffer, 0); }
+    virtual void flash(uint8_t *buffer, size_t offset = 0);
 
     
     //

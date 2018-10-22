@@ -119,11 +119,9 @@ D64File::isD64File(const char *filename)
 D64File::D64File()
 {
     setDescription("D64Archive");
-    memset(name, 0, sizeof(name));
     memset(data, 0, sizeof(data));
     memset(errors, 0x01, sizeof(errors));
     numTracks = 35;
-    fp = 0;
 }
 
 D64File *
@@ -194,7 +192,7 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
         archive->debug(2, "Will write %d bytes\n", otherArchive->getSizeOfItem());
         
         otherArchive->selectItem(i);
-        while ((byte = otherArchive->getByte()) != EOF) {
+        while ((byte = otherArchive->readItem()) != EOF) {
             archive->writeByteToSector(byte, &track, &sector);
             num++;
         }
@@ -209,11 +207,19 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     return archive;
 }
 
-
-
-//
-// Virtual functions from Container class
-//
+const char *
+D64File::getName()
+{
+    int i, pos = offset(18, 0) + 0x90;
+    
+    for (i = 0; i < 255; i++) {
+        if (data[pos+i] == 0xA0)
+            break;
+        name[i] = data[pos+i];
+    }
+    name[i] = 0x00;
+    return name;
+}
 
 bool 
 D64File::readFromBuffer(const uint8_t *buffer, size_t length)
@@ -311,82 +317,43 @@ D64File::writeToBuffer(uint8_t *buffer)
     return 0;
 }
 
-long
-D64File::beginningOfItem(long item)
-{
-    long p;
-    
-    // Find directory entry
-    if ((p = findDirectoryEntry(item)) <= 0)
-        return -1;
-    
-    // Find first data sector
-    if ((p = offset(data[p+0x01], data[p+0x02])) < 0)
-        return -1;
-    
-    // Skip t/s sequence
-    p += 2;
-    
-    // Skip destination address
-    p += 2;
-    
-    return p;
-}
-
-const char *
-D64File::getName()
-{
-    int i, pos = offset(18, 0) + 0x90;
-    
-    for (i = 0; i < 255; i++) {
-        if (data[pos+i] == 0xA0)
-            break;
-        name[i] = data[pos+i];
-    }
-    name[i] = 0x00;
-    return name;
-}
-
-size_t
-D64File::numBytes()
-{
-    if (selectedItem < 0)
-        return 0;
-    
-    // In a D64 archive, the bytes of a single file item are not ordered
-    // consecutively. Hence, we have to step through the data byte by byte.
-    long oldFp = fp;
-    size_t result = 0;
-    
-    while (getByte() != EOF)
-        result++;
-    
-    fp = oldFp;
-    return result;
-}
-
-void
-D64File::seek(long offset)
-{
-    if (selectedItem == -1)
-        return;
-    
-    if ((fp = beginningOfItem(selectedItem)) == -1)
-        return;
-    
-    for (unsigned i = 0; i < offset; i++)
-        (void)getByte();
-}
-
 int
 D64File::numberOfItems()
 {
-    long offsets[144]; // a C64 disk contains at most 144 files
+    long offsets[144]; // A C64 disk contains at most 144 files
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles);
     
     return noOfFiles;
+}
+
+void
+D64File::selectItem(unsigned item)
+{
+    // Only proceed of item exists
+    if (item >= numberOfItems())
+        return;
+    
+    // Remember the selection
+    selectedItem = item;
+    
+    // Move file pointer to the first data byte
+    fp = beginningOfItem(item);
+}
+
+const char *
+D64File::getTypeOfItemAsString()
+{
+    assert(selectedItem != -1);
+    
+    const char *extension = "";
+    long pos = findDirectoryEntry(selectedItem);
+    
+    if (pos > 0)
+        (void)itemIsVisible(data[pos] /* file type byte */, &extension);
+    
+    return extension;
 }
 
 const char *
@@ -411,19 +378,143 @@ D64File::getNameOfItem()
     return name;
 }
 
-const char *
-D64File::getTypeOfItem()
+size_t
+D64File::getSizeOfItem()
+{
+    if (selectedItem < 0)
+        return 0;
+    
+    // In a D64 archive, the bytes of a single file item are not ordered
+    // consecutively. Hence, we have to step through the data byte by byte.
+    long oldFp = iFp;
+    size_t result = 0;
+    
+    while (readItem() != EOF)
+        result++;
+    
+    iFp = oldFp;
+    return result;
+}
+
+size_t
+D64File::getSizeOfItemInBlocks()
 {
     assert(selectedItem != -1);
     
-    const char *extension = "";
     long pos = findDirectoryEntry(selectedItem);
-    
-    if (pos > 0)
-        (void)itemIsVisible(data[pos] /* file type byte */, &extension);
-
-    return extension;
+    return (pos > 0) ? LO_HI(data[pos+0x1C],data[pos+0x1D]) : 0;
 }
+
+void
+D64File::seekItem(long offset)
+{
+    // Reset fp to the beginning of the selected item
+    fp = beginningOfItem(selectedItem);
+
+    // Advance fp to the requested position
+    for (unsigned i = 0; i < offset; i++)
+        (void)readItem();
+}
+
+int
+D64File::readItem()
+{
+    int result;
+    
+    if (fp < 0)
+        return -1;
+    
+    // Get byte
+    result = data[fp];
+    
+    // Check for end of file
+    if (isEndOfFile(fp)) {
+        fp = -1;
+        return result;
+    }
+    
+    if (isLastByteOfSector(fp)) {
+        
+        // Continue reading in new sector
+        if (!jumpToNextSector(&fp)) {
+            // The current sector points to an invalid next track/sector
+            // We won't jump off the cliff and terminate reading here.
+            fp = -1;
+            return result;
+        } else {
+            // Skip the first two data bytes of the new sector as they encode the
+            // next track/sector
+            fp += 2;
+            return result;
+        }
+    }
+    
+    // Continue reading in current sector
+    fp++;
+    return result;
+}
+
+uint16_t
+D64File::getDestinationAddrOfItem()
+{
+    int track;
+    int sector;
+    uint16_t result;
+    
+    assert(selectedItem != -1);
+    
+    // Search for beginning of file data
+    long pos = findDirectoryEntry(selectedItem);
+    if (pos <= 0)
+        return 0;
+    
+    track = data[pos + 0x01];
+    sector = data[pos + 0x02];
+    if ((pos = offset(track, sector)) < 0)
+        return 0;
+    
+    result = LO_HI(data[pos+2],data[pos+3]);
+    return result;
+}
+
+
+
+
+
+
+
+
+
+long
+D64File::beginningOfItem(long item)
+{
+    long p;
+    
+    if (item < 0)
+        return -1;
+    
+    // Find directory entry
+    if ((p = findDirectoryEntry(item)) <= 0)
+        return -1;
+    
+    // Find first data sector
+    if ((p = offset(data[p+0x01], data[p+0x02])) < 0)
+        return -1;
+    
+    // Skip t/s sequence
+    p += 2;
+    
+    // Skip destination address
+    p += 2;
+    
+    return p;
+}
+
+
+
+
+
+
 
 bool
 D64File::itemIsVisible(uint8_t typeChar, const char **extension)
@@ -460,110 +551,6 @@ D64File::itemIsVisible(uint8_t typeChar, const char **extension)
     return result != NULL;
 }
 
-size_t
-D64File::getSizeOfItemInBlocks()
-{
-    assert(selectedItem != -1);
-    
-    long pos = findDirectoryEntry(selectedItem);
-    return (pos > 0) ? LO_HI(data[pos+0x1C],data[pos+0x1D]) : 0;
-}
-
-uint16_t
-D64File::getDestinationAddrOfItem()
-{
-    int track;
-    int sector;
-    uint16_t result;
-    
-    assert(selectedItem != -1);
-    
-    // Search for beginning of file data
-    long pos = findDirectoryEntry(selectedItem);
-    if (pos <= 0)
-        return 0;
-    
-    track = data[pos + 0x01];
-    sector = data[pos + 0x02];
-    if ((pos = offset(track, sector)) < 0)
-        return 0;
-    
-    result = LO_HI(data[pos+2],data[pos+3]);
-    return result;
-}
-
-uint16_t
-D64File::getDestinationAddr()
-{
-    int track;
-    int sector;
-    uint16_t result;
-    
-    // Search for beginning of file data
-    long pos = findDirectoryEntry(selectedItem);
-    if (pos <= 0)
-        return 0;
-    
-    track = data[pos + 0x01];
-    sector = data[pos + 0x02];
-    if ((pos = offset(track, sector)) < 0)
-        return 0;
-    
-    result = LO_HI(data[pos+2],data[pos+3]);
-    return result;
-}
-
-void
-D64File::selectItem(unsigned item)
-{
-    // Only proceed of item exists
-    if (item >= numberOfItems())
-        return;
-    
-    // Remember the selection
-    selectedItem = item;
-    
-    // Move file pointer to the first data byte
-    fp = beginningOfItem(item);
-}
-
-int 
-D64File::getByte()
-{
-    int result;
-    
-    if (fp < 0)
-        return -1;
-    
-    // Get byte
-    result = data[fp];
-    
-    // Check for end of file
-    if (isEndOfFile(fp)) {
-        fp = -1;
-        return result;
-    }
-    
-    if (isLastByteOfSector(fp)) {
-        
-        // Continue reading in new sector
-        if (!jumpToNextSector(&fp)) {
-            // The current sector points to an invalid next track/sector
-            // We won't jump off the cliff and terminate reading here.
-            fp = -1;
-            return result;
-        } else {
-            // Skip the first two data bytes of the new sector as they encode the
-            // next track/sector
-            fp += 2;
-            return result;
-        }
-    }
-    
-    // Continue reading in current sector
-    fp++;
-    return result;
-}
 
 //
 // Accessing archive attributes

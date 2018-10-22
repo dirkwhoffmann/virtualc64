@@ -672,10 +672,10 @@ struct ContainerWrapper;
 - (C64FileType)type; 
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
-- (void)seek:(NSInteger)offset; 
+// - (void)seek:(NSInteger)offset; 
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
-- (NSString *)hexDump:(NSInteger)num;
+// - (NSString *)readHex:(NSInteger)num;
 
 @end
 
@@ -760,7 +760,9 @@ struct ContainerWrapper;
 - (NSString *)unicodeNameOfItem;
 - (NSInteger)sizeOfItem;
 - (NSInteger)sizeOfItemInBlocks;
+- (void)seekItem:(NSInteger)offset;
 - (NSString *)typeOfItem;
+- (NSString *)readItemHex:(NSInteger)num;
 - (NSInteger)destinationAddrOfItem;
 
 @end
@@ -811,10 +813,11 @@ struct ContainerWrapper;
 + (instancetype) makeWithDisk:(DiskProxy *)diskProxy;
 @end
 
+/*
 @interface FileProxy : ArchiveProxy
 {
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype) makeWithFile:(NSString *)filename;
 @end
-
+*/

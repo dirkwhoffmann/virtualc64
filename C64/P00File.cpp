@@ -120,30 +120,11 @@ P00File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
     // File data
     int byte;
     otherArchive->selectItem(0);
-    while ((byte = otherArchive->getByte()) != EOF) {
+    while ((byte = otherArchive->readItem()) != EOF) {
         *ptr++ = (uint8_t)byte;
     }
     
     return archive;
-}
-
-void
-P00File::selectItem(unsigned n)
-{
-    if (n == 1) {
-        seek(0);
-    } else {
-        fp = -1;
-    }
-
-    /*
-    // Skip header and load address
-    fp = 0x1C;
-    
-    // Invalidate file pointer if it is out of range or item does not exist.
-    if (fp >= size || n != 0)
-        fp = -1;
-    */
 }
 
 const char *
@@ -156,6 +137,17 @@ P00File::getName()
     }
     name[i] = 0x00;
     return name;
+}
+
+void
+P00File::selectItem(unsigned item)
+{
+    if (item == 0) {
+        iFp = 0x1C;
+        iEof = size;
+    } else {
+        iFp = -1;
+    }
 }
 
 const char *
@@ -171,12 +163,14 @@ P00File::getNameOfItem()
 }
 
 void
-P00File::seek(long offset)
+P00File::seekItem(long offset)
 {
-    fp = 0x1C + offset;
+    assert(iFp != -1);
     
-    if (fp >= size)
-        fp = -1;
+    iFp = 0x1C + offset;
+    
+    if (iFp >= size)
+        iFp = -1;
 }
 
 uint16_t 

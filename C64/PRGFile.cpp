@@ -103,7 +103,7 @@ PRGFile::makeObjectWithAnyArchive(AnyArchive *otherArchive) {
     // File data
     int byte;
     otherArchive->selectItem(exportItem);
-    while ((byte = otherArchive->getByte()) != EOF) {
+    while ((byte = otherArchive->readItem()) != EOF) {
         *ptr++ = (uint8_t)byte;
     }
     
@@ -111,29 +111,33 @@ PRGFile::makeObjectWithAnyArchive(AnyArchive *otherArchive) {
 }
 
 void
-PRGFile::seek(long offset)
+PRGFile::selectItem(unsigned item)
 {
-    fp = 2 + offset;
+    debug("PRGFile::selectItem %d\n", item);
+    if (item == 0) {
+        iFp = 2;
+        iEof = size;
+        debug("iEof = %d\n", size);
+    } else {
+        iFp = -1;
+    }
+}
 
-    if (fp >= size)
-        fp = -1;
+void
+PRGFile::seekItem(long offset)
+{
+    assert(iFp != -1);
+    
+    iFp = 2 + offset;
+    
+    if (iFp >= size)
+        iFp = -1;
 }
 
 uint16_t 
 PRGFile::getDestinationAddrOfItem()
 {
-	uint16_t result = LO_HI(data[0], data[1]);
-	return result;
+	return LO_HI(data[0], data[1]);
 }
 
-void 
-PRGFile::selectItem(unsigned n)
-{
-    // Skip load address
-    fp = 0x2;
-    
-    // Invalidate file pointer if it is out of range or item does not exist.
-    if (fp >= size || n != 0)
-        fp = -1;
-}
 

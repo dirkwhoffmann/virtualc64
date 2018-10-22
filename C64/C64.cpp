@@ -1068,7 +1068,6 @@ C64::flash(AnyC64File *file, unsigned item)
         case VC1541_ROM_FILE:
             
             file->flash(drive1.mem.rom);
-            file->seek(0);
             file->flash(drive2.mem.rom);
             break;
                     

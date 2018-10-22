@@ -97,12 +97,24 @@ public:
     C64FileType type() { return D64_FILE; }
     const char *typeAsString() { return "D64"; }
     const char *getName();
-    size_t numBytes();
-    void seek(long offset);
-    int getByte();
     bool hasSameType(const char *filename) { return isD64File(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
+    
+    
+    //
+    //! @functiongroup Methods from AnyArchive
+    //
+    
+    int numberOfItems();
+    void selectItem(unsigned n);
+    const char *getTypeOfItemAsString();
+    const char *getNameOfItem();
+    size_t getSizeOfItem();
+    size_t getSizeOfItemInBlocks();
+    void seekItem(long offset);
+    int readItem();
+    uint16_t getDestinationAddrOfItem();
     
 private:
     
@@ -111,28 +123,8 @@ private:
      */
     long beginningOfItem(long item);
     
-    
-    //
-    //! @functiongroup Methods from AnyArchive
-    //
-
 public:
     
-    int numberOfItems();
-	const char *getNameOfItem();
-	const char *getTypeOfItem();
-    size_t getSizeOfItemInBlocks();
-	uint16_t getDestinationAddrOfItem();
-    uint16_t getDestinationAddr();
-
-	void selectItem(unsigned n);
-
-
-    
-    //
-    //! @functiongroup Accessing archive attributes
-    //
-
     //! @brief    Returns a pointer to the raw archive data
     uint8_t *getData() { return data; }
 

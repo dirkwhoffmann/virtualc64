@@ -30,7 +30,6 @@
  */
 class PRGFile : public AnyArchive {
 
-    
 public:
 
     //
@@ -73,7 +72,6 @@ public:
 
     C64FileType type() { return PRG_FILE; }
     const char *typeAsString() { return "PRG"; }
-    void seek(long offset); 
     bool hasSameType(const char *filename) { return isPRGFile(filename); }
     
     
@@ -82,11 +80,11 @@ public:
     //
     
     int numberOfItems() { return 1; }
+    void selectItem(unsigned item);
+    const char *getTypeOfItemAsString() { return "PRG"; }
     const char *getNameOfItem() { return "FILE"; }
-    const char *getTypeOfItem() { return "PRG"; }
     size_t getSizeOfItem() { return size - 2; }
+    void seekItem(long offset);
     uint16_t getDestinationAddrOfItem();
-    void selectItem(unsigned n);
-    
 };
 #endif
