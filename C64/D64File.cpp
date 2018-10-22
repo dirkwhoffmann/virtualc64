@@ -27,9 +27,58 @@
 typedef struct D64TrackInfo {
     int numberOfSectors;
     int sectorsIn;
-    int offset;
 } D64TrackInfo;
 
+static const D64TrackInfo D64Map[] =
+{
+    { 0,  0 }, // Padding
+    { 21, 0 },
+    { 21, 21 },
+    { 21, 42 },
+    { 21, 63 },
+    { 21, 84 },
+    { 21, 105 },
+    { 21, 126 },
+    { 21, 147 },
+    { 21, 168 },
+    { 21, 189 },
+    { 21, 210 },
+    { 21, 231 },
+    { 21, 252 },
+    { 21, 273 },
+    { 21, 294 },
+    { 21, 315 },
+    { 21, 336 },
+    { 19, 357 }, // Track 18, Directory
+    { 19, 376 },
+    { 19, 395 },
+    { 19, 414 },
+    { 19, 433 },
+    { 19, 452 },
+    { 19, 471 },
+    { 18, 490 },
+    { 18, 508 },
+    { 18, 526 },
+    { 18, 544 },
+    { 18, 562 },
+    { 18, 580 },
+    { 17, 598 },
+    { 17, 615 },
+    { 17, 632 },
+    { 17, 649 },
+    { 17, 666 },
+    { 17, 683 },
+    { 17, 700 },
+    { 17, 717 },
+    { 17, 734 },
+    { 17, 751 },
+    // Unusual, tracks 41 & 42
+    { 17, 768 },
+    { 17, 785 }
+};
+
+
+/*
 static const D64TrackInfo D64Map[] =
 {
     { 0,  0,   0 }, // Padding
@@ -77,6 +126,7 @@ static const D64TrackInfo D64Map[] =
     { 17, 768, 0x30000 },
     { 17, 785, 0x31100 }
 };
+*/
 
 bool
 D64File::isD64Buffer(const uint8_t *buffer, size_t length)
@@ -276,7 +326,7 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
     uint8_t *source = (uint8_t *)buffer;
     for(Track t = 1; t <= numTracks; t++) {
         
-        uint8_t *destination = &data[D64Map[t].offset];
+        uint8_t *destination = &data[D64Map[t].sectorsIn * 256];
         int sectors = D64Map[t].numberOfSectors;
         memcpy(destination, source, 256 * sectors);
         source += 256 * sectors;
@@ -628,7 +678,7 @@ int
 D64File::offset(Track track, Sector sector)
 {
     if (isValidTrackSectorPair(track, sector)) {
-        return D64Map[track].offset + (sector * 256);
+        return (D64Map[track].sectorsIn * 256) + (sector * 256);
     } else {
         return -1;
     }
