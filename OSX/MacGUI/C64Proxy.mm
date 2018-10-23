@@ -837,7 +837,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
 - (NSData *)autoSnapshotData:(NSInteger)nr {
     Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->header()
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
                           length: snapshot->sizeOnDisk()];
 }
 - (unsigned char *)autoSnapshotImageData:(NSInteger)nr {
@@ -854,7 +854,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
 - (NSData *)userSnapshotData:(NSInteger)nr {
     Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->header()
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
                           length: snapshot->sizeOnDisk()];
 }
 - (unsigned char *)userSnapshotImageData:(NSInteger)nr {
@@ -956,10 +956,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 @implementation SnapshotProxy
 
-+ (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length {
++ (BOOL) isSupportedSnapshot:(const void *)buffer length:(NSInteger)length {
     return Snapshot::isSupportedSnapshot((uint8_t *)buffer, length);
 }
-+ (BOOL)isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length {
++ (BOOL) isUnsupportedSnapshot:(const void *)buffer length:(NSInteger)length {
     return Snapshot::isUnsupportedSnapshot((uint8_t *)buffer, length);
 }
 + (BOOL) isSupportedSnapshotFile:(NSString *)path {

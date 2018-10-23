@@ -113,14 +113,3 @@ TAPFile::readFromBuffer(const uint8_t *buffer, size_t length)
     return true;
 }
 
-size_t
-TAPFile::writeToBuffer(uint8_t *buffer)
-{
-    assert(data != NULL);
-    
-    if (buffer) {
-        memcpy(buffer, data, size);
-    }
-    return size;
-}
-

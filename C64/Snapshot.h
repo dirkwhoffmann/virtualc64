@@ -129,36 +129,31 @@ public:
     //! @functiongroup Accessing snapshot properties
     //
     
-    //! @brief    Returns size of header
-    // size_t headerSize() { return sizeof(SnapshotHeader); }
-
+public:
+    
     //! @brief    Returns pointer to header data
-    SnapshotHeader *header() { return (SnapshotHeader *)data; }
-
-    //! @brief    Returns size of core data (without header)
-    //! @deprecated
-    size_t getDataSize() { return size; }
+    SnapshotHeader *getHeader() { return (SnapshotHeader *)data; }
 
     //! @brief    Returns pointer to core data
-	uint8_t *getData() { return data + sizeof(SnapshotHeader); }
-
+    uint8_t *getData() { return data + sizeof(SnapshotHeader); }
+    
 	//! @brief    Returns the timestamp
-	time_t getTimestamp() { return header()->timestamp; }
+	time_t getTimestamp() { return getHeader()->timestamp; }
 
 	//! @brief    Sets the timestamp
-	void setTimestamp(time_t value) { header()->timestamp = value; }
+	void setTimestamp(time_t value) { getHeader()->timestamp = value; }
 	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return data == NULL; }
 	
 	//! Return screen buffer
-	unsigned char *getImageData() { return (unsigned char *)(header()->screenshot.screen); }
+	unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
 
     //! Return image width
-    unsigned getImageWidth() { return header()->screenshot.width; }
+    unsigned getImageWidth() { return getHeader()->screenshot.width; }
 
     //! Return image height
-    unsigned getImageHeight() { return header()->screenshot.height; }
+    unsigned getImageHeight() { return getHeader()->screenshot.height; }
 
     //! Take screenshot
     void takeScreenshot(uint32_t *buf, bool pal);

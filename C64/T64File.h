@@ -111,7 +111,6 @@ public:
      *            has been detected that could not be repaired.
      */
     bool repair();
-    
 };
 
 #endif

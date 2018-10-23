@@ -75,7 +75,6 @@ public:
     const char *getName();
     bool hasSameType(const char *filename) { return isTAPFile(filename); }
     bool readFromBuffer(const uint8_t *buffer, size_t length);
-    size_t writeToBuffer(uint8_t *buffer);
     
     
     //
