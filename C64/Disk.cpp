@@ -747,20 +747,13 @@ Disk::encodeTrack(D64File *a, Track t, uint8_t tailGap, HeadPosition start)
 size_t
 Disk::encodeSector(D64File *a, Track t, Sector s, HeadPosition start, int tailGap)
 {
-    uint8_t *source;
+    assert(a != NULL);
+    assert(isValidTrackSectorPair(t, s));
+    
     HeadPosition offset = start;
     uint8_t errorCode = a->errorCode(t, s);
-    if (errorCode != 1)
-        debug("Error code track %d sector %d = %d\n", t, s, errorCode);
     
-    assert(a != NULL);
-    assert(isTrackNumber(t));
-    
-    // Get source address from archive
-    if ((source = a->findSector(t, s)) == 0) {
-        warn("Can't find halftrack data in archive\n");
-        return 0;
-    }
+    a->selectTrackAndSector(t, s);
     
     debug(4, "  Encoding track/sector %d/%d\n", t, s);
     
@@ -847,8 +840,9 @@ Disk::encodeSector(D64File *a, Track t, Sector s, HeadPosition start, int tailGa
     // Data bytes
     checksum = 0;
     for (unsigned i = 0; i < 256; i++, offset += 10) {
-        checksum ^= source[i];
-        encodeGcr(source[i], t, offset);
+        uint8_t byte = (uint8_t)a->readTrack();
+        checksum ^= byte;
+        encodeGcr(byte, t, offset);
     }
     
     // Checksum

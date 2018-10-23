@@ -575,17 +575,22 @@ D64File::seekHalftrack(long offset)
         fp = -1;
 }
 
+void
+D64File::selectTrackAndSector(Track t, Sector s)
+{
+    assert(isValidTrackSectorPair(t, s));
+    
+    selectHalftrack(2 * t - 1);
+    assert(fp != -1);
+    
+    tFp += 256 * s;
+    tEof = tFp + 256;
+}
+
 
 //
 //! @functiongroup Accessing tracks and sectors
 //
-
-uint8_t *
-D64File::findSector(Track t, Sector s)
-{
-    assert(isValidTrackSectorPair(t, s));
-    return data + offset(t, s);
-}
 
 uint8_t
 D64File::errorCode(Track t, Sector s)

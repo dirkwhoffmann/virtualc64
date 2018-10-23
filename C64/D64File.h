@@ -119,7 +119,7 @@ public:
     int readItem();
     uint16_t getDestinationAddrOfItem();
     
-
+ 
     //
     // Methods from AnyDisk
     //
@@ -129,6 +129,8 @@ public:
     size_t getSizeOfHalftrack();
     void seekHalftrack(long offset);
     
+    //! @brief    Similar to selectHalftrack()
+    void selectTrackAndSector(Track t, Sector s);
     
     //
     //! @functiongroup Accessing file attributes
@@ -140,8 +142,6 @@ public:
     //! @brief    Returns the second disk ID character
     uint8_t diskId2() { return data[offset(18, 0) + 0xA3]; }
 
-    
-public:
     
     //
     //! @functiongroup Accessing single file items
@@ -164,18 +164,11 @@ public:
      */
     bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
     
-
-public:
     
     //
     //! @functiongroup Accessing tracks and sectors
     //
     
-
-    //! @brief    Returns a pointer to the raw sector data.
-    //! @deprecated
-    uint8_t *findSector(Track track, Sector sector);
-
     //! @brief    Returns the error for the specified sector.
     /*! @note     Returns 01 (no error) if the D64 file does not contain
      *            error codes.
