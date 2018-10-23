@@ -454,22 +454,21 @@ private:
     
 public:
     
-    /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
-     *  @param   dest Target buffer. If a NULL reference is provided, a test run
-     *           is performed. Test runs are used to determine upfront how many
+    /*! @brief   Converts the disk into a byte stream.
+     *  @details The byte stream is compatible with the D64 file format.
+     *  @param   dest Target buffer. If parameter is NULL, a test run is
+     *           performed. Test runs are used to determine upfront how many
      *           bytes will be written. If something went wrong, an error code
      *           is written into 'error' (0 = success).
      *  @return  Number of bytes written.
      */
-    // size_t decodeDisk(uint8_t *dest, int *error = NULL);
+    size_t decodeDisk(uint8_t *dest);
+ 
     
-    /*! @brief   Converts a disk into a byte stream compatible with the D64 format.
+    /*! @brief   Work horse for decodeDisk(uint8_t *)
      *  @param   numTracks must be either 35, 40, or 42.
      */
     size_t decodeDisk(uint8_t *dest, unsigned numTracks, int *error = NULL);
-     
-     
-private:
     
     //! @brief   Decodes all sectors of a track
     size_t decodeTrack(Track t, uint8_t *dest, int *error = NULL);

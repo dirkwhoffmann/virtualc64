@@ -1408,14 +1408,22 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
-    D64File *archive = D64File::makeD64ArchiveWithAnyArchive(other);
+    D64File *archive = D64File::makeObjectWithAnyArchive(other);
     return [self make: archive];
 }
++ (instancetype) makeWithDisk:(DiskProxy *)disk
+{
+    Disk *d = (Disk *)([disk wrapper]->disk);
+    D64File *archive = D64File::makeObjectWithDisk(d);
+    return [self make: archive];
+}
+/*
 + (instancetype) makeWithDrive:(DriveProxy *)drive
 {
     D64File *archive = [drive wrapper]->drive->convertToD64();
     return [self make: archive];
 }
+*/
 @end
 
 

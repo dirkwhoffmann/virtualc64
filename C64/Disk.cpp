@@ -538,6 +538,23 @@ Disk::sectorBytesAsString(uint8_t *buffer, size_t length)
 //
 
 size_t
+Disk::decodeDisk(uint8_t *dest)
+{
+    // Determine highest non-empty track
+    Track t = 42;
+    while (t > 0 && trackIsEmpty(t)) t--;
+    
+    // Decode disk 
+    if (t <= 35)
+        return decodeDisk(dest, 35, NULL);
+        
+    if (t <= 40)
+        return decodeDisk(dest, 40, NULL);
+    
+    return decodeDisk(dest, 42, NULL);
+}
+
+size_t
 Disk::decodeDisk(uint8_t *dest, unsigned numTracks, int *error)
 {
     unsigned numBytes = 0;

@@ -22,9 +22,7 @@
 #define _G64FILE_INC
 
 #include "AnyDisk.h"
-
-// Forward declarations
-class Disk;
+#include "Disk.h"
 
 /*! @class   G64File
  *  @brief   The G64File class declares the programmatic interface for a file

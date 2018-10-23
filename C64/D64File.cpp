@@ -22,7 +22,6 @@
 #include "T64File.h"
 #include "PRGFile.h"
 #include "P00File.h"
-#include "Disk.h"
 
 bool
 D64File::isD64Buffer(const uint8_t *buffer, size_t length)
@@ -124,7 +123,7 @@ D64File::makeObjectWithFile(const char *path)
 }
 
 D64File *
-D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
+D64File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
 {
     assert(otherArchive != NULL);
     
@@ -179,6 +178,24 @@ D64File::makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     archive->debug(2, "%s archive created.\n", archive->typeAsString());
     
     return archive;
+}
+
+D64File *
+D64File::makeObjectWithDisk(Disk *disk)
+{
+    uint8_t buffer[D64_802_SECTORS];
+    
+    assert(disk != NULL);
+    
+    // Translate disk contents into a byte stream
+    size_t length = disk->decodeDisk(buffer);
+    
+    assert((length == D64_683_SECTORS) ||
+           (length == D64_768_SECTORS) ||
+           (length == D64_802_SECTORS));
+    
+    // Create object from byte stream
+    return makeObjectWithBuffer(buffer, length);
 }
 
 const char *

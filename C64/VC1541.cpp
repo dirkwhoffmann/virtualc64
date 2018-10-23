@@ -533,7 +533,7 @@ VC1541::insertDisk(AnyArchive *a)
             // All other archives cannot be encoded directly.
             // We convert them to a D64 archive first.
             
-            D64File *converted = D64File::makeD64ArchiveWithAnyArchive(a);
+            D64File *converted = D64File::makeObjectWithAnyArchive(a);
             disk.clearDisk();
             disk.encodeArchive(converted);
             break;
@@ -586,6 +586,7 @@ VC1541::ejectDisk()
     c64->resume();
 }
 
+/*
 D64File *
 VC1541::convertToD64()
 {
@@ -624,13 +625,15 @@ VC1541::convertToD64()
     
     return archive;
 }
+*/
 
 bool
 VC1541::exportToD64(const char *filename)
 {
     assert(filename != NULL);
 
-    D64File *archive = convertToD64();
+    // D64File *archive = convertToD64();
+    D64File *archive = D64File::makeObjectWithDisk(&disk);
     
     if (archive == NULL)
         return false;

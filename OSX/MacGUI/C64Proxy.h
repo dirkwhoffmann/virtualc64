@@ -819,7 +819,8 @@ struct ContainerWrapper;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
 + (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
-+ (instancetype)makeWithDrive:(DriveProxy *)drive;
++ (instancetype)makeWithDisk:(DiskProxy *)disk;
+// + (instancetype)makeWithDrive:(DriveProxy *)drive;
 @end
 
 @interface G64Proxy : AnyDiskProxy

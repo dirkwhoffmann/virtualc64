@@ -22,6 +22,10 @@
 #define _D64FILE_INC
 
 #include "AnyDisk.h"
+#include "Disk.h"
+
+// Forward declarations
+// class Disk;
 
 // D64 files come in six different sizes
 #define D64_683_SECTORS 174848
@@ -88,10 +92,11 @@ public:
     //! @brief    Factory method
     static D64File *makeObjectWithFile(const char *path);
     
-    /*! @brief    Factory method
-     *  @details  otherArchive can be of any archive type
-     */
-    static D64File *makeD64ArchiveWithAnyArchive(AnyArchive *otherArchive);
+    //! @brief    Factory method
+    static D64File *makeObjectWithAnyArchive(AnyArchive *otherArchive);
+    
+    //! @brief    Factory method
+    static D64File *makeObjectWithDisk(Disk *disk);
     
     
     //

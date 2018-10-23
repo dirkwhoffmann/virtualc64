@@ -19,7 +19,6 @@
  */
 
 #include "G64File.h"
-#include "Disk.h"
 
 const uint8_t /* "GCR-1541" */
 G64File::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00 };
