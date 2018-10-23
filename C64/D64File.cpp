@@ -61,13 +61,13 @@ D64File::isD64File(const char *filename)
     return fileOK;
 }
 
+
 D64File::D64File()
 {
     debug("D64File::D64File()\n");
     
     setDescription("D64Archive");
     memset(errors, 0x01, sizeof(errors));
-    numTracks = 35;
 }
 
 D64File::D64File(unsigned tracks, bool ecc) : D64File()
@@ -93,7 +93,7 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
     
     data = new uint8_t[size];
     memset(data, 0, size);
-    numTracks = tracks;
+    // numTracks = tracks;
 }
 
 D64File *
@@ -223,14 +223,14 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
         case D64_683_SECTORS: // 35 tracks, no errors
             
             debug(2, "D64 file contains 35 tracks, no EC bytes\n");
-            numTracks = 35;
+            // numTracks = 35;
             numSectors = 683;
             break;
             
         case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
             
             debug(2, "D64 file contains 35 tracks, 683 EC bytes\n");
-            numTracks = 35;
+            // numTracks = 35;
             numSectors = 683;
             numberOfErrors = 683;
             break;
@@ -238,14 +238,14 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
         case D64_768_SECTORS: // 40 tracks, no errors
             
             debug(2, "D64 file contains 40 tracks, no EC bytes\n");
-            numTracks = 40;
+            // numTracks = 40;
             numSectors = 768;
             break;
             
         case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
             
             debug(2, "D64 file contains 40 tracks, 768 EC bytes\n");
-            numTracks = 40;
+            // numTracks = 40;
             numSectors = 768;
             numberOfErrors = 768;
             break;
@@ -253,14 +253,14 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
         case D64_802_SECTORS: // 42 tracks, no error bytes
             
             debug(2, "D64 file contains 42 tracks, no EC bytes\n");
-            numTracks = 42;
+            // numTracks = 42;
             numSectors = 802;
             break;
             
         case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
             debug(2, "D64 file contains 42 tracks, 802 EC bytes\n");
-            numTracks = 42;
+            // numTracks = 42;
             numSectors = 802;
             numberOfErrors = 802;
             break;
@@ -302,7 +302,7 @@ D64File::selectItem(unsigned item)
     selectedItem = item;
     
     // Move file pointer to the first data byte
-    fp = beginningOfItem(item);
+    fp = findItem(item);
 }
 
 const char *
@@ -372,7 +372,7 @@ void
 D64File::seekItem(long offset)
 {
     // Reset fp to the beginning of the selected item
-    fp = beginningOfItem(selectedItem);
+    fp = findItem(selectedItem);
 
     // Advance fp to the requested position
     for (unsigned i = 0; i < offset; i++)
@@ -441,7 +441,7 @@ D64File::getDestinationAddrOfItem()
 }
 
 long
-D64File::beginningOfItem(long item)
+D64File::findItem(long item)
 {
     long p;
     
@@ -509,8 +509,24 @@ D64File::itemIsVisible(uint8_t typeChar, const char **extension)
 int
 D64File::numberOfHalftracks()
 {
-    // TODO
-    return 0;
+    switch (size) {
+            
+        case D64_683_SECTORS:
+        case D64_683_SECTORS_ECC:
+            return 2 * 35;
+            
+        case D64_768_SECTORS:
+        case D64_768_SECTORS_ECC:
+            return 2 * 40;
+            
+        case D64_802_SECTORS:
+        case D64_802_SECTORS_ECC:
+            return 2 * 42;
+            
+        default:
+            assert(false);
+            return 0;
+    }
 }
 
 void
@@ -536,13 +552,16 @@ D64File::seekHalftrack(long offset)
 
 
 
+/*
 unsigned
 D64File::numberOfTracks()
 {
     assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
+    
+    assert(numTracks == numberOfHalftracks() / 2);
     return numTracks;
 }
-
+*/
 
 //
 //! @functiongroup Accessing tracks and sectors
@@ -614,7 +633,7 @@ D64File::nextTrackAndSector(Track track, Sector sector,
     
     // Move to next track if we wrapped over
     if (sector == 0) {
-        if (track < numTracks) {
+        if (track < numberOfTracks()) {
             track = (track == 17 && skipDirectoryTrack) ? 19 : track + 1;
             sector = 0;
         } else {
@@ -637,7 +656,7 @@ D64File::jumpToNextSector(long *pos)
     nTrack = nextTrack(*pos);
     nSector = nextSector(*pos);
     
-    if (nTrack > (int)numTracks)
+    if (nTrack > numberOfTracks())
         return false;
     
     if ((newPos = offset(nTrack, nSector)) < 0)

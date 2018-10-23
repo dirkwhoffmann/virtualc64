@@ -605,7 +605,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) rotateDisk { wrapper->drive->rotateDisk(); }
 - (void) rotateBack { wrapper->drive->rotateBack(); }
 
-- (BOOL) exportToD64:(NSString *)path { return wrapper->drive->exportToD64([path UTF8String]); }
+// - (BOOL) exportToD64:(NSString *)path { return wrapper->drive->exportToD64([path UTF8String]); }
 
 @end
 

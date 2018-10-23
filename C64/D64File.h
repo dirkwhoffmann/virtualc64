@@ -56,7 +56,7 @@ private:
 	/*! @brief   The number of tracks stored in this archive.
         @details Possible values are 35, 40, and 42.
      */
-	unsigned numTracks; 
+	// unsigned numTracks; 
 	
     /*! @brief    Number of the currently selected item
      *  @details  -1, if no item is selected
@@ -129,7 +129,7 @@ private:
     /*! @brief    Returns the offset to the first data byte of an item.
      *  @return   -1, if the item does not exist.
      */
-    long beginningOfItem(long item);
+    long findItem(long item);
     
 public:
     
@@ -152,7 +152,7 @@ public:
 
     //! @brief    Returns the number of tracks stored in this image
     //! @deprecated
-    unsigned numberOfTracks();
+    // unsigned numberOfTracks();
     
     
     /*! @brief    Returns true iff item is a visible file

@@ -60,14 +60,14 @@ public:
     
     //! @brief    Returns the number of halftracks of the represented disk.
     virtual int numberOfHalftracks() { return 0; }
+    virtual int numberOfTracks() { return (numberOfHalftracks() + 1) / 2; }
     
     /*! @brief    Selects the active track
      *  @details  All track related methods work on the active item.
      */
     virtual void selectHalftrack(Halftrack ht) { };
-    
-    void selectTrack(Track ht) { selectHalftrack(2 * ht - 1); }
-    
+    virtual void selectTrack(Track t) { selectHalftrack(2 * t - 1); }
+        
     
     //
     //! @functiongroup Reading data from a track
@@ -75,31 +75,29 @@ public:
     
     //! @brief    Returns the size of the selected haltrack in bytes
     virtual size_t getSizeOfHalftrack() { return 0; }
-    
+    virtual size_t getSizeOfTrack() { return getSizeOfHalftrack(); }
+                                                
     //! @brief    Moves the file pointer to the specified offset.
     /*! @details  Use seek(0) to return to the beginning of the selected track.
      */
-    virtual void seekHalftrack(long offset) { };
+    virtual void seekHalftrack(long offset) { }
+    virtual void seekTrack(long offset) { seekHalftrack(offset); }
     
     /*! @brief    Reads a byte from the selected track.
      *  @return   EOF (-1) if all bytes have been read in.
      */
     virtual int readHalftrack();
+    virtual int readTrack() { return readHalftrack(); }
     
     /*! @brief    Reads multiple bytes in form of a hex dump string.
      *  @param    Number of bytes ranging from 1 to 85.
      */
     virtual const char *readHalftrackHex(size_t num);
-    
+    virtual const char *readTrackHex(size_t num) { return readHalftrackHex(num); }
     
     //! @brief    Copies the selected track into the specified buffer.
-    void copy(uint8_t *buffer, size_t offset = 0);
-    
-    
-    //
-    //! @functiongroup Debugging
-    //
-    
+    virtual void copyHalftrack(uint8_t *buffer, size_t offset = 0);
+    virtual void copyTrack(uint8_t *buffer, size_t offset = 0) { copyHalftrack(buffer, offset); }
 };
 
 #endif

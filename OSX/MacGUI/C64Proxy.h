@@ -465,7 +465,7 @@ struct ContainerWrapper;
 - (void) rotateDisk;
 - (void) rotateBack;
 
-- (BOOL) exportToD64:(NSString *)path;
+// - (BOOL) exportToD64:(NSString *)path;
 
 @end
 

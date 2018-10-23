@@ -586,21 +586,3 @@ VC1541::ejectDisk()
     c64->resume();
 }
 
-
-bool
-VC1541::exportToD64(const char *filename)
-{
-    assert(filename != NULL);
-
-    // D64File *archive = convertToD64();
-    D64File *archive = D64File::makeObjectWithDisk(&disk);
-    
-    if (archive == NULL)
-        return false;
-    
-    archive->writeToFile(filename);
-    delete archive;
-    return true;
-}
-
-

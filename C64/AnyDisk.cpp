@@ -71,7 +71,7 @@ AnyDisk::readHalftrackHex(size_t num)
 }
 
 void
-AnyDisk::copy(uint8_t *buffer, size_t offset)
+AnyDisk::copyHalftrack(uint8_t *buffer, size_t offset)
 {
     int byte;
     

@@ -363,8 +363,6 @@ public:
      */
     void ejectDisk();
    
-    //! @brief    Exports the currently inserted disk to D64 file.
-    bool exportToD64(const char *filename);
     
     //
     //! @functiongroup Running the device
