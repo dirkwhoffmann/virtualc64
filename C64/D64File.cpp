@@ -882,8 +882,6 @@ D64File::findDirectoryEntry(long item, bool skipInvisibleFiles)
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles, skipInvisibleFiles);
-    // printf("scanDirectory: %d %d\n", noOfFiles, offsets[0]);
-    
     return (item < noOfFiles) ? offsets[item] : -1;
 }
 

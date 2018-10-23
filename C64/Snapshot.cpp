@@ -22,63 +22,6 @@
 
 const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
-Snapshot::Snapshot()
-{
-    setDescription("Snapshot");
-}
-
-Snapshot *
-Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t length)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot();
-    if (!snapshot->readFromBuffer(buffer, length)) {
-        delete snapshot;
-        return NULL;
-    }
-    return snapshot;
-}
-
-Snapshot *
-Snapshot::makeSnapshotWithFile(const char *filename)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot();
-    if (!snapshot->readFromFile(filename)) {
-        delete snapshot;
-        return NULL;
-    }
-    return snapshot;
-}
-
-bool
-Snapshot::setCapacity(size_t newCapacity)
-{
-    size_t newSize = newCapacity + sizeof(SnapshotHeader);
-    
-    if (data != NULL && size == newSize)
-        return true;
-    
-    dealloc();
-    if ((data = new uint8_t[newSize]) == NULL)
-        return false;
-    size = newSize;
-    
-    SnapshotHeader *header = (SnapshotHeader *)data;
-    header->magic[0] = magicBytes[0];
-    header->magic[1] = magicBytes[1];
-    header->magic[2] = magicBytes[2];
-    header->magic[3] = magicBytes[3];
-    header->major = V_MAJOR;
-    header->minor = V_MINOR;
-    header->subminor = V_SUBMINOR;
-    header->timestamp = (time_t)0;
-    
-    return true;
-}
-
 bool
 Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
 {
@@ -90,7 +33,7 @@ Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
 
 bool
 Snapshot::isSnapshot(const uint8_t *buffer, size_t length,
-                       uint8_t major, uint8_t minor, uint8_t subminor)
+                     uint8_t major, uint8_t minor, uint8_t subminor)
 {
     if (!isSnapshot(buffer, length)) return false;
     return buffer[4] == major && buffer[5] == minor && buffer[6] == subminor;
@@ -144,30 +87,67 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
     return isSnapshotFile(path) && !isSupportedSnapshotFile(path);
 }
 
+Snapshot::Snapshot()
+{
+    setDescription("Snapshot");
+}
+
+bool
+Snapshot::setCapacity(size_t newCapacity)
+{
+    size_t newSize = newCapacity + sizeof(SnapshotHeader);
+    
+    if (data != NULL && size == newSize)
+        return true;
+    
+    dealloc();
+    if ((data = new uint8_t[newSize]) == NULL)
+        return false;
+    size = newSize;
+    
+    SnapshotHeader *header = (SnapshotHeader *)data;
+    header->magic[0] = magicBytes[0];
+    header->magic[1] = magicBytes[1];
+    header->magic[2] = magicBytes[2];
+    header->magic[3] = magicBytes[3];
+    header->major = V_MAJOR;
+    header->minor = V_MINOR;
+    header->subminor = V_SUBMINOR;
+    header->timestamp = (time_t)0;
+    
+    return true;
+}
+
+Snapshot *
+Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t length)
+{
+    Snapshot *snapshot;
+    
+    snapshot = new Snapshot();
+    if (!snapshot->readFromBuffer(buffer, length)) {
+        delete snapshot;
+        return NULL;
+    }
+    return snapshot;
+}
+
+Snapshot *
+Snapshot::makeSnapshotWithFile(const char *filename)
+{
+    Snapshot *snapshot;
+    
+    snapshot = new Snapshot();
+    if (!snapshot->readFromFile(filename)) {
+        delete snapshot;
+        return NULL;
+    }
+    return snapshot;
+}
+
 bool 
 Snapshot::hasSameType(const char *filename)
 {
     return Snapshot::isSnapshotFile(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
-size_t
-Snapshot::writeToBuffer(uint8_t *buffer)
-{
-    assert(data != NULL);
-    
-    // Copy data
-    /*
-    size_t length = capacity + sizeof(SnapshotHeader);
-    if (buffer)
-        memcpy(buffer, state, length);
-    
-    return length;
-     */
-    
-    if (buffer) {
-        memcpy(buffer, data, size);
-    }
-    return size;
 }
 
 void

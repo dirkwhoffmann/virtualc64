@@ -73,6 +73,31 @@ public:
     //! @functiongroup Class methods
     //
     
+    //! @brief    Returns true iff buffer contains a snapshot
+    static bool isSnapshot(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true iff buffer contains a snapshot of a specific version
+    static bool isSnapshot(const uint8_t *buffer, size_t length,
+                           uint8_t major, uint8_t minor, uint8_t subminor);
+    
+    //! @brief    Returns true iff buffer contains a snapshot with a supported version number
+    static bool isSupportedSnapshot(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true iff buffer contains a snapshot with an outdated version number
+    static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true if path points to a snapshot file
+    static bool isSnapshotFile(const char *path);
+    
+    //! @brief    Returns true if file points to a snapshot file of a specific version
+    static bool isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor);
+    
+    //! @brief    Returns true if file is a snapshot with a supported version number
+    static bool isSupportedSnapshotFile(const char *path);
+    
+    //! @brief    Returns true if file is a snapshot with an outdated version number
+    static bool isUnsupportedSnapshotFile(const char *path);
+
     
     //
     //! @functiongroup Creating and destructing objects
@@ -81,54 +106,31 @@ public:
 	//! @brief    Constructor
 	Snapshot();
 
+    //! @brief    Allocates memory for storing internal state
+    bool setCapacity(size_t size);
+    
     //! @brief    Factory method
     static Snapshot *makeSnapshotWithFile(const char *filename);
     
     //! @brief    Factory method
     static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
-
-	//! @brief    Destructor
-	// ~Snapshot();
-	
-    //! @brief    Frees the allocated memory
-    // void dealloc();
     
-    //! @brief    Allocates memory for storing internal state
-    bool setCapacity(size_t size);
+
+    //
+    //! @functiongroup Methods from AnyC64File
+    //
     
-    //! @brief    Returns true iff buffer contains a snapshot
-    static bool isSnapshot(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true iff buffer contains a snapshot of a specific version
-    static bool isSnapshot(const uint8_t *buffer, size_t length,
-                           uint8_t major, uint8_t minor, uint8_t subminor);
- 
-    //! @brief    Returns true iff buffer contains a snapshot with a supported version number
-    static bool isSupportedSnapshot(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true iff buffer contains a snapshot with an outdated version number
-    static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true if path points to a snapshot file
-    static bool isSnapshotFile(const char *path);
-
-    //! @brief    Returns true if file points to a snapshot file of a specific version
-    static bool isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor);
-
-    //! @brief    Returns true if file is a snapshot with a supported version number
-    static bool isSupportedSnapshotFile(const char *path);
-
-    //! @brief    Returns true if file is a snapshot with an outdated version number
-    static bool isUnsupportedSnapshotFile(const char *path);
-
-	// Methods from Container class
-	bool hasSameType(const char *filename);
-	size_t writeToBuffer(uint8_t *buffer);
     C64FileType type() { return V64_FILE; }
     const char *typeAsString() { return "V64"; }
+	bool hasSameType(const char *filename);
 
+    
+    //
+    //! @functiongroup Accessing snapshot properties
+    //
+    
     //! @brief    Returns size of header
-    size_t headerSize() { return sizeof(SnapshotHeader); }
+    // size_t headerSize() { return sizeof(SnapshotHeader); }
 
     //! @brief    Returns pointer to header data
     SnapshotHeader *header() { return (SnapshotHeader *)data; }
