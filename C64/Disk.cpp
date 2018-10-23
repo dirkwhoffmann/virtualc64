@@ -546,19 +546,18 @@ Disk::decodeDisk(uint8_t *dest)
     
     // Decode disk 
     if (t <= 35)
-        return decodeDisk(dest, 35, NULL);
+        return decodeDisk(dest, 35);
         
     if (t <= 40)
-        return decodeDisk(dest, 40, NULL);
+        return decodeDisk(dest, 40);
     
-    return decodeDisk(dest, 42, NULL);
+    return decodeDisk(dest, 42);
 }
 
 size_t
-Disk::decodeDisk(uint8_t *dest, unsigned numTracks, int *error)
+Disk::decodeDisk(uint8_t *dest, unsigned numTracks)
 {
     unsigned numBytes = 0;
-     if (error) *error = 0;
 
     assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
 
@@ -569,14 +568,14 @@ Disk::decodeDisk(uint8_t *dest, unsigned numTracks, int *error)
             break;
         
         debug(2, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
-        numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), error);
+        numBytes += decodeTrack(t, dest + (dest ? numBytes : 0));
     }
     
     return numBytes;
 }
 
 size_t
-Disk::decodeTrack(Track t, uint8_t *dest, int *error)
+Disk::decodeTrack(Track t, uint8_t *dest)
 {
     unsigned numBytes = 0;
     
@@ -589,7 +588,7 @@ Disk::decodeTrack(Track t, uint8_t *dest, int *error)
         debug(3, "   Decoding sector %d\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
-            numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0), error);
+            numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
         }
     }
     
@@ -597,7 +596,7 @@ Disk::decodeTrack(Track t, uint8_t *dest, int *error)
 }
 
 size_t
-Disk::decodeSector(size_t offset, uint8_t *dest, int *error)
+Disk::decodeSector(size_t offset, uint8_t *dest)
 {
     // The first byte must be 0x07 (indicating a data block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);

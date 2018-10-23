@@ -363,13 +363,6 @@ public:
      */
     void ejectDisk();
    
-    /*! @brief    Converts the currently inserted disk into a D64 archive.
-     *  @result   A D64 archive containing the same files as the currently
-     *            inserted disk; NULL if no disk is inserted.
-     *  @deprecated
-     */
-    // D64File *convertToD64();
-
     //! @brief    Exports the currently inserted disk to D64 file.
     bool exportToD64(const char *filename);
     

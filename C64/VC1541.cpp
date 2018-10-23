@@ -586,46 +586,6 @@ VC1541::ejectDisk()
     c64->resume();
 }
 
-/*
-D64File *
-VC1541::convertToD64()
-{
-    int error;
-    
-    debug(1, "Creating D64 archive from currently inserted diskette ...\n");
-    
-    // Determine D64 format (35, 40, or 42 tracks)
-    Track t = 42;
-    while (t > 0 && disk.trackIsEmpty(t)) t--;
-    unsigned numTracks = (t <= 35) ? 35 : (t <= 40) ? 40 : 42;
-    
-    // Create D64File
-    D64File *archive = new D64File(numTracks, false);
-    
-    // Perform test run
-    size_t numBytes = disk.decodeDisk(NULL, numTracks, &error);
-    if (error) {
-        archive->warn("Decoder failure (error code: %d)\n", error);
-        delete archive;
-        return NULL;
-    }
-    if ((t == 35 && numBytes != D64_683_SECTORS) ||
-        (t == 40 && numBytes != D64_768_SECTORS) ||
-        (t == 42 && numBytes != D64_802_SECTORS)) {
-        archive->warn("Decoder failure (wrong byte count: %d)\n", numBytes);
-        delete archive;
-        return NULL;
-    }
-
-    // Decode disk
-    disk.decodeDisk(archive->getData(), numTracks);
-    
-    // archive->debug("Archive has %d files\n", archive->numberOfItems());
-    // archive->debug("Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
-    
-    return archive;
-}
-*/
 
 bool
 VC1541::exportToD64(const char *filename)

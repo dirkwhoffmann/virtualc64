@@ -458,23 +458,23 @@ public:
      *  @details The byte stream is compatible with the D64 file format.
      *  @param   dest Target buffer. If parameter is NULL, a test run is
      *           performed. Test runs are used to determine upfront how many
-     *           bytes will be written. If something went wrong, an error code
-     *           is written into 'error' (0 = success).
+     *           bytes will be written.
      *  @return  Number of bytes written.
      */
     size_t decodeDisk(uint8_t *dest);
  
+private:
     
     /*! @brief   Work horse for decodeDisk(uint8_t *)
      *  @param   numTracks must be either 35, 40, or 42.
      */
-    size_t decodeDisk(uint8_t *dest, unsigned numTracks, int *error = NULL);
+    size_t decodeDisk(uint8_t *dest, unsigned numTracks);
     
     //! @brief   Decodes all sectors of a track
-    size_t decodeTrack(Track t, uint8_t *dest, int *error = NULL);
+    size_t decodeTrack(Track t, uint8_t *dest);
 
     //! @brief   Decodes a single sector
-    size_t decodeSector(size_t offset, uint8_t *dest, int *error = NULL);
+    size_t decodeSector(size_t offset, uint8_t *dest);
 
     
     //
