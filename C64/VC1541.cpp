@@ -617,7 +617,6 @@ VC1541::convertToD64()
     }
 
     // Decode disk
-    archive->setNumberOfTracks(numTracks);
     disk.decodeDisk(archive->getData(), numTracks);
     
     // archive->debug("Archive has %d files\n", archive->numberOfItems());

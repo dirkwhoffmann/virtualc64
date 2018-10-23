@@ -149,9 +149,6 @@ public:
     //! @deprecated
     unsigned numberOfTracks();
     
-    //! @brief Sets the number of tracks stored in this image
-    void setNumberOfTracks(unsigned tracks);
-
     
     /*! @brief    Returns true iff item is a visible file
      *  @details  Whether a file is visible or not is determined by the type character,

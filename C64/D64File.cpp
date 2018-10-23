@@ -526,13 +526,6 @@ D64File::numberOfTracks()
     return numTracks;
 }
 
-void
-D64File::setNumberOfTracks(unsigned tracks)
-{
-    assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
-    numTracks = tracks;
-}
-
 
 //
 //! @functiongroup Accessing tracks and sectors
