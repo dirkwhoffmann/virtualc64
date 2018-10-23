@@ -215,54 +215,51 @@ D64File::getName()
 bool 
 D64File::readFromBuffer(const uint8_t *buffer, size_t length)
 {
-    unsigned numSectors = 0;
-    size_t numberOfErrors = 0;
+    unsigned numSectors;
+    bool errorCodes;
  
     switch (length)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
             
             debug(2, "D64 file contains 35 tracks, no EC bytes\n");
-            // numTracks = 35;
             numSectors = 683;
+            errorCodes = false;
             break;
             
         case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
             
             debug(2, "D64 file contains 35 tracks, 683 EC bytes\n");
-            // numTracks = 35;
             numSectors = 683;
-            numberOfErrors = 683;
+            errorCodes = true;
             break;
             
         case D64_768_SECTORS: // 40 tracks, no errors
             
             debug(2, "D64 file contains 40 tracks, no EC bytes\n");
-            // numTracks = 40;
             numSectors = 768;
+            errorCodes = false;
             break;
             
         case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
             
             debug(2, "D64 file contains 40 tracks, 768 EC bytes\n");
-            // numTracks = 40;
             numSectors = 768;
-            numberOfErrors = 768;
+            errorCodes = true;
             break;
             
         case D64_802_SECTORS: // 42 tracks, no error bytes
             
             debug(2, "D64 file contains 42 tracks, no EC bytes\n");
-            // numTracks = 42;
             numSectors = 802;
+            errorCodes = false;
             break;
             
         case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
             debug(2, "D64 file contains 42 tracks, 802 EC bytes\n");
-            // numTracks = 42;
             numSectors = 802;
-            numberOfErrors = 802;
+            errorCodes = true;
             break;
             
         default:
@@ -272,9 +269,9 @@ D64File::readFromBuffer(const uint8_t *buffer, size_t length)
     
     AnyC64File::readFromBuffer(buffer, length);
     
-    // Read error codes (if present)
-    if (numberOfErrors > 0) {
-        memcpy(errors, data + (numSectors * 256), numberOfErrors);
+    // Copy error codes into seperate array
+    if (errorCodes) {
+        memcpy(errors, data + (numSectors * 256), numSectors);
     }
     
     return true;    
@@ -534,34 +531,50 @@ D64File::selectHalftrack(Halftrack ht)
 {
     assert(isHalftrackNumber(ht));
     
-    // TODO
+    selectedHalftrack = ht;
+    Track t = (ht + 1) / 2;
+
+    // Check if a real track is requested (D64 files do not store halftracks)
+    if ((selectedHalftrack % 2) == 0) {
+        tFp = tEof = -1;
+        return;
+    }
+    
+    // Check if the requested track is stored inside the D64 file
+    if (t > numberOfTracks()) {
+        tFp = tEof = -1;
+        return;
+    }
+
+    tFp = offset(t, 0);
+    tEof = tFp + getSizeOfHalftrack();
 }
 
 size_t
 D64File::getSizeOfHalftrack()
 {
-    // TODO
-    return 0;
+    if (selectedHalftrack % 2) {
+        return numberOfSectorsInHalftrack(selectedHalftrack) * 256;
+    } else {
+        return 0; // Real halftrack (not stored inside D64 files)
+    }
 }
 
 void
 D64File::seekHalftrack(long offset)
 {
-    // TODO
-}
-
-
-
-/*
-unsigned
-D64File::numberOfTracks()
-{
-    assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
+    // Reset file pointer to the first data byte.
+    selectHalftrack(selectedHalftrack);
     
-    assert(numTracks == numberOfHalftracks() / 2);
-    return numTracks;
+    // Advance file pointer to the requested position.
+    if (fp != -1)
+        fp += offset;
+    
+    // Invalidate fp if it is out of range.
+    if (fp >= size)
+        fp = -1;
 }
-*/
+
 
 //
 //! @functiongroup Accessing tracks and sectors

@@ -44,19 +44,14 @@ class D64File : public AnyDisk {
 
 private: 
     
-    /*! @brief    Number of the currently selected halftrack
-     *  @details  0, if no halftrack is selected
+    /*! @brief    Number of the currently selected track
+     *  @details  0, if no track is selected
      */
-    Halftrack selectedHalftrack  = 0;
+    Halftrack selectedHalftrack = 0;
     
 	/*! @brief   Error information stored in the D64 archive.
      */
 	uint8_t errors[802];
-	
-	/*! @brief   The number of tracks stored in this archive.
-        @details Possible values are 35, 40, and 42.
-     */
-	// unsigned numTracks; 
 	
     /*! @brief    Number of the currently selected item
      *  @details  -1, if no item is selected
@@ -124,16 +119,7 @@ public:
     int readItem();
     uint16_t getDestinationAddrOfItem();
     
-private:
-    
-    /*! @brief    Returns the offset to the first data byte of an item.
-     *  @return   -1, if the item does not exist.
-     */
-    long findItem(long item);
-    
-public:
-    
-    
+
     //
     // Methods from AnyDisk
     //
@@ -144,45 +130,50 @@ public:
     void seekHalftrack(long offset);
     
     
+    //
+    //! @functiongroup Accessing file attributes
+    //
     
+    //! @brief    Returns the first disk ID character
+    uint8_t diskId1() { return data[offset(18, 0) + 0xA2]; }
     
-    //! @brief    Returns a pointer to the raw archive data
-    //! @deprecated
-    uint8_t *getData() { return data; }
+    //! @brief    Returns the second disk ID character
+    uint8_t diskId2() { return data[offset(18, 0) + 0xA3]; }
 
-    //! @brief    Returns the number of tracks stored in this image
-    //! @deprecated
-    // unsigned numberOfTracks();
     
+public:
     
+    //
+    //! @functiongroup Accessing single file items
+    //
+    
+    /*! @brief    Returns the offset to the first data byte of an item.
+     *  @return   -1, if the item does not exist.
+     */
+    long findItem(long item);
+
     /*! @brief    Returns true iff item is a visible file
-     *  @details  Whether a file is visible or not is determined by the type character,
-     *            a special byte stored inside the directory. The type character also
-     *            determines how the file is displayed when the directory is loaded via
-     *            LOAD "$",8. E.g., standard program files are listes as PRG.
+     *  @details  Whether a file is visible or not is determined by the type
+     *            character, a special byte stored inside the directory. The
+     *            type character also determines how the file is displayed when
+     *            the directory is loaded via LOAD "$",8. E.g., standard
+     *            program files are listes as PRG.
      *  @param    typeChar   The type character of a file.
-     *  @param    extension  If this argument is provided, an extension string is
-     *            returned (e.g. "PRG"). Invisible files return "" as extension string.
+     *  @param    extension  If this argument is provided, an extension string
+     *            is returned (e.g. "PRG"). Invisible files return "".
      */
     bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
     
-    //! @brief    Class function that returns the total number of sectors in a specific track
-    // static unsigned numberOfSectors(unsigned trackNr);
 
-	//! @brief    Returns the first disk ID character
-	uint8_t diskId1() { return data[offset(18, 0) + 0xA2]; }
-
-	//! @brief    Returns the second disk ID character
-	uint8_t diskId2() { return data[offset(18, 0) + 0xA3]; }
-
- 
+public:
+    
     //
     //! @functiongroup Accessing tracks and sectors
     //
     
-public:
 
     //! @brief    Returns a pointer to the raw sector data.
+    //! @deprecated
     uint8_t *findSector(Track track, Sector sector);
 
     //! @brief    Returns the error for the specified sector.
