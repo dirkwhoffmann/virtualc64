@@ -299,7 +299,7 @@ D64File::selectItem(unsigned item)
     selectedItem = item;
     
     // Move file pointer to the first data byte
-    fp = findItem(item);
+    iFp = findItem(item);
 }
 
 const char *
@@ -368,10 +368,10 @@ D64File::getSizeOfItemInBlocks()
 void
 D64File::seekItem(long offset)
 {
-    // Reset fp to the beginning of the selected item
-    fp = findItem(selectedItem);
+    // Reset file pointer to the beginning of the selected item
+    iFp = findItem(selectedItem);
 
-    // Advance fp to the requested position
+    // Advance file pointer to the requested position
     for (unsigned i = 0; i < offset; i++)
         (void)readItem();
 }
@@ -381,36 +381,36 @@ D64File::readItem()
 {
     int result;
     
-    if (fp < 0)
+    if (iFp < 0)
         return -1;
     
     // Get byte
-    result = data[fp];
+    result = data[iFp];
     
     // Check for end of file
-    if (isEndOfFile(fp)) {
-        fp = -1;
+    if (isEndOfFile(iFp)) {
+        iFp = -1;
         return result;
     }
     
-    if (isLastByteOfSector(fp)) {
+    if (isLastByteOfSector(iFp)) {
         
         // Continue reading in new sector
-        if (!jumpToNextSector(&fp)) {
+        if (!jumpToNextSector(&iFp)) {
             // The current sector points to an invalid next track/sector
             // We won't jump off the cliff and terminate reading here.
-            fp = -1;
+            iFp = -1;
             return result;
         } else {
             // Skip the first two data bytes of the new sector as they encode the
             // next track/sector
-            fp += 2;
+            iFp += 2;
             return result;
         }
     }
     
     // Continue reading in current sector
-    fp++;
+    iFp++;
     return result;
 }
 
@@ -567,12 +567,12 @@ D64File::seekHalftrack(long offset)
     selectHalftrack(selectedHalftrack);
     
     // Advance file pointer to the requested position.
-    if (fp != -1)
-        fp += offset;
+    if (tFp != -1)
+        tFp += offset;
     
     // Invalidate fp if it is out of range.
-    if (fp >= size)
-        fp = -1;
+    if (tFp >= size)
+        tFp = -1;
 }
 
 void
@@ -581,7 +581,7 @@ D64File::selectTrackAndSector(Track t, Sector s)
     assert(isValidTrackSectorPair(t, s));
     
     selectHalftrack(2 * t - 1);
-    assert(fp != -1);
+    assert(tFp != -1);
     
     tFp += 256 * s;
     tEof = tFp + 256;

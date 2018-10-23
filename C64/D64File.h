@@ -147,6 +147,8 @@ public:
     //! @functiongroup Accessing single file items
     //
     
+private:
+    
     /*! @brief    Returns the offset to the first data byte of an item.
      *  @return   -1, if the item does not exist.
      */
@@ -168,6 +170,8 @@ public:
     //
     //! @functiongroup Accessing tracks and sectors
     //
+    
+public:
     
     //! @brief    Returns the error for the specified sector.
     /*! @note     Returns 01 (no error) if the D64 file does not contain
