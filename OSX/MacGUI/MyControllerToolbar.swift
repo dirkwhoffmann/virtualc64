@@ -252,11 +252,7 @@ extension MyController {
         case 1: // Take
 
             track("Snap")
-            if (c64.takeUserSnapshot()) {
-                metalScreen.snapToFront()
-            } else {
-                userSnapshotStorageFull()
-            }
+            c64.takeUserSnapshot()
             
         case 2: // Restore
             

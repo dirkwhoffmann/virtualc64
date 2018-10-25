@@ -144,6 +144,7 @@ extension MyDocument {
 
 extension MyController {
     
+    /*
     func userSnapshotStorageFull() {
         
         let alert = NSAlert()
@@ -154,6 +155,7 @@ extension MyController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
+    */
     
     func showResidSamplingMethodAlert() {
         

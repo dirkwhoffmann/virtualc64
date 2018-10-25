@@ -31,6 +31,7 @@ AnyC64File::AnyC64File()
 
 AnyC64File::~AnyC64File()
 {
+    debug("Destructor\n");
     dealloc();
 
     if (path)
@@ -45,6 +46,7 @@ AnyC64File::dealloc()
         return;
     }
     
+    debug("Freeing memory\n");
     delete[] data;
     data = NULL;
     size = 0;

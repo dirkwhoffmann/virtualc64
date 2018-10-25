@@ -90,6 +90,7 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
 Snapshot::Snapshot()
 {
     setDescription("Snapshot");
+    debug("CONSTRUCTOR\n");
 }
 
 bool

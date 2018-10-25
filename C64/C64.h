@@ -249,16 +249,17 @@ public:
 private:
     
     //! @brief    Maximum number of auto-taken snapshots
-    #define MAX_AUTO_SAVED_SNAPSHOTS 16
+    static const size_t MAX_AUTO_SNAPSHOTS = 32;
 
     //! @brief    Storage for auto-taken snapshots
-    Snapshot *autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS];
+    vector<Snapshot *> autoSnapshots;
     
     //! @brief    Maximum number of user-taken snapshots
-    #define MAX_USER_SAVED_SNAPSHOTS 32
+    static const size_t MAX_USER_SNAPSHOTS = 32;
     
     //! @brief    Storage for user-taken snapshots
-    Snapshot *userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS];
+    vector<Snapshot *> userSnapshots;
+
     
 public:
     
@@ -567,10 +568,11 @@ public:
     Snapshot *takeSnapshotSafe();
 
     //! @brief    Returns the number of auto-saved snapshots
-    unsigned numAutoSnapshots();
+    unsigned numAutoSnapshots() { return (unsigned)autoSnapshots.size(); }
     
     //! @brief    Returns an auto-saved snapshot
-    Snapshot *autoSnapshot(unsigned nr) { return autoSavedSnapshots[nr]; }
+    Snapshot *autoSnapshot(unsigned nr) {
+        return nr < autoSnapshots.size() ? autoSnapshots.at(nr) : NULL; }
     
     /*! @brief    Takes a snapshot and inserts it into the auto-save storage
      *  @details  The new snapshot is inserted at position 0 and all others are
@@ -587,19 +589,20 @@ public:
     void deleteAutoSnapshot(unsigned nr);
     
     //! @brief    Returns the number of user-saved snapshots.
-    unsigned numUserSnapshots();
+    unsigned numUserSnapshots() { return (unsigned)userSnapshots.size(); }
     
     //! @brief    Returns a user-saved snapshot
-    Snapshot *userSnapshot(unsigned nr) { return userSavedSnapshots[nr]; }
+    Snapshot *userSnapshot(unsigned nr) {
+        return nr < userSnapshots.size() ? userSnapshots.at(nr) : NULL; }
     
     /*! @brief    Takes a snapshot and inserts it into the user-save storage
-     *  @details  If there is free space, the new snapshot is inserted at
-     *            position 0 and all others are moved one position up.
-     *  @return   false, if all slots are occupied
+     *  @details  The new snapshot is inserted at position 0 and all others are
+     *            moved one position up. If the buffer is full, the oldest
+     *            snapshot is deleted.
      *  @note     In contrast to takeAutoSnapshot(), this function is
      *            thread-safe an can be called any time.
      */
-    bool takeUserSnapshot();
+    void takeUserSnapshot();
     
     /*! @brief    Deletes a snapshot from the user-save storage.
      *  @details  All snapshots that follow are moved one position down.

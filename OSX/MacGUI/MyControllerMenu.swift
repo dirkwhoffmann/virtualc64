@@ -199,11 +199,7 @@ extension MyController {
     
     @IBAction func takeSnapshot(_ sender: Any!) {
         
-        if (c64.takeUserSnapshot()) {
-            metalScreen.snapToFront()
-        } else {
-            userSnapshotStorageFull()
-        }
+        c64.takeUserSnapshot()
     }
     
     //

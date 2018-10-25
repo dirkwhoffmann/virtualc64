@@ -136,12 +136,14 @@ C64::C64()
     mach_timebase_info(&timebase);
 
     // Initialize snapshot ringbuffers
-    for (unsigned i = 0; i < MAX_AUTO_SAVED_SNAPSHOTS; i++) {
+    /*
+    for (unsigned i = 0; i < MAX_AUTO_SNAPSHOTS; i++) {
         autoSavedSnapshots[i] = new Snapshot();
     }
-    for (unsigned i = 0; i < MAX_USER_SAVED_SNAPSHOTS; i++) {
+    for (unsigned i = 0; i < MAX_USER_SNAPSHOTS; i++) {
         userSavedSnapshots[i] = new Snapshot();
     }
+    */
     snapshotInterval = 3;
 
     reset();
@@ -843,11 +845,14 @@ C64::loadFromSnapshotSafe(Snapshot *snapshot)
 bool
 C64::restoreAutoSnapshot(unsigned nr)
 {
-    if (autoSnapshot(nr)->isEmpty())
-        return false;
+    Snapshot *snapshot = autoSnapshot(nr);
     
-    loadFromSnapshotSafe(autoSnapshot(nr));
-    return true;
+    if (snapshot) {
+        loadFromSnapshotSafe(snapshot);
+        return true;
+    }
+    
+    return false;
 }
 
 bool
@@ -863,11 +868,14 @@ C64::restoreLatestAutoSnapshot()
 bool
 C64::restoreUserSnapshot(unsigned nr)
 {
-    if (userSnapshot(nr)->isEmpty())
-        return false;
+    Snapshot *snapshot = userSnapshot(nr);
     
-    loadFromSnapshotSafe(userSnapshot(nr));
-    return true;
+    if (snapshot) {
+        loadFromSnapshotSafe(snapshot);
+        return true;
+    }
+    
+    return false;
 }
 
 bool
@@ -893,8 +901,6 @@ C64::saveToSnapshotUnsafe(Snapshot *snapshot)
 void
 C64::saveToSnapshotSafe(Snapshot *snapshot)
 {
-    debug(1, "C64::saveToSnapshotSafe\n");
- 
     suspend();
     saveToSnapshotUnsafe(snapshot);
     resume();
@@ -920,72 +926,113 @@ C64::takeSnapshotSafe()
     return snapshot;
 }
 
+/*
 unsigned
 C64::numAutoSnapshots()
 {
     unsigned result;
     
-    for (result = 0; result < MAX_AUTO_SAVED_SNAPSHOTS; result++) {
+    for (result = 0; result < MAX_AUTO_SNAPSHOTS; result++) {
         if (autoSavedSnapshots[result]->isEmpty())
             break;
     }
     
     return result;
 }
+*/
 
 void
 C64::takeAutoSnapshot()
 {
-    Snapshot *last = autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS - 1];
+    debug("takeAutoSnapshot\n");
+    // Delete oldest snapshot if capacity limit has been reached
+    if (autoSnapshots.size() >= MAX_AUTO_SNAPSHOTS) {
+        debug("Limit reached\n");
+        deleteAutoSnapshot(MAX_AUTO_SNAPSHOTS - 1);
+    }
+    
+    // Add new snapshot
+    Snapshot *snapshot = new Snapshot();
+    debug("Snapshot created\n");
+    saveToSnapshotUnsafe(snapshot);
+    autoSnapshots.insert(autoSnapshots.begin(), snapshot);
+    putMessage(MSG_SNAPSHOT_TAKEN);
+    
+    /*
+    Snapshot *last = autoSavedSnapshots[MAX_AUTO_SNAPSHOTS - 1];
     
     // Shuffle slots
-    for (unsigned i = MAX_AUTO_SAVED_SNAPSHOTS - 1; i > 0; i--)
+    for (unsigned i = MAX_AUTO_SNAPSHOTS - 1; i > 0; i--)
         autoSavedSnapshots[i] = autoSavedSnapshots[i - 1];
     autoSavedSnapshots[0] = last;
     
     // Save state
     saveToSnapshotUnsafe(autoSavedSnapshots[0]);
     putMessage(MSG_SNAPSHOT_TAKEN);
+    */
 }
 
 void
 C64::deleteAutoSnapshot(unsigned index)
 {
+    Snapshot *snapshot = autoSnapshot(index);
+    
+    if (snapshot) {
+        delete snapshot;
+        autoSnapshots.erase(autoSnapshots.begin() + index);
+    }
+    
+    /*
     Snapshot *first = autoSavedSnapshots[index];
     first->dealloc();
     
     // Shuffle slots
-    for (unsigned i = index; i < MAX_AUTO_SAVED_SNAPSHOTS - 1; i++)
+    for (unsigned i = index; i < MAX_AUTO_SNAPSHOTS - 1; i++)
         autoSavedSnapshots[i] = autoSavedSnapshots[i + 1];
-    autoSavedSnapshots[MAX_AUTO_SAVED_SNAPSHOTS - 1] = first;
+    autoSavedSnapshots[MAX_AUTO_SNAPSHOTS - 1] = first;
+    */
 }
 
+/*
 unsigned
 C64::numUserSnapshots()
 {
     unsigned result;
     
-    for (result = 0; result < MAX_USER_SAVED_SNAPSHOTS; result++) {
+    for (result = 0; result < MAX_USER_SNAPSHOTS; result++) {
         if (userSavedSnapshots[result]->isEmpty())
             break;
     }
     
     return result;
 }
+*/
 
-bool
+void
 C64::takeUserSnapshot()
 {
+    // Delete oldest snapshot if capacity limit has been reached
+    if (userSnapshots.size() >= MAX_USER_SNAPSHOTS) {
+        deleteUserSnapshot(MAX_USER_SNAPSHOTS - 1);
+    }
+    
+    // Add new snapshot
+    Snapshot *snapshot = new Snapshot();
+    saveToSnapshotUnsafe(snapshot);
+    userSnapshots.insert(userSnapshots.begin(), snapshot);
+    putMessage(MSG_SNAPSHOT_TAKEN);
+    
+    /*
     debug("Taking user snapshop\n");
     
-    Snapshot *last = userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS - 1];
+    Snapshot *last = userSavedSnapshots[MAX_USER_SNAPSHOTS - 1];
     
     // Check for free space
     if (!last->isEmpty())
         return false;
     
     // Shuffle slots
-    for (unsigned i = MAX_USER_SAVED_SNAPSHOTS - 1; i > 0; i--)
+    for (unsigned i = MAX_USER_SNAPSHOTS - 1; i > 0; i--)
         userSavedSnapshots[i] = userSavedSnapshots[i - 1];
     userSavedSnapshots[0] = last;
     
@@ -994,18 +1041,28 @@ C64::takeUserSnapshot()
     putMessage(MSG_SNAPSHOT_TAKEN);
     
     return true;
+    */
 }
 
 void
 C64::deleteUserSnapshot(unsigned index)
 {
+    Snapshot *snapshot = userSnapshot(index);
+    
+    if (snapshot) {
+        delete snapshot;
+        userSnapshots.erase(userSnapshots.begin() + index);
+    }
+    
+    /*
     Snapshot *first = userSavedSnapshots[index];
     first->dealloc();
     
     // Shuffle slots
-    for (unsigned i = index; i < MAX_USER_SAVED_SNAPSHOTS - 1; i++)
+    for (unsigned i = index; i < MAX_USER_SNAPSHOTS - 1; i++)
         userSavedSnapshots[i] = userSavedSnapshots[i + 1];
-    userSavedSnapshots[MAX_USER_SAVED_SNAPSHOTS - 1] = first;
+    userSavedSnapshots[MAX_USER_SNAPSHOTS - 1] = first;
+    */
 }
 
 
