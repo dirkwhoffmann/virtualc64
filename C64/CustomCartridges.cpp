@@ -864,31 +864,23 @@ EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
     setRamCapacity(256);
 }
 
-
-void
-EasyFlash::reset()
-{
-    Cartridge::reset();
-    memset(externalRam, 0, 256);
-}
-
 uint8_t
 EasyFlash::peekIO1(uint16_t addr)
 {
+    // debug("WARNING: peekIO1\n");
     return 0;
 }
 
 uint8_t
 EasyFlash::peekIO2(uint16_t addr)
 {
-    assert(addr <= 0xFF);
-    return externalRam[addr];
+    return externalRam[addr & 0xFF];
 }
 
 void
 EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
 {
-    if (addr == 0x0) {
+    if (addr == 0xDE00) {
         
         // Bank register
         int bank = value & 0x3F;
@@ -897,7 +889,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
         bankIn(2 * bank + 1); // ROMH
     }
     
-    else if (addr == 0x2) {
+    else if (addr == 0xDE02) {
         
         // Mode register
         
@@ -919,32 +911,32 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
         
         switch (MXG) {
                 
-            case 000:
+            case 0b000:
                 game = getJumper();
                 exrom = 1;
                 break;
                 
-            case 010:
+            case 0b010:
                 game = getJumper();
                 exrom = 0;
                 break;
                 
-            case 100:
+            case 0b100:
                 game = 1;
                 exrom = 1;
                 break;
                 
-            case 101:
+            case 0b101:
                 game = 0;
                 exrom = 1;
                 break;
                 
-            case 110:
+            case 0b110:
                 game = 1;
                 exrom = 0;
                 break;
                 
-            case 111:
+            case 0b111:
                 game = 0;
                 exrom = 0;
                 break;
@@ -962,8 +954,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
 void
 EasyFlash::pokeIO2(uint16_t addr, uint8_t value)
 {
-    assert(addr <= 0xFF);
-    externalRam[addr] = value;
+    externalRam[addr & 0xFF] = value;
 }
 
 

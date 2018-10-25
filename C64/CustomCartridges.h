@@ -243,7 +243,6 @@ class EasyFlash : public Cartridge {
 public:
     EasyFlash(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
-    void reset();
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);

@@ -87,7 +87,7 @@ public:
     //
     
     int numberOfItems() { assert(false); return 0; };
-    size_t getSizeOfItem(unsigned n) { assert(false); return 0; }
+    size_t getSizeOfItem() { assert(false); return 0; }
     const char *getNameOfItem() { assert(false); return ""; }
     const char *getTypeOfItem() { assert(false); return ""; }
     uint16_t getDestinationAddrOfItem() { assert(false); return 0; }
