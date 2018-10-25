@@ -24,7 +24,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 3
-#define V_MINOR 0
+#define V_MINOR 1
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
@@ -39,11 +39,13 @@
 
 // RELEASE NOTES (Version 3.1)
 //
-// Added support for the KCS power cartridge
+// Added support for caertridges of type KCS and EasyFlash
 //
 // TODOs for the next release:
 //
-// Can sub components initialized without registerSubcomponents function?
+// Replace takeUserSnapshot etc. by takeSnapshot(vector<Snapshot> storage&)
+//
+// 
 // Map right Mac shift key to right Commodore key
 //
 //
