@@ -926,56 +926,42 @@ C64::takeSnapshotSafe()
     return snapshot;
 }
 
-void
-C64::takeAutoSnapshot()
+size_t
+C64::numSnapshots(vector<Snapshot *> &storage)
 {
-    // Delete oldest snapshot if capacity limit has been reached
-    if (autoSnapshots.size() >= MAX_AUTO_SNAPSHOTS) {
-        deleteAutoSnapshot(MAX_AUTO_SNAPSHOTS - 1);
-    }
+    return storage.size();
+}
+
+Snapshot *
+C64::getSnapshot(vector<Snapshot *> &storage, unsigned nr)
+{
+    return nr < storage.size() ? storage.at(nr) : NULL;
     
-    // Add new snapshot
-    Snapshot *snapshot = new Snapshot();
-    debug("Snapshot created\n");
-    saveToSnapshotUnsafe(snapshot);
-    autoSnapshots.insert(autoSnapshots.begin(), snapshot);
-    putMessage(MSG_SNAPSHOT_TAKEN);
 }
 
 void
-C64::deleteAutoSnapshot(unsigned index)
-{
-    Snapshot *snapshot = autoSnapshot(index);
-    
-    if (snapshot) {
-        delete snapshot;
-        autoSnapshots.erase(autoSnapshots.begin() + index);
-    }
-}
-
-void
-C64::takeUserSnapshot()
+C64::takeSnapshot(vector<Snapshot *> &storage)
 {
     // Delete oldest snapshot if capacity limit has been reached
-    if (userSnapshots.size() >= MAX_USER_SNAPSHOTS) {
-        deleteUserSnapshot(MAX_USER_SNAPSHOTS - 1);
+    if (storage.size() >= MAX_SNAPSHOTS) {
+        deleteSnapshot(storage, MAX_SNAPSHOTS - 1);
     }
     
     // Add new snapshot
     Snapshot *snapshot = new Snapshot();
     saveToSnapshotUnsafe(snapshot);
-    userSnapshots.insert(userSnapshots.begin(), snapshot);
+    storage.insert(storage.begin(), snapshot);
     putMessage(MSG_SNAPSHOT_TAKEN);
 }
 
 void
-C64::deleteUserSnapshot(unsigned index)
+C64::deleteSnapshot(vector<Snapshot *> &storage, unsigned index)
 {
-    Snapshot *snapshot = userSnapshot(index);
+    Snapshot *snapshot = getSnapshot(storage, index);
     
     if (snapshot) {
         delete snapshot;
-        userSnapshots.erase(userSnapshots.begin() + index);
+        storage.erase(storage.begin() + index);
     }
 }
 

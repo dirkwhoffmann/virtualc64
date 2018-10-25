@@ -44,8 +44,8 @@
 // TODOs for the next release:
 //
 // Replace takeUserSnapshot etc. by takeSnapshot(vector<Snapshot> storage&)
+// Add and use factory method Snapshot::makeObjectWithC64(C64 *c64)
 //
-// 
 // Map right Mac shift key to right Commodore key
 //
 //

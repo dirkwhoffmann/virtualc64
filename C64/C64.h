@@ -248,15 +248,12 @@ public:
     
 private:
     
-    //! @brief    Maximum number of auto-taken snapshots
-    static const size_t MAX_AUTO_SNAPSHOTS = 32;
+    //! @brief    Maximum number of stored snapshots
+    static const size_t MAX_SNAPSHOTS = 32;
 
     //! @brief    Storage for auto-taken snapshots
     vector<Snapshot *> autoSnapshots;
-    
-    //! @brief    Maximum number of user-taken snapshots
-    static const size_t MAX_USER_SNAPSHOTS = 32;
-    
+        
     //! @brief    Storage for user-taken snapshots
     vector<Snapshot *> userSnapshots;
 
@@ -567,47 +564,36 @@ public:
      */
     Snapshot *takeSnapshotSafe();
 
-    //! @brief    Returns the number of auto-saved snapshots
-    unsigned numAutoSnapshots() { return (unsigned)autoSnapshots.size(); }
-    
-    //! @brief    Returns an auto-saved snapshot
-    Snapshot *autoSnapshot(unsigned nr) {
-        return nr < autoSnapshots.size() ? autoSnapshots.at(nr) : NULL; }
-    
-    /*! @brief    Takes a snapshot and inserts it into the auto-save storage
+    //! @brief    Returns the number of stored snapshots
+    size_t numSnapshots(vector<Snapshot *> &storage);
+    size_t numAutoSnapshots() { return numSnapshots(autoSnapshots); }
+    size_t numUserSnapshots() { return numSnapshots(userSnapshots); }
+
+    //! @brief    Returns an snapshot from the snapshot storage
+    Snapshot *getSnapshot(vector<Snapshot *> &storage, unsigned nr);
+    Snapshot *autoSnapshot(unsigned nr) { return getSnapshot(autoSnapshots, nr); }
+    Snapshot *userSnapshot(unsigned nr) { return getSnapshot(userSnapshots, nr); }
+
+    /*! @brief    Takes a snapshot and inserts it into the snapshot storage
      *  @details  The new snapshot is inserted at position 0 and all others are
      *            moved one position up. If the buffer is full, the oldest
      *            snapshot is deleted.
-     *  @note     This function does not halt the emulator and must therefore be
-     *            called inside the execution thread, only.
+     *  @note     Make sure to call the 'Safe' version outside the emulator
+     *            thread.
      */
-    void takeAutoSnapshot();
-    
-    /*! @brief    Deletes a snapshot from the auto-save storage
-     *  @details  All snapshots that follow are moved one position down.
+    void takeSnapshot(vector<Snapshot *> &storage);
+    void takeAutoSnapshot() { takeSnapshot(autoSnapshots); }
+    void takeUserSnapshot() { takeSnapshot(userSnapshots); }
+    void takeAutoSnapshotSafe() { suspend(); takeSnapshot(autoSnapshots); resume(); }
+    void takeUserSnapshotSafe() { suspend(); takeSnapshot(userSnapshots); resume(); }
+
+
+    /*! @brief    Deletes a snapshot from the snapshot storage
+     *  @details  All remaining snapshots are moved one position down.
      */
-    void deleteAutoSnapshot(unsigned nr);
-    
-    //! @brief    Returns the number of user-saved snapshots.
-    unsigned numUserSnapshots() { return (unsigned)userSnapshots.size(); }
-    
-    //! @brief    Returns a user-saved snapshot
-    Snapshot *userSnapshot(unsigned nr) {
-        return nr < userSnapshots.size() ? userSnapshots.at(nr) : NULL; }
-    
-    /*! @brief    Takes a snapshot and inserts it into the user-save storage
-     *  @details  The new snapshot is inserted at position 0 and all others are
-     *            moved one position up. If the buffer is full, the oldest
-     *            snapshot is deleted.
-     *  @note     In contrast to takeAutoSnapshot(), this function is
-     *            thread-safe an can be called any time.
-     */
-    void takeUserSnapshot();
-    
-    /*! @brief    Deletes a snapshot from the user-save storage.
-     *  @details  All snapshots that follow are moved one position down.
-     */
-    void deleteUserSnapshot(unsigned nr);
+    void deleteSnapshot(vector<Snapshot *> &storage, unsigned nr);
+    void deleteAutoSnapshot(unsigned nr) { deleteSnapshot(autoSnapshots, nr); }
+    void deleteUserSnapshot(unsigned nr) { deleteSnapshot(userSnapshots, nr); }
 
     
     //
