@@ -1,9 +1,10 @@
 /*!
  * @header      CustomCartridges.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2018 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
-/* This program is free software; you can redistribute it and/or modify
+/*
+ * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -18,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _POWERPLAY_INC
-#define _POWERPLAY_INC
+#ifndef _CUSTOM_CARTRIDGES_INC
+#define _CUSTOM_CARTRIDGES_INC
 
 #include "Cartridge.h"
 
@@ -71,35 +72,6 @@ public:
     bool hasResetButton() { return true; }
     void pressResetButton();
     void releaseResetButton();
-};
-
-
-//! @brief    Type 35 cartridges
-class ActionReplay3 : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    // ActionReplay3(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
-    bool hasResetButton() { return true; }
-
-    //! @brief   Sets the cartridge's control register
-    /*! @details This function triggers all side effects that take place when
-     *           the control register value changes.
-     */
-    void setControlReg(uint8_t value);
-
-    unsigned bank() { return regValue & 0x01; }
-    bool game() { return !!(regValue & 0x02); }
-    bool exrom() { return !(regValue & 0x08); }
-    bool disabled() { return !!(regValue & 0x04); }
 };
 
 //! @brief    Type 3 cartridges
@@ -263,6 +235,51 @@ public:
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
+};
+
+//! @brief    Type 32 cartridges
+class EasyFlash : public Cartridge {
+    
+public:
+    EasyFlash(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
+    void reset();
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
+    bool hasFreezeButton() { return false; }
+    bool hasResetButton() { return false; }
+    bool getJumper() { return val[2]; }
+    void setJumper(bool value) { val[2] = value; }
+};
+
+//! @brief    Type 35 cartridges
+class ActionReplay3 : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    // ActionReplay3(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
+    uint8_t peek(uint16_t addr);
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    void releaseFreezeButton();
+    bool hasResetButton() { return true; }
+    
+    //! @brief   Sets the cartridge's control register
+    /*! @details This function triggers all side effects that take place when
+     *           the control register value changes.
+     */
+    void setControlReg(uint8_t value);
+    
+    unsigned bank() { return regValue & 0x01; }
+    bool game() { return !!(regValue & 0x02); }
+    bool exrom() { return !(regValue & 0x08); }
+    bool disabled() { return !!(regValue & 0x04); }
 };
 
 //! @brief    Type 45 cartridges

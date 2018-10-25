@@ -1,9 +1,24 @@
-//
-//  Cartridge.cpp
-//  VirtualC64
-//
-//  Created by Dirk Hoffmann on 20.01.18.
-//
+/*!
+ * @file        Cartridge.cpp
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
+ */
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 
 #include "C64.h"
 
@@ -17,7 +32,7 @@ Cartridge::Cartridge(C64 *c64)
     initialGameLine = 1;
     initialExromLine = 1;
     
-    for (unsigned i = 0; i < 64; i++) {
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chip[i] = NULL;
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
@@ -30,6 +45,7 @@ Cartridge::Cartridge(C64 *c64)
     ramCapacity = 0;
     persistentRam = false;
     
+    memset(val, 0, sizeof(val));
     cycle = 0;
     regValue = 0;
 }
@@ -39,7 +55,7 @@ Cartridge::~Cartridge()
     debug(1, "  Releasing cartridge...\n");
     
     // Deallocate ROM chips
-    for (unsigned i = 0; i < 64; i++)
+    for (unsigned i = 0; i < MAX_PACKETS; i++)
         if (chip[i]) free(chip[i]);
     
     // Deallocate RAM (if any)
@@ -57,13 +73,15 @@ Cartridge::reset()
         memset(externalRam, 0, ramCapacity);
     }
     
-    // Bank in visibile chips (chips with low numbers show up first)
-    for (int i = 63; i >= 0; i--) {
-        bankIn(i);
-    }
-    
+    // Delete general-purpose storage variables
+    memset(val, 0, sizeof(val));
     cycle = 0;
     regValue = 0;
+    
+    // Bank in visibile chips (chips with low numbers show up first)
+    for (int i = MAX_PACKETS - 1; i >= 0; i--) {
+        bankIn(i);
+    }
 }
 
 bool
@@ -90,6 +108,8 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_MAGIC_DESK:
             
         case CRT_COMAL80:
+            
+        case CRT_EASYFLASH:
             
         case CRT_ACTION_REPLAY3:
             
@@ -140,6 +160,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             return new MagicDesk(c64);
         case CRT_COMAL80:
             return new Comal80(c64);
+        case CRT_EASYFLASH:
+            return new EasyFlash(c64);
         case CRT_ACTION_REPLAY3:
             return new ActionReplay3(c64);
         case CRT_FREEZE_FRAME:
@@ -181,7 +203,7 @@ Cartridge::stateSize()
     size += 1; // initialGameLine
     size += 1; // initialExromLine
 
-    for (unsigned i = 0; i < 64; i++) {
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
         size += 4 + chipSize[i];
     }
     size += sizeof(chipL);
@@ -195,7 +217,7 @@ Cartridge::stateSize()
     size += ramCapacity;
     size += 1; // persistentRam
 
-    // size += sizeof(blendedIn);
+    size += sizeof(val);
     size += sizeof(cycle);
     size += sizeof(regValue);
 
@@ -210,7 +232,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     initialGameLine = (bool)read8(buffer);
     initialExromLine = (bool)read8(buffer);
     
-    for (unsigned i = 0; i < 64; i++) {
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chipStartAddress[i] = read16(buffer);
         chipSize[i] = read16(buffer);
         
@@ -233,7 +255,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     readBlock(buffer, externalRam, ramCapacity);
     persistentRam = (bool)read8(buffer);
     
-    // readBlock(buffer, blendedIn, sizeof(blendedIn));
+    readBlock(buffer, val, sizeof(val));
     cycle = read64(buffer);
     regValue = read8(buffer);
 
@@ -249,7 +271,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     write8(buffer, (uint8_t)initialGameLine);
     write8(buffer, (uint8_t)initialExromLine);
     
-    for (unsigned i = 0; i < 64; i++) {
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
         write16(buffer, chipStartAddress[i]);
         write16(buffer, chipSize[i]);
         
@@ -268,7 +290,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     writeBlock(buffer, externalRam, ramCapacity);
     write8(buffer, (uint8_t)persistentRam);
     
-    // writeBlock(buffer, blendedIn, sizeof(blendedIn));
+    writeBlock(buffer, val, sizeof(val));
     write64(buffer, cycle);
     write8(buffer, regValue);
 
@@ -287,7 +309,7 @@ Cartridge::dumpState()
     msg("Initial game line:  %d\n", initialGameLine);
     msg("Initial exrom line: %d\n", initialExromLine);
     
-    for (unsigned i = 0; i < 64; i++) {
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
         if (chip[i] != NULL) {
             msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
         }
@@ -313,7 +335,7 @@ uint8_t
 Cartridge::peekRomL(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
-    assert(chipL >= 0 && chipL < 64);
+    assert(chipL >= 0 && chipL < MAX_PACKETS);
     assert(addr + offsetL < chipSize[chipL]);
     
     return chip[chipL][addr + offsetL];
@@ -323,7 +345,7 @@ uint8_t
 Cartridge::peekRomH(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
-    assert(chipH >= 0 && chipH < 64);
+    assert(chipH >= 0 && chipH < MAX_PACKETS);
     assert(addr + offsetH < chipSize[chipH]);
     
     return chip[chipH][addr + offsetH];
@@ -334,7 +356,7 @@ Cartridge::numberOfChips()
 {
     unsigned result = 0;
     
-    for (unsigned i = 0; i < 64; i++)
+    for (unsigned i = 0; i < MAX_PACKETS; i++)
         if (chip[i] != NULL)
             result++;
     
@@ -346,7 +368,7 @@ Cartridge::numberOfBytes()
 {
     unsigned result = 0;
     
-    for (unsigned i = 0; i < 64; i++)
+    for (unsigned i = 0; i < MAX_PACKETS; i++)
         if (chip[i] != NULL)
             result += chipSize[i];
     
@@ -386,7 +408,7 @@ Cartridge::setRamCapacity(uint32_t size)
 void
 Cartridge::loadChip(unsigned nr, CRTFile *c)
 {
-    assert(nr < 64);
+    assert(nr < MAX_PACKETS);
     assert(c != NULL);
     
     uint16_t start = c->chipAddr(nr);
@@ -416,19 +438,19 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
 
 bool
 Cartridge::mapsToL(unsigned nr) {
-    assert(nr < 64);
+    assert(nr < MAX_PACKETS);
     return chipStartAddress[nr] == 0x8000 && chipSize[nr] <= 0x2000;
 }
 
 bool
 Cartridge::mapsToLH(unsigned nr) {
-    assert(nr < 64);
+    assert(nr < MAX_PACKETS);
     return chipStartAddress[nr] == 0x8000 && chipSize[nr] > 0x2000;
 }
 
 bool
 Cartridge::mapsToH(unsigned nr) {
-    assert(nr < 64);
+    assert(nr < MAX_PACKETS);
     return chipStartAddress[nr] == 0xA000 || chipStartAddress[nr] == 0xE000;
 }
 
@@ -451,7 +473,7 @@ Cartridge::bankInROMH(unsigned nr, uint16_t size, uint16_t offset)
 void
 Cartridge::bankIn(unsigned nr)
 {
-    assert(nr < 64);
+    assert(nr < MAX_PACKETS);
     assert(chipSize[nr] <= 0x4000);
     
     if (chip[nr] == NULL)
@@ -479,34 +501,10 @@ Cartridge::bankIn(unsigned nr)
     }
 }
 
-/*
 void
 Cartridge::bankOut(unsigned nr)
 {
-    assert(nr < 64);
-    assert(chip[nr] != NULL);
-
-    uint16_t start     = chipStartAddress[nr];
-    uint16_t size      = chipSize[nr];
-    uint8_t  firstBank = start / 0x1000;
-    uint8_t  numBanks  = size / 0x1000;
-    assert (firstBank + numBanks <= 16);
-    
-    for (unsigned i = 0; i < numBanks; i++)
-        blendedIn[firstBank + i] = 255;
-    
-    debug(1, "Chip %d banked out (start: %04X size: %d KB)\n", nr, start, size / 1024);
-    for (unsigned i = 0; i < 16; i++) {
-        printf("%d ", blendedIn[i]);
-    }
-    printf("\n");
-}
-*/
-
-void
-Cartridge::bankOut(unsigned nr)
-{
-    assert(nr < 64);
+    assert(nr < MAX_PACKETS);
 
     if (mapsToL(nr)) {
         

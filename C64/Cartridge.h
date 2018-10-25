@@ -1,9 +1,10 @@
 /*!
  * @header      Cartridge.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2018 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
-/* This program is free software; you can redistribute it and/or modify
+/*
+ * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -18,8 +19,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// TODO:
-// 4. Magic Desk, Domark, HES Australia, interesting test case
 
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
@@ -34,6 +33,9 @@ class ExpansionPort;
  * @brief    Cartridge that can be plugged into the C64's expansion port
  */
 class Cartridge : public VirtualComponent {
+    
+    //! @brief    Maximum number of chip packets on a single cartridge.
+    static const unsigned MAX_PACKETS = 128;
     
 public:
     
@@ -52,13 +54,13 @@ public:
     /*! @brief    ROM chips contained in the attached cartridge
      *  @details  A cartridge can contain up to 64 chips
      */
-    uint8_t *chip[64];
+    uint8_t *chip[MAX_PACKETS];
     
     //! @brief    Array containing the load addresses of all chips
-    uint16_t chipStartAddress[64];
+    uint16_t chipStartAddress[MAX_PACKETS];
     
     //! @brief    Array containing the chip sizes of all chips
-    uint16_t chipSize[64];
+    uint16_t chipSize[MAX_PACKETS];
     
     //! @brief    Number of the ROM chip that is currently mapped to ROMx
     uint8_t chipL, chipH;
@@ -98,10 +100,18 @@ public:
      */
     uint64_t cycle;
     
+    /*! @brief    Temporary storage
+     *  @details  Some custom cartridges contain additonal registers or jumpers.
+     *            They preserve these values in these general-purpose variables.
+     *            Only a few cartridges make use of this variable.
+     */
+    uint8_t val[16];
+    
     /*! @brief    Temporary value storage
      *  @details  Some custom cartridges need to remember the last value that
      *            has been peeked or poked into the I/O registers. They preserve
      *            this value in this variable.
+     *  @deprecated Use val[] instead
      */
     uint8_t regValue;
 

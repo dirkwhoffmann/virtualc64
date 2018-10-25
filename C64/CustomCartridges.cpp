@@ -228,97 +228,6 @@ KcsPower::releaseResetButton()
 
 
 //
-// Action Replay 3
-//
-
-uint8_t
-ActionReplay3::peek(uint16_t addr)
-{
-    if (addr >= 0x8000 && addr <= 0x9FFF) {
-        return chip[bank()][addr - 0x8000];
-    }
-    
-    if (addr >= 0xE000 && addr <= 0xFFFF) {
-        return chip[bank()][addr - 0xE000];
-    }
-    
-    if (addr >= 0xA000 && addr <= 0xBFFF) {
-        return chip[bank()][addr - 0xA000];
-    }
-    
-    assert(false);
-    return 0;
-}
-
-uint8_t
-ActionReplay3::peekIO1(uint16_t addr)
-{
-    return 0;
-}
-
-uint8_t
-ActionReplay3::peekIO2(uint16_t addr)
-{
-    uint16_t offset = addr - 0xDF00;
-    return disabled() ? 0 : chip[bank()][0x1F00 + offset];
-}
-
-void
-ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
-{
-    if (!disabled())
-        setControlReg(value);
-}
-
-void
-ActionReplay3::pressFreezeButton()
-{
-    c64->suspend();
-    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
-    
-    // By setting the control register to 0, exrom/game is set to 1/0
-    // which activates ultimax mode. This mode is reset later, in the
-    // ActionReplay's interrupt handler.
-    setControlReg(0);
-    c64->resume();
-}
-
-void
-ActionReplay3::releaseFreezeButton()
-{
-    c64->suspend();
-    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
-}
-
-/*
-void
-ActionReplay3::pressResetButton()
-{
-    // Note: Cartridge requires to keep the RAM
-    // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
-    uint8_t ram[0xFFFF];
-    
-    c64->suspend();
-    memcpy(ram, c64->mem.ram, 0xFFFF);
-    c64->reset();
-    memcpy(c64->mem.ram, ram, 0xFFFF);
-    c64->resume();
-}
-*/
-
-void
-ActionReplay3::setControlReg(uint8_t value)
-{
-    regValue = value;
-    c64->expansionport.setGameLine(game());
-    c64->expansionport.setExromLine(exrom());
-}
-
-
-//
 // Final Cartridge III
 //
 
@@ -922,6 +831,230 @@ Comal80::pokeIO1(uint16_t addr, uint8_t value)
                 break;
         }
     }
+}
+
+
+//
+// Easy flash
+//
+
+EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
+{
+    // Scan chips
+    /*
+     for (unsigned i = 0; i < 64; i++) {
+     chipsL[i] = chipsH[i] = -1;
+     }
+     
+     int iL = 0, iH = 0;
+     for (unsigned i = 0; i < 64; i++) {
+     
+     if (chip[i] == NULL)
+     continue;
+     
+     if (chipStartAddress[i] == 0x8000) {
+     chipsL[iL++] = i;
+     } else {
+     chipsH[iH++] = i;
+     }
+     }
+     */
+    
+    // Allocate 256 bytes on-board RAM
+    setRamCapacity(256);
+}
+
+
+void
+EasyFlash::reset()
+{
+    Cartridge::reset();
+    memset(externalRam, 0, 256);
+}
+
+uint8_t
+EasyFlash::peekIO1(uint16_t addr)
+{
+    return 0;
+}
+
+uint8_t
+EasyFlash::peekIO2(uint16_t addr)
+{
+    assert(addr <= 0xFF);
+    return externalRam[addr];
+}
+
+void
+EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
+{
+    if (addr == 0x0) {
+        
+        // Bank register
+        int bank = value & 0x3F;
+        
+        bankIn(2 * bank); // ROML
+        bankIn(2 * bank + 1); // ROMH
+    }
+    
+    else if (addr == 0x2) {
+        
+        // Mode register
+        
+        uint8_t MXG = value & 0x07;
+        
+        /* MXG
+         * 000 : GAME from jumper, EXROM high (i.e. Ultimax or Off)
+         * 001 : Reserved, don’t use this
+         * 010 : GAME from jumper, EXROM low (i.e. 16K or 8K)
+         * 011 : Reserved, don’t use this
+         * 100 : Cartridge ROM off (RAM at $DF00 still available)
+         * 101 : Ultimax (Low bank at $8000, high bank at $e000)
+         * 110 : 8k Cartridge (Low bank at $8000)
+         * 111 : 16k cartridge (Low bank at $8000, high bank at $a000)
+         */
+        
+        bool exrom;
+        bool game;
+        
+        switch (MXG) {
+                
+            case 000:
+                game = getJumper();
+                exrom = 1;
+                break;
+                
+            case 010:
+                game = getJumper();
+                exrom = 0;
+                break;
+                
+            case 100:
+                game = 1;
+                exrom = 1;
+                break;
+                
+            case 101:
+                game = 0;
+                exrom = 1;
+                break;
+                
+            case 110:
+                game = 1;
+                exrom = 0;
+                break;
+                
+            case 111:
+                game = 0;
+                exrom = 0;
+                break;
+                
+            default:
+                warn("Ignoring invalid MXG combination %X.", MXG);
+                return;
+        }
+        
+        c64->expansionport.setGameLine(game);
+        c64->expansionport.setExromLine(exrom);
+    }
+}
+
+void
+EasyFlash::pokeIO2(uint16_t addr, uint8_t value)
+{
+    assert(addr <= 0xFF);
+    externalRam[addr] = value;
+}
+
+
+//
+// Action Replay 3
+//
+
+uint8_t
+ActionReplay3::peek(uint16_t addr)
+{
+    if (addr >= 0x8000 && addr <= 0x9FFF) {
+        return chip[bank()][addr - 0x8000];
+    }
+    
+    if (addr >= 0xE000 && addr <= 0xFFFF) {
+        return chip[bank()][addr - 0xE000];
+    }
+    
+    if (addr >= 0xA000 && addr <= 0xBFFF) {
+        return chip[bank()][addr - 0xA000];
+    }
+    
+    assert(false);
+    return 0;
+}
+
+uint8_t
+ActionReplay3::peekIO1(uint16_t addr)
+{
+    return 0;
+}
+
+uint8_t
+ActionReplay3::peekIO2(uint16_t addr)
+{
+    uint16_t offset = addr - 0xDF00;
+    return disabled() ? 0 : chip[bank()][0x1F00 + offset];
+}
+
+void
+ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
+{
+    if (!disabled())
+        setControlReg(value);
+}
+
+void
+ActionReplay3::pressFreezeButton()
+{
+    c64->suspend();
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+    
+    // By setting the control register to 0, exrom/game is set to 1/0
+    // which activates ultimax mode. This mode is reset later, in the
+    // ActionReplay's interrupt handler.
+    setControlReg(0);
+    c64->resume();
+}
+
+void
+ActionReplay3::releaseFreezeButton()
+{
+    c64->suspend();
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
+}
+
+/*
+ void
+ ActionReplay3::pressResetButton()
+ {
+ // Note: Cartridge requires to keep the RAM
+ // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
+ uint8_t ram[0xFFFF];
+ 
+ c64->suspend();
+ memcpy(ram, c64->mem.ram, 0xFFFF);
+ c64->reset();
+ memcpy(c64->mem.ram, ram, 0xFFFF);
+ c64->resume();
+ }
+ */
+
+void
+ActionReplay3::setControlReg(uint8_t value)
+{
+    regValue = value;
+    c64->expansionport.setGameLine(game());
+    c64->expansionport.setExromLine(exrom());
 }
 
 
