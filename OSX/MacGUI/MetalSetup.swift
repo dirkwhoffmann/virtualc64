@@ -116,6 +116,7 @@ public extension MetalView {
         filters[1] = SmoothFilter.init(device: device!, library: library)
         filters[2] = BlurFilter.init(device: device!, library: library, radius: 3.0)
         filters[3] = CrtFilter.init(device: device!, library: library)
+        filters[4] = ScanlineFilter.init(device: device!, library: library)
     }
     
     func buildBuffers() {

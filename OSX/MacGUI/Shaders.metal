@@ -307,3 +307,21 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     
     outTexture.write(result, gid);
 }
+
+//
+// Scanline filter
+//
+// SCANLINE_SCALE scales the intensity between scanlines. Too much contrast will create moiré patterns.
+// SCANLINE_CUTOFF determines the height of the scanlines. With SCALE_FACTOR=4 native lines per C64 line,
+// SCANLINE_CUTOFF of 1 gives 75% high scanlines, and SCANLINE_CUTOFF of 2 gives 50% height scanlines.
+//
+#define SCANLINE_SCALE .5
+#define SCANLINE_CUTOFF 1
+
+kernel void scanline(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                     texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                     uint2                          gid         [[ thread_position_in_grid ]])
+{
+    half4 inColor = inTexture.read(gid);
+    outTexture.write(inColor * ((gid.y % SCALE_FACTOR) < SCANLINE_CUTOFF ? SCANLINE_SCALE : 1), gid);
+}

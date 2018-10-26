@@ -248,4 +248,9 @@ class CrtFilter : ComputeKernel {
     }
 }
 
-
+class ScanlineFilter : ComputeKernel {
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        self.init(name: "scanline", device: device, library: library)
+    }
+}

@@ -49,7 +49,7 @@
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="271" y="425" width="469" height="516"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="XKY-dS-MzX">
                 <rect key="frame" x="0.0" y="0.0" width="469" height="516"/>
@@ -285,6 +285,9 @@
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="CRT" tag="3" id="rtm-MV-mOE">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Scanline" tag="4" id="8j5-Oi-7n6">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>
