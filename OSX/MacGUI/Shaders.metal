@@ -248,7 +248,7 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                    texture2d<half, access::write> outTexture  [[ texture(1) ]],
                    uint2                          gid         [[ thread_position_in_grid ]])
 {
-    half4 result = inTexture.read(gid);
+    half4 result = inTexture.read(uint2(gid.x, gid.y / 2));
     outTexture.write(result, gid);
 }
 
@@ -270,7 +270,7 @@ kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
     for (int j = 0; j < size; ++j) {
         for (int i = 0; i < size; ++i) {
             uint2 kernelIndex(i, j);
-            uint2 textureIndex(gid.x + (i - radius), gid.y + (j - radius));
+            uint2 textureIndex(gid.x + (i - radius), (gid.y / 2) + (j - radius));
             float4 color = inTexture.read(textureIndex).rgba;
             float4 weight = weights.read(kernelIndex).rrrr;
             accumColor += weight * color;
@@ -291,8 +291,8 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                 texture2d<half, access::write> outTexture  [[ texture(1) ]],
                 uint2                          gid         [[ thread_position_in_grid ]])
 {
-    half4 inColor = inTexture.read(gid);
-    half line = ((gid.y / 2) % 4) / 5.0;
+    half4 inColor = inTexture.read(uint2(gid.x, gid.y / 2));
+    half line = ((gid.y / 4) % 4) / 5.0;
     half4 grayColor(line, line, line, 1.0);
     half4 result = mix(inColor, grayColor, half(0.11));
     
@@ -322,6 +322,29 @@ kernel void scanline(texture2d<half, access::read>  inTexture   [[ texture(0) ]]
                      texture2d<half, access::write> outTexture  [[ texture(1) ]],
                      uint2                          gid         [[ thread_position_in_grid ]])
 {
+    half4 color;
+    
+    // half4 color = inTexture.read(uint2(gid.x, gid.y / 2));
+
+    int row = gid.y % 8;
+
+    if (row == 0 || row == 7) {
+        color = half4(0,0,0,1);
+    } else if (row == 1 || row == 6) {
+        color = half4(0.2,0.2,0.2,1);
+    } else {
+        color = inTexture.read(uint2(gid.x, gid.y / 2) + row);
+    }
+    
+    outTexture.write(color, gid);
+    
+    
+    /*
+     if((gid.x % 4 != 0) || (gid.y % 4 != 0))
+     return;
+     */
+    /*
     half4 inColor = inTexture.read(gid);
     outTexture.write(inColor * ((gid.y % SCALE_FACTOR) < SCANLINE_CUTOFF ? SCANLINE_SCALE : 1), gid);
+     */
 }

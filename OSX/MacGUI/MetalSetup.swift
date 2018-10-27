@@ -97,6 +97,12 @@ public extension MetalView {
         precondition(upscaledTexture != nil, "Failed to create upscaling texture")
     
         // Final texture (upscaled and filtered)
+        descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: MTLPixelFormat.rgba8Unorm,
+            width: 2048,
+            height: 4096,
+            mipmapped: false)
+        descriptor.usage = MTLTextureUsage(rawValue: readWriteUsage)
         filteredTexture = device?.makeTexture(descriptor: descriptor)
         precondition(filteredTexture != nil, "Failed to create filtering texture")
     }

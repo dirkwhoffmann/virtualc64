@@ -19,11 +19,21 @@ struct C64_TEXTURE {
 }
 
 struct UPSCALED_TEXTURE {
-    static let factor = 4
-    static let width = C64_TEXTURE.width * UPSCALED_TEXTURE.factor
-    static let height = C64_TEXTURE.height * UPSCALED_TEXTURE.factor
-    static let cutout_x = C64_TEXTURE.cutout_x * UPSCALED_TEXTURE.factor
-    static let cutout_y = C64_TEXTURE.cutout_y * UPSCALED_TEXTURE.factor
+    static let factor_x = 4
+    static let factor_y = 4
+    static let width = C64_TEXTURE.width * UPSCALED_TEXTURE.factor_x
+    static let height = C64_TEXTURE.height * UPSCALED_TEXTURE.factor_y
+    static let cutout_x = C64_TEXTURE.cutout_x * UPSCALED_TEXTURE.factor_x
+    static let cutout_y = C64_TEXTURE.cutout_y * UPSCALED_TEXTURE.factor_y
+}
+
+struct FILTERED_TEXTURE {
+    static let factor_x = 4
+    static let factor_y = 8
+    static let width = C64_TEXTURE.width * FILTERED_TEXTURE.factor_x
+    static let height = C64_TEXTURE.height * FILTERED_TEXTURE.factor_y
+    static let cutout_x = C64_TEXTURE.cutout_x * FILTERED_TEXTURE.factor_x
+    static let cutout_y = C64_TEXTURE.cutout_y * FILTERED_TEXTURE.factor_y
 }
 
 class ComputeKernel : NSObject {
@@ -46,8 +56,8 @@ class ComputeKernel : NSObject {
         threadgroupSize = MTLSizeMake(groupSizeX, groupSizeY, 1 /* depth */)
         
         // Calculate the compute kernel's width and height
-        let threadCountX = (UPSCALED_TEXTURE.width + groupSizeX -  1) / groupSizeX
-        let threadCountY = (UPSCALED_TEXTURE.height + groupSizeY - 1) / groupSizeY
+        let threadCountX = (FILTERED_TEXTURE.width + groupSizeX -  1) / groupSizeX
+        let threadCountY = (FILTERED_TEXTURE.height + groupSizeY - 1) / groupSizeY
         threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1)
         
         super.init()
