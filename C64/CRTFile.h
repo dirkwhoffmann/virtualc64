@@ -39,6 +39,9 @@ class CRTFile : public AnyC64File {
     
 private:
     
+    //! @brief    Maximum number of chip packets in a CRT file.
+    static const unsigned MAX_PACKETS = 128;
+    
     //! @brief    Header signature
     static const uint8_t magicBytes[];
         
@@ -46,7 +49,7 @@ private:
     unsigned int numberOfChips = 0;
     
     //! @brief    Indicates where each chip section starts
-    uint8_t *chips[64];
+    uint8_t *chips[MAX_PACKETS];
 
 public:
     

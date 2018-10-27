@@ -147,6 +147,11 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     uint8_t *ptr = &data[headerSize];
     for (numberOfChips = 0; ptr < data + length; numberOfChips++) {
         
+        if (numberOfChips == MAX_PACKETS) {
+            warn("CRT file contains too many chip packets. Aborting!\n");
+            break;
+        }
+        
         if (memcmp("CHIP", ptr, 4) != 0) {
             warn("Unexpected data in cartridge, expected 'CHIP'\n");
             printReadable(ptr, 4);
