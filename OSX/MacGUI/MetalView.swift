@@ -275,13 +275,14 @@ public class MetalView: MTKView {
         commandBuffer = queue.makeCommandBuffer()
         precondition(commandBuffer != nil, "Command buffer must not be nil")
     
-        // Upscale C64 texture
+        // Upscale the C64 texture
         let upscaler = currentUpscaler()
         upscaler.apply(commandBuffer: commandBuffer,
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        // Post-process C64 texture
+        
+        // Filter the upscaled texture
         let filter = currentFilter()
         filter.apply(commandBuffer: commandBuffer,
                      source: upscaledTexture,
