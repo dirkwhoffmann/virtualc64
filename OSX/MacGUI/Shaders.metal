@@ -282,9 +282,92 @@ kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
 
 
 //
-// Simple CRT filter
+// Dirk's CRT filter
 //
 
+kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                uint2                          gid         [[ thread_position_in_grid ]])
+{
+    half4 color;
+    
+    // The four colors coming from the upscaler
+    int row = gid.y / 8;
+    int yoffset = row * 4;
+    half4 col0 = inTexture.read(uint2(gid.x, yoffset));
+    half4 col1 = inTexture.read(uint2(gid.x, yoffset + 1));
+    half4 col2 = inTexture.read(uint2(gid.x, yoffset + 2));
+    half4 col3 = inTexture.read(uint2(gid.x, yoffset + 3));
+    half4 left0 = inTexture.read(uint2(gid.x - 1, yoffset));
+    // half4 left1 = inTexture.read(uint2(gid.x - 1, yoffset + 1));
+    // half4 left2 = inTexture.read(uint2(gid.x - 1, yoffset + 2));
+    half4 left3 = inTexture.read(uint2(gid.x - 1, yoffset + 3));
+    half4 right0 = inTexture.read(uint2(gid.x + 1, yoffset));
+    // half4 right1 = inTexture.read(uint2(gid.x + 1, yoffset + 1));
+    // half4 right2 = inTexture.read(uint2(gid.x + 1, yoffset + 2));
+    half4 right3 = inTexture.read(uint2(gid.x + 1, yoffset + 3));
+    half4 bloomCol;
+    half Y;
+    
+    int offset = gid.y % 8;
+    switch(offset) {
+        case 0:
+            
+            bloomCol = 0.25 * left0 + 0.5 * col0 + 0.25 * right0;
+            Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
+            color = 0.75 * Y * Y * bloomCol;
+            
+            // color = half4(0,0,0,1)
+            break;
+            
+        case 1:
+            
+            bloomCol = 0.25 * left0 + 0.5 * col0 + 0.25 * right0;
+            Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
+            color = Y * Y * bloomCol;
+            
+            // color = half4(0,0,0,1)
+            break;
+            
+        case 2:
+            
+            color = col0;
+            break;
+            
+        case 3:
+            
+            color = col1;
+            break;
+            
+        case 4:
+            
+            color = col2;
+            break;
+            
+        case 5:
+            
+            color = col3;
+            break;
+            
+        case 6:
+            
+            bloomCol = 0.25 * left3 + 0.5 * col3 + 0.25 * right3;
+            Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
+            color = Y * Y * bloomCol;
+            break;
+            
+        case 7:
+            
+            bloomCol = 0.25 * left3 + 0.5 * col3 + 0.25 * right3;
+            Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
+            color = 0.75 * Y * Y * bloomCol;
+            break;
+    }
+    
+    outTexture.write(color, gid);
+}
+
+/* OLD CODE:
 #pragma parameter DOTMASK "CRTGeom Dot Mask Toggle" 0.3 0.0 0.3 0.3
 
 kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
@@ -307,83 +390,23 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     
     outTexture.write(result, gid);
 }
+*/
 
 //
-// Scanline filter
+// Jim's scanline filter
 //
 // SCANLINE_SCALE scales the intensity between scanlines. Too much contrast will create moiré patterns.
 // SCANLINE_CUTOFF determines the height of the scanlines. With SCALE_FACTOR=4 native lines per C64 line,
 // SCANLINE_CUTOFF of 1 gives 75% high scanlines, and SCANLINE_CUTOFF of 2 gives 50% height scanlines.
 //
 #define SCANLINE_SCALE .5
-#define SCANLINE_CUTOFF 1
+#define SCANLINE_CUTOFF 2
 
 kernel void scanline(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                      texture2d<half, access::write> outTexture  [[ texture(1) ]],
                      uint2                          gid         [[ thread_position_in_grid ]])
 {
-    half4 color;
-
-    // The four colors coming from the upscaler
-    int row = gid.y / 8;
-    int yoffset = row * 4;
-    half4 col0 = inTexture.read(uint2(gid.x, yoffset));
-    half4 col1 = inTexture.read(uint2(gid.x, yoffset + 1));
-    half4 col2 = inTexture.read(uint2(gid.x, yoffset + 2));
-    half4 col3 = inTexture.read(uint2(gid.x, yoffset + 3));
-
-    int offset = gid.y % 8;
-    switch(offset) {
-        case 0:
-            
-            color = half4(0,0,0,1);
-            break;
-            
-        case 1:
-            /*
-            half4 bloomingColor = inTexture.read(uint2(gid.x, gid.y / 2) + 0);
-            half3 bloom = bloomingColor.xyz;
-            half Y = dot(half3(0.299, 0.587, 0.114),bloom);
-            color = bloomingColor * (Y / 2);
-            */
-            color = half4(0,0,0,1);
-            break;
-
-        case 2:
-            
-            color = col0;
-            break;
-            
-        case 3:
- 
-            color = col1;
-            break;
-            
-        case 4:
-            
-            color = col2;
-            break;
-            
-        case 5:
-            
-            color = col3;
-            break;
-            
-        case 6:
-            
-            color = half4(0,0,0,1);
-            break;
-            
-        case 7:
-            
-            color = half4(0,0,0,1);
-            break;
-    }
-    
-    outTexture.write(color, gid);
-    
-    /*
-    half4 inColor = inTexture.read(gid);
-    outTexture.write(inColor * ((gid.y % SCALE_FACTOR) < SCANLINE_CUTOFF ? SCANLINE_SCALE : 1), gid);
-     */
+    half4 inColor = inTexture.read(uint2(gid.x, gid.y / 2));
+    outTexture.write(inColor * ((gid.y % 8) < SCANLINE_CUTOFF ? SCANLINE_SCALE : 1), gid);
 }
+

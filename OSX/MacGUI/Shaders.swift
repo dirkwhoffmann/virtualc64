@@ -262,6 +262,14 @@ class ScanlineFilter : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "scanline", device: device, library: library)
-        sampler = samplerNearest
+        sampler = samplerLinear
+    }
+}
+
+class ScanlineFilterDirk : ComputeKernel {
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        self.init(name: "scanlineDirk", device: device, library: library)
+        sampler = samplerLinear
     }
 }
