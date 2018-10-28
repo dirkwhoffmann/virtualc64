@@ -69,9 +69,6 @@ public extension MetalView {
 
         track()
         precondition(device != nil)
-
-        let readWriteUsage =
-            MTLTextureUsage.shaderRead.rawValue | MTLTextureUsage.shaderWrite.rawValue
         
         // Build background texture (drawn behind the cube)
         bgTexture = self.createBackgroundTexture()
@@ -92,7 +89,7 @@ public extension MetalView {
             width: 2048,
             height: 2048,
             mipmapped: false)
-        descriptor.usage = MTLTextureUsage(rawValue: readWriteUsage)
+        descriptor.usage = [.shaderRead, .shaderWrite, .pixelFormatView, .renderTarget]
         upscaledTexture = device?.makeTexture(descriptor: descriptor)
         precondition(upscaledTexture != nil, "Failed to create upscaling texture")
     
@@ -102,7 +99,7 @@ public extension MetalView {
             width: 2048,
             height: 4096,
             mipmapped: false)
-        descriptor.usage = MTLTextureUsage(rawValue: readWriteUsage)
+        descriptor.usage = [.shaderRead, .shaderWrite]
         filteredTexture = device?.makeTexture(descriptor: descriptor)
         precondition(filteredTexture != nil, "Failed to create filtering texture")
     }

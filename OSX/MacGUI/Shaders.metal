@@ -323,26 +323,65 @@ kernel void scanline(texture2d<half, access::read>  inTexture   [[ texture(0) ]]
                      uint2                          gid         [[ thread_position_in_grid ]])
 {
     half4 color;
-    
-    // half4 color = inTexture.read(uint2(gid.x, gid.y / 2));
 
-    int row = gid.y % 8;
+    // The four colors coming from the upscaler
+    int row = gid.y / 8;
+    int yoffset = row * 4;
+    half4 col0 = inTexture.read(uint2(gid.x, yoffset));
+    half4 col1 = inTexture.read(uint2(gid.x, yoffset + 1));
+    half4 col2 = inTexture.read(uint2(gid.x, yoffset + 2));
+    half4 col3 = inTexture.read(uint2(gid.x, yoffset + 3));
 
-    if (row == 0 || row == 7) {
-        color = half4(0,0,0,1);
-    } else if (row == 1 || row == 6) {
-        color = half4(0.2,0.2,0.2,1);
-    } else {
-        color = inTexture.read(uint2(gid.x, gid.y / 2) + row);
+    int offset = gid.y % 8;
+    switch(offset) {
+        case 0:
+            
+            color = half4(0,0,0,1);
+            break;
+            
+        case 1:
+            /*
+            half4 bloomingColor = inTexture.read(uint2(gid.x, gid.y / 2) + 0);
+            half3 bloom = bloomingColor.xyz;
+            half Y = dot(half3(0.299, 0.587, 0.114),bloom);
+            color = bloomingColor * (Y / 2);
+            */
+            color = half4(0,0,0,1);
+            break;
+
+        case 2:
+            
+            color = col0;
+            break;
+            
+        case 3:
+ 
+            color = col1;
+            break;
+            
+        case 4:
+            
+            color = col2;
+            break;
+            
+        case 5:
+            
+            color = col3;
+            break;
+            
+        case 6:
+            
+            color = half4(0,0,0,1);
+            break;
+            
+        case 7:
+            
+            color = half4(0,0,0,1);
+            break;
     }
     
     outTexture.write(color, gid);
     
-    
-    /*
-     if((gid.x % 4 != 0) || (gid.y % 4 != 0))
-     return;
-     */
     /*
     half4 inColor = inTexture.read(gid);
     outTexture.write(inColor * ((gid.y % SCALE_FACTOR) < SCANLINE_CUTOFF ? SCANLINE_SCALE : 1), gid);

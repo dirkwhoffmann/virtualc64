@@ -7,9 +7,9 @@
 
 import Foundation
 
-// --------------------------------------------------------------------------------
-//                            Extensions to MTLTexture
-// --------------------------------------------------------------------------------
+//
+// Extensions to MTLTexture
+//
 
 extension MTLTexture {
     
@@ -20,9 +20,10 @@ extension MTLTexture {
         let w = Int(Float(self.width) * (x2 - x1))  // (w,h) : width and height
         let h = Int(Float(self.height) * (y2 - y1)) //         of texture cutout
         let bytesPerRow = w * 4
+        let size = bytesPerRow * h
         
         // Allocate memory
-        guard let data = malloc(bytesPerRow * h) else { return nil; }
+        guard let data = malloc(size) else { return nil; }
         
         // Fill memory with texture data
         self.getBytes(data,
@@ -30,6 +31,19 @@ extension MTLTexture {
                       from: MTLRegionMake2D(x, y, w, h),
                       mipmapLevel: 0)
     
+        // Copy data over to a new buffer of double horizontal width
+        let w2 = 2 * w
+        let h2 = h
+        let bytesPerRow2 = 2 * bytesPerRow
+        let size2 = bytesPerRow2 * h2
+        guard let data2 = malloc(size2) else { return nil; }
+        let ptr = data.assumingMemoryBound(to: UInt32.self)
+        let ptr2 = data2.assumingMemoryBound(to: UInt32.self)
+        for i in 0 ... (w * h) {
+            ptr2[2 * i] = ptr[i]
+            ptr2[2 * i + 1] = ptr[i]
+        }
+        
         let pColorSpace = CGColorSpaceCreateDeviceRGB()
 
         let rawBitmapInfo =
@@ -44,13 +58,13 @@ extension MTLTexture {
             return
         }
         guard let provider = CGDataProvider(dataInfo: nil,
-                                      data: data,
-                                      size: bytesPerRow * h,
+                                      data: data2,
+                                      size: size2,
                                       releaseData: dealloc) else { return nil; }
         
         // Create image
-        let image = CGImage(width: w, height: h,
-                            bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow,
+        let image = CGImage(width: w2, height: h2,
+                            bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow2,
                             space: pColorSpace, bitmapInfo: bitmapInfo,
                             provider: provider, decode: nil, shouldInterpolate: false,
                             intent: CGColorRenderingIntent.defaultIntent)
@@ -70,9 +84,10 @@ extension MTLTexture {
     
 }
 
-// --------------------------------------------------------------------------------
-//                              Extensions to NSImage
-// --------------------------------------------------------------------------------
+
+//
+// Extensions to NSImage
+//
 
 public extension NSImage {
     
@@ -118,8 +133,6 @@ public extension NSImage {
     
         if (width == 0 || height == 0) { return nil; }
         
-        
-        
         // Allocate memory
         guard let data = malloc(height * width * 4) else { return nil; }
         let rawBitmapInfo =
@@ -153,24 +166,39 @@ public extension NSImage {
 }
 
 
-// --------------------------------------------------------------------------------
-//                            Extensions to MetalView
-// --------------------------------------------------------------------------------
+//
+// Extensions to MetalView
+//
 
 
 public extension MetalView
 {
 
-    // --------------------------------------------------------------------------------
-    //                                 Image handling
-    // --------------------------------------------------------------------------------
+    //
+    // Image handling
+    //
 
-    
     func screenshot() -> NSImage?
     {
         track()
         
+        /*
         return emulatorTexture.toNSImage(Float(textureRect.minX),
+                                         Float(textureRect.minY),
+                                         Float(textureRect.maxX),
+                                         Float(textureRect.maxY))
+        */
+        
+        // Use the blitter to copy the texture data back from the GPU
+        let queue = filteredTexture.device.makeCommandQueue()!
+        let commandBuffer = queue.makeCommandBuffer()!
+        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+        blitEncoder.synchronize(texture: filteredTexture, slice: 0, level: 0)
+        blitEncoder.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        
+        return filteredTexture.toNSImage(Float(textureRect.minX),
                                          Float(textureRect.minY),
                                          Float(textureRect.maxX),
                                          Float(textureRect.maxY))
