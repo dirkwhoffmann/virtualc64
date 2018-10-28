@@ -253,23 +253,19 @@ class BlurFilter : ComputeKernel {
 
 class CrtFilter : ComputeKernel {
     
-    var _r : Float = 1.0
-    var _g : Float = 1.0
-    var _b : Float = 1.0
-    
+    var _bloomingFactor : Float = 1.0
     var bloom: MTLBuffer!
     
-    func setBloom(r: Float, g: Float, b: Float) {
+    func setBloomingFactor(_ value : Float) {
         
-        _r = r
-        _g = g
-        _b = b
-        var _a : Float = 0.0
+        _bloomingFactor = value;
+        var _alpha : Float = 0.0
+        
         let contents = bloom.contents()
-        memcpy(contents, &_a, 4)
-        memcpy(contents + 4, &_b, 4)
-        memcpy(contents + 8, &_g, 4)
-        memcpy(contents + 12, &_r, 4)
+        memcpy(contents, &_bloomingFactor, 4)
+        memcpy(contents + 4, &_bloomingFactor, 4)
+        memcpy(contents + 8, &_bloomingFactor, 4)
+        memcpy(contents + 12, &_alpha, 4)
     }
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
@@ -277,7 +273,7 @@ class CrtFilter : ComputeKernel {
         self.init(name: "crt", device: device, library: library)
         self.bloom = device.makeBuffer(length: 16, options: .storageModeShared)
         
-        setBloom(r: 2.0, g: 2.0, b: 2.0)
+        setBloomingFactor(1.0)
     }
     
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {

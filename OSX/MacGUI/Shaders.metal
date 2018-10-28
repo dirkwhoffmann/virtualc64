@@ -31,7 +31,7 @@ struct ProjectedVertex {
 };
 
 struct CrtParameters {
-    half4 bloomFactor;
+    float4 bloomFactor;
 };
 
 
@@ -296,9 +296,9 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                 uint2                          gid         [[ thread_position_in_grid ]])
 {
     half4 color;
-    half4 bloomFactor = params.bloomFactor;
+    half4 bloomFactor = half4(params.bloomFactor);
    
-    bloomFactor = half4(2.0,2.0,2.0,0.0);
+    // bloomFactor = half4(2.0,2.0,2.0,0.0);
     
     // The four colors coming from the upscaler
     int row = gid.y / 8;
@@ -325,7 +325,7 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
             
             bloomCol = 0.3 * left0 + 0.4 * col0 + 0.3 * right0;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            factor = bloomFactor * 0.7 * (0.5 + 0.5 * Y * Y);
+            factor = min(bloomFactor * 0.7 * (0.5 + 0.5 * Y * Y), 1.0);
             color = factor * bloomCol;
             
             // color = half4(0,0,0,1)
@@ -335,7 +335,7 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
             
             bloomCol = 0.3 * left0 + 0.4 * col0 + 0.3 * right0;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            factor = bloomFactor * (0.5 + 0.5 * Y * Y);
+            factor = min(bloomFactor * (0.5 + 0.5 * Y * Y), 1.0);
             color = factor * bloomCol;
             
             // color = half4(0,0,0,1)
@@ -365,7 +365,7 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
             
             bloomCol = 0.3 * left3 + 0.4 * col3 + 0.3 * right3;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            factor = bloomFactor * (0.5 + 0.5 * Y * Y);
+            factor = min(bloomFactor * (0.5 + 0.5 * Y * Y), 1.0);
             color = factor * bloomCol;
             break;
             
@@ -373,11 +373,14 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
             
             bloomCol = 0.3 * left3 + 0.4 * col3 + 0.3 * right3;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            factor = bloomFactor * 0.7 * (0.5 + 0.5 * Y * Y);
+            factor = min(bloomFactor * 0.7 * (0.5 + 0.5 * Y * Y), 1.0);
             color = factor * bloomCol;
             break;
     }
     
+    // bloomFactor /= 8;
+    // color = half4(bloomFactor.g, bloomFactor.g, bloomFactor.g, 0.0);
+
     outTexture.write(color, gid);
 }
 

@@ -54,6 +54,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var brightnessSlider: NSSlider!
     @IBOutlet weak var contrastSlider: NSSlider!
     @IBOutlet weak var saturationSlider: NSSlider!
+    @IBOutlet weak var bloomingSlider: NSSlider!
     @IBOutlet weak var palette: NSPopUpButton!
     @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var filter: NSPopUpButton!
@@ -107,12 +108,14 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         
         // Video
+        let crtFilter = parent.metalScreen.filters[3] as! CrtFilter
         eyeXSlider.floatValue = parent.metalScreen.eyeX()
         eyeYSlider.floatValue = parent.metalScreen.eyeY()
         eyeZSlider.floatValue = parent.metalScreen.eyeZ()
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
+        bloomingSlider.floatValue = crtFilter._bloomingFactor
         palette.selectItem(withTag: document.c64.vic.videoPalette())
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         filter.selectItem(withTag: parent.metalScreen.videoFilter)
@@ -270,6 +273,14 @@ class EmulatorPrefsController : UserDialogController {
         track("Value = \(sender.doubleValue)")
         let document = parent.document as! MyDocument
         document.c64.vic.setSaturation(sender.doubleValue)
+        update()
+    }
+    
+    @IBAction func bloomingAction(_ sender: NSSlider!) {
+        
+        track("Bloom factor = \(sender.doubleValue)")
+        let crtFilter = parent.metalScreen.filters[3] as! CrtFilter
+        crtFilter.setBloomingFactor(sender.floatValue)
         update()
     }
     
