@@ -172,7 +172,7 @@ public extension MetalView {
         fillMatrix(buffer, matrix)
         fillAlpha(buffer, alpha)
     }
-    
+        
     func buildMatricesBg() {
         
         let model  = matrix_identity_float4x4

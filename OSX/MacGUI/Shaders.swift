@@ -253,23 +253,44 @@ class BlurFilter : ComputeKernel {
 
 class CrtFilter : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "crt", device: device, library: library)
+    var _r : Float = 1.0
+    var _g : Float = 1.0
+    var _b : Float = 1.0
+    
+    var bloom: MTLBuffer!
+    
+    func setBloom(r: Float, g: Float, b: Float) {
+        
+        _r = r
+        _g = g
+        _b = b
+        var _a : Float = 0.0
+        let contents = bloom.contents()
+        memcpy(contents, &_a, 4)
+        memcpy(contents + 4, &_b, 4)
+        memcpy(contents + 8, &_g, 4)
+        memcpy(contents + 12, &_r, 4)
     }
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+
+        self.init(name: "crt", device: device, library: library)
+        self.bloom = device.makeBuffer(length: 16, options: .storageModeShared)
+        
+        setBloom(r: 2.0, g: 2.0, b: 2.0)
+    }
+    
+    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
+        
+        encoder.setBuffer(bloom, offset: 0, index: 2)
+    }
+    
 }
 
 class ScanlineFilter : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "scanline", device: device, library: library)
-        sampler = samplerLinear
-    }
-}
-
-class ScanlineFilterDirk : ComputeKernel {
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "scanlineDirk", device: device, library: library)
         sampler = samplerLinear
     }
 }

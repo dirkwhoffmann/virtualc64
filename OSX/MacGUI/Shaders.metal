@@ -30,6 +30,11 @@ struct ProjectedVertex {
     float  alpha;
 };
 
+struct CrtParameters {
+    half4 bloomFactor;
+};
+
+
 vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
                                    constant Uniforms &uniforms [[buffer(1)]],
                                    ushort vid [[vertex_id]])
@@ -287,9 +292,13 @@ kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
 
 kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                 texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                constant CrtParameters         &params     [[ buffer(2) ]],
                 uint2                          gid         [[ thread_position_in_grid ]])
 {
     half4 color;
+    half4 bloomFactor = params.bloomFactor;
+   
+    bloomFactor = half4(2.0,2.0,2.0,0.0);
     
     // The four colors coming from the upscaler
     int row = gid.y / 8;
@@ -308,23 +317,26 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     half4 right3 = inTexture.read(uint2(gid.x + 1, yoffset + 3));
     half4 bloomCol;
     half Y;
+    half4 factor;
     
     int offset = gid.y % 8;
     switch(offset) {
         case 0:
             
-            bloomCol = 0.25 * left0 + 0.5 * col0 + 0.25 * right0;
+            bloomCol = 0.3 * left0 + 0.4 * col0 + 0.3 * right0;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            color = 0.75 * Y * Y * bloomCol;
+            factor = bloomFactor * 0.7 * (0.5 + 0.5 * Y * Y);
+            color = factor * bloomCol;
             
             // color = half4(0,0,0,1)
             break;
             
         case 1:
             
-            bloomCol = 0.25 * left0 + 0.5 * col0 + 0.25 * right0;
+            bloomCol = 0.3 * left0 + 0.4 * col0 + 0.3 * right0;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            color = Y * Y * bloomCol;
+            factor = bloomFactor * (0.5 + 0.5 * Y * Y);
+            color = factor * bloomCol;
             
             // color = half4(0,0,0,1)
             break;
@@ -351,16 +363,18 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
             
         case 6:
             
-            bloomCol = 0.25 * left3 + 0.5 * col3 + 0.25 * right3;
+            bloomCol = 0.3 * left3 + 0.4 * col3 + 0.3 * right3;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            color = Y * Y * bloomCol;
+            factor = bloomFactor * (0.5 + 0.5 * Y * Y);
+            color = factor * bloomCol;
             break;
             
         case 7:
             
-            bloomCol = 0.25 * left3 + 0.5 * col3 + 0.25 * right3;
+            bloomCol = 0.3 * left3 + 0.4 * col3 + 0.3 * right3;
             Y = dot(half4(0.299, 0.587, 0.114, 0),bloomCol);
-            color = 0.75 * Y * Y * bloomCol;
+            factor = bloomFactor * 0.7 * (0.5 + 0.5 * Y * Y);
+            color = factor * bloomCol;
             break;
     }
     
