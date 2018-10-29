@@ -563,7 +563,7 @@ Zaxxon::reset()
     
     // Make sure peekRomL() is called for the whole 8KB ROML range.
     assert(chipSize[0] = 0x1000);
-    chipSize[0] = 0x2000;
+    mappedBytesL = 0x2000;
 }
 
 uint8_t
