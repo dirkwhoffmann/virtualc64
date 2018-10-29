@@ -382,34 +382,6 @@ Cartridge::peekRomH(uint16_t addr)
     return packet[chipH]->peek(addr + offsetH);
 }
 
-/*
-unsigned
-Cartridge::numberOfChips()
-{
-    unsigned result = 0;
-    
-    for (unsigned i = 0; i < MAX_PACKETS; i++)
-        if (chip[i] != NULL)
-            result++;
-    
-    return result;
-}
-*/
-
-/*
-unsigned
-Cartridge::numberOfBytes()
-{
-    unsigned result = 0;
-    
-    for (unsigned i = 0; i < MAX_PACKETS; i++)
-        if (chip[i] != NULL)
-            result += chipSize[i];
-    
-    return result;
-}
-*/
-
 uint32_t
 Cartridge::getRamCapacity()
 {

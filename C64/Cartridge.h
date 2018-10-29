@@ -59,14 +59,11 @@ class Cartridge : public VirtualComponent {
     //! @brief    ROM chips contained in this cartridge
     CartridgeRom *packet[MAX_PACKETS];
     
-    //! @brief    Array containing the chip sizes of all chips
-    // uint16_t chipSize[MAX_PACKETS];
-    
     //! @brief    Number of the ROM chip that is currently mapped to ROMx
     uint8_t chipL, chipH;
 
     //! @brief    Number of bytes that are mapped to ROMX
-    /*! @details  For most cartridges, this value is equals chipSize[romX],
+    /*! @details  For most cartridges, this value is equals packet[romX]->size
      *            which means that the ROM is completely mapped.
      *            A value of 0 indicates that no ROM is currently mapped.
      */

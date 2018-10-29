@@ -48,23 +48,6 @@ EasyFlash::reset()
 {
     Cartridge::reset();
     
-    // Create the Flash Roms when the cartridge is reset the first time
-    /*
-    if (romCount == 0) {
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        
-        if (chip[i] == NULL) break;
-
-        if (chipSize[i] != 0x2000) {
-            panic("Invalid chip size in EasyFlash cartrige spotted: %04X\n");
-            assert(false);
-            return;
-        }
-        
-        flashRom[i] = new FlashRom(chip[i]);
-    }
-    */
- 
     for (unsigned i = 0; i < 128; i++) {
         if (flashRom[i])
         flashRom[i]->reset();
