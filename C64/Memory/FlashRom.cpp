@@ -29,10 +29,19 @@ FlashRom::FlashRom()
     SnapshotItem items[] = {
         
         { &state,       sizeof(state),          KEEP_ON_RESET },
-        { &rom,         sizeof(rom),            KEEP_ON_RESET },
+        { rom,          sizeof(rom),            KEEP_ON_RESET },
         { NULL,         0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
+    
+    state = FLASH_READ;
+    memset(rom, 0xff, sizeof(rom));
+}
+
+FlashRom::FlashRom(const uint8_t *buffer) : FlashRom()
+{
+    assert(buffer != NULL);
+    memcpy(rom, buffer, sizeof(rom));
 }
 
 FlashRom::~FlashRom()
@@ -44,7 +53,6 @@ void
 FlashRom::reset()
 {
     state = FLASH_READ;
-    memset(rom, 0xff, sizeof(rom));
 }
 
 void

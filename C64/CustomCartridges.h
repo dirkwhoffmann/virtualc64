@@ -23,6 +23,7 @@
 #define _CUSTOM_CARTRIDGES_INC
 
 #include "Cartridge.h"
+#include "EasyFlash.h"
 
 //! @brief    Type 1 cartridges
 class ActionReplay : public Cartridge {
@@ -235,22 +236,6 @@ public:
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
-};
-
-//! @brief    Type 32 cartridges
-class EasyFlash : public Cartridge {
-    
-public:
-    EasyFlash(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return false; }
-    bool hasResetButton() { return false; }
-    bool getJumper() { return val[2]; }
-    void setJumper(bool value) { val[2] = value; }
 };
 
 //! @brief    Type 35 cartridges

@@ -31,6 +31,7 @@
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5017B71A218729DA0014EDE4 /* FlashRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B718218729DA0014EDE4 /* FlashRom.cpp */; };
+		5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B71B21873FD00014EDE4 /* EasyFlash.cpp */; };
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
@@ -238,6 +239,8 @@
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		5017B718218729DA0014EDE4 /* FlashRom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FlashRom.cpp; sourceTree = "<group>"; };
 		5017B719218729DA0014EDE4 /* FlashRom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlashRom.h; sourceTree = "<group>"; };
+		5017B71B21873FD00014EDE4 /* EasyFlash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EasyFlash.cpp; sourceTree = "<group>"; };
+		5017B71C21873FD00014EDE4 /* EasyFlash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasyFlash.h; sourceTree = "<group>"; };
 		50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportScreenshotController.swift; sourceTree = "<group>"; };
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
@@ -758,6 +761,8 @@
 				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				50B5861C201C673900742DB3 /* CustomCartridges.h */,
 				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
+				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
+				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
 			);
 			name = Cartridges;
 			sourceTree = "<group>";
@@ -1187,6 +1192,7 @@
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */,
 				501DE30C20C9C41B00707130 /* sid.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,

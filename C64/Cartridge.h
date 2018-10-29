@@ -26,6 +26,7 @@
 #include "VirtualComponent.h"
 #include "Cartridge_types.h"
 #include "CRTFile.h"
+#include "FlashRom.h"
 
 class ExpansionPort;
 

@@ -50,6 +50,7 @@
 #include "ControlPort.h"
 #include "Memory.h"
 #include "C64Memory.h"
+#include "FlashRom.h"
 #include "VC1541Memory.h"
 #include "VIC.h"
 // #include "PixelEngine.h"
