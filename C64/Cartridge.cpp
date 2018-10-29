@@ -418,9 +418,8 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     assert(nr < MAX_PACKETS);
     assert(c != NULL);
     
+    uint16_t size = c->chipSize(nr);
     uint16_t start = c->chipAddr(nr);
-    uint16_t size  = c->chipSize(nr);
-    uint8_t  *data = c->chipData(nr);
     
     if (start < 0x8000) {
         warn("Ignoring chip %d: Start address too low (%04X)", nr, start);
@@ -435,7 +434,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     if (packet[nr]) {
         delete packet[nr];
     }
-    packet[nr] = new CartridgeRom(size, start, data);
+    packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
 }
 
 void

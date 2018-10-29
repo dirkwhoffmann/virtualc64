@@ -235,14 +235,6 @@ public:
     //! @brief    Returns the cartridge type
     virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
     
-    /*! @brief    Counts the number of chips
-     *  @return   Value between 0 and 64
-     */
-    // unsigned numberOfChips();
-    
-    //! @brief    Sums up the sizes of all chips in bytes
-    // unsigned numberOfBytes();
-    
     //! @brief    Returns the RAM size in bytes.
     uint32_t getRamCapacity(); 
 
