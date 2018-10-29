@@ -40,7 +40,6 @@ Cartridge::Cartridge(C64 *c64)
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chip[i] = NULL;
-        chipStartAddress[i] = 0;
         chipSize[i] = 0;
     }
     chipL = chipH = 0;
@@ -268,7 +267,7 @@ Cartridge::stateSize()
     size += packetStateSize();
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        size += 4 + chipSize[i];
+        size += 2 + chipSize[i];
     }
     size += sizeof(chipL);
     size += sizeof(chipH);
@@ -299,7 +298,6 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     loadPacketsFromBuffer(buffer);
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        chipStartAddress[i] = read16(buffer);
         chipSize[i] = read16(buffer);
         
         if (chipSize[i] > 0) {
@@ -340,7 +338,6 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     savePacketsToBuffer(buffer);
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        write16(buffer, chipStartAddress[i]);
         write16(buffer, chipSize[i]);
         
         if (chipSize[i] > 0) {
@@ -509,7 +506,6 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     if (!(chip[nr] = (uint8_t *)malloc(size)))
         return;
     
-    chipStartAddress[nr] = start;
     chipSize[nr]         = size;
     memcpy(chip[nr], data, size);
 }
@@ -517,22 +513,19 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
 bool
 Cartridge::mapsToL(unsigned nr) {
     assert(nr < MAX_PACKETS);
-    assert(chipStartAddress[nr] == packet[nr]->loadAddress);
-    return chipStartAddress[nr] == 0x8000 && chipSize[nr] <= 0x2000;
+    return packet[nr]->loadAddress == 0x8000 && chipSize[nr] <= 0x2000;
 }
 
 bool
 Cartridge::mapsToLH(unsigned nr) {
     assert(nr < MAX_PACKETS);
-    assert(chipStartAddress[nr] == packet[nr]->loadAddress);
-    return chipStartAddress[nr] == 0x8000 && chipSize[nr] > 0x2000;
+    return packet[nr]->loadAddress == 0x8000 && chipSize[nr] > 0x2000;
 }
 
 bool
 Cartridge::mapsToH(unsigned nr) {
     assert(nr < MAX_PACKETS);
-    assert(chipStartAddress[nr] == packet[nr]->loadAddress);
-    return chipStartAddress[nr] == 0xA000 || chipStartAddress[nr] == 0xE000;
+    return packet[nr]->loadAddress == 0xA000 || packet[nr]->loadAddress == 0xE000;
 }
 
 void

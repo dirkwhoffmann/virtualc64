@@ -63,10 +63,7 @@ class Cartridge : public VirtualComponent {
      *  @deprecated
      */
     uint8_t *chip[MAX_PACKETS];
-    
-    //! @brief    Array containing the load addresses of all chips
-    uint16_t chipStartAddress[MAX_PACKETS];
-    
+        
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[MAX_PACKETS];
     
