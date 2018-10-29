@@ -126,17 +126,40 @@ class Cartridge : public VirtualComponent {
     
 public:
     
+    //
+    //! @functiongroup Class methods
+    //
+    
+    /*! @brief    Returns true if addr is located in the ROML address space
+     *  @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
+     */
+    static bool isROMLaddr (uint16_t addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
+    
+    /*! @brief    Returns true if addr is located in the ROMH address space
+     *  @details  ROMH can appear in 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
+     */
+    static bool isROMHaddr (uint16_t addr) {
+        return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
+    
+    /*! @brief    Check cartridge type
+     *  @details  Returns true iff the cartridge type is supported.
+     */
+    static bool isSupportedType(CartridgeType type);
+    
+    
+    //
+    //! @functiongroup Creating and destructing objects
+    //
+    
     //! @brief    Convenience constructor
     Cartridge(C64 *c64);
 
     //! @brief    Destructor
     ~Cartridge();
-    
-    //! @brief    Check cartridge type
-    /*! @details  Returns true iff the cartridge type is supported.
-     */
-    static bool isSupportedType(CartridgeType type);
-    
+
+    //! @brief    Deletes all chip packages
+    void dealloc();
+
     //! @brief    Factory method
     /*! @details  Creates a cartridge with the specified type. Make sure to pass
      *            containers of the supported cartridge type, only.
@@ -151,17 +174,15 @@ public:
      */
     static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container);
     
-    //! @brief    Returns true if addr is located in the ROML address space
-    /*! @details  If visible, ROML is always mapped to 0x8000 - 0x9FFF.
-     */
-    bool isROMLaddr (uint16_t addr) { return addr >= 0x8000 && addr <= 0x9FFF; }
-
-    //! @brief    Returns true if addr is located in the ROMH address space
-    /*! @details  ROMH can appear in 0xA000 - 0xBFFF or 0xE000 - 0xFFFF.
-     */
-    bool isROMHaddr (uint16_t addr) {
-        return (addr >= 0xA000 && addr <= 0xBFFF) || (addr >= 0xE000 && addr <= 0xFFFF); }
-
+    //! @brief    State size function for chip packet data
+    virtual size_t packetStateSize();
+    
+    //! @brief    Loads all chip packets from a buffer
+    virtual void loadPacketsFromBuffer(uint8_t **buffer);
+    
+    //! @brief    Saves all chip packets to a buffer
+    virtual void savePacketsToBuffer(uint8_t **buffer);
+    
     //! @brief    Methods from VirtualComponent
     void reset();
     void ping() { };

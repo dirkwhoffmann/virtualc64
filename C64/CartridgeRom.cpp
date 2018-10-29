@@ -20,16 +20,30 @@
 
 #include "CartridgeRom.h"
 
+/*
 CartridgeRom::CartridgeRom(uint16_t sizeInBytes)
 {
-    rom = new uint8_t[sizeInBytes];
     size = sizeInBytes;
+    rom = new uint8_t[sizeInBytes];
+}
+*/
+
+CartridgeRom::CartridgeRom(uint8_t **buffer)
+{
+    assert(buffer != NULL);
+    size = read16(buffer);
+    rom = new uint8_t[size];
+    readBlock(buffer, rom, size);
 }
 
-CartridgeRom::CartridgeRom(uint16_t sizeInBytes, const uint8_t *buffer) : CartridgeRom(sizeInBytes)
+CartridgeRom::CartridgeRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer)
 {
-    assert(size == sizeInBytes);
-    memcpy(rom, buffer, size);
+    size = _size;
+    loadAddress = _loadAddress;
+    rom = new uint8_t[size];
+    if (buffer) {
+        memcpy(rom, buffer, size);
+    }
 }
 
 CartridgeRom::~CartridgeRom()
@@ -41,7 +55,7 @@ CartridgeRom::~CartridgeRom()
 size_t
 CartridgeRom::stateSize()
 {
-    return 2 + size;
+    return 2 + 2 + size;
 }
 
 void
@@ -53,6 +67,7 @@ CartridgeRom::loadFromBuffer(uint8_t **buffer)
     }
     
     size = read16(buffer);
+    loadAddress = read16(buffer);
     rom = new uint8_t[size];
     readBlock(buffer, rom, size);
 }
@@ -61,9 +76,27 @@ void
 CartridgeRom::saveToBuffer(uint8_t **buffer)
 {
     write16(buffer, size);
+    write16(buffer, loadAddress);
     writeBlock(buffer, rom, size);
 }
 
+bool
+CartridgeRom::mapsToL() {
+    assert(rom != NULL);
+    return loadAddress == 0x8000 && size <= 0x2000;
+}
+
+bool
+CartridgeRom::mapsToLH() {
+    assert(rom != NULL);
+    return loadAddress == 0x8000 && size > 0x2000;
+}
+
+bool
+CartridgeRom::mapsToH() {
+    assert(rom != NULL);
+    return loadAddress == 0xA000 || loadAddress == 0xE000;
+}
 
 uint8_t
 CartridgeRom::peek(uint16_t addr)

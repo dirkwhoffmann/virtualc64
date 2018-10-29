@@ -72,6 +72,17 @@ Cartridge::~Cartridge()
 }
 
 void
+Cartridge::dealloc()
+{
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] != NULL);
+        delete packet[i];
+        packet[i] = NULL;
+    }
+    numPackets = 0;
+}
+
+void
 Cartridge::reset()
 {
     // Delete RAM
@@ -200,6 +211,39 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
     }
     
     return cart;
+}
+
+size_t
+Cartridge::packetStateSize()
+{
+    size_t result = 1 /* numPackets */;
+    
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] != NULL);
+        result += packet[i]->stateSize();
+    }
+
+    return result;
+}
+
+void
+Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
+{
+    assert(buffer != NULL);
+    
+    dealloc();
+    
+    numPackets = read8(buffer);
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] == NULL);
+        packet[i] = new CartridgeRom(buffer);
+    }
+}
+
+void
+Cartridge::savePacketsToBuffer(uint8_t **buffer)
+{
+    
 }
 
 size_t
@@ -447,7 +491,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     if (packet[nr] != 0) {
         delete packet[nr];
     }
-    packet[nr] = new CartridgeRom(size, data);
+    packet[nr] = new CartridgeRom(size, start, data);
     
     // OLD CODE
     if (chip[nr])

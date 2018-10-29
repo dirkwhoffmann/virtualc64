@@ -720,10 +720,6 @@
 				50171AA12083722C00C07AAD /* Memory_types.h */,
 				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
-				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
-				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
-				5017B719218729DA0014EDE4 /* FlashRom.h */,
-				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -761,8 +757,12 @@
 		503C8BFA2014AC99000494A0 /* Cartridges */ = {
 			isa = PBXGroup;
 			children = (
-				5054BF1020133BA2003D86D4 /* Cartridge.h */,
+				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
+				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
+				5017B719218729DA0014EDE4 /* FlashRom.h */,
+				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
 				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
+				5054BF1020133BA2003D86D4 /* Cartridge.h */,
 				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				50B5861C201C673900742DB3 /* CustomCartridges.h */,
 				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
