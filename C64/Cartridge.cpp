@@ -32,6 +32,8 @@ Cartridge::Cartridge(C64 *c64)
     initialGameLine = 1;
     initialExromLine = 1;
     
+    numPackets = 0;
+    
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chip[i] = NULL;
         chipStartAddress[i] = 0;
@@ -188,7 +190,8 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
     cart->initialExromLine = container->initialExromLine();
     
     // Load chip packets
-    for (unsigned i = 0; i < container->chipCount(); i++) {
+    cart->numPackets = container->chipCount();
+    for (unsigned i = 0; i < cart->numPackets; i++) {
         cart->loadChip(i, container);
     }
     
@@ -202,7 +205,8 @@ Cartridge::stateSize()
 
     size += 1; // initialGameLine
     size += 1; // initialExromLine
-
+    size += 1; // numPackets
+    
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         size += 4 + chipSize[i];
     }
@@ -231,6 +235,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     
     initialGameLine = (bool)read8(buffer);
     initialExromLine = (bool)read8(buffer);
+    numPackets = (bool)read8(buffer);
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chipStartAddress[i] = read16(buffer);
@@ -270,7 +275,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     
     write8(buffer, (uint8_t)initialGameLine);
     write8(buffer, (uint8_t)initialExromLine);
-    
+    write8(buffer, (uint8_t)numPackets);
+
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         write16(buffer, chipStartAddress[i]);
         write16(buffer, chipSize[i]);
@@ -305,9 +311,10 @@ Cartridge::dumpState()
     msg("Cartridge\n");
     msg("---------\n");
     
-    msg("Cartridge type:     %d\n", getCartridgeType());
-    msg("Initial game line:  %d\n", initialGameLine);
-    msg("Initial exrom line: %d\n", initialExromLine);
+    msg("Cartridge type:        %d\n", getCartridgeType());
+    msg("Initial game line:     %d\n", initialGameLine);
+    msg("Initial exrom line:    %d\n", initialExromLine);
+    msg("Number of Rom packets: %d\n", numPackets);
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         if (chip[i] != NULL) {

@@ -52,11 +52,17 @@ class Cartridge : public VirtualComponent {
      */
     bool initialExromLine;
     
+    //! @brief    Number of ROM packets
+    uint8_t numPackets;
+    
     /*! @brief    ROM chips contained in the attached cartridge
-     *  @details  A cartridge can contain up to 64 chips
+     *  @deprecated
      */
     uint8_t *chip[MAX_PACKETS];
     
+    //! @brief    ROM chips contained in this cartridge
+    // CartridgeRom packet[MAX_PACKETS];
+
     //! @brief    Array containing the load addresses of all chips
     uint16_t chipStartAddress[MAX_PACKETS];
     
