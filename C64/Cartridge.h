@@ -267,15 +267,6 @@ public:
     //! @brief    Reads in chip stored in the provided CRT container
     virtual void loadChip(unsigned nr, CRTFile *c);
 
-    //! @brief    Returns true if a certain ROM chip maps to ROML, only.
-    bool mapsToL(unsigned nr);
-
-    //! @brief    Returns true if a certain ROM chip maps to ROML and ROMH.
-    bool mapsToLH(unsigned nr);
-
-    //! @brief    Returns true if a certain ROM chip maps to ROMH, only.
-    bool mapsToH(unsigned nr);
-
     //! @brief    Banks in a rom chip into the ROML space
     void bankInROML(unsigned nr, uint16_t size, uint16_t offset);
 
