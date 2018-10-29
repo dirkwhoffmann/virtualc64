@@ -379,13 +379,8 @@ Cartridge::dumpState()
     msg("Number of Rom packets: %d\n", numPackets);
     
     for (unsigned i = 0; i < numPackets; i++) {
-        msg("Chip %2d:        %d KB\n", packet[i]->size);
-    }
-        
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        if (chip[i] != NULL) {
-            msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
-        }
+        msg("Chip %2d:        %d KB starting at $%04X\n",
+            packet[i]->size / 1024, packet[i]->loadAddress);
     }
 }
 
@@ -522,18 +517,21 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
 bool
 Cartridge::mapsToL(unsigned nr) {
     assert(nr < MAX_PACKETS);
+    assert(chipStartAddress[nr] == packet[nr]->loadAddress);
     return chipStartAddress[nr] == 0x8000 && chipSize[nr] <= 0x2000;
 }
 
 bool
 Cartridge::mapsToLH(unsigned nr) {
     assert(nr < MAX_PACKETS);
+    assert(chipStartAddress[nr] == packet[nr]->loadAddress);
     return chipStartAddress[nr] == 0x8000 && chipSize[nr] > 0x2000;
 }
 
 bool
 Cartridge::mapsToH(unsigned nr) {
     assert(nr < MAX_PACKETS);
+    assert(chipStartAddress[nr] == packet[nr]->loadAddress);
     return chipStartAddress[nr] == 0xA000 || chipStartAddress[nr] == 0xE000;
 }
 

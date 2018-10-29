@@ -24,6 +24,7 @@
 
 #include "Cartridge.h"
 #include "EasyFlash.h"
+#include "FinalIII.h"
 
 //! @brief    Type 1 cartridges
 class ActionReplay : public Cartridge {
@@ -74,22 +75,6 @@ public:
     void pressResetButton();
     void releaseResetButton();
 };
-
-//! @brief    Type 3 cartridges
-class FinalIII : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FINAL_III; }
-    void reset();
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO2(uint16_t addr, uint8_t value);
-    void pressFreezeButton();
-    bool hasFreezeButton() { return true; }
-    bool hasResetButton() { return true; }
-};
-
 
 //! @brief    Type 4 cartridges
 class SimonsBasic : public Cartridge {

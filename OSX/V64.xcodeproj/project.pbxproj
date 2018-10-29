@@ -68,6 +68,7 @@
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
 		5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9420B6C2AC000D9193 /* VICPanel.swift */; };
 		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
+		503A424D2187A133003011D1 /* FinalIII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503A424B2187A133003011D1 /* FinalIII.cpp */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		503E199020C42C6D007E91F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Media.xcassets */; };
 		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
@@ -303,6 +304,8 @@
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
 		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
 		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
+		503A424B2187A133003011D1 /* FinalIII.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FinalIII.cpp; sourceTree = "<group>"; };
+		503A424C2187A133003011D1 /* FinalIII.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FinalIII.h; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
@@ -768,6 +771,8 @@
 				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
 				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
 				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
+				503A424C2187A133003011D1 /* FinalIII.h */,
+				503A424B2187A133003011D1 /* FinalIII.cpp */,
 			);
 			name = Cartridges;
 			sourceTree = "<group>";
@@ -1091,6 +1096,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				503A424D2187A133003011D1 /* FinalIII.cpp in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,

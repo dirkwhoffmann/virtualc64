@@ -124,31 +124,6 @@ EasyFlash::saveToBuffer(uint8_t **buffer)
     }
 }
 
-/*
-void
-EasyFlash::loadChip(unsigned nr, CRTFile *c)
-{
-    assert(nr < MAX_PACKETS);
-    assert(c != NULL);
-    
-    uint16_t start = c->chipAddr(nr);
-    uint16_t size  = c->chipSize(nr);
-    uint8_t  *data = c->chipData(nr);
-    
-    if (size != 0x2000) {
-        warn("Ignoring chip %d: Got size %04X, expected %04X.\n", size, 0x2000);
-        return;
-    }
-    
-    if (flashRom[nr]) {
-        delete flashRom[nr];
-    }
-    flashRom[nr] = new FlashRom(data);
-    chipStartAddress[nr] = start;
-    chipSize[nr] = size;
-}
-*/
-
 uint8_t
 EasyFlash::peekIO1(uint16_t addr)
 {
