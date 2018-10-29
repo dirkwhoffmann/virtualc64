@@ -32,6 +32,7 @@
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5017B71A218729DA0014EDE4 /* FlashRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B718218729DA0014EDE4 /* FlashRom.cpp */; };
 		5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B71B21873FD00014EDE4 /* EasyFlash.cpp */; };
+		5017B72021874B9A0014EDE4 /* CartridgeRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */; };
 		50186A1E202E309C00EEAD72 /* ExportScreenshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */; };
 		50186A20202E31B700EEAD72 /* ExportScreenshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
@@ -241,6 +242,8 @@
 		5017B719218729DA0014EDE4 /* FlashRom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlashRom.h; sourceTree = "<group>"; };
 		5017B71B21873FD00014EDE4 /* EasyFlash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EasyFlash.cpp; sourceTree = "<group>"; };
 		5017B71C21873FD00014EDE4 /* EasyFlash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasyFlash.h; sourceTree = "<group>"; };
+		5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CartridgeRom.cpp; sourceTree = "<group>"; };
+		5017B71F21874B9A0014EDE4 /* CartridgeRom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgeRom.h; sourceTree = "<group>"; };
 		50186A1D202E309C00EEAD72 /* ExportScreenshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportScreenshotController.swift; sourceTree = "<group>"; };
 		50186A1F202E31B700EEAD72 /* ExportScreenshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportScreenshotDialog.xib; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
@@ -717,6 +720,8 @@
 				50171AA12083722C00C07AAD /* Memory_types.h */,
 				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
+				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
+				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
 				5017B719218729DA0014EDE4 /* FlashRom.h */,
 				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
 			);
@@ -1089,6 +1094,7 @@
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,
+				5017B72021874B9A0014EDE4 /* CartridgeRom.cpp in Sources */,
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
 				50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,

@@ -35,10 +35,10 @@ class ExpansionPort;
  */
 class Cartridge : public VirtualComponent {
     
+    public:
+    
     //! @brief    Maximum number of chip packets on a single cartridge.
     static const unsigned MAX_PACKETS = 128;
-    
-public:
     
     /*! @brief    Initial gameLine value used by this cartridge
      *  @details  The value is read from the CRT filt and the game line is set
@@ -248,7 +248,7 @@ public:
     //
     
     //! @brief    Reads in chip stored in the provided CRT container
-    void loadChip(unsigned nr, CRTFile *c);
+    virtual void loadChip(unsigned nr, CRTFile *c);
 
     //! @brief    Returns true if a certain ROM chip maps to ROML, only.
     bool mapsToL(unsigned nr);

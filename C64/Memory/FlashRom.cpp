@@ -42,6 +42,7 @@ FlashRom::FlashRom(const uint8_t *buffer) : FlashRom()
 {
     assert(buffer != NULL);
     memcpy(rom, buffer, sizeof(rom));
+    debug("Flash Rom created at address %p\n", this);
 }
 
 FlashRom::~FlashRom()

@@ -48,6 +48,23 @@ EasyFlash::reset()
 {
     Cartridge::reset();
     
+    // Create the Flash Roms when the cartridge is reset the first time
+    /*
+    if (romCount == 0) {
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
+        
+        if (chip[i] == NULL) break;
+
+        if (chipSize[i] != 0x2000) {
+            panic("Invalid chip size in EasyFlash cartrige spotted: %04X\n");
+            assert(false);
+            return;
+        }
+        
+        flashRom[i] = new FlashRom(chip[i]);
+    }
+    */
+ 
     for (unsigned i = 0; i < 128; i++) {
         if (flashRom[i])
         flashRom[i]->reset();
@@ -93,7 +110,7 @@ EasyFlash::loadFromBuffer(uint8_t **buffer)
 
 void
 EasyFlash::saveToBuffer(uint8_t **buffer)
-{    
+{
     uint8_t *old = *buffer;
     Cartridge::saveToBuffer(buffer);
     write8(buffer, romCount);
@@ -106,6 +123,31 @@ EasyFlash::saveToBuffer(uint8_t **buffer)
         assert(false);
     }
 }
+
+/*
+void
+EasyFlash::loadChip(unsigned nr, CRTFile *c)
+{
+    assert(nr < MAX_PACKETS);
+    assert(c != NULL);
+    
+    uint16_t start = c->chipAddr(nr);
+    uint16_t size  = c->chipSize(nr);
+    uint8_t  *data = c->chipData(nr);
+    
+    if (size != 0x2000) {
+        warn("Ignoring chip %d: Got size %04X, expected %04X.\n", size, 0x2000);
+        return;
+    }
+    
+    if (flashRom[nr]) {
+        delete flashRom[nr];
+    }
+    flashRom[nr] = new FlashRom(data);
+    chipStartAddress[nr] = start;
+    chipSize[nr] = size;
+}
+*/
 
 uint8_t
 EasyFlash::peekIO1(uint16_t addr)
