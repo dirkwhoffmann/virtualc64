@@ -45,7 +45,8 @@ ActionReplay::peekRomL(uint16_t addr)
     if (ramIsEnabled()) {
         return externalRam[addr];
     } else {
-        return chip[chipL][addr];
+        return packet[chipL]->peek(addr);
+        // return chip[chipL][addr];
     }
 }
 
@@ -73,7 +74,8 @@ ActionReplay::peekIO2(uint16_t addr)
     if (ramIsEnabled()) {
         return externalRam[0x1F00 + offset];
     } else {
-        return chip[chipL][0x1F00 + offset];
+        // return chip[chipL][0x1F00 + offset];
+        return packet[chipL]->peek(0x1F00 + offset);
     }
 }
 
@@ -457,7 +459,8 @@ uint8_t
 EpyxFastLoad::peekIO2(uint16_t addr)
 {
     // I/O 2 mirrors the last 256 ROM bytes
-    return chip[0][0x1f00 + (addr & 0xff)];
+    // return chip[0][0x1f00 + (addr & 0xff)];
+    return packet[0]->peek(0x1f00 + (addr & 0xff));
 }
 
 
@@ -712,15 +715,18 @@ uint8_t
 ActionReplay3::peek(uint16_t addr)
 {
     if (addr >= 0x8000 && addr <= 0x9FFF) {
-        return chip[bank()][addr - 0x8000];
+        // return chip[bank()][addr - 0x8000];
+        return packet[bank()]->peek(addr - 0x8000);
     }
     
     if (addr >= 0xE000 && addr <= 0xFFFF) {
-        return chip[bank()][addr - 0xE000];
+        // return chip[bank()][addr - 0xE000];
+        return packet[bank()]->peek(addr - 0xE000);
     }
     
     if (addr >= 0xA000 && addr <= 0xBFFF) {
-        return chip[bank()][addr - 0xA000];
+        // return chip[bank()][addr - 0xA000];
+        return packet[bank()]->peek(addr - 0xA000);
     }
     
     assert(false);
@@ -737,7 +743,8 @@ uint8_t
 ActionReplay3::peekIO2(uint16_t addr)
 {
     uint16_t offset = addr - 0xDF00;
-    return disabled() ? 0 : chip[bank()][0x1F00 + offset];
+    // return disabled() ? 0 : chip[bank()][0x1F00 + offset];
+    return disabled() ? 0 : packet[bank()]->peek(0x1F00 + offset);
 }
 
 void
