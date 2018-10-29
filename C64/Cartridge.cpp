@@ -39,7 +39,7 @@ Cartridge::Cartridge(C64 *c64)
     }
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        chip[i] = NULL;
+        // chip[i] = NULL;
         chipSize[i] = 0;
     }
     chipL = chipH = 0;
@@ -58,10 +58,6 @@ Cartridge::Cartridge(C64 *c64)
 Cartridge::~Cartridge()
 {
     debug(1, "  Releasing cartridge...\n");
-    
-    // Deallocate ROM chips
-    for (unsigned i = 0; i < MAX_PACKETS; i++)
-        if (chip[i]) free(chip[i]);
     
     // Deallocate RAM (if any)
     if (externalRam) {
@@ -267,8 +263,9 @@ Cartridge::stateSize()
     size += packetStateSize();
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        size += 2 + chipSize[i];
+        size += 2;
     }
+    
     size += sizeof(chipL);
     size += sizeof(chipH);
     size += sizeof(mappedBytesL);
@@ -300,6 +297,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chipSize[i] = read16(buffer);
         
+        /*
         if (chipSize[i] > 0) {
             if (chip[i] != NULL) free(chip[i]);
             chip[i] = (uint8_t *)malloc(chipSize[i]);
@@ -307,6 +305,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
         } else {
             chip[i] = NULL;
         }
+        */
     }
     chipL = read8(buffer);
     chipH = read8(buffer);
@@ -339,11 +338,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         write16(buffer, chipSize[i]);
-        
-        if (chipSize[i] > 0) {
-            writeBlock(buffer, chip[i], chipSize[i]);
-        }
     }
+    
     write8(buffer, chipL);
     write8(buffer, chipH);
     write16(buffer, mappedBytesL);
@@ -401,11 +397,8 @@ Cartridge::peekRomL(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < numPackets);
-    assert(addr + offsetL < chipSize[chipL]);
     
-    uint8_t result = packet[chipL]->peek(addr + offsetL);
-    assert(result == chip[chipL][addr + offsetL]);
-    return chip[chipL][addr + offsetL];
+    return packet[chipL]->peek(addr + offsetL);
 }
 
 uint8_t
@@ -413,13 +406,11 @@ Cartridge::peekRomH(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipH >= 0 && chipH < numPackets);
-    assert(addr + offsetH < chipSize[chipH]);
     
-    uint8_t result = packet[chipH]->peek(addr + offsetH);
-    assert(result == chip[chipH][addr + offsetH]);
-    return chip[chipH][addr + offsetH];
+    return packet[chipH]->peek(addr + offsetH);
 }
 
+/*
 unsigned
 Cartridge::numberOfChips()
 {
@@ -431,7 +422,9 @@ Cartridge::numberOfChips()
     
     return result;
 }
+*/
 
+/*
 unsigned
 Cartridge::numberOfBytes()
 {
@@ -443,6 +436,7 @@ Cartridge::numberOfBytes()
     
     return result;
 }
+*/
 
 uint32_t
 Cartridge::getRamCapacity()
@@ -499,15 +493,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     }
     packet[nr] = new CartridgeRom(size, start, data);
     
-    // OLD CODE
-    if (chip[nr])
-        free(chip[nr]);
-    
-    if (!(chip[nr] = (uint8_t *)malloc(size)))
-        return;
-    
     chipSize[nr]         = size;
-    memcpy(chip[nr], data, size);
 }
 
 bool
@@ -550,7 +536,7 @@ Cartridge::bankIn(unsigned nr)
     assert(nr < MAX_PACKETS);
     assert(chipSize[nr] <= 0x4000);
     
-    if (chip[nr] == NULL)
+    if (packet[nr] == NULL)
         return;
 
     if (mapsToLH(nr)) {

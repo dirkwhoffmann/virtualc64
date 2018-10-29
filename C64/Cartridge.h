@@ -62,7 +62,7 @@ class Cartridge : public VirtualComponent {
     /*! @brief    ROM chips contained in the attached cartridge
      *  @deprecated
      */
-    uint8_t *chip[MAX_PACKETS];
+    // uint8_t *chip[MAX_PACKETS];
         
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[MAX_PACKETS];
@@ -246,10 +246,10 @@ public:
     /*! @brief    Counts the number of chips
      *  @return   Value between 0 and 64
      */
-    unsigned numberOfChips();
+    // unsigned numberOfChips();
     
     //! @brief    Sums up the sizes of all chips in bytes
-    unsigned numberOfBytes();
+    // unsigned numberOfBytes();
     
     //! @brief    Returns the RAM size in bytes.
     uint32_t getRamCapacity(); 
