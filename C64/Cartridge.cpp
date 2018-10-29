@@ -221,29 +221,44 @@ Cartridge::packetStateSize()
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
         result += packet[i]->stateSize();
+        debug("Packet size = %04X\n", packet[i]->stateSize());
     }
 
+    debug("Packet state size = %04X\n", result);
     return result;
 }
 
 void
 Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
 {
-    assert(buffer != NULL);
+    uint8_t *old = *buffer;
     
+    debug("loadPacketsFromBuffer\n");
+    dumpState();
     dealloc();
     
     numPackets = read8(buffer);
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
         packet[i] = new CartridgeRom(buffer);
+        debug("packet[%d] loaded\n", i);
     }
+    
+    assert(*buffer - old == packetStateSize());
 }
 
 void
 Cartridge::savePacketsToBuffer(uint8_t **buffer)
 {
+    uint8_t *old = *buffer;
     
+    write8(buffer, numPackets);
+    for (unsigned i = 0; i < numPackets; i++) {
+        assert(packet[i] != NULL);
+        packet[i]->saveToBuffer(buffer);
+    }
+    
+    assert(*buffer - old == packetStateSize());
 }
 
 size_t
@@ -253,7 +268,8 @@ Cartridge::stateSize()
 
     size += 1; // initialGameLine
     size += 1; // initialExromLine
-    size += 1; // numPackets
+    
+    size += packetStateSize();
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         size += 4 + chipSize[i];
@@ -283,7 +299,9 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     
     initialGameLine = (bool)read8(buffer);
     initialExromLine = (bool)read8(buffer);
-    numPackets = (bool)read8(buffer);
+    
+    debug("loadFromBuffer\n");
+    loadPacketsFromBuffer(buffer);
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chipStartAddress[i] = read16(buffer);
@@ -323,8 +341,9 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     
     write8(buffer, (uint8_t)initialGameLine);
     write8(buffer, (uint8_t)initialExromLine);
-    write8(buffer, (uint8_t)numPackets);
 
+    savePacketsToBuffer(buffer);
+    
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         write16(buffer, chipStartAddress[i]);
         write16(buffer, chipSize[i]);
@@ -492,6 +511,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         delete packet[nr];
     }
     packet[nr] = new CartridgeRom(size, start, data);
+    debug("packet[%d] created\n", nr);
     
     // OLD CODE
     if (chip[nr])

@@ -32,6 +32,7 @@ CartridgeRom::CartridgeRom(uint8_t **buffer)
 {
     assert(buffer != NULL);
     size = read16(buffer);
+    loadAddress = read16(buffer);
     rom = new uint8_t[size];
     readBlock(buffer, rom, size);
 }
@@ -61,6 +62,8 @@ CartridgeRom::stateSize()
 void
 CartridgeRom::loadFromBuffer(uint8_t **buffer)
 {
+    uint8_t *old = *buffer;
+    
     if (rom != NULL) {
         assert(size > 0);
         delete[] rom;
@@ -70,14 +73,25 @@ CartridgeRom::loadFromBuffer(uint8_t **buffer)
     loadAddress = read16(buffer);
     rom = new uint8_t[size];
     readBlock(buffer, rom, size);
+    
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
+    debug("CartridgeRom::loadFromBuffer (%d  bytes)\n", size);
 }
 
 void
 CartridgeRom::saveToBuffer(uint8_t **buffer)
 {
+    uint8_t *old = *buffer;
+    
     write16(buffer, size);
     write16(buffer, loadAddress);
     writeBlock(buffer, rom, size);
+
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
 }
 
 bool
