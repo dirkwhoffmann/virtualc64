@@ -35,6 +35,10 @@ Cartridge::Cartridge(C64 *c64)
     numPackets = 0;
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
+        packet[i] = NULL;
+    }
+    
+    for (unsigned i = 0; i < MAX_PACKETS; i++) {
         chip[i] = NULL;
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
@@ -188,7 +192,7 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
     // Remember powerup values for game line and exrom line
     cart->initialGameLine  = container->initialGameLine();
     cart->initialExromLine = container->initialExromLine();
-    
+
     // Load chip packets
     cart->numPackets = container->chipCount();
     for (unsigned i = 0; i < cart->numPackets; i++) {
@@ -316,6 +320,10 @@ Cartridge::dumpState()
     msg("Initial exrom line:    %d\n", initialExromLine);
     msg("Number of Rom packets: %d\n", numPackets);
     
+    for (unsigned i = 0; i < numPackets; i++) {
+        msg("Chip %2d:        %d KB\n", packet[i]->size);
+    }
+        
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
         if (chip[i] != NULL) {
             msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
@@ -342,9 +350,11 @@ uint8_t
 Cartridge::peekRomL(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
-    assert(chipL >= 0 && chipL < MAX_PACKETS);
+    assert(chipL >= 0 && chipL < numPackets);
     assert(addr + offsetL < chipSize[chipL]);
     
+    uint8_t result = packet[chipL]->peek(addr + offsetL);
+    assert(result == chip[chipL][addr + offsetL]);
     return chip[chipL][addr + offsetL];
 }
 
@@ -352,9 +362,11 @@ uint8_t
 Cartridge::peekRomH(uint16_t addr)
 {
     assert(addr <= 0x1FFF);
-    assert(chipH >= 0 && chipH < MAX_PACKETS);
+    assert(chipH >= 0 && chipH < numPackets);
     assert(addr + offsetH < chipSize[chipH]);
     
+    uint8_t result = packet[chipH]->peek(addr + offsetH);
+    assert(result == chip[chipH][addr + offsetH]);
     return chip[chipH][addr + offsetH];
 }
 
@@ -432,6 +444,12 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         return;
     }
     
+    if (packet[nr] != 0) {
+        delete packet[nr];
+    }
+    packet[nr] = new CartridgeRom(size, data);
+    
+    // OLD CODE
     if (chip[nr])
         free(chip[nr]);
     

@@ -28,8 +28,12 @@
  */
 class CartridgeRom : public VirtualComponent {
     
+    public:
+    
     //! @brief    Rom size in bytes
     uint16_t size;
+    
+    private:
     
     //! @brief    Rom data
     uint8_t *rom;
