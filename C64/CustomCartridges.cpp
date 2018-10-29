@@ -565,7 +565,6 @@ Zaxxon::reset()
     Cartridge::reset();
     
     // Make sure peekRomL() is called for the whole 8KB ROML range.
-    assert(chipSize[0] = 0x1000);
     mappedBytesL = 0x2000;
 }
 

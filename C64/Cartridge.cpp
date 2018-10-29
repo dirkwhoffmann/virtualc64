@@ -33,15 +33,8 @@ Cartridge::Cartridge(C64 *c64)
     initialExromLine = 1;
     
     numPackets = 0;
+    memset(packet, 0, sizeof(packet));
     
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        packet[i] = NULL;
-    }
-    
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        // chip[i] = NULL;
-        chipSize[i] = 0;
-    }
     chipL = chipH = 0;
     offsetL = offsetH = 0;
     mappedBytesL = mappedBytesH = 0;
@@ -262,10 +255,6 @@ Cartridge::stateSize()
     
     size += packetStateSize();
     
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        size += 2;
-    }
-    
     size += sizeof(chipL);
     size += sizeof(chipH);
     size += sizeof(mappedBytesL);
@@ -294,19 +283,6 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     
     loadPacketsFromBuffer(buffer);
     
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        chipSize[i] = read16(buffer);
-        
-        /*
-        if (chipSize[i] > 0) {
-            if (chip[i] != NULL) free(chip[i]);
-            chip[i] = (uint8_t *)malloc(chipSize[i]);
-            readBlock(buffer, chip[i], chipSize[i]);
-        } else {
-            chip[i] = NULL;
-        }
-        */
-    }
     chipL = read8(buffer);
     chipH = read8(buffer);
     mappedBytesL = read16(buffer);
@@ -335,10 +311,6 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     write8(buffer, (uint8_t)initialExromLine);
 
     savePacketsToBuffer(buffer);
-    
-    for (unsigned i = 0; i < MAX_PACKETS; i++) {
-        write16(buffer, chipSize[i]);
-    }
     
     write8(buffer, chipL);
     write8(buffer, chipH);
@@ -488,24 +460,22 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         return;
     }
     
-    if (packet[nr] != 0) {
+    if (packet[nr]) {
         delete packet[nr];
     }
     packet[nr] = new CartridgeRom(size, start, data);
-    
-    chipSize[nr]         = size;
 }
 
 bool
 Cartridge::mapsToL(unsigned nr) {
     assert(nr < MAX_PACKETS);
-    return packet[nr]->loadAddress == 0x8000 && chipSize[nr] <= 0x2000;
+    return packet[nr]->loadAddress == 0x8000 && packet[nr]->size <= 0x2000;
 }
 
 bool
 Cartridge::mapsToLH(unsigned nr) {
     assert(nr < MAX_PACKETS);
-    return packet[nr]->loadAddress == 0x8000 && chipSize[nr] > 0x2000;
+    return packet[nr]->loadAddress == 0x8000 && packet[nr]->size > 0x2000;
 }
 
 bool
@@ -534,25 +504,26 @@ void
 Cartridge::bankIn(unsigned nr)
 {
     assert(nr < MAX_PACKETS);
-    assert(chipSize[nr] <= 0x4000);
     
     if (packet[nr] == NULL)
         return;
 
+    assert(packet[nr]->size <= 0x4000);
+
     if (mapsToLH(nr)) {
         
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
-        bankInROMH(nr, chipSize[nr] - 0x2000, 0x2000);
+        bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
         debug(2, "Banked in chip %d in ROML and ROMH\n", nr);
     
     } else if (mapsToL(nr)) {
         
-        bankInROML(nr, chipSize[nr], 0); // chip covers (part of) ROML
+        bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
         debug(2, "Banked in chip %d in ROML\n", nr);
         
     } else if (mapsToH(nr)) {
         
-        bankInROMH(nr, chipSize[nr], 0); // chip covers (part of) ROMH
+        bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
         debug(2, "Banked in chip %d to ROMH\n", nr);
         
     } else {

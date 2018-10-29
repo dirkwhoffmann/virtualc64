@@ -59,13 +59,8 @@ class Cartridge : public VirtualComponent {
     //! @brief    ROM chips contained in this cartridge
     CartridgeRom *packet[MAX_PACKETS];
     
-    /*! @brief    ROM chips contained in the attached cartridge
-     *  @deprecated
-     */
-    // uint8_t *chip[MAX_PACKETS];
-        
     //! @brief    Array containing the chip sizes of all chips
-    uint16_t chipSize[MAX_PACKETS];
+    // uint16_t chipSize[MAX_PACKETS];
     
     //! @brief    Number of the ROM chip that is currently mapped to ROMx
     uint8_t chipL, chipH;
