@@ -20,14 +20,6 @@
 
 #include "CartridgeRom.h"
 
-/*
-CartridgeRom::CartridgeRom(uint16_t sizeInBytes)
-{
-    size = sizeInBytes;
-    rom = new uint8_t[sizeInBytes];
-}
-*/
-
 CartridgeRom::CartridgeRom(uint8_t **buffer)
 {
     assert(buffer != NULL);
@@ -56,7 +48,7 @@ CartridgeRom::~CartridgeRom()
 size_t
 CartridgeRom::stateSize()
 {
-    return 2 + 2 + size;
+    return 4 + size;
 }
 
 void
@@ -77,7 +69,6 @@ CartridgeRom::loadFromBuffer(uint8_t **buffer)
     if (*buffer - old != stateSize()) {
         assert(false);
     }
-    debug("CartridgeRom::loadFromBuffer (%d  bytes)\n", size);
 }
 
 void

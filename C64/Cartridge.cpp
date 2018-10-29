@@ -221,10 +221,8 @@ Cartridge::packetStateSize()
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != NULL);
         result += packet[i]->stateSize();
-        debug("Packet size = %04X\n", packet[i]->stateSize());
     }
 
-    debug("Packet state size = %04X\n", result);
     return result;
 }
 
@@ -233,7 +231,6 @@ Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    debug("loadPacketsFromBuffer\n");
     dumpState();
     dealloc();
     
@@ -241,7 +238,6 @@ Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == NULL);
         packet[i] = new CartridgeRom(buffer);
-        debug("packet[%d] loaded\n", i);
     }
     
     assert(*buffer - old == packetStateSize());
@@ -300,7 +296,6 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     initialGameLine = (bool)read8(buffer);
     initialExromLine = (bool)read8(buffer);
     
-    debug("loadFromBuffer\n");
     loadPacketsFromBuffer(buffer);
     
     for (unsigned i = 0; i < MAX_PACKETS; i++) {
@@ -511,7 +506,6 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         delete packet[nr];
     }
     packet[nr] = new CartridgeRom(size, start, data);
-    debug("packet[%d] created\n", nr);
     
     // OLD CODE
     if (chip[nr])
