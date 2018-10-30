@@ -25,23 +25,11 @@
 //! @brief    Type 32 cartridges
 class EasyFlash : public Cartridge {
     
-    //! @brief    Number of Flash Roms on this cartridge
-    uint8_t romCount;
-    
-    //! @brief    Pointer to the Flash Roms
-    FlashRom *flashRom[128];
-    
 public:
     
     EasyFlash(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
-    void dealloc();
     void reset();
-    size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
-    
-    // void loadChip(unsigned nr, CRTFile *c);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);

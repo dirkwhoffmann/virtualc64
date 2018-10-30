@@ -20,34 +20,15 @@
 
 #include "FlashRom.h"
 
-FlashRom::FlashRom()
+FlashRom::FlashRom(uint8_t **buffer) : CartridgeRom(buffer)
 {
-    setDescription("FlashRom");
-    debug(3, "  Creating FlashRom at address %p...\n", this);
-    
-    // Register snapshot items
-    SnapshotItem items[] = {
-        
-        { &state,       sizeof(state),          KEEP_ON_RESET },
-        { rom,          sizeof(rom),            KEEP_ON_RESET },
-        { NULL,         0,                      0 }};
-    
-    registerSnapshotItems(items, sizeof(items));
-    
+    state = (FlashRomState)read8(buffer);
+}
+
+FlashRom::FlashRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer) :
+CartridgeRom(_size, _loadAddress, buffer)
+{
     state = FLASH_READ;
-    memset(rom, 0xff, sizeof(rom));
-}
-
-FlashRom::FlashRom(const uint8_t *buffer) : FlashRom()
-{
-    assert(buffer != NULL);
-    memcpy(rom, buffer, sizeof(rom));
-    debug("Flash Rom created at address %p\n", this);
-}
-
-FlashRom::~FlashRom()
-{
-    debug(3, "  Releasing FlashRom...\n");
 }
 
 void
@@ -56,12 +37,24 @@ FlashRom::reset()
     state = FLASH_READ;
 }
 
-void
-FlashRom::dumpState()
+size_t
+FlashRom::stateSize()
 {
-    msg("FlashRom:\n");
-    msg("---------\n\n");
-    msg("Current state: %s\n", getStateAsString());
+    return 1 + CartridgeRom::stateSize();
+}
+
+void
+FlashRom::loadFromBuffer(uint8_t **buffer)
+{
+    CartridgeRom::loadFromBuffer(buffer);
+    state = (FlashRomState)read8(buffer);
+}
+
+void
+FlashRom::saveToBuffer(uint8_t **buffer)
+{
+    CartridgeRom::saveToBuffer(buffer);
+    write8(buffer, (uint8_t)state);
 }
 
 const char *
@@ -89,6 +82,8 @@ FlashRom::getStateAsString()
 uint8_t
 FlashRom::peek(uint16_t addr)
 {
+    assert(addr < size);
+    
     uint8_t result;
     
     switch (state) {
@@ -96,43 +91,43 @@ FlashRom::peek(uint16_t addr)
         case FLASH_AUTOSELECT:
         
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
         
         case FLASH_BYTE_PROGRAM_ERROR:
         
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
         
         case FLASH_SECTOR_ERASE_SUSPEND:
         
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
         
         case FLASH_CHIP_ERASE:
         
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
         
         case FLASH_SECTOR_ERASE:
         
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
         
         case FLASH_SECTOR_ERASE_TIMEOUT:
         
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
         
         default:
 
         // TODO
-        result = 0;
+        result = rom[addr];
         break;
     }
     

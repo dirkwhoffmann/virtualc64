@@ -73,12 +73,17 @@ Cartridge::dealloc()
 void
 Cartridge::reset()
 {
-    // Delete RAM
+    // Reset external RAM
     if (externalRam && !persistentRam) {
         memset(externalRam, 0, ramCapacity);
     }
+ 
+    // Reset all chip packets
+    for (unsigned i = 0; i < numPackets; i++) {
+        packet[i]->reset();
+    }
     
-    // Delete general-purpose storage variables
+    // Delete general-purpose variables
     memset(val, 0, sizeof(val));
     cycle = 0;
     regValue = 0;
@@ -420,21 +425,43 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
     
     uint16_t size = c->chipSize(nr);
     uint16_t start = c->chipAddr(nr);
+    uint16_t type = c->chipType(nr);
     
+    // Perform some consistency checks
     if (start < 0x8000) {
-        warn("Ignoring chip %d: Start address too low (%04X)", nr, start);
+        warn("Ignoring chip %d: Start address too low (%04X)\n", nr, start);
         return;
     }
-    
     if (0x10000 - start < size) {
-        warn("Ignoring chip %d: Invalid size (start: %04X size: %04X)", nr, start, size);
+        warn("Ignoring chip %d: Invalid size (start: %04X size: %04X)/n", nr, start, size);
         return;
     }
     
+    // Delete old chip packet if present
     if (packet[nr]) {
         delete packet[nr];
     }
-    packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
+    
+    // Create new chip packet
+    switch (type) {
+        
+        case 0: // ROM
+        packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
+        break;
+        
+        case 1: // RAM
+        warn("Ignoring chip %d, because it has type RAM.\n", nr);
+        break;
+        
+        case 2: // Flash ROM
+        packet[nr] = new FlashRom(size, start, c->chipData(nr));
+        // packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
+        break;
+        
+        default:
+        warn("Ignoring chip %d, because it has unknown type %d.\n", nr, type);
+        break;
+    }
 }
 
 void

@@ -21,7 +21,7 @@
 #ifndef _FLASHROM_INC
 #define _FLASHROM_INC
 
-#include "VirtualComponent.h"
+#include "CartridgeRom.h"
 
 /*! @brief    This class implements a Flash Rom module of type Am29F040
  *  @details  Flash Rom modules of this type are used, e.g., by the EasyFlash
@@ -30,7 +30,7 @@
  *            29F040.pdf:     Data sheet published by AMD
  *            flash040core.c: Part of the VICE emulator
  */
-class FlashRom : public VirtualComponent {
+class FlashRom : public CartridgeRom {
 
     //! @brief    Flash Rom states (taken from VICE)
     typedef enum {
@@ -52,34 +52,24 @@ class FlashRom : public VirtualComponent {
     //! @brief    Current Flash Rom state
     FlashRomState state;
     
-    //! @brief    Rom memory cells
-    uint8_t rom[0x2000];
-    
 public:
     
     //! @brief    Constructor
-    FlashRom();
-
-    //! @brief    Custom Constructor
-    FlashRom(const uint8_t *buffer);
-
-    //! @brief    Destructor
-    ~FlashRom();
+    FlashRom(uint8_t **buffer);
+    FlashRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer = NULL);
     
-    //! @brief    Method from VirtualComponent
+    //! @brief    Methods from VirtualComponent
     void reset();
-    void dumpState();
+    size_t stateSize();
+    void loadFromBuffer(uint8_t **buffer);
+    void saveToBuffer(uint8_t **buffer);
     
     //! @brief    Returns the current Flash Rom state as a string
     const char *getStateAsString(); 
     
-    //! @brief    Performs a read access at the specified memory address
+    //! @brief    Methods fromn CartridgeRom
     uint8_t peek(uint16_t addr);
-    
-    //! @brief    Returns the Rom contents at the specified memory address
     uint8_t spypeek(uint16_t addr) {assert(addr < 0x2000); return rom[addr]; }
-
-    //! @brief    Performs a write access at the specified memory address
     void poke(uint16_t addr, uint8_t value);
 
 };

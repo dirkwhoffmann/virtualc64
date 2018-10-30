@@ -66,7 +66,7 @@ CartridgeRom::loadFromBuffer(uint8_t **buffer)
     rom = new uint8_t[size];
     readBlock(buffer, rom, size);
     
-    if (*buffer - old != stateSize()) {
+    if (*buffer - old != CartridgeRom::stateSize()) {
         assert(false);
     }
 }
@@ -80,7 +80,7 @@ CartridgeRom::saveToBuffer(uint8_t **buffer)
     write16(buffer, loadAddress);
     writeBlock(buffer, rom, size);
 
-    if (*buffer - old != stateSize()) {
+    if (*buffer - old != CartridgeRom::stateSize()) {
         assert(false);
     }
 }

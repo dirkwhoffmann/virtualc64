@@ -23,88 +23,15 @@
 
 EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
 {
-    romCount = 0;
-    memset(flashRom, 0, sizeof(flashRom));
-    
     // Allocate 256 bytes on-board RAM
     setRamCapacity(256);
-}
-
-void
-EasyFlash::dealloc()
-{
-    for (unsigned i = 0; i < 128; i++) {
-        if (flashRom[i]) {
-            delete flashRom[i];
-            flashRom[i] = NULL;
-            romCount--;
-        }
-    }
-    assert(romCount == 0);
 }
 
 void
 EasyFlash::reset()
 {
     Cartridge::reset();
-    
-    for (unsigned i = 0; i < 128; i++) {
-        if (flashRom[i])
-        flashRom[i]->reset();
-    }
-}
-
-size_t
-EasyFlash::stateSize()
-{
-    size_t result = Cartridge::stateSize();
-    
-    result += 1; // romCount
-    
-    for (unsigned i = 0; i < 128; i++) {
-        if (flashRom[i] != NULL) {
-            debug("%d SIZE\n", flashRom[i]->stateSize());
-            result += flashRom[i]->stateSize();
-        }
-    }
-    
-    return result;
-}
-
-void
-EasyFlash::loadFromBuffer(uint8_t **buffer)
-{
-    debug("EasyFlash::loadFromBuffer\n");
-    
-    uint8_t *old = *buffer;
-    Cartridge::loadFromBuffer(buffer);
-    romCount = read8(buffer);
-    
-    dealloc();
-    for (unsigned i = 0; i < romCount; i++) {
-        flashRom[i] = new FlashRom();
-        flashRom[i]->loadFromBuffer(buffer);
-    }
-    
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
-}
-
-void
-EasyFlash::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    Cartridge::saveToBuffer(buffer);
-    write8(buffer, romCount);
-    for (unsigned i = 0; i < romCount; i++) {
-        if (flashRom[i]) {
-            flashRom[i]->saveToBuffer(buffer);
-        }
-    }
-    if (*buffer - old != stateSize()) {
-        assert(false);
-    }
+    memset(externalRam, 0xFF, ramCapacity);
 }
 
 uint8_t

@@ -23,14 +23,15 @@
 
 #include "VirtualComponent.h"
 
-/*! @brief    This class implements a single Rom packet inside an expansion
- *            port cartridge.
+/*! @brief    This class implements a cartridge Rom chip 
  */
 class CartridgeRom : public VirtualComponent {
     
+    protected:
+    
     //! @brief    Rom data
     uint8_t *rom;
-
+    
     public:
     
     //! @brief    Size in bytes
@@ -47,7 +48,6 @@ class CartridgeRom : public VirtualComponent {
     public:
     
     //! @brief    Constructor
-    // CartridgeRom(uint16_t sizeInBytes);
     CartridgeRom(uint8_t **buffer);
     CartridgeRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer = NULL);
     
