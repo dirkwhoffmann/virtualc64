@@ -46,6 +46,15 @@ class ComputeKernel : NSObject {
 
     var samplerLinear : MTLSamplerState!
     var samplerNearest : MTLSamplerState!
+    var preBlurTexture: MTLTexture!
+    
+    func isPreBlurRequired() -> Bool {
+        return false;
+    }
+    
+    func setPreBlurTexture(texture: MTLTexture) {
+        self.preBlurTexture = texture;
+    }
 
     override init()
     {
@@ -125,7 +134,9 @@ class ComputeKernel : NSObject {
             encoder.setComputePipelineState(kernel)
             encoder.setTexture(source, index: 0)
             encoder.setTexture(target, index: 1)
-
+            if (preBlurTexture != nil) {
+                encoder.setTexture(preBlurTexture, index: 3);
+            }
             configureComputeCommandEncoder(encoder: encoder)
 
             encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
@@ -197,9 +208,9 @@ class SmoothFilter : ComputeKernel {
 class BlurFilter : ComputeKernel {
     
     var blurWeightTexture: MTLTexture!
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary, radius: Float) {
-        self.init(name: "blur", device: device, library: library)
+
+    convenience init?(name: String, device: MTLDevice, library: MTLLibrary, radius: Float) {
+        self.init(name: name, device: device, library: library)
     
         // Build blur weight texture
         let sigma: Float = radius / 2.0
@@ -213,37 +224,35 @@ class BlurFilter : ComputeKernel {
             expScale = -1.0 / (2 * sigma * sigma)
         }
     
-        let weights = UnsafeMutablePointer<Float>.allocate(capacity: size * size)
+        let weights = UnsafeMutablePointer<Float>.allocate(capacity: size)
         
         var weightSum: Float = 0.0;
-        var y: Float = -radius;
         
-        for j in 0 ..< size {
-            var x = -radius
-            for i in 0 ..< size {
-                let weight = expf((x * x + y * y) * expScale)
-                weights[j * size + i] = weight
-                weightSum += weight
-                x += delta
-            }
-            y += delta
+        var x = -radius
+        for i in 0 ..< size {
+            let weight = expf((x * x) * expScale)
+            weights[i] = weight
+            weightSum += weight
+            x += delta
         }
         
         let weightScale: Float = 1.0 / weightSum
         for j in 0 ..< size {
-            for i in 0 ..< size {
-                weights[j * size + i] *= weightScale;
-            }
+            weights[j] *= weightScale;
         }
     
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.r32Float, width: size, height: size, mipmapped: false)
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.r32Float, width: size, height: 1, mipmapped: false)
     
         blurWeightTexture = device.makeTexture(descriptor: textureDescriptor)!
         
-        let region = MTLRegionMake2D(0, 0, size, size)
+        let region = MTLRegionMake2D(0, 0, size, 1)
         blurWeightTexture.replace(region: region, mipmapLevel: 0, withBytes: weights, bytesPerRow: size * 4 /* size of float */)
     
         weights.deallocate()
+    }
+    
+    override func isPreBlurRequired() -> Bool {
+        return true;
     }
     
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {

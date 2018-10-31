@@ -67,6 +67,11 @@ public class MetalView: MTKView {
      *   algorithm such as EPX */
     var upscaledTexture: MTLTexture! = nil
     
+    //! Pre-blurred texture
+    /*! A horizontally blurred texture. Subsequent filters may add a vertical blur
+     *  to get the final blur value. */
+    var preBlurredTexture: MTLTexture! = nil
+    
     //! Filtered emulator texture
     /*! In the second post-processing stage, the upscaled texture gets filtered.
      *  E.g., a CRT filter can be applied to mimic old CRT displays.
@@ -81,6 +86,9 @@ public class MetalView: MTKView {
  
     /// Array holding all available filters
     var filters = [ComputeKernel?](repeating: nil, count: 5)
+    
+    /// Filter for horizontal blur stage
+    var preBlurFilter: BlurFilter! = nil
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -281,9 +289,16 @@ public class MetalView: MTKView {
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        
-        // Filter the upscaled texture
+        // Run a pre-blur pass if needed
         let filter = currentFilter()
+        if (filter.isPreBlurRequired()) {
+            preBlurFilter.apply(commandBuffer: commandBuffer,
+                                source: upscaledTexture,
+                                target: preBlurredTexture)
+            filter.setPreBlurTexture(texture: preBlurredTexture)
+        }
+
+        // Filter the upscaled texture
         filter.apply(commandBuffer: commandBuffer,
                      source: upscaledTexture,
                      target: filteredTexture)
