@@ -257,32 +257,75 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     outTexture.write(result, gid);
 }
 
-
-//
-// Gaussian blur filter
-//
-
-kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
-                 texture2d<float, access::write> outTexture [[texture(1)]],
-                 texture2d<float, access::read> weights [[texture(2)]],
-                 uint2 gid [[thread_position_in_grid]])
+float4 blur_h(texture2d<float, access::read> inTexture,
+              texture2d<float, access::read> weights,
+              uint2 gid)
 {
     int size = weights.get_width();
     int radius = size / 2;
     
     float4 accumColor(0, 0, 0, 0);
     
-    for (int j = 0; j < size; ++j) {
-        for (int i = 0; i < size; ++i) {
-            uint2 kernelIndex(i, j);
-            uint2 textureIndex(gid.x + (i - radius), (gid.y / 2) + (j - radius));
-            float4 color = inTexture.read(textureIndex).rgba;
-            float4 weight = weights.read(kernelIndex).rrrr;
-            accumColor += weight * color;
-        }
+    for (int i = 0; i < size; ++i) {
+        float4 color = inTexture.read(uint2(gid.x + (i - radius), gid.y)).rgba;
+        float4 weight = weights.read(uint2(i, 0)).rrrr;
+        accumColor += weight * color;
     }
-        
-    outTexture.write(float4(accumColor.rgb, 1), gid);
+    
+    return float4(accumColor.rgb, 1);
+}
+
+float4 blur_v(texture2d<float, access::read> inTexture,
+              texture2d<float, access::read> weights,
+              uint2 gid)
+{
+    int size = weights.get_width();
+    int radius = size / 2;
+    
+    float4 accumColor(0, 0, 0, 0);
+    
+    for (int i = 0; i < size; ++i) {
+        float4 color = inTexture.read(uint2(gid.x, gid.y + (i - radius))).rgba;
+        float4 weight = weights.read(uint2(i, 0)).rrrr;
+        accumColor += weight * color;
+    }
+    
+    return float4(accumColor.rgb, 1);
+}
+
+//
+// Gaussian blur filter (horizontal)
+//
+// This shader only performs a horizontal pass. A secondary filter must call
+// blur_v(inTexture, weights, gid) and add the result to get the final value.
+// This is the first optimization from
+// http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling
+//
+
+kernel void blur_h(texture2d<float, access::read> inTexture [[texture(0)]],
+                 texture2d<float, access::write> outTexture [[texture(1)]],
+                 texture2d<float, access::read> weights [[texture(2)]],
+                 uint2 gid [[thread_position_in_grid]])
+{
+    outTexture.write(blur_h(inTexture, weights, gid), gid);
+}
+
+//
+// Gaussian blur filter (vertical)
+//
+// This shader only performs a vertical pass. A prior call must do a horizontal
+// blur and pass the texture in.
+// http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling
+//
+
+kernel void blur_v(texture2d<float, access::read> inTexture [[texture(0)]],
+                   texture2d<float, access::write> outTexture [[texture(1)]],
+                   texture2d<float, access::read> weights [[texture(2)]],
+                   texture2d<float, access::read> horizontalBlur [[texture(3)]],
+                   uint2 gid [[thread_position_in_grid]])
+{
+    uint2 blurTexIndices = uint2(gid.x, gid.y / 2);
+    outTexture.write(blur_v(horizontalBlur, weights, blurTexIndices), gid);
 }
 
 
