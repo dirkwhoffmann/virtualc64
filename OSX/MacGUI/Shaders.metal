@@ -297,7 +297,7 @@ float4 blur_v(texture2d<float, access::read> inTexture,
 // Gaussian blur filter (horizontal)
 //
 // This shader only performs a horizontal pass. A secondary filter must call
-// blur_v(inTexture, weights, gid) and add the result to get the final value.
+// blur_v(horizontalBlur, weights, gid) to get the final value.
 // This is the first optimization from
 // http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling
 //
