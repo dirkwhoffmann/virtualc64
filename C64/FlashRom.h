@@ -51,7 +51,10 @@ class FlashRom : public CartridgeRom {
 
     //! @brief    Current Flash Rom state
     FlashRomState state;
-    
+
+    //! @brief    Taken from VICE
+    FlashRomState baseState;
+
 public:
     
     //! @brief    Constructor
@@ -72,6 +75,19 @@ public:
     uint8_t spypeek(uint16_t addr) {assert(addr < 0x2000); return rom[addr]; }
     void poke(uint16_t addr, uint8_t value);
 
+    /*! @brief    Performs a "Byte Program" operation
+     *  @details  "Programming is allowed in any sequence and across sector
+     *            boundaries. Beware that a data '0' cannot be programmed back
+     *            to a '1'. Attempting to do so may cause the device to exceed
+     *            programming time limits (DQ5 = 1) or result in an apparent
+     *            success, according to the data polling algorithm, but a read
+     *            from reset/read mode will show that the data is still '0'.
+     *            Only erase operations can convert '0's to '1's." [AMD]
+     *  @return   true on success, false if a '0' was tried to program back
+     *            to a '1'.
+     */
+    bool byteProgram(uint16_t addr, uint8_t value);
+    
 };
 
 #endif 

@@ -23,24 +23,32 @@
 FlashRom::FlashRom(uint8_t **buffer) : CartridgeRom(buffer)
 {
     state = (FlashRomState)read8(buffer);
+    baseState = (FlashRomState)read8(buffer);
 }
 
 FlashRom::FlashRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer) :
 CartridgeRom(_size, _loadAddress, buffer)
 {
     state = FLASH_READ;
+    baseState = FLASH_READ;
 }
 
 void
 FlashRom::reset()
 {
     state = FLASH_READ;
+    baseState = FLASH_READ;
 }
 
 size_t
 FlashRom::stateSize()
 {
-    return 1 + CartridgeRom::stateSize();
+    size_t result = CartridgeRom::stateSize();
+    
+    result += 1; // state
+    result += 1; // baseState
+
+    return result;
 }
 
 void
@@ -48,6 +56,7 @@ FlashRom::loadFromBuffer(uint8_t **buffer)
 {
     CartridgeRom::loadFromBuffer(buffer);
     state = (FlashRomState)read8(buffer);
+    baseState = (FlashRomState)read8(buffer);
 }
 
 void
@@ -55,6 +64,7 @@ FlashRom::saveToBuffer(uint8_t **buffer)
 {
     CartridgeRom::saveToBuffer(buffer);
     write8(buffer, (uint8_t)state);
+    write8(buffer, (uint8_t)baseState);
 }
 
 const char *
@@ -141,23 +151,66 @@ FlashRom::poke(uint16_t addr, uint8_t value)
         
         case FLASH_READ:
         
-        // TODO
-        break;
+        if (addr == 0x5555 && value == 0xAA) {
+            
+            state = FLASH_MAGIC_1;
+            return;
+        }
+        
+        return;
         
         case FLASH_MAGIC_1:
         
-        // TODO
-        break;
+        if (addr == 0x2AAA && value == 0x55) {
+            
+            state = FLASH_MAGIC_2;
+            return;
+        }
+        
+        state = baseState;
+        return;
         
         case FLASH_MAGIC_2:
-  
-        // TODO
+        
+        if (addr == 0x5555) {
+            
+            switch(value) {
+                
+                case 0xF0:
+                
+                state = FLASH_READ;
+                baseState = FLASH_READ;
+                return;
+                
+                case 0x90:
+                
+                state = FLASH_AUTOSELECT;
+                baseState = FLASH_AUTOSELECT;
+                return;
+                
+                case 0xA0:
+                state = FLASH_BYTE_PROGRAM;
+                return;
+                
+                case 0x80:
+                state = FLASH_ERASE_MAGIC_1;
+                return;
+            }
+        }
+        
+        state = baseState;
         break;
         
         case FLASH_BYTE_PROGRAM:
   
-        // TODO
-        break;
+        if (!byteProgram(addr, value)) {
+            
+            state = FLASH_BYTE_PROGRAM_ERROR;
+            return;
+        }
+        
+        state = baseState;
+        return;
         
         case FLASH_ERASE_MAGIC_1:
      
@@ -192,8 +245,18 @@ FlashRom::poke(uint16_t addr, uint8_t value)
         case FLASH_BYTE_PROGRAM_ERROR:
         case FLASH_AUTOSELECT:
       
-        // TODO
-        break;
+        if (addr == 0x5555 && value == 0xAA) {
+            
+            state = FLASH_MAGIC_1;
+            return;
+        }
+        if (value == 0xF0) {
+            
+            state = FLASH_READ;
+            baseState = FLASH_READ;
+            return;
+        }
+        return;
         
         case FLASH_CHIP_ERASE:
         default:
@@ -202,3 +265,16 @@ FlashRom::poke(uint16_t addr, uint8_t value)
         break;
     }
 }
+
+bool
+FlashRom::byteProgram(uint16_t addr, uint8_t value)
+{
+    assert(addr < size);
+    
+    uint8_t oldValue = rom[addr];
+    uint8_t newValue = rom[addr] & value;
+    
+    rom[addr] = newValue;
+    return oldValue == newValue;
+}
+
