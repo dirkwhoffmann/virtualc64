@@ -25,11 +25,39 @@
 //! @brief    Type 32 cartridges
 class EasyFlash : public Cartridge {
     
+    //!@brief    Flash Rom mapping to ROML ($8000 - $9FFF)
+    FlashRom flashRomL;
+
+    //!@brief    Flash Rom mapping to ROMH ($A000 - $B000 or $E000 - $FFFF)
+    FlashRom flashRomH;
+    
+    //!@brief    Selected memory bank
+    uint8_t bank;
+
 public:
+    
+    //
+    //! @functiongroup Creating and destructing
+    //
     
     EasyFlash(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_EASYFLASH; }
+    
+
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+
     void reset();
+    
+    
+    //
+    //! @functiongroup Methods from Cartridge
+    //
+    
+    void loadChip(unsigned nr, CRTFile *c);
+    uint8_t peek(uint16_t addr);
+    
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
@@ -38,6 +66,9 @@ public:
     bool hasResetButton() { return false; }
     bool getJumper() { return val[2]; }
     void setJumper(bool value) { val[2] = value; }
+    
+
+    
 };
 
 #endif

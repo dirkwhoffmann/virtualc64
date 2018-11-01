@@ -23,6 +23,8 @@
 
 EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
 {
+    bank = 0;
+    
     // Allocate 256 bytes on-board RAM
     setRamCapacity(256);
 }
@@ -31,7 +33,57 @@ void
 EasyFlash::reset()
 {
     Cartridge::reset();
+    
+    bank = 0;
     memset(externalRam, 0xFF, ramCapacity);
+}
+
+void
+EasyFlash::loadChip(unsigned nr, CRTFile *c)
+{
+    uint16_t chipSize = c->chipSize(nr);
+    uint16_t chipAddr = c->chipAddr(nr);
+    uint8_t *chipData = c->chipData(nr);
+    uint8_t bank = nr / 2;
+
+    if(chipSize != 0x2000) {
+        warn("Package %d has chip size %04X. Expected 0x2000.\n", nr, chipSize);
+        return;
+    }
+
+    if (nr % 2) {
+
+        if (!isROMHaddr(chipAddr)) {
+            warn("Package %d maps to ROML. Expected ROMH.\n", nr);
+            return;
+        }
+        flashRomH.loadBank(bank, chipData);
+        debug("Rom bank %dH loaded.\n", bank);
+        
+    } else {
+        
+        if (!isROMLaddr(chipAddr)) {
+            warn("Package %d maps to ROMH. Expected ROML.\n", nr);
+            return;
+        }
+        flashRomL.loadBank(bank, chipData);
+        debug("Rom bank %dL loaded.\n", bank);
+    }    
+}
+
+uint8_t
+EasyFlash::peek(uint16_t addr)
+{
+    if (isROMLaddr(addr)) {
+        return flashRomL.peek(bank, addr & 0x1FFF);
+        
+    } else if (isROMHaddr(addr)) {
+        return flashRomH.peek(bank, addr & 0x1FFF);
+        
+    } else {
+        assert(false);
+        return 0;
+    }
 }
 
 uint8_t
@@ -50,18 +102,15 @@ EasyFlash::peekIO2(uint16_t addr)
 void
 EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
 {
-    if (addr == 0xDE00) {
+    if (addr == 0xDE00) { // Bank register
         
-        // Bank register
-        int bank = value & 0x3F;
+        bank = value & 0x3F;
         
         bankIn(2 * bank); // ROML
         bankIn(2 * bank + 1); // ROMH
     }
     
-    else if (addr == 0xDE02) {
-        
-        // Mode register
+    else if (addr == 0xDE02) { // Mode register
         
         uint8_t MXG = value & 0x07;
         

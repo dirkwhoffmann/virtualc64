@@ -136,7 +136,7 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
     //! @brief    Convenience constructor
@@ -252,10 +252,10 @@ public:
     
     
     //
-    // ROM chip handling
+    //! @functiongroup ROM chip handling
     //
     
-    //! @brief    Reads in chip stored in the provided CRT container
+    //! @brief    Reads in a chip packet from a CRT file
     virtual void loadChip(unsigned nr, CRTFile *c);
 
     //! @brief    Banks in a rom chip into the ROML space

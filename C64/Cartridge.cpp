@@ -198,11 +198,11 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
     cart->initialExromLine = container->initialExromLine();
 
     // Load chip packets
-    cart->numPackets = container->chipCount();
-    for (unsigned i = 0; i < cart->numPackets; i++) {
+    cart->numPackets = 0;
+    for (unsigned i = 0; i < container->chipCount(); i++) {
         cart->loadChip(i, container);
     }
-    
+        
     return cart;
 }
 
@@ -350,7 +350,7 @@ Cartridge::dumpState()
     
     for (unsigned i = 0; i < numPackets; i++) {
         msg("Chip %2d:        %d KB starting at $%04X\n",
-            packet[i]->size / 1024, packet[i]->loadAddress);
+            i, packet[i]->size / 1024, packet[i]->loadAddress);
     }
 }
 
@@ -451,7 +451,7 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         
         case 1: // RAM
         warn("Ignoring chip %d, because it has type RAM.\n", nr);
-        break;
+        return;
         
         case 2: // Flash ROM
         warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
@@ -460,8 +460,10 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         
         default:
         warn("Ignoring chip %d, because it has unknown type %d.\n", nr, type);
-        break;
+        return;
     }
+    
+    numPackets++;
 }
 
 void
