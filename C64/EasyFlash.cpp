@@ -44,6 +44,48 @@ EasyFlash::reset()
     memset(externalRam, 0xFF, ramCapacity);
 }
 
+size_t
+EasyFlash::stateSize()
+{
+    size_t result = Cartridge::stateSize();
+    
+    result += 1; // bank
+    result += flashRomL.stateSize();
+    result += flashRomH.stateSize();
+    
+    return result;
+}
+
+void
+EasyFlash::loadFromBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    
+    Cartridge::loadFromBuffer(buffer);
+    bank = read8(buffer);
+    flashRomL.loadFromBuffer(buffer);
+    flashRomH.loadFromBuffer(buffer);
+
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
+}
+
+void
+EasyFlash::saveToBuffer(uint8_t **buffer)
+{
+    uint8_t *old = *buffer;
+    
+    Cartridge::saveToBuffer(buffer);
+    write8(buffer, bank);
+    flashRomL.saveToBuffer(buffer);
+    flashRomH.saveToBuffer(buffer);
+    
+    if (*buffer - old != stateSize()) {
+        assert(false);
+    }
+}
+
 void
 EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {
@@ -156,7 +198,6 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
     if (addr == 0xDE00) { // Bank register
         
         bank = value & 0x3F;
-        debug("Switching to bank %d\n", bank);
         return;
     }
     

@@ -49,6 +49,9 @@ public:
     //
 
     void reset();
+    size_t stateSize();
+    void loadFromBuffer(uint8_t **buffer);
+    void saveToBuffer(uint8_t **buffer);
     
     
     //
@@ -57,7 +60,6 @@ public:
     
     void loadChip(unsigned nr, CRTFile *c);
     uint8_t peek(uint16_t addr);
-    // uint8_t spypeek(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
