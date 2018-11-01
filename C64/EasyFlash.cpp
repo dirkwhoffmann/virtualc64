@@ -89,6 +89,20 @@ EasyFlash::peek(uint16_t addr)
     }
 }
 
+void
+EasyFlash::poke(uint16_t addr, uint8_t value)
+{
+    if (isROMLaddr(addr)) {
+        flashRomL.poke(bank, addr & 0x1FFF, value);
+        
+    } else if (isROMHaddr(addr)) {
+        flashRomH.poke(bank, addr & 0x1FFF, value);
+        
+    } else {
+        assert(false);
+    }
+}
+
 uint8_t
 EasyFlash::peekIO1(uint16_t addr)
 {
@@ -134,11 +148,13 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
         switch (MXG) {
             
             case 0b000:
+            case 0b001:
             game = getJumper();
             exrom = 1;
             break;
             
             case 0b010:
+            case 0b011:
             game = getJumper();
             exrom = 0;
             break;
@@ -164,7 +180,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
             break;
             
             default:
-            warn("Ignoring invalid MXG combination %X.", MXG);
+            assert(false); 
             return;
         }
         

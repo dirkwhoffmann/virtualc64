@@ -147,6 +147,8 @@ FlashRom::poke(uint32_t addr, uint8_t value)
 {
     assert(addr < size);
     
+    debug("poke(%04X, %02)\n", addr, value);
+    
     switch (state) {
         
         case FLASH_READ:
