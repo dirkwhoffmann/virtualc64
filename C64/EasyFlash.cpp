@@ -27,6 +27,9 @@ EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
     
     // Allocate 256 bytes on-board RAM
     setRamCapacity(256);
+
+    // Start in Ultimax mode
+    setJumper(0);
 }
 
 void
@@ -59,13 +62,21 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
 
     if (isROMHaddr(chipAddr)) {
         
-        debug("Loading Rom bank %dH ...\n", bankH);
+        debug(1, "Loading Rom bank %dH ...\n", bankH);
         flashRomH.loadBank(bankH++, chipData);
+        for (unsigned i = 0; i < 8; i++) {
+            msg("%02X ", flashRomH.spypeek(bankH - 1, 0));
+        }
+        msg("\n");
         
     } else if (isROMLaddr(chipAddr)) {
 
-        debug("Loading Rom bank %dL ...\n", bankL);
+        debug(1, "Loading Rom bank %dL ...\n", bankL);
         flashRomL.loadBank(bankL++, chipData);
+        for (unsigned i = 0; i < 8; i++) {
+            msg("%02X ", flashRomL.spypeek(bankL - 1, i));
+        }
+        msg("\n");
         
     } else {
         
@@ -88,6 +99,23 @@ EasyFlash::peek(uint16_t addr)
         return 0;
     }
 }
+
+/*
+uint8_t
+EasyFlash::spypeek(uint16_t addr)
+{
+    if (isROMLaddr(addr)) {
+        return flashRomL.spypeek(bank, addr & 0x1FFF);
+        
+    } else if (isROMHaddr(addr)) {
+        return flashRomH.spypeek(bank, addr & 0x1FFF);
+        
+    } else {
+        assert(false);
+        return 0;
+    }
+}
+*/
 
 void
 EasyFlash::poke(uint16_t addr, uint8_t value)
@@ -122,9 +150,6 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
     if (addr == 0xDE00) { // Bank register
         
         bank = value & 0x3F;
-        
-        bankIn(2 * bank); // ROML
-        bankIn(2 * bank + 1); // ROMH
     }
     
     else if (addr == 0xDE02) { // Mode register
@@ -180,7 +205,7 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
             break;
             
             default:
-            assert(false); 
+            assert(false);
             return;
         }
         

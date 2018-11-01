@@ -179,64 +179,41 @@ C64Memory::updatePeekPokeLookupTables()
     assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
     peekSrc[0xE] = pokeTarget[0xE] = source;
     peekSrc[0xF] = pokeTarget[0xF] = source;
-
-    /*
-    // Set poke targets
-    target = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
-    if (target != M_CRTLO) target = M_RAM;
-    pokeTarget[0x8] = target;
-    pokeTarget[0x9] = target;
-    
-    target = BankMap[index][2]; // 0xA000 - 0xBFFF (CRT, or RAM)
-    if (target != M_CRTHI) target = M_RAM;
-    pokeTarget[0xA] = target;
-    pokeTarget[0xB] = target;
-    
-    target = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O or RAM)
-    if (target != M_IO) target = M_RAM;
-    pokeTarget[0xD] = target;
-    
-    target = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, or RAM)
-    if (target != M_CRTHI) target = M_RAM;
-    pokeTarget[0xE] = target;
-    pokeTarget[0xF] = target;
-    */
 }
 
 uint8_t
 C64Memory::peek(uint16_t addr, MemoryType source)
 {
     switch(source) {
-            
+        
         case M_RAM:
-            return ram[addr];
-            
+        return ram[addr];
+        
         case M_ROM:
-            return rom[addr];
-            
+        return rom[addr];
+        
         case M_IO:
-            return peekIO(addr);
-            
+        return peekIO(addr);
+        
         case M_CRTLO:
         case M_CRTHI:
-            return c64->expansionport.peek(addr);
-            
+        return c64->expansionport.peek(addr);
+        
         case M_PP:
-            if (likely(addr >= 0x02)) {
-                return ram[addr];
-            } else if (addr == 0x00) {
-                return c64->processorPort.readDirection();
-            } else {
-                return c64->processorPort.read();
-            }
-   
-        case M_NONE:
-            // what happens if RAM is unmapped?
+        if (likely(addr >= 0x02)) {
             return ram[addr];
-            
+        } else if (addr == 0x00) {
+            return c64->processorPort.readDirection();
+        } else {
+            return c64->processorPort.read();
+        }
+        
+        case M_NONE:
+        return c64->vic.getDataBusPhi1();
+        
         default:
-            assert(0);
-            return 0;
+        assert(0);
+        return 0;
     }
 }
 

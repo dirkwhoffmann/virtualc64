@@ -448,6 +448,8 @@ CPU::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
+bool dirkverbose = false;
+
 bool
 CPU::executeOneCycle()
 {    
