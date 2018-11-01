@@ -21,7 +21,7 @@
 #ifndef _FLASHROM_INC
 #define _FLASHROM_INC
 
-#include "CartridgeRom.h"
+#include "VirtualComponent.h"
 
 /*! @brief    This class implements a Flash Rom module of type Am29F040
  *  @details  Flash Rom modules of this type are used, e.g., by the EasyFlash
@@ -30,11 +30,11 @@
  *            29F040.pdf:     Data sheet published by AMD
  *            flash040core.c: Part of the VICE emulator
  */
-class FlashRom : public CartridgeRom {
-
+class FlashRom : public VirtualComponent {
+    
     //! @brief    Flash Rom states (taken from VICE)
     typedef enum {
-        FLASH_READ,
+        FLASH_READ = 0,
         FLASH_MAGIC_1,
         FLASH_MAGIC_2,
         FLASH_AUTOSELECT,
@@ -48,46 +48,107 @@ class FlashRom : public CartridgeRom {
         FLASH_SECTOR_ERASE_TIMEOUT,
         FLASH_SECTOR_ERASE_SUSPEND
     } FlashRomState;
-
+    
     //! @brief    Current Flash Rom state
     FlashRomState state;
 
-    //! @brief    Taken from VICE
+    //! @brief    State taken after an operations has been completed.
     FlashRomState baseState;
 
-public:
+    //! @brief    Number of sectors in this Flash Rom
+    size_t numSectors;
+    
+    //! @brief    Size of a single sector in bytes
+    size_t sectorSize; // 64 KB
+    
+    //! @brief    Total size of the Flash Rom in bytes
+    size_t size; // 512 KB
+    
+    //! @brief    Flash Rom data
+    uint8_t *rom;
+    
+    public:
+    
+    //
+    //! @brief    Class methods
+    //
+    
+    //! @brief    Validity check for bank numbers
+    static bool isBankNumber(unsigned bank) { return bank < 64; }
+    
+    //! @brief    Converts a Flash Rom state to a string
+    static const char *getStateAsString(FlashRomState state);
+    
+    
+    //
+    //! @functiongroup Creating and destructing
+    //
     
     //! @brief    Constructor
-    FlashRom(uint8_t **buffer);
-    FlashRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer = NULL);
+    FlashRom();
     
-    //! @brief    Methods from VirtualComponent
-    void reset();
-    size_t stateSize();
-    void loadFromBuffer(uint8_t **buffer);
-    void saveToBuffer(uint8_t **buffer);
+    //! @brief    Destructor
+    ~FlashRom();
     
-    //! @brief    Returns the current Flash Rom state as a string
-    const char *getStateAsString(); 
-    
-    //! @brief    Methods fromn CartridgeRom
-    uint8_t peek(uint16_t addr);
-    uint8_t spypeek(uint16_t addr) {assert(addr < 0x2000); return rom[addr]; }
-    void poke(uint16_t addr, uint8_t value);
-
-    /*! @brief    Performs a "Byte Program" operation
-     *  @details  "Programming is allowed in any sequence and across sector
-     *            boundaries. Beware that a data '0' cannot be programmed back
-     *            to a '1'. Attempting to do so may cause the device to exceed
-     *            programming time limits (DQ5 = 1) or result in an apparent
-     *            success, according to the data polling algorithm, but a read
-     *            from reset/read mode will show that the data is still '0'.
-     *            Only erase operations can convert '0's to '1's." [AMD]
-     *  @return   true on success, false if a '0' was tried to program back
-     *            to a '1'.
+    /*! @brief    Loads an 8 KB chunk of Rom data from a buffer.
+     *  @details  This method is used when loading the contents from a CRT file.
      */
-    bool byteProgram(uint16_t addr, uint8_t value);
+    void loadBank(unsigned bank, uint8_t *data);
     
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
+    void reset();
+    
+    
+    //
+    //! @functiongroup Accessing Rom cells
+    //
+    
+    //! @brief    Reads a Rom cell
+    uint8_t peek(uint32_t addr);
+    
+    //! @brief    Convenience wrapper with bank,offset addressing
+    uint8_t peek(unsigned bank, uint16_t addr) {
+        assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
+    
+    //! @brief    Reads a Rom cell without side effects
+    uint8_t spypeek(uint32_t addr) { return peek(addr); }
+    
+    //! @brief    Convenience wrapper with bank,offset addressing
+    uint8_t spypeek(unsigned bank, uint16_t addr) {
+        assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
+    
+    //! @brief    Writes a Rom cell
+    void poke(uint32_t addr, uint8_t value);
+    
+    //! @brief    Convenience wrapper with bank,offset addressing
+    void poke(unsigned bank, uint16_t addr, uint8_t value) {
+        assert(isBankNumber(bank)); poke(bank * 0x2000 + addr, value); }
+    
+    
+    //
+    //! @functiongroup Performing flash operations
+    //
+    
+    //! @brief    Performs a "Byte Program" operation
+    bool doByteProgram(uint32_t addr, uint8_t value);
+    
+    //! @brief    Convenience wrapper with bank,offset addressing
+    bool doByteProgram(unsigned bank, uint16_t addr, uint8_t value) {
+        assert(isBankNumber(bank)); return doByteProgram(bank * 0x2000 + addr, value); }
+    
+    //! @brief    Performs a "Sector Erase" operation
+    void doSectorErase(uint32_t addr);
+    
+    //! @brief    Convenience wrapper with bank,offset addressing
+    void doSectorErase(unsigned bank, uint16_t addr) {
+        assert(isBankNumber(bank)); doSectorErase(bank * 0x2000 + addr); }
+    
+    //! @brief    Performs a "Chip Erase" operation
+    void doChipErase();
 };
 
 #endif 

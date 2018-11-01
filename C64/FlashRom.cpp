@@ -20,55 +20,8 @@
 
 #include "FlashRom.h"
 
-FlashRom::FlashRom(uint8_t **buffer) : CartridgeRom(buffer)
-{
-    state = (FlashRomState)read8(buffer);
-    baseState = (FlashRomState)read8(buffer);
-}
-
-FlashRom::FlashRom(uint16_t _size, uint16_t _loadAddress, const uint8_t *buffer) :
-CartridgeRom(_size, _loadAddress, buffer)
-{
-    state = FLASH_READ;
-    baseState = FLASH_READ;
-}
-
-void
-FlashRom::reset()
-{
-    state = FLASH_READ;
-    baseState = FLASH_READ;
-}
-
-size_t
-FlashRom::stateSize()
-{
-    size_t result = CartridgeRom::stateSize();
-    
-    result += 1; // state
-    result += 1; // baseState
-
-    return result;
-}
-
-void
-FlashRom::loadFromBuffer(uint8_t **buffer)
-{
-    CartridgeRom::loadFromBuffer(buffer);
-    state = (FlashRomState)read8(buffer);
-    baseState = (FlashRomState)read8(buffer);
-}
-
-void
-FlashRom::saveToBuffer(uint8_t **buffer)
-{
-    CartridgeRom::saveToBuffer(buffer);
-    write8(buffer, (uint8_t)state);
-    write8(buffer, (uint8_t)baseState);
-}
-
 const char *
-FlashRom::getStateAsString()
+FlashRom::getStateAsString(FlashRomState state)
 {
     switch(state) {
         case FLASH_READ:return "FLASH_READ";
@@ -89,8 +42,53 @@ FlashRom::getStateAsString()
     }
 }
 
+FlashRom::FlashRom()
+{
+    setDescription("FlashRom");
+    debug(3, "  Creating FlashRom at address %p...\n", this);
+    
+    state = FLASH_READ;
+    baseState = FLASH_READ;
+    
+    numSectors = 8;
+    sectorSize = 0x10000; // 64 KB
+    size = 0x80000;       // 512 KB
+    
+    rom = new uint8_t[size];
+    memset(rom, 0xFF, size);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { &state,             sizeof(state),                KEEP_ON_RESET },
+        { &baseState,         sizeof(baseState),            KEEP_ON_RESET },
+        { rom,                size,                         KEEP_ON_RESET },
+        { NULL,               0,                            0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
+}
+
+FlashRom::~FlashRom()
+{
+    debug(3, "  Releasing FlashRom ...\n");
+    delete[] rom;
+}
+
+void
+FlashRom::loadBank(unsigned bank, uint8_t *data)
+{
+    assert(data != NULL);
+    memcpy(rom + bank * 0x2000, data, 0x2000);
+}
+
+void
+FlashRom::reset()
+{
+    state = FLASH_READ;
+    baseState = FLASH_READ;
+}
+
 uint8_t
-FlashRom::peek(uint16_t addr)
+FlashRom::peek(uint32_t addr)
 {
     assert(addr < size);
     
@@ -135,7 +133,7 @@ FlashRom::peek(uint16_t addr)
         break;
         
         default:
-
+        
         // TODO
         result = rom[addr];
         break;
@@ -145,8 +143,10 @@ FlashRom::peek(uint16_t addr)
 }
 
 void
-FlashRom::poke(uint16_t addr, uint8_t value)
+FlashRom::poke(uint32_t addr, uint8_t value)
 {
+    assert(addr < size);
+    
     switch (state) {
         
         case FLASH_READ:
@@ -202,8 +202,8 @@ FlashRom::poke(uint16_t addr, uint8_t value)
         break;
         
         case FLASH_BYTE_PROGRAM:
-  
-        if (!byteProgram(addr, value)) {
+        
+        if (!doByteProgram(addr, value)) {
             
             state = FLASH_BYTE_PROGRAM_ERROR;
             return;
@@ -213,38 +213,38 @@ FlashRom::poke(uint16_t addr, uint8_t value)
         return;
         
         case FLASH_ERASE_MAGIC_1:
-     
+        
         // TODO
         break;
         
         case FLASH_ERASE_MAGIC_2:
-     
+        
         // TODO
         break;
         
         case FLASH_ERASE_SELECT:
-       
+        
         // TODO
         break;
         
         case FLASH_SECTOR_ERASE_TIMEOUT:
-  
+        
         // TODO
         break;
         
         case FLASH_SECTOR_ERASE:
-    
+        
         // TODO
         break;
         
         case FLASH_SECTOR_ERASE_SUSPEND:
-     
+        
         // TODO
         break;
         
         case FLASH_BYTE_PROGRAM_ERROR:
         case FLASH_AUTOSELECT:
-      
+        
         if (addr == 0x5555 && value == 0xAA) {
             
             state = FLASH_MAGIC_1;
@@ -267,14 +267,26 @@ FlashRom::poke(uint16_t addr, uint8_t value)
 }
 
 bool
-FlashRom::byteProgram(uint16_t addr, uint8_t value)
+FlashRom::doByteProgram(uint32_t addr, uint8_t value)
 {
     assert(addr < size);
     
-    uint8_t oldValue = rom[addr];
-    uint8_t newValue = rom[addr] & value;
-    
-    rom[addr] = newValue;
-    return oldValue == newValue;
+    rom[addr] &= value;
+    return rom[addr] == value;
 }
 
+void
+FlashRom::doChipErase() {
+    
+    debug("Erasing chip ...\n");
+    memset(rom, 0xFF, size);
+}
+
+void
+FlashRom::doSectorErase(uint32_t addr)
+{
+    assert(addr < size);
+    
+    debug("Erasing sector %d ... %d\n", addr >> 4);
+    memset(rom + (addr & 0x0000), 0xFF, sectorSize);
+}

@@ -27,7 +27,6 @@
 #include "Cartridge_types.h"
 #include "CRTFile.h"
 #include "CartridgeRom.h"
-#include "FlashRom.h"
 
 class ExpansionPort;
 

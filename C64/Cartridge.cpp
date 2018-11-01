@@ -454,8 +454,8 @@ Cartridge::loadChip(unsigned nr, CRTFile *c)
         break;
         
         case 2: // Flash ROM
-        packet[nr] = new FlashRom(size, start, c->chipData(nr));
-        // packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
+        warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
+        packet[nr] = new CartridgeRom(size, start, c->chipData(nr));
         break;
         
         default:
