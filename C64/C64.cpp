@@ -135,15 +135,6 @@ C64::C64()
     // Initialize mach timer info
     mach_timebase_info(&timebase);
 
-    // Initialize snapshot ringbuffers
-    /*
-    for (unsigned i = 0; i < MAX_AUTO_SNAPSHOTS; i++) {
-        autoSavedSnapshots[i] = new Snapshot();
-    }
-    for (unsigned i = 0; i < MAX_USER_SNAPSHOTS; i++) {
-        userSavedSnapshots[i] = new Snapshot();
-    }
-    */
     snapshotInterval = 3;
 
     reset();

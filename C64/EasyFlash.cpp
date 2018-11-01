@@ -23,8 +23,11 @@
 
 EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
 {
+    flashRomL.setDescription("FlashRom_L");
+    flashRomH.setDescription("FlashRom_H");
+
     bank = 0;
-    
+
     // Allocate 256 bytes on-board RAM
     setRamCapacity(256);
 
@@ -44,15 +47,14 @@ EasyFlash::reset()
 void
 EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {
-    static int bankL;
-    static int bankH;
+    static int bank;
     
     uint16_t chipSize = c->chipSize(nr);
     uint16_t chipAddr = c->chipAddr(nr);
     uint8_t *chipData = c->chipData(nr);
 
     if (nr == 0) {
-        bankL = bankH = 0;
+        bank = 0;
     }
     
     if(chipSize != 0x2000) {
@@ -60,23 +62,27 @@ EasyFlash::loadChip(unsigned nr, CRTFile *c)
         return;
     }
 
-    if (isROMHaddr(chipAddr)) {
-        
-        debug(1, "Loading Rom bank %dH ...\n", bankH);
-        flashRomH.loadBank(bankH++, chipData);
-        for (unsigned i = 0; i < 8; i++) {
-            msg("%02X ", flashRomH.spypeek(bankH - 1, 0));
-        }
-        msg("\n");
-        
-    } else if (isROMLaddr(chipAddr)) {
+    // Check for missing banks
+    if (bank % 2 == 0 && isROMHaddr(chipAddr)) {
+        debug(1, "Skipping Rom bank %dL ...\n", bank / 2);
+        bank++;
+    }
+    if (bank % 2 == 1 && isROMLaddr(chipAddr)) {
+        debug(1, "Skipping Rom bank %dH ...\n", bank / 2);
+        bank++;
+    }
 
-        debug(1, "Loading Rom bank %dL ...\n", bankL);
-        flashRomL.loadBank(bankL++, chipData);
-        for (unsigned i = 0; i < 8; i++) {
-            msg("%02X ", flashRomL.spypeek(bankL - 1, i));
-        }
-        msg("\n");
+    if (isROMLaddr(chipAddr)) {
+            
+        debug(1, "Loading Rom bank %dL ...\n", bank / 2);
+        flashRomL.loadBank(bank / 2, chipData);
+        bank++;
+    
+    } else if (isROMHaddr(chipAddr)) {
+
+        debug(1, "Loading Rom bank %dH ...\n", bank / 2);
+        flashRomH.loadBank(bank / 2, chipData);
+        bank++;
         
     } else {
         
@@ -150,9 +156,11 @@ EasyFlash::pokeIO1(uint16_t addr, uint8_t value)
     if (addr == 0xDE00) { // Bank register
         
         bank = value & 0x3F;
+        debug("Switching to bank %d\n", bank);
+        return;
     }
     
-    else if (addr == 0xDE02) { // Mode register
+    if (addr == 0xDE02) { // Mode register
         
         uint8_t MXG = value & 0x07;
         

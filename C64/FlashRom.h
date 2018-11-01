@@ -23,7 +23,7 @@
 
 #include "VirtualComponent.h"
 
-/*! @brief    This class implements a Flash Rom module of type Am29F040
+/*! @brief    This class implements a Flash Rom module of type Am29F040B
  *  @details  Flash Rom modules of this type are used, e.g., by the EasyFlash
  *            cartridge.
  *            The implementation is based on the following ressources:
@@ -31,6 +31,8 @@
  *            flash040core.c: Part of the VICE emulator
  */
 class FlashRom : public VirtualComponent {
+    
+    private:
     
     //! @brief    Flash Rom states (taken from VICE)
     typedef enum {
@@ -133,6 +135,12 @@ class FlashRom : public VirtualComponent {
     //! @functiongroup Performing flash operations
     //
     
+    //! @brief    Checks if addr serves as the first command address.
+    bool firstCommandAddr(uint32_t addr) { return (addr & 0x7FF) == 0x555; }
+
+    //! @brief    Checks if addr serves as the second command address.
+    bool secondCommandAddr(uint32_t addr) { return (addr & 0x7FF) == 0x2AA; }
+
     //! @brief    Performs a "Byte Program" operation
     bool doByteProgram(uint32_t addr, uint8_t value);
     

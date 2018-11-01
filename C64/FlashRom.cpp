@@ -83,6 +83,7 @@ FlashRom::loadBank(unsigned bank, uint8_t *data)
 void
 FlashRom::reset()
 {
+    debug("Resetting\n");
     state = FLASH_READ;
     baseState = FLASH_READ;
 }
@@ -98,9 +99,18 @@ FlashRom::peek(uint32_t addr)
         
         case FLASH_AUTOSELECT:
         
-        // TODO
-        result = rom[addr];
-        break;
+        switch(addr & 0xFF) {
+           
+            case 0:
+            return 0x01; // Manufacturer ID
+            
+            case 1:
+            return 0xA4; // Device ID
+            
+            case 2:
+            return 0;
+        }
+        return rom[addr];
         
         case FLASH_BYTE_PROGRAM_ERROR:
         
@@ -147,13 +157,11 @@ FlashRom::poke(uint32_t addr, uint8_t value)
 {
     assert(addr < size);
     
-    debug("poke(%04X, %02)\n", addr, value);
-    
     switch (state) {
         
         case FLASH_READ:
         
-        if (addr == 0x5555 && value == 0xAA) {
+        if (firstCommandAddr(addr) && value == 0xAA) {
             
             state = FLASH_MAGIC_1;
             debug("%s\n", getStateAsString(state));
@@ -164,7 +172,7 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         
         case FLASH_MAGIC_1:
         
-        if (addr == 0x2AAA && value == 0x55) {
+        if (secondCommandAddr(addr) && value == 0x55) {
             
             state = FLASH_MAGIC_2;
             debug("%s\n", getStateAsString(state));
@@ -172,12 +180,12 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         }
         
         state = baseState;
-        debug("%s\n", getStateAsString(state));
+        debug("Back to %s\n", getStateAsString(state));
         return;
         
         case FLASH_MAGIC_2:
         
-        if (addr == 0x5555) {
+        if (firstCommandAddr(addr)) {
             
             switch(value) {
                 
@@ -208,7 +216,7 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         }
         
         state = baseState;
-        debug("%s\n", getStateAsString(state));
+        debug("Back to %s\n", getStateAsString(state));
         break;
         
         case FLASH_BYTE_PROGRAM:
@@ -221,7 +229,7 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         }
         
         state = baseState;
-        debug("%s\n", getStateAsString(state));
+        debug("Back to %s\n", getStateAsString(state));
         return;
         
         case FLASH_ERASE_MAGIC_1:
