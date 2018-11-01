@@ -41,34 +41,37 @@ EasyFlash::reset()
 void
 EasyFlash::loadChip(unsigned nr, CRTFile *c)
 {
+    static int bankL;
+    static int bankH;
+    
     uint16_t chipSize = c->chipSize(nr);
     uint16_t chipAddr = c->chipAddr(nr);
     uint8_t *chipData = c->chipData(nr);
-    uint8_t bank = nr / 2;
 
+    if (nr == 0) {
+        bankL = bankH = 0;
+    }
+    
     if(chipSize != 0x2000) {
         warn("Package %d has chip size %04X. Expected 0x2000.\n", nr, chipSize);
         return;
     }
 
-    if (nr % 2) {
+    if (isROMHaddr(chipAddr)) {
+        
+        debug("Loading Rom bank %dH ...\n", bankH);
+        flashRomH.loadBank(bankH++, chipData);
+        
+    } else if (isROMLaddr(chipAddr)) {
 
-        if (!isROMHaddr(chipAddr)) {
-            warn("Package %d maps to ROML. Expected ROMH.\n", nr);
-            return;
-        }
-        flashRomH.loadBank(bank, chipData);
-        debug("Rom bank %dH loaded.\n", bank);
+        debug("Loading Rom bank %dL ...\n", bankL);
+        flashRomL.loadBank(bankL++, chipData);
         
     } else {
         
-        if (!isROMLaddr(chipAddr)) {
-            warn("Package %d maps to ROMH. Expected ROML.\n", nr);
-            return;
-        }
-        flashRomL.loadBank(bank, chipData);
-        debug("Rom bank %dL loaded.\n", bank);
-    }    
+        warn("Package %d has an invalid load address (%04X).", nr, chipAddr);
+        return;
+    }
 }
 
 uint8_t

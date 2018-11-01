@@ -154,6 +154,7 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         if (addr == 0x5555 && value == 0xAA) {
             
             state = FLASH_MAGIC_1;
+            debug("%s\n", getStateAsString(state));
             return;
         }
         
@@ -164,10 +165,12 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         if (addr == 0x2AAA && value == 0x55) {
             
             state = FLASH_MAGIC_2;
+            debug("%s\n", getStateAsString(state));
             return;
         }
         
         state = baseState;
+        debug("%s\n", getStateAsString(state));
         return;
         
         case FLASH_MAGIC_2:
@@ -180,25 +183,30 @@ FlashRom::poke(uint32_t addr, uint8_t value)
                 
                 state = FLASH_READ;
                 baseState = FLASH_READ;
+                debug("%s\n", getStateAsString(state));
                 return;
                 
                 case 0x90:
                 
                 state = FLASH_AUTOSELECT;
                 baseState = FLASH_AUTOSELECT;
+                debug("%s\n", getStateAsString(state));
                 return;
                 
                 case 0xA0:
                 state = FLASH_BYTE_PROGRAM;
+                debug("%s\n", getStateAsString(state));
                 return;
                 
                 case 0x80:
                 state = FLASH_ERASE_MAGIC_1;
+                debug("%s\n", getStateAsString(state));
                 return;
             }
         }
         
         state = baseState;
+        debug("%s\n", getStateAsString(state));
         break;
         
         case FLASH_BYTE_PROGRAM:
@@ -206,10 +214,12 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         if (!doByteProgram(addr, value)) {
             
             state = FLASH_BYTE_PROGRAM_ERROR;
+            debug("%s\n", getStateAsString(state));
             return;
         }
         
         state = baseState;
+        debug("%s\n", getStateAsString(state));
         return;
         
         case FLASH_ERASE_MAGIC_1:
@@ -248,12 +258,14 @@ FlashRom::poke(uint32_t addr, uint8_t value)
         if (addr == 0x5555 && value == 0xAA) {
             
             state = FLASH_MAGIC_1;
+            debug("%s\n", getStateAsString(state));
             return;
         }
         if (value == 0xF0) {
             
             state = FLASH_READ;
             baseState = FLASH_READ;
+            debug("%s\n", getStateAsString(state));
             return;
         }
         return;
