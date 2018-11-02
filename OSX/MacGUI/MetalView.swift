@@ -67,10 +67,14 @@ public class MetalView: MTKView {
      *   algorithm such as EPX */
     var upscaledTexture: MTLTexture! = nil
     
-    //! Pre-blurred texture
-    /*! A horizontally blurred texture. Subsequent filters may add a vertical blur
+    //! Horizontally blurred texture
+    /*! A horizontally blurred texture. A subsequent pass will do a full blur.
      *  to get the final blur value. */
-    var preBlurredTexture: MTLTexture! = nil
+    var hBlurredTexture: MTLTexture! = nil
+    
+    //! Blurred texture
+    /*! A fully blurred emulator texture. */
+    var blurredTexture: MTLTexture! = nil
     
     //! Filtered emulator texture
     /*! In the second post-processing stage, the upscaled texture gets filtered.
@@ -88,7 +92,10 @@ public class MetalView: MTKView {
     var filters = [ComputeKernel?](repeating: nil, count: 5)
     
     /// Filter for horizontal blur stage
-    var preBlurFilter: BlurFilter! = nil
+    var hBlurFilter: BlurFilter! = nil
+ 
+    /// Filter for vertical blur stage
+    var vBlurFilter: BlurFilter! = nil
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -289,13 +296,17 @@ public class MetalView: MTKView {
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        // Run a pre-blur pass if needed
+        // Run a blur pass if needed
         let filter = currentFilter()
-        if (filter.isPreBlurRequired()) {
-            preBlurFilter.apply(commandBuffer: commandBuffer,
-                                source: upscaledTexture,
-                                target: preBlurredTexture)
-            filter.setPreBlurTexture(texture: preBlurredTexture)
+        if (filter.isBlurRequired()) {
+            hBlurFilter.apply(commandBuffer: commandBuffer,
+                                source: emulatorTexture,
+                                target: hBlurredTexture)
+            vBlurFilter.setBlurTexture(texture: hBlurredTexture)
+            vBlurFilter.apply(commandBuffer: commandBuffer,
+                              source: emulatorTexture,
+                              target: blurredTexture)
+            filter.setBlurTexture(texture: blurredTexture)
         }
 
         // Filter the upscaled texture

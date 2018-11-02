@@ -10,6 +10,21 @@ import simd
 
 public extension MetalView {
 
+    struct C64_TEXTURE {
+        static let width = 512
+        static let height = 512
+    }
+    
+    struct UPSCALED_TEXTURE {
+        static let width = 2048
+        static let height = 2048
+    }
+    
+    struct OUTPUT_TEXTURE {
+        static let width = 2048
+        static let height = 4096
+    }
+    
     func checkForMetal() {
         
         guard let _ = MTLCreateSystemDefaultDevice() else {
@@ -76,32 +91,37 @@ public extension MetalView {
         // Build C64 texture (as provided by the emulator)
         var descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: 512,
-            height: 512,
+            width: C64_TEXTURE.width,
+            height: C64_TEXTURE.height,
             mipmapped: false)
         descriptor.usage = MTLTextureUsage.shaderRead
         emulatorTexture = device?.makeTexture(descriptor: descriptor)
         precondition(emulatorTexture != nil, "Failed to create emulator texture")
         
+        // Horizontally blurred emulator texture
+        descriptor.usage = [.shaderRead, .shaderWrite]
+        hBlurredTexture = device?.makeTexture(descriptor: descriptor)
+        precondition(hBlurredTexture != nil, "Failed to create horizontally blurred texture")
+        
+        // Fully blurred emulator texture
+        blurredTexture = device?.makeTexture(descriptor: descriptor)
+        precondition(blurredTexture != nil, "Failed to create blurred texture")
+        
         // Upscaled C64 texture
         descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: 2048,
-            height: 2048,
+            width: UPSCALED_TEXTURE.width,
+            height: UPSCALED_TEXTURE.height,
             mipmapped: false)
         descriptor.usage = [.shaderRead, .shaderWrite, .pixelFormatView, .renderTarget]
         upscaledTexture = device?.makeTexture(descriptor: descriptor)
         precondition(upscaledTexture != nil, "Failed to create upscaling texture")
         
-        // Horizontally blurred texture
-        preBlurredTexture = device?.makeTexture(descriptor: descriptor)
-        precondition(preBlurredTexture != nil, "Failed to create horizontally blurred texture")
-    
         // Final texture (upscaled and filtered)
         descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: 2048,
-            height: 4096,
+            width: OUTPUT_TEXTURE.width,
+            height: OUTPUT_TEXTURE.height,
             mipmapped: false)
         descriptor.usage = [.shaderRead, .shaderWrite]
         filteredTexture = device?.makeTexture(descriptor: descriptor)
@@ -114,17 +134,63 @@ public extension MetalView {
         precondition(library != nil)
         
         // Build upscalers
-        upscalers[0] = BypassUpscaler.init(device: device!, library: library)
-        upscalers[1] = EPXUpscaler.init(device: device!, library: library)
-        upscalers[2] = XBRUpscaler.init(device: device!, library: library)
+        upscalers[0] = BypassUpscaler.init(
+            width: UPSCALED_TEXTURE.width,
+            height: UPSCALED_TEXTURE.height,
+            device: device!,
+            library: library)
+        upscalers[1] = EPXUpscaler.init(
+            width: UPSCALED_TEXTURE.width,
+            height: UPSCALED_TEXTURE.height,
+            device: device!,
+            library: library)
+        upscalers[2] = XBRUpscaler.init(
+            width: UPSCALED_TEXTURE.width,
+            height: UPSCALED_TEXTURE.height,
+            device: device!,
+            library: library)
         
         // Build filters
-        preBlurFilter = BlurFilter.init(name: "blur_h", device: device!, library: library, radius: 3.0);
-        filters[0] = BypassFilter.init(device: device!, library: library)
-        filters[1] = SmoothFilter.init(device: device!, library: library)
-        filters[2] = BlurFilter.init(name: "blur_v", device: device!, library: library, radius: 3.0)
-        filters[3] = CrtFilter.init(device: device!, library: library)
-        filters[4] = ScanlineFilter.init(device: device!, library: library)
+        hBlurFilter = BlurFilter.init(
+            name: "blur_h",
+            width: C64_TEXTURE.width,
+            height: C64_TEXTURE.height,
+            device: device!,
+            library: library,
+            radius: 1.0);
+        vBlurFilter = BlurFilter.init(
+            name: "blur_v",
+            width: C64_TEXTURE.width,
+            height: C64_TEXTURE.height,
+            device: device!,
+            library: library,
+            radius: 1.0);
+        filters[0] = BypassFilter.init(
+            width: OUTPUT_TEXTURE.width,
+            height: OUTPUT_TEXTURE.height,
+            device: device!,
+            library: library)
+        filters[1] = SmoothFilter.init(
+            width: OUTPUT_TEXTURE.width,
+            height: OUTPUT_TEXTURE.height,
+            device: device!,
+            library: library)
+        filters[2] = BlurSampleFilter.init(
+            name: "blur_sample",
+            width: OUTPUT_TEXTURE.width,
+            height: OUTPUT_TEXTURE.height,
+            device: device!,
+            library: library)
+        filters[3] = CrtFilter.init(
+            width: OUTPUT_TEXTURE.width,
+            height: OUTPUT_TEXTURE.height,
+            device: device!,
+            library: library)
+        filters[4] = ScanlineFilter.init(
+            width: OUTPUT_TEXTURE.width,
+            height: OUTPUT_TEXTURE.height,
+            device: device!,
+            library: library)
     }
     
     func buildBuffers() {

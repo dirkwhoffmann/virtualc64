@@ -324,8 +324,30 @@ kernel void blur_v(texture2d<float, access::read> inTexture [[texture(0)]],
                    texture2d<float, access::read> horizontalBlur [[texture(3)]],
                    uint2 gid [[thread_position_in_grid]])
 {
-    uint2 blurTexIndices = uint2(gid.x, gid.y / 2);
-    outTexture.write(blur_v(horizontalBlur, weights, blurTexIndices), gid);
+    outTexture.write(blur_v(horizontalBlur, weights, gid), gid);
+}
+
+//
+// Gaussian blur filter
+//
+// This shader samples from the pre-blurred texture and writes to the output texture.
+//
+
+kernel void blur_sample(texture2d<float, access::read> inTexture [[texture(0)]],
+                   texture2d<float, access::write> outTexture [[texture(1)]],
+                   texture2d<float, access::read> weights [[texture(2)]],
+                   texture2d<float, access::sample> blur [[texture(3)]],
+                   uint2 gid [[thread_position_in_grid]])
+{
+    constexpr sampler _sampler(coord::normalized,
+                               address::repeat,
+                               filter::linear);
+
+    float2 uv = float2(gid.x, gid.y);
+    uv.x /= outTexture.get_width();
+    uv.y /= outTexture.get_height();
+    
+    outTexture.write(blur.sample(_sampler, uv), gid);
 }
 
 

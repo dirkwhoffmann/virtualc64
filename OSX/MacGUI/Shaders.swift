@@ -9,32 +9,7 @@ import Foundation
 
 //
 // Base class for all compute kernels
-// 
-
-struct C64_TEXTURE {
-    static let width = 512
-    static let height = 512
-    static let cutout_x = 428
-    static let cutout_y = 284
-}
-
-struct UPSCALED_TEXTURE {
-    static let factor_x = 4
-    static let factor_y = 4
-    static let width = C64_TEXTURE.width * UPSCALED_TEXTURE.factor_x
-    static let height = C64_TEXTURE.height * UPSCALED_TEXTURE.factor_y
-    static let cutout_x = C64_TEXTURE.cutout_x * UPSCALED_TEXTURE.factor_x
-    static let cutout_y = C64_TEXTURE.cutout_y * UPSCALED_TEXTURE.factor_y
-}
-
-struct FILTERED_TEXTURE {
-    static let factor_x = 4
-    static let factor_y = 8
-    static let width = C64_TEXTURE.width * FILTERED_TEXTURE.factor_x
-    static let height = C64_TEXTURE.height * FILTERED_TEXTURE.factor_y
-    static let cutout_x = C64_TEXTURE.cutout_x * FILTERED_TEXTURE.factor_x
-    static let cutout_y = C64_TEXTURE.cutout_y * FILTERED_TEXTURE.factor_y
-}
+//
 
 class ComputeKernel : NSObject {
     
@@ -46,17 +21,17 @@ class ComputeKernel : NSObject {
 
     var samplerLinear : MTLSamplerState!
     var samplerNearest : MTLSamplerState!
-    var preBlurTexture: MTLTexture!
+    var blurTexture: MTLTexture!
     
-    func isPreBlurRequired() -> Bool {
+    func isBlurRequired() -> Bool {
         return false;
     }
     
-    func setPreBlurTexture(texture: MTLTexture) {
-        self.preBlurTexture = texture;
+    func setBlurTexture(texture: MTLTexture) {
+        self.blurTexture = texture;
     }
 
-    override init()
+    init(width: Int, height: Int)
     {
         // Set thread group size of 16x16
         // TODO: Which thread group size suits best for out purpose?
@@ -65,17 +40,17 @@ class ComputeKernel : NSObject {
         threadgroupSize = MTLSizeMake(groupSizeX, groupSizeY, 1 /* depth */)
         
         // Calculate the compute kernel's width and height
-        let threadCountX = (FILTERED_TEXTURE.width + groupSizeX -  1) / groupSizeX
-        let threadCountY = (FILTERED_TEXTURE.height + groupSizeY - 1) / groupSizeY
+        let threadCountX = (width + groupSizeX -  1) / groupSizeX
+        let threadCountY = (height + groupSizeY - 1) / groupSizeY
         threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1)
         
         super.init()
     }
 
-    convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
+    convenience init?(name: String, width: Int, height: Int, device: MTLDevice, library: MTLLibrary)
     {
-        self.init()
-        
+        self.init(width: width, height: height)
+
         // Lookup kernel function in library
         guard let function = library.makeFunction(name: name) else {
             track("ERROR: Cannot find kernel function '\(name)' in library.")
@@ -134,8 +109,8 @@ class ComputeKernel : NSObject {
             encoder.setComputePipelineState(kernel)
             encoder.setTexture(source, index: 0)
             encoder.setTexture(target, index: 1)
-            if (preBlurTexture != nil) {
-                encoder.setTexture(preBlurTexture, index: 3);
+            if (blurTexture != nil) {
+                encoder.setTexture(blurTexture, index: 3);
             }
             configureComputeCommandEncoder(encoder: encoder)
 
@@ -151,9 +126,9 @@ class ComputeKernel : NSObject {
 
 class BypassUpscaler : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
         
-        self.init(name: "bypassupscaler", device: device, library: library)
+        self.init(name: "bypassupscaler", width: width, height: height, device: device, library: library)
         
         // Replace default texture sampler
         sampler = samplerNearest
@@ -162,9 +137,9 @@ class BypassUpscaler : ComputeKernel {
 
 class EPXUpscaler : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
         
-        self.init(name: "epxupscaler", device: device, library: library)
+        self.init(name: "epxupscaler", width: width, height: height, device: device, library: library)
         
         // Replace default texture sampler
         sampler = samplerNearest
@@ -173,9 +148,9 @@ class EPXUpscaler : ComputeKernel {
 
 class XBRUpscaler : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary)
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary)
     {
-        self.init(name: "xbrupscaler", device: device, library: library)
+        self.init(name: "xbrupscaler", width: width, height: height, device: device, library: library)
         
         // Replace default texture sampler
         sampler = samplerNearest
@@ -189,18 +164,18 @@ class XBRUpscaler : ComputeKernel {
 
 class BypassFilter : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
         
-        self.init(name: "bypass", device: device, library: library)
+        self.init(name: "bypass", width: width, height: height, device: device, library: library)
         sampler = samplerNearest
     }
 }
 
 class SmoothFilter : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
         
-        self.init(name: "bypass", device: device, library: library)
+        self.init(name: "bypass", width: width, height: height, device: device, library: library)
         sampler = samplerLinear
     }
 }
@@ -209,8 +184,8 @@ class BlurFilter : ComputeKernel {
     
     var blurWeightTexture: MTLTexture!
 
-    convenience init?(name: String, device: MTLDevice, library: MTLLibrary, radius: Float) {
-        self.init(name: name, device: device, library: library)
+    convenience init?(name: String, width: Int, height: Int, device: MTLDevice, library: MTLLibrary, radius: Float) {
+        self.init(name: name, width: width, height: height, device: device, library: library)
     
         // Build blur weight texture
         let sigma: Float = radius / 2.0
@@ -251,7 +226,7 @@ class BlurFilter : ComputeKernel {
         weights.deallocate()
     }
     
-    override func isPreBlurRequired() -> Bool {
+    override func isBlurRequired() -> Bool {
         return true;
     }
     
@@ -277,9 +252,9 @@ class CrtFilter : ComputeKernel {
         memcpy(contents + 12, &_alpha, 4)
     }
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
 
-        self.init(name: "crt", device: device, library: library)
+        self.init(name: "crt", width: width, height: height, device: device, library: library)
         self.bloom = device.makeBuffer(length: 16, options: .storageModeShared)
         
         setBloomingFactor(1.0)
@@ -292,10 +267,22 @@ class CrtFilter : ComputeKernel {
     
 }
 
+class BlurSampleFilter : ComputeKernel {
+    
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
+        self.init(name: "blur_sample", width: width, height: height, device: device, library: library)
+        sampler = samplerLinear
+    }
+    
+    override func isBlurRequired() -> Bool {
+        return true;
+    }
+}
+
 class ScanlineFilter : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "scanline", device: device, library: library)
+    convenience init?(width: Int, height: Int, device: MTLDevice, library: MTLLibrary) {
+        self.init(name: "scanline", width: width, height: height, device: device, library: library)
         sampler = samplerLinear
     }
 }
