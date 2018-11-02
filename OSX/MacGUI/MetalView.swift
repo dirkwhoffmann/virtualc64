@@ -78,17 +78,25 @@ public class MetalView: MTKView {
      */
     var filteredTexture: MTLTexture! = nil
     
-    /// Texture to hold the pixel depth information
+    // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
 
-    /// Array holding all available upscalers
+    // Array holding all available upscalers
     var upscalers = [ComputeKernel?](repeating: nil, count: 3)
  
-    /// Array holding all available filters
+    // Array holding all available filters
     var filters = [ComputeKernel?](repeating: nil, count: 5)
     
-    /// Filter for horizontal blur stage
+    // Filter for horizontal blur stage
     var preBlurFilter: BlurFilter! = nil
+    
+    // Shader parameters
+    var scanlines = 0
+    var dotMask = 0
+    var scanlineBrightness = Float(0.0)
+    var scanlineWeight = Float(0.0)
+    var bloomingFactor = Float(0.0)
+    var dotMaskBrightness = Float(0.0)
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -112,17 +120,11 @@ public class MetalView: MTKView {
     var currentAlpha = Float(0.0)
     var targetAlpha = Float(0.0)
     var deltaAlpha = Float(0.0)
-    
-    // Monitor calibration parameters
-    /*
-    var contrast = 50.0
-    var saturation = 50.0
-    */
-    
-    // Texture cut-out (normalized)
+        
+    /// Texture cut-out (normalized)
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
-    // Currently selected texture upscaler
+    /// Currently selected texture upscaler
     var videoUpscaler = 0 {
         didSet {
             if videoUpscaler >= upscalers.count || upscalers[videoUpscaler] == nil {
