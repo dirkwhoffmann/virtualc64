@@ -47,11 +47,93 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
     return out;
 }
 
+#define MASK_BRIGHTNESS 0.70
+#define SCANLINE_WEIGHT 6.0
+#define SCANLINE_GAP_BRIGHTNESS 0.12
+#define DOTMASK_GAP_BRIGHTNESS 0.5
+#define BLOOM_FACTOR 1.5
+#define MASK_TYPE 2
+
+float CalcScanLineWeight(float dist)
+{
+    return max(1.0-dist*dist*SCANLINE_WEIGHT, SCANLINE_GAP_BRIGHTNESS);
+}
+
+float CalcScanLine(float dy)
+{
+    float scanLineWeight = CalcScanLineWeight(dy);
+#if defined(MULTISAMPLE)
+    scanLineWeight += CalcScanLineWeight(dy-filterWidth);
+    scanLineWeight += CalcScanLineWeight(dy+filterWidth);
+    scanLineWeight *= 0.3333333;
+#endif
+    return scanLineWeight;
+}
+
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                              texture2d<float, access::sample> texture [[texture(0)]],
                              sampler texSampler [[sampler(0)]])
 {
-    float4 color = texture.sample(texSampler, vert.texCoords);
+    uint pixelX = uint(vert.position.x);
+    uint pixelY = uint(vert.position.y);
+
+    // Emulate scanline
+    float dy = ((float(pixelY % 6) - 2.5) / 2.5) / 4;
+    float scanLineWeight = CalcScanLine(dy);
+    scanLineWeight *= BLOOM_FACTOR;
+
+    // Read from texture and apply scanline effect
+    float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
+    float4 color = texture.sample(texSampler, tc);
+    color *= scanLineWeight;
+    
+    // Apply dot mask
+    float4 mask;
+
+#if MASK_TYPE == 0
+    
+    mask = float4(1.0, 1.0, 1.0, 0.0);
+    
+#elif MASK_TYPE == 1
+    
+    switch(pixelX % 3) {
+        case 0:
+            mask = float4(MASK_BRIGHTNESS, 1.0, MASK_BRIGHTNESS, 0.0);
+            break;
+
+        case 1:
+            mask = float4(1.0, MASK_BRIGHTNESS, 1.0, 0.0);
+            break;
+            
+        default:
+            mask = float4(DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, 0.0);
+    }
+    
+#else
+    
+    switch(pixelX % 4) {
+            
+        case 0:
+            mask = float4(1.0, MASK_BRIGHTNESS, MASK_BRIGHTNESS, 0.0);
+            break;
+
+        case 1:
+            mask = float4(MASK_BRIGHTNESS, 1.0, MASK_BRIGHTNESS, 0.0);
+            break;
+
+        case 2:
+            mask = float4(MASK_BRIGHTNESS, MASK_BRIGHTNESS, 1.0, 0.0);
+            break;
+            
+        default:
+            mask = float4(DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, 0.0);
+            break;
+    }
+            
+#endif
+            
+    color *= mask;
+            
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 

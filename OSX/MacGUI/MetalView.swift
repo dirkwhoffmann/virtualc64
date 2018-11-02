@@ -401,6 +401,8 @@ public class MetalView: MTKView {
     
     func reshape(withFrame frame: CGRect) {
     
+        reshape();
+        /*
         if let scale = NSScreen.main?.backingScaleFactor {
             
             var size = bounds.size
@@ -410,6 +412,7 @@ public class MetalView: MTKView {
             metalLayer.drawableSize = drawableSize
             reshape()
         }
+        */
     }
 
     func reshape() {
