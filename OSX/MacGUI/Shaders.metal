@@ -8,8 +8,6 @@
 
 using namespace metal;
 
-#define SCALE_FACTOR 4
-
 //
 // Main vertex shader (for drawing the quad)
 // 
@@ -63,7 +61,9 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
                            texture2d<half, access::write> outTexture  [[ texture(1) ]],
                            uint2                          gid         [[ thread_position_in_grid ]])
 {
-    half4 result = inTexture.read(uint2(gid.x / SCALE_FACTOR, gid.y / SCALE_FACTOR));
+    uint scaleX = outTexture.get_width() / inTexture.get_width();
+    uint scaleY = outTexture.get_height() / inTexture.get_height();
+    half4 result = inTexture.read(uint2(gid.x / scaleX, gid.y / scaleY));
     outTexture.write(result, gid);
 }
 
@@ -95,8 +95,11 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
     // IF D==C AND D!=B AND C!=A => 3=C
     // IF B==D AND B!=A AND D!=C => 4=D
 
-    half xx = gid.x / SCALE_FACTOR;
-    half yy = gid.y / SCALE_FACTOR;
+    uint scaleX = outTexture.get_width() / inTexture.get_width();
+    uint scaleY = outTexture.get_height() / inTexture.get_height();
+    
+    half xx = gid.x / scaleX;
+    half yy = gid.y / scaleY;
     half4 A = inTexture.read(uint2(xx, yy - 1));
     half4 C = inTexture.read(uint2(xx - 1, yy));
     half4 P = inTexture.read(uint2(xx, yy));
@@ -142,9 +145,10 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
     bool4 ir_lv1, ir_lv2_left, ir_lv2_up;
     bool4 nc;                               // new color
     bool4 fx, fx_left, fx_up;               // inequations of straight lines
-        
-    half2 fp = fract(half2(gid) / SCALE_FACTOR);
-    uint2 ggid = gid / SCALE_FACTOR;
+    
+    uint scaleX = outTexture.get_width() / inTexture.get_width();
+    half2 fp = fract(half2(gid) / scaleX);
+    uint2 ggid = gid / scaleX;
     
     half3 A  = inTexture.read(ggid + uint2(-1,-1)).xyz;
     half3 B  = inTexture.read(ggid + uint2( 0,-1)).xyz;
