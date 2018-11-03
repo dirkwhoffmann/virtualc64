@@ -14,6 +14,7 @@ struct Defaults {
     static let brightness = Double(50.0)
     static let contrast = Double(100.0)
     static let saturation = Double(50.0)
+    static let blurFactor = Float(1.5)
     static let scanlines = 1
     static let dotMask = 1
     static let scanlineBrightness = Float(0.12)
@@ -58,6 +59,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var brightnessSlider: NSSlider!
     @IBOutlet weak var contrastSlider: NSSlider!
     @IBOutlet weak var saturationSlider: NSSlider!
+    @IBOutlet weak var blurSlider: NSSlider!
 
     // Effect engine
     @IBOutlet weak var scanlines: NSPopUpButton!
@@ -129,6 +131,7 @@ class EmulatorPrefsController : UserDialogController {
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
+        blurSlider.doubleValue = Double(parent.metalScreen.blurFactor)
 
         // Effect engine
         scanlines.selectItem(withTag: parent.metalScreen.scanlines)
@@ -210,6 +213,16 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
+    @IBAction func blurAction(_ sender: NSSlider!) {
+        
+        track("New blur factor = \(sender.doubleValue)")
+        parent.metalScreen.blurFactor = sender.floatValue
+
+        let gaussFilter = parent.metalScreen.filters[1] as! GaussFilter
+        gaussFilter.sigma = sender.floatValue
+        update()
+    }
+
     
     //
     // Action methods (Effect engine)
@@ -354,7 +367,8 @@ class EmulatorPrefsController : UserDialogController {
         c64.vic.setBrightness(Defaults.brightness)
         c64.vic.setContrast(Defaults.contrast)
         c64.vic.setSaturation(Defaults.saturation)
-
+        parent.metalScreen.blurFactor = Defaults.blurFactor
+        
         // Effect engine
         parent.metalScreen.scanlines = Defaults.scanlines
         parent.metalScreen.dotMask = Defaults.dotMask

@@ -118,9 +118,7 @@ public extension MetalView {
         
         // Build filters
         filters[0] = BypassFilter.init(device: device!, library: library)
-        filters[1] = SmoothFilter.init(device: device!, library: library)
-        filters[2] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
-        filters[3] = GaussFilter.init(device: device!, library: library, sigma: 2.0)
+        filters[1] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
     }
     
     func buildBuffers() {

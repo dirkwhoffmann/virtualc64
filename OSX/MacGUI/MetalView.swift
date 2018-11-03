@@ -90,11 +90,12 @@ public class MetalView: MTKView {
     var filters = [ComputeKernel?](repeating: nil, count: 5)
     
     // Shader parameters
+    var blurFactor = Float(0.0)
     var scanlines = 0
-    var dotMask = 0
     var scanlineBrightness = Float(0.0)
     var scanlineWeight = Float(0.0)
     var bloomingFactor = Float(0.0)
+    var dotMask = 0
     var dotMaskBrightness = Float(0.0)
     
     // Animation parameters

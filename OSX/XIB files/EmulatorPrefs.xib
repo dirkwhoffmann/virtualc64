@@ -12,6 +12,7 @@
                 <outlet property="autoMount" destination="PUa-Ci-VYH" id="ftj-sZ-YSR"/>
                 <outlet property="autoSnapshots" destination="C5o-Wm-bLH" id="ud5-kg-xDo"/>
                 <outlet property="bloomingSlider" destination="V1l-Ao-46d" id="W6g-0R-4Us"/>
+                <outlet property="blurSlider" destination="P4W-6z-69X" id="etn-Al-Zre"/>
                 <outlet property="brightnessSlider" destination="sSm-AO-usU" id="ZYH-Tb-aCA"/>
                 <outlet property="colorWell0" destination="AjL-Lu-fgD" id="MO7-GF-eDS"/>
                 <outlet property="colorWell1" destination="gkI-gO-ghe" id="Hsd-MT-ZEn"/>
@@ -197,13 +198,7 @@
                                     <menuItem title="None" state="on" id="72g-g5-lh0">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Weak" tag="1" id="XGk-ZJ-WU0">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem title="Medium" tag="2" id="dLh-v9-5V9">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                    </menuItem>
-                                    <menuItem title="Strong" tag="3" id="x1o-SZ-dh8">
+                                    <menuItem title="Gaussian" tag="1" id="XGk-ZJ-WU0">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>
@@ -516,9 +511,9 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcv-pT-jLC">
-                        <rect key="frame" x="446" y="298" width="92" height="23"/>
+                        <rect key="frame" x="455" y="298" width="73" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" selectable="YES" alignment="center" title="BLOOMING FACTOR" id="Q5F-Vn-8J2">
+                        <textFieldCell key="cell" controlSize="mini" selectable="YES" alignment="center" title="BLOOM FACTOR" id="Q5F-Vn-8J2">
                             <font key="font" metaFont="miniSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -687,6 +682,23 @@ Gw
                         <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" sliderType="circular" id="11r-EK-Ohs"/>
                         <connections>
                             <action selector="eyeXAction:" target="-2" id="ixG-rs-e1D"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hW-p7-4rt">
+                        <rect key="frame" x="555" y="410" width="28" height="11"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="BLUR" id="RXs-9q-3vR">
+                            <font key="font" metaFont="miniSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P4W-6z-69X">
+                        <rect key="frame" x="555" y="421" width="28" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="5" sliderType="circular" id="XZu-YG-H5S"/>
+                        <connections>
+                            <action selector="blurAction:" target="-2" id="sjZ-ph-rwo"/>
                         </connections>
                     </slider>
                 </subviews>
