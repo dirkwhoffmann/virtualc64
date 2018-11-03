@@ -49,15 +49,6 @@ class ComputeKernel : NSObject {
 
     var samplerLinear : MTLSamplerState!
     var samplerNearest : MTLSamplerState!
-    var preBlurTexture: MTLTexture!
-    
-    func isPreBlurRequired() -> Bool {
-        return false;
-    }
-    
-    func setPreBlurTexture(texture: MTLTexture) {
-        self.preBlurTexture = texture;
-    }
     
     convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
     {
@@ -127,10 +118,7 @@ class ComputeKernel : NSObject {
         encoder.setComputePipelineState(kernel)
         encoder.setTexture(source, index: 0)
         encoder.setTexture(target, index: 1)
-        if (preBlurTexture != nil) {
-            encoder.setTexture(preBlurTexture, index: 3);
-        }
-        
+     
         // Apply shader specific configurations (if any)
         configureComputeCommandEncoder(encoder: encoder)
         

@@ -57,28 +57,27 @@ public class MetalView: MTKView {
     
     // Textures
     
-    //! Background image behind the cube
+    /// Background image behind the cube
     var bgTexture: MTLTexture! = nil
     
-    //! Raw texture data provided by the emulator
-    /*! Texture is updated in updateTexture which is called periodically in drawRect */
+    /// Raw texture data provided by the emulator
+    /// Texture is updated in updateTexture which is called periodically in
+    /// drawRect
     var emulatorTexture: MTLTexture! = nil
     
-    //! Upscaled emulator texture
-    /*! In the first post-processing stage, the emulator texture is doubled in size.
-     *  The user can choose between simply doubling pixels are applying a smoothing
-     *   algorithm such as EPX */
+    /// Upscaled emulator texture
+    /// In the first post-processing stage, the emulator texture is bumped up
+    /// by factor 4. The user can choose between bypass upscaling which simply
+    /// replaces each pixel by a 4x4 quad or more sophisticated upscaling
+    /// algorithms such as xBr.
     var upscaledTexture: MTLTexture! = nil
     
-    //! Pre-blurred texture
-    /*! A horizontally blurred texture. Subsequent filters may add a vertical blur
-     *  to get the final blur value. */
-    // var preBlurredTexture: MTLTexture! = nil
-    
-    //! Filtered emulator texture
-    /*! In the second post-processing stage, the upscaled texture gets filtered.
-     *  E.g., a CRT filter can be applied to mimic old CRT displays.
-     */
+    /// Filtered emulator texture
+    /// In the second post-processing stage, the upscaled texture is blurred.
+    /// The user can choose between bypass blurring which simply copies the
+    /// pixels as they are or real blurring algorithm. To achieve high
+    /// performance, blurring is done via Metals High Performance Shader
+    /// framework.
     var filteredTexture: MTLTexture! = nil
     
     // Texture to hold the pixel depth information
@@ -89,9 +88,6 @@ public class MetalView: MTKView {
  
     // Array holding all available filters
     var filters = [ComputeKernel?](repeating: nil, count: 5)
-    
-    // Filter for horizontal blur stage
-    // var preBlurFilter: BlurFilter! = nil
     
     // Shader parameters
     var scanlines = 0
@@ -294,18 +290,8 @@ public class MetalView: MTKView {
                        source: emulatorTexture,
                        target: upscaledTexture)
     
+        // Filter the upscaled texture (apply blur effect)
         let filter = currentFilter()
-        /*
-        // Run a pre-blur pass if needed
-        if (filter.isPreBlurRequired()) {
-            preBlurFilter.apply(commandBuffer: commandBuffer,
-                                source: upscaledTexture,
-                                target: preBlurredTexture)
-            filter.setPreBlurTexture(texture: preBlurredTexture)
-        }
-        */
-        
-        // Filter the upscaled texture
         filter.apply(commandBuffer: commandBuffer,
                      source: upscaledTexture,
                      target: filteredTexture)
