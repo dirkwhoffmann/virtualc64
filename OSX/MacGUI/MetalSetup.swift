@@ -177,19 +177,13 @@ public extension MetalView {
         }
     }
     
-    func fillFragmentShaderUniforms(_ buffer: MTLBuffer?,
-                                    scanline: Int,
-                                    scanlineBrightness: Float,
-                                    scanlineWeight: Float,
-                                    bloomFactor: Float,
-                                    mask: Int,
-                                    maskBrightness: Float) {
+    func fillFragmentShaderUniforms(_ buffer: MTLBuffer?) {
         
-        var _s = scanline
+        var _s = scanlines
         var _sb = scanlineBrightness
         var _sw = scanlineWeight
         var _bf = bloomFactor
-        var _m = mask
+        var _m = dotMask
         var _dmb = maskBrightness
         
         if let contents = buffer?.contents() {

@@ -91,13 +91,21 @@ public class MetalView: MTKView {
     var filters = [ComputeKernel?](repeating: nil, count: 5)
     
     // Shader parameters
-    var blurFactor = Float(0.0)
-    var scanlines = 0
-    var scanlineBrightness = Float(0.0)
-    var scanlineWeight = Float(0.0)
-    var bloomFactor = Float(0.0)
-    var dotMask = 0
-    var maskBrightness = Float(0.0)
+    var scanlines = EmulatorDefaults.scanlines
+    var scanlineBrightness = EmulatorDefaults.scanlineBrightness
+    var scanlineWeight = EmulatorDefaults.scanlineWeight
+    var bloomFactor = EmulatorDefaults.bloomFactor
+    var dotMask = EmulatorDefaults.dotMask
+    var maskBrightness = EmulatorDefaults.maskBrightness
+    
+    var blurFactor = EmulatorDefaults.blurFactor {
+        didSet {
+            if (1 < filters.count && filters[1] != nil) {
+                let gaussFilter = filters[1] as! GaussFilter
+                gaussFilter.sigma = blurFactor
+            }
+        }
+    }
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -126,7 +134,7 @@ public class MetalView: MTKView {
     var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
  
     /// Currently selected texture upscaler
-    var videoUpscaler = 0 {
+    var videoUpscaler = EmulatorDefaults.upscaler {
         didSet {
             if videoUpscaler >= upscalers.count || upscalers[videoUpscaler] == nil {
                 track("Sorry, the selected GPU upscaler is unavailable.")
@@ -136,7 +144,7 @@ public class MetalView: MTKView {
     }
 
     // Currently selected texture filter
-    var videoFilter = 1 {
+    var videoFilter = EmulatorDefaults.filter {
         didSet {
             if videoFilter >= filters.count || filters[videoFilter] == nil {
                 track("Sorry, the selected GPU filter is unavailable.")
@@ -287,13 +295,7 @@ public class MetalView: MTKView {
         precondition(commandBuffer != nil, "Command buffer must not be nil")
     
         // Set uniforms
-        fillFragmentShaderUniforms(uniformFragment,
-                                   scanline: scanlines,
-                                   scanlineBrightness: scanlineBrightness,
-                                   scanlineWeight: scanlineWeight,
-                                   bloomFactor: bloomFactor,
-                                   mask: dotMask,
-                                   maskBrightness: maskBrightness)
+        fillFragmentShaderUniforms(uniformFragment)
         
         // Upscale the C64 texture
         let upscaler = currentUpscaler()

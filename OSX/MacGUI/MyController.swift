@@ -7,6 +7,31 @@
 
 import Foundation
 
+struct EmulatorDefaults {
+    static let palette = Int(COLOR_PALETTE.rawValue)
+    static let upscaler = 0
+    static let filter = 1
+    static let brightness = Double(50.0)
+    static let contrast = Double(100.0)
+    static let saturation = Double(50.0)
+    static let blurFactor = Float(1.5)
+    static let scanlines = 1
+    static let dotMask = 1
+    static let scanlineBrightness = Float(0.12)
+    static let scanlineWeight = Float(6.0)
+    static let bloomFactor = Float(1.5)
+    static let maskBrightness = Float(0.7)
+    static let eyeX = Float(0.0)
+    static let eyeY = Float(0.0)
+    static let eyeZ = Float(0.0)
+    static let fullscreenAspectRatio = false
+    static let warpLoad = true
+    static let sendSoundMessages = true
+    static let pauseInBackground = false
+    static let snapshotInterval = 3
+    static let autoMount = false
+}
+
 protocol MessageReceiver {
     func processMessage(_ msg: Message)
 }

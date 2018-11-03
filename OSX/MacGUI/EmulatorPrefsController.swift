@@ -7,31 +7,6 @@
 
 import Foundation
 
-struct Defaults {
-    static let palette = Int(COLOR_PALETTE.rawValue)
-    static let upscaler = 0
-    static let filter = 0
-    static let brightness = Double(50.0)
-    static let contrast = Double(100.0)
-    static let saturation = Double(50.0)
-    static let blurFactor = Float(1.5)
-    static let scanlines = 1
-    static let dotMask = 1
-    static let scanlineBrightness = Float(0.12)
-    static let scanlineWeight = Float(6.0)
-    static let bloomingFactor = Float(1.5)
-    static let maskBrightness = Float(0.7)
-    static let eyeX = Float(0.0)
-    static let eyeY = Float(0.0)
-    static let eyeZ = Float(0.0)
-    static let fullscreenAspectRatio = false
-    static let warpLoad = true
-    static let sendSoundMessages = true
-    static let pauseInBackground = false
-    static let snapshotInterval = 3
-    static let autoMount = false
-}
-
 class EmulatorPrefsController : UserDialogController {
     
     // Color synthesizer
@@ -352,39 +327,39 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
         // Color synthesizer
-        c64.vic.setVideoPalette(Defaults.palette)
+        c64.vic.setVideoPalette(EmulatorDefaults.palette)
 
         // Texture processor
-        parent.metalScreen.videoUpscaler = Defaults.upscaler
-        parent.metalScreen.videoFilter = Defaults.filter
-        c64.vic.setBrightness(Defaults.brightness)
-        c64.vic.setContrast(Defaults.contrast)
-        c64.vic.setSaturation(Defaults.saturation)
-        parent.metalScreen.blurFactor = Defaults.blurFactor
+        parent.metalScreen.videoUpscaler = EmulatorDefaults.upscaler
+        parent.metalScreen.videoFilter = EmulatorDefaults.filter
+        c64.vic.setBrightness(EmulatorDefaults.brightness)
+        c64.vic.setContrast(EmulatorDefaults.contrast)
+        c64.vic.setSaturation(EmulatorDefaults.saturation)
+        parent.metalScreen.blurFactor = EmulatorDefaults.blurFactor
         
         // Effect engine
-        parent.metalScreen.scanlines = Defaults.scanlines
-        parent.metalScreen.dotMask = Defaults.dotMask
-        parent.metalScreen.scanlineBrightness = Defaults.scanlineBrightness
-        parent.metalScreen.scanlineWeight = Defaults.scanlineWeight
-        parent.metalScreen.bloomFactor = Defaults.bloomingFactor
-        parent.metalScreen.maskBrightness = Defaults.maskBrightness
+        parent.metalScreen.scanlines = EmulatorDefaults.scanlines
+        parent.metalScreen.dotMask = EmulatorDefaults.dotMask
+        parent.metalScreen.scanlineBrightness = EmulatorDefaults.scanlineBrightness
+        parent.metalScreen.scanlineWeight = EmulatorDefaults.scanlineWeight
+        parent.metalScreen.bloomFactor = EmulatorDefaults.bloomFactor
+        parent.metalScreen.maskBrightness = EmulatorDefaults.maskBrightness
             
         // Geometry
-        parent.metalScreen.setEyeX(Defaults.eyeX)
-        parent.metalScreen.setEyeY(Defaults.eyeY)
-        parent.metalScreen.setEyeZ(Defaults.eyeZ)
-        parent.metalScreen.fullscreenKeepAspectRatio = Defaults.fullscreenAspectRatio
+        parent.metalScreen.setEyeX(EmulatorDefaults.eyeX)
+        parent.metalScreen.setEyeY(EmulatorDefaults.eyeY)
+        parent.metalScreen.setEyeZ(EmulatorDefaults.eyeZ)
+        parent.metalScreen.fullscreenKeepAspectRatio = EmulatorDefaults.fullscreenAspectRatio
         
         // VC1541
-        c64.setWarpLoad(Defaults.warpLoad)
-        c64.drive1.setSendSoundMessages(Defaults.sendSoundMessages)
-        c64.drive2.setSendSoundMessages(Defaults.sendSoundMessages)
+        c64.setWarpLoad(EmulatorDefaults.warpLoad)
+        c64.drive1.setSendSoundMessages(EmulatorDefaults.sendSoundMessages)
+        c64.drive2.setSendSoundMessages(EmulatorDefaults.sendSoundMessages)
         
         // Misc
-        parent.pauseInBackground = Defaults.pauseInBackground
-        c64.setSnapshotInterval(Defaults.snapshotInterval)
-        parent.autoMount = Defaults.autoMount
+        parent.pauseInBackground = EmulatorDefaults.pauseInBackground
+        c64.setSnapshotInterval(EmulatorDefaults.snapshotInterval)
+        parent.autoMount = EmulatorDefaults.autoMount
 
         update()
     }

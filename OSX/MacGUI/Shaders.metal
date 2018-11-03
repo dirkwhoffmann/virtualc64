@@ -54,15 +54,6 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
     return out;
 }
 
-/*
-#define MASK_BRIGHTNESS 0.70
-#define SCANLINE_WEIGHT 6.0
-#define SCANLINE_GAP_BRIGHTNESS 0.12
-#define DOTMASK_GAP_BRIGHTNESS 0.5
-#define BLOOM_FACTOR 1.5
-#define MASK_TYPE 2
-*/
-
 float4 scanlineWeight(uint2 pixel, float weight, float brightness, float bloom) {
     
     // Calculate distance to nearest scanline
@@ -75,23 +66,40 @@ float4 scanlineWeight(uint2 pixel, float weight, float brightness, float bloom) 
     return scanlineWeight * bloom;
 }
 
-float4 dotMaskWeight1(uint2 pixel, float brightness) {
+float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
     
-    switch(pixel.x % 3) {
-        case 0: return float4(brightness, 1.0, brightness, 0.0);
-        case 1: return float4(1.0, brightness, 1.0, 0.0);
-        default: return float4(0.5, 0.5, 0.5, 0.0);
-    }
-}
-
-float4 dotMaskWeight2(uint2 pixel, float brightness) {
+    float shadow = brightness * brightness;
     
-    switch(pixel.x % 4) {
-        case 0: return float4(1.0, brightness, brightness, 0.0);
-        case 1: return float4(brightness, 1.0, brightness, 0.0);
-        case 2: return float4(brightness, brightness, 1.0, 0.0);
-        default: return float4(0.5, 0.5, 0.5, 0.0);
+    switch (dotmaskType) {
+            
+        case 1:
+            switch(pixel.x % 3) {
+                case 0: return float4(brightness, 1.0, brightness, 0.0);
+                case 1: return float4(1.0, brightness, 1.0, 0.0);
+                default: return float4(shadow, shadow, shadow, 0.0);
+            }
+        case 2:
+            switch(pixel.x % 4) {
+                case 0: return float4(1.0, brightness, brightness, 0.0);
+                case 1: return float4(brightness, 1.0, brightness, 0.0);
+                case 2: return float4(brightness, brightness, 1.0, 0.0);
+                default: return float4(shadow, shadow, shadow, 0.0);
+            }
+        case 3:
+            switch((pixel.x + ((pixel.y / 6) % 2)) % 3) {
+                case 0: return float4(brightness, 1.0, brightness, 0.0);
+                case 1: return float4(1.0, brightness, 1.0, 0.0);
+                default: return float4(shadow, shadow, shadow, 0.0);
+            }
+        case 4:
+            switch((pixel.x + ((pixel.y / 6) % 2)) % 4) {
+                case 0: return float4(1.0, brightness, brightness, 0.0);
+                case 1: return float4(brightness, 1.0, brightness, 0.0);
+                case 2: return float4(brightness, brightness, 1.0, 0.0);
+                default: return float4(shadow, shadow, shadow, 0.0);
+            }
     }
+    return float4(1.0, 1.0, 1.0, 0.0);
 }
 
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
@@ -114,14 +122,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     }
     
     // Apply dot mask effect
-    switch (uniforms.mask) {
-        case 1:
-            color *= dotMaskWeight1(pixel, uniforms.maskBrightness);
-            break;
-        case 2:
-            color *= dotMaskWeight2(pixel, uniforms.maskBrightness);
-            break;
-    }
+    color *= dotMaskWeight(uniforms.mask, pixel, uniforms.maskBrightness);
 
     return half4(color.r, color.g, color.b, vert.alpha);
 }
