@@ -33,10 +33,14 @@ struct ProjectedVertex {
     float  alpha;
 };
 
-struct CrtParameters {
-    float4 bloomFactor;
+struct FragmentUniforms {
+    uint scanline;
+    float scanlineBrightness;
+    float scanlineWeight;
+    float bloomFactor;
+    uint mask;
+    float maskBrightness;
 };
-
 
 vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
                                    constant Uniforms &uniforms [[buffer(1)]],
@@ -50,31 +54,82 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
     return out;
 }
 
+/*
 #define MASK_BRIGHTNESS 0.70
 #define SCANLINE_WEIGHT 6.0
 #define SCANLINE_GAP_BRIGHTNESS 0.12
 #define DOTMASK_GAP_BRIGHTNESS 0.5
 #define BLOOM_FACTOR 1.5
 #define MASK_TYPE 2
+*/
 
-float CalcScanLineWeight(float dist)
-{
-    return max(1.0-dist*dist*SCANLINE_WEIGHT, SCANLINE_GAP_BRIGHTNESS);
+float4 scanlineWeight(uint2 pixel, float weight, float brightness, float bloom) {
+    
+    // Calculate distance to nearest scanline
+    float dy = ((float(pixel.y % 6) - 2.5) / 2.5) / 4;
+    
+    // Calculate scanline weight
+    float scanlineWeight = max(1.0 - dy * dy * weight, brightness);
+    
+    // Apply bloom effect an return
+    return scanlineWeight * bloom;
 }
 
-float CalcScanLine(float dy)
-{
-    float scanLineWeight = CalcScanLineWeight(dy);
-#if defined(MULTISAMPLE)
-    scanLineWeight += CalcScanLineWeight(dy-filterWidth);
-    scanLineWeight += CalcScanLineWeight(dy+filterWidth);
-    scanLineWeight *= 0.3333333;
-#endif
-    return scanLineWeight;
+float4 dotMaskWeight1(uint2 pixel, float brightness) {
+    
+    switch(pixel.x % 3) {
+        case 0: return float4(brightness, 1.0, brightness, 0.0);
+        case 1: return float4(1.0, brightness, 1.0, 0.0);
+        default: return float4(0.5, 0.5, 0.5, 0.0);
+    }
+}
+
+float4 dotMaskWeight2(uint2 pixel, float brightness) {
+    
+    switch(pixel.x % 4) {
+        case 0: return float4(1.0, brightness, brightness, 0.0);
+        case 1: return float4(brightness, 1.0, brightness, 0.0);
+        case 2: return float4(brightness, brightness, 1.0, 0.0);
+        default: return float4(0.5, 0.5, 0.5, 0.0);
+    }
 }
 
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                              texture2d<float, access::sample> texture [[texture(0)]],
+                             constant FragmentUniforms &uniforms [[buffer(0)]],
+                             sampler texSampler [[sampler(0)]])
+{
+    uint2 pixel = uint2(uint(vert.position.x), uint(vert.position.y));
+    
+    // Read fragment from texture
+    float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
+    float4 color = texture.sample(texSampler, tc);
+    
+    // Apply scanline effect
+    if (uniforms.scanline == 1) {
+        color *= scanlineWeight(pixel,
+                                uniforms.scanlineWeight,
+                                uniforms.scanlineBrightness,
+                                uniforms.bloomFactor);
+    }
+    
+    // Apply dot mask effect
+    switch (uniforms.mask) {
+        case 1:
+            color *= dotMaskWeight1(pixel, uniforms.maskBrightness);
+            break;
+        case 2:
+            color *= dotMaskWeight2(pixel, uniforms.maskBrightness);
+            break;
+    }
+
+    return half4(color.r, color.g, color.b, vert.alpha);
+}
+
+/*
+fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
+                             texture2d<float, access::sample> texture [[texture(0)]],
+                             constant FragmentUniforms &uniforms [[buffer(0)]],
                              sampler texSampler [[sampler(0)]])
 {
     uint pixelX = uint(vert.position.x);
@@ -83,7 +138,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Emulate scanline
     float dy = ((float(pixelY % 6) - 2.5) / 2.5) / 4;
     float scanLineWeight = CalcScanLine(dy);
-    scanLineWeight *= BLOOM_FACTOR;
+    scanLineWeight *= uniforms.bloomFactor;
 
     // Read from texture and apply scanline effect
     float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
@@ -101,11 +156,11 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     
     switch(pixelX % 3) {
         case 0:
-            mask = float4(MASK_BRIGHTNESS, 1.0, MASK_BRIGHTNESS, 0.0);
+            mask = float4(uniforms.maskBrightness, 1.0, uniforms.maskBrightness, 0.0);
             break;
 
         case 1:
-            mask = float4(1.0, MASK_BRIGHTNESS, 1.0, 0.0);
+            mask = float4(1.0, uniforms.maskBrightness, 1.0, 0.0);
             break;
             
         default:
@@ -139,6 +194,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
             
     return half4(color.r, color.g, color.b, vert.alpha);
 }
+*/
 
 //
 // Texture upscalers (first post-processing stage)

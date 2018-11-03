@@ -54,6 +54,7 @@ public class MetalView: MTKView {
     var uniformBuffer2D: MTLBuffer! = nil
     var uniformBuffer3D: MTLBuffer! = nil
     var uniformBufferBg: MTLBuffer! = nil
+    var uniformFragment: MTLBuffer! = nil
     
     // Textures
     
@@ -94,9 +95,9 @@ public class MetalView: MTKView {
     var scanlines = 0
     var scanlineBrightness = Float(0.0)
     var scanlineWeight = Float(0.0)
-    var bloomingFactor = Float(0.0)
+    var bloomFactor = Float(0.0)
     var dotMask = 0
-    var dotMaskBrightness = Float(0.0)
+    var maskBrightness = Float(0.0)
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -285,6 +286,15 @@ public class MetalView: MTKView {
         commandBuffer = queue.makeCommandBuffer()
         precondition(commandBuffer != nil, "Command buffer must not be nil")
     
+        // Set uniforms
+        fillFragmentShaderUniforms(uniformFragment,
+                                   scanline: scanlines,
+                                   scanlineBrightness: scanlineBrightness,
+                                   scanlineWeight: scanlineWeight,
+                                   bloomFactor: bloomFactor,
+                                   mask: dotMask,
+                                   maskBrightness: maskBrightness)
+        
         // Upscale the C64 texture
         let upscaler = currentUpscaler()
         upscaler.apply(commandBuffer: commandBuffer,
@@ -315,6 +325,7 @@ public class MetalView: MTKView {
         commandEncoder.setDepthStencilState(depthState)
         commandEncoder.setFragmentTexture(bgTexture, index: 0)
         commandEncoder.setFragmentSamplerState(filter.getsampler(), index: 0)
+        commandEncoder.setFragmentBuffer(uniformFragment, offset: 0, index: 0)
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
     }
     

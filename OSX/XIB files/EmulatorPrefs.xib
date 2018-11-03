@@ -32,12 +32,12 @@
                 <outlet property="colorWell9" destination="AwU-ez-6jc" id="BGz-qR-Rpm"/>
                 <outlet property="contrastSlider" destination="CCy-1N-a2D" id="rXW-I1-mkB"/>
                 <outlet property="dotMask" destination="1t5-RU-6d2" id="7fY-M3-zKY"/>
-                <outlet property="dotMaskBrightnessSlider" destination="zx7-mh-HWZ" id="tce-A3-ycP"/>
                 <outlet property="driveNoise" destination="hIA-jy-ddV" id="RTp-Cu-Qhc"/>
                 <outlet property="eyeXSlider" destination="Ghc-gB-6Bk" id="z2T-Yv-E1v"/>
                 <outlet property="eyeYSlider" destination="Fff-Rw-YU3" id="u4A-lE-c7u"/>
                 <outlet property="eyeZSlider" destination="svW-5Y-UKa" id="ArX-qM-Rtj"/>
                 <outlet property="filter" destination="GFQ-XE-Kwn" id="baa-3N-ofh"/>
+                <outlet property="maskBrightnessSlider" destination="zx7-mh-HWZ" id="siU-DR-CZY"/>
                 <outlet property="palette" destination="04J-bH-Fgj" id="Hfh-Cb-aBN"/>
                 <outlet property="pauseInBackground" destination="1PY-YV-Vn9" id="BpP-hv-ntK"/>
                 <outlet property="saturationSlider" destination="GPi-83-wzn" id="Oyo-n0-Dyv"/>
@@ -396,7 +396,7 @@ DQ
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V1l-Ao-46d">
                         <rect key="frame" x="478" y="321" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="2" sliderType="circular" id="Fv1-Mh-Yj6"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="1" maxValue="3" doubleValue="1" sliderType="circular" id="Fv1-Mh-Yj6"/>
                         <connections>
                             <action selector="bloomingAction:" target="-2" id="kUP-hr-UsV"/>
                         </connections>
@@ -404,7 +404,7 @@ DQ
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bg-jg-6dI">
                         <rect key="frame" x="328" y="321" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="2" sliderType="circular" id="tqB-EK-8MU"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="1" sliderType="circular" id="tqB-EK-8MU"/>
                         <connections>
                             <action selector="scanlineBrightnessAction:" target="-2" id="TNB-ir-PPZ"/>
                         </connections>
@@ -412,15 +412,15 @@ DQ
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zx7-mh-HWZ">
                         <rect key="frame" x="554" y="320" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="2" sliderType="circular" id="062-dE-d8M"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="1" sliderType="circular" id="062-dE-d8M"/>
                         <connections>
-                            <action selector="dotMaskBrightnessAction:" target="-2" id="KjP-w4-UCR"/>
+                            <action selector="maskBrightnessAction:" target="-2" id="5QB-vv-aCR"/>
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-8p-6VF">
                         <rect key="frame" x="402" y="321" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="2" sliderType="circular" id="OjE-wO-8Pz"/>
+                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="10" sliderType="circular" id="OjE-wO-8Pz"/>
                         <connections>
                             <action selector="scanlineWeightAction:" target="-2" id="Fa1-Dl-zNv"/>
                         </connections>

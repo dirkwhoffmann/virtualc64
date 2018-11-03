@@ -20,7 +20,7 @@ struct Defaults {
     static let scanlineBrightness = Float(0.12)
     static let scanlineWeight = Float(6.0)
     static let bloomingFactor = Float(1.5)
-    static let dotMaskBrightness = Float(0.7)
+    static let maskBrightness = Float(0.7)
     static let eyeX = Float(0.0)
     static let eyeY = Float(0.0)
     static let eyeZ = Float(0.0)
@@ -67,7 +67,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var scanlineBrightnessSlider: NSSlider!
     @IBOutlet weak var scanlineWeightSlider: NSSlider!
     @IBOutlet weak var bloomingSlider: NSSlider!
-    @IBOutlet weak var dotMaskBrightnessSlider: NSSlider!
+    @IBOutlet weak var maskBrightnessSlider: NSSlider!
 
     // Geometry
     @IBOutlet weak var aspectRatioButton: NSButton!
@@ -138,8 +138,8 @@ class EmulatorPrefsController : UserDialogController {
         dotMask.selectItem(withTag: parent.metalScreen.dotMask)
         scanlineBrightnessSlider.floatValue = parent.metalScreen.scanlineBrightness
         scanlineWeightSlider.floatValue = parent.metalScreen.scanlineWeight
-        bloomingSlider.floatValue = parent.metalScreen.bloomingFactor
-        dotMaskBrightnessSlider.floatValue = parent.metalScreen.dotMaskBrightness
+        bloomingSlider.floatValue = parent.metalScreen.bloomFactor
+        maskBrightnessSlider.floatValue = parent.metalScreen.maskBrightness
 
         // Geometry
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
@@ -191,7 +191,6 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func brightnessAction(_ sender: NSSlider!) {
         
-        track("New brightness = \(sender.doubleValue)")
         let document = parent.document as! MyDocument
         document.c64.vic.setBrightness(sender.doubleValue)
         update()
@@ -199,7 +198,6 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func contrastAction(_ sender: NSSlider!) {
         
-        track("New contrast = \(sender.doubleValue)")
         let document = parent.document as! MyDocument
         document.c64.vic.setContrast(sender.doubleValue)
         update()
@@ -207,7 +205,6 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func saturationAction(_ sender: NSSlider!) {
         
-        track("New staturation = \(sender.doubleValue)")
         let document = parent.document as! MyDocument
         document.c64.vic.setSaturation(sender.doubleValue)
         update()
@@ -215,11 +212,9 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func blurAction(_ sender: NSSlider!) {
         
-        track("New blur factor = \(sender.doubleValue)")
-        parent.metalScreen.blurFactor = sender.floatValue
-
         let gaussFilter = parent.metalScreen.filters[1] as! GaussFilter
         gaussFilter.sigma = sender.floatValue
+        parent.metalScreen.blurFactor = sender.floatValue
         update()
     }
 
@@ -258,15 +253,13 @@ class EmulatorPrefsController : UserDialogController {
 
     @IBAction func bloomingAction(_ sender: NSSlider!) {
         
-        track("New blooming factor = \(sender.doubleValue)")
-        parent.metalScreen.bloomingFactor = sender.floatValue
+        parent.metalScreen.bloomFactor = sender.floatValue
         update()
     }
 
-    @IBAction func dotMaskBrightnessAction(_ sender: NSSlider!) {
+    @IBAction func maskBrightnessAction(_ sender: NSSlider!) {
         
-        track("New blooming factor = \(sender.doubleValue)")
-        parent.metalScreen.dotMaskBrightness = sender.floatValue
+        parent.metalScreen.maskBrightness = sender.floatValue
         update()
     }
 
@@ -374,8 +367,8 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.dotMask = Defaults.dotMask
         parent.metalScreen.scanlineBrightness = Defaults.scanlineBrightness
         parent.metalScreen.scanlineWeight = Defaults.scanlineWeight
-        parent.metalScreen.bloomingFactor = Defaults.bloomingFactor
-        parent.metalScreen.dotMaskBrightness = Defaults.dotMaskBrightness
+        parent.metalScreen.bloomFactor = Defaults.bloomingFactor
+        parent.metalScreen.maskBrightness = Defaults.maskBrightness
             
         // Geometry
         parent.metalScreen.setEyeX(Defaults.eyeX)

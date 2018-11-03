@@ -131,21 +131,32 @@ public extension MetalView {
         // struct Uniforms {
         //     float4x4 modelViewProjection;     4 bytes * 16
         //     float    alpha;                +  4 bytes
-        //     uint8    _pad[15]              + 15 bytes
+        //     uint8    _pad[]                + 15 bytes
         // };                                 ----------
         //                                    = 80 bytes
 
-        let len = 80
+        // struct FragmentUniforms {
+        //     float scanlineBrightness;         4 bytes
+        //     uint  scanline;                +  4 bytes
+        //     float scanlineWeight;          +  4 bytes
+        //     float bloomFactor;             +  4 bytes
+        //     uint  mask;                    +  4 bytes
+        //     float maskBrightness;          +  4 bytes
+        //     uint8 _pad[]                   +  0 bytes
+        // };                                 ----------
+        //                                    = 24 bytes
+        
         let opt = MTLResourceOptions.cpuCacheModeWriteCombined
         
-        uniformBuffer2D = device?.makeBuffer(length: len, options: opt)
-        uniformBuffer3D = device?.makeBuffer(length: len, options: opt)
-        uniformBufferBg = device?.makeBuffer(length: len, options: opt)
-        
+        uniformBuffer2D = device!.makeBuffer(length: 80, options: opt)
+        uniformBuffer3D = device!.makeBuffer(length: 80, options: opt)
+        uniformBufferBg = device!.makeBuffer(length: 80, options: opt)
+        uniformFragment = device!.makeBuffer(length: 24, options: opt)
+
         precondition(uniformBuffer2D != nil, "uniformBuffer2D must not be nil")
         precondition(uniformBuffer3D != nil, "uniformBuffer3D must not be nil")
         precondition(uniformBufferBg != nil, "uniformBufferBg must not be nil")
-        
+        precondition(uniformFragment != nil, "uniformFragment must not be nil")
     }
     
     func fillMatrix(_ buffer: MTLBuffer?, _ matrix: simd_float4x4) {
@@ -159,13 +170,39 @@ public extension MetalView {
     
     func fillAlpha(_ buffer: MTLBuffer?, _ alpha: Float) {
         
-        var _alpha  = alpha
+        var _alpha = alpha
         if buffer != nil {
             let contents = buffer!.contents()
             memcpy(contents + 16 * 4, &_alpha, 4)
         }
     }
     
+    func fillFragmentShaderUniforms(_ buffer: MTLBuffer?,
+                                    scanline: Int,
+                                    scanlineBrightness: Float,
+                                    scanlineWeight: Float,
+                                    bloomFactor: Float,
+                                    mask: Int,
+                                    maskBrightness: Float) {
+        
+        var _s = scanline
+        var _sb = scanlineBrightness
+        var _sw = scanlineWeight
+        var _bf = bloomFactor
+        var _m = mask
+        var _dmb = maskBrightness
+        
+        if let contents = buffer?.contents() {
+            memcpy(contents, &_s, 4)
+            memcpy(contents + 4, &_sb, 4)
+            memcpy(contents + 8, &_sw, 4)
+            memcpy(contents + 12, &_bf, 4)
+            memcpy(contents + 16, &_m, 4)
+            memcpy(contents + 20, &_dmb, 4)
+        }
+    }
+    
+        
     func fillBuffer(_ buffer: MTLBuffer?, matrix: simd_float4x4, alpha: Float) {
         
         fillMatrix(buffer, matrix)
