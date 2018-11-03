@@ -335,7 +335,7 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                    texture2d<half, access::write> outTexture  [[ texture(1) ]],
                    uint2                          gid         [[ thread_position_in_grid ]])
 {
-    half4 result = inTexture.read(uint2(gid.x, gid.y / 2));
+    half4 result = inTexture.read(uint2(gid.x, gid.y));
     outTexture.write(result, gid);
 }
 
@@ -406,7 +406,7 @@ kernel void blur_v(texture2d<float, access::read> inTexture [[texture(0)]],
                    texture2d<float, access::read> horizontalBlur [[texture(3)]],
                    uint2 gid [[thread_position_in_grid]])
 {
-    uint2 blurTexIndices = uint2(gid.x, gid.y / 2);
+    uint2 blurTexIndices = uint2(gid.x, gid.y);
     outTexture.write(blur_v(horizontalBlur, weights, blurTexIndices), gid);
 }
 

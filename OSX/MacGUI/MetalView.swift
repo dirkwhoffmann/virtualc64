@@ -25,7 +25,7 @@ public class MetalView: MTKView {
     
     @IBOutlet weak var controller: MyController!
     
-    /// Number of drawn frames sind power up
+    /// Number of drawn frames since power up
     var frames: UInt64 = 0
     
     // Synchronization semaphore

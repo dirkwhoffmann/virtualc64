@@ -1,9 +1,13 @@
+//===----------------------------------------------------------------------===//
 //
-//  Shaders.swift
-//  VirtualC64
+// This source file is part of VirtualC64 - A Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 12.01.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
 //
+// See https://www.gnu.org for license information
+//
+//===----------------------------------------------------------------------===//
 
 import Foundation
 
@@ -29,7 +33,7 @@ struct UPSCALED_TEXTURE {
 
 struct FILTERED_TEXTURE {
     static let factor_x = 4
-    static let factor_y = 8
+    static let factor_y = 4
     static let width = C64_TEXTURE.width * FILTERED_TEXTURE.factor_x
     static let height = C64_TEXTURE.height * FILTERED_TEXTURE.factor_y
     static let cutout_x = C64_TEXTURE.cutout_x * FILTERED_TEXTURE.factor_x
@@ -40,9 +44,6 @@ class ComputeKernel : NSObject {
     
     var kernel : MTLComputePipelineState!
     var sampler : MTLSamplerState!
-    
-    var threadgroupSize : MTLSize
-    var threadgroupCount : MTLSize
 
     var samplerLinear : MTLSamplerState!
     var samplerNearest : MTLSamplerState!
@@ -56,22 +57,13 @@ class ComputeKernel : NSObject {
         self.preBlurTexture = texture;
     }
 
+    /*
     override init()
     {
-        // Set thread group size of 16x16
-        // TODO: Which thread group size suits best for out purpose?
-        let groupSizeX = 16
-        let groupSizeY = 16
-        threadgroupSize = MTLSizeMake(groupSizeX, groupSizeY, 1 /* depth */)
-        
-        // Calculate the compute kernel's width and height
-        let threadCountX = (FILTERED_TEXTURE.width + groupSizeX -  1) / groupSizeX
-        let threadCountY = (FILTERED_TEXTURE.height + groupSizeY - 1) / groupSizeY
-        threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1)
-        
-        super.init()
+    super.init()
     }
-
+    */
+    
     convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
     {
         self.init()
@@ -130,18 +122,34 @@ class ComputeKernel : NSObject {
     
     func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture)
     {
-        if let encoder = commandBuffer.makeComputeCommandEncoder() {
-            encoder.setComputePipelineState(kernel)
-            encoder.setTexture(source, index: 0)
-            encoder.setTexture(target, index: 1)
-            if (preBlurTexture != nil) {
-                encoder.setTexture(preBlurTexture, index: 3);
-            }
-            configureComputeCommandEncoder(encoder: encoder)
-
-            encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
-            encoder.endEncoding()
+        guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
+            return
         }
+        
+        // Bind pipeline and textures
+        encoder.setComputePipelineState(kernel)
+        encoder.setTexture(source, index: 0)
+        encoder.setTexture(target, index: 1)
+        if (preBlurTexture != nil) {
+            encoder.setTexture(preBlurTexture, index: 3);
+        }
+        
+        // Apply shader specific configurations (if any)
+        configureComputeCommandEncoder(encoder: encoder)
+        
+        // Determine thread group size and number of groups
+        let groupW = kernel.threadExecutionWidth
+        let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
+        let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
+        
+        let countW = (FILTERED_TEXTURE.cutout_x + groupW - 1) / groupW;
+        let countH = (FILTERED_TEXTURE.cutout_y + groupH - 1) / groupH;
+        let threadgroupCount = MTLSizeMake(countW, countH, 1)
+        
+        // Finally, we're ready to dispatch
+        encoder.dispatchThreadgroups(threadgroupCount,
+                                     threadsPerThreadgroup: threadsPerGroup)
+        encoder.endEncoding()
     }
 }
 

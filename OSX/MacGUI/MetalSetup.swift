@@ -101,7 +101,7 @@ public extension MetalView {
         descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
             width: 2048,
-            height: 4096,
+            height: 2048,
             mipmapped: false)
         descriptor.usage = [.shaderRead, .shaderWrite]
         filteredTexture = device?.makeTexture(descriptor: descriptor)
