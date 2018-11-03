@@ -73,7 +73,7 @@ public class MetalView: MTKView {
     //! Pre-blurred texture
     /*! A horizontally blurred texture. Subsequent filters may add a vertical blur
      *  to get the final blur value. */
-    var preBlurredTexture: MTLTexture! = nil
+    // var preBlurredTexture: MTLTexture! = nil
     
     //! Filtered emulator texture
     /*! In the second post-processing stage, the upscaled texture gets filtered.
@@ -91,7 +91,7 @@ public class MetalView: MTKView {
     var filters = [ComputeKernel?](repeating: nil, count: 5)
     
     // Filter for horizontal blur stage
-    var preBlurFilter: BlurFilter! = nil
+    // var preBlurFilter: BlurFilter! = nil
     
     // Shader parameters
     var scanlines = 0

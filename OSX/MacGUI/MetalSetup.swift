@@ -96,9 +96,11 @@ public extension MetalView {
         precondition(upscaledTexture != nil, "Failed to create upscaling texture")
         
         // Horizontally blurred texture
+        /*
         preBlurredTexture = device?.makeTexture(descriptor: descriptor)
         precondition(preBlurredTexture != nil, "Failed to create horizontally blurred texture")
-    
+        */
+        
         // Final texture (upscaled and filtered)
         descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
@@ -130,8 +132,9 @@ public extension MetalView {
         filters[4] = ScanlineFilter.init(device: device!, library: library)
          */
         filters[0] = BypassFilter.init(device: device!, library: library)
-        filters[1] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
-        filters[2] = GaussFilter.init(device: device!, library: library, sigma: 2.0)
+        filters[1] = SmoothFilter.init(device: device!, library: library)
+        filters[2] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
+        filters[3] = GaussFilter.init(device: device!, library: library, sigma: 2.0)
     }
     
     func buildBuffers() {

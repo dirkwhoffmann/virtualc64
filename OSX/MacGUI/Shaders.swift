@@ -201,6 +201,15 @@ class BypassFilter : ComputeKernel {
     }
 }
 
+class SmoothFilter : ComputeKernel {
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        
+        self.init(name: "bypass", device: device, library: library)
+        sampler = samplerLinear
+    }
+}
+
 class GaussFilter : ComputeKernel {
     
     var sigma = Float(0.0)
@@ -225,15 +234,7 @@ class GaussFilter : ComputeKernel {
     }
 }
 
-class SmoothFilter : ComputeKernel {
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
-        self.init(name: "bypass", device: device, library: library)
-        sampler = samplerLinear
-    }
-}
-
+/*
 class BlurFilter : ComputeKernel {
     
     var blurWeightTexture: MTLTexture!
@@ -328,3 +329,4 @@ class ScanlineFilter : ComputeKernel {
         sampler = samplerLinear
     }
 }
+*/
