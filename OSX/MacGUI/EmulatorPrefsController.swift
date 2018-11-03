@@ -335,7 +335,7 @@ class EmulatorPrefsController : UserDialogController {
         c64.vic.setBrightness(EmulatorDefaults.brightness)
         c64.vic.setContrast(EmulatorDefaults.contrast)
         c64.vic.setSaturation(EmulatorDefaults.saturation)
-        parent.metalScreen.blurFactor = EmulatorDefaults.blurFactor
+        parent.metalScreen.blurFactor = EmulatorDefaults.blur
         
         // Effect engine
         parent.metalScreen.scanlines = EmulatorDefaults.scanlines

@@ -98,7 +98,7 @@ public class MetalView: MTKView {
     var dotMask = EmulatorDefaults.dotMask
     var maskBrightness = EmulatorDefaults.maskBrightness
     
-    var blurFactor = EmulatorDefaults.blurFactor {
+    var blurFactor = EmulatorDefaults.blur {
         didSet {
             if (1 < filters.count && filters[1] != nil) {
                 let gaussFilter = filters[1] as! GaussFilter

@@ -1,8 +1,10 @@
 //
-//  UserDefaults.swift
-//  VirtualC64
+// This source file is part of VirtualC64 - A Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 10.02.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
 //
 
 import Foundation
@@ -10,59 +12,69 @@ import Foundation
 struct VC64Keys {
     
     // General
-    static let basicRom          = "VC64BasicRomFileKey"
-    static let charRom           = "VC64CharRomFileKey"
-    static let kernalRom         = "VC64KernelRomFileKey"
-    static let vc1541Rom         = "VC64VC1541RomFileKey"
+    static let basicRom           = "VC64BasicRomFileKey"
+    static let charRom            = "VC64CharRomFileKey"
+    static let kernalRom          = "VC64KernelRomFileKey"
+    static let vc1541Rom          = "VC64VC1541RomFileKey"
 
     // Keyboard
-    static let mapKeysByPosition = "VC64MapKeysByPosition"
-    static let keyMap            = "VC64KeyMap"
+    static let mapKeysByPosition  = "VC64MapKeysByPosition"
+    static let keyMap             = "VC64KeyMap"
     
     // Devices preferences dialog
-    static let joyKeyMap1        = "VC64JoyKeyMap1"
-    static let joyKeyMap2        = "VC64JoyKeyMap2"
-    static let disconnectKeys    = "VC64DisconnectKeys"
+    static let joyKeyMap1         = "VC64JoyKeyMap1"
+    static let joyKeyMap2         = "VC64JoyKeyMap2"
+    static let disconnectKeys     = "VC64DisconnectKeys"
     
-    static let autofire          = "VC64Autofire"
-    static let autofireBullets   = "VC64AutofireBullets"
-    static let autofireFrequency = "VC64AutofireFrequency"
+    static let autofire           = "VC64Autofire"
+    static let autofireBullets    = "VC64AutofireBullets"
+    static let autofireFrequency  = "VC64AutofireFrequency"
     
-    static let mouseModel        = "VC64MouseModelKey"
+    static let mouseModel         = "VC64MouseModelKey"
     
     // Emulator preferences dialog
-    static let eyeX              = "VC64EyeX"
-    static let eyeY              = "VC64EyeY"
-    static let eyeZ              = "VC64EyeZ"
-    static let brightness        = "VC64BrightnessKey"
-    static let contrast          = "VC64ContrastKey"
-    static let saturation        = "VC64SaturationKey"
-    static let videoPalette      = "VC64PaletteKey"
-    static let videoUpscaler     = "VC64UpscalerKey"
-    static let videoFilter       = "VC64FilterKey"
-    static let aspectRatio       = "VC64FullscreenKeepAspectRatioKey"
+    static let videoPalette       = "VC64PaletteKey"
+
+    static let videoUpscaler      = "VC64UpscalerKey"
+    static let videoFilter        = "VC64FilterKey"
+    static let brightness         = "VC64BrightnessKey"
+    static let contrast           = "VC64ContrastKey"
+    static let saturation         = "VC64SaturationKey"
+    static let blur               = "VC64BlurKey"
     
-    static let warpLoad          = "VC64WarpLoadKey"
-    static let driveNoise        = "VC64DriveNoiseKey"
+    static let scanlines          = "VC64ScanlinesKey"
+    static let scanlineBrightness = "VC64ScanlineBrightness"
+    static let scanlineWeight     = "VC64ScanlineWeight"
+    static let bloomFactor        = "VC64BloomFactor"
+    static let mask               = "VC64Mask"
+    static let maskBrightness     = "VC64MaskBrightness"
+
+    static let aspectRatio        = "VC64FullscreenKeepAspectRatioKey"
+    static let eyeX               = "VC64EyeX"
+    static let eyeY               = "VC64EyeY"
+    static let eyeZ               = "VC64EyeZ"
     
-    static let pauseInBackground = "VC64PauseInBackground"
-    static let snapshotInterval  = "VC64SnapshotInterval"
-    static let autoMount         = "VC64AutoMount"
+    static let warpLoad           = "VC64WarpLoadKey"
+    static let driveNoise         = "VC64DriveNoiseKey"
+    
+    static let pauseInBackground  = "VC64PauseInBackground"
+    static let snapshotInterval   = "VC64SnapshotInterval"
+    static let autoMount          = "VC64AutoMount"
 
     // Hardware preferences dialog
-    static let vicChip           = "VC64VICChipModelKey"
-    static let grayDotBug        = "VC64VICGrayDotBugKey"
+    static let vicChip            = "VC64VICChipModelKey"
+    static let grayDotBug         = "VC64VICGrayDotBugKey"
 
-    static let ciaChip           = "VC64CIAChipModelKey"
-    static let timerBBug         = "VC64CIATimerBBugKey"
+    static let ciaChip            = "VC64CIAChipModelKey"
+    static let timerBBug          = "VC64CIATimerBBugKey"
 
-    static let reSID             = "VC64SIDReSIDKey"
-    static let audioChip         = "VC64SIDChipModelKey"
-    static let audioFilter       = "VC64SIDFilterKey"
-    static let samplingMethod    = "VC64SIDSamplingMethodKey"
+    static let reSID              = "VC64SIDReSIDKey"
+    static let audioChip          = "VC64SIDChipModelKey"
+    static let audioFilter        = "VC64SIDFilterKey"
+    static let samplingMethod     = "VC64SIDSamplingMethodKey"
 
-    static let glueLogic         = "VC64GlueLogicKey"
-    static let initPattern       = "VC64InitPatternKey"
+    static let glueLogic          = "VC64GlueLogicKey"
+    static let initPattern        = "VC64InitPatternKey"
 }
 
 /// This class extension handles the UserDefaults management
@@ -119,16 +131,29 @@ extension MyController {
         track()
         let dictionary : [String:Any] = [
             
-            VC64Keys.eyeX: 0.0,
-            VC64Keys.eyeY: 0.0,
-            VC64Keys.eyeZ: 0.0,
-            VC64Keys.brightness: 50.0,
-            VC64Keys.contrast: 100.0,
-            VC64Keys.saturation: 50.0,
-            VC64Keys.videoPalette: COLOR_PALETTE.rawValue,
-            VC64Keys.videoUpscaler: 0,
-            VC64Keys.videoFilter: 1,
+            VC64Keys.videoPalette: EmulatorDefaults.palette,
+            
+            VC64Keys.videoUpscaler: EmulatorDefaults.upscaler,
+            VC64Keys.videoFilter: EmulatorDefaults.filter,
+            VC64Keys.brightness: EmulatorDefaults.brightness,
+            VC64Keys.contrast: EmulatorDefaults.contrast,
+            VC64Keys.saturation: EmulatorDefaults.saturation,
+            VC64Keys.blur: EmulatorDefaults.blur,
+            
+            VC64Keys.scanlines: EmulatorDefaults.scanlines,
+            VC64Keys.scanlineBrightness: EmulatorDefaults.scanlineBrightness,
+            VC64Keys.scanlineWeight: EmulatorDefaults.scanlineWeight,
+            VC64Keys.bloomFactor: EmulatorDefaults.bloomFactor,
+            VC64Keys.mask: EmulatorDefaults.dotMask,
+            VC64Keys.maskBrightness: EmulatorDefaults.maskBrightness,
+        
             VC64Keys.aspectRatio: false,
+            VC64Keys.eyeX: EmulatorDefaults.eyeX,
+            VC64Keys.eyeY: EmulatorDefaults.eyeY,
+            VC64Keys.eyeZ: EmulatorDefaults.eyeZ,
+            
+            VC64Keys.warpLoad: true,
+            VC64Keys.driveNoise: true,
             
             VC64Keys.disconnectKeys: true,
             VC64Keys.pauseInBackground: false,
@@ -158,10 +183,7 @@ extension MyController {
             VC64Keys.samplingMethod: 0,
 
             VC64Keys.glueLogic: GLUE_DISCRETE.rawValue,
-            VC64Keys.initPattern: INIT_PATTERN_C64.rawValue,
-
-            VC64Keys.warpLoad: true,
-            VC64Keys.driveNoise: true
+            VC64Keys.initPattern: INIT_PATTERN_C64.rawValue
         ]
         
         let defaults = UserDefaults.standard
@@ -231,17 +253,30 @@ extension MyController {
 
         c64.suspend()
         
-        // Video
-        metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
-        metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
-        metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
+        // Colors
+        c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.videoPalette))
+        
+        // Texture
+        metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
+        metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
         c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
         c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
-        c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.videoPalette))
-        metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
-        metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
+        metalScreen.blurFactor = defaults.float(forKey: VC64Keys.blur)
+        
+        // Effects
+        metalScreen.scanlines = defaults.integer(forKey: VC64Keys.scanlines)
+        metalScreen.scanlineBrightness = defaults.float(forKey: VC64Keys.scanlineBrightness)
+        metalScreen.scanlineWeight = defaults.float(forKey: VC64Keys.scanlineWeight)
+        metalScreen.bloomFactor = defaults.float(forKey: VC64Keys.bloomFactor)
+        metalScreen.dotMask = defaults.integer(forKey: VC64Keys.mask)
+        metalScreen.maskBrightness = defaults.float(forKey: VC64Keys.maskBrightness)
+        
+        // Geometry
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
+        metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
+        metalScreen.setEyeY(defaults.float(forKey: VC64Keys.eyeY))
+        metalScreen.setEyeZ(defaults.float(forKey: VC64Keys.eyeZ))
         
         // Drive
         c64.setWarpLoad(defaults.bool(forKey: VC64Keys.warpLoad))
@@ -367,17 +402,31 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         
-        // Video
-        defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
-        defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
-        defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
+        // Colors
+        defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.videoPalette)
+        
+        // Texture
+        defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
+        defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
         defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
         defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
-        defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.videoPalette)
-        defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
-        defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
+        defaults.set(metalScreen.blurFactor, forKey: VC64Keys.blur)
+
+        // Effects
+        defaults.set(metalScreen.scanlines, forKey: VC64Keys.scanlines)
+        defaults.set(metalScreen.scanlineBrightness, forKey: VC64Keys.scanlineBrightness)
+        defaults.set(metalScreen.scanlineWeight, forKey: VC64Keys.scanlineWeight)
+        defaults.set(metalScreen.bloomFactor, forKey: VC64Keys.bloomFactor)
+        defaults.set(metalScreen.dotMask, forKey: VC64Keys.mask)
+        defaults.set(metalScreen.scanlines, forKey: VC64Keys.scanlines)
+        defaults.set(metalScreen.maskBrightness, forKey: VC64Keys.maskBrightness)
+        
+        // Geometry
         defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)
+        defaults.set(metalScreen.eyeX(), forKey: VC64Keys.eyeX)
+        defaults.set(metalScreen.eyeY(), forKey: VC64Keys.eyeY)
+        defaults.set(metalScreen.eyeZ(), forKey: VC64Keys.eyeZ)
         
         // Drive
         defaults.set(c64.warpLoad(), forKey: VC64Keys.warpLoad)

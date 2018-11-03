@@ -127,75 +127,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 
-/*
-fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
-                             texture2d<float, access::sample> texture [[texture(0)]],
-                             constant FragmentUniforms &uniforms [[buffer(0)]],
-                             sampler texSampler [[sampler(0)]])
-{
-    uint pixelX = uint(vert.position.x);
-    uint pixelY = uint(vert.position.y);
-
-    // Emulate scanline
-    float dy = ((float(pixelY % 6) - 2.5) / 2.5) / 4;
-    float scanLineWeight = CalcScanLine(dy);
-    scanLineWeight *= uniforms.bloomFactor;
-
-    // Read from texture and apply scanline effect
-    float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
-    float4 color = texture.sample(texSampler, tc);
-    color *= scanLineWeight;
-    
-    // Apply dot mask
-    float4 mask;
-
-#if MASK_TYPE == 0
-    
-    mask = float4(1.0, 1.0, 1.0, 0.0);
-    
-#elif MASK_TYPE == 1
-    
-    switch(pixelX % 3) {
-        case 0:
-            mask = float4(uniforms.maskBrightness, 1.0, uniforms.maskBrightness, 0.0);
-            break;
-
-        case 1:
-            mask = float4(1.0, uniforms.maskBrightness, 1.0, 0.0);
-            break;
-            
-        default:
-            mask = float4(DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, 0.0);
-    }
-    
-#else
-    
-    switch(pixelX % 4) {
-            
-        case 0:
-            mask = float4(1.0, MASK_BRIGHTNESS, MASK_BRIGHTNESS, 0.0);
-            break;
-
-        case 1:
-            mask = float4(MASK_BRIGHTNESS, 1.0, MASK_BRIGHTNESS, 0.0);
-            break;
-
-        case 2:
-            mask = float4(MASK_BRIGHTNESS, MASK_BRIGHTNESS, 1.0, 0.0);
-            break;
-            
-        default:
-            mask = float4(DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, DOTMASK_GAP_BRIGHTNESS, 0.0);
-            break;
-    }
-            
-#endif
-            
-    color *= mask;
-            
-    return half4(color.r, color.g, color.b, vert.alpha);
-}
-*/
 
 //
 // Texture upscalers (first post-processing stage)
@@ -208,6 +139,7 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
     half4 result = inTexture.read(uint2(gid.x / SCALE_FACTOR, gid.y / SCALE_FACTOR));
     outTexture.write(result, gid);
 }
+
 
 //
 // EPX upscaler (Eric's Pixel Expansion)
@@ -398,79 +330,3 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     half4 result = inTexture.read(uint2(gid.x, gid.y));
     outTexture.write(result, gid);
 }
-
-
-
-/*
-float4 blur_h(texture2d<float, access::read> inTexture,
-              texture2d<float, access::read> weights,
-              uint2 gid)
-{
-    int size = weights.get_width();
-    int radius = size / 2;
-    
-    float4 accumColor(0, 0, 0, 0);
-    
-    for (int i = 0; i < size; ++i) {
-        float4 color = inTexture.read(uint2(gid.x + (i - radius), gid.y)).rgba;
-        float4 weight = weights.read(uint2(i, 0)).rrrr;
-        accumColor += weight * color;
-    }
-    
-    return float4(accumColor.rgb, 1);
-}
-
-float4 blur_v(texture2d<float, access::read> inTexture,
-              texture2d<float, access::read> weights,
-              uint2 gid)
-{
-    int size = weights.get_width();
-    int radius = size / 2;
-    
-    float4 accumColor(0, 0, 0, 0);
-    
-    for (int i = 0; i < size; ++i) {
-        float4 color = inTexture.read(uint2(gid.x, gid.y + (i - radius))).rgba;
-        float4 weight = weights.read(uint2(i, 0)).rrrr;
-        accumColor += weight * color;
-    }
-    
-    return float4(accumColor.rgb, 1);
-}
-
-//
-// Gaussian blur filter (horizontal)
-//
-// This shader only performs a horizontal pass. A secondary filter must call
-// blur_v(horizontalBlur, weights, gid) to get the final value.
-// This is the first optimization from
-// http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling
-//
-
-kernel void blur_h(texture2d<float, access::read> inTexture [[texture(0)]],
-                 texture2d<float, access::write> outTexture [[texture(1)]],
-                 texture2d<float, access::read> weights [[texture(2)]],
-                 uint2 gid [[thread_position_in_grid]])
-{
-    outTexture.write(blur_h(inTexture, weights, gid), gid);
-}
-
-//
-// Gaussian blur filter (vertical)
-//
-// This shader only performs a vertical pass. A prior call must do a horizontal
-// blur and pass the texture in.
-// http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling
-//
-
-kernel void blur_v(texture2d<float, access::read> inTexture [[texture(0)]],
-                   texture2d<float, access::write> outTexture [[texture(1)]],
-                   texture2d<float, access::read> weights [[texture(2)]],
-                   texture2d<float, access::read> horizontalBlur [[texture(3)]],
-                   uint2 gid [[thread_position_in_grid]])
-{
-    uint2 blurTexIndices = uint2(gid.x, gid.y);
-    outTexture.write(blur_v(horizontalBlur, weights, blurTexIndices), gid);
-}
-
-*/
