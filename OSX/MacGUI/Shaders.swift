@@ -1,4 +1,3 @@
-//===----------------------------------------------------------------------===//
 //
 // This source file is part of VirtualC64 - A Commodore 64 emulator
 //
@@ -7,9 +6,11 @@
 //
 // See https://www.gnu.org for license information
 //
-//===----------------------------------------------------------------------===//
 
 import Foundation
+import Metal
+import MetalKit
+import MetalPerformanceShaders
 
 //
 // Base class for all compute kernels
@@ -41,7 +42,8 @@ struct FILTERED_TEXTURE {
 }
 
 class ComputeKernel : NSObject {
-    
+
+    var device : MTLDevice!
     var kernel : MTLComputePipelineState!
     var sampler : MTLSamplerState!
 
@@ -56,17 +58,12 @@ class ComputeKernel : NSObject {
     func setPreBlurTexture(texture: MTLTexture) {
         self.preBlurTexture = texture;
     }
-
-    /*
-    override init()
-    {
-    super.init()
-    }
-    */
     
     convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
     {
         self.init()
+        
+        self.device = device
         
         // Lookup kernel function in library
         guard let function = library.makeFunction(name: name) else {
@@ -201,6 +198,30 @@ class BypassFilter : ComputeKernel {
         
         self.init(name: "bypass", device: device, library: library)
         sampler = samplerNearest
+    }
+}
+
+class GaussFilter : ComputeKernel {
+    
+    var sigma = Float(0.0)
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary, sigma: Float) {
+        
+        self.init(name: "bypass", device: device, library: library)
+        self.sigma = sigma
+    }
+    
+    override func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture) {
+        
+        if #available(OSX 10.13, *) {
+            let gauss = MPSImageGaussianBlur(device: device, sigma: sigma)
+            gauss.encode(commandBuffer: commandBuffer,
+                         sourceTexture: source,
+                         destinationTexture: target)
+        } else {
+            // Apply bypass on earlier versions
+            super.apply(commandBuffer: commandBuffer, source: source, target: target)
+        }
     }
 }
 

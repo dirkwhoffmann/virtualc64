@@ -1,8 +1,10 @@
 //
-//  MetalView.swift
-//  VirtualC64
+// This source file is part of VirtualC64 - A Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 15.01.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
 //
 // TODO:
 // eyeX,eyeY,eyeZ -> eye : float3
@@ -10,6 +12,7 @@
 import Foundation
 import Metal
 import MetalKit
+// import MetalPerformanceShaders
 
 struct Sizeof {
     static let float = 4
@@ -291,20 +294,22 @@ public class MetalView: MTKView {
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        // Run a pre-blur pass if needed
         let filter = currentFilter()
+        /*
+        // Run a pre-blur pass if needed
         if (filter.isPreBlurRequired()) {
             preBlurFilter.apply(commandBuffer: commandBuffer,
                                 source: upscaledTexture,
                                 target: preBlurredTexture)
             filter.setPreBlurTexture(texture: preBlurredTexture)
         }
-
+        */
+        
         // Filter the upscaled texture
         filter.apply(commandBuffer: commandBuffer,
                      source: upscaledTexture,
                      target: filteredTexture)
-    
+       
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
         descriptor.colorAttachments[0].texture = drawable.texture

@@ -1,8 +1,10 @@
 //
-//  MetalSetup.swift
-//  VirtualC64
+// This source file is part of VirtualC64 - A Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 15.01.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
 //
 
 import Foundation
@@ -119,12 +121,17 @@ public extension MetalView {
         upscalers[2] = XBRUpscaler.init(device: device!, library: library)
         
         // Build filters
+        /*
         preBlurFilter = BlurFilter.init(name: "blur_h", device: device!, library: library, radius: 3.0);
         filters[0] = BypassFilter.init(device: device!, library: library)
         filters[1] = SmoothFilter.init(device: device!, library: library)
         filters[2] = BlurFilter.init(name: "blur_v", device: device!, library: library, radius: 3.0)
         filters[3] = CrtFilter.init(device: device!, library: library)
         filters[4] = ScanlineFilter.init(device: device!, library: library)
+         */
+        filters[0] = BypassFilter.init(device: device!, library: library)
+        filters[1] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
+        filters[2] = GaussFilter.init(device: device!, library: library, sigma: 2.0)
     }
     
     func buildBuffers() {
