@@ -113,11 +113,9 @@ PRGFile::makeObjectWithAnyArchive(AnyArchive *otherArchive) {
 void
 PRGFile::selectItem(unsigned item)
 {
-    debug("PRGFile::selectItem %d\n", item);
     if (item == 0) {
         iFp = 2;
         iEof = size;
-        debug("iEof = %d\n", size);
     } else {
         iFp = -1;
     }
