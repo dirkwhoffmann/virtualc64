@@ -825,8 +825,11 @@ VIC::beginRasterline(uint16_t line)
 
     // Check if this line is a DMA line (bad line)
     // Note: The value might change later if control register 1 is written to.
-    badLine = badLineCondition();
-    displayState |= badLine;
+    if ((badLine = badLineCondition())) {
+        delay |= VICSetDisplayState;
+    } else {
+        delay &= ~VICSetDisplayState;
+    }
     
     // We adjust the position of the first pixel in the pixel buffer to make
     // sure that the screen always appears centered.

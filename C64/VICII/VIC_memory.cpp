@@ -462,9 +462,9 @@ VIC::poke(uint16_t addr, uint8_t value)
             if (c64->rasterLine == 0x30 && (value & 0x10))
                 DENwasSetInRasterline30 = true;
             
-            if ((badLine = badLineCondition()))
+            if ((badLine = badLineCondition())) {
                 delay |= VICSetDisplayState;
-            
+            }
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
             break;
