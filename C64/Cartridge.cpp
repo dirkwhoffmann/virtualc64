@@ -233,7 +233,9 @@ Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
         packet[i] = new CartridgeRom(buffer);
     }
     
-    assert(*buffer - old == packetStateSize());
+    if (*buffer - old != packetStateSize()) {
+        assert(false);
+    }
 }
 
 void
@@ -247,7 +249,9 @@ Cartridge::savePacketsToBuffer(uint8_t **buffer)
         packet[i]->saveToBuffer(buffer);
     }
     
-    assert(*buffer - old == packetStateSize());
+    if (*buffer - old != packetStateSize()) {
+        assert(false);
+    }
 }
 
 size_t
