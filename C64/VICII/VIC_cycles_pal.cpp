@@ -45,7 +45,7 @@ VIC::processDelayedActions()
         flipflops.delayed = flipflops.current;
     }
     if (delay & VICSetDisplayState) {
-        displayState = true;
+        displayState |= badLine;
     }
     if (delay & VICUpdateRegisters) {
         reg.delayed = reg.current;

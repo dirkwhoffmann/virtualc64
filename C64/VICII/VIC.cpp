@@ -827,9 +827,12 @@ VIC::beginRasterline(uint16_t line)
     // Note: The value might change later if control register 1 is written to.
     if ((badLine = badLineCondition())) {
         delay |= VICSetDisplayState;
-    } else {
+    }
+    /*
+    else {
         delay &= ~VICSetDisplayState;
     }
+    */
     
     // We adjust the position of the first pixel in the pixel buffer to make
     // sure that the screen always appears centered.
