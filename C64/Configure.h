@@ -28,7 +28,7 @@
 #define V_SUBMINOR 0
 
 // Disable assertion checking (Uncomment in release build)
-// #define NDEBUG
+#define NDEBUG
 
 // Default debug level for all components (Set to 1 in release build)
 #define DEBUG_LEVEL 1
@@ -56,25 +56,6 @@
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive matching value
 // Call CA1 action in VIA class only if the pin value really has changed.
-
-// Loading and saving:
-//
-// New object structure:
-// AnyC64File : Base class for all supported file types
-// AnyDisk : Interface for all files representing a floppy disk
-//           Gives access to tracks and sectors
-// AnyArchive : Interface for all files representing a file archive
-//           Gives access to files and their data
-//
-// Snapshot : AnyC64File
-// RomFile : AnyC64File
-// TapFile : AnyC64File
-// CrtFile : AnyC64File
-// G64File : AnyC64File, AnyDisk
-// D64File : AnyC64File, AnyDisk, AnyArchive
-// T64File : AnyC64File, AnyArchive
-// PRGFile : AnyC64File, AnyArchive
-// P00File : AnyC64File, AnyArchive
 //
 // Add setter API for SID stuff
 //
