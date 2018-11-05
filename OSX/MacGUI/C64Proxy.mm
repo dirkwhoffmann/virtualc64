@@ -57,6 +57,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setTracing:(BOOL)b {
     if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
 
+- (UInt64) cycle { return wrapper->cpu->cycle; }
 - (uint16_t) pc { return wrapper->cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
 - (void) setSP:(uint8_t)sp { wrapper->cpu->setSP(sp); }
@@ -797,7 +798,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
 - (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
 
-- (UInt64) cycles { return wrapper->c64->cpu.cycle; }
+// - (UInt64) cycles { return wrapper->c64->cpu.cycle; }
 
 // Snapshot storage
 - (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }

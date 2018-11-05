@@ -493,7 +493,7 @@ extension MyController {
         
         // Do 3 times a second ...
         if (animationCounter % 4) == 0 {
-            speedometer.updateWith(cycle: c64.cycles(), frame: metalScreen.frames)
+            speedometer.updateWith(cycle: c64.cpu.cycle(), frame: metalScreen.frames)
             let mhz = speedometer.mhz(digits: 2)
             let fps = speedometer.fps(digits: 0)
             clockSpeed.stringValue = String(format:"%.2f MHz %.0f fps", mhz, fps)

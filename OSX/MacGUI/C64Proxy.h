@@ -55,6 +55,7 @@ struct ContainerWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
+- (UInt64) cycle;
 - (uint16_t) pc;
 - (void) setPC:(uint16_t)pc;
 - (void) setSP:(uint8_t)sp;
@@ -630,14 +631,6 @@ struct ContainerWrapper;
 // - (BOOL) insertDisk:(ArchiveProxy *)a;
 - (BOOL) insertTape:(TAPProxy *)a;
 
-- (UInt64) cycles;
-
-// Audio hardware
-/*
-- (BOOL) enableAudio;
-- (void) disableAudio;
-*/
- 
 @end
 
 
