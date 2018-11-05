@@ -37,9 +37,9 @@
 
 
 
-// RELEASE NOTES (Version 3.1)
+// RELEASE NOTES (Version 3.2)
 //
-// Added support for caertridges of type KCS and EasyFlash
+// 
 //
 // TODOs for the next release:
 //
