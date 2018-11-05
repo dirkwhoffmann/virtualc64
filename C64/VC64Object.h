@@ -1,21 +1,22 @@
 /*!
  * @header      VC64Object.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2018 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
-/*              This program is free software; you can redistribute it and/or modify
- *              it under the terms of the GNU General Public License as published by
- *              the Free Software Foundation; either version 2 of the License, or
- *              (at your option) any later version.
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *              This program is distributed in the hope that it will be useful,
- *              but WITHOUT ANY WARRANTY; without even the implied warranty of
- *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *              GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *              You should have received a copy of the GNU General Public License
- *              along with this program; if not, write to the Free Software
- *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _VC64OBJECT_INC
@@ -25,8 +26,8 @@
 #include "C64_types.h"
 
 /*! @brief    Common functionality of all VirtualC64 objects.
- *  @details  This class defines the base functionality of all objects such as 
- *            printing debug messages.
+ *  @details  This class stores a textual description of the object and offers
+ *            various functions for printing debug messages and warnings.
  */
 class VC64Object {
 
@@ -36,8 +37,9 @@ private:
     unsigned debugLevel = DEBUG_LEVEL;
 
     /*! @brief    Stores how many trace messages are left to be printed
-     *  @details  If positive, this value is decremented in tracingEnabled()
-     *  @details  A negative value indicates that tracing should continue forever
+     *  @details  If positive, this value is decremented in tracingEnabled().
+     *            A negative value indicates that tracing should continue
+     *            forever.
      */
     int traceCounter = 0;
 
@@ -78,7 +80,7 @@ public:
     
     
     //
-    //! @functiongroup Printing messages to console
+    //! @functiongroup Printing messages to the console
     //
     
     //! @brief    Prints a message to console.
@@ -88,22 +90,26 @@ public:
     void msg(int level, const char *fmt, ...);
     
     /*! @brief    Prints a debug message to the console
-     *  @details  Debug messages are prefixed by a custom string naming the component.
+     *  @details  Debug messages are prefixed by a custom string naming the
+     *            component.
      */
     void debug(const char *fmt, ...);
     
     /*! @brief    Prints a debug message if debug level is high enough.
-     *  @details  Debug messages are prefixed by a custom string naming the component.
+     *  @details  Debug messages are prefixed by a custom string naming the
+     *            component.
      */
     void debug(int level, const char *fmt, ...);
 
     /*! @brief    Prints a warning message to the console.
-     *  @details  Warning messages are prefixed by a custom string naming the component.
+     *  @details  Warning messages are prefixed by a custom string naming the
+     *            component.
      */
     void warn(const char *fmt, ...);
     
     /*! @brief    Prints a panic message to console or a log file.
-     *  @details  Panic messages are prefixed by a custom string naming the component.
+     *  @details  Panic messages are prefixed by a custom string naming the
+     *            component.
      */
     void panic(const char *fmt, ...);    
 };

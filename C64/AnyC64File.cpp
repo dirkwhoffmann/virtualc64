@@ -79,7 +79,7 @@ AnyC64File::setPath(const char *str)
     
     // Set default name (path without suffix)
     memset(name, 0, sizeof(name));
-    char *filename = ExtractFilenameWithoutSuffix(path);
+    char *filename = extractFilenameWithoutSuffix(path);
     strncpy(name, filename, sizeof(name) - 1);
     free(filename);
     ascii2petStr(name);

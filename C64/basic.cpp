@@ -1,6 +1,9 @@
+/*!
+ * @file        basic.cpp
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
+ */
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,23 +23,6 @@
 
 struct timeval t;
 long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
-
-void
-printReadable(const void *data, int length)
-{
-    int i;
-    for(i = 0; i < length; i++) {
-        char ch = ((char*)(data))[i];
-        if (isascii(ch)) {
-            fprintf(stderr, "%02x %c ", ch, ch);
-        } else {
-            fprintf(stderr, "%02x ? ", ch);
-        }
-        if (i > 0 && i % 16 == 0) {
-            fprintf(stderr, "\n");
-        }
-    }
-}
 
 void translateToUnicode(const char *petscii, uint16_t *unichars, uint16_t base, size_t max)
 {
@@ -159,7 +145,7 @@ sprint16b(char *s, uint16_t value)
 }
 
 char *
-ExtractFilename(const char *path)
+extractFilename(const char *path)
 {
     assert(path != NULL);
     
@@ -168,7 +154,7 @@ ExtractFilename(const char *path)
 }
 
 char *
-ExtractSuffix(const char *path)
+extractSuffix(const char *path)
 {
     assert(path != NULL);
     
@@ -177,13 +163,13 @@ ExtractSuffix(const char *path)
 }
 
 char *
-ExtractFilenameWithoutSuffix(const char *path)
+extractFilenameWithoutSuffix(const char *path)
 {
     assert(path != NULL);
     
     char *result;
-    char *filename = ExtractFilename(path);
-    char *suffix   = ExtractSuffix(filename);
+    char *filename = extractFilename(path);
+    char *suffix   = extractSuffix(filename);
     
     if (strlen(suffix) == 0)
         result = strdup(filename);
@@ -267,7 +253,6 @@ checkFileHeader(const char *filename, const uint8_t *header)
 	return result;
 }
 
-//! Returns elepased time since application start in microseconds
 uint64_t 
 usec()
 {

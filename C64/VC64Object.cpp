@@ -1,6 +1,9 @@
+/*!
+ * @file        VC64Object.cpp
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
+ */
 /*
- * Author: Dirk W. Hoffmann. All rights reserved.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,12 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "C64.h"
-
-
-//
-// Tracing
-//
+#include "VC64Object.h"
 
 bool
 VC64Object::tracingEnabled()
@@ -34,11 +32,6 @@ VC64Object::tracingEnabled()
     
     return true;
 }
-
-
-//
-// Printing messages
-// 
 
 #define VC64OBJ_PARSE \
     char buf[256]; \

@@ -1,6 +1,9 @@
+/*!
+ * @file        VirtualComponent.cpp
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
+ */
 /*
- * Author: Dirk W. Hoffmann. All rights reserved.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "C64.h"
-#include <algorithm>    // std::copy CAN WE GET RID OF THIS?
+#include "VirtualComponent.h"
+#include <algorithm>
 
 VirtualComponent::~VirtualComponent()
 {
@@ -127,8 +130,9 @@ void
 VirtualComponent::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
+    size_t stateSize = VirtualComponent::stateSize();
     
-    debug(3, "    Loading internal state (%d bytes) ...\n", VirtualComponent::stateSize());
+    debug(3, "    Loading internal state (%d bytes) ...\n", stateSize);
     
     // Load internal state of sub components
     if (subComponents != NULL)
@@ -175,8 +179,9 @@ void
 VirtualComponent::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
-
-    debug(3, "    Saving internal state (%d bytes) ...\n", VirtualComponent::stateSize());
+    size_t stateSize = VirtualComponent::stateSize();
+    
+    debug(3, "    Saving internal state (%d bytes) ...\n", stateSize);
 
     // Save internal state of sub components
     if (subComponents != NULL) {
@@ -214,9 +219,8 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
         }
     }
     
-    if (*buffer - old != VirtualComponent::stateSize()) {
+    if (*buffer - old != stateSize) {
         panic("saveToBuffer: Snapshot size is wrong.");
         assert(false);
     }
 }
-

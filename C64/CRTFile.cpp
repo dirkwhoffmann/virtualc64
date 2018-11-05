@@ -126,8 +126,7 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
     
     // Scan cartridge header
     if (memcmp("C64 CARTRIDGE   ", data, 16) != 0) {
-        warn("Bad cartridge signature. Expected 'C64  CARTRIDGE  ', got ...\n");
-        printReadable(&data[0], 16);
+        warn("Bad cartridge signature. Expected 'C64  CARTRIDGE  '\n");
         return false;
     }
     
@@ -154,7 +153,6 @@ CRTFile::readFromBuffer(const uint8_t *buffer, size_t length)
         
         if (memcmp("CHIP", ptr, 4) != 0) {
             warn("Unexpected data in cartridge, expected 'CHIP'\n");
-            printReadable(ptr, 4);
             return false;
         }
         

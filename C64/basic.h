@@ -1,21 +1,22 @@
 /*!
  * @header      basic.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2018 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
-/*              This program is free software; you can redistribute it and/or modify
- *              it under the terms of the GNU General Public License as published by
- *              the Free Software Foundation; either version 2 of the License, or
- *              (at your option) any later version.
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *              This program is distributed in the hope that it will be useful,
- *              but WITHOUT ANY WARRANTY; without even the implied warranty of
- *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *              GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *              You should have received a copy of the GNU General Public License
- *              along with this program; if not, write to the Free Software
- *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _BASIC_INC
@@ -50,6 +51,12 @@ typedef uint8_t uint2_t;
 //! @brief    Integrity check
 inline bool is_uint2_t(uint2_t value) { return value < 4; }
 
+//! @brief    Three bit binary value
+typedef uint8_t uint3_t;
+
+//! @brief    Integrity check
+inline bool is_uint3_t(uint2_t value) { return value < 8; }
+
 //! @brief    Four bit binary value
 typedef uint8_t uint4_t;
 
@@ -67,42 +74,29 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @functiongroup Handling low level data objects
 //
 
-//! @brief    Evaluates to the high byte of x. x is expected to be of type uint16_t.
+//! @brief    Returns the high byte of a uint16_t value.
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
 
-//! @brief    Evaluates to the low byte of x. x is expected to be of type uint16_t.
+//! @brief    Returns the low byte of a uint16_t value.
 #define LO_BYTE(x) (uint8_t)((x) & 0xFF)
 
-//! @brief    Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
+//! @brief    Specifies a larger integer in little endian byte format
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
-
-//! @brief    Evaluates to the 24 bit value specified by x, y, and z in little endian order (lowest, low, high, highest).
 #define LO_LO_HI(x,y,z) (uint32_t)((z) << 16 | (y) << 8 | (x))
-
-//! @brief    Evaluates to the 32 bit value specified by x, y, z, and w in little endian order (lowest, low, high, highest).
 #define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
-//! @brief    Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
+//! @brief    Specifies a larger integer in big endian byte format
 #define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
-
-/*! @brief    Evaluates to the 32 bit value specified by x, y, z, and w in
- *            big endian order (highest, high, low, lowest).
- */
+#define HI_HI_LO(x,y,z) (uint32_t)((x) << 16 | (y) << 8 | (z))
 #define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
-//! @brief    Returns the first byte of a larger integer
+//! @brief    Returns a certain byte of a larger integer
 #define BYTE0(x) LO_BYTE(x)
-
-//! @brief    Returns the second byte of a larger integer
 #define BYTE1(x) LO_BYTE((x) >> 8)
-
-//! @brief    Returns the third byte of a larger integer
 #define BYTE2(x) LO_BYTE((x) >> 16)
-
-//! @brief    Returns the fourth byte of a larger integer
 #define BYTE3(x) LO_BYTE((x) >> 24)
 
-//! @brief    Returns true iff bit n is set in x.
+//! @brief    Returns a non-zero value if the n-th bit is set in x.
 #define GET_BIT(x,nr) ((x) & (1 << (nr)))
 
 //! @brief    Sets a single bit.
@@ -114,15 +108,11 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @brief    Toggles a single bit.
 #define TOGGLE_BIT(x,nr) ((x) ^= (1 << (nr)))
 
-//! @brief    Copies a single bit from x to y.
-#define COPY_BIT(x,y,nr) ((y) = ((y) & ~(1 << (nr)) | ((x) & (1 << (nr)))))
-
 //! @brief    Sets a single bit to 0 (value == 0) or 1 (value != 0)
-// #define WRITE_BIT(x,nr,value) ((x) = (((x) & ~(1 << (nr))) | ((!!(value)) << (nr))))
 #define WRITE_BIT(x,nr,value) ((value) ? SET_BIT(x, nr) : CLR_BIT(x, nr))
 
-//! @brief    Cuts out a single byte from a bigger integer.
-// #define GET_BYTE(x,nr) (((x) >> (8 * nr)) & 0xFF)
+//! @brief    Copies a single bit from x to y.
+#define COPY_BIT(x,y,nr) ((y) = ((y) & ~(1 << (nr)) | ((x) & (1 << (nr)))))
 
 //! @brief    Returns true if value is rising when switching from x to y
 #define RISING_EDGE(x,y) (!(x) && (y))
@@ -136,14 +126,6 @@ inline bool is_uint5_t(uint5_t value) { return value < 32; }
 //! @brief    Returns true if bit n is falling when switching from x to y
 #define FALLING_EDGE_BIT(x,y,n) (((x) & (1 << (n))) && !((y) & (1 << (n))))
 
-//! @brief    Returns eight copies of a single byte
-/*
-inline uint64_t repeated(uint8_t value) {
-    uint64_t result = value;
-    for (unsigned i = 0; i < 7; i++) { result = (result << 8) | value; }
-    return result;
-}
-*/
 
 //
 //! @functiongroup Handling buffers
@@ -213,12 +195,11 @@ inline void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
     for (unsigned i = 0; i < length / sizeof(uint64_t); i++) values[i] = read64(ptr); }
 
 
-
 //
 //! @functiongroup Pretty printing
 //
 
-void printReadable(const void *data, int length);
+
 
 //
 //! @functiongroup Converting low level data objects
@@ -290,23 +271,23 @@ inline uint8_t incBCD(uint8_t value) {
 
 
 //
-//! Handling file and path names
+//! @functiongroup Handling file and path names
 //
 
 /*! @brief    Extracts filename from a path
  *  @details  Returns a newly created string. You need to delete it manually.
  */
-char *ExtractFilename(const char *path);
+char *extractFilename(const char *path);
 
 /*! @brief    Extracts file suffix from a path
  *  @details  Returns a newly created string. You need to delete it manually.
  */
-char *ExtractSuffix(const char *path);
+char *extractSuffix(const char *path);
 
 /*! @brief    Extracts filename from a path without its suffix
  *  @details  Returns a newly created string. You need to delete it manually.
  */
-char *ExtractFilenameWithoutSuffix(const char *path);
+char *extractFilenameWithoutSuffix(const char *path);
 
 /*! @brief    Check file suffix
  *  @details  The function is used for determining the type of a file. 
@@ -361,14 +342,13 @@ uint8_t localTimeHour();
 void sleepMicrosec(unsigned usec);
 
 /*! @brief    Sleeps until kernel timer reaches kernelTargetTime
- *  @param    kernelEarlyWakeup To increase timing precision, the function wakes up the thread earlier
- *            by this amount and waits actively in a delay loop until the deadline is reached.
- *  @result   Overshoot time (jitter), measured in kernel time. Smaller values are better, 0 is best.
+ *  @param    kernelEarlyWakeup: To increase timing precision, the function
+ *            wakes up the thread earlier by this amount and waits actively in
+ *            a delay loop until the deadline is reached.
+ *  @return   Overshoot time (jitter), measured in kernel time. Smaller values
+ *            are better, 0 is best.
  */
 int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup);
-
-
-
 
 #endif
 

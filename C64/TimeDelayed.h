@@ -3,19 +3,20 @@
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
-/*              This program is free software; you can redistribute it and/or modify
- *              it under the terms of the GNU General Public License as published by
- *              the Free Software Foundation; either version 2 of the License, or
- *              (at your option) any later version.
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *              This program is distributed in the hope that it will be useful,
- *              but WITHOUT ANY WARRANTY; without even the implied warranty of
- *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *              GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *              You should have received a copy of the GNU General Public License
- *              along with this program; if not, write to the Free Software
- *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _TIME_DELAYED_INC
@@ -23,7 +24,7 @@
 
 template <class T> class TimeDelayed {
     
-public:
+    private:
     
     /*! @brief    Value pipeline (history buffer)
      *  @details  Semantics:
@@ -32,11 +33,9 @@ public:
      */
     T *pipeline = NULL;
     
-private:
-    
     //! @brief   Number of elements hold in pipeline
     uint8_t capacity = 0;
-
+    
     //! @brief  Remembers the time of the most recent call to write()
     int64_t timeStamp = 0;
     
@@ -46,7 +45,7 @@ private:
     //! @brief   Pointer to reference clock
     int64_t *clock = NULL;
     
-public:
+    public:
     
     //! @brief   Constructors
     TimeDelayed(uint8_t delay, uint8_t capacity, uint64_t *clock);
@@ -57,7 +56,10 @@ public:
     //! @brief   Destructor
     ~TimeDelayed();
     
-    //! @brief   Sets the reference clock
+    /*! @brief   Sets the reference clock
+     *  @param   clock is either the clock of the C64 CPU or the clock of the
+     *           a drive CPU.
+     */
     void setClock(uint64_t *clock) { this->clock = (int64_t *)clock; }
     
     //! @brief   Overwrites all pipeline entries with a reset value.
@@ -68,10 +70,10 @@ public:
     
     //! @brief   Zeroes out all pipeline entries.
     void clear() { reset((T)0); }
-
+    
     //! @brief   Write a value into the pipeline.
     void write(T value) { writeWithDelay(value, 0); }
-
+    
     //! @brief   Work horse for writing a value.
     void writeWithDelay(T value, uint8_t waitCycles);
     
@@ -82,23 +84,22 @@ public:
     // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
     T delayed() {
         int64_t offset = timeStamp - *clock + delay;
-        if (__builtin_expect(offset <= 0, 1))
+        if (__builtin_expect(offset <= 0, 1)) {
             return pipeline[0];
-        else
+        } else {
             return pipeline[offset];
+        }
     }
-
     
     //! @brief   Reads a value from the pipeline with a custom delay.
     T readWithDelay(uint8_t delay) {
         assert(delay <= this->capacity);
         return pipeline[MAX(0, timeStamp - *clock + delay)];
     }
- 
+    
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
-    
     void debug();
 };
 
