@@ -692,9 +692,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 {
 	assert(wrapper->c64 != NULL);
 	NSLog(@"C64Proxy::kill");
-
-	// Stop sound device
-	[self disableAudio];
 	
     // Delete emulator
     delete wrapper->c64;
@@ -854,6 +851,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
 
 // Audio hardware
+/*
 - (BOOL) enableAudio {
     [sid rampUpFromZero];
     return [audioEngine startPlayback];
@@ -863,6 +861,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     [sid rampDown];
     [audioEngine stopPlayback];
 }
+*/
 
 @end
 

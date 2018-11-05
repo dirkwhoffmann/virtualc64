@@ -46,6 +46,9 @@ class MyController : NSWindowController, MessageReceiver {
     //  the proxy is written in Objective-C.
     var c64: C64Proxy!
     
+    /// Audio Engine
+    var audioEngine: AudioEngine!
+    
     /// Game pad manager
     var gamePadManager: GamePadManager!
     
@@ -319,6 +322,9 @@ extension MyController {
  
         track()
 
+        // Create audio engine
+        audioEngine = AudioEngine.init(withSID: c64.sid)
+            
         // Reset mouse coordinates
         mouseXY = NSZeroPoint
         hideMouse = false

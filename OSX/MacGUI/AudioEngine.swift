@@ -119,7 +119,8 @@ public class AudioEngine: NSObject {
     }
     
     //! @brief  Start playing sound
-    @objc func startPlayback() -> Bool {
+    @discardableResult
+    func startPlayback() -> Bool {
 
         do { try audiounit.startHardware() } catch {
             NSLog("Failed to start audio hardware")
@@ -130,7 +131,7 @@ public class AudioEngine: NSObject {
     }
     
     //! @brief  Stop playing sound
-    @objc func stopPlayback() {
+    func stopPlayback() {
         
         audiounit.stopHardware()
     }

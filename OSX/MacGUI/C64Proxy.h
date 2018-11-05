@@ -633,9 +633,11 @@ struct ContainerWrapper;
 - (UInt64) cycles;
 
 // Audio hardware
+/*
 - (BOOL) enableAudio;
 - (void) disableAudio;
-
+*/
+ 
 @end
 
 
