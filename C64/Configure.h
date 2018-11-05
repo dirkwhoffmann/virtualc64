@@ -49,6 +49,7 @@
 //
 // CLEANUP:
 // Don't use mount() for inserting disks. Use insertDisk instead
+// Replace Mouse* C64::mouse by (enum) MouseModel C64::mouse
 //
 // OPTIMIZATION:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary

@@ -196,12 +196,6 @@ inline void readBlock64(uint8_t **ptr, uint64_t *values, size_t length) {
 
 
 //
-//! @functiongroup Pretty printing
-//
-
-
-
-//
 //! @functiongroup Converting low level data objects
 //
 

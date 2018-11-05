@@ -791,12 +791,6 @@ VIC::beginFrame()
      *  and is irrelevant." [C.B.]
      */
     vcBase = 0;
-    
-    // Trigger lightpen interrupt if lp line is down
-    /*
-    if (!lpLine)
-        checkForLightpenIrqAtStartOfFrame();
-     */
 }
 
 void
@@ -828,11 +822,6 @@ VIC::beginRasterline(uint16_t line)
     if ((badLine = badLineCondition())) {
         delay |= VICSetDisplayState;
     }
-    /*
-    else {
-        delay &= ~VICSetDisplayState;
-    }
-    */
     
     // We adjust the position of the first pixel in the pixel buffer to make
     // sure that the screen always appears centered.
