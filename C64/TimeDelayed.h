@@ -1,6 +1,7 @@
 /*!
+ * @header      TimeDelayed.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, 2018. All rights reserved.
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
