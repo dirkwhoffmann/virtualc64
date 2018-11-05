@@ -92,18 +92,10 @@ Snapshot::Snapshot()
     setDescription("Snapshot");
 }
 
-bool
-Snapshot::setCapacity(size_t newCapacity)
+Snapshot::Snapshot(size_t capacity)
 {
-    size_t newSize = newCapacity + sizeof(SnapshotHeader);
-    
-    if (data != NULL && size == newSize)
-        return true;
-    
-    dealloc();
-    if ((data = new uint8_t[newSize]) == NULL)
-        return false;
-    size = newSize;
+    size = capacity + sizeof(SnapshotHeader);
+    data = new uint8_t[size];
     
     SnapshotHeader *header = (SnapshotHeader *)data;
     header->magic[0] = magicBytes[0];
@@ -113,9 +105,7 @@ Snapshot::setCapacity(size_t newCapacity)
     header->major = V_MAJOR;
     header->minor = V_MINOR;
     header->subminor = V_SUBMINOR;
-    header->timestamp = (time_t)0;
-    
-    return true;
+    header->timestamp = time(NULL);
 }
 
 Snapshot *
@@ -149,9 +139,7 @@ Snapshot::makeWithC64(C64 *c64)
 {
     Snapshot *snapshot;
     
-    snapshot = new Snapshot();
-    snapshot->setCapacity(c64->stateSize());
-    snapshot->setTimestamp(time(NULL));
+    snapshot = new Snapshot(c64->stateSize());
     snapshot->takeScreenshot((uint32_t *)c64->vic.screenBuffer(), c64->vic.isPAL());
     uint8_t *ptr = snapshot->getData();
     c64->saveToBuffer(&ptr);

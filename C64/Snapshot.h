@@ -103,9 +103,12 @@ class Snapshot : public AnyC64File {
     //! @functiongroup Creating and destructing
     //
     
-    //! @brief    Constructor
+    //! @brief    Standard Constructor
     Snapshot();
-    
+
+    //! @brief    Custom Constructor
+    Snapshot(size_t capacity);
+
     //! @brief    Allocates memory for storing the emulator state.
     bool setCapacity(size_t size);
     
@@ -142,9 +145,6 @@ class Snapshot : public AnyC64File {
     
     //! @brief    Returns the timestamp
     time_t getTimestamp() { return getHeader()->timestamp; }
-    
-    //! @brief    Sets the timestamp
-    void setTimestamp(time_t value) { getHeader()->timestamp = value; }
     
     //! Returns true, if snapshot does not contain data yet
     bool isEmpty() { return data == NULL; }

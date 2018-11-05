@@ -875,50 +875,6 @@ C64::restoreLatestUserSnapshot()
     return restoreUserSnapshot(0);
 }
 
-/*
-void
-C64::saveToSnapshotUnsafe(Snapshot *snapshot)
-{
-    if (snapshot == NULL)
-        return;
-    
-    snapshot->setCapacity(stateSize());
-    snapshot->setTimestamp(time(NULL));
-    snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), vic.isPAL());
-
-    uint8_t *ptr = snapshot->getData();
-    saveToBuffer(&ptr);
-}
-
-void
-C64::saveToSnapshotSafe(Snapshot *snapshot)
-{
-    suspend();
-    saveToSnapshotUnsafe(snapshot);
-    resume();
-}
-
-Snapshot *
-C64::takeSnapshotUnsafe()
-{
-    Snapshot *snapshot = new Snapshot;
-    saveToSnapshotUnsafe(snapshot);
-    return snapshot;
-}
-
-Snapshot *
-C64::takeSnapshotSafe()
-{
-    Snapshot *snapshot;
-    
-    suspend();
-    snapshot = takeSnapshotUnsafe();
-    resume();
-    
-    return snapshot;
-}
-*/
-
 size_t
 C64::numSnapshots(vector<Snapshot *> &storage)
 {
