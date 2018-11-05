@@ -71,6 +71,7 @@ extension NSImage {
     }
 }
 
+
 //
 // C64 Proxy extensions
 //
