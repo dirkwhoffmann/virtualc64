@@ -782,14 +782,13 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
-- (BOOL) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
-/* USE mount INSTEAD
+/*
 - (BOOL) insertDisk:(ArchiveProxy *)a {
     AnyArchive *archive = (AnyArchive *)([a wrapper]->container);
     return wrapper->c64->insertDisk(archive);
 }
- */
+*/
 - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *container = (TAPFile *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
@@ -798,9 +797,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
 - (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }
 - (void) disconnectMouse { wrapper->c64->connectMouse(0); }
-- (void) setMouseXY:(NSPoint)pos {
-    wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y);
-}
+- (void) setMouseXY:(NSPoint)pos { wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y); }
 - (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse->leftButton = pressed; }
 - (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
 
@@ -810,7 +807,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
 - (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
 
-- (UInt64) cycles { return wrapper->c64->cycle(); }
+- (UInt64) cycles { return wrapper->c64->cpu.cycle; }
 
 // Snapshot storage
 - (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }

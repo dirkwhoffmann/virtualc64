@@ -502,8 +502,8 @@ struct ContainerWrapper;
 	struct C64Wrapper *wrapper;
     
 	// Sub proxys
+    MemoryProxy *mem;
 	CPUProxy *cpu;
-	MemoryProxy *mem;
 	VICProxy *vic;
 	CIAProxy *cia1;
 	CIAProxy *cia2;
@@ -518,8 +518,8 @@ struct ContainerWrapper;
     DatasetteProxy *datasette;
 }
 
-@property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
+@property (readonly) CPUProxy *cpu;
 @property (readonly) VICProxy *vic;
 @property (readonly) CIAProxy *cia1;
 @property (readonly) CIAProxy *cia2;
@@ -534,65 +534,35 @@ struct ContainerWrapper;
 @property (readonly) DatasetteProxy *datasette;
 
 - (struct C64Wrapper *)wrapper;
+- (DriveProxy *)drive:(NSInteger)nr;
 - (void) kill;
 
+- (void) ping;
 - (void) dump;
 - (BOOL) developmentMode;
 
-// Configuration
+// Configuring the emulator
 - (NSInteger) model;
 - (void) setModel:(NSInteger)value;
 
-// Disk drive
-- (DriveProxy *)drive:(NSInteger)nr;
-
-// Flashing files
-- (BOOL)flash:(ContainerProxy *)container;
-- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item;
-
-// Handling ROMs
-- (BOOL) isBasicRom:(NSURL *)url;
-- (BOOL) loadBasicRom:(NSURL *)url;
-- (BOOL) isBasicRomLoaded;
-- (BOOL) isCharRom:(NSURL *)url;
-- (BOOL) loadCharRom:(NSURL *)url;
-- (BOOL) isCharRomLoaded;
-- (BOOL) isKernalRom:(NSURL *)url;
-- (BOOL) loadKernalRom:(NSURL *)url;
-- (BOOL) isKernalRomLoaded;
-- (BOOL) isVC1541Rom:(NSURL *)url;
-- (BOOL) loadVC1541Rom:(NSURL *)url;
-- (BOOL) isVC1541RomLoaded;
-- (BOOL) isRom:(NSURL *)url;
-- (BOOL) loadRom:(NSURL *)url;
-
-// Using the message queue
+// Accessing the message queue
 - (Message)message;
 - (void) addListener:(const void *)sender function:(Callback *)func;
 - (void) removeListener:(const void *)sender;
 
 // Running the emulator
 - (void) powerUp;
-- (void) ping;
-
-- (BOOL) isRunnable;
-- (BOOL) isRunning;
-- (BOOL) isHalted;
 - (void) run;
 - (void) halt;
 - (void) suspend;
 - (void) resume;
-
+- (BOOL) isRunnable;
+- (BOOL) isRunning;
+- (BOOL) isHalted;
 - (void) step;
 - (void) stepOver;
 
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
-- (void) detachCartridgeAndReset;
-- (BOOL) isCartridgeAttached;
-
-// - (BOOL) insertDisk:(ArchiveProxy *)a;
-- (BOOL) insertTape:(TAPProxy *)a;
-
+// Handling mice
 - (NSInteger) mouseModel;
 - (void) setMouseModel:(NSInteger)model;
 - (void) connectMouse:(NSInteger)toPort;
@@ -601,15 +571,14 @@ struct ContainerWrapper;
 - (void) setMouseLeftButton:(BOOL)pressed;
 - (void) setMouseRightButton:(BOOL)pressed;
 
+// Managing the execution thread
 - (BOOL) warp;
 - (BOOL) alwaysWarp;
 - (void) setAlwaysWarp:(BOOL)b;
 - (BOOL) warpLoad;
 - (void) setWarpLoad:(BOOL)b;
 
-- (UInt64) cycles;
-
-// Snapshot storage
+// Handling snapshots
 - (void) disableAutoSnapshots;
 - (void) enableAutoSnapshots;
 - (void) suspendAutoSnapshots;
@@ -636,6 +605,32 @@ struct ContainerWrapper;
 - (BOOL) restoreUserSnapshot:(NSInteger)nr;
 - (BOOL) restoreLatestUserSnapshot;
 - (void) deleteUserSnapshot:(NSInteger)nr;
+
+// Handling ROMs
+- (BOOL) isBasicRom:(NSURL *)url;
+- (BOOL) loadBasicRom:(NSURL *)url;
+- (BOOL) isBasicRomLoaded;
+- (BOOL) isCharRom:(NSURL *)url;
+- (BOOL) loadCharRom:(NSURL *)url;
+- (BOOL) isCharRomLoaded;
+- (BOOL) isKernalRom:(NSURL *)url;
+- (BOOL) loadKernalRom:(NSURL *)url;
+- (BOOL) isKernalRomLoaded;
+- (BOOL) isVC1541Rom:(NSURL *)url;
+- (BOOL) loadVC1541Rom:(NSURL *)url;
+- (BOOL) isVC1541RomLoaded;
+- (BOOL) isRom:(NSURL *)url;
+- (BOOL) loadRom:(NSURL *)url;
+
+// Attaching media objects
+- (BOOL)flash:(ContainerProxy *)container;
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item;
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
+- (void) detachCartridgeAndReset;
+// - (BOOL) insertDisk:(ArchiveProxy *)a;
+- (BOOL) insertTape:(TAPProxy *)a;
+
+- (UInt64) cycles;
 
 // Audio hardware
 - (BOOL) enableAudio;

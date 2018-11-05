@@ -1017,8 +1017,3 @@ C64::detachCartridgeAndReset()
     }
 }
 
-bool
-C64::isCartridgeAttached()
-{
-    return expansionport.getCartridgeAttached();
-}

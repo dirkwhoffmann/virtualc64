@@ -329,26 +329,24 @@ class C64 : public VirtualComponent {
     
     
     //
-    //! @functiongroup Handling mice
+    //! @functiongroup Accessing the message queue
     //
     
-    //! @brief    Returns the hardware model of the selected mouse.
-    MouseModel getMouseModel() { return mouse->mouseModel(); }
+    //! @brief    Registers a listener callback function
+    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
+        queue.addListener(sender, func);
+    }
     
-    //! @brief    Sets the mouse hardware model.
-    void setMouseModel(MouseModel value);
+    //! @brief    Removes a listener callback function
+    void removeListener(const void *sender) {
+        queue.removeListener(sender);
+    }
     
-    //! @brief    Connects the selected mouse with the control port.
-    void connectMouse(unsigned port);
+    //! @brief    Gets a notification message from message queue
+    Message getMessage() { return queue.getMessage(); }
     
-    //! @brief    Reads the control port mouse bits.
-    uint8_t mouseBits(unsigned port);
-    
-    //! @brief    Returns the potX bits as they show up in the SID register.
-    uint8_t potXBits();
-    
-    //! @brief    Returns the potY bits as they show up in the SID register.
-    uint8_t potYBits();
+    //! @brief    Feeds a notification message into message queue
+    void putMessage(MessageType msg, uint64_t data = 0) { queue.putMessage(msg, data); }
     
     
     //
@@ -458,6 +456,31 @@ class C64 : public VirtualComponent {
     
     
     //
+    //! @functiongroup Handling mice
+    //
+    
+    public:
+    
+    //! @brief    Returns the hardware model of the selected mouse.
+    MouseModel getMouseModel() { return mouse->mouseModel(); }
+    
+    //! @brief    Sets the mouse hardware model.
+    void setMouseModel(MouseModel value);
+    
+    //! @brief    Connects the selected mouse with the control port.
+    void connectMouse(unsigned port);
+    
+    //! @brief    Reads the control port mouse bits.
+    uint8_t mouseBits(unsigned port);
+    
+    //! @brief    Returns the potX bits as they show up in the SID register.
+    uint8_t potXBits();
+    
+    //! @brief    Returns the potY bits as they show up in the SID register.
+    uint8_t potYBits();
+    
+    
+    //
     //! @functiongroup Managing the execution thread
     //
     
@@ -501,29 +524,7 @@ class C64 : public VirtualComponent {
      */
     void synchronizeTiming();
     
-    
-    //
-    //! @functiongroup Accessing cycle, rasterline, and frame information
-    //
-    
-    //! @brief    Returns the number of CPU cycles elapsed so far.
-    uint64_t cycle() { return cpu.cycle; }
-    
-    
-    //
-    //! @functiongroup Operation modes
-    //
-    
-    //! @brief    Returns the ultimax flag
-    bool getUltimax() { return ultimax; }
-    
-    /*! @brief    Setter for ultimax
-     *  @details  This method is called in function updatePeekPokeLookupTables()
-     *            if a certain game / exrom line combination is provided.
-     */
-    void setUltimax(bool b) { ultimax = b; }
-    
-    
+ 
     //
     //! @functiongroup Handling snapshots
     //
@@ -598,6 +599,14 @@ class C64 : public VirtualComponent {
     void deleteAutoSnapshot(unsigned nr) { deleteSnapshot(autoSnapshots, nr); }
     void deleteUserSnapshot(unsigned nr) { deleteSnapshot(userSnapshots, nr); }
     
+
+    //
+    //! @functiongroup Handling Roms
+    //
+
+    //! @brief    Loads a ROM image into memory
+    bool loadRom(const char *filename);
+
     
     //
     //! @functiongroup Attaching media objects
@@ -609,9 +618,6 @@ class C64 : public VirtualComponent {
     //! @brief    Flashes a single item of an archive into memory
     bool flash(AnyArchive *file, unsigned item);
     
-    //! @brief    Loads ROM image into memory
-    bool loadRom(const char *filename);
-    
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @details  Only D64 and G64 archives are supported.
      */
@@ -619,7 +625,6 @@ class C64 : public VirtualComponent {
     
     /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.
-     *  @deprecated
      */
     bool insertTape(TAPFile *a);
     
@@ -629,30 +634,20 @@ class C64 : public VirtualComponent {
     //! @brief    Detaches a cartridge from the expansion port.
     void detachCartridgeAndReset();
     
-    //! @brief    Returns true iff a cartridge is attached.
-    bool isCartridgeAttached();
-    
     
     //
-    //! @functiongroup Accessing the message queue
+    //! @functiongroup Set and query ultimax mode
     //
     
-    //! @brief    Registers a listener callback function
-    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
-        queue.addListener(sender, func);
-    }
+    //! @brief    Returns the ultimax flag
+    bool getUltimax() { return ultimax; }
     
-    //! @brief    Removes a listener callback function
-    void removeListener(const void *sender) {
-        queue.removeListener(sender);
-    }
+    /*! @brief    Setter for ultimax
+     *  @details  This method is called in function updatePeekPokeLookupTables()
+     *            if a certain game / exrom line combination is provided.
+     */
+    void setUltimax(bool b) { ultimax = b; }
     
-    //! @brief    Gets a notification message from message queue
-    Message getMessage() { return queue.getMessage(); }
-    
-    //! @brief    Feeds a notification message into message queue
-    void putMessage(MessageType msg, uint64_t data = 0) { queue.putMessage(msg, data); }
-
     
     //
     //! @functiongroup Debugging
