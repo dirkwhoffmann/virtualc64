@@ -64,17 +64,17 @@ public:
     G64File(size_t capacity);
 
     //! @brief    Factory method
-    static G64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static G64File *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static G64File *makeObjectWithFile(const char *path);
+    static G64File *makeWithFile(const char *path);
     
     //! @brief    Factory method
-    static G64File *makeObjectWithDisk(Disk *disk);
+    static G64File *makeWithDisk(Disk *disk);
     
     
     //
-    // Methods from AnyC64File
+    //! @functiongroup Methods from AnyC64File
     //
     
     C64FileType type() { return G64_FILE; }
@@ -83,7 +83,7 @@ public:
     
     
     //
-    // Methods from AnyArchive (API not supported by G64 format)
+    //! @functiongroup Methods from AnyArchive (API not supported by G64 format)
     //
     
     int numberOfItems() { assert(false); return 0; };
@@ -96,7 +96,7 @@ public:
 
     
     //
-    // Methods from AnyDisk
+    //! @functiongroup Methods from AnyDisk
     //
     
     int numberOfHalftracks() { return 84; }

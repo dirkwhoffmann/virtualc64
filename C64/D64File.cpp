@@ -97,7 +97,7 @@ D64File::D64File(unsigned tracks, bool ecc) : D64File()
 }
 
 D64File *
-D64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+D64File::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     D64File *archive = new D64File();
     
@@ -110,7 +110,7 @@ D64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 D64File *
-D64File::makeObjectWithFile(const char *path)
+D64File::makeWithFile(const char *path)
 {
     D64File *archive = new D64File();
     
@@ -123,7 +123,7 @@ D64File::makeObjectWithFile(const char *path)
 }
 
 D64File *
-D64File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
+D64File::makeWithAnyArchive(AnyArchive *otherArchive)
 {
     assert(otherArchive != NULL);
     
@@ -181,7 +181,7 @@ D64File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
 }
 
 D64File *
-D64File::makeObjectWithDisk(Disk *disk)
+D64File::makeWithDisk(Disk *disk)
 {
     uint8_t buffer[D64_802_SECTORS];
     
@@ -195,7 +195,7 @@ D64File::makeObjectWithDisk(Disk *disk)
            (length == D64_802_SECTORS));
     
     // Create object from byte stream
-    return makeObjectWithBuffer(buffer, length);
+    return makeWithBuffer(buffer, length);
 }
 
 const char *

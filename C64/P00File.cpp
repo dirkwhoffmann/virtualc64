@@ -51,7 +51,7 @@ P00File::P00File()
 }
 
 P00File *
-P00File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+P00File::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     P00File *archive = new P00File();
     
@@ -64,7 +64,7 @@ P00File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 P00File *
-P00File::makeObjectWithFile(const char *filename)
+P00File::makeWithFile(const char *filename)
 {
     P00File *archive = new P00File();
     
@@ -77,7 +77,7 @@ P00File::makeObjectWithFile(const char *filename)
 }
 
 P00File *
-P00File::makeObjectWithAnyArchive(AnyArchive *otherArchive)
+P00File::makeWithAnyArchive(AnyArchive *otherArchive)
 {
     if (otherArchive == NULL || otherArchive->numberOfItems() == 0)
         return NULL;

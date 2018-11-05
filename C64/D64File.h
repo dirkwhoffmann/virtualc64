@@ -82,16 +82,16 @@ public:
     D64File(unsigned tracks, bool ecc);
     
     //! @brief    Factory method
-    static D64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static D64File *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static D64File *makeObjectWithFile(const char *path);
+    static D64File *makeWithFile(const char *path);
     
     //! @brief    Factory method
-    static D64File *makeObjectWithAnyArchive(AnyArchive *otherArchive);
+    static D64File *makeWithAnyArchive(AnyArchive *otherArchive);
     
     //! @brief    Factory method
-    static D64File *makeObjectWithDisk(Disk *disk);
+    static D64File *makeWithDisk(Disk *disk);
     
     
     //
@@ -121,7 +121,7 @@ public:
     
  
     //
-    // Methods from AnyDisk
+    //! @functiongroup Methods from AnyDisk
     //
     
     int numberOfHalftracks();

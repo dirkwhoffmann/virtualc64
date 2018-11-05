@@ -48,26 +48,26 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
     //! @brief    Standard constructor
     P00File();
     
     //! @brief    Factory method
-    static P00File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static P00File *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static P00File *makeObjectWithFile(const char *path);
+    static P00File *makeWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static P00File *makeObjectWithAnyArchive(AnyArchive *otherArchive);
+    static P00File *makeWithAnyArchive(AnyArchive *otherArchive);
     
     
     //
-    // Methods from AnyFile
+    //! @functiongroup Methods from AnyFile
     //
     
     const char *getName();
@@ -77,7 +77,7 @@ public:
     
     
     //
-    // Methods from AnyArchive
+    //! @functiongroup Methods from AnyArchive
     //
     
     int numberOfItems() { return 1; }

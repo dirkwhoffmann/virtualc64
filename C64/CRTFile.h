@@ -77,17 +77,17 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
 
     //! @brief    Constructor
     CRTFile();
     
     //! @brief    Factory method
-    static CRTFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static CRTFile *makeWithBuffer(const uint8_t *buffer, size_t length);
 
     //! @brief    Factory method
-    static CRTFile *makeObjectWithFile(const char *filename);
+    static CRTFile *makeWithFile(const char *filename);
     
     
     //

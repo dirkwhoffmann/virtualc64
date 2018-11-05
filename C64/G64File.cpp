@@ -62,7 +62,7 @@ G64File::G64File(size_t capacity)
 }
 
 G64File *
-G64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+G64File::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     G64File *archive = new G64File();
     
@@ -75,7 +75,7 @@ G64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 G64File *
-G64File::makeObjectWithFile(const char *filename)
+G64File::makeWithFile(const char *filename)
 {
     G64File *archive = new G64File();
     
@@ -88,7 +88,7 @@ G64File::makeObjectWithFile(const char *filename)
 }
 
 G64File *
-G64File::makeObjectWithDisk(Disk *disk)
+G64File::makeWithDisk(Disk *disk)
 {
     assert(disk != NULL);
     
@@ -163,7 +163,7 @@ G64File::makeObjectWithDisk(Disk *disk)
     }
     assert(pos == length);
     
-    return G64File::makeObjectWithBuffer(buffer, length);
+    return G64File::makeWithBuffer(buffer, length);
 }
 
 void

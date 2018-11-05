@@ -64,7 +64,7 @@ T64File::T64File()
 }
 
 T64File *
-T64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+T64File::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     T64File *archive = new T64File();
     
@@ -77,7 +77,7 @@ T64File::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 T64File *
-T64File::makeObjectWithFile(const char *path)
+T64File::makeWithFile(const char *path)
 {
     T64File *archive = new T64File();
     

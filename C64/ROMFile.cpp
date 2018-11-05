@@ -107,7 +107,7 @@ ROMFile::isVC1541RomFile(const char *filename)
 }
 
 ROMFile *
-ROMFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+ROMFile::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     ROMFile *rom = new ROMFile();
     
@@ -120,7 +120,7 @@ ROMFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 ROMFile *
-ROMFile::makeObjectWithFile(const char *filename)
+ROMFile::makeWithFile(const char *filename)
 {
     ROMFile *rom = new ROMFile();
     

@@ -46,7 +46,7 @@ PRGFile::PRGFile()
 }
 
 PRGFile *
-PRGFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+PRGFile::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     PRGFile *archive = new PRGFile();
     
@@ -60,7 +60,7 @@ PRGFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 PRGFile *
-PRGFile::makeObjectWithFile(const char *filename)
+PRGFile::makeWithFile(const char *filename)
 {
     PRGFile *archive = new PRGFile();
     
@@ -74,7 +74,7 @@ PRGFile::makeObjectWithFile(const char *filename)
 }
 
 PRGFile *
-PRGFile::makeObjectWithAnyArchive(AnyArchive *otherArchive) {
+PRGFile::makeWithAnyArchive(AnyArchive *otherArchive) {
     
     int exportItem = 0;
     

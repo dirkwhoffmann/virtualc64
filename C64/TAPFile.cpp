@@ -31,7 +31,7 @@ TAPFile::TAPFile()
 }
 
 TAPFile *
-TAPFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+TAPFile::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     TAPFile *tape = new TAPFile();
     
@@ -44,7 +44,7 @@ TAPFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 TAPFile *
-TAPFile::makeObjectWithFile(const char *filename)
+TAPFile::makeWithFile(const char *filename)
 {
     TAPFile *tape = new TAPFile();
     

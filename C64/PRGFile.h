@@ -48,26 +48,26 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
     //! @brief    Standard constructor
     PRGFile();
     
     //! @brief    Factory method
-    static PRGFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static PRGFile *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static PRGFile *makeObjectWithFile(const char *path);
+    static PRGFile *makeWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static PRGFile *makeObjectWithAnyArchive(AnyArchive *otherArchive);
+    static PRGFile *makeWithAnyArchive(AnyArchive *otherArchive);
     
     
     //
-    // Methods from AnyFile
+    //! @functiongroup Methods from AnyFile
     //
 
     C64FileType type() { return PRG_FILE; }
@@ -76,7 +76,7 @@ public:
     
     
     //
-    // Methods from AnyArchive
+    //! @functiongroup Methods from AnyArchive
     //
     
     int numberOfItems() { return 1; }

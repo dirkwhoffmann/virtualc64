@@ -145,21 +145,18 @@ class Snapshot : public AnyC64File {
     
     //! @brief    Returns the timestamp
     time_t getTimestamp() { return getHeader()->timestamp; }
-    
-    //! Returns true, if snapshot does not contain data yet
-    bool isEmpty() { return data == NULL; }
-    
-    //! Return screen buffer
+        
+    //! @brief    Returns a pointer to the screenshot data.
     unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
     
-    //! Return image width
+    //! @brief    Returns the screenshot image width
     unsigned getImageWidth() { return getHeader()->screenshot.width; }
     
-    //! Return image height
+    //! @brief    Returns the screenshot image height
     unsigned getImageHeight() { return getHeader()->screenshot.height; }
     
-    //! Take screenshot
-    void takeScreenshot(uint32_t *buf, bool pal);
+    //! @brief    Stores a screenshot inside this snapshot
+    void takeScreenshot(C64 *c64);
     
 };
 

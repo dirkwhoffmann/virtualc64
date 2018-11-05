@@ -65,11 +65,11 @@ Snapshot::isSnapshotFile(const char *path)
 bool
 Snapshot::isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor)
 {
-    uint8_t magicBytesWithVersion[] = { 'V', 'C', '6', '4', major, minor, subminor, 0x00 };
+    uint8_t signature[] = { 'V', 'C', '6', '4', major, minor, subminor, 0x00 };
     
     assert(path != NULL);
     
-    if (!checkFileHeader(path, magicBytesWithVersion))
+    if (!checkFileHeader(path, signature))
         return false;
     
     return true;
@@ -140,7 +140,7 @@ Snapshot::makeWithC64(C64 *c64)
     Snapshot *snapshot;
     
     snapshot = new Snapshot(c64->stateSize());
-    snapshot->takeScreenshot((uint32_t *)c64->vic.screenBuffer(), c64->vic.isPAL());
+    snapshot->takeScreenshot(c64);
     uint8_t *ptr = snapshot->getData();
     c64->saveToBuffer(&ptr);
     
@@ -154,12 +154,12 @@ Snapshot::hasSameType(const char *filename)
 }
 
 void
-Snapshot::takeScreenshot(uint32_t *buf, bool pal)
+Snapshot::takeScreenshot(C64 *c64)
 {
     SnapshotHeader *header = (SnapshotHeader *)data;
     unsigned x_start, y_start;
        
-    if (pal) {
+    if (c64->vic.isPAL()) {
         x_start = PAL_LEFT_BORDER_WIDTH - 36;
         y_start = PAL_UPPER_BORDER_HEIGHT - 34;
         header->screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
@@ -171,11 +171,12 @@ Snapshot::takeScreenshot(uint32_t *buf, bool pal)
         header->screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
     }
     
+    uint32_t *source = (uint32_t *)c64->vic.screenBuffer();
     uint32_t *target = header->screenshot.screen;
-    buf += x_start + y_start * NTSC_PIXELS;
+    source += x_start + y_start * NTSC_PIXELS;
     for (unsigned i = 0; i < header->screenshot.height; i++) {
-        memcpy(target, buf, header->screenshot.width * 4);
+        memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
-        buf += NTSC_PIXELS;
+        source += NTSC_PIXELS;
     }
 }

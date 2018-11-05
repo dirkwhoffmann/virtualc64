@@ -79,17 +79,17 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
     //! @brief    Standard constructor
     ROMFile();
     
     //! @brief    Factory method
-    static ROMFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static ROMFile *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static ROMFile *makeObjectWithFile(const char *filename);
+    static ROMFile *makeWithFile(const char *filename);
     
     
     //

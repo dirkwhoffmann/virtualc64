@@ -85,7 +85,7 @@ CRTFile::CRTFile()
 }
 
 CRTFile *
-CRTFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
+CRTFile::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     CRTFile *cartridge = new CRTFile();
     
@@ -98,7 +98,7 @@ CRTFile::makeObjectWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 CRTFile *
-CRTFile::makeObjectWithFile(const char *filename)
+CRTFile::makeWithFile(const char *filename)
 {
     CRTFile *cartridge = new CRTFile();
     

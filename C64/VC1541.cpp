@@ -533,7 +533,7 @@ VC1541::insertDisk(AnyArchive *a)
             // All other archives cannot be encoded directly.
             // We convert them to a D64 archive first.
             
-            D64File *converted = D64File::makeObjectWithAnyArchive(a);
+            D64File *converted = D64File::makeWithAnyArchive(a);
             disk.clearDisk();
             disk.encodeArchive(converted);
             break;

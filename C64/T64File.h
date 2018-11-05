@@ -51,17 +51,17 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
     //! @brief    Standard constructor
     T64File();
     
     //! @brief    Factory method
-    static T64File *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static T64File *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static T64File *makeObjectWithFile(const char *path);
+    static T64File *makeWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type

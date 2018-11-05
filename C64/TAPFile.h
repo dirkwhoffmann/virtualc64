@@ -52,17 +52,17 @@ public:
     
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
     //! @brief    Constructor
     TAPFile();
     
     //! @brief    Factory method
-    static TAPFile *makeObjectWithBuffer(const uint8_t *buffer, size_t length);
+    static TAPFile *makeWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static TAPFile *makeObjectWithFile(const char *filename);
+    static TAPFile *makeWithFile(const char *filename);
     
     
     //

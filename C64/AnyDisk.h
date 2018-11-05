@@ -51,7 +51,7 @@ public:
      *  @return   A D64File or G64File,
      *            depending on the type of the specified file.
      */
-    static AnyDisk *makeObjectWithFile(const char *filename);
+    static AnyDisk *makeWithFile(const char *filename);
     
     
     //

@@ -55,7 +55,7 @@ public:
      *  @return   A T64File, D64File, PRGFile, P00File, or G64File object,
      *            depending on the type of the specified file.
      */
-    static AnyArchive *makeObjectWithFile(const char *filename);
+    static AnyArchive *makeWithFile(const char *filename);
     
 
     //
