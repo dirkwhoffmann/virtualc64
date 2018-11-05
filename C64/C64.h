@@ -602,11 +602,12 @@ class C64 : public VirtualComponent {
     //
     //! @functiongroup Attaching media objects
     //
-        
-    //! @brief    Flashes an item stored in a file of supported type
-    /*! @details  Flashable objects are single programs, roms, and snapshots.
-     */
-    bool flash(AnyC64File *file, unsigned item = 0);
+
+    //! @brief    Flashes a single file into memory
+    bool flash(AnyC64File *file);
+
+    //! @brief    Flashes a single item of an archive into memory
+    bool flash(AnyArchive *file, unsigned item);
     
     //! @brief    Loads ROM image into memory
     bool loadRom(const char *filename);

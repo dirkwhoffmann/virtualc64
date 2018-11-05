@@ -878,46 +878,61 @@ C64::deleteSnapshot(vector<Snapshot *> &storage, unsigned index)
 }
 
 bool
-C64::flash(AnyC64File *file, unsigned item)
+C64::flash(AnyC64File *file)
 {
     bool result = true;
     
     suspend();
     switch (file->type()) {
-            
+        
         case BASIC_ROM_FILE:
-            file->flash(mem.rom, 0xA000);
-            break;
-            
+        file->flash(mem.rom, 0xA000);
+        break;
+        
         case CHAR_ROM_FILE:
-            file->flash(mem.rom, 0xD000);
-            break;
-            
+        file->flash(mem.rom, 0xD000);
+        break;
+        
         case KERNAL_ROM_FILE:
-            file->flash(mem.rom, 0xE000);
-            break;
-            
+        file->flash(mem.rom, 0xE000);
+        break;
+        
         case VC1541_ROM_FILE:
-            
-            file->flash(drive1.mem.rom);
-            file->flash(drive2.mem.rom);
-            break;
-                    
+        file->flash(drive1.mem.rom);
+        file->flash(drive2.mem.rom);
+        break;
+        
         case V64_FILE:
-            loadFromSnapshotUnsafe((Snapshot *)file);
-            break;
-            
+        loadFromSnapshotUnsafe((Snapshot *)file);
+        break;
+        
+        default:
+        assert(false);
+        result = false;
+    }
+    resume();
+    return result;
+}
+
+bool
+C64::flash(AnyArchive *file, unsigned item)
+{
+    bool result = true;
+    
+    suspend();
+    switch (file->type()) {
+        
         case D64_FILE:
         case T64_FILE:
         case PRG_FILE:
         case P00_FILE:
-            ((AnyArchive *)file)->selectItem(item);
-            ((AnyArchive *)file)->flashItem(mem.ram);
-            break;
-            
+        file->selectItem(item);
+        file->flashItem(mem.ram);
+        break;
+        
         default:
-            assert(false); // not mountable
-            result = false;
+        assert(false);
+        result = false;
     }
     resume();
     return result;

@@ -546,10 +546,9 @@ struct ContainerWrapper;
 // Disk drive
 - (DriveProxy *)drive:(NSInteger)nr;
 
-// Loading and saving
-// - (BOOL)mount:(ContainerProxy *)container;
+// Flashing files
 - (BOOL)flash:(ContainerProxy *)container;
-- (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item;
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item;
 
 // Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url;

@@ -723,11 +723,11 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL)mount:(ContainerProxy *)container {
     return wrapper->c64->mount([container wrapper]->container); }
 */
-- (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item; {
-    return wrapper->c64->flash([container wrapper]->container, (int)item); }
 - (BOOL)flash:(ContainerProxy *)container {
     return wrapper->c64->flash([container wrapper]->container); }
-
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item; {
+    AnyArchive *a = (AnyArchive *)([archive wrapper]->container);
+    return wrapper->c64->flash(a, (unsigned)item); }
 - (BOOL) isBasicRom:(NSURL *)url {
     return ROMFile::isBasicRomFile([[url path] UTF8String]); }
 - (BOOL) loadBasicRom:(NSURL *)url {
@@ -778,15 +778,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (void) step { wrapper->c64->step(); }
 - (void) stepOver { wrapper->c64->stepOver(); }
-
-/*
-- (BOOL) isPAL { return wrapper->c64->isPAL(); }
-- (void) setPAL { wrapper->c64->setPAL(); }
-- (void) setPAL:(BOOL)b { if (b) [self setPAL]; else [self setNTSC]; }
-- (BOOL) isNTSC { return wrapper->c64->isNTSC(); }
-- (void) setNTSC { wrapper->c64->setNTSC(); }
-- (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
-*/
 
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
