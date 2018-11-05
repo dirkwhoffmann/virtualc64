@@ -119,7 +119,7 @@ Snapshot::setCapacity(size_t newCapacity)
 }
 
 Snapshot *
-Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t length)
+Snapshot::makeWithBuffer(const uint8_t *buffer, size_t length)
 {
     Snapshot *snapshot;
     
@@ -132,7 +132,7 @@ Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t length)
 }
 
 Snapshot *
-Snapshot::makeSnapshotWithFile(const char *filename)
+Snapshot::makeWithFile(const char *filename)
 {
     Snapshot *snapshot;
     
@@ -141,6 +141,21 @@ Snapshot::makeSnapshotWithFile(const char *filename)
         delete snapshot;
         return NULL;
     }
+    return snapshot;
+}
+
+Snapshot *
+Snapshot::makeWithC64(C64 *c64)
+{
+    Snapshot *snapshot;
+    
+    snapshot = new Snapshot();
+    snapshot->setCapacity(c64->stateSize());
+    snapshot->setTimestamp(time(NULL));
+    snapshot->takeScreenshot((uint32_t *)c64->vic.screenBuffer(), c64->vic.isPAL());
+    uint8_t *ptr = snapshot->getData();
+    c64->saveToBuffer(&ptr);
+    
     return snapshot;
 }
 

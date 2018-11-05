@@ -54,111 +54,114 @@ typedef struct {
     
 } SnapshotHeader;
 
+
 /*! @class   Snapshot
  *  @brief   The Snapshot class declares the programmatic interface for a file
  *           in V64 format (VirtualC64 snapshot files).
  */
 class Snapshot : public AnyC64File {
-	
-private:
-	
+    
+    private:
+    
     //! @brief    Header signature
     static const uint8_t magicBytes[];
     
- 
-	
-public:
-
+    
     //
     //! @functiongroup Class methods
     //
     
-    //! @brief    Returns true iff buffer contains a snapshot
+    public:
+    
+    //! @brief    Returns true iff buffer contains a snapshot.
     static bool isSnapshot(const uint8_t *buffer, size_t length);
     
-    //! @brief    Returns true iff buffer contains a snapshot of a specific version
+    //! @brief    Returns true iff buffer contains a snapshot of a specific version.
     static bool isSnapshot(const uint8_t *buffer, size_t length,
                            uint8_t major, uint8_t minor, uint8_t subminor);
     
-    //! @brief    Returns true iff buffer contains a snapshot with a supported version number
+    //! @brief    Returns true iff buffer contains a snapshot with a supported version number.
     static bool isSupportedSnapshot(const uint8_t *buffer, size_t length);
     
-    //! @brief    Returns true iff buffer contains a snapshot with an outdated version number
+    //! @brief    Returns true iff buffer contains a snapshot with an outdated version number.
     static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length);
     
-    //! @brief    Returns true if path points to a snapshot file
+    //! @brief    Returns true if path points to a snapshot file.
     static bool isSnapshotFile(const char *path);
     
-    //! @brief    Returns true if file points to a snapshot file of a specific version
+    //! @brief    Returns true if file points to a snapshot file of a specific version.
     static bool isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor);
     
-    //! @brief    Returns true if file is a snapshot with a supported version number
+    //! @brief    Returns true if file is a snapshot with a supported version number.
     static bool isSupportedSnapshotFile(const char *path);
     
-    //! @brief    Returns true if file is a snapshot with an outdated version number
+    //! @brief    Returns true if file is a snapshot with an outdated version number.
     static bool isUnsupportedSnapshotFile(const char *path);
-
+    
     
     //
-    //! @functiongroup Creating and destructing objects
+    //! @functiongroup Creating and destructing
     //
     
-	//! @brief    Constructor
-	Snapshot();
-
-    //! @brief    Allocates memory for storing internal state
+    //! @brief    Constructor
+    Snapshot();
+    
+    //! @brief    Allocates memory for storing the emulator state.
     bool setCapacity(size_t size);
     
     //! @brief    Factory method
-    static Snapshot *makeSnapshotWithFile(const char *filename);
+    static Snapshot *makeWithFile(const char *filename);
     
     //! @brief    Factory method
-    static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
-    
+    static Snapshot *makeWithBuffer(const uint8_t *buffer, size_t size);
 
+    //! @brief    Factory method
+    static Snapshot *makeWithC64(C64 *c64);
+    
+    
     //
     //! @functiongroup Methods from AnyC64File
     //
     
     C64FileType type() { return V64_FILE; }
     const char *typeAsString() { return "V64"; }
-	bool hasSameType(const char *filename);
-
+    bool hasSameType(const char *filename);
+    
     
     //
     //! @functiongroup Accessing snapshot properties
     //
     
-public:
+    public:
     
     //! @brief    Returns pointer to header data
     SnapshotHeader *getHeader() { return (SnapshotHeader *)data; }
-
+    
     //! @brief    Returns pointer to core data
     uint8_t *getData() { return data + sizeof(SnapshotHeader); }
     
-	//! @brief    Returns the timestamp
-	time_t getTimestamp() { return getHeader()->timestamp; }
-
-	//! @brief    Sets the timestamp
-	void setTimestamp(time_t value) { getHeader()->timestamp = value; }
-	
-	//! Returns true, if snapshot does not contain data yet
-	bool isEmpty() { return data == NULL; }
-	
-	//! Return screen buffer
-	unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
-
+    //! @brief    Returns the timestamp
+    time_t getTimestamp() { return getHeader()->timestamp; }
+    
+    //! @brief    Sets the timestamp
+    void setTimestamp(time_t value) { getHeader()->timestamp = value; }
+    
+    //! Returns true, if snapshot does not contain data yet
+    bool isEmpty() { return data == NULL; }
+    
+    //! Return screen buffer
+    unsigned char *getImageData() { return (unsigned char *)(getHeader()->screenshot.screen); }
+    
     //! Return image width
     unsigned getImageWidth() { return getHeader()->screenshot.width; }
-
+    
     //! Return image height
     unsigned getImageHeight() { return getHeader()->screenshot.height; }
-
+    
     //! Take screenshot
     void takeScreenshot(uint32_t *buf, bool pal);
-
+    
 };
 
 #endif
-	
+

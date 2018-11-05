@@ -979,21 +979,20 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    Snapshot *snapshot = Snapshot::makeSnapshotWithBuffer((uint8_t *)buffer, length);
+    Snapshot *snapshot = Snapshot::makeWithBuffer((uint8_t *)buffer, length);
     return [self make:snapshot];
 }
 
 + (instancetype) makeWithFile:(NSString *)path
 {
-    Snapshot *snapshot = Snapshot::makeSnapshotWithFile([path UTF8String]);
+    Snapshot *snapshot = Snapshot::makeWithFile([path UTF8String]);
     return [self make:snapshot];
 }
 
 + (instancetype) makeWithC64:(C64Proxy *)c64proxy
 {
-    C64Wrapper *wrapper = [c64proxy wrapper];
-    C64 *c64 = wrapper->c64;
-    Snapshot *snapshot = c64->takeSnapshotSafe();
+    C64 *c64 = [c64proxy wrapper]->c64;
+    Snapshot *snapshot = Snapshot::makeWithC64(c64);
     return [self make:snapshot];
 }
 

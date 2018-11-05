@@ -875,6 +875,7 @@ C64::restoreLatestUserSnapshot()
     return restoreUserSnapshot(0);
 }
 
+/*
 void
 C64::saveToSnapshotUnsafe(Snapshot *snapshot)
 {
@@ -916,6 +917,7 @@ C64::takeSnapshotSafe()
     
     return snapshot;
 }
+*/
 
 size_t
 C64::numSnapshots(vector<Snapshot *> &storage)
@@ -939,8 +941,11 @@ C64::takeSnapshot(vector<Snapshot *> &storage)
     }
     
     // Add new snapshot
+    /*
     Snapshot *snapshot = new Snapshot();
     saveToSnapshotUnsafe(snapshot);
+    */
+    Snapshot *snapshot = Snapshot::makeWithC64(this);
     storage.insert(storage.begin(), snapshot);
     putMessage(MSG_SNAPSHOT_TAKEN);
 }

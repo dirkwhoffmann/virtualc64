@@ -545,25 +545,25 @@ public:
      *  @note     Use this function inside the execution thread.
      *  @seealso  saveToSnapshotSafe
      */
-    void saveToSnapshotUnsafe(Snapshot *snapshot);
+    // void saveToSnapshotUnsafe(Snapshot *snapshot);
     
     /*! @brief    Saves the current state into an existing snapshot.
      *  @note     Use this function outside the execution thread.
      *  @seealso  saveToSnapshotUnsafe
      */
-    void saveToSnapshotSafe(Snapshot *snapshot);
+    // void saveToSnapshotSafe(Snapshot *snapshot);
     
     /*! @brief    Creates a new snapshot object storing the current state.
      *  @note     Use this function inside the execution thread.
      *  @seealso  takeSnapshotSafe
      */
-    Snapshot *takeSnapshotUnsafe();
+    // Snapshot *takeSnapshotUnsafe();
     
     /*! @brief    Creates a new snapshot object storing the current state.
      *  @note     Use this function outside the execution thread.
      *  @seealso  saveToSnapshotUnsafe
      */
-    Snapshot *takeSnapshotSafe();
+    // Snapshot *takeSnapshotSafe();
 
     //! @brief    Returns the number of stored snapshots
     size_t numSnapshots(vector<Snapshot *> &storage);
