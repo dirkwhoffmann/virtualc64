@@ -293,6 +293,7 @@ extension MyController {
     @IBAction func restoreLatestAutoSnapshotAction(_ sender: Any!) {
         
         if (c64.restoreLatestAutoSnapshot()) {
+            c64.deleteAutoSnapshot(0)
             metalScreen.snapToFront()
         }
     }

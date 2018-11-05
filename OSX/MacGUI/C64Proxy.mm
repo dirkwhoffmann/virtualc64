@@ -850,6 +850,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
 - (BOOL)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
 - (BOOL)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
+- (void)deleteAutoSnapshot:(NSInteger)nr { wrapper->c64->deleteAutoSnapshot((unsigned)nr); }
 
 - (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
 - (NSData *)userSnapshotData:(NSInteger)nr {

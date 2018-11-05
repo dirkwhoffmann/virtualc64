@@ -551,29 +551,22 @@ class C64 : public VirtualComponent {
     void setSnapshotInterval(long value) { snapshotInterval = value; }
     
     /*! @brief    Loads the current state from a snapshot container
-     *  @note     This functions is not thread-safe. It must be used only on
-     *            halted emulators or within the emulation thread.
-     *  @seealso  loadFromSnapshotSafe
+     *  @note     There is an thread-unsafe and thread-safe version of this
+     *            function. The first one can be unsed inside the emulator
+     *            thread or from outside if the emulator is halted. The second
+     *            one can be called any time.
      */
     void loadFromSnapshotUnsafe(Snapshot *snapshot);
-    
-    /*! @brief    Thread-safe version of loadFromSnapshotUnsafe
-     *  @details  A running emulator is paused before performing the operation.
-     */
     void loadFromSnapshotSafe(Snapshot *snapshot);
     
-    //! @brief    Restores an snapshot from the snapshot storage
+    //! @brief    Restores a certain snapshot from the snapshot storage
     bool restoreSnapshot(vector<Snapshot *> &storage, unsigned nr);
     bool restoreAutoSnapshot(unsigned nr) { return restoreSnapshot(autoSnapshots, nr); }
     bool restoreUserSnapshot(unsigned nr) { return restoreSnapshot(userSnapshots, nr); }
 
-    //! @brief    Restores the latest auto-saved snapshot.
-    /*! @note     The reverted snapshot is deleted from the snapshot buffer.
-     */
-    bool restoreLatestAutoSnapshot();
-    
-    //! @brief    Restores the latest user-saved snapshot.
-    bool restoreLatestUserSnapshot();
+    //! @brief    Restores the latest snapshot from the snapshot storage
+    bool restoreLatestAutoSnapshot() { return restoreAutoSnapshot(0); }
+    bool restoreLatestUserSnapshot() { return restoreUserSnapshot(0); }
     
     //! @brief    Returns the number of stored snapshots
     size_t numSnapshots(vector<Snapshot *> &storage);
@@ -597,7 +590,6 @@ class C64 : public VirtualComponent {
     void takeUserSnapshot() { takeSnapshot(userSnapshots); }
     void takeAutoSnapshotSafe() { suspend(); takeSnapshot(autoSnapshots); resume(); }
     void takeUserSnapshotSafe() { suspend(); takeSnapshot(userSnapshots); resume(); }
-    
     
     /*! @brief    Deletes a snapshot from the snapshot storage
      *  @details  All remaining snapshots are moved one position down.

@@ -820,7 +820,7 @@ void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 void
 C64::loadFromSnapshotSafe(Snapshot *snapshot)
 {
-    debug(1, "C64::loadFromSnapshotSafe\n");
+    debug(2, "C64::loadFromSnapshotSafe\n");
 
     suspend();
     loadFromSnapshotUnsafe(snapshot);
@@ -838,22 +838,6 @@ C64::restoreSnapshot(vector<Snapshot *> &storage, unsigned nr)
     }
     
     return false;
-}
-
-bool
-C64::restoreLatestAutoSnapshot()
-{
-    if (!restoreAutoSnapshot(0))
-        return false;
-    
-    deleteAutoSnapshot(0);
-    return true;
-}
-
-bool
-C64::restoreLatestUserSnapshot()
-{
-    return restoreUserSnapshot(0);
 }
 
 size_t

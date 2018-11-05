@@ -633,6 +633,7 @@ struct ContainerWrapper;
 - (time_t) autoSnapshotTimestamp:(NSInteger)nr;
 - (BOOL) restoreAutoSnapshot:(NSInteger)nr;
 - (BOOL) restoreLatestAutoSnapshot;
+- (void) deleteAutoSnapshot:(NSInteger)nr;
 
 - (NSInteger) numUserSnapshots;
 - (NSData *) userSnapshotData:(NSInteger)nr;
