@@ -20,7 +20,7 @@ public class AudioEngine: NSObject {
         super.init()
     }
     
-    @objc convenience init?(withSID proxy: SIDProxy)
+    convenience init?(withSID proxy: SIDProxy)
     {
         track()
     

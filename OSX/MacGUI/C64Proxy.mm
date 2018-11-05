@@ -640,7 +640,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 //
 
 @implementation C64Proxy {
-    AudioEngine *audioEngine;
 }
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec;
@@ -674,12 +673,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     drive2 = [[DriveProxy alloc] initWithVC1541:&c64->drive2];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     
-    // Initialize audio interface
-    audioEngine = [[AudioEngine alloc] initWithSID:sid];
-    if (!audioEngine) {
-        NSLog(@"WARNING: Failed to initialize AudioEngine");
-    }
-
     return self;
 }
 
@@ -849,19 +842,6 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
 - (BOOL)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
 - (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
-
-// Audio hardware
-/*
-- (BOOL) enableAudio {
-    [sid rampUpFromZero];
-    return [audioEngine startPlayback];
-}
-
-- (void) disableAudio {
-    [sid rampDown];
-    [audioEngine stopPlayback];
-}
-*/
 
 @end
 
