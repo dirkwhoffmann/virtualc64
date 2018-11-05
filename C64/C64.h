@@ -602,12 +602,7 @@ class C64 : public VirtualComponent {
     //
     //! @functiongroup Attaching media objects
     //
-    
-    //! @brief    Mounts an object stored in a file of supported type
-    /*! @details  Mountable objects are disks, tapes, and cartridges.
-     */
-    bool mount(AnyC64File *file);
-    
+        
     //! @brief    Flashes an item stored in a file of supported type
     /*! @details  Flashable objects are single programs, roms, and snapshots.
      */

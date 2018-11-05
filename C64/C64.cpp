@@ -878,38 +878,6 @@ C64::deleteSnapshot(vector<Snapshot *> &storage, unsigned index)
 }
 
 bool
-C64::mount(AnyC64File *file)
-{
-    bool result = true;
-    
-    suspend();
-    switch (file->type()) {
-       
-        case CRT_FILE:
-            result = attachCartridgeAndReset((CRTFile *)file);
-            break;
-
-        case D64_FILE:
-        case T64_FILE:
-        case PRG_FILE:
-        case P00_FILE:
-        case G64_FILE:
-            result = insertDisk((AnyArchive *)file, 1);
-            break;
-    
-        case TAP_FILE:
-            result = insertTape((TAPFile *)file);
-            break;
-            
-        default: 
-            assert(false); // not mountable
-            result = false;
-    }
-    resume();
-    return result;
-}
-
-bool
 C64::flash(AnyC64File *file, unsigned item)
 {
     bool result = true;

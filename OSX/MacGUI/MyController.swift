@@ -801,29 +801,32 @@ extension MyController {
     // Mounting media files
     //
     
-    /// DEPRECATED
     @discardableResult
     func mount(_ item: ContainerProxy?) -> Bool {
 
         guard let type = item?.type() else { return false }
-            
-        // We need to take some special care for items that mount as a disk.
-        // In that case, the light barrier has to be broken several times.
         
         switch (type) {
             
+        case CRT_FILE:
+            return c64.attachCartridgeAndReset(item as? CRTProxy)
+            
+        case TAP_FILE:
+            return c64.insertTape(item as? TAPProxy)
+            
         case T64_FILE, D64_FILE,
-             PRG_FILE, P00_FILE:
+             PRG_FILE, P00_FILE,
+             G64_FILE:
+            // We need to take some special care for items that mount as a disk.
+            // In that case, the light barrier has to be broken several times.
             // TODO: Use insertDisk for these attachments in future
             changeDisk(item, drive: 1)
             return true
-            
+                        
         default:
-            break
+            track("Unknown attachment type \(type).")
+            fatalError()
         }
-        
-        // Finally, let's mount that thing
-        return c64.mount(item)
     }
     
     // Emulates changing a disk including the necessary light barrier breaks

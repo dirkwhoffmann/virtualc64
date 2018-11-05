@@ -719,8 +719,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     }
 }
 
+/*
 - (BOOL)mount:(ContainerProxy *)container {
     return wrapper->c64->mount([container wrapper]->container); }
+*/
 - (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item; {
     return wrapper->c64->flash([container wrapper]->container, (int)item); }
 - (BOOL)flash:(ContainerProxy *)container {

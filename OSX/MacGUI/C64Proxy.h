@@ -547,7 +547,7 @@ struct ContainerWrapper;
 - (DriveProxy *)drive:(NSInteger)nr;
 
 // Loading and saving
-- (BOOL)mount:(ContainerProxy *)container;
+// - (BOOL)mount:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container;
 - (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item;
 
