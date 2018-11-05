@@ -714,10 +714,6 @@ C64::endFrame()
     }
 }
 
-//
-//! @functiongroup Managing the execution thread
-//
-
 bool
 C64::getWarp()
 {
@@ -810,11 +806,6 @@ C64::synchronizeTiming()
     }
 }
 
-
-//
-//! @functiongroup Handling snapshots
-//
-
 void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 {    
     uint8_t *ptr;
@@ -837,9 +828,9 @@ C64::loadFromSnapshotSafe(Snapshot *snapshot)
 }
 
 bool
-C64::restoreAutoSnapshot(unsigned nr)
+C64::restoreSnapshot(vector<Snapshot *> &storage, unsigned nr)
 {
-    Snapshot *snapshot = autoSnapshot(nr);
+    Snapshot *snapshot = getSnapshot(storage, nr);
     
     if (snapshot) {
         loadFromSnapshotSafe(snapshot);
@@ -857,19 +848,6 @@ C64::restoreLatestAutoSnapshot()
     
     deleteAutoSnapshot(0);
     return true;
-}
-
-bool
-C64::restoreUserSnapshot(unsigned nr)
-{
-    Snapshot *snapshot = userSnapshot(nr);
-    
-    if (snapshot) {
-        loadFromSnapshotSafe(snapshot);
-        return true;
-    }
-    
-    return false;
 }
 
 bool
@@ -899,11 +877,6 @@ C64::takeSnapshot(vector<Snapshot *> &storage)
         deleteSnapshot(storage, MAX_SNAPSHOTS - 1);
     }
     
-    // Add new snapshot
-    /*
-    Snapshot *snapshot = new Snapshot();
-    saveToSnapshotUnsafe(snapshot);
-    */
     Snapshot *snapshot = Snapshot::makeWithC64(this);
     storage.insert(storage.begin(), snapshot);
     putMessage(MSG_SNAPSHOT_TAKEN);
@@ -919,11 +892,6 @@ C64::deleteSnapshot(vector<Snapshot *> &storage, unsigned index)
         storage.erase(storage.begin() + index);
     }
 }
-
-
-//
-//! @functiongroup Handling archives, tapes, and cartridges
-//
 
 bool
 C64::mount(AnyC64File *file)

@@ -562,16 +562,15 @@ class C64 : public VirtualComponent {
      */
     void loadFromSnapshotSafe(Snapshot *snapshot);
     
-    //! @brief    Restores a snapshot from the auto-save ringbuffer.
-    bool restoreAutoSnapshot(unsigned nr);
-    
-    //! @brief    Restored the latest auto-saved snapshot.
+    //! @brief    Restores an snapshot from the snapshot storage
+    bool restoreSnapshot(vector<Snapshot *> &storage, unsigned nr);
+    bool restoreAutoSnapshot(unsigned nr) { return restoreSnapshot(autoSnapshots, nr); }
+    bool restoreUserSnapshot(unsigned nr) { return restoreSnapshot(userSnapshots, nr); }
+
+    //! @brief    Restores the latest auto-saved snapshot.
     /*! @note     The reverted snapshot is deleted from the snapshot buffer.
      */
     bool restoreLatestAutoSnapshot();
-    
-    //! @brief    Restores a snapshot from the user storage
-    bool restoreUserSnapshot(unsigned nr);
     
     //! @brief    Restores the latest user-saved snapshot.
     bool restoreLatestUserSnapshot();
