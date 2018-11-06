@@ -61,7 +61,7 @@ class CartridgeMountController : UserDialogController {
         NSLog("OK Action")
         
         // Attach cartridge
-        c64.attachCartridgeAndReset(cartridge)
+        c64.expansionport.attachCartridgeAndReset(cartridge)
         parent.metalScreen.rotateBack()
         
         hideSheet()

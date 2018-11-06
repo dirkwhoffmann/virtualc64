@@ -615,7 +615,7 @@ class C64 : public VirtualComponent {
 
     
     //
-    //! @functiongroup Attaching media objects
+    //! @functiongroup Flashing files
     //
     
     //! @brief    Flashes a single file into memory
@@ -635,16 +635,16 @@ class C64 : public VirtualComponent {
     // void ejectDisk(unsigned drive);
 
     //! @brief    Inserts a TAP file as a virtual datasette tape.
-    bool insertTape(TAPFile *a);
+    // bool insertTape(TAPFile *a);
 
     //! @brief    Ejects a previously inserted tape.
-    void ejectTape();
+    // void ejectTape();
 
     //! @brief    Attaches a cartridge to the expansion port.
-    bool attachCartridgeAndReset(CRTFile *c);
+    // bool attachCartridgeAndReset(CRTFile *c);
     
     //! @brief    Detaches a cartridge from the expansion port.
-    void detachCartridgeAndReset();
+    // void detachCartridgeAndReset();
     
     
     //

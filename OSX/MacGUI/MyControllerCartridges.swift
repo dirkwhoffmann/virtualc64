@@ -13,6 +13,6 @@ extension MyController {
 
     @IBAction func cartridgeEjectAction(_ sender: Any!) {
         
-        c64.detachCartridgeAndReset()
+        c64.expansionport.detachCartridgeAndReset()
     }
 }

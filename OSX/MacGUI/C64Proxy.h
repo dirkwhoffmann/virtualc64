@@ -336,7 +336,9 @@ struct AnyC64FileWrapper;
 
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
+- (void) detachCartridgeAndReset;
 - (BOOL) hasFreezeButton;
 - (void) pressFreezeButton;
 - (void) releaseFreezeButton;
@@ -625,15 +627,16 @@ struct AnyC64FileWrapper;
 - (BOOL) isRom:(NSURL *)url;
 - (BOOL) loadRom:(NSURL *)url;
 
-// Attaching media objects
+// Flashing files
 - (BOOL)flash:(AnyC64FileProxy *)container;
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr;
+
 // - (BOOL) insertDisk:(ArchiveProxy *)a drive:(NSInteger)nr;
 // - (void) ejectDiskFromDrive:(NSInteger)nr;
 // - (BOOL) insertTape:(TAPProxy *)a;
 // - (void) ejectTape;
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
-- (void) detachCartridgeAndReset;
+// - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
+// - (void) detachCartridgeAndReset;
 
 @end
 

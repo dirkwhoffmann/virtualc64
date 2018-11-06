@@ -660,7 +660,7 @@ extension MyController {
     
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         track()
-        c64.detachCartridgeAndReset()
+        c64.expansionport.detachCartridgeAndReset()
     }
     
     @IBAction func attachGeoRamAction(_ sender: Any!) {

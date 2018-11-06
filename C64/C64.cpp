@@ -1013,7 +1013,6 @@ C64::ejectTape()
     datasette.ejectTape();
     resume();
 }
-*/
 
 bool
 C64::attachCartridgeAndReset(CRTFile *container)
@@ -1045,4 +1044,4 @@ C64::detachCartridgeAndReset()
         resume();
     }
 }
-
+*/

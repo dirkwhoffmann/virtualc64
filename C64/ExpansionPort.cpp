@@ -251,6 +251,25 @@ ExpansionPort::attachCartridge(Cartridge *c)
 }
 
 bool
+ExpansionPort::attachCartridgeAndReset(CRTFile *file)
+{
+    assert(file != NULL);
+    
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
+    
+    if (cartridge) {
+        
+        c64->suspend();
+        attachCartridge(cartridge);
+        c64->reset();
+        c64->resume();
+        return true;
+    }
+    
+    return false;
+}
+
+bool
 ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
 {
     switch (capacity) {
@@ -272,18 +291,28 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
 void
 ExpansionPort::detachCartridge()
 {
-    if (cartridge == NULL)
-        return;
-    
-    delete cartridge;
-    cartridge = NULL;
-    
-    setGameLine(1);
-    setExromLine(1);
-
-    c64->putMessage(MSG_NO_CARTRIDGE);
-    
-    debug(1, "Cartridge detached from expansion port");
+    if (cartridge) {
+        
+        c64->suspend();
+        
+        delete cartridge;
+        cartridge = NULL;
+        
+        setGameLine(1);
+        setExromLine(1);
+        
+        debug(1, "Cartridge detached from expansion port");
+        
+        c64->putMessage(MSG_NO_CARTRIDGE);
+        c64->resume();
+    }
 }
 
-
+void
+ExpansionPort::detachCartridgeAndReset()
+{
+    c64->suspend();
+    detachCartridge();
+    c64->reset();
+    c64->resume();
+}

@@ -440,15 +440,20 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
 - (BOOL) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
-- (BOOL) hasBattery { return wrapper->expansionPort->hasBattery(); }
-- (void) setBattery:(BOOL)value { wrapper->expansionPort->setBattery(value); }
-- (BOOL) attachGeoRamCartridge:(NSInteger)capacity { return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
+    return wrapper->expansionPort->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
+- (BOOL) attachGeoRamCartridge:(NSInteger)capacity {
+    return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
+- (void) detachCartridgeAndReset { wrapper->expansionPort->detachCartridgeAndReset(); }
 - (BOOL) hasFreezeButton { return wrapper->expansionPort->hasFreezeButton(); }
 - (void) pressFreezeButton { wrapper->expansionPort->pressFreezeButton(); }
 - (void) releaseFreezeButton { wrapper->expansionPort->releaseFreezeButton(); }
 - (BOOL) hasResetButton { return wrapper->expansionPort->hasResetButton(); }
 - (void) pressResetButton { wrapper->expansionPort->pressResetButton(); }
 - (void) releaseResetButton { wrapper->expansionPort->releaseResetButton(); }
+- (BOOL) hasBattery { return wrapper->expansionPort->hasBattery(); }
+- (void) setBattery:(BOOL)value { wrapper->expansionPort->setBattery(value); }
+
 
 @end
 
@@ -836,10 +841,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return wrapper->c64->insertTape(file);
 }
 - (void) ejectTape { return wrapper->c64->ejectTape(); }
-*/
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
+ */
 @end
 
 

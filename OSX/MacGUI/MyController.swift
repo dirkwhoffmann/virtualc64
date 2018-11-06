@@ -815,7 +815,7 @@ extension MyController {
         switch (type) {
             
         case CRT_FILE:
-            return c64.attachCartridgeAndReset(item as? CRTProxy)
+            return c64.expansionport.attachCartridgeAndReset(item as? CRTProxy)
             
         case TAP_FILE:
             return c64.datasette.insertTape(item as? TAPProxy)
