@@ -95,9 +95,9 @@ CIA::setChipModel(CIAChipModel model)
         model = MOS_6526_OLD;
     }
     
-    c64->suspend();
+    suspend();
     chipModel = model;
-    c64->resume();
+    resume();
 }
 
 void

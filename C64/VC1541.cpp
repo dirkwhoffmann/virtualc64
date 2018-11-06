@@ -141,9 +141,9 @@ VC1541::dumpState()
 void
 VC1541::powerUp()
 {
-    c64->suspend();
+    suspend();
     reset();
-    c64->resume();
+    resume();
 }
 
 bool
@@ -390,14 +390,14 @@ VC1541::powerOn()
 {
     if (poweredOn) return;
     
-    c64->suspend();
+    suspend();
     
     poweredOn = true;
     if (soundMessagesEnabled())
         c64->putMessage(MSG_VC1541_ATTACHED_SOUND, deviceNr);
     ping();
     
-    c64->resume();
+    resume();
 }
 
 void
@@ -405,7 +405,7 @@ VC1541::powerOff()
 {
     if (!poweredOn) return;
 
-    c64->suspend();
+    suspend();
     
     reset();
     
@@ -414,7 +414,7 @@ VC1541::powerOff()
         c64->putMessage(MSG_VC1541_DETACHED_SOUND, deviceNr);
     ping();
     
-    c64->resume();
+    resume();
 }
 
 void
@@ -509,7 +509,7 @@ VC1541::prepareToInsert()
 void
 VC1541::insertDisk(AnyArchive *a)
 {
-    c64->suspend();
+    suspend();
 
     debug("insertDisk\n");
     assert(a != NULL);
@@ -546,13 +546,13 @@ VC1541::insertDisk(AnyArchive *a)
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_DISK_SOUND, deviceNr);
     
-    c64->resume();
+    resume();
 }
 
 void
 VC1541::prepareToEject()
 {
-    c64->suspend();
+    suspend();
     
     debug("prepareToEject\n");
     assert(insertionStatus == FULLY_INSERTED);
@@ -563,13 +563,13 @@ VC1541::prepareToEject()
     // Make sure the drive can no longer read from this disk
     disk.clearDisk();
     
-    c64->resume();
+    resume();
 }
 
 void 
 VC1541::ejectDisk()
 {
-    c64->suspend();
+    suspend();
  
     debug("ejectDisk\n");
     assert(insertionStatus == PARTIALLY_INSERTED);
@@ -582,6 +582,6 @@ VC1541::ejectDisk()
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_NO_DISK_SOUND, deviceNr);
     
-    c64->resume();
+    resume();
 }
 

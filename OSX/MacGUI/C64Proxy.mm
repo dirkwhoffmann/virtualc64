@@ -117,17 +117,17 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (uint8_t) spypeekIO:(uint16_t)addr { return wrapper->mem->spypeekIO(addr); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
-    wrapper->mem->c64->suspend();
+    wrapper->mem->suspend();
     wrapper->mem->poke(addr, value, target);
-    wrapper->mem->c64->resume(); }
+    wrapper->mem->resume(); }
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
-    wrapper->mem->c64->suspend();
+    wrapper->mem->suspend();
     wrapper->mem->poke(addr, value);
-    wrapper->mem->c64->resume(); }
+    wrapper->mem->resume(); }
 - (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
-    wrapper->mem->c64->suspend();
+    wrapper->mem->suspend();
     wrapper->mem->pokeIO(addr, value);
-    wrapper->mem->c64->resume(); }
+    wrapper->mem->resume(); }
 
 @end
 
@@ -158,9 +158,9 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) setEmulateTimerBBug:(BOOL)value { wrapper->cia->setEmulateTimerBBug(value); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
-    wrapper->cia->c64->suspend();
+    wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);
-    wrapper->cia->c64->resume();
+    wrapper->cia->resume();
 }
 
 @end

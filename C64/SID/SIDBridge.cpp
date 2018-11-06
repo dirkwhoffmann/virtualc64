@@ -286,10 +286,10 @@ SIDBridge::setChipModel(SIDChipModel model)
         model = MOS_8580;
     }
     
-    c64->suspend();
+    suspend();
     resid.setChipModel(model);
     fastsid.setChipModel(model);
-    c64->resume();
+    resume();
 }
 
 uint32_t

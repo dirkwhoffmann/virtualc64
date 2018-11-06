@@ -259,10 +259,10 @@ ExpansionPort::attachCartridgeAndReset(CRTFile *file)
     
     if (cartridge) {
         
-        c64->suspend();
+        suspend();
         attachCartridge(cartridge);
         c64->reset();
-        c64->resume();
+        resume();
         return true;
     }
     
@@ -293,7 +293,7 @@ ExpansionPort::detachCartridge()
 {
     if (cartridge) {
         
-        c64->suspend();
+        suspend();
         
         delete cartridge;
         cartridge = NULL;
@@ -304,15 +304,15 @@ ExpansionPort::detachCartridge()
         debug(1, "Cartridge detached from expansion port");
         
         c64->putMessage(MSG_NO_CARTRIDGE);
-        c64->resume();
+        resume();
     }
 }
 
 void
 ExpansionPort::detachCartridgeAndReset()
 {
-    c64->suspend();
+    suspend();
     detachCartridge();
     c64->reset();
-    c64->resume();
+    resume();
 }

@@ -289,7 +289,7 @@ VIC::setChipModel(VICChipModel model)
         model = PAL_8565;
     }
     
-    c64->suspend();
+    suspend();
     
     chipModel = model;
     updatePalette();
@@ -316,7 +316,7 @@ VIC::setChipModel(VICChipModel model)
             assert(false);
     }
     
-    c64->resume();
+    resume();
 }
 
 void
@@ -341,9 +341,9 @@ VIC::setGlueLogic(GlueLogic type)
         type = GLUE_DISCRETE;
     }
     
-    c64->suspend();
+    suspend();
     glueLogic = type;
-    c64->resume();
+    resume();
 }
 
 unsigned

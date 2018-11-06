@@ -124,6 +124,31 @@ public:
     
     
     //
+    //! @functiongroup Controlling the emulation thread
+    //
+    
+    /*! @brief    Freezes the emulation thread.
+     *  @details  If the internal state of the emulator is changed from outside
+     *            the emulation thread, the change must be embedded in a
+     *            suspend / resume block as follows:
+     *
+     *            suspend();
+     *            do something with the internal state;
+     *            resume();
+     *
+     *  @note     Multiple suspend / resume blocks can be nested.
+     *  @see      resume
+     */
+    virtual void suspend();
+    
+    /*! @brief    Continues the emulation thread.
+     *  @details  This functions concludes a suspend operation.
+     *  @see      suspend
+     */
+    virtual void resume();
+    
+    
+    //
     //! @functiongroup Debugging the component
     //
 
