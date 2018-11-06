@@ -762,7 +762,7 @@ extension MyController {
         c64.drive1.via2.setTracing(!c64.drive1.via2.tracing())
     }
     
-    @IBAction func dumpC64(_ sender: Any!) { c64.dump() }
+    @IBAction func dumpC64(_ sender: Any!) { c64.dumpState() }
     @IBAction func dumpC64CPU(_ sender: Any!) { c64.cpu.dump() }
     @IBAction func dumpC64CIA1(_ sender: Any!) {c64.cia1.dump() }
     @IBAction func dumpC64CIA2(_ sender: Any!) { c64.cia2.dump() }

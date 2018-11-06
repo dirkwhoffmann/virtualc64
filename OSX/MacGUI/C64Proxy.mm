@@ -637,15 +637,15 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
 //
-// C64
+// C64Proxy
 //
 
 @implementation C64Proxy {
 }
 
-@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec;
-@synthesize drive1, drive2, expansionport, datasette;
-@synthesize port1, port2;
+@synthesize mem, cpu, vic, cia1, cia2, sid;
+@synthesize keyboard, port1, port2, iec;
+@synthesize expansionport, drive1, drive2, datasette;
 
 - (instancetype) init
 {
@@ -659,8 +659,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     wrapper->c64 = c64;
 	
     // Create sub proxys
-    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
     mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
+    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
     vic = [[VICProxy alloc] initWithVIC:&c64->vic];
 	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
@@ -677,48 +677,120 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return self;
 }
 
-- (struct C64Wrapper *)wrapper
-{
-    return wrapper;
-}
-
 - (void) kill
 {
-	assert(wrapper->c64 != NULL);
-	NSLog(@"C64Proxy::kill");
-	
-    // Delete emulator
+    assert(wrapper->c64 != NULL);
+    NSLog(@"C64Proxy::kill");
+    
+    // Kill the emulator
     delete wrapper->c64;
-	wrapper->c64 = NULL;
+    wrapper->c64 = NULL;
 }
 
-- (void) dump { wrapper->c64->dumpState(); }
-- (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
-
-- (NSInteger) model { return wrapper->c64->getModel(); }
-- (void) setModel:(NSInteger)value { wrapper->c64->setModel((C64Model)value); }
+- (struct C64Wrapper *)wrapper { return wrapper; }
 
 - (DriveProxy *) drive:(NSInteger)num {
     switch (num) {
         case 1:
-            return [self drive1];
+        return [self drive1];
         case 2:
-            return [self drive2];
+        return [self drive2];
         default:
-            assert(false);
-            return NULL;
+        assert(false);
+        return NULL;
     }
 }
 
-/*
-- (BOOL)mount:(ContainerProxy *)container {
-    return wrapper->c64->mount([container wrapper]->container); }
-*/
-- (BOOL)flash:(ContainerProxy *)container {
-    return wrapper->c64->flash([container wrapper]->container); }
-- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item; {
-    AnyArchive *a = (AnyArchive *)([archive wrapper]->container);
-    return wrapper->c64->flash(a, (unsigned)item); }
+- (void) ping { wrapper->c64->ping(); }
+- (void) dumpState { wrapper->c64->dumpState(); }
+- (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
+
+// Configuring the emulator
+- (NSInteger) model { return wrapper->c64->getModel(); }
+- (void) setModel:(NSInteger)value { wrapper->c64->setModel((C64Model)value); }
+
+// Accessing the message queue
+- (Message)message { return wrapper->c64->getMessage(); }
+- (void) addListener:(const void *)sender function:(Callback *)func {
+    wrapper->c64->addListener(sender, func); }
+- (void) removeListener:(const void *)sender { wrapper->c64->removeListener(sender); }
+
+// Running the emulator
+- (void) powerUp { wrapper->c64->powerUp(); }
+- (void) run { wrapper->c64->run(); }
+- (void) halt { wrapper->c64->halt(); }
+- (void) suspend { wrapper->c64->suspend(); }
+- (void) resume { wrapper->c64->resume(); }
+- (BOOL) isRunnable { return wrapper->c64->isRunnable(); }
+- (BOOL) isRunning { return wrapper->c64->isRunning(); }
+- (BOOL) isHalted { return wrapper->c64->isHalted(); }
+- (void) step { wrapper->c64->step(); }
+- (void) stepOver { wrapper->c64->stepOver(); }
+
+// Handling mice
+- (NSInteger) mouseModel { return (NSInteger)wrapper->c64->getMouseModel(); }
+- (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
+- (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }
+- (void) disconnectMouse { wrapper->c64->connectMouse(0); }
+- (void) setMouseXY:(NSPoint)pos { wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y); }
+- (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse->leftButton = pressed; }
+- (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
+
+// Managing the execution thread
+- (BOOL) warp { return wrapper->c64->getWarp(); }
+- (BOOL) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
+- (void) setAlwaysWarp:(BOOL)b { wrapper->c64->setAlwaysWarp(b); }
+- (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
+- (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
+
+// Handling snapshots
+- (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }
+- (void) enableAutoSnapshots { wrapper->c64->enableAutoSnapshots(); }
+- (void) suspendAutoSnapshots { wrapper->c64->suspendAutoSnapshots(); }
+- (void) resumeAutoSnapshots { wrapper->c64->resumeAutoSnapshots(); }
+- (NSInteger) snapshotInterval { return wrapper->c64->getSnapshotInterval(); }
+- (void) setSnapshotInterval:(NSInteger)value { wrapper->c64->setSnapshotInterval(value); }
+
+- (BOOL)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
+- (BOOL)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
+- (BOOL)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
+- (BOOL)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
+- (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
+- (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
+
+- (NSData *)autoSnapshotData:(NSInteger)nr {
+    Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
+                          length: snapshot->sizeOnDisk()];
+}
+- (NSData *)userSnapshotData:(NSInteger)nr {
+    Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
+                          length: snapshot->sizeOnDisk()];
+}
+- (unsigned char *)autoSnapshotImageData:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageData() : NULL; }
+- (unsigned char *)userSnapshotImageData:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageData() : NULL; }
+- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
+- (NSInteger)userSnapshotImageWidth:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
+- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (NSInteger)userSnapshotImageHeight:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (time_t)autoSnapshotTimestamp:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+- (time_t)userSnapshotTimestamp:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+
+- (void)takeUserSnapshot { wrapper->c64->takeUserSnapshotSafe(); }
+
+- (void)deleteAutoSnapshot:(NSInteger)nr { wrapper->c64->deleteAutoSnapshot((unsigned)nr); }
+- (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
+
+// Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url {
     return ROMFile::isBasicRomFile([[url path] UTF8String]); }
 - (BOOL) loadBasicRom:(NSURL *)url {
@@ -748,101 +820,25 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) loadRom:(NSURL *)url {
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
-- (Message)message { return wrapper->c64->getMessage(); }
-- (void) addListener:(const void *)sender function:(Callback *)func {
-    wrapper->c64->addListener(sender, func);
-}
-- (void) removeListener:(const void *)sender {
-    wrapper->c64->removeListener(sender);
-}
-
-- (void) powerUp { wrapper->c64->powerUp(); }
-- (void) ping { wrapper->c64->ping(); }
-
-- (BOOL) isRunnable { return wrapper->c64->isRunnable(); }
-- (BOOL) isRunning { return wrapper->c64->isRunning(); }
-- (BOOL) isHalted { return wrapper->c64->isHalted(); }
-- (void) suspend { wrapper->c64->suspend(); }
-- (void) resume { wrapper->c64->resume(); }
-- (void) run { wrapper->c64->run(); }
-- (void) halt { wrapper->c64->halt(); }
-
-- (void) step { wrapper->c64->step(); }
-- (void) stepOver { wrapper->c64->stepOver(); }
-
+// Attaching media objects
+- (BOOL)flash:(ContainerProxy *)container {
+    return wrapper->c64->flash([container wrapper]->container); }
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item; {
+    AnyArchive *a = (AnyArchive *)([archive wrapper]->container);
+    return wrapper->c64->flash(a, (unsigned)item); }
+/*
+ - (BOOL) insertDisk:(ArchiveProxy *)a {
+ AnyArchive *archive = (AnyArchive *)([a wrapper]->container);
+ return wrapper->c64->insertDisk(archive);
+ }
+ */
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
-
-/*
-- (BOOL) insertDisk:(ArchiveProxy *)a {
-    AnyArchive *archive = (AnyArchive *)([a wrapper]->container);
-    return wrapper->c64->insertDisk(archive);
-}
-*/
 - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *container = (TAPFile *)([c wrapper]->container);
     return wrapper->c64->insertTape(container);
 }
-- (NSInteger) mouseModel { return (NSInteger)wrapper->c64->getMouseModel(); }
-- (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
-- (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }
-- (void) disconnectMouse { wrapper->c64->connectMouse(0); }
-- (void) setMouseXY:(NSPoint)pos { wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y); }
-- (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse->leftButton = pressed; }
-- (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
-
-- (BOOL) warp { return wrapper->c64->getWarp(); }
-- (BOOL) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
-- (void) setAlwaysWarp:(BOOL)b { wrapper->c64->setAlwaysWarp(b); }
-- (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
-- (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
-
-// - (UInt64) cycles { return wrapper->c64->cpu.cycle; }
-
-// Snapshot storage
-- (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }
-- (void) enableAutoSnapshots { wrapper->c64->enableAutoSnapshots(); }
-- (void) suspendAutoSnapshots { wrapper->c64->suspendAutoSnapshots(); }
-- (void) resumeAutoSnapshots { wrapper->c64->resumeAutoSnapshots(); }
-- (NSInteger) snapshotInterval { return wrapper->c64->getSnapshotInterval(); }
-- (void) setSnapshotInterval:(NSInteger)value { wrapper->c64->setSnapshotInterval(value); }
-- (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
-- (NSData *)autoSnapshotData:(NSInteger)nr {
-    Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
-}
-- (unsigned char *)autoSnapshotImageData:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageData() : NULL; }
-- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (time_t)autoSnapshotTimestamp:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (BOOL)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
-- (BOOL)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
-- (void)deleteAutoSnapshot:(NSInteger)nr { wrapper->c64->deleteAutoSnapshot((unsigned)nr); }
-
-- (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
-- (NSData *)userSnapshotData:(NSInteger)nr {
-    Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
-}
-- (unsigned char *)userSnapshotImageData:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageData() : NULL; }
-- (NSInteger)userSnapshotImageWidth:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (NSInteger)userSnapshotImageHeight:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (time_t)userSnapshotTimestamp:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (void)takeUserSnapshot { wrapper->c64->takeUserSnapshotSafe(); }
-- (BOOL)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
-- (BOOL)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
-- (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
 
 @end
 

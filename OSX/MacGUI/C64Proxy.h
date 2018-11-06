@@ -502,7 +502,7 @@ struct ContainerWrapper;
     
 	struct C64Wrapper *wrapper;
     
-	// Sub proxys
+	// Hardware components
     MemoryProxy *mem;
 	CPUProxy *cpu;
 	VICProxy *vic;
@@ -534,12 +534,13 @@ struct ContainerWrapper;
 @property (readonly) DriveProxy *drive2;
 @property (readonly) DatasetteProxy *datasette;
 
-- (struct C64Wrapper *)wrapper;
-- (DriveProxy *)drive:(NSInteger)nr;
 - (void) kill;
 
+- (struct C64Wrapper *)wrapper;
+- (DriveProxy *)drive:(NSInteger)nr;
+
 - (void) ping;
-- (void) dump;
+- (void) dumpState;
 - (BOOL) developmentMode;
 
 // Configuring the emulator
@@ -586,25 +587,28 @@ struct ContainerWrapper;
 - (void) resumeAutoSnapshots;
 - (NSInteger) snapshotInterval;
 - (void) setSnapshotInterval:(NSInteger)value;
-- (NSInteger) numAutoSnapshots;
-- (NSData *) autoSnapshotData:(NSInteger)nr;
-- (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
-- (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
-- (time_t) autoSnapshotTimestamp:(NSInteger)nr;
-- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
-- (BOOL) restoreLatestAutoSnapshot;
-- (void) deleteAutoSnapshot:(NSInteger)nr;
 
-- (NSInteger) numUserSnapshots;
-- (NSData *) userSnapshotData:(NSInteger)nr;
-- (unsigned char *) userSnapshotImageData:(NSInteger)nr;
-- (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
-- (time_t) userSnapshotTimestamp:(NSInteger)nr;
-- (void) takeUserSnapshot;
+- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
 - (BOOL) restoreUserSnapshot:(NSInteger)nr;
+- (BOOL) restoreLatestAutoSnapshot;
 - (BOOL) restoreLatestUserSnapshot;
+- (NSInteger) numAutoSnapshots;
+- (NSInteger) numUserSnapshots;
+
+- (NSData *) autoSnapshotData:(NSInteger)nr;
+- (NSData *) userSnapshotData:(NSInteger)nr;
+- (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
+- (unsigned char *) userSnapshotImageData:(NSInteger)nr;
+- (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
+- (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
+- (time_t) autoSnapshotTimestamp:(NSInteger)nr;
+- (time_t) userSnapshotTimestamp:(NSInteger)nr;
+
+- (void) takeUserSnapshot;
+
+- (void) deleteAutoSnapshot:(NSInteger)nr;
 - (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Handling ROMs
@@ -626,9 +630,9 @@ struct ContainerWrapper;
 // Attaching media objects
 - (BOOL)flash:(ContainerProxy *)container;
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item;
+// - (BOOL) insertDisk:(ArchiveProxy *)a;
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;
-// - (BOOL) insertDisk:(ArchiveProxy *)a;
 - (BOOL) insertTape:(TAPProxy *)a;
 
 @end

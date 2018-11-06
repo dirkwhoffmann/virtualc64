@@ -484,6 +484,8 @@ class C64 : public VirtualComponent {
     //! @functiongroup Managing the execution thread
     //
     
+    private:
+    
     //! @brief    Converts kernel time to nanoseconds.
     uint64_t abs_to_nanos(uint64_t abs) { return abs * timebase.numer / timebase.denom; }
     
@@ -516,6 +518,8 @@ class C64 : public VirtualComponent {
      */
     void restartTimer();
     
+    private:
+    
     /*! @brief    Puts the emulation the thread to sleep for a while.
      *  @details  This function is called inside endFrame(). It makes the
      *            emulation thread wait until nanoTargetTime has been reached.
@@ -528,6 +532,8 @@ class C64 : public VirtualComponent {
     //
     //! @functiongroup Handling snapshots
     //
+    
+    public:
     
     //! @brief    Disables the auto-snapshot feature.
     void disableAutoSnapshots() { if (snapshotInterval > 0) snapshotInterval *= -1; }
@@ -603,7 +609,7 @@ class C64 : public VirtualComponent {
     //
     //! @functiongroup Handling Roms
     //
-
+    
     //! @brief    Loads a ROM image into memory
     bool loadRom(const char *filename);
 
@@ -611,7 +617,7 @@ class C64 : public VirtualComponent {
     //
     //! @functiongroup Attaching media objects
     //
-
+    
     //! @brief    Flashes a single file into memory
     bool flash(AnyC64File *file);
 
@@ -638,6 +644,8 @@ class C64 : public VirtualComponent {
     //
     //! @functiongroup Set and query ultimax mode
     //
+    
+    public:
     
     //! @brief    Returns the ultimax flag
     bool getUltimax() { return ultimax; }
