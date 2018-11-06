@@ -28,13 +28,6 @@ struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct AnyC64FileWrapper { AnyC64File *file; };
 
-// DEPRECATED
-struct SnapshotWrapper { Snapshot *snapshot; };
-struct ArchiveWrapper { AnyArchive *archive; };
-struct TAPContainerWrapper { TAPFile *tapcontainer; };
-struct CRTContainerWrapper { CRTFile *crtcontainer; };
-
-
 //
 // CPU
 //
@@ -821,8 +814,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
 // Attaching media objects
-- (BOOL)flash:(AnyC64FileProxy *)container {
-    return wrapper->c64->flash([container wrapper]->file); }
+- (BOOL)flash:(AnyC64FileProxy *)file {
+    return wrapper->c64->flash([file wrapper]->file); }
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item; {
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)item); }
@@ -836,37 +829,37 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (BOOL) insertTape:(TAPProxy *)c {
-    TAPFile *container = (TAPFile *)([c wrapper]->file);
-    return wrapper->c64->insertTape(container);
+    TAPFile *file = (TAPFile *)([c wrapper]->file);
+    return wrapper->c64->insertTape(file);
 }
 
 @end
 
 
 //
-// Container
+// AnyC64FileProxy
 //
 
 @implementation AnyC64FileProxy
 
-- (instancetype) initWithContainer:(AnyC64File *)container
+- (instancetype) initWithFile:(AnyC64File *)file
 {
-    if (container == nil) {
+    if (file == nil) {
         return nil;
     }
     if (self = [super init]) {
         wrapper = new AnyC64FileWrapper();
-        wrapper->file = container;
+        wrapper->file = file;
     }
     return self;
 }
 
-+ (AnyC64FileProxy *) makeWithContainer:(AnyC64File *)container
++ (AnyC64FileProxy *) makeWithFile:(AnyC64File *)file
 {
-    if (container == nil) {
+    if (file == nil) {
         return nil;
     }
-    return [[self alloc] initWithContainer:container];
+    return [[self alloc] initWithFile:file];
 }
 
 - (void)setPath:(NSString *)path {
@@ -933,7 +926,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     if (snapshot == NULL) {
         return nil;
     }
-    return [[self alloc] initWithContainer:snapshot];
+    return [[self alloc] initWithFile:snapshot];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -996,7 +989,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     if (container == NULL) {
         return nil;
     }
-    return [[self alloc] initWithContainer:container];
+    return [[self alloc] initWithFile:container];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -1079,7 +1072,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     if (container == NULL) {
         return nil;
     }
-    return [[self alloc] initWithContainer:container];
+    return [[self alloc] initWithFile:container];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -1110,7 +1103,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(AnyArchive *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 
 + (instancetype) make
@@ -1198,7 +1191,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(T64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1232,7 +1225,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(PRGFile *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1266,7 +1259,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(P00File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1295,7 +1288,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(AnyDisk *)disk
 {
     if (disk == NULL) return nil;
-    return [[self alloc] initWithContainer:disk];
+    return [[self alloc] initWithFile:disk];
 }
 
 + (instancetype) make
@@ -1351,7 +1344,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(D64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1398,7 +1391,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(G64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
