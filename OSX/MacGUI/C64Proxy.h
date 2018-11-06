@@ -432,7 +432,6 @@ struct AnyC64FileWrapper;
 - (BOOL) hasModifiedDisk;
 - (void) setModifiedDisk:(BOOL)b;
 - (void) prepareToInsert;
-- (void) insertDisk:(ArchiveProxy *)disk;
 - (void) prepareToEject;
 - (void) ejectDisk;
 - (BOOL) writeProtected;
@@ -479,7 +478,7 @@ struct AnyC64FileWrapper;
 - (void) pressPlay;
 - (void) pressStop;
 - (void) rewind;
-- (void) ejectTape;
+// - (void) ejectTape;
 
 - (NSInteger) getType; 
 - (long) durationInCycles;
@@ -540,7 +539,7 @@ struct AnyC64FileWrapper;
 - (DriveProxy *)drive:(NSInteger)nr;
 
 - (void) ping;
-- (void) dumpState;
+- (void) dump;
 - (BOOL) developmentMode;
 
 // Configuring the emulator
@@ -629,11 +628,13 @@ struct AnyC64FileWrapper;
 
 // Attaching media objects
 - (BOOL)flash:(AnyC64FileProxy *)container;
-- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item;
-// - (BOOL) insertDisk:(ArchiveProxy *)a;
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr;
+- (BOOL) insertDisk:(ArchiveProxy *)a drive:(NSInteger)nr;
+- (void) ejectDiskFromDrive:(NSInteger)nr;
+- (BOOL) insertTape:(TAPProxy *)a;
+- (void) ejectTape;
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (void) detachCartridgeAndReset;
-- (BOOL) insertTape:(TAPProxy *)a;
 
 @end
 

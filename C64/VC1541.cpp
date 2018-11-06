@@ -509,7 +509,6 @@ VC1541::prepareToInsert()
 void
 VC1541::insertDisk(AnyArchive *a)
 {
-
     c64->suspend();
 
     debug("insertDisk\n");

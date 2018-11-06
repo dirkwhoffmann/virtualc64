@@ -82,7 +82,7 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     
     // Read cartridge data (if any)
     if (cartridgeType != CRT_NONE) {
-        cartridge = Cartridge::makeCartridgeWithType(c64, cartridgeType);
+        cartridge = Cartridge::makeWithType(c64, cartridgeType);
         cartridge->loadFromBuffer(buffer);
     }
     
@@ -261,7 +261,7 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
             return false;
     }
     
-    Cartridge *geoRAM = Cartridge::makeCartridgeWithType(c64, CRT_GEO_RAM);
+    Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
     uint32_t capacityInBytes = capacity * 1024;
     geoRAM->setRamCapacity(capacityInBytes);
     debug("Created GeoRAM cartridge (%d KB)\n", capacity);

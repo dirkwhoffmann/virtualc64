@@ -134,7 +134,7 @@ Cartridge::isSupportedType(CartridgeType type)
 }
 
 Cartridge *
-Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
+Cartridge::makeWithType(C64 *c64, CartridgeType type)
 {
      assert(isSupportedType(type));
     
@@ -186,21 +186,21 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
 }
 
 Cartridge *
-Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container)
+Cartridge::makeWithCRTFile(C64 *c64, CRTFile *file)
 {
     Cartridge *cart;
     
-    cart = makeCartridgeWithType(c64, container->cartridgeType());
+    cart = makeWithType(c64, file->cartridgeType());
     assert(cart != NULL);
     
     // Remember powerup values for game line and exrom line
-    cart->initialGameLine  = container->initialGameLine();
-    cart->initialExromLine = container->initialExromLine();
+    cart->initialGameLine  = file->initialGameLine();
+    cart->initialExromLine = file->initialExromLine();
 
     // Load chip packets
     cart->numPackets = 0;
-    for (unsigned i = 0; i < container->chipCount(); i++) {
-        cart->loadChip(i, container);
+    for (unsigned i = 0; i < file->chipCount(); i++) {
+        cart->loadChip(i, file);
     }
         
     return cart;

@@ -950,7 +950,9 @@ C64::loadRom(const char *filename)
         return false;
     }
     
+    suspend();
     result = flash(rom);
+    resume();
     
     if (result) {
         debug(2, "Loaded ROM image %s.\n", filename);
@@ -970,9 +972,22 @@ C64::insertDisk(AnyArchive *a, unsigned drive)
 {
     assert(a != NULL);
     assert(isValidDriveNr(drive));
-           
+    
+    suspend();
     drive == 1 ? drive1.insertDisk(a) : drive2.insertDisk(a);
+    resume();
+    
     return true;
+}
+
+void
+C64::ejectDisk(unsigned drive)
+{
+    assert(isValidDriveNr(drive));
+    
+    suspend();
+    drive == 1 ? drive1.ejectDisk() : drive2.ejectDisk();
+    resume();
 }
 
 bool
@@ -990,26 +1005,38 @@ C64::insertTape(TAPFile *a)
     return true;
 }
 
+void
+C64::ejectTape()
+{
+    suspend();
+    datasette.ejectTape();
+    resume();
+}
+
 bool
 C64::attachCartridgeAndReset(CRTFile *container)
 {
     assert(container != NULL);
     
-    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(this, container);
-    if (!cartridge)
-        return false;
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(this, container);
     
-    suspend();
-    expansionport.attachCartridge(cartridge);
-    reset();
-    resume();
-    return true;
+    if (cartridge) {
+        
+        suspend();
+        expansionport.attachCartridge(cartridge);
+        reset();
+        resume();
+        return true;
+    }
+    
+    return false;
 }
 
 void
 C64::detachCartridgeAndReset()
 {
     if (expansionport.getCartridgeAttached()) {
+        
         suspend();
         expansionport.detachCartridge();
         reset();

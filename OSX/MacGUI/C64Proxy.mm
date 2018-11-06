@@ -565,10 +565,12 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (BOOL) hasModifiedDisk {return wrapper->drive->hasModifiedDisk(); }
 - (void) setModifiedDisk:(BOOL)b { wrapper->drive->setModifiedDisk(b); }
 - (void) prepareToInsert { wrapper->drive->prepareToInsert(); }
+/*
 - (void) insertDisk:(ArchiveProxy *)disk {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
 }
+ */
 - (void) prepareToEject { wrapper->drive->prepareToEject(); }
 - (void) ejectDisk { wrapper->drive->ejectDisk(); }
 - (BOOL) writeProtected { return wrapper->drive->disk.isWriteProtected(); }
@@ -695,7 +697,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 
 - (void) ping { wrapper->c64->ping(); }
-- (void) dumpState { wrapper->c64->dumpState(); }
+- (void) dump { wrapper->c64->dumpState(); }
 - (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 
 // Configuring the emulator
@@ -816,23 +818,22 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // Attaching media objects
 - (BOOL)flash:(AnyC64FileProxy *)file {
     return wrapper->c64->flash([file wrapper]->file); }
-- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item; {
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr; {
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
-    return wrapper->c64->flash(a, (unsigned)item); }
-/*
- - (BOOL) insertDisk:(ArchiveProxy *)a {
- AnyArchive *archive = (AnyArchive *)([a wrapper]->file);
- return wrapper->c64->insertDisk(archive);
- }
- */
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
-    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
-- (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
+    return wrapper->c64->flash(a, (unsigned)nr); }
+- (BOOL) insertDisk:(ArchiveProxy *)disk drive:(NSInteger)nr {
+    AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
+    return wrapper->c64->insertDisk(archive, (unsigned)nr);
+}
+- (void) ejectDiskFromDrive:(NSInteger)nr { return wrapper->c64->ejectDisk((unsigned)nr); }
 - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *file = (TAPFile *)([c wrapper]->file);
     return wrapper->c64->insertTape(file);
 }
-
+- (void) ejectTape { return wrapper->c64->ejectTape(); }
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
+    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
+- (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 @end
 
 
@@ -870,25 +871,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (C64FileType)type { return wrapper->file->type(); }
 - (NSString *)name { return [NSString stringWithUTF8String:wrapper->file->getName()]; }
 - (NSInteger) sizeOnDisk { return wrapper->file->sizeOnDisk(); }
-// - (void)seek:(NSInteger)offset { wrapper->file->seek(offset); }
-
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
-{
-    wrapper->file->readFromBuffer((const uint8_t *)buffer, length);
-}
-
-- (NSInteger) writeToBuffer:(void *)buffer
-{
-    return wrapper->file->writeToBuffer((uint8_t *)buffer);
-}
-
-/*
-- (NSString *)readHex:(NSInteger)num
-{
-    AnyC64File *file = (AnyC64File *)([self wrapper]->file);
-    return [NSString stringWithUTF8String:file->readHex(num)];
-}
-*/
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length {
+    wrapper->file->readFromBuffer((const uint8_t *)buffer, length); }
+- (NSInteger) writeToBuffer:(void *)buffer {
+    return wrapper->file->writeToBuffer((uint8_t *)buffer); }
 
 - (void) dealloc
 {

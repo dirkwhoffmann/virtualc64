@@ -625,15 +625,21 @@ class C64 : public VirtualComponent {
     bool flash(AnyArchive *file, unsigned item);
     
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
-     *  @details  Only D64 and G64 archives are supported.
+     *  @param    drive is the drive number (either 1 or 2).
      */
     bool insertDisk(AnyArchive *a, unsigned drive);
     
-    /*! @brief    Inserts a TAP file as a virtual datasette tape.
-     *  @details  Only TAP archives can be used as tape.
+    /*! @brief    Ejects a previously inserted disk.
+     *  @param    drive is the drive number (either 1 or 2).
      */
+    void ejectDisk(unsigned drive);
+
+    //! @brief    Inserts a TAP file as a virtual datasette tape.
     bool insertTape(TAPFile *a);
-    
+
+    //! @brief    Ejects a previously inserted tape.
+    void ejectTape();
+
     //! @brief    Attaches a cartridge to the expansion port.
     bool attachCartridgeAndReset(CRTFile *c);
     
