@@ -1,4 +1,4 @@
-[![GitQ](https://gitq.com/badge.svg)](https://gitq.com/user/project)
+[![GitQ](https://gitq.com/badge.svg)](https://gitq.com/dirkwhoffmann/virtualc64)
 
 ![alt Logo](http://www.dirkwhoffmann.de/virtualC64/pics/banner.png#1)
 
