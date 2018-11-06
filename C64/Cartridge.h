@@ -156,7 +156,7 @@ public:
     static Cartridge *makeCartridgeWithType(C64 *c64, CartridgeType type);
     
     //! @brief    Factory method
-    /*! @details  Creates a cartridge from a CRT container. Make sure to pass
+    /*! @details  Creates a cartridge from a CRT file. Make sure to pass
      *            containers of the supported cartridge type, only.
      *  @seealso  isSupportedType
      */

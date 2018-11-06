@@ -557,7 +557,7 @@ class C64 : public VirtualComponent {
     //! @brief    Sets the time between two auto-snapshots in seconds.
     void setSnapshotInterval(long value) { snapshotInterval = value; }
     
-    /*! @brief    Loads the current state from a snapshot container
+    /*! @brief    Loads the current state from a snapshot file
      *  @note     There is an thread-unsafe and thread-safe version of this
      *            function. The first one can be unsed inside the emulator
      *            thread or from outside if the emulator is halted. The second
@@ -629,7 +629,7 @@ class C64 : public VirtualComponent {
      */
     bool insertDisk(AnyArchive *a, unsigned drive);
     
-    /*! @brief    Inserts a TAP container as a virtual datasette tape.
+    /*! @brief    Inserts a TAP file as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.
      */
     bool insertTape(TAPFile *a);

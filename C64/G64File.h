@@ -60,7 +60,7 @@ public:
     //! @brief    Standard constructor
     G64File();
 
-    //! @brief    Creates an empty G64 container with the specified capacity
+    //! @brief    Creates an empty G64 file with the specified capacity
     G64File(size_t capacity);
 
     //! @brief    Factory method

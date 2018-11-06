@@ -26,7 +26,7 @@ struct Via6522Wrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
-struct ContainerWrapper { AnyC64File *container; };
+struct AnyC64FileWrapper { AnyC64File *file; };
 
 // DEPRECATED
 struct SnapshotWrapper { Snapshot *snapshot; };
@@ -573,7 +573,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setModifiedDisk:(BOOL)b { wrapper->drive->setModifiedDisk(b); }
 - (void) prepareToInsert { wrapper->drive->prepareToInsert(); }
 - (void) insertDisk:(ArchiveProxy *)disk {
-    AnyArchive *archive = (AnyArchive *)([disk wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
 }
 - (void) prepareToEject { wrapper->drive->prepareToEject(); }
@@ -821,22 +821,22 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
 // Attaching media objects
-- (BOOL)flash:(ContainerProxy *)container {
-    return wrapper->c64->flash([container wrapper]->container); }
+- (BOOL)flash:(AnyC64FileProxy *)container {
+    return wrapper->c64->flash([container wrapper]->file); }
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item; {
-    AnyArchive *a = (AnyArchive *)([archive wrapper]->container);
+    AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)item); }
 /*
  - (BOOL) insertDisk:(ArchiveProxy *)a {
- AnyArchive *archive = (AnyArchive *)([a wrapper]->container);
+ AnyArchive *archive = (AnyArchive *)([a wrapper]->file);
  return wrapper->c64->insertDisk(archive);
  }
  */
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
-    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
+    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (BOOL) insertTape:(TAPProxy *)c {
-    TAPFile *container = (TAPFile *)([c wrapper]->container);
+    TAPFile *container = (TAPFile *)([c wrapper]->file);
     return wrapper->c64->insertTape(container);
 }
 
@@ -847,7 +847,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 // Container
 //
 
-@implementation ContainerProxy
+@implementation AnyC64FileProxy
 
 - (instancetype) initWithContainer:(AnyC64File *)container
 {
@@ -855,13 +855,13 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
         return nil;
     }
     if (self = [super init]) {
-        wrapper = new ContainerWrapper();
-        wrapper->container = container;
+        wrapper = new AnyC64FileWrapper();
+        wrapper->file = container;
     }
     return self;
 }
 
-+ (ContainerProxy *) makeWithContainer:(AnyC64File *)container
++ (AnyC64FileProxy *) makeWithContainer:(AnyC64File *)container
 {
     if (container == nil) {
         return nil;
@@ -870,39 +870,39 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (void)setPath:(NSString *)path {
-    AnyC64File *file = (AnyC64File *)([self wrapper]->container);
+    AnyC64File *file = (AnyC64File *)([self wrapper]->file);
     file->setPath([path UTF8String]);
 }
-- (ContainerWrapper *)wrapper { return wrapper; }
-- (C64FileType)type { return wrapper->container->type(); }
-- (NSString *)name { return [NSString stringWithUTF8String:wrapper->container->getName()]; }
-- (NSInteger) sizeOnDisk { return wrapper->container->sizeOnDisk(); }
-// - (void)seek:(NSInteger)offset { wrapper->container->seek(offset); }
+- (AnyC64FileWrapper *)wrapper { return wrapper; }
+- (C64FileType)type { return wrapper->file->type(); }
+- (NSString *)name { return [NSString stringWithUTF8String:wrapper->file->getName()]; }
+- (NSInteger) sizeOnDisk { return wrapper->file->sizeOnDisk(); }
+// - (void)seek:(NSInteger)offset { wrapper->file->seek(offset); }
 
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
 {
-    wrapper->container->readFromBuffer((const uint8_t *)buffer, length);
+    wrapper->file->readFromBuffer((const uint8_t *)buffer, length);
 }
 
 - (NSInteger) writeToBuffer:(void *)buffer
 {
-    return wrapper->container->writeToBuffer((uint8_t *)buffer);
+    return wrapper->file->writeToBuffer((uint8_t *)buffer);
 }
 
 /*
 - (NSString *)readHex:(NSInteger)num
 {
-    AnyC64File *file = (AnyC64File *)([self wrapper]->container);
+    AnyC64File *file = (AnyC64File *)([self wrapper]->file);
     return [NSString stringWithUTF8String:file->readHex(num)];
 }
 */
 
 - (void) dealloc
 {
-    // NSLog(@"ContainerProxy::dealloc");
+    // NSLog(@"AnyC64FileProxy::dealloc");
     
     if (wrapper) {
-        if (wrapper->container) delete wrapper->container;
+        if (wrapper->file) delete wrapper->file;
         delete wrapper;
     }
 }
@@ -957,17 +957,17 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSInteger)imageWidth
 {
-    Snapshot *snapshot = (Snapshot *)wrapper->container;
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
     return snapshot->getImageWidth();
 }
 - (NSInteger)imageHeight
 {
-    Snapshot *snapshot = (Snapshot *)wrapper->container;
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
     return snapshot->getImageHeight();
 }
 - (uint8_t *)imageData
 {
-    Snapshot *snapshot = (Snapshot *)wrapper->container;
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
     return snapshot->getImageData();
 }
 
@@ -1013,17 +1013,17 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSString *)cartridgeName
 {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return [NSString stringWithUTF8String:c->getName()];
 }
 
 - (CartridgeType)cartridgeType {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->cartridgeType();
 }
 
 - (NSString *)cartridgeTypeName {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return [NSString stringWithUTF8String:c->cartridgeTypeName()];
 }
 
@@ -1032,32 +1032,32 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (NSInteger)initialExromLine {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->initialExromLine();
 }
 
 - (NSInteger)initialGameLine {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->initialGameLine();
 }
 
 - (NSInteger)chipCount {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipCount();
 }
 
 - (NSInteger)typeOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipType((unsigned)nr);
 }
 
 - (NSInteger)loadAddrOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipAddr((unsigned)nr);
 }
 
 - (NSInteger)sizeOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipSize((unsigned)nr);
 }
 @end
@@ -1095,7 +1095,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (NSInteger)TAPversion {
-    TAPFile *container = (TAPFile *)wrapper->container;
+    TAPFile *container = (TAPFile *)wrapper->file;
     return (NSInteger)container->TAPversion();
 }
 @end
@@ -1126,59 +1126,59 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (void)selectItem:(NSInteger)item {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     archive->selectItem((unsigned)item);
 }
 
 - (NSInteger)numberOfItems {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return (NSInteger)archive->numberOfItems();
 }
 
 - (NSString *)nameOfItem {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return [NSString stringWithUTF8String:archive->getNameOfItem()];
 }
 
 - (NSString *)unicodeNameOfItem {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     const unsigned short *unichars = archive->getUnicodeNameOfItem();
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 
 - (NSInteger)sizeOfItem
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->getSizeOfItem();
 }
 
 - (NSInteger)sizeOfItemInBlocks
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->getSizeOfItemInBlocks();
 }
 
 - (void)seekItem:(NSInteger)offset
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->seekItem(offset);
 }
 
 - (NSString *)typeOfItem
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return [NSString stringWithUTF8String:archive->getTypeOfItemAsString()];
 }
 
 - (NSInteger)destinationAddrOfItem
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->getDestinationAddrOfItem();
 }
 
 - (NSString *)readItemHex:(NSInteger)num
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return [NSString stringWithUTF8String:archive->readItemHex(num)];
 }
 
@@ -1212,7 +1212,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1246,7 +1246,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     PRGFile *archive = PRGFile::makeWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1280,7 +1280,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     P00File *archive = P00File::makeWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1311,27 +1311,27 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (NSInteger) numberOfHalftracks {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->numberOfHalftracks();
 }
 
 - (void) selectHalftrack:(NSInteger)ht {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     disk->selectHalftrack((unsigned)ht);
 }
 
 - (NSInteger) sizeOfHalftrack {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->getSizeOfHalftrack();
 }
 
 - (void)seekHalftrack:(NSInteger)offset {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->seekHalftrack(offset);
 }
 
 - (NSString *)readHalftrackHex:(NSInteger)num {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return [NSString stringWithUTF8String:disk->readHalftrackHex(num)];
 }
 
@@ -1365,7 +1365,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     D64File *archive = D64File::makeWithAnyArchive(other);
     return [self make: archive];
 }

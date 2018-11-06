@@ -32,7 +32,7 @@ class MyDocument : NSDocument {
      snapshots are flashed while T64 archives are converted to a disk and
      inserted into the disk drive.
      */
-    var attachment: ContainerProxy? = nil
+    var attachment: AnyC64FileProxy? = nil
     
     /// The list of recently inserted disk URLs.
     var recentlyInsertedDiskURLs: [URL] = []

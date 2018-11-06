@@ -15,7 +15,7 @@
 // Forward declarations of proxy classes
 @class MyController;
 @class C64Proxy;
-@class ContainerProxy;
+@class AnyC64FileProxy;
 @class SnapshotProxy;
 @class ArchiveProxy;
 @class TAPProxy;
@@ -38,7 +38,7 @@ struct Via6522Wrapper;
 struct DiskWrapper;
 struct DriveWrapper;
 struct DatasetteWrapper;
-struct ContainerWrapper;
+struct AnyC64FileWrapper;
 
 //
 // CPU
@@ -628,7 +628,7 @@ struct ContainerWrapper;
 - (BOOL) loadRom:(NSURL *)url;
 
 // Attaching media objects
-- (BOOL)flash:(ContainerProxy *)container;
+- (BOOL)flash:(AnyC64FileProxy *)container;
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)item;
 // - (BOOL) insertDisk:(ArchiveProxy *)a;
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
@@ -639,21 +639,21 @@ struct ContainerWrapper;
 
 
 //
-// C O N T A I N E R   P R O X Y   C L A S S E S
+// F I L E   P R O X Y   C L A S S E S
 //
 
 //
-// ContainerProxy
+// AnyC64FileProxy
 //
 
-@interface ContainerProxy : NSObject {
+@interface AnyC64FileProxy : NSObject {
     
-    struct ContainerWrapper *wrapper;
+    struct AnyC64FileWrapper *wrapper;
 }
 
 - (void)setPath:(NSString *)path;
 
-- (struct ContainerWrapper *)wrapper;
+- (struct AnyC64FileWrapper *)wrapper;
 
 - (C64FileType)type; 
 - (NSString *)name;
@@ -670,7 +670,7 @@ struct ContainerWrapper;
 // SnapshotProxy
 //
 
-@interface SnapshotProxy : ContainerProxy {
+@interface SnapshotProxy : AnyC64FileProxy {
 }
 
 + (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
@@ -691,7 +691,7 @@ struct ContainerWrapper;
 // CRTProxy
 //
 
-@interface CRTProxy : ContainerProxy {
+@interface CRTProxy : AnyC64FileProxy {
 }
 
 + (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
@@ -719,7 +719,7 @@ struct ContainerWrapper;
 // TAPProxy
 //
 
-@interface TAPProxy : ContainerProxy {
+@interface TAPProxy : AnyC64FileProxy {
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
@@ -734,7 +734,7 @@ struct ContainerWrapper;
 // ArchiveProxy
 //
 
-@interface ArchiveProxy : ContainerProxy {
+@interface ArchiveProxy : AnyC64FileProxy {
 }
 
 + (instancetype)make;

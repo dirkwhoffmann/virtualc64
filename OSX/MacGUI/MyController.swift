@@ -808,7 +808,7 @@ extension MyController {
     //
     
     @discardableResult
-    func mount(_ item: ContainerProxy?) -> Bool {
+    func mount(_ item: AnyC64FileProxy?) -> Bool {
 
         guard let type = item?.type() else { return false }
         
@@ -837,7 +837,7 @@ extension MyController {
     
     // Emulates changing a disk including the necessary light barrier breaks
     // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: ContainerProxy?, drive nr: Int) {
+    func changeDisk(_ disk: AnyC64FileProxy?, drive nr: Int) {
         
         let drive = c64.drive(nr)!
 

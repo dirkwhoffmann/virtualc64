@@ -24,7 +24,7 @@
 #define CARTRIDGE_TYPES_H
 
 /*! @enum     ContainerType
- *  @brief    The type of a container
+ *  @brief    The type of a file
  *  @constant CRT_FILE A cartridge that can be plugged into the expansion port.
  *  @constant V64_FILE A snapshot file (contains a frozen C64 state).
  *  @constant D64_FILE A floppy disk image with multiply files.
