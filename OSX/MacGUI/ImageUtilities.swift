@@ -35,6 +35,7 @@ extension MTLTexture {
                       mipmapLevel: 0)
     
         // Copy data over to a new buffer of double horizontal width
+        /*
         let w2 = 2 * w
         let h2 = h
         let bytesPerRow2 = 2 * bytesPerRow
@@ -46,6 +47,7 @@ extension MTLTexture {
             ptr2[2 * i] = ptr[i]
             ptr2[2 * i + 1] = ptr[i]
         }
+        */
         
         let pColorSpace = CGColorSpaceCreateDeviceRGB()
 
@@ -61,13 +63,13 @@ extension MTLTexture {
             return
         }
         guard let provider = CGDataProvider(dataInfo: nil,
-                                      data: data2,
-                                      size: size2,
+                                      data: data,
+                                      size: size,
                                       releaseData: dealloc) else { return nil; }
         
         // Create image
-        let image = CGImage(width: w2, height: h2,
-                            bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow2,
+        let image = CGImage(width: w, height: h,
+                            bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow,
                             space: pColorSpace, bitmapInfo: bitmapInfo,
                             provider: provider, decode: nil, shouldInterpolate: false,
                             intent: CGColorRenderingIntent.defaultIntent)
