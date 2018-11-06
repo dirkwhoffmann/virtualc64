@@ -624,29 +624,7 @@ class C64 : public VirtualComponent {
     //! @brief    Flashes a single item of an archive into memory
     bool flash(AnyArchive *file, unsigned item);
     
-    /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
-     *  @param    drive is the drive number (either 1 or 2).
-     */
-    // bool insertDisk(AnyArchive *a, unsigned drive);
-    
-    /*! @brief    Ejects a previously inserted disk.
-     *  @param    drive is the drive number (either 1 or 2).
-     */
-    // void ejectDisk(unsigned drive);
-
-    //! @brief    Inserts a TAP file as a virtual datasette tape.
-    // bool insertTape(TAPFile *a);
-
-    //! @brief    Ejects a previously inserted tape.
-    // void ejectTape();
-
-    //! @brief    Attaches a cartridge to the expansion port.
-    // bool attachCartridgeAndReset(CRTFile *c);
-    
-    //! @brief    Detaches a cartridge from the expansion port.
-    // void detachCartridgeAndReset();
-    
-    
+ 
     //
     //! @functiongroup Set and query ultimax mode
     //

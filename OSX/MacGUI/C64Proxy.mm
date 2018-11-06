@@ -822,29 +822,12 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (BOOL) loadRom:(NSURL *)url {
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
-// Attaching media objects
+// Flashing files
 - (BOOL)flash:(AnyC64FileProxy *)file {
     return wrapper->c64->flash([file wrapper]->file); }
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr; {
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)nr); }
-/*
-- (BOOL) insertDisk:(ArchiveProxy *)disk drive:(NSInteger)nr {
-    AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
-    return wrapper->c64->insertDisk(archive, (unsigned)nr);
-}
-- (void) ejectDiskFromDrive:(NSInteger)nr { return wrapper->c64->ejectDisk((unsigned)nr); }
-*/
-/*
- - (BOOL) insertTape:(TAPProxy *)c {
-    TAPFile *file = (TAPFile *)([c wrapper]->file);
-    return wrapper->c64->insertTape(file);
-}
-- (void) ejectTape { return wrapper->c64->ejectTape(); }
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
-    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
-- (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
- */
 @end
 
 

@@ -631,13 +631,6 @@ struct AnyC64FileWrapper;
 - (BOOL)flash:(AnyC64FileProxy *)container;
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr;
 
-// - (BOOL) insertDisk:(ArchiveProxy *)a drive:(NSInteger)nr;
-// - (void) ejectDiskFromDrive:(NSInteger)nr;
-// - (BOOL) insertTape:(TAPProxy *)a;
-// - (void) ejectTape;
-// - (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
-// - (void) detachCartridgeAndReset;
-
 @end
 
 
