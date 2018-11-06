@@ -967,6 +967,7 @@ C64::loadRom(const char *filename)
     return result;
 }
 
+/*
 bool
 C64::insertDisk(AnyArchive *a, unsigned drive)
 {
@@ -1012,6 +1013,7 @@ C64::ejectTape()
     datasette.ejectTape();
     resume();
 }
+*/
 
 bool
 C64::attachCartridgeAndReset(CRTFile *container)

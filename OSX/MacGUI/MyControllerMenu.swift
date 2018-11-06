@@ -596,7 +596,7 @@ extension MyController {
     
     @IBAction func ejectTapeAction(_ sender: Any!) {
         track()
-        c64.ejectTape()
+        c64.datasette.ejectTape()
     }
     
     @IBAction func playOrStopAction(_ sender: Any!) {

@@ -627,12 +627,12 @@ class C64 : public VirtualComponent {
     /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @param    drive is the drive number (either 1 or 2).
      */
-    bool insertDisk(AnyArchive *a, unsigned drive);
+    // bool insertDisk(AnyArchive *a, unsigned drive);
     
     /*! @brief    Ejects a previously inserted disk.
      *  @param    drive is the drive number (either 1 or 2).
      */
-    void ejectDisk(unsigned drive);
+    // void ejectDisk(unsigned drive);
 
     //! @brief    Inserts a TAP file as a virtual datasette tape.
     bool insertTape(TAPFile *a);

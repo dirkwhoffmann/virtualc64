@@ -38,7 +38,7 @@ class TapeMountController : UserDialogController {
     @IBAction func okAction(_ sender: Any!) {
         
         // Insert tape
-        c64.insertTape(tape)
+        c64.datasette.insertTape(tape)
         parent.metalScreen.rotateBack()
         
         // Process options

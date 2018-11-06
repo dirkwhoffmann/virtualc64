@@ -133,9 +133,11 @@ Datasette::setHeadInCycles(uint64_t value)
     printf("Head is %llu (max %llu)\n", head, size);
 }
 
-void
+bool
 Datasette::insertTape(TAPFile *a)
 {
+    c64->suspend();
+    
     size = a->getSize();
     type = a->TAPversion();
     
@@ -154,11 +156,16 @@ Datasette::insertTape(TAPFile *a)
     rewind();
     
     c64->putMessage(MSG_VC1530_TAPE);
+    c64->resume();
+    
+    return true;
 }
 
 void
 Datasette::ejectTape()
 {
+    c64->suspend();
+    
     debug(2, "Ejecting tape\n");
 
     if (!hasTape())
@@ -175,6 +182,7 @@ Datasette::ejectTape()
     head = -1;
 
     c64->putMessage(MSG_VC1530_NO_TAPE);
+    c64->resume();
 }
 
 void

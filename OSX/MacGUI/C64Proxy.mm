@@ -565,12 +565,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (BOOL) hasModifiedDisk {return wrapper->drive->hasModifiedDisk(); }
 - (void) setModifiedDisk:(BOOL)b { wrapper->drive->setModifiedDisk(b); }
 - (void) prepareToInsert { wrapper->drive->prepareToInsert(); }
-/*
 - (void) insertDisk:(ArchiveProxy *)disk {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
 }
- */
 - (void) prepareToEject { wrapper->drive->prepareToEject(); }
 - (void) ejectDisk { wrapper->drive->ejectDisk(); }
 - (BOOL) writeProtected { return wrapper->drive->disk.isWriteProtected(); }
@@ -618,6 +616,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) pressPlay { wrapper->datasette->pressPlay(); }
 - (void) pressStop { wrapper->datasette->pressStop(); }
 - (void) rewind { wrapper->datasette->rewind(); }
+- (BOOL) insertTape:(TAPProxy *)tape {
+    TAPFile *file = (TAPFile *)([tape wrapper]->file);
+    return wrapper->datasette->insertTape(file);
+}
 - (void) ejectTape { wrapper->datasette->ejectTape(); }
 - (NSInteger) getType { return wrapper->datasette->getType(); }
 - (long) durationInCycles { return wrapper->datasette->getDurationInCycles(); }
@@ -821,16 +823,20 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr; {
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)nr); }
+/*
 - (BOOL) insertDisk:(ArchiveProxy *)disk drive:(NSInteger)nr {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     return wrapper->c64->insertDisk(archive, (unsigned)nr);
 }
 - (void) ejectDiskFromDrive:(NSInteger)nr { return wrapper->c64->ejectDisk((unsigned)nr); }
-- (BOOL) insertTape:(TAPProxy *)c {
+*/
+/*
+ - (BOOL) insertTape:(TAPProxy *)c {
     TAPFile *file = (TAPFile *)([c wrapper]->file);
     return wrapper->c64->insertTape(file);
 }
 - (void) ejectTape { return wrapper->c64->ejectTape(); }
+*/
 - (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
     return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
