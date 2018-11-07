@@ -494,7 +494,7 @@ struct AnyC64FileWrapper;
 
 
 //
-// C64
+// C64 proxy
 //
 
 @interface C64Proxy : NSObject {
@@ -518,6 +518,7 @@ struct AnyC64FileWrapper;
     DatasetteProxy *datasette;
 }
 
+@property (readonly) struct C64Wrapper *wrapper;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) VICProxy *vic;
@@ -535,7 +536,6 @@ struct AnyC64FileWrapper;
 
 - (void) kill;
 
-- (struct C64Wrapper *)wrapper;
 - (DriveProxy *)drive:(NSInteger)nr;
 
 - (void) ping;
