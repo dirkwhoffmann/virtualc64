@@ -774,14 +774,14 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageData() : NULL; }
 - (unsigned char *)userSnapshotImageData:(NSInteger)nr {
     Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageData() : NULL; }
-- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (NSInteger)userSnapshotImageWidth:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (NSInteger)userSnapshotImageHeight:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (NSSize) autoSnapshotImageSize:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr);
+    return s ? NSMakeSize(s->getImageWidth(), s->getImageHeight()) : NSMakeSize(0,0);
+}
+- (NSSize) userSnapshotImageSize:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr);
+    return s ? NSMakeSize(s->getImageWidth(), s->getImageHeight()) : NSMakeSize(0,0);
+}
 - (time_t)autoSnapshotTimestamp:(NSInteger)nr {
     Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
 - (time_t)userSnapshotTimestamp:(NSInteger)nr {
@@ -927,7 +927,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     Snapshot *snapshot = Snapshot::makeWithC64(c64);
     return [self make:snapshot];
 }
-
 - (NSInteger)imageWidth
 {
     Snapshot *snapshot = (Snapshot *)wrapper->file;

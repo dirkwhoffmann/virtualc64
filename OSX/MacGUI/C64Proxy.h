@@ -599,10 +599,8 @@ struct AnyC64FileWrapper;
 - (NSData *) userSnapshotData:(NSInteger)nr;
 - (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
 - (unsigned char *) userSnapshotImageData:(NSInteger)nr;
-- (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
-- (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
+- (NSSize) autoSnapshotImageSize:(NSInteger)nr;
+- (NSSize) userSnapshotImageSize:(NSInteger)nr;
 - (time_t) autoSnapshotTimestamp:(NSInteger)nr;
 - (time_t) userSnapshotTimestamp:(NSInteger)nr;
 

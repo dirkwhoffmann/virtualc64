@@ -78,9 +78,11 @@ extension NSImage {
 
 public extension C64Proxy {
     
-    func image(data: UnsafeMutablePointer<UInt8>?, width: Int, height: Int) -> NSImage {
+    func image(data: UnsafeMutablePointer<UInt8>?, size: NSSize) -> NSImage {
         
         var bitmap = data
+        let width = Int(size.width)
+        let height = Int(size.height)
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: &bitmap,
                                         pixelsWide: width,
                                         pixelsHigh: height,
@@ -97,21 +99,17 @@ public extension C64Proxy {
         
         return image
     }
+    
     func autoSnapshotImage(_ item: Int) -> NSImage {
         
         let data = autoSnapshotImageData(item)
-        let width = autoSnapshotImageWidth(item)
-        let height = autoSnapshotImageHeight(item)
-        return image(data: data, width: width, height: height)
+        return image(data: data, size: autoSnapshotImageSize(item))
     }
 
     func userSnapshotImage(_ item: Int) -> NSImage {
         
         let data = userSnapshotImageData(item)
-        let width = userSnapshotImageWidth(item)
-        let height = userSnapshotImageHeight(item)
-        return image(data: data, width: width, height: height)
+       return image(data: data, size: userSnapshotImageSize(item))
     }
-
 }
 
