@@ -155,7 +155,6 @@ struct AnyC64FileWrapper;
 - (BOOL) emulateGrayDotBug;
 - (void) setEmulateGrayDotBug:(BOOL)value;
 - (BOOL) isPAL;
-- (BOOL) isNTSC;
 
 - (void *) screenBuffer;
 - (NSColor *) color:(NSInteger)nr;

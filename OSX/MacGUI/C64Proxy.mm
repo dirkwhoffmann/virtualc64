@@ -29,11 +29,12 @@ struct DatasetteWrapper { Datasette *datasette; };
 struct AnyC64FileWrapper { AnyC64File *file; };
 
 //
-// CPU
+// CPU proxy
 //
 
 @implementation CPUProxy
 
+// Constructing
 - (instancetype) initWithCPU:(CPU *)cpu
 {
     if (self = [super init]) {
@@ -43,54 +44,127 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (CPUInfo) getInfo { return wrapper->cpu->getInfo(); }
-- (void) dump { wrapper->cpu->dumpState(); }
-
-- (BOOL) tracing { return wrapper->cpu->tracingEnabled(); }
-- (void) setTracing:(BOOL)b {
-    if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
-
-- (UInt64) cycle { return wrapper->cpu->cycle; }
-- (uint16_t) pc { return wrapper->cpu->getPC_at_cycle_0(); }
-- (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
-- (void) setSP:(uint8_t)sp { wrapper->cpu->setSP(sp); }
-- (void) setA:(uint8_t)a { wrapper->cpu->setA(a); }
-- (void) setX:(uint8_t)x { wrapper->cpu->setX(x); }
-- (void) setY:(uint8_t)y { wrapper->cpu->setY(y); }
-- (void) setNflag:(BOOL)b { wrapper->cpu->setN(b); }
-- (void) setZflag:(BOOL)b { wrapper->cpu->setZ(b); }
-- (void) setCflag:(BOOL)b { wrapper->cpu->setC(b); }
-- (void) setIflag:(BOOL)b { wrapper->cpu->setI(b); }
-- (void) setBflag:(BOOL)b { wrapper->cpu->setB(b); }
-- (void) setDflag:(BOOL)b { wrapper->cpu->setD(b); }
-- (void) setVflag:(BOOL)b { wrapper->cpu->setV(b); }
-
-- (BOOL) breakpoint:(uint16_t)addr { return wrapper->cpu->hardBreakpoint(addr); }
-- (void) setBreakpoint:(uint16_t)addr { wrapper->cpu->setHardBreakpoint(addr); }
-- (void) deleteBreakpoint:(uint16_t)addr { wrapper->cpu->deleteHardBreakpoint(addr); }
-- (void) toggleBreakpoint:(uint16_t)addr { wrapper->cpu->toggleHardBreakpoint(addr); }
-
-- (NSInteger) recordedInstructions { return
-    wrapper->cpu->recordedInstructions(); }
-- (RecordedInstruction) readRecordedInstruction {
-    return wrapper->cpu->readRecordedInstruction(); }
-- (RecordedInstruction) readRecordedInstruction:(NSInteger)previous {
-    return wrapper->cpu->readRecordedInstruction((unsigned)previous); }
-
-- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h; {
-    return wrapper->cpu->disassemble(addr, h); }
-- (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr hex:(BOOL)h; {
-    return wrapper->cpu->disassemble(instr, h); }
+// Proxy methods
+- (CPUInfo) getInfo
+{
+    return wrapper->cpu->getInfo();
+}
+- (void) dump
+{
+    wrapper->cpu->dumpState();
+}
+- (BOOL) tracing
+{
+    return wrapper->cpu->tracingEnabled();
+}
+- (void) setTracing:(BOOL)b
+{
+    b ? wrapper->cpu->startTracing() : wrapper->cpu->stopTracing();
+}
+- (UInt64) cycle
+{
+    return wrapper->cpu->cycle;
+}
+- (uint16_t) pc
+{
+    return wrapper->cpu->getPC_at_cycle_0();
+}
+- (void) setPC:(uint16_t)pc
+{
+    wrapper->cpu->setPC_at_cycle_0(pc);
+}
+- (void) setSP:(uint8_t)sp
+{
+    wrapper->cpu->setSP(sp);
+}
+- (void) setA:(uint8_t)a
+{
+    wrapper->cpu->setA(a);
+}
+- (void) setX:(uint8_t)x
+{
+    wrapper->cpu->setX(x);
+}
+- (void) setY:(uint8_t)y
+{
+    wrapper->cpu->setY(y);
+}
+- (void) setNflag:(BOOL)b
+{
+    wrapper->cpu->setN(b);
+}
+- (void) setZflag:(BOOL)b
+{
+    wrapper->cpu->setZ(b);
+}
+- (void) setCflag:(BOOL)b
+{
+    wrapper->cpu->setC(b);
+}
+- (void) setIflag:(BOOL)b
+{
+    wrapper->cpu->setI(b);
+}
+- (void) setBflag:(BOOL)b
+{
+    wrapper->cpu->setB(b);
+}
+- (void) setDflag:(BOOL)b
+{
+    wrapper->cpu->setD(b);
+}
+- (void) setVflag:(BOOL)b
+{
+    wrapper->cpu->setV(b);
+}
+- (BOOL) breakpoint:(uint16_t)addr
+{
+    return wrapper->cpu->hardBreakpoint(addr);
+}
+- (void) setBreakpoint:(uint16_t)addr
+{
+    wrapper->cpu->setHardBreakpoint(addr);
+}
+- (void) deleteBreakpoint:(uint16_t)addr
+{
+    wrapper->cpu->deleteHardBreakpoint(addr);
+}
+- (void) toggleBreakpoint:(uint16_t)addr
+{
+    wrapper->cpu->toggleHardBreakpoint(addr);
+}
+- (NSInteger) recordedInstructions
+{
+    return wrapper->cpu->recordedInstructions();
+}
+- (RecordedInstruction) readRecordedInstruction
+{
+    return wrapper->cpu->readRecordedInstruction();
+}
+- (RecordedInstruction) readRecordedInstruction:(NSInteger)previous
+{
+    return wrapper->cpu->readRecordedInstruction((unsigned)previous);
+}
+- (DisassembledInstruction) disassemble:(uint16_t)addr hex:(BOOL)h;
+{
+    return wrapper->cpu->disassemble(addr, h);
+}
+- (DisassembledInstruction) disassembleRecordedInstr:(RecordedInstruction)instr
+                                                 hex:(BOOL)h;
+{
+    return wrapper->cpu->disassemble(instr, h);
+}
 
 @end
 
 
 //
-// Memory
+// Memory proxy
 //
 
 @implementation MemoryProxy
 
+// Constructing
 - (instancetype) initWithMemory:(C64Memory *)mem
 {
     if (self = [super init]) {
@@ -100,44 +174,73 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (void) dump { wrapper->mem->dumpState(); }
+// Proxy methods
+- (void) dump
+{
+    wrapper->mem->dumpState();
+}
 
-- (NSInteger) ramInitPattern { return wrapper->mem->getRamInitPattern(); }
-- (void) setRamInitPattern:(NSInteger)pattern {
-    wrapper->mem->setRamInitPattern((RamInitPattern)pattern); }
-- (void) eraseWithPattern:(NSInteger)pattern {
-    wrapper->mem->eraseWithPattern((RamInitPattern)pattern); }
-
-- (MemoryType) peekSource:(uint16_t)addr { return wrapper->mem->getPeekSource(addr); }
-- (MemoryType) pokeTarget:(uint16_t)addr { return wrapper->mem->getPokeTarget(addr); }
-
-- (uint8_t) spypeek:(uint16_t)addr source:(MemoryType)source {
-    return wrapper->mem->spypeek(addr, source); }
-- (uint8_t) spypeek:(uint16_t)addr { return wrapper->mem->spypeek(addr); }
-- (uint8_t) spypeekIO:(uint16_t)addr { return wrapper->mem->spypeekIO(addr); }
-
-- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
+- (NSInteger) ramInitPattern
+{
+    return wrapper->mem->getRamInitPattern();
+}
+- (void) setRamInitPattern:(NSInteger)pattern
+{
+    wrapper->mem->setRamInitPattern((RamInitPattern)pattern);
+}
+- (void) eraseWithPattern:(NSInteger)pattern
+{
+    wrapper->mem->eraseWithPattern((RamInitPattern)pattern);
+}
+- (MemoryType) peekSource:(uint16_t)addr
+{
+    return wrapper->mem->getPeekSource(addr);
+}
+- (MemoryType) pokeTarget:(uint16_t)addr
+{
+    return wrapper->mem->getPokeTarget(addr);
+}
+- (uint8_t) spypeek:(uint16_t)addr source:(MemoryType)source
+{
+    return wrapper->mem->spypeek(addr, source);
+}
+- (uint8_t) spypeek:(uint16_t)addr
+{
+    return wrapper->mem->spypeek(addr);
+}
+- (uint8_t) spypeekIO:(uint16_t)addr
+{
+    return wrapper->mem->spypeekIO(addr);
+}
+- (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target
+{
     wrapper->mem->suspend();
     wrapper->mem->poke(addr, value, target);
-    wrapper->mem->resume(); }
-- (void) poke:(uint16_t)addr value:(uint8_t)value {
+    wrapper->mem->resume();
+}
+- (void) poke:(uint16_t)addr value:(uint8_t)value
+{
     wrapper->mem->suspend();
     wrapper->mem->poke(addr, value);
-    wrapper->mem->resume(); }
-- (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
+    wrapper->mem->resume();
+}
+- (void) pokeIO:(uint16_t)addr value:(uint8_t)value
+{
     wrapper->mem->suspend();
     wrapper->mem->pokeIO(addr, value);
-    wrapper->mem->resume(); }
+    wrapper->mem->resume();
+}
 
 @end
 
 
 //
-// CIA
+// CIA proxy
 //
 
 @implementation CIAProxy
 
+// Constructing
 - (instancetype) initWithCIA:(CIA *)cia
 {
     if (self = [super init]) {
@@ -147,16 +250,39 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (CIAInfo) getInfo { return wrapper->cia->getInfo(); }
-- (void) dump { wrapper->cia->dumpState(); }
-- (BOOL) tracing { return wrapper->cia->tracingEnabled(); }
-- (void) setTracing:(BOOL)b { b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing(); }
-
-- (NSInteger) chipModel { return (NSInteger)wrapper->cia->getChipModel(); }
-- (void) setChipModel:(NSInteger)value { wrapper->cia->setChipModel((CIAChipModel)value); }
-- (BOOL) emulateTimerBBug { return wrapper->cia->getEmulateTimerBBug(); }
-- (void) setEmulateTimerBBug:(BOOL)value { wrapper->cia->setEmulateTimerBBug(value); }
-
+// Proxy functions
+- (CIAInfo) getInfo
+{
+    return wrapper->cia->getInfo();
+}
+- (void) dump
+{
+    wrapper->cia->dumpState();
+}
+- (BOOL) tracing
+{
+    return wrapper->cia->tracingEnabled();
+}
+- (void) setTracing:(BOOL)b
+{
+    b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing();
+}
+- (NSInteger) chipModel
+{
+    return (NSInteger)wrapper->cia->getChipModel();
+}
+- (void) setChipModel:(NSInteger)value
+{
+    wrapper->cia->setChipModel((CIAChipModel)value);
+}
+- (BOOL) emulateTimerBBug
+{
+    return wrapper->cia->getEmulateTimerBBug();
+}
+- (void) setEmulateTimerBBug:(BOOL)value
+{
+    wrapper->cia->setEmulateTimerBBug(value);
+}
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
     wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);
@@ -167,9 +293,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 
 //
-// VIC
+// VIC proxy
 //
 
+// Constructing
 @implementation VICProxy
 
 - (instancetype) initWithVIC:(VIC *)vic
@@ -181,24 +308,61 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (NSInteger) chipModel { return (NSInteger)wrapper->vic->getChipModel(); }
-- (void) setChipModel:(NSInteger)value { wrapper->vic->setChipModel((VICChipModel)value); }
-- (NSInteger) videoPalette { return (NSInteger)wrapper->vic->videoPalette(); }
-- (void) setVideoPalette:(NSInteger)value { wrapper->vic->setVideoPalette((VICPalette)value); }
-- (NSInteger) glueLogic { return (NSInteger)wrapper->vic->getGlueLogic(); }
-- (void) setGlueLogic:(NSInteger)value { wrapper->vic->setGlueLogic((GlueLogic)value); }
-- (BOOL) hasGrayDotBug { return wrapper->vic->hasGrayDotBug(); }
-- (BOOL) emulateGrayDotBug { return wrapper->vic->emulateGrayDotBug; }
-- (void) setEmulateGrayDotBug:(BOOL)value { wrapper->vic->emulateGrayDotBug = value; }
-
-- (BOOL) isPAL { return wrapper->vic->isPAL(); }
-- (BOOL) isNTSC { return wrapper->vic->isNTSC(); }
-
-- (VICInfo) getInfo { return wrapper->vic->getInfo(); }
-- (void) dump { wrapper->vic->dumpState(); }
-- (SpriteInfo) getSpriteInfo:(NSInteger)sprite { return wrapper->vic->getSpriteInfo((unsigned)sprite); }
-
-- (void *) screenBuffer { return wrapper->vic->screenBuffer(); }
+- (NSInteger) chipModel
+{
+    return (NSInteger)wrapper->vic->getChipModel();
+}
+- (void) setChipModel:(NSInteger)value
+{
+    wrapper->vic->setChipModel((VICChipModel)value);
+}
+- (NSInteger) videoPalette
+{
+    return (NSInteger)wrapper->vic->videoPalette();
+}
+- (void) setVideoPalette:(NSInteger)value
+{
+    wrapper->vic->setVideoPalette((VICPalette)value);
+}
+- (NSInteger) glueLogic
+{
+    return (NSInteger)wrapper->vic->getGlueLogic();
+}
+- (void) setGlueLogic:(NSInteger)value
+{
+    wrapper->vic->setGlueLogic((GlueLogic)value);
+}
+- (BOOL) hasGrayDotBug
+{
+    return wrapper->vic->hasGrayDotBug();
+}
+- (BOOL) emulateGrayDotBug
+{
+    return wrapper->vic->emulateGrayDotBug;
+}
+- (void) setEmulateGrayDotBug:(BOOL)value
+{
+    wrapper->vic->emulateGrayDotBug = value;
+}
+- (BOOL) isPAL
+{
+    return wrapper->vic->isPAL();
+}
+- (VICInfo) getInfo {
+    return wrapper->vic->getInfo();
+}
+- (void) dump
+{
+    wrapper->vic->dumpState();
+}
+- (SpriteInfo) getSpriteInfo:(NSInteger)sprite
+{
+    return wrapper->vic->getSpriteInfo((unsigned)sprite);
+}
+- (void *) screenBuffer
+{
+    return wrapper->vic->screenBuffer();
+}
 - (NSColor *) color:(NSInteger)nr
 {
     assert (0 <= nr && nr < 16);
@@ -213,75 +377,168 @@ struct AnyC64FileWrapper { AnyC64File *file; };
                                       blue:(float)b/255.0
                                      alpha:1.0];
 }
-- (double)brightness { return wrapper->vic->getBrightness(); }
-- (void)setBrightness:(double)value { wrapper->vic->setBrightness(value); }
-- (double)contrast { return wrapper->vic->getContrast(); }
-- (void)setContrast:(double)value  { wrapper->vic->setContrast(value); }
-- (double)saturation { return wrapper->vic->getSaturation(); }
-- (void)setSaturation:(double)value  { wrapper->vic->setSaturation(value); }
-
-- (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }
-- (void) setScreenMemoryAddr:(uint16_t)addr { wrapper->vic->setScreenMemoryAddr(addr); }
-- (void) setCharacterMemoryAddr:(uint16_t)addr { wrapper->vic->setCharacterMemoryAddr(addr); }
-
-- (void) setDisplayMode:(DisplayMode)mode { wrapper->vic->setDisplayMode(mode); }
-- (void) setScreenGeometry:(ScreenGeometry)mode { wrapper->vic->setScreenGeometry(mode); }
-- (void) setHorizontalRasterScroll:(uint8_t)offset { wrapper->vic->setHorizontalRasterScroll(offset & 0x07); }
-- (void) setVerticalRasterScroll:(uint8_t)offset { wrapper->vic->setVerticalRasterScroll(offset & 0x07); }
-
-- (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag { wrapper->vic->setSpriteEnabled(nr, flag); }
-- (void) toggleSpriteEnabled:(NSInteger)nr { wrapper->vic->toggleSpriteEnabled(nr); }
-- (void) setSpriteX:(NSInteger)nr value:(NSInteger)x {
-    wrapper->vic->setSpriteX((unsigned)nr, (uint16_t)x); }
-- (void) setSpriteY:(NSInteger)nr value:(NSInteger)y {
-    wrapper->vic->setSpriteY((unsigned)nr, (uint8_t)y); }
-- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag {
-    wrapper->vic->setSpriteStretchX((unsigned)nr, flag); }
-- (void) toggleSpriteStretchX:(NSInteger)nr {
-    wrapper->vic->spriteToggleStretchXFlag((unsigned)nr); }
-- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag {
-    return wrapper->vic->setSpriteStretchY((unsigned)nr, flag); }
-- (void) toggleSpriteStretchY:(NSInteger)nr {
-    wrapper->vic->spriteToggleStretchYFlag((unsigned)nr); }
-- (void) setSpriteColor:(NSInteger)nr value:(int)c {
-    wrapper->vic->setSpriteColor((unsigned)nr, c); }
-- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag {
-    wrapper->vic->setSpritePriority((unsigned)nr, flag); }
-- (void) toggleSpritePriority:(NSInteger)nr {
-    wrapper->vic->toggleSpritePriority((unsigned)nr); }
-- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag {
-    wrapper->vic->setSpriteMulticolor((unsigned)nr, flag); }
-- (void) toggleSpriteMulticolor:(NSInteger)nr {
-    wrapper->vic->toggleMulticolorFlag((unsigned)nr); }
-
-- (void) setIrqOnSpriteSpriteCollision:(BOOL)value {
-    wrapper->vic->setIrqOnSpriteSpriteCollision(value); }
-- (void) toggleIrqOnSpriteSpriteCollision {
-    wrapper->vic-> toggleIrqOnSpriteSpriteCollision(); }
-- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value {
-    wrapper->vic->setIrqOnSpriteBackgroundCollision(value); }
-- (void) toggleIrqOnSpriteBackgroundCollision {
-    wrapper->vic->toggleIrqOnSpriteBackgroundCollision(); }
-
-- (void) setRasterInterruptLine:(uint16_t)line {
-    wrapper->vic->setRasterInterruptLine(line); }
-- (void) setRasterInterruptEnabled:(BOOL)b {
-    wrapper->vic->setRasterInterruptEnable(b); }
-- (void) toggleRasterInterruptFlag {
-    wrapper->vic->toggleRasterInterruptFlag(); }
-
-- (BOOL) hideSprites { return wrapper->vic->hideSprites; }
-- (void) setHideSprites:(BOOL)b { wrapper->vic->setHideSprites(b); }
-- (BOOL) showIrqLines { return wrapper->vic->markIRQLines; }
-- (void) setShowIrqLines:(BOOL)b { wrapper->vic->setShowIrqLines(b); }
-- (BOOL) showDmaLines { return wrapper->vic->markDMALines; }
-- (void) setShowDmaLines:(BOOL)b { wrapper->vic->setShowDmaLines(b); }
+- (double)brightness
+{
+    return wrapper->vic->getBrightness();
+}
+- (void)setBrightness:(double)value
+{
+    wrapper->vic->setBrightness(value);
+}
+- (double)contrast
+{
+    return wrapper->vic->getContrast();
+}
+- (void)setContrast:(double)value
+{
+    wrapper->vic->setContrast(value);
+}
+- (double)saturation
+{
+    return wrapper->vic->getSaturation();
+}
+- (void)setSaturation:(double)value
+{
+    wrapper->vic->setSaturation(value);
+}
+- (void) setMemoryBankAddr:(uint16_t)addr
+{
+    wrapper->vic->setMemoryBankAddr(addr);
+}
+- (void) setScreenMemoryAddr:(uint16_t)addr
+{
+    wrapper->vic->setScreenMemoryAddr(addr);
+}
+- (void) setCharacterMemoryAddr:(uint16_t)addr
+{
+    wrapper->vic->setCharacterMemoryAddr(addr);
+}
+- (void) setDisplayMode:(DisplayMode)mode
+{
+    wrapper->vic->setDisplayMode(mode);
+}
+- (void) setScreenGeometry:(ScreenGeometry)mode
+{
+    wrapper->vic->setScreenGeometry(mode);
+}
+- (void) setHorizontalRasterScroll:(uint8_t)offset
+{
+    wrapper->vic->setHorizontalRasterScroll(offset & 0x07);
+}
+- (void) setVerticalRasterScroll:(uint8_t)offset
+{
+    wrapper->vic->setVerticalRasterScroll(offset & 0x07);
+}
+- (void) setSpriteEnabled:(NSInteger)nr value:(BOOL)flag
+{
+    wrapper->vic->setSpriteEnabled(nr, flag);
+}
+- (void) toggleSpriteEnabled:(NSInteger)nr
+{
+    wrapper->vic->toggleSpriteEnabled(nr);
+}
+- (void) setSpriteX:(NSInteger)nr value:(NSInteger)x
+{
+    wrapper->vic->setSpriteX((unsigned)nr, (uint16_t)x);
+}
+- (void) setSpriteY:(NSInteger)nr value:(NSInteger)y
+{
+    wrapper->vic->setSpriteY((unsigned)nr, (uint8_t)y);
+}
+- (void) setSpriteStretchX:(NSInteger)nr value:(BOOL)flag
+{
+    wrapper->vic->setSpriteStretchX((unsigned)nr, flag);
+}
+- (void) toggleSpriteStretchX:(NSInteger)nr
+{
+    wrapper->vic->spriteToggleStretchXFlag((unsigned)nr);
+}
+- (void) setSpriteStretchY:(NSInteger)nr value:(BOOL)flag
+{
+    return wrapper->vic->setSpriteStretchY((unsigned)nr, flag);
+}
+- (void) toggleSpriteStretchY:(NSInteger)nr
+{
+    wrapper->vic->spriteToggleStretchYFlag((unsigned)nr);
+}
+- (void) setSpriteColor:(NSInteger)nr value:(int)c
+{
+    wrapper->vic->setSpriteColor((unsigned)nr, c);
+}
+- (void) setSpritePriority:(NSInteger)nr value:(BOOL)flag
+{
+    wrapper->vic->setSpritePriority((unsigned)nr, flag);
+}
+- (void) toggleSpritePriority:(NSInteger)nr
+{
+    wrapper->vic->toggleSpritePriority((unsigned)nr);
+}
+- (void) setSpriteMulticolor:(NSInteger)nr value:(BOOL)flag
+{
+    wrapper->vic->setSpriteMulticolor((unsigned)nr, flag);
+}
+- (void) toggleSpriteMulticolor:(NSInteger)nr
+{
+    wrapper->vic->toggleMulticolorFlag((unsigned)nr);
+}
+- (void) setIrqOnSpriteSpriteCollision:(BOOL)value
+{
+    wrapper->vic->setIrqOnSpriteSpriteCollision(value);
+}
+- (void) toggleIrqOnSpriteSpriteCollision
+{
+    wrapper->vic-> toggleIrqOnSpriteSpriteCollision();
+}
+- (void) setIrqOnSpriteBackgroundCollision:(BOOL)value
+{
+    wrapper->vic->setIrqOnSpriteBackgroundCollision(value);
+}
+- (void) toggleIrqOnSpriteBackgroundCollision
+{
+    wrapper->vic->toggleIrqOnSpriteBackgroundCollision();
+}
+- (void) setRasterInterruptLine:(uint16_t)line
+{
+    wrapper->vic->setRasterInterruptLine(line);
+}
+- (void) setRasterInterruptEnabled:(BOOL)b
+{
+    wrapper->vic->setRasterInterruptEnable(b);
+}
+- (void) toggleRasterInterruptFlag
+{
+    wrapper->vic->toggleRasterInterruptFlag();
+}
+- (BOOL) hideSprites
+{
+    return wrapper->vic->hideSprites;
+}
+- (void) setHideSprites:(BOOL)b
+{
+    wrapper->vic->setHideSprites(b);
+}
+- (BOOL) showIrqLines
+{
+    return wrapper->vic->markIRQLines;
+}
+- (void) setShowIrqLines:(BOOL)b
+{
+    wrapper->vic->setShowIrqLines(b);
+}
+- (BOOL) showDmaLines
+{
+    return wrapper->vic->markDMALines;
+}
+- (void) setShowDmaLines:(BOOL)b
+{
+    wrapper->vic->setShowDmaLines(b);
+}
 
 @end
 
 
 //
-// SID
+// SID proxy
 //
 
 @implementation SIDProxy
@@ -295,45 +552,108 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (void) dump { wrapper->sid->dumpState(); }
-- (SIDInfo) getInfo { return wrapper->sid->getInfo(); }
-- (VoiceInfo) getVoiceInfo:(NSInteger)voice {
-    return wrapper->sid->getVoiceInfo((unsigned)voice); }
-
-- (BOOL) reSID { return wrapper->sid->getReSID(); }
-- (void) setReSID:(BOOL)b { wrapper->sid->setReSID(b); }
-- (BOOL) audioFilter { return wrapper->sid->getAudioFilter(); }
-- (void) setAudioFilter:(BOOL)b { wrapper->sid->setAudioFilter(b); }
-- (NSInteger) samplingMethod { return (NSInteger)(wrapper->sid->getSamplingMethod()); }
-- (void) setSamplingMethod:(NSInteger)value { wrapper->sid->setSamplingMethod((SamplingMethod)value); }
-- (NSInteger) chipModel { return (int)(wrapper->sid->getChipModel()); }
-- (void) setChipModel:(NSInteger)value {wrapper->sid->setChipModel((SIDChipModel)value); }
-- (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
-- (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
-
-- (NSInteger) ringbufferSize { return wrapper->sid->ringbufferSize(); }
-- (float) ringbufferData:(NSInteger)offset {
-    return wrapper->sid->ringbufferData(offset); }
-- (double) fillLevel { return wrapper->sid->fillLevel(); }
-- (NSInteger) bufferUnderflows { return wrapper->sid->bufferUnderflows; }
-- (NSInteger) bufferOverflows { return wrapper->sid->bufferOverflows; }
-
-- (void) readMonoSamples:(float *)target size:(NSInteger)n {
-    wrapper->sid->readMonoSamples(target, n); }
-- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n {
-    wrapper->sid->readStereoSamples(target1, target2, n); }
-- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
-    wrapper->sid->readStereoSamplesInterleaved(target, n); }
-
-- (void) rampUp { wrapper->sid->rampUp(); }
-- (void) rampUpFromZero { wrapper->sid->rampUpFromZero(); }
-- (void) rampDown { wrapper->sid->rampDown(); }
+- (void) dump
+{
+    wrapper->sid->dumpState();
+}
+- (SIDInfo) getInfo
+{
+    return wrapper->sid->getInfo();
+}
+- (VoiceInfo) getVoiceInfo:(NSInteger)voice
+{
+    return wrapper->sid->getVoiceInfo((unsigned)voice);
+}
+- (BOOL) reSID
+{
+    return wrapper->sid->getReSID();
+}
+- (void) setReSID:(BOOL)b
+{
+    wrapper->sid->setReSID(b);
+}
+- (BOOL) audioFilter
+{
+    return wrapper->sid->getAudioFilter();
+}
+- (void) setAudioFilter:(BOOL)b
+{
+    wrapper->sid->setAudioFilter(b);
+}
+- (NSInteger) samplingMethod
+{
+    return (NSInteger)(wrapper->sid->getSamplingMethod());
+}
+- (void) setSamplingMethod:(NSInteger)value
+{
+    wrapper->sid->setSamplingMethod((SamplingMethod)value);
+}
+- (NSInteger) chipModel
+{
+    return (int)(wrapper->sid->getChipModel());
+}
+- (void) setChipModel:(NSInteger)value
+{
+    wrapper->sid->setChipModel((SIDChipModel)value);
+}
+- (uint32_t) sampleRate
+{
+    return wrapper->sid->getSampleRate();
+}
+- (void) setSampleRate:(uint32_t)rate
+{
+    wrapper->sid->setSampleRate(rate);
+}
+- (NSInteger) ringbufferSize
+{
+    return wrapper->sid->ringbufferSize();
+}
+- (float) ringbufferData:(NSInteger)offset
+{
+    return wrapper->sid->ringbufferData(offset);
+}
+- (double) fillLevel
+{
+    return wrapper->sid->fillLevel();
+}
+- (NSInteger) bufferUnderflows
+{
+    return wrapper->sid->bufferUnderflows;
+}
+- (NSInteger) bufferOverflows
+{
+    return wrapper->sid->bufferOverflows;
+}
+- (void) readMonoSamples:(float *)target size:(NSInteger)n
+{
+    wrapper->sid->readMonoSamples(target, n);
+}
+- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
+{
+    wrapper->sid->readStereoSamples(target1, target2, n);
+}
+- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n
+{
+    wrapper->sid->readStereoSamplesInterleaved(target, n);
+}
+- (void) rampUp
+{
+    wrapper->sid->rampUp();
+}
+- (void) rampUpFromZero
+{
+    wrapper->sid->rampUpFromZero();
+}
+- (void) rampDown
+{
+    wrapper->sid->rampDown();
+}
 
 @end
 
 
 //
-// IEC bus
+// IEC bus proxy
 //
 
 @implementation IECProxy
@@ -347,9 +667,18 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (void) dump { wrapper->iec->dumpState(); }
-- (BOOL) tracing { return wrapper->iec->tracingEnabled(); }
-- (void) setTracing:(BOOL)b { b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing(); }
+- (void) dump
+{
+    wrapper->iec->dumpState();
+}
+- (BOOL) tracing
+{
+    return wrapper->iec->tracingEnabled();
+}
+- (void) setTracing:(BOOL)b
+{
+    b ? wrapper->iec->startTracing() : wrapper->iec->stopTracing();
+}
 
 @end
 
@@ -369,29 +698,61 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (void) dump { wrapper->keyboard->dumpState(); }
-
-- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col {
-    wrapper->keyboard->pressKey(row, col); }
+- (void) dump
+{
+    wrapper->keyboard->dumpState();
+}
+- (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
+{
+    wrapper->keyboard->pressKey(row, col);
+}
 - (void) pressRestoreKey {
-    wrapper->keyboard->pressRestoreKey(); }
-
-- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col {
-    wrapper->keyboard->releaseKey(row, col); }
-- (void) releaseRestoreKey {
-    wrapper->keyboard->releaseRestoreKey(); }
-- (void) releaseAll { wrapper->keyboard->releaseAll(); }
-
-- (BOOL) leftShiftIsPressed { return wrapper->keyboard->leftShiftIsPressed(); }
-- (BOOL) rightShiftIsPressed { return wrapper->keyboard->rightShiftIsPressed(); }
-- (BOOL) controlIsPressed { return wrapper->keyboard->ctrlIsPressed(); }
-- (BOOL) commodoreIsPressed { return wrapper->keyboard->commodoreIsPressed(); }
-
-- (BOOL) shiftLockIsHoldDown { return wrapper->keyboard->shiftLockIsHoldDown(); }
-- (void) lockShift { wrapper->keyboard->pressShiftLockKey(); }
-- (void) unlockShift { wrapper->keyboard->releaseShiftLockKey(); }
-
-- (BOOL) inUpperCaseMode { return wrapper->keyboard->inUpperCaseMode(); }
+    wrapper->keyboard->pressRestoreKey();
+}
+- (void) releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
+{
+    wrapper->keyboard->releaseKey(row, col);
+}
+- (void) releaseRestoreKey
+{
+    wrapper->keyboard->releaseRestoreKey();
+}
+- (void) releaseAll
+{
+    wrapper->keyboard->releaseAll();
+}
+- (BOOL) leftShiftIsPressed
+{
+    return wrapper->keyboard->leftShiftIsPressed();
+}
+- (BOOL) rightShiftIsPressed
+{
+    return wrapper->keyboard->rightShiftIsPressed();
+}
+- (BOOL) controlIsPressed
+{
+    return wrapper->keyboard->ctrlIsPressed();
+}
+- (BOOL) commodoreIsPressed
+{
+    return wrapper->keyboard->commodoreIsPressed();
+}
+- (BOOL) shiftLockIsHoldDown
+{
+    return wrapper->keyboard->shiftLockIsHoldDown();
+}
+- (void) lockShift
+{
+    wrapper->keyboard->pressShiftLockKey();
+}
+- (void) unlockShift
+{
+    wrapper->keyboard->releaseShiftLockKey();
+}
+- (BOOL) inUpperCaseMode
+{
+    return wrapper->keyboard->inUpperCaseMode();
+}
 @end
 
 
@@ -410,20 +771,44 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (void) dump { wrapper->port->dumpState(); }
-- (BOOL) autofire { return wrapper->port->getAutofire(); }
-- (void) setAutofire:(BOOL)value { return wrapper->port->setAutofire(value); }
-- (NSInteger) autofireBullets { return (NSInteger)wrapper->port->getAutofireBullets(); }
-- (void) setAutofireBullets:(NSInteger)value { wrapper->port->setAutofireBullets((int)value); }
-- (float) autofireFrequency { return wrapper->port->getAutofireFrequency(); }
-- (void) setAutofireFrequency:(float)value { wrapper->port->setAutofireFrequency(value); }
-- (void) trigger:(JoystickEvent)event { wrapper->port->trigger(event); }
+- (void) dump
+{
+    wrapper->port->dumpState();
+}
+- (BOOL) autofire
+{
+    return wrapper->port->getAutofire();
+}
+- (void) setAutofire:(BOOL)value
+{
+    return wrapper->port->setAutofire(value);
+}
+- (NSInteger) autofireBullets
+{
+    return (NSInteger)wrapper->port->getAutofireBullets();
+}
+- (void) setAutofireBullets:(NSInteger)value
+{
+    wrapper->port->setAutofireBullets((int)value);
+}
+- (float) autofireFrequency
+{
+    return wrapper->port->getAutofireFrequency();
+}
+- (void) setAutofireFrequency:(float)value
+{
+    wrapper->port->setAutofireFrequency(value);
+}
+- (void) trigger:(JoystickEvent)event
+{
+    wrapper->port->trigger(event);
+}
 
 @end
 
 
 //
-// Expansion port
+// Expansion port proxy
 //
 
 @implementation ExpansionPortProxy
