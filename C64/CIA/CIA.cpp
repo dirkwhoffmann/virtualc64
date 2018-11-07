@@ -95,9 +95,9 @@ CIA::setChipModel(CIAChipModel model)
         model = MOS_6526_OLD;
     }
     
-    c64->suspend();
+    suspend();
     chipModel = model;
-    c64->resume();
+    resume();
 }
 
 void
@@ -1101,7 +1101,7 @@ CIA::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t cycle = c64->cycle();
+    uint64_t cycle = c64->cpu.cycle;
     uint64_t sleepA = (counterA > 2) ? (cycle + counterA - 1) : 0;
     uint64_t sleepB = (counterB > 2) ? (cycle + counterB - 1) : 0;
     

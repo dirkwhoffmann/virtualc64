@@ -820,7 +820,7 @@ void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 void
 C64::loadFromSnapshotSafe(Snapshot *snapshot)
 {
-    debug(1, "C64::loadFromSnapshotSafe\n");
+    debug(2, "C64::loadFromSnapshotSafe\n");
 
     suspend();
     loadFromSnapshotUnsafe(snapshot);
@@ -838,22 +838,6 @@ C64::restoreSnapshot(vector<Snapshot *> &storage, unsigned nr)
     }
     
     return false;
-}
-
-bool
-C64::restoreLatestAutoSnapshot()
-{
-    if (!restoreAutoSnapshot(0))
-        return false;
-    
-    deleteAutoSnapshot(0);
-    return true;
-}
-
-bool
-C64::restoreLatestUserSnapshot()
-{
-    return restoreUserSnapshot(0);
 }
 
 size_t
@@ -894,78 +878,61 @@ C64::deleteSnapshot(vector<Snapshot *> &storage, unsigned index)
 }
 
 bool
-C64::mount(AnyC64File *file)
+C64::flash(AnyC64File *file)
 {
     bool result = true;
     
     suspend();
     switch (file->type()) {
-       
-        case CRT_FILE:
-            result = attachCartridgeAndReset((CRTFile *)file);
-            break;
-
-        case D64_FILE:
-        case T64_FILE:
-        case PRG_FILE:
-        case P00_FILE:
-        case G64_FILE:
-            result = insertDisk((AnyArchive *)file, 1);
-            break;
-    
-        case TAP_FILE:
-            result = insertTape((TAPFile *)file);
-            break;
-            
-        default: 
-            assert(false); // not mountable
-            result = false;
+        
+        case BASIC_ROM_FILE:
+        file->flash(mem.rom, 0xA000);
+        break;
+        
+        case CHAR_ROM_FILE:
+        file->flash(mem.rom, 0xD000);
+        break;
+        
+        case KERNAL_ROM_FILE:
+        file->flash(mem.rom, 0xE000);
+        break;
+        
+        case VC1541_ROM_FILE:
+        file->flash(drive1.mem.rom);
+        file->flash(drive2.mem.rom);
+        break;
+        
+        case V64_FILE:
+        loadFromSnapshotUnsafe((Snapshot *)file);
+        break;
+        
+        default:
+        assert(false);
+        result = false;
     }
     resume();
     return result;
 }
 
 bool
-C64::flash(AnyC64File *file, unsigned item)
+C64::flash(AnyArchive *file, unsigned item)
 {
     bool result = true;
     
     suspend();
     switch (file->type()) {
-            
-        case BASIC_ROM_FILE:
-            file->flash(mem.rom, 0xA000);
-            break;
-            
-        case CHAR_ROM_FILE:
-            file->flash(mem.rom, 0xD000);
-            break;
-            
-        case KERNAL_ROM_FILE:
-            file->flash(mem.rom, 0xE000);
-            break;
-            
-        case VC1541_ROM_FILE:
-            
-            file->flash(drive1.mem.rom);
-            file->flash(drive2.mem.rom);
-            break;
-                    
-        case V64_FILE:
-            loadFromSnapshotUnsafe((Snapshot *)file);
-            break;
-            
+        
         case D64_FILE:
         case T64_FILE:
         case PRG_FILE:
         case P00_FILE:
-            ((AnyArchive *)file)->selectItem(item);
-            ((AnyArchive *)file)->flashItem(mem.ram);
-            break;
-            
+        file->selectItem(item);
+        file->flashItem(mem.ram);
+        break;
+        
         default:
-            assert(false); // not mountable
-            result = false;
+        assert(false);
+        result = false;
     }
     resume();
     return result;
@@ -983,7 +950,9 @@ C64::loadRom(const char *filename)
         return false;
     }
     
+    suspend();
     result = flash(rom);
+    resume();
     
     if (result) {
         debug(2, "Loaded ROM image %s.\n", filename);
@@ -998,14 +967,28 @@ C64::loadRom(const char *filename)
     return result;
 }
 
+/*
 bool
 C64::insertDisk(AnyArchive *a, unsigned drive)
 {
     assert(a != NULL);
     assert(isValidDriveNr(drive));
-           
+    
+    suspend();
     drive == 1 ? drive1.insertDisk(a) : drive2.insertDisk(a);
+    resume();
+    
     return true;
+}
+
+void
+C64::ejectDisk(unsigned drive)
+{
+    assert(isValidDriveNr(drive));
+    
+    suspend();
+    drive == 1 ? drive1.ejectDisk() : drive2.ejectDisk();
+    resume();
 }
 
 bool
@@ -1023,35 +1006,42 @@ C64::insertTape(TAPFile *a)
     return true;
 }
 
+void
+C64::ejectTape()
+{
+    suspend();
+    datasette.ejectTape();
+    resume();
+}
+
 bool
 C64::attachCartridgeAndReset(CRTFile *container)
 {
     assert(container != NULL);
     
-    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(this, container);
-    if (!cartridge)
-        return false;
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(this, container);
     
-    suspend();
-    expansionport.attachCartridge(cartridge);
-    reset();
-    resume();
-    return true;
+    if (cartridge) {
+        
+        suspend();
+        expansionport.attachCartridge(cartridge);
+        reset();
+        resume();
+        return true;
+    }
+    
+    return false;
 }
 
 void
 C64::detachCartridgeAndReset()
 {
     if (expansionport.getCartridgeAttached()) {
+        
         suspend();
         expansionport.detachCartridge();
         reset();
         resume();
     }
 }
-
-bool
-C64::isCartridgeAttached()
-{
-    return expansionport.getCartridgeAttached();
-}
+*/

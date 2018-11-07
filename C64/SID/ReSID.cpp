@@ -126,10 +126,10 @@ ReSID::setChipModel(SIDChipModel model)
     assert(model == 0 || model == 1);
     chipModel = model;
     
-    c64->suspend();
+    suspend();
     sid->set_chip_model((reSID::chip_model)chipModel);
     // sid->filter._reset();
-    c64->resume();
+    resume();
     
     // MOS8580 emulation seems to be problematic when combined with filters.
     // TODO: Disable filters in combination with this chip
@@ -145,11 +145,11 @@ ReSID::setClockFrequency(uint32_t value)
 {
     clockFrequency = value;
     
-    c64->suspend();
+    suspend();
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  (double)sampleRate);
-    c64->resume();
+    resume();
     
     assert((uint32_t)sid->clock_frequency == clockFrequency);
     debug("Setting clock frequency to %d cycles per second.\n", clockFrequency);
@@ -160,11 +160,11 @@ ReSID::setSampleRate(uint32_t value)
 {
     sampleRate = value;
     
-    c64->suspend();
+    suspend();
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  (double)sampleRate);
-    c64->resume();
+    resume();
     
     debug("Setting sample rate to %d samples per second.\n", sampleRate);
 }
@@ -174,10 +174,10 @@ ReSID::setAudioFilter(bool value)
 {
     emulateFilter = value;
     
-    c64->suspend();
+    suspend();
     sid->enable_filter(value);
     // sid->filter._reset();
-    c64->resume();
+    resume();
     
     debug("%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
 }
@@ -207,11 +207,11 @@ ReSID::setSamplingMethod(SamplingMethod value)
 
     samplingMethod = value;
     
-    c64->suspend();
+    suspend();
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  (double)sampleRate);
-    c64->resume();
+    resume();
     
     assert((SamplingMethod)sid->sampling == samplingMethod);
 }

@@ -82,7 +82,7 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     
     // Read cartridge data (if any)
     if (cartridgeType != CRT_NONE) {
-        cartridge = Cartridge::makeCartridgeWithType(c64, cartridgeType);
+        cartridge = Cartridge::makeWithType(c64, cartridgeType);
         cartridge->loadFromBuffer(buffer);
     }
     
@@ -251,6 +251,25 @@ ExpansionPort::attachCartridge(Cartridge *c)
 }
 
 bool
+ExpansionPort::attachCartridgeAndReset(CRTFile *file)
+{
+    assert(file != NULL);
+    
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
+    
+    if (cartridge) {
+        
+        suspend();
+        attachCartridge(cartridge);
+        c64->reset();
+        resume();
+        return true;
+    }
+    
+    return false;
+}
+
+bool
 ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
 {
     switch (capacity) {
@@ -261,7 +280,7 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
             return false;
     }
     
-    Cartridge *geoRAM = Cartridge::makeCartridgeWithType(c64, CRT_GEO_RAM);
+    Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
     uint32_t capacityInBytes = capacity * 1024;
     geoRAM->setRamCapacity(capacityInBytes);
     debug("Created GeoRAM cartridge (%d KB)\n", capacity);
@@ -272,18 +291,28 @@ ExpansionPort::attachGeoRamCartridge(uint32_t capacity)
 void
 ExpansionPort::detachCartridge()
 {
-    if (cartridge == NULL)
-        return;
-    
-    delete cartridge;
-    cartridge = NULL;
-    
-    setGameLine(1);
-    setExromLine(1);
-
-    c64->putMessage(MSG_NO_CARTRIDGE);
-    
-    debug(1, "Cartridge detached from expansion port");
+    if (cartridge) {
+        
+        suspend();
+        
+        delete cartridge;
+        cartridge = NULL;
+        
+        setGameLine(1);
+        setExromLine(1);
+        
+        debug(1, "Cartridge detached from expansion port");
+        
+        c64->putMessage(MSG_NO_CARTRIDGE);
+        resume();
+    }
 }
 
-
+void
+ExpansionPort::detachCartridgeAndReset()
+{
+    suspend();
+    detachCartridge();
+    c64->reset();
+    resume();
+}

@@ -153,14 +153,14 @@ public:
      *            containers of the supported cartridge type, only.
      *  @seealso  isSupportedType
      */
-    static Cartridge *makeCartridgeWithType(C64 *c64, CartridgeType type);
+    static Cartridge *makeWithType(C64 *c64, CartridgeType type);
     
     //! @brief    Factory method
-    /*! @details  Creates a cartridge from a CRT container. Make sure to pass
+    /*! @details  Creates a cartridge from a CRT file. Make sure to pass
      *            containers of the supported cartridge type, only.
      *  @seealso  isSupportedType
      */
-    static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTFile *container);
+    static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
     
     //! @brief    State size function for chip packet data
     virtual size_t packetStateSize();

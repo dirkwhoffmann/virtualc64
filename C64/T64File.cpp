@@ -97,7 +97,7 @@ T64File::makeT64ArchiveWithAnyArchive(AnyArchive *otherArchive)
     
     T64File *archive  = new T64File();
     
-    // Determine container size and allocate memory
+    // Determine file size and allocate memory
     unsigned currentFiles = otherArchive->numberOfItems();
     unsigned maxFiles = (currentFiles < 30) ? 30 : currentFiles;
     archive->size = 64 /* header */ + maxFiles * 32 /* tape entries */;
@@ -389,7 +389,7 @@ T64File::repair()
         // 2. Check relative offset information for each item
         //
 
-        // Compute start address in container
+        // Compute start address in file
         n = 0x48 + (i * 0x20);
         uint16_t startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 

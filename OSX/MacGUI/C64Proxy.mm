@@ -1,20 +1,12 @@
-/*
- * Author: Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+//
+// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
+//
+
 
 #import "C64GUI.h"
 #import "C64.h"
@@ -34,14 +26,7 @@ struct Via6522Wrapper { VIA6522 *via; };
 struct DiskWrapper { Disk *disk; };
 struct DriveWrapper { VC1541 *drive; };
 struct DatasetteWrapper { Datasette *datasette; };
-struct ContainerWrapper { AnyC64File *container; };
-
-// DEPRECATED
-struct SnapshotWrapper { Snapshot *snapshot; };
-struct ArchiveWrapper { AnyArchive *archive; };
-struct TAPContainerWrapper { TAPFile *tapcontainer; };
-struct CRTContainerWrapper { CRTFile *crtcontainer; };
-
+struct AnyC64FileWrapper { AnyC64File *file; };
 
 //
 // CPU
@@ -65,6 +50,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setTracing:(BOOL)b {
     if (b) wrapper->cpu->startTracing(); else wrapper->cpu->stopTracing(); }
 
+- (UInt64) cycle { return wrapper->cpu->cycle; }
 - (uint16_t) pc { return wrapper->cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { wrapper->cpu->setPC_at_cycle_0(pc); }
 - (void) setSP:(uint8_t)sp { wrapper->cpu->setSP(sp); }
@@ -131,17 +117,17 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (uint8_t) spypeekIO:(uint16_t)addr { return wrapper->mem->spypeekIO(addr); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value target:(MemoryType)target {
-    wrapper->mem->c64->suspend();
+    wrapper->mem->suspend();
     wrapper->mem->poke(addr, value, target);
-    wrapper->mem->c64->resume(); }
+    wrapper->mem->resume(); }
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
-    wrapper->mem->c64->suspend();
+    wrapper->mem->suspend();
     wrapper->mem->poke(addr, value);
-    wrapper->mem->c64->resume(); }
+    wrapper->mem->resume(); }
 - (void) pokeIO:(uint16_t)addr value:(uint8_t)value {
-    wrapper->mem->c64->suspend();
+    wrapper->mem->suspend();
     wrapper->mem->pokeIO(addr, value);
-    wrapper->mem->c64->resume(); }
+    wrapper->mem->resume(); }
 
 @end
 
@@ -172,9 +158,9 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setEmulateTimerBBug:(BOOL)value { wrapper->cia->setEmulateTimerBBug(value); }
 
 - (void) poke:(uint16_t)addr value:(uint8_t)value {
-    wrapper->cia->c64->suspend();
+    wrapper->cia->suspend();
     wrapper->cia->poke(addr, value);
-    wrapper->cia->c64->resume();
+    wrapper->cia->resume();
 }
 
 @end
@@ -454,15 +440,20 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
 - (BOOL) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
-- (BOOL) hasBattery { return wrapper->expansionPort->hasBattery(); }
-- (void) setBattery:(BOOL)value { wrapper->expansionPort->setBattery(value); }
-- (BOOL) attachGeoRamCartridge:(NSInteger)capacity { return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
+    return wrapper->expansionPort->attachCartridgeAndReset((CRTFile *)([c wrapper]->file)); }
+- (BOOL) attachGeoRamCartridge:(NSInteger)capacity {
+    return wrapper->expansionPort->attachGeoRamCartridge((uint32_t)capacity); }
+- (void) detachCartridgeAndReset { wrapper->expansionPort->detachCartridgeAndReset(); }
 - (BOOL) hasFreezeButton { return wrapper->expansionPort->hasFreezeButton(); }
 - (void) pressFreezeButton { wrapper->expansionPort->pressFreezeButton(); }
 - (void) releaseFreezeButton { wrapper->expansionPort->releaseFreezeButton(); }
 - (BOOL) hasResetButton { return wrapper->expansionPort->hasResetButton(); }
 - (void) pressResetButton { wrapper->expansionPort->pressResetButton(); }
 - (void) releaseResetButton { wrapper->expansionPort->releaseResetButton(); }
+- (BOOL) hasBattery { return wrapper->expansionPort->hasBattery(); }
+- (void) setBattery:(BOOL)value { wrapper->expansionPort->setBattery(value); }
+
 
 @end
 
@@ -580,7 +571,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) setModifiedDisk:(BOOL)b { wrapper->drive->setModifiedDisk(b); }
 - (void) prepareToInsert { wrapper->drive->prepareToInsert(); }
 - (void) insertDisk:(ArchiveProxy *)disk {
-    AnyArchive *archive = (AnyArchive *)([disk wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
 }
 - (void) prepareToEject { wrapper->drive->prepareToEject(); }
@@ -630,6 +621,10 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (void) pressPlay { wrapper->datasette->pressPlay(); }
 - (void) pressStop { wrapper->datasette->pressStop(); }
 - (void) rewind { wrapper->datasette->rewind(); }
+- (BOOL) insertTape:(TAPProxy *)tape {
+    TAPFile *file = (TAPFile *)([tape wrapper]->file);
+    return wrapper->datasette->insertTape(file);
+}
 - (void) ejectTape { wrapper->datasette->ejectTape(); }
 - (NSInteger) getType { return wrapper->datasette->getType(); }
 - (long) durationInCycles { return wrapper->datasette->getDurationInCycles(); }
@@ -644,16 +639,15 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 
 //
-// C64
+// C64Proxy
 //
 
 @implementation C64Proxy {
-    AudioEngine *audioEngine;
 }
 
-@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec;
-@synthesize drive1, drive2, expansionport, datasette;
-@synthesize port1, port2;
+@synthesize mem, cpu, vic, cia1, cia2, sid;
+@synthesize keyboard, port1, port2, iec;
+@synthesize expansionport, drive1, drive2, datasette;
 
 - (instancetype) init
 {
@@ -667,8 +661,8 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     wrapper->c64 = c64;
 	
     // Create sub proxys
-    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
     mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
+    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
     vic = [[VICProxy alloc] initWithVIC:&c64->vic];
 	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
@@ -682,58 +676,123 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     drive2 = [[DriveProxy alloc] initWithVC1541:&c64->drive2];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     
-    // Initialize audio interface
-    audioEngine = [[AudioEngine alloc] initWithSID:sid];
-    if (!audioEngine) {
-        NSLog(@"WARNING: Failed to initialize AudioEngine");
-    }
-
     return self;
-}
-
-- (struct C64Wrapper *)wrapper
-{
-    return wrapper;
 }
 
 - (void) kill
 {
-	assert(wrapper->c64 != NULL);
-	NSLog(@"C64Proxy::kill");
-
-	// Stop sound device
-	[self disableAudio];
-	
-    // Delete emulator
+    assert(wrapper->c64 != NULL);
+    NSLog(@"C64Proxy::kill");
+    
+    // Kill the emulator
     delete wrapper->c64;
-	wrapper->c64 = NULL;
+    wrapper->c64 = NULL;
 }
 
-- (void) dump { wrapper->c64->dumpState(); }
-- (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
-
-- (NSInteger) model { return wrapper->c64->getModel(); }
-- (void) setModel:(NSInteger)value { wrapper->c64->setModel((C64Model)value); }
+- (struct C64Wrapper *)wrapper { return wrapper; }
 
 - (DriveProxy *) drive:(NSInteger)num {
     switch (num) {
         case 1:
-            return [self drive1];
+        return [self drive1];
         case 2:
-            return [self drive2];
+        return [self drive2];
         default:
-            assert(false);
-            return NULL;
+        assert(false);
+        return NULL;
     }
 }
 
-- (BOOL)mount:(ContainerProxy *)container {
-    return wrapper->c64->mount([container wrapper]->container); }
-- (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item; {
-    return wrapper->c64->flash([container wrapper]->container, (int)item); }
-- (BOOL)flash:(ContainerProxy *)container {
-    return wrapper->c64->flash([container wrapper]->container); }
+- (void) ping { wrapper->c64->ping(); }
+- (void) dump { wrapper->c64->dumpState(); }
+- (BOOL) developmentMode { return wrapper->c64->developmentMode(); }
 
+// Configuring the emulator
+- (NSInteger) model { return wrapper->c64->getModel(); }
+- (void) setModel:(NSInteger)value { wrapper->c64->setModel((C64Model)value); }
+
+// Accessing the message queue
+- (Message)message { return wrapper->c64->getMessage(); }
+- (void) addListener:(const void *)sender function:(Callback *)func {
+    wrapper->c64->addListener(sender, func); }
+- (void) removeListener:(const void *)sender { wrapper->c64->removeListener(sender); }
+
+// Running the emulator
+- (void) powerUp { wrapper->c64->powerUp(); }
+- (void) run { wrapper->c64->run(); }
+- (void) halt { wrapper->c64->halt(); }
+- (void) suspend { wrapper->c64->suspend(); }
+- (void) resume { wrapper->c64->resume(); }
+- (BOOL) isRunnable { return wrapper->c64->isRunnable(); }
+- (BOOL) isRunning { return wrapper->c64->isRunning(); }
+- (BOOL) isHalted { return wrapper->c64->isHalted(); }
+- (void) step { wrapper->c64->step(); }
+- (void) stepOver { wrapper->c64->stepOver(); }
+
+// Handling mice
+- (NSInteger) mouseModel { return (NSInteger)wrapper->c64->getMouseModel(); }
+- (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
+- (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }
+- (void) disconnectMouse { wrapper->c64->connectMouse(0); }
+- (void) setMouseXY:(NSPoint)pos { wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y); }
+- (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse->leftButton = pressed; }
+- (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
+
+// Managing the execution thread
+- (BOOL) warp { return wrapper->c64->getWarp(); }
+- (BOOL) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
+- (void) setAlwaysWarp:(BOOL)b { wrapper->c64->setAlwaysWarp(b); }
+- (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
+- (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
+
+// Handling snapshots
+- (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }
+- (void) enableAutoSnapshots { wrapper->c64->enableAutoSnapshots(); }
+- (void) suspendAutoSnapshots { wrapper->c64->suspendAutoSnapshots(); }
+- (void) resumeAutoSnapshots { wrapper->c64->resumeAutoSnapshots(); }
+- (NSInteger) snapshotInterval { return wrapper->c64->getSnapshotInterval(); }
+- (void) setSnapshotInterval:(NSInteger)value { wrapper->c64->setSnapshotInterval(value); }
+
+- (BOOL)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
+- (BOOL)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
+- (BOOL)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
+- (BOOL)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
+- (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
+- (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
+
+- (NSData *)autoSnapshotData:(NSInteger)nr {
+    Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
+                          length: snapshot->sizeOnDisk()];
+}
+- (NSData *)userSnapshotData:(NSInteger)nr {
+    Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
+    return [NSData dataWithBytes: (void *)snapshot->getHeader()
+                          length: snapshot->sizeOnDisk()];
+}
+- (unsigned char *)autoSnapshotImageData:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageData() : NULL; }
+- (unsigned char *)userSnapshotImageData:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageData() : NULL; }
+- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
+- (NSInteger)userSnapshotImageWidth:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
+- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (NSInteger)userSnapshotImageHeight:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (time_t)autoSnapshotTimestamp:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+- (time_t)userSnapshotTimestamp:(NSInteger)nr {
+    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+
+- (void)takeUserSnapshot { wrapper->c64->takeUserSnapshotSafe(); }
+
+- (void)deleteAutoSnapshot:(NSInteger)nr { wrapper->c64->deleteAutoSnapshot((unsigned)nr); }
+- (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
+
+// Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url {
     return ROMFile::isBasicRomFile([[url path] UTF8String]); }
 - (BOOL) loadBasicRom:(NSURL *)url {
@@ -763,187 +822,60 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 - (BOOL) loadRom:(NSURL *)url {
     return [self loadBasicRom:url] || [self loadCharRom:url] || [self loadKernalRom:url] || [self loadVC1541Rom:url]; }
 
-- (Message)message { return wrapper->c64->getMessage(); }
-- (void) addListener:(const void *)sender function:(Callback *)func {
-    wrapper->c64->addListener(sender, func);
-}
-- (void) removeListener:(const void *)sender {
-    wrapper->c64->removeListener(sender);
-}
-
-- (void) powerUp { wrapper->c64->powerUp(); }
-- (void) ping { wrapper->c64->ping(); }
-
-- (BOOL) isRunnable { return wrapper->c64->isRunnable(); }
-- (BOOL) isRunning { return wrapper->c64->isRunning(); }
-- (BOOL) isHalted { return wrapper->c64->isHalted(); }
-- (void) suspend { wrapper->c64->suspend(); }
-- (void) resume { wrapper->c64->resume(); }
-- (void) run { wrapper->c64->run(); }
-- (void) halt { wrapper->c64->halt(); }
-
-- (void) step { wrapper->c64->step(); }
-- (void) stepOver { wrapper->c64->stepOver(); }
-
-/*
-- (BOOL) isPAL { return wrapper->c64->isPAL(); }
-- (void) setPAL { wrapper->c64->setPAL(); }
-- (void) setPAL:(BOOL)b { if (b) [self setPAL]; else [self setNTSC]; }
-- (BOOL) isNTSC { return wrapper->c64->isNTSC(); }
-- (void) setNTSC { wrapper->c64->setNTSC(); }
-- (void) setNTSC:(BOOL)b { if (b) [self setNTSC]; else [self setPAL]; }
-*/
-
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c {
-    return wrapper->c64->attachCartridgeAndReset((CRTFile *)([c wrapper]->container)); }
-- (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
-- (BOOL) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
-
-/* USE mount INSTEAD
-- (BOOL) insertDisk:(ArchiveProxy *)a {
-    AnyArchive *archive = (AnyArchive *)([a wrapper]->container);
-    return wrapper->c64->insertDisk(archive);
-}
- */
-- (BOOL) insertTape:(TAPProxy *)c {
-    TAPFile *container = (TAPFile *)([c wrapper]->container);
-    return wrapper->c64->insertTape(container);
-}
-- (NSInteger) mouseModel { return (NSInteger)wrapper->c64->getMouseModel(); }
-- (void) setMouseModel:(NSInteger)model { wrapper->c64->setMouseModel((MouseModel)model); }
-- (void) connectMouse:(NSInteger)toPort { wrapper->c64->connectMouse((unsigned)toPort); }
-- (void) disconnectMouse { wrapper->c64->connectMouse(0); }
-- (void) setMouseXY:(NSPoint)pos {
-    wrapper->c64->mouse->setXY((int64_t)pos.x, (int64_t)pos.y);
-}
-- (void) setMouseLeftButton:(BOOL)pressed { wrapper->c64->mouse->leftButton = pressed; }
-- (void) setMouseRightButton:(BOOL)pressed { wrapper->c64->mouse->rightButton = pressed;  }
-
-- (BOOL) warp { return wrapper->c64->getWarp(); }
-- (BOOL) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
-- (void) setAlwaysWarp:(BOOL)b { wrapper->c64->setAlwaysWarp(b); }
-- (BOOL) warpLoad { return wrapper->c64->getWarpLoad(); }
-- (void) setWarpLoad:(BOOL)b { wrapper->c64->setWarpLoad(b); }
-
-- (UInt64) cycles { return wrapper->c64->cycle(); }
-
-// Snapshot storage
-- (void) disableAutoSnapshots { wrapper->c64->disableAutoSnapshots(); }
-- (void) enableAutoSnapshots { wrapper->c64->enableAutoSnapshots(); }
-- (void) suspendAutoSnapshots { wrapper->c64->suspendAutoSnapshots(); }
-- (void) resumeAutoSnapshots { wrapper->c64->resumeAutoSnapshots(); }
-- (NSInteger) snapshotInterval { return wrapper->c64->getSnapshotInterval(); }
-- (void) setSnapshotInterval:(NSInteger)value { wrapper->c64->setSnapshotInterval(value); }
-- (NSInteger) numAutoSnapshots { return wrapper->c64->numAutoSnapshots(); }
-- (NSData *)autoSnapshotData:(NSInteger)nr {
-    Snapshot *snapshot = wrapper->c64->autoSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
-}
-- (unsigned char *)autoSnapshotImageData:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageData() : NULL; }
-- (NSInteger)autoSnapshotImageWidth:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (NSInteger)autoSnapshotImageHeight:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (time_t)autoSnapshotTimestamp:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->autoSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (BOOL)restoreAutoSnapshot:(NSInteger)nr { return wrapper->c64->restoreAutoSnapshot((unsigned)nr); }
-- (BOOL)restoreLatestAutoSnapshot { return wrapper->c64->restoreLatestAutoSnapshot(); }
-
-- (NSInteger) numUserSnapshots { return wrapper->c64->numUserSnapshots(); }
-- (NSData *)userSnapshotData:(NSInteger)nr {
-    Snapshot *snapshot = wrapper->c64->userSnapshot((unsigned)nr);
-    return [NSData dataWithBytes: (void *)snapshot->getHeader()
-                          length: snapshot->sizeOnDisk()];
-}
-- (unsigned char *)userSnapshotImageData:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageData() : NULL; }
-- (NSInteger)userSnapshotImageWidth:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (NSInteger)userSnapshotImageHeight:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (time_t)userSnapshotTimestamp:(NSInteger)nr {
-    Snapshot *s = wrapper->c64->userSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (void)takeUserSnapshot { wrapper->c64->takeUserSnapshotSafe(); }
-- (BOOL)restoreUserSnapshot:(NSInteger)nr { return wrapper->c64->restoreUserSnapshot((unsigned)nr); }
-- (BOOL)restoreLatestUserSnapshot { return wrapper->c64->restoreLatestUserSnapshot(); }
-- (void)deleteUserSnapshot:(NSInteger)nr { wrapper->c64->deleteUserSnapshot((unsigned)nr); }
-
-// Audio hardware
-- (BOOL) enableAudio {
-    [sid rampUpFromZero];
-    return [audioEngine startPlayback];
-}
-
-- (void) disableAudio {
-    [sid rampDown];
-    [audioEngine stopPlayback];
-}
-
+// Flashing files
+- (BOOL)flash:(AnyC64FileProxy *)file {
+    return wrapper->c64->flash([file wrapper]->file); }
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr; {
+    AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
+    return wrapper->c64->flash(a, (unsigned)nr); }
 @end
 
 
 //
-// Container
+// AnyC64FileProxy
 //
 
-@implementation ContainerProxy
+@implementation AnyC64FileProxy
 
-- (instancetype) initWithContainer:(AnyC64File *)container
+- (instancetype) initWithFile:(AnyC64File *)file
 {
-    if (container == nil) {
+    if (file == nil) {
         return nil;
     }
     if (self = [super init]) {
-        wrapper = new ContainerWrapper();
-        wrapper->container = container;
+        wrapper = new AnyC64FileWrapper();
+        wrapper->file = file;
     }
     return self;
 }
 
-+ (ContainerProxy *) makeWithContainer:(AnyC64File *)container
++ (AnyC64FileProxy *) makeWithFile:(AnyC64File *)file
 {
-    if (container == nil) {
+    if (file == nil) {
         return nil;
     }
-    return [[self alloc] initWithContainer:container];
+    return [[self alloc] initWithFile:file];
 }
 
 - (void)setPath:(NSString *)path {
-    AnyC64File *file = (AnyC64File *)([self wrapper]->container);
+    AnyC64File *file = (AnyC64File *)([self wrapper]->file);
     file->setPath([path UTF8String]);
 }
-- (ContainerWrapper *)wrapper { return wrapper; }
-- (C64FileType)type { return wrapper->container->type(); }
-- (NSString *)name { return [NSString stringWithUTF8String:wrapper->container->getName()]; }
-- (NSInteger) sizeOnDisk { return wrapper->container->sizeOnDisk(); }
-// - (void)seek:(NSInteger)offset { wrapper->container->seek(offset); }
-
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length
-{
-    wrapper->container->readFromBuffer((const uint8_t *)buffer, length);
-}
-
-- (NSInteger) writeToBuffer:(void *)buffer
-{
-    return wrapper->container->writeToBuffer((uint8_t *)buffer);
-}
-
-/*
-- (NSString *)readHex:(NSInteger)num
-{
-    AnyC64File *file = (AnyC64File *)([self wrapper]->container);
-    return [NSString stringWithUTF8String:file->readHex(num)];
-}
-*/
+- (AnyC64FileWrapper *)wrapper { return wrapper; }
+- (C64FileType)type { return wrapper->file->type(); }
+- (NSString *)name { return [NSString stringWithUTF8String:wrapper->file->getName()]; }
+- (NSInteger) sizeOnDisk { return wrapper->file->sizeOnDisk(); }
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length {
+    wrapper->file->readFromBuffer((const uint8_t *)buffer, length); }
+- (NSInteger) writeToBuffer:(void *)buffer {
+    return wrapper->file->writeToBuffer((uint8_t *)buffer); }
 
 - (void) dealloc
 {
-    // NSLog(@"ContainerProxy::dealloc");
+    // NSLog(@"AnyC64FileProxy::dealloc");
     
     if (wrapper) {
-        if (wrapper->container) delete wrapper->container;
+        if (wrapper->file) delete wrapper->file;
         delete wrapper;
     }
 }
@@ -974,7 +906,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     if (snapshot == NULL) {
         return nil;
     }
-    return [[self alloc] initWithContainer:snapshot];
+    return [[self alloc] initWithFile:snapshot];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -998,17 +930,17 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSInteger)imageWidth
 {
-    Snapshot *snapshot = (Snapshot *)wrapper->container;
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
     return snapshot->getImageWidth();
 }
 - (NSInteger)imageHeight
 {
-    Snapshot *snapshot = (Snapshot *)wrapper->container;
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
     return snapshot->getImageHeight();
 }
 - (uint8_t *)imageData
 {
-    Snapshot *snapshot = (Snapshot *)wrapper->container;
+    Snapshot *snapshot = (Snapshot *)wrapper->file;
     return snapshot->getImageData();
 }
 
@@ -1037,7 +969,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     if (container == NULL) {
         return nil;
     }
-    return [[self alloc] initWithContainer:container];
+    return [[self alloc] initWithFile:container];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -1054,17 +986,17 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 
 - (NSString *)cartridgeName
 {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return [NSString stringWithUTF8String:c->getName()];
 }
 
 - (CartridgeType)cartridgeType {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->cartridgeType();
 }
 
 - (NSString *)cartridgeTypeName {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return [NSString stringWithUTF8String:c->cartridgeTypeName()];
 }
 
@@ -1073,32 +1005,32 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (NSInteger)initialExromLine {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->initialExromLine();
 }
 
 - (NSInteger)initialGameLine {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->initialGameLine();
 }
 
 - (NSInteger)chipCount {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipCount();
 }
 
 - (NSInteger)typeOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipType((unsigned)nr);
 }
 
 - (NSInteger)loadAddrOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipAddr((unsigned)nr);
 }
 
 - (NSInteger)sizeOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->container;
+    CRTFile *c = (CRTFile *)wrapper->file;
     return c->chipSize((unsigned)nr);
 }
 @end
@@ -1120,7 +1052,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
     if (container == NULL) {
         return nil;
     }
-    return [[self alloc] initWithContainer:container];
+    return [[self alloc] initWithFile:container];
 }
 
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -1136,7 +1068,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (NSInteger)TAPversion {
-    TAPFile *container = (TAPFile *)wrapper->container;
+    TAPFile *container = (TAPFile *)wrapper->file;
     return (NSInteger)container->TAPversion();
 }
 @end
@@ -1151,7 +1083,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(AnyArchive *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 
 + (instancetype) make
@@ -1167,59 +1099,59 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (void)selectItem:(NSInteger)item {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     archive->selectItem((unsigned)item);
 }
 
 - (NSInteger)numberOfItems {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return (NSInteger)archive->numberOfItems();
 }
 
 - (NSString *)nameOfItem {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return [NSString stringWithUTF8String:archive->getNameOfItem()];
 }
 
 - (NSString *)unicodeNameOfItem {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     const unsigned short *unichars = archive->getUnicodeNameOfItem();
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
 
 - (NSInteger)sizeOfItem
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->getSizeOfItem();
 }
 
 - (NSInteger)sizeOfItemInBlocks
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->getSizeOfItemInBlocks();
 }
 
 - (void)seekItem:(NSInteger)offset
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->seekItem(offset);
 }
 
 - (NSString *)typeOfItem
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return [NSString stringWithUTF8String:archive->getTypeOfItemAsString()];
 }
 
 - (NSInteger)destinationAddrOfItem
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return archive->getDestinationAddrOfItem();
 }
 
 - (NSString *)readItemHex:(NSInteger)num
 {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->container);
+    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
     return [NSString stringWithUTF8String:archive->readItemHex(num)];
 }
 
@@ -1239,7 +1171,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(T64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1253,7 +1185,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1273,7 +1205,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(PRGFile *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1287,7 +1219,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     PRGFile *archive = PRGFile::makeWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1307,7 +1239,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(P00File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1321,7 +1253,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     P00File *archive = P00File::makeWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1336,7 +1268,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(AnyDisk *)disk
 {
     if (disk == NULL) return nil;
-    return [[self alloc] initWithContainer:disk];
+    return [[self alloc] initWithFile:disk];
 }
 
 + (instancetype) make
@@ -1352,27 +1284,27 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 
 - (NSInteger) numberOfHalftracks {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->numberOfHalftracks();
 }
 
 - (void) selectHalftrack:(NSInteger)ht {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     disk->selectHalftrack((unsigned)ht);
 }
 
 - (NSInteger) sizeOfHalftrack {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->getSizeOfHalftrack();
 }
 
 - (void)seekHalftrack:(NSInteger)offset {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return disk->seekHalftrack(offset);
 }
 
 - (NSString *)readHalftrackHex:(NSInteger)num {
-    AnyDisk *disk = (AnyDisk *)([self wrapper]->container);
+    AnyDisk *disk = (AnyDisk *)([self wrapper]->file);
     return [NSString stringWithUTF8String:disk->readHalftrackHex(num)];
 }
 
@@ -1392,7 +1324,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(D64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1406,7 +1338,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 }
 + (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
 {
-    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->container);
+    AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     D64File *archive = D64File::makeWithAnyArchive(other);
     return [self make: archive];
 }
@@ -1439,7 +1371,7 @@ struct CRTContainerWrapper { CRTFile *crtcontainer; };
 + (instancetype) make:(G64File *)archive
 {
     if (archive == NULL) return nil;
-    return [[self alloc] initWithContainer:archive];
+    return [[self alloc] initWithFile:archive];
 }
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {

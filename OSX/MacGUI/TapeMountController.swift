@@ -1,8 +1,10 @@
 //
-//  TapeMountController.swift
-//  VirtualC64
+// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 08.02.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
 //
 
 import Foundation
@@ -36,7 +38,7 @@ class TapeMountController : UserDialogController {
     @IBAction func okAction(_ sender: Any!) {
         
         // Insert tape
-        c64.insertTape(tape)
+        c64.datasette.insertTape(tape)
         parent.metalScreen.rotateBack()
         
         // Process options

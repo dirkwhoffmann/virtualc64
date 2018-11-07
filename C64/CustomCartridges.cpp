@@ -98,13 +98,13 @@ void
 ActionReplay::pressFreezeButton()
 {
     // Pressing the freeze bottom pulls down both the NMI and the IRQ line
-    c64->suspend();
+    suspend();
     setControlReg(0);
     c64->expansionport.setGameLine(0);
     c64->expansionport.setExromLine(1);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
+    resume();
 }
 
 void
@@ -213,19 +213,19 @@ void
 KcsPower::pressResetButton()
 {
     // Pressing the freeze bottom triggers an NMI in ultimax mode
-    c64->suspend();
+    suspend();
     c64->expansionport.setGameLine(0);
     c64->expansionport.setExromLine(1);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
+    resume();
 };
 
 void
 KcsPower::releaseResetButton()
 {
-    c64->suspend();
+    suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
+    resume();
 };
 
 
@@ -383,7 +383,7 @@ EpyxFastLoad::dischargeCapacitor()
     /* The capacitor will be charged in about 512 cycles (value taken from VICE).
      * We store this value variable 'cycle', so it can be picked up in execute().
      */
-    cycle = c64->cycle() + 512;
+    cycle = c64->cpu.cycle + 512;
     
     if (c64->expansionport.getGameLine() == 1 && c64->expansionport.getExromLine() == 1) {
     }
@@ -398,7 +398,7 @@ EpyxFastLoad::checkCapacitor()
     
     // debug("Capacitor check: Cartridge continues to live for %ld cycles\n", disable_at_cycle - c64->getCycles());
     
-    if (c64->cycle() > cycle) {
+    if (c64->cpu.cycle > cycle) {
         
         if (c64->expansionport.getGameLine() != 1 || c64->expansionport.getExromLine() != 1) {
         }
@@ -756,7 +756,7 @@ ActionReplay3::pokeIO1(uint16_t addr, uint8_t value)
 void
 ActionReplay3::pressFreezeButton()
 {
-    c64->suspend();
+    suspend();
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
     
@@ -764,33 +764,17 @@ ActionReplay3::pressFreezeButton()
     // which activates ultimax mode. This mode is reset later, in the
     // ActionReplay's interrupt handler.
     setControlReg(0);
-    c64->resume();
+    resume();
 }
 
 void
 ActionReplay3::releaseFreezeButton()
 {
-    c64->suspend();
+    suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
+    resume();
 }
-
-/*
- void
- ActionReplay3::pressResetButton()
- {
- // Note: Cartridge requires to keep the RAM
- // TODO: Same as in FinalIII. Add a 'softReset' method to C64 class
- uint8_t ram[0xFFFF];
- 
- c64->suspend();
- memcpy(ram, c64->mem.ram, 0xFFFF);
- c64->reset();
- memcpy(c64->mem.ram, ram, 0xFFFF);
- c64->resume();
- }
- */
 
 void
 ActionReplay3::setControlReg(uint8_t value)
@@ -844,19 +828,19 @@ void
 FreezeFrame::pressFreezeButton()
 {
     // Pressing the freeze button switches to ultimax mode and triggers an NMI
-    c64->suspend();
+    suspend();
     c64->expansionport.setExromLine(1);
     c64->expansionport.setGameLine(0);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
+    resume();
 }
 
 void
 FreezeFrame::releaseFreezeButton()
 {
-    c64->suspend();
+    suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
-    c64->resume();
+    resume();
 }
 
 

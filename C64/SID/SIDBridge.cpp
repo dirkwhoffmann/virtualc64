@@ -160,7 +160,7 @@ SIDBridge::peek(uint16_t addr)
     assert(addr <= 0x1F);
     
     // Get SID up to date
-    executeUntil(c64->cycle());
+    executeUntil(c64->cpu.cycle);
     
     if (addr == 0x19) {
         return c64->potXBits();
@@ -187,7 +187,7 @@ void
 SIDBridge::poke(uint16_t addr, uint8_t value)
 {
     // Get SID up to date
-    executeUntil(c64->cycle());
+    executeUntil(c64->cpu.cycle);
 
     // Keep both SID implementations up to date
     resid.poke(addr, value);
@@ -286,10 +286,10 @@ SIDBridge::setChipModel(SIDChipModel model)
         model = MOS_8580;
     }
     
-    c64->suspend();
+    suspend();
     resid.setChipModel(model);
     fastsid.setChipModel(model);
-    c64->resume();
+    resume();
 }
 
 uint32_t

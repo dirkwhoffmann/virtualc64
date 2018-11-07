@@ -1,9 +1,11 @@
-/**
-Audio interface that connects the GUI with the core emulator
- 
- - Author: Dirk W. Hoffmann
- - Copyright: Dirk W. Hoffmann
-*/
+//
+// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
+//
 
 import Foundation
 import AVFoundation
@@ -18,7 +20,7 @@ public class AudioEngine: NSObject {
         super.init()
     }
     
-    @objc convenience init?(withSID proxy: SIDProxy)
+    convenience init?(withSID proxy: SIDProxy)
     {
         track()
     
@@ -117,7 +119,8 @@ public class AudioEngine: NSObject {
     }
     
     //! @brief  Start playing sound
-    @objc func startPlayback() -> Bool {
+    @discardableResult
+    func startPlayback() -> Bool {
 
         do { try audiounit.startHardware() } catch {
             NSLog("Failed to start audio hardware")
@@ -128,7 +131,7 @@ public class AudioEngine: NSObject {
     }
     
     //! @brief  Stop playing sound
-    @objc func stopPlayback() {
+    func stopPlayback() {
         
         audiounit.stopHardware()
     }

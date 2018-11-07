@@ -83,9 +83,9 @@ VIC::setMemoryBankAddr(uint16_t addr)
 {
     assert(addr % 0x4000 == 0);
     
-    c64->suspend();
+    suspend();
     bankAddr = addr;
-    c64->resume();
+    resume();
 }
 
 void
@@ -93,10 +93,10 @@ VIC::setScreenMemoryAddr(uint16_t addr)
 {
     assert((addr & ~0x3C00) == 0);
     
-    c64->suspend();
+    suspend();
     addr >>= 6;
     memSelect = (memSelect & ~0xF0) | (addr & 0xF0);
-    c64->resume();
+    resume();
 }
 
 void
@@ -104,20 +104,20 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
 {
     assert((addr & ~0x3800) == 0);
     
-    c64->suspend();
+    suspend();
     addr >>= 10;
     memSelect = (memSelect & ~0x0E) | (addr & 0x0E);
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setDisplayMode(DisplayMode m)
 {
-    c64->suspend();
+    suspend();
     reg.current.ctrl1 = (reg.current.ctrl1 & ~0x60) | (m & 0x60);
     reg.current.ctrl2 = (reg.current.ctrl2 & ~0x10) | (m & 0x10);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -125,11 +125,11 @@ VIC::setNumberOfRows(unsigned rs)
 {
     assert(rs == 24 || rs == 25);
     
-    c64->suspend();
+    suspend();
     uint8_t cntrl = reg.current.ctrl1;
     WRITE_BIT(cntrl, 3, rs == 25);
     poke(0x11, cntrl);
-    c64->resume();
+    resume();
 }
 
 void
@@ -137,11 +137,11 @@ VIC::setNumberOfColumns(unsigned cs)
 {
     assert(cs == 38 || cs == 40);
 
-    c64->suspend();
+    suspend();
     uint8_t cntrl = reg.current.ctrl2;
     WRITE_BIT(cntrl, 3, cs == 40);
     poke(0x16, cntrl);
-    c64->resume();
+    resume();
 }
 
 ScreenGeometry
@@ -160,10 +160,10 @@ VIC::getScreenGeometry(void)
 void
 VIC::setScreenGeometry(ScreenGeometry mode)
 {
-    c64->suspend();
+    suspend();
     setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
     setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
-    c64->resume();
+    resume();
 }
 
 void
@@ -171,10 +171,10 @@ VIC::setVerticalRasterScroll(uint8_t offset)
 {
     assert(offset < 8);
     
-    c64->suspend();
+    suspend();
     reg.current.ctrl1 = (reg.current.ctrl1 & 0xF8) | (offset & 0x07);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -182,36 +182,36 @@ VIC::setHorizontalRasterScroll(uint8_t offset)
 {
     assert(offset < 8);
     
-    c64->suspend();
+    suspend();
     reg.current.ctrl2 = (reg.current.ctrl2 & 0xF8) | (offset & 0x07);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setRasterInterruptLine(uint16_t line)
 {
-    c64->suspend();
+    suspend();
     rasterIrqLine = line & 0xFF;
     WRITE_BIT(reg.delayed.ctrl1, 7, line > 0xFF);
     WRITE_BIT(reg.current.ctrl1, 7, line > 0xFF);
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setRasterInterruptEnable(bool b)
 {
-    c64->suspend();
+    suspend();
     WRITE_BIT(imr, 1, b);
-    c64->resume();
+    resume();
 }
 
 void
 VIC::toggleRasterInterruptFlag()
 {
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(imr, 1);
-    c64->resume();
+    resume();
 }
 
 
@@ -225,10 +225,10 @@ VIC::setSpriteX(unsigned nr, uint16_t x)
     assert(nr < 8);
     x = MIN(x, 511);
     
-    c64->suspend();
+    suspend();
     reg.current.sprX[nr] = x;
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -236,10 +236,10 @@ VIC::setSpriteY(unsigned nr, uint8_t y)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     reg.current.sprY[nr] = y;
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -247,60 +247,59 @@ VIC::setSpriteColor(unsigned nr, uint8_t color)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     reg.current.colors[COLREG_SPR0 + nr] = color;
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setSpriteEnabled(uint8_t nr, bool b)
 {
-    c64->suspend();
+    suspend();
     WRITE_BIT(reg.current.sprEnable, nr, b);
-    delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::toggleSpriteEnabled(uint8_t nr)
 {
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(reg.current.sprEnable, nr);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setIrqOnSpriteBackgroundCollision(bool b)
 {
-    c64->suspend();
+    suspend();
     WRITE_BIT(imr, 1, b);
-    c64->resume();
+    resume();
 }
 
 void
 VIC::toggleIrqOnSpriteBackgroundCollision()
 {
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(imr, 1);
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setIrqOnSpriteSpriteCollision(bool b)
 {
-    c64->suspend();
+    suspend();
     WRITE_BIT(imr, 2, b);
-    c64->resume();
+    resume();
 }
 
 void
 VIC::toggleIrqOnSpriteSpriteCollision()
 {
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(imr, 2);
-    c64->resume();
+    resume();
 }
 
 void
@@ -308,10 +307,10 @@ VIC::setSpritePriority(unsigned nr, bool b)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     WRITE_BIT(reg.current.sprPriority, nr, b);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -319,10 +318,10 @@ VIC::toggleSpritePriority(unsigned nr)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(reg.current.sprPriority, nr);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -330,10 +329,10 @@ VIC::setSpriteMulticolor(unsigned nr, bool b)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     WRITE_BIT(reg.current.sprMC, nr, b);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -341,10 +340,10 @@ VIC::toggleMulticolorFlag(unsigned nr)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(reg.current.sprMC, nr);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -352,10 +351,10 @@ VIC::setSpriteStretchY(unsigned nr, bool b)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     WRITE_BIT(reg.current.sprExpandY, nr, b);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -363,10 +362,10 @@ VIC::spriteToggleStretchYFlag(unsigned nr)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(reg.current.sprExpandY, nr);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -374,10 +373,10 @@ VIC::setSpriteStretchX(unsigned nr, bool b)
 {
     assert(nr < 8);
     
-    c64->suspend();
+    suspend();
     WRITE_BIT(reg.current.sprExpandX, nr, b);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
@@ -385,66 +384,66 @@ VIC::spriteToggleStretchXFlag(unsigned nr)
 {
     assert(nr < 8);
 
-    c64->suspend();
+    suspend();
     TOGGLE_BIT(reg.current.sprExpandX, nr);
     delay |= VICUpdateRegisters;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setShowIrqLines(bool show)
 {
-    c64->suspend();
+    suspend();
     markIRQLines = show;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setShowDmaLines(bool show)
 {
-    c64->suspend();
+    suspend();
     markDMALines = show;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setHideSprites(bool hide)
 {
-    c64->suspend();
+    suspend();
     hideSprites = hide;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setSpriteSpriteCollisionFlag(bool b)
 {
-    c64->suspend();
+    suspend();
     spriteSpriteCollisionEnabled = b;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::toggleSpriteSpriteCollisionFlag()
 {
-    c64->suspend();
+    suspend();
     spriteSpriteCollisionEnabled = !spriteSpriteCollisionEnabled;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::setSpriteBackgroundCollisionFlag(bool b)
 {
-    c64->suspend();
+    suspend();
     spriteBackgroundCollisionEnabled = b;
-    c64->resume();
+    resume();
 }
 
 void
 VIC::toggleSpriteBackgroundCollisionFlag()
 {
-    c64->suspend();
+    suspend();
     spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled;
-    c64->resume();
+    resume();
 }
 
 

@@ -1,20 +1,12 @@
-/*
- * Author: Dirk W. Hoffmann. 2018, All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+//
+// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
+//
+
 
 #import <Cocoa/Cocoa.h>
 #import "C64_types.h"
@@ -23,7 +15,7 @@
 // Forward declarations of proxy classes
 @class MyController;
 @class C64Proxy;
-@class ContainerProxy;
+@class AnyC64FileProxy;
 @class SnapshotProxy;
 @class ArchiveProxy;
 @class TAPProxy;
@@ -46,7 +38,7 @@ struct Via6522Wrapper;
 struct DiskWrapper;
 struct DriveWrapper;
 struct DatasetteWrapper;
-struct ContainerWrapper;
+struct AnyC64FileWrapper;
 
 //
 // CPU
@@ -63,6 +55,7 @@ struct ContainerWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
+- (UInt64) cycle;
 - (uint16_t) pc;
 - (void) setPC:(uint16_t)pc;
 - (void) setSP:(uint8_t)sp;
@@ -343,7 +336,9 @@ struct ContainerWrapper;
 
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
+- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
+- (void) detachCartridgeAndReset;
 - (BOOL) hasFreezeButton;
 - (void) pressFreezeButton;
 - (void) releaseFreezeButton;
@@ -465,8 +460,6 @@ struct ContainerWrapper;
 - (void) rotateDisk;
 - (void) rotateBack;
 
-// - (BOOL) exportToD64:(NSString *)path;
-
 @end
 
 
@@ -487,7 +480,7 @@ struct ContainerWrapper;
 - (void) pressStop;
 - (void) rewind;
 - (void) ejectTape;
-
+- (BOOL) insertTape:(TAPProxy *)tape;
 - (NSInteger) getType; 
 - (long) durationInCycles;
 - (int) durationInSeconds;
@@ -509,9 +502,9 @@ struct ContainerWrapper;
     
 	struct C64Wrapper *wrapper;
     
-	// Sub proxys
+	// Hardware components
+    MemoryProxy *mem;
 	CPUProxy *cpu;
-	MemoryProxy *mem;
 	VICProxy *vic;
 	CIAProxy *cia1;
 	CIAProxy *cia2;
@@ -526,8 +519,8 @@ struct ContainerWrapper;
     DatasetteProxy *datasette;
 }
 
-@property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
+@property (readonly) CPUProxy *cpu;
 @property (readonly) VICProxy *vic;
 @property (readonly) CIAProxy *cia1;
 @property (readonly) CIAProxy *cia2;
@@ -541,23 +534,82 @@ struct ContainerWrapper;
 @property (readonly) DriveProxy *drive2;
 @property (readonly) DatasetteProxy *datasette;
 
-- (struct C64Wrapper *)wrapper;
 - (void) kill;
 
+- (struct C64Wrapper *)wrapper;
+- (DriveProxy *)drive:(NSInteger)nr;
+
+- (void) ping;
 - (void) dump;
 - (BOOL) developmentMode;
 
-// Configuration
+// Configuring the emulator
 - (NSInteger) model;
 - (void) setModel:(NSInteger)value;
 
-// Disk drive
-- (DriveProxy *)drive:(NSInteger)nr;
+// Accessing the message queue
+- (Message)message;
+- (void) addListener:(const void *)sender function:(Callback *)func;
+- (void) removeListener:(const void *)sender;
 
-// Loading and saving
-- (BOOL)mount:(ContainerProxy *)container;
-- (BOOL)flash:(ContainerProxy *)container;
-- (BOOL)flash:(ContainerProxy *)container item:(NSInteger)item;
+// Running the emulator
+- (void) powerUp;
+- (void) run;
+- (void) halt;
+- (void) suspend;
+- (void) resume;
+- (BOOL) isRunnable;
+- (BOOL) isRunning;
+- (BOOL) isHalted;
+- (void) step;
+- (void) stepOver;
+
+// Handling mice
+- (NSInteger) mouseModel;
+- (void) setMouseModel:(NSInteger)model;
+- (void) connectMouse:(NSInteger)toPort;
+- (void) disconnectMouse;
+- (void) setMouseXY:(NSPoint)position;
+- (void) setMouseLeftButton:(BOOL)pressed;
+- (void) setMouseRightButton:(BOOL)pressed;
+
+// Managing the execution thread
+- (BOOL) warp;
+- (BOOL) alwaysWarp;
+- (void) setAlwaysWarp:(BOOL)b;
+- (BOOL) warpLoad;
+- (void) setWarpLoad:(BOOL)b;
+
+// Handling snapshots
+- (void) disableAutoSnapshots;
+- (void) enableAutoSnapshots;
+- (void) suspendAutoSnapshots;
+- (void) resumeAutoSnapshots;
+- (NSInteger) snapshotInterval;
+- (void) setSnapshotInterval:(NSInteger)value;
+
+- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
+- (BOOL) restoreUserSnapshot:(NSInteger)nr;
+- (BOOL) restoreLatestAutoSnapshot;
+- (BOOL) restoreLatestUserSnapshot;
+- (NSInteger) numAutoSnapshots;
+- (NSInteger) numUserSnapshots;
+
+- (NSData *) autoSnapshotData:(NSInteger)nr;
+- (NSData *) userSnapshotData:(NSInteger)nr;
+- (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
+- (unsigned char *) userSnapshotImageData:(NSInteger)nr;
+- (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
+- (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
+- (time_t) autoSnapshotTimestamp:(NSInteger)nr;
+- (time_t) userSnapshotTimestamp:(NSInteger)nr;
+
+- (void) takeUserSnapshot;
+
+- (void) deleteAutoSnapshot:(NSInteger)nr;
+- (void) deleteUserSnapshot:(NSInteger)nr;
 
 // Handling ROMs
 - (BOOL) isBasicRom:(NSURL *)url;
@@ -575,99 +627,29 @@ struct ContainerWrapper;
 - (BOOL) isRom:(NSURL *)url;
 - (BOOL) loadRom:(NSURL *)url;
 
-// Using the message queue
-- (Message)message;
-- (void) addListener:(const void *)sender function:(Callback *)func;
-- (void) removeListener:(const void *)sender;
-
-// Running the emulator
-- (void) powerUp;
-- (void) ping;
-
-- (BOOL) isRunnable;
-- (BOOL) isRunning;
-- (BOOL) isHalted;
-- (void) run;
-- (void) halt;
-- (void) suspend;
-- (void) resume;
-
-- (void) step;
-- (void) stepOver;
-
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
-- (void) detachCartridgeAndReset;
-- (BOOL) isCartridgeAttached;
-
-// - (BOOL) insertDisk:(ArchiveProxy *)a;
-- (BOOL) insertTape:(TAPProxy *)a;
-
-- (NSInteger) mouseModel;
-- (void) setMouseModel:(NSInteger)model;
-- (void) connectMouse:(NSInteger)toPort;
-- (void) disconnectMouse;
-- (void) setMouseXY:(NSPoint)position;
-- (void) setMouseLeftButton:(BOOL)pressed;
-- (void) setMouseRightButton:(BOOL)pressed;
-
-- (BOOL) warp;
-- (BOOL) alwaysWarp;
-- (void) setAlwaysWarp:(BOOL)b;
-- (BOOL) warpLoad;
-- (void) setWarpLoad:(BOOL)b;
-
-- (UInt64) cycles;
-
-// Snapshot storage
-- (void) disableAutoSnapshots;
-- (void) enableAutoSnapshots;
-- (void) suspendAutoSnapshots;
-- (void) resumeAutoSnapshots;
-- (NSInteger) snapshotInterval;
-- (void) setSnapshotInterval:(NSInteger)value;
-- (NSInteger) numAutoSnapshots;
-- (NSData *) autoSnapshotData:(NSInteger)nr;
-- (unsigned char *) autoSnapshotImageData:(NSInteger)nr;
-- (NSInteger) autoSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger) autoSnapshotImageHeight:(NSInteger)nr;
-- (time_t) autoSnapshotTimestamp:(NSInteger)nr;
-- (BOOL) restoreAutoSnapshot:(NSInteger)nr;
-- (BOOL) restoreLatestAutoSnapshot;
-
-- (NSInteger) numUserSnapshots;
-- (NSData *) userSnapshotData:(NSInteger)nr;
-- (unsigned char *) userSnapshotImageData:(NSInteger)nr;
-- (NSInteger) userSnapshotImageWidth:(NSInteger)nr;
-- (NSInteger) userSnapshotImageHeight:(NSInteger)nr;
-- (time_t) userSnapshotTimestamp:(NSInteger)nr;
-- (void) takeUserSnapshot;
-- (BOOL) restoreUserSnapshot:(NSInteger)nr;
-- (BOOL) restoreLatestUserSnapshot;
-- (void) deleteUserSnapshot:(NSInteger)nr;
-
-// Audio hardware
-- (BOOL) enableAudio;
-- (void) disableAudio;
+// Flashing files
+- (BOOL)flash:(AnyC64FileProxy *)container;
+- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr;
 
 @end
 
 
 //
-// C O N T A I N E R   P R O X Y   C L A S S E S
+// F I L E   P R O X Y   C L A S S E S
 //
 
 //
-// ContainerProxy
+// AnyC64FileProxy
 //
 
-@interface ContainerProxy : NSObject {
+@interface AnyC64FileProxy : NSObject {
     
-    struct ContainerWrapper *wrapper;
+    struct AnyC64FileWrapper *wrapper;
 }
 
 - (void)setPath:(NSString *)path;
 
-- (struct ContainerWrapper *)wrapper;
+- (struct AnyC64FileWrapper *)wrapper;
 
 - (C64FileType)type; 
 - (NSString *)name;
@@ -684,7 +666,7 @@ struct ContainerWrapper;
 // SnapshotProxy
 //
 
-@interface SnapshotProxy : ContainerProxy {
+@interface SnapshotProxy : AnyC64FileProxy {
 }
 
 + (BOOL)isSupportedSnapshot:(const void *)buffer length:(NSInteger)length;
@@ -705,7 +687,7 @@ struct ContainerWrapper;
 // CRTProxy
 //
 
-@interface CRTProxy : ContainerProxy {
+@interface CRTProxy : AnyC64FileProxy {
 }
 
 + (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
@@ -733,7 +715,7 @@ struct ContainerWrapper;
 // TAPProxy
 //
 
-@interface TAPProxy : ContainerProxy {
+@interface TAPProxy : AnyC64FileProxy {
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
@@ -748,7 +730,7 @@ struct ContainerWrapper;
 // ArchiveProxy
 //
 
-@interface ArchiveProxy : ContainerProxy {
+@interface ArchiveProxy : AnyC64FileProxy {
 }
 
 + (instancetype)make;

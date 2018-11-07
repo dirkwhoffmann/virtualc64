@@ -96,7 +96,7 @@ FinalIII::pressFreezeButton() {
     
     // The freezer is enabled by selecting bank 0 in ultimax mode and
     // triggering an NMI
-    c64->suspend();
+    suspend();
     pokeIO2(0xDFFF, 0x10);
-    c64->resume();
+    resume();
 }

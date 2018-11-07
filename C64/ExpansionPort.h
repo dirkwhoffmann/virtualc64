@@ -138,14 +138,20 @@ public:
     //! @brief    Returns true if a cartridge is attached to the expansion port
     bool getCartridgeAttached() { return cartridge != NULL; }
 
-    //! @brief    Attaches an existing cartridge to the expansion port
+    //! @brief    Attaches a cartridge to the expansion port.
     bool attachCartridge(Cartridge *c);
 
+    //! @brief    Attaches a cartridge from a file and resets.
+    bool attachCartridgeAndReset(CRTFile *c);
+    
     //! @brief    Creates and attaches a GeoRAM cartridge
     bool attachGeoRamCartridge(uint32_t capacity);
     
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
+
+    //! @brief    Removes a cartridge from the expansion port and resets
+    void detachCartridgeAndReset();
 
     //! @brief    Returns true if a cartridge with a freeze button is attached
     bool hasFreezeButton() { return cartridge ? cartridge->hasFreezeButton() : false; }

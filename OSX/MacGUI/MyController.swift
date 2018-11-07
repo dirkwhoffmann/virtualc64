@@ -1,8 +1,10 @@
 //
-//  MyController.swift
-//  VirtualC64
+// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 29.01.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
 //
 
 import Foundation
@@ -43,6 +45,9 @@ class MyController : NSWindowController, MessageReceiver {
     /// GUI written in Swift. Because Swift cannot interact with C++ directly,
     //  the proxy is written in Objective-C.
     var c64: C64Proxy!
+    
+    /// Audio Engine
+    var audioEngine: AudioEngine!
     
     /// Game pad manager
     var gamePadManager: GamePadManager!
@@ -317,6 +322,9 @@ extension MyController {
  
         track()
 
+        // Create audio engine
+        audioEngine = AudioEngine.init(withSID: c64.sid)
+            
         // Reset mouse coordinates
         mouseXY = NSZeroPoint
         hideMouse = false
@@ -485,7 +493,7 @@ extension MyController {
         
         // Do 3 times a second ...
         if (animationCounter % 4) == 0 {
-            speedometer.updateWith(cycle: c64.cycles(), frame: metalScreen.frames)
+            speedometer.updateWith(cycle: c64.cpu.cycle(), frame: metalScreen.frames)
             let mhz = speedometer.mhz(digits: 2)
             let fps = speedometer.fps(digits: 0)
             clockSpeed.stringValue = String(format:"%.2f MHz %.0f fps", mhz, fps)
@@ -799,34 +807,37 @@ extension MyController {
     // Mounting media files
     //
     
-    /// DEPRECATED
     @discardableResult
-    func mount(_ item: ContainerProxy?) -> Bool {
+    func mount(_ item: AnyC64FileProxy?) -> Bool {
 
         guard let type = item?.type() else { return false }
-            
-        // We need to take some special care for items that mount as a disk.
-        // In that case, the light barrier has to be broken several times.
         
         switch (type) {
             
+        case CRT_FILE:
+            return c64.expansionport.attachCartridgeAndReset(item as? CRTProxy)
+            
+        case TAP_FILE:
+            return c64.datasette.insertTape(item as? TAPProxy)
+            
         case T64_FILE, D64_FILE,
-             PRG_FILE, P00_FILE:
+             PRG_FILE, P00_FILE,
+             G64_FILE:
+            // We need to take some special care for items that mount as a disk.
+            // In that case, the light barrier has to be broken several times.
             // TODO: Use insertDisk for these attachments in future
             changeDisk(item, drive: 1)
             return true
-            
+                        
         default:
-            break
+            track("Unknown attachment type \(type).")
+            fatalError()
         }
-        
-        // Finally, let's mount that thing
-        return c64.mount(item)
     }
     
     // Emulates changing a disk including the necessary light barrier breaks
     // If disk is nil, only the ejection is emulated.
-    func changeDisk(_ disk: ContainerProxy?, drive nr: Int) {
+    func changeDisk(_ disk: AnyC64FileProxy?, drive nr: Int) {
         
         let drive = c64.drive(nr)!
 

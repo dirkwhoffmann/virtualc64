@@ -1,8 +1,10 @@
 //
-//  WindowDelegate.swift
-//  VirtualC64
+// This file is part of VirtualC64 - A user-friendly Commodore 64 emulator
 //
-//  Created by Dirk Hoffmann on 11.02.18.
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// Licensed under the GNU General Public License v3
+//
+// See https://www.gnu.org for license information
 //
 
 import Foundation
@@ -11,7 +13,9 @@ extension MyController : NSWindowDelegate {
         
     public func windowDidBecomeMain(_ notification: Notification) {
         
-        c64.enableAudio()
+        // Enable audio
+        c64.sid.rampUpFromZero()
+        audioEngine.startPlayback()
         
         // Start emulator if it was only paused while in background
         if pauseInBackgroundSavedState { c64.run() }
@@ -22,7 +26,9 @@ extension MyController : NSWindowDelegate {
     
     public func windowDidResignMain(_ notification: Notification) {
         
-        c64.disableAudio()
+        // Disable audio
+        c64.sid.rampDown()
+        audioEngine.stopPlayback()
         
         // Stop emulator if it is configured to pause in background
         pauseInBackgroundSavedState = c64.isRunning()
@@ -39,6 +45,9 @@ extension MyController : NSWindowDelegate {
         // Stop timer
         timer?.invalidate()
         timer = nil
+        
+        // Stop audio playback
+        audioEngine.stopPlayback()
         
         // Quit message queue
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())

@@ -87,7 +87,7 @@ P00File::makeWithAnyArchive(AnyArchive *otherArchive)
     P00File *archive = new P00File();
     archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->typeAsString());
     
-    // Determine container size and allocate memory
+    // Determine file size and allocate memory
     try {
         
         archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem();

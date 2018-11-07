@@ -303,6 +303,8 @@ class C64 : public VirtualComponent {
     void reset();
     void ping();
     void setClockFrequency(uint32_t frequency);
+    void suspend();
+    void resume();
     void dumpState();
     
  
@@ -329,26 +331,24 @@ class C64 : public VirtualComponent {
     
     
     //
-    //! @functiongroup Handling mice
+    //! @functiongroup Accessing the message queue
     //
     
-    //! @brief    Returns the hardware model of the selected mouse.
-    MouseModel getMouseModel() { return mouse->mouseModel(); }
+    //! @brief    Registers a listener callback function
+    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
+        queue.addListener(sender, func);
+    }
     
-    //! @brief    Sets the mouse hardware model.
-    void setMouseModel(MouseModel value);
+    //! @brief    Removes a listener callback function
+    void removeListener(const void *sender) {
+        queue.removeListener(sender);
+    }
     
-    //! @brief    Connects the selected mouse with the control port.
-    void connectMouse(unsigned port);
+    //! @brief    Gets a notification message from message queue
+    Message getMessage() { return queue.getMessage(); }
     
-    //! @brief    Reads the control port mouse bits.
-    uint8_t mouseBits(unsigned port);
-    
-    //! @brief    Returns the potX bits as they show up in the SID register.
-    uint8_t potXBits();
-    
-    //! @brief    Returns the potY bits as they show up in the SID register.
-    uint8_t potYBits();
+    //! @brief    Feeds a notification message into message queue
+    void putMessage(MessageType msg, uint64_t data = 0) { queue.putMessage(msg, data); }
     
     
     //
@@ -377,27 +377,7 @@ class C64 : public VirtualComponent {
      *            not running.
      */
     void halt();
-    
-    /*! @brief    Freezes the emulation thread.
-     *  @details  If the internal state of the emulator is changed from outside
-     *            the emulation thread, the change must be embedded in a
-     *            suspend / resume block as follows:
-     *
-     *            suspend();
-     *            do something with the internal state;
-     *            resume();
-     *
-     *  @note     Multiple suspend / resume blocks can be nested.
-     *  @see      resume
-     */
-    void suspend();
-    
-    /*! @brief    Continues the emulation thread.
-     *  @details  This functions concludes a suspend operation.
-     *  @see      suspend
-     */
-    void resume();
-    
+        
     /*! @brief    The tread exit function.
      *  @details  This method is invoked automatically when the emulator thread
      *            terminates.
@@ -458,8 +438,35 @@ class C64 : public VirtualComponent {
     
     
     //
+    //! @functiongroup Handling mice
+    //
+    
+    public:
+    
+    //! @brief    Returns the hardware model of the selected mouse.
+    MouseModel getMouseModel() { return mouse->mouseModel(); }
+    
+    //! @brief    Sets the mouse hardware model.
+    void setMouseModel(MouseModel value);
+    
+    //! @brief    Connects the selected mouse with the control port.
+    void connectMouse(unsigned port);
+    
+    //! @brief    Reads the control port mouse bits.
+    uint8_t mouseBits(unsigned port);
+    
+    //! @brief    Returns the potX bits as they show up in the SID register.
+    uint8_t potXBits();
+    
+    //! @brief    Returns the potY bits as they show up in the SID register.
+    uint8_t potYBits();
+    
+    
+    //
     //! @functiongroup Managing the execution thread
     //
+    
+    private:
     
     //! @brief    Converts kernel time to nanoseconds.
     uint64_t abs_to_nanos(uint64_t abs) { return abs * timebase.numer / timebase.denom; }
@@ -493,6 +500,8 @@ class C64 : public VirtualComponent {
      */
     void restartTimer();
     
+    private:
+    
     /*! @brief    Puts the emulation the thread to sleep for a while.
      *  @details  This function is called inside endFrame(). It makes the
      *            emulation thread wait until nanoTargetTime has been reached.
@@ -501,32 +510,12 @@ class C64 : public VirtualComponent {
      */
     void synchronizeTiming();
     
-    
-    //
-    //! @functiongroup Accessing cycle, rasterline, and frame information
-    //
-    
-    //! @brief    Returns the number of CPU cycles elapsed so far.
-    uint64_t cycle() { return cpu.cycle; }
-    
-    
-    //
-    //! @functiongroup Operation modes
-    //
-    
-    //! @brief    Returns the ultimax flag
-    bool getUltimax() { return ultimax; }
-    
-    /*! @brief    Setter for ultimax
-     *  @details  This method is called in function updatePeekPokeLookupTables()
-     *            if a certain game / exrom line combination is provided.
-     */
-    void setUltimax(bool b) { ultimax = b; }
-    
-    
+ 
     //
     //! @functiongroup Handling snapshots
     //
+    
+    public:
     
     //! @brief    Disables the auto-snapshot feature.
     void disableAutoSnapshots() { if (snapshotInterval > 0) snapshotInterval *= -1; }
@@ -550,30 +539,23 @@ class C64 : public VirtualComponent {
     //! @brief    Sets the time between two auto-snapshots in seconds.
     void setSnapshotInterval(long value) { snapshotInterval = value; }
     
-    /*! @brief    Loads the current state from a snapshot container
-     *  @note     This functions is not thread-safe. It must be used only on
-     *            halted emulators or within the emulation thread.
-     *  @seealso  loadFromSnapshotSafe
+    /*! @brief    Loads the current state from a snapshot file
+     *  @note     There is an thread-unsafe and thread-safe version of this
+     *            function. The first one can be unsed inside the emulator
+     *            thread or from outside if the emulator is halted. The second
+     *            one can be called any time.
      */
     void loadFromSnapshotUnsafe(Snapshot *snapshot);
-    
-    /*! @brief    Thread-safe version of loadFromSnapshotUnsafe
-     *  @details  A running emulator is paused before performing the operation.
-     */
     void loadFromSnapshotSafe(Snapshot *snapshot);
     
-    //! @brief    Restores an snapshot from the snapshot storage
+    //! @brief    Restores a certain snapshot from the snapshot storage
     bool restoreSnapshot(vector<Snapshot *> &storage, unsigned nr);
     bool restoreAutoSnapshot(unsigned nr) { return restoreSnapshot(autoSnapshots, nr); }
     bool restoreUserSnapshot(unsigned nr) { return restoreSnapshot(userSnapshots, nr); }
 
-    //! @brief    Restores the latest auto-saved snapshot.
-    /*! @note     The reverted snapshot is deleted from the snapshot buffer.
-     */
-    bool restoreLatestAutoSnapshot();
-    
-    //! @brief    Restores the latest user-saved snapshot.
-    bool restoreLatestUserSnapshot();
+    //! @brief    Restores the latest snapshot from the snapshot storage
+    bool restoreLatestAutoSnapshot() { return restoreAutoSnapshot(0); }
+    bool restoreLatestUserSnapshot() { return restoreUserSnapshot(0); }
     
     //! @brief    Returns the number of stored snapshots
     size_t numSnapshots(vector<Snapshot *> &storage);
@@ -598,7 +580,6 @@ class C64 : public VirtualComponent {
     void takeAutoSnapshotSafe() { suspend(); takeSnapshot(autoSnapshots); resume(); }
     void takeUserSnapshotSafe() { suspend(); takeSnapshot(userSnapshots); resume(); }
     
-    
     /*! @brief    Deletes a snapshot from the snapshot storage
      *  @details  All remaining snapshots are moved one position down.
      */
@@ -606,65 +587,41 @@ class C64 : public VirtualComponent {
     void deleteAutoSnapshot(unsigned nr) { deleteSnapshot(autoSnapshots, nr); }
     void deleteUserSnapshot(unsigned nr) { deleteSnapshot(userSnapshots, nr); }
     
-    
-    //
-    //! @functiongroup Attaching media objects
-    //
-    
-    //! @brief    Mounts an object stored in a file of supported type
-    /*! @details  Mountable objects are disks, tapes, and cartridges.
-     */
-    bool mount(AnyC64File *file);
-    
-    //! @brief    Flashes an item stored in a file of supported type
-    /*! @details  Flashable objects are single programs, roms, and snapshots.
-     */
-    bool flash(AnyC64File *file, unsigned item = 0);
-    
-    //! @brief    Loads ROM image into memory
-    bool loadRom(const char *filename);
-    
-    /*! @brief    Inserts an archive into the floppy drive as a virtual disk.
-     *  @details  Only D64 and G64 archives are supported.
-     */
-    bool insertDisk(AnyArchive *a, unsigned drive);
-    
-    /*! @brief    Inserts a TAP container as a virtual datasette tape.
-     *  @details  Only TAP archives can be used as tape.
-     *  @deprecated
-     */
-    bool insertTape(TAPFile *a);
-    
-    //! @brief    Attaches a cartridge to the expansion port.
-    bool attachCartridgeAndReset(CRTFile *c);
-    
-    //! @brief    Detaches a cartridge from the expansion port.
-    void detachCartridgeAndReset();
-    
-    //! @brief    Returns true iff a cartridge is attached.
-    bool isCartridgeAttached();
-    
-    
-    //
-    //! @functiongroup Accessing the message queue
-    //
-    
-    //! @brief    Registers a listener callback function
-    void addListener(const void *sender, void(*func)(const void *, int, long) ) {
-        queue.addListener(sender, func);
-    }
-    
-    //! @brief    Removes a listener callback function
-    void removeListener(const void *sender) {
-        queue.removeListener(sender);
-    }
-    
-    //! @brief    Gets a notification message from message queue
-    Message getMessage() { return queue.getMessage(); }
-    
-    //! @brief    Feeds a notification message into message queue
-    void putMessage(MessageType msg, uint64_t data = 0) { queue.putMessage(msg, data); }
 
+    //
+    //! @functiongroup Handling Roms
+    //
+    
+    //! @brief    Loads a ROM image into memory
+    bool loadRom(const char *filename);
+
+    
+    //
+    //! @functiongroup Flashing files
+    //
+    
+    //! @brief    Flashes a single file into memory
+    bool flash(AnyC64File *file);
+
+    //! @brief    Flashes a single item of an archive into memory
+    bool flash(AnyArchive *file, unsigned item);
+    
+ 
+    //
+    //! @functiongroup Set and query ultimax mode
+    //
+    
+    public:
+    
+    //! @brief    Returns the ultimax flag
+    bool getUltimax() { return ultimax; }
+    
+    /*! @brief    Setter for ultimax
+     *  @details  This method is called in function updatePeekPokeLookupTables()
+     *            if a certain game / exrom line combination is provided.
+     */
+    void setUltimax(bool b) { ultimax = b; }
+    
     
     //
     //! @functiongroup Debugging
