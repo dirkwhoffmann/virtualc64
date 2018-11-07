@@ -179,12 +179,14 @@ public extension MetalView {
     
     func fillFragmentShaderUniforms(_ buffer: MTLBuffer?) {
         
-        var _s = scanlines
+        var _s = (scanlines == 0) ? 0 : Int(layerHeight / 256);
         var _sb = scanlineBrightness
         var _sw = scanlineWeight
         var _bf = bloomFactor
         var _m = dotMask
         var _dmb = maskBrightness
+        
+        // track("scanline height: \(_s)")
         
         if let contents = buffer?.contents() {
             memcpy(contents, &_s, 4)
