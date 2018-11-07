@@ -54,10 +54,12 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
     return out;
 }
 
-float4 scanlineWeight(uint2 pixel, float weight, float brightness, float bloom) {
+float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, float bloom) {
     
     // Calculate distance to nearest scanline
-    float dy = ((float(pixel.y % 6) - 2.5) / 2.5) / 4;
+    float modHeight = float(pixel.y % height) - 0.5 * float(height);
+    float scaledModHeight = modHeight / (float)height;
+    float dy = scaledModHeight / 2;
     
     // Calculate scanline weight
     float scanlineWeight = max(1.0 - dy * dy * weight, brightness);
@@ -114,8 +116,9 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     float4 color = texture.sample(texSampler, tc);
     
     // Apply scanline effect
-    if (uniforms.scanline == 1) {
+    if (uniforms.scanline != 0) {
         color *= scanlineWeight(pixel,
+                                uniforms.scanline,
                                 uniforms.scanlineWeight,
                                 uniforms.scanlineBrightness,
                                 uniforms.bloomFactor);
