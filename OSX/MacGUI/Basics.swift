@@ -112,4 +112,3 @@ public extension C64Proxy {
        return image(data: data, size: userSnapshotImageSize(item))
     }
 }
-

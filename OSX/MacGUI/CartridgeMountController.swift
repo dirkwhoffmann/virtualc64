@@ -38,7 +38,7 @@ class CartridgeMountController : UserDialogController {
         data.reloadData()
         
         // Set name and type
-        let cartName = cartridge.cartridgeName()!
+        let cartName = cartridge.name()!
         let cartType = cartridge.cartridgeType().rawValue
         let cartTypeName = cartridge.cartridgeTypeName()!
     
@@ -105,19 +105,19 @@ extension CartridgeMountController : NSTableViewDataSource {
         if (tableColumn?.identifier)!.rawValue == "addr" {
             
             let str = String(format: "$%04X - %04X",
-                             cartridge.loadAddr(ofChip: row),
-                             cartridge.loadAddr(ofChip: row) + cartridge.size(ofChip: row))
+                             cartridge.chipAddr(row),
+                             cartridge.chipAddr(row) + cartridge.chipSize(row))
             return str
         }
         if (tableColumn?.identifier)!.rawValue == "size" {
             
-            let str = String(format: "%d KB", cartridge.size(ofChip: row) / 1024)
+            let str = String(format: "%d KB", cartridge.chipSize(row) / 1024)
             return str
         }
 
         if (tableColumn?.identifier)!.rawValue == "type" {
             
-            switch cartridge.type(ofChip: row) {
+            switch cartridge.chipType(row) {
             case 0: return "ROM"
             case 1: return "RAM"
             case 2: return "Flash ROM"

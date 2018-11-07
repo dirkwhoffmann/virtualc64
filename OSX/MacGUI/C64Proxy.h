@@ -645,17 +645,14 @@ struct AnyC64FileWrapper;
     struct AnyC64FileWrapper *wrapper;
 }
 
-- (void)setPath:(NSString *)path;
-
 - (struct AnyC64FileWrapper *)wrapper;
 
-- (C64FileType)type; 
+- (C64FileType)type;
+- (void)setPath:(NSString *)path;
 - (NSString *)name;
 - (NSInteger)sizeOnDisk;
-// - (void)seek:(NSInteger)offset; 
 - (void)readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger)writeToBuffer:(void *)buffer;
-// - (NSString *)readHex:(NSInteger)num;
 
 @end
 
@@ -675,9 +672,6 @@ struct AnyC64FileWrapper;
 + (instancetype)makeWithFile:(NSString *)path;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;
 
-- (NSInteger)imageWidth;
-- (NSInteger)imageHeight;
-- (unsigned char *)imageData;
 @end
 
 
@@ -695,17 +689,16 @@ struct AnyC64FileWrapper;
 + (BOOL)isCRTFile:(NSString *)path;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)path;
-
-- (NSString *)cartridgeName;
+ 
 - (CartridgeType)cartridgeType;
 - (NSString *)cartridgeTypeName;
-- (BOOL)isSupported;
 - (NSInteger)initialExromLine;
 - (NSInteger)initialGameLine;
 - (NSInteger)chipCount;
-- (NSInteger)typeOfChip:(NSInteger)nr;
-- (NSInteger)loadAddrOfChip:(NSInteger)nr;
-- (NSInteger)sizeOfChip:(NSInteger)nr;
+- (NSInteger)chipType:(NSInteger)nr;
+- (NSInteger)chipAddr:(NSInteger)nr;
+- (NSInteger)chipSize:(NSInteger)nr;
+
 @end
 
 

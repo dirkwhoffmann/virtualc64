@@ -78,6 +78,77 @@ CRTFile::isCRTFile(const char *path)
     return true;
 }
 
+const char *
+CRTFile::cartridgeTypeName(CartridgeType type)
+{
+    switch (type) {
+            
+        case CRT_NORMAL: return "Normal cartridge";
+        case CRT_ACTION_REPLAY: return "Action Replay";
+        case CRT_KCS_POWER: return "KCS Power";
+        case CRT_FINAL_III: return "Final Cartridge III";
+        case CRT_SIMONS_BASIC: return "Simons Basic";
+        case CRT_OCEAN: return "Ocean";
+        case CRT_EXPERT: return "Expert";
+        case CRT_FUNPLAY: return "Fun Play";
+        case CRT_SUPER_GAMES: return "Super Games";
+        case CRT_ATOMIC_POWER: return "Atomic Power";
+        case CRT_EPYX_FASTLOAD: return "Epyx Fastload";
+        case CRT_WESTERMANN: return "Westermann";
+        case CRT_REX: return "REX";
+        case CRT_FINAL_I: return "Final Cartridge I";
+        case CRT_MAGIC_FORMEL: return "Magic Formel";
+        case CRT_GAME_SYSTEM_SYSTEM_3: return "Game System 3";
+        case CRT_WARPSPEED: return "WarpSpeed";
+        case CRT_DINAMIC: return "Dinamic";
+        case CRT_ZAXXON: return "Zaxxon (SEGA)";
+        case CRT_MAGIC_DESK: return "Magic Desk";
+        case CRT_SUPER_SNAPSHOT_V5: return "Super Snapshot";
+        case CRT_COMAL80: return "Comal 80";
+        case CRT_STRUCTURE_BASIC: return "Structured Basic";
+        case CRT_ROSS: return "Ross";
+        case CRT_DELA_EP64: return "Dela EP64";
+        case CRT_DELA_EP7x8: return "Dela EP7x8";
+        case CRT_DELA_EP256: return "Dela EP256";
+        case CRT_REX_EP256: return "Rex EP256";
+        case CRT_MIKRO_ASSEMBLER: return "Mikro Assembler";
+        case CRT_FINAL_PLUS: return "Final Plus";
+        case CRT_ACTION_REPLAY4: return "Action replay 4";
+        case CRT_STARDOS: return "Stardos";
+        case CRT_EASYFLASH: return "Easyflash";
+        case CRT_EASYFLASH_XBANK: return "Easyflash (XBank)";
+        case CRT_CAPTURE: return "Capture";
+        case CRT_ACTION_REPLAY3: return "Action replay 3";
+        case CRT_RETRO_REPLAY: return "Metro replay";
+        case CRT_MMC64: return "MMC 64";
+        case CRT_MMC_REPLAY: return "MMC replay";
+        case CRT_IDE64: return "IDE 64";
+        case CRT_SUPER_SNAPSHOT: return "Super snapshot";
+        case CRT_IEEE488: return "IEEE 488";
+        case CRT_GAME_KILLER: return "Game killer";
+        case CRT_P64: return "P64";
+        case CRT_EXOS: return "Exos";
+        case CRT_FREEZE_FRAME: return "Freeze frame";
+        case CRT_FREEZE_MACHINE: return "Freeze machine";
+        case CRT_SNAPSHOT64: return "Snapshot 64";
+        case CRT_SUPER_EXPLODE_V5: return "Super explode V5";
+        case CRT_MAGIC_VOICE: return "Magic voice";
+        case CRT_ACTION_REPLAY2: return "Action replay 2";
+        case CRT_MACH5: return "Mach 5";
+        case CRT_DIASHOW_MAKER: return "Diashow Maker";
+        case CRT_PAGEFOX: return "Pagefox";
+        case CRT_KINGSOFT: return "Kingsoft";
+        case CRT_SILVERROCK_128: return "Silverrock 128";
+        case CRT_FORMEL64: return "Formel 64";
+        case CRT_RGCD: return "RGCD";
+        case CRT_RRNETMK3: return "RRNETMK3";
+        case CRT_EASYCALC: return "Easy calc";
+        case CRT_GMOD2: return "GMOD 2";
+            
+        default: return "";
+    }
+}
+
 CRTFile::CRTFile()
 {
     setDescription("CRTFile");
@@ -172,77 +243,6 @@ CRTFile::cartridgeType() {
     
     uint16_t type = LO_HI(data[0x17], data[0x16]);
     return CartridgeType(type);
-}
-
-const char *
-CRTFile::cartridgeTypeName(CartridgeType type)
-{
-    switch (type) {
-            
-        case CRT_NORMAL: return "Normal cartridge";
-        case CRT_ACTION_REPLAY: return "Action Replay";
-        case CRT_KCS_POWER: return "KCS Power";
-        case CRT_FINAL_III: return "Final Cartridge III";
-        case CRT_SIMONS_BASIC: return "Simons Basic";
-        case CRT_OCEAN: return "Ocean";
-        case CRT_EXPERT: return "Expert";
-        case CRT_FUNPLAY: return "Fun Play";
-        case CRT_SUPER_GAMES: return "Super Games";
-        case CRT_ATOMIC_POWER: return "Atomic Power";
-        case CRT_EPYX_FASTLOAD: return "Epyx Fastload";
-        case CRT_WESTERMANN: return "Westermann";
-        case CRT_REX: return "REX";
-        case CRT_FINAL_I: return "Final Cartridge I";
-        case CRT_MAGIC_FORMEL: return "Magic Formel";
-        case CRT_GAME_SYSTEM_SYSTEM_3: return "Game System 3";
-        case CRT_WARPSPEED: return "WarpSpeed";
-        case CRT_DINAMIC: return "Dinamic";
-        case CRT_ZAXXON: return "Zaxxon (SEGA)";
-        case CRT_MAGIC_DESK: return "Magic Desk";
-        case CRT_SUPER_SNAPSHOT_V5: return "Super Snapshot";
-        case CRT_COMAL80: return "Comal 80";
-        case CRT_STRUCTURE_BASIC: return "Structured Basic";
-        case CRT_ROSS: return "Ross";
-        case CRT_DELA_EP64: return "Dela EP64";
-        case CRT_DELA_EP7x8: return "Dela EP7x8";
-        case CRT_DELA_EP256: return "Dela EP256";
-        case CRT_REX_EP256: return "Rex EP256";
-        case CRT_MIKRO_ASSEMBLER: return "Mikro Assembler";
-        case CRT_FINAL_PLUS: return "Final Plus";
-        case CRT_ACTION_REPLAY4: return "Action replay 4";
-        case CRT_STARDOS: return "Stardos";
-        case CRT_EASYFLASH: return "Easyflash";
-        case CRT_EASYFLASH_XBANK: return "Easyflash (XBank)";
-        case CRT_CAPTURE: return "Capture";
-        case CRT_ACTION_REPLAY3: return "Action replay 3";
-        case CRT_RETRO_REPLAY: return "Metro replay";
-        case CRT_MMC64: return "MMC 64";
-        case CRT_MMC_REPLAY: return "MMC replay";
-        case CRT_IDE64: return "IDE 64";
-        case CRT_SUPER_SNAPSHOT: return "Super snapshot";
-        case CRT_IEEE488: return "IEEE 488";
-        case CRT_GAME_KILLER: return "Game killer";
-        case CRT_P64: return "P64";
-        case CRT_EXOS: return "Exos";
-        case CRT_FREEZE_FRAME: return "Freeze frame";
-        case CRT_FREEZE_MACHINE: return "Freeze machine";
-        case CRT_SNAPSHOT64: return "Snapshot 64";
-        case CRT_SUPER_EXPLODE_V5: return "Super explode V5";
-        case CRT_MAGIC_VOICE: return "Magic voice";
-        case CRT_ACTION_REPLAY2: return "Action replay 2";
-        case CRT_MACH5: return "Mach 5";
-        case CRT_DIASHOW_MAKER: return "Diashow Maker";
-        case CRT_PAGEFOX: return "Pagefox";
-        case CRT_KINGSOFT: return "Kingsoft";
-        case CRT_SILVERROCK_128: return "Silverrock 128";
-        case CRT_FORMEL64: return "Formel 64";
-        case CRT_RGCD: return "RGCD";
-        case CRT_RRNETMK3: return "RRNETMK3";
-        case CRT_EASYCALC: return "Easy calc";
-        case CRT_GMOD2: return "GMOD 2";
-            
-        default: return "";
-    }
 }
 
 const char *

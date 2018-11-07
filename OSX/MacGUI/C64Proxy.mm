@@ -927,21 +927,6 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     Snapshot *snapshot = Snapshot::makeWithC64(c64);
     return [self make:snapshot];
 }
-- (NSInteger)imageWidth
-{
-    Snapshot *snapshot = (Snapshot *)wrapper->file;
-    return snapshot->getImageWidth();
-}
-- (NSInteger)imageHeight
-{
-    Snapshot *snapshot = (Snapshot *)wrapper->file;
-    return snapshot->getImageHeight();
-}
-- (uint8_t *)imageData
-{
-    Snapshot *snapshot = (Snapshot *)wrapper->file;
-    return snapshot->getImageData();
-}
 
 @end
 
@@ -952,86 +937,79 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 @implementation CRTProxy
 
-+ (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    return CRTFile::typeOfCRTBuffer((uint8_t *)buffer, length); }
-+ (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length {
++ (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length
+{
+    return CRTFile::typeOfCRTBuffer((uint8_t *)buffer, length);
+}
++ (NSString *) typeNameOfCRTBuffer:(const void *)buffer length:(NSInteger)length
+{
     const char *str = CRTFile::typeNameOfCRTBuffer((uint8_t *)buffer, length);
-    return [NSString stringWithUTF8String: str]; }
-+ (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    return CRTFile::isSupportedCRTBuffer((uint8_t *)buffer, length); }
-+ (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length {
-    return CRTFile::isUnsupportedCRTBuffer((uint8_t *)buffer, length); }
-+ (BOOL) isCRTFile:(NSString *)path {
-    return CRTFile::isCRTFile([path UTF8String]); }
+    return [NSString stringWithUTF8String: str];
+}
++ (BOOL) isSupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
+{
+    return CRTFile::isSupportedCRTBuffer((uint8_t *)buffer, length);
+}
++ (BOOL) isUnsupportedCRTBuffer:(const void *)buffer length:(NSInteger)length
+{
+    return CRTFile::isUnsupportedCRTBuffer((uint8_t *)buffer, length);
+}
++ (BOOL) isCRTFile:(NSString *)path
+{
+    return CRTFile::isCRTFile([path UTF8String]);
+}
 + (instancetype) make:(CRTFile *)container
 {
-    if (container == NULL) {
-        return nil;
-    }
-    return [[self alloc] initWithFile:container];
+    return container ? [[self alloc] initWithFile:container] : nil;
 }
-
 + (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
 {
     CRTFile *container = CRTFile::makeWithBuffer((const uint8_t *)buffer, length);
     return [self make: container];
 }
-
 + (instancetype) makeWithFile:(NSString *)path
 {
     CRTFile *container = CRTFile::makeWithFile([path UTF8String]);
     return [self make: container];
 }
 
-- (NSString *)cartridgeName
+- (CRTFile *)unwrap
 {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return [NSString stringWithUTF8String:c->getName()];
+    return (CRTFile *)wrapper->file;
+}
+- (CartridgeType)cartridgeType
+{
+    return [self unwrap]->cartridgeType();
+}
+- (NSString *)cartridgeTypeName
+{
+    return [NSString stringWithUTF8String:[self unwrap]->cartridgeTypeName()];
+}
+- (NSInteger)initialExromLine
+{
+    return [self unwrap]->initialExromLine();
+}
+- (NSInteger)initialGameLine
+{
+    return [self unwrap]->initialGameLine();
+}
+- (NSInteger)chipCount
+{
+    return [self unwrap]->chipCount();
+}
+- (NSInteger)chipType:(NSInteger)nr;
+{
+    return [self unwrap]->chipType((unsigned)nr);
+}
+- (NSInteger)chipAddr:(NSInteger)nr;
+{
+    return [self unwrap]->chipAddr((unsigned)nr);
+}
+- (NSInteger)chipSize:(NSInteger)nr;
+{
+    return [self unwrap]->chipSize((unsigned)nr);
 }
 
-- (CartridgeType)cartridgeType {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->cartridgeType();
-}
-
-- (NSString *)cartridgeTypeName {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return [NSString stringWithUTF8String:c->cartridgeTypeName()];
-}
-
-- (BOOL) isSupported {
-    return Cartridge::isSupportedType([self cartridgeType]);
-}
-
-- (NSInteger)initialExromLine {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->initialExromLine();
-}
-
-- (NSInteger)initialGameLine {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->initialGameLine();
-}
-
-- (NSInteger)chipCount {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->chipCount();
-}
-
-- (NSInteger)typeOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->chipType((unsigned)nr);
-}
-
-- (NSInteger)loadAddrOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->chipAddr((unsigned)nr);
-}
-
-- (NSInteger)sizeOfChip:(NSInteger)nr; {
-    CRTFile *c = (CRTFile *)wrapper->file;
-    return c->chipSize((unsigned)nr);
-}
 @end
 
 
@@ -1041,35 +1019,25 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 @implementation TAPProxy
 
-+ (BOOL) isTAPFile:(NSString *)path
-{
-    return TAPFile::isTAPFile([path UTF8String]);
++ (BOOL) isTAPFile:(NSString *)path { return TAPFile::isTAPFile([path UTF8String]); }
+
++ (instancetype) make:(TAPFile *)container {
+    return container ? [[self alloc] initWithFile:container] : nil;
 }
 
-+ (instancetype) make:(TAPFile *)container
-{
-    if (container == NULL) {
-        return nil;
-    }
-    return [[self alloc] initWithFile:container];
-}
-
-+ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length
-{
++ (instancetype) makeWithBuffer:(const void *)buffer length:(NSInteger)length {
     TAPFile *container = TAPFile::makeWithBuffer((const uint8_t *)buffer, length);
     return [self make: container];
 }
 
-+ (instancetype) makeWithFile:(NSString *)path
-{
++ (instancetype) makeWithFile:(NSString *)path {
     TAPFile *container = TAPFile::makeWithFile([path UTF8String]);
     return [self make: container];
 }
 
-- (NSInteger)TAPversion {
-    TAPFile *container = (TAPFile *)wrapper->file;
-    return (NSInteger)container->TAPversion();
-}
+- (TAPFile *)unwrap { return (TAPFile *)wrapper->file; }
+- (NSInteger)TAPversion { return [self unwrap]->TAPversion(); }
+
 @end
 
 
@@ -1097,61 +1065,29 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return [self make: archive];
 }
 
-- (void)selectItem:(NSInteger)item {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    archive->selectItem((unsigned)item);
-}
+- (AnyArchive *)unwrap { return (AnyArchive *)([self wrapper]->file); }
 
-- (NSInteger)numberOfItems {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return (NSInteger)archive->numberOfItems();
-}
-
+- (void)selectItem:(NSInteger)item { return [self unwrap]->selectItem((unsigned)item); }
+- (NSInteger)numberOfItems { return [self unwrap]->numberOfItems(); }
 - (NSString *)nameOfItem {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return [NSString stringWithUTF8String:archive->getNameOfItem()];
+    const char *chars = [self unwrap]->getNameOfItem();
+    return [NSString stringWithUTF8String:chars];
 }
-
 - (NSString *)unicodeNameOfItem {
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    const unsigned short *unichars = archive->getUnicodeNameOfItem();
+    const unsigned short *unichars = [self unwrap]->getUnicodeNameOfItem();
     return [NSString stringWithCharacters:unichars length:strlen16(unichars)];
 }
-
-- (NSInteger)sizeOfItem
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return archive->getSizeOfItem();
+- (NSInteger)sizeOfItem { return [self unwrap]->getSizeOfItem(); }
+- (NSInteger)sizeOfItemInBlocks { return [self unwrap]->getSizeOfItemInBlocks(); }
+- (void)seekItem:(NSInteger)offset { [self unwrap]->seekItem(offset); }
+- (NSString *)typeOfItem {
+    const char *chars = [self unwrap]->getTypeOfItemAsString();
+    return [NSString stringWithUTF8String:chars];
 }
-
-- (NSInteger)sizeOfItemInBlocks
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return archive->getSizeOfItemInBlocks();
-}
-
-- (void)seekItem:(NSInteger)offset
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return archive->seekItem(offset);
-}
-
-- (NSString *)typeOfItem
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return [NSString stringWithUTF8String:archive->getTypeOfItemAsString()];
-}
-
-- (NSInteger)destinationAddrOfItem
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return archive->getDestinationAddrOfItem();
-}
-
-- (NSString *)readItemHex:(NSInteger)num
-{
-    AnyArchive *archive = (AnyArchive *)([self wrapper]->file);
-    return [NSString stringWithUTF8String:archive->readItemHex(num)];
+- (NSInteger)destinationAddrOfItem { return [self unwrap]->getDestinationAddrOfItem(); }
+- (NSString *)readItemHex:(NSInteger)num {
+    const char *chars = [self unwrap]->readItemHex(num);
+    return [NSString stringWithUTF8String:chars];
 }
 
 @end

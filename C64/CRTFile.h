@@ -75,6 +75,9 @@ public:
     //! @brief    Returns true if path points to a CRT file.
     static bool isCRTFile(const char *path);
     
+    //! @brief    Returns the cartridge type in plain text
+    static const char *cartridgeTypeName(CartridgeType type);
+
     
     //
     //! @functiongroup Creating and destructing
@@ -113,9 +116,6 @@ public:
      *  @details  Don't confuse with ContainerType
      */
     CartridgeType cartridgeType();
-
-    //! @brief    Returns the cartridge type in plain text
-    static const char *cartridgeTypeName(CartridgeType type);
 
     //! @brief    Returns the cartridge type in plain text
     const char *cartridgeTypeName();
