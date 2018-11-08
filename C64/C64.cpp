@@ -472,7 +472,7 @@ C64::stepOver()
     drive2.cpu.clearErrorState();
     
     // If the next instruction is a JSR instruction, ...
-    if (mem.spypeek(cpu.getPC_at_cycle_0()) == 0x20) {
+    if (mem.spypeek(cpu.getPC()) == 0x20) {
         // set a soft breakpoint at the next memory location.
         cpu.setSoftBreakpoint(cpu.getAddressOfNextInstruction());
         run();

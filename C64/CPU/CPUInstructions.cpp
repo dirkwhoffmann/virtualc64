@@ -469,7 +469,7 @@ CPU::executeOneCycle()
             }
             */
             
-            PC_at_cycle_0 = PC;
+            frozenPC = PC;
             
             // Check interrupt lines
             if (unlikely(doNmi)) {
@@ -522,10 +522,10 @@ CPU::executeOneCycle()
             
             
             // Check breakpoint tag
-            if (unlikely(breakpoint[PC_at_cycle_0] != NO_BREAKPOINT)) {
-                if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
+            if (unlikely(breakpoint[frozenPC] != NO_BREAKPOINT)) {
+                if (breakpoint[frozenPC] & SOFT_BREAKPOINT) {
                     // Soft breakpoints get deleted when reached
-                    breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT;
+                    breakpoint[frozenPC] &= ~SOFT_BREAKPOINT;
                     setErrorState(CPU_SOFT_BREAKPOINT_REACHED);
                 } else {
                     setErrorState(CPU_HARD_BREAKPOINT_REACHED);

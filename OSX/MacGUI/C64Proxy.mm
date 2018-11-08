@@ -67,7 +67,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (uint16_t) pc
 {
-    return wrapper->cpu->getPC_at_cycle_0();
+    return wrapper->cpu->getPC();
 }
 - (void) setPC:(uint16_t)pc
 {

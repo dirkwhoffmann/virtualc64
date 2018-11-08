@@ -83,8 +83,15 @@ class CPU : public VirtualComponent {
     
     private:
     
-	//! @brief    Memory location of the currently executed command
-	uint16_t PC_at_cycle_0;
+	/*! @brief    Memory location of the currently executed command
+     *  @details  This value is assigned the value of PC when the CPU executes
+     *            the fetch phase of a command. Function getPC() returns this
+     *            value instead of the real value of PC. This ensures that
+     *            calling getPC() always returns the start address of the
+     *            currently executed command, even if the command has already
+     *            been partially computed.
+     */
+	uint16_t frozenPC;
     
     /*! @brief     Processor status register (flags)
      *  @details   7 6 5 4 3 2 1 0
@@ -239,29 +246,14 @@ public:
     //! @functiongroup Handling registers and flags
     //
 
-    /*
-    //! @brief    Returns the current execution cycle.
-    uint64_t getCycle() { return cycle; }
-
-	//! @brief    Returns the contents of the accumulator.
-    uint8_t getA() { return A; }
+	/*! @brief    Returns the frozen program counter.
+     *  @return   Start address of the currently executed command.
+     *  @note     If execution is not in microcycle 0 (fetch phase) and the
+     *            currently executed command spans over multiple bytes in
+     *            memory, the PC may have been incremented already.
+     */
+    uint16_t getPC() { return frozenPC; }
     
-	//! @brief    Returns current value of the X register.
-    uint8_t getX() { return X; }
-    
-	//! @brief    Returns current value of the Y register.
-    uint8_t getY() { return Y; }
-
-	//! @brief    Returns current value of the program counter.
-    uint16_t getPC() { return PC; }
-    */
-    
-	//! @brief    Returns "freezed" program counter.
-    uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; }
-    
-	//! @brief    Returns current value of the program counter.
-    // uint8_t getSP() { return SP; }
-	
 	//! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
     uint8_t getN() { return P & N_FLAG; }
     
@@ -300,22 +292,8 @@ public:
     //! @brief    Returns current opcode.
     uint8_t getOpcode() { return opcode; }
     
-    /*
-	//! @brief    Writes value to the accumulator. Flags remain untouched.
-    void setA(uint8_t a) { A = a; }
-    
-	//! @brief    Writes value to the the X register. Flags remain untouched.
-    void setX(uint8_t x) { X = x; }
-    
-	//! @brief    Writes value to the the Y register. Flags remain untouched.
-    void setY(uint8_t y) { Y = y; }
-    
-	//! @brief    Writes value to the the program counter.
-    void setPC(uint16_t pc) { PC = pc; }
-    */
-    
 	//! @brief    Writes value to the freezend program counter.
-    void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = fetch;}
+    void setPC_at_cycle_0(uint16_t pc) { frozenPC = PC = pc; next = fetch;}
     
 	//! @brief    Changes low byte of the program counter only.
     void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
@@ -335,9 +313,6 @@ public:
      *  @note     The low byte does not change.
      */
     void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
-	
-	//! @brief    Writes value to the stack pointer.
-    // void setSP(uint8_t sp) { SP = sp; }
 	
 	//! @brief    0: Negative-flag is cleared, any other value: flag is set.
     void setN(uint8_t bit) { bit ? P |= N_FLAG : P &= ~N_FLAG; }
@@ -429,13 +404,13 @@ public:
      *  @result   Integer value between 1 and 3.
      */
     unsigned getLengthOfCurrentInstruction() {
-        return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
+        return getLengthOfInstructionAtAddress(frozenPC); }
     
 	/*! @brief    Returns the address of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
     uint16_t getAddressOfNextInstruction() {
-        return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
+        return frozenPC + getLengthOfCurrentInstruction(); }
     
 	/*! @brief    Returns true if the next microcycle is the fetch cycle.
      *  @details  The fetch cycle is the first microinstruction of each command.
@@ -540,7 +515,7 @@ public:
     DisassembledInstruction disassemble(uint16_t addr, bool hex);
     
     //! @brief    Disassembles the current instruction.
-    DisassembledInstruction disassemble(bool hex) { return disassemble(PC_at_cycle_0, hex); }
+    DisassembledInstruction disassemble(bool hex) { return disassemble(frozenPC, hex); }
 };
 
 #endif
