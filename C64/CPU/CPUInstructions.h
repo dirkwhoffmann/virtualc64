@@ -317,17 +317,17 @@ typedef enum {
 
 // Atomic CPU tasks
 #define FETCH_OPCODE \
-    if (likely(rdyLine)) opcode = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) instr = mem->peek(PC++); else return true;
 #define FETCH_ADDR_LO \
-    if (likely(rdyLine)) addr_lo = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) abl = mem->peek(PC++); else return true;
 #define FETCH_ADDR_HI \
-    if (likely(rdyLine)) addr_hi = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) abh = mem->peek(PC++); else return true;
 #define FETCH_POINTER_ADDR \
     if (likely(rdyLine)) ptr = mem->peek(PC++); else return true;
 #define FETCH_ADDR_LO_INDIRECT \
-    if (likely(rdyLine)) addr_lo = mem->peek((uint16_t)ptr++); else return true;
+    if (likely(rdyLine)) abl = mem->peek((uint16_t)ptr++); else return true;
 #define FETCH_ADDR_HI_INDIRECT \
-    if (likely(rdyLine)) addr_hi = mem->peek((uint16_t)ptr++); else return true;
+    if (likely(rdyLine)) abh = mem->peek((uint16_t)ptr++); else return true;
 #define IDLE_FETCH \
     if (likely(rdyLine)) (void)mem->peek(PC); else return true;
 
@@ -339,9 +339,9 @@ typedef enum {
 #define READ_FROM(x) \
     if (likely(rdyLine)) data = mem->peek(x); else return true;
 #define READ_FROM_ADDRESS \
-    if (likely(rdyLine)) data = mem->peek(HI_LO(addr_hi, addr_lo)); else return true;
+    if (likely(rdyLine)) data = mem->peek(HI_LO(abh, abl)); else return true;
 #define READ_FROM_ZERO_PAGE \
-    if (likely(rdyLine)) data = mem->peekZP(addr_lo); else return true;
+    if (likely(rdyLine)) data = mem->peekZP(abl); else return true;
 #define READ_FROM_ADDRESS_INDIRECT \
     if (likely(rdyLine)) data = mem->peekZP(ptr); else return true;
 
@@ -352,23 +352,23 @@ typedef enum {
 #define IDLE_READ_FROM(x) \
     if (likely(rdyLine)) (void)mem->peek(x); else return true;
 #define IDLE_READ_FROM_ADDRESS \
-    if (likely(rdyLine)) (void)(mem->peek(HI_LO(addr_hi, addr_lo))); else return true;
+    if (likely(rdyLine)) (void)(mem->peek(HI_LO(abh, abl))); else return true;
 #define IDLE_READ_FROM_ZERO_PAGE \
-    if (likely(rdyLine)) (void)mem->peekZP(addr_lo); else return true;
+    if (likely(rdyLine)) (void)mem->peekZP(abl); else return true;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
     if (likely(rdyLine)) (void)mem->peekZP(ptr); else return true;
 
 #define WRITE_TO_ADDRESS \
-mem->poke(HI_LO(addr_hi, addr_lo), data);
+mem->poke(HI_LO(abh, abl), data);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS \
-    mem->poke(HI_LO(addr_hi, addr_lo), data); setN(data & 0x80); setZ(data == 0);
+    mem->poke(HI_LO(abh, abl), data); setN(data & 0x80); setZ(data == 0);
 #define WRITE_TO_ZERO_PAGE \
-    mem->pokeZP(addr_lo, data);
+    mem->pokeZP(abl, data);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
-    mem->pokeZP(addr_lo, data); setN(data & 0x80); setZ(data == 0);
+    mem->pokeZP(abl, data); setN(data & 0x80); setZ(data == 0);
 
-#define ADD_INDEX_X overflow = ((int)addr_lo + (int)X > 0xFF); addr_lo += X;
-#define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y > 0xFF); addr_lo += Y;
+#define ADD_INDEX_X overflow = ((int)abl + (int)X > 0xFF); abl += X;
+#define ADD_INDEX_Y overflow = ((int)abl + (int)Y > 0xFF); abl += Y;
 #define ADD_INDEX_X_INDIRECT ptr += X;
 #define ADD_INDEX_Y_INDIRECT ptr += Y;
 
@@ -384,7 +384,7 @@ mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define IDLE_PULL if (likely(rdyLine)) (void)mem->peekStack(SP); else return true;
 
 #define PAGE_BOUNDARY_CROSSED overflow
-#define FIX_ADDR_HI addr_hi++;
+#define FIX_ADDR_HI abh++;
 
 #define POLL_IRQ doIrq = (levelDetector.delayed() && !getI());
 #define POLL_NMI doNmi = edgeDetector.delayed();

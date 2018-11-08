@@ -97,11 +97,11 @@ class CPU : public VirtualComponent {
      */
     uint8_t P;
     
-	//! @brief    Internal address register (low byte)
-	uint8_t addr_lo;
+	//! @brief    Address buffer (low byte)
+	uint8_t abl;
     
-	//! @brief    Internal address register (high byte)
-	uint8_t addr_hi;
+	//! @brief    ddress buffer (high byte)
+	uint8_t abh;
     
 	//! @brief    Pointer for indirect addressing modes
 	uint8_t ptr;
@@ -231,10 +231,7 @@ public:
     //! @functiongroup Constructing and destructing
     //
     
-	//! @brief    Standard constructor
-	// CPU();
-
-    //! @brief    Custom constructor
+    //! @brief    Constructor
     CPU(CPUChipModel model, Memory *mem);
 
 	//! @brief    Destructor
@@ -250,9 +247,6 @@ public:
     //! @brief    Gathers debug information.
     CPUInfo getInfo();
     
-    //! @brief    Returns true iff this object is the C64 CPU (for debugging, only).
-    bool isC64CPU() { return strcmp(getDescription(), "CPU") == 0; /* VC1541 CPU is calles "1541CPU" */ }
-
     
     //
     //! @functiongroup Handling registers and flags
@@ -525,6 +519,7 @@ public:
     
     //! @brief    Disassembles the current instruction.
     DisassembledInstruction disassemble(bool hex) { return disassemble(frozenPC, hex); }
+
 };
 
 #endif

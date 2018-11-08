@@ -456,7 +456,7 @@ bool dirkverbose = false;
 bool
 CPU::executeOneCycle()
 {
-    uint8_t opcode;
+    uint8_t instr;
     
     switch (next) {
             
@@ -495,7 +495,7 @@ CPU::executeOneCycle()
             
             // Execute fetch phase
             FETCH_OPCODE
-            next = actionFunc[opcode];
+            next = actionFunc[instr];
             
             // Disassemble command if requested
             if (unlikely(tracingEnabled())) {
@@ -1709,7 +1709,7 @@ CPU::executeOneCycle()
         case JMP_abs_2:
             
             FETCH_ADDR_HI
-            PC = LO_HI(addr_lo, addr_hi);
+            PC = LO_HI(abl, abh);
             POLL_INT
             DONE
 
@@ -1727,7 +1727,7 @@ CPU::executeOneCycle()
             
             READ_FROM_ADDRESS
             setPCL(data);
-            addr_lo++;
+            abl++;
             CONTINUE
             
         case JMP_abs_ind_4:
@@ -1768,7 +1768,7 @@ CPU::executeOneCycle()
         case JSR_5:
             
             FETCH_ADDR_HI
-            PC = LO_HI(addr_lo, addr_hi);
+            PC = LO_HI(abl, abh);
             POLL_INT
             DONE
 
@@ -2942,7 +2942,7 @@ CPU::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            data = A & X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
+            data = A & X & (rdyLineUp == cycle ? 0xFF : abh + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -2951,7 +2951,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                addr_hi = A & X & addr_hi;
+                abh = A & X & abh;
             }
             
             CONTINUE
@@ -2971,7 +2971,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = A & X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
+            data = A & X & (rdyLineUp == cycle ? 0xFF : abh + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -2980,7 +2980,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                addr_hi = A & X & addr_hi;
+                abh = A & X & abh;
             }
 
             CONTINUE
@@ -3008,7 +3008,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
+            data = X & (rdyLineUp == cycle ? 0xFF : abh + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3017,7 +3017,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                addr_hi = X & addr_hi;
+                abh = X & abh;
             }
             
             CONTINUE
@@ -3045,7 +3045,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = Y & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
+            data = Y & (rdyLineUp == cycle ? 0xFF : abh + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3054,7 +3054,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                addr_hi = Y & addr_hi;
+                abh = Y & abh;
             }
 
             CONTINUE
@@ -3176,7 +3176,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = A & X & (rdyLineUp == cycle ? 0xFF : addr_hi + 1);
+            data = A & X & (rdyLineUp == cycle ? 0xFF : abh + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3185,7 +3185,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                addr_hi = A & X & addr_hi;
+                abh = A & X & abh;
             }
 
             CONTINUE
