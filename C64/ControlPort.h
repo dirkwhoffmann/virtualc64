@@ -74,7 +74,7 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     
     //! @brief    Method from VirtualComponent
-    void dumpState();
+    void dump();
     
     //! @brief   Returns true if auto-fire mode is enabled.
     float getAutofire() { return autofire; }

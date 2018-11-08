@@ -82,7 +82,7 @@ public:
     void saveToBuffer(uint8_t **buffer);
     
     //! @brief    Method from VirtualComponent
-    void dumpState();	
+    void dump();	
     
     //! @brief    Execution thread callback
     /*! @details  This method is invoked after each rasterline.

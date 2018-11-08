@@ -712,7 +712,7 @@ CIA::dumpTrace()
 }
 
 void
-CIA::dumpState()
+CIA::dump()
 {
     CIAInfo info = getInfo();
     
@@ -731,7 +731,7 @@ CIA::dumpState()
 	msg("  Interrupt control reg : %02X\n", info.icr);
 	msg("     Interrupt mask reg : %02X\n", info.imr);
 	msg("\n");	
-	tod.dumpState();
+	tod.dump();
 }
 
 CIAInfo
@@ -1152,11 +1152,11 @@ CIA1::~CIA1()
 }
 
 void 
-CIA1::dumpState()
+CIA1::dump()
 {
 	msg("CIA 1:\n");
 	msg("------\n\n");
-	CIA::dumpState();
+	CIA::dump();
 }
 
 void 
@@ -1302,11 +1302,11 @@ CIA2::reset()
 }
 
 void 
-CIA2::dumpState()
+CIA2::dump()
 {
 	msg("CIA 2:\n");
 	msg("------\n\n");
-	CIA::dumpState();
+	CIA::dump();
 }
 
 void 

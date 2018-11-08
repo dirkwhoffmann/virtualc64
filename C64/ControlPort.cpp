@@ -69,7 +69,7 @@ ControlPort::loadFromBuffer(uint8_t **buffer)
 }
 
 void
-ControlPort::dumpState()
+ControlPort::dump()
 {
     msg("ControlPort port %d\n", nr);
     msg("------------------\n");

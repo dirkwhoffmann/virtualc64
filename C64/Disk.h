@@ -43,7 +43,7 @@ public:
     ~Disk();
     
     //! @brief   Method from VirtualComponent
-    void dumpState();
+    void dump();
     void ping();
 
     //

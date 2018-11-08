@@ -30,7 +30,7 @@ ProcessorPort::~ProcessorPort()
 }
 
 void
-ProcessorPort::dumpState()
+ProcessorPort::dump()
 {
     msg("Processor port:\n");
     msg("---------------\n\n");

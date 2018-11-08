@@ -108,7 +108,7 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
 }
 
 void
-ExpansionPort::dumpState()
+ExpansionPort::dump()
 {
     msg("Expansion port\n");
     msg("--------------\n");
@@ -120,7 +120,7 @@ ExpansionPort::dumpState()
     if (cartridge == NULL) {
         msg("No cartridge attached\n");
     } else {
-        cartridge->dumpState();
+        cartridge->dump();
     }
 }
 
@@ -245,7 +245,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     
     c64->putMessage(MSG_CARTRIDGE);
     debug(1, "Cartridge attached to expansion port");
-    cartridge->dumpState();
+    cartridge->dump();
 
     return true;
 }

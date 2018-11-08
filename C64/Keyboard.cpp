@@ -48,7 +48,7 @@ Keyboard::reset()
 }
 
 void 
-Keyboard::dumpState()
+Keyboard::dump()
 {
 	msg("Keyboard:\n");
 	msg("---------\n\n");

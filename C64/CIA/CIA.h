@@ -259,7 +259,7 @@ public:
 	void reset();
     	
 	//! @brief    Dump internal state
-	void dumpState();	
+	void dump();	
 
 	//! @brief    Dump trace line
 	void dumpTrace();	
@@ -446,7 +446,7 @@ public:
 
     CIA1();
     ~CIA1();
-    void dumpState();
+    void dump();
     
 private:
     
@@ -474,7 +474,7 @@ public:
     CIA2();
     ~CIA2();
     void reset(); 
-    void dumpState();
+    void dump();
     
 private:
 

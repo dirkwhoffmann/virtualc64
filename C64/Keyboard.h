@@ -60,7 +60,7 @@ public:
 
 	//! @brief    Methods from VirtualComponent
 	void reset();
-	void dumpState();	
+	void dump();	
 
     /*! @brief    Checks if a certain key is currently pressed.
      *  @details  The key is identified by its native row and column index.

@@ -157,7 +157,7 @@ public:
      *            derived component should override this method and print out
      *            useful debugging information.
 	 */ 
-    virtual void dumpState() { };
+    virtual void dump() { };
 	
     
     //

@@ -246,7 +246,7 @@ public:
 
 	//! @brief    Methods from VirtualComponent
 	void reset();
-	void dumpState();	
+	void dump();	
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);

@@ -176,7 +176,7 @@ VIC::ping()
 }
 
 void 
-VIC::dumpState()
+VIC::dump()
 {
     uint8_t ctrl1 = reg.current.ctrl1;
     uint8_t ctrl2 = reg.current.ctrl2; 

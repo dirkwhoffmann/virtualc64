@@ -115,7 +115,7 @@ Datasette::saveToBuffer(uint8_t **buffer)
 }
 
 void
-Datasette::dumpState()
+Datasette::dump()
 {
 #if 0
     msg("Datasette\n");

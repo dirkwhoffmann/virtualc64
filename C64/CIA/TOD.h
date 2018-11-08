@@ -94,7 +94,7 @@ public:
 	void reset();
 	    
 	//! @brief    Prints debug information.
-	void dumpState();	
+	void dump();	
 
     //! @brief    Get debug info
     TODInfo getInfo();

@@ -177,7 +177,7 @@ public:
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
-    void dumpState();
+    void dump();
     
     //! @brief    Execution thread callback
     /*! @details  This function is invoked by the expansion port. Only a few

@@ -82,7 +82,7 @@ SIDBridge::setReSID(bool enable)
 }
 
 void
-SIDBridge::dumpState(SIDInfo info)
+SIDBridge::dump(SIDInfo info)
 {
     uint8_t ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
@@ -114,11 +114,11 @@ SIDBridge::dumpState(SIDInfo info)
 }
 
 void 
-SIDBridge::dumpState()
+SIDBridge::dump()
 {
     msg("ReSID:\n");
     msg("------\n");
-    dumpState(resid.getInfo());
+    dump(resid.getInfo());
 
     msg("FastSID:\n");
     msg("--------\n");
@@ -129,7 +129,7 @@ SIDBridge::dumpState()
     msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
     msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
     msg("\n");
-    dumpState(fastsid.getInfo());
+    dump(fastsid.getInfo());
     
     resid.sid->voice[0].wave.reset(); // reset_shift_register();
     resid.sid->voice[1].wave.reset(); // reset_shift_register();

@@ -305,7 +305,7 @@ class C64 : public VirtualComponent {
     void setClockFrequency(uint32_t frequency);
     void suspend();
     void resume();
-    void dumpState();
+    void dump();
     
  
     //

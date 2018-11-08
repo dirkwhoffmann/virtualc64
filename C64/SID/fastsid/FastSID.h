@@ -122,7 +122,7 @@ public:
     void setClockFrequency(uint32_t frequency);
 
     //! Dump internal state to console
-    void dumpState();
+    void dump();
 
     //! Load state
     void loadFromBuffer(uint8_t **buffer);

@@ -80,7 +80,7 @@ C64Memory::reset()
 }
 
 void 
-C64Memory::dumpState()
+C64Memory::dump()
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");

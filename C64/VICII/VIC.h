@@ -739,7 +739,7 @@ public:
 	void reset();
     void setC64(C64 *c64);
     void ping();
-	void dumpState();
+	void dump();
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);

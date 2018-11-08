@@ -219,7 +219,7 @@ public:
     //! @brief    Methods from VirtualComponent
     void reset();
     void ping();
-    void dumpState();
+    void dump();
     void setClockFrequency(uint32_t frequency);
 
     /*! @brief    Resets all disk related properties

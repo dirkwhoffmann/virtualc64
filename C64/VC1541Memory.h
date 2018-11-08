@@ -55,7 +55,7 @@ public:
 	void reset();
 		
 	//! @brief    Method from VirtualComponent
-	void dumpState();
+	void dump();
 		
 	//! @brief    Returns true iff the ROM image has been loaded.
     bool romIsLoaded() { return rom[0] != 0x00; }

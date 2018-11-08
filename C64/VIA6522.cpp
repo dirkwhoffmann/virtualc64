@@ -77,7 +77,7 @@ void VIA6522::reset()
 }
 
 void 
-VIA6522::dumpState()
+VIA6522::dump()
 {
     const char *latchingA = inputLatchingEnabledA() ? "enabled" : "disabled";
     const char *latchingB = inputLatchingEnabledB() ? "enabled" : "disabled";

@@ -124,8 +124,8 @@ public:
     void loadFromBuffer(uint8_t **buffer);
     
 	//! @brief    Prints debug information
-    void dumpState(SIDInfo info);
-    void dumpState();
+    void dump(SIDInfo info);
+    void dump();
 
     //! @brief    Gathers all values that are displayed in the debugger
     SIDInfo getInfo();

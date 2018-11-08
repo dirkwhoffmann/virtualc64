@@ -115,7 +115,7 @@ Disk::~Disk()
 }
 
 void
-Disk::dumpState()
+Disk::dump()
 {
     msg("Floppy disk\n");
     msg("-----------\n\n");

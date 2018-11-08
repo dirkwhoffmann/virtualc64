@@ -51,7 +51,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) dump
 {
-    wrapper->cpu->dumpState();
+    wrapper->cpu->dump();
 }
 - (BOOL) tracing
 {
@@ -177,7 +177,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // Proxy methods
 - (void) dump
 {
-    wrapper->mem->dumpState();
+    wrapper->mem->dump();
 }
 
 - (NSInteger) ramInitPattern
@@ -257,7 +257,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) dump
 {
-    wrapper->cia->dumpState();
+    wrapper->cia->dump();
 }
 - (BOOL) tracing
 {
@@ -353,7 +353,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) dump
 {
-    wrapper->vic->dumpState();
+    wrapper->vic->dump();
 }
 - (SpriteInfo) getSpriteInfo:(NSInteger)sprite
 {
@@ -554,7 +554,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->sid->dumpState();
+    wrapper->sid->dump();
 }
 - (SIDInfo) getInfo
 {
@@ -669,7 +669,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->iec->dumpState();
+    wrapper->iec->dump();
 }
 - (BOOL) tracing
 {
@@ -700,7 +700,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->keyboard->dumpState();
+    wrapper->keyboard->dump();
 }
 - (void) pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
@@ -773,7 +773,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->port->dumpState();
+    wrapper->port->dump();
 }
 - (BOOL) autofire
 {
@@ -824,7 +824,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->expansionPort->dumpState();
+    wrapper->expansionPort->dump();
 }
 - (CartridgeType) cartridgeType
 {
@@ -902,7 +902,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->disk->dumpState();
+    wrapper->disk->dump();
 }
 - (BOOL)writeProtected
 {
@@ -986,7 +986,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->via->dumpState();
+    wrapper->via->dump();
 }
 - (BOOL) tracing
 {
@@ -1035,7 +1035,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->drive->dumpState();
+    wrapper->drive->dump();
 }
 - (BOOL) tracing
 {
@@ -1188,7 +1188,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 
 - (void) dump
 {
-    wrapper->datasette->dumpState();
+    wrapper->datasette->dump();
 }
 - (BOOL) hasTape
 {
@@ -1324,7 +1324,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) dump
 {
-    wrapper->c64->dumpState();
+    wrapper->c64->dump();
 }
 - (BOOL) developmentMode
 {

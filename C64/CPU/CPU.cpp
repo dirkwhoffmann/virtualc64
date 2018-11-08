@@ -97,7 +97,7 @@ CPU::reset()
 }
 
 void 
-CPU::dumpState()
+CPU::dump()
 {
     DisassembledInstruction instr = disassemble(true /* hex output */);
     
@@ -120,7 +120,7 @@ CPU::dumpState()
 	msg("   NMI routine : %02X%02X\n", mem->spypeek(0xFFFB), mem->spypeek(0xFFFA));
 	msg("\n");
     
-    c64->processorPort.dumpState();
+    c64->processorPort.dump();
 }
 
 size_t

@@ -224,7 +224,7 @@ Cartridge::loadPacketsFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    dumpState();
+    dump();
     dealloc();
     
     numPackets = read8(buffer);
@@ -341,7 +341,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
 }
 
 void
-Cartridge::dumpState()
+Cartridge::dump()
 {
     msg("\n");
     msg("Cartridge\n");

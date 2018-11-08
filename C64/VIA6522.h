@@ -247,7 +247,7 @@ public:
 	void reset();
 
     //! @brief    Method from VirtualComponent
-    void dumpState();
+    void dump();
 
     //! @brief    Returns true if this object emulates is VIA2
     bool isVia2();

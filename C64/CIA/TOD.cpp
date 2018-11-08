@@ -53,7 +53,7 @@ TOD::reset()
 }
 
 void 
-TOD::dumpState()
+TOD::dump()
 {
 	msg("            Time of day : %02X:%02X:%02X:%02X\n", tod.hours, tod.minutes, tod.seconds, tod.tenth);
 	msg("                  Alarm : %02X:%02X:%02X:%02X\n", alarm.hours, alarm.minutes, alarm.seconds, alarm.tenth);

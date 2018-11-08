@@ -65,7 +65,7 @@ public:
     ~ProcessorPort();
     
     //! @brief    Method from VirtualComponent
-    void dumpState();
+    void dump();
 
     //! @brief    Reads the processor port register
     uint8_t read();

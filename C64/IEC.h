@@ -83,7 +83,7 @@ public:
     void ping();
 	
     //! @brief    Method from VirtualComponent
-	void dumpState();
+	void dump();
 	
 	//! @brief    Writes trace output to console.
 	void dumpTrace();

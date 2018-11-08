@@ -97,7 +97,7 @@ FastSID::setClockFrequency(uint32_t frequency)
 }
 
 void
-FastSID::dumpState()
+FastSID::dump()
 {
     SIDInfo info = getInfo();
 

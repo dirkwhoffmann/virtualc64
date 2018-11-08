@@ -126,7 +126,7 @@ public:
     void resetWithoutRAM();
 
 	//! @brief    Method from VirtualComponent
-	void dumpState();
+	void dump();
 
 	//! @brief    Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return rom[0xA000] != 0x00; }

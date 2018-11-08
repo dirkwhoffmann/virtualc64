@@ -53,7 +53,7 @@ public:
     void saveToBuffer(uint8_t **buffer);
 
     //! @brief    Dumps the current state
-    void dumpState();
+    void dump();
 
     
     // ---------------------------------------------------------------------------------------------

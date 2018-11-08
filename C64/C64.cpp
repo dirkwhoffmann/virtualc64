@@ -191,7 +191,7 @@ C64::setClockFrequency(uint32_t frequency)
 }
 
 void 
-C64::dumpState() {
+C64::dump() {
     msg("C64:\n");
     msg("----\n\n");
     msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");
