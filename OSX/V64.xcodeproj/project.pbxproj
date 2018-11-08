@@ -10,7 +10,7 @@
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E77800C7A3B6F00BEAFA6 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* ControlPort.cpp */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
-		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
+		5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* Drive.cpp */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */; };
@@ -18,7 +18,7 @@
 		500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */; };
 		500EF689203EB0210043F4FC /* HardwarePrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500EF688203EB0210043F4FC /* HardwarePrefs.xib */; };
 		500EF68B203EB5180043F4FC /* HardwarePrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */; };
-		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
+		500FC6790D17D2190044131D /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		5014D684200CD62C00044217 /* MetalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5014D683200CD62C00044217 /* MetalSetup.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
@@ -96,7 +96,7 @@
 		506004661B78E9C500EBDD93 /* VIC_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* VIC_draw.cpp */; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506B315220DCDF87007913A8 /* ROMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315020DCDF87007913A8 /* ROMFile.cpp */; };
-		506B315420DD0AEB007913A8 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315320DD0AEB007913A8 /* VC1541Memory.cpp */; };
+		506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506B315320DD0AEB007913A8 /* DriveMemory.cpp */; };
 		506D39D2141780E500268AF6 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDBridge.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
@@ -198,9 +198,9 @@
 		389E777F0C7A3B6F00BEAFA6 /* ControlPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPort.h; sourceTree = "<group>"; };
 		5000C80D0D13CE680011A2E9 /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		5000C80E0D13CE680011A2E9 /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
-		5000C8220D13CEE10011A2E9 /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
-		5000C8230D13CEE10011A2E9 /* VC1541.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541.cpp; sourceTree = "<group>"; };
-		5000C9610D13DED40011A2E9 /* VC1541Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541Memory.h; sourceTree = "<group>"; };
+		5000C8220D13CEE10011A2E9 /* Drive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drive.h; sourceTree = "<group>"; };
+		5000C8230D13CEE10011A2E9 /* Drive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drive.cpp; sourceTree = "<group>"; };
+		5000C9610D13DED40011A2E9 /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_ntsc.cpp; sourceTree = "<group>"; };
@@ -210,8 +210,8 @@
 		500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
 		500EF688203EB0210043F4FC /* HardwarePrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HardwarePrefs.xib; sourceTree = "<group>"; };
 		500EF68A203EB5180043F4FC /* HardwarePrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePrefsController.swift; sourceTree = "<group>"; };
-		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
-		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
+		500FC6770D17D2190044131D /* VIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA.h; sourceTree = "<group>"; };
+		500FC6780D17D2190044131D /* VIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA.cpp; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		5014D683200CD62C00044217 /* MetalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalSetup.swift; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
@@ -311,7 +311,7 @@
 		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTFile.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* CRTFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTFile.h; sourceTree = "<group>"; };
-		5045C4FE2105D07200A9A62D /* VC1541_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VC1541_types.h; sourceTree = "<group>"; };
+		5045C4FE2105D07200A9A62D /* Drive_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Drive_types.h; sourceTree = "<group>"; };
 		504606321BE4B99100463FD7 /* G64File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G64File.cpp; sourceTree = "<group>"; };
 		504606331BE4B99100463FD7 /* G64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64File.h; sourceTree = "<group>"; };
 		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506B315020DCDF87007913A8 /* ROMFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ROMFile.cpp; sourceTree = "<group>"; };
 		506B315120DCDF87007913A8 /* ROMFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ROMFile.h; sourceTree = "<group>"; };
-		506B315320DD0AEB007913A8 /* VC1541Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541Memory.cpp; sourceTree = "<group>"; };
+		506B315320DD0AEB007913A8 /* DriveMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemory.cpp; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
 		506D39D3141780FF00268AF6 /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
@@ -730,13 +730,13 @@
 		501F845820D7851000917A97 /* Drive */ = {
 			isa = PBXGroup;
 			children = (
-				5045C4FE2105D07200A9A62D /* VC1541_types.h */,
-				5000C8220D13CEE10011A2E9 /* VC1541.h */,
-				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
-				5000C9610D13DED40011A2E9 /* VC1541Memory.h */,
-				506B315320DD0AEB007913A8 /* VC1541Memory.cpp */,
-				500FC6770D17D2190044131D /* VIA6522.h */,
-				500FC6780D17D2190044131D /* VIA6522.cpp */,
+				5045C4FE2105D07200A9A62D /* Drive_types.h */,
+				5000C8220D13CEE10011A2E9 /* Drive.h */,
+				5000C8230D13CEE10011A2E9 /* Drive.cpp */,
+				5000C9610D13DED40011A2E9 /* DriveMemory.h */,
+				506B315320DD0AEB007913A8 /* DriveMemory.cpp */,
+				500FC6770D17D2190044131D /* VIA.h */,
+				500FC6780D17D2190044131D /* VIA.cpp */,
 				5027F9DA20C5449E0041AD37 /* Disk_types.h */,
 				50775E101B8EE95B002EB58D /* Disk.h */,
 				50775E0E1B8EE8A9002EB58D /* Disk.cpp */,
@@ -1146,11 +1146,11 @@
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
-				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
+				5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */,
 				501DE31120C9C41B00707130 /* envelope.cc in Sources */,
 				5018AF66202EDD2000B4C886 /* UserDefaults.swift in Sources */,
 				50E8366D20DC4A090017A5BB /* FastSID.cpp in Sources */,
-				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
+				500FC6790D17D2190044131D /* VIA.cpp in Sources */,
 				501DE30E20C9C41B00707130 /* extfilt.cc in Sources */,
 				50F681E71BEA2927008568E3 /* TAPFile.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
@@ -1176,7 +1176,7 @@
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
-				506B315420DD0AEB007913A8 /* VC1541Memory.cpp in Sources */,
+				506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */,
 				501DE31220C9C41B00707130 /* filter.cc in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,

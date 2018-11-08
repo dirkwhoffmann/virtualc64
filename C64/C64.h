@@ -51,7 +51,7 @@
 #include "Memory.h"
 #include "C64Memory.h"
 #include "FlashRom.h"
-#include "VC1541Memory.h"
+#include "DriveMemory.h"
 #include "VIC.h"
 #include "SIDBridge.h"
 #include "TOD.h"
@@ -63,7 +63,7 @@
 #include "CustomCartridges.h"
 
 // Peripherals
-#include "VC1541.h"
+#include "Drive.h"
 #include "Datasette.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
