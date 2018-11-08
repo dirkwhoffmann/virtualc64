@@ -22,7 +22,7 @@
 #include "C64.h"
 
 //
-// Execution thread
+// Emulator thread
 //
 
 void 
@@ -112,14 +112,14 @@ C64::C64()
     // Register snapshot items
     SnapshotItem items[] = {
  
-        { &warp,            sizeof(warp),            CLEAR_ON_RESET },
-        { &alwaysWarp,      sizeof(alwaysWarp),      CLEAR_ON_RESET },
-        { &warpLoad,        sizeof(warpLoad),        KEEP_ON_RESET },
-        { &durationOfCycle, sizeof(durationOfCycle), KEEP_ON_RESET },
-        { &frame,           sizeof(frame),           CLEAR_ON_RESET },
-        { &rasterLine,      sizeof(rasterLine),      CLEAR_ON_RESET },
-        { &rasterCycle,     sizeof(rasterCycle),     CLEAR_ON_RESET },
-        { &ultimax,         sizeof(ultimax),         CLEAR_ON_RESET },
+        { &warp,               sizeof(warp),               CLEAR_ON_RESET },
+        { &alwaysWarp,         sizeof(alwaysWarp),         CLEAR_ON_RESET },
+        { &warpLoad,           sizeof(warpLoad),           KEEP_ON_RESET  },
+        { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
+        { &frame,              sizeof(frame),              CLEAR_ON_RESET },
+        { &rasterLine,         sizeof(rasterLine),         CLEAR_ON_RESET },
+        { &rasterCycle,        sizeof(rasterCycle),        CLEAR_ON_RESET },
+        { &ultimax,            sizeof(ultimax),            CLEAR_ON_RESET },
         
         { NULL,             0,                       0 }};
     
@@ -148,7 +148,6 @@ C64::~C64()
     debug(1, "Destroying virtual C64[%p]\n", this);
     
     halt();
-    // pthread_mutex_destroy(&mutex);
 }
 
 void
@@ -186,8 +185,32 @@ C64::setClockFrequency(uint32_t frequency)
 {
     VirtualComponent::setClockFrequency(frequency);
     
-    durationOfCycle = 10000000000 / frequency;
-    debug("Duration of a C64 CPU cycle is %lld 1/10 nsec.\n", durationOfCycle);
+    durationOfOneCycle = 10000000000 / frequency;
+    debug("Duration of a C64 CPU cycle is %lld 1/10 nsec.\n", durationOfOneCycle);
+}
+
+void
+C64::suspend()
+{
+    debug(2, "Suspending...(%d)\n", suspendCounter);
+    
+    if (suspendCounter == 0 && isHalted())
+    return;
+    
+    halt();
+    suspendCounter++;
+}
+
+void
+C64::resume()
+{
+    debug(2, "Resuming (%d)...\n", suspendCounter);
+    
+    if (suspendCounter == 0)
+    return;
+    
+    if (--suspendCounter == 0)
+    run();
 }
 
 void 
@@ -203,7 +226,6 @@ C64::dump() {
     msg("        Current rasterline : %d\n", rasterLine);
     msg("  Current rasterline cycle : %d\n", rasterCycle);
     msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");
-    
     msg("warp, warpLoad, alwaysWarp : %d %d %d\n", warp, warpLoad, alwaysWarp);
     msg("\n");
 }
@@ -354,78 +376,6 @@ C64::updateVicFunctionTable()
 }
 
 void
-C64::setMouseModel(MouseModel value)
-{
-    suspend();
-    
-    switch(value) {
-        case MOUSE1350:
-            mouse = &mouse1350;
-            break;
-        case MOUSE1351:
-            mouse = &mouse1351;
-            break;
-        case NEOSMOUSE:
-            mouse = &neosMouse;
-            break;
-        default:
-            warn("Unknown mouse model selected.\n");
-            mouse = &mouse1350;
-    }
-    
-    mouse->reset();
-    resume();
-}
-
-void
-C64::connectMouse(unsigned port)
-{
-    assert(port <= 2);
-    mousePort = port;
-}
-
-uint8_t
-C64::mouseBits(unsigned port)
-{
-    if (mousePort != port) {
-        return 0xFF;
-    } else {
-        return mouse->readControlPort();
-    }
-}
-
-uint8_t
-C64::potXBits()
-{
-    if (mousePort != 0) {
-        switch (mouse->mouseModel()) {
-            case MOUSE1350:
-                return mouse1350.rightButton ? 0x00 : 0xFF;
-            case MOUSE1351:
-                return mouse1351.mouseXBits();
-            case NEOSMOUSE:
-                return neosMouse.rightButton ? 0xFF : 0x00;
-        }
-    }
-    return 0xFF;
-}
-
-uint8_t
-C64::potYBits()
-{
-    if (mousePort != 0 && mouse->mouseModel() == MOUSE1351) {
-        return mouse1351.mouseYBits();
-    } else {
-        return 0xFF;
-    }
-}
-
-
-//
-// Running the emulator
-//
-
-void
 C64::powerUp()
 {
     suspend();
@@ -454,46 +404,18 @@ C64::run()
 }
 
 void
-C64::suspend()
+C64::halt()
 {
-    debug(2, "Suspending...(%d)\n", suspendCounter);
-    
-    if (suspendCounter == 0 && isHalted())
-        return;
-    
-    halt();
-    suspendCounter++;
+    if (isRunning()) {
+        
+        // Cancel execution thread
+        pthread_cancel(p);
+        // Wait until thread terminates
+        pthread_join(p, NULL);
+        // Finish the current command (to reach a clean state)
+        step();
+    }
 }
-
-/*
-void
-C64::suspend()
-{
-    debug(2, "Suspending...\n");
-    pthread_mutex_lock(&mutex);
-}
-*/
-
-void
-C64::resume()
-{
-    debug(2, "Resuming (%d)...\n", suspendCounter);
-    
-    if (suspendCounter == 0)
-        return;
-    
-    if (--suspendCounter == 0)
-        run();
-}
-
-/*
-void
-C64::resume()
-{
-    debug(2, "Resuming...\n");
-    pthread_mutex_unlock(&mutex);
-}
-*/
 
 void
 C64::threadCleanup()
@@ -517,20 +439,6 @@ bool
 C64::isRunning()
 {
     return p != NULL;
-}
-
-void
-C64::halt()
-{
-    if (isRunning()) {
-        
-        // Cancel execution thread
-        pthread_cancel(p);
-        // Wait until thread terminates
-        pthread_join(p, NULL);
-        // Finish the current command (to reach a clean state)
-        step();
-    }
 }
 
 bool
@@ -573,6 +481,34 @@ C64::stepOver()
 
     // Otherwise, stepOver behaves like step
     step();
+}
+
+bool
+C64::executeOneLine()
+{
+    if (rasterCycle == 1)
+    beginRasterLine();
+    
+    int lastCycle = vic.getCyclesPerRasterline();
+    for (unsigned i = rasterCycle; i <= lastCycle; i++) {
+        if (!_executeOneCycle()) {
+            if (i == lastCycle)
+            endRasterLine();
+            return false;
+        }
+    }
+    endRasterLine();
+    return true;
+}
+
+bool
+C64::executeOneFrame()
+{
+    do {
+        if (!executeOneLine())
+        return false;
+    } while (rasterLine != 0);
+    return true;
 }
 
 bool
@@ -620,41 +556,13 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     result &= cpu.executeOneCycle();
-    if (drive1.isPoweredOn()) result &= drive1.execute(durationOfCycle);
-    if (drive2.isPoweredOn()) result &= drive2.execute(durationOfCycle);
+    if (drive1.isPoweredOn()) result &= drive1.execute(durationOfOneCycle);
+    if (drive2.isPoweredOn()) result &= drive2.execute(durationOfOneCycle);
     // if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
     datasette.execute();
     
     rasterCycle++;
     return result;
-}
-
-bool
-C64::executeOneLine()
-{
-    if (rasterCycle == 1)
-        beginRasterLine();
-
-    int lastCycle = vic.getCyclesPerRasterline();
-    for (unsigned i = rasterCycle; i <= lastCycle; i++) {
-        if (!_executeOneCycle()) {
-            if (i == lastCycle)
-                endRasterLine();
-            return false;
-        }
-    }
-    endRasterLine();
-    return true;
-}
-
-bool
-C64::executeOneFrame()
-{
-    do {
-        if (!executeOneLine())
-            return false;
-    } while (rasterLine != 0);
-    return true;
 }
 
 void
@@ -711,6 +619,73 @@ C64::endFrame()
     // Count some sheep (zzzzzz) ...
     if (!getWarp()) {
             synchronizeTiming();
+    }
+}
+
+void
+C64::setMouseModel(MouseModel value)
+{
+    suspend();
+    
+    switch(value) {
+        case MOUSE1350:
+        mouse = &mouse1350;
+        break;
+        case MOUSE1351:
+        mouse = &mouse1351;
+        break;
+        case NEOSMOUSE:
+        mouse = &neosMouse;
+        break;
+        default:
+        warn("Unknown mouse model selected.\n");
+        mouse = &mouse1350;
+    }
+    
+    mouse->reset();
+    resume();
+}
+
+void
+C64::connectMouse(unsigned port)
+{
+    assert(port <= 2);
+    mousePort = port;
+}
+
+uint8_t
+C64::mouseBits(unsigned port)
+{
+    if (mousePort != port) {
+        return 0xFF;
+    } else {
+        return mouse->readControlPort();
+    }
+}
+
+uint8_t
+C64::potXBits()
+{
+    if (mousePort != 0) {
+        switch (mouse->mouseModel()) {
+            case MOUSE1350:
+            return mouse1350.rightButton ? 0x00 : 0xFF;
+            case MOUSE1351:
+            return mouse1351.mouseXBits();
+            case NEOSMOUSE:
+            return neosMouse.rightButton ? 0xFF : 0x00;
+        }
+    }
+    return 0xFF;
+}
+
+uint8_t
+C64::potYBits()
+{
+    if (mousePort != 0 && mouse->mouseModel() == MOUSE1351) {
+        return mouse1351.mouseYBits();
+    } else {
+        return 0xFF;
     }
 }
 
@@ -966,82 +941,3 @@ C64::loadRom(const char *filename)
     delete rom;
     return result;
 }
-
-/*
-bool
-C64::insertDisk(AnyArchive *a, unsigned drive)
-{
-    assert(a != NULL);
-    assert(isValidDriveNr(drive));
-    
-    suspend();
-    drive == 1 ? drive1.insertDisk(a) : drive2.insertDisk(a);
-    resume();
-    
-    return true;
-}
-
-void
-C64::ejectDisk(unsigned drive)
-{
-    assert(isValidDriveNr(drive));
-    
-    suspend();
-    drive == 1 ? drive1.ejectDisk() : drive2.ejectDisk();
-    resume();
-}
-
-bool
-C64::insertTape(TAPFile *a)
-{
-    if (a == NULL)
-        return false;
-    
-    debug(1, "Inserting TAP archive into datasette\n");
-    
-    suspend();
-    datasette.insertTape(a);
-    resume();
-    
-    return true;
-}
-
-void
-C64::ejectTape()
-{
-    suspend();
-    datasette.ejectTape();
-    resume();
-}
-
-bool
-C64::attachCartridgeAndReset(CRTFile *container)
-{
-    assert(container != NULL);
-    
-    Cartridge *cartridge = Cartridge::makeWithCRTFile(this, container);
-    
-    if (cartridge) {
-        
-        suspend();
-        expansionport.attachCartridge(cartridge);
-        reset();
-        resume();
-        return true;
-    }
-    
-    return false;
-}
-
-void
-C64::detachCartridgeAndReset()
-{
-    if (expansionport.getCartridgeAttached()) {
-        
-        suspend();
-        expansionport.detachCartridge();
-        reset();
-        resume();
-    }
-}
-*/

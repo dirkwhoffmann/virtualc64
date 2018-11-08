@@ -86,15 +86,15 @@ class C64 : public VirtualComponent {
     // Hardware components
     //
     
-    //! @brief    The C64's virtual memory (ROM, RAM, and color RAM)
-    C64Memory mem;
-    
     //! @brief    The C64's virtual CPU
     CPU cpu;
     
     //! @brief    The C64's processor port
     ProcessorPort processorPort;
     
+    //! @brief    The C64's virtual memory (ROM, RAM, and color RAM)
+    C64Memory mem;
+
     //! @brief    The C64's Video Interface Controller
     VIC vic;
     
@@ -180,7 +180,7 @@ class C64 : public VirtualComponent {
     /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
      *  @details  This value is set in setClockFrequency()
      */
-    uint64_t durationOfCycle;
+    uint64_t durationOfOneCycle;
     
     //! @brief    VICII function table.
     /*! @details  Stores a pointer to the VICII method that is executed
