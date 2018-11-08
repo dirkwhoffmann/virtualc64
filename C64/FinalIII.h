@@ -32,6 +32,7 @@ class FinalIII : public Cartridge {
     uint8_t peekIO2(uint16_t addr);
     void pokeIO2(uint16_t addr, uint8_t value);
     void pressFreezeButton();
+    void releaseFreezeButton();
     bool hasFreezeButton() { return true; }
     bool hasResetButton() { return true; }
 };

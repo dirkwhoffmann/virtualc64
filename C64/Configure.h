@@ -37,9 +37,10 @@
 
 
 
-// RELEASE NOTES (Version 3.1)
+// RELEASE NOTES (Version 3.1.1)
 //
-// Added support for caertridges of type KCS and EasyFlash
+// Screenshots can be taken again (was broken in 3.1).
+// Scanline emulation has been slightly improved.
 //
 // TODOs for the next release:
 //
