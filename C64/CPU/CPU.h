@@ -1,21 +1,22 @@
 /*!
  * @header      CPU.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann, all rights reserved.
  */
-/*              This program is free software; you can redistribute it and/or modify
- *              it under the terms of the GNU General Public License as published by
- *              the Free Software Foundation; either version 2 of the License, or
- *              (at your option) any later version.
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *              This program is distributed in the hope that it will be useful,
- *              but WITHOUT ANY WARRANTY; without even the implied warranty of
- *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *              GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *              You should have received a copy of the GNU General Public License
- *              along with this program; if not, write to the Free Software
- *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _CPU_INC
@@ -214,7 +215,7 @@ private:
      *             interrupts are polled during the last cycle of an
      *             instruction, but this is true only when talking about the
      *             output from the edge and level detectors."
-     *            Variable is set in macro POLL_INTS (Instructions.h)
+     *            Variable is set in macro POLL_INTS (CPUInstructions.h)
      */
     bool doNmi;
     
@@ -224,7 +225,7 @@ private:
      *             instruction, the NMI will be handled and the pending status
      *             of the IRQ forgotten (though it's likely to be detected again
      *             during later polling)."
-     *            Variable is set in macro POLL_INTS (Instructions.h)
+     *            Variable is set in macro POLL_INTS (CPUInstructions.h)
      */
     bool doIrq;
     
@@ -234,7 +235,7 @@ private:
 	//! @brief    Breakpoint tag for each memory cell
 	uint8_t breakpoint[65536];
 	
-#include "Instructions.h"
+#include "CPUInstructions.h"
 		
 public:
 

@@ -26,7 +26,7 @@
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
 		50176C660A6F72F3009E80BD /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C550A6F72F3009E80BD /* CPU.cpp */; };
-		50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C570A6F72F3009E80BD /* Instructions.cpp */; };
+		50176C670A6F72F3009E80BD /* CPUInstructions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C570A6F72F3009E80BD /* CPUInstructions.cpp */; };
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
@@ -230,8 +230,8 @@
 		50176C540A6F72F3009E80BD /* CIA.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = CIA.h; sourceTree = "<group>"; };
 		50176C550A6F72F3009E80BD /* CPU.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
 		50176C560A6F72F3009E80BD /* CPU.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = CPU.h; sourceTree = "<group>"; };
-		50176C570A6F72F3009E80BD /* Instructions.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Instructions.cpp; sourceTree = "<group>"; };
-		50176C580A6F72F3009E80BD /* Instructions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Instructions.h; sourceTree = "<group>"; };
+		50176C570A6F72F3009E80BD /* CPUInstructions.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CPUInstructions.cpp; sourceTree = "<group>"; };
+		50176C580A6F72F3009E80BD /* CPUInstructions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = CPUInstructions.h; sourceTree = "<group>"; };
 		50176C590A6F72F3009E80BD /* Keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Keyboard.cpp; sourceTree = "<group>"; };
 		50176C5A0A6F72F3009E80BD /* Keyboard.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Keyboard.h; sourceTree = "<group>"; };
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
@@ -683,8 +683,8 @@
 				50171AA02083716000C07AAD /* CPU_types.h */,
 				50176C560A6F72F3009E80BD /* CPU.h */,
 				50176C550A6F72F3009E80BD /* CPU.cpp */,
-				50176C580A6F72F3009E80BD /* Instructions.h */,
-				50176C570A6F72F3009E80BD /* Instructions.cpp */,
+				50176C580A6F72F3009E80BD /* CPUInstructions.h */,
+				50176C570A6F72F3009E80BD /* CPUInstructions.cpp */,
 			);
 			path = CPU;
 			sourceTree = "<group>";
@@ -1104,7 +1104,7 @@
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
 				50FB74A2203322C900E05051 /* DiskInspectorController.swift in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
-				50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */,
+				50176C670A6F72F3009E80BD /* CPUInstructions.cpp in Sources */,
 				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
 				50DC89C820B2EB54005E0557 /* CpuTableView.swift in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
