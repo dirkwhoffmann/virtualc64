@@ -30,16 +30,16 @@
 @class DatasetteProxy;
 
 @class AnyC64FileProxy;
-@class ArchiveProxy;
+@class AnyArchiveProxy;
 @class AnyDiskProxy;
-@class CRTProxy;
-@class TAPProxy;
+@class CRTFileProxy;
+@class TAPFileProxy;
 @class SnapshotProxy;
-@class T64Proxy;
-@class PRGProxy;
-@class P00Proxy;
-@class D64Proxy;
-@class G64Proxy;
+@class T64FileProxy;
+@class PRGFileProxy;
+@class P00FileProxy;
+@class D64FileProxy;
+@class G64FileProxy;
 
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++.
@@ -194,7 +194,7 @@ struct AnyC64FileWrapper;
 
 // Flashing files
 - (BOOL)flash:(AnyC64FileProxy *)container;
-- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr;
+- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
 
 @end
 
@@ -481,7 +481,7 @@ struct AnyC64FileWrapper;
 
 - (BOOL) cartridgeAttached;
 - (CartridgeType) cartridgeType;
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c;
+- (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c;
 - (BOOL) attachGeoRamCartridge:(NSInteger)capacity;
 - (void) detachCartridgeAndReset;
 - (BOOL) hasFreezeButton;
@@ -550,7 +550,7 @@ struct AnyC64FileWrapper;
 - (BOOL) hasModifiedDisk;
 - (void) setModifiedDisk:(BOOL)b;
 - (void) prepareToInsert;
-- (void) insertDisk:(ArchiveProxy *)disk;
+- (void) insertDisk:(AnyArchiveProxy *)disk;
 - (void) prepareToEject;
 - (void) ejectDisk;
 - (BOOL) writeProtected;
@@ -640,7 +640,7 @@ struct AnyC64FileWrapper;
 - (void) pressStop;
 - (void) rewind;
 - (void) ejectTape;
-- (BOOL) insertTape:(TAPProxy *)tape;
+- (BOOL) insertTape:(TAPFileProxy *)tape;
 - (NSInteger) getType; 
 - (long) durationInCycles;
 - (int) durationInSeconds;
@@ -683,7 +683,7 @@ struct AnyC64FileWrapper;
 //                               AnyArchive proxy
 // -----------------------------------------------------------------------------
 
-@interface ArchiveProxy : AnyC64FileProxy {
+@interface AnyArchiveProxy : AnyC64FileProxy {
 }
 
 + (instancetype)make;
@@ -725,7 +725,7 @@ struct AnyC64FileWrapper;
 //                               CRTFile proxy
 // -----------------------------------------------------------------------------
 
-@interface CRTProxy : AnyC64FileProxy {
+@interface CRTFileProxy : AnyC64FileProxy {
 }
 
 + (CartridgeType)typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length;
@@ -752,7 +752,7 @@ struct AnyC64FileWrapper;
 //                               TAPFile proxy
 // -----------------------------------------------------------------------------
 
-@interface TAPProxy : AnyC64FileProxy {
+@interface TAPFileProxy : AnyC64FileProxy {
 }
 
 + (BOOL)isTAPFile:(NSString *)path;
@@ -768,13 +768,13 @@ struct AnyC64FileWrapper;
 //                               T64File proxy
 // -----------------------------------------------------------------------------
 
-@interface T64Proxy : ArchiveProxy
+@interface T64FileProxy : AnyArchiveProxy
 {
 }
 + (BOOL)isT64File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
 
 @end
 
@@ -783,13 +783,13 @@ struct AnyC64FileWrapper;
 //                               PRGFile proxy
 // -----------------------------------------------------------------------------
 
-@interface PRGProxy : ArchiveProxy
+@interface PRGFileProxy : AnyArchiveProxy
 {
 }
 + (BOOL)isPRGFile:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
 
 @end
 
@@ -798,13 +798,13 @@ struct AnyC64FileWrapper;
 //                               P00File proxy
 // -----------------------------------------------------------------------------
 
-@interface P00Proxy : ArchiveProxy
+@interface P00FileProxy : AnyArchiveProxy
 {
 }
 + (BOOL)isP00File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
 
 @end
 
@@ -813,7 +813,7 @@ struct AnyC64FileWrapper;
 //                               AnyDisk proxy
 // -----------------------------------------------------------------------------
 
-@interface AnyDiskProxy : ArchiveProxy {
+@interface AnyDiskProxy : AnyArchiveProxy {
 }
 
 + (instancetype)make;
@@ -832,13 +832,13 @@ struct AnyC64FileWrapper;
 //                               D64File proxy
 // -----------------------------------------------------------------------------
 
-@interface D64Proxy : AnyDiskProxy
+@interface D64FileProxy : AnyDiskProxy
 {
 }
 + (BOOL)isD64File:(NSString *)filename;
 + (instancetype)makeWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype)makeWithFile:(NSString *)filename;
-+ (instancetype)makeWithAnyArchive:(ArchiveProxy *)otherArchive;
++ (instancetype)makeWithAnyArchive:(AnyArchiveProxy *)otherArchive;
 + (instancetype)makeWithDisk:(DiskProxy *)disk;
 
 @end
@@ -848,7 +848,7 @@ struct AnyC64FileWrapper;
 //                               G64File proxy
 // -----------------------------------------------------------------------------
 
-@interface G64Proxy : AnyDiskProxy
+@interface G64FileProxy : AnyDiskProxy
 {
 }
 + (BOOL)isG64File:(NSString *)filename;

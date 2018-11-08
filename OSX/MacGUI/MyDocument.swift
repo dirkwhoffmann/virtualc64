@@ -221,29 +221,29 @@ class MyDocument : NSDocument {
             openAsUntitled = false
             break
         case "CRT":
-            if CRTProxy.isUnsupportedCRTBuffer(buffer, length: length) {
-                let type = CRTProxy.typeName(ofCRTBuffer: buffer, length: length)!
+            if CRTFileProxy.isUnsupportedCRTBuffer(buffer, length: length) {
+                let type = CRTFileProxy.typeName(ofCRTBuffer: buffer, length: length)!
                 throw NSError.unsupportedCartridgeError(filename: filename, type: type)
             }
-            attachment = CRTProxy.make(withBuffer: buffer, length: length)
+            attachment = CRTFileProxy.make(withBuffer: buffer, length: length)
             break
         case "TAP":
-            attachment = TAPProxy.make(withBuffer: buffer, length: length)
+            attachment = TAPFileProxy.make(withBuffer: buffer, length: length)
             break
         case "T64":
-            attachment = T64Proxy.make(withBuffer: buffer, length: length)
+            attachment = T64FileProxy.make(withBuffer: buffer, length: length)
             break
         case "PRG":
-            attachment = PRGProxy.make(withBuffer: buffer, length: length)
+            attachment = PRGFileProxy.make(withBuffer: buffer, length: length)
             break
         case "D64":
-            attachment = D64Proxy.make(withBuffer: buffer, length: length)
+            attachment = D64FileProxy.make(withBuffer: buffer, length: length)
             break
         case "P00":
-            attachment = P00Proxy.make(withBuffer: buffer, length: length)
+            attachment = P00FileProxy.make(withBuffer: buffer, length: length)
             break
         case "G64":
-            attachment = G64Proxy.make(withBuffer: buffer, length: length)
+            attachment = G64FileProxy.make(withBuffer: buffer, length: length)
             break
         default:
             throw NSError.unsupportedFormatError(filename: filename)
@@ -345,7 +345,7 @@ class MyDocument : NSDocument {
     @discardableResult
     func insertAttachmentAsDisk(drive nr: Int) -> Bool {
         
-        if let archive = attachment as? ArchiveProxy {
+        if let archive = attachment as? AnyArchiveProxy {
            
             if proceedWithUnexportedDisk(drive: nr) {
              
@@ -434,7 +434,7 @@ class MyDocument : NSDocument {
         // Perform default behavior if mount dialogs are disabled
         if parent.autoMount {
             if type == PRG_FILE || type == P00_FILE {
-                flashAttachment(archive: attachment as! ArchiveProxy)
+                flashAttachment(archive: attachment as! AnyArchiveProxy)
                 return true
             } else {
                 return parent.mount(attachment)
@@ -467,10 +467,10 @@ class MyDocument : NSDocument {
         }
     }
     
-    func flashAttachment(archive: ArchiveProxy, item: Int = 0) {
+    func flashAttachment(archive: AnyArchiveProxy, item: Int = 0) {
         
         let parent = windowForSheet!.windowController as! MyController
-        let archive = attachment as! ArchiveProxy
+        let archive = attachment as! AnyArchiveProxy
 
         // Flash program into memory
         c64.flash(archive, item: item)
@@ -570,12 +570,12 @@ class MyDocument : NSDocument {
         
         // Convert disk to a D64 archive
         // guard let d64archive = D64Proxy.make(withDrive: drive) else {
-        guard let d64archive = D64Proxy.make(withDisk: drive.disk) else {
+        guard let d64archive = D64FileProxy.make(withDisk: drive.disk) else {
             return false
         }
         
         // Convert the D64 archive into the target format
-        var archive: ArchiveProxy?
+        var archive: AnyArchiveProxy?
         switch typeName.uppercased() {
         case "D64":
             track("Exporting to D64 format")
@@ -583,25 +583,25 @@ class MyDocument : NSDocument {
         
         case "G64":
             track("Exporting to G64 format")
-            archive = G64Proxy.make(withDisk: drive.disk)
+            archive = G64FileProxy.make(withDisk: drive.disk)
             
         case "T64":
             track("Exporting to T64 format")
-            archive = T64Proxy.make(withAnyArchive: d64archive)
+            archive = T64FileProxy.make(withAnyArchive: d64archive)
             
         case "PRG":
             track("Exporting to PRG format")
             if d64archive.numberOfItems() > 1  {
                 showDiskHasMultipleFilesAlert(format: "PRG")
             }
-            archive = PRGProxy.make(withAnyArchive: d64archive)
+            archive = PRGFileProxy.make(withAnyArchive: d64archive)
             
         case "P00":
             track("Exporting to P00 format")
             if d64archive.numberOfItems() > 1  {
                 showDiskHasMultipleFilesAlert(format: "P00")
             }
-            archive = P00Proxy.make(withAnyArchive: d64archive)
+            archive = P00FileProxy.make(withAnyArchive: d64archive)
             
         default:
             fatalError()

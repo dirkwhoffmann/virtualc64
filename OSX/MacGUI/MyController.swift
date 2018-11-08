@@ -815,10 +815,10 @@ extension MyController {
         switch (type) {
             
         case CRT_FILE:
-            return c64.expansionport.attachCartridgeAndReset(item as? CRTProxy)
+            return c64.expansionport.attachCartridgeAndReset(item as? CRTFileProxy)
             
         case TAP_FILE:
-            return c64.datasette.insertTape(item as? TAPProxy)
+            return c64.datasette.insertTape(item as? TAPFileProxy)
             
         case T64_FILE, D64_FILE,
              PRG_FILE, P00_FILE,
@@ -860,7 +860,7 @@ extension MyController {
             if disk != nil {
                 drive.prepareToInsert()
                 usleep(300000)
-                drive.insertDisk(disk as? ArchiveProxy)
+                drive.insertDisk(disk as? AnyArchiveProxy)
             }
         }
     }

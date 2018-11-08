@@ -11,7 +11,7 @@ import Foundation
 
 class TapeMountController : UserDialogController {
     
-    var tape: TAPProxy!
+    var tape: TAPFileProxy!
     
     // Outlets
     @IBOutlet weak var autoLoad: NSButton!
@@ -21,7 +21,7 @@ class TapeMountController : UserDialogController {
                    completionHandler:(() -> Void)? = nil) {
         
         track()
-        tape = controller.mydocument.attachment as? TAPProxy
+        tape = controller.mydocument.attachment as? TAPFileProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     

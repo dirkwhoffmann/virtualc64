@@ -405,9 +405,9 @@ extension MyController {
     @IBAction func newDiskAction(_ sender: Any!) {
         
         let tag = (sender as! NSMenuItem).tag
-        let emptyArchive = ArchiveProxy.make()
+        let emptyArchive = AnyArchiveProxy.make()
         
-        mydocument.attachment = D64Proxy.make(withAnyArchive: emptyArchive)
+        mydocument.attachment = D64FileProxy.make(withAnyArchive: emptyArchive)
         mydocument.insertAttachmentAsDisk(drive: tag)
         mydocument.clearRecentlyExportedDiskURLs(drive: tag)
     }

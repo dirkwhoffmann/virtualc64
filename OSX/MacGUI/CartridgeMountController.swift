@@ -11,7 +11,7 @@ import Foundation
 
 class CartridgeMountController : UserDialogController {
     
-    var cartridge: CRTProxy!
+    var cartridge: CRTFileProxy!
     
     // Outlets
     @IBOutlet weak var header: NSTextField!
@@ -25,7 +25,7 @@ class CartridgeMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        cartridge = controller.mydocument.attachment as? CRTProxy
+        cartridge = controller.mydocument.attachment as? CRTFileProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
         

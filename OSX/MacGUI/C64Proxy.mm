@@ -834,7 +834,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->expansionPort->getCartridgeAttached();
 }
-- (BOOL) attachCartridgeAndReset:(CRTProxy *)c
+- (BOOL) attachCartridgeAndReset:(CRTFileProxy *)c
 {
     CRTFile *file = (CRTFile *)([c wrapper]->file);
     return wrapper->expansionPort->attachCartridgeAndReset(file);
@@ -1082,7 +1082,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->drive->prepareToInsert();
 }
-- (void) insertDisk:(ArchiveProxy *)disk
+- (void) insertDisk:(AnyArchiveProxy *)disk
 {
     AnyArchive *archive = (AnyArchive *)([disk wrapper]->file);
     wrapper->drive->insertDisk(archive);
@@ -1206,7 +1206,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->datasette->rewind();
 }
-- (BOOL) insertTape:(TAPProxy *)tape
+- (BOOL) insertTape:(TAPFileProxy *)tape
 {
     TAPFile *file = (TAPFile *)([tape wrapper]->file);
     return wrapper->datasette->insertTape(file);
@@ -1610,7 +1610,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->flash([file wrapper]->file);
 }
-- (BOOL)flash:(ArchiveProxy *)archive item:(NSInteger)nr;
+- (BOOL)flash:(AnyArchiveProxy *)archive item:(NSInteger)nr;
 {
     AnyArchive *a = (AnyArchive *)([archive wrapper]->file);
     return wrapper->c64->flash(a, (unsigned)nr);
@@ -1740,7 +1740,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // CRT proxy
 //
 
-@implementation CRTProxy
+@implementation CRTFileProxy
 
 + (CartridgeType) typeOfCRTBuffer:(const void *)buffer length:(NSInteger)length
 {
@@ -1822,7 +1822,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // TAP proxy
 //
 
-@implementation TAPProxy
+@implementation TAPFileProxy
 
 + (BOOL) isTAPFile:(NSString *)path
 {
@@ -1858,7 +1858,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // AnyArchive proxy
 //
 
-@implementation ArchiveProxy
+@implementation AnyArchiveProxy
 
 + (instancetype) make:(AnyArchive *)archive
 {
@@ -1932,7 +1932,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // T64 proxy
 //
 
-@implementation T64Proxy
+@implementation T64FileProxy
 
 + (BOOL)isT64File:(NSString *)filename
 {
@@ -1953,7 +1953,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     T64File *archive = T64File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     T64File *archive = T64File::makeT64ArchiveWithAnyArchive(other);
@@ -1967,7 +1967,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // PRG proxy
 //
 
-@implementation PRGProxy
+@implementation PRGFileProxy
 
 + (BOOL)isPRGFile:(NSString *)filename
 {
@@ -1988,7 +1988,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     PRGFile *archive = PRGFile::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     PRGFile *archive = PRGFile::makeWithAnyArchive(other);
@@ -2002,7 +2002,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // P00 proxy
 //
 
-@implementation P00Proxy
+@implementation P00FileProxy
 
 + (BOOL)isP00File:(NSString *)filename
 {
@@ -2023,7 +2023,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     P00File *archive = P00File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     P00File *archive = P00File::makeWithAnyArchive(other);
@@ -2087,7 +2087,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // D64 proxy
 //
 
-@implementation D64Proxy
+@implementation D64FileProxy
 
 + (BOOL)isD64File:(NSString *)filename
 {
@@ -2108,7 +2108,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     D64File *archive = D64File::makeWithFile([path UTF8String]);
     return [self make: archive];
 }
-+ (instancetype) makeWithAnyArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeWithAnyArchive:(AnyArchiveProxy *)otherArchive
 {
     AnyArchive *other = (AnyArchive *)([otherArchive wrapper]->file);
     D64File *archive = D64File::makeWithAnyArchive(other);
@@ -2128,7 +2128,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 // G64 proxy
 //
 
-@implementation G64Proxy
+@implementation G64FileProxy
 
 + (BOOL)isG64File:(NSString *)filename
 {

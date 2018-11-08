@@ -11,7 +11,7 @@ import Foundation
 
 class ArchiveMountController : UserDialogController {
     
-    var archive: ArchiveProxy!
+    var archive: AnyArchiveProxy!
     
     // Custom font
     let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
@@ -30,7 +30,7 @@ class ArchiveMountController : UserDialogController {
                             completionHandler:(() -> Void)? = nil) {
         
         track()
-        archive = controller.mydocument.attachment as? ArchiveProxy
+        archive = controller.mydocument.attachment as? AnyArchiveProxy
         super.showSheet(withParent: controller, completionHandler: completionHandler)
     }
     
