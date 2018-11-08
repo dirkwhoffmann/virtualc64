@@ -52,7 +52,6 @@ CPU::CPU()
         { &frozenPC,           sizeof(frozenPC),     CLEAR_ON_RESET },
         { &SP,                 sizeof(SP),           CLEAR_ON_RESET },
         { &P,                  sizeof(P),            CLEAR_ON_RESET },
-        { &opcode,             sizeof(opcode),       CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
         { &addr_lo,            sizeof(addr_lo),      CLEAR_ON_RESET },
         { &addr_hi,            sizeof(addr_hi),      CLEAR_ON_RESET },

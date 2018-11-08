@@ -59,12 +59,16 @@ class CPU : public VirtualComponent {
      *            differences between both models are not emulated.
      */
     CPUChipModel chipModel;
-
+    
     //! @brief    Reference to the connected virtual memory
 	Memory *mem;
-
+    
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
+    
+    //
+    // Internal registers
+    //
     
 	//! @brief    Accumulator
 	uint8_t A;
@@ -98,9 +102,6 @@ class CPU : public VirtualComponent {
      *             N O - B D I Z C
      */
     uint8_t P;
-    
-	//! @brief    Opcode of the currently executed command
-	uint8_t opcode;
     
 	//! @brief    Internal address register (low byte)
 	uint8_t addr_lo;
@@ -288,9 +289,6 @@ public:
      *            stack with the B-flag cleared.
      */
     uint8_t getPWithClearedB() { return getP() & 0b11101111; }
-	
-    //! @brief    Returns current opcode.
-    uint8_t getOpcode() { return opcode; }
     
 	//! @brief    Writes value to the freezend program counter.
     void setPC_at_cycle_0(uint16_t pc) { frozenPC = PC = pc; next = fetch;}

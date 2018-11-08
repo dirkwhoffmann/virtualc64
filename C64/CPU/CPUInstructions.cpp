@@ -455,7 +455,9 @@ bool dirkverbose = false;
 
 bool
 CPU::executeOneCycle()
-{    
+{
+    uint8_t opcode;
+    
     switch (next) {
             
         case fetch:
