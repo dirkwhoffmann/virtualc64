@@ -116,12 +116,12 @@ class C64 : public VirtualComponent {
     //! @brief    The C64's second control port
     ControlPort port2 = ControlPort(2);
     
-    //! @brief    The C64's serial bus connecting the VC1541 floppy drives
-    IEC iec;
-    
     //! @brief    The C64's expansion port (cartdrige slot)
     ExpansionPort expansionport;
     
+    //! @brief    The C64's serial bus connecting the VC1541 floppy drives
+    IEC iec;
+
     //! @brief    A VC1541 floppy drive (with device number 8)
     VC1541 drive1 = VC1541(1);
     
@@ -285,7 +285,7 @@ class C64 : public VirtualComponent {
     
     
     //
-    //! @functiongroup Construction and destructing
+    //! @functiongroup Constructing and destructing
     //
     
     public:

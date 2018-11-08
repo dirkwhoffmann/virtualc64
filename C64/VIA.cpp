@@ -25,9 +25,11 @@
 // VIA 6522 (Commons)
 //
 
-VIA6522::VIA6522()
+VIA6522::VIA6522(VC1541 *drive)
 {
 	setDescription("VIA");
+    
+    this->drive = drive;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -890,7 +892,7 @@ VIA6522::wakeUp()
 // VIA 1
 //
 
-VIA1::VIA1()
+VIA1::VIA1(VC1541 *drive) : VIA6522(drive)
 {
     setDescription("VIA1");
     debug(3, "  Creating VIA1 at address %p...\n", this);
@@ -951,7 +953,7 @@ VIA1::updatePB()
 // VIA 2
 // 
 
-VIA2::VIA2()
+VIA2::VIA2(VC1541 *drive) : VIA6522(drive)
 {
     setDescription("VIA2");
 	debug(3, "  Creating VIA2 at address %p...\n", this);

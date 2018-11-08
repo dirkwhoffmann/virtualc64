@@ -87,12 +87,16 @@ C64::C64()
     // Register sub components
     VirtualComponent *subcomponents[] = {
         
+        &mem,
         &cpu,
         &processorPort,
-        &mem,
+        &cia1, &cia2,
         &vic,
         &sid,
-        &cia1, &cia2,
+        &keyboard,
+        &port1,
+        &port2,
+        &expansionport,
         &iec,
         &drive1,
         &drive2,
@@ -100,10 +104,6 @@ C64::C64()
         &mouse1350,
         &mouse1351,
         &neosMouse,
-        &keyboard,
-        &port1,
-        &port2,
-        &expansionport,
         NULL };
     
     registerSubComponents(subcomponents, sizeof(subcomponents));
@@ -124,9 +124,6 @@ C64::C64()
         { NULL,             0,                       0 }};
     
     registerSnapshotItems(items, sizeof(items));
-
-    // Setup references
-    // cpu.mem = &mem;
 
     // Set initial hardware configuration
     mouse = &mouse1350;

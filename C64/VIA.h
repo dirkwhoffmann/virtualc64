@@ -244,16 +244,21 @@ protected:
     
 public:
     
+    //
+    //! @functiongroup Constructing and destructing
+    //
+    
 	//! @brief    Constructor
-	VIA6522();
+	VIA6522(VC1541 *drive);
 	
 	//! @brief    Destructor
 	~VIA6522();
 		
-	//! @brief    Method from VirtualComponent
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
 	void reset();
-
-    //! @brief    Method from VirtualComponent
     void dump();
 
     //! @brief    Returns true if this object emulates is VIA2
@@ -528,7 +533,7 @@ class VIA1 : public VIA6522 {
 	
 public:
 
-	VIA1();
+	VIA1(VC1541 *drive);
 	~VIA1();
     
     uint8_t portAexternal();
@@ -546,7 +551,7 @@ class VIA2 : public VIA6522 {
 	
 public:
 
-	VIA2();
+	VIA2(VC1541 *drive);
 	~VIA2();
  
     uint8_t portAexternal();

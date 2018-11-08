@@ -228,7 +228,7 @@ private:
 public:
 
     //
-    //! @functiongroup Construction and destructing
+    //! @functiongroup Constructing and destructing
     //
     
 	//! @brief    Standard constructor
