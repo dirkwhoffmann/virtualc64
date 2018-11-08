@@ -79,15 +79,15 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (void) setA:(uint8_t)a
 {
-    wrapper->cpu->A = a;
+    wrapper->cpu->regA = a;
 }
 - (void) setX:(uint8_t)x
 {
-    wrapper->cpu->X = x;
+    wrapper->cpu->regX = x;
 }
 - (void) setY:(uint8_t)y
 {
-    wrapper->cpu->Y = y;
+    wrapper->cpu->regY = y;
 }
 - (void) setNflag:(BOOL)b
 {

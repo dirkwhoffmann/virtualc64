@@ -323,11 +323,11 @@ typedef enum {
 #define FETCH_ADDR_HI \
     if (likely(rdyLine)) abh = mem->peek(PC++); else return true;
 #define FETCH_POINTER_ADDR \
-    if (likely(rdyLine)) ptr = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) dl = mem->peek(PC++); else return true;
 #define FETCH_ADDR_LO_INDIRECT \
-    if (likely(rdyLine)) abl = mem->peek((uint16_t)ptr++); else return true;
+    if (likely(rdyLine)) abl = mem->peek((uint16_t)dl++); else return true;
 #define FETCH_ADDR_HI_INDIRECT \
-    if (likely(rdyLine)) abh = mem->peek((uint16_t)ptr++); else return true;
+    if (likely(rdyLine)) abh = mem->peek((uint16_t)dl++); else return true;
 #define IDLE_FETCH \
     if (likely(rdyLine)) (void)mem->peek(PC); else return true;
 
@@ -343,7 +343,7 @@ typedef enum {
 #define READ_FROM_ZERO_PAGE \
     if (likely(rdyLine)) data = mem->peekZP(abl); else return true;
 #define READ_FROM_ADDRESS_INDIRECT \
-    if (likely(rdyLine)) data = mem->peekZP(ptr); else return true;
+    if (likely(rdyLine)) data = mem->peekZP(dl); else return true;
 
 #define IDLE_READ_IMPLIED \
     if (likely(rdyLine)) (void)mem->peek(PC); else return true;
@@ -356,7 +356,7 @@ typedef enum {
 #define IDLE_READ_FROM_ZERO_PAGE \
     if (likely(rdyLine)) (void)mem->peekZP(abl); else return true;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
-    if (likely(rdyLine)) (void)mem->peekZP(ptr); else return true;
+    if (likely(rdyLine)) (void)mem->peekZP(dl); else return true;
 
 #define WRITE_TO_ADDRESS \
 mem->poke(HI_LO(abh, abl), data);
@@ -367,16 +367,16 @@ mem->poke(HI_LO(abh, abl), data);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
     mem->pokeZP(abl, data); setN(data & 0x80); setZ(data == 0);
 
-#define ADD_INDEX_X overflow = ((int)abl + (int)X > 0xFF); abl += X;
-#define ADD_INDEX_Y overflow = ((int)abl + (int)Y > 0xFF); abl += Y;
-#define ADD_INDEX_X_INDIRECT ptr += X;
-#define ADD_INDEX_Y_INDIRECT ptr += Y;
+#define ADD_INDEX_X overflow = ((int)abl + (int)regX > 0xFF); abl += regX;
+#define ADD_INDEX_Y overflow = ((int)abl + (int)regY > 0xFF); abl += regY;
+#define ADD_INDEX_X_INDIRECT dl += regX;
+#define ADD_INDEX_Y_INDIRECT dl += regY;
 
 #define PUSH_PCL mem->pokeStack(SP--, LO_BYTE(PC));
 #define PUSH_PCH mem->pokeStack(SP--, HI_BYTE(PC));
 #define PUSH_P mem->pokeStack(SP--, getP());
 #define PUSH_P_WITH_B_SET mem->pokeStack(SP--, getP() | B_FLAG);
-#define PUSH_A mem->pokeStack(SP--, A);
+#define PUSH_A mem->pokeStack(SP--, regA);
 #define PULL_PCL if (likely(rdyLine)) setPCL(mem->peekStack(SP)); else return true;
 #define PULL_PCH if (likely(rdyLine)) setPCH(mem->peekStack(SP)); else return true;
 #define PULL_P if (likely(rdyLine)) setPWithoutB(mem->peekStack(SP)); else return true;

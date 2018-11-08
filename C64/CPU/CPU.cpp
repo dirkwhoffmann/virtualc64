@@ -49,16 +49,16 @@ CPU::CPU(CPUChipModel model, Memory *mem)
 
          // Internal state
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
-        { &A,                  sizeof(A),            CLEAR_ON_RESET },
-        { &X,                  sizeof(X),            CLEAR_ON_RESET },
-        { &Y,                  sizeof(Y),            CLEAR_ON_RESET },
+        { &regA,               sizeof(regA),         CLEAR_ON_RESET },
+        { &regX,               sizeof(regX),         CLEAR_ON_RESET },
+        { &regY,               sizeof(regY),         CLEAR_ON_RESET },
         { &PC,                 sizeof(PC),           CLEAR_ON_RESET },
         { &SP,                 sizeof(SP),           CLEAR_ON_RESET },
         { &P,                  sizeof(P),            CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
         { &abl,                sizeof(abl),          CLEAR_ON_RESET },
         { &abh,                sizeof(abh),          CLEAR_ON_RESET },
-        { &ptr,                sizeof(ptr),          CLEAR_ON_RESET },
+        { &dl,                 sizeof(dl),           CLEAR_ON_RESET },
         { &frozenPC,           sizeof(frozenPC),     CLEAR_ON_RESET },
         { &overflow,           sizeof(overflow),     CLEAR_ON_RESET },
         { &data,               sizeof(data),         CLEAR_ON_RESET },
@@ -153,9 +153,9 @@ CPU::getInfo()
     
     info.cycle = cycle;
     info.pc = frozenPC;
-    info.a = A;
-    info.x = X;
-    info.y = Y;
+    info.a = regA;
+    info.x = regX;
+    info.y = regY;
     info.sp = SP;
     info.nFlag = getN();
     info.vFlag = getV();
@@ -301,9 +301,9 @@ CPU::recordInstruction()
     i.byte1 = opcode;
     i.byte2 = length > 1 ? mem->spypeek(i.pc + 1) : 0;
     i.byte3 = length > 2 ? mem->spypeek(i.pc + 2) : 0;
-    i.a = A;
-    i.x = X;
-    i.y = Y;
+    i.a = regA;
+    i.x = regX;
+    i.y = regY;
     i.sp = SP;
     i.flags = getP();
     
@@ -486,9 +486,9 @@ CPU::disassemble(uint16_t addr, bool hex)
     instr.byte1 = mem->spypeek(addr);
     instr.byte2 = mem->spypeek(addr + 1);
     instr.byte3 = mem->spypeek(addr + 2);
-    instr.a = A;
-    instr.x = X;
-    instr.y = Y;
+    instr.a = regA;
+    instr.x = regX;
+    instr.y = regY;
     instr.sp = SP;
     instr.flags = getP();
     

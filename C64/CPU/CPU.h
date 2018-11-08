@@ -70,18 +70,19 @@ class CPU : public VirtualComponent {
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
     
+    
     //
     // Internal registers
     //
     
 	//! @brief    Accumulator
-	uint8_t A;
+	uint8_t regA;
     
 	//! @brief    X register
-	uint8_t X;
+	uint8_t regX;
     
 	//! @brief    Y register
-	uint8_t Y;
+	uint8_t regY;
     
     //! @brief    Stack pointer
     uint8_t SP;
@@ -103,10 +104,10 @@ class CPU : public VirtualComponent {
 	//! @brief    ddress buffer (high byte)
 	uint8_t abh;
     
-	//! @brief    Pointer for indirect addressing modes
-	uint8_t ptr;
+	//! @brief    Input data latch (used in indirect addressing modes)
+	uint8_t dl;
     
-    //! @brief    Internal data register
+    //! @brief    Data bus buffer
     uint8_t data;
         
     /*! @brief    Memory location of the currently executed command
@@ -124,16 +125,21 @@ class CPU : public VirtualComponent {
      */
 	bool overflow;
     
-public:
+  
+    //
+    // External port lines
+    //
     
-	/*! @brief    RDY line (ready line)
-	 *  @details  If this line is LOW, the CPU freezes on the next read access.
-     *            RDY is pulled down by VIC to perform longer lasting read
+    public:
+    
+	/*! @brief    Ready line (RDY)
+	 *  @details  If this line is low, the CPU freezes on the next read access.
+     *            RDY is pulled down by VICII to perform longer lasting read
      *            operations.
      */
 	bool rdyLine;
     
-private:
+    private:
     
     //! @brief    Cycle of the most recent rising edge of the rdyLine
     uint64_t rdyLineUp;
@@ -150,7 +156,8 @@ private:
      */
     uint8_t nmiLine;
     
-public:
+    public:
+    
     /*! @brief    IRQ line (maskable interrupts)
      *  @details  This variable is usually set to 0 which means that the IRQ
      *            line is in high state. When an external component requests an
@@ -160,7 +167,8 @@ public:
      */
 	uint8_t irqLine;
 
-private: 
+    private:
+    
 	/*! @brief    Edge detector of NMI line
      *  @details  https://wiki.nesdev.com/w/index.php/CPU_interrupts
      *            "The NMI input is connected to an edge detector. This edge
@@ -339,13 +347,13 @@ public:
     void setPWithoutB(uint8_t p) { P = (p & 0b11101111) | (P & 0b00010000); }
 
 	//! @brief    Loads the accumulator. The Z- and N-flag may change.
-    void loadA(uint8_t a) { A = a; setN(a & 0x80); setZ(a == 0); }
+    void loadA(uint8_t a) { regA = a; setN(a & 0x80); setZ(a == 0); }
 
 	//! @brief    Loads the X register. The Z- and N-flag may change.
-    void loadX(uint8_t x) { X = x; setN(x & 0x80); setZ(x == 0); }
+    void loadX(uint8_t x) { regX = x; setN(x & 0x80); setZ(x == 0); }
     
 	//! @brief    Loads the Y register. The Z- and N-flag may change.
-    void loadY(uint8_t y) { Y = y; setN(y & 0x80); setZ(y == 0); }
+    void loadY(uint8_t y) { regY = y; setN(y & 0x80); setZ(y == 0); }
     
     
     //
