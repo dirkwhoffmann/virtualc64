@@ -187,7 +187,7 @@ C64::setClockFrequency(uint32_t frequency)
     VirtualComponent::setClockFrequency(frequency);
     
     durationOfCycle = 10000000000 / frequency;
-    debug("Duration of a CPU cycle is %lld 1/10 nsec.\n", durationOfCycle);
+    debug("Duration of a C64 CPU cycle is %lld 1/10 nsec.\n", durationOfCycle);
 }
 
 void 
