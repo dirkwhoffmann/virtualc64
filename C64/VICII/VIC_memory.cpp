@@ -723,7 +723,7 @@ VIC::cAccess()
          */
         dataBusPhi2 = 0xFF;
         videoMatrix[vmli] = dataBusPhi2;
-        colorLine[vmli] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
+        colorLine[vmli] = c64->mem.ram[c64->cpu.PC] & 0x0F;
     }
 }
 

@@ -340,7 +340,7 @@ public:
      */
     bool getLightBarrier() {
         return
-        (cpu.getCycle() < 1500000)
+        (cpu.cycle < 1500000)
         || hasPartiallyInsertedDisk()
         || disk.isWriteProtected();
     }

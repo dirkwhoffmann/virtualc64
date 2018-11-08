@@ -1552,7 +1552,7 @@ CPU::executeOneCycle()
         case DEX:
             
             IDLE_READ_IMPLIED
-            loadX(getX()-1);
+            loadX(X - 1);
             POLL_INT
             DONE
             
@@ -1567,7 +1567,7 @@ CPU::executeOneCycle()
         case DEY:
             
             IDLE_READ_IMPLIED
-            loadY(getY()-1);
+            loadY(Y - 1);
             POLL_INT
             DONE
 
@@ -1672,7 +1672,7 @@ CPU::executeOneCycle()
         case INX:
             
             IDLE_READ_IMPLIED
-            loadX(getX()+1);
+            loadX(X + 1);
             POLL_INT
             DONE
 
@@ -1687,7 +1687,7 @@ CPU::executeOneCycle()
         case INY:
             
             IDLE_READ_IMPLIED
-            loadY(getY()+1);
+            loadY(Y + 1);
             POLL_INT
             DONE
 
@@ -1707,7 +1707,7 @@ CPU::executeOneCycle()
         case JMP_abs_2:
             
             FETCH_ADDR_HI
-            setPC(LO_HI(addr_lo, addr_hi));
+            PC = LO_HI(addr_lo, addr_hi);
             POLL_INT
             DONE
 
@@ -1766,7 +1766,7 @@ CPU::executeOneCycle()
         case JSR_5:
             
             FETCH_ADDR_HI
-            setPC(LO_HI(addr_lo, addr_hi));
+            PC = LO_HI(addr_lo, addr_hi);
             POLL_INT
             DONE
 

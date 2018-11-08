@@ -845,8 +845,8 @@ VIA6522::sleep()
     assert(idleCounter == 0);
     
     // Determine maximum possible sleep cycles based on timer counts
-    uint64_t sleepA = (t1 > 2) ? (drive->cpu.getCycle() + t1 - 1) : 0;
-    uint64_t sleepB = (t2 > 2) ? (drive->cpu.getCycle() + t2 - 1) : 0;
+    uint64_t sleepA = (t1 > 2) ? (drive->cpu.cycle + t1 - 1) : 0;
+    uint64_t sleepB = (t2 > 2) ? (drive->cpu.cycle + t2 - 1) : 0;
     
     // VIAs with stopped timers can sleep forever
     if (!(delay & VIACountA1)) sleepA = UINT64_MAX;

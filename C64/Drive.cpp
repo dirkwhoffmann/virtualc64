@@ -90,11 +90,8 @@ VC1541::reset()
 {
     VirtualComponent::reset();
     
-    cpu.setPC(0xEAA0);
+    cpu.PC = 0xEAA0;
     halftrack = 41;
-        
-    // setDebugLevel(2);
-    // via2.setDebugLevel(2);
 }
 
 void

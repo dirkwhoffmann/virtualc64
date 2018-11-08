@@ -51,6 +51,8 @@ CPU::CPU()
         { &PC,                      sizeof(PC),                CLEAR_ON_RESET },
         { &PC_at_cycle_0,           sizeof(PC_at_cycle_0),     CLEAR_ON_RESET },
         { &SP,                      sizeof(SP),                CLEAR_ON_RESET },
+        { &P,                       sizeof(P),                 CLEAR_ON_RESET },
+        /*
         { &N,                       sizeof(N),                 CLEAR_ON_RESET },
         { &V,                       sizeof(V),                 CLEAR_ON_RESET },
         { &B,                       sizeof(B),                 CLEAR_ON_RESET },
@@ -58,6 +60,7 @@ CPU::CPU()
         { &I,                       sizeof(I),                 CLEAR_ON_RESET },
         { &Z,                       sizeof(Z),                 CLEAR_ON_RESET },
         { &C,                       sizeof(C),                 CLEAR_ON_RESET },
+        */
         { &opcode,                  sizeof(opcode),            CLEAR_ON_RESET },
         { &next,                    sizeof(next),              CLEAR_ON_RESET },
         { &addr_lo,                 sizeof(addr_lo),           CLEAR_ON_RESET },
@@ -90,7 +93,7 @@ CPU::reset()
 {
     VirtualComponent::reset();
 
-    B = 1;
+    setB(1);
 	rdyLine = true;
 	next = fetch;
     levelDetector.clear();
@@ -162,13 +165,13 @@ CPU::getInfo()
     info.x = X;
     info.y = Y;
     info.sp = SP;
-    info.nFlag = N;
-    info.vFlag = V;
-    info.bFlag = B;
-    info.dFlag = D;
-    info.iFlag = I;
-    info.zFlag = Z;
-    info.cFlag = C;
+    info.nFlag = getN();
+    info.vFlag = getV();
+    info.bFlag = getB();
+    info.dFlag = getD();
+    info.iFlag = getI();
+    info.zFlag = getZ();
+    info.cFlag = getC();
   
     return info;
 }

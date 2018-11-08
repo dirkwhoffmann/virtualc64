@@ -24,13 +24,13 @@
 
 #include <stdint.h>
 
-//! @brief    Processor models
+//! @brief    Processor model
 typedef enum {
     MOS_6510 = 0,
     MOS_6502 = 1
 } CPUChipModel;
 
-//! @brief    Addressing modes
+//! @brief    Addressing mode
 typedef enum {
     ADDR_IMPLIED,
     ADDR_ACCUMULATOR,
@@ -48,11 +48,27 @@ typedef enum {
     ADDR_INDIRECT
 } AddressingMode;
 
-/*! @brief    Error states of the virtual CPU
- *  @details  CPU_OK indicates normal operation. When a (soft or hard) breakpoint is reached,
- *            the CPU enters the CPU_BREAKPOINT_REACHED state. CPU_ILLEGAL_INSTRUCTION is
- *            entered when an opcode is not understood by the CPU. Once the CPU enters a
- *            different state than CPU_OK, the execution thread is terminated.
+/*! @brief    Breakpoint type
+ *  @details  Each memory call is marked with a breakpoint tag. Originally,
+ *            each cell is tagged with NO_BREAKPOINT which has no effect. CPU
+ *            execution will stop if the memory cell is tagged with one of the
+ *            following breakpoint types:
+ *            HARD_BREAKPOINT : Execution is halted.
+ *            SOFT_BREAKPOINT : Execution is halted and the tag is deleted.
+ */
+typedef enum {
+    NO_BREAKPOINT   = 0x00,
+    HARD_BREAKPOINT = 0x01,
+    SOFT_BREAKPOINT = 0x02
+} Breakpoint;
+
+
+/*! @brief    Error state of the virtual CPU
+ *  @details  CPU_OK indicates normal operation. When a (soft or hard)
+ *            breakpoint is reached, state CPU_BREAKPOINT_REACHED is entered.
+ *            CPU_ILLEGAL_INSTRUCTION is set when an opcode is not understood
+ *            by the CPU. Once the CPU enters a different state than CPU_OK,
+ *            the execution thread is terminated.
  */
 typedef enum {
     CPU_OK = 0,
@@ -60,20 +76,6 @@ typedef enum {
     CPU_HARD_BREAKPOINT_REACHED,
     CPU_ILLEGAL_INSTRUCTION
 } ErrorState;
-
-/*! @brief    Breakpoint type
- *  @details  Each memory call is marked with a breakpoint tag. Originally, each cell is
- *            tagged with NO_BREAKPOINT which has no effect. CPU execution will stop if the
- *            memory cell is tagged with one of the following breakpoint types:
- *
- *            HARD_BREAKPOINT: execution is halted
- *            SOFT_BREAKPOINT: execution is halted and the tag is deleted
- */
-typedef enum {
-    NO_BREAKPOINT   = 0x00,
-    HARD_BREAKPOINT = 0x01,
-    SOFT_BREAKPOINT = 0x02
-} Breakpoint;
 
 /*! @brief    CPU info
  *  @details  Used by getInfo() to collect debug information

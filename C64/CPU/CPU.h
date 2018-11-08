@@ -29,30 +29,20 @@
 /*! @class  The virtual 6502 / 6510 processor
  */
 class CPU : public VirtualComponent {
-
-public:
-	
-	//! @brief    Bit position of the Negative flag
-	static const uint8_t N_FLAG = 0x80;
     
-	//! @brief    Bit position of the Overflow flag
-	static const uint8_t V_FLAG = 0x40;
+    public:
     
-	//! @brief    Bit position of the Break flag
-	static const uint8_t B_FLAG = 0x10;
+    //! @brief    Bit positions of all 7 CPU flags
+    typedef enum : uint8_t {
+        C_FLAG = 0x01,
+        Z_FLAG = 0x02,
+        I_FLAG = 0x04,
+        D_FLAG = 0x08,
+        B_FLAG = 0x10,
+        V_FLAG = 0x40,
+        N_FLAG = 0x80
+    } Flag;
     
-	//! @brief    Bit position of the Decimal flag
-	static const uint8_t D_FLAG = 0x08;
-    
-	//! @brief    Bit position of the Interrupt flag
-	static const uint8_t I_FLAG = 0x04;
-    
-	//! @brief    Bit position of the Zero flag
-	static const uint8_t Z_FLAG = 0x02;
-    
-	//! @brief    Bit position of the Carry flag
-	static const uint8_t C_FLAG = 0x01;
-	
     //! @brief    Possible interrupt sources
     typedef enum : uint8_t {
         INTSRC_CIA = 0x01,
@@ -63,20 +53,18 @@ public:
         INTSRC_KEYBOARD = 0x20
     } InterruptSource;
     
-	//! @brief    Reference to the connected virtual memory
-	Memory *mem;
-
     /*! @brief    Selected chip model
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
      *            differences between both models are not emulated.
      */
     CPUChipModel chipModel;
-    
+
+    //! @brief    Reference to the connected virtual memory
+	Memory *mem;
+
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
-
-private:
     
 	//! @brief    Accumulator
 	uint8_t A;
@@ -87,36 +75,23 @@ private:
 	//! @brief    Y register
 	uint8_t Y;
     
-	//! @brief    Program counter
+    //! @brief    Stack pointer
+    uint8_t SP;
+
+    //! @brief    Program counter
 	uint16_t PC;
+    
+    private:
     
 	//! @brief    Memory location of the currently executed command
 	uint16_t PC_at_cycle_0;
     
-	//! @brief    Stack pointer
-	uint8_t SP;
+    /*! @brief     Processor status register (flags)
+     *  @details   7 6 5 4 3 2 1 0
+     *             N O - B D I Z C
+     */
+    uint8_t P;
     
-	//! @brief    Negative flag
-	uint8_t  N;
-    
-	//! @brief    Overflow flag
-	uint8_t  V;
-    
-	//! @brief    Break flag
-	uint8_t  B;
-    
-	//! @brief    Decimal flag
-	uint8_t  D;
-    
-	//! @brief    Interrupt flag
-	uint8_t  I;
-    
-	//! @brief    Zero flag
-	uint8_t  Z;
-    
-	//! @brief    Carry flag
-	uint8_t  C;
-	
 	//! @brief    Opcode of the currently executed command
 	uint8_t opcode;
     
@@ -151,6 +126,7 @@ public:
      *            operations.
      */
 	bool rdyLine;
+    
 private:
     
     //! @brief    Cycle of the most recent rising edge of the rdyLine
@@ -263,6 +239,7 @@ public:
     //! @functiongroup Handling registers and flags
     //
 
+    /*
     //! @brief    Returns the current execution cycle.
     uint64_t getCycle() { return cycle; }
 
@@ -277,51 +254,53 @@ public:
 
 	//! @brief    Returns current value of the program counter.
     uint16_t getPC() { return PC; }
+    */
     
 	//! @brief    Returns "freezed" program counter.
     uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; }
     
 	//! @brief    Returns current value of the program counter.
-    uint8_t getSP() { return SP; }
+    // uint8_t getSP() { return SP; }
 	
-	//! @brief    Returns 1, if Negative flag is set, 0 otherwise.
-    uint8_t getN() { return (N ? N_FLAG : 0); }
+	//! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
+    uint8_t getN() { return P & N_FLAG; }
     
-	//! @brief    Returns 1, if Overflow flag is set, 0 otherwise.
-    uint8_t getV() { return (V ? V_FLAG : 0); }
+	//! @brief    Returns V_FLAG, if Overflow flag is set, 0 otherwise.
+    uint8_t getV() { return P & V_FLAG; }
     
-	//! @brief    Returns 1, if Break flag is set, 0 otherwise.
-    uint8_t getB() { return (B ? B_FLAG : 0); }
+	//! @brief    Returns B_FLAG, if Break flag is set, 0 otherwise.
+    uint8_t getB() { return P & B_FLAG; }
     
-	//! @brief    Returns 1, if Decimal flag is set, 0 otherwise.
-    uint8_t getD() { return (D ? D_FLAG : 0); }
+	//! @brief    Returns D_FLAG, if Decimal flag is set, 0 otherwise.
+    uint8_t getD() { return P & D_FLAG; }
     
-	//! @brief    Returns 1, if Interrupt flag is set, 0 otherwise.
-    uint8_t getI() { return (I ? I_FLAG : 0); }
+	//! @brief    Returns I_FLAG, if Interrupt flag is set, 0 otherwise.
+    uint8_t getI() { return P & I_FLAG; }
     
-	//! @brief    Returns 1, if Zero flag is set, 0 otherwise.
-    uint8_t getZ() { return (Z ? Z_FLAG : 0); }
+	//! @brief    Returns Z_FLAG, if Zero flag is set, 0 otherwise.
+    uint8_t getZ() { return P & Z_FLAG; }
     
-	//! @brief    Returns 1, if Carry flag is set, 0 otherwise.
-    uint8_t getC() { return (C ? C_FLAG : 0); }
+	//! @brief    Returns C_FLAG, if Carry flag is set, 0 otherwise.
+    uint8_t getC() { return P & C_FLAG; }
     
 	/*! @brief    Returns the contents of the status register
 	 *  @details  Each bit in the status register corresponds to the value of
      *            a single flag, except bit 5 which is always set.
      */
-    uint8_t getP() { return getN() | getV() | 32 | getB() | getD() | getI() | getZ() | getC(); }
-    
+    uint8_t getP() { return P | 0b00100000; }
+
 	/*! @brief    Returns the status register without the B flag
 	 *  @details  The bit position of the B flag is always 0. This function is
      *            needed for proper interrupt handling. When an IRQ or NMI is
      *            triggered internally, the status register is pushed on the
      *            stack with the B-flag cleared.
      */
-    uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
+    uint8_t getPWithClearedB() { return getP() & 0b11101111; }
 	
     //! @brief    Returns current opcode.
     uint8_t getOpcode() { return opcode; }
     
+    /*
 	//! @brief    Writes value to the accumulator. Flags remain untouched.
     void setA(uint8_t a) { A = a; }
     
@@ -333,6 +312,7 @@ public:
     
 	//! @brief    Writes value to the the program counter.
     void setPC(uint16_t pc) { PC = pc; }
+    */
     
 	//! @brief    Writes value to the freezend program counter.
     void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = fetch;}
@@ -357,43 +337,43 @@ public:
     void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
 	
 	//! @brief    Writes value to the stack pointer.
-    void setSP(uint8_t sp) { SP = sp; }
+    // void setSP(uint8_t sp) { SP = sp; }
 	
 	//! @brief    0: Negative-flag is cleared, any other value: flag is set.
-    void setN(uint8_t n) { N = n; }
+    void setN(uint8_t bit) { bit ? P |= N_FLAG : P &= ~N_FLAG; }
     
 	//! @brief    0: Overflow-flag is cleared, any other value: flag is set.
-    void setV(uint8_t v) { V = v; }
+    void setV(uint8_t bit) { bit ? P |= V_FLAG : P &= ~V_FLAG; }
     
 	//! @brief    0: Break-flag is cleared, any other value: flag is set.
-    void setB(uint8_t b) { B = b; }
+    void setB(uint8_t bit) { bit ? P |= B_FLAG : P &= ~B_FLAG; }
     
 	//! @brief    0: Decimal-flag is cleared, any other value: flag is set.
-    void setD(uint8_t d) { D = d; }
+    void setD(uint8_t bit) { bit ? P |= D_FLAG : P &= ~D_FLAG; }
     
 	//! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
-    void setI(uint8_t i) { I = i; }
+    void setI(uint8_t bit) { bit ? P |= I_FLAG : P &= ~I_FLAG; }
     
 	//! @brief    0: Zero-flag is cleared, any other value: flag is set.
-    void setZ(uint8_t z) { Z = z; }
+    void setZ(uint8_t bit) { bit ? P |= Z_FLAG : P &= ~Z_FLAG; }
     
 	//! @brief    0: Carry-flag is cleared, any other value: flag is set.
-    void setC(uint8_t c) { C = c; }
+    void setC(uint8_t bit) { bit ? P |= C_FLAG : P &= ~C_FLAG; }
     
-	//! @brief    Write value to the status register. The value of bit 5 is ignored.
-    void setP(uint8_t p)
-		{ setN(p & N_FLAG); setV(p & V_FLAG); setB(p & B_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
-    void setPWithoutB(uint8_t p)
-		{ setN(p & N_FLAG); setV(p & V_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
-			
+	//! @brief    Writes a value to the status register.
+    void setP(uint8_t p) { P = p; }
+    
+    //! @brief    Writes a value to the status register without overwriting B.
+    void setPWithoutB(uint8_t p) { P = (p & 0b11101111) | (P & 0b00010000); }
+
 	//! @brief    Loads the accumulator. The Z- and N-flag may change.
-    void loadA(uint8_t a) { A = a; N = a & 0x80; Z = (a == 0); }
+    void loadA(uint8_t a) { A = a; setN(a & 0x80); setZ(a == 0); }
 
 	//! @brief    Loads the X register. The Z- and N-flag may change.
-    void loadX(uint8_t x) { X = x; N = x & 0x80; Z = (x == 0); }
+    void loadX(uint8_t x) { X = x; setN(x & 0x80); setZ(x == 0); }
     
 	//! @brief    Loads the Y register. The Z- and N-flag may change.
-    void loadY(uint8_t y) { Y = y; N = y & 0x80; Z = (y == 0); }
+    void loadY(uint8_t y) { Y = y; setN(y & 0x80); setZ(y == 0); }
     
     
     //

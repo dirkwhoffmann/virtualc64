@@ -361,11 +361,11 @@ typedef enum {
 #define WRITE_TO_ADDRESS \
 mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS \
-    mem->poke(HI_LO(addr_hi, addr_lo), data); N = data & 0x80; Z = (data == 0);
+    mem->poke(HI_LO(addr_hi, addr_lo), data); setN(data & 0x80); setZ(data == 0);
 #define WRITE_TO_ZERO_PAGE \
     mem->pokeZP(addr_lo, data);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
-    mem->pokeZP(addr_lo, data); N = data & 0x80; Z = (data == 0);
+    mem->pokeZP(addr_lo, data); setN(data & 0x80); setZ(data == 0);
 
 #define ADD_INDEX_X overflow = ((int)addr_lo + (int)X > 0xFF); addr_lo += X;
 #define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y > 0xFF); addr_lo += Y;
@@ -386,10 +386,10 @@ mem->poke(HI_LO(addr_hi, addr_lo), data);
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
 
-#define POLL_IRQ doIrq = (levelDetector.delayed() && I == 0);
+#define POLL_IRQ doIrq = (levelDetector.delayed() && !getI());
 #define POLL_NMI doNmi = edgeDetector.delayed();
 #define POLL_INT POLL_IRQ POLL_NMI
-#define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() && I == 0); \
+#define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() && !getI()); \
                        doNmi |= edgeDetector.delayed();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return true;
 #define DONE     next = fetch; return true;

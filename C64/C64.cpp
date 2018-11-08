@@ -164,7 +164,7 @@ C64::reset()
 
     // Initialize program counter
     bool takeFromRom = mem.getPeekSource(0xFFFC) == M_ROM;
-    cpu.setPC(takeFromRom ? 0xFCE2 : LO_HI(mem.spypeek(0xFFFC), mem.spypeek(0xFFFD)));
+    cpu.PC = takeFromRom ? 0xFCE2 : LO_HI(mem.spypeek(0xFFFC), mem.spypeek(0xFFFD));
     
     rasterCycle = 1;
     nanoTargetTime = 0UL;
