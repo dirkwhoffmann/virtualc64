@@ -21,10 +21,14 @@
 
 #include "C64.h"
 
-CPU::CPU()
-{	
-	setDescription("CPU");
-	debug(3, "  Creating CPU at address %p...\n", this);
+// CPU::CPU()
+CPU::CPU(CPUChipModel model, Memory *mem)
+{
+    this->chipModel = model;
+    this->mem = mem;
+	
+    setDescription(model == MOS_6502 ? "CPU(6502)" : "CPU");
+	debug(3, "  Creating %s at address %p...\n", getDescription(), this);
 	
     // Chip model
     chipModel = MOS_6510;
@@ -49,7 +53,6 @@ CPU::CPU()
         { &X,                  sizeof(X),            CLEAR_ON_RESET },
         { &Y,                  sizeof(Y),            CLEAR_ON_RESET },
         { &PC,                 sizeof(PC),           CLEAR_ON_RESET },
-        { &frozenPC,           sizeof(frozenPC),     CLEAR_ON_RESET },
         { &SP,                 sizeof(SP),           CLEAR_ON_RESET },
         { &P,                  sizeof(P),            CLEAR_ON_RESET },
         { &next,               sizeof(next),         CLEAR_ON_RESET },
@@ -58,6 +61,7 @@ CPU::CPU()
         { &ptr,                sizeof(ptr),          CLEAR_ON_RESET },
         { &pc_lo,              sizeof(pc_lo),        CLEAR_ON_RESET },
         { &pc_hi,              sizeof(pc_hi),        CLEAR_ON_RESET },
+        { &frozenPC,           sizeof(frozenPC),     CLEAR_ON_RESET },
         { &overflow,           sizeof(overflow),     CLEAR_ON_RESET },
         { &data,               sizeof(data),         CLEAR_ON_RESET },
         { &rdyLine,            sizeof(rdyLine),      CLEAR_ON_RESET },

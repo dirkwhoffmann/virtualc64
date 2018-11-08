@@ -41,11 +41,11 @@ class VC1541 : public VirtualComponent {
 
 public:
     
-	//! @brief    CPU of the virtual drive (6502)
-	CPU cpu;
-	
 	//! @brief    Memory of the virtual drive
 	VC1541Memory mem;
+
+    //! @brief    The drive's CPU
+    CPU cpu = CPU(MOS_6502, &mem);
 
 	//! @brief    VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1;

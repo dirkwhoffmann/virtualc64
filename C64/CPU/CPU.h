@@ -53,6 +53,8 @@ class CPU : public VirtualComponent {
         INTSRC_KEYBOARD = 0x20
     } InterruptSource;
     
+    private:
+    
     /*! @brief    Selected chip model
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
@@ -62,6 +64,8 @@ class CPU : public VirtualComponent {
     
     //! @brief    Reference to the connected virtual memory
 	Memory *mem;
+    
+    public:
     
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
@@ -87,16 +91,6 @@ class CPU : public VirtualComponent {
     
     private:
     
-	/*! @brief    Memory location of the currently executed command
-     *  @details  This value is assigned the value of PC when the CPU executes
-     *            the fetch phase of a command. Function getPC() returns this
-     *            value instead of the real value of PC. This ensures that
-     *            calling getPC() always returns the start address of the
-     *            currently executed command, even if the command has already
-     *            been partially computed.
-     */
-	uint16_t frozenPC;
-    
     /*! @brief     Processor status register (flags)
      *  @details   7 6 5 4 3 2 1 0
      *             N O - B D I Z C
@@ -112,20 +106,30 @@ class CPU : public VirtualComponent {
 	//! @brief    Pointer for indirect addressing modes
 	uint8_t ptr;
     
+    //! @brief    Internal data register
+    uint8_t data;
+    
 	//! @brief    Temporary storage for program counter (low byte)
 	uint8_t pc_lo;
     
 	//! @brief    Temporary storage for program counter (high byte)
 	uint8_t pc_hi;
     
+    /*! @brief    Memory location of the currently executed command
+     *  @details  This value is assigned the value of PC when the CPU executes
+     *            the fetch phase of a command. Function getPC() returns this
+     *            value instead of the real value of PC. This ensures that
+     *            calling getPC() always returns the start address of the
+     *            currently executed command, even if the command has already
+     *            been partially computed.
+     */
+    uint16_t frozenPC;
+    
 	/*! @brief    Address overflow indicater
 	 *  @details  Used to indicate whether the page boundary has been crossed 
      */
 	bool overflow;
     
-	//! @brief    Internal data register
-	uint8_t data;
-		
 public:
     
 	/*! @brief    RDY line (ready line)
@@ -223,9 +227,16 @@ private:
 		
 public:
 
-	//! @brief    Constructor
-	CPU();
-	
+    //
+    //! @functiongroup Construction and destructing
+    //
+    
+	//! @brief    Standard constructor
+	// CPU();
+
+    //! @brief    Custom constructor
+    CPU(CPUChipModel model, Memory *mem);
+
 	//! @brief    Destructor
 	~CPU();
 

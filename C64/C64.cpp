@@ -126,7 +126,7 @@ C64::C64()
     registerSnapshotItems(items, sizeof(items));
 
     // Setup references
-    cpu.mem = &mem;
+    // cpu.mem = &mem;
 
     // Set initial hardware configuration
     mouse = &mouse1350;

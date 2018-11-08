@@ -30,15 +30,15 @@ VC1541::VC1541(unsigned nr)
     debug(3, "Creating %s at address %p\n", getDescription());
 	
 	// Configure CPU
-	cpu.setDescription(deviceNr == 1 ? "Drive1CPU" : "Drive2CPU");
-    cpu.chipModel = MOS_6502;
+	// cpu.setDescription(deviceNr == 1 ? "Drive1CPU" : "Drive2CPU");
+    // cpu.chipModel = MOS_6502;
     
     // Register sub components
     VirtualComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
     
     // Setup references
-    cpu.mem = &mem;
+    // cpu.mem = &mem;
     mem.drive = this;
     via1.drive = this;
     via2.drive = this;

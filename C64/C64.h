@@ -86,15 +86,15 @@ class C64 : public VirtualComponent {
     // Hardware components
     //
     
+    //! @brief    The C64's virtual memory (ROM, RAM, and color RAM)
+    C64Memory mem;
+    
     //! @brief    The C64's virtual CPU
-    CPU cpu;
+    CPU cpu = CPU(MOS_6510, &mem);
     
     //! @brief    The C64's processor port
     ProcessorPort processorPort;
     
-    //! @brief    The C64's virtual memory (ROM, RAM, and color RAM)
-    C64Memory mem;
-
     //! @brief    The C64's Video Interface Controller
     VIC vic;
     
@@ -285,7 +285,7 @@ class C64 : public VirtualComponent {
     
     
     //
-    //! @functiongroup Creating and destructing
+    //! @functiongroup Construction and destructing
     //
     
     public:
