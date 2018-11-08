@@ -96,7 +96,18 @@ FinalIII::pressFreezeButton() {
     
     // The freezer is enabled by selecting bank 0 in ultimax mode and
     // triggering an NMI
-    suspend();
-    pokeIO2(0xDFFF, 0x10);
-    resume();
+    c64->suspend();
+    bankIn(0);
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(1);
+    c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
+}
+
+void
+FinalIII::releaseFreezeButton()
+{
+    c64->suspend();
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->resume();
 }
