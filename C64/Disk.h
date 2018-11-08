@@ -28,8 +28,8 @@
 #include "VirtualComponent.h"
 #include "Disk_types.h"
 
-// Forward declarations
 class C64;
+class VC1541;
 class D64File;
 class G64File;
 
@@ -39,17 +39,9 @@ class Disk : public VirtualComponent {
     
 public:
     
-    Disk();
-    ~Disk();
-    
-    //! @brief   Method from VirtualComponent
-    void dump();
-    void ping();
-
     //
     // Constants and lookup tables
     //
-    
     
     //! @brief   Disk parameters of a standard floppy disk
     typedef struct {
@@ -199,6 +191,26 @@ private:
     
 
 public:
+    
+    //
+    //! @functiongroup Constructing and destructing
+    //
+    
+    //! @brief    Constructor
+    Disk();
+    
+    //! @brief    Destructor
+    ~Disk();
+    
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
+    void dump();
+    void ping();
+
+    
     
     //! @brief Returns write protection flag
     bool isWriteProtected() { return writeProtected; }

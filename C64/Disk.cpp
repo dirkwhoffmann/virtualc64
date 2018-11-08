@@ -81,7 +81,7 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
 Disk::Disk()
 {
     setDescription("Disk");
-
+    
     // Register snapshot items
     SnapshotItem items[] = {        
         { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },

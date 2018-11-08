@@ -33,12 +33,7 @@ VC1541::VC1541(unsigned nr)
     // Register sub components
     VirtualComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents));
-    
-    // Setup references
-    mem.drive = this;
-    via1.drive = this;
-    via2.drive = this;
-    
+     
     // Register snapshot items
     SnapshotItem items[] = {
 

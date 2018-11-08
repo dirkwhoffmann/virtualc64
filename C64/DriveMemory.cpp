@@ -22,11 +22,13 @@
 
 #include "C64.h"
 
-VC1541Memory::VC1541Memory()
+VC1541Memory::VC1541Memory(VC1541 *drive)
 {
     setDescription("1541MEM");
 	debug(3, "  Creating VC1541 memory at %p...\n", this);
 
+    this->drive = drive;
+    
     memset(rom, 0, sizeof(rom));
     stack = &ram[0x0100];
     

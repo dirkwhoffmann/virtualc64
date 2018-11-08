@@ -29,25 +29,24 @@ class VC1541;
 /*! @brief    Represents RAM and ROM of a virtual VC1541 floopy disk drive.
  */
 class VC1541Memory : public Memory {
-
-public:
     
-	//! @brief    Reference to the connected IEC bus
-	// IEC *iec;
-
+    private:
+    
 	//! @brief    Reference to the connected disk drive
 	VC1541 *drive;
 	
+    public:
+    
     //! @brief    Random Access Memory
     uint8_t ram[0x0800];
     
     //! @brief    Read Only Memory
     uint8_t rom[0x4000];
     
-public:
-	
+    public:
+    
 	//! @brief    Constructor
-	VC1541Memory();
+	VC1541Memory(VC1541 *drive);
 	
 	//! @brief    Destructor
 	~VC1541Memory();

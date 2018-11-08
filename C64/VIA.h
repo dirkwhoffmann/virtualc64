@@ -73,12 +73,13 @@ class VIA6522 : public VirtualComponent {
 	
     friend class VC1541;
     
-protected:
+    protected:
     
     //! @brief    Owner of this VIA
     /*! @details  Either a reference to the first or the second drive.
      */
-    VC1541 *drive; 
+    VC1541 *drive;
+    
     
     //
     // Peripheral interface
