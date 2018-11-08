@@ -59,8 +59,6 @@ CPU::CPU(CPUChipModel model, Memory *mem)
         { &abl,                sizeof(abl),          CLEAR_ON_RESET },
         { &abh,                sizeof(abh),          CLEAR_ON_RESET },
         { &ptr,                sizeof(ptr),          CLEAR_ON_RESET },
-        { &pc_lo,              sizeof(pc_lo),        CLEAR_ON_RESET },
-        { &pc_hi,              sizeof(pc_hi),        CLEAR_ON_RESET },
         { &frozenPC,           sizeof(frozenPC),     CLEAR_ON_RESET },
         { &overflow,           sizeof(overflow),     CLEAR_ON_RESET },
         { &data,               sizeof(data),         CLEAR_ON_RESET },

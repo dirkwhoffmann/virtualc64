@@ -108,13 +108,7 @@ class CPU : public VirtualComponent {
     
     //! @brief    Internal data register
     uint8_t data;
-    
-	//! @brief    Temporary storage for program counter (low byte)
-	uint8_t pc_lo;
-    
-	//! @brief    Temporary storage for program counter (high byte)
-	uint8_t pc_hi;
-    
+        
     /*! @brief    Memory location of the currently executed command
      *  @details  This value is assigned the value of PC when the CPU executes
      *            the fetch phase of a command. Function getPC() returns this
