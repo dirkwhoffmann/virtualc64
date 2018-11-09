@@ -24,12 +24,12 @@
 #include "VirtualComponent.h"
 
 /*! @brief    Processor port
- *  @details  The C64 contains a processor port register and a data direction
- *            register that indicates if a processor bit is configured as input
- *            or output. The register serves multiple pursposes. Firstly, it is
- *            used for bank switching, i.e. it decided for certain memory
- *            regions if ROM or RAM is avaible. Secondly, it is used to
- *            communicate with the datasette.
+ *  @details  The C64 CPU contains a processor port register and a data
+ *            direction register that indicates if a processor bit is configured
+ *            as input or output. The register serves multiple pursposes.
+ *            Firstly, it is used for bank switching, i.e. it decided for
+ *            certain memory regions if ROM or RAM is avaible. Secondly, it is
+ *            used to communicate with the datasette.
  */
 class ProcessorPort : public VirtualComponent {
    
