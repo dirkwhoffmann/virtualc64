@@ -58,25 +58,39 @@ class ProcessorPort : public VirtualComponent {
     uint64_t dischargeCycleBit7;
 
 public:
+    
+    //
+    //! @functiongroup Creating and destructing
+    //
+    
     //! @brief    Constructor
     ProcessorPort();
     
     //! @brief    Destructor
     ~ProcessorPort();
     
-    //! @brief    Method from VirtualComponent
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+
     void dump();
 
-    //! @brief    Reads the processor port register
+    
+    //
+    //! @functiongroup Accessing the port registers
+    //
+    
+    //! @brief    Reads from the processor port register.
     uint8_t read();
 
-    //! @brief    Reads the processor port direction register
+    //! @brief    Reads from the processor port direction register.
     uint8_t readDirection();
 
-    //! @brief    Writes the processor port register
+    //! @brief    Writes to the processor port register.
     void write(uint8_t value);
     
-    //! @brief    Writes the processor port direction register
+    //! @brief    Writes to the processor port direction register.
     void writeDirection(uint8_t value);
 };
 

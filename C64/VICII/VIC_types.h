@@ -176,15 +176,6 @@ static const uint16_t NTSC_RASTERLINES = 235; // 10 + 200 + 25
 //! @brief    PAL clock frequency in Hz
 static const uint32_t PAL_CLOCK_FREQUENCY = 985249;
 
-//! @brief    Frames per second in PAL mode
-// static const double PAL_REFRESH_RATE = 50.125;
-
-//! @brief    CPU cycles per rasterline in PAL mode
-// static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
-
-//! @brief    CPU cycles per frame in PAL mode
-// static const unsigned PAL_CYCLES_PER_FRAME = 19656;
-
 //! @brief    CPU cycles per second in PAL mode
 static const unsigned PAL_CYCLES_PER_SECOND = PAL_CLOCK_FREQUENCY;
 

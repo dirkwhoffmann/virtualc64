@@ -1,7 +1,7 @@
 /*!
  * @header      Datasette.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2015 - 2016 Dirk W. Hoffmann
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,15 +21,78 @@
 #ifndef _DATASETTE_INC
 #define _DATASETTE_INC
 
-// Forward declarations
 class TAPFile;
 
-/*! 
- *  @brief    Virtual tape recorder (datasette)
- */
+//! @brief    A Commodore 1530 (C2N) tape recorder (Datasette)
 class Datasette : public VirtualComponent {
     
+    //
+    // Tape
+    //
+    
+    //! @brief    Data buffer (contains the raw data of the TAP archive)
+    uint8_t *data = NULL;
+    
+    //! @brief    Size of the attached data buffer
+    uint64_t size = 0;
+    
+    /*! @brief    Data format (TAP type)
+     *  @details  In TAP format 0, data byte 0 signals a long pulse without
+     *            stating its length precisely.
+     *            In TAP format 1, each 0 is followed by three bytes stating
+     *            the precise length in LO_LO_HI_00 format.
+     */
+    uint8_t type = 0;
+    
+    /*! @brief    Tape length in cycles
+     *  @details  The value is set when insertTape() is called. It is computed
+     *            by iterating over all pulses in the data buffer.
+     */
+    uint64_t durationInCycles = 0;
+    
+    
+    //
+    // Datasette
+    //
+    
+    /*! @brief    Read/Write head
+     *  @details  Value must be between 0 and size.
+     *  @note     head == size indicates EOT (End Of Tape)
+     */
+    uint64_t head = 0;
+    
+    /*! @brief    Read/Write head
+     *  @details  Head position, measured in cycles
+     */
+    uint64_t headInCycles = 0;
+    
+    /*! @brief    Read/Write head
+     *  @details  Head position, measured in seconds
+     */
+    uint32_t headInSeconds = 0;
+    
+    /*! @brief    Next scheduled rising edge on data line
+     */
+    int64_t nextRisingEdge = 0;
+    
+    /*! @brief    Next scheduled falling edge on data line
+     */
+    int64_t nextFallingEdge = 0;
+    
+    /*! @brief    Indicates whether the play key is pressed
+     */
+    bool playKey = false;
+    
+    /*! @brief    Indicates whether the motor is on
+     */
+    bool motor = false;
+    
+    
 public:
+    
+    //
+    //! @functiongroup Creating and destructing
+    //
     
     //! @brief    Constructor
     Datasette();
@@ -37,152 +100,68 @@ public:
     //! @brief    Destructor
     ~Datasette();
     
-    //! @brief    Resets the VC1541 drive
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+    
     void reset();
-    
-    //! @brief    Dumps current configuration into message queue
     void ping();
-
-    //! @brief    Return the size of the internal state
     size_t stateSize();
-    
-    //! @brief    Restores the current state from a buffer
     void loadFromBuffer(uint8_t **buffer);
-    
-    //! @brief    Saves the current state into a buffer
     void saveToBuffer(uint8_t **buffer);
 
-    //! @brief    Dumps the current state
-    void dump();
 
-    
-    // ---------------------------------------------------------------------------------------------
-    //                                     Atrributes
-    // ---------------------------------------------------------------------------------------------
-    
-private:
-    
-    //
-    //! @functiongroup Tape
-    //
-
-    /*! @brief    Data buffer (contains the raw data of the TAP archive)
-     *  @details  Pointer is NULL if no data is present
-     */
-    uint8_t *data;
-
-    /*! @brief    Size of the attached data buffer
-     *  @details  Equals 0 iff no tape is inserted.
-     */
-    uint64_t size;
-    
-    /*! @brief    Data format (TAP type)
-     *  @details  In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
-     *            In TAP format 1, each 0 is followed by three bytes stating the precise length in
-     *            LO_LO_HI_00 format. 
-     */
-    uint8_t type;
-    
-    /*! @brief    Tape length in cycles
-     *  @details  The value is computed in insertTape by examining all pulses in the data buffer
-     */
-    uint64_t durationInCycles;
-
-    //
-    //! @functiongroup Datasette
-    //
-
-    /*! @brief    Read/Write head
-     *  @details  Value must be between 0 and size. head == size indicates EOT (end of tape) 
-     */
-    uint64_t head;
-
-    /*! @brief    Read/Write head
-     *  @details  Head position, measured in cycles 
-     */
-    uint64_t headInCycles;
-
-    /*! @brief    Read/Write head
-     *  @details  Head position, measured in seconds
-     */
-    uint32_t headInSeconds;
-
-    /*! @brief    Next scheduled rising edge on data line 
-     */
-    int64_t nextRisingEdge;
-
-    /*! @brief    Next scheduled falling edge on data line 
-     */
-    int64_t nextFallingEdge;
-    
-    /*! @brief    Indicates whether the play key is pressed 
-     */
-    bool playKey;
-    
-    /*! @brief    Indicates whether the motor is on 
-     */
-    bool motor;
-    
-    // ---------------------------------------------------------------------------------------------
-    //                                    Methods
-    // ---------------------------------------------------------------------------------------------
-
-public:
-    
     //
     //! @functiongroup Handling virtual tapes
     //
     
-    /*! @brief    Returns true if a tape is inserted 
-     */
+    //! @brief    Returns true if a tape is inserted.
     bool hasTape() { return size != 0; }
     
-    /*! @brief    Inserts a TAP archive as a virtual tape 
-     */
+    //! @brief    Inserts a TAP archive as a virtual tape.
     bool insertTape(TAPFile *a);
 
-    /*! @brief    Ejects the virtual tape
+    /*! @brief    Ejects the virtual tape.
      *  @details  Does nothing, if no tape is present.  
      */
     void ejectTape();
 
-    /*! @brief    Returns type of tape (TAP format, 0 or 1). 
-     */
+    //! @brief    Returns the tape type (TAP format, 0 or 1).
     uint8_t getType() { return type; }
 
-    /*! @brief    Returns the tape length in cycles 
-     */
+    //! @brief    Returns the tape length in cycles.
     uint64_t getDurationInCycles() { return durationInCycles; }
     
-    /*! @brief    Returns the tape length in seconds 
-     */
+    //! @brief    Returns the tape length in seconds.
     uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (uint64_t)PAL_CLOCK_FREQUENCY); }
 
+    
     //
-    //! @functiongroup Handling the read/write head
+    //! @functiongroup Operating the read/write head
     //
 
-    /*! @brief    Puts the read/write head at the beginning of the tape
-     */
+    //! @brief    Puts the read/write head at the beginning of the tape.
     void rewind() { head = headInSeconds = headInCycles = 0; }
 
-    /*! @brief    Advances the read/write head for one pulse
-     *  @details  This methods updates head, headInCycles, and headInSeconds 
+    /*! @brief    Advances the read/write head one pulse.
+     *  @details  This methods updates head, headInCycles, and headInSeconds.
+     *  @param    silent indicates if a MSG_VC1530_PROGRESS should be sent.
      */
     void advanceHead(bool silent = false);
     
-    /*! @brief    Gets the current head position in different units
-     */
+    //! @brief    Returns the head position
     uint64_t getHead() { return head; }
+
+    //! @brief    Returns the head position in CPU cycles
     uint64_t getHeadInCycles() { return headInCycles; }
+
+    //! @brief    Returns the head position in seconds
     uint32_t getHeadInSeconds() { return headInSeconds; }
     
-    /*! @brief    Sets the current head position in cycles
-     */
+    //! @brief    Sets the current head position in cycles.
     void setHeadInCycles(uint64_t value);
     
-    /*! @brief    Returns the pulse length at the current head position
-     */
+    //! @brief    Returns the pulse length at the current head position
     int pulseLength(int *skip);
     int pulseLength() { return pulseLength(NULL); }
 

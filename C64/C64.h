@@ -176,7 +176,12 @@ class C64 : public VirtualComponent {
      *  @see      VIC::getCyclesPerRasterline()
      */
     uint8_t rasterCycle;
-    
+
+    /*! @brief    Current CPU frequency
+     *  @details  This value is set in setClockFrequency()
+     */
+    uint32_t frequency;
+
     /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
      *  @details  This value is set in setClockFrequency()
      */
