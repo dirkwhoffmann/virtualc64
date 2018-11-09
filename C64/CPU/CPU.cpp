@@ -218,19 +218,6 @@ CPU::setRDY(bool value)
     }
 }
 
-// Instruction set
-const char 
-*CPU::getMnemonic(uint8_t opcode)
-{
-    return mnemonic[opcode];
-}
-
-AddressingMode
-CPU::getAddressingMode(uint8_t opcode)
-{
-    return addressingMode[opcode];
-}
-
 unsigned
 CPU::getLengthOfInstruction(uint8_t opcode)
 {
@@ -436,8 +423,7 @@ CPU::disassemble(RecordedInstruction instr, bool hex)
     }
     
     // Copy mnemonic
-    const char *mnc = getMnemonic(opcode);
-    strncpy(result.command, mnc, 3);
+    strncpy(result.command, mnemonic[opcode], 3);
     
     // Convert register contents to strings
     hex ? sprint16x(result.pc, instr.pc) : sprint16d(result.pc, instr.pc);

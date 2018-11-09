@@ -25,7 +25,8 @@
 #include "CPU_types.h"
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
-#include "Memory.h"
+
+class Memory;
 
 /*! @class  The virtual 6502 / 6510 processor
  */
@@ -58,8 +59,9 @@ class CPU : public VirtualComponent {
         INTSRC_KEYBOARD = 0x20
     } IntSource;
     
+    
     //
-    // Members
+    // References to other components
     //
     
     private:
@@ -67,27 +69,17 @@ class CPU : public VirtualComponent {
     //! @brief    Reference to the connected virtual memory
     Memory *mem;
 
+
+    //
+    // Chip properties
+    //
+
     /*! @brief    Selected model
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
      *            differences between both models are not emulated.
      */
     CPUModel model;
-    
-    public:
-    
-    //! @brief    Elapsed C64 clock cycles since power up
-    uint64_t cycle;
-    
-    //! @brief    Current error state
-    ErrorState errorState;
-    
-    private:
-
-    //! @brief    Next microinstruction to be executed
-    /*! @see      executeOneCycle()
-     */
-    MicroInstruction next;
     
     
     //
@@ -115,7 +107,27 @@ class CPU : public VirtualComponent {
 
     
     //
-    // Internal registers
+    // Internal state
+    //
+    
+    public:
+    
+    //! @brief    Elapsed C64 clock cycles since power up
+    uint64_t cycle;
+    
+    //! @brief    Current error state
+    ErrorState errorState;
+    
+    private:
+
+    //! @brief    Next microinstruction to be executed
+    /*! @see      executeOneCycle()
+     */
+    MicroInstruction next;
+    
+    
+    //
+    // Registers
     //
     
     public:
@@ -171,7 +183,7 @@ class CPU : public VirtualComponent {
     
   
     //
-    // External port lines
+    // Port lines
     //
     
     public:
@@ -262,6 +274,7 @@ class CPU : public VirtualComponent {
      *            Variable is set in macro POLL_INTS (CPUInstructions.h)
      */
     bool doIrq;
+    
     
     //
     // Trace buffer
@@ -441,6 +454,22 @@ class CPU : public VirtualComponent {
     
     
     //
+    //! @functiongroup Performing ALU operations (CPUInstructions.cpp)
+    //
+    
+    void adc(uint8_t op);
+    void adc_binary(uint8_t op);
+    void adc_bcd(uint8_t op);
+    void sbc(uint8_t op);
+    void sbc_binary(uint8_t op);
+    void sbc_bcd(uint8_t op);
+    void branch(int8_t offset);
+    void cmp(uint8_t op1, uint8_t op2);
+    uint8_t ror(uint8_t op);
+    uint8_t rol(uint8_t op);
+    
+    
+    //
     //! @functiongroup Handling interrupts
     //
     
@@ -473,13 +502,7 @@ class CPU : public VirtualComponent {
     //
     //! @functiongroup Examining the currently executed instruction
     //
-    
-	//! @brief    Returns the three letter mnemonic for a given opcode.
-	const char *getMnemonic(uint8_t opcode);
-    
-	//! @brief    Returns the adressing mode for a given opcode.
-	AddressingMode getAddressingMode(uint8_t opcode);
-    
+        
 	/*! @brief    Returns the length of an instruction in bytes.
 	 *  @result   Integer value between 1 and 3.
      */
@@ -527,22 +550,6 @@ class CPU : public VirtualComponent {
     
 	//! @brief    Sets the error state back to normal.
     void clearErrorState() { setErrorState(CPU_OK); }
-    
-    
-    //
-    //! @functiongroup Performing ALU operations
-    //
-    
-    void adc(uint8_t op);
-    void adc_binary(uint8_t op);
-    void adc_bcd(uint8_t op);
-    void sbc(uint8_t op);
-    void sbc_binary(uint8_t op);
-    void sbc_bcd(uint8_t op);
-    void branch(int8_t offset);
-    void cmp(uint8_t op1, uint8_t op2);
-    uint8_t ror(uint8_t op);
-    uint8_t rol(uint8_t op);
     
     
     //

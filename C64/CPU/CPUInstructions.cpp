@@ -451,8 +451,6 @@ CPU::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
-bool dirkverbose = false;
-
 bool
 CPU::executeOneCycle()
 {
@@ -572,7 +570,7 @@ CPU::executeOneCycle()
             // If there is a positive edge on the NMI line ...
             if (edgeDetector.current()) {
                 
-                // ... the processor will jump to the NMI vector instead of the IRQ vector
+                // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = nmi_5;
                 return true;
@@ -2966,16 +2964,16 @@ CPU::executeOneCycle()
             
             IDLE_READ_FROM_ADDRESS
             
-            /* "There are two unstable conditions, the first is when a DMA is going on while
-             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off."
+            /* "There are two unstable conditions, the first is when a DMA is
+             *  going on while the instruction executes (the CPU is halted by
+             *  the VIC-II) then the & M+1 part drops off."
              */
             
             regD = regA & regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
-            /* "The other unstable condition is when the addressing/indexing causes a page
-             *  boundary crossing, in that case the highbyte of the target address may
-             *  become equal to the value stored."
+            /* "The other unstable condition is when the addressing/indexing
+             *  causes a page boundary crossing, in that case the highbyte of
+             *  the target address may become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3003,16 +3001,16 @@ CPU::executeOneCycle()
             
             IDLE_READ_FROM_ADDRESS
             
-            /* "There are two unstable conditions, the first is when a DMA is going on while
-             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off."
+            /* "There are two unstable conditions, the first is when a DMA is
+             *  going on while the instruction executes (the CPU is halted by
+             *  the VIC-II) then the & M+1 part drops off."
              */
             
             regD = regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
-            /* "The other unstable condition is when the addressing/indexing causes a page
-             *  boundary crossing, in that case the highbyte of the target address may
-             *  become equal to the value stored."
+            /* "The other unstable condition is when the addressing/indexing
+             *  causes a page boundary crossing, in that case the highbyte of
+             *  the target address may become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3040,16 +3038,16 @@ CPU::executeOneCycle()
             
             IDLE_READ_FROM_ADDRESS
             
-            /* "There are two unstable conditions, the first is when a DMA is going on while
-             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off."
+            /* "There are two unstable conditions, the first is when a DMA is
+             *  going on while the instruction executes (the CPU is halted by
+             *  the VIC-II) then the & M+1 part drops off."
              */
             
             regD = regY & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
-            /* "The other unstable condition is when the addressing/indexing causes a page
-             *  boundary crossing, in that case the highbyte of the target address may
-             *  become equal to the value stored."
+            /* "The other unstable condition is when the addressing/indexing
+             *  causes a page boundary crossing, in that case the highbyte of
+             *  the target address may become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
@@ -3171,16 +3169,16 @@ CPU::executeOneCycle()
             
             regSP = regA & regX;
             
-            /* "There are two unstable conditions, the first is when a DMA is going on while
-             *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
-             *  drops off."
+            /* "There are two unstable conditions, the first is when a DMA is
+             *  going on while the instruction executes (the CPU is halted by
+             *  the VIC-II) then the & M+1 part drops off."
              */
             
             regD = regA & regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
-            /* "The other unstable condition is when the addressing/indexing causes a page
-             *  boundary crossing, in that case the highbyte of the target address may
-             *  become equal to the value stored."
+            /* "The other unstable condition is when the addressing/indexing
+             *  causes a page boundary crossing, in that case the highbyte of
+             *  the target address may become equal to the value stored."
              */
             
             if (PAGE_BOUNDARY_CROSSED) {
