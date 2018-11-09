@@ -24,12 +24,12 @@
 #include "VirtualComponent.h"
 
 /*! @brief    Processor port
- *  @details  The C64 contains a processor port register and a data direction
- *            register that indicates if a processor bit is configured as input
- *            or output. The register serves multiple pursposes. Firstly, it is
- *            used for bank switching, i.e. it decided for certain memory
- *            regions if ROM or RAM is avaible. Secondly, it is used to
- *            communicate with the datasette.
+ *  @details  The C64 CPU contains a processor port register and a data
+ *            direction register that indicates if a processor bit is configured
+ *            as input or output. The register serves multiple pursposes.
+ *            Firstly, it is used for bank switching, i.e. it decided for
+ *            certain memory regions if ROM or RAM is avaible. Secondly, it is
+ *            used to communicate with the datasette.
  */
 class ProcessorPort : public VirtualComponent {
    
@@ -58,25 +58,39 @@ class ProcessorPort : public VirtualComponent {
     uint64_t dischargeCycleBit7;
 
 public:
+    
+    //
+    //! @functiongroup Creating and destructing
+    //
+    
     //! @brief    Constructor
     ProcessorPort();
     
     //! @brief    Destructor
     ~ProcessorPort();
     
-    //! @brief    Method from VirtualComponent
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+
     void dump();
 
-    //! @brief    Reads the processor port register
+    
+    //
+    //! @functiongroup Accessing the port registers
+    //
+    
+    //! @brief    Reads from the processor port register.
     uint8_t read();
 
-    //! @brief    Reads the processor port direction register
+    //! @brief    Reads from the processor port direction register.
     uint8_t readDirection();
 
-    //! @brief    Writes the processor port register
+    //! @brief    Writes to the processor port register.
     void write(uint8_t value);
     
-    //! @brief    Writes the processor port direction register
+    //! @brief    Writes to the processor port direction register.
     void writeDirection(uint8_t value);
 };
 

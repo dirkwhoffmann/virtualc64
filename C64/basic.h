@@ -1,7 +1,7 @@
 /*!
  * @header      basic.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, all rights reserved.
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -252,16 +252,6 @@ void sprint16x(char *s, uint16_t value);
 
 //! @brief    Writes an uint16_t value into a string in binary format
 void sprint16b(char *s, uint16_t value);
-
-//! @brief    Converts a BCD number to a binary value.
-inline uint8_t BCDToBinary(uint8_t value) { return (10 * (value >> 4)) + (value & 0x0F); }
-
-//! @brief    Converts a binary value to a BCD number.
-inline uint8_t BinaryToBCD(uint8_t value) { return ((value / 10) << 4) + (value % 10); }
-
-//! @brief    Increments a BCD number by one.
-inline uint8_t incBCD(uint8_t value) {
-    return ((value & 0x0F) == 0x09) ? (value & 0xF0) + 0x10 : (value & 0xF0) + ((value + 0x01) & 0x0F); }
 
 
 //

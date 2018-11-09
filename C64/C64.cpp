@@ -1,7 +1,7 @@
 /*!
  * @file        C64.cpp
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, all rights reserved.
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -112,13 +112,14 @@ C64::C64()
     // Register snapshot items
     SnapshotItem items[] = {
  
-        { &warp,               sizeof(warp),               CLEAR_ON_RESET },
-        { &alwaysWarp,         sizeof(alwaysWarp),         CLEAR_ON_RESET },
-        { &warpLoad,           sizeof(warpLoad),           KEEP_ON_RESET  },
-        { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
         { &frame,              sizeof(frame),              CLEAR_ON_RESET },
         { &rasterLine,         sizeof(rasterLine),         CLEAR_ON_RESET },
         { &rasterCycle,        sizeof(rasterCycle),        CLEAR_ON_RESET },
+        { &frequency,          sizeof(frequency),          KEEP_ON_RESET  },
+        { &durationOfOneCycle, sizeof(durationOfOneCycle), KEEP_ON_RESET  },
+        { &warp,               sizeof(warp),               CLEAR_ON_RESET },
+        // { &alwaysWarp,         sizeof(alwaysWarp),         CLEAR_ON_RESET },
+        // { &warpLoad,           sizeof(warpLoad),           KEEP_ON_RESET  },
         { &ultimax,            sizeof(ultimax),            CLEAR_ON_RESET },
         
         { NULL,             0,                       0 }};
@@ -178,12 +179,13 @@ void C64::ping()
 }
 
 void
-C64::setClockFrequency(uint32_t frequency)
+C64::setClockFrequency(uint32_t value)
 {
-    VirtualComponent::setClockFrequency(frequency);
+    VirtualComponent::setClockFrequency(value);
     
-    durationOfOneCycle = 10000000000 / frequency;
-    debug("Duration of a C64 CPU cycle is %lld 1/10 nsec.\n", durationOfOneCycle);
+    frequency = value;
+    durationOfOneCycle = 10000000000 / value;
+    debug(2, "Duration of a C64 CPU cycle is %lld 1/10 nsec.\n", durationOfOneCycle);
 }
 
 void

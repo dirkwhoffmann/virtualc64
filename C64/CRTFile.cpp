@@ -3,7 +3,7 @@
  *              Original implementation by A. Carl Douglas, 2009
  *              Modified and maintained by Dirk W. Hoffmann
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, all rights reserved.
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

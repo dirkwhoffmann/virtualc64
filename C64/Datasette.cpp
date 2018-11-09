@@ -30,28 +30,22 @@ Datasette::Datasette()
     SnapshotItem items[] = {
         
         // Tape properties (will survive reset)
-        { &size,                    sizeof(size),                   KEEP_ON_RESET },
-        { &type,                    sizeof(type),                   KEEP_ON_RESET },
-        { &durationInCycles,        sizeof(durationInCycles),       KEEP_ON_RESET },
+        { &size,               sizeof(size),              KEEP_ON_RESET },
+        { &type,               sizeof(type),              KEEP_ON_RESET },
+        { &durationInCycles,   sizeof(durationInCycles),  KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
-        { &head,                    sizeof(head),                   CLEAR_ON_RESET },
-        { &headInCycles,            sizeof(headInCycles),           CLEAR_ON_RESET },
-        { &headInSeconds,           sizeof(headInSeconds),          CLEAR_ON_RESET },
-        { &nextRisingEdge,          sizeof(nextRisingEdge),         CLEAR_ON_RESET },
-        { &nextFallingEdge,         sizeof(nextFallingEdge),        CLEAR_ON_RESET },
-        { &playKey,                 sizeof(playKey),                CLEAR_ON_RESET },
-        { &motor,                   sizeof(motor),                  CLEAR_ON_RESET },
+        { &head,               sizeof(head),              CLEAR_ON_RESET },
+        { &headInCycles,       sizeof(headInCycles),      CLEAR_ON_RESET },
+        { &headInSeconds,      sizeof(headInSeconds),     CLEAR_ON_RESET },
+        { &nextRisingEdge,     sizeof(nextRisingEdge),    CLEAR_ON_RESET },
+        { &nextFallingEdge,    sizeof(nextFallingEdge),   CLEAR_ON_RESET },
+        { &playKey,            sizeof(playKey),           CLEAR_ON_RESET },
+        { &motor,              sizeof(motor),             CLEAR_ON_RESET },
         
-        { NULL,                     0,                              0 }};
+        { NULL,                0,                         0 }};
     
     registerSnapshotItems(items, sizeof(items));
-    
-    // Initialize all values that are not initialized in reset()
-    data = NULL;
-    size = 0;
-    type = 0;
-    durationInCycles = 0;
 }
 
 Datasette::~Datasette()
@@ -59,7 +53,7 @@ Datasette::~Datasette()
     debug(3, "Releasing Datasette...\n");
 
     if (data)
-        delete data;
+        delete[] data;
 }
 
 void
@@ -91,12 +85,12 @@ Datasette::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
     if (size) {
         if (data == NULL)
-            data = (uint8_t *)malloc(size);
+            data = new uint8_t[size];
         readBlock(buffer, (uint8_t *)data, size);
     }
     
     if (*buffer - old != stateSize())
-        assert(0);
+        assert(false);
 }
 
 void
@@ -111,16 +105,7 @@ Datasette::saveToBuffer(uint8_t **buffer)
     }
     
     if (*buffer - old != stateSize())
-        assert(0);
-}
-
-void
-Datasette::dump()
-{
-#if 0
-    msg("Datasette\n");
-    msg("---------\n\n");
-#endif
+        assert(false);
 }
 
 void
@@ -188,7 +173,7 @@ Datasette::ejectTape()
 void
 Datasette::advanceHead(bool silent)
 {
-    // Return if end of tape is already reached
+    // Return if end of tape has been reached already
     if (head == size)
         return;
     
@@ -199,7 +184,7 @@ Datasette::advanceHead(bool silent)
     headInCycles += length;
     
     // Send message if the tapeCounter (in seconds) changes
-    uint32_t newHeadInSeconds = (uint32_t)(headInCycles / PAL_CYCLES_PER_SECOND);
+    uint32_t newHeadInSeconds = (uint32_t)(headInCycles / c64->frequency);
     if (newHeadInSeconds != headInSeconds && !silent)
         c64->putMessage(MSG_VC1530_PROGRESS);
 

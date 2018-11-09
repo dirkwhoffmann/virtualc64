@@ -1,6 +1,9 @@
+/*!
+ * @file        TOD.cpp
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
+ */
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,12 +19,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
 #include "C64.h"
 
-TOD::TOD()
+TOD::TOD(CIA *cia)
 {
 	setDescription("TOD");
 	debug(3, "    Creating TOD at address %p...\n", this);
+    
+    this->cia = cia;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -39,10 +45,6 @@ TOD::TOD()
     registerSnapshotItems(items, sizeof(items));
 }
 
-TOD::~TOD()
-{
-}
-
 void
 TOD::reset() 
 {
@@ -55,9 +57,12 @@ TOD::reset()
 void 
 TOD::dump()
 {
-	msg("            Time of day : %02X:%02X:%02X:%02X\n", tod.hours, tod.minutes, tod.seconds, tod.tenth);
-	msg("                  Alarm : %02X:%02X:%02X:%02X\n", alarm.hours, alarm.minutes, alarm.seconds, alarm.tenth);
-	msg("                  Latch : %02X:%02X:%02X:%02X\n", latch.hours, latch.minutes, latch.seconds, latch.tenth);
+	msg("            Time of day : %02X:%02X:%02X:%02X\n",
+        tod.hours, tod.minutes, tod.seconds, tod.tenth);
+	msg("                  Alarm : %02X:%02X:%02X:%02X\n",
+        alarm.hours, alarm.minutes, alarm.seconds, alarm.tenth);
+	msg("                  Latch : %02X:%02X:%02X:%02X\n",
+        latch.hours, latch.minutes, latch.seconds, latch.tenth);
 	msg("                 Frozen : %s\n", frozen ? "yes" : "no");
 	msg("                Stopped : %s\n", stopped ? "yes" : "no");
 	msg("\n");
@@ -138,4 +143,3 @@ TOD::checkForInterrupt()
     
     matching = (tod.value == alarm.value);
 }
-

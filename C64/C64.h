@@ -1,7 +1,7 @@
 /*!
  * @header      C64.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   Dirk W. Hoffmann, all rights reserved.
+ * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -176,7 +176,12 @@ class C64 : public VirtualComponent {
      *  @see      VIC::getCyclesPerRasterline()
      */
     uint8_t rasterCycle;
-    
+
+    /*! @brief    Current CPU frequency
+     *  @details  This value is set in setClockFrequency()
+     */
+    uint32_t frequency;
+
     /*! @brief    Duration of a CPU cycle in 1/10 nano seconds
      *  @details  This value is set in setClockFrequency()
      */
