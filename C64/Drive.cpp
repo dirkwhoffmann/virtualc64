@@ -295,28 +295,6 @@ VC1541::executeUF4()
     }
 }
 
-bool
-VC1541::computeByteReady()
-{
-    //
-    //           74LS191                             ---
-    //           -------               VIA2::CA2 ---|   |
-    //  SYNC --o| Load  |                UF4::QB --o| & |o-- Byte Ready
-    //    QB ---| Clk   |                        ---|   |
-    //          |    QD |   ---                  |   ---
-    //          |    QC |--|   |    ---          |
-    //          |    QB |--| & |o--| 1 |o---------
-    //          |    QA |--|   |    ---
-    //           -------    ---
-    //             UE3
-    
-    bool ca2 = via2.getCA2();
-    bool qb = counterUF4 & 0x02;
-    bool ue3 = (byteReadyCounter == 7);
-    // debug("%d %d (%d) %d (%d)\n", ca2, qb, counterUF4, ue3, byteReadyCounter);
-    return !(ca2 && !qb && ue3);
-}
-
 void
 VC1541::updateByteReady()
 {

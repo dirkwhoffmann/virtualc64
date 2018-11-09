@@ -34,11 +34,36 @@
 #include "Disk.h"
 
 /*!
- * @brief    Virtual floppy drive
- * @details  Bit-accurate emulation of a Commodore VC 1541
+ * @brief    A Commodore VC 1541 disk drive
  */
 class VC1541 : public VirtualComponent {
 
+    //
+    // Constants
+    //
+
+    /*! @brief    Time between two carry pulses of UE7 in 1/10 nano seconds
+     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is
+     *            divided by N where N ranges from 13 (density bits = 11) to 16
+     *            (density bits = 00). On the logic board, this is done with
+     *            a 4-bit counter of type 74SL193 whose reset value bits are
+     *            connected to the two density bits (PB5 and PB6 of VIA2). It
+     *            follows that a single bit is ready after approx. 3.25 CPU
+     *            cycles in the fastest zone and approx. 4 CPU cycles in the
+     *            slowest zone.
+     */
+    const uint64_t delayBetweenTwoCarryPulses[4] = {
+        10000, // Density bits = 00: Carry pulse every 16/16 * 10^4 1/10 nsec
+        9375,  // Density bits = 01: Carry pulse every 15/16 * 10^4 1/10 nsec
+        8750,  // Density bits = 10: Carry pulse every 14/16 * 10^4 1/10 nsec
+        8125   // Density bits = 11: Carry pulse every 13/16 * 10^4 1/10 nsec
+    };
+    
+    
+    //
+    // Sub components
+    //
+    
 public:
     
 	//! @brief    Memory of the virtual drive
@@ -50,13 +75,13 @@ public:
 	//! @brief    VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1 = VIA1(this);
 
-    //! @brief    VIA6522 connecting the drive's CPU with it's read/write head
+    //! @brief    VIA6522 connecting the drive CPU with the read/write head
     VIA2 via2 = VIA2(this);
 
-    //! @brief    Disk in this drive (single sided 5,25" floppy disk)
+    //! @brief    A single sided 5,25" floppy disk
     Disk disk;
     
- 
+    
     //
     // Drive status
     //
@@ -64,27 +89,27 @@ public:
 private:
     
     //! @brief    Internal number of this drive
-    /*! @details  The first drive has number 0, the second drive number 1, etc.
+    /*! @details  The first drive has number 1, the second drive number 2, etc.
      *            The number is set once and never changed afterwards.
      *            When the drive writes a message into the message queue, the
      *            drive number is provided in the data field to let the GUI
-     *            GUI know about the sender.
+     *            know about the sender.
      */
     unsigned deviceNr;
     
-    //! @brief    Indicates whether the disk drive is powered on
+    //! @brief    Indicates whether the disk drive is powered on.
     bool poweredOn;
 
-    //! @brief    Indicates whether disk is rotating or not
+    //! @brief    Indicates whether the disk is rotating.
     bool spinning;
     
-    //! @brief    Indicates whether red LED is on or off
+    //! @brief    Indicates whether the red LED is on.
     bool redLED;
     
-    //! @brief    Indicates if a disk is inserted
+    //! @brief    Indicates if or how a disk is inserted.
     DiskInsertionStatus insertionStatus;
     
-    //! @brief    Indicates whether the drive shall send sound notifications
+    //! @brief    Indicates whether the drive shall send sound notifications.
     bool sendSoundMessages;
     
     
@@ -92,12 +117,8 @@ private:
     // Clocking logic
     //
     
-public:
-    
     //! @brief    Elapsed time since power up in 1/10 nano seconds
     uint64_t elapsedTime;
-    
-private:
     
     //! @brief    Duration of a single CPU clock cycle in 1/10 nano seconds
     uint64_t durationOfOneCpuCycle;
@@ -138,7 +159,6 @@ public:
      */
     uint4_t counterUF4;
     
-private:
     
     //
     // Read/Write logic
@@ -174,14 +194,10 @@ private:
      */
     uint8_t zone;
     
-public:
-    
     /*! @brief    The 74LS164 serial to parallel shift register
      *  @details  In read mode, this register is fed by the drive head with data.
      */
     uint16_t readShiftreg;
-
-private:
     
     /*! @brief    The 74LS165 parallel to serial shift register
      *  @details  In write mode, this register feeds the drive head with data.
@@ -206,17 +222,25 @@ private:
      */
     bool byteReady;
     
-public:
+    public:
 
-    //! @brief    Constructor
-    /*! @param    deviceNr must be 1 (first drive) or 2 (second drive)
+    //
+    //! @functiongroup Creating and destructing
+    //
+    
+    //! @brief    Custom Constructor
+    /*! @param    deviceNr must be 1 (first drive) or 2 (second drive).
      */
     VC1541(unsigned deviceNr);
     
-    //! @brief    Destructor
+    //! @brief    Standard destructor
     ~VC1541();
+
     
-    //! @brief    Methods from VirtualComponent
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+
     void reset();
     void ping();
     void dump();
@@ -226,23 +250,6 @@ public:
      *  @note     This method is needed, because reset() keeps the disk alive.
      */
     void resetDisk();
-    
-    /*! @brief    Time between two carry pulses of UE7 in 1/10 nano seconds
-     *  @details  The VC1541 drive is clocked by 16 Mhz. The base frequency is
-     *            divided by N where N ranges from 13 (density bits = 11) to 16
-     *            (density bits = 00). On the logic board, this is done with
-     *            a 4-bit counter of type 74SL193 whose reset value bits are
-     *            connected to the two density bits (PB5 and PB6 of VIA2). It
-     *            follows that a single bit is ready after approx. 3.25 CPU
-     *            cycles in the fastest zone and approx. 4 CPU cycles in the
-     *            slowest zone.
-     */
-    const uint64_t delayBetweenTwoCarryPulses[4] = {
-        10000, // Density bits = 00: Carry pulse every 16/16 * 10^4 1/10 nsec
-        9375,  // Density bits = 01: Carry pulse every 15/16 * 10^4 1/10 nsec
-        8750,  // Density bits = 10: Carry pulse every 14/16 * 10^4 1/10 nsec
-        8125   // Density bits = 11: Carry pulse every 13/16 * 10^4 1/10 nsec
-    };
     
     
     //
@@ -423,27 +430,6 @@ public:
 
     //! @brief    Returns the current value of the sync signal
     bool getSync() { return sync; }
-
-    //! @brief    Computed the current value of the byte ready line
-    //! @deprecated Experimental (for debugging only)
-    bool computeByteReady();
-    
-    //! @brief    Sets the byte ready line
-    /*! @note     The byte ready line is connected to the CA1 pin of VIA2.
-     *            Pulling this signal low causes important side effects.
-     *            Firstly, the contents of the read shift register is latched
-     *            into the VIA chip. Secondly, the V flag is set inside the CPU.
-     *  @seealso  CA1action()
-     */
-    // void setByteReadyLine(bool value);
-
-    //! @brief    Convenience wrapper
-    //! @deprecated
-    // void clearByteReadyLine() { setByteReadyLine(false); }
-
-    //! @brief    Convenience wrapper
-    //! @deprecated
-    // void raiseByteReadyLine() { setByteReadyLine(true); }
     
     //! @brief    Updates the value on the byte ready line
     /*! @note     The byte ready line is connected to the CA1 pin of VIA2.
