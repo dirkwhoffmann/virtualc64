@@ -32,11 +32,11 @@ inline bool isC64Model(C64Model model) {
 
 //! @brief    C64 configuration
 typedef struct {
-    VICChipModel vic;
+    VICModel vic;
     bool grayDotBug;
-    CIAChipModel cia;
+    CIAModel cia;
     bool timerBBug;
-    SIDChipModel sid;
+    SIDModel sid;
     bool sidFilter;
     GlueLogic glue;
     RamInitPattern pattern;

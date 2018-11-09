@@ -55,12 +55,12 @@ class CPU : public VirtualComponent {
     
     private:
     
-    /*! @brief    Selected chip model
+    /*! @brief    Selected model
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
      *            differences between both models are not emulated.
      */
-    CPUChipModel chipModel;
+    CPUModel model;
     
     //! @brief    Reference to the connected virtual memory
 	Memory *mem;
@@ -234,7 +234,7 @@ public:
     //
     
     //! @brief    Constructor
-    CPU(CPUChipModel model, Memory *mem);
+    CPU(CPUModel model, Memory *mem);
 
 	//! @brief    Destructor
 	~CPU();

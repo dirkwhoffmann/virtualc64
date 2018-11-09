@@ -129,7 +129,7 @@ C64::C64()
     // Set initial hardware configuration
     mouse = &mouse1350;
     mousePort = 0;
-    vic.setChipModel(PAL_8565);
+    vic.setModel(PAL_8565);
     drive1.powerOn();
     drive2.powerOff();
     
@@ -234,11 +234,11 @@ C64::getModel()
 {
     // Look for known configurations
     for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64Configuration); i++) {
-        if (vic.getChipModel() == configurations[i].vic &&
+        if (vic.getModel() == configurations[i].vic &&
             vic.emulateGrayDotBug == configurations[i].grayDotBug &&
-            cia1.getChipModel() == configurations[i].cia &&
+            cia1.getModel() == configurations[i].cia &&
             cia1.getEmulateTimerBBug() == configurations[i].timerBBug &&
-            sid.getChipModel() == configurations[i].sid &&
+            sid.getModel() == configurations[i].sid &&
             sid.getAudioFilter() == configurations[i].sidFilter &&
             vic.getGlueLogic() == configurations[i].glue &&
             mem.getRamInitPattern() == configurations[i].pattern) {
@@ -251,21 +251,21 @@ C64::getModel()
 }
 
 void
-C64::setModel(C64Model model)
+C64::setModel(C64Model m)
 {
-    if (model != C64_CUSTOM) {
+    if (m != C64_CUSTOM) {
         
         suspend();
-        vic.setChipModel(configurations[model].vic);
-        vic.emulateGrayDotBug = configurations[model].grayDotBug;
-        cia1.setChipModel(configurations[model].cia);
-        cia2.setChipModel(configurations[model].cia);
-        cia1.setEmulateTimerBBug(configurations[model].timerBBug);
-        cia2.setEmulateTimerBBug(configurations[model].timerBBug);
-        sid.setChipModel(configurations[model].sid);
-        sid.setAudioFilter(configurations[model].sidFilter);
-        vic.setGlueLogic(configurations[model].glue);
-        mem.setRamInitPattern(configurations[model].pattern);
+        vic.setModel(configurations[m].vic);
+        vic.emulateGrayDotBug = configurations[m].grayDotBug;
+        cia1.setModel(configurations[m].cia);
+        cia2.setModel(configurations[m].cia);
+        cia1.setEmulateTimerBBug(configurations[m].timerBBug);
+        cia2.setEmulateTimerBBug(configurations[m].timerBBug);
+        sid.setModel(configurations[m].sid);
+        sid.setAudioFilter(configurations[m].sidFilter);
+        vic.setGlueLogic(configurations[m].glue);
+        mem.setRamInitPattern(configurations[m].pattern);
         resume();
     }
 }
@@ -289,7 +289,7 @@ C64::updateVicFunctionTable()
     vicfunc[56] = &VIC::cycle56;
     
     // Assign model specific execution functions
-    switch (vic.getChipModel()) {
+    switch (vic.getModel()) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:

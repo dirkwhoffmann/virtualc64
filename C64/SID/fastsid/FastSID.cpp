@@ -43,7 +43,7 @@ FastSID::FastSID()
     SnapshotItem items[] = {
         { &sidreg,           sizeof(sidreg),           CLEAR_ON_RESET },
         { &speed1,           sizeof(speed1),           CLEAR_ON_RESET },
-        { &chipModel,        sizeof(chipModel),        KEEP_ON_RESET },
+        { &model,            sizeof(model),            KEEP_ON_RESET },
         { &cpuFrequency,     sizeof(cpuFrequency),     CLEAR_ON_RESET },
         { &sampleRate,       sizeof(sampleRate),       CLEAR_ON_RESET },
         { &samplesPerCycle,  sizeof(samplesPerCycle),  CLEAR_ON_RESET },
@@ -62,7 +62,7 @@ FastSID::FastSID()
     voice[1].init(this, 1, &voice[0]);
     voice[2].init(this, 2, &voice[1]);
     
-    chipModel = MOS_6581;
+    model = MOS_6581;
     cpuFrequency = PAL_CLOCK_FREQUENCY;
     sampleRate = 44100;
     emulateFilter = true;
@@ -102,8 +102,8 @@ FastSID::dump()
     SIDInfo info = getInfo();
 
     msg("    Chip model: %s\n",
-        (chipModel == MOS_6581) ? "6581" :
-        (chipModel == MOS_8580) ? "8580" : "???");
+        (model == MOS_6581) ? "6581" :
+        (model == MOS_8580) ? "8580" : "???");
     msg(" Sampling rate: %d\n", sampleRate);
     msg(" CPU frequency: %d\n", cpuFrequency);
     msg("Emulate filter: %s\n", emulateFilter ? "yes" : "no");
@@ -181,9 +181,9 @@ FastSID::getVoiceInfo(unsigned i)
 }
 
 void
-FastSID::setChipModel(SIDChipModel model)
+FastSID::setModel(SIDModel m)
 {
-    chipModel = model;
+    model = m;
     
     // Switch wave tables according to new model
     voice[0].updateWaveTablePtr();

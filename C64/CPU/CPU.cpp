@@ -22,16 +22,16 @@
 #include "C64.h"
 
 // CPU::CPU()
-CPU::CPU(CPUChipModel model, Memory *mem)
+CPU::CPU(CPUModel model, Memory *mem)
 {
-    this->chipModel = model;
+    this->model = model;
     this->mem = mem;
 	
     setDescription(model == MOS_6502 ? "CPU(6502)" : "CPU");
 	debug(3, "  Creating %s at address %p...\n", getDescription(), this);
 	
     // Chip model
-    chipModel = MOS_6510;
+    model = MOS_6510;
 
 	// Establish callback for each instruction
 	registerInstructions();
@@ -45,7 +45,7 @@ CPU::CPU(CPUChipModel model, Memory *mem)
     SnapshotItem items[] = {
         
         // Lifetime items
-        { &chipModel,          sizeof(chipModel),    KEEP_ON_RESET },
+        { &model,              sizeof(model),        KEEP_ON_RESET },
 
          // Internal state
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },

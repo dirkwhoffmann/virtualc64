@@ -14,7 +14,7 @@
 typedef enum {
     MOS_6581,
     MOS_8580
-} SIDChipModel;
+} SIDModel;
 
 /*! @brief    Sampling method
  *  @details  This enum reflects enum "sampling_method" used by reSID.

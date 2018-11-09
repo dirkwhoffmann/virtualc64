@@ -327,10 +327,10 @@ class C64 : public VirtualComponent {
      *  @param    model is any C64Model other than C64_CUSTOM.
      *  @note     It it safe to call this function on a running emulator.
      */
-    void setModel(C64Model model);
+    void setModel(C64Model m);
     
     //! @brief    Updates the VIC function table
-    /*! @details  This function is invoked by VIC::setChipModel(), only.
+    /*! @details  This function is invoked by VIC::setModel(), only.
      */
     void updateVicFunctionTable();
     

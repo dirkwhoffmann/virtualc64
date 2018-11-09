@@ -29,7 +29,7 @@ CIA::CIA()
     // Register snapshot items
     SnapshotItem items[] = {
 
-        { &chipModel,        sizeof(chipModel),        KEEP_ON_RESET },
+        { &model,            sizeof(model),            KEEP_ON_RESET },
         { &emulateTimerBBug, sizeof(emulateTimerBBug), KEEP_ON_RESET },
 
         { &counterA,         sizeof(counterA),         CLEAR_ON_RESET },
@@ -64,7 +64,7 @@ CIA::CIA()
 
     registerSnapshotItems(items, sizeof(items));
     
-    chipModel = MOS_6526_OLD;
+    model = MOS_6526_OLD;
     emulateTimerBBug = true;
 }
 
@@ -85,17 +85,17 @@ CIA::reset()
 }
 
 void
-CIA::setChipModel(CIAChipModel model)
+CIA::setModel(CIAModel m)
 {
-    debug(2, "setChipModel(%d)\n", model);
+    debug(2, "setModel(%d)\n", m);
     
-    if (!isCIAChipModel(model)) {
-        warn("Unknown CIA chip model (%d). Assuming first generation.\n", model);
-        model = MOS_6526_OLD;
+    if (!isCIAModel(m)) {
+        warn("Unknown CIA model (%d). Assuming first generation.\n", m);
+        m = MOS_6526_OLD;
     }
     
     suspend();
-    chipModel = model;
+    model = m;
     resume();
 }
 
@@ -122,7 +122,7 @@ CIA::triggerFallingEdgeOnFlagPin()
 void
 CIA::triggerTimerIrq()
 {
-    switch (chipModel) {
+    switch (model) {
             
         case MOS_6526_OLD:
             delay |= CIASetInt0;
@@ -236,7 +236,7 @@ CIA::peek(uint16_t addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 		
             // For new CIAs, set upper bit if an IRQ is being triggered
-            if ((delay & CIASetInt1) && (icr & 0x1F) && chipModel == MOS_6526_NEW) {
+            if ((delay & CIASetInt1) && (icr & 0x1F) && model == MOS_6526_NEW) {
                 icr |= 0x80;
             }
             
@@ -252,7 +252,7 @@ CIA::peek(uint16_t addr)
             delay &= ~(CIASetInt0 | CIASetInt1);
         
             // Schedule the ICR bits to be cleared
-            if (chipModel == MOS_6526_NEW) {
+            if (model == MOS_6526_NEW) {
                 delay |= CIAClearIcr0; // Uppermost bit
                 delay |= CIAAckIcr0;   // Other bits
                 icrAck = 0xFF;
@@ -485,7 +485,7 @@ CIA::poke(uint16_t addr, uint8_t value)
             
 			// Raise an interrupt in the next cycle if conditions match
 			if ((imr & icr & 0x1F) && INT) {
-                if (chipModel == MOS_6526_NEW) {
+                if (model == MOS_6526_NEW) {
                     if (!(delay & CIAReadIcr1)) {
                         delay |= (CIASetInt1 | CIASetIcr1);
                     }
@@ -497,7 +497,7 @@ CIA::poke(uint16_t addr, uint8_t value)
             // Clear pending interrupt if a write has occurred in the previous cycle
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
             else if (delay & CIAClearIcr2) {
-                if (chipModel == MOS_6526_OLD) {
+                if (model == MOS_6526_OLD) {
                      delay &= ~(CIASetInt1 | CIASetIcr1);
                  }
             }

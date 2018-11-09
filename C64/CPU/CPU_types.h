@@ -28,7 +28,7 @@
 typedef enum {
     MOS_6510 = 0,
     MOS_6502 = 1
-} CPUChipModel;
+} CPUModel;
 
 //! @brief    Addressing mode
 typedef enum {

@@ -145,7 +145,7 @@ FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
 void
 FastVoice::updateWaveTablePtr()
 {
-    SIDChipModel chipModel = fastsid->getChipModel(); 
+    SIDModel chipModel = fastsid->getModel(); 
     assert(chipModel == MOS_6581 || chipModel == MOS_8580);
     
     unsigned offset;

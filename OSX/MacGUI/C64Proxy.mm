@@ -267,13 +267,13 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     b ? wrapper->cia->startTracing() : wrapper->cia->stopTracing();
 }
-- (NSInteger) chipModel
+- (NSInteger) model
 {
-    return (NSInteger)wrapper->cia->getChipModel();
+    return (NSInteger)wrapper->cia->getModel();
 }
-- (void) setChipModel:(NSInteger)value
+- (void) setModel:(NSInteger)value
 {
-    wrapper->cia->setChipModel((CIAChipModel)value);
+    wrapper->cia->setModel((CIAModel)value);
 }
 - (BOOL) emulateTimerBBug
 {
@@ -308,13 +308,13 @@ struct AnyC64FileWrapper { AnyC64File *file; };
     return self;
 }
 
-- (NSInteger) chipModel
+- (NSInteger) model
 {
-    return (NSInteger)wrapper->vic->getChipModel();
+    return (NSInteger)wrapper->vic->getModel();
 }
-- (void) setChipModel:(NSInteger)value
+- (void) setModel:(NSInteger)value
 {
-    wrapper->vic->setChipModel((VICChipModel)value);
+    wrapper->vic->setModel((VICModel)value);
 }
 - (NSInteger) videoPalette
 {
@@ -588,13 +588,13 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->sid->setSamplingMethod((SamplingMethod)value);
 }
-- (NSInteger) chipModel
+- (NSInteger) model
 {
-    return (int)(wrapper->sid->getChipModel());
+    return (int)(wrapper->sid->getModel());
 }
-- (void) setChipModel:(NSInteger)value
+- (void) setModel:(NSInteger)value
 {
-    wrapper->sid->setChipModel((SIDChipModel)value);
+    wrapper->sid->setModel((SIDModel)value);
 }
 - (uint32_t) sampleRate
 {

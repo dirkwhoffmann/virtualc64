@@ -56,7 +56,7 @@ private:
     FastVoice voice[3];
         
     //! @brief   Chip model.
-    SIDChipModel chipModel;
+    SIDModel model;
     
     //! @brief   Current CPU frequency
     uint32_t cpuFrequency;
@@ -154,10 +154,10 @@ public:
     //
     
     //! Returns the chip model
-    SIDChipModel getChipModel() { return chipModel; }
+    SIDModel getModel() { return model; }
     
     //! Sets the chip model
-    void setChipModel(SIDChipModel model);
+    void setModel(SIDModel m);
     
     //! Returns the clock frequency
     uint32_t getClockFrequency() { return cpuFrequency; }

@@ -165,7 +165,7 @@ extension MyController {
         alert.alertStyle = .warning // .critical
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "pref_sid"))
         alert.messageText = "Incompatible Sampling Method"
-        alert.informativeText = "The current sampling method is not compatible with the selected chip model and will be changed to \"Interpolate\"."
+        alert.informativeText = "The current sampling method is not compatible with the selected SID model and will be changed to \"Interpolate\"."
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }

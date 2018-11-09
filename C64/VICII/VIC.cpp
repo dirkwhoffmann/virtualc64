@@ -46,7 +46,7 @@ VIC::VIC()
     SnapshotItem items[] = {
 
         // Configuration items
-        { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
+        { &model,                       sizeof(model),                          KEEP_ON_RESET },
         { &glueLogic,                   sizeof(glueLogic),                      KEEP_ON_RESET },
         { &emulateGrayDotBug,           sizeof(emulateGrayDotBug),              KEEP_ON_RESET },
 
@@ -80,7 +80,6 @@ VIC::VIC()
         { &upperComparisonVal,          sizeof(upperComparisonVal),             CLEAR_ON_RESET },
         { &lowerComparisonVal,          sizeof(lowerComparisonVal),             CLEAR_ON_RESET },
 
-        // { &visibleColumnCnt,            sizeof(visibleColumnCnt),               CLEAR_ON_RESET },
         { &isVisibleColumn,             sizeof(isVisibleColumn),                CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
@@ -186,7 +185,7 @@ VIC::dump()
     
 	msg("VIC\n");
 	msg("---\n\n");
-    msg("       Chip model : %d\n", chipModel);
+    msg("       Chip model : %d\n", model);
     msg("              PAL : %s\n", isPAL() ? "yes" : "no");
     msg("             NTSC : %s\n", isNTSC() ? "yes" : "no");
     msg("       Glue logic : %d\n", glueLogic);
@@ -280,23 +279,23 @@ VIC::saveToBuffer(uint8_t **buffer)
 }
 
 void
-VIC::setChipModel(VICChipModel model)
+VIC::setModel(VICModel m)
 {
-    debug(2, "VIC::setChipModel(%d)\n", model);
+    debug(2, "VIC::setModel(%d)\n", m);
     
-    if (!isVICChhipModel(model)) {
-        warn("Unknown VICII chip model (%d). Assuming a MOS8565.\n", model);
-        model = PAL_8565;
+    if (!isVICChhipModel(m)) {
+        warn("Unknown VICII model (%d). Assuming a MOS8565.\n", m);
+        m = PAL_8565;
     }
     
     suspend();
     
-    chipModel = model;
+    model = m;
     updatePalette();
     resetScreenBuffers();
     c64->updateVicFunctionTable();
     
-    switch(chipModel) {
+    switch(model) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:
@@ -349,7 +348,7 @@ VIC::setGlueLogic(GlueLogic type)
 unsigned
 VIC::getClockFrequency()
 {
-    switch (chipModel) {
+    switch (model) {
             
         case NTSC_6567:
         case NTSC_8562:
@@ -364,7 +363,7 @@ VIC::getClockFrequency()
 unsigned
 VIC::getCyclesPerRasterline()
 {
-    switch (chipModel) {
+    switch (model) {
             
         case NTSC_6567_R56A:
             return 64;
@@ -387,7 +386,7 @@ VIC::isLastCycleInRasterline(unsigned cycle)
 unsigned
 VIC::getRasterlinesPerFrame()
 {
-    switch (chipModel) {
+    switch (model) {
             
         case NTSC_6567_R56A:
             return 262;
@@ -404,7 +403,7 @@ VIC::getRasterlinesPerFrame()
 bool
 VIC::isVBlankLine(unsigned rasterline)
 {
-    switch (chipModel) {
+    switch (model) {
             
         case NTSC_6567_R56A:
             return rasterline < 16 || rasterline >= 16 + 234;
@@ -566,7 +565,7 @@ VIC::lightpenX()
 {
     uint8_t cycle = c64->rasterCycle; 
     
-    switch (chipModel) {
+    switch (model) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:
@@ -643,7 +642,7 @@ VIC::checkForLightpenIrqAtStartOfFrame()
     assert(c64->rasterCycle == 2);
  
     // Latch coordinate (values according to VICE 3.1)
-    switch (chipModel) {
+    switch (model) {
             
         case PAL_6569_R1:
         case PAL_6569_R3:

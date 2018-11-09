@@ -97,15 +97,6 @@ typedef struct {
 //! @brief    NTSC clock frequency in Hz
 static const uint32_t NTSC_CLOCK_FREQUENCY = 1022727;
 
-//! @brief    Frames per second in NTSC mode
-// static const double NTSC_REFRESH_RATE = 59.826;
-
-//! @brief    CPU cycles per rasterline in NTSC mode
-// static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
-
-//! @brief    CPU cycles per frame in NTSC mode
-// static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
-
 //! @brief    CPU cycles per second in NTSC mode
 static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_CLOCK_FREQUENCY;
 
@@ -249,9 +240,9 @@ typedef enum {
     NTSC_6567_R56A = 8,
     NTSC_6567 = 16,
     NTSC_8562 = 32
-} VICChipModel;
+} VICModel;
 
-inline bool isVICChhipModel(VICChipModel model) {
+inline bool isVICChhipModel(VICModel model) {
     return
     (model == PAL_6569_R1) ||
     (model == PAL_6569_R3) ||

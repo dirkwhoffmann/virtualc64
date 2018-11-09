@@ -12,9 +12,9 @@
 typedef enum {
     MOS_6526_OLD,
     MOS_6526_NEW
-} CIAChipModel;
+} CIAModel;
 
-inline bool isCIAChipModel(CIAChipModel model) {
+inline bool isCIAModel(CIAModel model) {
     return (model == MOS_6526_OLD) || (model == MOS_6526_NEW);
 }
 

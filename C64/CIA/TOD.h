@@ -29,7 +29,8 @@ class CIA;
 
 //! @brief    Increments a BCD number by one.
 inline uint8_t incBCD(uint8_t bcd) {
-    return ((bcd & 0x0F) == 0x09) ? (bcd & 0xF0) + 0x10 : (bcd & 0xF0) + ((bcd + 0x01) & 0x0F); }
+    return ((bcd & 0x0F) == 0x09) ? (bcd & 0xF0) + 0x10 : (bcd & 0xF0) + ((bcd + 0x01) & 0x0F);
+}
 
 /*! @brief    Time of day clock (TOD)
  *  @details  Each CIA chip contains a time of day clock, counting hours,

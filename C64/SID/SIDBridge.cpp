@@ -126,8 +126,8 @@ SIDBridge::dump()
     msg("FastSID:\n");
     msg("--------\n");
     msg("    Chip model: %s\n",
-        (fastsid.getChipModel() == MOS_6581) ? "6581" :
-        (fastsid.getChipModel() == MOS_8580) ? "8580" : "???");
+        (fastsid.getModel() == MOS_6581) ? "6581" :
+        (fastsid.getModel() == MOS_8580) ? "8580" : "???");
     msg(" Sampling rate: %d\n", fastsid.getSampleRate());
     msg(" CPU frequency: %d\n", fastsid.getClockFrequency());
     msg("Emulate filter: %s\n", fastsid.getAudioFilter() ? "yes" : "no");
@@ -271,27 +271,27 @@ SIDBridge::setSamplingMethod(SamplingMethod value)
     resid.setSamplingMethod(value);
 }
 
-SIDChipModel
-SIDBridge::getChipModel()
+SIDModel
+SIDBridge::getModel()
 {
     if (useReSID) {
-        return resid.getChipModel();
+        return resid.getModel();
     } else {
-        return fastsid.getChipModel();
+        return fastsid.getModel();
     }
 }
 
 void 
-SIDBridge::setChipModel(SIDChipModel model)
+SIDBridge::setModel(SIDModel m)
 {
-    if (model != MOS_6581 && model != MOS_8580) {
-        warn("Unknown chip model (%d). Using  MOS8580\n", model);
-        model = MOS_8580;
+    if (m != MOS_6581 && m != MOS_8580) {
+        warn("Unknown SID model (%d). Using  MOS8580\n", m);
+        m = MOS_8580;
     }
     
     suspend();
-    resid.setChipModel(model);
-    fastsid.setChipModel(model);
+    resid.setModel(m);
+    fastsid.setModel(m);
     resume();
 }
 

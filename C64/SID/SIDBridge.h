@@ -145,10 +145,10 @@ public:
     void setReSID(bool enable);
     
     //! @brief    Returns the simulated chip model.
-    SIDChipModel getChipModel();
+    SIDModel getModel();
     
     //! @brief    Sets chip model
-    void setChipModel(SIDChipModel value);
+    void setModel(SIDModel m);
     
     //! @brief    Returns true iff audio filters are enabled.
     bool getAudioFilter();

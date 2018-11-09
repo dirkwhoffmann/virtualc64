@@ -23,7 +23,7 @@ ReSID::ReSID()
 	setDescription("ReSID");
 	debug(3, "  Creating ReSID at address %p...\n", this);
 
-    chipModel = MOS_6581;
+    model = MOS_6581;
     emulateFilter = true;
     sampleRate = 44100;
 
@@ -113,7 +113,7 @@ ReSID::reset()
     sid = new reSID::SID();
     
     // Reconfigure reSID
-    sid->set_chip_model((reSID::chip_model)chipModel);
+    sid->set_chip_model((reSID::chip_model)model);
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
                                  (double)sampleRate);
@@ -121,23 +121,22 @@ ReSID::reset()
 }
 
 void
-ReSID::setChipModel(SIDChipModel model)
+ReSID::setModel(SIDModel m)
 {
-    assert(model == 0 || model == 1);
-    chipModel = model;
+    assert(m == 0 || m == 1);
+    model = m;
     
     suspend();
-    sid->set_chip_model((reSID::chip_model)chipModel);
-    // sid->filter._reset();
+    sid->set_chip_model((reSID::chip_model)m);
     resume();
     
     // MOS8580 emulation seems to be problematic when combined with filters.
     // TODO: Disable filters in combination with this chip
     
-    assert((SIDChipModel)sid->sid_model == chipModel);
+    assert((SIDModel)sid->sid_model == model);
     debug("Emulating SID model %s.\n",
-          (chipModel == reSID::MOS6581) ? "MOS6581" :
-          (chipModel == reSID::MOS8580) ? "MOS8580" : "?");
+          (model == reSID::MOS6581) ? "MOS6581" :
+          (model == reSID::MOS8580) ? "MOS8580" : "?");
 }
 
 void

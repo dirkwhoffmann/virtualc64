@@ -300,18 +300,18 @@ extension MyController {
         c64.suspend()
         
         // VICII
-        c64.vic.setChipModel(defaults.integer(forKey: VC64Keys.vicChip))
+        c64.vic.setModel(defaults.integer(forKey: VC64Keys.vicChip))
         c64.vic.setEmulateGrayDotBug(defaults.bool(forKey: VC64Keys.grayDotBug))
 
         // CIA
-        c64.cia1.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
-        c64.cia2.setChipModel(defaults.integer(forKey: VC64Keys.ciaChip))
+        c64.cia1.setModel(defaults.integer(forKey: VC64Keys.ciaChip))
+        c64.cia2.setModel(defaults.integer(forKey: VC64Keys.ciaChip))
         c64.cia1.setEmulateTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
         c64.cia2.setEmulateTimerBBug(defaults.bool(forKey: VC64Keys.timerBBug))
 
         // SID
         c64.sid.setReSID(defaults.bool(forKey: VC64Keys.reSID))
-        c64.sid.setChipModel(defaults.integer(forKey: VC64Keys.audioChip))
+        c64.sid.setModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
 
@@ -446,16 +446,16 @@ extension MyController {
         let defaults = UserDefaults.standard
         
         // VICII
-        defaults.set(c64.vic.chipModel(), forKey: VC64Keys.vicChip)
+        defaults.set(c64.vic.model(), forKey: VC64Keys.vicChip)
         defaults.set(c64.vic.emulateGrayDotBug(), forKey: VC64Keys.grayDotBug)
 
         // CIA
-        defaults.set(c64.cia1.chipModel(), forKey: VC64Keys.ciaChip)
+        defaults.set(c64.cia1.model(), forKey: VC64Keys.ciaChip)
         defaults.set(c64.cia1.emulateTimerBBug(), forKey: VC64Keys.timerBBug)
 
         // SID
         defaults.set(c64.sid.reSID(), forKey: VC64Keys.reSID)
-        defaults.set(c64.sid.chipModel(), forKey: VC64Keys.audioChip)
+        defaults.set(c64.sid.model(), forKey: VC64Keys.audioChip)
         defaults.set(c64.sid.audioFilter(), forKey: VC64Keys.audioFilter)
         defaults.set(c64.sid.samplingMethod(), forKey: VC64Keys.samplingMethod)
         

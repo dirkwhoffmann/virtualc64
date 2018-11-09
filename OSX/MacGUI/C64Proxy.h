@@ -287,8 +287,8 @@ struct AnyC64FileWrapper;
 - (BOOL) tracing;
 - (void) setTracing:(BOOL)b;
 
-- (NSInteger) chipModel;
-- (void) setChipModel:(NSInteger)value;
+- (NSInteger) model;
+- (void) setModel:(NSInteger)value;
 - (BOOL) emulateTimerBBug;
 - (void) setEmulateTimerBBug:(BOOL)value;
 
@@ -307,8 +307,8 @@ struct AnyC64FileWrapper;
 	struct VicWrapper *wrapper;
 }
 
-- (NSInteger) chipModel;
-- (void) setChipModel:(NSInteger)value;
+- (NSInteger) model;
+- (void) setModel:(NSInteger)value;
 - (NSInteger) videoPalette;
 - (void) setVideoPalette:(NSInteger)value;
 - (NSInteger) glueLogic;
@@ -394,8 +394,8 @@ struct AnyC64FileWrapper;
 - (void) setAudioFilter:(BOOL)b;
 - (NSInteger) samplingMethod;
 - (void) setSamplingMethod:(NSInteger)value;
-- (NSInteger) chipModel;
-- (void) setChipModel:(NSInteger)value;
+- (NSInteger) model;
+- (void) setModel:(NSInteger)value;
 
 - (NSInteger) ringbufferSize;
 - (float) ringbufferData:(NSInteger)offset;

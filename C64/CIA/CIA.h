@@ -87,7 +87,7 @@ class Joystick;
 class CIA : public VirtualComponent {
     
     //! @brief    Selected chip model
-    CIAChipModel chipModel;
+    CIAModel model;
     
     //! @brief    Indicates if timer B bug should be emulated
     bool emulateTimerBBug;
@@ -270,13 +270,13 @@ public:
     //
     
     //! @brief    Returns the currently plugged in chip model.
-    CIAChipModel getChipModel() { return chipModel; }
+    CIAModel getModel() { return model; }
     
     //! @brief    Sets the chip model.
-    void setChipModel(CIAChipModel model);
+    void setModel(CIAModel m);
     
     //! @brief    Determines if the emulated model is affected by the timer B bug.
-    bool hasTimerBBug() { return chipModel == MOS_6526_OLD; }
+    bool hasTimerBBug() { return model == MOS_6526_OLD; }
     
     //! @brief    Returns true if the timer B bug should be emulated.
     bool getEmulateTimerBBug() { return emulateTimerBBug; }

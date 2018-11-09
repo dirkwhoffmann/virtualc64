@@ -74,7 +74,7 @@ class HardwarePrefsController : UserDialogController {
         updateInfoText()
         
         // VIC
-        let model = c64.vic.chipModel()
+        let model = c64.vic.model()
         vicModel.selectItem(withTag: model)
         
         switch (UInt32(model)) {
@@ -103,13 +103,13 @@ class HardwarePrefsController : UserDialogController {
         grayDotBug.state = c64.vic.emulateGrayDotBug() ? .on : .off
         
         // CIA
-        assert(c64.cia1.chipModel() == c64.cia2.chipModel());
+        assert(c64.cia1.model() == c64.cia2.model());
         assert(c64.cia1.emulateTimerBBug() == c64.cia2.emulateTimerBBug());
-        ciaModel.selectItem(withTag: c64.cia1.chipModel())
+        ciaModel.selectItem(withTag: c64.cia1.model())
         timerBBug.state = c64.cia1.emulateTimerBBug() ? .on : .off
 
         // Audio
-        let sidModel = c64.sid.chipModel()
+        let sidModel = c64.sid.model()
         sidChipModel.selectItem(withTag: sidModel)
         sidFilter.state = c64.sid.audioFilter() ? .on : .off
         sidEngine.selectItem(withTag: (c64.sid.reSID() ? 1 : 0))
@@ -133,7 +133,7 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func vicChipModelAction(_ sender: NSMenuItem!) {
         
-        c64.vic.setChipModel(sender.tag)
+        c64.vic.setModel(sender.tag)
         update()
     }
     
@@ -145,8 +145,8 @@ class HardwarePrefsController : UserDialogController {
     
     @IBAction func ciaChipModelAction(_ sender: NSMenuItem!) {
         
-        c64.cia1.setChipModel(sender.tag)
-        c64.cia2.setChipModel(sender.tag)
+        c64.cia1.setModel(sender.tag)
+        c64.cia2.setModel(sender.tag)
         update()
     }
     
@@ -186,7 +186,7 @@ class HardwarePrefsController : UserDialogController {
             c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
         }
         
-        c64.sid.setChipModel(sender.selectedTag())
+        c64.sid.setModel(sender.selectedTag())
         update()
     }
     
@@ -208,16 +208,6 @@ class HardwarePrefsController : UserDialogController {
         parent.loadHardwareUserDefaults()
         hideSheet()
     }
-    
-    /*
-    @IBAction func factorySettingsAction(_ sender: Any!) {
-        
-        c64.suspend()
-        c64.setModel(Int(C64_PAL.rawValue))
-        c64.resume()
-        update()
-    }
-    */
     
     @IBAction func okAction(_ sender: Any!) {
         

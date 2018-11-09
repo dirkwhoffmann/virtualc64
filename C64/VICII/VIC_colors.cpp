@@ -129,7 +129,7 @@ VIC::updatePalette()
     };
     
     double *luma;
-    switch(chipModel) {
+    switch(model) {
         case PAL_6569_R1:
             luma = luma_vice_6569_r1;
             break;
