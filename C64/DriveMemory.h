@@ -43,7 +43,10 @@ class VC1541Memory : public Memory {
     //! @brief    Read Only Memory
     uint8_t rom[0x4000];
     
-    public:
+    
+    //
+    //! @functiongroup Creating and destructing
+    //
     
 	//! @brief    Constructor
 	VC1541Memory(VC1541 *drive);
@@ -51,20 +54,32 @@ class VC1541Memory : public Memory {
 	//! @brief    Destructor
 	~VC1541Memory();
 
-	//! @brief    Method from VirtualComponent
+    
+    //
+    //! @functiongroup Methods from VirtualComponent
+    //
+
 	void reset();
-		
-	//! @brief    Method from VirtualComponent
 	void dump();
-		
+
+    
+    //
+    //! @functiongroup Accessing ROM
+    //
+
 	//! @brief    Returns true iff the ROM image has been loaded.
     bool romIsLoaded() { return rom[0] != 0x00; }
-				
+    
+    
+    //
+    //! @functiongroup Accessing RAM
+    //
+
     // Reading from memory
     uint8_t peek(uint16_t addr);
     uint8_t peekZP(uint8_t addr) { return ram[addr]; }
 
-    // Snooping in memory (no side effects)
+    // Reading from memory without side effects
     uint8_t spypeek(uint16_t addr);
     
     // Writing into memory
