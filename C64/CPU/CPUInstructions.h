@@ -317,74 +317,74 @@ typedef enum {
 
 // Atomic CPU tasks
 #define FETCH_OPCODE \
-    if (likely(rdyLine)) instr = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) instr = mem->peek(regPC++); else return true;
 #define FETCH_ADDR_LO \
-    if (likely(rdyLine)) abl = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) regADL = mem->peek(regPC++); else return true;
 #define FETCH_ADDR_HI \
-    if (likely(rdyLine)) abh = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) regADH = mem->peek(regPC++); else return true;
 #define FETCH_POINTER_ADDR \
-    if (likely(rdyLine)) dl = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) regIDL = mem->peek(regPC++); else return true;
 #define FETCH_ADDR_LO_INDIRECT \
-    if (likely(rdyLine)) abl = mem->peek((uint16_t)dl++); else return true;
+    if (likely(rdyLine)) regADL = mem->peek((uint16_t)regIDL++); else return true;
 #define FETCH_ADDR_HI_INDIRECT \
-    if (likely(rdyLine)) abh = mem->peek((uint16_t)dl++); else return true;
+    if (likely(rdyLine)) regADH = mem->peek((uint16_t)regIDL++); else return true;
 #define IDLE_FETCH \
-    if (likely(rdyLine)) (void)mem->peek(PC); else return true;
+    if (likely(rdyLine)) (void)mem->peek(regPC); else return true;
 
 
 #define READ_RELATIVE \
-    if (likely(rdyLine)) data = mem->peek(PC); else return true;
+    if (likely(rdyLine)) regD = mem->peek(regPC); else return true;
 #define READ_IMMEDIATE \
-    if (likely(rdyLine)) data = mem->peek(PC++); else return true;
+    if (likely(rdyLine)) regD = mem->peek(regPC++); else return true;
 #define READ_FROM(x) \
-    if (likely(rdyLine)) data = mem->peek(x); else return true;
+    if (likely(rdyLine)) regD = mem->peek(x); else return true;
 #define READ_FROM_ADDRESS \
-    if (likely(rdyLine)) data = mem->peek(HI_LO(abh, abl)); else return true;
+    if (likely(rdyLine)) regD = mem->peek(HI_LO(regADH, regADL)); else return true;
 #define READ_FROM_ZERO_PAGE \
-    if (likely(rdyLine)) data = mem->peekZP(abl); else return true;
+    if (likely(rdyLine)) regD = mem->peekZP(regADL); else return true;
 #define READ_FROM_ADDRESS_INDIRECT \
-    if (likely(rdyLine)) data = mem->peekZP(dl); else return true;
+    if (likely(rdyLine)) regD = mem->peekZP(regDL); else return true;
 
 #define IDLE_READ_IMPLIED \
-    if (likely(rdyLine)) (void)mem->peek(PC); else return true;
+    if (likely(rdyLine)) (void)mem->peek(regPC); else return true;
 #define IDLE_READ_IMMEDIATE \
-    if (likely(rdyLine)) (void)mem->peek(PC++); else return true;
+    if (likely(rdyLine)) (void)mem->peek(regPC++); else return true;
 #define IDLE_READ_FROM(x) \
     if (likely(rdyLine)) (void)mem->peek(x); else return true;
 #define IDLE_READ_FROM_ADDRESS \
-    if (likely(rdyLine)) (void)(mem->peek(HI_LO(abh, abl))); else return true;
+    if (likely(rdyLine)) (void)(mem->peek(HI_LO(regADH, regADL))); else return true;
 #define IDLE_READ_FROM_ZERO_PAGE \
-    if (likely(rdyLine)) (void)mem->peekZP(abl); else return true;
+    if (likely(rdyLine)) (void)mem->peekZP(regADL); else return true;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
-    if (likely(rdyLine)) (void)mem->peekZP(dl); else return true;
+    if (likely(rdyLine)) (void)mem->peekZP(regIDL); else return true;
 
 #define WRITE_TO_ADDRESS \
-mem->poke(HI_LO(abh, abl), data);
+mem->poke(HI_LO(regADH, regADL), regD);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS \
-    mem->poke(HI_LO(abh, abl), data); setN(data & 0x80); setZ(data == 0);
+    mem->poke(HI_LO(regADH, regADL), regD); setN(regD & 0x80); setZ(regD == 0);
 #define WRITE_TO_ZERO_PAGE \
-    mem->pokeZP(abl, data);
+    mem->pokeZP(regADL, regD);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
-    mem->pokeZP(abl, data); setN(data & 0x80); setZ(data == 0);
+    mem->pokeZP(regADL, regD); setN(regD & 0x80); setZ(regD == 0);
 
-#define ADD_INDEX_X overflow = ((int)abl + (int)regX > 0xFF); abl += regX;
-#define ADD_INDEX_Y overflow = ((int)abl + (int)regY > 0xFF); abl += regY;
-#define ADD_INDEX_X_INDIRECT dl += regX;
-#define ADD_INDEX_Y_INDIRECT dl += regY;
+#define ADD_INDEX_X overflow = ((int)regADL + (int)regX > 0xFF); regADL += regX;
+#define ADD_INDEX_Y overflow = ((int)regADL + (int)regY > 0xFF); regADL += regY;
+#define ADD_INDEX_X_INDIRECT regIDL += regX;
+#define ADD_INDEX_Y_INDIRECT regIDL += regY;
 
-#define PUSH_PCL mem->pokeStack(SP--, LO_BYTE(PC));
-#define PUSH_PCH mem->pokeStack(SP--, HI_BYTE(PC));
-#define PUSH_P mem->pokeStack(SP--, getP());
-#define PUSH_P_WITH_B_SET mem->pokeStack(SP--, getP() | B_FLAG);
-#define PUSH_A mem->pokeStack(SP--, regA);
-#define PULL_PCL if (likely(rdyLine)) setPCL(mem->peekStack(SP)); else return true;
-#define PULL_PCH if (likely(rdyLine)) setPCH(mem->peekStack(SP)); else return true;
-#define PULL_P if (likely(rdyLine)) setPWithoutB(mem->peekStack(SP)); else return true;
-#define PULL_A if (likely(rdyLine)) loadA(mem->peekStack(SP)); else return true;
-#define IDLE_PULL if (likely(rdyLine)) (void)mem->peekStack(SP); else return true;
+#define PUSH_PCL mem->pokeStack(regSP--, LO_BYTE(regPC));
+#define PUSH_PCH mem->pokeStack(regSP--, HI_BYTE(regPC));
+#define PUSH_P mem->pokeStack(regSP--, getP());
+#define PUSH_P_WITH_B_SET mem->pokeStack(regSP--, getP() | B_FLAG);
+#define PUSH_A mem->pokeStack(regSP--, regA);
+#define PULL_PCL if (likely(rdyLine)) setPCL(mem->peekStack(regSP)); else return true;
+#define PULL_PCH if (likely(rdyLine)) setPCH(mem->peekStack(regSP)); else return true;
+#define PULL_P if (likely(rdyLine)) setPWithoutB(mem->peekStack(regSP)); else return true;
+#define PULL_A if (likely(rdyLine)) loadA(mem->peekStack(regSP)); else return true;
+#define IDLE_PULL if (likely(rdyLine)) (void)mem->peekStack(regSP); else return true;
 
 #define PAGE_BOUNDARY_CROSSED overflow
-#define FIX_ADDR_HI abh++;
+#define FIX_ADDR_HI regADH++;
 
 #define POLL_IRQ doIrq = (levelDetector.delayed() && !getI());
 #define POLL_NMI doNmi = edgeDetector.delayed();
@@ -393,53 +393,3 @@ mem->poke(HI_LO(abh, abl), data);
                        doNmi |= edgeDetector.delayed();
 #define CONTINUE next = (MicroInstruction)((int)next+1); return true;
 #define DONE     next = fetch; return true;
-
-
-//! @brief    Next microinstruction to be executed
-/*! @see      executeOneCycle()
- */
-MicroInstruction next;
-
-//! @brief    Mapping from opcodes to microinstructions
-/*! @details  The mapped microinstruction is the first microinstruction to be
- *            executed after the fetch phase (second microcycle).
- */
-MicroInstruction actionFunc[256];
-
-/*! @brief    Textual representation for each opcode
- *  @note     Used by the disassembler, only.
- */
-const char *mnemonic[256];
-
-/*! @brief    Adressing mode of each opcode
- *  @note     Used by the disassembler, only.
- */
-AddressingMode addressingMode[256];
-
-//! @brief    Registers a single opcode
-/*! @details  Initializes all lookup table entries for this opcode.
- */
-void registerCallback(uint8_t opcode, const char *mnemonic,
-                      AddressingMode mode, MicroInstruction mInstr);
-
-//! @brief    Registers the complete instruction set.
-void registerInstructions();
-
-//! @brief    Registers the legal instruction set, only.
-void registerLegalInstructions();
-
-//! @brief    Registers the illegal instructions set, only.
-void registerIllegalInstructions();
-
-// Helper functions
-void adc(uint8_t op);
-void adc_binary(uint8_t op);
-void adc_bcd(uint8_t op);
-void sbc(uint8_t op);
-void sbc_binary(uint8_t op);
-void sbc_bcd(uint8_t op);
-void branch(int8_t offset);
-void cmp(uint8_t op1, uint8_t op2);
-uint8_t ror(uint8_t op);
-uint8_t rol(uint8_t op);
-

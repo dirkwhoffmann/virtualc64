@@ -69,13 +69,13 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->cpu->getPC();
 }
-- (void) setPC:(uint16_t)pc
+- (void) setPC:(uint16_t)addr
 {
-    wrapper->cpu->setPC_at_cycle_0(pc);
+    wrapper->cpu->jumpToAddress(addr);
 }
 - (void) setSP:(uint8_t)sp
 {
-    wrapper->cpu->SP = sp;
+    wrapper->cpu->regSP = sp;
 }
 - (void) setA:(uint8_t)a
 {

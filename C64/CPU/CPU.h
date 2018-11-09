@@ -23,12 +23,17 @@
 #define _CPU_INC
 
 #include "CPU_types.h"
+#include "CPUInstructions.h"
 #include "TimeDelayed.h"
 #include "Memory.h"
 
 /*! @class  The virtual 6502 / 6510 processor
  */
 class CPU : public VirtualComponent {
+    
+    //
+    // Types
+    //
     
     public:
     
@@ -51,10 +56,17 @@ class CPU : public VirtualComponent {
         INTSRC_VIA2 = 0x08,
         INTSRC_EXPANSION = 0x10,
         INTSRC_KEYBOARD = 0x20
-    } InterruptSource;
+    } IntSource;
+    
+    //
+    // Members
+    //
     
     private:
     
+    //! @brief    Reference to the connected virtual memory
+    Memory *mem;
+
     /*! @brief    Selected model
      *  @details  Right now, this atrribute is only used to distinguish the
      *            C64 CPU (MOS6510) from the VC1541 CPU (MOS6502). Hardware
@@ -62,18 +74,51 @@ class CPU : public VirtualComponent {
      */
     CPUModel model;
     
-    //! @brief    Reference to the connected virtual memory
-	Memory *mem;
-    
     public:
     
     //! @brief    Elapsed C64 clock cycles since power up
     uint64_t cycle;
     
+    //! @brief    Current error state
+    ErrorState errorState;
+    
+    private:
+
+    //! @brief    Next microinstruction to be executed
+    /*! @see      executeOneCycle()
+     */
+    MicroInstruction next;
+    
+    
+    //
+    // Lookup tables
+    //
+    
+    //! @brief    Mapping from opcodes to microinstructions
+    /*! @details  The mapped microinstruction is the first microinstruction to
+     *            be executed after the fetch phase (second microcycle).
+     */
+    MicroInstruction actionFunc[256];
+    
+    /*! @brief    Textual representation for each opcode
+     *  @note     Used by the disassembler, only.
+     */
+    const char *mnemonic[256];
+    
+    /*! @brief    Adressing mode of each opcode
+     *  @note     Used by the disassembler, only.
+     */
+    AddressingMode addressingMode[256];
+    
+    //! @brief    Breakpoint tag for each memory cell
+    uint8_t breakpoint[65536];
+
     
     //
     // Internal registers
     //
+    
+    public:
     
 	//! @brief    Accumulator
 	uint8_t regA;
@@ -84,46 +129,45 @@ class CPU : public VirtualComponent {
 	//! @brief    Y register
 	uint8_t regY;
     
-    //! @brief    Stack pointer
-    uint8_t SP;
-
     //! @brief    Program counter
-	uint16_t PC;
-    
+    uint16_t regPC;
+
+    //! @brief    Stack pointer
+    uint8_t regSP;
+
     private:
     
     /*! @brief     Processor status register (flags)
      *  @details   7 6 5 4 3 2 1 0
      *             N O - B D I Z C
      */
-    uint8_t P;
+    uint8_t regP;
     
-	//! @brief    Address buffer (low byte)
-	uint8_t abl;
+	//! @brief    Address data (low byte)
+	uint8_t regADL;
     
-	//! @brief    ddress buffer (high byte)
-	uint8_t abh;
+	//! @brief    Address data (high byte)
+	uint8_t regADH;
     
-	//! @brief    Input data latch (used in indirect addressing modes)
-	uint8_t dl;
+	//! @brief    Input data latch (indirect addressing modes)
+	uint8_t regIDL;
     
-    //! @brief    Data bus buffer
-    uint8_t data;
-        
-    /*! @brief    Memory location of the currently executed command
-     *  @details  This value is assigned the value of PC when the CPU executes
-     *            the fetch phase of a command. Function getPC() returns this
-     *            value instead of the real value of PC. This ensures that
-     *            calling getPC() always returns the start address of the
-     *            currently executed command, even if the command has already
-     *            been partially computed.
-     */
-    uint16_t frozenPC;
+    //! @brief    Data buffer
+    uint8_t regD;
     
 	/*! @brief    Address overflow indicater
-	 *  @details  Used to indicate whether the page boundary has been crossed 
+	 *  @details  Indicates when the page boundary has been crossed.
      */
 	bool overflow;
+    
+    /*! @brief    Memory location of the currently executed command.
+     *  @details  This variable is overwritten with the current value of the
+     *            program counter (regPC) when the CPU executes the fetch phase
+     *            of an instruction. Hence, this value always contains the start
+     *            address of the currently executed command, even if some
+     *            microcycles of the command have already been computed.
+     */
+    uint16_t pc;
     
   
     //
@@ -219,34 +263,71 @@ class CPU : public VirtualComponent {
      */
     bool doIrq;
     
-	//! @brief    Current error state
-	ErrorState errorState;
+    //
+    // Trace buffer
+    //
     
-	//! @brief    Breakpoint tag for each memory cell
-	uint8_t breakpoint[65536];
-	
-#include "CPUInstructions.h"
-		
-public:
+    //! @brief  Trace buffer size
+    static const unsigned traceBufferSize = 1024;
+    
+    //! @brief  Ring buffer for storing the CPU state
+    RecordedInstruction traceBuffer[traceBufferSize];
+    
+    //! @brief  Trace buffer read pointer
+    unsigned readPtr;
+    
+    //! @brief  Trace buffer write pointer
+    unsigned writePtr;
 
+    
     //
     //! @functiongroup Constructing and destructing
     //
-    
+
+    public:
+
     //! @brief    Constructor
     CPU(CPUModel model, Memory *mem);
 
 	//! @brief    Destructor
 	~CPU();
 
-	//! @brief    Methods from VirtualComponent
+    private:
+    
+    //! @brief    Registers a single opcode
+    /*! @details  Initializes all lookup table entries for this opcode.
+     */
+    void registerCallback(uint8_t opcode, const char *mnemonic,
+                          AddressingMode mode, MicroInstruction mInstr);
+    
+    //! @brief    Registers the complete instruction set.
+    void registerInstructions();
+    
+    //! @brief    Registers the legal instruction set, only.
+    void registerLegalInstructions();
+    
+    //! @brief    Registers the illegal instructions set, only.
+    void registerIllegalInstructions();
+    
+    
+    //
+	//! @functiongroup Methods from VirtualComponent
+    //
+    
+    public:
+
 	void reset();
 	void dump();	
     size_t stateSize();
     void loadFromBuffer(uint8_t **buffer);
     void saveToBuffer(uint8_t **buffer);
     
-    //! @brief    Gathers debug information.
+    
+    //
+    //! @functiongroup Gathering debug information
+    //
+    
+    //! @brief    Returns the internal state.
     CPUInfo getInfo();
     
     
@@ -255,39 +336,66 @@ public:
     //
 
 	/*! @brief    Returns the frozen program counter.
-     *  @return   Start address of the currently executed command.
-     *  @note     If execution is not in microcycle 0 (fetch phase) and the
-     *            currently executed command spans over multiple bytes in
-     *            memory, the PC may have been incremented already.
+     *  @note     This function returns variable pc that always points to the
+     *            beginning of the currently executed command. If execution is
+     *            not in microcycle 0 (fetch phase) and the currently executed
+     *            command spans over multiple bytes in memory, the program
+     *            counter (regPC) may already have been incremented.
      */
-    uint16_t getPC() { return frozenPC; }
+    uint16_t getPC() { return pc; }
     
+    //! @brief    Redirects the CPU to a new instruction in memory.
+    void jumpToAddress(uint16_t addr) { pc = regPC = addr; next = fetch; }
+
 	//! @brief    Returns N_FLAG, if Negative flag is set, 0 otherwise.
-    uint8_t getN() { return P & N_FLAG; }
+    uint8_t getN() { return regP & N_FLAG; }
+    
+    //! @brief    0: Negative-flag is cleared, any other value: flag is set.
+    void setN(uint8_t bit) { bit ? regP |= N_FLAG : regP &= ~N_FLAG; }
     
 	//! @brief    Returns V_FLAG, if Overflow flag is set, 0 otherwise.
-    uint8_t getV() { return P & V_FLAG; }
+    uint8_t getV() { return regP & V_FLAG; }
     
+    //! @brief    0: Overflow-flag is cleared, any other value: flag is set.
+    void setV(uint8_t bit) { bit ? regP |= V_FLAG : regP &= ~V_FLAG; }
+
 	//! @brief    Returns B_FLAG, if Break flag is set, 0 otherwise.
-    uint8_t getB() { return P & B_FLAG; }
+    uint8_t getB() { return regP & B_FLAG; }
+    
+    //! @brief    0: Break-flag is cleared, any other value: flag is set.
+    void setB(uint8_t bit) { bit ? regP |= B_FLAG : regP &= ~B_FLAG; }
     
 	//! @brief    Returns D_FLAG, if Decimal flag is set, 0 otherwise.
-    uint8_t getD() { return P & D_FLAG; }
+    uint8_t getD() { return regP & D_FLAG; }
     
+    //! @brief    0: Decimal-flag is cleared, any other value: flag is set.
+    void setD(uint8_t bit) { bit ? regP |= D_FLAG : regP &= ~D_FLAG; }
+
 	//! @brief    Returns I_FLAG, if Interrupt flag is set, 0 otherwise.
-    uint8_t getI() { return P & I_FLAG; }
+    uint8_t getI() { return regP & I_FLAG; }
+    
+    //! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
+    void setI(uint8_t bit) { bit ? regP |= I_FLAG : regP &= ~I_FLAG; }
     
 	//! @brief    Returns Z_FLAG, if Zero flag is set, 0 otherwise.
-    uint8_t getZ() { return P & Z_FLAG; }
+    uint8_t getZ() { return regP & Z_FLAG; }
+    
+    //! @brief    0: Zero-flag is cleared, any other value: flag is set.
+    void setZ(uint8_t bit) { bit ? regP |= Z_FLAG : regP &= ~Z_FLAG; }
     
 	//! @brief    Returns C_FLAG, if Carry flag is set, 0 otherwise.
-    uint8_t getC() { return P & C_FLAG; }
+    uint8_t getC() { return regP & C_FLAG; }
+    
+    //! @brief    0: Carry-flag is cleared, any other value: flag is set.
+    void setC(uint8_t bit) { bit ? regP |= C_FLAG : regP &= ~C_FLAG; }
+
+    private:
     
 	/*! @brief    Returns the contents of the status register
 	 *  @details  Each bit in the status register corresponds to the value of
      *            a single flag, except bit 5 which is always set.
      */
-    uint8_t getP() { return P | 0b00100000; }
+    uint8_t getP() { return regP | 0b00100000; }
 
 	/*! @brief    Returns the status register without the B flag
 	 *  @details  The bit position of the B flag is always 0. This function is
@@ -297,55 +405,31 @@ public:
      */
     uint8_t getPWithClearedB() { return getP() & 0b11101111; }
     
-	//! @brief    Writes value to the freezend program counter.
-    void setPC_at_cycle_0(uint16_t pc) { frozenPC = PC = pc; next = fetch;}
+    //! @brief    Writes a value to the status register.
+    void setP(uint8_t p) { regP = p; }
+    
+    //! @brief    Writes a value to the status register without overwriting B.
+    void setPWithoutB(uint8_t p) { regP = (p & 0b11101111) | (regP & 0b00010000); }
     
 	//! @brief    Changes low byte of the program counter only.
-    void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
+    void setPCL(uint8_t lo) { regPC = (regPC & 0xff00) | lo; }
     
 	//! @brief    Changes high byte of the program counter only.
-    void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
+    void setPCH(uint8_t hi) { regPC = (regPC & 0x00ff) | ((uint16_t)hi << 8); }
     
 	//! @brief    Increments the program counter by the specified amount.
-    void incPC(uint8_t offset = 1) { PC += offset; }
+    void incPC(uint8_t offset = 1) { regPC += offset; }
     
 	/*! @brief    Increments the program counter's low byte.
      *  @note     The high byte does not change.
      */
-    void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(PC) + offset); }
+    void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(regPC) + offset); }
     
 	/*! @brief    Increments the program counter's high byte.
      *  @note     The low byte does not change.
      */
-    void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
+    void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(regPC) + offset); }
 	
-	//! @brief    0: Negative-flag is cleared, any other value: flag is set.
-    void setN(uint8_t bit) { bit ? P |= N_FLAG : P &= ~N_FLAG; }
-    
-	//! @brief    0: Overflow-flag is cleared, any other value: flag is set.
-    void setV(uint8_t bit) { bit ? P |= V_FLAG : P &= ~V_FLAG; }
-    
-	//! @brief    0: Break-flag is cleared, any other value: flag is set.
-    void setB(uint8_t bit) { bit ? P |= B_FLAG : P &= ~B_FLAG; }
-    
-	//! @brief    0: Decimal-flag is cleared, any other value: flag is set.
-    void setD(uint8_t bit) { bit ? P |= D_FLAG : P &= ~D_FLAG; }
-    
-	//! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
-    void setI(uint8_t bit) { bit ? P |= I_FLAG : P &= ~I_FLAG; }
-    
-	//! @brief    0: Zero-flag is cleared, any other value: flag is set.
-    void setZ(uint8_t bit) { bit ? P |= Z_FLAG : P &= ~Z_FLAG; }
-    
-	//! @brief    0: Carry-flag is cleared, any other value: flag is set.
-    void setC(uint8_t bit) { bit ? P |= C_FLAG : P &= ~C_FLAG; }
-    
-	//! @brief    Writes a value to the status register.
-    void setP(uint8_t p) { P = p; }
-    
-    //! @brief    Writes a value to the status register without overwriting B.
-    void setPWithoutB(uint8_t p) { P = (p & 0b11101111) | (P & 0b00010000); }
-
 	//! @brief    Loads the accumulator. The Z- and N-flag may change.
     void loadA(uint8_t a) { regA = a; setN(a & 0x80); setZ(a == 0); }
 
@@ -360,25 +444,27 @@ public:
     //! @functiongroup Handling interrupts
     //
     
-    /*! @brief    Pulls down the NMI line
+    public:
+    
+    /*! @brief    Pulls down the NMI line.
      *  @details  Pulling down the NMI line requests the CPU to interrupt.
      */
-    void pullDownNmiLine(InterruptSource source);
+    void pullDownNmiLine(IntSource source);
     
-    /*! @brief    Releases the NMI line
+    /*! @brief    Releases the NMI line.
      *  @note     Other sources might still hold the line down.
      */
-    void releaseNmiLine(InterruptSource source);
+    void releaseNmiLine(IntSource source);
     
-    /*! @brief    Pulls down the IRQ line
+    /*! @brief    Pulls down the IRQ line.
      *  @details  Pulling down the IRQ line requests the CPU to interrupt.
      */
-    void pullDownIrqLine(InterruptSource source);
+    void pullDownIrqLine(IntSource source);
     
-    /*! @brief    Releases the IRQ line
+    /*! @brief    Releases the IRQ line.
      *  @note     Other sources might still hold the line down.
      */
-    void releaseIrqLine(InterruptSource source);
+    void releaseIrqLine(IntSource source);
     
 	//! @brief    Sets the RDY line.
     void setRDY(bool value);
@@ -409,13 +495,13 @@ public:
      *  @result   Integer value between 1 and 3.
      */
     unsigned getLengthOfCurrentInstruction() {
-        return getLengthOfInstructionAtAddress(frozenPC); }
+        return getLengthOfInstructionAtAddress(pc); }
     
 	/*! @brief    Returns the address of the next instruction to execute.
      *  @result   Integer value between 1 and 3.
      */
     uint16_t getAddressOfNextInstruction() {
-        return frozenPC + getLengthOfCurrentInstruction(); }
+        return pc + getLengthOfCurrentInstruction(); }
     
 	/*! @brief    Returns true if the next microcycle is the fetch cycle.
      *  @details  The fetch cycle is the first microinstruction of each command.
@@ -444,6 +530,22 @@ public:
     
     
     //
+    //! @functiongroup Performing ALU operations
+    //
+    
+    void adc(uint8_t op);
+    void adc_binary(uint8_t op);
+    void adc_bcd(uint8_t op);
+    void sbc(uint8_t op);
+    void sbc_binary(uint8_t op);
+    void sbc_bcd(uint8_t op);
+    void branch(int8_t offset);
+    void cmp(uint8_t op1, uint8_t op2);
+    uint8_t ror(uint8_t op);
+    uint8_t rol(uint8_t op);
+    
+    
+    //
     //! @functiongroup Handling breakpoints
     //
     
@@ -454,7 +556,7 @@ public:
     void setHardBreakpoint(uint16_t addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
 	
 	//! @brief    Deletes a hard breakpoint at the provided address.
-	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= (0XFF - HARD_BREAKPOINT); }
+	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= ~HARD_BREAKPOINT; }
 	
 	//! @brief    Sets or deletes a hard breakpoint at the provided address.
 	void toggleHardBreakpoint(uint16_t addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
@@ -466,7 +568,7 @@ public:
 	void setSoftBreakpoint(uint16_t addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
     
 	//! @brief    Deletes a soft breakpoint at the specified address.
-	void deleteSoftBreakpoint(uint16_t addr) { breakpoint[addr] &= (0xFF - SOFT_BREAKPOINT); }
+	void deleteSoftBreakpoint(uint16_t addr) { breakpoint[addr] &= ~SOFT_BREAKPOINT; }
     
 	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
@@ -475,18 +577,6 @@ public:
     //
     //! @functiongroup Tracing the program execution
     //
-
-    //! @brief  Trace buffer size
-    static const unsigned traceBufferSize = 1024;
-    
-    //! @brief  Ring buffer for storing the CPU state
-    RecordedInstruction traceBuffer[traceBufferSize];
-    
-    //! @brief  Trace buffer read pointer
-    unsigned readPtr;
-
-    //! @brief  Trace buffer write pointer
-    unsigned writePtr;
     
     //! @brief  Clears the trace buffer.
     void clearTraceBuffer() { readPtr = writePtr = 0; }
@@ -520,7 +610,7 @@ public:
     DisassembledInstruction disassemble(uint16_t addr, bool hex);
     
     //! @brief    Disassembles the current instruction.
-    DisassembledInstruction disassemble(bool hex) { return disassemble(frozenPC, hex); }
+    DisassembledInstruction disassemble(bool hex) { return disassemble(pc, hex); }
 
 };
 

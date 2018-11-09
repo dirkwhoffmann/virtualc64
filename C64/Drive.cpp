@@ -81,7 +81,7 @@ VC1541::reset()
 {
     VirtualComponent::reset();
     
-    cpu.PC = 0xEAA0;
+    cpu.regPC = 0xEAA0;
     halftrack = 41;
 }
 

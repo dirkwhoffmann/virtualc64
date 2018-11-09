@@ -21,7 +21,6 @@
 
 #include "C64.h"
 
-// CPU::CPU()
 CPU::CPU(CPUModel model, Memory *mem)
 {
     this->model = model;
@@ -49,19 +48,21 @@ CPU::CPU(CPUModel model, Memory *mem)
 
          // Internal state
         { &cycle,              sizeof(cycle),        CLEAR_ON_RESET },
+        { &errorState,         sizeof(errorState),   CLEAR_ON_RESET },
+        { &next,               sizeof(next),         CLEAR_ON_RESET },
+
         { &regA,               sizeof(regA),         CLEAR_ON_RESET },
         { &regX,               sizeof(regX),         CLEAR_ON_RESET },
         { &regY,               sizeof(regY),         CLEAR_ON_RESET },
-        { &PC,                 sizeof(PC),           CLEAR_ON_RESET },
-        { &SP,                 sizeof(SP),           CLEAR_ON_RESET },
-        { &P,                  sizeof(P),            CLEAR_ON_RESET },
-        { &next,               sizeof(next),         CLEAR_ON_RESET },
-        { &abl,                sizeof(abl),          CLEAR_ON_RESET },
-        { &abh,                sizeof(abh),          CLEAR_ON_RESET },
-        { &dl,                 sizeof(dl),           CLEAR_ON_RESET },
-        { &frozenPC,           sizeof(frozenPC),     CLEAR_ON_RESET },
+        { &regPC,              sizeof(regPC),        CLEAR_ON_RESET },
+        { &regSP,              sizeof(regSP),        CLEAR_ON_RESET },
+        { &regP,               sizeof(regP),         CLEAR_ON_RESET },
+        { &regADL,             sizeof(regADL),       CLEAR_ON_RESET },
+        { &regADH,             sizeof(regADH),       CLEAR_ON_RESET },
+        { &regIDL,             sizeof(regIDL),       CLEAR_ON_RESET },
+        { &regD,               sizeof(regD),         CLEAR_ON_RESET },
         { &overflow,           sizeof(overflow),     CLEAR_ON_RESET },
-        { &data,               sizeof(data),         CLEAR_ON_RESET },
+        { &pc,                 sizeof(pc),           CLEAR_ON_RESET },
         { &rdyLine,            sizeof(rdyLine),      CLEAR_ON_RESET },
         { &rdyLineUp,          sizeof(rdyLineUp),    CLEAR_ON_RESET },
         { &rdyLineDown,        sizeof(rdyLineDown),  CLEAR_ON_RESET },
@@ -69,7 +70,6 @@ CPU::CPU(CPUModel model, Memory *mem)
         { &irqLine,            sizeof(irqLine),      CLEAR_ON_RESET },
         { &doNmi,              sizeof(doNmi),        CLEAR_ON_RESET },
         { &doIrq,              sizeof(doIrq),        CLEAR_ON_RESET },
-        { &errorState,         sizeof(errorState),   CLEAR_ON_RESET },
         { NULL,                0,                    0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -152,11 +152,11 @@ CPU::getInfo()
     CPUInfo info;
     
     info.cycle = cycle;
-    info.pc = frozenPC;
+    info.pc = pc;
     info.a = regA;
     info.x = regX;
     info.y = regY;
-    info.sp = SP;
+    info.sp = regSP;
     info.nFlag = getN();
     info.vFlag = getV();
     info.bFlag = getB();
@@ -169,7 +169,7 @@ CPU::getInfo()
 }
 
 void
-CPU::pullDownNmiLine(InterruptSource bit)
+CPU::pullDownNmiLine(IntSource bit)
 {
     assert(bit != 0);
     
@@ -182,13 +182,13 @@ CPU::pullDownNmiLine(InterruptSource bit)
 }
 
 void
-CPU::releaseNmiLine(InterruptSource source)
+CPU::releaseNmiLine(IntSource source)
 {
     nmiLine &= ~source;
 }
 
 void
-CPU::pullDownIrqLine(InterruptSource source)
+CPU::pullDownIrqLine(IntSource source)
 {
 	assert(source != 0);
     
@@ -197,7 +197,7 @@ CPU::pullDownIrqLine(InterruptSource source)
 }
 
 void
-CPU::releaseIrqLine(InterruptSource source)
+CPU::releaseIrqLine(IntSource source)
 {
     irqLine &= ~source;
     levelDetector.write(irqLine);
@@ -222,19 +222,19 @@ CPU::setRDY(bool value)
 const char 
 *CPU::getMnemonic(uint8_t opcode)
 {
-	return mnemonic[opcode];
+    return mnemonic[opcode];
 }
 
 AddressingMode
 CPU::getAddressingMode(uint8_t opcode)
 {
-	return addressingMode[opcode];
+    return addressingMode[opcode];
 }
 
 unsigned
 CPU::getLengthOfInstruction(uint8_t opcode)
 {
-	switch(addressingMode[opcode]) {
+    switch(addressingMode[opcode]) {
 		case ADDR_IMPLIED:			
 		case ADDR_ACCUMULATOR:
 			return 1;
@@ -293,18 +293,18 @@ void
 CPU::recordInstruction()
 {
     RecordedInstruction i;
-    uint8_t opcode = mem->spypeek(frozenPC);
+    uint8_t opcode = mem->spypeek(pc);
     unsigned length = getLengthOfInstruction(opcode);
     
     i.cycle = cycle;
-    i.pc = frozenPC;
+    i.pc = pc;
     i.byte1 = opcode;
     i.byte2 = length > 1 ? mem->spypeek(i.pc + 1) : 0;
     i.byte3 = length > 2 ? mem->spypeek(i.pc + 2) : 0;
     i.a = regA;
     i.x = regX;
     i.y = regY;
-    i.sp = SP;
+    i.sp = regSP;
     i.flags = getP();
     
     assert(writePtr < traceBufferSize);
@@ -489,7 +489,7 @@ CPU::disassemble(uint16_t addr, bool hex)
     instr.a = regA;
     instr.x = regX;
     instr.y = regY;
-    instr.sp = SP;
+    instr.sp = regSP;
     instr.flags = getP();
     
     return disassemble(instr, hex);

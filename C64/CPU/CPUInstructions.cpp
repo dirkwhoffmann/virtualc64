@@ -471,7 +471,7 @@ CPU::executeOneCycle()
             }
             */
             
-            frozenPC = PC;
+            pc = regPC;
             
             // Check interrupt lines
             if (unlikely(doNmi)) {
@@ -524,10 +524,10 @@ CPU::executeOneCycle()
             
             
             // Check breakpoint tag
-            if (unlikely(breakpoint[frozenPC] != NO_BREAKPOINT)) {
-                if (breakpoint[frozenPC] & SOFT_BREAKPOINT) {
+            if (unlikely(breakpoint[pc] != NO_BREAKPOINT)) {
+                if (breakpoint[pc] & SOFT_BREAKPOINT) {
                     // Soft breakpoints get deleted when reached
-                    breakpoint[frozenPC] &= ~SOFT_BREAKPOINT;
+                    breakpoint[pc] &= ~SOFT_BREAKPOINT;
                     setErrorState(CPU_SOFT_BREAKPOINT_REACHED);
                 } else {
                     setErrorState(CPU_HARD_BREAKPOINT_REACHED);
@@ -581,20 +581,20 @@ CPU::executeOneCycle()
             
         case irq_5:
             
-            mem->poke(0x100+(SP--), getPWithClearedB());
+            mem->poke(0x100+(regSP--), getPWithClearedB());
             CONTINUE
             
         case irq_6:
             
             READ_FROM(0xFFFE)
-            setPCL(data);
+            setPCL(regD);
             setI(1);
             CONTINUE
             
         case irq_7:
             
             READ_FROM(0xFFFF)
-            setPCH(data);
+            setPCH(regD);
             DONE
             
         //
@@ -618,20 +618,20 @@ CPU::executeOneCycle()
             
         case nmi_5:
             
-            mem->poke(0x100+(SP--), getPWithClearedB());
+            mem->poke(0x100+(regSP--), getPWithClearedB());
             CONTINUE
             
         case nmi_6:
             
             READ_FROM(0xFFFA)
-            setPCL(data);
+            setPCL(regD);
             setI(1);
             CONTINUE
             
         case nmi_7:
 
             READ_FROM(0xFFFB)
-            setPCH(data);
+            setPCH(regD);
             DONE
 
         //
@@ -921,11 +921,11 @@ CPU::executeOneCycle()
         case BNE_rel_2: case BPL_rel_2: case BVC_rel_2: case BVS_rel_2:
         {
             IDLE_READ_IMPLIED
-            uint8_t pc_hi = HI_BYTE(PC);
-            PC += (int8_t)data;
+            uint8_t pc_hi = HI_BYTE(regPC);
+            regPC += (int8_t)regD;
             
-            if (unlikely(pc_hi != HI_BYTE(PC))) {
-                next = (data & 0x80) ? branch_3_underflow : branch_3_overflow;
+            if (unlikely(pc_hi != HI_BYTE(regPC))) {
+                next = (regD & 0x80) ? branch_3_underflow : branch_3_overflow;
                 return true;
             }
             DONE
@@ -933,13 +933,13 @@ CPU::executeOneCycle()
             
         case branch_3_underflow:
             
-            IDLE_READ_FROM(PC + 0x100)
+            IDLE_READ_FROM(regPC + 0x100)
             POLL_INT_AGAIN
             DONE
             
         case branch_3_overflow:
             
-            IDLE_READ_FROM(PC - 0x100)
+            IDLE_READ_FROM(regPC - 0x100)
             POLL_INT_AGAIN
             DONE
             
@@ -954,7 +954,7 @@ CPU::executeOneCycle()
         case ADC_imm:
 
             READ_IMMEDIATE
-            adc(data);
+            adc(regD);
             POLL_INT
             DONE
 
@@ -962,7 +962,7 @@ CPU::executeOneCycle()
         case ADC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            adc(data);
+            adc(regD);
             POLL_INT
             DONE
 
@@ -975,7 +975,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                adc(data);
+                adc(regD);
                 POLL_INT
                 DONE
             }
@@ -987,7 +987,7 @@ CPU::executeOneCycle()
         case ADC_ind_y_5:
             
             READ_FROM_ADDRESS
-            adc(data);
+            adc(regD);
             POLL_INT
             DONE
             
@@ -1002,7 +1002,7 @@ CPU::executeOneCycle()
         case AND_imm:
             
             READ_IMMEDIATE
-            loadA(regA & data);
+            loadA(regA & regD);
             POLL_INT
             DONE
 
@@ -1010,7 +1010,7 @@ CPU::executeOneCycle()
         case AND_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            loadA(regA & data);
+            loadA(regA & regD);
             POLL_INT
             DONE
             
@@ -1023,7 +1023,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                loadA(regA & data);
+                loadA(regA & regD);
                 POLL_INT
                 DONE
             }
@@ -1035,7 +1035,7 @@ CPU::executeOneCycle()
         case AND_ind_y_5:
             
             READ_FROM_ADDRESS
-            loadA(regA & data);
+            loadA(regA & regD);
             POLL_INT
             DONE
             
@@ -1048,7 +1048,7 @@ CPU::executeOneCycle()
         //              / / / - - -
     
         #define DO_ASL_ACC setC(regA & 0x80); loadA(regA << 1);
-        #define DO_ASL setC(data & 0x80); data = data << 1;
+        #define DO_ASL setC(regD & 0x80); regD = regD << 1;
 
         case ASL_acc:
             
@@ -1155,18 +1155,18 @@ CPU::executeOneCycle()
         case BIT_zpg_2:
             
             READ_FROM_ZERO_PAGE
-            setN(data & 128);
-            setV(data & 64);
-            setZ((data & regA) == 0);
+            setN(regD & 128);
+            setV(regD & 64);
+            setZ((regD & regA) == 0);
             POLL_INT
             DONE
 
         case BIT_abs_3:
             
             READ_FROM_ADDRESS
-            setN(data & 128);
-            setV(data & 64);
-            setZ((data & regA) == 0);
+            setN(regD & 128);
+            setV(regD & 64);
+            setZ((regD & regA) == 0);
             POLL_INT
             DONE
 
@@ -1266,14 +1266,14 @@ CPU::executeOneCycle()
         case BRK_5:
             
             READ_FROM(0xFFFE);
-            setPCL(data);
+            setPCL(regD);
             setI(1);
             CONTINUE
             
         case BRK_6:
             
             READ_FROM(0xFFFF);
-            setPCH(data);
+            setPCH(regD);
             POLL_INT
             doNmi = false; // Only the level detector is polled here. This is
                            // the reason why only IRQs can be triggered right
@@ -1288,14 +1288,14 @@ CPU::executeOneCycle()
         case BRK_nmi_5:
             
             READ_FROM(0xFFFA);
-            setPCL(data);
+            setPCL(regD);
             setI(1);
             CONTINUE
             
         case BRK_nmi_6:
             
             READ_FROM(0xFFFB);
-            setPCH(data);
+            setPCH(regD);
             POLL_INT
             DONE
 
@@ -1408,7 +1408,7 @@ CPU::executeOneCycle()
         case CMP_imm:
             
             READ_IMMEDIATE
-            cmp(regA, data);
+            cmp(regA, regD);
             POLL_INT
             DONE
 
@@ -1416,7 +1416,7 @@ CPU::executeOneCycle()
         case CMP_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            cmp(regA, data);
+            cmp(regA, regD);
             POLL_INT
             DONE
 
@@ -1429,7 +1429,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                cmp(regA, data);
+                cmp(regA, regD);
                 POLL_INT
                 DONE
             }
@@ -1441,7 +1441,7 @@ CPU::executeOneCycle()
         case CMP_ind_y_5:
             
             READ_FROM_ADDRESS
-            cmp(regA, data);
+            cmp(regA, regD);
             POLL_INT
             DONE
 
@@ -1456,21 +1456,21 @@ CPU::executeOneCycle()
         case CPX_imm:
             
             READ_IMMEDIATE
-            cmp(regX, data);
+            cmp(regX, regD);
             POLL_INT
             DONE
             
         case CPX_zpg_2:
             
             READ_FROM_ZERO_PAGE
-            cmp(regX, data);
+            cmp(regX, regD);
             POLL_INT
             DONE
             
         case CPX_abs_3:
             
             READ_FROM_ADDRESS
-            cmp(regX, data);
+            cmp(regX, regD);
             POLL_INT
             DONE
 
@@ -1485,21 +1485,21 @@ CPU::executeOneCycle()
         case CPY_imm:
             
             READ_IMMEDIATE
-            cmp(regY, data);
+            cmp(regY, regD);
             POLL_INT
             DONE
 
         case CPY_zpg_2:
             
             READ_FROM_ZERO_PAGE
-            cmp(regY, data);
+            cmp(regY, regD);
             POLL_INT
             DONE
 
         case CPY_abs_3:
             
             READ_FROM_ADDRESS
-            cmp(regY, data);
+            cmp(regY, regD);
             POLL_INT
             DONE
 
@@ -1511,7 +1511,7 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / - - - -
             
-        #define DO_DEC data--;
+        #define DO_DEC regD--;
             
         case DEC_zpg_3:
         case DEC_zpg_x_4:
@@ -1581,7 +1581,7 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / - - - -
 
-        #define DO_EOR loadA(regA ^ data);
+        #define DO_EOR loadA(regA ^ regD);
             
         case EOR_imm:
             
@@ -1631,7 +1631,7 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / - - - -
             
-        #define DO_INC data++;
+        #define DO_INC regD++;
             
         case INC_zpg_3:
         case INC_zpg_x_4:
@@ -1709,7 +1709,7 @@ CPU::executeOneCycle()
         case JMP_abs_2:
             
             FETCH_ADDR_HI
-            PC = LO_HI(abl, abh);
+            regPC = LO_HI(regADL, regADH);
             POLL_INT
             DONE
 
@@ -1726,14 +1726,14 @@ CPU::executeOneCycle()
         case JMP_abs_ind_3:
             
             READ_FROM_ADDRESS
-            setPCL(data);
-            abl++;
+            setPCL(regD);
+            regADL++;
             CONTINUE
             
         case JMP_abs_ind_4:
             
             READ_FROM_ADDRESS
-            setPCH(data);
+            setPCH(regD);
             POLL_INT
             DONE
 
@@ -1768,7 +1768,7 @@ CPU::executeOneCycle()
         case JSR_5:
             
             FETCH_ADDR_HI
-            PC = LO_HI(abl, abh);
+            regPC = LO_HI(regADL, regADH);
             POLL_INT
             DONE
 
@@ -1783,7 +1783,7 @@ CPU::executeOneCycle()
         case LDA_imm:
             
             READ_IMMEDIATE
-            loadA(data);
+            loadA(regD);
             POLL_INT
             DONE
 
@@ -1791,7 +1791,7 @@ CPU::executeOneCycle()
         case LDA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            loadA(data);
+            loadA(regD);
             POLL_INT
             DONE
           
@@ -1804,7 +1804,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                loadA(data);
+                loadA(regD);
                 POLL_INT
                 DONE
             }
@@ -1816,7 +1816,7 @@ CPU::executeOneCycle()
         case LDA_ind_y_5:
             
             READ_FROM_ADDRESS
-            loadA(data);
+            loadA(regD);
             POLL_INT
             DONE
 
@@ -1831,7 +1831,7 @@ CPU::executeOneCycle()
         case LDX_imm:
             
             READ_IMMEDIATE
-            loadX(data);
+            loadX(regD);
             POLL_INT
             DONE
 
@@ -1839,7 +1839,7 @@ CPU::executeOneCycle()
         case LDX_zpg_y_3:
             
             READ_FROM_ZERO_PAGE
-            loadX(data);
+            loadX(regD);
             POLL_INT
             DONE
 
@@ -1851,7 +1851,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                loadX(data);
+                loadX(regD);
                 POLL_INT
                 DONE
             }
@@ -1862,7 +1862,7 @@ CPU::executeOneCycle()
         case LDX_ind_y_5:
             
             READ_FROM_ADDRESS
-            loadX(data);
+            loadX(regD);
             POLL_INT
             DONE
             
@@ -1877,7 +1877,7 @@ CPU::executeOneCycle()
         case LDY_imm:
             
             READ_IMMEDIATE
-            loadY(data);
+            loadY(regD);
             POLL_INT
             DONE
             
@@ -1885,7 +1885,7 @@ CPU::executeOneCycle()
         case LDY_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            loadY(data);
+            loadY(regD);
             POLL_INT
             DONE
 
@@ -1897,7 +1897,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                loadY(data);
+                loadY(regD);
                 POLL_INT
                 DONE
             }
@@ -1908,7 +1908,7 @@ CPU::executeOneCycle()
         case LDY_ind_y_5:
             
             READ_FROM_ADDRESS
-            loadY(data);
+            loadY(regD);
             POLL_INT
             DONE
             
@@ -1931,7 +1931,7 @@ CPU::executeOneCycle()
         case LSR_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            setC(data & 1); data = data >> 1;
+            setC(regD & 1); regD = regD >> 1;
             CONTINUE
             
         case LSR_zpg_4:
@@ -1948,7 +1948,7 @@ CPU::executeOneCycle()
         case LSR_ind_y_6:
             
             WRITE_TO_ADDRESS
-            setC(data & 1); data = data >> 1;
+            setC(regD & 1); regD = regD >> 1;
             CONTINUE
             
         case LSR_abs_5:
@@ -2017,7 +2017,7 @@ CPU::executeOneCycle()
         case ORA_imm:
             
             READ_IMMEDIATE
-            loadA(regA | data);
+            loadA(regA | regD);
             POLL_INT
             DONE
             
@@ -2025,7 +2025,7 @@ CPU::executeOneCycle()
         case ORA_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            loadA(regA | data);
+            loadA(regA | regD);
             POLL_INT
             DONE
 
@@ -2038,7 +2038,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                loadA(regA | data);
+                loadA(regA | regD);
                 POLL_INT
                 DONE
             }
@@ -2050,7 +2050,7 @@ CPU::executeOneCycle()
         case ORA_ind_y_5:
             
             READ_FROM_ADDRESS
-            loadA(regA | data);
+            loadA(regA | regD);
             POLL_INT
             DONE
             
@@ -2092,7 +2092,7 @@ CPU::executeOneCycle()
             
         case PLA_2:
             
-            SP++;
+            regSP++;
             CONTINUE
             
         case PLA_3:
@@ -2112,7 +2112,7 @@ CPU::executeOneCycle()
         case PLP_2:
 
             IDLE_PULL
-            SP++;
+            regSP++;
             CONTINUE
             
         case PLP_3:
@@ -2132,7 +2132,7 @@ CPU::executeOneCycle()
         //              / / / - - -
          
         #define DO_ROL_ACC { int c = !!getC(); setC(regA & 0x80); loadA((regA << 1) | c); }
-        #define DO_ROL { int c = !!getC(); setC(data & 0x80); data = (data << 1) | c; }
+        #define DO_ROL { int c = !!getC(); setC(regD & 0x80); regD = (regD << 1) | c; }
 
         case ROL_acc:
             
@@ -2182,7 +2182,7 @@ CPU::executeOneCycle()
         //              / / / - - -
     
         #define DO_ROR_ACC { int c = !!getC(); setC(regA & 0x1); loadA((regA >> 1) | (c << 7)); }
-        #define DO_ROR { int c = !!getC(); setC(data & 0x1); data = (data >> 1) | (c << 7); }
+        #define DO_ROR { int c = !!getC(); setC(regD & 0x1); regD = (regD >> 1) | (c << 7); }
             
         case ROR_acc:
             
@@ -2232,19 +2232,19 @@ CPU::executeOneCycle()
         case RTI_2:
             
             IDLE_PULL
-            SP++;
+            regSP++;
             CONTINUE
             
         case RTI_3:
             
             PULL_P
-            SP++;
+            regSP++;
             CONTINUE
             
         case RTI_4:
             
             PULL_PCL
-            SP++;
+            regSP++;
             CONTINUE
             
         case RTI_5:
@@ -2264,13 +2264,13 @@ CPU::executeOneCycle()
         case RTS_2:
             
             IDLE_PULL
-            SP++;
+            regSP++;
             CONTINUE
             
         case RTS_3:
             
             PULL_PCL
-            SP++;
+            regSP++;
             CONTINUE
             
         case RTS_4:
@@ -2295,7 +2295,7 @@ CPU::executeOneCycle()
         case SBC_imm:
             
             READ_IMMEDIATE
-            sbc(data);
+            sbc(regD);
             POLL_INT
             DONE
             
@@ -2303,7 +2303,7 @@ CPU::executeOneCycle()
         case SBC_zpg_x_3:
             
             READ_FROM_ZERO_PAGE
-            sbc(data);
+            sbc(regD);
             POLL_INT
             DONE
             
@@ -2316,7 +2316,7 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                sbc(data);
+                sbc(regD);
                 POLL_INT
                 DONE
             }
@@ -2328,7 +2328,7 @@ CPU::executeOneCycle()
         case SBC_ind_y_5:
             
             READ_FROM_ADDRESS
-            sbc(data);
+            sbc(regD);
             POLL_INT
             DONE
 
@@ -2393,7 +2393,7 @@ CPU::executeOneCycle()
         case STA_zpg_2:
         case STA_zpg_x_3:
             
-            data = regA;
+            regD = regA;
             WRITE_TO_ZERO_PAGE
             POLL_INT
             DONE
@@ -2401,7 +2401,7 @@ CPU::executeOneCycle()
         case STA_abs_3:
         case STA_abs_x_4:
             
-            data = regA;
+            regD = regA;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -2410,7 +2410,7 @@ CPU::executeOneCycle()
         case STA_ind_x_5:
         case STA_ind_y_5:
             
-            data = regA;
+            regD = regA;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -2426,14 +2426,14 @@ CPU::executeOneCycle()
         case STX_zpg_2:
         case STX_zpg_y_3:
             
-            data = regX;
+            regD = regX;
             WRITE_TO_ZERO_PAGE
             POLL_INT
             DONE
             
         case STX_abs_3:
             
-            data = regX;
+            regD = regX;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -2449,14 +2449,14 @@ CPU::executeOneCycle()
         case STY_zpg_2:
         case STY_zpg_x_3:
             
-            data = regY;
+            regD = regY;
             WRITE_TO_ZERO_PAGE
             POLL_INT
             DONE
             
         case STY_abs_3:
             
-            data = regY;
+            regD = regY;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -2502,7 +2502,7 @@ CPU::executeOneCycle()
         case TSX:
             
             IDLE_READ_IMPLIED
-            loadX(SP);
+            loadX(regSP);
             POLL_INT
             DONE
 
@@ -2532,7 +2532,7 @@ CPU::executeOneCycle()
         case TXS:
             
             IDLE_READ_IMPLIED
-            SP = regX;
+            regSP = regX;
             POLL_INT
             DONE
 
@@ -2567,7 +2567,7 @@ CPU::executeOneCycle()
         case ALR_imm:
             
             READ_IMMEDIATE
-            regA = regA & data;
+            regA = regA & regD;
             setC(regA & 1);
             loadA(regA >> 1);
             POLL_INT
@@ -2584,7 +2584,7 @@ CPU::executeOneCycle()
         case ANC_imm:
             
             READ_IMMEDIATE
-            loadA(regA & data);
+            loadA(regA & regD);
             setC(getN());
             POLL_INT
             DONE
@@ -2601,7 +2601,7 @@ CPU::executeOneCycle()
         {
             READ_IMMEDIATE
             
-            uint8_t tmp2 = regA & data;
+            uint8_t tmp2 = regA & regD;
             
             // Taken from Frodo...
             regA = (getC() ? (tmp2 >> 1) | 0x80 : tmp2 >> 1);
@@ -2643,9 +2643,9 @@ CPU::executeOneCycle()
             READ_IMMEDIATE
             
             uint8_t op2  = regA & regX;
-            uint8_t tmp = op2 - data;
+            uint8_t tmp = op2 - regD;
             
-            setC(op2 >= data);
+            setC(op2 >= regD);
             loadX(tmp);
             POLL_INT
             DONE
@@ -2663,14 +2663,14 @@ CPU::executeOneCycle()
         case DCP_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            data--;
+            regD--;
             CONTINUE
             
         case DCP_zpg_4:
         case DCP_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            cmp(regA, data);
+            cmp(regA, regD);
             POLL_INT
             DONE
             
@@ -2681,7 +2681,7 @@ CPU::executeOneCycle()
         case DCP_ind_y_6:
             
             WRITE_TO_ADDRESS
-            data--;
+            regD--;
             CONTINUE
             
         case DCP_abs_5:
@@ -2691,7 +2691,7 @@ CPU::executeOneCycle()
         case DCP_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            cmp(regA, data);
+            cmp(regA, regD);
             POLL_INT
             DONE
        
@@ -2707,14 +2707,14 @@ CPU::executeOneCycle()
         case ISC_zpg_x_4:
             
             WRITE_TO_ZERO_PAGE
-            data++;
+            regD++;
             CONTINUE
             
         case ISC_zpg_4:
         case ISC_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
-            sbc(data);
+            sbc(regD);
             POLL_INT
             DONE
 
@@ -2725,7 +2725,7 @@ CPU::executeOneCycle()
         case ISC_ind_y_6:
             
             WRITE_TO_ADDRESS
-            data++;
+            regD++;
             CONTINUE
             
         case ISC_abs_5:
@@ -2735,7 +2735,7 @@ CPU::executeOneCycle()
         case ISC_ind_y_7:
             
             WRITE_TO_ADDRESS_AND_SET_FLAGS
-            sbc(data);
+            sbc(regD);
             POLL_INT
             DONE
 
@@ -2754,10 +2754,10 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                data &= SP;
-                SP = data;
-                regX = data;
-                loadA(data);
+                regD &= regSP;
+                regSP = regD;
+                regX = regD;
+                loadA(regD);
                 POLL_INT
                 DONE
             }
@@ -2765,10 +2765,10 @@ CPU::executeOneCycle()
         case LAS_abs_y_4:
             
             READ_FROM_ADDRESS
-            data &= SP;
-            SP = data;
-            regX = data;
-            loadA(data);
+            regD &= regSP;
+            regSP = regD;
+            regX = regD;
+            loadA(regD);
             POLL_INT
             DONE
 
@@ -2784,8 +2784,8 @@ CPU::executeOneCycle()
         case LAX_zpg_y_3:
             
             READ_FROM_ZERO_PAGE
-            loadA(data);
-            loadX(data);
+            loadA(regD);
+            loadX(regD);
             POLL_INT
             DONE
             
@@ -2797,8 +2797,8 @@ CPU::executeOneCycle()
                 FIX_ADDR_HI
                 CONTINUE
             } else {
-                loadA(data);
-                loadX(data);
+                loadA(regD);
+                loadX(regD);
                 POLL_INT
                 DONE
             }
@@ -2809,8 +2809,8 @@ CPU::executeOneCycle()
         case LAX_ind_y_5:
             
             READ_FROM_ADDRESS;
-            loadA(data);
-            loadX(data);
+            loadA(regD);
+            loadX(regD);
             POLL_INT
             DONE
           
@@ -2833,7 +2833,7 @@ CPU::executeOneCycle()
         case RLA_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
-            loadA(regA & data);
+            loadA(regA & regD);
             POLL_INT
             DONE
             
@@ -2854,7 +2854,7 @@ CPU::executeOneCycle()
         case RLA_ind_y_7:
             
             WRITE_TO_ADDRESS
-            loadA(regA & data);
+            loadA(regA & regD);
             POLL_INT
             DONE
 
@@ -2876,7 +2876,7 @@ CPU::executeOneCycle()
         case RRA_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
-            adc(data);
+            adc(regD);
             POLL_INT
             DONE
 
@@ -2897,7 +2897,7 @@ CPU::executeOneCycle()
         case RRA_ind_y_7:
             
             WRITE_TO_ADDRESS
-            adc(data);
+            adc(regD);
             POLL_INT
             DONE
         
@@ -2912,7 +2912,7 @@ CPU::executeOneCycle()
         case SAX_zpg_2:
         case SAX_zpg_y_3:
             
-            data = regA & regX;
+            regD = regA & regX;
             WRITE_TO_ZERO_PAGE
             POLL_INT
             DONE
@@ -2920,7 +2920,7 @@ CPU::executeOneCycle()
         case SAX_abs_3:
         case SAX_ind_x_5:
             
-            data = regA & regX;
+            regD = regA & regX;
             WRITE_TO_ADDRESS
             POLL_INT
             DONE
@@ -2942,7 +2942,7 @@ CPU::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            data = regA & regX & (rdyLineUp == cycle ? 0xFF : abh + 1);
+            regD = regA & regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -2951,7 +2951,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                abh = regA & regX & abh;
+                regADH = regA & regX & regADH;
             }
             
             CONTINUE
@@ -2971,7 +2971,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = regA & regX & (rdyLineUp == cycle ? 0xFF : abh + 1);
+            regD = regA & regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -2980,7 +2980,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                abh = regA & regX & abh;
+                regADH = regA & regX & regADH;
             }
 
             CONTINUE
@@ -3008,7 +3008,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = regX & (rdyLineUp == cycle ? 0xFF : abh + 1);
+            regD = regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3017,7 +3017,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                abh = regX & abh;
+                regADH = regX & regADH;
             }
             
             CONTINUE
@@ -3045,7 +3045,7 @@ CPU::executeOneCycle()
              *  drops off."
              */
             
-            data = regY & (rdyLineUp == cycle ? 0xFF : abh + 1);
+            regD = regY & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3054,7 +3054,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                abh = regY & abh;
+                regADH = regY & regADH;
             }
 
             CONTINUE
@@ -3073,7 +3073,7 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
 
-        #define DO_SLO setC(data & 128); data <<= 1;
+        #define DO_SLO setC(regD & 128); regD <<= 1;
 
         case SLO_zpg_3:
         case SLO_zpg_x_4:
@@ -3086,7 +3086,7 @@ CPU::executeOneCycle()
         case SLO_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
-            loadA(regA | data);
+            loadA(regA | regD);
             POLL_INT
             DONE
             
@@ -3107,7 +3107,7 @@ CPU::executeOneCycle()
         case SLO_ind_y_7:
             
             WRITE_TO_ADDRESS
-            loadA(regA | data);
+            loadA(regA | regD);
             POLL_INT
             DONE
             
@@ -3119,7 +3119,7 @@ CPU::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
 
-        #define DO_SRE setC(data & 1); data >>= 1;
+        #define DO_SRE setC(regD & 1); regD >>= 1;
 
         case SRE_zpg_3:
         case SRE_zpg_x_4:
@@ -3132,7 +3132,7 @@ CPU::executeOneCycle()
         case SRE_zpg_x_5:
             
             WRITE_TO_ZERO_PAGE
-            loadA(regA ^ data);
+            loadA(regA ^ regD);
             POLL_INT
             DONE
             
@@ -3153,7 +3153,7 @@ CPU::executeOneCycle()
         case SRE_ind_y_7:
             
             WRITE_TO_ADDRESS
-            loadA(regA ^ data);
+            loadA(regA ^ regD);
             POLL_INT
             DONE
 
@@ -3169,14 +3169,14 @@ CPU::executeOneCycle()
             
             IDLE_READ_FROM_ADDRESS
             
-            SP = regA & regX;
+            regSP = regA & regX;
             
             /* "There are two unstable conditions, the first is when a DMA is going on while
              *  the instruction executes (the CPU is halted by the VIC-II) then the & M+1 part
              *  drops off."
              */
             
-            data = regA & regX & (rdyLineUp == cycle ? 0xFF : abh + 1);
+            regD = regA & regX & (rdyLineUp == cycle ? 0xFF : regADH + 1);
             
             /* "The other unstable condition is when the addressing/indexing causes a page
              *  boundary crossing, in that case the highbyte of the target address may
@@ -3185,7 +3185,7 @@ CPU::executeOneCycle()
             
             if (PAGE_BOUNDARY_CROSSED) {
                 FIX_ADDR_HI;
-                abh = regA & regX & abh;
+                regADH = regA & regX & regADH;
             }
 
             CONTINUE
@@ -3206,7 +3206,7 @@ CPU::executeOneCycle()
         case ANE_imm:
             
             READ_IMMEDIATE
-            loadA(regX & data & (regA | 0xEE));
+            loadA(regX & regD & (regA | 0xEE));
             POLL_INT
             DONE
 
@@ -3221,7 +3221,7 @@ CPU::executeOneCycle()
         case LXA_imm:
             
             READ_IMMEDIATE
-            regX = data & (regA | 0xEE);
+            regX = regD & (regA | 0xEE);
             loadA(regX);
             POLL_INT
             DONE
