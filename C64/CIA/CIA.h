@@ -109,7 +109,7 @@ private:
 	uint16_t latchB;
 	
 	//! @brief    Time of day clock
-	TOD tod;
+	TOD tod = TOD(this);
     
 	
 	// 

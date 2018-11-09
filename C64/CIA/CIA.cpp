@@ -63,7 +63,6 @@ CIA::CIA()
         { NULL,              0,                        0 }};
 
     registerSnapshotItems(items, sizeof(items));
-    tod.cia = this;
     
     chipModel = MOS_6526_OLD;
     emulateTimerBBug = true;
