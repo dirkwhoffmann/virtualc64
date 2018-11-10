@@ -48,12 +48,14 @@ class ActionReplay : public Cartridge {
      */
     void setControlReg(uint8_t value);
     
-    unsigned bank() { return (regValue >> 3) & 0x03; }
-    bool game() { return !(regValue & 0x01); }
-    bool exrom() { return (regValue >> 1) & 0x01; }
-    bool disabled() { return regValue & 0x04; }
-    bool ramIsEnabled() { return regValue & 0x20; }
-    bool resetFreezeMode() { return regValue & 0x40; }
+    virtual unsigned bank() { return (regValue >> 3) & 0x03; }
+    virtual bool game() { return !(regValue & 0x01); }
+    virtual bool exrom() { return (regValue >> 1) & 0x01; }
+    virtual bool disabled() { return regValue & 0x04; }
+    virtual bool resetFreezeMode() { return regValue & 0x40; }
+    
+    //! @brief  Returns true if the cartridge RAM shows up at addr
+    virtual bool ramIsEnabled(uint16_t addr); 
 };
 
 //! @brief    Type 35 cartridges

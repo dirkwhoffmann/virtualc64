@@ -131,7 +131,7 @@ ActionReplay::peekRomL(uint16_t addr)
 uint8_t
 ActionReplay::peek(uint16_t addr)
 {
-    if (ramIsEnabled() && addr >= 0x8000 && addr <= 0x9FFF) {
+    if (ramIsEnabled(addr)) {
         return externalRam[addr & 0x1FFF];
     }
     return Cartridge::peek(addr);
@@ -140,7 +140,7 @@ ActionReplay::peek(uint16_t addr)
 void
 ActionReplay::poke(uint16_t addr, uint8_t value)
 {
-    if (ramIsEnabled() && addr >= 0x8000 && addr <= 0x9FFF) {
+    if (ramIsEnabled(addr)) {
         externalRam[addr & 0x1FFF] = value;
     }
 }
@@ -158,7 +158,7 @@ ActionReplay::peekIO2(uint16_t addr)
     assert(offset <= 0xFF);
     
     // I/O space 2 mirrors $1F00 to $1FFF from the selected bank or RAM.
-    if (ramIsEnabled()) {
+    if (ramIsEnabled(addr)) {
         return externalRam[0x1F00 + offset];
     } else {
         return packet[chipL]->peek(0x1F00 + offset);
@@ -175,7 +175,9 @@ ActionReplay::pokeIO1(uint16_t addr, uint8_t value)
 void
 ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 {
-    if (ramIsEnabled()) {
+    assert(addr >= 0xDF00 && addr <= 0xDFFF);
+    
+    if (ramIsEnabled(addr)) {
         externalRam[0x1F00 + (addr & 0xFF)] = value;
     }
 }
@@ -227,3 +229,19 @@ ActionReplay::setControlReg(uint8_t value)
         c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
     }
 }
+
+bool
+ActionReplay::ramIsEnabled(uint16_t addr)
+{
+    if (regValue & 0x20) {
+        
+        if (addr >= 0xDF00 && addr <= 0xDFFF) { // I/O space 2
+            return true;
+        }
+        if (addr >= 0x8000 && addr <= 0x9FFF) { // ROML
+            return true;
+        }
+    }
+    return false;
+}
+
