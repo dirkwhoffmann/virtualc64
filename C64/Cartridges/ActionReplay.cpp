@@ -154,10 +154,10 @@ ActionReplay::peekIO1(uint16_t addr)
 uint8_t
 ActionReplay::peekIO2(uint16_t addr)
 {
-    uint16_t offset = addr - 0xDF00;
-    assert(offset <= 0xFF);
+    assert(addr >= 0xDF00 && addr <= 0xDFFF);
+    uint16_t offset = addr & 0xFF;
     
-    // I/O space 2 mirrors $1F00 to $1FFF from the selected bank or RAM.
+    // I/O space 2 mirrors $1F00 to $1FFF from the selected ROM bank or RAM.
     if (ramIsEnabled(addr)) {
         return externalRam[0x1F00 + offset];
     } else {
@@ -176,9 +176,10 @@ void
 ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
+    uint16_t offset = addr & 0xFF;
     
     if (ramIsEnabled(addr)) {
-        externalRam[0x1F00 + (addr & 0xFF)] = value;
+        externalRam[0x1F00 + offset] = value;
     }
 }
 
@@ -242,6 +243,42 @@ ActionReplay::ramIsEnabled(uint16_t addr)
             return true;
         }
     }
+    return false;
+}
+
+
+//
+// Atomic Power 
+//
+
+bool
+AtomicPower::game()
+{
+    return specialMapping() ? 0 : (regValue & 0x01) == 0;
+}
+
+bool
+AtomicPower::exrom()
+{
+    return specialMapping() ? 0 : (regValue & 0x02) != 0;
+}
+
+bool
+AtomicPower::ramIsEnabled(uint16_t addr)
+{
+    if (regValue & 0x20) {
+        
+        if (addr >= 0xDF00 && addr <= 0xDFFF) { // I/O space 2
+            return true;
+        }
+        
+        if (specialMapping()) {
+            return addr >= 0xA000 && addr <= 0xBFFF; // ROMH (16K game mode)
+        } else {
+            return addr >= 0x8000 && addr <= 0x9FFF; // ROML
+        }
+    }
+ 
     return false;
 }
 

@@ -24,41 +24,10 @@
 
 #include "Cartridge.h"
 
-//! @brief    Type 1 cartridges
-class ActionReplay : public Cartridge {
-    
-    public:
-    ActionReplay(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
-    void reset();
-    // uint8_t peekRomL(uint16_t addr);
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    bool hasResetButton() { return true; }
-    
-    //! @brief   Sets the cartridge's control register
-    /*! @details This function triggers all side effects that take place when
-     *           the control register value changes.
-     */
-    void setControlReg(uint8_t value);
-    
-    virtual unsigned bank() { return (regValue >> 3) & 0x03; }
-    virtual bool game() { return !(regValue & 0x01); }
-    virtual bool exrom() { return (regValue >> 1) & 0x01; }
-    virtual bool disabled() { return regValue & 0x04; }
-    virtual bool resetFreezeMode() { return regValue & 0x40; }
-    
-    //! @brief  Returns true if the cartridge RAM shows up at addr
-    virtual bool ramIsEnabled(uint16_t addr); 
-};
+//
+// Action Replay (hardware version 3)
+//
 
-//! @brief    Type 35 cartridges
 class ActionReplay3 : public Cartridge {
     
     public:
@@ -85,5 +54,74 @@ class ActionReplay3 : public Cartridge {
     bool exrom() { return !(regValue & 0x08); }
     bool disabled() { return !!(regValue & 0x04); }
 };
+
+
+//
+// Action Replay (hardware version 4 and above)
+//
+
+class ActionReplay : public Cartridge {
+    
+    public:
+    ActionReplay(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
+    void reset();
+    uint8_t peek(uint16_t addr);
+    uint8_t peekIO1(uint16_t addr);
+    uint8_t peekIO2(uint16_t addr);
+    void poke(uint16_t addr, uint8_t value);
+    void pokeIO1(uint16_t addr, uint8_t value);
+    void pokeIO2(uint16_t addr, uint8_t value);
+    bool hasFreezeButton() { return true; }
+    void pressFreezeButton();
+    bool hasResetButton() { return true; }
+    
+    //! @brief   Sets the cartridge's control register
+    /*! @details This function triggers all side effects that take place when
+     *           the control register value changes.
+     */
+    void setControlReg(uint8_t value);
+    
+    virtual unsigned bank() { return (regValue >> 3) & 0x03; }
+    virtual bool game() { return (regValue & 0x01) == 0; }
+    virtual bool exrom() { return (regValue & 0x02) != 0; }
+    virtual bool disabled() { return (regValue & 0x04) != 0; }
+    virtual bool resetFreezeMode() { return (regValue & 0x40) != 0; }
+    
+    //! @brief  Returns true if the cartridge RAM shows up at addr
+    virtual bool ramIsEnabled(uint16_t addr); 
+};
+
+
+//
+// Atomic Power (a modern derivation of the Action Replay cartridge)
+//
+
+class AtomicPower : public ActionReplay {
+    
+    public:
+    AtomicPower(C64 *c64);
+    CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
+    
+    /*! @brief    Indicates if special ROM / RAM config has to be used.
+     * @details   In contrast to the Action Replay cartridge, Atomic Power
+     *            has the ability to map the on-board RAM to the ROMH area
+     *            at $A000 - $BFFF. To enable this special configuration, the
+     *            control register has to be configured as follows:
+     *            Bit 0b10000000 (Extra ROM)    is 0.
+     *            Bit 0b01000000 (Freeze clear) is 0.
+     *            Bit 0b00100000 (RAM enable)   is 1.
+     *            Bit 0b00000100 (Disable)      is 0.
+     *            Bit 0b00000010 (Exrom)        is 1.
+     *            Bit 0b00000001 (Game)         is 0.
+     */
+    bool specialMapping() { return (regValue & 0xb11100111) == 0xb00100010; }
+    
+    virtual bool game();
+    virtual bool exrom();
+    virtual bool ramIsEnabled(uint16_t addr);
+};
+
+
 
 #endif
