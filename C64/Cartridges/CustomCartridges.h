@@ -23,40 +23,9 @@
 #define _CUSTOM_CARTRIDGES_INC
 
 #include "Cartridge.h"
+#include "ActionReplay.h"
 #include "EasyFlash.h"
 #include "FinalIII.h"
-
-//! @brief    Type 1 cartridges
-class ActionReplay : public Cartridge {
-    
-public:
-    ActionReplay(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
-    void reset();
-    uint8_t peekRomL(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void poke(uint16_t addr, uint8_t value);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    void pokeIO2(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    bool hasResetButton() { return true; }
-
-    //! @brief   Sets the cartridge's control register
-    /*! @details This function triggers all side effects that take place when
-     *           the control register value changes.
-     */
-    void setControlReg(uint8_t value);
-    
-    unsigned bank() { return (regValue >> 3) & 0x03; }
-    bool game() { return !(regValue & 0x01); }
-    bool exrom() { return (regValue >> 1) & 0x01; }
-    bool disabled() { return regValue & 0x04; }
-    bool ramIsEnabled() { return regValue & 0x20; }
-    bool resetFreezeMode() { return regValue & 0x40; }
-};
-
 
 //! @brief    Type 2 cartridges
 class KcsPower : public Cartridge {
@@ -221,34 +190,6 @@ public:
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);
     void pokeIO1(uint16_t addr, uint8_t value);
-};
-
-//! @brief    Type 35 cartridges
-class ActionReplay3 : public Cartridge {
-    
-public:
-    using Cartridge::Cartridge;
-    // ActionReplay3(C64 *c64);
-    CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
-    uint8_t peek(uint16_t addr);
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO1(uint16_t addr, uint8_t value);
-    bool hasFreezeButton() { return true; }
-    void pressFreezeButton();
-    void releaseFreezeButton();
-    bool hasResetButton() { return true; }
-    
-    //! @brief   Sets the cartridge's control register
-    /*! @details This function triggers all side effects that take place when
-     *           the control register value changes.
-     */
-    void setControlReg(uint8_t value);
-    
-    unsigned bank() { return regValue & 0x01; }
-    bool game() { return !!(regValue & 0x02); }
-    bool exrom() { return !(regValue & 0x08); }
-    bool disabled() { return !!(regValue & 0x04); }
 };
 
 //! @brief    Type 45 cartridges

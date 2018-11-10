@@ -148,6 +148,7 @@
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.swift */; };
+		50F1752D2196C8820004E853 /* ActionReplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F1752B2196C8820004E853 /* ActionReplay.cpp */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
 		50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
@@ -413,6 +414,8 @@
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
+		50F1752B2196C8820004E853 /* ActionReplay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActionReplay.cpp; sourceTree = "<group>"; };
+		50F1752C2196C8820004E853 /* ActionReplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionReplay.h; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
@@ -552,13 +555,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5000473C12DCEC060098D890 /* Computer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Computer;
-			sourceTree = "<group>";
-		};
 		5000473F12DCEC9B0098D890 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -667,7 +663,6 @@
 				5006087A21256D6800C7C6C5 /* VICII */,
 				5062EE1320A4AD0400F77BA4 /* SID */,
 				50F1752A2196C6B70004E853 /* Computer */,
-				5000473C12DCEC060098D890 /* Computer */,
 				504B39910C45192700286F18 /* Peripherals */,
 				50F175272196C53B0004E853 /* FileTypes */,
 			);
@@ -884,6 +879,8 @@
 				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				50B5861C201C673900742DB3 /* CustomCartridges.h */,
 				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
+				50F1752C2196C8820004E853 /* ActionReplay.h */,
+				50F1752B2196C8820004E853 /* ActionReplay.cpp */,
 				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
 				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
 				503A424C2187A133003011D1 /* FinalIII.h */,
@@ -1220,6 +1217,7 @@
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				50F1752D2196C8820004E853 /* ActionReplay.cpp in Sources */,
 				5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */,
 				501DE30C20C9C41B00707130 /* sid.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,

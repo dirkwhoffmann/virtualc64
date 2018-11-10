@@ -391,6 +391,27 @@ Cartridge::peekRomH(uint16_t addr)
     return packet[chipH]->peek(addr + offsetH);
 }
 
+void
+Cartridge::poke(uint16_t addr, uint8_t value)
+{
+    assert(isROMLaddr(addr) || isROMHaddr(addr));
+    
+    uint16_t relAddr = addr & 0x1FFF;
+    
+    
+    if (isROMLaddr(addr) && relAddr < mappedBytesL) {
+        pokeRomL(relAddr, value);
+        return;
+    }
+    if (isROMHaddr(addr) && relAddr < mappedBytesH) {
+        pokeRomH(relAddr, value);
+        return;
+    }
+        
+    // Question: Is it correct to write to RAM if no ROM is mapped?
+     c64->mem.ram[addr] = value;
+}
+
 uint32_t
 Cartridge::getRamCapacity()
 {

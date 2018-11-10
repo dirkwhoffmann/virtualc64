@@ -185,25 +185,40 @@ public:
      */
     virtual void execute() { };
     
-    //! @brief    Peek fallthrough
-    /*! @param    addr must be a value in the ROML range (0x8000 - 0x9FFF) or
-     *            the ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
+    /*! @brief    Peek fallthrough
+     *  @param    addr must be a value in
+     *            ROML range (0x8000 - 0x9FFF) or
+     *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
      */
     virtual uint8_t peek(uint16_t addr);
 
-    //! @brief    Peek fallthrough for the ROML space
-    /*! @param    addr must be a value between 0x0000 - 0x1FFF.
+    /*! @brief    Peek fallthrough for the ROML space
+     *  @param    addr must be a value between 0x0000 - 0x1FFF.
      */
     virtual uint8_t peekRomL(uint16_t addr);
     
-    //! @brief    Peek fallthrough for the ROMH space
-    /*! @details  addr must be a value between 0x0000 - 0x1FFF.
+    /*! @brief    Peek fallthrough for the ROMH space
+     *  @details  addr must be a value between 0x0000 - 0x1FFF.
      */
     virtual uint8_t peekRomH(uint16_t addr);
     
-    //! @brief    Poke fallthrough
-    virtual void poke(uint16_t addr, uint8_t value) { return; }
+    /*! @brief    Poke fallthrough
+     *  @param    addr must be a value in
+     *            ROML range (0x8000 - 0x9FFF) or
+     *            ROMH range (0xA000 - 0xBFFF, 0xE000 - 0xFFFF).
+     */
+    virtual void poke(uint16_t addr, uint8_t value);
 
+    /*! @brief    Poke fallthrough for the ROML space
+     *  @param    addr must be a value between 0x0000 - 0x1FFF.
+     */
+    virtual void pokeRomL(uint16_t addr, uint8_t value) { return; }
+    
+    /*! @brief    Poke fallthrough for the ROMH space
+     *  @details  addr must be a value between 0x0000 - 0x1FFF.
+     */
+    virtual void pokeRomH(uint16_t addr, uint8_t value) { return; }
+    
     //! @brief    Same as peek, but without side effects.
     virtual uint8_t spypeek(uint16_t addr) { return peek(addr); }
     
