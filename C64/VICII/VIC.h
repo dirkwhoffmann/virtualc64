@@ -525,6 +525,13 @@ private:
     
 private:
     
+    /*! @brief    Indicates whether VICII is running in ultimax mode.
+     *  @details  Ultimax mode can be enabled by external cartridges by pulling
+     *            game line low and keeping exrom line high. In ultimax mode,
+     *            VICII has access to ROMH and some portions of RAM.
+     */
+    bool ultimax;
+    
     /*! @brief    Value on the data bus during the latest phi1 access
      *  @note     Only VICII performs a memory access during phi1.
      */
@@ -873,6 +880,12 @@ public:
     //! @brief    Peeks a value from a VIC register without side effects.
     uint8_t spypeek(uint16_t addr);
     
+    //! @brief    Returns the ultimax flag
+    uint8_t getUltimax() { return ultimax; }
+
+    //! @brief    Sets the ultimax flag
+    void setUltimax(bool value) { ultimax = value; }
+
     //! @brief    Returns the latest value of the VICII's data bus during phi1.
     uint8_t getDataBusPhi1() { return dataBusPhi1; }
 

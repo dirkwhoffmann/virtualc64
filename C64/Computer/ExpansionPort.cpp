@@ -221,6 +221,7 @@ void
 ExpansionPort::setGameLine(bool value)
 {
     gameLine = value;
+    c64->vic.setUltimax(!gameLine && exromLine);
     c64->mem.updatePeekPokeLookupTables();
 }
 
@@ -228,6 +229,7 @@ void
 ExpansionPort::setExromLine(bool value)
 {
     exromLine = value;
+    c64->vic.setUltimax(!gameLine && exromLine);
     c64->mem.updatePeekPokeLookupTables();
 }
 

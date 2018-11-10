@@ -638,7 +638,7 @@ VIC::memAccess(uint16_t addr)
     // 0x1000:   BLANK     CHAR
     // 0x0000:   RAM       RAM
     
-    if (c64->getUltimax()) {
+    if (getUltimax()) {
         
         switch (addrBus >> 12) {
             case 0xF:

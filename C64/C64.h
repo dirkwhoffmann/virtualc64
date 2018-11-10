@@ -244,8 +244,7 @@ class C64 : public VirtualComponent {
     /*! @brief    Indicates whether C64 is running in ultimax mode.
      *  @details  Ultimax mode can be enabled by external cartridges by pulling
      *            game line low and keeping exrom line high. In ultimax mode,
-     *            most of the C64's RAM and ROM is invisible. This flag is
-     *            frequently read by VIC to determine the correct peek source.
+     *            most of the C64's RAM and ROM is invisible.
      */
     bool ultimax;
     
