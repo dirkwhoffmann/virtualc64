@@ -108,6 +108,7 @@ Cartridge::isSupportedType(CartridgeType type)
             
         case CRT_FUNPLAY:
         case CRT_SUPER_GAMES:
+        case CRT_ATOMIC_POWER:
         case CRT_EPYX_FASTLOAD:
         case CRT_WESTERMANN:
         case CRT_REX:
@@ -136,52 +137,34 @@ Cartridge::isSupportedType(CartridgeType type)
 Cartridge *
 Cartridge::makeWithType(C64 *c64, CartridgeType type)
 {
-     assert(isSupportedType(type));
+    assert(isSupportedType(type));
     
     switch (type) {
-            
-        case CRT_NORMAL:
-            return new Cartridge(c64);
-        case CRT_ACTION_REPLAY:
-            return new ActionReplay(c64);
-        case CRT_KCS_POWER:
-            return new KcsPower(c64); 
-        case CRT_FINAL_III:
-            return new FinalIII(c64);
-        case CRT_SIMONS_BASIC:
-            return new SimonsBasic(c64);
-        case CRT_OCEAN:
-            return new Ocean(c64);
-        case CRT_FUNPLAY:
-            return new Funplay(c64);
-        case CRT_SUPER_GAMES:
-            return new Supergames(c64);
-        case CRT_EPYX_FASTLOAD:
-            return new EpyxFastLoad(c64);
-        case CRT_WESTERMANN:
-            return new Westermann(c64);
-        case CRT_REX:
-            return new Rex(c64);
-        case CRT_WARPSPEED:
-            return new WarpSpeed(c64);
-        case CRT_ZAXXON:
-            return new Zaxxon(c64);
-        case CRT_MAGIC_DESK:
-            return new MagicDesk(c64);
-        case CRT_COMAL80:
-            return new Comal80(c64);
-        case CRT_EASYFLASH:
-            return new EasyFlash(c64);
-        case CRT_ACTION_REPLAY3:
-            return new ActionReplay3(c64);
-        case CRT_FREEZE_FRAME:
-            return new FreezeFrame(c64);
-        case CRT_GEO_RAM:
-            return new GeoRAM(c64);
-            
+        
+        case CRT_NORMAL:         return new Cartridge(c64);
+        case CRT_ACTION_REPLAY:  return new ActionReplay(c64);
+        case CRT_KCS_POWER:      return new KcsPower(c64);
+        case CRT_FINAL_III:      return new FinalIII(c64);
+        case CRT_SIMONS_BASIC:   return new SimonsBasic(c64);
+        case CRT_OCEAN:          return new Ocean(c64);
+        case CRT_FUNPLAY:        return new Funplay(c64);
+        case CRT_SUPER_GAMES:    return new Supergames(c64);
+        case CRT_ATOMIC_POWER:   return new AtomicPower(c64);
+        case CRT_EPYX_FASTLOAD:  return new EpyxFastLoad(c64);
+        case CRT_WESTERMANN:     return new Westermann(c64);
+        case CRT_REX:            return new Rex(c64);
+        case CRT_WARPSPEED:      return new WarpSpeed(c64);
+        case CRT_ZAXXON:         return new Zaxxon(c64);
+        case CRT_MAGIC_DESK:     return new MagicDesk(c64);
+        case CRT_COMAL80:        return new Comal80(c64);
+        case CRT_EASYFLASH:      return new EasyFlash(c64);
+        case CRT_ACTION_REPLAY3: return new ActionReplay3(c64);
+        case CRT_FREEZE_FRAME:   return new FreezeFrame(c64);
+        case CRT_GEO_RAM:        return new GeoRAM(c64);
+        
         default:
-            assert(false); // should not reach
-            return NULL;
+        assert(false); // Should not reach
+        return NULL;
     }
 }
 
@@ -202,7 +185,10 @@ Cartridge::makeWithCRTFile(C64 *c64, CRTFile *file)
     for (unsigned i = 0; i < file->chipCount(); i++) {
         cart->loadChip(i, file);
     }
-        
+    
+    // Give the new cartridge the chance to perform some custom stuff
+    cart->concludeMake();
+    
     return cart;
 }
 

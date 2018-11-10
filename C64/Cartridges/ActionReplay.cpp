@@ -111,23 +111,22 @@ ActionReplay::ActionReplay(C64 *c64) : Cartridge(c64)
 }
 
 void
+ActionReplay::concludeMake()
+{
+    debug("Changing initial game/exrom configuration to 1/0 (8K game mode)\n");
+    
+    // Start in 8K game mode
+    initialGameLine = 1;
+    initialExromLine = 0;
+}
+
+void
 ActionReplay::reset()
 {
     Cartridge::reset();
-    setControlReg(0x040);
+    setControlReg(0);
 }
 
-/*
-uint8_t
-ActionReplay::peekRomL(uint16_t addr)
-{
-    if (ramIsEnabled()) {
-        return externalRam[addr];
-    } else {
-        return packet[chipL]->peek(addr);
-    }
-}
-*/
 uint8_t
 ActionReplay::peek(uint16_t addr)
 {
@@ -222,7 +221,7 @@ ActionReplay::setControlReg(uint8_t value)
     bankInROMH(bank(), 0x2000, 0);
     
     if (disabled()) {
-        debug(2, "***** DISABLING AR cart *****\n");
+        debug(2, "Action Replay cartridge disabled.\n");
     }
     
     if (resetFreezeMode() || disabled()) {
@@ -236,13 +235,13 @@ ActionReplay::ramIsEnabled(uint16_t addr)
 {
     if (regValue & 0x20) {
         
-        if (addr >= 0xDF00 && addr <= 0xDFFF) { // I/O space 2
+        if (addr >= 0xDF00 && addr <= 0xDFFF) { // RAM mirrored in IO2
             return true;
         }
-        if (addr >= 0x8000 && addr <= 0x9FFF) { // ROML
-            return true;
-        }
+        
+        return addr >= 0x8000 && addr <= 0x9FFF; // RAM mapped to ROML
     }
+    
     return false;
 }
 
@@ -254,13 +253,13 @@ ActionReplay::ramIsEnabled(uint16_t addr)
 bool
 AtomicPower::game()
 {
-    return specialMapping() ? 0 : (regValue & 0x01) == 0;
+    return specialMapping() ? 0 : ActionReplay::game();
 }
 
 bool
 AtomicPower::exrom()
 {
-    return specialMapping() ? 0 : (regValue & 0x02) != 0;
+    return specialMapping() ? 0 : ActionReplay::exrom();
 }
 
 bool
@@ -268,14 +267,13 @@ AtomicPower::ramIsEnabled(uint16_t addr)
 {
     if (regValue & 0x20) {
         
-        if (addr >= 0xDF00 && addr <= 0xDFFF) { // I/O space 2
+        if (addr >= 0xDF00 && addr <= 0xDFFF) { // RAM mirrored in IO2
             return true;
         }
-        
         if (specialMapping()) {
-            return addr >= 0xA000 && addr <= 0xBFFF; // ROMH (16K game mode)
+            return addr >= 0xA000 && addr <= 0xBFFF; // RAM mapped to ROMH
         } else {
-            return addr >= 0x8000 && addr <= 0x9FFF; // ROML
+            return addr >= 0x8000 && addr <= 0x9FFF; // RAM mapped to ROML
         }
     }
  

@@ -162,6 +162,15 @@ public:
      */
     static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
     
+    /*! @brief    Finalizes the make operation
+     *  @details  This function is called inside makeWithCRTFile() to give
+     *            the cartridge the chance to overwrite some default values.
+     *            E.g., some cartridge type need to use initial game and exrom
+     *            values that are different than the ones states inside the
+     *            CRT file.
+     */
+    virtual void concludeMake() { }
+    
     //! @brief    State size function for chip packet data
     virtual size_t packetStateSize();
     

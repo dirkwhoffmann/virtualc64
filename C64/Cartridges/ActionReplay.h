@@ -64,6 +64,7 @@ class ActionReplay : public Cartridge {
     
     public:
     ActionReplay(C64 *c64);
+    void concludeMake();
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
     void reset();
     uint8_t peek(uint16_t addr);
@@ -94,13 +95,13 @@ class ActionReplay : public Cartridge {
 
 
 //
-// Atomic Power (a modern derivation of the Action Replay cartridge)
+// Atomic Power (a derivation of the Action Replay cartridge)
 //
 
 class AtomicPower : public ActionReplay {
     
     public:
-    AtomicPower(C64 *c64);
+    AtomicPower(C64 *c64) : ActionReplay(c64) { };
     CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
     
     /*! @brief    Indicates if special ROM / RAM config has to be used.
@@ -115,11 +116,11 @@ class AtomicPower : public ActionReplay {
      *            Bit 0b00000010 (Exrom)        is 1.
      *            Bit 0b00000001 (Game)         is 0.
      */
-    bool specialMapping() { return (regValue & 0xb11100111) == 0xb00100010; }
+    bool specialMapping() { return (regValue & 0b11100111) == 0b00100010; }
     
-    virtual bool game();
-    virtual bool exrom();
-    virtual bool ramIsEnabled(uint16_t addr);
+    bool game();
+    bool exrom();
+    bool ramIsEnabled(uint16_t addr);
 };
 
 
