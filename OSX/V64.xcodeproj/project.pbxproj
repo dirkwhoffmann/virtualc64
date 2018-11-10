@@ -695,6 +695,7 @@
 				502107DA2133CF9F003D133D /* Configure.h */,
 				5000473E12DCEC7D0098D890 /* General */,
 				5000473C12DCEC060098D890 /* Computer */,
+				50F175232196C3B30004E853 /* Crt */,
 				504B39910C45192700286F18 /* Peripherals */,
 				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 			);
@@ -757,31 +758,11 @@
 			name = Debugger;
 			sourceTree = "<group>";
 		};
-		503C8BFA2014AC99000494A0 /* Cartridges */ = {
-			isa = PBXGroup;
-			children = (
-				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
-				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
-				5017B719218729DA0014EDE4 /* FlashRom.h */,
-				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
-				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
-				5054BF1020133BA2003D86D4 /* Cartridge.h */,
-				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
-				50B5861C201C673900742DB3 /* CustomCartridges.h */,
-				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
-				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
-				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
-				503A424C2187A133003011D1 /* FinalIII.h */,
-				503A424B2187A133003011D1 /* FinalIII.cpp */,
-			);
-			name = Cartridges;
-			sourceTree = "<group>";
-		};
 		504B39910C45192700286F18 /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
-				503C8BFA2014AC99000494A0 /* Cartridges */,
-				50FFF52420AB498000758683 /* Mouse */,
+				50F175252196C4760004E853 /* Mouse */,
+				50F175242196C4290004E853 /* Cartridges */,
 				501F845820D7851000917A97 /* Drive */,
 				50F681E91BEA3BE4008568E3 /* Datasette.h */,
 				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
@@ -968,17 +949,34 @@
 			path = fastsid;
 			sourceTree = "<group>";
 		};
-		50FE5B342039B392006CE7C7 /* Keyboard Controller */ = {
+		50F175232196C3B30004E853 /* Crt */ = {
 			isa = PBXGroup;
 			children = (
-				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
-				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
-				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 			);
-			name = "Keyboard Controller";
+			name = Crt;
 			sourceTree = "<group>";
 		};
-		50FFF52420AB498000758683 /* Mouse */ = {
+		50F175242196C4290004E853 /* Cartridges */ = {
+			isa = PBXGroup;
+			children = (
+				5017B71F21874B9A0014EDE4 /* CartridgeRom.h */,
+				5017B71E21874B9A0014EDE4 /* CartridgeRom.cpp */,
+				5017B719218729DA0014EDE4 /* FlashRom.h */,
+				5017B718218729DA0014EDE4 /* FlashRom.cpp */,
+				50171AA3208372CF00C07AAD /* Cartridge_types.h */,
+				5054BF1020133BA2003D86D4 /* Cartridge.h */,
+				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
+				50B5861C201C673900742DB3 /* CustomCartridges.h */,
+				50B5861B201C673900742DB3 /* CustomCartridges.cpp */,
+				5017B71C21873FD00014EDE4 /* EasyFlash.h */,
+				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
+				503A424C2187A133003011D1 /* FinalIII.h */,
+				503A424B2187A133003011D1 /* FinalIII.cpp */,
+			);
+			path = Cartridges;
+			sourceTree = "<group>";
+		};
+		50F175252196C4760004E853 /* Mouse */ = {
 			isa = PBXGroup;
 			children = (
 				50FFF52120AB495B00758683 /* Mouse.h */,
@@ -991,7 +989,17 @@
 				5058F0F120A77EDC008BFA92 /* NeosMouse.h */,
 				5058F0F020A77EDC008BFA92 /* NeosMouse.cpp */,
 			);
-			name = Mouse;
+			path = Mouse;
+			sourceTree = "<group>";
+		};
+		50FE5B342039B392006CE7C7 /* Keyboard Controller */ = {
+			isa = PBXGroup;
+			children = (
+				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
+				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
+				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+			);
+			name = "Keyboard Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
