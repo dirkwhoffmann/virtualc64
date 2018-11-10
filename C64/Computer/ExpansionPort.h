@@ -46,17 +46,27 @@ private:
     /*! @brief    Attached cartridge
      *  @details  NULL, if no cartridge is plugged in.
      */
-    Cartridge *cartridge;
+    Cartridge *cartridge = NULL;
     
-    /*! @brief    Current value of game line
+    /*! @brief    Current value of the Game line in phase phi1 (VICII access)
      *  @details  Equals 1, if no cartridge if attached.
      */
-    bool gameLine;
-    
-    /*! @brief    Current value of exrom line
+    bool gameLinePhi1 = 1;
+
+    /*! @brief    Current value of the Game line in phase phi2 (CPU access)
      *  @details  Equals 1, if no cartridge if attached.
      */
-    bool exromLine;
+    bool gameLinePhi2 = 1;
+    
+    /*! @brief    Current value of the Exrom line in phase phi1 (VICII access)
+     *  @details  Equals 1, if no cartridge if attached.
+     */
+    bool exromLinePhi1 = 1;
+
+    /*! @brief    Current value of the Exrom line in phase phi2 (CPU access)
+     *  @details  Equals 1, if no cartridge if attached.
+     */
+    bool exromLinePhi2 = 1;
     
 public:
     
@@ -119,21 +129,27 @@ public:
     //! @brief    Returns the cartridge type
     CartridgeType getCartridgeType();
     
-    //! @brief    Returns the state of the game line
-    bool getGameLine() { return gameLine; }
+    //! @brief    Returns the state of the Game line
+    bool getGameLinePhi1() { return gameLinePhi1; }
+    bool getGameLinePhi2() { return gameLinePhi2; }
+
+    /*! @brief    Sets the state of the Game line
+     *  @details  Value has an effect on the C64's peek sources and poke targets
+     */
+    void setGameLinePhi1(bool value);
+    void setGameLinePhi2(bool value);
+    void setGameLine(bool value) { setGameLinePhi1(value); setGameLinePhi2(value); }
     
-    /*! @brief    Sets the state of the game line
+    //! @brief    Returns the state of the Exrom line
+    bool getExromLinePhi1() { return exromLinePhi1; }
+    bool getExromLinePhi2() { return exromLinePhi2; }
+
+    /*! @brief    Sets the state of the Exrom line
      *  @details  Value has an effect on the C64's peek sources and poke targets
      */
-    void setGameLine(bool value);
-
-    //! @brief    Returns the state of the exrom line
-    bool getExromLine() { return exromLine; }
-
-    /*! @brief    Sets the state of the exrom line
-     *  @details  Value has an effect on the C64's peek sources and poke targets
-     */
-    void setExromLine(bool value);
+    void setExromLinePhi1(bool value);
+    void setExromLinePhi2(bool value);
+    void setExromLine(bool value) { setExromLinePhi1(value); setExromLinePhi2(value); }
     
     //! @brief    Returns true if a cartridge is attached to the expansion port
     bool getCartridgeAttached() { return cartridge != NULL; }

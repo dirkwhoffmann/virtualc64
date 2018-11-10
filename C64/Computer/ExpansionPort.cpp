@@ -22,10 +22,6 @@ ExpansionPort::ExpansionPort()
 {
     setDescription("Expansion port");
     debug(3, "  Creating expansion port at address %p...\n", this);
-
-    cartridge = NULL;
-    gameLine = 1;
-    exromLine = 1;
 }
 
 ExpansionPort::~ExpansionPort()
@@ -61,7 +57,7 @@ ExpansionPort::ping()
 size_t
 ExpansionPort::stateSize()
 {
-    return 4 + (cartridge ? cartridge->stateSize() : 0);
+    return 6 + (cartridge ? cartridge->stateSize() : 0);
 }
 
 void
@@ -77,8 +73,10 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     
     // Read cartridge type
     CartridgeType cartridgeType = (CartridgeType)read16(buffer);
-    exromLine = read8(buffer);
-    gameLine = read8(buffer);
+    gameLinePhi1 = read8(buffer);
+    gameLinePhi2 = read8(buffer);
+    exromLinePhi1 = read8(buffer);
+    exromLinePhi2 = read8(buffer);
     
     // Read cartridge data (if any)
     if (cartridgeType != CRT_NONE) {
@@ -96,9 +94,11 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     write16(buffer, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
-    write8(buffer, exromLine);
-    write8(buffer, gameLine);
-    
+    write8(buffer, gameLinePhi1);
+    write8(buffer, gameLinePhi2);
+    write8(buffer, exromLinePhi1);
+    write8(buffer, exromLinePhi2);
+
     // Write cartridge data (if any)
     if (cartridge != NULL)
         cartridge->saveToBuffer(buffer);
@@ -113,10 +113,9 @@ ExpansionPort::dump()
     msg("Expansion port\n");
     msg("--------------\n");
     
-    msg("Game line:  %d\n", gameLine);
-    msg("Exrom line: %d\n", exromLine);
+    msg(" Game line (phi1 / phi2):  %d / %d\n", gameLinePhi1, gameLinePhi2);
+    msg("Exrom line (phi1 / phi2):  %d / %d\n", exromLinePhi1, exromLinePhi2);
 
-    
     if (cartridge == NULL) {
         msg("No cartridge attached\n");
     } else {
@@ -218,18 +217,30 @@ ExpansionPort::pokeIO2(uint16_t addr, uint8_t value)
 }
 
 void
-ExpansionPort::setGameLine(bool value)
+ExpansionPort::setGameLinePhi1(bool value)
 {
-    gameLine = value;
-    c64->vic.setUltimax(!gameLine && exromLine);
+    gameLinePhi1 = value;
+    c64->vic.setUltimax(!gameLinePhi1 && exromLinePhi1);
+}
+
+void
+ExpansionPort::setGameLinePhi2(bool value)
+{
+    gameLinePhi2 = value;
     c64->mem.updatePeekPokeLookupTables();
 }
 
 void
-ExpansionPort::setExromLine(bool value)
+ExpansionPort::setExromLinePhi1(bool value)
 {
-    exromLine = value;
-    c64->vic.setUltimax(!gameLine && exromLine);
+    exromLinePhi1 = value;
+    c64->vic.setUltimax(!gameLinePhi1 && exromLinePhi1);
+}
+
+void
+ExpansionPort::setExromLinePhi2(bool value)
+{
+    exromLinePhi2 = value;
     c64->mem.updatePeekPokeLookupTables();
 }
 

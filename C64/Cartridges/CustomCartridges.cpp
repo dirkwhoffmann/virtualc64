@@ -265,9 +265,6 @@ EpyxFastLoad::dischargeCapacitor()
      */
     cycle = c64->cpu.cycle + 512;
     
-    if (c64->expansionport.getGameLine() == 1 && c64->expansionport.getExromLine() == 1) {
-    }
-    
     c64->expansionport.setExromLine(0);
     c64->expansionport.setGameLine(1);
 }
@@ -279,10 +276,7 @@ EpyxFastLoad::checkCapacitor()
     // debug("Capacitor check: Cartridge continues to live for %ld cycles\n", disable_at_cycle - c64->getCycles());
     
     if (c64->cpu.cycle > cycle) {
-        
-        if (c64->expansionport.getGameLine() != 1 || c64->expansionport.getExromLine() != 1) {
-        }
-            
+                    
         // Switch cartridge off
         // Should be really change exrom and game line???
         c64->expansionport.setExromLine(1);
