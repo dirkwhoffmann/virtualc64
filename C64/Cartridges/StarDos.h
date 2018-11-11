@@ -1,5 +1,5 @@
 /*!
- * @header      FinalIII.h
+ * @header      StarDos.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -19,24 +19,45 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _FINALIII_INC
-#define _FINALIII_INC
+#ifndef _STARDOS_INC
+#define _STARDOS_INC
 
-class FinalIII : public Cartridge {
+#include "Cartridge.h"
+
+class StarDos : public Cartridge {
+    
+    private:
+    
+    uint64_t voltage = 0;
+    uint64_t latestVoltageUpdate = 0;
+    bool enableROML = false;
     
     public:
+    
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FINAL_III; }
+    void concludeMake();
+    CartridgeType getCartridgeType() { return CRT_STARDOS; }
     void reset();
     void resetCartConfig();
-    uint8_t peekIO1(uint16_t addr);
-    uint8_t peekIO2(uint16_t addr);
-    void pokeIO2(uint16_t addr, uint8_t value);
-    void pressFreezeButton();
-    void releaseFreezeButton();
+    
+    void updateVoltage();
+    void charge();
+    void discharge();
+    
+    uint8_t peekIO1(uint16_t addr) { charge(); return 0; }
+    uint8_t peekIO2(uint16_t addr) { discharge(); return 0; }
+    void pokeIO1(uint16_t addr, uint8_t value) { charge(); }
+    void pokeIO2(uint16_t addr, uint8_t value) { discharge(); }
+    
+    uint8_t peekRomL(uint16_t addr);
+    // uint8_t peekRomH(uint16_t addr);
+
     bool hasFreezeButton() { return true; }
+    // void pressFreezeButton();
+    // void releaseFreezeButton();
     bool hasResetButton() { return true; }
 };
 
-#endif
 
+
+#endif

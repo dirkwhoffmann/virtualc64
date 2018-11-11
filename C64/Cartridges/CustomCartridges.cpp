@@ -234,111 +234,6 @@ Supergames::pokeIO2(uint16_t addr, uint8_t value)
 
 
 //
-// Epyx Fast Loader
-//
-
-void
-EpyxFastLoad::reset()
-{
-    // Make the ROM show up
-    initialGameLine = 1;
-    initialExromLine = 0;
-    Cartridge::reset();
-    
-    dischargeCapacitor();
-
-}
-
-void
-EpyxFastLoad::execute()
-{
-    checkCapacitor();
-}
-
-void
-EpyxFastLoad::dischargeCapacitor()
-{
-    // debug("Discharging capacitor\n");
-    
-    /* The capacitor will be charged in about 512 cycles (value taken from VICE).
-     * We store this value variable 'cycle', so it can be picked up in execute().
-     */
-    cycle = c64->cpu.cycle + 512;
-    
-    c64->expansionport.setExromLine(0);
-    c64->expansionport.setGameLine(1);
-}
-
-bool
-EpyxFastLoad::checkCapacitor()
-{
-    
-    // debug("Capacitor check: Cartridge continues to live for %ld cycles\n", disable_at_cycle - c64->getCycles());
-    
-    if (c64->cpu.cycle > cycle) {
-                    
-        // Switch cartridge off
-        // Should be really change exrom and game line???
-        c64->expansionport.setExromLine(1);
-        c64->expansionport.setGameLine(1);
-        return false;
-    }
-    
-    return true;
-}
-
-
-uint8_t
-EpyxFastLoad::peekRomL(uint16_t addr)
-{
-    dischargeCapacitor();
-    return Cartridge::peekRomL(addr);
-}
-
-uint8_t
-EpyxFastLoad::peekRomH(uint16_t addr)
-{
-    dischargeCapacitor();
-    return Cartridge::peekRomH(addr);
-}
-
-/*
-uint8_t
-EpyxFastLoad::spypeekRomL(uint16_t addr)
-{
-    return Cartridge::spypeekRomL(addr);
-}
-
-uint8_t
-EpyxFastLoad::spypeekRomL(uint16_t addr)
-{
-    return Cartridge::spypeekRomL(addr);
-}
-*/
-
-uint8_t
-EpyxFastLoad::peekIO1(uint16_t addr)
-{
-    dischargeCapacitor();
-    return 0;
-}
-
-uint8_t
-EpyxFastLoad::readIO1(uint16_t addr)
-{
-    return 0;
-}
-
-uint8_t
-EpyxFastLoad::peekIO2(uint16_t addr)
-{
-    // I/O 2 mirrors the last 256 ROM bytes
-    // return chip[0][0x1f00 + (addr & 0xff)];
-    return packet[0]->peek(0x1f00 + (addr & 0xff));
-}
-
-
-//
 // Westermann learning
 //
 
@@ -393,11 +288,11 @@ Rex::spypeekIO2(uint16_t addr)
 //
 
 void
-WarpSpeed::reset()
+WarpSpeed::resetCartConfig()
 {
-    initialGameLine = 0;
-    initialExromLine = 0;
-    Cartridge::reset();
+    // Start in 16KB game mode
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(0);
 }
 
 uint8_t

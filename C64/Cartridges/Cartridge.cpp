@@ -29,23 +29,8 @@ Cartridge::Cartridge(C64 *c64)
 
     this->c64 = c64;
     
-    initialGameLine = 1;
-    initialExromLine = 1;
-    
-    numPackets = 0;
     memset(packet, 0, sizeof(packet));
-    
-    chipL = chipH = 0;
-    offsetL = offsetH = 0;
-    mappedBytesL = mappedBytesH = 0;
-    
-    externalRam = NULL;
-    ramCapacity = 0;
-    persistentRam = false;
-    
     memset(val, 0, sizeof(val));
-    cycle = 0;
-    regValue = 0;
 }
 
 Cartridge::~Cartridge()
@@ -94,6 +79,13 @@ Cartridge::reset()
     }
 }
 
+void
+Cartridge::resetCartConfig() {
+
+    c64->expansionport.setGameLine(gameLineInCrtFile);
+    c64->expansionport.setExromLine(exromLineInCrtFile);
+}
+
 bool
 Cartridge::isSupportedType(CartridgeType type)
 {    
@@ -119,7 +111,8 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_MAGIC_DESK:
             
         case CRT_COMAL80:
-            
+        
+        case CRT_STARDOS:
         case CRT_EASYFLASH:
             
         case CRT_ACTION_REPLAY3:
@@ -157,6 +150,7 @@ Cartridge::makeWithType(C64 *c64, CartridgeType type)
         case CRT_ZAXXON:         return new Zaxxon(c64);
         case CRT_MAGIC_DESK:     return new MagicDesk(c64);
         case CRT_COMAL80:        return new Comal80(c64);
+        case CRT_STARDOS:        return new StarDos(c64);
         case CRT_EASYFLASH:      return new EasyFlash(c64);
         case CRT_ACTION_REPLAY3: return new ActionReplay3(c64);
         case CRT_FREEZE_FRAME:   return new FreezeFrame(c64);
@@ -177,17 +171,14 @@ Cartridge::makeWithCRTFile(C64 *c64, CRTFile *file)
     assert(cart != NULL);
     
     // Remember powerup values for game line and exrom line
-    cart->initialGameLine  = file->initialGameLine();
-    cart->initialExromLine = file->initialExromLine();
+    cart->gameLineInCrtFile = file->initialGameLine();
+    cart->exromLineInCrtFile = file->initialExromLine();
 
     // Load chip packets
     cart->numPackets = 0;
     for (unsigned i = 0; i < file->chipCount(); i++) {
         cart->loadChip(i, file);
     }
-    
-    // Give the new cartridge the chance to perform some custom stuff
-    cart->concludeMake();
     
     return cart;
 }
@@ -273,8 +264,8 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    initialGameLine = (bool)read8(buffer);
-    initialExromLine = (bool)read8(buffer);
+    gameLineInCrtFile = (bool)read8(buffer);
+    exromLineInCrtFile = (bool)read8(buffer);
     
     loadPacketsFromBuffer(buffer);
     
@@ -302,8 +293,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    write8(buffer, (uint8_t)initialGameLine);
-    write8(buffer, (uint8_t)initialExromLine);
+    write8(buffer, (uint8_t)gameLineInCrtFile);
+    write8(buffer, (uint8_t)exromLineInCrtFile);
 
     savePacketsToBuffer(buffer);
     
@@ -333,13 +324,13 @@ Cartridge::dump()
     msg("Cartridge\n");
     msg("---------\n");
     
-    msg("Cartridge type:        %d\n", getCartridgeType());
-    msg("Initial game line:     %d\n", initialGameLine);
-    msg("Initial exrom line:    %d\n", initialExromLine);
-    msg("Number of Rom packets: %d\n", numPackets);
+    msg("        Cartridge type: %d\n", getCartridgeType());
+    msg(" Game line in CRT file: %d\n", gameLineInCrtFile);
+    msg("Exrom line in CRT file: %d\n", exromLineInCrtFile);
+    msg(" Number of Rom packets: %d\n", numPackets);
     
     for (unsigned i = 0; i < numPackets; i++) {
-        msg("Chip %2d:        %d KB starting at $%04X\n",
+        msg("              Chip %3d: %d KB starting at $%04X\n",
             i, packet[i]->size / 1024, packet[i]->loadAddress);
     }
 }

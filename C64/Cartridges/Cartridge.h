@@ -40,53 +40,56 @@ class Cartridge : public VirtualComponent {
     //! @brief    Maximum number of chip packets on a single cartridge.
     static const unsigned MAX_PACKETS = 128;
     
-    /*! @brief    Initial gameLine value used by this cartridge
+    /*! @brief    Initial value of the game line
      *  @details  The value is read from the CRT filt and the game line is set
      *            to it when the cartridge is plugged into the expansion port.
      */
-    bool initialGameLine;
+    bool gameLineInCrtFile = 1;
     
-    /*! @brief    Initial exromLine value used by this cartridge
+    /*! @brief    Initial value of the exrom line
      *  @details  The value is read from the CRT filt and the exrom line is set
      *            to it when the cartridge is plugged into the expansion port.
      */
-    bool initialExromLine;
+    bool exromLineInCrtFile = 1;
     
     //! @brief    Number of ROM packets
-    uint8_t numPackets;
+    uint8_t numPackets = 0;
     
     //! @brief    ROM chips contained in this cartridge
     CartridgeRom *packet[MAX_PACKETS];
     
     //! @brief    Number of the ROM chip that is currently mapped to ROMx
-    uint8_t chipL, chipH;
+    uint8_t chipL = 0;
+    uint8_t chipH = 0;
 
     //! @brief    Number of bytes that are mapped to ROMX
     /*! @details  For most cartridges, this value is equals packet[romX]->size
      *            which means that the ROM is completely mapped.
      *            A value of 0 indicates that no ROM is currently mapped.
      */
-    uint16_t mappedBytesL, mappedBytesH;
+    uint16_t mappedBytesL = 0;
+    uint16_t mappedBytesH = 0;
 
     //! @brief    Offset into the ROM chip's data array
     /*! @details  The first ROMX byte is: chip[romX] + romOffsetX
      *            The last ROMX byte is: chip[romX] + romOffsetX + romSizeX - 1
      */
-    uint16_t offsetL, offsetH;
+    uint16_t offsetL = 0;
+    uint16_t offsetH = 0;
     
     /*! @brief    Additional RAM
      *  @details  Some cartridges such as ActionReplay contain additional RAM.
      *            By default, this variable is NULL.
      */
-    uint8_t *externalRam;
+    uint8_t *externalRam = NULL;
     
     /*! @brief    Capacity of the additional RAM in bytes
      *  @note     This value is 0 if and only if externaRam is NULL.
      */
-    uint32_t ramCapacity; 
+    uint32_t ramCapacity = 0;
     
     //! @brief    Indicates if the RAM is kept alive during a reset.
-    bool persistentRam;
+    bool persistentRam = false;
     
     /*! @brief    Temporary storage for cycle information
      *  @details  Some custom cartridges need to remember when certain event
@@ -94,14 +97,14 @@ class Cartridge : public VirtualComponent {
      *            cycle in this variable. Only a few cartridges make use of this
      *            variable.
      */
-    uint64_t cycle;
+    uint64_t cycle = 0;
     
     /*! @brief    Temporary storage
      *  @details  Some custom cartridges contain additonal registers or jumpers.
      *            They preserve these values in these general-purpose variables.
      *            Only a few cartridges make use of this variable.
      */
-    uint8_t val[16];
+    uint8_t val[16]; 
     
     /*! @brief    Temporary value storage
      *  @details  Some custom cartridges need to remember the last value that
@@ -109,7 +112,7 @@ class Cartridge : public VirtualComponent {
      *            this value in this variable.
      *  @deprecated Use val[] instead
      */
-    uint8_t regValue;
+    uint8_t regValue = 0;
 
     
 public:
@@ -169,8 +172,15 @@ public:
      *            values that are different than the ones states inside the
      *            CRT file.
      */
-    virtual void concludeMake() { }
+    // virtual void concludeMake() { }
     
+    /*! @brief    Set the game line / exrom line to it's reset value.
+     *  @details  The custom implementation returns the value that was found
+     *            in the CRT file. Some custom cartridges need other start
+     *            configurations and overwrite this function.
+     */
+    virtual void resetCartConfig();
+
     //! @brief    State size function for chip packet data
     virtual size_t packetStateSize();
     
@@ -269,10 +279,10 @@ public:
     void setRamCapacity(uint32_t size);
 
     //! @brief    Returns the initial state of the game line.
-    bool getInitialGameLine() { return initialGameLine; }
+    bool getGameLineInCrtFile() { return gameLineInCrtFile; }
         
     //! @brief    Returns the initial state of the exrom line.
-    bool getInitialExromLine() { return initialExromLine; }
+    bool getExromLineInCrtFile() { return exromLineInCrtFile; }
     
     
     //

@@ -111,20 +111,20 @@ ActionReplay::ActionReplay(C64 *c64) : Cartridge(c64)
 }
 
 void
-ActionReplay::concludeMake()
-{
-    debug("Changing initial game/exrom configuration to 1/0 (8K game mode)\n");
-    
-    // Start in 8K game mode
-    initialGameLine = 1;
-    initialExromLine = 0;
-}
-
-void
 ActionReplay::reset()
 {
     Cartridge::reset();
     setControlReg(0);
+}
+
+void
+ActionReplay::resetCartConfig()
+{
+    debug("Starting ActionReplay cartridge in 8K game mode.\n");
+    
+    // Start in 8K game mode
+    c64->expansionport.setGameLine(1);
+    c64->expansionport.setExromLine(0);
 }
 
 uint8_t

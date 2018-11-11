@@ -25,8 +25,14 @@ void
 FinalIII::reset()
 {
     bankIn(0);
-    initialGameLine = 0;
-    initialExromLine = 0;
+}
+
+void
+FinalIII::resetCartConfig()
+{
+    // Start in 16KB game mode
+    c64->expansionport.setGameLine(0);
+    c64->expansionport.setExromLine(0);
 }
 
 uint8_t

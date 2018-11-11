@@ -32,7 +32,6 @@ class ActionReplay3 : public Cartridge {
     
     public:
     using Cartridge::Cartridge;
-    // ActionReplay3(C64 *c64);
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY3; }
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
@@ -64,9 +63,9 @@ class ActionReplay : public Cartridge {
     
     public:
     ActionReplay(C64 *c64);
-    void concludeMake();
     CartridgeType getCartridgeType() { return CRT_ACTION_REPLAY; }
     void reset();
+    void resetCartConfig();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO1(uint16_t addr);
     uint8_t peekIO2(uint16_t addr);

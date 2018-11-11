@@ -37,8 +37,7 @@ ExpansionPort::reset()
     
     if (cartridge) {
         cartridge->reset();
-        setGameLine(cartridge->getInitialGameLine());
-        setExromLine(cartridge->getInitialExromLine());
+        cartridge->resetCartConfig();
     } else {
         setGameLine(1);
         setExromLine(1);

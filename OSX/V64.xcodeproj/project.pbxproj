@@ -13,6 +13,8 @@
 		5000C8240D13CEE10011A2E9 /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* Drive.cpp */; };
 		50031B34206FABA400A1969B /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50031B33206FABA400A1969B /* SnapshotDialog.xib */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
+		5003C1B4219807F8009AA08D /* StarDos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003C1B2219807F8009AA08D /* StarDos.cpp */; };
+		5003C1B721981BA6009AA08D /* Epyx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003C1B521981BA6009AA08D /* Epyx.cpp */; };
 		5006087921256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* MessageQueue.cpp */; };
@@ -204,6 +206,10 @@
 		5000C9610D13DED40011A2E9 /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
+		5003C1B2219807F8009AA08D /* StarDos.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StarDos.cpp; sourceTree = "<group>"; };
+		5003C1B3219807F8009AA08D /* StarDos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarDos.h; sourceTree = "<group>"; };
+		5003C1B521981BA6009AA08D /* Epyx.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Epyx.cpp; sourceTree = "<group>"; };
+		5003C1B621981BA6009AA08D /* Epyx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Epyx.h; sourceTree = "<group>"; };
 		5006087821256D4C00C7C6C5 /* VIC_cycles_ntsc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_cycles_ntsc.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
@@ -885,6 +891,10 @@
 				5017B71B21873FD00014EDE4 /* EasyFlash.cpp */,
 				503A424C2187A133003011D1 /* FinalIII.h */,
 				503A424B2187A133003011D1 /* FinalIII.cpp */,
+				5003C1B3219807F8009AA08D /* StarDos.h */,
+				5003C1B2219807F8009AA08D /* StarDos.cpp */,
+				5003C1B621981BA6009AA08D /* Epyx.h */,
+				5003C1B521981BA6009AA08D /* Epyx.cpp */,
 			);
 			path = Cartridges;
 			sourceTree = "<group>";
@@ -1192,6 +1202,7 @@
 				506B315420DD0AEB007913A8 /* DriveMemory.cpp in Sources */,
 				501DE31220C9C41B00707130 /* filter.cc in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
+				5003C1B721981BA6009AA08D /* Epyx.cpp in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				50E542A5212E988A00026EEF /* VIC_debug.cpp in Sources */,
@@ -1217,6 +1228,7 @@
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				5003C1B4219807F8009AA08D /* StarDos.cpp in Sources */,
 				50F1752D2196C8820004E853 /* ActionReplay.cpp in Sources */,
 				5017B71D21873FD00014EDE4 /* EasyFlash.cpp in Sources */,
 				501DE30C20C9C41B00707130 /* sid.cc in Sources */,

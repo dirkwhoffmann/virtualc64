@@ -104,9 +104,9 @@ extension CartridgeMountController : NSTableViewDataSource {
         
         if (tableColumn?.identifier)!.rawValue == "addr" {
             
-            let str = String(format: "$%04X - %04X",
+            let str = String(format: "$%04X - $%04X",
                              cartridge.chipAddr(row),
-                             cartridge.chipAddr(row) + cartridge.chipSize(row))
+                             cartridge.chipAddr(row) + cartridge.chipSize(row) - 1)
             return str
         }
         if (tableColumn?.identifier)!.rawValue == "size" {
