@@ -22,10 +22,10 @@
 
 #include "C64.h"
 
-Cartridge::Cartridge(C64 *c64)
+Cartridge::Cartridge(C64 *c64, const char *description)
 {
-    setDescription("Cartridge");
-    debug("  Creating cartridge at address %p...\n", this);
+    setDescription(description);
+    debug("Creating cartridge at address %p...\n", this);
 
     this->c64 = c64;
     
@@ -35,7 +35,7 @@ Cartridge::Cartridge(C64 *c64)
 
 Cartridge::~Cartridge()
 {
-    debug(1, "  Releasing cartridge...\n");
+    debug("Releasing cartridge...\n");
     
     // Deallocate RAM (if any)
     if (externalRam) {

@@ -143,7 +143,7 @@ public:
     //
     
     //! @brief    Convenience constructor
-    Cartridge(C64 *c64);
+    Cartridge(C64 *c64, const char *description = "Cartridge");
 
     //! @brief    Destructor
     ~Cartridge();

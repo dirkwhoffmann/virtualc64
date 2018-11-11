@@ -34,7 +34,7 @@ class StarDos : public Cartridge {
     
     public:
     
-    using Cartridge::Cartridge;
+    StarDos(C64 *c64) : Cartridge(c64, "StarDos") { };
     void concludeMake();
     CartridgeType getCartridgeType() { return CRT_STARDOS; }
     void reset();
