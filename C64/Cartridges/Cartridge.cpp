@@ -60,7 +60,7 @@ Cartridge::reset()
 {
     // Reset external RAM
     if (externalRam && !persistentRam) {
-        memset(externalRam, 0, ramCapacity);
+        memset(externalRam, 0xFF, ramCapacity);
     }
  
     // Reset all chip packets
@@ -415,7 +415,7 @@ Cartridge::setRamCapacity(uint32_t size)
     if (size > 0) {
         externalRam = (uint8_t *)malloc((size_t)size);
         ramCapacity = size;
-        memset(externalRam, 0, size);
+        memset(externalRam, 0xFF, size);
     }
 }
 

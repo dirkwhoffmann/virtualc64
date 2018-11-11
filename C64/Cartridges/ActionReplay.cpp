@@ -142,7 +142,7 @@ ActionReplay::poke(uint16_t addr, uint8_t value)
     if (ramIsEnabled(addr)) {
         externalRam[addr & 0x1FFF] = value;
     } else {
-        debug("poke(%04X, %02X)\n", addr, value);
+        // debug("poke(%04X, %02X)\n", addr, value);
         // Cartridge::poke(addr, value);
     }
     
@@ -192,7 +192,7 @@ ActionReplay::pressFreezeButton()
 {
     // Pressing the freeze bottom pulls down both the NMI and the IRQ line
     suspend();
-    setControlReg(0);
+    // setControlReg(0x20);
     c64->expansionport.setGameLine(0);
     c64->expansionport.setExromLine(1);
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
