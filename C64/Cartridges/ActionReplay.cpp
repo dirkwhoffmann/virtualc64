@@ -141,12 +141,17 @@ ActionReplay::poke(uint16_t addr, uint8_t value)
 {
     if (ramIsEnabled(addr)) {
         externalRam[addr & 0x1FFF] = value;
+    } else {
+        debug("poke(%04X, %02X)\n", addr, value);
+        // Cartridge::poke(addr, value);
     }
+    
 }
 
 uint8_t
 ActionReplay::peekIO1(uint16_t addr)
 {
+    debug("peekIO1(uint16_t %04X)\n", addr);
     return regValue;
 }
 
@@ -196,11 +201,21 @@ ActionReplay::pressFreezeButton()
 }
 
 void
+ActionReplay::releaseFreezeButton()
+{
+    debug("releaseFreezeButton\n");
+    suspend();
+    c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
+    c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
+    resume();
+}
+
+void
 ActionReplay::setControlReg(uint8_t value)
 {
     regValue = value;
     
-    debug(2, "ActionReplay::setControlReg(%02X)\n", value);
+    debug(1, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
     
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)

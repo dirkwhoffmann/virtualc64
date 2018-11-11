@@ -179,6 +179,10 @@ C64Memory::updatePeekPokeLookupTables()
     assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
     peekSrc[0xE] = pokeTarget[0xE] = source;
     peekSrc[0xF] = pokeTarget[0xF] = source;
+    
+    // An attached cartridge may influence the settings. Let's give it a chance
+    // to adjust the tables ...
+    c64->expansionport.updatePeekPokeLookupTables();
 }
 
 uint8_t

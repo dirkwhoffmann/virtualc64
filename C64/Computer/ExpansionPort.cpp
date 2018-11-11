@@ -243,6 +243,14 @@ ExpansionPort::setExromLinePhi2(bool value)
     c64->mem.updatePeekPokeLookupTables();
 }
 
+void
+ExpansionPort::updatePeekPokeLookupTables()
+{
+    if (cartridge) {
+        cartridge->updatePeekPokeLookupTables();
+    }
+}
+
 bool
 ExpansionPort::attachCartridge(Cartridge *c)
 {

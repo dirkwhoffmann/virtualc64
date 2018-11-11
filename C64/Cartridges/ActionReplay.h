@@ -74,6 +74,7 @@ class ActionReplay : public Cartridge {
     void pokeIO2(uint16_t addr, uint8_t value);
     bool hasFreezeButton() { return true; }
     void pressFreezeButton();
+    void releaseFreezeButton();
     bool hasResetButton() { return true; }
     
     //! @brief   Sets the cartridge's control register
@@ -100,7 +101,10 @@ class ActionReplay : public Cartridge {
 class AtomicPower : public ActionReplay {
     
     public:
-    AtomicPower(C64 *c64) : ActionReplay(c64) { };
+    AtomicPower(C64 *c64) : ActionReplay(c64) {
+        setDescription("AtomicPower");
+    };
+    
     CartridgeType getCartridgeType() { return CRT_ATOMIC_POWER; }
     
     /*! @brief    Indicates if special ROM / RAM config has to be used.

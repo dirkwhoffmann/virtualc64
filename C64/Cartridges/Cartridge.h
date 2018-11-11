@@ -165,15 +165,6 @@ public:
      */
     static Cartridge *makeWithCRTFile(C64 *c64, CRTFile *file);
     
-    /*! @brief    Finalizes the make operation
-     *  @details  This function is called inside makeWithCRTFile() to give
-     *            the cartridge the chance to overwrite some default values.
-     *            E.g., some cartridge type need to use initial game and exrom
-     *            values that are different than the ones states inside the
-     *            CRT file.
-     */
-    // virtual void concludeMake() { }
-    
     /*! @brief    Set the game line / exrom line to it's reset value.
      *  @details  The custom implementation returns the value that was found
      *            in the CRT file. Some custom cartridges need other start
@@ -203,6 +194,9 @@ public:
      *            cartridges such as EpyxFastLoader will do some action here.
      */
     virtual void execute() { };
+    
+    //! @brief    Modifies the memory source lookup tables if required
+    virtual void updatePeekPokeLookupTables() { };
     
     /*! @brief    Peek fallthrough
      *  @param    addr must be a value in

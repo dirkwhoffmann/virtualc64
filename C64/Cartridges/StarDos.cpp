@@ -30,21 +30,6 @@ StarDos::reset()
 }
 
 void
-StarDos::resetCartConfig()
-{
-    debug("Enabling Ultimax mode.\n");
-    
-    // VIC will always see RAM
-    c64->expansionport.setGameLinePhi1(1);
-    c64->expansionport.setExromLinePhi1(1);
-
-    // CPU acts in Ultimax mode
-    c64->expansionport.setGameLinePhi2(0);
-    c64->expansionport.setExromLinePhi2(1);
-    
-}
-
-void
 StarDos::updateVoltage()
 {
     // If the capacitor is untouched, it slowly raises to 2.0V
@@ -61,7 +46,11 @@ StarDos::charge()
 {
     updateVoltage();
     voltage += MIN(5000000 /* 5.0V */ - voltage, 78125);
-    if (voltage > 2700000 /* 2.7V */) enableROML = true;
+    if (voltage > 2700000 /* 2.7V */) {
+        // romIsVisible = true;
+        enableROML();
+    }
+    debug("charge %lld (ROML %s)\n", voltage, voltage > 2700000 ? "ON" : "OFF");
 }
 
 void
@@ -69,15 +58,46 @@ StarDos::discharge()
 {
     updateVoltage();
     voltage -= MIN(voltage, 78125);
-    if (voltage < 1400000 /* 1.4V */) enableROML = false;
+    if (voltage < 1400000 /* 1.4V */) {
+        // romIsVisible = false;
+        disableROML();
+    }
+    
+    debug("discharge %lld (ROML %s)\n", voltage, voltage < 1400000 ? "OFF" : "ON");
+
 }
 
+void
+StarDos::enableROML()
+{
+    c64->expansionport.setExromLine(0);
+}
+
+void
+StarDos::disableROML()
+{
+    c64->expansionport.setExromLine(1);
+}
+
+void
+StarDos::updatePeekPokeLookupTables()
+{
+    // Replace Kernel by the StarDos kernel
+    if (c64->mem.peekSrc[0xE] == M_KERNAL) {
+        c64->mem.peekSrc[0xE] = M_CRTHI;
+        c64->mem.peekSrc[0xF] = M_CRTHI;
+    }
+}
+
+/*
 uint8_t
 StarDos::peekRomL(uint16_t addr)
 {
-    if (enableROML) {
+    if (romIsVisible) {
         return Cartridge::peekRomL(addr);
     } else {
         return c64->mem.ram[addr];
     }
 }
+*/
+

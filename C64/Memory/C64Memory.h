@@ -103,7 +103,7 @@ public:
     //! @brief    RAM init pattern type
     RamInitPattern ramInitPattern;
     
-private:
+public:
     
     //! @brief    Peek source lookup table
     MemoryType peekSrc[16];

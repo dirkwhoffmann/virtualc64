@@ -151,6 +151,17 @@ public:
     void setExromLinePhi2(bool value);
     void setExromLine(bool value) { setExromLinePhi1(value); setExromLinePhi2(value); }
     
+    /*! @brief    Modifies the memory source lookup tables if required
+     *  @details  This function is called in C64::updatePeekPokeLookupTables()
+     *            to allow cartridges to manipulate the lookup tables after the
+     *            default values have been set.
+     *            Background: Some cartridges such as StarDos change the game
+     *            and exrom line on-the-fly to achieve very special memory
+     *            mappings.
+     *            For most cartridges, this function does nothing.
+     */
+    void updatePeekPokeLookupTables();
+    
     //! @brief    Returns true if a cartridge is attached to the expansion port
     bool getCartridgeAttached() { return cartridge != NULL; }
 
