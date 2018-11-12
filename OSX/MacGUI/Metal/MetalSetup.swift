@@ -111,13 +111,6 @@ public extension MetalView {
         // Build scanline texture
         scanlineTexture = device?.makeTexture(descriptor: descriptor)
         precondition(scanlineTexture != nil, "Failed to create scanline texture.")
-        
-        // Filtered texture (upscaled and blurred) DEPRECATED
-        /*
-        descriptor.usage = [ .shaderRead, .shaderWrite ]
-        filteredTexture = device?.makeTexture(descriptor: descriptor)
-        precondition(filteredTexture != nil, "Failed to create filtering texture.")
-        */
     }
     
     internal func buildKernels() {
@@ -126,21 +119,13 @@ public extension MetalView {
         precondition(library != nil)
         
         // Build upscalers
-        upscalers[0] = BypassUpscaler.init(device: device!, library: library)
-        upscalers[1] = EPXUpscaler.init(device: device!, library: library)
-        upscalers[2] = XBRUpscaler.init(device: device!, library: library)
+        upscalerGallery[0] = BypassUpscaler.init(device: device!, library: library)
+        upscalerGallery[1] = EPXUpscaler.init(device: device!, library: library)
+        upscalerGallery[2] = XBRUpscaler.init(device: device!, library: library)
         
         // Build scanline filters
-        scanlineFilters[0] = BypassFilter.init(device: device!, library: library)
-        scanlineFilters[1] = SimpleScanlines(device: device!, library: library)
-        
-        // Build bloom filter
-        // bloomFilter = GaussFilter.init(device: device!, library: library, sigma: 1.0)
-        
-        // Build filters
-        filters[0] = BypassFilter.init(device: device!, library: library)
-        filters[1] = BypassFilter.init(device: device!, library: library)
-        // filters[1] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
+        scanlineFilterGallery[0] = BypassFilter.init(device: device!, library: library)
+        scanlineFilterGallery[1] = SimpleScanlines(device: device!, library: library)
     }
     
     func buildBuffers() {

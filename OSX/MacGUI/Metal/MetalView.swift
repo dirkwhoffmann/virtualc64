@@ -90,17 +90,14 @@ public class MetalView: MTKView {
     var scanlineTexture: MTLTexture! = nil
     
     // Array holding all available upscalers
-    var upscalers = [ComputeKernel?](repeating: nil, count: 3)
+    var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
     // Array holding all available scanline filters
-    var scanlineFilters = [ComputeKernel?](repeating: nil, count: 2)
+    var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 2)
     
     // Array holding all available filters
-    var filters = [ComputeKernel?](repeating: nil, count: 5)
-    
-    // The bloom filter
-    // var bloomFilter: GaussFilter!
-    
+    // var filters = [ComputeKernel?](repeating: nil, count: 5)
+        
     // Shader parameters
     var scanlines = EmulatorDefaults.scanlines
     var scanlineBrightness = EmulatorDefaults.scanlineBrightness
@@ -139,7 +136,7 @@ public class MetalView: MTKView {
     /// Currently selected texture upscaler
     var videoUpscaler = EmulatorDefaults.upscaler {
         didSet {
-            if videoUpscaler >= upscalers.count || upscalers[videoUpscaler] == nil {
+            if videoUpscaler >= upscalerGallery.count || upscalerGallery[videoUpscaler] == nil {
                 track("Sorry, the selected GPU upscaler is unavailable.")
                 videoUpscaler = 0
             }
@@ -149,19 +146,9 @@ public class MetalView: MTKView {
     /// Currently selected scanline filter
     var scanlineFilter = EmulatorDefaults.scanlineFilter {
         didSet {
-            if scanlineFilter >= scanlineFilters.count || scanlineFilters[scanlineFilter] == nil {
+            if scanlineFilter >= scanlineFilterGallery.count || scanlineFilterGallery[scanlineFilter] == nil {
                 track("Sorry, the selected GPU scanline filter is unavailable.")
                 scanlineFilter = 0
-            }
-        }
-    }
-    
-    /// Currently selected texture filter
-    var videoFilter = EmulatorDefaults.filter {
-        didSet {
-            if videoFilter >= filters.count || filters[videoFilter] == nil {
-                track("Sorry, the selected GPU filter is unavailable.")
-                videoFilter = 0
             }
         }
     }
@@ -281,30 +268,21 @@ public class MetalView: MTKView {
     /// Returns the compute kernel of the currently selected pixel upscaler
     func currentUpscaler() -> ComputeKernel {
     
-        precondition(videoUpscaler < upscalers.count)
-        precondition(upscalers[0] != nil)
+        precondition(videoUpscaler < upscalerGallery.count)
+        precondition(upscalerGallery[0] != nil)
         
-        return upscalers[videoUpscaler]!
+        return upscalerGallery[videoUpscaler]!
     }
 
     /// Returns the compute kernel of the currently selected scanline filter
     func currentScanlineFilter() -> ComputeKernel {
         
-        precondition(scanlineFilter < scanlineFilters.count)
-        precondition(scanlineFilters[0] != nil)
+        precondition(scanlineFilter < scanlineFilterGallery.count)
+        precondition(scanlineFilterGallery[0] != nil)
         
-        return scanlineFilters[scanlineFilter]!
+        return scanlineFilterGallery[scanlineFilter]!
     }
-    
-    /// Returns the compute kernel of the currently selected texture filer
-    func currentFilter() -> ComputeKernel {
         
-        precondition(videoFilter < filters.count)
-        precondition(filters[0] != nil)
-        
-        return filters[videoFilter]!
-    }
-    
     func startFrame() {
     
         commandBuffer = queue.makeCommandBuffer()

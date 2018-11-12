@@ -258,7 +258,6 @@ extension MyController {
         
         // Texture
         metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
-        metalScreen.videoFilter = defaults.integer(forKey: VC64Keys.videoFilter)
         c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
         c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
@@ -407,7 +406,6 @@ extension MyController {
         
         // Texture
         defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
-        defaults.set(metalScreen.videoFilter, forKey: VC64Keys.videoFilter)
         defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
         defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)

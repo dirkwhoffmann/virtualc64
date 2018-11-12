@@ -65,16 +65,18 @@ class EmulatorPrefsController : UserDialogController {
     override func awakeFromNib() {
         
         // Check for available upscalers
-        var kernels = parent.metalScreen.upscalers
+        var kernels = parent.metalScreen.upscalerGallery
         for i in 0 ... kernels.count - 1 {
             upscaler.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
         }
         
         // Check for available filters
+        /*
         kernels = parent.metalScreen.filters
         for i in 0 ... kernels.count - 1 {
             filter.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
         }
+        */
         
         update()
     }
@@ -104,7 +106,6 @@ class EmulatorPrefsController : UserDialogController {
 
         // Texture processor
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
-        filter.selectItem(withTag: parent.metalScreen.videoFilter)
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
@@ -158,14 +159,7 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.videoUpscaler = sender.selectedTag()
         update()
     }
-    
-    @IBAction func filterAction(_ sender: NSPopUpButton!) {
-    
-        track()
-        parent.metalScreen.videoFilter = sender.selectedTag()
-        update()
-    }
-    
+        
     @IBAction func brightnessAction(_ sender: NSSlider!) {
         
         let document = parent.document as! MyDocument
@@ -335,7 +329,6 @@ class EmulatorPrefsController : UserDialogController {
 
         // Texture processor
         parent.metalScreen.videoUpscaler = EmulatorDefaults.upscaler
-        parent.metalScreen.videoFilter = EmulatorDefaults.filter
         c64.vic.setBrightness(EmulatorDefaults.brightness)
         c64.vic.setContrast(EmulatorDefaults.contrast)
         c64.vic.setSaturation(EmulatorDefaults.saturation)
