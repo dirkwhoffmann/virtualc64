@@ -12,7 +12,7 @@
 import Foundation
 import Metal
 import MetalKit
-// import MetalPerformanceShaders
+import MetalPerformanceShaders
 
 struct Sizeof {
     static let float = 4
@@ -61,17 +61,34 @@ public class MetalView: MTKView {
     /// Background image behind the cube
     var bgTexture: MTLTexture! = nil
     
-    /// Raw texture data provided by the emulator
-    /// Texture is updated in updateTexture which is called periodically in
-    /// drawRect
+    /// Texture to hold the pixel depth information
+    var depthTexture: MTLTexture! = nil
+    
+    /// Emulator texture as provided by the emulator (512 x 512)
+    /// The C64 screen has size 428 x 284 and covers the upper left part of the
+    /// emulator texture. The emulator texture is updated in function
+    /// updateTexture() which is called periodically in drawRect().
     var emulatorTexture: MTLTexture! = nil
+
+    /// Bloom texture to emulate scanline blooming (512 x 512)
+    /// To emulate a bloom effect, the C64 texture is run through a Gaussian
+    /// blur filter with a large radius. This blurred texture is later passed
+    /// into the fragment shader as a secondary texture where it is composed
+    /// with the upscaled primary texture.
+    var bloomTexture: MTLTexture! = nil
     
     /// Upscaled emulator texture
-    /// In the first post-processing stage, the emulator texture is bumped up
-    /// by factor 4. The user can choose between bypass upscaling which simply
-    /// replaces each pixel by a 4x4 quad or more sophisticated upscaling
+    /// In the first texture processing stage, the emulator texture is bumped up
+    /// by a factor of 4. The user can choose between bypass upscaling which
+    /// simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
     /// algorithms such as xBr.
     var upscaledTexture: MTLTexture! = nil
+    
+    /// Upscaled texture with scanlines
+    /// In the second texture processing stage, a scanline effect is applied to
+    /// the upscaled texture.
+    var scanlineTexture: MTLTexture! = nil
+    
     
     /// Filtered emulator texture
     /// In the second post-processing stage, the upscaled texture is blurred.
@@ -79,16 +96,22 @@ public class MetalView: MTKView {
     /// pixels as they are or real blurring algorithm. To achieve high
     /// performance, blurring is done via Metals High Performance Shader
     /// framework.
-    var filteredTexture: MTLTexture! = nil
+    /// DEPRECATED
+    // var filteredTexture: MTLTexture! = nil
     
-    // Texture to hold the pixel depth information
-    var depthTexture: MTLTexture! = nil
+    
 
     // Array holding all available upscalers
     var upscalers = [ComputeKernel?](repeating: nil, count: 3)
- 
+
+    // Array holding all available scanline filters
+    var scanlineFilters = [ComputeKernel?](repeating: nil, count: 2)
+    
     // Array holding all available filters
     var filters = [ComputeKernel?](repeating: nil, count: 5)
+    
+    // The bloom filter
+    var bloomFilter: GaussFilter!
     
     // Shader parameters
     var scanlines = EmulatorDefaults.scanlines
@@ -143,7 +166,17 @@ public class MetalView: MTKView {
         }
     }
 
-    // Currently selected texture filter
+    /// Currently selected scanline filter
+    var scanlineFilter = EmulatorDefaults.scanlineFilter {
+        didSet {
+            if scanlineFilter >= scanlineFilters.count || scanlineFilters[scanlineFilter] == nil {
+                track("Sorry, the selected GPU scanline filter is unavailable.")
+                scanlineFilter = 0
+            }
+        }
+    }
+    
+    /// Currently selected texture filter
     var videoFilter = EmulatorDefaults.filter {
         didSet {
             if videoFilter >= filters.count || filters[videoFilter] == nil {
@@ -246,12 +279,6 @@ public class MetalView: MTKView {
     }
     
     func updateTexture() {
-    
-        /*
-        if c64proxy == nil {
-            return
-        }
-        */
         
         let buf = controller.c64.vic.screenBuffer()
         precondition(buf != nil)
@@ -271,7 +298,7 @@ public class MetalView: MTKView {
                                 bytesPerImage: imageBytes)
     }
     
-    //! Returns the compute kernel of the currently selected pixel upscaler
+    /// Returns the compute kernel of the currently selected pixel upscaler
     func currentUpscaler() -> ComputeKernel {
     
         precondition(videoUpscaler < upscalers.count)
@@ -279,8 +306,17 @@ public class MetalView: MTKView {
         
         return upscalers[videoUpscaler]!
     }
+
+    /// Returns the compute kernel of the currently selected scanline filter
+    func currentScanlineFilter() -> ComputeKernel {
+        
+        precondition(scanlineFilter < scanlineFilters.count)
+        precondition(scanlineFilters[0] != nil)
+        
+        return scanlineFilters[scanlineFilter]!
+    }
     
-    //! Returns the compute kernel of the currently selected texture filer
+    /// Returns the compute kernel of the currently selected texture filer
     func currentFilter() -> ComputeKernel {
         
         precondition(videoFilter < filters.count)
@@ -297,18 +333,47 @@ public class MetalView: MTKView {
         // Set uniforms
         fillFragmentShaderUniforms(uniformFragment)
         
+        // Compute the bloom texture
+        bloomFilter.apply(commandBuffer: commandBuffer,
+                          source: emulatorTexture,
+                          target: bloomTexture)
+        
+        // Blur the bloom texture
+        if #available(OSX 10.13, *) {
+            let gauss = MPSImageGaussianBlur(device: device!, sigma: 1.0)
+            gauss.encode(commandBuffer: commandBuffer,
+                         inPlaceTexture: &bloomTexture,
+                         fallbackCopyAllocator: nil)
+        }
+        
         // Upscale the C64 texture
         let upscaler = currentUpscaler()
         upscaler.apply(commandBuffer: commandBuffer,
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        // Filter the upscaled texture (apply blur effect)
+        // Add scanlines
+        let scanlineFilter = currentScanlineFilter()
+        scanlineFilter.apply(commandBuffer: commandBuffer,
+                                source: upscaledTexture,
+                                target: scanlineTexture)
+        
+        // Blur the scanline texture
+        if #available(OSX 10.13, *) {
+            let gauss = MPSImageGaussianBlur(device: device!, sigma: 1.0)
+            gauss.encode(commandBuffer: commandBuffer,
+                         inPlaceTexture: &scanlineTexture,
+                         fallbackCopyAllocator: nil)
+        }
+        
+        // Filter the upscaled texture (DEPRECATED)
+        /*
         let filter = currentFilter()
         filter.apply(commandBuffer: commandBuffer,
-                     source: upscaledTexture,
+                     source: scanlineTexture,
                      target: filteredTexture)
-       
+        */
+        
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
         descriptor.colorAttachments[0].texture = drawable.texture
@@ -326,7 +391,8 @@ public class MetalView: MTKView {
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
         commandEncoder.setFragmentTexture(bgTexture, index: 0)
-        commandEncoder.setFragmentSamplerState(filter.getsampler(), index: 0)
+        commandEncoder.setFragmentTexture(bgTexture, index: 1)
+        commandEncoder.setFragmentSamplerState(scanlineFilter.getSampler(), index: 0)
         commandEncoder.setFragmentBuffer(uniformFragment, offset: 0, index: 0)
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
     }
@@ -336,7 +402,7 @@ public class MetalView: MTKView {
         startFrame()
     
         // Render quad
-        commandEncoder.setFragmentTexture(filteredTexture, index: 0)
+        commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
         commandEncoder.setVertexBuffer(uniformBuffer2D, offset: 0, index: 1)
         commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
                                       vertexStart: 42,
@@ -364,6 +430,7 @@ public class MetalView: MTKView {
         // Render background
         if drawBackground {
             commandEncoder.setFragmentTexture(bgTexture, index: 0)
+            commandEncoder.setFragmentTexture(bgTexture, index: 1)
             commandEncoder.setVertexBuffer(uniformBufferBg, offset: 0, index: 1)
             commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
                                           vertexStart: 0,
@@ -373,7 +440,8 @@ public class MetalView: MTKView {
         
         // Render cube
         if drawC64texture {
-            commandEncoder.setFragmentTexture(filteredTexture, index: 0)
+            commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
+            commandEncoder.setFragmentTexture(bloomTexture, index: 1)
             commandEncoder.setVertexBuffer(uniformBuffer3D, offset: 0, index: 1)
             commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
                                           vertexStart: 6,

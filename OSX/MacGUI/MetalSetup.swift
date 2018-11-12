@@ -72,39 +72,52 @@ public extension MetalView {
 
         track()
         precondition(device != nil)
-        
-        // Build background texture (drawn behind the cube)
-        bgTexture = self.createBackgroundTexture()
-    
-        // Build C64 texture (as provided by the emulator)
-        var descriptor = MTLTextureDescriptor.texture2DDescriptor(
+
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.rgba8Unorm,
             width: 512,
             height: 512,
             mipmapped: false)
-        descriptor.usage = MTLTextureUsage.shaderRead
+
+        // Build background texture (drawn behind the cube)
+        bgTexture = self.createBackgroundTexture()
+    
+        //
+        // 512 x 512 textures
+        //
+        
+        // Build C64 texture (as provided by the emulator)
+        descriptor.usage = [ .shaderRead ]
         emulatorTexture = device?.makeTexture(descriptor: descriptor)
-        precondition(emulatorTexture != nil, "Failed to create emulator texture")
+        precondition(emulatorTexture != nil, "Failed to create emulator texture.")
         
-        // Upscaled C64 texture
-        descriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: 2048,
-            height: 2048,
-            mipmapped: false)
-        descriptor.usage = [.shaderRead, .shaderWrite, .pixelFormatView, .renderTarget]
+        // Build bloom texture
+        descriptor.usage = [ .shaderRead, .shaderWrite ]
+        bloomTexture = device?.makeTexture(descriptor: descriptor)
+        precondition(bloomTexture != nil, "Failed to create bloom texture.")
+        
+        //
+        // 2048 x 2048 textures
+        //
+        
+        descriptor.width = 2048;
+        descriptor.height = 2048;
+        
+        // Build upscaled C64 texture
+        descriptor.usage = [ .shaderRead, .shaderWrite, .pixelFormatView, .renderTarget ]
         upscaledTexture = device?.makeTexture(descriptor: descriptor)
-        precondition(upscaledTexture != nil, "Failed to create upscaling texture")
+        precondition(upscaledTexture != nil, "Failed to create upscaling texture.")
         
-        // Filtered texture (upscaled and blurred)
-        descriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: 2048,
-            height: 2048,
-            mipmapped: false)
-        descriptor.usage = [.shaderRead, .shaderWrite]
+        // Build scanline texture
+        scanlineTexture = device?.makeTexture(descriptor: descriptor)
+        precondition(scanlineTexture != nil, "Failed to create scanline texture.")
+        
+        // Filtered texture (upscaled and blurred) DEPRECATED
+        /*
+        descriptor.usage = [ .shaderRead, .shaderWrite ]
         filteredTexture = device?.makeTexture(descriptor: descriptor)
-        precondition(filteredTexture != nil, "Failed to create filtering texture")
+        precondition(filteredTexture != nil, "Failed to create filtering texture.")
+        */
     }
     
     internal func buildKernels() {
@@ -116,6 +129,13 @@ public extension MetalView {
         upscalers[0] = BypassUpscaler.init(device: device!, library: library)
         upscalers[1] = EPXUpscaler.init(device: device!, library: library)
         upscalers[2] = XBRUpscaler.init(device: device!, library: library)
+        
+        // Build scanline filters
+        scanlineFilters[0] = BypassFilter.init(device: device!, library: library)
+        scanlineFilters[1] = SimpleScanlines(device: device!, library: library)
+        
+        // Build bloom filter
+        bloomFilter = GaussFilter.init(device: device!, library: library, sigma: 1.0)
         
         // Build filters
         filters[0] = BypassFilter.init(device: device!, library: library)

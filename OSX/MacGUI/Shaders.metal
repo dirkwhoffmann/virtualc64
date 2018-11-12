@@ -106,6 +106,7 @@ float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
 
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                              texture2d<float, access::sample> texture [[texture(0)]],
+                             texture2d<float, access::sample> bloomTexture [[texture(1)]],
                              constant FragmentUniforms &uniforms [[buffer(0)]],
                              sampler texSampler [[sampler(0)]])
 {
@@ -114,8 +115,12 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Read fragment from texture
     float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
     float4 color = texture.sample(texSampler, tc);
+    float4 bloomColor = bloomTexture.sample(texSampler, tc);
+    bloomColor = pow(bloomColor, uniforms.bloomFactor) * uniforms.scanlineBrightness;
+    color = saturate(color + bloomColor);
     
     // Apply scanline effect
+    /*
     if (uniforms.scanline != 0) {
         color *= scanlineWeight(pixel,
                                 uniforms.scanline,
@@ -123,6 +128,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                                 uniforms.scanlineBrightness,
                                 uniforms.bloomFactor);
     }
+    */
     
     // Apply dot mask effect
     color *= dotMaskWeight(uniforms.mask, pixel, uniforms.maskBrightness);
@@ -132,7 +138,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
 
 
 //
-// Texture upscalers (first post-processing stage)
+// Texture upscalers (first texture processing stage)
 //
 
 kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
@@ -319,8 +325,25 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
 
 
 //
-// Texture filter (second post-processing stage)
+// Scanline filter (second texture processing stage)
 //
+
+struct CrtParameters {
+    float scanlineWeight;
+};
+
+kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                      texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                      constant CrtParameters         &params     [[ buffer(0) ]],
+                      uint2                          gid         [[ thread_position_in_grid ]])
+{
+    half4 color = inTexture.read(uint2(gid.x, gid.y));
+    if (((gid.y + 1) % 4) < 2) {
+        color *= params.scanlineWeight;
+    }
+    outTexture.write(color, gid);
+}
+
 
 //
 // Bypass filter

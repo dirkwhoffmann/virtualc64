@@ -195,15 +195,15 @@ public extension MetalView
         */
         
         // Use the blitter to copy the texture data back from the GPU
-        let queue = filteredTexture.device.makeCommandQueue()!
+        let queue = scanlineTexture.device.makeCommandQueue()!
         let commandBuffer = queue.makeCommandBuffer()!
         let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
-        blitEncoder.synchronize(texture: filteredTexture, slice: 0, level: 0)
+        blitEncoder.synchronize(texture: scanlineTexture, slice: 0, level: 0)
         blitEncoder.endEncoding()
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         
-        return filteredTexture.toNSImage(Float(textureRect.minX),
+        return scanlineTexture.toNSImage(Float(textureRect.minX),
                                          Float(textureRect.minY),
                                          Float(textureRect.maxX),
                                          Float(textureRect.maxY))

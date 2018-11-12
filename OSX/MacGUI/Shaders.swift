@@ -12,6 +12,7 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
+
 //
 // Base class for all compute kernels
 // 
@@ -98,7 +99,7 @@ class ComputeKernel : NSObject {
         sampler = samplerLinear
     }
     
-    func getsampler() -> MTLSamplerState
+    func getSampler() -> MTLSamplerState
     {
         return sampler
     }
@@ -177,6 +178,36 @@ class XBRUpscaler : ComputeKernel {
 
 
 //
+// Scanline filters
+//
+
+class SimpleScanlines : ComputeKernel {
+    
+    private var crtParameters: CrtParameters!
+    
+    struct CrtParameters {
+        var scanlineWeight: Float
+    }
+    
+    func setScanlineWeight(_ value : Float) {
+        crtParameters.scanlineWeight = value
+    }
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary)
+    {
+        self.init(name: "scanlines",
+                  device: device,
+                  library: library)
+        crtParameters = CrtParameters.init(scanlineWeight: 0.0)
+        sampler = samplerLinear; //  samplerNearest
+    }
+    
+    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
+        encoder.setBytes(&crtParameters, length: MemoryLayout<CrtParameters>.stride, index: 0);
+    }
+}
+
+//
 // Filters
 //
 
@@ -198,6 +229,7 @@ class SmoothFilter : ComputeKernel {
     }
 }
 
+// DEPRECATED
 class GaussFilter : ComputeKernel {
     
     var sigma = Float(0.0)
@@ -222,99 +254,3 @@ class GaussFilter : ComputeKernel {
     }
 }
 
-/*
-class BlurFilter : ComputeKernel {
-    
-    var blurWeightTexture: MTLTexture!
-
-    convenience init?(name: String, device: MTLDevice, library: MTLLibrary, radius: Float) {
-        self.init(name: name, device: device, library: library)
-    
-        // Build blur weight texture
-        let sigma: Float = radius / 2.0
-        let size:  Int   = Int(round(radius) * 2 + 1)
-    
-        var delta: Float = 0.0;
-        var expScale: Float = 0.0
-        
-        if (radius > 0.0) {
-            delta = (radius * 2) / Float(size - 1)
-            expScale = -1.0 / (2 * sigma * sigma)
-        }
-    
-        let weights = UnsafeMutablePointer<Float>.allocate(capacity: size)
-        
-        var weightSum: Float = 0.0;
-        
-        var x = -radius
-        for i in 0 ..< size {
-            let weight = expf((x * x) * expScale)
-            weights[i] = weight
-            weightSum += weight
-            x += delta
-        }
-        
-        let weightScale: Float = 1.0 / weightSum
-        for j in 0 ..< size {
-            weights[j] *= weightScale;
-        }
-    
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.r32Float, width: size, height: 1, mipmapped: false)
-    
-        blurWeightTexture = device.makeTexture(descriptor: textureDescriptor)!
-        
-        let region = MTLRegionMake2D(0, 0, size, 1)
-        blurWeightTexture.replace(region: region, mipmapLevel: 0, withBytes: weights, bytesPerRow: size * 4 /* size of float */)
-    
-        weights.deallocate()
-    }
-    
-    override func isPreBlurRequired() -> Bool {
-        return true;
-    }
-    
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
-        encoder.setTexture(blurWeightTexture, index: 2)
-    }
-}
-
-class CrtFilter : ComputeKernel {
-    
-    var _bloomingFactor : Float = 1.0
-    var bloom: MTLBuffer!
-    
-    func setBloomingFactor(_ value : Float) {
-        
-        _bloomingFactor = value;
-        var _alpha : Float = 0.0
-        
-        let contents = bloom.contents()
-        memcpy(contents, &_bloomingFactor, 4)
-        memcpy(contents + 4, &_bloomingFactor, 4)
-        memcpy(contents + 8, &_bloomingFactor, 4)
-        memcpy(contents + 12, &_alpha, 4)
-    }
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-
-        self.init(name: "crt", device: device, library: library)
-        self.bloom = device.makeBuffer(length: 16, options: .storageModeShared)
-        
-        setBloomingFactor(1.0)
-    }
-    
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
-        
-        encoder.setBuffer(bloom, offset: 0, index: 2)
-    }
-    
-}
-
-class ScanlineFilter : ComputeKernel {
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "scanline", device: device, library: library)
-        sampler = samplerLinear
-    }
-}
-*/
