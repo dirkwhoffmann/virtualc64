@@ -32,15 +32,15 @@ struct ShaderOptions : Codable {
 }
 
 var ShaderDefaults = ShaderOptions(blur: 1,
-                                   blurRadius: 1.0,
+                                   blurRadius: 1.5,
                                    bloom: 1,
                                    bloomRadius: 1.0,
                                    bloomFactor: 1.0,
                                    dotMask: 1,
-                                   dotMaskBrightness: 1.0,
-                                   scanlines: 1,
-                                   scanlineBrightness: 1.0,
-                                   scanlineWeight: 1.0)
+                                   dotMaskBrightness: 0.7,
+                                   scanlines: 2,
+                                   scanlineBrightness: 0.12,
+                                   scanlineWeight: 6.0)
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
@@ -115,9 +115,9 @@ public class MetalView: MTKView {
     // Array holding all available upscalers
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
-    // Array holding all available scanline filters
-    var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 2)
-        
+    // The scanline filter
+    var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
+    
     // Shader options
     var shaderOptions = ShaderDefaults
     
@@ -169,6 +169,7 @@ public class MetalView: MTKView {
     }
 
     /// Currently selected scanline filter
+    /*
     var scanlineFilter = EmulatorDefaults.scanlineFilter {
         didSet {
             if scanlineFilter >= scanlineFilterGallery.count || scanlineFilterGallery[scanlineFilter] == nil {
@@ -177,6 +178,7 @@ public class MetalView: MTKView {
             }
         }
     }
+    */
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
     var enableMetal = false
@@ -302,12 +304,12 @@ public class MetalView: MTKView {
     /// Returns the compute kernel of the currently selected scanline filter
     func currentScanlineFilter() -> ComputeKernel {
         
-        precondition(scanlineFilter < scanlineFilterGallery.count)
+        precondition(shaderOptions.scanlines < scanlineFilterGallery.count)
         precondition(scanlineFilterGallery[0] != nil)
         
-        return scanlineFilterGallery[scanlineFilter]!
+        return scanlineFilterGallery[shaderOptions.scanlines]!
     }
-        
+    
     func startFrame() {
     
         commandBuffer = queue.makeCommandBuffer()
@@ -318,7 +320,8 @@ public class MetalView: MTKView {
         
         // Compute the bloom texture
         if #available(OSX 10.13, *) {
-            let gauss = MPSImageGaussianBlur(device: device!, sigma: 1.0)
+            let gauss = MPSImageGaussianBlur(device: device!,
+                                             sigma: shaderOptions.bloomRadius)
             gauss.encode(commandBuffer: commandBuffer,
                          sourceTexture: emulatorTexture,
                          destinationTexture: bloomTexture)
@@ -332,27 +335,20 @@ public class MetalView: MTKView {
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        // Add scanlines
+        // Emulate scanlines
         let scanlineFilter = currentScanlineFilter()
         scanlineFilter.apply(commandBuffer: commandBuffer,
                                 source: upscaledTexture,
                                 target: scanlineTexture)
         
         // Blur the scanline texture
-        if #available(OSX 10.13, *) {
-            let gauss = MPSImageGaussianBlur(device: device!, sigma: 1.0)
+        if #available(OSX 10.13, *), shaderOptions.blur > 0 {
+            let gauss = MPSImageGaussianBlur(device: device!,
+                                             sigma: shaderOptions.blurRadius)
             gauss.encode(commandBuffer: commandBuffer,
                          inPlaceTexture: &scanlineTexture,
                          fallbackCopyAllocator: nil)
         }
-        
-        // Filter the upscaled texture (DEPRECATED)
-        /*
-        let filter = currentFilter()
-        filter.apply(commandBuffer: commandBuffer,
-                     source: scanlineTexture,
-                     target: filteredTexture)
-        */
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()

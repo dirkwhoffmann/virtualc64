@@ -147,7 +147,10 @@
                                     <menuItem title="None" state="on" id="tn7-rz-jm3">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Yes" tag="1" id="EFM-xi-KNs">
+                                    <menuItem title="Embedded" tag="1" id="EFM-xi-KNs">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Superimposed" tag="2" id="oTK-iX-QvN">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>
@@ -520,7 +523,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlN-gj-axR">
                         <rect key="frame" x="451" y="294" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="l7e-Vo-Ynq"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="12" doubleValue="6" tickMarkPosition="above" sliderType="linear" id="l7e-Vo-Ynq"/>
                         <connections>
                             <action selector="scanlineWeightAction:" target="-2" id="feW-fA-qoU"/>
                         </connections>
@@ -528,7 +531,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x9o-Uu-IT3">
                         <rect key="frame" x="451" y="316" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="uFX-uz-tY3"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.12" tickMarkPosition="above" sliderType="linear" id="uFX-uz-tY3"/>
                         <connections>
                             <action selector="scanlineBrightnessAction:" target="-2" id="w2g-dq-dDW"/>
                         </connections>
@@ -563,7 +566,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IN4-8J-FPM">
                         <rect key="frame" x="448" y="377" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="2Zl-BI-gA6"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.69999999999999996" tickMarkPosition="above" sliderType="linear" id="2Zl-BI-gA6"/>
                         <connections>
                             <action selector="dotMaskBrightnessAction:" target="-2" id="13U-eR-AbN"/>
                         </connections>
@@ -589,15 +592,15 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pZd-6i-ZbR">
                         <rect key="frame" x="97" y="401" width="186" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="3mz-Af-9bv" id="Zv2-z0-Hxt">
+                        <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="3mz-Af-9bv" id="Zv2-z0-Hxt">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" autoenablesItems="NO" id="Z8D-Rr-LgW">
                                 <items>
-                                    <menuItem title="None" state="on" id="3mz-Af-9bv">
+                                    <menuItem title="Disabled" state="on" id="3mz-Af-9bv">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Yes" tag="1" id="nv7-Kz-cab">
+                                    <menuItem title="Enabled" tag="1" id="nv7-Kz-cab">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>
@@ -610,7 +613,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ix-im-cce">
                         <rect key="frame" x="154" y="377" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Dn0-N5-u4v"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5" doubleValue="1.5" tickMarkPosition="above" sliderType="linear" id="Dn0-N5-u4v"/>
                         <connections>
                             <action selector="blurRadiusAction:" target="-2" id="1lZ-i4-FJQ"/>
                         </connections>
@@ -636,15 +639,15 @@ Gw
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7d-l9-zhx">
                         <rect key="frame" x="97" y="342" width="186" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="PnU-jq-UPB" id="gES-vH-sGq">
+                        <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="PnU-jq-UPB" id="gES-vH-sGq">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" autoenablesItems="NO" id="zyi-yh-eKk">
                                 <items>
-                                    <menuItem title="None" state="on" id="PnU-jq-UPB">
+                                    <menuItem title="Disabled" state="on" id="PnU-jq-UPB">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="Yes" tag="1" id="llz-Hu-SBH">
+                                    <menuItem title="Enabled" tag="1" id="llz-Hu-SBH">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>
@@ -657,7 +660,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IjX-Lg-CLs">
                         <rect key="frame" x="154" y="318" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="bwU-FQ-gOQ"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="bwU-FQ-gOQ"/>
                         <connections>
                             <action selector="bloomRadiusAction:" target="-2" id="3bF-78-8WQ"/>
                         </connections>
@@ -674,7 +677,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DrJ-VB-wtT">
                         <rect key="frame" x="154" y="296" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="E2K-Br-F1W"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="3" doubleValue="1.5" tickMarkPosition="above" sliderType="linear" id="E2K-Br-F1W"/>
                         <connections>
                             <action selector="bloomFactorAction:" target="-2" id="q2w-px-AsH"/>
                         </connections>

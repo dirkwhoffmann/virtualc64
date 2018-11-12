@@ -33,17 +33,6 @@ struct ProjectedVertex {
     float  alpha;
 };
 
-/*
-struct FragmentUniforms {
-    uint scanline;
-    float scanlineBrightness;
-    float scanlineWeight;
-    float bloomFactor;
-    uint mask;
-    float maskBrightness;
-};
-*/
-
 struct ShaderOptions {
     
     uint blur;
@@ -134,24 +123,28 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Read fragment from texture
     float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
     float4 color = texture.sample(texSampler, tc);
-    float4 bloomColor = bloomTexture.sample(texSampler, tc);
-    bloomColor = pow(bloomColor, uniforms.bloomFactor) * uniforms.scanlineBrightness;
-    color = saturate(color + bloomColor);
     
-    // Apply scanline effect
-    /*
-    if (uniforms.scanline != 0) {
+    // Apply bloom effect (if enabled)
+    if (uniforms.bloom) {
+        float4 bColor = bloomTexture.sample(texSampler, tc);
+        bColor = pow(bColor, uniforms.bloomFactor) * uniforms.scanlineBrightness;
+        color = saturate(color + bColor);
+    }
+    
+    // Apply scanline effect (if emulation type matches)
+    if (uniforms.scanlines == 2) {
         color *= scanlineWeight(pixel,
-                                uniforms.scanline,
+                                6, // TODO: MUST BE SCANLINE HEIGHT
                                 uniforms.scanlineWeight,
                                 uniforms.scanlineBrightness,
                                 uniforms.bloomFactor);
     }
-    */
     
-    // Apply dot mask effect
-    color *= dotMaskWeight(uniforms.dotMask, pixel, uniforms.dotMaskBrightness);
-
+    // Apply dot mask effect (if enabled)
+    if (uniforms.dotMask) {
+        color *= dotMaskWeight(uniforms.dotMask, pixel, uniforms.dotMaskBrightness);
+    }
+    
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 

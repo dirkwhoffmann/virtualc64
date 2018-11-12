@@ -126,6 +126,7 @@ public extension MetalView {
         // Build scanline filters
         scanlineFilterGallery[0] = BypassFilter.init(device: device!, library: library)
         scanlineFilterGallery[1] = SimpleScanlines(device: device!, library: library)
+        scanlineFilterGallery[2] = BypassFilter.init(device: device!, library: library)
     }
     
     func buildBuffers() {
