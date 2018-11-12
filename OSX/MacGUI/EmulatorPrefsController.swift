@@ -115,18 +115,24 @@ class EmulatorPrefsController : UserDialogController {
         // Effects
         blurPopUp.selectItem(withTag: shaderOptions.blur)
         blurRadiusSlider.floatValue = shaderOptions.blurRadius
-        
+        blurRadiusSlider.isEnabled = shaderOptions.blur > 0
+
         bloomPopup.selectItem(withTag: shaderOptions.bloom)
         bloomRadiusSlider.floatValue = shaderOptions.bloomRadius
+        bloomRadiusSlider.isEnabled = shaderOptions.bloom > 0
         bloomFactorSlider.floatValue = shaderOptions.bloomFactor
+        bloomFactorSlider.isEnabled = shaderOptions.bloom > 0
         
         dotMaskPopUp.selectItem(withTag: shaderOptions.dotMask)
         dotMaskBrightnessSlider.floatValue = shaderOptions.dotMaskBrightness
-        
+        dotMaskBrightnessSlider.isEnabled = shaderOptions.dotMask > 0
+
         scanlinesPopUp.selectItem(withTag: shaderOptions.scanlines)
         scanlineBrightnessSlider.floatValue = shaderOptions.scanlineBrightness
+        scanlineBrightnessSlider.isEnabled = shaderOptions.scanlines > 0
         scanlineWeightSlider.floatValue = shaderOptions.scanlineWeight
-    
+        scanlineWeightSlider.isEnabled = shaderOptions.scanlines > 0
+
         // Geometry
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
         eyeXSlider.floatValue = parent.metalScreen.eyeX()
