@@ -122,6 +122,7 @@ public class MetalView: MTKView {
     var shaderOptions = ShaderDefaults
     
     // Shader parameters (DEPRECATED)
+    /*
     var scanlines = EmulatorDefaults.scanlines
     var scanlineBrightness = EmulatorDefaults.scanlineBrightness
     var scanlineWeight = EmulatorDefaults.scanlineWeight
@@ -129,6 +130,7 @@ public class MetalView: MTKView {
     var dotMask = EmulatorDefaults.dotMask
     var maskBrightness = EmulatorDefaults.maskBrightness
     var blurFactor = EmulatorDefaults.blur
+    */
     
     // Animation parameters
     var currentXAngle = Float(0.0)

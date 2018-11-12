@@ -141,24 +141,27 @@ public extension MetalView {
         //     uint8    _pad[]                + 15 bytes
         // };                                 ----------
         //                                    = 80 bytes
-
-        // struct FragmentUniforms {
-        //     float scanlineBrightness;         4 bytes
-        //     uint  scanline;                +  4 bytes
-        //     float scanlineWeight;          +  4 bytes
+        
+        // struct ShaderOptions {
+        //     uint blur;                        4 bytes
+        //     float blurRadius;              +  4 bytes
+        //     uint bloom;                    +  4 bytes
+        //     float bloomRadius;             +  4 bytes
         //     float bloomFactor;             +  4 bytes
-        //     uint  mask;                    +  4 bytes
-        //     float maskBrightness;          +  4 bytes
-        //     uint8 _pad[]                   +  0 bytes
+        //     uint dotMask;                  +  4 bytes
+        //     float dotMaskBrightness;       +  4 bytes
+        //     uint scanlines;                +  4 bytes
+        //     float scanlineBrightness;      +  4 bytes
+        //     float scanlineWeight;          +  4 bytes
         // };                                 ----------
-        //                                    = 24 bytes
+        //                                    = 40 bytes
         
         let opt = MTLResourceOptions.cpuCacheModeWriteCombined
         
         uniformBuffer2D = device!.makeBuffer(length: 80, options: opt)
         uniformBuffer3D = device!.makeBuffer(length: 80, options: opt)
         uniformBufferBg = device!.makeBuffer(length: 80, options: opt)
-        uniformFragment = device!.makeBuffer(length: 24, options: opt)
+        uniformFragment = device!.makeBuffer(length: 40, options: opt)
 
         precondition(uniformBuffer2D != nil, "uniformBuffer2D must not be nil")
         precondition(uniformBuffer3D != nil, "uniformBuffer3D must not be nil")
@@ -186,26 +189,23 @@ public extension MetalView {
     
     func fillFragmentShaderUniforms(_ buffer: MTLBuffer?) {
         
-        var _s = (scanlines == 0) ? 0 : Int(layerHeight / 256);
-        var _sb = scanlineBrightness
-        var _sw = scanlineWeight
-        var _bf = bloomFactor
-        var _m = dotMask
-        var _dmb = maskBrightness
-        
-        // track("scanline height: \(_s)")
+        var options = shaderOptions
         
         if let contents = buffer?.contents() {
-            memcpy(contents, &_s, 4)
-            memcpy(contents + 4, &_sb, 4)
-            memcpy(contents + 8, &_sw, 4)
-            memcpy(contents + 12, &_bf, 4)
-            memcpy(contents + 16, &_m, 4)
-            memcpy(contents + 20, &_dmb, 4)
+            
+            memcpy(contents + 0, &options.blur, 4)
+            memcpy(contents + 4, &options.blurRadius, 4)
+            memcpy(contents + 8, &options.bloom, 4)
+            memcpy(contents + 12, &options.bloomRadius, 4)
+            memcpy(contents + 16, &options.bloomFactor, 4)
+            memcpy(contents + 20, &options.dotMask, 4)
+            memcpy(contents + 24, &options.dotMaskBrightness, 4)
+            memcpy(contents + 28, &options.scanlines, 4)
+            memcpy(contents + 32, &options.scanlineBrightness, 4)
+            memcpy(contents + 36, &options.scanlineWeight, 4)
         }
     }
     
-        
     func fillBuffer(_ buffer: MTLBuffer?, matrix: simd_float4x4, alpha: Float) {
         
         fillMatrix(buffer, matrix)

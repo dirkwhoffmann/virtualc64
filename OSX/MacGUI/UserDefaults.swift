@@ -282,16 +282,6 @@ extension MyController {
             }
         }
         
-        // DEPRECATED
-        metalScreen.blurFactor = defaults.float(forKey: VC64Keys.blur)
-        metalScreen.scanlines = defaults.integer(forKey: VC64Keys.scanlines)
-        metalScreen.scanlineBrightness = defaults.float(forKey: VC64Keys.scanlineBrightness)
-        metalScreen.scanlineWeight = defaults.float(forKey: VC64Keys.scanlineWeight)
-        metalScreen.bloomFactor = defaults.float(forKey: VC64Keys.bloomFactor)
-        metalScreen.dotMask = defaults.integer(forKey: VC64Keys.mask)
-        metalScreen.maskBrightness = defaults.float(forKey: VC64Keys.maskBrightness)
-        // END DEPRECATED
-        
         // Geometry
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
         metalScreen.setEyeX(defaults.float(forKey: VC64Keys.eyeX))
@@ -334,15 +324,6 @@ extension MyController {
         c64.sid.setModel(defaults.integer(forKey: VC64Keys.audioChip))
         c64.sid.setAudioFilter(defaults.bool(forKey: VC64Keys.audioFilter))
         c64.sid.setSamplingMethod(defaults.integer(forKey: VC64Keys.samplingMethod))
-
-        /*
-        let model = c64.sid.chipModel()
-        let method = c64.sid.samplingMethod()
-        if (model == MOS_8580.rawValue && method == SID_SAMPLE_FAST.rawValue) {
-            showResidSamplingMethodAlert()
-            c64.sid.setSamplingMethod(Int(SID_SAMPLE_INTERPOLATE.rawValue))
-        }
-        */
         
         // Board
         c64.vic.setGlueLogic(defaults.integer(forKey: VC64Keys.glueLogic))
@@ -433,18 +414,6 @@ extension MyController {
         UserDefaults.standard.set(try?
             PropertyListEncoder().encode(metalScreen.shaderOptions),
                                   forKey: VC64Keys.shaderOptions)
-        
-        // Texture
-        defaults.set(metalScreen.blurFactor, forKey: VC64Keys.blur)
-
-        // Effects
-        defaults.set(metalScreen.scanlines, forKey: VC64Keys.scanlines)
-        defaults.set(metalScreen.scanlineBrightness, forKey: VC64Keys.scanlineBrightness)
-        defaults.set(metalScreen.scanlineWeight, forKey: VC64Keys.scanlineWeight)
-        defaults.set(metalScreen.bloomFactor, forKey: VC64Keys.bloomFactor)
-        defaults.set(metalScreen.dotMask, forKey: VC64Keys.mask)
-        defaults.set(metalScreen.scanlines, forKey: VC64Keys.scanlines)
-        defaults.set(metalScreen.maskBrightness, forKey: VC64Keys.maskBrightness)
         
         // Geometry
         defaults.set(metalScreen.fullscreenKeepAspectRatio, forKey: VC64Keys.aspectRatio)

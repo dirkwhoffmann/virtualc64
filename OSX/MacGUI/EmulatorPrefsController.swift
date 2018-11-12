@@ -366,18 +366,6 @@ class EmulatorPrefsController : UserDialogController {
         
         // Effects
         parent.metalScreen.shaderOptions = ShaderDefaults
-
-
-        // DEPRECATED
-        parent.metalScreen.blurFactor = EmulatorDefaults.blur
-        // Effect engine
-        parent.metalScreen.scanlines = EmulatorDefaults.scanlines
-        parent.metalScreen.dotMask = EmulatorDefaults.dotMask
-        parent.metalScreen.scanlineBrightness = EmulatorDefaults.scanlineBrightness
-        parent.metalScreen.scanlineWeight = EmulatorDefaults.scanlineWeight
-        parent.metalScreen.bloomFactor = EmulatorDefaults.bloomFactor
-        parent.metalScreen.maskBrightness = EmulatorDefaults.maskBrightness
-        // END DEPRECATED
         
         // Geometry
         parent.metalScreen.setEyeX(EmulatorDefaults.eyeX)
