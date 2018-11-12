@@ -189,8 +189,10 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func blurAction(_ sender: NSSlider!) {
         
+        /*
         let gaussFilter = parent.metalScreen.filters[1] as! GaussFilter
         gaussFilter.sigma = sender.floatValue
+        */
         parent.metalScreen.blurFactor = sender.floatValue
         update()
     }

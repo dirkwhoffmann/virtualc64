@@ -220,6 +220,7 @@ class BypassFilter : ComputeKernel {
     }
 }
 
+/*
 class SmoothFilter : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
@@ -228,8 +229,10 @@ class SmoothFilter : ComputeKernel {
         sampler = samplerLinear
     }
 }
+*/
 
 // DEPRECATED
+/*
 class GaussFilter : ComputeKernel {
     
     var sigma = Float(0.0)
@@ -253,4 +256,4 @@ class GaussFilter : ComputeKernel {
         }
     }
 }
-
+*/

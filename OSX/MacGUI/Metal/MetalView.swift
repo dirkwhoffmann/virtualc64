@@ -89,18 +89,6 @@ public class MetalView: MTKView {
     /// the upscaled texture.
     var scanlineTexture: MTLTexture! = nil
     
-    
-    /// Filtered emulator texture
-    /// In the second post-processing stage, the upscaled texture is blurred.
-    /// The user can choose between bypass blurring which simply copies the
-    /// pixels as they are or real blurring algorithm. To achieve high
-    /// performance, blurring is done via Metals High Performance Shader
-    /// framework.
-    /// DEPRECATED
-    // var filteredTexture: MTLTexture! = nil
-    
-    
-
     // Array holding all available upscalers
     var upscalers = [ComputeKernel?](repeating: nil, count: 3)
 
@@ -111,7 +99,7 @@ public class MetalView: MTKView {
     var filters = [ComputeKernel?](repeating: nil, count: 5)
     
     // The bloom filter
-    var bloomFilter: GaussFilter!
+    // var bloomFilter: GaussFilter!
     
     // Shader parameters
     var scanlines = EmulatorDefaults.scanlines
@@ -120,15 +108,7 @@ public class MetalView: MTKView {
     var bloomFactor = EmulatorDefaults.bloomFactor
     var dotMask = EmulatorDefaults.dotMask
     var maskBrightness = EmulatorDefaults.maskBrightness
-    
-    var blurFactor = EmulatorDefaults.blur {
-        didSet {
-            if (1 < filters.count && filters[1] != nil) {
-                let gaussFilter = filters[1] as! GaussFilter
-                gaussFilter.sigma = blurFactor
-            }
-        }
-    }
+    var blurFactor = EmulatorDefaults.blur
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -334,16 +314,13 @@ public class MetalView: MTKView {
         fillFragmentShaderUniforms(uniformFragment)
         
         // Compute the bloom texture
-        bloomFilter.apply(commandBuffer: commandBuffer,
-                          source: emulatorTexture,
-                          target: bloomTexture)
-        
-        // Blur the bloom texture
         if #available(OSX 10.13, *) {
             let gauss = MPSImageGaussianBlur(device: device!, sigma: 1.0)
             gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &bloomTexture,
-                         fallbackCopyAllocator: nil)
+                         sourceTexture: emulatorTexture,
+                         destinationTexture: bloomTexture)
+        } else {
+            bloomTexture = emulatorTexture
         }
         
         // Upscale the C64 texture

@@ -135,11 +135,12 @@ public extension MetalView {
         scanlineFilters[1] = SimpleScanlines(device: device!, library: library)
         
         // Build bloom filter
-        bloomFilter = GaussFilter.init(device: device!, library: library, sigma: 1.0)
+        // bloomFilter = GaussFilter.init(device: device!, library: library, sigma: 1.0)
         
         // Build filters
         filters[0] = BypassFilter.init(device: device!, library: library)
-        filters[1] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
+        filters[1] = BypassFilter.init(device: device!, library: library)
+        // filters[1] = GaussFilter.init(device: device!, library: library, sigma: 1.0)
     }
     
     func buildBuffers() {
