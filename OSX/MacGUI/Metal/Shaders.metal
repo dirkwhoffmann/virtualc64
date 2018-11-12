@@ -33,10 +33,10 @@ struct ProjectedVertex {
     float  alpha;
 };
 
-struct ShaderOptions {
+struct FragmentUniforms {
     
-    uint blur;
-    float blurRadius;
+    // uint blur;
+    // float blurRadius;
     
     uint bloom;
     float bloomRadius;
@@ -48,6 +48,7 @@ struct ShaderOptions {
     uint scanlines;
     float scanlineBrightness;
     float scanlineWeight;
+    uint scanlineDistance;
 };
 
 vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
@@ -115,7 +116,7 @@ float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                              texture2d<float, access::sample> texture [[texture(0)]],
                              texture2d<float, access::sample> bloomTexture [[texture(1)]],
-                             constant ShaderOptions &uniforms [[buffer(0)]],
+                             constant FragmentUniforms &uniforms [[buffer(0)]],
                              sampler texSampler [[sampler(0)]])
 {
     uint2 pixel = uint2(uint(vert.position.x), uint(vert.position.y));
@@ -134,7 +135,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Apply scanline effect (if emulation type matches)
     if (uniforms.scanlines == 2) {
         color *= scanlineWeight(pixel,
-                                6, // TODO: MUST BE SCANLINE HEIGHT
+                                uniforms.scanlineDistance,
                                 uniforms.scanlineWeight,
                                 uniforms.scanlineBrightness,
                                 uniforms.bloomFactor);

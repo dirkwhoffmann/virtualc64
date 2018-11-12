@@ -144,9 +144,7 @@ public extension MetalView {
         //                                    = 80 bytes
         
         // struct ShaderOptions {
-        //     uint blur;                        4 bytes
-        //     float blurRadius;              +  4 bytes
-        //     uint bloom;                    +  4 bytes
+        //     uint bloom;                       4 bytes
         //     float bloomRadius;             +  4 bytes
         //     float bloomFactor;             +  4 bytes
         //     uint dotMask;                  +  4 bytes
@@ -154,15 +152,16 @@ public extension MetalView {
         //     uint scanlines;                +  4 bytes
         //     float scanlineBrightness;      +  4 bytes
         //     float scanlineWeight;          +  4 bytes
+        //     uint scanlineDistance;         +  4 bytes
         // };                                 ----------
-        //                                    = 40 bytes
+        //                                    = 36 bytes
         
         let opt = MTLResourceOptions.cpuCacheModeWriteCombined
         
         uniformBuffer2D = device!.makeBuffer(length: 80, options: opt)
         uniformBuffer3D = device!.makeBuffer(length: 80, options: opt)
         uniformBufferBg = device!.makeBuffer(length: 80, options: opt)
-        uniformFragment = device!.makeBuffer(length: 40, options: opt)
+        uniformFragment = device!.makeBuffer(length: 36, options: opt)
 
         precondition(uniformBuffer2D != nil, "uniformBuffer2D must not be nil")
         precondition(uniformBuffer3D != nil, "uniformBuffer3D must not be nil")
@@ -194,16 +193,19 @@ public extension MetalView {
         
         if let contents = buffer?.contents() {
             
-            memcpy(contents + 0, &options.blur, 4)
-            memcpy(contents + 4, &options.blurRadius, 4)
-            memcpy(contents + 8, &options.bloom, 4)
-            memcpy(contents + 12, &options.bloomRadius, 4)
-            memcpy(contents + 16, &options.bloomFactor, 4)
-            memcpy(contents + 20, &options.dotMask, 4)
-            memcpy(contents + 24, &options.dotMaskBrightness, 4)
-            memcpy(contents + 28, &options.scanlines, 4)
-            memcpy(contents + 32, &options.scanlineBrightness, 4)
-            memcpy(contents + 36, &options.scanlineWeight, 4)
+            var distance = Int(layerHeight / 256);
+            
+            // memcpy(contents + 0, &options.blur, 4)
+            // memcpy(contents + 4, &options.blurRadius, 4)
+            memcpy(contents + 0, &options.bloom, 4)
+            memcpy(contents + 4, &options.bloomRadius, 4)
+            memcpy(contents + 8, &options.bloomFactor, 4)
+            memcpy(contents + 12, &options.dotMask, 4)
+            memcpy(contents + 16, &options.dotMaskBrightness, 4)
+            memcpy(contents + 20, &options.scanlines, 4)
+            memcpy(contents + 24, &options.scanlineBrightness, 4)
+            memcpy(contents + 28, &options.scanlineWeight, 4)
+            memcpy(contents + 32, &distance, 4)
         }
     }
     
