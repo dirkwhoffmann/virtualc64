@@ -46,11 +46,7 @@ class ComputeKernel : NSObject {
 
     var device : MTLDevice!
     var kernel : MTLComputePipelineState!
-    // var sampler : MTLSamplerState!
 
-    // var samplerLinear : MTLSamplerState!
-    // var samplerNearest : MTLSamplerState!
-    
     convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
     {
         self.init()
@@ -77,36 +73,7 @@ class ComputeKernel : NSObject {
             alert.runModal()
             return nil
         }
-        
-        /*
-        // Build texture samplers
-        let samplerDescriptor1 = MTLSamplerDescriptor()
-        samplerDescriptor1.minFilter = MTLSamplerMinMagFilter.linear
-        samplerDescriptor1.magFilter = MTLSamplerMinMagFilter.linear
-        samplerDescriptor1.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor1.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor1.mipFilter = MTLSamplerMipFilter.notMipmapped
-        samplerLinear = device.makeSamplerState(descriptor: samplerDescriptor1)
-        
-        let samplerDescriptor2 = MTLSamplerDescriptor()
-        samplerDescriptor2.minFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor2.magFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor2.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor2.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor2.mipFilter = MTLSamplerMipFilter.notMipmapped
-        samplerNearest = device.makeSamplerState(descriptor: samplerDescriptor2)
-        
-        // Set default sampler
-        sampler = samplerLinear
-        */
     }
-    
-    /*
-    func getSampler() -> MTLSamplerState
-    {
-        return sampler
-    }
-    */
     
     func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder)
     {
@@ -152,9 +119,6 @@ class BypassUpscaler : ComputeKernel {
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         
         self.init(name: "bypassupscaler", device: device, library: library)
-        
-        // Replace default texture sampler
-        // sampler = samplerNearest
     }
 }
 
@@ -163,20 +127,14 @@ class EPXUpscaler : ComputeKernel {
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         
         self.init(name: "epxupscaler", device: device, library: library)
-        
-        // Replace default texture sampler
-        // sampler = samplerNearest
     }
 }
 
 class XBRUpscaler : ComputeKernel {
     
-    convenience init?(device: MTLDevice, library: MTLLibrary)
-    {
-        self.init(name: "xbrupscaler", device: device, library: library)
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
         
-        // Replace default texture sampler
-        // sampler = samplerNearest
+        self.init(name: "xbrupscaler", device: device, library: library)
     }
 }
 

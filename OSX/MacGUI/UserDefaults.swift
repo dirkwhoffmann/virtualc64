@@ -142,21 +142,6 @@ extension MyController {
             VC64Keys.brightness: EmulatorDefaults.brightness,
             VC64Keys.contrast: EmulatorDefaults.contrast,
             VC64Keys.saturation: EmulatorDefaults.saturation,
-
-            // Effects
-            // VC64Keys.shaderOptions: try? PropertyListEncoder().encode(shaderDefaults),
-            
-            // DEPRECATED
-            VC64Keys.videoFilter: EmulatorDefaults.filter,
-            VC64Keys.blur: EmulatorDefaults.blur,
-            
-            VC64Keys.scanlines: EmulatorDefaults.scanlines,
-            VC64Keys.scanlineBrightness: EmulatorDefaults.scanlineBrightness,
-            VC64Keys.scanlineWeight: EmulatorDefaults.scanlineWeight,
-            VC64Keys.bloomFactor: EmulatorDefaults.bloomFactor,
-            VC64Keys.mask: EmulatorDefaults.dotMask,
-            VC64Keys.maskBrightness: EmulatorDefaults.maskBrightness,
-            // END DEPRECATED
             
             VC64Keys.aspectRatio: false,
             VC64Keys.eyeX: EmulatorDefaults.eyeX,
