@@ -574,7 +574,7 @@
 		5000474012DCECAB0098D890 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				50C8924D1BEF35FB00231B96 /* MetalView */,
+				506CE96621998C4500B70A3A /* Metal */,
 				506D4D0C20B331A00093C5C6 /* Formatter.swift */,
 				50DC89C720B2EB53005E0557 /* CpuTableView.swift */,
 				50720F4120C853910010EBF2 /* CpuTraceView.swift */,
@@ -755,6 +755,21 @@
 			path = SID;
 			sourceTree = "<group>";
 		};
+		506CE96621998C4500B70A3A /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				50133B96200D4EED00167227 /* MetalView.swift */,
+				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
+				5014D683200CD62C00044217 /* MetalSetup.swift */,
+				5031D599200B47B70088C802 /* ImageUtilities.swift */,
+				5031D59B200B81D20088C802 /* Animation.swift */,
+				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
+				50DEAD8E2008E615008A8761 /* Shaders.swift */,
+				50C72DE51BC7F42100F1863B /* Shaders.metal */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
 		50763278202989E000575110 /* User Dialog Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -809,21 +824,6 @@
 				50031B33206FABA400A1969B /* SnapshotDialog.xib */,
 			);
 			path = "XIB files";
-			sourceTree = "<group>";
-		};
-		50C8924D1BEF35FB00231B96 /* MetalView */ = {
-			isa = PBXGroup;
-			children = (
-				50133B96200D4EED00167227 /* MetalView.swift */,
-				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
-				5014D683200CD62C00044217 /* MetalSetup.swift */,
-				5031D599200B47B70088C802 /* ImageUtilities.swift */,
-				5031D59B200B81D20088C802 /* Animation.swift */,
-				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
-				50DEAD8E2008E615008A8761 /* Shaders.swift */,
-				50C72DE51BC7F42100F1863B /* Shaders.metal */,
-			);
-			name = MetalView;
 			sourceTree = "<group>";
 		};
 		50D141641417A34B0024FC74 /* resid */ = {
