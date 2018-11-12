@@ -47,10 +47,8 @@ StarDos::charge()
     updateVoltage();
     voltage += MIN(5000000 /* 5.0V */ - voltage, 78125);
     if (voltage > 2700000 /* 2.7V */) {
-        // romIsVisible = true;
         enableROML();
     }
-    debug("charge %lld (ROML %s)\n", voltage, voltage > 2700000 ? "ON" : "OFF");
 }
 
 void
@@ -59,12 +57,8 @@ StarDos::discharge()
     updateVoltage();
     voltage -= MIN(voltage, 78125);
     if (voltage < 1400000 /* 1.4V */) {
-        // romIsVisible = false;
         disableROML();
     }
-    
-    debug("discharge %lld (ROML %s)\n", voltage, voltage < 1400000 ? "OFF" : "ON");
-
 }
 
 void
@@ -88,16 +82,3 @@ StarDos::updatePeekPokeLookupTables()
         c64->mem.peekSrc[0xF] = M_CRTHI;
     }
 }
-
-/*
-uint8_t
-StarDos::peekRomL(uint16_t addr)
-{
-    if (romIsVisible) {
-        return Cartridge::peekRomL(addr);
-    } else {
-        return c64->mem.ram[addr];
-    }
-}
-*/
-

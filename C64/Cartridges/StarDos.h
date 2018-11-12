@@ -30,7 +30,6 @@ class StarDos : public Cartridge {
     
     uint64_t voltage = 5000000;
     uint64_t latestVoltageUpdate = 0;
-    // bool romIsVisible = false;
     
     public:
     
@@ -38,7 +37,6 @@ class StarDos : public Cartridge {
     void concludeMake();
     CartridgeType getCartridgeType() { return CRT_STARDOS; }
     void reset();
-    // void resetCartConfig();
     
     void updateVoltage();
     void charge();
@@ -52,12 +50,6 @@ class StarDos : public Cartridge {
     void pokeIO1(uint16_t addr, uint8_t value) { charge(); }
     void pokeIO2(uint16_t addr, uint8_t value) { discharge(); }
     
-    // uint8_t peekRomL(uint16_t addr);
-    // uint8_t peekRomH(uint16_t addr);
-
-    bool hasFreezeButton() { return true; }
-    // void pressFreezeButton();
-    // void releaseFreezeButton();
     bool hasResetButton() { return true; }
 };
 
