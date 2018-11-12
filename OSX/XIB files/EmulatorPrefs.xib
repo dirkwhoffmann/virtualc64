@@ -444,17 +444,6 @@ DQ
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sjI-yN-1Te">
-                        <rect key="frame" x="99" y="13" width="192" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Restore Factory Settings" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="efc-yO-U0H">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="factorySettingsAction:" target="-2" id="tFL-jJ-HKE"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XXU-y7-3lq">
                         <rect key="frame" x="14" y="13" width="81" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -746,6 +735,32 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ad1-yb-S1i" userLabel="System">
+                        <rect key="frame" x="104" y="17" width="196" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Restore Factory Settings" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="P9n-Sk-JCD" userLabel="System">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" title="Restore" id="K6t-OO-7tR">
+                                <items>
+                                    <menuItem title="Restore Factory Settings" hidden="YES" id="kd1-3B-mvY">
+                                        <attributedString key="attributedTitle"/>
+                                    </menuItem>
+                                    <menuItem title="TFT Monitor" id="HYZ-5d-Hey">
+                                        <attributedString key="attributedTitle"/>
+                                        <connections>
+                                            <action selector="factorySettingsActionTFT:" target="-2" id="VPi-d1-xqd"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="CRT Monitor" tag="1" id="4mg-Jb-qQD">
+                                        <connections>
+                                            <action selector="factorySettingsActionCRT:" target="-2" id="RKr-ow-Hwq"/>
+                                        </connections>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                 </subviews>
             </view>
             <connections>

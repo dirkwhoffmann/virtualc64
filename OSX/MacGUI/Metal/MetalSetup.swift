@@ -29,6 +29,7 @@ public extension MetalView {
         
         buildMetal()
         buildTextures()
+        buildSamplers()
         buildKernels()
         buildBuffers()
         buildPipeline()
@@ -37,7 +38,7 @@ public extension MetalView {
         enableMetal = true
     }
     
-    func buildMetal() {
+    internal func buildMetal() {
     
         track()
             
@@ -68,7 +69,7 @@ public extension MetalView {
         self.sampleCount = 1
     }
     
-    func buildTextures() {
+    internal func buildTextures() {
 
         track()
         precondition(device != nil)
@@ -111,6 +112,24 @@ public extension MetalView {
         // Build scanline texture
         scanlineTexture = device?.makeTexture(descriptor: descriptor)
         precondition(scanlineTexture != nil, "Failed to create scanline texture.")
+    }
+    
+    internal func buildSamplers() {
+
+        let descriptor = MTLSamplerDescriptor()
+        descriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
+        descriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
+        descriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
+
+        // Nearest neighbor sampler
+        descriptor.minFilter = MTLSamplerMinMagFilter.linear
+        descriptor.magFilter = MTLSamplerMinMagFilter.linear
+        samplerLinear = device!.makeSamplerState(descriptor: descriptor)
+        
+        // Linear sampler
+        descriptor.minFilter = MTLSamplerMinMagFilter.nearest
+        descriptor.magFilter = MTLSamplerMinMagFilter.nearest
+        samplerNearest = device!.makeSamplerState(descriptor: descriptor)
     }
     
     internal func buildKernels() {

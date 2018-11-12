@@ -175,7 +175,7 @@ extension MyController {
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
         
-        if let encoded = try? PropertyListEncoder().encode(ShaderDefaults) {
+        if let encoded = try? PropertyListEncoder().encode(ShaderDefaultsTFT) {
             UserDefaults.standard.register(defaults: [VC64Keys.shaderOptions: encoded])
         }
     }

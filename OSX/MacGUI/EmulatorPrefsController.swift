@@ -355,7 +355,7 @@ class EmulatorPrefsController : UserDialogController {
         hideSheet()
     }
     
-    @IBAction func factorySettingsAction(_ sender: Any!) {
+    func factorySettingsAction() {
         
         // Video
         parent.metalScreen.videoUpscaler = EmulatorDefaults.upscaler
@@ -363,9 +363,6 @@ class EmulatorPrefsController : UserDialogController {
         c64.vic.setBrightness(EmulatorDefaults.brightness)
         c64.vic.setContrast(EmulatorDefaults.contrast)
         c64.vic.setSaturation(EmulatorDefaults.saturation)
-        
-        // Effects
-        parent.metalScreen.shaderOptions = ShaderDefaults
         
         // Geometry
         parent.metalScreen.setEyeX(EmulatorDefaults.eyeX)
@@ -386,6 +383,19 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
+    @IBAction func factorySettingsActionTFT(_ sender: Any!)
+    {
+        parent.metalScreen.shaderOptions = ShaderDefaultsTFT
+        factorySettingsAction()
+        
+    }
+
+    @IBAction func factorySettingsActionCRT(_ sender: Any!)
+    {
+        parent.metalScreen.shaderOptions = ShaderDefaultsCRT
+        factorySettingsAction()
+    }
+
     @IBAction func okAction(_ sender: Any!) {
         
         parent.saveEmulatorUserDefaults()

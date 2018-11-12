@@ -31,16 +31,29 @@ struct ShaderOptions : Codable {
     var scanlineWeight: Float
 }
 
-var ShaderDefaults = ShaderOptions(blur: 1,
-                                   blurRadius: 1.5,
-                                   bloom: 1,
-                                   bloomRadius: 1.0,
-                                   bloomFactor: 1.0,
-                                   dotMask: 1,
-                                   dotMaskBrightness: 0.7,
-                                   scanlines: 2,
-                                   scanlineBrightness: 0.12,
-                                   scanlineWeight: 6.0)
+// Default settings for TFT monitor emulation (retro effects off)
+var ShaderDefaultsTFT = ShaderOptions(blur: 0,
+                                      blurRadius: 1.5,
+                                      bloom: 0,
+                                      bloomRadius: 1.0,
+                                      bloomFactor: 1.0,
+                                      dotMask: 0,
+                                      dotMaskBrightness: 0.7,
+                                      scanlines: 0,
+                                      scanlineBrightness: 0.12,
+                                      scanlineWeight: 6.0)
+
+// Default settings for CRT monitor emulation (retro effects on)
+var ShaderDefaultsCRT = ShaderOptions(blur: 1,
+                                      blurRadius: 1.5,
+                                      bloom: 1,
+                                      bloomRadius: 1.0,
+                                      bloomFactor: 1.0,
+                                      dotMask: 1,
+                                      dotMaskBrightness: 0.7,
+                                      scanlines: 2,
+                                      scanlineBrightness: 0.12,
+                                      scanlineWeight: 6.0)
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
@@ -115,22 +128,21 @@ public class MetalView: MTKView {
     // Array holding all available upscalers
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
-    // The scanline filter
+    // Array holding all available scanline filters
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
     
-    // Shader options
-    var shaderOptions = ShaderDefaults
+    //
+    // Texture samplers
+    //
     
-    // Shader parameters (DEPRECATED)
-    /*
-    var scanlines = EmulatorDefaults.scanlines
-    var scanlineBrightness = EmulatorDefaults.scanlineBrightness
-    var scanlineWeight = EmulatorDefaults.scanlineWeight
-    var bloomFactor = EmulatorDefaults.bloomFactor
-    var dotMask = EmulatorDefaults.dotMask
-    var maskBrightness = EmulatorDefaults.maskBrightness
-    var blurFactor = EmulatorDefaults.blur
-    */
+    // Nearest neighbor sampler
+    var samplerNearest : MTLSamplerState! = nil
+
+    // Linear interpolation sampler
+    var samplerLinear : MTLSamplerState! = nil
+    
+    // Shader options
+    var shaderOptions = ShaderDefaultsTFT
     
     // Animation parameters
     var currentXAngle = Float(0.0)
@@ -368,9 +380,15 @@ public class MetalView: MTKView {
         commandEncoder.setDepthStencilState(depthState)
         commandEncoder.setFragmentTexture(bgTexture, index: 0)
         commandEncoder.setFragmentTexture(bgTexture, index: 1)
-        commandEncoder.setFragmentSamplerState(scanlineFilter.getSampler(), index: 0)
         commandEncoder.setFragmentBuffer(uniformFragment, offset: 0, index: 0)
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
+
+        // Finally, we have to decide for a texture sampler. We use a linear
+        // interpolation sampler, if Gaussian blur is enabled, and a nearest
+        // neighbor sampler if Gaussian blur is disabled.
+        let sampler = shaderOptions.blur > 0 ? samplerLinear : samplerNearest
+        commandEncoder.setFragmentSamplerState(sampler, index: 0)
+
     }
     
     func drawScene2D() {

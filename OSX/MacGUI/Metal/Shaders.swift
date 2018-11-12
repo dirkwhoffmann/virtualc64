@@ -46,10 +46,10 @@ class ComputeKernel : NSObject {
 
     var device : MTLDevice!
     var kernel : MTLComputePipelineState!
-    var sampler : MTLSamplerState!
+    // var sampler : MTLSamplerState!
 
-    var samplerLinear : MTLSamplerState!
-    var samplerNearest : MTLSamplerState!
+    // var samplerLinear : MTLSamplerState!
+    // var samplerNearest : MTLSamplerState!
     
     convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
     {
@@ -78,6 +78,7 @@ class ComputeKernel : NSObject {
             return nil
         }
         
+        /*
         // Build texture samplers
         let samplerDescriptor1 = MTLSamplerDescriptor()
         samplerDescriptor1.minFilter = MTLSamplerMinMagFilter.linear
@@ -97,12 +98,15 @@ class ComputeKernel : NSObject {
         
         // Set default sampler
         sampler = samplerLinear
+        */
     }
     
+    /*
     func getSampler() -> MTLSamplerState
     {
         return sampler
     }
+    */
     
     func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder)
     {
@@ -150,7 +154,7 @@ class BypassUpscaler : ComputeKernel {
         self.init(name: "bypassupscaler", device: device, library: library)
         
         // Replace default texture sampler
-        sampler = samplerNearest
+        // sampler = samplerNearest
     }
 }
 
@@ -161,7 +165,7 @@ class EPXUpscaler : ComputeKernel {
         self.init(name: "epxupscaler", device: device, library: library)
         
         // Replace default texture sampler
-        sampler = samplerNearest
+        // sampler = samplerNearest
     }
 }
 
@@ -172,7 +176,7 @@ class XBRUpscaler : ComputeKernel {
         self.init(name: "xbrupscaler", device: device, library: library)
         
         // Replace default texture sampler
-        sampler = samplerNearest
+        // sampler = samplerNearest
     }
 }
 
@@ -199,7 +203,7 @@ class SimpleScanlines : ComputeKernel {
                   device: device,
                   library: library)
         crtParameters = CrtParameters.init(scanlineWeight: 0.0)
-        sampler = samplerLinear; //  samplerNearest
+        // sampler = samplerLinear; //  samplerNearest
     }
     
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
@@ -216,7 +220,7 @@ class BypassFilter : ComputeKernel {
     convenience init?(device: MTLDevice, library: MTLLibrary) {
         
         self.init(name: "bypass", device: device, library: library)
-        sampler = samplerNearest
+        // sampler = samplerNearest
     }
 }
 
