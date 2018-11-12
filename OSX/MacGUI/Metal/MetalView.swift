@@ -14,10 +14,33 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
-struct Sizeof {
-    static let float = 4
-    static let matrix4x4 = 16 * 4
+struct ShaderOptions : Codable {
+    
+    var blur: Int
+    var blurRadius: Float
+    
+    var bloom: Int
+    var bloomRadius: Float
+    var bloomFactor: Float
+
+    var dotMask: Int
+    var dotMaskBrightness: Float
+    
+    var scanlines: Int
+    var scanlineBrightness: Float
+    var scanlineWeight: Float
 }
+
+var ShaderDefaults = ShaderOptions(blur: 1,
+                                   blurRadius: 1.0,
+                                   bloom: 1,
+                                   bloomRadius: 1.0,
+                                   bloomFactor: 1.0,
+                                   dotMask: 1,
+                                   dotMaskBrightness: 1.0,
+                                   scanlines: 1,
+                                   scanlineBrightness: 1.0,
+                                   scanlineWeight: 1.0)
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
@@ -94,11 +117,11 @@ public class MetalView: MTKView {
 
     // Array holding all available scanline filters
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 2)
-    
-    // Array holding all available filters
-    // var filters = [ComputeKernel?](repeating: nil, count: 5)
         
-    // Shader parameters
+    // Shader options
+    var shaderOptions = ShaderDefaults
+    
+    // Shader parameters (DEPRECATED)
     var scanlines = EmulatorDefaults.scanlines
     var scanlineBrightness = EmulatorDefaults.scanlineBrightness
     var scanlineWeight = EmulatorDefaults.scanlineWeight

@@ -33,13 +33,21 @@ struct VC64Keys {
     static let mouseModel         = "VC64MouseModelKey"
     
     // Emulator preferences dialog
-    static let videoPalette       = "VC64PaletteKey"
-
     static let videoUpscaler      = "VC64UpscalerKey"
-    static let videoFilter        = "VC64FilterKey"
+    static let videoPalette       = "VC64PaletteKey"
     static let brightness         = "VC64BrightnessKey"
     static let contrast           = "VC64ContrastKey"
     static let saturation         = "VC64SaturationKey"
+
+    static let shaderOptions      = "VC64ShaderOptionsKey"
+    
+    static let aspectRatio        = "VC64FullscreenKeepAspectRatioKey"
+    static let eyeX               = "VC64EyeX"
+    static let eyeY               = "VC64EyeY"
+    static let eyeZ               = "VC64EyeZ"
+    
+    // DEPRECATED
+    static let videoFilter        = "VC64FilterKey"
     static let blur               = "VC64BlurKey"
     
     static let scanlines          = "VC64ScanlinesKey"
@@ -48,11 +56,8 @@ struct VC64Keys {
     static let bloomFactor        = "VC64BloomFactor"
     static let mask               = "VC64Mask"
     static let maskBrightness     = "VC64MaskBrightness"
-
-    static let aspectRatio        = "VC64FullscreenKeepAspectRatioKey"
-    static let eyeX               = "VC64EyeX"
-    static let eyeY               = "VC64EyeY"
-    static let eyeZ               = "VC64EyeZ"
+    // END DEPRECATED
+ 
     
     static let warpLoad           = "VC64WarpLoadKey"
     static let driveNoise         = "VC64DriveNoiseKey"
@@ -131,13 +136,18 @@ extension MyController {
         track()
         let dictionary : [String:Any] = [
             
-            VC64Keys.videoPalette: EmulatorDefaults.palette,
-            
+            // Video
             VC64Keys.videoUpscaler: EmulatorDefaults.upscaler,
-            VC64Keys.videoFilter: EmulatorDefaults.filter,
+            VC64Keys.videoPalette: EmulatorDefaults.palette,
             VC64Keys.brightness: EmulatorDefaults.brightness,
             VC64Keys.contrast: EmulatorDefaults.contrast,
             VC64Keys.saturation: EmulatorDefaults.saturation,
+
+            // Effects
+            // VC64Keys.shaderOptions: try? PropertyListEncoder().encode(shaderDefaults),
+            
+            // DEPRECATED
+            VC64Keys.videoFilter: EmulatorDefaults.filter,
             VC64Keys.blur: EmulatorDefaults.blur,
             
             VC64Keys.scanlines: EmulatorDefaults.scanlines,
@@ -146,7 +156,8 @@ extension MyController {
             VC64Keys.bloomFactor: EmulatorDefaults.bloomFactor,
             VC64Keys.mask: EmulatorDefaults.dotMask,
             VC64Keys.maskBrightness: EmulatorDefaults.maskBrightness,
-        
+            // END DEPRECATED
+            
             VC64Keys.aspectRatio: false,
             VC64Keys.eyeX: EmulatorDefaults.eyeX,
             VC64Keys.eyeY: EmulatorDefaults.eyeY,
@@ -163,6 +174,10 @@ extension MyController {
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
+        
+        if let encoded = try? PropertyListEncoder().encode(ShaderDefaults) {
+            UserDefaults.standard.register(defaults: [VC64Keys.shaderOptions: encoded])
+        }
     }
     
     /// Registers the default values for all hardware dialog properties
@@ -253,23 +268,29 @@ extension MyController {
 
         c64.suspend()
         
-        // Colors
-        c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.videoPalette))
-        
-        // Texture
+        // Video
         metalScreen.videoUpscaler = defaults.integer(forKey: VC64Keys.videoUpscaler)
+        c64.vic.setVideoPalette(defaults.integer(forKey: VC64Keys.videoPalette))
         c64.vic.setBrightness(defaults.double(forKey: VC64Keys.brightness))
         c64.vic.setContrast(defaults.double(forKey: VC64Keys.contrast))
         c64.vic.setSaturation(defaults.double(forKey: VC64Keys.saturation))
-        metalScreen.blurFactor = defaults.float(forKey: VC64Keys.blur)
-        
+
         // Effects
+        if let data = defaults.value(forKey: VC64Keys.shaderOptions) as? Data {
+            if let options = try? PropertyListDecoder().decode(ShaderOptions.self, from: data) {
+                metalScreen.shaderOptions = options
+            }
+        }
+        
+        // DEPRECATED
+        metalScreen.blurFactor = defaults.float(forKey: VC64Keys.blur)
         metalScreen.scanlines = defaults.integer(forKey: VC64Keys.scanlines)
         metalScreen.scanlineBrightness = defaults.float(forKey: VC64Keys.scanlineBrightness)
         metalScreen.scanlineWeight = defaults.float(forKey: VC64Keys.scanlineWeight)
         metalScreen.bloomFactor = defaults.float(forKey: VC64Keys.bloomFactor)
         metalScreen.dotMask = defaults.integer(forKey: VC64Keys.mask)
         metalScreen.maskBrightness = defaults.float(forKey: VC64Keys.maskBrightness)
+        // END DEPRECATED
         
         // Geometry
         metalScreen.fullscreenKeepAspectRatio = defaults.bool(forKey: VC64Keys.aspectRatio)
@@ -401,14 +422,19 @@ extension MyController {
         track()
         let defaults = UserDefaults.standard
         
-        // Colors
-        defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.videoPalette)
-        
-        // Texture
+        // Video
         defaults.set(metalScreen.videoUpscaler, forKey: VC64Keys.videoUpscaler)
+        defaults.set(c64.vic.videoPalette(), forKey: VC64Keys.videoPalette)
         defaults.set(c64.vic.brightness(), forKey: VC64Keys.brightness)
         defaults.set(c64.vic.contrast(), forKey: VC64Keys.contrast)
         defaults.set(c64.vic.saturation(), forKey: VC64Keys.saturation)
+
+        // Effects
+        UserDefaults.standard.set(try?
+            PropertyListEncoder().encode(metalScreen.shaderOptions),
+                                  forKey: VC64Keys.shaderOptions)
+        
+        // Texture
         defaults.set(metalScreen.blurFactor, forKey: VC64Keys.blur)
 
         // Effects

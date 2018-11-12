@@ -11,7 +11,8 @@ import Foundation
 
 class EmulatorPrefsController : UserDialogController {
     
-    // Color synthesizer
+    // Video
+    @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var palette: NSPopUpButton!
     @IBOutlet weak var colorWell0: NSColorWell!
     @IBOutlet weak var colorWell1: NSColorWell!
@@ -29,23 +30,25 @@ class EmulatorPrefsController : UserDialogController {
     @IBOutlet weak var colorWell13: NSColorWell!
     @IBOutlet weak var colorWell14: NSColorWell!
     @IBOutlet weak var colorWell15: NSColorWell!
-    
-    // Texture processor
-    @IBOutlet weak var upscaler: NSPopUpButton!
-    @IBOutlet weak var filter: NSPopUpButton!
     @IBOutlet weak var brightnessSlider: NSSlider!
     @IBOutlet weak var contrastSlider: NSSlider!
     @IBOutlet weak var saturationSlider: NSSlider!
-    @IBOutlet weak var blurSlider: NSSlider!
-
-    // Effect engine
-    @IBOutlet weak var scanlines: NSPopUpButton!
-    @IBOutlet weak var dotMask: NSPopUpButton!
+ 
+    // Effects
+    @IBOutlet weak var blurPopUp: NSPopUpButton!
+    @IBOutlet weak var blurRadiusSlider: NSSlider!
+    
+    @IBOutlet weak var bloomPopup:NSPopUpButton!
+    @IBOutlet weak var bloomRadiusSlider: NSSlider!
+    @IBOutlet weak var bloomFactorSlider: NSSlider!
+    
+    @IBOutlet weak var dotMaskPopUp: NSPopUpButton!
+    @IBOutlet weak var dotMaskBrightnessSlider: NSSlider!
+    
+    @IBOutlet weak var scanlinesPopUp: NSPopUpButton!
     @IBOutlet weak var scanlineBrightnessSlider: NSSlider!
     @IBOutlet weak var scanlineWeightSlider: NSSlider!
-    @IBOutlet weak var bloomingSlider: NSSlider!
-    @IBOutlet weak var maskBrightnessSlider: NSSlider!
-
+    
     // Geometry
     @IBOutlet weak var aspectRatioButton: NSButton!
     @IBOutlet weak var eyeXSlider: NSSlider!
@@ -84,8 +87,10 @@ class EmulatorPrefsController : UserDialogController {
     func update() {
        
         let document = parent.document as! MyDocument
-        
-        // Color synthesizer
+        let shaderOptions = parent.metalScreen.shaderOptions
+            
+        // Video
+        upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         palette.selectItem(withTag: document.c64.vic.videoPalette())
         colorWell0.color = c64.vic.color(0)
         colorWell1.color = c64.vic.color(1)
@@ -103,22 +108,25 @@ class EmulatorPrefsController : UserDialogController {
         colorWell13.color = c64.vic.color(13)
         colorWell14.color = c64.vic.color(14)
         colorWell15.color = c64.vic.color(15)
-
-        // Texture processor
-        upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
-        blurSlider.doubleValue = Double(parent.metalScreen.blurFactor)
 
-        // Effect engine
-        scanlines.selectItem(withTag: parent.metalScreen.scanlines)
-        dotMask.selectItem(withTag: parent.metalScreen.dotMask)
-        scanlineBrightnessSlider.floatValue = parent.metalScreen.scanlineBrightness
-        scanlineWeightSlider.floatValue = parent.metalScreen.scanlineWeight
-        bloomingSlider.floatValue = parent.metalScreen.bloomFactor
-        maskBrightnessSlider.floatValue = parent.metalScreen.maskBrightness
-
+        // Effects
+        blurPopUp.selectItem(withTag: shaderOptions.blur)
+        blurRadiusSlider.floatValue = shaderOptions.blurRadius
+        
+        bloomPopup.selectItem(withTag: shaderOptions.bloom)
+        bloomRadiusSlider.floatValue = shaderOptions.bloomRadius
+        bloomFactorSlider.floatValue = shaderOptions.bloomFactor
+        
+        dotMaskPopUp.selectItem(withTag: shaderOptions.dotMask)
+        dotMaskBrightnessSlider.floatValue = shaderOptions.dotMaskBrightness
+        
+        scanlinesPopUp.selectItem(withTag: shaderOptions.scanlines)
+        scanlineBrightnessSlider.floatValue = shaderOptions.scanlineBrightness
+        scanlineWeightSlider.floatValue = shaderOptions.scanlineWeight
+    
         // Geometry
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off
         eyeXSlider.floatValue = parent.metalScreen.eyeX()
@@ -151,7 +159,7 @@ class EmulatorPrefsController : UserDialogController {
 
  
     //
-    // Action methods (Texture processor)
+    // Action methods (Video)
     //
     
     @IBAction func upscalerAction(_ sender: NSPopUpButton!) {
@@ -181,62 +189,81 @@ class EmulatorPrefsController : UserDialogController {
         update()
     }
     
-    @IBAction func blurAction(_ sender: NSSlider!) {
-        
-        /*
-        let gaussFilter = parent.metalScreen.filters[1] as! GaussFilter
-        gaussFilter.sigma = sender.floatValue
-        */
-        parent.metalScreen.blurFactor = sender.floatValue
-        update()
-    }
 
-    
     //
-    // Action methods (Effect engine)
+    // Action methods (Effects)
     //
     
-    @IBAction func scanlinesAction(_ sender: NSPopUpButton!) {
-        
-        track("Scanlines = \(sender.selectedTag())")
-        parent.metalScreen.scanlines = sender.selectedTag()
-        update()
-    }
-
-    @IBAction func dotMaskAction(_ sender: NSPopUpButton!) {
-        
-        track("dotMask = \(sender.selectedTag())")
-        parent.metalScreen.dotMask = sender.selectedTag()
+    @IBAction func blurAction(_ sender: NSPopUpButton!)
+    {
+        track("\(sender.selectedTag())")
+        parent.metalScreen.shaderOptions.blur = sender.selectedTag()
         update()
     }
     
-    @IBAction func scanlineBrightnessAction(_ sender: NSSlider!) {
-        
-        track("New scanline brightness = \(sender.doubleValue)")
-        parent.metalScreen.scanlineBrightness = sender.floatValue
+    @IBAction func blurRadiusAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.blurRadius = sender.floatValue
         update()
     }
-
-    @IBAction func scanlineWeightAction(_ sender: NSSlider!) {
-        
-        track("New scanline weight = \(sender.doubleValue)")
-        parent.metalScreen.scanlineWeight = sender.floatValue
-        update()
-    }
-
-    @IBAction func bloomingAction(_ sender: NSSlider!) {
-        
-        parent.metalScreen.bloomFactor = sender.floatValue
-        update()
-    }
-
-    @IBAction func maskBrightnessAction(_ sender: NSSlider!) {
-        
-        parent.metalScreen.maskBrightness = sender.floatValue
-        update()
-    }
-
     
+    @IBAction func bloomAction(_ sender: NSPopUpButton!)
+    {
+        track("\(sender.selectedTag())")
+        parent.metalScreen.shaderOptions.bloom = sender.selectedTag()
+        update()
+    }
+        
+    @IBAction func bloomRadiusAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.bloomRadius = sender.floatValue
+        update()
+    }
+    
+    @IBAction func bloomFactorAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.bloomFactor = sender.floatValue
+        update()
+    }
+    
+    @IBAction func dotMaskAction(_ sender: NSPopUpButton!)
+    {
+        track("\(sender.selectedTag())")
+        parent.metalScreen.shaderOptions.dotMask = sender.selectedTag()
+        update()
+    }
+    
+    @IBAction func dotMaskBrightnessAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.dotMaskBrightness = sender.floatValue
+        update()
+    }
+    
+    @IBAction func scanlinesAction(_ sender: NSPopUpButton!)
+    {
+        track("\(sender.selectedTag())")
+        parent.metalScreen.shaderOptions.scanlines = sender.selectedTag()
+        update()
+    }
+    @IBAction func scanlineBrightnessAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.scanlineBrightness = sender.floatValue
+        update()
+    }
+    
+    @IBAction func scanlineWeightAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.scanlineWeight = sender.floatValue
+        update()
+    }
+    
+
     //
     // Action methods (Geometry)
     //
@@ -324,16 +351,19 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
         
-        // Color synthesizer
-        c64.vic.setVideoPalette(EmulatorDefaults.palette)
-
-        // Texture processor
+        // Video
         parent.metalScreen.videoUpscaler = EmulatorDefaults.upscaler
+        c64.vic.setVideoPalette(EmulatorDefaults.palette)
         c64.vic.setBrightness(EmulatorDefaults.brightness)
         c64.vic.setContrast(EmulatorDefaults.contrast)
         c64.vic.setSaturation(EmulatorDefaults.saturation)
-        parent.metalScreen.blurFactor = EmulatorDefaults.blur
         
+        // Effects
+        parent.metalScreen.shaderOptions = ShaderDefaults
+
+
+        // DEPRECATED
+        parent.metalScreen.blurFactor = EmulatorDefaults.blur
         // Effect engine
         parent.metalScreen.scanlines = EmulatorDefaults.scanlines
         parent.metalScreen.dotMask = EmulatorDefaults.dotMask
@@ -341,7 +371,8 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.scanlineWeight = EmulatorDefaults.scanlineWeight
         parent.metalScreen.bloomFactor = EmulatorDefaults.bloomFactor
         parent.metalScreen.maskBrightness = EmulatorDefaults.maskBrightness
-            
+        // END DEPRECATED
+        
         // Geometry
         parent.metalScreen.setEyeX(EmulatorDefaults.eyeX)
         parent.metalScreen.setEyeY(EmulatorDefaults.eyeY)
