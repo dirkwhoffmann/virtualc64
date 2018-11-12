@@ -151,7 +151,7 @@ ActionReplay::poke(uint16_t addr, uint8_t value)
 uint8_t
 ActionReplay::peekIO1(uint16_t addr)
 {
-    debug("peekIO1(uint16_t %04X)\n", addr);
+    // debug("peekIO1(uint16_t %04X)\n", addr);
     return regValue;
 }
 
@@ -190,20 +190,21 @@ ActionReplay::pokeIO2(uint16_t addr, uint8_t value)
 void
 ActionReplay::pressFreezeButton()
 {
-    // Pressing the freeze bottom pulls down both the NMI and the IRQ line
     suspend();
-    // setControlReg(0x20);
-    c64->expansionport.setGameLine(0);
-    c64->expansionport.setExromLine(1);
+    
+    // Turn Ultimax mode on
+    setControlReg(0x23);
+
+    // Pressing the freeze bottom pulls down both the NMI and the IRQ line
     c64->cpu.pullDownNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.pullDownIrqLine(CPU::INTSRC_EXPANSION);
+    
     resume();
 }
 
 void
 ActionReplay::releaseFreezeButton()
 {
-    debug("releaseFreezeButton\n");
     suspend();
     c64->cpu.releaseNmiLine(CPU::INTSRC_EXPANSION);
     c64->cpu.releaseIrqLine(CPU::INTSRC_EXPANSION);
@@ -215,7 +216,7 @@ ActionReplay::setControlReg(uint8_t value)
 {
     regValue = value;
     
-    debug(1, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
+    debug(2, "PC: %04X setControlReg(%02X)\n", c64->cpu.getPC(), value);
     
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
