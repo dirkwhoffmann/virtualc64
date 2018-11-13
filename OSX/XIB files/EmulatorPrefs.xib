@@ -512,7 +512,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlN-gj-axR">
                         <rect key="frame" x="451" y="294" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="12" doubleValue="6" tickMarkPosition="above" sliderType="linear" id="l7e-Vo-Ynq"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="l7e-Vo-Ynq"/>
                         <connections>
                             <action selector="scanlineWeightAction:" target="-2" id="feW-fA-qoU"/>
                         </connections>
@@ -666,7 +666,7 @@ Gw
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DrJ-VB-wtT">
                         <rect key="frame" x="154" y="296" width="122" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="3" doubleValue="1.5" tickMarkPosition="above" sliderType="linear" id="E2K-Br-F1W"/>
+                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="E2K-Br-F1W"/>
                         <connections>
                             <action selector="bloomFactorAction:" target="-2" id="q2w-px-AsH"/>
                         </connections>

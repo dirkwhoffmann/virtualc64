@@ -66,12 +66,10 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
 float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, float bloom) {
     
     // Calculate distance to nearest scanline
-    float modHeight = float(pixel.y % height) - 0.5 * float(height);
-    float scaledModHeight = modHeight / (float)height;
-    float dy = scaledModHeight / 2;
-    
+    float dy = ((float(pixel.y % height) / float(height - 1)) - 0.5);
+ 
     // Calculate scanline weight
-    float scanlineWeight = max(1.0 - dy * dy * weight, brightness);
+    float scanlineWeight = max(1.0 - dy * dy * 24 * weight, brightness);
     
     // Apply bloom effect an return
     return scanlineWeight * bloom;
@@ -79,7 +77,7 @@ float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, 
 
 float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
     
-    float shadow = brightness * brightness;
+    float shadow = 0; //brightness * brightness;
     
     switch (dotmaskType) {
             
@@ -124,11 +122,12 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Read fragment from texture
     float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
     float4 color = texture.sample(texSampler, tc);
+    // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
     
     // Apply bloom effect (if enabled)
     if (uniforms.bloom) {
         float4 bColor = bloomTexture.sample(texSampler, tc);
-        bColor = pow(bColor, uniforms.bloomFactor) * uniforms.scanlineBrightness;
+        bColor = pow(bColor, 3 * (1.0 - uniforms.bloomFactor));
         color = saturate(color + bColor);
     }
     
@@ -138,7 +137,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                                 uniforms.scanlineDistance,
                                 uniforms.scanlineWeight,
                                 uniforms.scanlineBrightness,
-                                uniforms.bloomFactor);
+                                1.0);
     }
     
     // Apply dot mask effect (if enabled)
@@ -343,6 +342,7 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
 
 struct CrtParameters {
     float scanlineWeight;
+    float scanlineBrightness;
 };
 
 kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
@@ -352,7 +352,7 @@ kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]
 {
     half4 color = inTexture.read(uint2(gid.x, gid.y));
     if (((gid.y + 1) % 4) < 2) {
-        color *= params.scanlineWeight;
+        color *= params.scanlineBrightness;
     }
     outTexture.write(color, gid);
 }

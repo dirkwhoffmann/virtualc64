@@ -131,7 +131,7 @@ class EmulatorPrefsController : UserDialogController {
         scanlineBrightnessSlider.floatValue = shaderOptions.scanlineBrightness
         scanlineBrightnessSlider.isEnabled = shaderOptions.scanlines > 0
         scanlineWeightSlider.floatValue = shaderOptions.scanlineWeight
-        scanlineWeightSlider.isEnabled = shaderOptions.scanlines > 0
+        scanlineWeightSlider.isEnabled = shaderOptions.scanlines == 2
 
         // Geometry
         aspectRatioButton.state = parent.metalScreen.fullscreenKeepAspectRatio ? .on : .off

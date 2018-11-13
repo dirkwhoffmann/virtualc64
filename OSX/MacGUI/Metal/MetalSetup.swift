@@ -214,6 +214,8 @@ public extension MetalView {
             
             var distance = Int(layerHeight / 256);
             
+            // track("distance = \(distance)")
+            
             // memcpy(contents + 0, &options.blur, 4)
             // memcpy(contents + 4, &options.blurRadius, 4)
             memcpy(contents + 0, &options.bloom, 4)

@@ -41,7 +41,7 @@ var ShaderDefaultsTFT = ShaderOptions(blur: 0,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 0,
                                       scanlineBrightness: 0.12,
-                                      scanlineWeight: 6.0)
+                                      scanlineWeight: 0.5)
 
 // Default settings for CRT monitor emulation (retro effects on)
 var ShaderDefaultsCRT = ShaderOptions(blur: 1,
@@ -53,7 +53,7 @@ var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 2,
                                       scanlineBrightness: 0.12,
-                                      scanlineWeight: 6.0)
+                                      scanlineWeight: 0.5)
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
@@ -347,20 +347,24 @@ public class MetalView: MTKView {
                        source: emulatorTexture,
                        target: upscaledTexture)
     
-        // Emulate scanlines
-        let scanlineFilter = currentScanlineFilter()
-        scanlineFilter.apply(commandBuffer: commandBuffer,
-                                source: upscaledTexture,
-                                target: scanlineTexture)
-        
-        // Blur the scanline texture
+        // Blur the upscaled texture
         if #available(OSX 10.13, *), shaderOptions.blur > 0 {
             let gauss = MPSImageGaussianBlur(device: device!,
                                              sigma: shaderOptions.blurRadius)
             gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &scanlineTexture,
+                         inPlaceTexture: &upscaledTexture,
                          fallbackCopyAllocator: nil)
         }
+        
+        // Emulate scanlines
+        let scanlineFilter = currentScanlineFilter()
+        if let filter = scanlineFilter as? SimpleScanlines {
+            filter.crtParameters.scanlineWeight = shaderOptions.scanlineWeight
+            filter.crtParameters.scanlineBrightness = shaderOptions.scanlineBrightness
+        }
+        scanlineFilter.apply(commandBuffer: commandBuffer,
+                                source: upscaledTexture,
+                                target: scanlineTexture)
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()

@@ -145,23 +145,26 @@ class XBRUpscaler : ComputeKernel {
 
 class SimpleScanlines : ComputeKernel {
     
-    private var crtParameters: CrtParameters!
+    var crtParameters: CrtParameters!
     
     struct CrtParameters {
         var scanlineWeight: Float
+        var scanlineBrightness: Float
     }
     
+    /*
     func setScanlineWeight(_ value : Float) {
         crtParameters.scanlineWeight = value
     }
+    */
     
     convenience init?(device: MTLDevice, library: MTLLibrary)
     {
         self.init(name: "scanlines",
                   device: device,
                   library: library)
-        crtParameters = CrtParameters.init(scanlineWeight: 0.0)
-        // sampler = samplerLinear; //  samplerNearest
+        crtParameters = CrtParameters.init(scanlineWeight: 0.0,
+                                           scanlineBrightness: 0.0)
     }
     
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
