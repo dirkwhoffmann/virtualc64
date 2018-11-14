@@ -367,7 +367,7 @@ kernel void bloom(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
 
     half4 color = inTexture.read(uint2(gid.x, gid.y));
     float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
-    color = color * luma * (2 * params.bloomWeight);
+    color = color * luma * (3 * params.bloomWeight);
     outTexture.write(half4(color.r, color.g, color.b, 0), gid);
 }
 
