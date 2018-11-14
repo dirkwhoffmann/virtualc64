@@ -93,7 +93,7 @@ public extension MetalView {
         precondition(emulatorTexture != nil, "Failed to create emulator texture.")
         
         // Build bloom texture
-        descriptor.usage = [ .shaderRead, .shaderWrite ]
+        descriptor.usage = [ .shaderRead, .shaderWrite, .renderTarget ]
         bloomTexture = device?.makeTexture(descriptor: descriptor)
         precondition(bloomTexture != nil, "Failed to create bloom texture.")
         
@@ -142,6 +142,10 @@ public extension MetalView {
         upscalerGallery[1] = EPXUpscaler.init(device: device!, library: library)
         upscalerGallery[2] = XBRUpscaler.init(device: device!, library: library)
         
+        // Build bloom filters
+        bloomFilterGallery[0] = BypassFilter.init(device: device!, library: library)
+        bloomFilterGallery[1] = BloomFilter.init(device: device!, library: library)
+
         // Build scanline filters
         scanlineFilterGallery[0] = BypassFilter.init(device: device!, library: library)
         scanlineFilterGallery[1] = SimpleScanlines(device: device!, library: library)

@@ -140,29 +140,47 @@ class XBRUpscaler : ComputeKernel {
 
 
 //
+// Bloom filters
+//
+
+class BloomFilter : ComputeKernel {
+
+    struct BloomUniforms {
+        var bloomWeight: Float
+    }
+    
+    var bloomUniforms = BloomUniforms.init(bloomWeight: 1.0)
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary)
+    {
+        self.init(name: "bloom", device: device, library: library)
+    }
+    
+    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder)
+    {
+        encoder.setBytes(&bloomUniforms,
+                         length: MemoryLayout<BloomUniforms>.stride,
+                         index: 0);
+    }
+}
+
+    
+//
 // Scanline filters
 //
 
 class SimpleScanlines : ComputeKernel {
-    
-    var crtParameters: CrtParameters!
     
     struct CrtParameters {
         var scanlineWeight: Float
         var scanlineBrightness: Float
     }
     
-    /*
-    func setScanlineWeight(_ value : Float) {
-        crtParameters.scanlineWeight = value
-    }
-    */
+    var crtParameters: CrtParameters!
     
     convenience init?(device: MTLDevice, library: MTLLibrary)
     {
-        self.init(name: "scanlines",
-                  device: device,
-                  library: library)
+        self.init(name: "scanlines", device: device, library: library)
         crtParameters = CrtParameters.init(scanlineWeight: 0.0,
                                            scanlineBrightness: 0.0)
     }
@@ -172,8 +190,9 @@ class SimpleScanlines : ComputeKernel {
     }
 }
 
+
 //
-// Filters
+// Bypass filter (DEPRECATED)
 //
 
 class BypassFilter : ComputeKernel {
@@ -184,41 +203,3 @@ class BypassFilter : ComputeKernel {
         // sampler = samplerNearest
     }
 }
-
-/*
-class SmoothFilter : ComputeKernel {
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
-        self.init(name: "bypass", device: device, library: library)
-        sampler = samplerLinear
-    }
-}
-*/
-
-// DEPRECATED
-/*
-class GaussFilter : ComputeKernel {
-    
-    var sigma = Float(0.0)
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary, sigma: Float) {
-        
-        self.init(name: "bypass", device: device, library: library)
-        self.sigma = sigma
-    }
-    
-    override func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture) {
-        
-        if #available(OSX 10.13, *) {
-            let gauss = MPSImageGaussianBlur(device: device, sigma: sigma)
-            gauss.encode(commandBuffer: commandBuffer,
-                         sourceTexture: source,
-                         destinationTexture: target)
-        } else {
-            // Apply bypass on earlier versions
-            super.apply(commandBuffer: commandBuffer, source: source, target: target)
-        }
-    }
-}
-*/

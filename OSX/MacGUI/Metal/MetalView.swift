@@ -32,8 +32,8 @@ struct ShaderOptions : Codable {
 }
 
 // Default settings for TFT monitor emulation (retro effects off)
-var ShaderDefaultsTFT = ShaderOptions(blur: 0,
-                                      blurRadius: 1.5,
+var ShaderDefaultsTFT = ShaderOptions(blur: 1,
+                                      blurRadius: 0,
                                       bloom: 0,
                                       bloomRadius: 1.0,
                                       bloomFactor: 1.0,
@@ -113,14 +113,14 @@ public class MetalView: MTKView {
     /// with the upscaled primary texture.
     var bloomTexture: MTLTexture! = nil
     
-    /// Upscaled emulator texture
+    /// Upscaled emulator texture (2048 x 2048)
     /// In the first texture processing stage, the emulator texture is bumped up
     /// by a factor of 4. The user can choose between bypass upscaling which
     /// simply replaces each pixel by a 4x4 quad or more sophisticated upscaling
     /// algorithms such as xBr.
     var upscaledTexture: MTLTexture! = nil
     
-    /// Upscaled texture with scanlines
+    /// Upscaled texture with scanlines (2048 x 2048)
     /// In the second texture processing stage, a scanline effect is applied to
     /// the upscaled texture.
     var scanlineTexture: MTLTexture! = nil
@@ -128,8 +128,12 @@ public class MetalView: MTKView {
     // Array holding all available upscalers
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
+    // Array holding all available bloom filters
+    var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 2)
+
     // Array holding all available scanline filters
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
+    
     
     //
     // Texture samplers
@@ -179,18 +183,6 @@ public class MetalView: MTKView {
             }
         }
     }
-
-    /// Currently selected scanline filter
-    /*
-    var scanlineFilter = EmulatorDefaults.scanlineFilter {
-        didSet {
-            if scanlineFilter >= scanlineFilterGallery.count || scanlineFilterGallery[scanlineFilter] == nil {
-                track("Sorry, the selected GPU scanline filter is unavailable.")
-                scanlineFilter = 0
-            }
-        }
-    }
-    */
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
     var enableMetal = false
@@ -313,6 +305,15 @@ public class MetalView: MTKView {
         return upscalerGallery[videoUpscaler]!
     }
 
+    /// Returns the compute kernel of the currently selected bloom filter
+    func currentBloomFilter() -> ComputeKernel {
+        
+        precondition(shaderOptions.bloom < bloomFilterGallery.count)
+        precondition(bloomFilterGallery[0] != nil)
+        
+        return bloomFilterGallery[shaderOptions.bloom]!
+    }
+
     /// Returns the compute kernel of the currently selected scanline filter
     func currentScanlineFilter() -> ComputeKernel {
         
@@ -331,14 +332,21 @@ public class MetalView: MTKView {
         fillFragmentShaderUniforms(uniformFragment)
         
         // Compute the bloom texture
+        let bloomFilter = currentBloomFilter()
+        if let bloomFilter = bloomFilter as? BloomFilter {
+            bloomFilter.bloomUniforms.bloomWeight = shaderOptions.bloomFactor
+        }
+        bloomFilter.apply(commandBuffer: commandBuffer,
+                          source: emulatorTexture,
+                          target: bloomTexture)
+        
+        // Blur the bloom texture
         if #available(OSX 10.13, *) {
             let gauss = MPSImageGaussianBlur(device: device!,
                                              sigma: shaderOptions.bloomRadius)
             gauss.encode(commandBuffer: commandBuffer,
-                         sourceTexture: emulatorTexture,
-                         destinationTexture: bloomTexture)
-        } else {
-            bloomTexture = emulatorTexture
+                         inPlaceTexture: &bloomTexture,
+                         fallbackCopyAllocator: nil)
         }
         
         // Upscale the C64 texture

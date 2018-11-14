@@ -1,5 +1,5 @@
 //
-// This file is part of VirtualC64 - Yet another Commodore 64 emulator
+// This file is part of VirtualC64 - A Commodore 64 emulator
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -127,7 +127,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Apply bloom effect (if enabled)
     if (uniforms.bloom) {
         float4 bColor = bloomTexture.sample(texSampler, tc);
-        bColor = pow(bColor, 3 * (1.0 - uniforms.bloomFactor));
+        // bColor = pow(bColor, 3 * (1.0 - uniforms.bloomFactor));
         color = saturate(color + bColor);
     }
     
@@ -150,7 +150,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
 
 
 //
-// Texture upscalers (first texture processing stage)
+// Texture upscalers
 //
 
 kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
@@ -161,11 +161,7 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
     outTexture.write(result, gid);
 }
 
-
-//
 // EPX upscaler (Eric's Pixel Expansion)
-//
-
 void writePixelBlock(texture2d<half, access::write> outTexture, uint2 gid, half4 value)
 {
     outTexture.write(value, gid + uint2(0,0));
@@ -209,9 +205,7 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
     writePixelBlock(outTexture, gid + uint2(2,2), r4);
 }
 
-//
 // xBR upscaler (4x)
-//
 // Code is based on what I've found at:
 // https://gamedev.stackexchange.com/questions/87275/how-do-i-perform-an-xbr-or-hqx-filter-in-xna
 
@@ -337,7 +331,7 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
 
 
 //
-// Scanline filter (second texture processing stage)
+// Scanline filters
 //
 
 struct CrtParameters {
@@ -355,6 +349,26 @@ kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]
         color *= params.scanlineBrightness;
     }
     outTexture.write(color, gid);
+}
+
+//
+// Bloom filters
+//
+
+struct BloomUniforms {
+    float bloomWeight;
+};
+
+kernel void bloom(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                  texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                  constant BloomUniforms         &params     [[ buffer(0) ]],
+                  uint2                          gid         [[ thread_position_in_grid ]])
+{
+
+    half4 color = inTexture.read(uint2(gid.x, gid.y));
+    float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
+    color = color * luma * (2 * params.bloomWeight);
+    outTexture.write(half4(color.r, color.g, color.b, 0), gid);
 }
 
 
