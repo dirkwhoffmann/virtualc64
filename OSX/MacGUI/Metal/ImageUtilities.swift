@@ -10,12 +10,101 @@
 
 import Foundation
 
+
+//
+// Extensions to CGImage
+//
+
+public extension CGImage {
+    
+    static func bitmapInfo() -> CGBitmapInfo {
+        
+        let noAlpha = CGImageAlphaInfo.noneSkipLast.rawValue
+        let bigEn32 = CGBitmapInfo.byteOrder32Big.rawValue
+    
+        return CGBitmapInfo(rawValue: noAlpha | bigEn32)
+    }
+    
+    static func dataProvider(data: UnsafeMutableRawPointer, size: CGSize) -> CGDataProvider? {
+        
+        let dealloc : CGDataProviderReleaseDataCallback = {
+            
+            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> () in
+            
+            // Core Foundation objects are memory managed, aren't they?
+            return
+        }
+        
+        return CGDataProvider(dataInfo: nil,
+                              data: data,
+                              size: 4 * Int(size.width) * Int(size.height),
+                              releaseData: dealloc)
+    }
+    
+    /// Creates a CGImage from a raw data stream in 32 bit big endian format
+    static func make(data: UnsafeMutableRawPointer, size: CGSize) -> CGImage? {
+        
+        let w = Int(size.width)
+        let h = Int(size.height)
+        
+        return CGImage(width: w, height: h,
+                       bitsPerComponent: 8,
+                       bitsPerPixel: 32,
+                       bytesPerRow: 4 * w,
+                       space: CGColorSpaceCreateDeviceRGB(),
+                       bitmapInfo: bitmapInfo(),
+                       provider: dataProvider(data: data, size: size)!,
+                       decode: nil,
+                       shouldInterpolate: false,
+                       intent: CGColorRenderingIntent.defaultIntent)
+    }
+    
+    /// Creates a CGImage from a MTLTexture
+    static func make(texture: MTLTexture, rect: CGRect) -> CGImage? {
+        
+        // Compute texture cutout
+        //   (x,y) : upper left corner
+        //   (w,h) : width and height
+        let x = Int(CGFloat(texture.width) * rect.minX)
+        let y = Int(CGFloat(texture.height) * rect.minY)
+        let w = Int(CGFloat(texture.width) * rect.width)
+        let h = Int(CGFloat(texture.height) * rect.height)
+        
+        // Get texture data as a byte stream
+        guard let data = malloc(4 * w * h) else { return nil; }
+        texture.getBytes(data,
+                         bytesPerRow: 4 * w,
+                         from: MTLRegionMake2D(x, y, w, h),
+                         mipmapLevel: 0)
+        
+        // Copy data over to a new buffer of double horizontal width
+        /*
+         let w2 = 2 * w
+         let h2 = h
+         let bytesPerRow2 = 2 * bytesPerRow
+         let size2 = bytesPerRow2 * h2
+         guard let data2 = malloc(size2) else { return nil; }
+         let ptr = data.assumingMemoryBound(to: UInt32.self)
+         let ptr2 = data2.assumingMemoryBound(to: UInt32.self)
+         for i in 0 ... (w * h) {
+         ptr2[2 * i] = ptr[i]
+         ptr2[2 * i + 1] = ptr[i]
+         }
+         */
+        
+        return make(data: data, size: CGSize.init(width: w, height: h))
+    }
+}
+
+
+
 //
 // Extensions to MTLTexture
 //
 
 extension MTLTexture {
     
+    /*
     func toCGImage(_ x1: Float, _ y1: Float, _ x2: Float, _ y2: Float) -> CGImage? {
     
         let x = Int(Float(self.width) * x1)         // (x,y) : upper left corner
@@ -76,17 +165,20 @@ extension MTLTexture {
         
         return image
     }
-
+    */
+    
+    /*
     func toNSImage(_ x1: Float, _ y1: Float, _ x2: Float, _ y2: Float) -> NSImage? {
     
-        guard let cgImage = self.toCGImage(x1,y1,x2,y2) else { return nil }
+        // guard let cgImage = self.toCGImage(x1,y1,x2,y2) else { return nil }
+        let cgImage = CGImage.make(texture: self, x1, y1, x2, y2)!
         
         let size = NSSize(width: cgImage.width, height: cgImage.height)
         let image = NSImage(cgImage: cgImage, size: size)
         
         return image
     }
-    
+    */
 }
 
 
@@ -104,6 +196,18 @@ public extension NSImage {
         unlockFocus()
     }
 
+    static func make(texture: MTLTexture, rect: CGRect) -> NSImage? {
+        
+        guard let cgImage = CGImage.make(texture: texture, rect: rect) else {
+            track("Failed to create CGImage.")
+            return nil
+        }
+        
+        track()
+        let size = NSSize(width: cgImage.width, height: cgImage.height)
+        return NSImage(cgImage: cgImage, size: size)
+    }
+    
     func expand(toSize size: NSSize) -> NSImage? {
  
         let newImage = NSImage.init(size: size)
@@ -203,10 +307,13 @@ public extension MetalView
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         
+        /*
         return scanlineTexture.toNSImage(Float(textureRect.minX),
                                          Float(textureRect.minY),
                                          Float(textureRect.maxX),
                                          Float(textureRect.maxY))
+         */
+        return NSImage.make(texture: scanlineTexture, rect: textureRect)
     }
     
     func createBackgroundTexture() -> MTLTexture? {
