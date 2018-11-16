@@ -104,81 +104,6 @@ public extension CGImage {
 
 extension MTLTexture {
     
-    /*
-    func toCGImage(_ x1: Float, _ y1: Float, _ x2: Float, _ y2: Float) -> CGImage? {
-    
-        let x = Int(Float(self.width) * x1)         // (x,y) : upper left corner
-        let y = Int(Float(self.height) * y1)        //         of texture cutout
-        let w = Int(Float(self.width) * (x2 - x1))  // (w,h) : width and height
-        let h = Int(Float(self.height) * (y2 - y1)) //         of texture cutout
-        let bytesPerRow = w * 4
-        let size = bytesPerRow * h
-        
-        // Allocate memory
-        guard let data = malloc(size) else { return nil; }
-        
-        // Fill memory with texture data
-        self.getBytes(data,
-                      bytesPerRow: bytesPerRow,
-                      from: MTLRegionMake2D(x, y, w, h),
-                      mipmapLevel: 0)
-    
-        // Copy data over to a new buffer of double horizontal width
-        /*
-        let w2 = 2 * w
-        let h2 = h
-        let bytesPerRow2 = 2 * bytesPerRow
-        let size2 = bytesPerRow2 * h2
-        guard let data2 = malloc(size2) else { return nil; }
-        let ptr = data.assumingMemoryBound(to: UInt32.self)
-        let ptr2 = data2.assumingMemoryBound(to: UInt32.self)
-        for i in 0 ... (w * h) {
-            ptr2[2 * i] = ptr[i]
-            ptr2[2 * i + 1] = ptr[i]
-        }
-        */
-        
-        let pColorSpace = CGColorSpaceCreateDeviceRGB()
-
-        let rawBitmapInfo =
-            CGImageAlphaInfo.noneSkipLast.rawValue |
-                CGBitmapInfo.byteOrder32Big.rawValue
-        let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: rawBitmapInfo)
-        
-        // Create data provider
-        let dealloc: CGDataProviderReleaseDataCallback
-            = { (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> () in
-            // As far as I know, Core Foundation objects are automatically memory managed
-            return
-        }
-        guard let provider = CGDataProvider(dataInfo: nil,
-                                      data: data,
-                                      size: size,
-                                      releaseData: dealloc) else { return nil; }
-        
-        // Create image
-        let image = CGImage(width: w, height: h,
-                            bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow,
-                            space: pColorSpace, bitmapInfo: bitmapInfo,
-                            provider: provider, decode: nil, shouldInterpolate: false,
-                            intent: CGColorRenderingIntent.defaultIntent)
-        
-        return image
-    }
-    */
-    
-    /*
-    func toNSImage(_ x1: Float, _ y1: Float, _ x2: Float, _ y2: Float) -> NSImage? {
-    
-        // guard let cgImage = self.toCGImage(x1,y1,x2,y2) else { return nil }
-        let cgImage = CGImage.make(texture: self, x1, y1, x2, y2)!
-        
-        let size = NSSize(width: cgImage.width, height: cgImage.height)
-        let image = NSImage(cgImage: cgImage, size: size)
-        
-        return image
-    }
-    */
 }
 
 
@@ -289,15 +214,6 @@ public extension MetalView
 
     func screenshot() -> NSImage?
     {
-        track()
-        
-        /*
-        return emulatorTexture.toNSImage(Float(textureRect.minX),
-                                         Float(textureRect.minY),
-                                         Float(textureRect.maxX),
-                                         Float(textureRect.maxY))
-        */
-        
         // Use the blitter to copy the texture data back from the GPU
         let queue = scanlineTexture.device.makeCommandQueue()!
         let commandBuffer = queue.makeCommandBuffer()!
@@ -307,18 +223,12 @@ public extension MetalView
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         
-        /*
-        return scanlineTexture.toNSImage(Float(textureRect.minX),
-                                         Float(textureRect.minY),
-                                         Float(textureRect.maxX),
-                                         Float(textureRect.maxY))
-         */
         return NSImage.make(texture: scanlineTexture, rect: textureRect)
     }
     
     func createBackgroundTexture() -> MTLTexture? {
 
-        // 1. step: Grab the current wallpaper as an NSImage
+        // Grab the current wallpaper as an NSImage
         let windows =
             CGWindowListCopyWindowInfo(CGWindowListOption.optionOnScreenOnly,
                                        CGWindowID(0))! as! [NSDictionary]
