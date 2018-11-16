@@ -152,6 +152,67 @@ public extension MetalView {
         scanlineFilterGallery[2] = BypassFilter.init(device: device!, library: library)
     }
     
+    func buildDotMasks() {
+        
+        let selected = shaderOptions.dotMask
+        let base = UInt8(shaderOptions.dotMaskBrightness * 0xFF)
+        
+        let R = UInt32.init(r: 0xFF, g: base, b: base)
+        let G = UInt32.init(r: base, g: 0xFF, b: base)
+        let B = UInt32.init(r: base, g: base, b: 0xFF)
+        let M = UInt32.init(r: 0xFF, g: base, b: 0xFF)
+        let W = UInt32.init(r: 0xFF, g: 0xFF, b: 0xFF)
+        
+        let maskSize = [
+            CGSize.init(width: 1, height: 1),
+            CGSize.init(width: 3, height: 1),
+            CGSize.init(width: 4, height: 1),
+            CGSize.init(width: 3, height: 6),
+            CGSize.init(width: 4, height: 6),
+            ]
+        
+        let maskData = [
+            
+            [ W ],
+            [ M, G, 0 ],
+            [ R, G, B, 0 ],
+            [ M, G, 0,
+              M, G, 0,
+              0, M, G,
+              0, M, G,
+              G, 0, M,
+              G, 0, M ],
+            [ R, G, B, 0,
+              R, G, B, 0,
+              R, G, B, 0,
+              B, 0, R, G,
+              B, 0, R, G,
+              B, 0, R, G ]
+        ]
+        
+        for n in 0 ... 4 {
+            
+            // Create image representation in memory
+            let cap = Int(maskSize[n].width) * Int (maskSize[n].height)
+            let mask = calloc(cap, MemoryLayout<UInt32>.size)!
+            let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
+            for i in 0 ... cap - 1 {
+                ptr[i] = maskData[n][i]
+            }
+            
+            // Create image
+            let image = NSImage.make(data: mask, rect: maskSize[n])
+            
+            // Create texture if the dotmask is the currently selected mask
+            if n == selected {
+                dotMaskTexture = image?.toTexture(device: device!)
+            }
+            
+            // Store preview image
+            dotmaskImages[n] = image?.resizeImage(width: 14, height: 14)
+        }
+    }
+    
     func buildBuffers() {
     
         // Vertex buffer

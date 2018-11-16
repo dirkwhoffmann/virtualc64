@@ -10,6 +10,15 @@
 
 import Foundation
 
+extension UInt32 {
+    
+    init(r: UInt8, g: UInt8, b: UInt8) {
+        let red = UInt32(r) << 24
+        let green = UInt32(g) << 16
+        let blue = UInt32(b) << 8
+        self.init(bigEndian: red | green | blue)
+    }
+}
 
 //
 // Extensions to CGImage
@@ -128,10 +137,21 @@ public extension NSImage {
             return nil
         }
         
-        track()
         let size = NSSize(width: cgImage.width, height: cgImage.height)
         return NSImage(cgImage: cgImage, size: size)
     }
+
+    static func make(data: UnsafeMutableRawPointer, rect: CGSize) -> NSImage? {
+        
+        guard let cgImage = CGImage.make(data: data, size: rect) else {
+            track("Failed to create CGImage.")
+            return nil
+        }
+        
+        let size = NSSize(width: cgImage.width, height: cgImage.height)
+        return NSImage(cgImage: cgImage, size: size)
+    }
+    
     
     func expand(toSize size: NSSize) -> NSImage? {
  

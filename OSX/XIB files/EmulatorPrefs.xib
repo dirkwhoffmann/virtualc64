@@ -170,11 +170,11 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1t5-RU-6d2">
-                        <rect key="frame" x="388" y="401" width="186" height="26"/>
+                        <rect key="frame" x="390" y="401" width="186" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="fOR-kz-MOj" id="8XX-1m-R3o">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
+                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="fOR-kz-MOj" id="8XX-1m-R3o">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
                             <menu key="menu" title="OtherViews" autoenablesItems="NO" id="OZd-G2-ZdV">
                                 <items>
                                     <menuItem title="None" state="on" id="fOR-kz-MOj">

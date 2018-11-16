@@ -73,14 +73,7 @@ class EmulatorPrefsController : UserDialogController {
             upscaler.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
         }
         
-        // Check for available filters
-        /*
-        kernels = parent.metalScreen.filters
-        for i in 0 ... kernels.count - 1 {
-            filter.menu!.item(withTag: i)?.isEnabled = (kernels[i] != nil)
-        }
-        */
-        
+        parent.metalScreen.buildDotMasks()
         update()
     }
     
@@ -124,6 +117,9 @@ class EmulatorPrefsController : UserDialogController {
         bloomFactorSlider.isEnabled = shaderOptions.bloom > 0
         
         dotMaskPopUp.selectItem(withTag: shaderOptions.dotMask)
+        for i in 0 ... 4 {
+            dotMaskPopUp.item(at: i)?.image = parent.metalScreen.dotmaskImages[i]
+        }
         dotMaskBrightnessSlider.floatValue = shaderOptions.dotMaskBrightness
         dotMaskBrightnessSlider.isEnabled = shaderOptions.dotMask > 0
 
@@ -239,6 +235,7 @@ class EmulatorPrefsController : UserDialogController {
     {
         track("\(sender.selectedTag())")
         parent.metalScreen.shaderOptions.dotMask = sender.selectedTag()
+        parent.metalScreen.buildDotMasks()
         update()
     }
     
@@ -246,6 +243,7 @@ class EmulatorPrefsController : UserDialogController {
     {
         track("\(sender.floatValue)")
         parent.metalScreen.shaderOptions.dotMaskBrightness = sender.floatValue
+        parent.metalScreen.buildDotMasks()
         update()
     }
     

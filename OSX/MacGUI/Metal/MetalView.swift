@@ -125,6 +125,11 @@ public class MetalView: MTKView {
     /// the upscaled texture.
     var scanlineTexture: MTLTexture! = nil
     
+    /// Dotmask texture (variable size)
+    /// This texture is used by the fragment shader to emulate a dotmask
+    /// effect.
+    var dotMaskTexture: MTLTexture! = nil
+    
     // Array holding all available upscalers
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
@@ -133,7 +138,10 @@ public class MetalView: MTKView {
 
     // Array holding all available scanline filters
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
-    
+
+    // Array holding dotmask preview images
+    var dotmaskImages = [NSImage?](repeating: nil, count: 5)
+
     
     //
     // Texture samplers
