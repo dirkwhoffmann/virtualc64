@@ -264,6 +264,7 @@ extension MyController {
         if let data = defaults.value(forKey: VC64Keys.shaderOptions) as? Data {
             if let options = try? PropertyListDecoder().decode(ShaderOptions.self, from: data) {
                 metalScreen.shaderOptions = options
+                metalScreen.buildDotMasks()
             }
         }
         

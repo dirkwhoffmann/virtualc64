@@ -400,6 +400,7 @@ public class MetalView: MTKView {
         commandEncoder.setDepthStencilState(depthState)
         commandEncoder.setFragmentTexture(bgTexture, index: 0)
         commandEncoder.setFragmentTexture(bgTexture, index: 1)
+        commandEncoder.setFragmentTexture(dotMaskTexture, index: 2)
         commandEncoder.setFragmentBuffer(uniformFragment, offset: 0, index: 0)
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
 

@@ -35,14 +35,13 @@ struct ProjectedVertex {
 
 struct FragmentUniforms {
     
-    // uint blur;
-    // float blurRadius;
-    
     uint bloom;
     float bloomRadius;
     float bloomFactor;
     
     uint dotMask;
+    uint dotMaskWidth;
+    uint dotMaskHeight;
     float dotMaskBrightness;
     
     uint scanlines;
@@ -75,6 +74,7 @@ float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, 
     return scanlineWeight * bloom;
 }
 
+/*
 float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
     
     float shadow = 0; //brightness * brightness;
@@ -110,14 +110,18 @@ float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
     }
     return float4(1.0, 1.0, 1.0, 0.0);
 }
+*/
 
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                              texture2d<float, access::sample> texture [[texture(0)]],
                              texture2d<float, access::sample> bloomTexture [[texture(1)]],
+                             texture2d<float, access::sample> dotMask [[texture(2)]],
                              constant FragmentUniforms &uniforms [[buffer(0)]],
                              sampler texSampler [[sampler(0)]])
 {
-    uint2 pixel = uint2(uint(vert.position.x), uint(vert.position.y));
+    uint x = uint(vert.position.x);
+    uint y = uint(vert.position.y);
+    uint2 pixel = uint2(x, y);
     
     // Read fragment from texture
     float2 tc = float2(vert.texCoords.x, vert.texCoords.y);
@@ -142,9 +146,12 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     
     // Apply dot mask effect (if enabled)
     if (uniforms.dotMask) {
-        color *= dotMaskWeight(uniforms.dotMask, pixel, uniforms.dotMaskBrightness);
+        uint xoffset = x % uniforms.dotMaskWidth;
+        uint yoffset = y % uniforms.dotMaskHeight;
+        float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
+        color *= dotColor;
     }
-    
+
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 
