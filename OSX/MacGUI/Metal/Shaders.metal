@@ -74,44 +74,6 @@ float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, 
     return scanlineWeight * bloom;
 }
 
-/*
-float4 dotMaskWeight(int dotmaskType, uint2 pixel, float brightness) {
-    
-    float shadow = 0; //brightness * brightness;
-    
-    switch (dotmaskType) {
-            
-        case 1:
-            switch(pixel.x % 3) {
-                case 0: return float4(brightness, 1.0, brightness, 0.0);
-                case 1: return float4(1.0, brightness, 1.0, 0.0);
-                default: return float4(shadow, shadow, shadow, 0.0);
-            }
-        case 2:
-            switch(pixel.x % 4) {
-                case 0: return float4(1.0, brightness, brightness, 0.0);
-                case 1: return float4(brightness, 1.0, brightness, 0.0);
-                case 2: return float4(brightness, brightness, 1.0, 0.0);
-                default: return float4(shadow, shadow, shadow, 0.0);
-            }
-        case 3:
-            switch((pixel.x + ((pixel.y / 6) % 2)) % 3) {
-                case 0: return float4(brightness, 1.0, brightness, 0.0);
-                case 1: return float4(1.0, brightness, 1.0, 0.0);
-                default: return float4(shadow, shadow, shadow, 0.0);
-            }
-        case 4:
-            switch((pixel.x + ((pixel.y / 6) % 2)) % 4) {
-                case 0: return float4(1.0, brightness, brightness, 0.0);
-                case 1: return float4(brightness, 1.0, brightness, 0.0);
-                case 2: return float4(brightness, brightness, 1.0, 0.0);
-                default: return float4(shadow, shadow, shadow, 0.0);
-            }
-    }
-    return float4(1.0, 1.0, 1.0, 0.0);
-}
-*/
-
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                              texture2d<float, access::sample> texture [[texture(0)]],
                              texture2d<float, access::sample> bloomTexture [[texture(1)]],
@@ -373,8 +335,9 @@ kernel void bloom(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
 {
 
     half4 color = inTexture.read(uint2(gid.x, gid.y));
-    float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
-    color = color * luma * (3 * params.bloomWeight);
+    // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
+    // color = color * luma * (3 * params.bloomWeight);
+    color = pow(color, 3 * (1.0 - params.bloomWeight));
     outTexture.write(half4(color.r, color.g, color.b, 0), gid);
 }
 
