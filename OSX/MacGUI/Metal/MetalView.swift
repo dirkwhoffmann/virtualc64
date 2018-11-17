@@ -360,10 +360,6 @@ public class MetalView: MTKView {
        
         // Compute the bloom texture
         let bloomFilter = currentBloomFilter()
-        if let bloomFilter = bloomFilter as? BloomFilter {
-            bloomFilter.bloomUniforms.bloomBrightness = shaderOptions.bloomBrightness
-            bloomFilter.bloomUniforms.bloomWeight = shaderOptions.bloomWeight
-        }
         bloomFilter.apply(commandBuffer: commandBuffer,
                           source: emulatorTexture,
                           target: bloomTexture,
@@ -395,10 +391,6 @@ public class MetalView: MTKView {
         
         // Emulate scanlines
         let scanlineFilter = currentScanlineFilter()
-        if let filter = scanlineFilter as? SimpleScanlines {
-            filter.crtParameters.scanlineWeight = shaderOptions.scanlineWeight
-            filter.crtParameters.scanlineBrightness = shaderOptions.scanlineBrightness
-        }
         scanlineFilter.apply(commandBuffer: commandBuffer,
                                 source: upscaledTexture,
                                 target: scanlineTexture,

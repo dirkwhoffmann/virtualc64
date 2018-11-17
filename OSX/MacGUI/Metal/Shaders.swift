@@ -75,16 +75,6 @@ class ComputeKernel : NSObject {
         }
     }
     
-    /*
-    func configure(options: ShaderOptions) {
-        // Each specific compute kernel puts its initialization code here
-    }
-    
-    func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder) {
-        // Each specific compute kernel puts its initialization code here
-    }
-    */
-    
     func apply(commandBuffer: MTLCommandBuffer,
                source: MTLTexture,
                target: MTLTexture,
@@ -105,9 +95,6 @@ class ComputeKernel : NSObject {
                              length: MemoryLayout<ShaderOptions>.stride,
                              index: 0);
         }
-        
-        // Apply shader specific configurations (if any)
-        // configureComputeCommandEncoder(encoder: encoder)
         
         // Determine thread group size and number of groups
         let groupW = kernel.threadExecutionWidth
@@ -132,7 +119,6 @@ class ComputeKernel : NSObject {
 class BypassUpscaler : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
         self.init(name: "bypassupscaler", device: device, library: library)
     }
 }
@@ -140,7 +126,6 @@ class BypassUpscaler : ComputeKernel {
 class EPXUpscaler : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
         self.init(name: "epxupscaler", device: device, library: library)
     }
 }
@@ -148,7 +133,6 @@ class EPXUpscaler : ComputeKernel {
 class XBRUpscaler : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
         self.init(name: "xbrupscaler", device: device, library: library)
     }
 }
@@ -160,33 +144,9 @@ class XBRUpscaler : ComputeKernel {
 
 class BloomFilter : ComputeKernel {
 
-    struct BloomUniforms {
-        var bloomBrightness: Float
-        var bloomWeight: Float
-    }
-    
-    var bloomUniforms = BloomUniforms.init(bloomBrightness: 1.0,
-                                           bloomWeight: 1.0)
-    
     convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
         self.init(name: "bloom", device: device, library: library)
     }
-    
-    /*
-    override func configure(options: ShaderOptions) {
-        
-        bloomUniforms.bloomBrightness = options.bloomBrightness
-        bloomUniforms.bloomWeight = options.bloomWeight
-    }
-    
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
-        
-        encoder.setBytes(&bloomUniforms,
-                         length: MemoryLayout<BloomUniforms>.stride,
-                         index: 0);
-    }
-    */
 }
 
     
@@ -196,25 +156,9 @@ class BloomFilter : ComputeKernel {
 
 class SimpleScanlines : ComputeKernel {
     
-    struct CrtParameters {
-        var scanlineWeight: Float
-        var scanlineBrightness: Float
-    }
-    
-    var crtParameters: CrtParameters!
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
         self.init(name: "scanlines", device: device, library: library)
-        crtParameters = CrtParameters.init(scanlineWeight: 0.0,
-                                           scanlineBrightness: 0.0)
     }
-    
-    /*
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
-        encoder.setBytes(&crtParameters, length: MemoryLayout<CrtParameters>.stride, index: 0);
-    }
-    */
 }
 
 
@@ -225,8 +169,6 @@ class SimpleScanlines : ComputeKernel {
 class BypassFilter : ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary) {
-        
         self.init(name: "bypass", device: device, library: library)
-        // sampler = samplerNearest
     }
 }
