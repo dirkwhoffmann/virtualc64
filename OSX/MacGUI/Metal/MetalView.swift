@@ -37,26 +37,26 @@ var ShaderDefaultsTFT = ShaderOptions(blur: 1,
                                       blurRadius: 0,
                                       bloom: 0,
                                       bloomRadius: 1.0,
-                                      bloomBrightness: 1.33,
+                                      bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 0,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 0,
-                                      scanlineBrightness: 0.12,
-                                      scanlineWeight: 0.5)
+                                      scanlineBrightness: 0.55,
+                                      scanlineWeight: 0.11)
 
 // Default settings for CRT monitor emulation (retro effects on)
 var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       blurRadius: 1.5,
                                       bloom: 1,
                                       bloomRadius: 1.0,
-                                      bloomBrightness: 1.33,
+                                      bloomBrightness: 0.4,
                                       bloomWeight: 1.21,
                                       dotMask: 1,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 2,
-                                      scanlineBrightness: 0.12,
-                                      scanlineWeight: 0.5)
+                                      scanlineBrightness: 0.55,
+                                      scanlineWeight: 0.11)
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
