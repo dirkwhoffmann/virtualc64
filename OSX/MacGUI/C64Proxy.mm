@@ -377,7 +377,7 @@ struct AnyC64FileWrapper { AnyC64File *file; };
                                       blue:(float)b/255.0
                                      alpha:1.0];
 }
-- (UInt32) color:(NSInteger)nr palette:(VICPalette)palette
+- (UInt32) rgbaColor:(NSInteger)nr palette:(VICPalette)palette
 {
     assert (0 <= nr && nr < 16);
     return wrapper->vic->getColor((unsigned)nr, palette);

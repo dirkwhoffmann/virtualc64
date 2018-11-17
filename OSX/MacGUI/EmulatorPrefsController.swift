@@ -11,10 +11,12 @@ import Foundation
 
 class EmulatorPrefsController : UserDialogController {
     
+    // Preview images for all available color palettes
+    // var palettePreview = [NSImage?](repeating: nil, count: 6)
+    
     // Video
     @IBOutlet weak var upscaler: NSPopUpButton!
     @IBOutlet weak var palettePopup: NSPopUpButton!
-    @IBOutlet weak var paletteImage: NSImageView!
     @IBOutlet weak var colorWell0: NSColorWell!
     @IBOutlet weak var colorWell1: NSColorWell!
     @IBOutlet weak var colorWell2: NSColorWell!
@@ -77,7 +79,7 @@ class EmulatorPrefsController : UserDialogController {
         
         parent.metalScreen.buildDotMasks()
         update()
-        updatePaletteImage()
+        updatePalettePreviewImages()
     }
     
     func update() {
@@ -88,24 +90,6 @@ class EmulatorPrefsController : UserDialogController {
         // Video
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
         palettePopup.selectItem(withTag: document.c64.vic.videoPalette())
-        /*
-        colorWell0.color = c64.vic.color(0)
-        colorWell1.color = c64.vic.color(1)
-        colorWell2.color = c64.vic.color(2)
-        colorWell3.color = c64.vic.color(3)
-        colorWell4.color = c64.vic.color(4)
-        colorWell5.color = c64.vic.color(5)
-        colorWell6.color = c64.vic.color(6)
-        colorWell7.color = c64.vic.color(7)
-        colorWell8.color = c64.vic.color(8)
-        colorWell9.color = c64.vic.color(9)
-        colorWell10.color = c64.vic.color(10)
-        colorWell11.color = c64.vic.color(11)
-        colorWell12.color = c64.vic.color(12)
-        colorWell13.color = c64.vic.color(13)
-        colorWell14.color = c64.vic.color(14)
-        colorWell15.color = c64.vic.color(15)
- */
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
@@ -154,7 +138,7 @@ class EmulatorPrefsController : UserDialogController {
         autoMount.state = parent.autoMount ? .on : .off
     }
     
-    func updatePaletteImage() {
+    func updatePalettePreviewImages() {
         
         // Create image representation in memory
         let size = CGSize.init(width: 16, height: 1)
@@ -162,21 +146,22 @@ class EmulatorPrefsController : UserDialogController {
         let mask = calloc(cap, MemoryLayout<UInt32>.size)!
         let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
         
-        for n in 0 ... 15 {
+        // For all palettes ...
+        for palette : Int in 0 ... 5 {
             
-            let color = parent.c64.vic.color(n)!
-            let r = UInt8(color.redComponent * 255)
-            let g = UInt8(color.greenComponent * 255)
-            let b = UInt8(color.blueComponent * 255)
-            let rgba = UInt32.init(r: r, g: g, b: b)
+            // Create image data
+            for n in 0 ... 15 {
+                let p = VICPalette(rawValue: UInt32(palette))
+                let rgba = parent.c64.vic.rgbaColor(n, palette: p)
+                ptr[n] = rgba
+            }
             
-            ptr[n] = rgba
+            // Create image
+            let image = NSImage.make(data: mask, rect: size)
+            // palettePreview[palette] = image?.resizeImageSharp(width: 64, height: 12)
+            let resizedImage = image?.resizeImageSharp(width: 64, height: 12)
+            palettePopup.item(at: palette)?.image = resizedImage
         }
-    
-        // Create image
-        let image = NSImage.make(data: mask, rect: size)
-        paletteImage.image = image?.resizeImageSharp(width: 128, height: 1)
-        palettePopup.item(at: 1)?.image = image?.resizeImageSharp(width: 64, height: 12)
     }
     
     
@@ -189,7 +174,7 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setVideoPalette(sender.selectedTag())
         update()
-        updatePaletteImage()
+        updatePalettePreviewImages()
     }
 
     @IBAction func brightnessAction(_ sender: NSSlider!) {
@@ -197,7 +182,7 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setBrightness(sender.doubleValue)
         update()
-        updatePaletteImage()
+        updatePalettePreviewImages()
     }
     
     @IBAction func contrastAction(_ sender: NSSlider!) {
@@ -205,7 +190,7 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setContrast(sender.doubleValue)
         update()
-        updatePaletteImage()
+        updatePalettePreviewImages()
     }
     
     @IBAction func saturationAction(_ sender: NSSlider!) {
@@ -213,7 +198,7 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setSaturation(sender.doubleValue)
         update()
-        updatePaletteImage()
+        updatePalettePreviewImages()
     }
     
  
@@ -417,6 +402,7 @@ class EmulatorPrefsController : UserDialogController {
         parent.autoMount = EmulatorDefaults.autoMount
 
         update()
+        updatePalettePreviewImages()
     }
     
     @IBAction func factorySettingsActionTFT(_ sender: Any!)

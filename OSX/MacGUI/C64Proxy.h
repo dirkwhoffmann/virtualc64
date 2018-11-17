@@ -320,7 +320,7 @@ struct AnyC64FileWrapper;
 
 - (void *) screenBuffer;
 - (NSColor *) color:(NSInteger)nr;
-- (UInt32) color:(NSInteger)nr palette:(VICPalette)palette;
+- (UInt32) rgbaColor:(NSInteger)nr palette:(VICPalette)palette;
 - (double)brightness;
 - (void)setBrightness:(double)value;
 - (double)contrast;

@@ -25,7 +25,6 @@
                 <outlet property="eyeXSlider" destination="Ghc-gB-6Bk" id="z2T-Yv-E1v"/>
                 <outlet property="eyeYSlider" destination="Fff-Rw-YU3" id="u4A-lE-c7u"/>
                 <outlet property="eyeZSlider" destination="svW-5Y-UKa" id="ArX-qM-Rtj"/>
-                <outlet property="paletteImage" destination="U22-cy-X0z" id="ZWt-IC-dJu"/>
                 <outlet property="palettePopup" destination="04J-bH-Fgj" id="jlq-xt-jd1"/>
                 <outlet property="pauseInBackground" destination="1PY-YV-Vn9" id="30x-p8-p7C"/>
                 <outlet property="saturationSlider" destination="GPi-83-wzn" id="Oyo-n0-Dyv"/>
@@ -81,7 +80,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XfY-TW-vCB">
-                        <rect key="frame" x="317" y="303" width="63" height="17"/>
+                        <rect key="frame" x="317" y="310" width="63" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Upscaler:" id="P6Z-Hc-FCG">
                             <font key="font" metaFont="system"/>
@@ -90,7 +89,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PJx-0D-Gl7">
-                        <rect key="frame" x="382" y="296" width="200" height="26"/>
+                        <rect key="frame" x="382" y="303" width="200" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="6p3-rD-cKA" id="FY3-L4-r3C">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -114,7 +113,7 @@
                         </connections>
                     </popUpButton>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jUI-uK-G2f">
-                        <rect key="frame" x="310" y="380" width="70" height="17"/>
+                        <rect key="frame" x="310" y="387" width="70" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Scanlines:" id="z71-hJ-2UJ">
                             <font key="font" metaFont="system"/>
@@ -123,7 +122,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqp-Ev-E4G">
-                        <rect key="frame" x="382" y="373" width="200" height="26"/>
+                        <rect key="frame" x="382" y="380" width="200" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="tn7-rz-jm3" id="8Hz-95-gQM">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -147,7 +146,7 @@
                         </connections>
                     </popUpButton>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Bb-IP-wG8">
-                        <rect key="frame" x="308" y="440" width="70" height="17"/>
+                        <rect key="frame" x="308" y="447" width="70" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Dot mask:" id="A6Q-b4-phW">
                             <font key="font" metaFont="system"/>
@@ -156,7 +155,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1t5-RU-6d2">
-                        <rect key="frame" x="382" y="433" width="200" height="25"/>
+                        <rect key="frame" x="382" y="440" width="200" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="fOR-kz-MOj" id="8XX-1m-R3o">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -416,7 +415,7 @@ Gw
                         </connections>
                     </slider>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlN-gj-axR">
-                        <rect key="frame" x="459" y="329" width="120" height="15"/>
+                        <rect key="frame" x="459" y="336" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="l7e-Vo-Ynq"/>
                         <connections>
@@ -424,7 +423,7 @@ Gw
                         </connections>
                     </slider>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x9o-Uu-IT3">
-                        <rect key="frame" x="459" y="352" width="120" height="15"/>
+                        <rect key="frame" x="459" y="359" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.12" tickMarkPosition="above" sliderType="linear" id="uFX-uz-tY3"/>
                         <connections>
@@ -432,7 +431,7 @@ Gw
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nzw-BK-GXA">
-                        <rect key="frame" x="365" y="327" width="83" height="14"/>
+                        <rect key="frame" x="365" y="334" width="83" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Weight:" id="qKc-oa-b76">
                             <font key="font" metaFont="smallSystem"/>
@@ -441,7 +440,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cwL-dg-mbM">
-                        <rect key="frame" x="380" y="345" width="68" height="18"/>
+                        <rect key="frame" x="380" y="352" width="68" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Brightness:" id="2JV-gG-gAh">
                             <font key="font" metaFont="smallSystem"/>
@@ -450,7 +449,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9z-Xa-BGL">
-                        <rect key="frame" x="122" y="412" width="43" height="14"/>
+                        <rect key="frame" x="122" y="419" width="43" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Radius:" id="kKT-tw-Oyr">
                             <font key="font" metaFont="smallSystem"/>
@@ -459,7 +458,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IN4-8J-FPM">
-                        <rect key="frame" x="459" y="411" width="120" height="15"/>
+                        <rect key="frame" x="459" y="418" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.69999999999999996" tickMarkPosition="above" sliderType="linear" id="2Zl-BI-gA6"/>
                         <connections>
@@ -467,7 +466,7 @@ Gw
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jFw-ou-xbK">
-                        <rect key="frame" x="381" y="408" width="67" height="18"/>
+                        <rect key="frame" x="381" y="415" width="67" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Brightness:" id="C2p-In-rSm">
                             <font key="font" metaFont="smallSystem"/>
@@ -476,7 +475,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yll-kf-txf">
-                        <rect key="frame" x="44" y="440" width="51" height="17"/>
+                        <rect key="frame" x="44" y="447" width="51" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Blur:" id="A3Z-N7-2By">
                             <font key="font" metaFont="system"/>
@@ -485,7 +484,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pZd-6i-ZbR">
-                        <rect key="frame" x="97" y="433" width="200" height="26"/>
+                        <rect key="frame" x="97" y="440" width="200" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="3mz-Af-9bv" id="Zv2-z0-Hxt">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -506,7 +505,7 @@ Gw
                         </connections>
                     </popUpButton>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ix-im-cce">
-                        <rect key="frame" x="174" y="411" width="120" height="15"/>
+                        <rect key="frame" x="174" y="418" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5" doubleValue="1.5" tickMarkPosition="above" sliderType="linear" id="Dn0-N5-u4v"/>
                         <connections>
@@ -514,7 +513,7 @@ Gw
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Cq-7A-k7E">
-                        <rect key="frame" x="122" y="352" width="43" height="14"/>
+                        <rect key="frame" x="122" y="359" width="43" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Radius:" id="0dG-At-5ZM">
                             <font key="font" metaFont="smallSystem"/>
@@ -523,7 +522,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mlt-7y-5Zo">
-                        <rect key="frame" x="44" y="380" width="51" height="18"/>
+                        <rect key="frame" x="44" y="387" width="51" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Bloom:" id="KnF-sa-lmO">
                             <font key="font" metaFont="system"/>
@@ -532,7 +531,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7d-l9-zhx">
-                        <rect key="frame" x="97" y="375" width="200" height="26"/>
+                        <rect key="frame" x="97" y="382" width="200" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Disabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="PnU-jq-UPB" id="gES-vH-sGq">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -553,7 +552,7 @@ Gw
                         </connections>
                     </popUpButton>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IjX-Lg-CLs">
-                        <rect key="frame" x="174" y="351" width="120" height="15"/>
+                        <rect key="frame" x="174" y="358" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="bwU-FQ-gOQ"/>
                         <connections>
@@ -561,7 +560,7 @@ Gw
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-Rs-wkh">
-                        <rect key="frame" x="93" y="302" width="72" height="16"/>
+                        <rect key="frame" x="93" y="309" width="72" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Weight:" id="qtw-Cn-QNt">
                             <font key="font" metaFont="smallSystem"/>
@@ -570,7 +569,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DrJ-VB-wtT">
-                        <rect key="frame" x="174" y="303" width="120" height="15"/>
+                        <rect key="frame" x="174" y="310" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="1" maxValue="3" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="E2K-Br-F1W"/>
                         <connections>
@@ -578,7 +577,7 @@ Gw
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pkT-9Z-JLt">
-                        <rect key="frame" x="92" y="327" width="72" height="16"/>
+                        <rect key="frame" x="92" y="334" width="72" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Brightness:" id="mvl-on-3n1">
                             <font key="font" metaFont="smallSystem"/>
@@ -587,7 +586,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ttM-ag-T0P">
-                        <rect key="frame" x="173" y="328" width="120" height="15"/>
+                        <rect key="frame" x="173" y="335" width="120" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="2" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="Bmi-x7-kSE"/>
                         <connections>
@@ -595,7 +594,7 @@ Gw
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ls-AH-S59">
-                        <rect key="frame" x="508" y="523" width="36" height="11"/>
+                        <rect key="frame" x="508" y="525" width="36" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="COLOR" id="lVU-nG-lbS">
                             <font key="font" metaFont="miniSystem"/>
@@ -604,7 +603,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ezU-oz-58C">
-                        <rect key="frame" x="425" y="523" width="55" height="11"/>
+                        <rect key="frame" x="425" y="525" width="55" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="CONTRAST" id="UZZ-rI-b5X">
                             <font key="font" metaFont="miniSystem"/>
@@ -613,7 +612,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hFu-Q7-wdJ">
-                        <rect key="frame" x="348" y="523" width="63" height="11"/>
+                        <rect key="frame" x="348" y="525" width="63" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="BRIGHTNESS" id="hLc-O0-CbC">
                             <font key="font" metaFont="miniSystem"/>
@@ -622,7 +621,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GPi-83-wzn">
-                        <rect key="frame" x="512" y="534" width="28" height="30"/>
+                        <rect key="frame" x="512" y="536" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" sliderType="circular" id="Oke-Qy-2Cx"/>
                         <connections>
@@ -630,7 +629,7 @@ Gw
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCy-1N-a2D">
-                        <rect key="frame" x="439" y="534" width="28" height="30"/>
+                        <rect key="frame" x="439" y="536" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" sliderType="circular" id="NYS-Nd-1du"/>
                         <connections>
@@ -638,7 +637,7 @@ Gw
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSm-AO-usU">
-                        <rect key="frame" x="366" y="534" width="28" height="30"/>
+                        <rect key="frame" x="366" y="536" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" maxValue="100" sliderType="circular" id="rzB-zf-fKF"/>
                         <connections>
@@ -646,11 +645,11 @@ Gw
                         </connections>
                     </slider>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="IWu-bM-Zl7">
-                        <rect key="frame" x="19" y="492" width="580" height="5"/>
+                        <rect key="frame" x="19" y="499" width="580" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Td-qH-6KS">
-                        <rect key="frame" x="18" y="469" width="42" height="17"/>
+                        <rect key="frame" x="18" y="476" width="42" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Video" id="Nvj-fr-ZjX">
                             <font key="font" metaFont="systemBold"/>
@@ -669,13 +668,14 @@ Gw
                                     <menuItem title="Restore Factory Settings" hidden="YES" id="kd1-3B-mvY">
                                         <attributedString key="attributedTitle"/>
                                     </menuItem>
-                                    <menuItem title="TFT Monitor" id="HYZ-5d-Hey">
+                                    <menuItem title="TFT Monitor Defaults" id="HYZ-5d-Hey">
                                         <attributedString key="attributedTitle"/>
                                         <connections>
                                             <action selector="factorySettingsActionTFT:" target="-2" id="VPi-d1-xqd"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="CRT Monitor" tag="1" id="4mg-Jb-qQD">
+                                    <menuItem title="CRT Monitor Defaults" tag="1" id="4mg-Jb-qQD">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="factorySettingsActionCRT:" target="-2" id="RKr-ow-Hwq"/>
                                         </connections>
@@ -684,11 +684,6 @@ Gw
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U22-cy-X0z">
-                        <rect key="frame" x="101" y="515" width="179" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="LEDred" id="kTM-7Z-YYt"/>
-                    </imageView>
                 </subviews>
             </view>
             <connections>
@@ -697,7 +692,4 @@ Gw
             <point key="canvasLocation" x="331" y="-219"/>
         </window>
     </objects>
-    <resources>
-        <image name="LEDred" width="128" height="128"/>
-    </resources>
 </document>
