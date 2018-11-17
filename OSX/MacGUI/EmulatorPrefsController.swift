@@ -13,7 +13,8 @@ class EmulatorPrefsController : UserDialogController {
     
     // Video
     @IBOutlet weak var upscaler: NSPopUpButton!
-    @IBOutlet weak var palette: NSPopUpButton!
+    @IBOutlet weak var palettePopup: NSPopUpButton!
+    @IBOutlet weak var paletteImage: NSImageView!
     @IBOutlet weak var colorWell0: NSColorWell!
     @IBOutlet weak var colorWell1: NSColorWell!
     @IBOutlet weak var colorWell2: NSColorWell!
@@ -76,6 +77,7 @@ class EmulatorPrefsController : UserDialogController {
         
         parent.metalScreen.buildDotMasks()
         update()
+        updatePaletteImage()
     }
     
     func update() {
@@ -85,7 +87,8 @@ class EmulatorPrefsController : UserDialogController {
             
         // Video
         upscaler.selectItem(withTag: parent.metalScreen.videoUpscaler)
-        palette.selectItem(withTag: document.c64.vic.videoPalette())
+        palettePopup.selectItem(withTag: document.c64.vic.videoPalette())
+        /*
         colorWell0.color = c64.vic.color(0)
         colorWell1.color = c64.vic.color(1)
         colorWell2.color = c64.vic.color(2)
@@ -102,6 +105,7 @@ class EmulatorPrefsController : UserDialogController {
         colorWell13.color = c64.vic.color(13)
         colorWell14.color = c64.vic.color(14)
         colorWell15.color = c64.vic.color(15)
+ */
         brightnessSlider.doubleValue = document.c64.vic.brightness()
         contrastSlider.doubleValue = document.c64.vic.contrast()
         saturationSlider.doubleValue = document.c64.vic.saturation()
@@ -150,9 +154,33 @@ class EmulatorPrefsController : UserDialogController {
         autoMount.state = parent.autoMount ? .on : .off
     }
     
+    func updatePaletteImage() {
+        
+        // Create image representation in memory
+        let size = CGSize.init(width: 16, height: 1)
+        let cap = Int(size.width) * Int(size.height)
+        let mask = calloc(cap, MemoryLayout<UInt32>.size)!
+        let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
+        
+        for n in 0 ... 15 {
+            
+            let color = parent.c64.vic.color(n)!
+            let r = UInt8(color.redComponent * 255)
+            let g = UInt8(color.greenComponent * 255)
+            let b = UInt8(color.blueComponent * 255)
+            let rgba = UInt32.init(r: r, g: g, b: b)
+            
+            ptr[n] = rgba
+        }
+    
+        // Create image
+        let image = NSImage.make(data: mask, rect: size)
+        paletteImage.image = image?.resizeImageSharp(width: 128, height: 1)
+    }
+    
     
     //
-    // Action methods (Color synthesizer)
+    // Action methods (Colors)
     //
 
     @IBAction func paletteAction(_ sender: NSPopUpButton!) {
@@ -160,24 +188,15 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setVideoPalette(sender.selectedTag())
         update()
+        updatePaletteImage()
     }
 
- 
-    //
-    // Action methods (Video)
-    //
-    
-    @IBAction func upscalerAction(_ sender: NSPopUpButton!) {
-    
-        parent.metalScreen.videoUpscaler = sender.selectedTag()
-        update()
-    }
-        
     @IBAction func brightnessAction(_ sender: NSSlider!) {
         
         let document = parent.document as! MyDocument
         document.c64.vic.setBrightness(sender.doubleValue)
         update()
+        updatePaletteImage()
     }
     
     @IBAction func contrastAction(_ sender: NSSlider!) {
@@ -185,6 +204,7 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setContrast(sender.doubleValue)
         update()
+        updatePaletteImage()
     }
     
     @IBAction func saturationAction(_ sender: NSSlider!) {
@@ -192,12 +212,19 @@ class EmulatorPrefsController : UserDialogController {
         let document = parent.document as! MyDocument
         document.c64.vic.setSaturation(sender.doubleValue)
         update()
+        updatePaletteImage()
     }
     
-
+ 
     //
     // Action methods (Effects)
     //
+    
+    @IBAction func upscalerAction(_ sender: NSPopUpButton!) {
+    
+        parent.metalScreen.videoUpscaler = sender.selectedTag()
+        update()
+    }
     
     @IBAction func blurAction(_ sender: NSPopUpButton!)
     {

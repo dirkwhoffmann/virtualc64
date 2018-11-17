@@ -34,13 +34,15 @@ public func track(_ message: String = "",
 
 extension NSImage {
     
-    func resizeImage(width: CGFloat, height: CGFloat, cutout: NSRect) -> NSImage {
+    func resizeImage(width: CGFloat, height: CGFloat,
+                     cutout: NSRect,
+                     interpolation: NSImageInterpolation = .high) -> NSImage {
         
         let img = NSImage(size: CGSize(width:width, height:height))
         
         img.lockFocus()
         let ctx = NSGraphicsContext.current
-        ctx?.imageInterpolation = .high
+        ctx?.imageInterpolation = interpolation // NSImageInterpolation.none // .high
         self.draw(in: cutout,
                   from: NSMakeRect(0, 0, size.width, size.height),
                   operation: .copy,
@@ -53,7 +55,16 @@ extension NSImage {
     func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
         
         let cutout = NSMakeRect(0, 0, width, height)
-        return resizeImage(width: width, height: height, cutout: cutout)
+        return resizeImage(width: width, height: height,
+                           cutout: cutout)
+    }
+
+    func resizeImageSharp(width: CGFloat, height: CGFloat) -> NSImage {
+        
+        let cutout = NSMakeRect(0, 0, width, height)
+        return resizeImage(width: width, height: height,
+                           cutout: cutout,
+                           interpolation: .none)
     }
     
     func makeGlossy() {

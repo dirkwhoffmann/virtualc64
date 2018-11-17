@@ -210,7 +210,7 @@ public extension MetalView {
             }
             
             // Store preview image
-            dotmaskImages[n] = image?.resizeImage(width: 14, height: 14)
+            dotmaskImages[n] = image?.resizeImageSharp(width: 14, height: 14)
         }
     }
     
