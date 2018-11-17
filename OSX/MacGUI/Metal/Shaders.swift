@@ -146,10 +146,12 @@ class XBRUpscaler : ComputeKernel {
 class BloomFilter : ComputeKernel {
 
     struct BloomUniforms {
+        var bloomBrightness: Float
         var bloomWeight: Float
     }
     
-    var bloomUniforms = BloomUniforms.init(bloomWeight: 1.0)
+    var bloomUniforms = BloomUniforms.init(bloomBrightness: 1.0,
+                                           bloomWeight: 1.0)
     
     convenience init?(device: MTLDevice, library: MTLLibrary)
     {

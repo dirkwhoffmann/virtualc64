@@ -23,7 +23,8 @@ struct EmulatorDefaults {
     static let dotMask = 1
     static let scanlineBrightness = Float(0.12)
     static let scanlineWeight = Float(6.0)
-    static let bloomFactor = Float(1.5)
+    static let bloomBrightness = Float(0.044)
+    static let bloomWeight = Float(1.33)
     static let maskBrightness = Float(0.7)
     static let eyeX = Float(0.0)
     static let eyeY = Float(0.0)

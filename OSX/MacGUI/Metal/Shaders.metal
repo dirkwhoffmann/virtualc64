@@ -37,7 +37,8 @@ struct FragmentUniforms {
     
     uint bloom;
     float bloomRadius;
-    float bloomFactor;
+    float bloomBrightness;
+    float bloomWeight;
     
     uint dotMask;
     uint dotMaskWidth;
@@ -93,7 +94,9 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // Apply bloom effect (if enabled)
     if (uniforms.bloom) {
         float4 bColor = bloomTexture.sample(texSampler, tc);
-        // bColor = pow(bColor, 3 * (1.0 - uniforms.bloomFactor));
+        // bColor = pow(bColor, 3 * (1.0 - uniforms.bloomWeight));
+        bColor = pow(bColor, uniforms.bloomWeight) * uniforms.bloomBrightness;
+        // color = bColor;
         color = saturate(color + bColor);
     }
     
@@ -325,19 +328,21 @@ kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]
 //
 
 struct BloomUniforms {
+    float bloomBrightness;
     float bloomWeight;
 };
 
 kernel void bloom(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                   texture2d<half, access::write> outTexture  [[ texture(1) ]],
-                  constant BloomUniforms         &params     [[ buffer(0) ]],
+                  constant BloomUniforms         &uniforms   [[ buffer(0) ]],
                   uint2                          gid         [[ thread_position_in_grid ]])
 {
 
     half4 color = inTexture.read(uint2(gid.x, gid.y));
     // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
-    // color = color * luma * (3 * params.bloomWeight);
-    color = pow(color, 3 * (1.0 - params.bloomWeight));
+    // color = color * luma * (3 * uniforms.bloomWeight);
+    
+    // color = pow(color, uniforms.bloomWeight) * uniforms.bloomBrightness;
     outTexture.write(half4(color.r, color.g, color.b, 0), gid);
 }
 

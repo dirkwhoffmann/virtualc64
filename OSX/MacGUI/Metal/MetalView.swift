@@ -21,7 +21,8 @@ struct ShaderOptions : Codable {
     
     var bloom: Int
     var bloomRadius: Float
-    var bloomFactor: Float
+    var bloomBrightness: Float
+    var bloomWeight: Float
 
     var dotMask: Int
     var dotMaskBrightness: Float
@@ -36,7 +37,8 @@ var ShaderDefaultsTFT = ShaderOptions(blur: 1,
                                       blurRadius: 0,
                                       bloom: 0,
                                       bloomRadius: 1.0,
-                                      bloomFactor: 1.0,
+                                      bloomBrightness: 1.33,
+                                      bloomWeight: 1.21,
                                       dotMask: 0,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 0,
@@ -48,7 +50,8 @@ var ShaderDefaultsCRT = ShaderOptions(blur: 1,
                                       blurRadius: 1.5,
                                       bloom: 1,
                                       bloomRadius: 1.0,
-                                      bloomFactor: 1.0,
+                                      bloomBrightness: 1.33,
+                                      bloomWeight: 1.21,
                                       dotMask: 1,
                                       dotMaskBrightness: 0.7,
                                       scanlines: 2,
@@ -342,7 +345,8 @@ public class MetalView: MTKView {
         // Compute the bloom texture
         let bloomFilter = currentBloomFilter()
         if let bloomFilter = bloomFilter as? BloomFilter {
-            bloomFilter.bloomUniforms.bloomWeight = shaderOptions.bloomFactor
+            bloomFilter.bloomUniforms.bloomBrightness = shaderOptions.bloomBrightness
+            bloomFilter.bloomUniforms.bloomWeight = shaderOptions.bloomWeight
         }
         bloomFilter.apply(commandBuffer: commandBuffer,
                           source: emulatorTexture,

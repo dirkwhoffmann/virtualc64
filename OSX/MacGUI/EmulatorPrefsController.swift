@@ -40,8 +40,9 @@ class EmulatorPrefsController : UserDialogController {
     
     @IBOutlet weak var bloomPopup:NSPopUpButton!
     @IBOutlet weak var bloomRadiusSlider: NSSlider!
-    @IBOutlet weak var bloomFactorSlider: NSSlider!
-    
+    @IBOutlet weak var bloomBrightnessSlider: NSSlider!
+    @IBOutlet weak var bloomWeightSlider: NSSlider!
+
     @IBOutlet weak var dotMaskPopUp: NSPopUpButton!
     @IBOutlet weak var dotMaskBrightnessSlider: NSSlider!
     
@@ -113,8 +114,10 @@ class EmulatorPrefsController : UserDialogController {
         bloomPopup.selectItem(withTag: shaderOptions.bloom)
         bloomRadiusSlider.floatValue = shaderOptions.bloomRadius
         bloomRadiusSlider.isEnabled = shaderOptions.bloom > 0
-        bloomFactorSlider.floatValue = shaderOptions.bloomFactor
-        bloomFactorSlider.isEnabled = shaderOptions.bloom > 0
+        bloomBrightnessSlider.floatValue = shaderOptions.bloomBrightness
+        bloomBrightnessSlider.isEnabled = shaderOptions.bloom > 0
+        bloomWeightSlider.floatValue = shaderOptions.bloomWeight
+        bloomWeightSlider.isEnabled = shaderOptions.bloom > 0
         
         dotMaskPopUp.selectItem(withTag: shaderOptions.dotMask)
         for i in 0 ... 4 {
@@ -223,11 +226,18 @@ class EmulatorPrefsController : UserDialogController {
         parent.metalScreen.shaderOptions.bloomRadius = sender.floatValue
         update()
     }
-    
-    @IBAction func bloomFactorAction(_ sender: NSSlider!)
+
+    @IBAction func bloomBrightnessAction(_ sender: NSSlider!)
     {
         track("\(sender.floatValue)")
-        parent.metalScreen.shaderOptions.bloomFactor = sender.floatValue
+        parent.metalScreen.shaderOptions.bloomBrightness = sender.floatValue
+        update()
+    }
+
+    @IBAction func bloomWeightAction(_ sender: NSSlider!)
+    {
+        track("\(sender.floatValue)")
+        parent.metalScreen.shaderOptions.bloomWeight = sender.floatValue
         update()
     }
     
