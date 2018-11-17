@@ -14,20 +14,28 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
+struct FragmentUniforms {
+    
+    var alpha: Float
+    var dotMaskWidth: Int32
+    var dotMaskHeight: Int32
+    var scanlineDistance: Int32
+}
+
 struct ShaderOptions : Codable {
     
-    var blur: Int
+    var blur: Int32
     var blurRadius: Float
     
-    var bloom: Int
+    var bloom: Int32
     var bloomRadius: Float
     var bloomBrightness: Float
     var bloomWeight: Float
 
-    var dotMask: Int
+    var dotMask: Int32
     var dotMaskBrightness: Float
     
-    var scanlines: Int
+    var scanlines: Int32
     var scanlineBrightness: Float
     var scanlineWeight: Float
 }
@@ -93,7 +101,11 @@ public class MetalView: MTKView {
     var uniformBuffer2D: MTLBuffer! = nil
     var uniformBuffer3D: MTLBuffer! = nil
     var uniformBufferBg: MTLBuffer! = nil
-    var uniformFragment: MTLBuffer! = nil
+    // var uniformFragment: MTLBuffer! = nil
+    var fragmentUniforms = FragmentUniforms(alpha: 1.0,
+                                            dotMaskWidth: 0,
+                                            dotMaskHeight: 0,
+                                            scanlineDistance: 0)
     
     // Textures
     
@@ -322,7 +334,7 @@ public class MetalView: MTKView {
         precondition(shaderOptions.bloom < bloomFilterGallery.count)
         precondition(bloomFilterGallery[0] != nil)
         
-        return bloomFilterGallery[shaderOptions.bloom]!
+        return bloomFilterGallery[Int(shaderOptions.bloom)]!
     }
 
     /// Returns the compute kernel of the currently selected scanline filter
@@ -331,7 +343,7 @@ public class MetalView: MTKView {
         precondition(shaderOptions.scanlines < scanlineFilterGallery.count)
         precondition(scanlineFilterGallery[0] != nil)
         
-        return scanlineFilterGallery[shaderOptions.scanlines]!
+        return scanlineFilterGallery[Int(shaderOptions.scanlines)]!
     }
     
     func startFrame() {
@@ -339,9 +351,13 @@ public class MetalView: MTKView {
         commandBuffer = queue.makeCommandBuffer()
         precondition(commandBuffer != nil, "Command buffer must not be nil")
     
-        // Set uniforms
-        fillFragmentShaderUniforms(uniformFragment)
-        
+        // Set uniforms for the fragment shader
+        // fillFragmentShaderUniforms(uniformFragment)
+        fragmentUniforms.alpha = 1.0
+        fragmentUniforms.dotMaskHeight = Int32(dotMaskTexture.height)
+        fragmentUniforms.dotMaskWidth = Int32(dotMaskTexture.width)
+        fragmentUniforms.scanlineDistance = Int32(layerHeight / 256);
+       
         // Compute the bloom texture
         let bloomFilter = currentBloomFilter()
         if let bloomFilter = bloomFilter as? BloomFilter {
@@ -350,7 +366,8 @@ public class MetalView: MTKView {
         }
         bloomFilter.apply(commandBuffer: commandBuffer,
                           source: emulatorTexture,
-                          target: bloomTexture)
+                          target: bloomTexture,
+                          options: shaderOptions)
         
         // Blur the bloom texture
         if #available(OSX 10.13, *) {
@@ -384,7 +401,8 @@ public class MetalView: MTKView {
         }
         scanlineFilter.apply(commandBuffer: commandBuffer,
                                 source: upscaledTexture,
-                                target: scanlineTexture)
+                                target: scanlineTexture,
+                                options: shaderOptions)
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
@@ -405,7 +423,15 @@ public class MetalView: MTKView {
         commandEncoder.setFragmentTexture(bgTexture, index: 0)
         commandEncoder.setFragmentTexture(bgTexture, index: 1)
         commandEncoder.setFragmentTexture(dotMaskTexture, index: 2)
-        commandEncoder.setFragmentBuffer(uniformFragment, offset: 0, index: 0)
+        // commandEncoder.setFragmentBuffer(uniformFragment, offset: 0, index: 0)
+        track("\(MemoryLayout<ShaderOptions>.stride)")
+        commandEncoder.setFragmentBytes(&shaderOptions,
+                                        length: MemoryLayout<ShaderOptions>.stride,
+                                        index: 0);
+        commandEncoder.setFragmentBytes(&fragmentUniforms,
+                                        length: MemoryLayout<FragmentUniforms>.stride,
+                                        index: 1);
+        
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
 
         // Finally, we have to decide for a texture sampler. We use a linear

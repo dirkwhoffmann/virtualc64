@@ -47,8 +47,8 @@ class ComputeKernel : NSObject {
     var device : MTLDevice!
     var kernel : MTLComputePipelineState!
 
-    convenience init?(name: String, device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init?(name: String, device: MTLDevice, library: MTLLibrary) {
+        
         self.init()
         
         self.device = device
@@ -75,12 +75,20 @@ class ComputeKernel : NSObject {
         }
     }
     
-    func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder)
-    {
+    /*
+    func configure(options: ShaderOptions) {
         // Each specific compute kernel puts its initialization code here
     }
     
-    func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture)
+    func configureComputeCommandEncoder(encoder : MTLComputeCommandEncoder) {
+        // Each specific compute kernel puts its initialization code here
+    }
+    */
+    
+    func apply(commandBuffer: MTLCommandBuffer,
+               source: MTLTexture,
+               target: MTLTexture,
+               options: ShaderOptions? = nil)
     {
         guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
             return
@@ -91,8 +99,15 @@ class ComputeKernel : NSObject {
         encoder.setTexture(source, index: 0)
         encoder.setTexture(target, index: 1)
      
+        // Pass in shader options
+        if var _options = options {
+            encoder.setBytes(&_options,
+                             length: MemoryLayout<ShaderOptions>.stride,
+                             index: 0);
+        }
+        
         // Apply shader specific configurations (if any)
-        configureComputeCommandEncoder(encoder: encoder)
+        // configureComputeCommandEncoder(encoder: encoder)
         
         // Determine thread group size and number of groups
         let groupW = kernel.threadExecutionWidth
@@ -153,17 +168,25 @@ class BloomFilter : ComputeKernel {
     var bloomUniforms = BloomUniforms.init(bloomBrightness: 1.0,
                                            bloomWeight: 1.0)
     
-    convenience init?(device: MTLDevice, library: MTLLibrary)
-    {
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        
         self.init(name: "bloom", device: device, library: library)
     }
     
-    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder)
-    {
+    /*
+    override func configure(options: ShaderOptions) {
+        
+        bloomUniforms.bloomBrightness = options.bloomBrightness
+        bloomUniforms.bloomWeight = options.bloomWeight
+    }
+    
+    override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
+        
         encoder.setBytes(&bloomUniforms,
                          length: MemoryLayout<BloomUniforms>.stride,
                          index: 0);
     }
+    */
 }
 
     
@@ -187,9 +210,11 @@ class SimpleScanlines : ComputeKernel {
                                            scanlineBrightness: 0.0)
     }
     
+    /*
     override func configureComputeCommandEncoder(encoder: MTLComputeCommandEncoder) {
         encoder.setBytes(&crtParameters, length: MemoryLayout<CrtParameters>.stride, index: 0);
     }
+    */
 }
 
 

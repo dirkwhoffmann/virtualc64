@@ -95,11 +95,11 @@ class EmulatorPrefsController : UserDialogController {
         saturationSlider.doubleValue = document.c64.vic.saturation()
 
         // Effects
-        blurPopUp.selectItem(withTag: shaderOptions.blur)
+        blurPopUp.selectItem(withTag: Int(shaderOptions.blur))
         blurRadiusSlider.floatValue = shaderOptions.blurRadius
         blurRadiusSlider.isEnabled = shaderOptions.blur > 0
 
-        bloomPopup.selectItem(withTag: shaderOptions.bloom)
+        bloomPopup.selectItem(withTag: Int(shaderOptions.bloom))
         bloomRadiusSlider.floatValue = shaderOptions.bloomRadius
         bloomRadiusSlider.isEnabled = shaderOptions.bloom > 0
         bloomBrightnessSlider.floatValue = shaderOptions.bloomBrightness
@@ -107,14 +107,14 @@ class EmulatorPrefsController : UserDialogController {
         bloomWeightSlider.floatValue = shaderOptions.bloomWeight
         bloomWeightSlider.isEnabled = shaderOptions.bloom > 0
         
-        dotMaskPopUp.selectItem(withTag: shaderOptions.dotMask)
+        dotMaskPopUp.selectItem(withTag: Int(shaderOptions.dotMask))
         for i in 0 ... 4 {
             dotMaskPopUp.item(at: i)?.image = parent.metalScreen.dotmaskImages[i]
         }
         dotMaskBrightnessSlider.floatValue = shaderOptions.dotMaskBrightness
         dotMaskBrightnessSlider.isEnabled = shaderOptions.dotMask > 0
 
-        scanlinesPopUp.selectItem(withTag: shaderOptions.scanlines)
+        scanlinesPopUp.selectItem(withTag: Int(shaderOptions.scanlines))
         scanlineBrightnessSlider.floatValue = shaderOptions.scanlineBrightness
         scanlineBrightnessSlider.isEnabled = shaderOptions.scanlines > 0
         scanlineWeightSlider.floatValue = shaderOptions.scanlineWeight
@@ -215,7 +215,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func blurAction(_ sender: NSPopUpButton!)
     {
         track("\(sender.selectedTag())")
-        parent.metalScreen.shaderOptions.blur = sender.selectedTag()
+        parent.metalScreen.shaderOptions.blur = Int32(sender.selectedTag())
         update()
     }
     
@@ -229,7 +229,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func bloomAction(_ sender: NSPopUpButton!)
     {
         track("\(sender.selectedTag())")
-        parent.metalScreen.shaderOptions.bloom = sender.selectedTag()
+        parent.metalScreen.shaderOptions.bloom = Int32(sender.selectedTag())
         update()
     }
         
@@ -257,7 +257,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func dotMaskAction(_ sender: NSPopUpButton!)
     {
         track("\(sender.selectedTag())")
-        parent.metalScreen.shaderOptions.dotMask = sender.selectedTag()
+        parent.metalScreen.shaderOptions.dotMask = Int32(sender.selectedTag())
         parent.metalScreen.buildDotMasks()
         update()
     }
@@ -273,7 +273,7 @@ class EmulatorPrefsController : UserDialogController {
     @IBAction func scanlinesAction(_ sender: NSPopUpButton!)
     {
         track("\(sender.selectedTag())")
-        parent.metalScreen.shaderOptions.scanlines = sender.selectedTag()
+        parent.metalScreen.shaderOptions.scanlines = Int32(sender.selectedTag())
         update()
     }
     @IBAction func scanlineBrightnessAction(_ sender: NSSlider!)

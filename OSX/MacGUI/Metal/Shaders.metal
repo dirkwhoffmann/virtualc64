@@ -33,21 +33,30 @@ struct ProjectedVertex {
     float  alpha;
 };
 
-struct FragmentUniforms {
+struct ShaderOptions {
     
+    uint blur;
+    float blurRadius;
+
     uint bloom;
     float bloomRadius;
     float bloomBrightness;
     float bloomWeight;
-    
+
     uint dotMask;
-    uint dotMaskWidth;
-    uint dotMaskHeight;
     float dotMaskBrightness;
-    
+
     uint scanlines;
     float scanlineBrightness;
     float scanlineWeight;
+};
+
+// Additional information needed by the fragment shader
+struct FragmentUniforms {
+    
+    float alpha;
+    uint dotMaskWidth;
+    uint dotMaskHeight;
     uint scanlineDistance;
 };
 
@@ -75,12 +84,13 @@ float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, 
     return scanlineWeight * bloom;
 }
 
-fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
-                             texture2d<float, access::sample> texture [[texture(0)]],
-                             texture2d<float, access::sample> bloomTexture [[texture(1)]],
-                             texture2d<float, access::sample> dotMask [[texture(2)]],
-                             constant FragmentUniforms &uniforms [[buffer(0)]],
-                             sampler texSampler [[sampler(0)]])
+fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
+                             texture2d<float, access::sample> texture [[ texture(0) ]],
+                             texture2d<float, access::sample> bloomTexture [[ texture(1) ]],
+                             texture2d<float, access::sample> dotMask [[ texture(2) ]],
+                             constant ShaderOptions &options [[ buffer(0) ]],
+                             constant FragmentUniforms &uniforms [[ buffer(1) ]],
+                             sampler texSampler [[ sampler(0) ]])
 {
     uint x = uint(vert.position.x);
     uint y = uint(vert.position.y);
@@ -92,31 +102,32 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
     // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
     
     // Apply bloom effect (if enabled)
-    if (uniforms.bloom) {
+    if (options.bloom) {
         float4 bColor = bloomTexture.sample(texSampler, tc);
         // bColor = pow(bColor, 3 * (1.0 - uniforms.bloomWeight));
-        bColor = pow(bColor, uniforms.bloomWeight) * uniforms.bloomBrightness;
+        bColor = pow(bColor, options.bloomWeight) * options.bloomBrightness;
         // color = bColor;
         color = saturate(color + bColor);
     }
     
     // Apply scanline effect (if emulation type matches)
-    if (uniforms.scanlines == 2) {
+    if (options.scanlines == 2) {
         color *= scanlineWeight(pixel,
                                 uniforms.scanlineDistance,
-                                uniforms.scanlineWeight,
-                                uniforms.scanlineBrightness,
+                                options.scanlineWeight,
+                                options.scanlineBrightness,
                                 1.0);
     }
     
     // Apply dot mask effect (if enabled)
-    if (uniforms.dotMask) {
+    if (options.dotMask) {
         uint xoffset = x % uniforms.dotMaskWidth;
         uint yoffset = y % uniforms.dotMaskHeight;
         float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
         color *= dotColor;
     }
 
+    // color = float4(options.scanlines, 0, 0, 0);
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 
@@ -306,19 +317,21 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
 // Scanline filters
 //
 
+/*
 struct CrtParameters {
     float scanlineWeight;
     float scanlineBrightness;
 };
+*/
 
 kernel void scanlines(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                       texture2d<half, access::write> outTexture  [[ texture(1) ]],
-                      constant CrtParameters         &params     [[ buffer(0) ]],
+                      constant ShaderOptions         &options    [[ buffer(0) ]],
                       uint2                          gid         [[ thread_position_in_grid ]])
 {
     half4 color = inTexture.read(uint2(gid.x, gid.y));
     if (((gid.y + 1) % 4) < 2) {
-        color *= params.scanlineBrightness;
+        color *= options.scanlineBrightness;
     }
     outTexture.write(color, gid);
 }
@@ -334,15 +347,15 @@ struct BloomUniforms {
 
 kernel void bloom(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                   texture2d<half, access::write> outTexture  [[ texture(1) ]],
-                  constant BloomUniforms         &uniforms   [[ buffer(0) ]],
+                  constant ShaderOptions         &options    [[ buffer(0) ]],
                   uint2                          gid         [[ thread_position_in_grid ]])
 {
 
     half4 color = inTexture.read(uint2(gid.x, gid.y));
     // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
-    // color = color * luma * (3 * uniforms.bloomWeight);
+    // color = color * luma * (3 * options.bloomWeight);
     
-    // color = pow(color, uniforms.bloomWeight) * uniforms.bloomBrightness;
+    // color = pow(color, options.bloomWeight) * options.bloomBrightness;
     outTexture.write(half4(color.r, color.g, color.b, 0), gid);
 }
 

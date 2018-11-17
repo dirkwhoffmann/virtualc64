@@ -249,12 +249,12 @@ public extension MetalView {
         uniformBuffer2D = device!.makeBuffer(length: 80, options: opt)
         uniformBuffer3D = device!.makeBuffer(length: 80, options: opt)
         uniformBufferBg = device!.makeBuffer(length: 80, options: opt)
-        uniformFragment = device!.makeBuffer(length: 48, options: opt)
+        // uniformFragment = device!.makeBuffer(length: 48, options: opt)
 
         precondition(uniformBuffer2D != nil, "uniformBuffer2D must not be nil")
         precondition(uniformBuffer3D != nil, "uniformBuffer3D must not be nil")
         precondition(uniformBufferBg != nil, "uniformBufferBg must not be nil")
-        precondition(uniformFragment != nil, "uniformFragment must not be nil")
+        // precondition(uniformFragment != nil, "uniformFragment must not be nil")
     }
     
     func fillMatrix(_ buffer: MTLBuffer?, _ matrix: simd_float4x4) {
@@ -277,10 +277,19 @@ public extension MetalView {
     
     func fillFragmentShaderUniforms(_ buffer: MTLBuffer?) {
         
-        var options = shaderOptions
+        // var options = shaderOptions
         
         if let contents = buffer?.contents() {
             
+            var uniforms = FragmentUniforms.init(
+                alpha: 1.0,
+                dotMaskWidth: Int32(dotMaskTexture.width),
+                dotMaskHeight: Int32(dotMaskTexture.height),
+                scanlineDistance: Int32(layerHeight / 256))
+            
+            memcpy(contents, &uniforms, MemoryLayout<FragmentUniforms>.stride)
+            
+            /*
             var scanlineDistance = Int(layerHeight / 256);
             var dotMaskWidth = dotMaskTexture.width;
             var dotMaskHeight = dotMaskTexture.height;
@@ -299,6 +308,7 @@ public extension MetalView {
             memcpy(contents + 36, &options.scanlineBrightness, 4)
             memcpy(contents + 40, &options.scanlineWeight, 4)
             memcpy(contents + 44, &scanlineDistance, 4)
+            */
         }
     }
     
