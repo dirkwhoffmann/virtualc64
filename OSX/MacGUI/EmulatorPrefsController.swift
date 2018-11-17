@@ -176,6 +176,7 @@ class EmulatorPrefsController : UserDialogController {
         // Create image
         let image = NSImage.make(data: mask, rect: size)
         paletteImage.image = image?.resizeImageSharp(width: 128, height: 1)
+        palettePopup.item(at: 1)?.image = image?.resizeImageSharp(width: 64, height: 12)
     }
     
     

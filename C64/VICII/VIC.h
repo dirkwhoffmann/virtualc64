@@ -840,10 +840,16 @@ public:
      */
     void resetScreenBuffers();
 
-    /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
+    /*! @brief    Returns a C64 color from the current color palette.
+     *  @return   Color in 32 bit big endian RGBA format.
      *  @seealso  updateColors
      */
     uint32_t getColor(unsigned nr);
+    
+    /*! @brief    Returns a C64 color from a specific color palette.
+     *  @return   Color in 32 bit big endian RGBA format.
+     */
+    uint32_t getColor(unsigned nr, VICPalette palette);
     
     //! @brief    Returns the brightness monitor parameter
     double getBrightness() { return brightness; }
