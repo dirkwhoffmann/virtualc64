@@ -14,7 +14,79 @@ import MetalPerformanceShaders
 
 
 //
-// Base class for all compute kernels
+// Additional uniforms needed by the vertex shader
+//
+
+struct VertexUniforms {
+    
+    var mvp: simd_float4x4
+}
+
+
+//
+// Uniforms passed to all compute shaders and the fragment shader
+//
+
+struct ShaderOptions : Codable {
+    
+    var blur: Int32
+    var blurRadius: Float
+    
+    var bloom: Int32
+    var bloomRadius: Float
+    var bloomBrightness: Float
+    var bloomWeight: Float
+    
+    var dotMask: Int32
+    var dotMaskBrightness: Float
+    
+    var scanlines: Int32
+    var scanlineBrightness: Float
+    var scanlineWeight: Float
+}
+
+// Default settings for TFT monitor emulation (retro effects off)
+var ShaderDefaultsTFT = ShaderOptions(blur: 1,
+                                      blurRadius: 0,
+                                      bloom: 0,
+                                      bloomRadius: 1.0,
+                                      bloomBrightness: 0.4,
+                                      bloomWeight: 1.21,
+                                      dotMask: 0,
+                                      dotMaskBrightness: 0.7,
+                                      scanlines: 0,
+                                      scanlineBrightness: 0.55,
+                                      scanlineWeight: 0.11)
+
+// Default settings for CRT monitor emulation (retro effects on)
+var ShaderDefaultsCRT = ShaderOptions(blur: 1,
+                                      blurRadius: 1.5,
+                                      bloom: 1,
+                                      bloomRadius: 1.0,
+                                      bloomBrightness: 0.4,
+                                      bloomWeight: 1.21,
+                                      dotMask: 1,
+                                      dotMaskBrightness: 0.7,
+                                      scanlines: 2,
+                                      scanlineBrightness: 0.55,
+                                      scanlineWeight: 0.11)
+
+
+//
+// Additional uniforms needed by the fragment shader
+//
+
+struct FragmentUniforms {
+    
+    var alpha: Float
+    var dotMaskWidth: Int32
+    var dotMaskHeight: Int32
+    var scanlineDistance: Int32
+}
+
+
+//
+// Static texture parameters
 // 
 
 struct C64_TEXTURE {
@@ -33,14 +105,10 @@ struct UPSCALED_TEXTURE {
     static let cutout_y = C64_TEXTURE.cutout_y * UPSCALED_TEXTURE.factor_y
 }
 
-struct FILTERED_TEXTURE {
-    static let factor_x = 4
-    static let factor_y = 4
-    static let width = C64_TEXTURE.width * FILTERED_TEXTURE.factor_x
-    static let height = C64_TEXTURE.height * FILTERED_TEXTURE.factor_y
-    static let cutout_x = C64_TEXTURE.cutout_x * FILTERED_TEXTURE.factor_x
-    static let cutout_y = C64_TEXTURE.cutout_y * FILTERED_TEXTURE.factor_y
-}
+
+//
+// Base class for all compute kernels
+//
 
 class ComputeKernel : NSObject {
 
@@ -101,8 +169,8 @@ class ComputeKernel : NSObject {
         let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
         let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
         
-        let countW = (FILTERED_TEXTURE.cutout_x + groupW - 1) / groupW;
-        let countH = (FILTERED_TEXTURE.cutout_y + groupH - 1) / groupH;
+        let countW = (UPSCALED_TEXTURE.cutout_x + groupW - 1) / groupW;
+        let countH = (UPSCALED_TEXTURE.cutout_y + groupH - 1) / groupH;
         let threadgroupCount = MTLSizeMake(countW, countH, 1)
         
         // Finally, we're ready to dispatch
@@ -111,6 +179,19 @@ class ComputeKernel : NSObject {
         encoder.endEncoding()
     }
 }
+
+
+//
+// Bypass filter
+//
+
+class BypassFilter : ComputeKernel {
+    
+    convenience init?(device: MTLDevice, library: MTLLibrary) {
+        self.init(name: "bypass", device: device, library: library)
+    }
+}
+
 
 //
 // Upscalers
@@ -161,14 +242,3 @@ class SimpleScanlines : ComputeKernel {
     }
 }
 
-
-//
-// Bypass filter (DEPRECATED)
-//
-
-class BypassFilter : ComputeKernel {
-    
-    convenience init?(device: MTLDevice, library: MTLLibrary) {
-        self.init(name: "bypass", device: device, library: library)
-    }
-}

@@ -14,57 +14,7 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
-struct FragmentUniforms {
-    
-    var alpha: Float
-    var dotMaskWidth: Int32
-    var dotMaskHeight: Int32
-    var scanlineDistance: Int32
-}
 
-struct ShaderOptions : Codable {
-    
-    var blur: Int32
-    var blurRadius: Float
-    
-    var bloom: Int32
-    var bloomRadius: Float
-    var bloomBrightness: Float
-    var bloomWeight: Float
-
-    var dotMask: Int32
-    var dotMaskBrightness: Float
-    
-    var scanlines: Int32
-    var scanlineBrightness: Float
-    var scanlineWeight: Float
-}
-
-// Default settings for TFT monitor emulation (retro effects off)
-var ShaderDefaultsTFT = ShaderOptions(blur: 1,
-                                      blurRadius: 0,
-                                      bloom: 0,
-                                      bloomRadius: 1.0,
-                                      bloomBrightness: 0.4,
-                                      bloomWeight: 1.21,
-                                      dotMask: 0,
-                                      dotMaskBrightness: 0.7,
-                                      scanlines: 0,
-                                      scanlineBrightness: 0.55,
-                                      scanlineWeight: 0.11)
-
-// Default settings for CRT monitor emulation (retro effects on)
-var ShaderDefaultsCRT = ShaderOptions(blur: 1,
-                                      blurRadius: 1.5,
-                                      bloom: 1,
-                                      bloomRadius: 1.0,
-                                      bloomBrightness: 0.4,
-                                      bloomWeight: 1.21,
-                                      dotMask: 1,
-                                      dotMaskBrightness: 0.7,
-                                      scanlines: 2,
-                                      scanlineBrightness: 0.55,
-                                      scanlineWeight: 0.11)
 
 struct C64Texture {
     static let orig = NSSize.init(width: 512, height: 512)
@@ -98,10 +48,11 @@ public class MetalView: MTKView {
     
     // Buffers
     var positionBuffer: MTLBuffer! = nil
-    var uniformBuffer2D: MTLBuffer! = nil
-    var uniformBuffer3D: MTLBuffer! = nil
-    var uniformBufferBg: MTLBuffer! = nil
-    // var uniformFragment: MTLBuffer! = nil
+
+    var vertexUniforms2D = VertexUniforms(mvp: matrix_identity_float4x4)
+    var vertexUniforms3D = VertexUniforms(mvp: matrix_identity_float4x4)
+    var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
+
     var fragmentUniforms = FragmentUniforms(alpha: 1.0,
                                             dotMaskWidth: 0,
                                             dotMaskHeight: 0,
@@ -412,15 +363,10 @@ public class MetalView: MTKView {
         commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
-        commandEncoder.setFragmentTexture(bgTexture, index: 0)
-        commandEncoder.setFragmentTexture(bgTexture, index: 1)
         commandEncoder.setFragmentTexture(dotMaskTexture, index: 2)
         commandEncoder.setFragmentBytes(&shaderOptions,
                                         length: MemoryLayout<ShaderOptions>.stride,
                                         index: 0);
-        commandEncoder.setFragmentBytes(&fragmentUniforms,
-                                        length: MemoryLayout<FragmentUniforms>.stride,
-                                        index: 1);
         
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
 
@@ -436,9 +382,18 @@ public class MetalView: MTKView {
     
         startFrame()
     
-        // Render quad
+        // Configure vertex shader
+        commandEncoder.setVertexBytes(&vertexUniforms2D,
+                                      length: MemoryLayout<VertexUniforms>.stride,
+                                      index: 1)
+
+        // Configure fragment shader
         commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
-        commandEncoder.setVertexBuffer(uniformBuffer2D, offset: 0, index: 1)
+        commandEncoder.setFragmentBytes(&fragmentUniforms,
+                                        length: MemoryLayout<FragmentUniforms>.stride,
+                                        index: 1)
+        
+        // Draw
         commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
                                       vertexStart: 42,
                                       vertexCount: 6,
@@ -457,16 +412,25 @@ public class MetalView: MTKView {
         }
 
         startFrame()
-    
-        // Make texture transparent if emulator is halted
-        let alpha = controller.c64.isHalted() ? 0.5 : currentAlpha
-        fillAlpha(uniformBuffer3D, alpha)
-        
+            
         // Render background
         if drawBackground {
+            
+            // Configure vertex shader
+            // commandEncoder.setVertexBuffer(uniformBufferBg, offset: 0, index: 1)
+            commandEncoder.setVertexBytes(&vertexUniformsBg,
+                                          length: MemoryLayout<VertexUniforms>.stride,
+                                          index: 1)
+            
+            // Configure fragment shader
+            fragmentUniforms.alpha = 1
             commandEncoder.setFragmentTexture(bgTexture, index: 0)
             commandEncoder.setFragmentTexture(bgTexture, index: 1)
-            commandEncoder.setVertexBuffer(uniformBufferBg, offset: 0, index: 1)
+            commandEncoder.setFragmentBytes(&fragmentUniforms,
+                                            length: MemoryLayout<FragmentUniforms>.stride,
+                                            index: 1);
+            
+            // Draw
             commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
                                           vertexStart: 0,
                                           vertexCount: 6,
@@ -475,9 +439,20 @@ public class MetalView: MTKView {
         
         // Render cube
         if drawC64texture {
+            
+            // Configure vertex shader
+            commandEncoder.setVertexBytes(&vertexUniforms3D,
+                                          length: MemoryLayout<VertexUniforms>.stride,
+                                          index: 1)
+            // Configure fragment shader
+            fragmentUniforms.alpha = controller.c64.isHalted() ? 0.5 : currentAlpha
             commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
             commandEncoder.setFragmentTexture(bloomTexture, index: 1)
-            commandEncoder.setVertexBuffer(uniformBuffer3D, offset: 0, index: 1)
+            commandEncoder.setFragmentBytes(&fragmentUniforms,
+                                            length: MemoryLayout<FragmentUniforms>.stride,
+                                            index: 1);
+            
+            // Draw
             commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
                                           vertexStart: 6,
                                           vertexCount: (animates ? 24 : 6),
@@ -511,18 +486,7 @@ public class MetalView: MTKView {
     
     func reshape(withFrame frame: CGRect) {
     
-        reshape();
-        /*
-        if let scale = NSScreen.main?.backingScaleFactor {
-            
-            var size = bounds.size
-            size.width *= scale
-            size.height *= scale
-            
-            metalLayer.drawableSize = drawableSize
-            reshape()
-        }
-        */
+        reshape()
     }
 
     func reshape() {

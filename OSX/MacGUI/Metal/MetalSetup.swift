@@ -32,7 +32,7 @@ public extension MetalView {
         buildSamplers()
         buildKernels()
         buildDotMasks()
-        buildBuffers()
+        buildVertexBuffer()
         buildPipeline()
         
         self.reshape(withFrame: self.frame)
@@ -214,110 +214,6 @@ public extension MetalView {
         }
     }
     
-    func buildBuffers() {
-    
-        // Vertex buffer
-        buildVertexBuffer()
-    
-        // Uniform buffers
-        
-        // struct Uniforms {
-        //     float4x4 modelViewProjection;     4 bytes * 16
-        //     float    alpha;                +  4 bytes
-        //     uint8    _pad[]                + 15 bytes
-        // };                                 ----------
-        //                                    = 80 bytes
-        
-        // struct ShaderOptions {
-        //     uint bloom;                       4 bytes
-        //     float bloomRadius;             +  4 bytes
-        //     float bloomBrightness;         +  4 bytes
-        //     float bloomWeight;             +  4 bytes
-        //     uint dotMask;                  +  4 bytes
-        //     uint dotMaskWidth;             +  4 bytes
-        //     uint dotMaskHeight;            +  4 bytes
-        //     float dotMaskBrightness;       +  4 bytes
-        //     uint scanlines;                +  4 bytes
-        //     float scanlineBrightness;      +  4 bytes
-        //     float scanlineWeight;          +  4 bytes
-        //     uint scanlineDistance;         +  4 bytes
-        // };                                 ----------
-        //                                    = 48 bytes
-        
-        let opt = MTLResourceOptions.cpuCacheModeWriteCombined
-        
-        uniformBuffer2D = device!.makeBuffer(length: 80, options: opt)
-        uniformBuffer3D = device!.makeBuffer(length: 80, options: opt)
-        uniformBufferBg = device!.makeBuffer(length: 80, options: opt)
-        // uniformFragment = device!.makeBuffer(length: 48, options: opt)
-
-        precondition(uniformBuffer2D != nil, "uniformBuffer2D must not be nil")
-        precondition(uniformBuffer3D != nil, "uniformBuffer3D must not be nil")
-        precondition(uniformBufferBg != nil, "uniformBufferBg must not be nil")
-        // precondition(uniformFragment != nil, "uniformFragment must not be nil")
-    }
-    
-    func fillMatrix(_ buffer: MTLBuffer?, _ matrix: simd_float4x4) {
-        
-        var _matrix = matrix
-        if buffer != nil {
-            let contents = buffer!.contents()
-            memcpy(contents, &_matrix, 16 * 4)
-        }
-    }
-    
-    func fillAlpha(_ buffer: MTLBuffer?, _ alpha: Float) {
-        
-        var _alpha = alpha
-        if buffer != nil {
-            let contents = buffer!.contents()
-            memcpy(contents + 16 * 4, &_alpha, 4)
-        }
-    }
-    
-    func fillFragmentShaderUniforms(_ buffer: MTLBuffer?) {
-        
-        // var options = shaderOptions
-        
-        if let contents = buffer?.contents() {
-            
-            var uniforms = FragmentUniforms.init(
-                alpha: 1.0,
-                dotMaskWidth: Int32(dotMaskTexture.width),
-                dotMaskHeight: Int32(dotMaskTexture.height),
-                scanlineDistance: Int32(layerHeight / 256))
-            
-            memcpy(contents, &uniforms, MemoryLayout<FragmentUniforms>.stride)
-            
-            /*
-            var scanlineDistance = Int(layerHeight / 256);
-            var dotMaskWidth = dotMaskTexture.width;
-            var dotMaskHeight = dotMaskTexture.height;
-
-            // track("distance = \(distance)")
-            
-            memcpy(contents + 0, &options.bloom, 4)
-            memcpy(contents + 4, &options.bloomRadius, 4)
-            memcpy(contents + 8, &options.bloomBrightness, 4)
-            memcpy(contents + 12, &options.bloomWeight, 4)
-            memcpy(contents + 16, &options.dotMask, 4)
-            memcpy(contents + 20, &dotMaskWidth, 4);
-            memcpy(contents + 24, &dotMaskHeight, 4);
-            memcpy(contents + 28, &options.dotMaskBrightness, 4)
-            memcpy(contents + 32, &options.scanlines, 4)
-            memcpy(contents + 36, &options.scanlineBrightness, 4)
-            memcpy(contents + 40, &options.scanlineWeight, 4)
-            memcpy(contents + 44, &scanlineDistance, 4)
-            */
-        }
-    }
-    
-    func fillBuffer(_ buffer: MTLBuffer?, matrix: simd_float4x4, alpha: Float) {
-        
-        fillMatrix(buffer, matrix)
-        fillAlpha(buffer, alpha)
-    }
-        
     func buildMatricesBg() {
         
         let model  = matrix_identity_float4x4
@@ -328,7 +224,7 @@ public extension MetalView {
                                              nearZ: 0.1,
                                              farZ: 100.0)
         
-        fillBuffer(uniformBufferBg, matrix: proj * view * model, alpha: 1.0)
+        vertexUniformsBg.mvp = proj * view * model
     }
     
     func buildMatrices2D() {
@@ -337,7 +233,7 @@ public extension MetalView {
         let view  = matrix_identity_float4x4
         let proj  = matrix_identity_float4x4
         
-        fillBuffer(uniformBuffer2D, matrix: proj * view * model, alpha: 1.0)
+        vertexUniforms2D.mvp = proj * view * model
     }
     
     func buildMatrices3D() {
@@ -363,7 +259,7 @@ public extension MetalView {
                 matrix_from_rotation(radians: zAngle, x: 0.0, y: 0.0, z: 0.5)
         }
         
-        fillBuffer(uniformBuffer3D, matrix: proj * view * model, alpha: currentAlpha)
+        vertexUniforms3D.mvp = proj * view * model
     }
 
     func buildVertexBuffer() {

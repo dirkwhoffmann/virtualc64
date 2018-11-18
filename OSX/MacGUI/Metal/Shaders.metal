@@ -13,14 +13,10 @@ using namespace metal;
 
 #define SCALE_FACTOR 4
 
-//
-// Main vertex shader (for drawing the quad)
-// 
 
-struct Uniforms {
-    float4x4 modelViewProjection;
-    float alpha;
-};
+//
+// Vertex shader data types
+// 
 
 struct InVertex {
     float4 position [[attribute(0)]];
@@ -30,8 +26,16 @@ struct InVertex {
 struct ProjectedVertex {
     float4 position [[position]];
     float2 texCoords [[user(tex_coords)]];
-    float  alpha;
 };
+
+struct Uniforms {
+    float4x4 modelViewProjection;
+};
+
+
+//
+// Compute shader data types
+//
 
 struct ShaderOptions {
     
@@ -51,7 +55,11 @@ struct ShaderOptions {
     float scanlineWeight;
 };
 
-// Additional information needed by the fragment shader
+
+//
+// Fragment shader data types
+//
+
 struct FragmentUniforms {
     
     float alpha;
@@ -59,6 +67,11 @@ struct FragmentUniforms {
     uint dotMaskHeight;
     uint scanlineDistance;
 };
+
+
+//
+// Vertex shader
+//
 
 vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
                                    constant Uniforms &uniforms [[buffer(1)]],
@@ -68,9 +81,13 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
 
     out.position = uniforms.modelViewProjection * float4(vertices[vid].position);
     out.texCoords = vertices[vid].texCoords;
-    out.alpha = uniforms.alpha;
     return out;
 }
+
+
+//
+// Fragment shader
+//
 
 float4 scanlineWeight(uint2 pixel, uint height, float weight, float brightness, float bloom) {
     
@@ -127,8 +144,8 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
         color *= dotColor;
     }
 
-    // color = float4(options.scanlines, 0, 0, 0);
-    return half4(color.r, color.g, color.b, vert.alpha);
+    // color = float4(options.scanlines, 0, 0, 1);
+    return half4(color.r, color.g, color.b, uniforms.alpha);
 }
 
 
