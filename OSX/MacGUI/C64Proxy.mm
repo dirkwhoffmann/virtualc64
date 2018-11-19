@@ -192,6 +192,18 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     wrapper->mem->eraseWithPattern((RamInitPattern)pattern);
 }
+- (void) deleteBasicRom
+{
+    wrapper->mem->deleteBasicRom();
+}
+- (void) deleteCharacterRom
+{
+    wrapper->mem->deleteCharacterRom();
+}
+- (void) deleteKernalRom
+{
+    wrapper->mem->deleteKernalRom();
+}
 - (MemoryType) peekSource:(uint16_t)addr
 {
     return wrapper->mem->getPeekSource(addr);
@@ -1066,6 +1078,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (void) togglePowerSwitch
 {
     wrapper->drive->togglePowerSwitch();
+}
+- (void) deleteRom
+{
+    wrapper->drive->mem.deleteRom();
 }
 - (BOOL) redLED
 {

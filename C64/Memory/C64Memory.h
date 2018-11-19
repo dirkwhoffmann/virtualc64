@@ -128,15 +128,24 @@ public:
 	//! @brief    Method from VirtualComponent
 	void dump();
 
-	//! @brief    Returns true, iff the Basic ROM is alrady loaded
+	//! @brief    Returns true, iff the Basic ROM has been loaded
 	bool basicRomIsLoaded() { return rom[0xA000] != 0x00; }
     
-    //! @brief    Returns true, iff the Character ROM is alrady loaded
+    //! @brief    Deletes the Basic ROM from memory
+    void deleteBasicRom() { memset(rom + 0xA000, 0, 0x2000); }
+    
+    //! @brief    Returns true, iff the Character ROM has been loaded
     bool charRomIsLoaded() { return rom[0xD000] != 0x00; }
 
-    //! @brief    Returns true, iff the Kernal ROM is alrady loaded
+    //! @brief    Deletes the Character ROM from memory
+    void deleteCharacterRom() { memset(rom + 0xD000, 0, 0x1000); }
+
+    //! @brief    Returns true, iff the Kernal ROM has been loaded
 	bool kernalRomIsLoaded() { return rom[0xE000] != 0x00; }
-        
+
+    //! @brief    Deletes the Kernal ROM from memory
+    void deleteKernalRom() { memset(rom + 0xE000, 0, 0x2000); }
+
 public:
     
     //! @brief    Returns the currently used RAM init pattern.

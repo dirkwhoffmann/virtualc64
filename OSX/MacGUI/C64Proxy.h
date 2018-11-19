@@ -259,6 +259,10 @@ struct AnyC64FileWrapper;
 - (void) setRamInitPattern:(NSInteger)type;
 - (void) eraseWithPattern:(NSInteger)type;
 
+- (void) deleteBasicRom;
+- (void) deleteCharacterRom;
+- (void) deleteKernalRom;
+
 - (MemoryType) peekSource:(uint16_t)addr;
 - (MemoryType) pokeTarget:(uint16_t)addr;
 
@@ -545,6 +549,8 @@ struct AnyC64FileWrapper;
 - (void) powerOn;
 - (void) powerOff;
 - (void) togglePowerSwitch;
+
+- (void) deleteRom;
 
 - (BOOL) redLED;
 - (BOOL) hasDisk;

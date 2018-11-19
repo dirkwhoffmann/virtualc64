@@ -69,7 +69,10 @@ class VC1541Memory : public Memory {
 
 	//! @brief    Returns true iff the ROM image has been loaded.
     bool romIsLoaded() { return rom[0] != 0x00; }
-    
+
+    //! @brief    Removes the ROM image from memory
+    void deleteRom() { memset(rom, 0, sizeof(rom)); }
+
     
     //
     //! @functiongroup Accessing RAM
