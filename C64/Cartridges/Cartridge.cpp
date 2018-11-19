@@ -118,6 +118,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_ACTION_REPLAY3:
             
         case CRT_FREEZE_FRAME:
+        case CRT_KINGSOFT:
             
         case CRT_GEO_RAM:
             return true;
@@ -154,6 +155,7 @@ Cartridge::makeWithType(C64 *c64, CartridgeType type)
         case CRT_EASYFLASH:      return new EasyFlash(c64);
         case CRT_ACTION_REPLAY3: return new ActionReplay3(c64);
         case CRT_FREEZE_FRAME:   return new FreezeFrame(c64);
+        case CRT_KINGSOFT:       return new Kingsoft(c64);
         case CRT_GEO_RAM:        return new GeoRAM(c64);
         
         default:

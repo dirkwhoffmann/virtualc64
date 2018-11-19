@@ -32,6 +32,8 @@
  */
 class C64Memory : public Memory {
 
+    public:
+    
     //! @brief    C64 bank mapping
     //
     // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
@@ -79,8 +81,6 @@ class C64Memory : public Memory {
         {M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL},
         {M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL}
     };
-
-public:		
 			
 	//! @brief    Random Access Memory
 	uint8_t ram[65536];
@@ -163,6 +163,14 @@ public:
      */
     void updatePeekPokeLookupTables();
     
+    //! @brief    Work horse for updatePeekPokeLookupTables()
+    void updatePeekPokeLookupTables_1000_7FFF(uint8_t index);
+    void updatePeekPokeLookupTables_8000_9FFF(uint8_t index);
+    void updatePeekPokeLookupTables_A000_BFFF(uint8_t index);
+    void updatePeekPokeLookupTables_C000_CFFF(uint8_t index);
+    void updatePeekPokeLookupTables_D000_DFFF(uint8_t index);
+    void updatePeekPokeLookupTables_E000_FFFF(uint8_t index);
+
     //! @brief    Returns the current peek source of the specified memory address
     MemoryType getPeekSource(uint16_t addr) { return peekSrc[addr >> 12]; }
     

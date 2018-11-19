@@ -132,10 +132,68 @@ C64Memory::eraseWithPattern(RamInitPattern pattern)
     memset(&ram[0x400], 0x01, 40*25);
 }
 
+void
+C64Memory::updatePeekPokeLookupTables_1000_7FFF(uint8_t index)
+{
+    MemoryType source = BankMap[index][0];
+    assert(source == M_RAM || source == M_NONE);
+    peekSrc[0x1] = pokeTarget[0x1] = source;
+    peekSrc[0x2] = pokeTarget[0x2] = source;
+    peekSrc[0x3] = pokeTarget[0x3] = source;
+    peekSrc[0x4] = pokeTarget[0x4] = source;
+    peekSrc[0x5] = pokeTarget[0x5] = source;
+    peekSrc[0x6] = pokeTarget[0x6] = source;
+    peekSrc[0x7] = pokeTarget[0x7] = source;
+}
+
+void
+C64Memory::updatePeekPokeLookupTables_8000_9FFF(uint8_t index)
+{
+    MemoryType source = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
+    assert(source == M_CRTLO || source == M_RAM);
+    peekSrc[0x8] = pokeTarget[0x8] = source;
+    peekSrc[0x9] = pokeTarget[0x9] = source;
+}
+
+void
+C64Memory::updatePeekPokeLookupTables_A000_BFFF(uint8_t index)
+{
+    MemoryType source = BankMap[index][2];
+    assert(source == M_CRTHI || source == M_BASIC ||
+           source == M_RAM   || source == M_NONE);
+    peekSrc[0xA] = pokeTarget[0xA] = source;
+    peekSrc[0xB] = pokeTarget[0xB] = source;
+}
+
+void
+C64Memory::updatePeekPokeLookupTables_C000_CFFF(uint8_t index)
+{
+    MemoryType source = BankMap[index][3];
+    assert(source == M_RAM || source == M_NONE);
+    peekSrc[0xC] = pokeTarget[0xC] = source;
+}
+
+void
+C64Memory::updatePeekPokeLookupTables_D000_DFFF(uint8_t index)
+{
+    MemoryType source = BankMap[index][4];
+    assert(source == M_IO || source == M_CHAR || source == M_RAM);
+    peekSrc[0xD] = pokeTarget[0xD] = source;
+}
+
+void
+C64Memory::updatePeekPokeLookupTables_E000_FFFF(uint8_t index)
+{
+    MemoryType source = BankMap[index][5];
+    assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
+    peekSrc[0xE] = pokeTarget[0xE] = source;
+    peekSrc[0xF] = pokeTarget[0xF] = source;
+}
+
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    MemoryType source;
+    // MemoryType source;
     // MemoryType target;
     
     uint8_t exrom = c64->expansionport.getExromLinePhi2() ? 0x10 : 0x00;
@@ -145,6 +203,15 @@ C64Memory::updatePeekPokeLookupTables()
     // Set ultimax flag
     c64->setUltimax(exrom && !game);
 
+    // Update table entries
+    updatePeekPokeLookupTables_1000_7FFF(index);
+    updatePeekPokeLookupTables_8000_9FFF(index);
+    updatePeekPokeLookupTables_A000_BFFF(index);
+    updatePeekPokeLookupTables_C000_CFFF(index);
+    updatePeekPokeLookupTables_D000_DFFF(index);
+    updatePeekPokeLookupTables_E000_FFFF(index);
+    
+#if 0
     // Set peek sources
     source = BankMap[index][0]; // 0x1000 - 0x7FFF (RAM or open)
     assert(source == M_RAM || source == M_NONE);
@@ -179,6 +246,8 @@ C64Memory::updatePeekPokeLookupTables()
     assert(source == M_CRTHI || source == M_KERNAL || source == M_RAM);
     peekSrc[0xE] = pokeTarget[0xE] = source;
     peekSrc[0xF] = pokeTarget[0xF] = source;
+    
+#endif
     
     // An attached cartridge may influence the settings. Let's give it a chance
     // to adjust the tables ...

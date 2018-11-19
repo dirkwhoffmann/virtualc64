@@ -28,6 +28,7 @@
 #include "FinalIII.h"
 #include "StarDos.h"
 #include "Epyx.h"
+#include "Kingsoft.h"
 
 //! @brief    Type 2 cartridges
 class KcsPower : public Cartridge {

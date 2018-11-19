@@ -1,5 +1,5 @@
 /*!
- * @header      StarDos.h
+ * @header      Kingsoft.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   Dirk W. Hoffmann. All rights reserved.
  */
@@ -19,37 +19,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _STARDOS_INC
-#define _STARDOS_INC
+#ifndef _KINGSOFT_INC
+#define _KINGSOFT_INC
 
 #include "Cartridge.h"
 
-class StarDos : public Cartridge {
+class Kingsoft : public Cartridge {
     
-    private:
+public:
     
-    uint64_t voltage = 5000000;
-    uint64_t latestVoltageUpdate = 0;
+    Kingsoft(C64 *c64) : Cartridge(c64, "Kingsoft") { };
+    CartridgeType getCartridgeType() { return CRT_KINGSOFT; }
     
-    public:
+    void resetCartConfig();
+    void updatePeekPokeLookupTables();
+    uint8_t peekIO1(uint16_t addr);
+    void pokeIO1(uint16_t addr, uint8_t value);
     
-    StarDos(C64 *c64) : Cartridge(c64, "StarDos") { };
-    CartridgeType getCartridgeType() { return CRT_STARDOS; }
-    void reset();
-    
-    void updateVoltage();
-    void charge();
-    void discharge();
-    void enableROML();
-    void disableROML();
-
-    void updatePeekPokeLookupTables(); 
-    uint8_t peekIO1(uint16_t addr) { charge(); return 0; }
-    uint8_t peekIO2(uint16_t addr) { discharge(); return 0; }
-    void pokeIO1(uint16_t addr, uint8_t value) { charge(); }
-    void pokeIO2(uint16_t addr, uint8_t value) { discharge(); }
-    
-    bool hasResetButton() { return true; }
+    // uint8_t getMode() { return regValue; }
+    // void setMode(uint8_t value) { regValue = value; }
 };
+
+
 
 #endif

@@ -61,6 +61,7 @@
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
 		50265F57202D00940041C315 /* TapeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50265F56202D00940041C315 /* TapeMountController.swift */; };
+		5028921521A2F96800622969 /* Kingsoft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5028921321A2F96800622969 /* Kingsoft.cpp */; };
 		502CD90F2128297E00C5A8F0 /* TimeDelayed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502CD90D2128297E00C5A8F0 /* TimeDelayed.cpp */; };
 		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
@@ -300,6 +301,8 @@
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
 		50265F56202D00940041C315 /* TapeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapeMountController.swift; sourceTree = "<group>"; };
 		5027F9DA20C5449E0041AD37 /* Disk_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk_types.h; sourceTree = "<group>"; };
+		5028921321A2F96800622969 /* Kingsoft.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Kingsoft.cpp; sourceTree = "<group>"; };
+		5028921421A2F96800622969 /* Kingsoft.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Kingsoft.h; sourceTree = "<group>"; };
 		502CD90D2128297E00C5A8F0 /* TimeDelayed.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TimeDelayed.cpp; sourceTree = "<group>"; };
 		502CD90E2128297E00C5A8F0 /* TimeDelayed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeDelayed.h; sourceTree = "<group>"; };
 		5030B2A820AEE44600E591BE /* Mouse_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse_types.h; sourceTree = "<group>"; };
@@ -895,6 +898,8 @@
 				5003C1B2219807F8009AA08D /* StarDos.cpp */,
 				5003C1B621981BA6009AA08D /* Epyx.h */,
 				5003C1B521981BA6009AA08D /* Epyx.cpp */,
+				5028921421A2F96800622969 /* Kingsoft.h */,
+				5028921321A2F96800622969 /* Kingsoft.cpp */,
 			);
 			path = Cartridges;
 			sourceTree = "<group>";
@@ -1195,6 +1200,7 @@
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				506D54C820321C830026D8B4 /* RomDialogController.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
+				5028921521A2F96800622969 /* Kingsoft.cpp in Sources */,
 				50FF16FD205D17F5000A729A /* ProcessorPort.cpp in Sources */,
 				50F97E01203D8D1E0005E19C /* EmulatorPrefsController.swift in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,

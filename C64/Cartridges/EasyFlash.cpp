@@ -21,7 +21,7 @@
 
 #include "C64.h"
 
-EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64)
+EasyFlash::EasyFlash(C64 *c64) : Cartridge(c64, "EasyFlash")
 {
     flashRomL.setDescription("FlashRom_L");
     flashRomH.setDescription("FlashRom_H");
