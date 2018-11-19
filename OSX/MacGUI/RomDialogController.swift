@@ -62,7 +62,7 @@ class RomDialogController : UserDialogController {
             
         } else {
             
-            headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "ghostIcon"))
+            headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "alertIcon"))
             headerText.stringValue = "VirtualC64 cannot run because some ROMs are missing."
             headerSubText.stringValue = "Use drag and drop to add ROM images."
             okButton.title = "Quit"
