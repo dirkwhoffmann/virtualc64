@@ -52,12 +52,21 @@ class RomDialogController : UserDialogController {
         let kernal = c64.isKernalRomLoaded()
         let character = c64.isCharRomLoaded()
         let vc1541 = c64.isVC1541RomLoaded()
-
-        let readyToRun = c64.isRunnable()
-
-        headerImage.isHidden = readyToRun
-        headerText.isHidden = readyToRun
-        headerSubText.isHidden = readyToRun
+        
+        if c64.isRunnable() {
+            
+            headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "AppIcon"))
+            headerText.stringValue = "All required ROMs are loaded."
+            headerSubText.stringValue = "VirtualC64 is ready to run."
+            okButton.title = "OK"
+            
+        } else {
+            
+            headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "ghostIcon"))
+            headerText.stringValue = "VirtualC64 cannot run because some ROMs are missing."
+            headerSubText.stringValue = "Use drag and drop to add ROM images."
+            okButton.title = "Quit"
+        }
         
         basicRom.image = basic ? romImage : romImageLight
         basicRomText.isHidden = basic
@@ -74,8 +83,6 @@ class RomDialogController : UserDialogController {
         vc1541Rom.image = vc1541 ? romImage : romImageLight
         vc1541RomText.isHidden = vc1541
         vc1541RomButton.isHidden = !vc1541
-        
-        okButton.stringValue = readyToRun ? "OK" : "Quit"
     }
 
     

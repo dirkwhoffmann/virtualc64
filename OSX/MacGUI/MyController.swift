@@ -524,11 +524,13 @@ extension MyController {
     
         case MSG_READY_TO_RUN:
     
-            // Start emulator
+            // Start emulator and blend in C64 screen
             c64.run()
-            metalScreen.blendIn()
-            metalScreen.drawC64texture = true
-    
+            if (!metalScreen.drawC64texture) {
+                metalScreen.blendIn()
+                metalScreen.drawC64texture = true
+            }
+            
             // Open attachment if present
             mydocument.openAttachmentWithDocument()
     
