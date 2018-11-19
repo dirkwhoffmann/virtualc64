@@ -143,7 +143,7 @@ extension MyController {
     }
     */
     @IBAction func diskInspectorAction(_ sender: Any!) {
-        
+ 
         let nibName = NSNib.Name(rawValue: "DiskInspector")
         let controller = DiskInspectorController.init(windowNibName: nibName)
         controller.showSheet(withParent: self)

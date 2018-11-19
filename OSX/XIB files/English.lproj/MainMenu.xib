@@ -25,6 +25,19 @@
                                     <action selector="checkForUpdates:" target="411" id="413"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Preferences" id="4Wh-i3-n7L">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Preferences" id="sB1-CL-iAJ">
+                                    <items>
+                                        <menuItem title="Rom images ..." id="L87-Y8-Gla">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openRomPreferences:" target="-1" id="nYL-o0-8n1"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="202">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>

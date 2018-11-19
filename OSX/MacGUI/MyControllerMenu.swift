@@ -172,6 +172,17 @@ extension MyController {
         return true
     }
 
+    //
+    // Action methods (VirtualC64 menu)
+    //
+    
+    @IBAction func openRomPreferences(_ sender: Any!) {
+    
+        let nibName = NSNib.Name(rawValue: "RomDialog")
+        let controller = RomDialogController.init(windowNibName: nibName)
+        controller.showSheet(withParent: self)
+    }
+    
     
     //
     // Action methods (File menu)

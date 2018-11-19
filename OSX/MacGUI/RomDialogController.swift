@@ -39,6 +39,10 @@ class RomDialogController : UserDialogController {
     
     override func awakeFromNib()
     {
+        // The user might delete Roms, so we better pause emulation while the
+        // dialog is open.
+        c64.halt()
+        
         refresh()
     }
 
@@ -81,28 +85,40 @@ class RomDialogController : UserDialogController {
     
     @IBAction func deleteBasicRom(_ sender: Any!)
     {
+        let defaults = UserDefaults.standard
+        
         track()
+        defaults.set(URL.init(string: ""), forKey: VC64Keys.basicRom)
         parent.c64.mem.deleteBasicRom()
         refresh()
     }
     
     @IBAction func deleteCharacterRom(_ sender: Any!)
     {
+        let defaults = UserDefaults.standard
+
         track()
+        defaults.set(URL.init(string: ""), forKey: VC64Keys.charRom)
         parent.c64.mem.deleteCharacterRom()
         refresh()
     }
     
     @IBAction func deleteKernalRom(_ sender: Any!)
     {
+        let defaults = UserDefaults.standard
+        
         track()
+        defaults.set(URL.init(string: ""), forKey: VC64Keys.kernalRom)
         parent.c64.mem.deleteKernalRom()
         refresh()
     }
     
     @IBAction func deleteVC1541Rom(_ sender: Any!)
     {
+        let defaults = UserDefaults.standard
+        
         track()
+        defaults.set(URL.init(string: ""), forKey: VC64Keys.vc1541Rom)
         parent.c64.drive1.deleteRom()
         parent.c64.drive2.deleteRom()
         refresh()
@@ -120,7 +136,9 @@ class RomDialogController : UserDialogController {
         track()
         hideSheet()
         
-        if (!c64.isRunnable()) {
+        if (c64.isRunnable()) {
+            c64.run()
+        } else {
            NSApp.terminate(self)
         }
     }
