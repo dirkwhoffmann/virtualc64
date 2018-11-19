@@ -39,7 +39,8 @@
 
 // RELEASE NOTES (Version 3.2)
 //
-// 
+// Added support for cartridges of type Kingsoft and StarDos.
+// The Rom dialog has been reworked and can be opend manually via a new menu item.
 //
 // TODOs for the next release:
 //
