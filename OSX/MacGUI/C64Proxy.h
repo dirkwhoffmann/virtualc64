@@ -180,15 +180,20 @@ struct AnyC64FileWrapper;
 - (BOOL) isBasicRom:(NSURL *)url;
 - (BOOL) loadBasicRom:(NSURL *)url;
 - (BOOL) isBasicRomLoaded;
+- (uint64_t) basicRomFingerprint;
 - (BOOL) isCharRom:(NSURL *)url;
 - (BOOL) loadCharRom:(NSURL *)url;
 - (BOOL) isCharRomLoaded;
+- (uint64_t) charRomFingerprint;
 - (BOOL) isKernalRom:(NSURL *)url;
 - (BOOL) loadKernalRom:(NSURL *)url;
 - (BOOL) isKernalRomLoaded;
+- (uint64_t) kernalRomFingerprint;
 - (BOOL) isVC1541Rom:(NSURL *)url;
 - (BOOL) loadVC1541Rom:(NSURL *)url;
 - (BOOL) isVC1541RomLoaded;
+- (uint64_t) vc1541RomFingerprint;
+
 - (BOOL) isRom:(NSURL *)url;
 - (BOOL) loadRom:(NSURL *)url;
 

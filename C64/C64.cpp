@@ -428,7 +428,7 @@ C64::isRunnable()
 {
     return
     mem.basicRomIsLoaded() &&
-    mem.charRomIsLoaded() &&
+    mem.characterRomIsLoaded() &&
     mem.kernalRomIsLoaded() &&
     drive1.mem.romIsLoaded() &&
     drive2.mem.romIsLoaded();

@@ -316,3 +316,17 @@ sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup)
     
     return jitter;
 }
+
+uint64_t
+fnv_1a(uint8_t *addr, size_t size)
+{
+    uint64_t basis = 0xcbf29ce484222325;
+    uint64_t prime = 0x100000001b3;
+    uint64_t hash = basis;
+
+    for (size_t i = 0; i < size; i++) {
+        hash = (hash ^ (uint64_t)addr[i]) * prime;
+    }
+    
+    return hash;
+}

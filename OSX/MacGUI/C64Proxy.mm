@@ -1581,6 +1581,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->mem.basicRomIsLoaded();
 }
+- (uint64_t) basicRomFingerprint
+{
+    return wrapper->c64->mem.basicRomFingerprint();
+}
 - (BOOL) isCharRom:(NSURL *)url
 {
     return ROMFile::isCharRomFile([[url path] UTF8String]);
@@ -1591,7 +1595,11 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 }
 - (BOOL) isCharRomLoaded
 {
-    return wrapper->c64->mem.charRomIsLoaded();
+    return wrapper->c64->mem.characterRomIsLoaded();
+}
+- (uint64_t) charRomFingerprint
+{
+    return wrapper->c64->mem.characterRomFingerprint();
 }
 - (BOOL) isKernalRom:(NSURL *)url
 {
@@ -1605,6 +1613,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 {
     return wrapper->c64->mem.kernalRomIsLoaded();
 }
+- (uint64_t) kernalRomFingerprint
+{
+    return wrapper->c64->mem.kernalRomFingerprint();
+}
 - (BOOL) isVC1541Rom:(NSURL *)url
 {
     return ROMFile::isVC1541RomFile([[url path] UTF8String]);
@@ -1616,6 +1628,10 @@ struct AnyC64FileWrapper { AnyC64File *file; };
 - (BOOL) isVC1541RomLoaded
 {
     return wrapper->c64->drive1.mem.romIsLoaded() && wrapper->c64->drive2.mem.romIsLoaded();
+}
+- (uint64_t) vc1541RomFingerprint
+{
+    return wrapper->c64->drive1.mem.romFingerprint();
 }
 - (BOOL) isRom:(NSURL *)url
 {

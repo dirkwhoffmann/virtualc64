@@ -73,6 +73,12 @@ class VC1541Memory : public Memory {
     //! @brief    Removes the ROM image from memory
     void deleteRom() { memset(rom, 0, sizeof(rom)); }
 
+    /*! @brief    Computes a 64-bit fingerprint for the VC1541 ROM.
+     *  @return   fingerprint or 0, if no Basic ROM is installed.
+     */
+    uint64_t romFingerprint() {
+        return romIsLoaded() ? fnv_1a(rom, sizeof(rom)) : 0; }
+    
     
     //
     //! @functiongroup Accessing RAM

@@ -85,7 +85,7 @@ C64Memory::dump()
 	msg("C64 Memory:\n");
 	msg("-----------\n");
 	msg("    Basic ROM: %s loaded\n", basicRomIsLoaded() ? "" : " not");
-	msg("Character ROM: %s loaded\n", charRomIsLoaded() ? "" : " not");
+	msg("Character ROM: %s loaded\n", characterRomIsLoaded() ? "" : " not");
     msg("   Kernal ROM: %s loaded\n", kernalRomIsLoaded() ? "" : " not");
 	
     for (uint16_t addr = 0; addr < 0xFFFF; addr++) {
