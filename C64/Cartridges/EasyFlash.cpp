@@ -44,6 +44,25 @@ EasyFlash::reset()
     memset(externalRam, 0xFF, ramCapacity);
 }
 
+void
+EasyFlash::dump()
+{
+    Cartridge::dump();
+    
+    msg("EasyFlash\n");
+    msg("---------\n\n");
+
+    msg("bank = %d\n", bank);
+    for (unsigned i = 0; i < 256; i++) {
+        msg("%02X ", externalRam[i]);
+        if (i % 16 == 15) msg("\n");
+    }
+    msg("\n");
+    
+    flashRomL.dump();
+    flashRomH.dump();
+}
+
 size_t
 EasyFlash::stateSize()
 {

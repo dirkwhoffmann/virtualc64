@@ -88,6 +88,19 @@ FlashRom::reset()
     baseState = FLASH_READ;
 }
 
+void
+FlashRom::dump()
+{
+    msg("FlashRom\n");
+    msg("--------\n\n");
+    
+    msg("     state: %d\n", state);
+    msg(" baseState: %d\n", baseState);
+    msg("numSectors: %d\n", numSectors);
+    msg("sectorSize: %d\n", sectorSize);
+    msg("       rom: %p\n\n", rom);
+}
+
 uint8_t
 FlashRom::peek(uint32_t addr)
 {

@@ -67,7 +67,7 @@ class MyDocument : NSDocument {
         loadRom(defaults.url(forKey: VC64Keys.charRom))
         loadRom(defaults.url(forKey: VC64Keys.kernalRom))
         loadRom(defaults.url(forKey: VC64Keys.vc1541Rom))
-        
+                
         // Try to run. The emulator will either run (if all ROMs were found)
         // or write a MISSING_ROM message into the message queue.
         // c64.run()

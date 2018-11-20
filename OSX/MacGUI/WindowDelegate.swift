@@ -13,6 +13,8 @@ extension MyController : NSWindowDelegate {
         
     public func windowDidBecomeMain(_ notification: Notification) {
         
+        track()
+        
         // Enable audio
         c64.sid.rampUpFromZero()
         audioEngine.startPlayback()

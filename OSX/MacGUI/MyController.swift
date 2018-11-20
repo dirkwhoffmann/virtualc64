@@ -315,9 +315,13 @@ extension MyController {
     override open func awakeFromNib() {
 
         track()
+        
         cpuTableView.c = self
         cpuTraceView.c = self
         memTableView.c = self
+        
+        // Create audio engine
+        audioEngine = AudioEngine.init(withSID: c64.sid)
     }
     
     
@@ -326,7 +330,7 @@ extension MyController {
         track()
 
         // Create audio engine
-        audioEngine = AudioEngine.init(withSID: c64.sid)
+        // audioEngine = AudioEngine.init(withSID: c64.sid)
             
         // Reset mouse coordinates
         mouseXY = NSZeroPoint

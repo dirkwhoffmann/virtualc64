@@ -103,7 +103,7 @@ class FlashRom : public VirtualComponent {
     //
     
     void reset();
-    
+    void dump();
     
     //
     //! @functiongroup Accessing Rom cells

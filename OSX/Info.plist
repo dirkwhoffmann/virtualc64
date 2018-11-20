@@ -186,9 +186,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.2 alpha 3</string>
+	<string>3.2 alpha 5</string>
 	<key>CFBundleVersion</key>
-	<string>3.2 alpha 3</string>
+	<string>3.2 alpha 5</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSAppTransportSecurity</key>

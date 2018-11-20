@@ -335,6 +335,7 @@ Cartridge::dump()
         msg("              Chip %3d: %d KB starting at $%04X\n",
             i, packet[i]->size / 1024, packet[i]->loadAddress);
     }
+    msg("\n");
 }
 
 uint8_t
