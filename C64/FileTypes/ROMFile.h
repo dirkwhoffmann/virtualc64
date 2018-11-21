@@ -37,6 +37,7 @@ private:
     static const uint8_t magicKernalRomBytes[];
     static const uint8_t magicVC1541RomBytes1[];
     static const uint8_t magicVC1541RomBytes2[];
+    static const uint8_t magicVC1541RomBytes3[];
 
     //! @brief    ROM type (Basic ROM, Kernal ROM, etc.)
     C64FileType romtype;

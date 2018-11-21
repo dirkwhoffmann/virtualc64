@@ -9,6 +9,34 @@
 
 import Foundation
 
+let knownBasicRoms : [UInt64 : String] = [
+    0 :
+    "This 8 KB Rom contains Commodore's Basic interpreter. It occupies the address space from $A000 to $BFFF."
+]
+
+let knownCharacterRoms : [UInt64 : String] = [
+    0 :
+    "This 4 KB Rom contains the C64's character set. It occupies the address space from $D000 to $DFFF."
+]
+
+let knownKernalRoms : [UInt64 : String] = [
+    0 :
+    "This 8 KB Rom contains the low-level operation system. It occupies the address space from $D000 to $DFFF."
+]
+
+let knownVc1541Roms : [UInt64: String] = [
+    0:
+    "This 16 KB Rom contains the firmware of Commodore's VC1541 floppy disk drive.",
+    0x44BBA0EAC5898597:
+    "1541-II firmware. Released in 1987.",
+    0xA1D36980A17C8756:
+    "1541-II firmware appearing in drives with a modern Newtronics Motor.",
+    0x361A1EC48F04F5A4:
+    "The firmware of an old-style 1541 in white case.",
+    0xB938E2DA07F4FE40:
+    "An upgrade firmware for the 1541C drive."
+]
+
 class RomDialogController : UserDialogController {
     
     let romImage = NSImage.init(named: NSImage.Name.init(rawValue: "rom"))
@@ -20,19 +48,31 @@ class RomDialogController : UserDialogController {
     @IBOutlet weak var headerSubText: NSTextField!
 
     @IBOutlet weak var basicRom: NSImageView!
-    @IBOutlet weak var basicRomText: NSTextField!
+    @IBOutlet weak var basicRomDragText: NSTextField!
+    @IBOutlet weak var basicRomHash: NSTextField!
+    @IBOutlet weak var basicRomPath: NSTextField!
+    @IBOutlet weak var basicRomDescription: NSTextField!
     @IBOutlet weak var basicRomButton: NSButton!
 
     @IBOutlet weak var kernalRom: NSImageView!
-    @IBOutlet weak var kernalRomText: NSTextField!
+    @IBOutlet weak var kernalRomDragText: NSTextField!
+    @IBOutlet weak var kernalRomHash: NSTextField!
+    @IBOutlet weak var kernalRomPath: NSTextField!
+    @IBOutlet weak var kernalRomDescription: NSTextField!
     @IBOutlet weak var kernelRomButton: NSButton!
     
     @IBOutlet weak var characterRom: NSImageView!
-    @IBOutlet weak var characterRomText: NSTextField!
+    @IBOutlet weak var characterRomDragText: NSTextField!
+    @IBOutlet weak var characterRomHash: NSTextField!
+    @IBOutlet weak var characterRomPath: NSTextField!
+    @IBOutlet weak var characterRomDescription: NSTextField!
     @IBOutlet weak var characterRomButton: NSButton!
 
     @IBOutlet weak var vc1541Rom: NSImageView!
-    @IBOutlet weak var vc1541RomText: NSTextField!
+    @IBOutlet weak var vc1541RomDragText: NSTextField!
+    @IBOutlet weak var vc1541RomHash: NSTextField!
+    @IBOutlet weak var vc1541RomPath: NSTextField!
+    @IBOutlet weak var vc1541RomDescription: NSTextField!
     @IBOutlet weak var vc1541RomButton: NSButton!
 
     @IBOutlet weak var okButton: NSButton!
@@ -48,11 +88,22 @@ class RomDialogController : UserDialogController {
 
     func refresh()
     {
-        let basic = c64.isBasicRomLoaded()
-        let kernal = c64.isKernalRomLoaded()
-        let character = c64.isCharRomLoaded()
-        let vc1541 = c64.isVC1541RomLoaded()
+        let hasBasicRom = c64.isBasicRomLoaded()
+        let hasKernalRom = c64.isKernalRomLoaded()
+        let hasCharacterRom = c64.isCharRomLoaded()
+        let hasVc1541Rom = c64.isVC1541RomLoaded()
+
+        let defaults = UserDefaults.standard
+        let basicURL = defaults.url(forKey: VC64Keys.basicRom)
+        let characterURL = defaults.url(forKey: VC64Keys.charRom)
+        let kernalURL = defaults.url(forKey: VC64Keys.kernalRom)
+        let vc1541URL = defaults.url(forKey: VC64Keys.vc1541Rom)
         
+        let basicHash = parent.c64.basicRomFingerprint()
+        let kernalHash = parent.c64.kernalRomFingerprint()
+        let characterHash = parent.c64.charRomFingerprint()
+        let vc1541Hash = parent.c64.vc1541RomFingerprint()
+
         if c64.isRunnable() {
             
             headerImage.image = NSImage.init(named: NSImage.Name(rawValue: "AppIcon"))
@@ -68,21 +119,67 @@ class RomDialogController : UserDialogController {
             okButton.title = "Quit"
         }
         
-        basicRom.image = basic ? romImage : romImageLight
-        basicRomText.isHidden = basic
-        basicRomButton.isHidden = !basic
+        basicRom.image = hasBasicRom ? romImage : romImageLight
+        basicRomDragText.isHidden = hasBasicRom
+        basicRomHash.isHidden = !hasBasicRom
+        basicRomHash.stringValue = String(format: "Hash: %X", basicHash)
+        basicRomPath.isHidden = !hasBasicRom
+        basicRomPath.stringValue = basicURL?.path ?? ""
+        basicRomButton.isHidden = !hasBasicRom
+        if let description = knownBasicRoms[basicHash] {
+            basicRomDescription.stringValue = description
+            basicRomDescription.textColor = NSColor.textColor
+        } else {
+            basicRomDescription.stringValue = "" // An unknown, possibly patched Basic ROM."
+            basicRomDescription.textColor = .red
+        }
         
-        kernalRom.image = kernal ? romImage : romImageLight
-        kernalRomText.isHidden = kernal
-        kernelRomButton.isHidden = !kernal
+        kernalRom.image = hasKernalRom ? romImage : romImageLight
+        kernalRomDragText.isHidden = hasKernalRom
+        kernalRomHash.isHidden = !hasKernalRom
+        kernalRomHash.stringValue = String(format: "Hash: %X", kernalHash)
+        kernalRomPath.isHidden = !hasKernalRom
+        kernalRomPath.stringValue = kernalURL?.path ?? ""
+        kernelRomButton.isHidden = !hasKernalRom
+        if let description = knownKernalRoms[kernalHash] {
+            kernalRomDescription.stringValue = description
+            kernalRomDescription.textColor = NSColor.textColor
+        } else {
+            kernalRomDescription.stringValue = "" // An unknown, possibly patched Kernal ROM."
+            kernalRomDescription.textColor = .red
+        }
 
-        characterRom.image = character ? romImage : romImageLight
-        characterRomText.isHidden = character
-        characterRomButton.isHidden = !character
+        characterRom.image = hasCharacterRom ? romImage : romImageLight
+        characterRomDragText.isHidden = hasCharacterRom
+        characterRomHash.isHidden = !hasCharacterRom
+        characterRomHash.stringValue = String(format: "Hash: %X", characterHash)
+        characterRomDescription.textColor = NSColor.textColor
+        characterRomPath.isHidden = !hasCharacterRom
+        characterRomPath.stringValue = characterURL?.path ?? ""
+        characterRomButton.isHidden = !hasCharacterRom
+        if let description = knownCharacterRoms[characterHash] {
+            characterRomDescription.stringValue = description
+            characterRomDescription.textColor = NSColor.textColor
+        } else {
+            characterRomDescription.stringValue = "" // An unknown, possibly patched Character ROM."
+            characterRomDescription.textColor = .red
+        }
 
-        vc1541Rom.image = vc1541 ? romImage : romImageLight
-        vc1541RomText.isHidden = vc1541
-        vc1541RomButton.isHidden = !vc1541
+        vc1541Rom.image = hasVc1541Rom ? romImage : romImageLight
+        vc1541RomDragText.isHidden = hasVc1541Rom
+        vc1541RomHash.isHidden = !hasVc1541Rom
+        vc1541RomHash.stringValue = String(format: "Hash: %llX", vc1541Hash)
+        vc1541RomDescription.textColor = NSColor.textColor
+        vc1541RomPath.isHidden = !hasVc1541Rom
+        vc1541RomPath.stringValue = vc1541URL?.path ?? ""
+        vc1541RomButton.isHidden = !hasVc1541Rom
+        if let description = knownVc1541Roms[vc1541Hash] {
+            vc1541RomDescription.stringValue = description
+            vc1541RomDescription.textColor = .textColor
+        } else {
+            vc1541RomDescription.stringValue = "An unknown, possibly patched 15xx ROM."
+            vc1541RomDescription.textColor = .red
+        }
     }
 
     
